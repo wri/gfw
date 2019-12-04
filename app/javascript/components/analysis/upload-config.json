@@ -1,6 +1,5 @@
 {
   "sizeLimit": 1000000,
-  "sizeMessage": "The selected file is quite large and uploading it might result in browser instability. Do you want to continue?",
   "featureLimit": 1000,
   "types": [
     "application/vnd.geo+json",

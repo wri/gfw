@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { CancelToken } from 'axios';
 
 import * as ownActions from 'components/analysis/actions';
 import * as modalActions from 'components/modals/sources/actions';
@@ -26,6 +27,11 @@ class ChoseAnalysisContainer extends PureComponent {
     activeBoundary: PropTypes.object,
     boundaries: PropTypes.array,
     setAnalysisLoading: PropTypes.func
+  };
+
+  state = {
+    uploadStatus: 0,
+    file: null
   };
 
   selectBoundaries = boundaryId => {
@@ -55,29 +61,100 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
-  onDrop = files => {
-    const { uploadShape, setAnalysisLoading } = this.props;
-    if (files && files.length) {
-      const file = files[0];
-      if (file.size > uploadConfig.sizeLimit) {
-        setAnalysisLoading({
-          error: `File larger than ${uploadConfig.sizeLimit / 1000000}MB`,
-          errorMessage: ''
-        });
-      } else {
-        uploadShape(file);
-      }
+  handleCheckUpload = e => {
+    this.setState({ uploadStatus: e.loaded / e.total * 25 });
+  };
+
+  handleCheckDownload = e => {
+    this.setState({
+      uploadStatus: 25 + e.loaded / e.total * 25
+    });
+  };
+
+  handleGeostoreUpload = e => {
+    this.setState({
+      uploadStatus: 50 + e.loaded / e.total * 25
+    });
+  };
+
+  handleGeostoreDownload = e => {
+    this.setState({
+      uploadStatus: 75 + e.loaded / e.total * 25
+    });
+  };
+
+  onDropAccepted = files => {
+    const file = files && files[0];
+    this.setState({ file, uploadStatus: 0 });
+    this.handleUploadShape(file);
+  };
+
+  onDropRejected = files => {
+    const { setAnalysisLoading } = this.props;
+    const file = files && files[0];
+
+    if (files && file && files.length > 1) {
+      setAnalysisLoading({
+        error: 'Multiple files not supported',
+        errorMessage:
+          'Only single files of type .zip, .csv, .json, .geojson, .kml and .kmz fles are supported.'
+      });
+    } else if (file && !uploadConfig.types.includes(file.type)) {
+      setAnalysisLoading({
+        error: 'Invalid file type',
+        errorMessage:
+          'Only .zip, .csv, .json, .geojson, .kml and .kmz fles are supported.'
+      });
+    } else if (file && file.size > uploadConfig.sizeLimit) {
+      setAnalysisLoading({
+        error: 'File too large',
+        errorMessage:
+          'The recommended maximum fle size is 1MB. Anything larger than that may not work properly.'
+      });
     } else {
-      setAnalysisLoading({ error: 'Invalid file type', errorMessage: '' });
+      setAnalysisLoading({
+        error: 'Error attaching file',
+        errorMessage: 'Please contact us for support.'
+      });
     }
+  };
+
+  handleUploadShape = file => {
+    if (this.uploadShape) {
+      this.uploadShape.cancel();
+    }
+    this.uploadShape = CancelToken.source();
+    this.props.uploadShape({
+      shape: file,
+      onCheckUpload: this.handleCheckUpload,
+      onCheckDownload: this.handleCheckDownload,
+      onGeostoreUpload: this.handleGeostoreUpload,
+      onGeostoreDownload: this.handleGeostoreDownload,
+      token: this.uploadShape.token
+    });
+  };
+
+  handleCancelUpload = () => {
+    const { setAnalysisLoading } = this.props;
+    if (this.uploadShape) {
+      this.uploadShape.cancel('cancel upload shape');
+    }
+    setAnalysisLoading({
+      uploading: false,
+      loading: false,
+      error: '',
+      errorMessage: ''
+    });
   };
 
   render() {
     return createElement(Component, {
       ...this.props,
+      ...this.state,
       selectBoundaries: this.selectBoundaries,
-      uploadShape: this.uploadShape,
-      onDrop: this.onDrop,
+      onDropAccepted: this.onDropAccepted,
+      onDropRejected: this.onDropRejected,
+      handleCancelUpload: this.handleCancelUpload,
       uploadConfig
     });
   }
