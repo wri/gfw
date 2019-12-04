@@ -14249,6 +14249,13 @@ turf-bbox@^3.0.12:
   dependencies:
     turf-meta "^3.0.12"
 
+turf-combine@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/turf-combine/-/turf-combine-3.0.12.tgz#1670746f0fdce0d1ea8aa6a29ffe5438d446cf73"
+  integrity sha1-FnB0bw/c4NHqiqain/5UONRGz3M=
+  dependencies:
+    turf-meta "^3.0.12"
+
 turf-helpers@^3.0.12:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/turf-helpers/-/turf-helpers-3.0.12.tgz#dd4272e74b3ad7c96eecb7ae5c57fe8eca544b7b"
