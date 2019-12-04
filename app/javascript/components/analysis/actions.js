@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import union from 'turf-union';
+import combine from 'turf-combine';
 import compact from 'lodash/compact';
 import { DASHBOARDS } from 'router';
 import { track } from 'app/analytics';
@@ -16,6 +16,28 @@ export const setAnalysisData = createAction('setAnalysisData');
 export const setAnalysisLoading = createAction('setAnalysisLoading');
 export const clearAnalysisError = createAction('clearAnalysisError');
 export const clearAnalysisData = createAction('clearAnalysisData');
+
+const getErrorMessage = (error, file) => {
+  const fileName = file.name && file.name.split('.');
+  const fileType = fileName[fileName.length - 1];
+
+  const title =
+    error.response && error.response.status >= 500
+      ? "The service can't be reached"
+      : `Invalid .${fileType} file format`;
+  const desc =
+    (error.response &&
+      error.response.data &&
+      error.response.data.errors &&
+      error.response.data.errors[0].detail) ||
+    error.message ||
+    'It’s quite likely because our service is down, but can you also please check your Internet connection?';
+
+  return {
+    title,
+    desc
+  };
+};
 
 // url action
 export const setAnalysisSettings = createThunkAction(
@@ -86,77 +108,131 @@ export const getAnalysis = createThunkAction(
 
 export const uploadShape = createThunkAction(
   'uploadShape',
-  shape => (dispatch, getState) => {
-    dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
-    uploadShapeFile(shape)
+  ({
+    shape,
+    onCheckUpload,
+    onCheckDownload,
+    onGeostoreUpload,
+    onGeostoreDownload,
+    token
+  }) => (dispatch, getState) => {
+    dispatch(
+      setAnalysisLoading({
+        uploading: true,
+        loading: false,
+        error: '',
+        data: {}
+      })
+    );
+
+    uploadShapeFile(shape, onCheckUpload, onCheckDownload, token)
       .then(response => {
         if (response && response.data && response.data.data) {
-          const features = response.data
-            ? response.data.data.attributes.features
-            : null;
-          if (features && features.length < uploadFileConfig.featureLimit) {
-            const geojson = features.filter(g => g.geometry).reduce(union);
-            getGeostoreKey(geojson.geometry)
+          const { attributes: geojsonShape } = response.data.data;
+
+          // check feature length first to make sure we don't regret it
+          const { features } = geojsonShape || {};
+          const featureCount = features && features.length;
+
+          // now lets flatten any features into a single multi polygon for consistency
+          const geojson = combine(geojsonShape);
+          const { geometry } =
+            geojson && geojson.features && geojson.features[0];
+
+          if (features && featureCount > uploadFileConfig.featureLimit) {
+            dispatch(
+              setAnalysisLoading({
+                uploading: false,
+                error: 'Too many features',
+                errorMessage:
+                  'We cannot support an analysis for a file with more than 1000 features.'
+              })
+            );
+          } else if (
+            features &&
+            featureCount === 1 &&
+            ['Point', 'LineString'].includes(geometry.type)
+          ) {
+            dispatch(
+              setAnalysisLoading({
+                uploading: false,
+                error: 'Please upload polygon data',
+                errorMessage:
+                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.'
+              })
+            );
+          } else {
+            getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
                   const { query, type } = getState().location || {};
-                  dispatch({
-                    type,
-                    payload: {
-                      type: 'geostore',
-                      adm0: id
-                    },
-                    ...(query && {
-                      query: {
-                        ...query,
-                        ...(query.map && {
-                          map: {
-                            ...query.map,
-                            canBound: true
-                          }
-                        })
-                      }
-                    })
-                  });
-                  dispatch(
-                    setAnalysisLoading({
-                      loading: false,
-                      error: '',
-                      errorMessage: ''
-                    })
-                  );
+                  setTimeout(() => {
+                    dispatch({
+                      type,
+                      payload: {
+                        type: 'geostore',
+                        adm0: id
+                      },
+                      ...(query && {
+                        query: {
+                          ...query,
+                          ...(query.map && {
+                            map: {
+                              ...query.map,
+                              canBound: true
+                            }
+                          })
+                        }
+                      })
+                    });
+                    dispatch(
+                      setAnalysisLoading({
+                        uploading: false,
+                        error: '',
+                        errorMessage: ''
+                      })
+                    );
+                  }, 300);
                 }
               })
               .catch(error => {
+                const errorMessage = getErrorMessage(error, shape);
+
                 dispatch(
                   setAnalysisLoading({
                     loading: false,
-                    error: 'error with shape',
-                    errorMessage:
-                      (error.response.data &&
-                        error.response.data.errors &&
-                        error.response.data.errors[0].detail) ||
-                      'error with shape'
+                    uploading: false,
+                    error: errorMessage.title,
+                    errorMessage: errorMessage.desc
                   })
                 );
                 console.info(error);
               });
           }
+        } else {
+          dispatch(
+            setAnalysisLoading({
+              uploading: false,
+              error: 'File is empty',
+              errorMessage: 'Please attach a file that contains geometric data.'
+            })
+          );
         }
       })
       .catch(error => {
-        dispatch(
-          setAnalysisLoading({
-            loading: false,
-            error: 'error with shape',
-            errorMessage:
-              (error.response.data &&
-                error.response.data.errors &&
-                error.response.data.errors[0].detail) ||
-              'error with shape'
-          })
-        );
+        const errorMessage = getErrorMessage(error, shape);
+
+        if (errorMessage.title !== 'cancel upload shape') {
+          dispatch(
+            setAnalysisLoading({
+              loading: false,
+              uploading: false,
+              error: errorMessage.title,
+              errorMessage: errorMessage.desc
+            })
+          );
+        }
         console.info(error);
       });
   }
