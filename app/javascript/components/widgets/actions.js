@@ -2,8 +2,8 @@ import { createAction, createThunkAction } from 'redux-tools';
 import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { getNonGlobalDatasets } from 'services/forest-data';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
+import { getNonGlobalDatasets } from 'services/analysis-cached';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');

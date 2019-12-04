@@ -9,7 +9,7 @@ import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
-import tscLossCategories from 'data/tsc-loss-categories-old.json';
+import tscLossCategories from 'data/tsc-loss-categories.json';
 
 // get list data
 const getLoss = state => state.data && state.data.loss;
@@ -128,7 +128,7 @@ export const parseConfig = createSelector(
     if (isEmpty(data)) return null;
     const { highlighted } = settings || {};
     const yKeys = {};
-    const categoryColors = colors.lossDriversOld;
+    const categoryColors = colors.lossDrivers;
     sortByKey(drivers, 'position').forEach(k => {
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],
@@ -151,9 +151,7 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const tscCat = tscLossCategories.find(
-            c => c.value === parseInt(d.driver, 10)
-          );
+          const tscCat = tscLossCategories.find(c => c.value === d.driver);
           const label = tscCat && tscCat.label;
           return {
             key: `class_${d.driver}`,
@@ -166,7 +164,7 @@ export const parseConfig = createSelector(
         })
         .reverse()
     );
-    const insertIndex = findIndex(tooltip, { key: 'class_5' });
+    const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
     if (insertIndex > -1) {
       tooltip.splice(insertIndex, 0, {
         key: 'break',

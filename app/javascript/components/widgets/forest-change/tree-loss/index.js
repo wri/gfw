@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
+import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
 import { getYearsRange } from 'components/widgets/utils/data';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 

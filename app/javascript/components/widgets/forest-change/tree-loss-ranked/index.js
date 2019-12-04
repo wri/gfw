@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getLossGrouped, getExtentGrouped } from 'services/forest-data';
+import { getLossGrouped, getExtentGrouped } from 'services/analysis-cached';
 import { getYearsRange } from 'components/widgets/utils/data';
 
 import getWidgetProps from './selectors';

@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-import { getLocationPolynameWhitelist } from 'services/forest-data';
+import { getLocationPolynameWhitelist } from 'services/analysis-cached';
 
 export const setWhitelistLoading = createAction('setWhitelistLoading');
 

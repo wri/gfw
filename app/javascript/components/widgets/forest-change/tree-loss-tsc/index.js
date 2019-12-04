@@ -3,7 +3,7 @@ import moment from 'moment';
 import { getYearsRange } from 'components/widgets/utils/data';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getExtentOld, getLossOld } from 'services/forest-data';
+import { getExtent, getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -84,8 +84,8 @@ export default {
   getData: params =>
     axios
       .all([
-        getLossOld({ ...params, landCategory: 'tsc' }),
-        getExtentOld({ ...params })
+        getLoss({ ...params, landCategory: 'tsc' }),
+        getExtent({ ...params })
       ])
       .then(
         axios.spread((loss, extent) => {

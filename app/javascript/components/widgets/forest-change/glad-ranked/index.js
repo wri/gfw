@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
-import { getExtentGrouped } from 'services/forest-data';
+import { getExtentGrouped } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
