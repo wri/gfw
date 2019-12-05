@@ -30,6 +30,7 @@ import closeIcon from 'assets/icons/close.svg';
 import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
+import PendingDashboard from './components/pending-dashboard';
 
 import './styles.scss';
 
@@ -163,6 +164,14 @@ class DashboardsPage extends PureComponent {
                         }
                       }))}
                       checkActive
+                    />
+                  )}
+                  {activeArea &&
+                    activeArea.status === 'pending' && (
+                    <PendingDashboard
+                      className="pending-message"
+                      isUserDashboard={activeArea && activeArea.userArea}
+                      areaId={activeArea && activeArea.id}
                     />
                   )}
                   <Widgets className="dashboard-widgets" />
