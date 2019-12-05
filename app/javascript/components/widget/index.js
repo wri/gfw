@@ -16,7 +16,8 @@ class WidgetContainer extends Component {
     refetchKeys: PropTypes.array,
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
-    geostore: PropTypes.object
+    geostore: PropTypes.object,
+    status: PropTypes.status
   };
 
   static defaultProps = {
@@ -35,14 +36,14 @@ class WidgetContainer extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const { location, settings } = this.props;
-    const params = { ...location, ...settings };
+    const { location, settings, status } = this.props;
+    const params = { ...location, ...settings, status };
 
     this.handleGetWidgetData(params);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location, settings, refetchKeys } = this.props;
+    const { location, settings, refetchKeys, status } = this.props;
     const { error } = this.state;
 
     const hasLocationChanged =
@@ -57,7 +58,7 @@ class WidgetContainer extends Component {
 
     // refetch data if error, settings, or location changes
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
-      const params = { ...location, ...settings };
+      const params = { ...location, ...settings, status };
       this.handleGetWidgetData(params);
     }
   }
