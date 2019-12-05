@@ -1,6 +1,7 @@
-import request from 'utils/request';
+import axios from 'axios';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
+import moment from 'moment';
 
 // contains everything summed without years inc gain and extent
 const ADM0_SUMMARY = process.env.ANNUAL_ADM0_SUMMARY;
@@ -11,6 +12,16 @@ const ADM2_SUMMARY = process.env.ANNUAL_ADM2_SUMMARY;
 const ADM0_CHANGE = process.env.ANNUAL_ADM0_CHANGE;
 const ADM1_CHANGE = process.env.ANNUAL_ADM1_CHANGE;
 const ADM2_CHANGE = process.env.ANNUAL_ADM2_CHANGE;
+
+// glad gadm36
+const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
+const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
+const GLAD_ADM2_WEEKLY = process.env.GLAD_ADM2_WEEKLY;
+
+// geostore tables
+const ANNUAL_GEOSTORE_SUMMARY = process.env.ANNUAL_GEOSTORE_SUMMARY;
+const ANNUAL_GEOSTORE_CHANGE = process.env.ANNUAL_GEOSTORE_CHANGE;
+const GLAD_GEOSTORE_WEEKLY = process.env.GLAD_GEOSTORE_WEEKLY;
 
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
@@ -31,6 +42,10 @@ const SQL_QUERIES = {
     'SELECT {location}, SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
+  glad:
+    'SELECT alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
+  gladLatest:
+    'SELECT alert__year, alert__week FROM data GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC LIMIT 1',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -47,7 +62,10 @@ const ALLOWED_PARAMS = [
 ];
 
 // quyery building helpers
-const getAdmDatasetId = (adm0, adm1, adm2, grouped, summary) => {
+const getAnnualDataset = ({ adm0, adm1, adm2, grouped, summary, type }) => {
+  if (type === 'geostore' && summary) return ANNUAL_GEOSTORE_SUMMARY;
+  if (type === 'geostore') return ANNUAL_GEOSTORE_CHANGE;
+
   if (summary && (adm2 || (adm1 && grouped))) return ADM2_SUMMARY;
   if (summary && (adm1 || (adm0 && grouped))) return ADM1_SUMMARY;
   if (summary) return ADM0_SUMMARY;
@@ -56,6 +74,15 @@ const getAdmDatasetId = (adm0, adm1, adm2, grouped, summary) => {
   if (adm2 || (adm1 && grouped)) return ADM2_CHANGE;
   if (adm1 || (adm0 && grouped)) return ADM1_CHANGE;
   return ADM0_CHANGE;
+};
+
+// quyery building helpers
+const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type }) => {
+  if (type === 'geostore') return GLAD_GEOSTORE_WEEKLY;
+
+  if (adm2 || (adm1 && grouped)) return GLAD_ADM2_WEEKLY;
+  if (adm1 || (adm0 && grouped)) return GLAD_ADM1_WEEKLY;
+  return GLAD_ADM0_WEEKLY;
 };
 
 const getLocationSelect = ({ adm1, adm2 }) =>
@@ -79,8 +106,10 @@ const buildPolynameSelects = () => {
   return polyString;
 };
 
-const getRequestUrl = (adm0, adm1, adm2, grouped, summary) => {
-  const dataset = getAdmDatasetId(adm0, adm1, adm2, grouped, summary);
+const getRequestUrl = params => {
+  const dataset = params.glad
+    ? getGladDatasetId(params)
+    : getAnnualDataset(params);
   const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
@@ -103,6 +132,9 @@ export const getWHEREQuery = params => {
       );
       const tableKey =
         polynameMeta && (polynameMeta.gladTableKey || polynameMeta.tableKey);
+      let paramKey = p;
+      if (p === 'threshold') paramKey = 'treecover_density__threshold';
+      if (p === 'iso' && params.type === 'geostore') paramKey = 'geostore__id';
 
       const polynameString = `
         ${
@@ -120,9 +152,7 @@ export const getWHEREQuery = params => {
     : ''
 }${
   !isPolyname
-    ? `${p === 'threshold' ? 'treecover_density__threshold' : p} = ${
-      typeof value === 'number' ? value : `'${value}'`
-    }`
+    ? `${paramKey} = ${typeof value === 'number' ? value : `'${value}'`}`
     : ''
 }${isLast ? '' : ' AND '}`;
 
@@ -136,10 +166,10 @@ export const getWHEREQuery = params => {
 // summed loss for single location
 export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const { loss, lossTsc } = SQL_QUERIES;
-  const url = `${getRequestUrl(adm0, adm1, adm2)}${
+  const url = `${getRequestUrl({ adm0, adm1, adm2, ...params })}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -155,13 +185,17 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
 
 // disaggregated loss for child of location
 export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
-    SQL_QUERIES.lossGrouped
-  }`
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped: true
+  })}${SQL_QUERIES.lossGrouped}`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -176,13 +210,17 @@ export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
 
 // summed extent for single location
 export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2, false, true)}${
-    SQL_QUERIES.extent
-  }`
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    summary: true
+  })}${SQL_QUERIES.extent}`
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -202,14 +240,19 @@ export const getExtentGrouped = ({
   extentYear,
   ...params
 }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2, true, true)}${
-    SQL_QUERIES.extentGrouped
-  }`
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped: true,
+    summary: true
+  })}${SQL_QUERIES.extentGrouped}`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -223,10 +266,17 @@ export const getExtentGrouped = ({
 
 // summed gain for single location
 export const getGain = ({ adm0, adm1, adm2, ...params }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2, false, true)}${
-    SQL_QUERIES.gain
-  }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url).then(response => ({
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    summary: true
+  })}${SQL_QUERIES.gain}`.replace(
+    '{WHERE}',
+    getWHEREQuery({ iso: adm0, adm1, adm2, ...params })
+  );
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -240,12 +290,17 @@ export const getGain = ({ adm0, adm1, adm2, ...params }) => {
 
 // disaggregated gain for child of location
 export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2, true, true)}${
-    SQL_QUERIES.gainGrouped
-  }`
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped: true,
+    summary: true
+  })}${SQL_QUERIES.gainGrouped}`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -270,9 +325,13 @@ export const getAreaIntersection = ({
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
 
-  const url = `${getRequestUrl(adm0, adm1, adm2, false, true)}${
-    SQL_QUERIES.areaIntersection
-  }`
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    summary: true
+  })}${SQL_QUERIES.areaIntersection}`
     .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
     .replace(/{intersection}/g, intersectionPolyname.tableKey)
     .replace(
@@ -287,7 +346,7 @@ export const getAreaIntersection = ({
       })
     );
 
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -312,9 +371,14 @@ export const getAreaIntersectionGrouped = ({
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
 
-  const url = `${getRequestUrl(adm0, adm1, adm2, true, true)}${
-    SQL_QUERIES.areaIntersection
-  }`
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped: true,
+    summary: true
+  })}${SQL_QUERIES.areaIntersection}`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace(/{intersection}/g, intersectionPolyname.tableKey)
     .replace(
@@ -329,7 +393,7 @@ export const getAreaIntersectionGrouped = ({
       })
     );
 
-  return request.get(url).then(response => ({
+  return axios.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -341,12 +405,67 @@ export const getAreaIntersectionGrouped = ({
   }));
 };
 
+export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
+  const { gladIntersectionAlerts } = SQL_QUERIES;
+  const url = `${getRequestUrl({ ...params, adm0, adm1, adm2, glad: true })}${
+    gladIntersectionAlerts
+  }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+  return axios.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count
+      }))
+    }
+  }));
+};
+
+// Latest Dates for Alerts
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
+export const fetchGLADLatest = ({ adm0, adm1, adm2 }) => {
+  const url = `${getRequestUrl({ adm0, adm1, adm2, glad: true })}${
+    SQL_QUERIES.alertsLatest
+  }`;
+  return axios
+    .get(url)
+    .then(response => {
+      const { alert__week, alert__year } = response.data.data[0];
+      const date = moment()
+        .year(parseInt(alert__year, 10))
+        .week(parseInt(alert__week, 10))
+        .day('Monday')
+        .format('YYYY-MM-DD');
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'glad-alerts'
+      };
+    })
+    .catch(error => {
+      console.error('Error in gladRequest', error);
+      return new Promise(resolve =>
+        resolve({
+          attributes: { updatedAt: lastFriday },
+          id: null,
+          type: 'glad-alerts'
+        })
+      );
+    });
+};
+
 export const getNonGlobalDatasets = () => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
     buildPolynameSelects()
   );
-  return request.get(url);
+  return axios.get(url);
 };
 
 export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
@@ -354,5 +473,5 @@ export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
     .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
     .replace('{polynames}', buildPolynameSelects())
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2 }));
-  return request.get(url);
+  return axios.get(url);
 };

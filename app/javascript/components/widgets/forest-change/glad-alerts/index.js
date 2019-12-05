@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import { fetchAnalysisEndpoint } from 'services/analysis';
-import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 

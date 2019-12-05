@@ -127,9 +127,9 @@ export default {
     ifl: 2000
   },
   getData: (params = {}) => {
-    const { adm0, adm1, adm2, type, ...rest } = params || {};
+    const { adm0, adm1, adm2, type, status } = params || {};
 
-    if (params.type !== 'country' && params.type !== 'global') {
+    if (status === 'pending') {
       return getDataAPI(params);
     }
 
@@ -140,10 +140,10 @@ export default {
     };
     const lossFetch =
       type === 'global'
-        ? getLossGrouped({ ...rest, ...globalLocation })
-        : getLoss({ ...rest, ...globalLocation });
+        ? getLossGrouped({ ...params, ...globalLocation })
+        : getLoss({ ...params, ...globalLocation });
     return axios
-      .all([lossFetch, getExtent({ ...rest, ...globalLocation })])
+      .all([lossFetch, getExtent({ ...params, ...globalLocation })])
       .then(
         axios.spread((loss, extent) => {
           let data = {};
