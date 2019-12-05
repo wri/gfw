@@ -47,6 +47,7 @@ export default {
     threshold: 30,
     extentYear: 2000
   },
+  colors: 'gain',
   sentence:
     'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total area.',
   getData: params =>

@@ -7,7 +7,7 @@ export default {
   widget: 'treeCoverPlantations',
   title: 'Plantations in {location}',
   categories: ['land-cover'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   colors: 'plantations',
   chartType: 'pieChart',
@@ -45,7 +45,8 @@ export default {
       'In {location}, the largest plantation area by type is {topType}, spanning {extent} and {percent} of land area.'
   },
   whitelists: {
-    indicators: ['plantations']
+    indicators: ['plantations'],
+    checkStatus: true
   },
   getData: params =>
     axios

@@ -8,7 +8,7 @@ export default {
   title: 'Forest loss in natural forest in {location}',
   large: true,
   categories: ['forest-change'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
@@ -60,7 +60,8 @@ export default {
   sentence:
     'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO<sub>2</sub> emissions.',
   whitelists: {
-    indicators: ['plantations']
+    indicators: ['plantations'],
+    checkStatus: true
   },
   settings: {
     threshold: 30,

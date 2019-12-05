@@ -10,7 +10,7 @@ export default {
     initial: 'Intact forest in {location}'
   },
   categories: ['land-cover'],
-  types: ['global', 'country'],
+  types: ['global', 'country', 'geostore'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
@@ -73,6 +73,9 @@ export default {
       'As of 2016, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
     noIntactwithIndicator:
       'As of 2016, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.'
+  },
+  whitelists: {
+    checkStatus: true
   },
   getData: params =>
     axios

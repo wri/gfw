@@ -3,7 +3,7 @@ import { getExtent } from 'services/analysis-cached';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 import getWidgetProps from './selectors';
 
-export const getDataAPI = ({ params }) =>
+export const getDataAPI = params =>
   fetchAnalysisEndpoint({
     ...params,
     name: 'umd',
@@ -105,7 +105,7 @@ export default {
   },
   getData: params => {
     if (params.status === 'pending') {
-      return getDataAPI({ params });
+      return getDataAPI(params);
     }
 
     return axios

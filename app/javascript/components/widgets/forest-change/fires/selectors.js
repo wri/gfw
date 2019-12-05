@@ -11,7 +11,8 @@ const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 
 export const filterData = createSelector([getData], data => {
-  if (!data || isEmpty(data) || typeof data === 'number') return null;
+  if (typeof data === 'number') return data;
+  if (!data || isEmpty(data)) return null;
 
   const startDate = moment().subtract(1, 'week');
   const endDate = moment();
@@ -97,10 +98,10 @@ export const parseSentence = createSelector(
     const { initial } = sentences;
     const firesCount =
       typeof data === 'number' ? data : (data && sumBy(data, 'count')) || 0;
-    const count = firesCount > 0 ? count : 'No';
+    const count = firesCount > 0 ? firesCount : 'No';
     const params = {
       location: currentLabel,
-      count: Number.isInteger(count) ? format(',')(count) : count
+      count: format(',')(count)
     };
     return { sentence: initial, params };
   }

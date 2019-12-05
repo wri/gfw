@@ -221,7 +221,7 @@ export const filterWidgetsByLocation = createSelector(
         visible
       } =
         w || {};
-      const { fao } = locationData || {};
+      const { fao, status } = locationData || {};
 
       const layerIntersection =
         datasets &&
@@ -259,6 +259,8 @@ export const filterWidgetsByLocation = createSelector(
         !whitelists ||
         !whitelists.indicators ||
         (polynameIntersection && polynameIntersection.length);
+      const isWidgetDataPending =
+        !whitelists || status !== 'pending' || !whitelists.checkStatus;
 
       const isWidgetVisible =
         (!showAnalysis && !visible) ||
@@ -274,7 +276,8 @@ export const filterWidgetsByLocation = createSelector(
         matchesPolynameWhitelist &&
         isFAOCountry &&
         isWidgetVisible &&
-        notInBlacklist
+        notInBlacklist &&
+        isWidgetDataPending
       );
     });
   }
@@ -294,7 +297,7 @@ export const filterWidgetsByCategory = createSelector(
 
     if (embed && widget) return widgets.filter(w => w.widget === widget);
 
-    if (showAnalysis || (locationData && locationData.status === 'pending')) {
+    if (showAnalysis) {
       return sortBy(widgets, 'sortOrder.summary');
     }
 

@@ -14,7 +14,7 @@ export default {
     initial: 'Biomass loss emissions in natural forest vs. plantations'
   },
   categories: ['climate'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
@@ -67,7 +67,8 @@ export default {
   },
   whitelists: {
     indicators: ['plantations'],
-    adm0: tropicalIsos
+    adm0: tropicalIsos,
+    checkStatus: true
   },
   settings: {
     forestType: 'ifl',
