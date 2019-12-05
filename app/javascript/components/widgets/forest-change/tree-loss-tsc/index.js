@@ -84,7 +84,7 @@ export default {
   getData: params =>
     axios
       .all([
-        getLoss({ ...params, landCategory: 'tsc' }),
+        getLoss({ ...params, landCategory: 'tsc', tsc: true }),
         getExtent({ ...params })
       ])
       .then(
@@ -92,7 +92,9 @@ export default {
           let data = {};
           if (loss && loss.data && extent && extent.data) {
             data = {
-              loss: loss.data.data,
+              loss: loss.data.data.filter(
+                d => d.tcs_driver__type !== 'Unknown'
+              ),
               extent: (loss.data.data && extent.data.data[0].value) || 0
             };
           }
