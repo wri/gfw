@@ -191,6 +191,7 @@
     "turf-area": "^3.0.12",
     "turf-bbox": "^3.0.12",
     "turf-bbox-polygon": "^3.0.12",
+    "turf-combine": "^3.0.12",
     "turf-inside": "^3.0.12",
     "turf-linestring": "^1.0.2",
     "turf-point": "^2.0.1",
