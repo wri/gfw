@@ -406,9 +406,9 @@ export const getAreaIntersectionGrouped = ({
 };
 
 export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
-  const { gladIntersectionAlerts } = SQL_QUERIES;
+  const { glad } = SQL_QUERIES;
   const url = `${getRequestUrl({ ...params, adm0, adm1, adm2, glad: true })}${
-    gladIntersectionAlerts
+    glad
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
   return axios.get(url).then(response => ({
     data: {
@@ -430,7 +430,7 @@ const lastFriday = moment()
 
 export const fetchGLADLatest = ({ adm0, adm1, adm2 }) => {
   const url = `${getRequestUrl({ adm0, adm1, adm2, glad: true })}${
-    SQL_QUERIES.alertsLatest
+    SQL_QUERIES.gladLatest
   }`;
   return axios
     .get(url)
