@@ -101,8 +101,9 @@ export const parseSentence = createSelector(
     const count = firesCount > 0 ? firesCount : 'No';
     const params = {
       location: currentLabel,
-      count: format(',')(count)
+      count: typeof count === 'number' ? format(',')(count) : count
     };
+
     return { sentence: initial, params };
   }
 );
