@@ -6,35 +6,39 @@ import sumBy from 'lodash/sumBy';
 import { buildDateArray } from 'utils/dates';
 
 // get list data
-const getData = state => state.data;
+const getData = state => state.data && state.data.alerts;
+const getLatestDate = state => state.data && state.data.latestDate;
 const getCurrentLocation = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentence = state => state.sentence;
 
-export const filterData = createSelector([getData], data => {
-  if (!data || isEmpty(data)) return null;
+export const filterData = createSelector(
+  [getData, getLatestDate],
+  (data, latestDate) => {
+    if (!data || isEmpty(data)) return null;
 
-  const filteredData = data.filter(d =>
-    moment(d.day).isAfter(moment().subtract(1, 'week'))
-  );
-
-  if (!filteredData || sumBy(filteredData, 'count') === 0) return null;
-
-  const startDate = moment().subtract(1, 'week');
-  const endDate = moment();
-
-  const weekData = buildDateArray(startDate, endDate).map(d => {
-    const dayData = filteredData.find(fd => fd.day === d);
-    return (
-      dayData || {
-        count: 0,
-        day: d
-      }
+    const filteredData = data.filter(d =>
+      moment(d.day).isAfter(moment(latestDate).subtract(1, 'week'))
     );
-  });
 
-  return weekData;
-});
+    if (!filteredData || sumBy(filteredData, 'count') === 0) return null;
+
+    const startDate = moment(latestDate).subtract(1, 'week');
+    const endDate = moment(latestDate);
+
+    const weekData = buildDateArray(startDate, endDate).map(d => {
+      const dayData = filteredData.find(fd => fd.day === d);
+      return (
+        dayData || {
+          count: 0,
+          day: d
+        }
+      );
+    });
+
+    return weekData;
+  }
+);
 
 export const parseData = createSelector([filterData], data => {
   if (!data || data.length < 1) return null;

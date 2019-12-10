@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 import { fetchAnalysisEndpoint } from 'services/analysis';
+import { fetchGLADLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -38,26 +39,34 @@ export default {
     period: 'week',
     weeks: 1
   },
-  getData: params => {
-    const dates = [
-      moment().format('YYYY-MM-DD'),
-      moment()
-        .subtract(1, 'year')
-        .format('YYYY-MM-DD')
-    ];
-    return fetchAnalysisEndpoint({
-      ...params,
-      params: {
+  getData: params =>
+    fetchGLADLatest(params).then(latest => {
+      const latestDate =
+        latest && latest.attributes && latest.attributes.updatedAt;
+      const dates = [
+        latestDate,
+        moment(latestDate)
+          .subtract(1, 'year')
+          .format('YYYY-MM-DD')
+      ];
+
+      return fetchAnalysisEndpoint({
         ...params,
-        startDate: dates[1],
-        endDate: dates[0]
-      },
-      name: 'glad-alerts',
-      slug: 'glad-alerts',
-      version: 'v1',
-      aggregate: true,
-      aggregateBy: 'day'
-    }).then(response => response.data.data.attributes.value);
-  },
+        params: {
+          ...params,
+          startDate: dates[1],
+          endDate: dates[0]
+        },
+        name: 'glad-alerts',
+        slug: 'glad-alerts',
+        version: 'v1',
+        aggregate: true,
+        aggregateBy: 'day'
+      }).then(response => ({
+        alerts: response.data.data.attributes.value,
+        latestDate,
+        settings: { latestDate }
+      }));
+    }),
   getWidgetProps
 };
