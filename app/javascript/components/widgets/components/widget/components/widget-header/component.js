@@ -178,7 +178,7 @@ class WidgetHeader extends PureComponent {
     );
   };
 
-  generateZipFromURL = urls => {
+  generateZipFromURL = files => {
     const { title } = this.props;
     const urlToPromise = url =>
       new Promise((resolve, reject) => {
@@ -192,13 +192,14 @@ class WidgetHeader extends PureComponent {
       });
     const filenames = [];
     const zip = new JSZip();
-    urls.forEach((url, index) => {
-      let filename;
+    files.forEach((file, index) => {
+      const { name, url } = file;
+      let filename = name;
       try {
-        filename = url
+        /* filename = url
           .split('?')[0]
           .split('/')
-          .pop();
+          .pop(); */
         if (filenames.includes(filename)) {
           filename = filename.concat(`-${index}.csv`);
         } else {
