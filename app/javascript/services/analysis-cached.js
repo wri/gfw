@@ -18,6 +18,11 @@ const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
 const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
 const GLAD_ADM2_WEEKLY = process.env.GLAD_ADM2_WEEKLY;
 
+// wdpa
+const ANNUAL_WDPA_SUMMARY = process.env.ANNUAL_WDPA_SUMMARY;
+const ANNUAL_WDPA_CHANGE = process.env.ANNUAL_WDPA_CHANGE;
+const GLAD_WDPA_WEEKLY = process.env.GLAD_WDPA_WEEKLY;
+
 // geostore tables
 const ANNUAL_GEOSTORE_SUMMARY = process.env.ANNUAL_GEOSTORE_SUMMARY;
 const ANNUAL_GEOSTORE_CHANGE = process.env.ANNUAL_GEOSTORE_CHANGE;
@@ -66,6 +71,9 @@ const getAnnualDataset = ({ adm0, adm1, adm2, grouped, summary, type }) => {
   if (type === 'geostore' && summary) return ANNUAL_GEOSTORE_SUMMARY;
   if (type === 'geostore') return ANNUAL_GEOSTORE_CHANGE;
 
+  if (type === 'wdpa' && summary) return ANNUAL_WDPA_SUMMARY;
+  if (type === 'wdpa') return ANNUAL_WDPA_CHANGE;
+
   if (summary && (adm2 || (adm1 && grouped))) return ADM2_SUMMARY;
   if (summary && (adm1 || (adm0 && grouped))) return ADM1_SUMMARY;
   if (summary) return ADM0_SUMMARY;
@@ -79,7 +87,7 @@ const getAnnualDataset = ({ adm0, adm1, adm2, grouped, summary, type }) => {
 // quyery building helpers
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type }) => {
   if (type === 'geostore') return GLAD_GEOSTORE_WEEKLY;
-
+  if (type === 'wdpa') return GLAD_WDPA_WEEKLY;
   if (adm2 || (adm1 && grouped)) return GLAD_ADM2_WEEKLY;
   if (adm1 || (adm0 && grouped)) return GLAD_ADM1_WEEKLY;
   return GLAD_ADM0_WEEKLY;
@@ -135,6 +143,7 @@ export const getWHEREQuery = params => {
       let paramKey = p;
       if (p === 'threshold') paramKey = 'treecover_density__threshold';
       if (p === 'iso' && params.type === 'geostore') paramKey = 'geostore__id';
+      if (p === 'iso' && params.type === 'wdpa') paramKey = 'wdpa_id';
 
       const polynameString = `
         ${

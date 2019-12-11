@@ -160,7 +160,9 @@ export const getLocationData = createSelector(
     const locationData = allLocationData[adminLevel] || allLocationData.adm0;
     const currentLocation =
       locationData &&
-      locationData.find(d => d.value === locationObj[adminLevel]);
+      locationData.find(
+        d => d.value === locationObj[adminLevel] || d.id === locationObj.areaId
+      );
 
     return {
       parent,
@@ -174,7 +176,9 @@ export const getLocationData = createSelector(
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
       polynamesWhitelist,
-      status: currentLocation && currentLocation.status
+      status: ['global', 'country', 'wdpa'].includes(locationObj.type)
+        ? 'complete'
+        : currentLocation && currentLocation.status
     };
   }
 );
