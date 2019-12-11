@@ -179,7 +179,21 @@ class WidgetHeader extends PureComponent {
   };
 
   generateZipFromURL = files => {
-    const { title } = this.props;
+    const { title, config, settings } = this.props;
+    const { admins, categories, datasets, widget } = config;
+    const metadata = {
+      admins: admins.join(' '),
+      datasets: datasets.map(d => d.dataset).join(', '),
+      layers: datasets.map(d => d.layers.join(', ')).join(', '),
+      categories: categories.join(', '),
+      title,
+      widget,
+      ...settings,
+      activeData: JSON.stringify(settings.activeData).slice(1, -1)
+    };
+    const metadataFile = Object.keys(metadata)
+      .join(';')
+      .concat('\n', Object.values(metadata).join(';'));
     const urlToPromise = url =>
       new Promise((resolve, reject) => {
         JSZipUtils.getBinaryContent(url, (err, data) => {
@@ -194,12 +208,14 @@ class WidgetHeader extends PureComponent {
     const zip = new JSZip();
     files.forEach((file, index) => {
       const { name, url } = file;
-      let filename = name;
+      let filename;
       try {
-        /* filename = url
-          .split('?')[0]
-          .split('/')
-          .pop(); */
+        filename =
+          name ||
+          url
+            .split('?')[0]
+            .split('/')
+            .pop();
         if (filenames.includes(filename)) {
           filename = filename.concat(`-${index}.csv`);
         } else {
@@ -211,6 +227,7 @@ class WidgetHeader extends PureComponent {
       }
       zip.file(filename, urlToPromise(url), { binary: true });
     });
+    zip.file('Metadata.csv', metadataFile);
     zip.generateAsync({ type: 'blob' }).then(content => {
       saveAs(content, `${title} data.zip`);
     });
