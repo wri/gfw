@@ -140,7 +140,9 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  if (download) return { name: 'Loss', url: url.replace('query', 'download') };
+  if (download) {
+    return { name: 'treecover_loss', url: url.replace('query', 'download') };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -164,7 +166,12 @@ export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  if (download) { return { name: 'Loss_grouped', url: url.replace('query', 'download') }; }
+  if (download) {
+    return {
+      name: 'treecover_loss__grouped',
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -194,7 +201,9 @@ export const getExtent = ({
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  if (download) { return { name: 'Extent', url: url.replace('query', 'download') }; }
+  if (download) {
+    return { name: 'area__ha', url: url.replace('query', 'download') };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -224,7 +233,12 @@ export const getExtentGrouped = ({
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  if (download) { return { name: 'Extent_grouped', url: url.replace('query', 'download') }; }
+  if (download) {
+    return {
+      name: `treecover_extent_${extentYear}__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -244,7 +258,12 @@ export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
     SQL_QUERIES.gain
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  if (download) return { name: 'Gain', url: url.replace('query', 'download') };
+  if (download) {
+    return {
+      name: 'treecover_gain_2000-2012__ha',
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -266,7 +285,12 @@ export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  if (download) { return { name: 'Gain_grouped', url: url.replace('query', 'download') }; }
+  if (download) {
+    return {
+      name: 'treecover_gain_2000-2012__grouped',
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -311,7 +335,12 @@ export const getAreaIntersection = ({
       })
     );
 
-  if (download) return { name: 'Area', url: url.replace('query', 'download') };
+  if (download) {
+    return {
+      name: 'area_intersection__ha',
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url).then(response => ({
     ...response,
@@ -358,7 +387,7 @@ export const getAreaIntersectionGrouped = ({
 
   if (download) {
     return {
-      name: 'Area_intersection_grouped',
+      name: 'area_intersection__grouped',
       url: url.replace('query', 'download')
     };
   }

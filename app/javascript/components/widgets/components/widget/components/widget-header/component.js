@@ -179,13 +179,18 @@ class WidgetHeader extends PureComponent {
   };
 
   generateZipFromURL = files => {
-    const { title, config, settings } = this.props;
+    const { title, config, settings, allLocation } = this.props;
     const { admins, categories, datasets, widget } = config;
     const metadata = {
       admins: admins.join(' '),
       datasets: datasets.map(d => d.dataset).join(', '),
       layers: datasets.map(d => d.layers.join(', ')).join(', '),
       categories: categories.join(', '),
+      link: 'https://www.globalforestwatch.org'.concat(
+        allLocation.pathname,
+        '?',
+        allLocation.search
+      ),
       title,
       widget,
       ...settings,
@@ -227,9 +232,9 @@ class WidgetHeader extends PureComponent {
       }
       zip.file(filename, urlToPromise(url), { binary: true });
     });
-    zip.file('Metadata.csv', metadataFile);
+    zip.file('metadata.csv', metadataFile);
     zip.generateAsync({ type: 'blob' }).then(content => {
-      saveAs(content, `${title} data.zip`);
+      saveAs(content, `${title}.zip`);
     });
   };
 
@@ -307,7 +312,8 @@ WidgetHeader.propTypes = {
   setActiveWidget: PropTypes.func,
   metakey: PropTypes.string,
   getDataURL: PropTypes.func,
-  downloadLink: PropTypes.string
+  downloadLink: PropTypes.string,
+  allLocation: PropTypes.string
 };
 
 export default WidgetHeader;
