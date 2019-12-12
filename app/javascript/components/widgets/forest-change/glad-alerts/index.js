@@ -188,7 +188,10 @@ export default {
     weeks: 13
   },
   getData: params => {
-    if (params.status === 'pending') {
+    if (
+      params.status === 'pending' ||
+      (params.type === 'geostore' && !params.areaId)
+    ) {
       return fetchAnalysisEndpoint({
         ...params,
         params,
