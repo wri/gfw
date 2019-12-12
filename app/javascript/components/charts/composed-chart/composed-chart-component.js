@@ -124,28 +124,26 @@ class CustomComposedChart extends PureComponent {
               interval="preserveStartEnd"
               {...xAxis}
             />
-            {!simple && (
-              <YAxis
-                axisLine={false}
-                strokeDasharray="3 4"
-                tickSize={-42}
-                mirror
-                tickMargin={0}
-                tick={
-                  <CustomTick
-                    dataMax={maxYValue}
-                    unit={unit || ''}
-                    unitFormat={
-                      unitFormat ||
-                      (value =>
-                        (value < 1 ? format('.2r')(value) : format('.2s')(value)))
-                    }
-                    fill="#555555"
-                  />
-                }
-                {...yAxis}
-              />
-            )}
+            <YAxis
+              axisLine={false}
+              strokeDasharray="3 4"
+              tickSize={-42}
+              mirror
+              tickMargin={0}
+              tick={
+                <CustomTick
+                  dataMax={maxYValue}
+                  unit={unit || ''}
+                  unitFormat={
+                    unitFormat ||
+                    (value =>
+                      (value < 1 ? format('.2r')(value) : format('.2s')(value)))
+                  }
+                  fill="#555555"
+                />
+              }
+              {...yAxis}
+            />
             {!simple && (
               <CartesianGrid vertical={false} strokeDasharray="3 4" />
             )}
