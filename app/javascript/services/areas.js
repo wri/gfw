@@ -31,7 +31,8 @@ export const getAreasProvider = () =>
             params: { geostore, iso, use, useid, wdpaid },
             application,
             userId,
-            createdAt
+            createdAt,
+            confirmed
           } = attributes;
           const deforestationAlerts =
             datasets.includes('umd-loss-gain') ||
@@ -71,7 +72,8 @@ export const getAreasProvider = () =>
               wdpaid
             }),
             userArea: true,
-            createdAt
+            createdAt,
+            confirmed
           };
         });
 

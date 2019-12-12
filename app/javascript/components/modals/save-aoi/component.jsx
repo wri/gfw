@@ -30,7 +30,8 @@ class ModalSaveAOI extends PureComponent {
     geostoreId: PropTypes.string,
     saved: PropTypes.bool,
     deleted: PropTypes.bool,
-    activeArea: PropTypes.object
+    activeArea: PropTypes.object,
+    modalDesc: PropTypes.string
   };
 
   componentWillUnmount() {
@@ -46,15 +47,12 @@ class ModalSaveAOI extends PureComponent {
   };
 
   renderConfirmation = () => {
-    const { deleted } = this.props;
-    const message = deleted
-      ? 'This area of interest has been deleted from your My GFW.'
-      : 'This area of interest has been added to your My GFW. If you subscribed to alerts please check your email and click on the link to confirm your subscription.';
+    const { deleted, modalDesc } = this.props;
 
     return (
       <div className="confirmation-message">
         {!deleted && <Icon icon={successIcon} className="icon-confirmation" />}
-        <p>{message}</p>
+        <p>{modalDesc}</p>
         <div className="confirmation-actions">
           <Button className="close-btn" onClick={this.handleCloseModal}>
             GOT IT!
