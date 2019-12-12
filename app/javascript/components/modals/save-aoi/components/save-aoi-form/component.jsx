@@ -16,6 +16,7 @@ import MapGeostore from 'components/map-geostore';
 import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
+import ModalSource from 'components/modals/sources';
 
 import './styles.scss';
 
@@ -115,7 +116,8 @@ function SaveAOIForm(props) {
     viewAfterSave,
     clearAfterDelete,
     canDelete,
-    geostoreId
+    geostoreId,
+    setModalSources
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
@@ -264,7 +266,15 @@ function SaveAOIForm(props) {
           }
         />
         <div className="webhook-actions">
-          <button className="button-link" onClick={() => {}}>
+          <button
+            className="button-link"
+            onClick={() =>
+              setModalSources({
+                open: true,
+                source: 'webhookPreview'
+              })
+            }
+          >
             Preview of payload
           </button>
           <button className="button-link" onClick={() => {}}>
@@ -305,6 +315,7 @@ function SaveAOIForm(props) {
           label={'Monthly summary'}
         />
       </div>
+      <ModalSource />
       {renderSaveAOI()}
     </div>
   );
@@ -327,7 +338,8 @@ SaveAOIForm.propTypes = {
   monthlySummary: PropTypes.bool,
   webhookUrl: PropTypes.string,
   email: PropTypes.string,
-  geostoreId: PropTypes.string
+  geostoreId: PropTypes.string,
+  setModalSources: PropTypes.func
 };
 
 export default SaveAOIForm;
