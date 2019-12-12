@@ -10,7 +10,7 @@ import img2014 from 'pages/about/section-history/images/2014.jpg';
 import img2015 from 'pages/about/section-history/images/2015.jpg';
 import img2016 from 'pages/about/section-history/images/2016.jpg';
 import img2017 from 'pages/about/section-history/images/2017.jpg';
-import img2018 from 'pages/about/section-history/images/2018.jpg';
+import img2018 from 'pages/about/section-history/images/2018.png';
 
 import './section-history-styles.scss';
 
