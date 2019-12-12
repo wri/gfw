@@ -21,10 +21,6 @@ export default {
   sentences: {
     initial: '{count} active fires detected in {location} in the last 7 days.'
   },
-  settings: {
-    period: 'week',
-    periodValue: 1
-  },
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -43,7 +39,7 @@ export default {
     const dates = [
       moment().format('YYYY-MM-DD'),
       moment()
-        .subtract(params.periodValue, params.period)
+        .subtract(1, 'week')
         .format('YYYY-MM-DD')
     ];
     // Viirs response too heavy at adm0 level, and returns error (CARTO).
