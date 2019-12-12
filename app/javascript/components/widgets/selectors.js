@@ -264,7 +264,9 @@ export const filterWidgetsByLocation = createSelector(
         !whitelists.indicators ||
         (polynameIntersection && polynameIntersection.length);
       const isWidgetDataPending =
-        !whitelists || status !== 'pending' || !whitelists.checkStatus;
+        !whitelists ||
+        (status && status !== 'pending') ||
+        !whitelists.checkStatus;
 
       const isWidgetVisible =
         (!showAnalysis && !visible) ||
