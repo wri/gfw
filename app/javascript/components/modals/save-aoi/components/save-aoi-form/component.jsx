@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { getLanguages } from 'utils/lang';
-import { validateEmail } from 'utils/format';
+import { validateEmail, validateURL } from 'utils/format';
 
 import Checkbox from 'components/ui/checkbox-v2';
 import Loader from 'components/ui/loader';
@@ -70,7 +70,8 @@ function reducer(state, action) {
     case 'webhookUrl': {
       return {
         ...state,
-        webhookUrl: payload
+        webhookUrl: payload,
+        webhookError: !validateURL(payload)
       };
     }
     case 'activeArea': {
@@ -132,7 +133,8 @@ function SaveAOIForm(props) {
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
     monthlySummary: props.monthlySummary || false,
-    webhookUrl: props.webhookUrl || ''
+    webhookUrl: props.webhookUrl || '',
+    webhookError: false
   });
 
   useEffect(
@@ -192,19 +194,23 @@ function SaveAOIForm(props) {
 
   const {
     name,
+    nameError,
     email,
     emailError,
     tags,
     language,
-    nameError,
     fireAlerts,
     deforestationAlerts,
     monthlySummary,
-    webhookUrl
+    webhookUrl,
+    webhookError
   } = form;
   const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
   const canSubmit =
-    (hasSubscription ? validateEmail(email) : true) && name && language;
+    (hasSubscription ? validateEmail(email) : true) &&
+    name &&
+    language &&
+    (!webhookUrl || !webhookError);
 
   const webhookData = { test: true };
 
@@ -259,7 +265,7 @@ function SaveAOIForm(props) {
           onChange={e => dispatch({ type: 'email', payload: e.target.value })}
         />
       </div>
-      <div className={cx('field')}>
+      <div className={cx('field', { error: webhookError })}>
         <label className="form-title">URL (Webhook)</label>
         <input
           className="text-input"
