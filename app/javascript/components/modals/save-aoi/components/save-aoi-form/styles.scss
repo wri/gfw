@@ -70,6 +70,22 @@ $desktop-padding: rem(50px);
     }
   }
 
+  .webhook-actions {
+    margin-top: rem(5px);
+
+    button {
+      color: $green-gfw;
+      margin-right: rem(10px);
+      font-style: italic;
+      cursor: pointer;
+      transition: color 0.1s ease-in-out;
+
+      &:hover {
+        color: darken($green-gfw, 10%);
+      }
+    }
+  }
+
   .text-input,
   .aoi-tags-input,
   .dropdown-input .select-wrapper {

@@ -196,7 +196,8 @@ function SaveAOIForm(props) {
     nameError,
     fireAlerts,
     deforestationAlerts,
-    monthlySummary
+    monthlySummary,
+    webhookUrl
   } = form;
   const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
   const canSubmit =
@@ -253,8 +254,8 @@ function SaveAOIForm(props) {
           onChange={e => dispatch({ type: 'email', payload: e.target.value })}
         />
       </div>
-      {/* <div className={cx('field')}>
-        <label className="form-title">Add a webhook url</label>
+      <div className={cx('field')}>
+        <label className="form-title">URL (Webhook)</label>
         <input
           className="text-input"
           value={webhookUrl}
@@ -262,7 +263,15 @@ function SaveAOIForm(props) {
             dispatch({ type: 'webhookUrl', payload: e.target.value })
           }
         />
-      </div> */}
+        <div className="webhook-actions">
+          <button className="button-link" onClick={() => {}}>
+            Preview of payload
+          </button>
+          <button className="button-link" onClick={() => {}}>
+            Test webhook
+          </button>
+        </div>
+      </div>
       <div className="field">
         <label className="form-title">Language*</label>
         <Dropdown
