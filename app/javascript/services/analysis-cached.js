@@ -437,19 +437,12 @@ const lastFriday = moment()
   .day(-2)
   .format('YYYY-MM-DD');
 
-export const fetchGLADLatest = ({ adm0, adm1, adm2 }) => {
-  const url = `${getRequestUrl({ adm0, adm1, adm2, glad: true })}${
-    SQL_QUERIES.gladLatest
-  }`;
+export const fetchGLADLatest = () => {
+  const url = `${process.env.GFW_API}/glad-alerts/latest`;
   return axios
     .get(url)
     .then(response => {
-      const { alert__week, alert__year } = response.data.data[0];
-      const date = moment()
-        .year(parseInt(alert__year, 10))
-        .week(parseInt(alert__week, 10))
-        .day('Monday')
-        .format('YYYY-MM-DD');
+      const { date } = response.data.data[0].attributes;
 
       return {
         attributes: { updatedAt: date },
