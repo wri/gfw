@@ -117,7 +117,8 @@ function SaveAOIForm(props) {
     clearAfterDelete,
     canDelete,
     geostoreId,
-    setModalSources
+    setModalSources,
+    testWebhook
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
@@ -205,6 +206,8 @@ function SaveAOIForm(props) {
   const canSubmit =
     (hasSubscription ? validateEmail(email) : true) && name && language;
 
+  const webhookData = { test: true };
+
   return (
     <div className="c-form c-save-aoi-form">
       <MapGeostore
@@ -277,7 +280,10 @@ function SaveAOIForm(props) {
           >
             Preview of payload
           </button>
-          <button className="button-link" onClick={() => {}}>
+          <button
+            className="button-link"
+            onClick={() => testWebhook(webhookData, webhookUrl)}
+          >
             Test webhook
           </button>
         </div>
@@ -339,7 +345,8 @@ SaveAOIForm.propTypes = {
   webhookUrl: PropTypes.string,
   email: PropTypes.string,
   geostoreId: PropTypes.string,
-  setModalSources: PropTypes.func
+  setModalSources: PropTypes.func,
+  testWebhook: PropTypes.func
 };
 
 export default SaveAOIForm;
