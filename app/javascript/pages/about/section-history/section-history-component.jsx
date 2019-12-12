@@ -10,6 +10,7 @@ import img2014 from 'pages/about/section-history/images/2014.jpg';
 import img2015 from 'pages/about/section-history/images/2015.jpg';
 import img2016 from 'pages/about/section-history/images/2016.jpg';
 import img2017 from 'pages/about/section-history/images/2017.jpg';
+import img2018 from 'pages/about/section-history/images/2018.jpg';
 
 import './section-history-styles.scss';
 
@@ -69,6 +70,13 @@ const data = [
     title: '2017',
     paragraph:
       'In 2017, GFW launched Forest Watcher, a mobile application that lets users take GFW’s data and tools offline and into the field. The app represents a new step in connecting the people working in forests directly with the information they need to protect them.'
+  },
+  {
+    img: img2018,
+    imgPosition: 'center',
+    title: '2018',
+    paragraph:
+      'GFW released new data that show the dominant drivers of tree cover loss, including those that result in deforestation. GFW also released new and improved dashboards to deliver insights about the causes and impacts of forest change.'
   }
 ];
 
