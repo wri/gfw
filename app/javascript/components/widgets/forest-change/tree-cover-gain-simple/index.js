@@ -47,9 +47,10 @@ export default {
     threshold: 30,
     extentYear: 2000
   },
+  chartType: 'listLegend',
   colors: 'gain',
   sentence:
-    'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total area.',
+    'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
   getData: params =>
     fetchAnalysisEndpoint({
       ...params,

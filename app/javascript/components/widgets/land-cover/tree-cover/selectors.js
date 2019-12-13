@@ -21,7 +21,6 @@ export const isoHasPlantations = createSelector(
   }
 );
 
-// get lists selected
 export const parseData = createSelector(
   [getData, getColors, getIndicator, isoHasPlantations],
   (data, colors, indicator, hasPlantations) => {
