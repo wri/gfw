@@ -94,7 +94,10 @@ export const saveAOI = createThunkAction(
           webhookUrl
         }),
         tags: tags || [],
-        public: true
+        public: true,
+        ...((isCountry || type === 'wdpa') && {
+          status: 'saved'
+        })
       };
 
       setAreasWithSubscription(postData, method)
