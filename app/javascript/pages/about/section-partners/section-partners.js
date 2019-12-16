@@ -334,6 +334,11 @@ const partnersCollaborators = [
     img: '/assets/logos/whrchover.png',
     link: 'http://whrc.org/',
     title: 'Woods Hole Research Center'
+  },
+  {
+    img: '/assets/logos/evidensiahover.png',
+    link: 'https://www.evidensia.eco/',
+    title: 'Evidensia'
   }
 ];
 
