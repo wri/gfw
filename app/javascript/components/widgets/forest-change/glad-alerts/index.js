@@ -192,36 +192,36 @@ export default {
       params.status === 'pending' ||
       (params.type === 'geostore' && !params.areaId)
     ) {
-      return fetchAnalysisEndpoint({
-        ...params,
-        params,
-        name: 'glad-alerts',
-        slug: 'glad-alerts',
-        version: 'v1',
-        aggregate: true,
-        aggregateBy: 'week'
-      }).then(response => {
-        const alerts = response.data.data.attributes.value;
-        const latest = alerts && alerts[0];
-        const latestDate =
-          latest &&
-          moment()
-            .year(latest.year)
-            .week(latest.week)
-            .day('5')
-            .format('YYYY-MM-DD');
+      return axios
+        .all([
+          fetchAnalysisEndpoint({
+            ...params,
+            params,
+            name: 'glad-alerts',
+            slug: 'glad-alerts',
+            version: 'v1',
+            aggregate: true,
+            aggregateBy: 'week'
+          }),
+          fetchGLADLatest(params)
+        ])
+        .then(
+          axios.spread((alertsResponse, latestResponse) => {
+            const alerts = alertsResponse.data.data.attributes.value;
+            const latestDate = latestResponse.attributes.updatedAt;
 
-        return {
-          alerts:
-            alerts &&
-            alerts.map(d => ({
-              ...d,
-              alerts: d.count
-            })),
-          latest: latestDate,
-          settings: { latestDate }
-        };
-      });
+            return {
+              alerts:
+                alerts &&
+                alerts.map(d => ({
+                  ...d,
+                  alerts: d.count
+                })),
+              latest: latestDate,
+              settings: { latestDate }
+            };
+          })
+        );
     }
 
     return axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
