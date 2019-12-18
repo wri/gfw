@@ -170,7 +170,11 @@ export const parseSentence = createSelector(
     const lossPercent = loss && locationData ? 100 * loss / globalLoss : 0;
     const indicatorName = !indicator
       ? 'region-wide'
-      : `${indicator.label.toLowerCase()}`;
+      : `${
+        indicator.label === 'Key Biodiversity Areas'
+          ? indicator.label
+          : indicator.label.toLowerCase()
+      }`;
     let sentence = !indicator ? initial : withIndicator;
     if (locationObject.label === 'global') {
       sentence = !indicator ? globalInitial : globalWithIndicator;

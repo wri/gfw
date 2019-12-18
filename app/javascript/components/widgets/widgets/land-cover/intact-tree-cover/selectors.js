@@ -56,8 +56,13 @@ export const parseSentence = createSelector(
       .reduce((sum, d) => sum + d);
     const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
     const intactPercentage = intactData && intactData / totalExtent * 100;
-    const indicatorLabel =
-      indicator && indicator.label ? indicator.label.toLowerCase() : null;
+    let indicatorLabel;
+    if (indicator && indicator.label) {
+      indicatorLabel =
+        indicator.label === 'Key Biodiversity Areas'
+          ? indicator.label
+          : indicator.label.toLowerCase();
+    } else indicatorLabel = null;
 
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,

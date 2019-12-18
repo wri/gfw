@@ -146,7 +146,15 @@ export const parseSentence = createSelector(
           ? `${percentileLength} region`
           : `${percentileLength} regions`,
       location: locationName,
-      indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
+      indicator: `${
+        indicator
+          ? `${
+            indicator.label === 'Key Biodiversity Areas'
+              ? indicator.label
+              : indicator.label.toLowerCase()
+          }`
+          : ''
+      }`
     };
     const sentence = indicator ? withInd : initial;
     return { sentence, params };

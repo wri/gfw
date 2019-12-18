@@ -137,7 +137,11 @@ export const parseSentence = createSelector(
     }
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator:
+        indicator &&
+        (indicator.label === 'Key Biodiversity Areas'
+          ? indicator.label
+          : indicator.label.toLowerCase()),
       location: locationName,
       startYear,
       endYear,

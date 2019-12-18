@@ -54,8 +54,13 @@ export const parseSentence = createSelector(
       .value;
     const primaryPercentage = primaryData && primaryData / totalExtent * 100;
 
-    const indicatorLabel =
-      indicator && indicator.label ? indicator.label.toLowerCase() : null;
+    let indicatorLabel;
+    if (indicator && indicator.label) {
+      indicatorLabel =
+        indicator.label === 'Key Biodiversity Areas'
+          ? indicator.label
+          : indicator.label.toLowerCase();
+    } else indicatorLabel = null;
 
     const params = {
       location: `${locationName}'s`,

@@ -113,7 +113,11 @@ export const parseSentence = createSelector(
     const aveFormat = avgGain < 1 ? '.3r' : '.3s';
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator:
+        indicator &&
+        (indicator.label === 'Key Biodiversity Areas'
+          ? indicator.label
+          : indicator.label.toLowerCase()),
       location: locationName,
       topGain: `${format('.2r')(topGain)}%`,
       percentileLength: percentileLength || '0',

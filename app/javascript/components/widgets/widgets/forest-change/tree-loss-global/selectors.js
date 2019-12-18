@@ -176,7 +176,11 @@ export const parseSentence = createSelector(
     const sentence = indicator ? withInd : initial;
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator:
+        indicator &&
+        (indicator.label === 'Key Biodiversity Areas'
+          ? indicator.label
+          : indicator.label.toLowerCase()),
       location: locationName === 'global' ? 'globally' : locationName,
       startYear,
       endYear,
