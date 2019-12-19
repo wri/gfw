@@ -178,8 +178,27 @@ class WidgetHeader extends PureComponent {
     );
   };
 
-  generateZipFromURL = urls => {
-    const { title } = this.props;
+  generateZipFromURL = files => {
+    const { title, config, settings, allLocation } = this.props;
+    const { admins, categories, datasets, widget } = config;
+    const metadata = {
+      admins: admins.join(' '),
+      datasets: datasets.map(d => d.dataset).join(', '),
+      layers: datasets.map(d => d.layers.join(', ')).join(', '),
+      categories: categories.join(', '),
+      link: 'https://www.globalforestwatch.org'.concat(
+        allLocation.pathname,
+        '?',
+        allLocation.search
+      ),
+      title,
+      widget,
+      ...settings,
+      activeData: JSON.stringify(settings.activeData).slice(1, -1)
+    };
+    const metadataFile = Object.keys(metadata)
+      .join(';')
+      .concat('\n', Object.values(metadata).join(';'));
     const urlToPromise = url =>
       new Promise((resolve, reject) => {
         JSZipUtils.getBinaryContent(url, (err, data) => {
@@ -192,13 +211,16 @@ class WidgetHeader extends PureComponent {
       });
     const filenames = [];
     const zip = new JSZip();
-    urls.forEach((url, index) => {
+    files.forEach((file, index) => {
+      const { name, url } = file;
       let filename;
       try {
-        filename = url
-          .split('?')[0]
-          .split('/')
-          .pop();
+        filename =
+          name ||
+          url
+            .split('?')[0]
+            .split('/')
+            .pop();
         if (filenames.includes(filename)) {
           filename = filename.concat(`-${index}.csv`);
         } else {
@@ -210,8 +232,9 @@ class WidgetHeader extends PureComponent {
       }
       zip.file(filename, urlToPromise(url), { binary: true });
     });
+    zip.file('metadata.csv', metadataFile);
     zip.generateAsync({ type: 'blob' }).then(content => {
-      saveAs(content, `${title} data.zip`);
+      saveAs(content, `${title}.zip`);
     });
   };
 
@@ -289,7 +312,8 @@ WidgetHeader.propTypes = {
   setActiveWidget: PropTypes.func,
   metakey: PropTypes.string,
   getDataURL: PropTypes.func,
-  downloadLink: PropTypes.string
+  downloadLink: PropTypes.string,
+  allLocation: PropTypes.string
 };
 
 export default WidgetHeader;
