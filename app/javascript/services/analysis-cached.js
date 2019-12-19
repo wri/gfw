@@ -1,43 +1,35 @@
 import axios from 'axios';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
+import DATASETS from 'data/analysis-datasets.json';
 
-// contains everything summed without years inc gain and extent
-const ADM0_SUMMARY = process.env.ANNUAL_ADM0_SUMMARY;
-const ADM1_SUMMARY = process.env.ANNUAL_ADM1_SUMMARY;
-const ADM2_SUMMARY = process.env.ANNUAL_ADM2_SUMMARY;
-
-// contains yearly data for loss
-const ADM0_CHANGE = process.env.ANNUAL_ADM0_CHANGE;
-const ADM1_CHANGE = process.env.ANNUAL_ADM1_CHANGE;
-const ADM2_CHANGE = process.env.ANNUAL_ADM2_CHANGE;
-
-const ANNUAL_ADM0_WHITELIST = process.env.ANNUAL_ADM0_WHITELIST;
-const ANNUAL_ADM1_WHITELIST = process.env.ANNUAL_ADM1_WHITELIST;
-const ANNUAL_ADM2_WHITELIST = process.env.ANNUAL_ADM2_WHITELIST;
-
-// glad gadm36
-const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
-const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
-const GLAD_ADM2_WEEKLY = process.env.GLAD_ADM2_WEEKLY;
-
-const GLAD_ADM0_WHITELIST = process.env.GLAD_ADM0_WHITELIST;
-const GLAD_ADM1_WHITELIST = process.env.GLAD_ADM1_WHITELIST;
-const GLAD_ADM2_WHITELIST = process.env.GLAD_ADM2_WHITELIST;
-
-// wdpa
-const ANNUAL_WDPA_SUMMARY = process.env.ANNUAL_WDPA_SUMMARY;
-const ANNUAL_WDPA_CHANGE = process.env.ANNUAL_WDPA_CHANGE;
-const ANNUAL_WDPA_WHITELIST = process.env.ANNUAL_WDPA_WHITELIST;
-const GLAD_WDPA_WEEKLY = process.env.GLAD_WDPA_WEEKLY;
-const GLAD_WDPA_WHITELIST = process.env.GLAD_WDPA_WHITELIST;
-
-// geostore tables
-const ANNUAL_GEOSTORE_SUMMARY = process.env.ANNUAL_GEOSTORE_SUMMARY;
-const ANNUAL_GEOSTORE_CHANGE = process.env.ANNUAL_GEOSTORE_CHANGE;
-const ANNUAL_GEOSTORE_WHITELIST = process.env.ANNUAL_GEOSTORE_WHITELIST;
-const GLAD_GEOSTORE_WEEKLY = process.env.GLAD_GEOSTORE_WEEKLY;
-const GLAD_GEOSTORE_WHITELIST = process.env.GLAD_GEOSTORE_WHITELIST;
+const {
+  ANNUAL_ADM0_SUMMARY,
+  ANNUAL_ADM1_SUMMARY,
+  ANNUAL_ADM2_SUMMARY,
+  ANNUAL_ADM0_CHANGE,
+  ANNUAL_ADM1_CHANGE,
+  ANNUAL_ADM2_CHANGE,
+  ANNUAL_ADM0_WHITELIST,
+  ANNUAL_ADM1_WHITELIST,
+  ANNUAL_ADM2_WHITELIST,
+  GLAD_ADM0_WEEKLY,
+  GLAD_ADM1_WEEKLY,
+  GLAD_ADM2_WEEKLY,
+  GLAD_ADM0_WHITELIST,
+  GLAD_ADM1_WHITELIST,
+  GLAD_ADM2_WHITELIST,
+  ANNUAL_WDPA_SUMMARY,
+  ANNUAL_WDPA_CHANGE,
+  ANNUAL_WDPA_WHITELIST,
+  GLAD_WDPA_WEEKLY,
+  GLAD_WDPA_WHITELIST,
+  ANNUAL_GEOSTORE_SUMMARY,
+  ANNUAL_GEOSTORE_CHANGE,
+  ANNUAL_GEOSTORE_WHITELIST,
+  GLAD_GEOSTORE_WEEKLY,
+  GLAD_GEOSTORE_WHITELIST
+} = DATASETS[process.env.FEATURE_ENV];
 
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
@@ -99,18 +91,18 @@ const getAnnualDataset = ({
   if (summary && (adm2 || (adm1 && grouped)) && whitelist) {
     return ANNUAL_ADM2_WHITELIST;
   }
-  if (summary && (adm2 || (adm1 && grouped))) return ADM2_SUMMARY;
+  if (summary && (adm2 || (adm1 && grouped))) return ANNUAL_ADM2_SUMMARY;
   if (summary && (adm1 || (adm0 && grouped)) && whitelist) {
     return ANNUAL_ADM1_WHITELIST;
   }
-  if (summary && (adm1 || (adm0 && grouped))) return ADM1_SUMMARY;
+  if (summary && (adm1 || (adm0 && grouped))) return ANNUAL_ADM1_SUMMARY;
   if (summary && whitelist) return ANNUAL_ADM0_WHITELIST;
-  if (summary) return ADM0_SUMMARY;
+  if (summary) return ANNUAL_ADM0_SUMMARY;
 
   // else return change datasets
-  if (adm2 || (adm1 && grouped)) return ADM2_CHANGE;
-  if (adm1 || (adm0 && grouped)) return ADM1_CHANGE;
-  return ADM0_CHANGE;
+  if (adm2 || (adm1 && grouped)) return ANNUAL_ADM2_CHANGE;
+  if (adm1 || (adm0 && grouped)) return ANNUAL_ADM1_CHANGE;
+  return ANNUAL_ADM0_CHANGE;
 };
 
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
@@ -184,6 +176,7 @@ export const getWHEREQuery = params => {
 }${
   isPolyname &&
         polynameMeta &&
+        !tableKey.includes('is__') &&
         polynameMeta.default &&
         polynameMeta.categories
     ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
