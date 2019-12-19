@@ -177,7 +177,7 @@ export const parseSentence = createSelector(
     const sentence = indicator ? withInd : initial;
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator: indicator && indicator.label,
       location: locationLabel === 'global' ? 'globally' : locationLabel,
       startYear,
       endYear,

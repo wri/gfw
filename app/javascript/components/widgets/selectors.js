@@ -258,7 +258,10 @@ export const filterWidgetsByLocation = createSelector(
       const polynameIntersection =
         whitelists &&
         whitelists.indicators &&
-        intersection(polynameWhitelist, whitelists.indicators);
+        intersection(
+          polynameWhitelist[w.whitelistType || 'annual'],
+          whitelists.indicators
+        );
       const matchesPolynameWhitelist =
         !whitelists ||
         !whitelists.indicators ||
@@ -419,7 +422,8 @@ export const getWidgets = createSelector(
         settingsConfig,
         dataOptions,
         settings,
-        polynamesWhitelist,
+        polynamesWhitelist:
+          polynamesWhitelist && polynamesWhitelist[w.whitelistType || 'annual'],
         status,
         pendingKeys
       });

@@ -90,6 +90,7 @@ export default {
     page: 0,
     ifl: 2016
   },
+  whitelistType: 'glad',
   whitelists: {
     adm0: [
       'BRA',

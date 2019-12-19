@@ -9,8 +9,12 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'gladAlerts',
   title: 'Deforestation Alerts in {location}',
-  sentence:
-    'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+  sentence: {
+    default:
+      'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+    withInd:
+      'There were {count} GLAD alerts reported in {indicator} in the week of the {date}. This was {status} compared to the same week in previous years.'
+  },
   metaKey: 'widget_deforestation_graph',
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -49,6 +53,7 @@ export default {
       noSort: true
     }
   ],
+  whitelistType: 'glad',
   whitelists: {
     adm0: [
       'ABW',

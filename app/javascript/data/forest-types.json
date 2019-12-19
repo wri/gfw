@@ -17,7 +17,7 @@
     "label": "Intact Forest Landscapes ({iflYear})",
     "value": "ifl",
     "tableKey": "intact_forest_landscape__year",
-    "gladTableKey": "is__intact_forest_landscape_2016",
+    "gladTableKey": "is__intact_forest_landscapes_2016",
     "metaKey": "intact_forest_landscapes_change",
     "global": true,
     "default": 2016,
