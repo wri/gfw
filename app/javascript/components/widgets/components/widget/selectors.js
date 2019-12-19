@@ -194,6 +194,9 @@ export const getIndicator = createSelector(
       label = forestType.label;
       value = forestType.value;
     }
+    if (label !== 'Key Biodiversity Areas') {
+      label = label.toLowerCase();
+    }
 
     return {
       label,

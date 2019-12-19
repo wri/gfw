@@ -149,11 +149,7 @@ export const parseSentence = createSelector(
     const params = {
       location: locationName === 'global' ? 'Globally' : locationName,
       region: topRegion.label,
-      indicator:
-        indicator &&
-        (indicator.label === 'Key Biodiversity Areas'
-          ? indicator.label
-          : indicator.label.toLowerCase()),
+      indicator: indicator && indicator.label,
       percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
       year: settings.extentYear,
       value: settings.unit === '%' ? topRegionPercent : topRegionExtent,

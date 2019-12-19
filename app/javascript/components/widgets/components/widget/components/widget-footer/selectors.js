@@ -61,10 +61,7 @@ export const getStatements = createSelector(
         ? translateText(
           '*{indicator} are available in {datasetsCount} countries only',
           {
-            indicator:
-                indicator.label === 'Key Biodiversity Areas'
-                  ? indicator.label
-                  : indicator.label.toLowerCase(),
+            indicator: indicator.label,
             datasetsCount: datasets[indicator.value]
           }
         )
