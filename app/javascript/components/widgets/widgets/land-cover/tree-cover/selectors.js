@@ -16,7 +16,11 @@ export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
   (whitelist, name) => {
     const hasPlantations =
-      name === 'global' ? true : whitelist && whitelist.includes('plantations');
+      name === 'global'
+        ? true
+        : whitelist &&
+          whitelist.annual &&
+          whitelist.annual.includes('plantations');
     return hasPlantations;
   }
 );

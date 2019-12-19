@@ -259,15 +259,16 @@ export const filterWidgetsByLocationWhitelist = createSelector(
 
 export const filterWidgetsByIndicatorWhitelist = createSelector(
   [filterWidgetsByLocationWhitelist, selectWhitelists],
-  (widgets, indicatorWhitelist) => {
+  (widgets, indicatorWhitelists) => {
     if (!widgets) return null;
 
     return widgets.filter(w => {
+      const { whitelistType } = w.config;
       const { indicators } = w.config.whitelists || {};
       if (!indicators) return true;
-      const totalIndicators = concat(indicators, indicatorWhitelist).length;
-      const reducedIndicators = uniq(concat(indicators, indicatorWhitelist))
-        .length;
+      const whitelist = indicatorWhitelists[whitelistType || 'annual'];
+      const totalIndicators = concat(indicators, whitelist).length;
+      const reducedIndicators = uniq(concat(indicators, whitelist)).length;
       return totalIndicators !== reducedIndicators;
     });
   }
@@ -281,7 +282,7 @@ export const parseWidgetsWithOptions = createSelector(
     selectWhitelists,
     selectLocation
   ],
-  (widgets, options, polynameWhitelist, location) => {
+  (widgets, options, polynameWhitelists, location) => {
     if (!widgets) return null;
 
     return widgets.map(w => {
@@ -312,16 +313,15 @@ export const parseWidgetsWithOptions = createSelector(
             }
 
             if (polynamesOptions.includes(optionKey)) {
+              const whitelist = polynameWhitelists[w.whitelistType || 'annual'];
               // some horrible an inexcusable filters for forest types and land categories
               filteredOptions =
                 location.type === 'global'
                   ? filteredOptions.filter(o => o.global)
                   : filteredOptions;
               filteredOptions =
-                polynameWhitelist && polynameWhitelist.length
-                  ? filteredOptions.filter(o =>
-                    polynameWhitelist.includes(o.value)
-                  )
+                whitelist && whitelist.length
+                  ? filteredOptions.filter(o => whitelist.includes(o.value))
                   : filteredOptions;
               filteredOptions = filteredOptions.map(i => ({
                 ...i,

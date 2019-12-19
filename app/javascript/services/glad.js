@@ -1,10 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
 import { getWHEREQuery } from 'services/analysis-cached';
+import DATASETS from 'data/analysis-datasets.json';
 
-const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
-const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
-const GLAD_ADM2_WEEKLY = process.env.GLAD_ADM2_WEEKLY;
+const { GLAD_ADM0_WEEKLY, GLAD_ADM1_WEEKLY, GLAD_ADM2_WEEKLY } = DATASETS[
+  process.env.FEATURE_ENV
+];
 
 const QUERIES = {
   gladIntersectionAlerts:
@@ -28,9 +29,17 @@ const getRequestUrl = (adm0, adm1, adm2, grouped) => {
 
 export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const { gladIntersectionAlerts } = QUERIES;
-  const url = `${getRequestUrl(adm0, adm1, adm2)}${
-    gladIntersectionAlerts
-  }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+  const url = `${getRequestUrl({
+    adm0,
+    adm1,
+    adm2,
+    ...params,
+    glad: true,
+    grouped: true
+  })}${gladIntersectionAlerts}`.replace(
+    '{WHERE}',
+    getWHEREQuery({ iso: adm0, adm1, adm2, ...params, glad: true })
+  );
   return axios.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
