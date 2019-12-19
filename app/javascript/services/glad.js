@@ -29,9 +29,14 @@ const getRequestUrl = (adm0, adm1, adm2, grouped) => {
 
 export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const { gladIntersectionAlerts } = QUERIES;
-  const url = `${getRequestUrl(adm0, adm1, adm2)}${
-    gladIntersectionAlerts
-  }`.replace(
+  const url = `${getRequestUrl({
+    adm0,
+    adm1,
+    adm2,
+    ...params,
+    glad: true,
+    grouped: true
+  })}${gladIntersectionAlerts}`.replace(
     '{WHERE}',
     getWHEREQuery({ iso: adm0, adm1, adm2, ...params, glad: true })
   );

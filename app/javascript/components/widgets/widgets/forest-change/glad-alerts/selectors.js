@@ -19,6 +19,7 @@ const selectColors = state => state.colors || null;
 const selectActiveData = state => state.settings.activeData || null;
 const selectWeeks = state => (state.settings && state.settings.weeks) || null;
 const selectSentence = state => state.config.sentence || null;
+const getIndicator = state => state.indicator || null;
 
 export const parsePayload = payload => {
   const payloadData = payload && payload.find(p => p.name === 'count');
@@ -136,8 +137,8 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, selectColors, selectActiveData, selectSentence],
-  (data, colors, activeData, sentence) => {
+  [parseData, selectColors, selectActiveData, selectSentence, getIndicator],
+  (data, colors, activeData, sentence, indicator) => {
     if (!data) return null;
 
     let lastDate = data[data.length - 1] || {};
@@ -186,6 +187,7 @@ export const parseSentence = createSelector(
     }
     const formattedDate = moment(date).format('Do of MMMM YYYY');
     const params = {
+      indicator: indicator && indicator.label,
       date: formattedDate,
       count: {
         value: lastDate.count ? format(',')(lastDate.count) : 0,

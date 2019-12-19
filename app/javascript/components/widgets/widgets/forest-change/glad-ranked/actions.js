@@ -1,11 +1,11 @@
-import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/glad';
 import { getExtentGrouped } from 'services/analysis-cached';
 import axios from 'axios';
 
 export default ({ params }) =>
   axios
     .all([
-      fetchGladIntersectionAlerts(params),
+      fetchGladAlerts(params),
       fetchGLADLatest(params),
       getExtentGrouped(params)
     ])
