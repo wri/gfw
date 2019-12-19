@@ -44,6 +44,7 @@ export default {
     landCategories: true
   },
   // custom whitelists for locations
+  whitelistType: 'glad',
   whitelists: {
     adm0: [
       'ABW',
