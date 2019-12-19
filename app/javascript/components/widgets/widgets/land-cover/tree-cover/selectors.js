@@ -109,7 +109,7 @@ export const parseSentence = createSelector(
     const params = {
       year: settings.extentYear,
       location: locationName || 'global',
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator: indicator && indicator.label,
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%',
       value:
