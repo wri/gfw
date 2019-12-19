@@ -211,6 +211,11 @@ const partnersCollaborators = [
     title: 'East West Management Institute'
   },
   {
+    img: '/assets/logos/evidensiahover.png',
+    link: 'https://www.evidensia.eco/',
+    title: 'Evidensia'
+  },
+  {
     img: '/assets/logos/hakahover.png',
     link: 'http://www.haka.or.id/',
     title: 'Haka'
