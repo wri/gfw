@@ -26,13 +26,24 @@ export const setSaveAOISettings = createThunkAction(
     )
 );
 
-export const testWebhook = (data, url) =>
+export const testWebhook = (data, url, callback) =>
   axios({
     method: 'POST',
     data: qs.stringify(data),
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     url
-  });
+  })
+    .then(response => {
+      callback(response);
+    })
+    .catch(error => {
+      let err;
+      if (error.response) {
+        // actual error
+        err = true;
+      } else err = false; // fake error
+      callback(err);
+    });
 
 export const saveAOI = createThunkAction(
   'saveAOI',

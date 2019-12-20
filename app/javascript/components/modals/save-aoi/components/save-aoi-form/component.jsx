@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-for */
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -14,6 +14,7 @@ import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 import MapGeostore from 'components/map-geostore';
 import deleteIcon from 'assets/icons/delete.svg';
+import infoIcon from 'assets/icons/info.svg';
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
 import ModalSource from 'components/modals/sources';
@@ -213,6 +214,7 @@ function SaveAOIForm(props) {
     (!webhookUrl || !webhookError);
 
   const webhookData = { test: true };
+  const [showLoader, setLoader] = useState(false);
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -266,33 +268,49 @@ function SaveAOIForm(props) {
         />
       </div>
       <div className={cx('field', { error: webhookError })}>
-        <label className="form-title">URL (Webhook)</label>
-        <input
-          className="text-input"
-          value={webhookUrl}
-          onChange={e =>
-            dispatch({ type: 'webhookUrl', payload: e.target.value })
-          }
-        />
-        <div className="webhook-actions">
-          <button
-            className="button-link"
-            onClick={() =>
-              setModalSources({
-                open: true,
-                source: 'webhookPreview'
-              })
+        <details>
+          <summary>
+            <label className="form-title">
+              Webhook URL (Optional)
+              <Button
+                className="info-button"
+                theme="theme-button-tiny theme-button-grey-filled square"
+                onClick={() =>
+                  setModalSources({
+                    open: true,
+                    source: 'webhookPreview'
+                  })
+                }
+              >
+                <Icon icon={infoIcon} className="info-icon" />
+              </Button>
+            </label>
+          </summary>
+          <input
+            className="text-input"
+            value={webhookUrl}
+            onChange={e =>
+              dispatch({ type: 'webhookUrl', payload: e.target.value })
             }
-          >
-            Preview of payload
-          </button>
-          <button
-            className="button-link"
-            onClick={() => testWebhook(webhookData, webhookUrl)}
-          >
-            Test webhook
-          </button>
-        </div>
+          />
+          <div className="webhook-actions">
+            {!!webhookUrl &&
+              !webhookError && (
+              <button
+                className="button-link"
+                onClick={() => {
+                  setLoader(true);
+                  testWebhook(webhookData, webhookUrl, () =>
+                    setLoader(false)
+                  );
+                }}
+              >
+                <span>Test webhook</span>
+                {showLoader && <Loader className="webhook-loader" />}
+              </button>
+            )}
+          </div>
+        </details>
       </div>
       <div className="field">
         <label className="form-title">Language*</label>
