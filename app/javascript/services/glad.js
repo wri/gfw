@@ -9,10 +9,16 @@ const { GLAD_ADM0_WEEKLY, GLAD_ADM1_WEEKLY, GLAD_ADM2_WEEKLY } = DATASETS[
 
 const QUERIES = {
   gladIntersectionAlerts:
-    'SELECT alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
   alertsLatest:
     'SELECT alert__year, alert__week FROM data GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC LIMIT 1'
 };
+
+const getLocationSelect = ({ adm1, adm2 }) =>
+  `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
+
+const getLocationSelectGrouped = ({ adm0, adm1 }) =>
+  `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
 
 // quyery building helpers
 const getAlertsDatasetId = (adm0, adm1, adm2, grouped) => {
@@ -21,25 +27,39 @@ const getAlertsDatasetId = (adm0, adm1, adm2, grouped) => {
   return GLAD_ADM0_WEEKLY;
 };
 
-const getRequestUrl = (adm0, adm1, adm2, grouped) => {
+const getRequestUrl = ({ adm0, adm1, adm2, grouped }) => {
   const dataset = getAlertsDatasetId(adm0, adm1, adm2, grouped);
   const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
+export const fetchGladAlerts = ({
+  threshold,
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  grouped,
+  ...params
+}) => {
   const { gladIntersectionAlerts } = QUERIES;
   const url = `${getRequestUrl({
     adm0,
     adm1,
     adm2,
-    ...params,
-    glad: true,
-    grouped: true
-  })}${gladIntersectionAlerts}`.replace(
-    '{WHERE}',
-    getWHEREQuery({ iso: adm0, adm1, adm2, ...params, glad: true })
-  );
+    grouped,
+    ...params
+  })}${gladIntersectionAlerts}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2 })
+        : getLocationSelect({ adm1, adm2 })
+    )
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({ iso: adm0, adm1, adm2, ...params, glad: true })
+    );
   return axios.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
@@ -47,7 +67,8 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
-        alerts: d.alert__count
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
       }))
     }
   }));
