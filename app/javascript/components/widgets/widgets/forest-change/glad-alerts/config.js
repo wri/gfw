@@ -4,8 +4,12 @@ export default {
   // title for header
   title: 'Deforestation Alerts in {location}',
   // sentences for header
-  sentence:
-    'There were {count} GLAD alerts reported in {indicator} in the week of the {date}. This was {status} compared to the same week in previous years.',
+  sentence: {
+    initial:
+      'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+    withIndicator:
+      'There were {count} GLAD alerts reported in {indicator} in the week of the {date}. This was {status} compared to the same week in previous years.'
+  },
   // meta key for info button
   metaKey: 'widget_deforestation_graph',
   // full width or not

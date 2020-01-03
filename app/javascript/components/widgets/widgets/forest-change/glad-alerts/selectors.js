@@ -198,7 +198,10 @@ export const parseSentence = createSelector(
         color: statusColor
       }
     };
-    return { sentence, params };
+    return {
+      sentence: indicator ? sentence.withIndicator : sentence.initial,
+      params
+    };
   }
 );
 

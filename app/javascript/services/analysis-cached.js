@@ -166,7 +166,9 @@ export const getWHEREQuery = params => {
       );
       const tableKey =
         polynameMeta &&
-        (params.glad ? polynameMeta.gladTableKey : polynameMeta.tableKey);
+        (params.glad && polynameMeta.gladTableKey
+          ? polynameMeta.gladTableKey
+          : polynameMeta.tableKey);
 
       const polynameString = `
         ${
