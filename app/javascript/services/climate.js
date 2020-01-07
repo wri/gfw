@@ -94,7 +94,12 @@ export const getBiomassRanking = ({
   }
   const url = `${process.env.CARTO_API}/sql?q=${query}`;
 
-  if (download) return url.concat('&format=csv');
+  if (download) {
+    return {
+      name: 'biomass_loss_by_region',
+      url: url.concat('&format=csv')
+    };
+  }
   return request.get(url);
 };
 
