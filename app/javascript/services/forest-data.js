@@ -3,9 +3,9 @@ import request from 'utils/request';
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const NEW_SQL_QUERIES = {
-  fao:
-    'SELECT country AS iso, name, plantfor * 1000 AS planted_forest, primfor * 1000 AS forest_primary, natregfor * 1000 AS forest_regenerated, forest * 1000 AS extent, totarea as area_ha FROM table_1_forest_area_and_characteristics WHERE {location} AND year = 2015',
   faoExtent:
+    'SELECT country AS iso, name, plantfor * 1000 AS planted_forest, primfor * 1000 AS forest_primary, natregfor * 1000 AS forest_regenerated, forest * 1000 AS extent, totarea as area_ha FROM table_1_forest_area_and_characteristics WHERE {location} AND year = 2015',
+  faoReforest:
     'SELECT country AS iso, name, year, reforest * 1000 AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY rate DESC',
   faoDeforest:
     'SELECT fao.country, fao.name, fao.deforest * 1000 AS deforest, fao.humdef, fao.year FROM table_1_forest_area_and_characteristics as fao {location}',
@@ -23,18 +23,24 @@ const getLocationQuery = (adm0, adm1, adm2) =>
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const getFAO = ({ adm0, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.fao}`.replace(
+export const getFAOExtent = ({ adm0, download }) => {
+  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoExtent}`.replace(
     '{location}',
     adm0 ? `country = '${adm0}'` : '1 = 1'
   );
 
-  if (download) return url.concat('&format=csv');
+  if (download) {
+    return {
+      name: 'fao_treecover_extent__ha',
+      url: url.concat('&format=csv')
+    };
+  }
+
   return request.get(url);
 };
 
-export const getFAOExtent = ({ period, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoExtent}`.replace(
+export const getFAOReforest = ({ period, download }) => {
+  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoReforest}`.replace(
     '{period}',
     period
   );
