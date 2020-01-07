@@ -4,9 +4,11 @@ import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
 import cx from 'classnames';
 import JSZip from 'jszip';
+import snakeCase from 'lodash/snakeCase';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import { track } from 'app/analytics';
+import moment from 'moment';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -180,21 +182,31 @@ class WidgetHeader extends PureComponent {
 
   generateZipFromURL = files => {
     const { title, config, settings, allLocation } = this.props;
-    const { admins, categories, datasets, widget } = config;
+    const { categories, metaKey } = config;
+
     const metadata = {
-      admins: admins.join(' '),
-      datasets: datasets.map(d => d.dataset).join(', '),
-      layers: datasets.map(d => d.layers.join(', ')).join(', '),
+      title,
       categories: categories.join(', '),
+      ...(settings && {
+        ...Object.keys(settings).reduce(
+          (obj, key) => ({
+            ...obj,
+            ...(!['activeData'].includes(key) && {
+              [snakeCase(key)]: settings[key]
+            })
+          }),
+          {}
+        )
+      }),
+      date: moment().format('YYYY-MM-DD'),
+      metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${
+        metaKey
+      }`,
       link: 'https://www.globalforestwatch.org'.concat(
         allLocation.pathname,
         '?',
         allLocation.search
-      ),
-      title,
-      widget,
-      ...settings,
-      activeData: JSON.stringify(settings.activeData).slice(1, -1)
+      )
     };
     const metadataFile = Object.keys(metadata)
       .join(';')

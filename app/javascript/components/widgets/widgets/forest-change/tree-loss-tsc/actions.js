@@ -21,7 +21,7 @@ export const getData = ({ params }) =>
     );
 
 export const getDataURL = params => [
-  getLoss({ ...params, landCategory: 'tsc', download: true }),
+  getLoss({ ...params, forestType: 'tsc', tsc: true, download: true }),
   getExtent({ ...params, download: true })
 ];
 

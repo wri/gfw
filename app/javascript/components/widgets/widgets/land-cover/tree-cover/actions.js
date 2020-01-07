@@ -49,15 +49,21 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = params => [
-  getExtent({ ...params, download: true }),
-  getExtent({
-    ...params,
-    forestType: null,
-    landCategory: null,
-    download: true
-  }),
-  getExtent({ ...params, forestType: 'plantations', download: true })
-];
+export const getDataURL = params => {
+  const urlArr =
+    params.forestType || params.landCategory
+      ? [getExtent({ ...params, download: true })]
+      : [];
+
+  return urlArr.concat([
+    getExtent({
+      ...params,
+      forestType: null,
+      landCategory: null,
+      download: true
+    }),
+    getExtent({ ...params, forestType: 'plantations', download: true })
+  ]);
+};
 
 export default getData;

@@ -6,7 +6,7 @@ import { getFAO } from 'services/forest-data';
 import { getRanking } from 'services/country';
 
 export const getData = ({ params }) =>
-  axios.all([getFAO({ ...params }), getRanking({ ...params })]).then(
+  axios.all([getFAO(params), getRanking(params)]).then(
     axios.spread((getFAOResponse, getRankingResponse) => {
       let data = {};
       const fao = getFAOResponse.data.rows;
@@ -32,6 +32,8 @@ export const getData = ({ params }) =>
     })
   );
 
-export const getDataURL = params => [[getFAO({ ...params, download: true })]];
+export const getDataURL = ({ params }) => [
+  getFAO({ ...params, download: true })
+];
 
 export default getData;

@@ -2,6 +2,7 @@ import axios from 'axios';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import DATASETS from 'data/analysis-datasets.json';
+import snakeCase from 'lodash/snakeCase';
 
 const {
   ANNUAL_ADM0_SUMMARY,
@@ -208,7 +209,10 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
   if (download) {
-    return { name: 'treecover_loss', url: url.replace('query', 'download') };
+    return {
+      name: 'treecover_loss__ha',
+      url: url.replace('query', 'download')
+    };
   }
 
   return axios.get(url).then(response => ({
@@ -235,7 +239,7 @@ export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
 
   if (download) {
     return {
-      name: 'treecover_loss__grouped',
+      name: 'treecover_loss_by_region__ha',
       url: url.replace('query', 'download')
     };
   }
@@ -260,16 +264,33 @@ export const getExtent = ({
   adm2,
   extentYear,
   download,
+  forestType,
+  landCategory,
   ...params
 }) => {
   const url = `${getRequestUrl({ adm0, adm1, adm2, summary: true })}${
     SQL_QUERIES.extent
   }`
     .replace(/{extentYear}/g, extentYear)
-    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        iso: adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ...params
+      })
+    );
 
   if (download) {
-    return { name: 'area__ha', url: url.replace('query', 'download') };
+    return {
+      name: `treecover_extent_${extentYear}${
+        forestType ? `_in_${forestType}` : ''
+      }${landCategory ? `_in_${landCategory}` : ''}__ha`,
+      url: url.replace('query', 'download')
+    };
   }
 
   return axios.get(url).then(response => ({
@@ -306,7 +327,7 @@ export const getExtentGrouped = ({
 
   if (download) {
     return {
-      name: `treecover_extent_${extentYear}__ha`,
+      name: `treecover_extent_${extentYear}_by_region__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -369,7 +390,7 @@ export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
 
   if (download) {
     return {
-      name: 'treecover_gain_2000-2012__grouped',
+      name: 'treecover_gain_2000-2012_by_region__ha',
       url: url.replace('query', 'download')
     };
   }
@@ -419,7 +440,7 @@ export const getAreaIntersection = ({
 
   if (download) {
     return {
-      name: 'area_intersection__ha',
+      name: `treecover_extent_in_${snakeCase(intersectionPolyname.label)}__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -473,7 +494,9 @@ export const getAreaIntersectionGrouped = ({
 
   if (download) {
     return {
-      name: 'area_intersection__grouped',
+      name: `treecover_extent_in_${snakeCase(
+        intersectionPolyname.label
+      )}_by_region__ha`,
       url: url.replace('query', 'download')
     };
   }
