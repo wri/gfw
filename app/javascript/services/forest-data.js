@@ -73,7 +73,7 @@ const NEW_SQL_QUERIES = {
   class_220 as permanent_snow_and_ice
   FROM global_land_cover_adm2 WHERE {location}`,
   getNLCDLandCover:
-    'SELECT {select} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
+    'SELECT from_class_nlcd AS initial_nlcd_category, to_class_nlcd AS final_nlcd_category, from_class_ipcc AS initial_ipcc_category, to_class_ipcc AS final_ipcc_category, {area} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
 };
 
 const getLocationQuery = (adm0, adm1, adm2) =>
@@ -261,12 +261,7 @@ export const getUSLandCover = params => {
     admQuery = `AND adm1 = ${adm1} AND adm2 = ${adm2}`;
   }
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.getNLCDLandCover}`
-    .replace(
-      '{select}',
-      adm2
-        ? '*, class_area as area'
-        : 'SUM(class_area) as area, to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
-    )
+    .replace('{area}', adm2 ? 'class_area as area' : 'SUM(class_area) as area')
     .replace('{startYear}', startYear)
     .replace('{endYear}', endYear)
     .replace('{adm}', admQuery)
@@ -277,12 +272,30 @@ export const getUSLandCover = params => {
         : 'GROUP BY to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
     );
   if (download) {
-    return url.concat(
-      `&format=csv&filename=land_cover_in_ha_in_${adm0}${
-        adm1 ? `_${adm1}` : ''
-      }${adm2 ? `_${adm2}` : ''}_from_${startYear}_to_${endYear}`
-    );
+    return {
+      name: 'global_land_cover',
+      url: url.concat(
+        `&format=csv&filename=land_cover_in_ha_in_${adm0}${
+          adm1 ? `_${adm1}` : ''
+        }${adm2 ? `_${adm2}` : ''}_from_${startYear}_to_${endYear}`
+      )
+    };
   }
-  return request.get(url);
-  // .then(r => console.table(r.data.rows[2]) || r);
+
+  return request.get(url).then(response => ({
+    ...response,
+    data: {
+      rows: response.data.rows.map(o => {
+        delete Object.assign(o, { from_class_ipcc: o.initial_ipcc_category })
+          .initial_ipcc_category;
+        delete Object.assign(o, { to_class_ipcc: o.final_ipcc_category })
+          .final_ipcc_category;
+        delete Object.assign(o, { from_class_nlcd: o.initial_nlcd_category })
+          .initial_nlcd_category;
+        delete Object.assign(o, { to_class_nlcd: o.final_nlcd_category })
+          .final_nlcd_category;
+        return o;
+      })
+    }
+  }));
 };
