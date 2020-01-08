@@ -63,7 +63,7 @@ export const getData = createSelector(
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
     const years = [];
-    const latestFullWeek = moment(latest).subtract(1, 'weeks');
+    const latestFullWeek = moment(latest);
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
