@@ -52,7 +52,7 @@ const SQL_QUERIES = {
   areaIntersection:
     'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
-    'SELECT alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
   gladLatest:
     'SELECT alert__year, alert__week FROM data GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC LIMIT 1',
   nonGlobalDatasets:
@@ -171,7 +171,9 @@ export const getWHEREQuery = params => {
       );
       const tableKey =
         polynameMeta &&
-        (params.glad ? polynameMeta.gladTableKey : polynameMeta.tableKey);
+        (params.glad && polynameMeta.gladTableKey
+          ? polynameMeta.gladTableKey
+          : polynameMeta.tableKey);
       let paramKey = p;
       if (p === 'threshold') paramKey = 'treecover_density__threshold';
       if (p === 'iso' && params.type === 'geostore') paramKey = 'geostore__id';
@@ -447,11 +449,30 @@ export const getAreaIntersectionGrouped = ({
   }));
 };
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
+export const fetchGladAlerts = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  grouped,
+  ...params
+}) => {
   const { glad } = SQL_QUERIES;
-  const url = `${getRequestUrl({ ...params, adm0, adm1, adm2, glad: true })}${
-    glad
-  }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    glad: true
+  })}${glad}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2 })
+        : getLocationSelect({ adm1, adm2 })
+    )
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
   return axios.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
@@ -459,7 +480,8 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
-        alerts: d.alert__count
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
       }))
     }
   }));

@@ -42,7 +42,7 @@ class SectionProjects extends PureComponent {
             }
           </MediaQuery>
           <div className="column small-12 large-6 project-side">
-            <h3>WHAT IS GLOBAL FOREST WATCH</h3>
+            <h3>WHAT IS GLOBAL FOREST WATCH?</h3>
             <div
               className="video-btn"
               onClick={() =>

@@ -119,7 +119,7 @@ export default {
   getData: params =>
     axios
       .all([
-        fetchGladAlerts(params),
+        fetchGladAlerts({ ...params, grouped: true }),
         fetchGLADLatest(params),
         getExtentGrouped(params)
       ])

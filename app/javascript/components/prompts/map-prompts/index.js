@@ -362,7 +362,7 @@ class MapPromptsContainer extends PureComponent {
           {
             target: '.draw-upload-tab',
             content:
-              'To draw a shape, click the Draw or Upload Shape tab and click Start Drawing. Click on the map, drag the mouse, and click again until you form your desired shape. Once the shape is fully connected, the analysis will be performed.',
+              'To draw a shape, click the Draw or Upload Shape tab and click Start Drawing. Click on the map, move the mouse, and click again until you form your desired shape. Once the shape is fully connected, the analysis will be performed.',
             disableBeacon: true,
             placement: 'right',
             actions: {
