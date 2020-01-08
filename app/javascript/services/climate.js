@@ -53,7 +53,12 @@ export const getEmissions = ({ threshold, adm0, download }) =>
       .replace('{threshold}', threshold || 0)
       .replace('{adm0}', adm0);
 
-    if (download) return newUrl.concat('&format=csv');
+    if (download) {
+      return {
+        name: 'emissions_per_year',
+        url: newUrl.concat('&format=csv')
+      };
+    }
     return request.get(encodeURI(newUrl));
   });
 
@@ -64,7 +69,12 @@ export const getCumulative = ({ download, ...params }) =>
     }`;
     const newUrl = url.replace('{iso}', params.adm0).replace('{year}', year);
 
-    if (download) return encodeURI(newUrl.replace('query', 'download'));
+    if (download) {
+      return {
+        name: 'cummulative_emissions_and_deforestation',
+        url: encodeURI(newUrl.replace('query', 'download'))
+      };
+    }
     return request.get(encodeURI(newUrl));
   });
 
@@ -117,6 +127,12 @@ export const getSoilOrganicCarbon = ({ adm0, adm1, adm2, download }) => {
   }
   const url = `${process.env.CARTO_API}/sql?q=${query}`;
 
-  if (download) return url.concat('&format=csv');
+  if (download) {
+    return {
+      name: 'soil_organic_carbon',
+      url: url.concat('&format=csv')
+    };
+  }
+
   return request.get(url);
 };

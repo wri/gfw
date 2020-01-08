@@ -273,7 +273,7 @@ export const getUSLandCover = params => {
     );
   if (download) {
     return {
-      name: 'global_land_cover',
+      name: 'us_land_cover',
       url: url.concat(
         `&format=csv&filename=land_cover_in_ha_in_${adm0}${
           adm1 ? `_${adm1}` : ''
