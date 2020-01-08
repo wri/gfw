@@ -1,4 +1,7 @@
-import { getGlobalLandCover } from 'services/forest-data';
+import {
+  getGlobalLandCover,
+  getGlobalLandCoverURL
+} from 'services/forest-data';
 
 export const getData = ({ params }) =>
   getGlobalLandCover(params).then(response => {
@@ -6,8 +9,6 @@ export const getData = ({ params }) =>
     return data;
   });
 
-export const getDataURL = params => [
-  getGlobalLandCover({ ...params, download: true })
-];
+export const getDataURL = params => [getGlobalLandCoverURL({ ...params })];
 
 export default getData;

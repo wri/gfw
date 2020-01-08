@@ -14,6 +14,64 @@ const NEW_SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country as iso, fao.forempl as total_forest_employees, fao.femempl as female_forest_employees, fao.usdrev as revenue__usd, fao.usdexp as expenditure__usd, fao.gdpusd2012 as gdp_2012__usd, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
+  globalLandCoverURL: `SELECT
+  cartodb_id,
+  the_geom,
+  the_geom_webmercator,
+  adm1,
+  adm2,
+  iso,
+  year,
+  (
+  coalesce(class_10, 0) +
+  coalesce(class_11, 0) +
+  coalesce(class_12, 0) +
+  coalesce(class_20, 0) +
+  coalesce(class_30, 0) +
+  coalesce(class_40, 0)
+  ) AS agriculture,
+  (
+  coalesce(class_50, 0) +
+  coalesce(class_60, 0) +
+  coalesce(class_61, 0) +
+  coalesce(class_62, 0) +
+  coalesce(class_70, 0) +
+  coalesce(class_71, 0) +
+  coalesce(class_72, 0) +
+  coalesce(class_80, 0) +
+  coalesce(class_81, 0) +
+  coalesce(class_82, 0) +
+  coalesce(class_90, 0)
+  ) AS forest,
+  (
+  coalesce(class_100, 0) +
+  coalesce(class_110, 0) +
+  coalesce(class_120, 0) +
+  coalesce(class_121, 0) +
+  coalesce(class_122, 0)
+  ) AS shrubland,
+  class_130 AS grassland,
+  (
+  coalesce(class_140, 0) +
+  coalesce(class_150, 0) +
+  coalesce(class_151, 0) +
+  coalesce(class_152, 0) +
+  coalesce(class_153, 0)
+  ) AS sparse_vegetation,
+  (
+  coalesce(class_160, 0) +
+  coalesce(class_170, 0) +
+  coalesce(class_180, 0)
+  ) AS wetland,
+  class_190 AS settlement,
+  (
+  coalesce(class_200, 0) +
+  coalesce(class_201, 0) +
+  coalesce(class_202, 0)
+  ) AS bare,
+  class_210 as water,
+  class_220 as permanent_snow_and_ice
+  FROM global_land_cover_adm2 WHERE {location}`,
   getNLCDLandCover:
     'SELECT {select} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
 };
@@ -177,9 +235,19 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
     };
   }
 
-  // TODO: rename column names? variables are class_60, class_61, class_62, etc.
+  // TODO: refactor global land cover widget to use method below
   return request.get(url);
-  // .then(r => console.table(r.data.rows[2]) || r);
+};
+
+export const getGlobalLandCoverURL = ({ adm0, adm1, adm2 }) => {
+  const url = `${CARTO_REQUEST_URL}${
+    NEW_SQL_QUERIES.globalLandCoverURL
+  }`.replace('{location}', getLocationQuery(adm0, adm1, adm2));
+
+  return {
+    name: 'global_land_cover',
+    url: encodeURI(url.concat('&format=csv')).replace(/\+/g, '%2B')
+  };
 };
 
 export const getUSLandCover = params => {
@@ -216,4 +284,5 @@ export const getUSLandCover = params => {
     );
   }
   return request.get(url);
+  // .then(r => console.table(r.data.rows[2]) || r);
 };
