@@ -12,7 +12,7 @@ const NEW_SQL_QUERIES = {
   faoDeforestRank:
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest as fao_treecover_deforest__ha from rank',
   faoEcoLive:
-    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
+    'SELECT fao.country as iso, fao.forempl as total_forest_employees, fao.femempl as female_forest_employees, fao.usdrev as revenue__usd, fao.usdexp as expenditure__usd, fao.gdpusd2012 as gdp_2012__usd, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getNLCDLandCover:
     'SELECT {select} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
@@ -122,30 +122,46 @@ export const getFAODeforestRank = ({ period, download }) => {
       url: url.concat('&format=csv')
     };
   }
-  return (
-    request
-      .get(url)
-      // .then(r => console.table(r.data.rows[2]) || r)
-      .then(response => ({
-        ...response,
-        data: {
-          rows: response.data.rows.map(o => {
-            delete Object.assign(o, { deforest: o.fao_treecover_deforest__ha })
-              .fao_treecover_deforest__ha;
-            return o;
-          })
-        }
-      }))
-  );
-  // .then(r => console.table(r.data.rows[2]) || r);
+  return request.get(url).then(response => ({
+    ...response,
+    data: {
+      rows: response.data.rows.map(o => {
+        delete Object.assign(o, { deforest: o.fao_treecover_deforest__ha })
+          .fao_treecover_deforest__ha;
+        return o;
+      })
+    }
+  }));
 };
 
 export const getFAOEcoLive = params => {
   const { download } = params || {};
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoEcoLive}`;
 
-  if (download) return url.concat('&format=csv');
-  return request.get(url);
+  if (download) {
+    return {
+      name: 'fao_treecover_economic_live',
+      url: url.concat('&format=csv')
+    };
+  }
+
+  return request.get(url).then(response => ({
+    ...response,
+    data: {
+      rows: response.data.rows.map(o => {
+        delete Object.assign(o, { country: o.iso }).iso;
+        delete Object.assign(o, { usdrev: o.revenue__usd }).revenue__usd;
+        delete Object.assign(o, { usdexp: o.expenditure__usd })
+          .expenditure__usd;
+        delete Object.assign(o, { gdpusd2012: o.gdp_2012__usd }).gdp_2012__usd;
+        delete Object.assign(o, { forempl: o.total_forest_employees })
+          .total_forest_employees;
+        delete Object.assign(o, { femempl: o.female_forest_employees })
+          .female_forest_employees;
+        return o;
+      })
+    }
+  }));
 };
 
 export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
@@ -154,8 +170,16 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
     getLocationQuery(adm0, adm1, adm2)
   );
 
-  if (download) return url.concat('&format=csv');
+  if (download) {
+    return {
+      name: 'global_land_cover',
+      url: url.concat('&format=csv')
+    };
+  }
+
+  // TODO: rename column names? variables are class_60, class_61, class_62, etc.
   return request.get(url);
+  // .then(r => console.table(r.data.rows[2]) || r);
 };
 
 export const getUSLandCover = params => {
