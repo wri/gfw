@@ -126,7 +126,7 @@ class RecentImageryContainer extends PureComponent {
       const recentDataset = {
         dataset: recentImageryDataset.dataset,
         layers: [recentImageryDataset.layer],
-        visibility: 1,
+        visibility: true,
         opacity: 1,
         isRecentImagery: true,
         params: {

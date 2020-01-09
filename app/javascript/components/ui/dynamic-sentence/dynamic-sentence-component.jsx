@@ -9,6 +9,13 @@ import Tip from 'components/ui/tip';
 import './dynamic-sentence-styles.scss';
 
 class DynamicSentence extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    handleMouseOver: PropTypes.func,
+    handleMouseOut: PropTypes.func
+  };
+
   reduceSentence = (sentence, pattern, component) => {
     const split = sentence.split(pattern);
     return [split[0], component, split[1]];
@@ -69,7 +76,7 @@ class DynamicSentence extends PureComponent {
           onHidden={handleMouseOut}
           duration={0}
         >
-          <span className="hover-text">
+          <span className="hover-text notranslate">
             {translateText(mappedComponent.key)}
           </span>
         </Tooltip>
@@ -85,12 +92,5 @@ class DynamicSentence extends PureComponent {
     );
   }
 }
-
-DynamicSentence.propTypes = {
-  className: PropTypes.string,
-  sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  handleMouseOver: PropTypes.func,
-  handleMouseOut: PropTypes.func
-};
 
 export default DynamicSentence;

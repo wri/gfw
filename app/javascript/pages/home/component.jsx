@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
+import Link from 'redux-first-router-link';
 import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
@@ -15,13 +16,22 @@ import NoContent from 'components/ui/no-content';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import profileIcon from 'assets/icons/profile.svg';
+import mailIcon from 'assets/icons/mail.svg';
 
 import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
 import './styles.scss';
 
-class Page extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+class HomePage extends PureComponent {
+  static propTypes = {
+    summary: PropTypes.array.isRequired,
+    apps: PropTypes.array.isRequired,
+    news: PropTypes.array,
+    newsLoading: PropTypes.bool,
+    uses: PropTypes.array.isRequired,
+    isDesktop: PropTypes.bool
+  };
+
   state = {
     showVideo: false
   };
@@ -75,6 +85,12 @@ class Page extends PureComponent {
                   STOP VIDEO
                 </Button>
               )}
+              <Link className="subscribe-btn" to="/subscribe">
+                <Button theme="square" className="subscribe-icon">
+                  <Icon icon={mailIcon} />
+                </Button>
+                <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+              </Link>
             </Fragment>
           )}
         </Cover>
@@ -265,13 +281,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  summary: PropTypes.array.isRequired,
-  apps: PropTypes.array.isRequired,
-  news: PropTypes.array,
-  newsLoading: PropTypes.bool,
-  uses: PropTypes.array.isRequired,
-  isDesktop: PropTypes.bool
-};
-
-export default Page;
+export default HomePage;

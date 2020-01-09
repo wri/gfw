@@ -99,8 +99,8 @@ export const getProjectsForGlobe = createSelector(
     let projectsForGlobe = [];
     projects.forEach(p => {
       let tempCountries = [];
-      const countries = p.countries.split(',');
-      if (countries.length > 1) {
+      const countries = p.countries && p.countries.split(',');
+      if (countries && countries.length > 1) {
         tempCountries = countries.map(iso => ({
           ...p,
           iso

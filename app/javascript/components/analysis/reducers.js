@@ -1,6 +1,7 @@
 import * as actions from './actions';
 
 export const initialState = {
+  uploading: false,
   loading: false,
   error: '',
   errorMessage: '',

@@ -89,7 +89,7 @@ export const parseSentence = createSelector(
     const totalGain = sumBy(data, 'gain') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
     const avgGainPercentage = sumBy(data, 'percentage') || 0 / data.length;
-    const avgGain = sumBy(data, 'gain') || 0 / data.length;
+    const avgGain = (sumBy(data, 'gain') || 0) / data.length;
     let percentileGain = 0;
     let percentileLength = 0;
 
@@ -113,7 +113,7 @@ export const parseSentence = createSelector(
     const aveFormat = avgGain < 1 ? '.3r' : '.3s';
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator: indicator && indicator.label,
       location: locationName,
       topGain: `${format('.2r')(topGain)}%`,
       percentileLength: percentileLength || '0',
