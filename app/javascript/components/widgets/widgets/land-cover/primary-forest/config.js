@@ -25,9 +25,9 @@ export default {
   },
   sentences: {
     initial:
-      'As of {extentYear}, {percentage} of {location} total tree cover was <b>primary forest</b>.',
+      'As of 2001, {percentage} of {location} total tree cover was <b>primary forest</b>.',
     withIndicator:
-      'As of {extentYear}, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
+      'As of 2001, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
   },
   whitelists: {
     adm0: ['IDN', 'COD']
