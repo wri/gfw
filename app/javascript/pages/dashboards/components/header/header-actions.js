@@ -18,6 +18,11 @@ export const getHeaderData = createThunkAction(
       .all([
         getExtent(params),
         getExtent({ ...params, forestType: 'plantations' }),
+        getExtent({
+          ...params,
+          forestType: 'primary_forest',
+          extentYear: 2000
+        }),
         getLoss(params),
         getLoss({ ...params, forestType: 'plantations' }),
         getLoss({ ...params, forestType: 'primary_forest' })
@@ -27,6 +32,7 @@ export const getHeaderData = createThunkAction(
           (
             totalExtent,
             totalPlantationsExtent,
+            totalPrimaryExtent,
             totalLoss,
             totalPlantationsLoss,
             totalPrimaryLoss
@@ -35,6 +41,7 @@ export const getHeaderData = createThunkAction(
             const loss = totalLoss.data.data;
             const plantationsLoss = totalPlantationsLoss.data.data;
             const plantationsExtent = totalPlantationsExtent.data.data;
+            const primaryExtent = totalPrimaryExtent.data.data;
 
             // group over years
             const groupedLoss = plantationsLoss && groupBy(loss, 'year');
@@ -76,6 +83,10 @@ export const getHeaderData = createThunkAction(
               plantationsExtent:
                 plantationsExtent && plantationsExtent.length
                   ? plantationsExtent[0].extent
+                  : 0,
+              primaryExtent:
+                primaryExtent && primaryExtent.length
+                  ? primaryExtent[0].extent
                   : 0,
               totalLoss: {
                 area: summedLoss || 0,
