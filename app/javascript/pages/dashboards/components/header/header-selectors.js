@@ -146,7 +146,6 @@ export const getSentence = createSelector(
       naturalForest: `${naturalForest}ha`,
       primaryForest: `${primaryForest}ha`,
       location: location || 'the world',
-      location_1: location || 'the world',
       percentage: `${percentageCover}%`,
       percentageNatForest: `${percentageNatForest}%`,
       percentagePrimaryForest: `${percentagePrimaryForest}%`,
