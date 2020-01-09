@@ -147,15 +147,15 @@ class Header extends PureComponent {
                     location.adm0 === 'IDN' && (
                     <Fragment>
                       <p className="disclaimer">
-                          *Natural forest is defined as all tree cover (all
-                          vegetation taller than 5 meters in height) with 30%
-                          minimum tree cover density excluding tree cover within
-                          mapped tree plantations.
-                      </p>
-                      <p className="disclaimer">
                           *Primary forest is defined as mature natural humid
                           tropical forest that has not been completely cleared
                           and regrown in recent history.
+                      </p>
+                      <p className="disclaimer">
+                          **Natural forest is defined as all tree cover (all
+                          vegetation taller than 5 meters in height) with 30%
+                          minimum tree cover density excluding tree cover within
+                          mapped tree plantations.
                       </p>
                     </Fragment>
                   )}
