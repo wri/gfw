@@ -117,6 +117,10 @@ export const getSentence = createSelector(
       data.extent - data.plantationsExtent < 1
         ? format('.3r')(data.extent - data.plantationsExtent)
         : format('.3s')(data.extent - data.plantationsExtent);
+    const primaryForest =
+      data.primaryExtent < 1
+        ? format('.3r')(data.primaryExtent)
+        : format('.3s')(data.primaryExtent);
     const percentageCover = format('.2r')(data.extent / data.totalArea * 100);
     const percentageNatForest = format('.2r')(
       (data.extent - data.plantationsExtent) / data.totalArea * 100
@@ -124,7 +128,7 @@ export const getSentence = createSelector(
     const percentagePrimaryForest = format('.2r')(
       data.primaryExtent / data.totalArea * 100
     );
-    const lossWithoutPlantations = format('.3s')(
+    const naturalLoss = format('.3s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
     const emissionsNaturalForest = format('.3s')(
@@ -140,19 +144,20 @@ export const getSentence = createSelector(
     const params = {
       extent: `${extent}ha`,
       naturalForest: `${naturalForest}ha`,
+      primaryForest: `${primaryForest}ha`,
       location: location || 'the world',
       location_1: location || 'the world',
       percentage: `${percentageCover}%`,
       percentageNatForest: `${percentageNatForest}%`,
       percentagePrimaryForest: `${percentagePrimaryForest}%`,
-      naturalLoss: `${lossWithoutPlantations}ha`,
       loss: `${loss}ha`,
       emissions: `${emissionsNaturalForest}t`,
       emissionsTreeCover: `${emissions}t`,
       emissionsPrimary: `${emissionsPrimary}t`,
       year: data.totalLoss.year,
       treeCoverLoss: `${loss}ha`,
-      primaryLoss: `${primaryLoss}ha`
+      primaryLoss: `${primaryLoss}ha`,
+      naturalLoss: `${naturalLoss}ha`
     };
 
     let sentence = sentences.default;
