@@ -134,7 +134,13 @@ class DashboardsPage extends PureComponent {
       embed
     } = this.props;
 
+    const { status, location } = activeArea || {};
+
     const isAreaDashboard = locationType === 'aoi';
+    const isPendingDashboard =
+      status === 'pending' &&
+      location &&
+      !['country', 'wdpa'].includes(location.type);
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -166,8 +172,7 @@ class DashboardsPage extends PureComponent {
                       checkActive
                     />
                   )}
-                  {activeArea &&
-                    activeArea.status === 'pending' && (
+                  {isPendingDashboard && (
                     <PendingDashboard
                       className="pending-message"
                       isUserDashboard={activeArea && activeArea.userArea}
