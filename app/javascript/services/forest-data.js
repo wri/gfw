@@ -1,5 +1,7 @@
 import request from 'utils/request';
 
+import globalLandCoverCategories from 'data/global-land-cover-categories.json';
+
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const NEW_SQL_QUERIES = {
@@ -22,55 +24,16 @@ const NEW_SQL_QUERIES = {
   adm2,
   iso,
   year,
-  (
-  coalesce(class_10, 0) +
-  coalesce(class_11, 0) +
-  coalesce(class_12, 0) +
-  coalesce(class_20, 0) +
-  coalesce(class_30, 0) +
-  coalesce(class_40, 0)
-  ) AS agriculture,
-  (
-  coalesce(class_50, 0) +
-  coalesce(class_60, 0) +
-  coalesce(class_61, 0) +
-  coalesce(class_62, 0) +
-  coalesce(class_70, 0) +
-  coalesce(class_71, 0) +
-  coalesce(class_72, 0) +
-  coalesce(class_80, 0) +
-  coalesce(class_81, 0) +
-  coalesce(class_82, 0) +
-  coalesce(class_90, 0)
-  ) AS forest,
-  (
-  coalesce(class_100, 0) +
-  coalesce(class_110, 0) +
-  coalesce(class_120, 0) +
-  coalesce(class_121, 0) +
-  coalesce(class_122, 0)
-  ) AS shrubland,
-  class_130 AS grassland,
-  (
-  coalesce(class_140, 0) +
-  coalesce(class_150, 0) +
-  coalesce(class_151, 0) +
-  coalesce(class_152, 0) +
-  coalesce(class_153, 0)
-  ) AS sparse_vegetation,
-  (
-  coalesce(class_160, 0) +
-  coalesce(class_170, 0) +
-  coalesce(class_180, 0)
-  ) AS wetland,
-  class_190 AS settlement,
-  (
-  coalesce(class_200, 0) +
-  coalesce(class_201, 0) +
-  coalesce(class_202, 0)
-  ) AS bare,
-  class_210 as water,
-  class_220 as permanent_snow_and_ice
+  ${globalLandCoverCategories
+    .map(
+      category =>
+        `(${category.classes
+          .map(c => `coalesce(${c}, 0)`)
+          .join(' + \n')}) AS ${category.label
+          .replace(/ /g, '_')
+          .toLowerCase()}`
+    )
+    .join(',\n')}
   FROM global_land_cover_adm2 WHERE {location}`,
   getNLCDLandCover:
     'SELECT from_class_nlcd AS initial_nlcd_category, to_class_nlcd AS final_nlcd_category, from_class_ipcc AS initial_ipcc_category, to_class_ipcc AS final_ipcc_category, {area} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
