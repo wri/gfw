@@ -72,6 +72,14 @@
     }
   }
 
+  .disclaimer {
+    color: rgba($white, 0.8);
+    font-size: rem(14px);
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: rem(10px);
+  }
+
   .forest-atlas-btn {
     margin-bottom: rem(20px);
     max-width: rem(200px);
