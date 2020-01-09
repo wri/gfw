@@ -214,6 +214,7 @@ function SaveAOIForm(props) {
     (!webhookUrl || !webhookError);
 
   const webhookData = { test: true };
+  const [webhookMsg, setWebhookMsg] = useState(null);
   const [showLoader, setLoader] = useState(false);
 
   return (
@@ -268,7 +269,7 @@ function SaveAOIForm(props) {
         />
       </div>
       <div className={cx('field', { error: webhookError })}>
-        <details>
+        <details open={!!webhookUrl}>
           <summary>
             <label className="form-title">
               Webhook URL (Optional)
@@ -300,14 +301,38 @@ function SaveAOIForm(props) {
                 className="button-link"
                 onClick={() => {
                   setLoader(true);
-                  testWebhook(webhookData, webhookUrl, () =>
-                    setLoader(false)
-                  );
+                  testWebhook({
+                    data: webhookData,
+                    url: webhookUrl,
+                    callback: message => {
+                      // message is 'success' / 'error'
+                      setTimeout(() => {
+                        setLoader(false);
+                        setWebhookMsg(message);
+                      }, 300);
+                      setTimeout(
+                        () => setWebhookMsg(null),
+                        message === 'error' ? 2500 : 1000
+                      );
+                    }
+                  });
                 }}
               >
                 <span>Test webhook</span>
                 {showLoader && <Loader className="webhook-loader" />}
               </button>
+            )}
+            {webhookMsg && (
+              <span
+                className={cx({
+                  'wh-error': webhookMsg === 'error',
+                  'wh-success': webhookMsg === 'success'
+                })}
+              >
+                {webhookMsg === 'success' && 'Success!'}
+                {webhookMsg === 'error' &&
+                  'POST error. Check the URL or CORS policy.'}
+              </span>
             )}
           </div>
         </details>

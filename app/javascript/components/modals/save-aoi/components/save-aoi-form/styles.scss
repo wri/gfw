@@ -122,6 +122,14 @@ $desktop-padding: rem(50px);
       height: 12px;
       border-width: 2px;
     }
+
+    .wh-success {
+      color: $green-gfw;
+    }
+
+    .wh-error {
+      color: $error;
+    }
   }
 
   .text-input,
