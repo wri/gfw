@@ -3,7 +3,6 @@ import { createSelector } from 'reselect';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 export const selectLocation = state => state.location;
-export const selectAdminData = state => state.geostore && state.geostore.data;
 
 export const getDataLocation = createSelector(
   [getActiveArea, selectLocation],

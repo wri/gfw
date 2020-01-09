@@ -38,12 +38,6 @@ export const parseData = createSelector(
         value: gain,
         color: colors.main,
         percentage: gainPerc
-      },
-      {
-        label: 'Tree cover',
-        value: extent,
-        color: colors.extent,
-        percentage: 100 - gainPerc
       }
     ];
   }

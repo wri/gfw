@@ -78,7 +78,7 @@ export const getModalDesc = createSelector(
       return "Check your email and click on the link to confirm your subscription. If you don't see an email, check your junk or spam email folder.";
     }
 
-    return 'Your area has been updated. You can view all your areas in my GFW.';
+    return 'Your area has been updated. You can view all your areas in My GFW.';
   }
 );
 
