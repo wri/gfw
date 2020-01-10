@@ -198,7 +198,7 @@ class WidgetHeader extends PureComponent {
           {}
         )
       }),
-      date: moment().format('YYYY-MM-DD'),
+      date_downloaded: moment().format('YYYY-MM-DD'),
       metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${
         metaKey
       }`,
