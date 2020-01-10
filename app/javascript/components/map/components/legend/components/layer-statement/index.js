@@ -4,7 +4,8 @@ import Component from './component';
 
 import config from './config';
 
-const mapStateToProps = ({ countryData }, { type, isos }) => ({
+const mapStateToProps = ({ countryData }, { type, isos, statement }) => ({
+  statementPlain: statement,
   ...config[type],
   ...(!!isos && {
     tooltipDesc:
