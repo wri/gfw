@@ -15,24 +15,30 @@ const mapStateToProps = state => ({
 });
 
 class WhitelistProvider extends PureComponent {
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    getWhitelist: PropTypes.func.isRequired,
+    setWhitelist: PropTypes.func.isRequired
+  };
+
   componentDidMount() {
     const { location: { type, adm0, adm1, adm2 } } = this.props;
-    if (type === 'country' && adm0) {
-      this.handleFetchWhitelist({ adm0, adm1, adm2 });
+    if (adm0) {
+      this.handleFetchWhitelist({ type, adm0, adm1, adm2 });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location } = this.props;
+    const { location, setWhitelist } = this.props;
     const { type, adm0, adm1, adm2 } = location;
-    const isCountry = type === 'country';
+    const hasLocationChanged = !isEqual(location, prevProps.location);
 
-    if (isCountry) {
-      const hasLocationChanged = adm0 && !isEqual(location, prevProps.location);
+    if (adm0 && hasLocationChanged) {
+      this.handleFetchWhitelist({ type, adm0, adm1, adm2 });
+    }
 
-      if (hasLocationChanged) {
-        this.handleFetchWhitelist({ adm0, adm1, adm2 });
-      }
+    if (type === 'global' && hasLocationChanged) {
+      setWhitelist({});
     }
   }
 
@@ -54,11 +60,6 @@ class WhitelistProvider extends PureComponent {
     return null;
   }
 }
-
-WhitelistProvider.propTypes = {
-  location: PropTypes.object.isRequired,
-  getWhitelist: PropTypes.func.isRequired
-};
 
 reducerRegistry.registerModule('whitelists', {
   actions,

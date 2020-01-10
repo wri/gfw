@@ -1,5 +1,4 @@
 import lowerCase from 'lodash/lowerCase';
-import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import compact from 'lodash/compact';
 import moment from 'moment';
@@ -10,16 +9,16 @@ import allOptions from '../options';
 export const getForestTypes = ({
   forestTypes,
   settings,
-  locationType,
   polynamesWhitelist,
   adm0
 }) =>
   forestTypes
     .filter(o => {
-      const isGlobal = locationType !== 'global' || o.global;
+      const isGlobal = !polynamesWhitelist && o.global;
       const hasPolyname =
-        isEmpty(polynamesWhitelist) || polynamesWhitelist.includes(o.value);
-      return isGlobal && hasPolyname;
+        isGlobal ||
+        (polynamesWhitelist && polynamesWhitelist.includes(o.value));
+      return isGlobal || hasPolyname;
     })
     .map(f => ({
       ...f,
@@ -32,16 +31,12 @@ export const getForestTypes = ({
           : f.metaKey
     }));
 
-export const getLandCategories = ({
-  landCategories,
-  locationType,
-  polynamesWhitelist
-}) =>
+export const getLandCategories = ({ landCategories, polynamesWhitelist }) =>
   landCategories.filter(o => {
-    const isGlobal = locationType !== 'global' || o.global;
+    const isGlobal = !polynamesWhitelist && o.global;
     const hasPolyname =
-      isEmpty(polynamesWhitelist) || polynamesWhitelist.includes(o.value);
-    return isGlobal && hasPolyname;
+      isGlobal || (polynamesWhitelist && polynamesWhitelist.includes(o.value));
+    return isGlobal || hasPolyname;
   });
 
 export const getSettingsConfig = ({
