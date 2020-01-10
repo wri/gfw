@@ -27,7 +27,7 @@ export const parsePayload = payload => {
   if (payloadValues) {
     const startDate = moment()
       .year(payloadValues.year)
-      .week(payloadValues.week);
+      .isoWeek(payloadValues.week);
 
     return {
       startDate: startDate.format('YYYY-MM-DD'),
@@ -63,10 +63,10 @@ export const getData = createSelector(
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
     const years = [];
-    const latestFullWeek = moment(latest);
+    const latestWeek = moment(latest);
     const lastWeek = {
-      isoWeek: latestFullWeek.isoWeek(),
-      year: latestFullWeek.year()
+      isoWeek: latestWeek.isoWeek(),
+      year: latestWeek.year()
     };
 
     for (let i = startYear; i <= lastWeek.year; i += 1) {

@@ -31,15 +31,15 @@ export const parseList = createSelector(
   ],
   (data, latest, extent, settings, adm1, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
-    const latestWeek = moment(latest).week();
+    const latestWeek = moment(latest).isoWeek();
     const latestYear = moment(latest).year();
     const alertsByDate = data.filter(d =>
       moment()
-        .week(d.week)
+        .isoWeek(d.week)
         .year(d.year)
         .isAfter(
           moment()
-            .week(latestWeek)
+            .isoWeek(latestWeek)
             .year(latestYear)
             .subtract(settings.weeks, 'weeks')
         )
