@@ -15,12 +15,17 @@ $desktop-padding: rem(50px);
     margin-bottom: rem(30px);
   }
 
+  summary {
+    cursor: pointer;
+  }
+
   .field {
     display: flex;
     flex-direction: column;
     margin-bottom: rem(20px);
 
-    label {
+    label,
+    summary {
       margin-bottom: rem(10px);
     }
 
@@ -70,6 +75,21 @@ $desktop-padding: rem(50px);
     }
   }
 
+  .form-toggle {
+    display: flex;
+    align-items: center;
+
+    button {
+      min-width: rem(22px);
+      margin-right: rem(10px);
+    }
+  }
+
+  .info-button {
+    margin-left: 4px;
+    display: inline-block;
+  }
+
   .webhook-actions {
     margin-top: rem(5px);
 
@@ -83,6 +103,32 @@ $desktop-padding: rem(50px);
       &:hover {
         color: darken($green-gfw, 10%);
       }
+    }
+
+    .button-link {
+      position: relative;
+      padding-right: 16px;
+    }
+
+    .webhook-loader {
+      width: 12px;
+      height: 12px;
+      left: unset;
+      right: 0;
+    }
+
+    .spinner {
+      width: 12px;
+      height: 12px;
+      border-width: 2px;
+    }
+
+    .wh-success {
+      color: $green-gfw;
+    }
+
+    .wh-error {
+      color: $error;
     }
   }
 
@@ -105,16 +151,6 @@ $desktop-padding: rem(50px);
     font-weight: 500;
     line-height: 18px;
     text-transform: uppercase;
-  }
-
-  .form-toggle {
-    display: flex;
-    align-items: center;
-
-    button {
-      min-width: rem(22px);
-      margin-right: rem(10px);
-    }
   }
 
   .form-checkbox {

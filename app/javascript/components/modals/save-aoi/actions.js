@@ -1,4 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
+import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { setAreasWithSubscription, deleteAreaProvider } from 'services/areas';
@@ -22,6 +23,23 @@ export const setSaveAOISettings = createThunkAction(
         state
       })
     )
+);
+
+export const testWebhook = createThunkAction(
+  'testWebhook',
+  ({ data, url, callback }) => () =>
+    axios({
+      method: 'POST',
+      data,
+      headers: { 'content-type': 'application/json' },
+      url
+    })
+      .then(() => {
+        callback('success');
+      })
+      .catch(() => {
+        callback('error');
+      })
 );
 
 export const saveAOI = createThunkAction(

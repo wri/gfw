@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
+import ReactHtmlParser from 'react-html-parser';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
@@ -52,7 +53,7 @@ class ModalSaveAOI extends PureComponent {
     return (
       <div className="confirmation-message">
         {!deleted && <Icon icon={successIcon} className="icon-confirmation" />}
-        <p>{modalDesc}</p>
+        <p>{ReactHtmlParser(modalDesc)}</p>
         <div className="confirmation-actions">
           <Button className="close-btn" onClick={this.handleCloseModal}>
             GOT IT!

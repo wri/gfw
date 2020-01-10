@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-for */
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { getLanguages } from 'utils/lang';
-import { validateEmail } from 'utils/format';
+import { validateEmail, validateURL } from 'utils/format';
 
 import Checkbox from 'components/ui/checkbox-v2';
 import Loader from 'components/ui/loader';
@@ -14,8 +14,10 @@ import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 import MapGeostore from 'components/map-geostore';
 import deleteIcon from 'assets/icons/delete.svg';
+import infoIcon from 'assets/icons/info.svg';
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
+import ModalSource from 'components/modals/sources';
 
 import './styles.scss';
 
@@ -69,7 +71,8 @@ function reducer(state, action) {
     case 'webhookUrl': {
       return {
         ...state,
-        webhookUrl: payload
+        webhookUrl: payload,
+        webhookError: !validateURL(payload)
       };
     }
     case 'activeArea': {
@@ -115,21 +118,24 @@ function SaveAOIForm(props) {
     viewAfterSave,
     clearAfterDelete,
     canDelete,
-    geostoreId
+    geostoreId,
+    setModalSources,
+    testWebhook
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
     loading: true,
     name: props.locationName || '',
+    nameError: false,
     email: props.email || userData.email,
     emailError: false,
     language: props.language || userData.language || 'en',
     tags: [],
-    nameError: false,
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
     monthlySummary: props.monthlySummary || false,
-    webhookUrl: props.webhookUrl || ''
+    webhookUrl: props.webhookUrl || '',
+    webhookError: false
   });
 
   useEffect(
@@ -189,19 +195,23 @@ function SaveAOIForm(props) {
 
   const {
     name,
+    nameError,
     email,
     emailError,
     tags,
     language,
-    nameError,
     fireAlerts,
     deforestationAlerts,
     monthlySummary,
-    webhookUrl
+    webhookUrl,
+    webhookError
   } = form;
-  const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
   const canSubmit =
-    (hasSubscription ? validateEmail(email) : true) && name && language;
+    !emailError && !nameError && language && (!webhookUrl || !webhookError);
+
+  const webhookData = { test: true };
+  const [webhookMsg, setWebhookMsg] = useState(null);
+  const [showLoader, setLoader] = useState(false);
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -218,14 +228,16 @@ function SaveAOIForm(props) {
         width={600}
       />
       <div className={cx('field', { error: nameError })}>
-        <label className="form-title">Name this area for later reference</label>
+        <label className="form-title">
+          Name this area for later reference *
+        </label>
         <input
           className="text-input"
           value={name}
           onChange={e => dispatch({ type: 'name', payload: e.target.value })}
         />
       </div>
-      <div className={cx('field', { error: nameError })}>
+      <div className="field">
         <label className="form-title">
           Assign tags to organize and group areas
         </label>
@@ -234,6 +246,9 @@ function SaveAOIForm(props) {
           className="aoi-tags-input"
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
         />
+        <div className="webhook-actions">
+          <span>Hit enter or comma to create and separate tags</span>
+        </div>
       </div>
       <div className={cx('field', 'field-image')}>
         <img
@@ -247,33 +262,84 @@ function SaveAOIForm(props) {
         </p>
       </div>
       <div className={cx('field', { error: emailError })}>
-        <label className="form-title">Email</label>
+        <label className="form-title">Email *</label>
         <input
           className="text-input"
           value={email}
           onChange={e => dispatch({ type: 'email', payload: e.target.value })}
         />
       </div>
-      <div className={cx('field')}>
-        <label className="form-title">URL (Webhook)</label>
-        <input
-          className="text-input"
-          value={webhookUrl}
-          onChange={e =>
-            dispatch({ type: 'webhookUrl', payload: e.target.value })
-          }
-        />
-        <div className="webhook-actions">
-          <button className="button-link" onClick={() => {}}>
-            Preview of payload
-          </button>
-          <button className="button-link" onClick={() => {}}>
-            Test webhook
-          </button>
-        </div>
+      <div className={cx('field', { error: webhookError })}>
+        <details open={!!webhookUrl}>
+          <summary>
+            <span className="form-title">
+              Webhook URL (Optional)
+              <Button
+                className="info-button"
+                theme="theme-button-tiny theme-button-grey-filled square"
+                onClick={() =>
+                  setModalSources({
+                    open: true,
+                    source: 'webhookPreview'
+                  })
+                }
+              >
+                <Icon icon={infoIcon} className="info-icon" />
+              </Button>
+            </span>
+          </summary>
+          <input
+            className="text-input"
+            value={webhookUrl}
+            onChange={e =>
+              dispatch({ type: 'webhookUrl', payload: e.target.value })
+            }
+          />
+          <div className="webhook-actions">
+            {!!webhookUrl &&
+              !webhookError && (
+              <button
+                className="button-link"
+                onClick={() => {
+                  setLoader(true);
+                  testWebhook({
+                    data: webhookData,
+                    url: webhookUrl,
+                    callback: message => {
+                      // message is 'success' / 'error'
+                      setTimeout(() => {
+                        setLoader(false);
+                        setWebhookMsg(message);
+                      }, 300);
+                      setTimeout(
+                        () => setWebhookMsg(null),
+                        message === 'error' ? 2500 : 1000
+                      );
+                    }
+                  });
+                }}
+              >
+                <span>Test webhook</span>
+                {showLoader && <Loader className="webhook-loader" />}
+              </button>
+            )}
+            {webhookMsg && (
+              <span
+                className={cx({
+                  'wh-error': webhookMsg === 'error',
+                  'wh-success': webhookMsg === 'success'
+                })}
+              >
+                {webhookMsg === 'success' && 'Success!'}
+                {webhookMsg === 'error' &&
+                  'POST error. Check the URL or CORS policy.'}
+              </span>
+            )}
+          </div>
+        </details>
       </div>
       <div className="field">
-        <label className="form-title">Language*</label>
+        <label className="form-title">Language</label>
         <Dropdown
           className="dropdown-input"
           theme="theme-dropdown-native-form"
@@ -305,6 +371,7 @@ function SaveAOIForm(props) {
           label={'Monthly summary'}
         />
       </div>
+      <ModalSource />
       {renderSaveAOI()}
     </div>
   );
@@ -327,7 +394,9 @@ SaveAOIForm.propTypes = {
   monthlySummary: PropTypes.bool,
   webhookUrl: PropTypes.string,
   email: PropTypes.string,
-  geostoreId: PropTypes.string
+  geostoreId: PropTypes.string,
+  setModalSources: PropTypes.func,
+  testWebhook: PropTypes.func
 };
 
 export default SaveAOIForm;
