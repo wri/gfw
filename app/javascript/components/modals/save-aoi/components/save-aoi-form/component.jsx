@@ -126,11 +126,11 @@ function SaveAOIForm(props) {
   const [form, dispatch] = useReducer(reducer, {
     loading: true,
     name: props.locationName || '',
+    nameError: false,
     email: props.email || userData.email,
     emailError: false,
     language: props.language || userData.language || 'en',
     tags: [],
-    nameError: false,
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
     monthlySummary: props.monthlySummary || false,
@@ -206,12 +206,8 @@ function SaveAOIForm(props) {
     webhookUrl,
     webhookError
   } = form;
-  const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
   const canSubmit =
-    (hasSubscription ? validateEmail(email) : true) &&
-    name &&
-    language &&
-    (!webhookUrl || !webhookError);
+    !emailError && !nameError && language && (!webhookUrl || !webhookError);
 
   const webhookData = { test: true };
   const [webhookMsg, setWebhookMsg] = useState(null);
@@ -232,14 +228,16 @@ function SaveAOIForm(props) {
         width={600}
       />
       <div className={cx('field', { error: nameError })}>
-        <label className="form-title">Name this area for later reference</label>
+        <label className="form-title">
+          Name this area for later reference *
+        </label>
         <input
           className="text-input"
           value={name}
           onChange={e => dispatch({ type: 'name', payload: e.target.value })}
         />
       </div>
-      <div className={cx('field', { error: nameError })}>
+      <div className="field">
         <label className="form-title">
           Assign tags to organize and group areas
         </label>
@@ -248,6 +246,9 @@ function SaveAOIForm(props) {
           className="aoi-tags-input"
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
         />
+        <div className="webhook-actions">
+          <span>Hit enter or comma to create and separate tags</span>
+        </div>
       </div>
       <div className={cx('field', 'field-image')}>
         <img
@@ -261,7 +262,7 @@ function SaveAOIForm(props) {
         </p>
       </div>
       <div className={cx('field', { error: emailError })}>
-        <label className="form-title">Email</label>
+        <label className="form-title">Email *</label>
         <input
           className="text-input"
           value={email}
@@ -271,7 +272,7 @@ function SaveAOIForm(props) {
       <div className={cx('field', { error: webhookError })}>
         <details open={!!webhookUrl}>
           <summary>
-            <label className="form-title">
+            <span className="form-title">
               Webhook URL (Optional)
               <Button
                 className="info-button"
@@ -285,7 +286,7 @@ function SaveAOIForm(props) {
               >
                 <Icon icon={infoIcon} className="info-icon" />
               </Button>
-            </label>
+            </span>
           </summary>
           <input
             className="text-input"
@@ -338,7 +339,7 @@ function SaveAOIForm(props) {
         </details>
       </div>
       <div className="field">
-        <label className="form-title">Language*</label>
+        <label className="form-title">Language</label>
         <Dropdown
           className="dropdown-input"
           theme="theme-dropdown-native-form"
