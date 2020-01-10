@@ -11,16 +11,16 @@ export default {
   },
   webhookPreview: {
     title: 'Webhook URL.',
-    body: `<h3>What is this feature?</h3><p>Webhooks are data sent on demand from one app (GFW) to another over HTTP(S) instead of through the command line in your computer, formatted in XML, JSON, or form-encoded serialization.</p><h3>What does the payload look like?</h3><p>We use the following standard:</p><p>All alerts include the following information:</p><div class="source_snippet"><pre><code>
+    body: `<h3>What is this feature?</h3><p>Webhooks are data sent on demand from one app (GFW) to another over HTTP(S) instead of through the command line in your computer, formatted in XML, JSON, or form-encoded serialization.</p><h3>What does the payload look like?</h3><div class="source_snippet"><pre><code>
   {
     <span class="json-key">layerSlug</span>: <span class="json-string">"layer slug"</span>,
-    <span class="json-key">alert_name</span>: <span class="json-string">"subscription name"</span>,
-    <span class="json-key">selected_area</span>: <span class="json-string">"area in meters"</span>,
+    <span class="json-key">alert_name</span>: <span class="json-string">"area of interest name"</span>,
+    <span class="json-key">selected_area</span>: <span class="json-string">"area in hectares"</span>,
     <span class="json-key">unsubscribe_url</span>: <span class="json-string">"url"</span>,
-    <span class="json-key">subscriptions_url</span>: <span class="json-string">"url of the user subscriptions (../my_gfw/subscriptions)"</span>,
-    <span class="json-key">alert_link</span>: <span class="json-string">"url of the map with the subscription"</span>,
-    <span class="json-key">alert_date_begin</span>: <span class="json-string">"beginDate"</span>,
-    <span class="json-key">alert_date_end</span>: <span class="json-string">"endDate"</span>
+    <span class="json-key">area_url</span>: <span class="json-string">"url of the area dashboard"</span>,
+    <span class="json-key">area_map</span>: <span class="json-string">"url of the area on the map"</span>,
+    <span class="json-key">alert_date_begin</span>: <span class="json-string">"begin date"</span>,
+    <span class="json-key">alert_date_end</span>: <span class="json-string">"end date"</span>
   }
 
 </code></pre></div>`
