@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
+import ReactHtmlParser from 'react-html-parser';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
@@ -46,28 +47,13 @@ class ModalSaveAOI extends PureComponent {
     }
   };
 
-  parseBoldText = str => {
-    if (str.includes('<b>')) {
-      const regex = /(?:^|\s)<b>(.*?)<\/b>(?:\s|$)/g;
-      const match = regex.exec(str);
-      const other = str.split(match[0]);
-      return (
-        <p>
-          {other[0]}
-          <b>{match[1]}</b> {other[1]}
-        </p>
-      );
-    }
-    return <p>str</p>;
-  };
-
   renderConfirmation = () => {
     const { deleted, modalDesc } = this.props;
 
     return (
       <div className="confirmation-message">
         {!deleted && <Icon icon={successIcon} className="icon-confirmation" />}
-        {this.parseBoldText(modalDesc)}
+        <p>{ReactHtmlParser(modalDesc)}</p>
         <div className="confirmation-actions">
           <Button className="close-btn" onClick={this.handleCloseModal}>
             GOT IT!
