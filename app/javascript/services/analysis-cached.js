@@ -77,10 +77,6 @@ const getAnnualDataset = ({
   type,
   whitelist
 }) => {
-  if (whitelist && adm0 && adm1 && adm2) return ANNUAL_ADM2_WHITELIST;
-  if (whitelist && adm0 && adm1) return ANNUAL_ADM1_WHITELIST;
-  if (whitelist) return ANNUAL_ADM0_WHITELIST;
-
   if (type === 'geostore' && summary && whitelist) {
     return ANNUAL_GEOSTORE_WHITELIST;
   }
@@ -188,7 +184,7 @@ export const getWHEREQuery = params => {
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
 }${
-  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not '0'` : ''
+  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
 }${
   isPolyname &&
         polynameMeta &&
@@ -550,6 +546,6 @@ export const getLocationPolynameWhitelist = params => {
   }`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{polynames}', buildPolynameSelects())
-    .replace('{WHERE}', getWHEREQuery({ iso: params.adm0, ...params }));
+    .replace('{WHERE}', getWHEREQuery(params));
   return axios.get(url);
 };

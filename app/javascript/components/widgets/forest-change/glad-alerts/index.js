@@ -44,7 +44,23 @@ export default {
     forestChange: 9
   },
   pendingKeys: ['weeks'],
+  refetchKeys: ['forestType', 'landCategory'],
   settingsConfig: [
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
     {
       key: 'weeks',
       label: 'show data for the last',

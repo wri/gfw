@@ -8,7 +8,7 @@ export const initialState = {
 };
 
 const setAreaLocation = area => {
-  const { geostore, admin, use, wdpaid } = area || {};
+  const { geostore, admin, wdpaid } = area || {};
   return {
     type: 'geostore',
     adm0: geostore,
@@ -18,12 +18,6 @@ const setAreaLocation = area => {
       adm0: admin.adm0,
       adm1: admin.adm1,
       adm2: admin.adm2
-    }),
-    ...(use &&
-      use.id && {
-      type: 'use',
-      adm0: use.name,
-      adm1: use.id
     }),
     ...(wdpaid && {
       type: 'wdpa',

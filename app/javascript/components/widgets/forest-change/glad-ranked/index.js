@@ -52,6 +52,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
+  pendingKeys: ['extentYear', 'threshold'],
   refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
   chartType: 'rankedList',
   metaKey: 'widget_deforestation_alert_location',
