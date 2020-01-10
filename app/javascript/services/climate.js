@@ -14,23 +14,23 @@ const INDICATORS = [
 
 const SQL_QUERIES = {
   aboveground_biomass: {
-    globalAndCountry: `SELECT iso, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE threshold = ${' '}
+    globalAndCountry: `SELECT iso, SUM(biomass) as total_biomass__t, SUM(biomassdensity) as biomass_density__ktha FROM biomass_whrc_gadm36 WHERE threshold = ${' '}
 {threshold} GROUP BY iso`,
-    adm1: `SELECT iso, admin_1, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso =${' '}
+    adm1: `SELECT iso, admin_1, SUM(biomass) as total_biomass__t, SUM(biomassdensity) as biomass_density__ktha FROM biomass_whrc_gadm36 WHERE iso =${' '}
 '{adm0}' AND threshold = {threshold} GROUP BY iso, admin_1`,
-    adm2: `SELECT iso, admin_1, admin_2, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36${' '}
+    adm2: `SELECT iso, admin_1, admin_2, SUM(biomass) as total_biomass__t, SUM(biomassdensity) as biomass_density__ktha FROM biomass_whrc_gadm36${' '}
 WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2`
   },
   soil_organic_carbon: {
     globalAndCountry:
-      'SELECT iso, SUM(total_soil_carbon) as totalbiomass, SUM(soil_carbon_density) as biomassdensity FROM soil_carbon_gadm36 GROUP BY iso',
-    adm1: `SELECT iso, admin_1, SUM(total_soil_carbon) as totalbiomass, SUM(soil_carbon_density) as biomassdensity FROM soil_carbon_gadm36${' '}
+      'SELECT iso, SUM(total_soil_carbon) as total_biomass__t, SUM(soil_carbon_density) as biomass_density__ktha FROM soil_carbon_gadm36 GROUP BY iso',
+    adm1: `SELECT iso, admin_1, SUM(total_soil_carbon) as total_biomass__t, SUM(soil_carbon_density) as biomass_density__ktha FROM soil_carbon_gadm36${' '}
 WHERE iso = '{adm0}' GROUP BY iso, admin_1`,
-    adm2: `SELECT iso, admin_1, admin_2, SUM(total_soil_carbon) as totalbiomass, SUM(soil_carbon_density) as biomassdensity FROM${' '}
+    adm2: `SELECT iso, admin_1, admin_2, SUM(total_soil_carbon) as total_biomass__t, SUM(soil_carbon_density) as biomass_density__ktha FROM${' '}
 soil_carbon_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} GROUP BY iso, admin_1, admin_2`
   },
-  cummulative: `SELECT sum(alerts) AS alerts, sum(cumulative_emissions) AS cumulative_emissions, sum(cumulative_deforestation) AS${' '}
-cumulative_deforestation, sum(loss_ha) AS loss, sum(percent_to_emissions_target) AS percent_to_emissions_target,${' '}
+  cummulative: `SELECT sum(alerts) AS alerts, sum(cumulative_emissions) AS cumulative_emissions_MtC02, sum(cumulative_deforestation) AS${' '}
+cumulative_deforestation, sum(loss_ha) AS loss__ha, sum(percent_to_emissions_target) AS percent_to_emissions_target,${' '}
 sum(percent_to_deforestation_target) AS percent_to_deforestation_target, year as year, country_iso, week FROM${' '}
 a98197d2-cd8e-4b17-ab5c-fabf54b25ea0 WHERE country_iso = '{iso}' AND year IN ('{year}') AND week <= 53 GROUP BY week,${' '}
 country_iso ORDER BY week ASC`,
@@ -75,7 +75,19 @@ export const getCumulative = ({ download, ...params }) =>
         url: encodeURI(newUrl.replace('query', 'download'))
       };
     }
-    return request.get(encodeURI(newUrl));
+
+    return request.get(encodeURI(newUrl)).then(response => ({
+      ...response,
+      data: {
+        data: response.data.data.map(o => {
+          delete Object.assign(o, { loss: o.loss__ha }).loss__ha;
+          delete Object.assign(o, {
+            cumulative_emissions: o.cumulative_emissions_MtC02
+          }).cumulative_emissions_MtC02;
+          return o;
+        })
+      }
+    }));
   });
 
 export const getBiomassRanking = ({
@@ -110,7 +122,19 @@ export const getBiomassRanking = ({
       url: url.concat('&format=csv')
     };
   }
-  return request.get(url);
+
+  return request.get(url).then(response => ({
+    ...response,
+    data: {
+      rows: response.data.rows.map(o => {
+        delete Object.assign(o, { total_biomass__t: o.totalbiomass })
+          .totalbiomass;
+        delete Object.assign(o, { biomass_density__ktha: o.biomassdensity })
+          .biomassdensity;
+        return o;
+      })
+    }
+  }));
 };
 
 export const getSoilOrganicCarbon = ({ adm0, adm1, adm2, download }) => {
@@ -134,5 +158,16 @@ export const getSoilOrganicCarbon = ({ adm0, adm1, adm2, download }) => {
     };
   }
 
-  return request.get(url);
+  return request.get(url).then(response => ({
+    ...response,
+    data: {
+      rows: response.data.rows.map(o => {
+        delete Object.assign(o, { total_biomass__t: o.totalbiomass })
+          .totalbiomass;
+        delete Object.assign(o, { biomass_density__ktha: o.biomassdensity })
+          .biomassdensity;
+        return o;
+      })
+    }
+  }));
 };
