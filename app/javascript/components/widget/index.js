@@ -17,7 +17,7 @@ class WidgetContainer extends Component {
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
     geostore: PropTypes.object,
-    status: PropTypes.status
+    status: PropTypes.string
   };
 
   static defaultProps = {

@@ -108,16 +108,15 @@ export const parseSentence = createSelector(
   [getData, filterData, getCurrentLocation, getSentence],
   (data, filteredData, currentLabel, sentence) => {
     const weekGladCount = filteredData ? sumBy(filteredData, 'count') : 'No';
-    const averageGladCount = data ? sumBy(data, 'count') / 52 : 0;
+    const averageGladCount = data ? Math.round(sumBy(data, 'count') / 52) : 0;
 
     const params = {
       location: currentLabel,
-      count: Number.isInteger(weekGladCount)
-        ? format(',')(weekGladCount)
-        : weekGladCount,
-      weeklyMean: Number.isInteger(averageGladCount)
-        ? format(',')(averageGladCount)
-        : Math.round(averageGladCount) || '0'
+      count:
+        typeof weekGladCount === 'number'
+          ? format(',')(weekGladCount)
+          : weekGladCount,
+      weeklyMean: format(',')(averageGladCount)
     };
     return { sentence, params };
   }

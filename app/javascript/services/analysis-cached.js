@@ -1,32 +1,36 @@
 import axios from 'axios';
+import moment from 'moment';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
-import moment from 'moment';
+import DATASETS from 'data/analysis-datasets.json';
 
-// contains everything summed without years inc gain and extent
-const ADM0_SUMMARY = process.env.ANNUAL_ADM0_SUMMARY;
-const ADM1_SUMMARY = process.env.ANNUAL_ADM1_SUMMARY;
-const ADM2_SUMMARY = process.env.ANNUAL_ADM2_SUMMARY;
-
-// contains yearly data for loss
-const ADM0_CHANGE = process.env.ANNUAL_ADM0_CHANGE;
-const ADM1_CHANGE = process.env.ANNUAL_ADM1_CHANGE;
-const ADM2_CHANGE = process.env.ANNUAL_ADM2_CHANGE;
-
-// glad gadm36
-const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
-const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
-const GLAD_ADM2_WEEKLY = process.env.GLAD_ADM2_WEEKLY;
-
-// wdpa
-const ANNUAL_WDPA_SUMMARY = process.env.ANNUAL_WDPA_SUMMARY;
-const ANNUAL_WDPA_CHANGE = process.env.ANNUAL_WDPA_CHANGE;
-const GLAD_WDPA_WEEKLY = process.env.GLAD_WDPA_WEEKLY;
-
-// geostore tables
-const ANNUAL_GEOSTORE_SUMMARY = process.env.ANNUAL_GEOSTORE_SUMMARY;
-const ANNUAL_GEOSTORE_CHANGE = process.env.ANNUAL_GEOSTORE_CHANGE;
-const GLAD_GEOSTORE_WEEKLY = process.env.GLAD_GEOSTORE_WEEKLY;
+const {
+  ANNUAL_ADM0_SUMMARY,
+  ANNUAL_ADM1_SUMMARY,
+  ANNUAL_ADM2_SUMMARY,
+  ANNUAL_ADM0_CHANGE,
+  ANNUAL_ADM1_CHANGE,
+  ANNUAL_ADM2_CHANGE,
+  ANNUAL_ADM0_WHITELIST,
+  ANNUAL_ADM1_WHITELIST,
+  ANNUAL_ADM2_WHITELIST,
+  GLAD_ADM0_WEEKLY,
+  GLAD_ADM1_WEEKLY,
+  GLAD_ADM2_WEEKLY,
+  GLAD_ADM0_WHITELIST,
+  GLAD_ADM1_WHITELIST,
+  GLAD_ADM2_WHITELIST,
+  ANNUAL_WDPA_SUMMARY,
+  ANNUAL_WDPA_CHANGE,
+  ANNUAL_WDPA_WHITELIST,
+  GLAD_WDPA_WEEKLY,
+  GLAD_WDPA_WHITELIST,
+  ANNUAL_GEOSTORE_SUMMARY,
+  ANNUAL_GEOSTORE_CHANGE,
+  ANNUAL_GEOSTORE_WHITELIST,
+  GLAD_GEOSTORE_WEEKLY,
+  GLAD_GEOSTORE_WHITELIST
+} = DATASETS[process.env.FEATURE_ENV];
 
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
@@ -48,13 +52,13 @@ const SQL_QUERIES = {
   areaIntersection:
     'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
-    'SELECT alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC',
   gladLatest:
     'SELECT alert__year, alert__week FROM data GROUP BY alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC LIMIT 1',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}'
+    'SELECT {location}, {polynames} FROM data {WHERE}'
 };
 
 const ALLOWED_PARAMS = [
@@ -66,30 +70,59 @@ const ALLOWED_PARAMS = [
   'landCategory'
 ];
 
-// quyery building helpers
-const getAnnualDataset = ({ adm0, adm1, adm2, grouped, summary, type }) => {
+const getAnnualDataset = ({
+  adm0,
+  adm1,
+  adm2,
+  grouped,
+  summary,
+  type,
+  whitelist
+}) => {
+  if (whitelist && adm0 && adm1 && adm2) return ANNUAL_ADM2_WHITELIST;
+  if (whitelist && adm0 && adm1) return ANNUAL_ADM1_WHITELIST;
+  if (whitelist) return ANNUAL_ADM0_WHITELIST;
+
+  if (type === 'geostore' && summary && whitelist) {
+    return ANNUAL_GEOSTORE_WHITELIST;
+  }
   if (type === 'geostore' && summary) return ANNUAL_GEOSTORE_SUMMARY;
   if (type === 'geostore') return ANNUAL_GEOSTORE_CHANGE;
 
+  if (type === 'wdpa' && summary && whitelist) return ANNUAL_WDPA_WHITELIST;
   if (type === 'wdpa' && summary) return ANNUAL_WDPA_SUMMARY;
   if (type === 'wdpa') return ANNUAL_WDPA_CHANGE;
 
-  if (summary && (adm2 || (adm1 && grouped))) return ADM2_SUMMARY;
-  if (summary && (adm1 || (adm0 && grouped))) return ADM1_SUMMARY;
-  if (summary) return ADM0_SUMMARY;
+  if (summary && (adm2 || (adm1 && grouped)) && whitelist) {
+    return ANNUAL_ADM2_WHITELIST;
+  }
+  if (summary && (adm2 || (adm1 && grouped))) return ANNUAL_ADM2_SUMMARY;
+  if (summary && (adm1 || (adm0 && grouped)) && whitelist) {
+    return ANNUAL_ADM1_WHITELIST;
+  }
+  if (summary && (adm1 || (adm0 && grouped))) return ANNUAL_ADM1_SUMMARY;
+  if (summary && whitelist) return ANNUAL_ADM0_WHITELIST;
+  if (summary) return ANNUAL_ADM0_SUMMARY;
 
   // else return change datasets
-  if (adm2 || (adm1 && grouped)) return ADM2_CHANGE;
-  if (adm1 || (adm0 && grouped)) return ADM1_CHANGE;
-  return ADM0_CHANGE;
+  if (adm2 || (adm1 && grouped)) return ANNUAL_ADM2_CHANGE;
+  if (adm1 || (adm0 && grouped)) return ANNUAL_ADM1_CHANGE;
+  return ANNUAL_ADM0_CHANGE;
 };
 
-// quyery building helpers
-const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type }) => {
+const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
+  if (type === 'geostore' && whitelist) return GLAD_GEOSTORE_WHITELIST;
   if (type === 'geostore') return GLAD_GEOSTORE_WEEKLY;
+
+  if (type === 'wdpa' && whitelist) return GLAD_WDPA_WHITELIST;
   if (type === 'wdpa') return GLAD_WDPA_WEEKLY;
+
+  if (adm2 || (adm1 && grouped && whitelist)) return GLAD_ADM2_WHITELIST;
   if (adm2 || (adm1 && grouped)) return GLAD_ADM2_WEEKLY;
+  if (adm1 || (adm0 && grouped && whitelist)) return GLAD_ADM1_WHITELIST;
   if (adm1 || (adm0 && grouped)) return GLAD_ADM1_WEEKLY;
+  if (whitelist) return GLAD_ADM0_WHITELIST;
+
   return GLAD_ADM0_WEEKLY;
 };
 
@@ -99,7 +132,7 @@ const getLocationSelect = ({ adm1, adm2 }) =>
 const getLocationSelectGrouped = ({ adm0, adm1 }) =>
   `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
 
-const buildPolynameSelects = () => {
+const buildPolynameSelects = nonTable => {
   const allPolynames = forestTypes
     .concat(landCategories)
     .filter(p => !p.hidden);
@@ -107,17 +140,15 @@ const buildPolynameSelects = () => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `SUM(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+      `${!nonTable ? p.tableKey : p.value} as ${p.value}${isLast ? '' : ', '}`
     );
   });
 
   return polyString;
 };
 
-const getRequestUrl = params => {
-  const dataset = params.glad
-    ? getGladDatasetId(params)
-    : getAnnualDataset(params);
+const getRequestUrl = ({ glad, ...params }) => {
+  const dataset = glad ? getGladDatasetId(params) : getAnnualDataset(params);
   const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
@@ -139,7 +170,10 @@ export const getWHEREQuery = params => {
         pname => pname.value === params[p]
       );
       const tableKey =
-        polynameMeta && (polynameMeta.gladTableKey || polynameMeta.tableKey);
+        polynameMeta &&
+        (params.glad && polynameMeta.gladTableKey
+          ? polynameMeta.gladTableKey
+          : polynameMeta.tableKey);
       let paramKey = p;
       if (p === 'threshold') paramKey = 'treecover_density__threshold';
       if (p === 'iso' && params.type === 'geostore') paramKey = 'geostore__id';
@@ -153,6 +187,7 @@ export const getWHEREQuery = params => {
 }${
   isPolyname &&
         polynameMeta &&
+        !tableKey.includes('is__') &&
         polynameMeta.default &&
         polynameMeta.categories
     ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
@@ -414,11 +449,30 @@ export const getAreaIntersectionGrouped = ({
   }));
 };
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
+export const fetchGladAlerts = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  grouped,
+  ...params
+}) => {
   const { glad } = SQL_QUERIES;
-  const url = `${getRequestUrl({ ...params, adm0, adm1, adm2, glad: true })}${
-    glad
-  }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    glad: true
+  })}${glad}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2 })
+        : getLocationSelect({ adm1, adm2 })
+    )
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
   return axios.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
@@ -426,7 +480,8 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
-        alerts: d.alert__count
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
       }))
     }
   }));
@@ -437,19 +492,12 @@ const lastFriday = moment()
   .day(-2)
   .format('YYYY-MM-DD');
 
-export const fetchGLADLatest = ({ adm0, adm1, adm2 }) => {
-  const url = `${getRequestUrl({ adm0, adm1, adm2, glad: true })}${
-    SQL_QUERIES.gladLatest
-  }`;
+export const fetchGLADLatest = () => {
+  const url = `${process.env.GFW_API}/glad-alerts/latest`;
   return axios
     .get(url)
     .then(response => {
-      const { alert__week, alert__year } = response.data.data[0];
-      const date = moment()
-        .year(parseInt(alert__year, 10))
-        .week(parseInt(alert__week, 10))
-        .day('Monday')
-        .format('YYYY-MM-DD');
+      const { date } = response.data.data[0].attributes;
 
       return {
         attributes: { updatedAt: date },
@@ -472,15 +520,17 @@ export const fetchGLADLatest = ({ adm0, adm1, adm2 }) => {
 export const getNonGlobalDatasets = () => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
-    buildPolynameSelects()
+    buildPolynameSelects(true)
   );
   return axios.get(url);
 };
 
-export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
-  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getLocationPolynameWhitelist}`
-    .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
+export const getLocationPolynameWhitelist = params => {
+  const url = `${getRequestUrl({ ...params, whitelist: true })}${
+    SQL_QUERIES.getLocationPolynameWhitelist
+  }`
+    .replace(/{location}/g, getLocationSelect(params))
     .replace('{polynames}', buildPolynameSelects())
-    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2 }));
+    .replace('{WHERE}', getWHEREQuery({ iso: params.adm0, ...params }));
   return axios.get(url);
 };

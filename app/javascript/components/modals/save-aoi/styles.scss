@@ -45,6 +45,10 @@
     p {
       margin-bottom: rem(30px);
       text-align: center;
+
+      strong {
+        font-weight: 500;
+      }
     }
 
     .confirmation-actions {

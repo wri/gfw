@@ -87,7 +87,7 @@ export const parseSentence = createSelector(
       topRegionCount: format(',')(topRegionCount),
       topRegionPerc: `${format('.2r')(topRegionPerc)}%`,
       location: locationName,
-      indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
+      indicator: `${indicator ? `${indicator.label}` : ''}`
     };
     const sentence = indicator ? withInd : initial;
     return { sentence, params };

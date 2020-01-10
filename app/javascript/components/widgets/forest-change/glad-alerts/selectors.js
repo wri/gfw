@@ -18,7 +18,8 @@ const selectLatestDates = state => state.data && state.data.latest;
 const selectColors = state => state.colors;
 const selectInteraction = state => state.settings.interaction;
 const selectWeeks = state => state.settings && state.settings.weeks;
-const selectSentence = state => state.sentence;
+const selectSentences = state => state.sentence;
+const getIndicator = state => state.indicator || null;
 
 export const parsePayload = payload => {
   const payloadData = payload && payload.find(p => p.name === 'count');
@@ -62,7 +63,7 @@ export const getData = createSelector(
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
     const years = [];
-    const latestFullWeek = moment(latest).subtract(1, 'weeks');
+    const latestFullWeek = moment(latest);
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
@@ -136,8 +137,8 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, selectColors, selectInteraction, selectSentence],
-  (data, colors, interaction, sentence) => {
+  [parseData, selectColors, selectInteraction, selectSentences, getIndicator],
+  (data, colors, interaction, sentences, indicator) => {
     if (!data) return null;
 
     let lastDate = data[data.length - 1] || {};
@@ -186,6 +187,7 @@ export const parseSentence = createSelector(
     }
     const formattedDate = moment(date).format('Do of MMMM YYYY');
     const params = {
+      indicator: indicator && indicator.label,
       date: formattedDate,
       count: {
         value: lastDate.count ? format(',')(lastDate.count) : 0,
@@ -196,7 +198,10 @@ export const parseSentence = createSelector(
         color: statusColor
       }
     };
-    return { sentence, params };
+    return {
+      sentence: indicator ? sentences.withInd : sentences.default,
+      params
+    };
   }
 );
 

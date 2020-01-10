@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
-import { getExtentGrouped } from 'services/analysis-cached';
+import {
+  getExtentGrouped,
+  fetchGladAlerts,
+  fetchGLADLatest
+} from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -87,6 +90,7 @@ export default {
     page: 0,
     ifl: 2016
   },
+  whitelistType: 'glad',
   whitelists: {
     adm0: [
       'BRA',
@@ -115,7 +119,7 @@ export default {
   getData: params =>
     axios
       .all([
-        fetchGladIntersectionAlerts(params),
+        fetchGladAlerts({ ...params, grouped: true }),
         fetchGLADLatest(params),
         getExtentGrouped(params)
       ])

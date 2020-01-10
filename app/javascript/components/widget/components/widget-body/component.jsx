@@ -12,6 +12,7 @@ import WidgetHorizontalBarChart from 'components/widget/components/widget-horizo
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import WidgetPieChartLegend from 'components/widget/components/widget-pie-chart-legend';
 import WidgetChartList from 'components/widget/components/widget-chart-list';
+import WidgetListLegend from 'components/widget/components/widget-list-legend';
 import WidgetMapList from 'components/widget/components/widget-map-list';
 import WidgetSankey from 'components/widget/components/widget-sankey';
 
@@ -24,7 +25,8 @@ const chartOptions = {
   pieChart: WidgetPieChartLegend,
   chartList: WidgetChartList,
   mapList: WidgetMapList,
-  sankey: WidgetSankey
+  sankey: WidgetSankey,
+  listLegend: WidgetListLegend
 };
 
 class WidgetBody extends PureComponent {

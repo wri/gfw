@@ -1,14 +1,10 @@
 import request from 'utils/request';
 import moment from 'moment';
 import axios from 'axios';
-import { getIndicator } from 'utils/strings';
 
 import { fetchAnalysisEndpoint } from './analysis';
 
 const REQUEST_URL = process.env.GFW_API;
-const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
-const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
-const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
 const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
 const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
@@ -64,35 +60,6 @@ export const getLatestAlerts = ({ location, params }) =>
         };
       })
     );
-
-export const fetchGladAlerts = ({ adm0, adm1, adm2 } = {}) => {
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if (adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  } else if (adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
-    QUERIES.gladIntersectionAlerts
-  }`
-    .replace('{location}', getLocation(adm0, adm1, adm2))
-    .replace('{polyname}', 'admin');
-  return request.get(url, 3600, 'gladRequest');
-};
-
-export const fetchGladIntersectionAlerts = ({
-  adm0,
-  adm1,
-  forestType,
-  landCategory
-}) => {
-  const url = `${REQUEST_URL}/query/${
-    adm1 ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
-  }?sql=${QUERIES.gladIntersectionAlerts}`
-    .replace('{location}', getLocation(adm0, adm1))
-    .replace('{polyname}', getIndicator(forestType, landCategory));
-  return request.get(url, 3600, 'gladRequest');
-};
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
@@ -214,42 +181,3 @@ export const fetchLatestDate = url =>
       })
     );
   });
-
-export const fetchGLADLatest = params => {
-  const { adm1, adm2 } = params || {};
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if (adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  } else if (adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
-    QUERIES.alertsLatest
-  }`;
-  return request
-    .get(url, 3600, 'gladRequestLatest')
-    .then(response => {
-      const { week, year } = response.data.data[0];
-      const date = moment()
-        .year(year)
-        .day('Monday')
-        .week(week)
-        .format('YYYY-MM-DD');
-
-      return {
-        attributes: { updatedAt: date },
-        id: null,
-        type: 'glad-alerts'
-      };
-    })
-    .catch(error => {
-      console.error('Error in gladRequest', error);
-      return new Promise(resolve =>
-        resolve({
-          attributes: { updatedAt: lastFriday },
-          id: null,
-          type: 'glad-alerts'
-        })
-      );
-    });
-};

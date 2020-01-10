@@ -258,13 +258,18 @@ export const filterWidgetsByLocation = createSelector(
       const polynameIntersection =
         whitelists &&
         whitelists.indicators &&
-        intersection(polynameWhitelist, whitelists.indicators);
+        intersection(
+          polynameWhitelist[w.whitelistType || 'annual'],
+          whitelists.indicators
+        );
       const matchesPolynameWhitelist =
         !whitelists ||
         !whitelists.indicators ||
         (polynameIntersection && polynameIntersection.length);
       const isWidgetDataPending =
-        !whitelists || status !== 'pending' || !whitelists.checkStatus;
+        !whitelists ||
+        (status && status !== 'pending') ||
+        !whitelists.checkStatus;
 
       const isWidgetVisible =
         (!showAnalysis && !visible) ||
@@ -417,7 +422,8 @@ export const getWidgets = createSelector(
         settingsConfig,
         dataOptions,
         settings,
-        polynamesWhitelist,
+        polynamesWhitelist:
+          polynamesWhitelist && polynamesWhitelist[w.whitelistType || 'annual'],
         status,
         pendingKeys
       });

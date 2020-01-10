@@ -31,9 +31,11 @@ class MyGFWLogin extends PureComponent {
           <a
             key={s.value}
             className={`social-btn -${s.value}`}
-            href={`${AUTH_URL}/${s.value}?applications=gfw&callbackUrl=${
+            href={`${AUTH_URL}/${
+              s.value
+            }?applications=gfw&callbackUrl=${encodeURIComponent(
               window.location.href
-            }`}
+            )}`}
           >
             Login with {s.label}
           </a>

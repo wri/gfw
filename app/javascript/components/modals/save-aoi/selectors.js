@@ -43,7 +43,6 @@ export const getActiveArea = createSelector(
     } else {
       activeAreaId = settings.activeAreaId;
     }
-
     return areas.find(a => a.id === activeAreaId);
   }
 );
@@ -64,6 +63,25 @@ export const getModalTitle = createSelector(
   }
 );
 
+export const getModalDesc = createSelector(
+  [getActiveArea, selectSaved, selectDeleted],
+  (area, saved, deleted) => {
+    if (isEmpty(area)) return null;
+    const { fireAlerts, deforestationAlerts, monthlySummary, confirmed } = area;
+    const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
+
+    if (deleted) {
+      return 'This area of interest has been deleted from your My GFW.';
+    }
+
+    if (saved && hasSubscription && !confirmed) {
+      return "Check your email and click on the link to confirm your subscription. If you don't see an email, check your junk or spam email folder.";
+    }
+
+    return 'Your area has been updated. You can view all your areas in My GFW.';
+  }
+);
+
 export const getModalAOIProps = createStructuredSelector({
   saving: selectSaving,
   saved: selectSaved,
@@ -76,5 +94,6 @@ export const getModalAOIProps = createStructuredSelector({
   userData: selectUserData,
   location: selectLocation,
   locationName: getGeodescriberTitleFull,
-  geostoreId: selectGeostoreId
+  geostoreId: selectGeostoreId,
+  modalDesc: getModalDesc
 });

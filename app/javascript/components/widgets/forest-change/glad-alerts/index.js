@@ -9,8 +9,12 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'gladAlerts',
   title: 'Deforestation Alerts in {location}',
-  sentence:
-    'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+  sentence: {
+    default:
+      'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+    withInd:
+      'There were {count} GLAD alerts reported in {indicator} in the week of the {date}. This was {status} compared to the same week in previous years.'
+  },
   metaKey: 'widget_deforestation_graph',
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -49,6 +53,7 @@ export default {
       noSort: true
     }
   ],
+  whitelistType: 'glad',
   whitelists: {
     adm0: [
       'ABW',
@@ -188,37 +193,40 @@ export default {
     weeks: 13
   },
   getData: params => {
-    if (params.status === 'pending') {
-      return fetchAnalysisEndpoint({
-        ...params,
-        params,
-        name: 'glad-alerts',
-        slug: 'glad-alerts',
-        version: 'v1',
-        aggregate: true,
-        aggregateBy: 'week'
-      }).then(response => {
-        const alerts = response.data.data.attributes.value;
-        const latest = alerts && alerts[0];
-        const latestDate =
-          latest &&
-          moment()
-            .year(latest.year)
-            .week(latest.week)
-            .day('5')
-            .format('YYYY-MM-DD');
+    if (
+      params.status === 'pending' ||
+      (params.type === 'geostore' && !params.areaId)
+    ) {
+      return axios
+        .all([
+          fetchAnalysisEndpoint({
+            ...params,
+            params,
+            name: 'glad-alerts',
+            slug: 'glad-alerts',
+            version: 'v1',
+            aggregate: true,
+            aggregateBy: 'week'
+          }),
+          fetchGLADLatest(params)
+        ])
+        .then(
+          axios.spread((alertsResponse, latestResponse) => {
+            const alerts = alertsResponse.data.data.attributes.value;
+            const latestDate = latestResponse.attributes.updatedAt;
 
-        return {
-          alerts:
-            alerts &&
-            alerts.map(d => ({
-              ...d,
-              alerts: d.count
-            })),
-          latest: latestDate,
-          settings: { latestDate }
-        };
-      });
+            return {
+              alerts:
+                alerts &&
+                alerts.map(d => ({
+                  ...d,
+                  alerts: d.count
+                })),
+              latest: latestDate,
+              settings: { latestDate }
+            };
+          })
+        );
     }
 
     return axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(

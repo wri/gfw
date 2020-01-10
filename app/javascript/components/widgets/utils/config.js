@@ -141,6 +141,9 @@ export const getIndicator = (forestType, landCategory) => {
     label = forestType.label;
     value = forestType.value;
   }
+  if (value !== 'kba') {
+    label = label.toLowerCase();
+  }
 
   return {
     label,
