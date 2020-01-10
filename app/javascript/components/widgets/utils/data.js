@@ -102,12 +102,13 @@ export const getDatesData = data =>
     ...d,
     date: moment()
       .year(d.year)
-      .week(d.week)
+      .isoWeek(d.week)
+      .day(1)
       .format('YYYY-MM-DD'),
     month: upperCase(
       moment()
         .year(d.year)
-        .week(d.week)
+        .isoWeek(d.week)
         .format('MMM')
     )
   }));
