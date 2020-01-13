@@ -30,7 +30,7 @@
   {
     "label": "Primary Forests (2001, tropics only)",
     "value": "primary_forest",
-    "metaKey": "primary_forest",
+    "metaKey": "regional_primary_forests",
     "global": true,
     "datasets": [
       {
