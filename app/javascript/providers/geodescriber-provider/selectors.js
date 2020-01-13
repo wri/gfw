@@ -19,9 +19,9 @@ const adminSentences = {
     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
   countrySpecific: {
     IDN:
-      'In 2010, {location} had {naturalForest} of natural forest, extending over {percentageNatForest} of its land area. In {year}, it lost {loss} of tree cover, equivalent to {emissionsTreeCover} of CO₂ of emissions. {primaryLoss} of this loss occurred within primary forests and {naturalLoss} within natural forest.'
+      'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions. In 2010 {location} had {naturalForest} of natural forest**, extending over {percentageNatForest} of its land area. In <b>2018</b>, it lost {naturalLoss} of natural forest**, equivalent to {emissions} of CO₂ of emissions.'
   },
-  co2Emissions: ', equivalent to {emission} of CO\u2082 of emissions.',
+  co2Emissions: ', equivalent to {emissions} of CO\u2082 of emissions.',
   end: '.'
 };
 
@@ -158,38 +158,46 @@ export const getAdminDescription = createSelector(
       data.extent - data.plantationsExtent < 1
         ? format('.3r')(data.extent - data.plantationsExtent)
         : format('.3s')(data.extent - data.plantationsExtent);
+    const primaryForest =
+      data.primaryExtent < 1
+        ? format('.3r')(data.primaryExtent)
+        : format('.3s')(data.primaryExtent);
     const percentageCover = format('.2r')(data.extent / data.totalArea * 100);
     const percentageNatForest = format('.2r')(
       (data.extent - data.plantationsExtent) / data.totalArea * 100
     );
-    const lossWithoutPlantations =
-      data.totalLoss &&
-      format('.3s')(data.totalLoss.area - (data.plantationsLoss.area || 0));
-    const emissionsWithoutPlantations =
-      data.totalLoss &&
-      format('.3s')(
-        data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
-      );
-    const emissions = data.totalLoss && format('.3s')(data.totalLoss.emissions);
-    const primaryLoss =
-      data.primaryLoss && format('.3s')(data.primaryLoss.area || 0);
-    const loss = data.totalLoss && format('.3s')(data.totalLoss.area || 0);
+    const percentagePrimaryForest = format('.2r')(
+      data.primaryExtent / data.totalArea * 100
+    );
+    const naturalLoss = format('.3s')(
+      data.totalLoss.area - (data.plantationsLoss.area || 0)
+    );
+    const emissionsNaturalForest = format('.3s')(
+      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
+    );
+    const emissions = format('.3s')(data.totalLoss.emissions);
+    const emissionsPrimary = format('.3s')(data.primaryLoss.emissions || 0);
+    const primaryLoss = format('.3s')(data.primaryLoss.area || 0);
+    const loss = format('.3s')(data.totalLoss.area || 0);
     const location = locationNames && locationNames.label;
     const { adm0 } = locationObj || {};
 
     const params = {
       extent: `${extent}ha`,
       naturalForest: `${naturalForest}ha`,
+      primaryForest: `${primaryForest}ha`,
       location: location || 'the world',
       percentage: `${percentageCover}%`,
       percentageNatForest: `${percentageNatForest}%`,
-      naturalLoss: `${lossWithoutPlantations}ha`,
+      percentagePrimaryForest: `${percentagePrimaryForest}%`,
       loss: `${loss}ha`,
-      emission: `${emissionsWithoutPlantations}t`,
+      emissions: `${emissionsNaturalForest}t`,
       emissionsTreeCover: `${emissions}t`,
-      year: data.totalLoss && data.totalLoss.year,
+      emissionsPrimary: `${emissionsPrimary}t`,
+      year: data.totalLoss.year,
       treeCoverLoss: `${loss}ha`,
-      primaryLoss: `${primaryLoss}ha`
+      primaryLoss: `${primaryLoss}ha`,
+      naturalLoss: `${naturalLoss}ha`
     };
 
     let sentence = adminSentences.default;

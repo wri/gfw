@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'redux-first-router-link';
@@ -282,6 +282,22 @@ class Header extends PureComponent {
               {!loading && (
                 <div>
                   <DynamicSentence className="sentence" sentence={sentence} />
+                  {location &&
+                    location.adm0 === 'IDN' && (
+                    <Fragment>
+                      <p className="disclaimer">
+                          *Primary forest is defined as mature natural humid
+                          tropical forest that has not been completely cleared
+                          and regrown in recent history.
+                      </p>
+                      <p className="disclaimer">
+                          **Natural forest is defined as all tree cover (all
+                          vegetation taller than 5 meters in height) with 30%
+                          minimum tree cover density excluding tree cover within
+                          mapped tree plantations.
+                      </p>
+                    </Fragment>
+                  )}
                   {forestAtlasLink &&
                     isCountryDashboard && (
                     <Button

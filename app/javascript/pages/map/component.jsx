@@ -126,7 +126,7 @@ class MainMapComponent extends PureComponent {
             {!embed &&
               isDesktop && (
               <Fragment>
-                <MapPrompts />
+                {!embed && <MapPrompts />}
                 <ModalWelcome />
               </Fragment>
             )}
