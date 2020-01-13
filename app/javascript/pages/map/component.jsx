@@ -94,11 +94,11 @@ class MainMapComponent extends PureComponent {
             </div>
             {isDesktop &&
               !hidePanels && (
-                <DataAnalysisMenu
-                  className="data-analysis-menu"
-                  embed={embed}
-                />
-              )}
+              <DataAnalysisMenu
+                className="data-analysis-menu"
+                embed={embed}
+              />
+            )}
             {!embed && (
               <MapControlButtons
                 className="main-map-controls"
@@ -109,11 +109,11 @@ class MainMapComponent extends PureComponent {
             <SubscribeModal />
             {!embed &&
               isDesktop && (
-                <Fragment>
-                  <MapPrompts />
-                  <ModalWelcome />
-                </Fragment>
-              )}
+              <Fragment>
+                {!embed && <MapPrompts />}
+                <ModalWelcome />
+              </Fragment>
+            )}
             <Share />
             <ModalMeta />
             <ModalSource />

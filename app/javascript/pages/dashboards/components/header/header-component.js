@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import Dropdown from 'components/ui/dropdown';
@@ -85,57 +85,57 @@ class Header extends PureComponent {
                 adm0s &&
                 adm1s &&
                 adm1s.length > 1 && (
-                  <Dropdown
-                    theme="theme-dropdown-dark"
-                    placeholder="Select a region"
-                    noItemsFound="No region found"
-                    noSelectedValue="Select a region"
-                    value={locationNames.adm1}
-                    options={adm1s}
-                    onChange={adm1 =>
-                      handleLocationChange({
-                        adm0: location.adm0,
-                        adm1: adm1 && adm1.value
-                      })
-                    }
-                    searchable
-                    disabled={loading}
-                    tooltip={{
-                      text: 'Choose the region you want to explore',
-                      delay: 1000
-                    }}
-                    arrowPosition="left"
-                    clearable
-                  />
-                )}
+                <Dropdown
+                  theme="theme-dropdown-dark"
+                  placeholder="Select a region"
+                  noItemsFound="No region found"
+                  noSelectedValue="Select a region"
+                  value={locationNames.adm1}
+                  options={adm1s}
+                  onChange={adm1 =>
+                    handleLocationChange({
+                      adm0: location.adm0,
+                      adm1: adm1 && adm1.value
+                    })
+                  }
+                  searchable
+                  disabled={loading}
+                  tooltip={{
+                    text: 'Choose the region you want to explore',
+                    delay: 1000
+                  }}
+                  arrowPosition="left"
+                  clearable
+                />
+              )}
               {location.adm1 &&
                 adm1s &&
                 adm2s &&
                 adm2s.length > 1 && (
-                  <Dropdown
-                    theme="theme-dropdown-dark"
-                    placeholder="Select a region"
-                    noItemsFound="No region found"
-                    noSelectedValue="Select a region"
-                    value={locationNames.adm2}
-                    options={adm2s}
-                    onChange={adm2 =>
-                      handleLocationChange({
-                        adm0: location.adm0,
-                        adm1: location.adm1,
-                        adm2: adm2 && adm2.value
-                      })
-                    }
-                    searchable
-                    disabled={loading}
-                    tooltip={{
-                      text: 'Choose the region you want to explore',
-                      delay: 1000
-                    }}
-                    arrowPosition="left"
-                    clearable
-                  />
-                )}
+                <Dropdown
+                  theme="theme-dropdown-dark"
+                  placeholder="Select a region"
+                  noItemsFound="No region found"
+                  noSelectedValue="Select a region"
+                  value={locationNames.adm2}
+                  options={adm2s}
+                  onChange={adm2 =>
+                    handleLocationChange({
+                      adm0: location.adm0,
+                      adm1: location.adm1,
+                      adm2: adm2 && adm2.value
+                    })
+                  }
+                  searchable
+                  disabled={loading}
+                  tooltip={{
+                    text: 'Choose the region you want to explore',
+                    delay: 1000
+                  }}
+                  arrowPosition="left"
+                  clearable
+                />
+              )}
             </div>
           </div>
           <div className="columns small-12 large-6">
@@ -143,6 +143,22 @@ class Header extends PureComponent {
               {!loading && (
                 <div>
                   <DynamicSentence className="sentence" sentence={sentence} />
+                  {location &&
+                    location.adm0 === 'IDN' && (
+                    <Fragment>
+                      <p className="disclaimer">
+                          *Primary forest is defined as mature natural humid
+                          tropical forest that has not been completely cleared
+                          and regrown in recent history.
+                      </p>
+                      <p className="disclaimer">
+                          **Natural forest is defined as all tree cover (all
+                          vegetation taller than 5 meters in height) with 30%
+                          minimum tree cover density excluding tree cover within
+                          mapped tree plantations.
+                      </p>
+                    </Fragment>
+                  )}
                   {forestAtlasLink && (
                     <Button
                       className="forest-atlas-btn"
