@@ -15,8 +15,8 @@ class ThankyouPage extends PureComponent {
               <img src={treeImage} alt="thank-you-tree" />
               <h1>Thank You!</h1>
               <p>
-                Thank you for letting us know you still want to hear from Global
-                Forest Watch.
+                Thank you for subscribing to Global Forest Watch newsletters and
+                updates.
               </p>
               <p>
                 You may wish to read our{' '}

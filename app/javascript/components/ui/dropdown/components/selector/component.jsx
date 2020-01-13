@@ -55,10 +55,10 @@ const Selector = props => {
         <input {...inputProps()} />
         {clearable &&
           activeValue && (
-            <button className="clear-btn" onClick={handleClearSelection}>
-              <Icon icon={closeIcon} className="clear-icon" />
-            </button>
-          )}
+          <button className="clear-btn" onClick={handleClearSelection}>
+            <Icon icon={closeIcon} className="clear-icon" />
+          </button>
+        )}
         {arrowPosition !== 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
             <Icon className="arrow" icon={arrowDownIcon} />
@@ -77,7 +77,7 @@ Selector.propTypes = {
   arrowPosition: PropTypes.string,
   onSelectorClick: PropTypes.func,
   clearable: PropTypes.bool,
-  activeValue: PropTypes.object,
+  activeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   searchable: PropTypes.bool,
   inputProps: PropTypes.func,

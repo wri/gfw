@@ -10,9 +10,12 @@ import landCategories from 'data/land-categories.json';
 import forestTypes from 'data/forest-types.json';
 
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
+export const selectLocation = (state, { location }) => location;
 export const selectWidgetSettings = (state, { settings }) => settings;
 export const selectWidgetConfig = (state, { config }) => config;
 export const selectWidgetOptions = (state, { options }) => options;
+export const selectDownloadLink = (state, { getDownloadLink }) =>
+  getDownloadLink;
 export const selectWidgetUrlState = (state, { widget }) =>
   state.location && state.location.query && state.location.query[widget];
 export const selectWidgetFromState = (state, { widget }) =>
@@ -191,6 +194,9 @@ export const getIndicator = createSelector(
       label = forestType.label;
       value = forestType.value;
     }
+    if (label !== 'Key Biodiversity Areas') {
+      label = label.toLowerCase();
+    }
 
     return {
       label,
@@ -233,6 +239,13 @@ export const getWidgetPropsFromState = createSelector(
   })
 );
 
+export const getWidgetDownloadLink = createSelector(
+  [selectWidgetSettings, selectDownloadLink, selectLocation],
+  (settings, getDownloadLink, location) =>
+    getDownloadLink &&
+    getDownloadLink({ params: { ...settings, ...location, download: true } })
+);
+
 export const getWidgetTitle = createSelector(
   [getWidgetPropsFromState],
   props => props && props.title
@@ -268,5 +281,6 @@ export const getWidgetProps = () =>
     polynames: getPolynames,
     indicator: getIndicator,
     options: getOptionsWithYears,
-    active: selectWidgetActive
+    active: selectWidgetActive,
+    downloadLink: getWidgetDownloadLink
   });

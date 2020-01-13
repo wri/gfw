@@ -70,10 +70,11 @@ class SearchPage extends PureComponent {
                           href={item.link}
                           target="_blank"
                           rel="noopener nofollower"
+                          className="notranslate"
                         >
                           <h3>{item.title}</h3>
                         </a>
-                        <p>{item.snippet}</p>
+                        <p className="notranslate">{item.snippet}</p>
                         <Button theme="theme-button-light" extLink={item.link}>
                           MORE
                         </Button>

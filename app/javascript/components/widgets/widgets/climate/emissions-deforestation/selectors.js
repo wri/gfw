@@ -75,9 +75,9 @@ export const parseSentence = createSelector(
       unit === 'biomassLoss' ? 'aboveground biomass' : 'CO\u2082';
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
-      indicatorText = ` ${indicator.label.toLowerCase()} regions`;
+      indicatorText = ` ${indicator.label} regions`;
     } else if (indicator) {
-      indicatorText = ` ${indicator.label.toLowerCase()}`;
+      indicatorText = ` ${indicator.label}`;
     }
 
     const params = {

@@ -301,15 +301,21 @@ export const getLayerGroups = createSelector(
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
-    return activeDatasetsState.map(layer => {
-      const dataset = datasets.find(d => d.id === layer.dataset);
-      const { metadata } =
-        (dataset && dataset.layers.find(l => l.active)) || {};
-      return {
-        ...dataset,
-        metadata: metadata || (dataset && dataset.metadata)
-      };
-    });
+    return activeDatasetsState
+      .map(layer => {
+        const dataset = datasets.find(d => d.id === layer.dataset);
+        const { metadata } =
+          (dataset && dataset.layers.find(l => l.active)) || {};
+        const newMetadata = metadata || (dataset && dataset.metadata);
+
+        return {
+          ...dataset,
+          ...(newMetadata && {
+            metadata: newMetadata
+          })
+        };
+      })
+      .filter(d => !isEmpty(d));
   }
 );
 
@@ -326,7 +332,10 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
         if (l.isBoundary) zIndex = 1050 - i;
         return {
           ...l,
-          zIndex
+          zIndex,
+          ...(l.isRecentImagery && {
+            id: l.params.url
+          })
         };
       }),
     'zIndex'

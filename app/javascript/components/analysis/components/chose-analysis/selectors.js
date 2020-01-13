@@ -13,6 +13,7 @@ import {
 export const selectError = state => state.analysis && state.analysis.error;
 export const selectErrorMessage = state =>
   state.analysis && state.analysis.errorMessage;
+const selectUploading = state => state.analysis && state.analysis.uploading;
 
 export const getChooseAnalysisProps = createStructuredSelector({
   showDraw: getShowDraw,
@@ -21,5 +22,6 @@ export const getChooseAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   activeDatasets: getActiveDatasetsFromState,
-  drawing: getDrawing
+  drawing: getDrawing,
+  uploading: selectUploading
 });

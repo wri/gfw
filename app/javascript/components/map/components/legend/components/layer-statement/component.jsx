@@ -15,7 +15,7 @@ class LayerStatement extends PureComponent {
       tooltipDesc
     } = this.props;
 
-    return (
+    return tooltipDesc ? (
       <Tooltip
         theme="tip"
         hideOnClick
@@ -28,6 +28,8 @@ class LayerStatement extends PureComponent {
           {statementPlain} <span>{statementHighlight}</span>
         </div>
       </Tooltip>
+    ) : (
+      <div>{statementPlain}</div>
     );
   }
 }

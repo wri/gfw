@@ -45,8 +45,11 @@
     line-height: 1.5;
 
     &::placeholder {
-      font-size: rem(15px);
+      font-size: rem(13px);
+      font-style: italic;
       line-height: 1.5;
+      color: scale-color($slate, $lightness: +30%);
+      color: lighten($color: $slate, $amount: 30%);
     }
   }
 

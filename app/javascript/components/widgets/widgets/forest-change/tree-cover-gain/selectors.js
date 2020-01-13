@@ -66,7 +66,6 @@ export const parseData = createSelector(
     ) {
       return null;
     }
-    // console.log(currentLabel, locationObject, data);
 
     let dataTrimmed = [];
     data.forEach(d => {
@@ -168,7 +167,7 @@ export const parseSentence = createSelector(
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
       gain: formatNumber({ num: gain, unit: 'ha' }),
-      indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
+      indicator: (indicator && indicator.label) || 'region-wide',
       percent: formatNumber({ num: areaPercent, unit: '%' }),
       gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
       parent: locationObject.parentLabel || null

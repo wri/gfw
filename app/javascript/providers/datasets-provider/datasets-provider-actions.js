@@ -49,7 +49,10 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
           const { global, selectorConfig } = applicationConfig || {};
 
           // build statement config
-          let statementConfig = null;
+          let statementConfig =
+            defaultLayer.legendConfig && defaultLayer.legendConfig.statement
+              ? { statement: defaultLayer.legendConfig.statement }
+              : null;
           if (isLossLayer) {
             statementConfig = {
               type: 'lossLayer'

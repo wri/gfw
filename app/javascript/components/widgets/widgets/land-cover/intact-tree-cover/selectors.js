@@ -57,7 +57,7 @@ export const parseSentence = createSelector(
     const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
     const intactPercentage = intactData && intactData / totalExtent * 100;
     const indicatorLabel =
-      indicator && indicator.label ? indicator.label.toLowerCase() : null;
+      indicator && indicator.label ? indicator.label : null;
 
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
