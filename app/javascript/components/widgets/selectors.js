@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
-import lowerCase from 'lodash/lowerCase';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
@@ -323,15 +322,6 @@ export const parseWidgetsWithOptions = createSelector(
                     polynameWhitelist.includes(o.value)
                   )
                   : filteredOptions;
-              filteredOptions = filteredOptions.map(i => ({
-                ...i,
-                metaKey:
-                  i.metaKey === 'primary_forest'
-                    ? `${lowerCase(location.adm0)}_${i.metaKey}${
-                      location.adm0 === 'IDN' ? 's' : ''
-                    }`
-                    : i.metaKey
-              }));
             }
 
             return {
