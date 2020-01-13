@@ -103,7 +103,7 @@ export const getDatesData = data =>
     date: moment()
       .year(d.year)
       .isoWeek(d.week)
-      .day(1)
+      .startOf('isoWeek')
       .format('YYYY-MM-DD'),
     month: upperCase(
       moment()
