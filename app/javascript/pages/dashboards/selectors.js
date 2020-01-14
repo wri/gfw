@@ -1,9 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import upperFirst from 'lodash/upperFirst';
-import isEmpty from 'lodash/isEmpty';
-import flatMap from 'lodash/flatMap';
 
-import { filterWidgetsByLocation } from 'components/widgets/selectors';
+import {
+  filterWidgetsByLocation,
+  getWidgetCategories,
+  getActiveCategory
+} from 'components/widgets/selectors';
 import {
   getActiveArea,
   selectAreaLoading
@@ -44,12 +46,12 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getLinks = createSelector(
-  [filterWidgetsByLocation, selectCategory, getActiveArea],
-  (widgets, activeCategory, activeArea) => {
-    if (!widgets || (activeArea && isEmpty(activeArea.admin))) {
+  [getWidgetCategories, getActiveCategory],
+  (widgetCats, activeCategory) => {
+    if (!widgetCats) {
       return null;
     }
-    const widgetCats = flatMap(widgets.map(w => w.categories));
+
     return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
       category => ({
         label: category.label,
@@ -62,7 +64,7 @@ export const getLinks = createSelector(
 
 export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
-  category: selectCategory,
+  category: getActiveCategory,
   links: getLinks,
   widgetAnchor: getWidgetAnchor,
   noWidgetsMessage: getNoWidgetsMessage,

@@ -295,10 +295,26 @@ export const filterWidgetsByLocation = createSelector(
   }
 );
 
+export const getWidgetCategories = createSelector(
+  [filterWidgetsByLocation],
+  widgets => flatMap(widgets.map(w => w.categories))
+);
+
+export const getActiveCategory = createSelector(
+  [selectCategory, getWidgetCategories],
+  (activeCategory, widgetCats) => {
+    if (!widgetCats) {
+      return null;
+    }
+
+    return widgetCats.includes(activeCategory) ? activeCategory : 'summary';
+  }
+);
+
 export const filterWidgetsByCategory = createSelector(
   [
     filterWidgetsByLocation,
-    selectCategory,
+    getActiveCategory,
     selectAnalysis,
     getLocationData,
     selectEmbed,
@@ -313,12 +329,9 @@ export const filterWidgetsByCategory = createSelector(
       return sortBy(widgets, 'sortOrder.summary');
     }
 
-    const cat =
-      locationData && !locationData.areaId && category ? category : 'summary';
-
     return sortBy(
-      widgets.filter(w => w.categories.includes(cat)),
-      `sortOrder[${camelCase(cat)}]`
+      widgets.filter(w => w.categories.includes(category)),
+      `sortOrder[${camelCase(category)}]`
     );
   }
 );
@@ -524,7 +537,7 @@ export const getActiveWidget = createSelector(
 );
 
 export const getNoDataMessage = createSelector(
-  [getGeodescriberTitleFull, selectCategory],
+  [getGeodescriberTitleFull, getActiveCategory],
   (title, category) => {
     if (!title || !category) return 'No data available';
     if (!category) return `No data available for ${title}`;

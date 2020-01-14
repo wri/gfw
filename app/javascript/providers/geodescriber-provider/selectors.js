@@ -162,7 +162,7 @@ export const getAdminDescription = createSelector(
       primaryLoss
     } =
       data || {};
-    const { area, emissions } = totalLoss || {};
+    const { area, emissions, year } = totalLoss || {};
     const { area: areaPlantations, emissions: emissionsPlantations } =
       plantationsLoss || {};
     const { area: areaPrimary, emissions: emissionsPrimary } =
@@ -208,7 +208,7 @@ export const getAdminDescription = createSelector(
       emissions: `${emissionsNaturalForest}t`,
       emissionsTreeCover: `${emissionsFormatted}t`,
       emissionsPrimary: `${emissionsPrimaryFormatted}t`,
-      year: totalLoss.year,
+      year,
       treeCoverLoss: `${loss}ha`,
       primaryLoss: `${primaryLossFormatted}ha`,
       naturalLoss: `${naturalLoss}ha`
