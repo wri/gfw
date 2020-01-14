@@ -84,7 +84,7 @@ export default {
         (response && response.data && response.data.data) || {};
       let loss = [];
 
-      if (params.type === 'geostore') {
+      if (['wdpa', 'use', 'geostore'].includes(params.type)) {
         const biomassData = data.biomassLossByYear;
         const emissionsData = data.co2LossByYear;
         loss = Object.keys(biomassData).map(l => ({
