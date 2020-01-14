@@ -70,7 +70,7 @@ class GeodescriberProvider extends PureComponent {
   };
 
   handleGetAdminGeodescriber = () => {
-    const { getAdminGeodescriber } = this.props;
+    const { getAdminGeodescriber, location } = this.props;
     this.cancelAdminGeodescriberFetch();
     this.adminGeodescriberFetch = CancelToken.source();
 
