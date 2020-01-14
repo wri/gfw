@@ -11,6 +11,7 @@ import img2015 from 'pages/about/section-history/images/2015.jpg';
 import img2016 from 'pages/about/section-history/images/2016.jpg';
 import img2017 from 'pages/about/section-history/images/2017.jpg';
 import img2018 from 'pages/about/section-history/images/2018.png';
+import img2019 from 'pages/about/section-history/images/2019.png';
 
 import './section-history-styles.scss';
 
@@ -77,6 +78,13 @@ const data = [
     title: '2018',
     paragraph:
       'GFW released new data that show the dominant drivers of tree cover loss, including those that result in deforestation. GFW also released new and improved dashboards to deliver insights about the causes and impacts of forest change.'
+  },
+  {
+    img: img2019,
+    imgPosition: 'center',
+    title: '2019',
+    paragraph:
+      'Stemming from collaboration with leading financial and commodity companies, GFW Pro was launched in 2019 to aid businesses intent on managing deforestation risk in their supply chains. Meanwhile, the addition of high-resolution Planet basemaps, plantations data for 82 countries and pan-tropical primary forest data gave users a new way to understand forest change on the GFW map.'
   }
 ];
 

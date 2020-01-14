@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import { getColorPalette } from 'utils/data';
 
@@ -25,13 +26,11 @@ export const parsePayload = payload => {
   const payloadData = payload && payload.find(p => p.name === 'count');
   const payloadValues = payloadData && payloadData.payload;
   if (payloadValues) {
-    const startDate = moment()
-      .year(payloadValues.year)
-      .week(payloadValues.week);
-
     return {
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),
+      startDate: payloadValues.date,
+      endDate: moment(payloadValues.date)
+        .add(7, 'days')
+        .format('YYYY-MM-DD'),
       updateLayer: true,
       ...payloadValues
     };
@@ -43,8 +42,7 @@ export const getData = createSelector(
   [selectAlerts, selectLatestDates],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const groupedByYear = groupBy(data, 'year');
-
+    const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
       (acc, next) => {
         const { year } = next[0];
@@ -55,6 +53,7 @@ export const getData = createSelector(
       },
       {}
     );
+
     const dataYears = Object.keys(hasAlertsByYears).filter(
       key => hasAlertsByYears[key] === true
     );
@@ -63,25 +62,29 @@ export const getData = createSelector(
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
     const years = [];
-    const latestFullWeek = moment(latest).subtract(1, 'weeks');
+    const latestWeek = moment(latest);
     const lastWeek = {
-      isoWeek: latestFullWeek.isoWeek(),
-      year: latestFullWeek.year()
+      isoWeek: latestWeek.isoWeek(),
+      year: latestWeek.year()
     };
 
     for (let i = startYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
+
     const yearLengths = {};
     years.forEach(y => {
-      if (lastWeek.year === parseInt(y, 10)) {
+      if (lastWeek.year === y) {
         yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).weekday() === 1) {
-        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+        yearLengths[y] = moment(`${y}-12-31`)
+          .subtract('week', 1)
+          .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
       }
     });
+
     const zeroFilledData = [];
 
     years.forEach(d => {
@@ -94,6 +97,7 @@ export const getData = createSelector(
         );
       }
     });
+
     return zeroFilledData;
   }
 );
