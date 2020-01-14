@@ -104,10 +104,7 @@ export default {
     extentYear: 2000
   },
   getData: params => {
-    if (
-      params.status === 'pending' ||
-      (params.type === 'geostore' && !params.areaId)
-    ) {
+    if (params.status === 'pending') {
       return getDataAPI(params);
     }
 

@@ -127,9 +127,9 @@ export default {
     ifl: 2000
   },
   getData: (params = {}) => {
-    const { adm0, adm1, adm2, type, status, areaId } = params || {};
+    const { adm0, adm1, adm2, type, status } = params || {};
 
-    if (status === 'pending' || (type === 'geostore' && !areaId)) {
+    if (status === 'pending') {
       return getDataAPI(params);
     }
 

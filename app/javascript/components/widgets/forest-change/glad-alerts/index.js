@@ -209,10 +209,7 @@ export default {
     weeks: 13
   },
   getData: params => {
-    if (
-      params.status === 'pending' ||
-      (params.type === 'geostore' && !params.areaId)
-    ) {
+    if (params.status === 'pending') {
       return axios
         .all([
           fetchAnalysisEndpoint({

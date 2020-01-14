@@ -107,6 +107,7 @@ export const parseConfig = createSelector(
 export const parseSentence = createSelector(
   [getData, filterData, getCurrentLocation, getSentence],
   (data, filteredData, currentLabel, sentence) => {
+    if (isEmpty(data)) return null;
     const weekGladCount = filteredData ? sumBy(filteredData, 'count') : 'No';
     const averageGladCount = data ? Math.round(sumBy(data, 'count') / 52) : 0;
 

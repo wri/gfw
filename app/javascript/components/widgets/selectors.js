@@ -138,31 +138,36 @@ export const getAllLocationData = createSelector(
 export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (locationObj, allLocationData, polynamesWhitelist) => {
-    if (isEmpty(allLocationData)) return null;
     const { type, adminLevel, locationLabel, adm0, adm1, areaId } = locationObj;
+    const { adm0: adm0Data, adm1: adm1Data, adm2: adm2Data } =
+      allLocationData || {};
 
     let parent = {};
-    let parentData = allLocationData.adm0;
-    let children = allLocationData.adm0;
+    let parentData = adm0Data;
+    let children = adm0Data;
     if (adminLevel === 'adm0') {
       parent = { label: 'global', value: 'global' };
-      children = allLocationData.adm1;
+      children = adm1Data;
     } else if (adminLevel === 'adm1') {
-      parent = allLocationData.adm0.find(d => d.value === adm0);
-      parentData = allLocationData.adm0;
-      children = allLocationData.adm2;
+      parent = adm0Data && adm0Data.find(d => d.value === adm0);
+      parentData = adm0Data;
+      children = adm2Data;
     } else if (adminLevel === 'adm2') {
-      parent = allLocationData.adm1.find(d => d.value === adm1);
-      parentData = allLocationData.adm1;
+      parent = adm1Data && adm1Data.find(d => d.value === adm1);
+      parentData = adm1Data;
       children = [];
     }
 
-    const locationData = allLocationData[adminLevel] || allLocationData.adm0;
+    const locationData = allLocationData[adminLevel] || adm0Data;
     const currentLocation =
       locationData &&
       locationData.find(
         d => d.value === locationObj[adminLevel] || d.id === locationObj.areaId
       );
+
+    const status = ['global', 'country', 'wdpa'].includes(locationObj.type)
+      ? 'saved'
+      : (currentLocation && currentLocation.status) || 'pending';
 
     return {
       parent,
@@ -176,9 +181,7 @@ export const getLocationData = createSelector(
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
       polynamesWhitelist,
-      status: ['global', 'country', 'wdpa'].includes(locationObj.type)
-        ? 'complete'
-        : currentLocation && currentLocation.status
+      status
     };
   }
 );

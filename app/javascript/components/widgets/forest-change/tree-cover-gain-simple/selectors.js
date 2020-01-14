@@ -11,6 +11,7 @@ const getColors = state => state.colors;
 export const parseSentence = createSelector(
   [getGain, getExtent, getSentence, getLocationName],
   (gain, extent, sentence, location) => {
+    if (!gain && !extent) return null;
     const gainPerc = (gain && extent && gain / extent * 100) || 0;
 
     const params = {

@@ -8,6 +8,7 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
+  metaKey: 'widget_tree_cover_gain',
   settingsConfig: [
     {
       key: 'extentYear',
