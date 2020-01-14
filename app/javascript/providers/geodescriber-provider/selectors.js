@@ -178,7 +178,8 @@ export const getAdminDescription = createSelector(
       primaryExtent < 1
         ? format('.3r')(primaryExtent)
         : format('.3s')(primaryExtent);
-    const percentageCover = format('.2r')(extent / totalArea * 100);
+    const percentageCover =
+      extent && totalArea ? format('.2r')(extent / totalArea * 100) : 0;
     const percentageNatForest = format('.2r')(
       (extent - plantationsExtent) / totalArea * 100
     );

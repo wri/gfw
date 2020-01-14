@@ -132,7 +132,7 @@ export default {
         }
 
         const { startYear, endYear, range } =
-          lossMappedData[0] && getYearsRange(lossMappedData[0].loss);
+          (lossMappedData[0] && getYearsRange(lossMappedData[0].loss)) || {};
 
         return {
           lossByRegion: lossMappedData,
