@@ -40,6 +40,7 @@ export const fetchGladAlerts = ({
   adm2,
   tsc,
   grouped,
+  download,
   ...params
 }) => {
   const { gladIntersectionAlerts } = QUERIES;
@@ -60,6 +61,14 @@ export const fetchGladAlerts = ({
       '{WHERE}',
       getWHEREQuery({ iso: adm0, adm1, adm2, ...params, glad: true })
     );
+
+  if (download) {
+    return {
+      name: 'glad_alerts__count',
+      url: url.replace('query', 'download')
+    };
+  }
+
   return axios.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
