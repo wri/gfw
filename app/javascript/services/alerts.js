@@ -1,19 +1,6 @@
 import request from 'utils/request';
 import moment from 'moment';
-import { getIndicator } from 'utils/strings';
-
-// // ISO
-// const GLAD_ADM0_SUMMARY = 'ec9a2221-830d-40ff-ae65-358726c4fa29';
-// const GLAD_ADM0_WEEKLY = '3170421d-ee32-4f9d-b4b0-a76bac33cd26';
-
-// // Adm1
-// const GLAD_ADM1_SUMMARY = '674573eb-249c-4f65-aefa-65e4f58aad6f';
-// const GLAD_ADM1_WEEKLY = '181a6e5d-7548-4471-a74c-fbab4456239a';
-
-// // Adm2
-// const GLAD_ADM2_SUMMARY = 'd9dc9bc5-36ce-4c64-819a-c778eed33526';
-// const GLAD_ADM2_DAILY = 'c78b4379-8030-4940-bd04-b07baee47146';
-// const GLAD_ADM2_WEEKLY = '79683341-dc3d-4d80-8a47-b82153943da2';
+import axios from 'axios';
 
 const REQUEST_URL = process.env.GFW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -24,15 +11,8 @@ const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
 const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
 
 const QUERIES = {
-  gladIntersectionAlerts:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  firesGrouped:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  viirsAlerts: '{location}?group=true&period={period}&thresh=0',
-  firesStats:
-    '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
+    "SELECT iso, adm1, adm2, week as alert__week, year as alert__year, alerts as alert__count, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   alertsLatest:
     'SELECT year, week FROM data GROUP BY year, week ORDER BY year DESC, week DESC LIMIT 1'
 };
@@ -41,40 +21,6 @@ const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
-
-export const fetchGladAlerts = ({ adm0, adm1, adm2, download }) => {
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if (adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  } else if (adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
-    QUERIES.gladIntersectionAlerts
-  }`
-    .replace('{location}', getLocation(adm0, adm1, adm2))
-    .replace('{polyname}', 'admin');
-
-  if (download) return url.replace('query', 'download');
-  return request.get(url, 3600, 'gladRequest');
-};
-
-export const fetchGladIntersectionAlerts = ({
-  adm0,
-  adm1,
-  forestType,
-  landCategory,
-  download
-}) => {
-  const url = `${REQUEST_URL}/query/${
-    adm1 ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
-  }?sql=${QUERIES.gladIntersectionAlerts}`
-    .replace('{location}', getLocation(adm0, adm1))
-    .replace('{polyname}', getIndicator(forestType, landCategory));
-
-  if (download) return url.replace('query', 'download');
-  return request.get(url, 3600, 'gladRequest');
-};
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
@@ -90,11 +36,34 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
     .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
 
-  if (download) return url.replace('query', 'download');
-  return request.get(url, 3600, 'firesRequest');
+  if (download) {
+    return {
+      name: 'viirs_fire_alerts__count',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return axios.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: d.alert__week,
+        year: d.alert__year,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
 };
 
-export const fetchFiresAlertsGrouped = ({ adm0, adm1, adm2, dataset }) => {
+export const fetchFiresAlertsGrouped = ({
+  adm0,
+  adm1,
+  adm2,
+  dataset,
+  download
+}) => {
   let fires_summary_table = FIRES_ADM1_DATASET;
   if (adm1) {
     fires_summary_table = FIRES_ADM2_DATASET;
@@ -105,7 +74,26 @@ export const fetchFiresAlertsGrouped = ({ adm0, adm1, adm2, dataset }) => {
     .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
-  return request.get(url, 3600, 'firesRequest');
+
+  if (download) {
+    return {
+      name: 'viirs_fire_alerts__count',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return axios.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: d.alert__week,
+        year: d.alert__year,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
 };
 
 export const fetchFiresLatest = ({ adm1, adm2 }) => {
