@@ -1,5 +1,4 @@
-import { fetchFiresStats, fetchFireAlertsByGeostore } from 'services/alerts';
-import moment from 'moment';
+import { fetchFireAlertsByGeostore } from 'services/alerts';
 
 import getWidgetProps from './selectors';
 
@@ -17,7 +16,7 @@ export default {
     forestChange: 11
   },
   visible: ['dashboard', 'analysis'],
-  chartType: 'composedChart',
+  chartType: 'listLegend',
   sentences: {
     initial: '{count} active fires detected in {location} in the last 7 days.'
   },
@@ -35,33 +34,9 @@ export default {
       layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
     }
   ],
-  getData: params => {
-    const dates = [
-      moment().format('YYYY-MM-DD'),
-      moment()
-        .subtract(1, 'week')
-        .format('YYYY-MM-DD')
-    ];
-    // Viirs response too heavy at adm0 level, and returns error (CARTO).
-    // If country, use alternative service and parse data.
-    if (params.type === 'country') {
-      return fetchFiresStats({ ...params, dates }).then(response => {
-        const firesResponse = response.data.data.attributes.value;
-        const data = firesResponse.filter(v => v.alerts && v.day).map(el => ({
-          type: 'viirs-fires',
-          attributes: {
-            value: el.alerts,
-            day: `${el.day}T00:00:00Z`
-          }
-        }));
-
-        return data;
-      });
-    }
-
-    return fetchFireAlertsByGeostore(params).then(response => ({
+  getData: params =>
+    fetchFireAlertsByGeostore(params).then(response => ({
       fires: response.data.data.attributes.value
-    }));
-  },
+    })),
   getWidgetProps
 };
