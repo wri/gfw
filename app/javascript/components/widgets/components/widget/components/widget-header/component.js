@@ -182,16 +182,15 @@ class WidgetHeader extends PureComponent {
 
   generateZipFromURL = files => {
     const { title, config, settings, allLocation } = this.props;
-    const { categories, metaKey } = config;
+    const { metaKey } = config;
 
     const metadata = {
       title,
-      categories: categories.join(', '),
       ...(settings && {
         ...Object.keys(settings).reduce(
           (obj, key) => ({
             ...obj,
-            ...(!['activeData'].includes(key) && {
+            ...(!['activeData', 'page', 'page_size', 'ifl'].includes(key) && {
               [snakeCase(key)]: settings[key]
             })
           }),
@@ -208,9 +207,11 @@ class WidgetHeader extends PureComponent {
         allLocation.search
       )
     };
-    const metadataFile = Object.keys(metadata)
-      .join(';')
-      .concat('\n', Object.values(metadata).join(';'));
+
+    const metadataFile = Object.entries(metadata)
+      .map(entry => `${entry[0]},${entry[1]}`)
+      .join('\n');
+
     const urlToPromise = url =>
       new Promise((resolve, reject) => {
         JSZipUtils.getBinaryContent(url, (err, data) => {
