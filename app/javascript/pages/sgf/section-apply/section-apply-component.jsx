@@ -55,7 +55,7 @@ class SectionAbout extends PureComponent {
                   - Read the 2020&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="http://s3.amazonaws.com/gfw.blog/Training%20Guides/SGF/Guidelines%20for%20SGF%20Applicants%202020.pdf"
+                    href="http://s3.amazonaws.com/gfw.blog/Training%20Guides/SGF/Guidelines%20for%20SGF%20Applicants%202020%20%281%29.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
