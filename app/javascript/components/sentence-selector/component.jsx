@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { translateText } from 'utils/transifex';
 
 import Dropdown from 'components/ui/dropdown';
 
@@ -18,10 +19,12 @@ class SentenceSelector extends PureComponent {
   render() {
     const { onChange, className, options, value, sentence, name } = this.props;
 
+    const translateSentence = translateText(sentence);
     const nameRepl =
-      sentence.includes('{name}') && name
-        ? this.reduceSentence(sentence, '{name}', name).join('')
+      translateSentence.includes('{name}') && name
+        ? this.reduceSentence(translateSentence, '{name}', name).join('')
         : sentence;
+
     const selectorRepl = this.reduceSentence(
       nameRepl,
       '{selector}',
@@ -37,7 +40,7 @@ class SentenceSelector extends PureComponent {
     );
 
     return (
-      <div className={`c-sentence-selector ${className || ''}`}>
+      <div className={`c-sentence-selector notranslate ${className || ''}`}>
         {selectorRepl}
       </div>
     );
