@@ -181,7 +181,15 @@ class WidgetHeader extends PureComponent {
   };
 
   generateZipFromURL = files => {
-    const { title, config, settings, allLocation } = this.props;
+    const {
+      title,
+      config,
+      settings,
+      allLocation,
+      locationData,
+      childLocationData,
+      locationObject
+    } = this.props;
     const { metaKey } = config;
 
     const metadata = {
@@ -211,6 +219,25 @@ class WidgetHeader extends PureComponent {
     const metadataFile = Object.entries(metadata)
       .map(entry => `${entry[0]},${entry[1]}`)
       .join('\n');
+
+    let adminLevel = (locationObject && locationObject.adminLevel) || 'global';
+    if (adminLevel === 'adm0') adminLevel = 'iso';
+    let childAdminLevel = 'adm2';
+    if (adminLevel === 'global') childAdminLevel = 'iso';
+    if (adminLevel === 'iso') childAdminLevel = 'adm1';
+
+    const locationMetadataFile =
+      locationData &&
+      adminLevel !== 'global' &&
+      [`name,${adminLevel}`]
+        .concat(locationData.map(entry => `${entry.label},${entry.value}`))
+        .join('\n');
+
+    const childLocationMetadataFile =
+      childLocationData &&
+      [`name,${childAdminLevel}`]
+        .concat(childLocationData.map(entry => `${entry.label},${entry.value}`))
+        .join('\n');
 
     const urlToPromise = url =>
       new Promise((resolve, reject) => {
@@ -246,6 +273,12 @@ class WidgetHeader extends PureComponent {
       zip.file(filename, urlToPromise(url), { binary: true });
     });
     zip.file('metadata.csv', metadataFile);
+    if (locationMetadataFile) {
+      zip.file(`${adminLevel}_metadata.csv`, locationMetadataFile);
+    }
+    if (childLocationMetadataFile) {
+      zip.file(`${childAdminLevel}_metadata.csv`, childLocationMetadataFile);
+    }
     zip.generateAsync({ type: 'blob' }).then(content => {
       saveAs(content, `${title}.zip`);
     });
@@ -326,7 +359,10 @@ WidgetHeader.propTypes = {
   metakey: PropTypes.string,
   getDataURL: PropTypes.func,
   downloadLink: PropTypes.string,
-  allLocation: PropTypes.string
+  allLocation: PropTypes.string,
+  locationData: PropTypes.array,
+  childLocationData: PropTypes.array,
+  locationObject: PropTypes.object
 };
 
 export default WidgetHeader;
