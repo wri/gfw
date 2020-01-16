@@ -186,6 +186,7 @@ class WidgetHeader extends PureComponent {
       config,
       settings,
       allLocation,
+      parentLocationData,
       locationData,
       childLocationData,
       locationObject
@@ -220,23 +221,45 @@ class WidgetHeader extends PureComponent {
       .map(entry => `${entry[0]},${entry[1]}`)
       .join('\n');
 
+    let parentAdminLevel = 'global';
     let adminLevel = (locationObject && locationObject.adminLevel) || 'global';
-    if (adminLevel === 'adm0') adminLevel = 'iso';
     let childAdminLevel = 'adm2';
-    if (adminLevel === 'global') childAdminLevel = 'iso';
-    if (adminLevel === 'iso') childAdminLevel = 'adm1';
+
+    if (adminLevel === 'global') {
+      childAdminLevel = 'iso';
+    }
+    if (adminLevel === 'adm0') {
+      adminLevel = 'iso';
+      childAdminLevel = 'adm1';
+    }
+    if (adminLevel === 'adm1') {
+      parentAdminLevel = 'iso';
+    }
+    if (adminLevel === 'adm2') {
+      parentAdminLevel = 'adm1';
+    }
+
+    const parentLocationMetadataFile =
+      parentLocationData &&
+      [`name,${parentAdminLevel}${parentAdminLevel !== 'iso' ? '__id' : ''}`]
+        .concat(
+          parentLocationData.map(entry => `"${entry.label}","${entry.value}"`)
+        )
+        .join('\n');
 
     const locationMetadataFile =
       locationData &&
       adminLevel !== 'global' &&
-      [`name,${adminLevel}`]
-        .concat(locationData.map(entry => `${entry.label},${entry.value}`))
+      [`name,${adminLevel}${adminLevel !== 'iso' ? '__id' : ''}`]
+        .concat(locationData.map(entry => `"${entry.label}","${entry.value}"`))
         .join('\n');
 
     const childLocationMetadataFile =
       childLocationData &&
-      [`name,${childAdminLevel}`]
-        .concat(childLocationData.map(entry => `${entry.label},${entry.value}`))
+      [`name,${childAdminLevel}${childAdminLevel !== 'iso' ? '__id' : ''}`]
+        .concat(
+          childLocationData.map(entry => `"${entry.label}","${entry.value}"`)
+        )
         .join('\n');
 
     const urlToPromise = url =>
@@ -273,6 +296,9 @@ class WidgetHeader extends PureComponent {
       zip.file(filename, urlToPromise(url), { binary: true });
     });
     zip.file('metadata.csv', metadataFile);
+    if (parentLocationMetadataFile) {
+      zip.file(`${parentAdminLevel}_metadata.csv`, parentLocationMetadataFile);
+    }
     if (locationMetadataFile) {
       zip.file(`${adminLevel}_metadata.csv`, locationMetadataFile);
     }
@@ -362,7 +388,8 @@ WidgetHeader.propTypes = {
   allLocation: PropTypes.string,
   locationData: PropTypes.array,
   childLocationData: PropTypes.array,
-  locationObject: PropTypes.object
+  locationObject: PropTypes.object,
+  parentLocationData: PropTypes.array
 };
 
 export default WidgetHeader;
