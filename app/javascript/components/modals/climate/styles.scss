@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(20px);
+$desktop-padding: rem(40px);
+$mobile-margin: rem(10px);
+
+.c-gfw-climate-modal {
+  margin-top: $mobile-margin !important;
+
+  @media screen and (min-width: $screen-m) {
+    margin-top: auto !important;
+  }
+
+  .contact-us-content {
+    .feedback-message {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+      background-color: #fff;
+      max-width: 70rem;
+      width: 600px;
+      padding: 1rem;
+      margin: auto;
+
+      p {
+        margin-bottom: 1.25rem;
+      }
+    }
+  }
+}
+
