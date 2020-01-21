@@ -7,7 +7,7 @@ import './styles.scss';
 
 class ModalGFWClimate extends PureComponent {
   render() {
-    const { open, setModalGFWClimateOpen } = this.props;
+    const { open, setModalGFWClimateOpen, setModalContactUsOpen } = this.props;
 
     return (
       <Modal
@@ -24,7 +24,15 @@ class ModalGFWClimate extends PureComponent {
             {`The Global Forest Watch Climate website is no longer available. We
             hope you can find the data and information you're looking for
             here. If not, `}
-            <a href="">contact us</a>
+            <a
+              href=""
+              onClick={() => {
+                setModalGFWClimateOpen(false);
+                setModalContactUsOpen(true);
+              }}
+            >
+              contact us
+            </a>
             {" and we'll be happy to help."}
           </p>
         </div>
@@ -35,7 +43,8 @@ class ModalGFWClimate extends PureComponent {
 
 ModalGFWClimate.propTypes = {
   open: PropTypes.bool,
-  setModalGFWClimateOpen: PropTypes.func
+  setModalGFWClimateOpen: PropTypes.func,
+  setModalContactUsOpen: PropTypes.func
 };
 
 export default ModalGFWClimate;

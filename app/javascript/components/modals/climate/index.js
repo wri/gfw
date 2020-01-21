@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
+
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
@@ -15,4 +17,6 @@ reducerRegistry.registerModule('modalGFWClimate', {
   initialState
 });
 
-export default connect(mapStateToProps, { ...actions })(Component);
+export default connect(mapStateToProps, { ...actions, setModalContactUsOpen })(
+  Component
+);
