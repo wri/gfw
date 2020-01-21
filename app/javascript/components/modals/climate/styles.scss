@@ -10,21 +10,20 @@ $mobile-margin: rem(10px);
     margin-top: auto !important;
   }
 
-  .contact-us-content {
-    .feedback-message {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      flex-direction: column;
-      background-color: #fff;
-      max-width: 70rem;
-      width: 600px;
-      padding: 1rem;
-      margin: auto;
+  .climate-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: #fff;
+    max-width: 70rem;
+    width: 600px;
+    margin: auto;
 
-      p {
-        margin-bottom: 1.25rem;
-      }
+    p {
+      font-size: rem(18px);
+      line-height: 30px;
+      margin-bottom: 1.25rem;
     }
   }
 }

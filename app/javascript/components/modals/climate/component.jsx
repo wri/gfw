@@ -19,16 +19,14 @@ class ModalGFWClimate extends PureComponent {
         title={'Global Forest Watch Climate.'}
         className="c-gfw-climate-modal"
       >
-        <div className="contact-us-content">
-          <div className="feedback-message">
-            <p>
-              The Global Forest Watch Climate website is no longer available. We
-              hope you can find the data and information you&#39;re looking for
-              here. If not,
-              <a href="">contact us</a>
-              and we&#39;ll be happy to help.
-            </p>
-          </div>
+        <div className="climate-content">
+          <p>
+            {`The Global Forest Watch Climate website is no longer available. We
+            hope you can find the data and information you're looking for
+            here. If not, `}
+            <a href="">contact us</a>
+            {" and we'll be happy to help."}
+          </p>
         </div>
       </Modal>
     );
