@@ -19,6 +19,23 @@
     color: $green-gfw;
   }
 
+  .login-form {
+    display: flex;
+    width: 100%;
+
+    > * {
+      width: 50%;
+
+      &:first-child {
+        margin-right: rem(10px);
+      }
+
+      &:last-child {
+        margin-left: rem(10px);
+      }
+    }
+  }
+
   .social-btn {
     border-radius: 0;
     height: rem(40px);

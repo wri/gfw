@@ -55,9 +55,7 @@ class SectionContact extends PureComponent {
               </h3>
               <p>Interested in getting news and updates from us?</p>
               <div className="button-group">
-                <Button link="/about?show_newsletter=true">
-                  Sign up for our newsletter
-                </Button>
+                <Button link="/subscribe">Sign up for our newsletter</Button>
                 <Button
                   className="close-button"
                   onClick={() => setShowConfirm(false)}

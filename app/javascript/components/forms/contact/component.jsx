@@ -4,84 +4,17 @@ import Button from 'components/ui/button';
 import { Field, reduxForm } from 'redux-form';
 
 import {
-  renderRadio,
+  renderInput,
   renderTextarea,
   renderSelect,
-  renderInput
-} from 'components/forms/form-fields';
-import 'components/forms/form-styles.scss';
+  renderRadio
+} from 'components/forms/fields';
 
-const validate = values => {
-  const errors = {};
-  if (
-    !values.email ||
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = true;
-  }
-  if (!values.topic) {
-    errors.topic = true;
-  }
-  if (!values.tool) {
-    errors.tool = true;
-  }
-  if (!values.message) {
-    errors.message = true;
-  }
+import { email, required } from 'components/forms/validations';
 
-  return errors;
-};
+import { topics, tools, testNewFeatures } from './config';
 
-const topics = [
-  {
-    key: 'report-a-bug-or-error',
-    name: 'Report a bug or error',
-    placeholder:
-      "Please tell us what browser and operating system you're using, including version numbers."
-  },
-  {
-    key: 'provide-feedback',
-    name: 'Provide feedback',
-    placeholder: ''
-  },
-  {
-    key: 'data-related-inquiry',
-    name: 'Data-related inquiry or suggestion',
-    placeholder: ''
-  },
-  {
-    key: 'general-inquiry',
-    name: 'General inquiry',
-    placeholder: ''
-  }
-];
-
-const tools = [
-  {
-    key: 'gfw',
-    name: 'Global Forest Watch'
-  },
-  {
-    key: 'gfw-pro',
-    name: 'GFW Pro'
-  },
-  {
-    key: 'fw',
-    name: 'Forest Watcher'
-  },
-  {
-    key: 'blog',
-    name: 'GFW Blog'
-  },
-  {
-    key: 'map-builder',
-    name: 'GFW MapBuilder'
-  },
-  {
-    key: 'not-applicable',
-    name: 'Not applicable'
-  }
-];
+import './styles.scss';
 
 const placeHolderValidator = value =>
   (value && value === 'placeholder' ? 'Select a topic' : undefined);
@@ -101,58 +34,51 @@ class ContactForm extends PureComponent {
       data &&
       data.values &&
       data.values.topic &&
-      topics.find(t => t.key === data.values.topic);
+      topics.find(t => t.value === data.values.topic);
+
     return (
-      <form className="c-form" onSubmit={handleSubmit}>
+      <form className="c-contact-form" onSubmit={handleSubmit}>
         <Field
           name="email"
           type="email"
-          label="EMAIL *"
-          placeholder=""
+          label="email *"
+          placeholder="example@globalforestwatch.org"
+          validate={[required, email]}
           component={renderInput}
         />
         <Field
           name="topic"
-          label="TOPIC *"
+          type="select"
+          label="topic *"
           options={topics}
           component={renderSelect}
-          validate={[placeHolderValidator]}
+          validate={[required, placeHolderValidator]}
           placeholder="Select a topic"
         />
         <Field
           name="tool"
-          label="TOOL *"
+          label="tool *"
           options={tools}
           component={renderSelect}
-          validate={[toolValidator]}
+          validate={[required, toolValidator]}
           placeholder="Select a tool that applies"
         />
         <Field
           name="message"
-          label="MESSAGE *"
+          label="message *"
+          type="textarea"
+          validate={[required]}
           placeholder={activeTopic && activeTopic.placeholder}
           component={renderTextarea}
         />
         <h4>Interested in testing new features?</h4>
-        <div className="radio">
-          <p>Sign up to become an official GFW tester!</p>
-          <Field
-            id="signup-true"
-            name="signup"
-            type="radio"
-            value="true"
-            label="Yes, sign me up."
-            component={renderRadio}
-          />
-          <Field
-            id="signup-false"
-            name="signup"
-            type="radio"
-            value="false"
-            label="No thanks."
-            component={renderRadio}
-          />
-        </div>
+        <p>Sign up to become an official GFW tester!</p>
+        <Field
+          name="signup"
+          type="radio"
+          options={testNewFeatures}
+          component={renderRadio}
+        />
         <Button className="submit-btn" type="submit" disabled={submitting}>
           Submit
         </Button>
@@ -163,8 +89,7 @@ class ContactForm extends PureComponent {
 
 export default reduxForm({
   form: 'contact',
-  validate,
   initialValues: {
-    signup: 'false'
+    signup: 'no'
   }
 })(ContactForm);

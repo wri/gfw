@@ -1,21 +1,23 @@
 @import '~styles/settings.scss';
 
-.c-form {
-  font-size: rem(13px);
-  line-height: 1.54;
-  color: rgba($slate, 0.7);
+.c-form-field {
+  font-size: rem(14px);
+  margin-bottom: rem(20px);
+  display: flex;
+  flex-direction: column;
 
-  label {
-    font-size: rem(16px);
-  }
+  .label {
+    text-transform: uppercase;
+    font-size: rem(12px);
+    color: #333;
+    margin-bottom: rem(3px);
 
-  h4 {
-    font-size: rem(16px);
-    margin-bottom: rem(5px);
-  }
-
-  .field {
-    margin-bottom: rem(15px);
+    span {
+      text-transform: none;
+      color: $error;
+      font-size: rem(12px);
+      margin-left: rem(10px);
+    }
   }
 
   input,
@@ -26,6 +28,10 @@
     border: solid 1px $border;
     outline: none;
     color: $slate;
+
+    &::placeholder {
+      color: #a8a8a8;
+    }
   }
 
   input,
@@ -33,36 +39,19 @@
     width: 100%;
     max-width: rem(315px);
     height: rem(40px);
-    padding: 0 rem(8px);
+    padding: 0 rem(12px);
   }
 
   textarea {
     width: 100%;
     height: rem(110px);
-    padding: rem(9px) rem(8px);
+    padding: rem(12px);
     resize: none;
-    font-size: rem(15px);
     line-height: 1.5;
-
-    &::placeholder {
-      font-size: rem(13px);
-      font-style: italic;
-      line-height: 1.5;
-      color: scale-color($slate, $lightness: +30%);
-      color: lighten($color: $slate, $amount: 30%);
-    }
   }
 
-  button {
-    max-width: rem(200px);
-  }
-
-  .radio {
+  .radio-option {
     margin-bottom: rem(15px);
-
-    p {
-      margin-bottom: rem(20px);
-    }
 
     label {
       display: flex;
@@ -101,19 +90,11 @@
     }
   }
 
-  .error {
-    label {
-      color: #ed1846;
-    }
-
+  &.error {
     input,
     select,
     textarea {
       border-color: #ed1846;
     }
-  }
-
-  .submit-btn {
-    min-width: rem(160px);
   }
 }

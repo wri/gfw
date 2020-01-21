@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
 
 import Contact from 'components/forms/contact';
 import Button from 'components/ui/button';
@@ -40,9 +41,9 @@ class ModalContactUs extends PureComponent {
             <div className="feedback-message">
               <p>Interested in getting news and updates from us?</p>
               <div className="button-group">
-                <Button link="/about?show_newsletter=true">
-                  Sign up for our newsletter
-                </Button>
+                <Link to="/subscribe">
+                  <Button>Sign up for our newsletter</Button>
+                </Link>
                 <Button
                   className="close-button"
                   onClick={() => setModalContactUsOpen(false)}
@@ -55,9 +56,7 @@ class ModalContactUs extends PureComponent {
             <div className="contact-form">
               <p className="subtitle">
                 For media inquiries, email{' '}
-                <a href="mailto:katie.lyons@wri.org">
-                  katie.lyons@wri.org
-                </a>
+                <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
               </p>
               <Contact onSubmit={this.handleSubmit} />
             </div>
