@@ -3,6 +3,8 @@
 import React, { Fragment } from 'react';
 import cx from 'classnames';
 import { Field } from 'redux-form';
+import Button from 'components/ui/button';
+import Loader from 'components/ui/loader';
 
 import './styles.scss';
 
@@ -10,9 +12,10 @@ export const renderField = ({
   input,
   label,
   meta: { touched, error },
-  children
+  children,
+  hidden
 }) => (
-  <div className={cx('c-form-field', { error: touched && error })}>
+  <div className={cx('c-form-field', { error: touched && error }, { hidden })}>
     <div className="label">
       <label htmlFor={input.name}>{label}</label>
       {touched && error && <span>{error}</span>}
@@ -117,3 +120,12 @@ export const renderCheckList = ({ input, type, options, ...params }) =>
     input,
     ...params
   });
+
+export const renderSubmit = ({ children, submitting, submitFailed, valid }) => (
+  <div className="c-form-field submit">
+    <Button className="submit-btn" type="submit" disabled={submitting}>
+      {submitting ? <Loader className="submit-loader" /> : children}
+    </Button>
+    {!valid && submitFailed && <span>Required fields are empty!</span>}
+  </div>
+);

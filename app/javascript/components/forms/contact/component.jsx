@@ -80,7 +80,7 @@ class ContactForm extends PureComponent {
           component={renderRadio}
         />
         <Button className="submit-btn" type="submit" disabled={submitting}>
-          Submit
+          Send
         </Button>
       </form>
     );

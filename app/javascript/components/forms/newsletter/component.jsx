@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/ui/button';
 import { Field, reduxForm } from 'redux-form';
 
 import {
   renderInput,
   renderSelect,
-  renderCheckList
+  renderCheckList,
+  renderSubmit
 } from 'components/forms/fields';
 import CountryDataProvider from 'providers/country-data-provider';
 
-import { email, required } from 'components/forms/validations';
+import { email as validateEmail, required } from 'components/forms/validations';
 
 import './styles.scss';
 
@@ -30,24 +30,32 @@ class NewsletterForm extends PureComponent {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     submitting: PropTypes.bool,
-    countries: PropTypes.array
+    countries: PropTypes.array,
+    valid: PropTypes.bool,
+    submitFailed: PropTypes.bool
   };
 
   render() {
-    const { countries, handleSubmit, submitting } = this.props;
+    const {
+      countries,
+      handleSubmit,
+      submitting,
+      submitFailed,
+      valid
+    } = this.props;
 
     return (
       <form className="c-subscribe-form" onSubmit={handleSubmit}>
         <CountryDataProvider />
         <Field
-          name="first name"
+          name="firstName"
           type="text"
           label="first name *"
           validate={[required]}
           component={renderInput}
         />
         <Field
-          name="last name"
+          name="lastName"
           type="text"
           label="last name *"
           validate={[required]}
@@ -58,7 +66,7 @@ class NewsletterForm extends PureComponent {
           type="email"
           label="email *"
           placeholder="example@globalforestwatch.org"
-          validate={[required, email]}
+          validate={[required, validateEmail]}
           component={renderInput}
         />
         <Field
@@ -90,14 +98,24 @@ class NewsletterForm extends PureComponent {
           options={subscriptions}
           component={renderCheckList}
         />
-        <Button className="submit-btn" type="submit" disabled={submitting}>
-          Submit
-        </Button>
+        <Field
+          name="comments"
+          type="text"
+          label="Comments *"
+          component={renderInput}
+          hidden
+        />
+        {renderSubmit({
+          submitting,
+          submitFailed,
+          valid,
+          children: 'subscribe'
+        })}
       </form>
     );
   }
 }
 
 export default reduxForm({
-  form: 'subscribe'
+  form: 'newsletter'
 })(NewsletterForm);

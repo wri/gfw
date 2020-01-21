@@ -56,6 +56,16 @@
     line-height: 1.5;
   }
 
+  &.submit {
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      margin-left: rem(10px);
+      color: $error;
+    }
+  }
+
   .radio-option {
     margin-bottom: rem(15px);
     cursor: pointer;
@@ -141,6 +151,22 @@
     border-color: black;
     background: #ddd;
     color: gray;
+  }
+
+  .submit-btn {
+    position: relative;
+
+    .submit-loader {
+      > div {
+        width: rem(20px);
+        height: rem(20px);
+        border-width: 2px;
+      }
+    }
+  }
+
+  &.hidden {
+    display: none;
   }
 
   &.error {

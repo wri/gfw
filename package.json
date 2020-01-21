@@ -176,7 +176,7 @@
     "redux": "^4.0.0",
     "redux-first-router": "0.0.16-next",
     "redux-first-router-link": "1.4.2",
-    "redux-form": "^7.4.2",
+    "redux-form": "^8.2.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
