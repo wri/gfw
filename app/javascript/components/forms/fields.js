@@ -43,24 +43,27 @@ export const renderSelect = ({
   type,
   options,
   ...params
-}) =>
-  renderField({
+}) => {
+  const allOptions = options
+    ? [{ label: placeholder, value: 'placeholder' }, ...options]
+    : [];
+
+  return renderField({
     children: (
       <Field name={input.name} component="select">
-        {[{ label: placeholder, value: 'placeholder' }, ...options].map(
-          option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          )
-        )}
+        {allOptions.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </Field>
     ),
     input,
     ...params
   });
+};
 
-export const renderRadio = ({ input, placeholder, type, options, ...params }) =>
+export const renderRadio = ({ input, type, options, ...params }) =>
   renderField({
     children: (
       <Fragment>
@@ -75,6 +78,35 @@ export const renderRadio = ({ input, placeholder, type, options, ...params }) =>
                 value={option.value}
               />
               <label className="radio-label" htmlFor={`radio-${option.value}`}>
+                <span />
+                {option.label}
+              </label>
+            </div>
+          ))}
+      </Fragment>
+    ),
+    input,
+    ...params
+  });
+
+export const renderCheckList = ({ input, type, options, ...params }) =>
+  renderField({
+    children: (
+      <Fragment>
+        {options &&
+          options.map(option => (
+            <div key={option.value} className="checkbox-option">
+              <Field
+                name={option.value}
+                id={`checkbox-${option.value}`}
+                component="input"
+                type="checkbox"
+                value={option.value}
+              />
+              <label
+                className="checkbox-label"
+                htmlFor={`checkbox-${option.value}`}
+              >
                 <span />
                 {option.label}
               </label>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import CountryDataProvider from 'providers/country-data-provider';
+import NewsletterForm from 'components/forms/newsletter';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
@@ -157,6 +158,7 @@ function SubscribePage(props) {
       </div>
       <div className="row">
         <div className="suscribe-form column small-12 medium-8 medium-offset-2">
+          <NewsletterForm />
           <div className={cx('field', { error: state.firstNameError })}>
             <span>First Name*</span>
             <input

@@ -1,0 +1,16 @@
+@import '~styles/settings.scss';
+
+.c-subscribe-form {
+  h4 {
+    font-size: rem(16px);
+    margin-bottom: rem(5px);
+  }
+
+  p {
+    margin-bottom: rem(20px);
+  }
+
+  .submit-btn {
+    min-width: rem(180px);
+  }
+}

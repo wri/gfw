@@ -11,12 +11,14 @@
     font-size: rem(12px);
     color: #333;
     margin-bottom: rem(3px);
+    font-weight: 500;
 
     span {
       text-transform: none;
       color: $error;
       font-size: rem(12px);
       margin-left: rem(10px);
+      font-weight: 400;
     }
   }
 
@@ -42,6 +44,10 @@
     padding: 0 rem(12px);
   }
 
+  select {
+    cursor: pointer;
+  }
+
   textarea {
     width: 100%;
     height: rem(110px);
@@ -52,6 +58,7 @@
 
   .radio-option {
     margin-bottom: rem(15px);
+    cursor: pointer;
 
     label {
       display: flex;
@@ -88,6 +95,52 @@
     input[type=radio]:checked + label span::after {
       display: block;
     }
+  }
+
+  .checkbox-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: rem(10px) 0;
+
+    label {
+      cursor: pointer;
+      padding-left: rem(10px);
+    }
+  }
+
+  input[type=checkbox] {
+    position: relative;
+    width: rem(25px);
+    height: rem(25px);
+    border: 1px solid $border;
+    appearance: none;
+    color: $green-gfw;
+    cursor: pointer;
+  }
+
+  input[type=checkbox]::-ms-check {
+    display: none;
+  }
+
+  input[type=checkbox]::before {
+    content: "✔";
+    position: absolute;
+    left: rem(5px);
+    top: rem(2px);
+    visibility: hidden;
+    font-size: rem(16px);
+  }
+
+  input[type=checkbox]:checked::before {
+    /* Use `visibility` instead of `display` to avoid recalculating layout */
+    visibility: visible;
+  }
+
+  input[type=checkbox]:disabled {
+    border-color: black;
+    background: #ddd;
+    color: gray;
   }
 
   &.error {
