@@ -1,18 +1,13 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Button from 'components/ui/button';
 import ContactForm from 'components/forms/contact';
-import Loader from 'components/ui/loader';
 
 import './section-contact-styles.scss';
 
 class SectionContact extends PureComponent {
   render() {
-    const { showConfirm, setShowConfirm, error, submitting } = this.props;
     return (
       <div className="l-section-contact">
         <div className="row">
-          {submitting && <Loader />}
           <div className="column small-12 large-6 desc">
             <h3>Contact us</h3>
             <p className="intro">
@@ -41,41 +36,10 @@ class SectionContact extends PureComponent {
           <div className="column small-12 large-6">
             <ContactForm />
           </div>
-          {showConfirm && (
-            <div className="feedback-message">
-              <h3>
-                Thank you for contacting Global Forest Watch! Check your inbox
-                for a confirmation email.
-              </h3>
-              <p>Interested in getting news and updates from us?</p>
-              <div className="button-group">
-                <Button link="/subscribe">Sign up for our newsletter</Button>
-                <Button
-                  className="close-button"
-                  onClick={() => setShowConfirm(false)}
-                >
-                  No thanks
-                </Button>
-              </div>
-            </div>
-          )}
-          {error && (
-            <div className="feedback-message">
-              <h3>There was a problem sending your message.</h3>
-              <Button onClick={() => setShowConfirm(false)}>Try again</Button>
-            </div>
-          )}
         </div>
       </div>
     );
   }
 }
-
-SectionContact.propTypes = {
-  showConfirm: PropTypes.bool,
-  setShowConfirm: PropTypes.func,
-  error: PropTypes.bool,
-  submitting: PropTypes.bool
-};
 
 export default SectionContact;

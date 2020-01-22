@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 
@@ -25,6 +25,14 @@ class ContactForm extends PureComponent {
 
   state = {};
 
+  handleSubmit = values => {
+    const { sendContactForm } = this.props;
+    const language = window.Transifex
+      ? window.Transifex.live.getSelectedLanguageCode()
+      : 'en';
+    sendContactForm({ ...values, language });
+  };
+
   render() {
     const { sendContactForm, resetForm, initialValues } = this.props;
 
@@ -35,74 +43,83 @@ class ContactForm extends PureComponent {
           submitting,
           valid,
           submitFailed,
-          submitSucceeded,
+          // submitSucceeded,
           values,
           reset
         }) => {
           const activeTopic = topics.find(t => t.value === values.topic);
+          const submitSucceeded = true;
 
-          return submitSucceeded ? (
-            <div className="feedback-message">
-              <p>Interested in getting news and updates from us?</p>
-              <div className="button-group">
-                <Link to="/subscribe">
-                  <Button>Sign up for our newsletter</Button>
-                </Link>
-                <Button
-                  className="close-button"
-                  onClick={resetForm || (() => reset())}
-                >
-                  No thanks
-                </Button>
-              </div>
-            </div>
-          ) : (
+          return (
             <div className="c-contact-form">
-              <p className="subtitle">
-                For media inquiries, email{' '}
-                <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
-              </p>
-              <form className="c-contact-form" onSubmit={handleSubmit}>
-                <Input
-                  name="email"
-                  type="email"
-                  label="email"
-                  placeholder="example@globalforestwatch.org"
-                  validate={[email]}
-                  required
-                />
-                <Select
-                  name="topic"
-                  label="topic"
-                  placeholder="Select a topic"
-                  options={topics}
-                  required
-                />
-                <Select
-                  name="tool"
-                  label="tool"
-                  placeholder="Select a tool that applies"
-                  options={tools}
-                  required
-                />
-                <Input
-                  name="message"
-                  label="message"
-                  type="textarea"
-                  placeholder={activeTopic && activeTopic.placeholder}
-                  required
-                />
-                <h4>Interested in testing new features?</h4>
-                <p>Sign up to become an official GFW tester!</p>
-                <Radio name="signup" options={testNewFeatures} />
-                <Submit
-                  valid={valid}
-                  submitting={submitting}
-                  submitFailed={submitFailed}
-                >
-                  send
-                </Submit>
-              </form>
+              {submitSucceeded ? (
+                <div className="feedback-message">
+                  <h3>
+                    Thank you for contacting Global Forest Watch! Check your
+                    inbox for a confirmation email.
+                  </h3>
+                  <p>Interested in getting news and updates from us?</p>
+                  <div className="button-group">
+                    <Link to="/subscribe">
+                      <Button>Subscribe</Button>
+                    </Link>
+                    <Button
+                      className="close-button"
+                      onClick={resetForm || (() => reset())}
+                    >
+                      No thanks
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Fragment>
+                  <p className="subtitle">
+                    For media inquiries, email{' '}
+                    <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
+                  </p>
+                  <form className="c-contact-form" onSubmit={handleSubmit}>
+                    <Input
+                      name="email"
+                      type="email"
+                      label="email"
+                      placeholder="example@globalforestwatch.org"
+                      validate={[email]}
+                      required
+                    />
+                    <Select
+                      name="topic"
+                      label="topic"
+                      placeholder="Select a topic"
+                      options={topics}
+                      required
+                    />
+                    <Select
+                      name="tool"
+                      label="tool"
+                      placeholder="Select a tool that applies"
+                      options={tools}
+                      required
+                    />
+                    <Input
+                      name="message"
+                      label="message"
+                      type="textarea"
+                      placeholder={activeTopic && activeTopic.placeholder}
+                      required
+                    />
+                    <h4>Interested in testing new features?</h4>
+                    <p>Sign up to become an official GFW tester!</p>
+                    <Radio name="signup" options={testNewFeatures} />
+                    <Submit
+                      valid={valid}
+                      submitting={submitting}
+                      submitFailed={submitFailed}
+                    >
+                      send
+                    </Submit>
+                  </form>
+                </Fragment>
+              )}
             </div>
           );
         }}
