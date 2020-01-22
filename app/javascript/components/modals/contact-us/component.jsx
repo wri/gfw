@@ -1,10 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
 
 import Contact from 'components/forms/contact';
-import Button from 'components/ui/button';
-import Loader from 'components/ui/loader';
 import Modal from '../modal';
 
 import './styles.scss';
@@ -19,7 +16,7 @@ class ModalContactUs extends PureComponent {
   };
 
   render() {
-    const { open, setModalContactUsOpen, showConfirm, submitting } = this.props;
+    const { open, setModalContactUsOpen } = this.props;
 
     return (
       <Modal
@@ -28,15 +25,11 @@ class ModalContactUs extends PureComponent {
         onRequestClose={() => {
           setModalContactUsOpen(false);
         }}
-        title={
-          showConfirm
-            ? 'Thank you for contacting Global Forest Watch! Check your inbox for a confirmation email.'
-            : 'Contact us'
-        }
-        className="c-contact-us"
+        title="Contact Us"
+        className="c-contact-us-modal"
       >
-        <div className="contact-us-content">
-          {submitting && <Loader />}
+        <Contact onSubmit={this.handleSubmit} />
+        {/* <div className="contact-us-content">
           {showConfirm ? (
             <div className="feedback-message">
               <p>Interested in getting news and updates from us?</p>
@@ -61,7 +54,7 @@ class ModalContactUs extends PureComponent {
               <Contact onSubmit={this.handleSubmit} />
             </div>
           )}
-        </div>
+        </div> */}
       </Modal>
     );
   }
@@ -70,8 +63,6 @@ class ModalContactUs extends PureComponent {
 ModalContactUs.propTypes = {
   open: PropTypes.bool,
   setModalContactUsOpen: PropTypes.func,
-  showConfirm: PropTypes.bool,
-  submitting: PropTypes.bool,
   sendContactForm: PropTypes.func
 };
 

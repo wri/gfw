@@ -1,0 +1,49 @@
+@import '~styles/settings.scss';
+
+.c-form-checkbox {
+  .checkbox-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: rem(10px) 0;
+
+    label {
+      cursor: pointer;
+      padding-left: rem(10px);
+    }
+  }
+
+  input[type=checkbox] {
+    position: relative;
+    width: rem(25px);
+    height: rem(25px);
+    border: 1px solid $border;
+    appearance: none;
+    color: $green-gfw;
+    cursor: pointer;
+  }
+
+  input[type=checkbox]::-ms-check {
+    display: none;
+  }
+
+  input[type=checkbox]::before {
+    content: "✔";
+    position: absolute;
+    left: rem(5px);
+    top: rem(2px);
+    visibility: hidden;
+    font-size: rem(16px);
+  }
+
+  input[type=checkbox]:checked::before {
+    /* Use `visibility` instead of `display` to avoid recalculating layout */
+    visibility: visible;
+  }
+
+  input[type=checkbox]:disabled {
+    border-color: black;
+    background: #ddd;
+    color: gray;
+  }
+}

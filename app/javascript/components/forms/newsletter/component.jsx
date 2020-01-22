@@ -1,21 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Form } from 'react-final-form';
 
-import {
-  renderInput,
-  renderSelect,
-  renderCheckList,
-  renderSubmit
-} from 'components/forms/fields';
 import CountryDataProvider from 'providers/country-data-provider';
+import Input from 'components/forms/components/input';
+import Select from 'components/forms/components/select';
+import Checkbox from 'components/forms/components/checkbox';
+import Submit from 'components/forms/components/submit';
 
-import { email as validateEmail, required } from 'components/forms/validations';
+import { email as validateEmail } from 'components/forms/validations';
 
 import './styles.scss';
-
-const countryValidator = value =>
-  (value && value === 'placeholder' ? 'Select a country' : undefined);
 
 const subscriptions = [
   { label: 'Innovations in Monitoring', value: 'monitoring' },
@@ -28,94 +23,58 @@ const subscriptions = [
 
 class NewsletterForm extends PureComponent {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool,
-    countries: PropTypes.array,
-    valid: PropTypes.bool,
-    submitFailed: PropTypes.bool
+    saveNewsletterSubscription: PropTypes.func.isRequired,
+    countries: PropTypes.array
   };
 
   render() {
-    const {
-      countries,
-      handleSubmit,
-      submitting,
-      submitFailed,
-      valid
-    } = this.props;
+    const { saveNewsletterSubscription, countries } = this.props;
 
     return (
-      <form className="c-subscribe-form" onSubmit={handleSubmit}>
+      <Fragment>
+        <Form
+          className="c-subscribe-form"
+          onSubmit={saveNewsletterSubscription}
+          render={({ handleSubmit, valid, submitting, submitFailed }) => (
+            <form className="c-subscribe-form" onSubmit={handleSubmit}>
+              <Input name="firstName" label="first name" required />
+              <Input name="lastName" label="last name" required />
+              <Input
+                name="email"
+                type="email"
+                label="email"
+                placeholder="example@globalforestwatch.org"
+                validate={[validateEmail]}
+                required
+              />
+              <Input name="organization" label="organization" />
+              <Input name="city" label="city" required />
+              <Select
+                name="country"
+                label="country"
+                options={countries}
+                placeholder="Select a country"
+                required
+              />
+              <Checkbox
+                name="subscriptions"
+                label="I'm interests in (check all that apply)"
+                options={subscriptions}
+              />
+              <Submit
+                valid={valid}
+                submitting={submitting}
+                submitFailed={submitFailed}
+              >
+                subscribe
+              </Submit>
+            </form>
+          )}
+        />
         <CountryDataProvider />
-        <Field
-          name="firstName"
-          type="text"
-          label="first name *"
-          validate={[required]}
-          component={renderInput}
-        />
-        <Field
-          name="lastName"
-          type="text"
-          label="last name *"
-          validate={[required]}
-          component={renderInput}
-        />
-        <Field
-          name="email"
-          type="email"
-          label="email *"
-          placeholder="example@globalforestwatch.org"
-          validate={[required, validateEmail]}
-          component={renderInput}
-        />
-        <Field
-          name="organization"
-          type="text"
-          label="organization"
-          component={renderInput}
-        />
-        <Field
-          name="city"
-          type="text"
-          label="city *"
-          validate={[required]}
-          component={renderInput}
-        />
-        <Field
-          name="country"
-          type="select"
-          label="country *"
-          options={countries}
-          component={renderSelect}
-          validate={[required, countryValidator]}
-          placeholder="Select a country"
-        />
-        <Field
-          name="subscriptions"
-          type="checkbox"
-          label="I'm interests in (check all that apply) *"
-          options={subscriptions}
-          component={renderCheckList}
-        />
-        <Field
-          name="comments"
-          type="text"
-          label="Comments *"
-          component={renderInput}
-          hidden
-        />
-        {renderSubmit({
-          submitting,
-          submitFailed,
-          valid,
-          children: 'subscribe'
-        })}
-      </form>
+      </Fragment>
     );
   }
 }
 
-export default reduxForm({
-  form: 'newsletter'
-})(NewsletterForm);
+export default NewsletterForm;

@@ -14,3 +14,19 @@ export const phoneNumber = value =>
   (value && !/^(0|[1-9][0-9]{9})$/i.test(value)
     ? 'Invalid phone number, must be 10 digits'
     : undefined);
+
+export const composeValidators = (req, vals) => value => {
+  let validations = req ? [required] : [];
+  if (vals) {
+    validations = validations.concat(vals);
+  }
+
+  if (validations) {
+    return validations.reduce(
+      (error, validator) => error || (validator ? validator(value) : undefined),
+      undefined
+    );
+  }
+
+  return undefined;
+};

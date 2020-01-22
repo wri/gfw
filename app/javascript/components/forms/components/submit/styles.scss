@@ -1,0 +1,26 @@
+@import '~styles/settings.scss';
+
+.c-form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0;
+
+  span {
+    margin-right: rem(20px);
+    font-size: rem(14px);
+    color: $error;
+  }
+
+  .submit-btn {
+    position: relative;
+
+    .submit-loader {
+      > div {
+        width: rem(20px);
+        height: rem(20px);
+        border-width: 2px;
+      }
+    }
+  }
+}

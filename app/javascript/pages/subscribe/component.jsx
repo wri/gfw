@@ -20,7 +20,7 @@ class NewsletterPage extends PureComponent {
           </div>
         </div>
         <div className="row">
-          <div className="suscribe-form column small-12 medium-8 medium-offset-2">
+          <div className="suscribe-form column small-12 medium-6 medium-offset-3">
             <NewsletterForm />
           </div>
         </div>

@@ -3,7 +3,7 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 $mobile-margin: rem(10px);
 
-.c-contact-us {
+.c-contact-us-modal {
   margin-top: $mobile-margin !important;
 
   @media screen and (min-width: $screen-m) {
@@ -93,4 +93,3 @@ $mobile-margin: rem(10px);
     }
   }
 }
-

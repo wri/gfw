@@ -1,7 +1,7 @@
 import { createThunkAction } from 'redux-tools';
 import { postNewsletterSubscription } from 'services/newsletter';
 
-export const onSubmit = createThunkAction(
+export const saveNewsletterSubscription = createThunkAction(
   'saveNewsletterSubscription',
   values => dispatch => {
     const {
@@ -12,7 +12,7 @@ export const onSubmit = createThunkAction(
       city,
       country,
       comments,
-      ...subscriptions
+      subscriptions
     } = values;
 
     const postData = {
