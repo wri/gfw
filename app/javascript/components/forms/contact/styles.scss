@@ -1,6 +1,11 @@
 @import '~styles/settings.scss';
 
 .c-contact-form {
+  .subtitle {
+    margin-bottom: rem(30px);
+    font-size: rem(16px);
+  }
+
   h4 {
     font-size: rem(16px);
     margin-bottom: rem(5px);
@@ -16,12 +21,10 @@
 
   .feedback-message {
     display: flex;
-    justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     background-color: #fff;
     max-width: rem(500px);
-    margin: auto;
 
     h3 {
       font-size: rem(20px);
@@ -37,11 +40,6 @@
     .button-group {
       display: flex;
       flex-direction: row;
-
-      // a,
-      // button {
-      //   width: rem(260px);
-      // }
 
       .close-button {
         background-color: $error;

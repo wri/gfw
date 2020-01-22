@@ -43,12 +43,11 @@ class ContactForm extends PureComponent {
           submitting,
           valid,
           submitFailed,
-          // submitSucceeded,
+          submitSucceeded,
           values,
-          reset
+          form: { reset }
         }) => {
           const activeTopic = topics.find(t => t.value === values.topic);
-          const submitSucceeded = true;
 
           return (
             <div className="c-contact-form">
