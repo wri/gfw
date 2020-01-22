@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 
+import Link from 'redux-first-router-link';
+import Button from 'components/ui/button';
+
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 import Radio from 'components/forms/components/radio';
@@ -15,18 +18,39 @@ import './styles.scss';
 
 class ContactForm extends PureComponent {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    sendContactForm: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired,
+    initialValues: PropTypes.object
   };
 
   render() {
-    const { onSubmit } = this.props;
+    const { sendContactForm, resetForm, initialValues } = this.props;
 
     return (
-      <Form onSubmit={onSubmit}>
-        {({ handleSubmit, submitting, valid, submitFailed, values }) => {
+      <Form onSubmit={sendContactForm} initialValues={initialValues}>
+        {({
+          handleSubmit,
+          submitting,
+          valid,
+          submitFailed,
+          submitSucceeded,
+          values
+        }) => {
           const activeTopic = topics.find(t => t.value === values.topic);
 
-          return (
+          return submitSucceeded ? (
+            <div className="feedback-message">
+              <p>Interested in getting news and updates from us?</p>
+              <div className="button-group">
+                <Link to="/subscribe">
+                  <Button>Sign up for our newsletter</Button>
+                </Link>
+                <Button className="close-button" onClick={resetForm}>
+                  No thanks
+                </Button>
+              </div>
+            </div>
+          ) : (
             <div className="c-contact-form">
               <p className="subtitle">
                 For media inquiries, email{' '}

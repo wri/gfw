@@ -24,17 +24,19 @@ const subscriptions = [
 class NewsletterForm extends PureComponent {
   static propTypes = {
     saveNewsletterSubscription: PropTypes.func.isRequired,
-    countries: PropTypes.array
+    countries: PropTypes.array,
+    initialValues: PropTypes.object
   };
 
   render() {
-    const { saveNewsletterSubscription, countries } = this.props;
+    const { saveNewsletterSubscription, countries, initialValues } = this.props;
 
     return (
       <Fragment>
         <Form
           className="c-subscribe-form"
           onSubmit={saveNewsletterSubscription}
+          initialValues={initialValues}
           render={({ handleSubmit, valid, submitting, submitFailed }) => (
             <form className="c-subscribe-form" onSubmit={handleSubmit}>
               <Input name="firstName" label="first name" required />
