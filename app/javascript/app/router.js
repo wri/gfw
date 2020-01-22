@@ -24,6 +24,7 @@ export const UNACCEPTABLE = 'location/UNACCEPTABLE';
 export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 export const SEARCH = 'location/SEARCH';
 export const SUBSCRIBE = 'location/SUBSCRIBE';
+export const LOGIN = 'location/LOGIN';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -236,6 +237,11 @@ export const routes = {
     path: '/subscribe',
     controller: 'subscribe',
     component: 'subscribe'
+  },
+  [LOGIN]: {
+    path: '/login',
+    controller: 'login',
+    component: 'login'
   }
 };
 

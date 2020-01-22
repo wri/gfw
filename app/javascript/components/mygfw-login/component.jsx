@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import LoginForm from 'components/forms/login';
+
 import './styles.scss';
 
 const AUTH_URL = `${process.env.GFW_API}/auth`;
@@ -32,6 +34,7 @@ class MyGFWLogin extends PureComponent {
           subscriptions. Questions? <a href="mailto:gfw@wri.org">Contact us</a>
         </p>
         <div className="login-form">
+          <LoginForm />
           <div className="social-btns">
             {socialButtons.map(s => (
               <a

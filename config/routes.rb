@@ -59,6 +59,9 @@ Gfw::Application.routes.draw do
   # thank you
   get '/thank-you' => 'thankyou#index'
 
+  # login
+  get '/login' => 'login#index'
+
   # stories
   get '/stories' => 'stories#index'
   get '/stories/*all' => 'stories#index'

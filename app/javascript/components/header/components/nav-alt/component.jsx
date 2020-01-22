@@ -112,9 +112,11 @@ class NavAlt extends PureComponent {
               <OutsideClickHandler
                 onOutsideClick={() => this.setState({ showMyGfw: false })}
               >
-                <button
+                <div
                   className="menu-link"
                   onClick={() => this.setState({ showMyGfw: !showMyGfw })}
+                  role="button"
+                  tabIndex={0}
                 >
                   My GFW
                   <Icon icon={myGfwIcon} />
@@ -126,7 +128,7 @@ class NavAlt extends PureComponent {
                     !loggedIn && (
                     <MyGFWLogin className="mygfw-header submenu" />
                   )}
-                </button>
+                </div>
               </OutsideClickHandler>
             </li>
           </Fragment>

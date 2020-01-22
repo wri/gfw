@@ -50,6 +50,9 @@ class ApplicationController < ActionController::Base
       thankyou: {
         title: 'Thank You'
       },
+      login: {
+        title: 'Login'
+      },
       use: {
         title: 'Area of Interest',
         desc: 'Explore the status of forests within your area of interest by layering data to create custom maps of forest change, cover and use.'

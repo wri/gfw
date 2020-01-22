@@ -23,21 +23,18 @@ class ContactForm extends PureComponent {
     initialValues: PropTypes.object
   };
 
-  state = {};
-
-  handleSubmit = values => {
-    const { sendContactForm } = this.props;
+  sendContactForm = values => {
     const language = window.Transifex
       ? window.Transifex.live.getSelectedLanguageCode()
       : 'en';
-    sendContactForm({ ...values, language });
+    this.props.sendContactForm({ ...values, language });
   };
 
   render() {
-    const { sendContactForm, resetForm, initialValues } = this.props;
+    const { resetForm, initialValues } = this.props;
 
     return (
-      <Form onSubmit={sendContactForm} initialValues={initialValues}>
+      <Form onSubmit={this.sendContactForm} initialValues={initialValues}>
         {({
           handleSubmit,
           submitting,
@@ -76,7 +73,7 @@ class ContactForm extends PureComponent {
                     For media inquiries, email{' '}
                     <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
                   </p>
-                  <form className="c-contact-form" onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
                     <Input
                       name="email"
                       type="email"
