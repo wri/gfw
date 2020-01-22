@@ -4,15 +4,12 @@ $desktop-padding: rem(50px);
 $mobile-margin: rem(10px);
 
 .c-modal-meta {
-  margin-top: $mobile-margin !important;
-
   .modal-content {
     padding-top: 0;
   }
 
   @media screen and (min-width: $screen-m) {
     width: auto;
-    margin-top: auto !important;
   }
 
   .modal-meta-content {
@@ -45,9 +42,9 @@ $mobile-margin: rem(10px);
       align-items: center;
       flex-direction: column;
       border-top: solid 1px $border;
-      margin: 0 rem(-30px) rem(-45px);
-      margin-left: -$horizontal-modal-padding-mobile;
-      width: calc(100% + (2 * #{$horizontal-modal-padding-mobile}));
+      margin: 0 rem(-30px) rem(-30px);
+      margin-left: rem(-25px);
+      width: calc(100% + (2 * #{rem(25px)}));
       padding: rem(20px) rem(30px) rem(10px);
 
       > a {
@@ -66,7 +63,7 @@ $mobile-margin: rem(10px);
 
     .subtitle {
       margin-top: rem(5px);
-      margin-bottom: $vertical-modal-padding-mobile;
+      margin-bottom: rem(20px);
       font-size: rem(13px);
       line-height: 1.2;
       color: $warm-grey;
@@ -109,7 +106,7 @@ $mobile-margin: rem(10px);
         font-weight: 500;
         font-size: rem(11px);
         text-transform: uppercase;
-        padding: rem(15px) rem(5px) rem(2px) $horizontal-modal-padding-mobile;
+        padding: rem(15px) rem(5px) rem(2px) rem(25px);
         color: $slate;
         width: rem(150px);
 
@@ -126,7 +123,7 @@ $mobile-margin: rem(10px);
         color: $slate;
         width: calc(100% - 100px);
         width: 100%;
-        padding: 0 $horizontal-modal-padding-mobile rem(15px) $horizontal-modal-padding-mobile;
+        padding: 0 rem(25px) rem(15px) rem(25px);
         word-break: break-word;
 
         @media screen and (min-width: $screen-m) {

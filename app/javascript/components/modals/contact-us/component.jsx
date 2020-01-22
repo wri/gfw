@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Contact from 'components/forms/contact';
+import ContactForm from 'components/forms/contact';
 import Modal from '../modal';
 
 import './styles.scss';
@@ -12,7 +12,7 @@ class ModalContactUs extends PureComponent {
 
     return (
       <Modal
-        isOpen={open}
+        isOpen={!!open}
         contentLabel="Contact Us"
         onRequestClose={() => {
           setModalContactUsOpen(false);
@@ -20,7 +20,7 @@ class ModalContactUs extends PureComponent {
         title="Contact Us"
         className="c-contact-us-modal"
       >
-        <Contact resetForm={() => setModalContactUsOpen(false)} />
+        <ContactForm resetForm={() => setModalContactUsOpen(false)} />
       </Modal>
     );
   }

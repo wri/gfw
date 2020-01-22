@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import uniqueId from 'lodash/uniqueId';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -39,24 +40,24 @@ class Radio extends PureComponent {
           >
             <div className="c-form-radio">
               {options &&
-                options.map(option => (
-                  <div key={option.value} className="radio-option">
-                    <Field
-                      id={`radio-${option.value}`}
-                      name={input.name}
-                      component="input"
-                      type="radio"
-                      value={option.value}
-                    />
-                    <label
-                      className="radio-label"
-                      htmlFor={`radio-${option.value}`}
-                    >
-                      <span />
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
+                options.map(option => {
+                  const id = uniqueId(`radio-${option.value}-`);
+                  return (
+                    <div key={option.value} className="radio-option">
+                      <Field
+                        id={id}
+                        name={input.name}
+                        component="input"
+                        type="radio"
+                        value={option.value}
+                      />
+                      <label className="radio-label" htmlFor={id}>
+                        <span />
+                        {option.label}
+                      </label>
+                    </div>
+                  );
+                })}
             </div>
           </FieldWrapper>
         )}

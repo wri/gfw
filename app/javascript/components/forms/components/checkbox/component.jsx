@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import uniqueId from 'lodash/uniqueId';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -40,24 +41,24 @@ class Checkbox extends PureComponent {
           >
             <div className="c-form-checkbox">
               {options &&
-                options.map(option => (
-                  <div key={option.value} className="checkbox-option">
-                    <Field
-                      name={name}
-                      id={`checkbox-${option.value}`}
-                      component="input"
-                      type="checkbox"
-                      value={option.value}
-                    />
-                    <label
-                      className="checkbox-label"
-                      htmlFor={`checkbox-${option.value}`}
-                    >
-                      <span />
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
+                options.map(option => {
+                  const id = uniqueId(`checkbox-${option.value}-`);
+                  return (
+                    <div key={option.value} className="checkbox-option">
+                      <Field
+                        name={name}
+                        id={id}
+                        component="input"
+                        type="checkbox"
+                        value={option.value}
+                      />
+                      <label className="checkbox-label" htmlFor={id}>
+                        <span />
+                        {option.label}
+                      </label>
+                    </div>
+                  );
+                })}
             </div>
           </FieldWrapper>
         )}

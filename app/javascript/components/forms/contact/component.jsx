@@ -19,9 +19,11 @@ import './styles.scss';
 class ContactForm extends PureComponent {
   static propTypes = {
     sendContactForm: PropTypes.func.isRequired,
-    resetForm: PropTypes.func.isRequired,
+    resetForm: PropTypes.func,
     initialValues: PropTypes.object
   };
+
+  state = {};
 
   render() {
     const { sendContactForm, resetForm, initialValues } = this.props;
@@ -34,7 +36,8 @@ class ContactForm extends PureComponent {
           valid,
           submitFailed,
           submitSucceeded,
-          values
+          values,
+          reset
         }) => {
           const activeTopic = topics.find(t => t.value === values.topic);
 
@@ -45,7 +48,10 @@ class ContactForm extends PureComponent {
                 <Link to="/subscribe">
                   <Button>Sign up for our newsletter</Button>
                 </Link>
-                <Button className="close-button" onClick={resetForm}>
+                <Button
+                  className="close-button"
+                  onClick={resetForm || (() => reset())}
+                >
                   No thanks
                 </Button>
               </div>

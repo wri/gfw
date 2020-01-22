@@ -1,20 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/ui/button';
-import Contact from 'components/forms/contact';
+import ContactForm from 'components/forms/contact';
 import Loader from 'components/ui/loader';
 
 import './section-contact-styles.scss';
 
 class SectionContact extends PureComponent {
   render() {
-    const {
-      handleSubmit,
-      showConfirm,
-      setShowConfirm,
-      error,
-      submitting
-    } = this.props;
+    const { showConfirm, setShowConfirm, error, submitting } = this.props;
     return (
       <div className="l-section-contact">
         <div className="row">
@@ -45,7 +39,7 @@ class SectionContact extends PureComponent {
             </a>
           </div>
           <div className="column small-12 large-6">
-            <Contact onSubmit={handleSubmit} />
+            <ContactForm />
           </div>
           {showConfirm && (
             <div className="feedback-message">
@@ -78,7 +72,6 @@ class SectionContact extends PureComponent {
 }
 
 SectionContact.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
   showConfirm: PropTypes.bool,
   setShowConfirm: PropTypes.func,
   error: PropTypes.bool,

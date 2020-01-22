@@ -9,7 +9,7 @@ import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
 import Modal from '../modal';
 
-import './meta-styles.scss';
+import './styles.scss';
 
 class ModalMeta extends PureComponent {
   componentDidMount() {
@@ -51,23 +51,23 @@ class ModalMeta extends PureComponent {
       <div className="modal-meta-content">
         {error &&
           !loading && (
-            <NoContent message="There was a problem finding this info. Please try again later." />
-          )}
+          <NoContent message="There was a problem finding this info. Please try again later." />
+        )}
         {!loading &&
           isEmpty(metaData) &&
           !error && (
-            <NoContent message="Sorry, we cannot find what you are looking for." />
-          )}
+          <NoContent message="Sorry, we cannot find what you are looking for." />
+        )}
         {!loading &&
           !error &&
           !isEmpty(metaData) && (
-            <div>
-              <p
-                className="subtitle"
+          <div>
+            <p
+              className="subtitle"
                 dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
-              />
-              <div className="meta-table element-fullwidth">
-                {tableData &&
+            />
+            <div className="meta-table element-fullwidth">
+              {tableData &&
                   Object.keys(tableData).map(
                     key =>
                       (tableData[key] ? (
@@ -82,43 +82,43 @@ class ModalMeta extends PureComponent {
                         </div>
                       ) : null)
                   )}
-              </div>
-              {overview && (
-                <div className="overview">
-                  <h4>Overview</h4>
-                  <div className="body">{this.parseContent(overview)}</div>
-                </div>
-              )}
-              {citation && (
-                <div className="citation">
-                  <h5>Citation</h5>
-                  <div className="body">{this.parseContent(citation)}</div>
-                </div>
-              )}
-              {(learn_more || download_data || map_service || amazon_link) && (
-                <div className="ext-actions">
-                  {learn_more && (
-                    <Button theme="theme-button-medium" extLink={learn_more}>
-                      LEARN MORE
-                    </Button>
-                  )}
-                  {download_data && (
-                    <Button theme="theme-button-medium" extLink={download_data}>
-                      DOWNLOAD DATA
-                    </Button>
-                  )}
-                  {(map_service || amazon_link) && (
-                    <Button
-                      theme="theme-button-medium"
-                      extLink={map_service || amazon_link}
-                    >
-                      OPEN IN ARCGIS
-                    </Button>
-                  )}
-                </div>
-              )}
             </div>
-          )}
+            {overview && (
+              <div className="overview">
+                <h4>Overview</h4>
+                <div className="body">{this.parseContent(overview)}</div>
+              </div>
+            )}
+            {citation && (
+              <div className="citation">
+                <h5>Citation</h5>
+                <div className="body">{this.parseContent(citation)}</div>
+              </div>
+            )}
+            {(learn_more || download_data || map_service || amazon_link) && (
+              <div className="ext-actions">
+                {learn_more && (
+                  <Button theme="theme-button-medium" extLink={learn_more}>
+                      LEARN MORE
+                  </Button>
+                )}
+                {download_data && (
+                  <Button theme="theme-button-medium" extLink={download_data}>
+                      DOWNLOAD DATA
+                  </Button>
+                )}
+                {(map_service || amazon_link) && (
+                  <Button
+                    theme="theme-button-medium"
+                    extLink={map_service || amazon_link}
+                  >
+                      OPEN IN ARCGIS
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     );
   }

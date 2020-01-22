@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import pick from 'lodash/pick';
 import reducerRegistry from 'app/registry';
 
-import * as actions from './meta-actions';
-import reducers, { initialState } from './meta-reducers';
-import ModalMetaComponent from './meta-component';
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
+import ModalMetaComponent from './component';
 
 const META_FIELDS = [
   'title',

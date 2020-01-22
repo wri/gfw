@@ -6,7 +6,7 @@ import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapStateToProps = ({ modalAttributions }) => ({
-  open: modalAttributions && modalAttributions.open
+  open: !!modalAttributions && !!modalAttributions.open
 });
 
 reducerRegistry.registerModule('modalAttributions', {
