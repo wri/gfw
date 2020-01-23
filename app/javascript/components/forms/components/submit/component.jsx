@@ -42,7 +42,8 @@ class Submit extends PureComponent {
             !valid &&
             submitFailed && <span>Required fields are empty!</span>}
           {submitError && <span>{submitError}</span>}
-          {success && <span className="success">{success}</span>}
+          {!submitError &&
+            success && <span className="success">{success}</span>}
           <Button className="submit-btn" type="submit" disabled={submitting}>
             {submitting ? <Loader className="submit-loader" /> : children}
           </Button>
