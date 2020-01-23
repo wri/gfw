@@ -2,4 +2,32 @@
 
 .c-login-form {
   text-align: left;
+
+  .forgotten-password {
+    margin-bottom: rem(15px);
+  }
+
+  .change-form,
+  .forgotten-password {
+    font-size: rem(14px);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .submit-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .change-form {
+      margin-right: rem(15px);
+    }
+  }
+
+  .submit-btn {
+    min-width: rem(120px);
+  }
 }

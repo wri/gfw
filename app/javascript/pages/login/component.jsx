@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import LoginForm from 'components/forms/login';
+import MyGfwLogin from 'components/mygfw-login';
 
 import './styles.scss';
 
@@ -10,7 +10,8 @@ class LoginPage extends PureComponent {
       <div className="l-login-page">
         <div className="row">
           <div className="column small-12 medium-8 medium-offset-2">
-            <LoginForm />
+            <h1>Login to My GFW</h1>
+            <MyGfwLogin />
           </div>
         </div>
       </div>

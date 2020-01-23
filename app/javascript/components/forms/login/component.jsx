@@ -35,7 +35,7 @@ class LoginForm extends PureComponent {
         submit: 'login',
         submitFunc: sendLoginForm,
         altView: 'register',
-        altLabel: 'register'
+        altLabel: 'Register'
       },
       register: {
         submit: 'register',
@@ -47,7 +47,8 @@ class LoginForm extends PureComponent {
         submit: 'reset',
         submitFunc: sendResetPassword,
         altView: 'login',
-        altLabel: 'sign in'
+        altLabel: 'Sign in',
+        successMessage: 'Email sent'
       }
     };
 
@@ -58,9 +59,8 @@ class LoginForm extends PureComponent {
         {({
           handleSubmit,
           submitting,
-          valid,
           submitFailed,
-          // submitSucceeded,
+          submitError,
           form: { reset }
         }) => (
           <div className="c-login-form">
@@ -92,32 +92,41 @@ class LoginForm extends PureComponent {
                     required
                   />
                 )}
-                <Submit
-                  valid={valid}
-                  submitting={submitting}
-                  submitFailed={submitFailed}
-                >
-                  {submit}
-                </Submit>
+                {showForm === 'login' && (
+                  <div
+                    className="forgotten-password"
+                    onClick={() => {
+                      this.setState({ showForm: 'reset' });
+                      reset();
+                    }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    Forgotten your password?
+                  </div>
+                )}
+                <div className="submit-actions">
+                  <div
+                    className="change-form"
+                    onClick={() => {
+                      this.setState({ showForm: altView });
+                      reset();
+                    }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    {altLabel}
+                  </div>
+                  <Submit
+                    valid
+                    submitting={submitting}
+                    submitFailed={submitFailed}
+                    submitError={submitError}
+                  >
+                    {submit}
+                  </Submit>
+                </div>
               </form>
-              {showForm === 'login' && (
-                <button
-                  onClick={() => {
-                    reset();
-                    this.setState({ showForm: 'reset' });
-                  }}
-                >
-                  Forgotten your password?
-                </button>
-              )}
-              <button
-                onClick={() => {
-                  this.setState({ showForm: altView });
-                  reset();
-                }}
-              >
-                {altLabel}
-              </button>
             </Fragment>
           </div>
         )}

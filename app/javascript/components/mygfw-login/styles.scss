@@ -27,13 +27,17 @@
       width: 50%;
 
       &:first-child {
-        margin-right: rem(10px);
+        margin-right: rem(20px);
       }
 
       &:last-child {
-        margin-left: rem(10px);
+        margin-left: rem(20px);
       }
     }
+  }
+
+  .social-btns {
+    margin-top: rem(22px);
   }
 
   .social-btn {

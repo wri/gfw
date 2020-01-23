@@ -11,15 +11,23 @@ class Submit extends PureComponent {
     valid: PropTypes.bool,
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
+    submitError: PropTypes.string,
     children: PropTypes.node
   };
 
   render() {
-    const { valid, submitting, children, submitFailed } = this.props;
+    const {
+      valid,
+      submitting,
+      children,
+      submitFailed,
+      submitError
+    } = this.props;
 
     return (
       <div className="c-form-submit">
         {!valid && submitFailed && <span>Required fields are empty!</span>}
+        {submitError && <span>{submitError}</span>}
         <Button className="submit-btn" type="submit" disabled={submitting}>
           {submitting ? <Loader className="submit-loader" /> : children}
         </Button>
