@@ -18,7 +18,12 @@ class LoginForm extends PureComponent {
   };
 
   state = {
-    showForm: 'login'
+    showForm: 'login',
+    successMessage: ''
+  };
+
+  onSuccess = message => {
+    this.setState({ successMessage: message });
   };
 
   render() {
@@ -28,20 +33,22 @@ class LoginForm extends PureComponent {
       sendResetPassword,
       initialValues
     } = this.props;
-    const { showForm } = this.state;
+    const { showForm, successMessage: success } = this.state;
 
     const formMeta = {
       login: {
         submit: 'login',
         submitFunc: sendLoginForm,
         altView: 'register',
-        altLabel: 'Register'
+        altLabel: 'Register',
+        successMessage: 'Login successful'
       },
       register: {
         submit: 'register',
         submitFunc: sendRegisterUser,
         altView: 'login',
-        altLabel: 'I have an account'
+        altLabel: 'I have an account',
+        successMessage: 'Account registered'
       },
       reset: {
         submit: 'reset',
@@ -52,10 +59,17 @@ class LoginForm extends PureComponent {
       }
     };
 
-    const { submit, submitFunc, altView, altLabel } = formMeta[showForm];
+    const { submit, submitFunc, altView, altLabel, successMessage } = formMeta[
+      showForm
+    ];
 
     return (
-      <Form onSubmit={submitFunc} initialValues={initialValues}>
+      <Form
+        onSubmit={data =>
+          submitFunc({ data, success: () => this.onSuccess(successMessage) })
+        }
+        initialValues={initialValues}
+      >
         {({
           handleSubmit,
           submitting,
@@ -122,6 +136,7 @@ class LoginForm extends PureComponent {
                     submitting={submitting}
                     submitFailed={submitFailed}
                     submitError={submitError}
+                    success={success}
                   >
                     {submit}
                   </Submit>

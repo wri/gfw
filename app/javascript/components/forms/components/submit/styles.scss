@@ -21,6 +21,10 @@
       margin-right: rem(20px);
       margin-bottom: 0;
     }
+
+    &.success {
+      color: $green-gfw;
+    }
   }
 
   .submit-btn {

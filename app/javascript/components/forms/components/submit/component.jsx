@@ -12,6 +12,7 @@ class Submit extends PureComponent {
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
     submitError: PropTypes.string,
+    success: PropTypes.string,
     children: PropTypes.node
   };
 
@@ -21,7 +22,8 @@ class Submit extends PureComponent {
       submitting,
       children,
       submitFailed,
-      submitError
+      submitError,
+      success
     } = this.props;
 
     return (
@@ -30,6 +32,7 @@ class Submit extends PureComponent {
           !valid &&
           submitFailed && <span>Required fields are empty!</span>}
         {submitError && <span>{submitError}</span>}
+        {success && <span className="success">{success}</span>}
         <Button className="submit-btn" type="submit" disabled={submitting}>
           {submitting ? <Loader className="submit-loader" /> : children}
         </Button>
