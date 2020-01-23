@@ -1,5 +1,6 @@
 import { createThunkAction } from 'redux-tools';
 import { postNewsletterSubscription } from 'services/newsletter';
+import { FORM_ERROR } from 'final-form';
 
 export const saveNewsletterSubscription = createThunkAction(
   'saveNewsletterSubscription',
@@ -36,9 +37,12 @@ export const saveNewsletterSubscription = createThunkAction(
       .catch(error => {
         if (!error.response) {
           dispatch({ type: 'location/THANKYOU' });
-        } else {
-          console.info(error);
+          return true;
         }
+
+        return {
+          [FORM_ERROR]: 'Service unavailable'
+        };
       });
   }
 );

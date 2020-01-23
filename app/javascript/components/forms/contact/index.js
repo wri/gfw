@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import Component from './component';
-import * as actions from './actions';
 
 const mapStateToProps = ({ myGfw }) => ({
   initialValues: {
@@ -9,4 +8,4 @@ const mapStateToProps = ({ myGfw }) => ({
   }
 });
 
-export default connect(mapStateToProps, actions)(Component);
+export default connect(mapStateToProps)(Component);

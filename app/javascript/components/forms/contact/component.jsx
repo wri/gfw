@@ -1,6 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
+
+import { submitContactForm } from 'services/forms';
 
 import Link from 'redux-first-router-link';
 import Button from 'components/ui/button';
@@ -18,7 +21,7 @@ import './styles.scss';
 
 class ContactForm extends PureComponent {
   static propTypes = {
-    sendContactForm: PropTypes.func.isRequired,
+    // sendContactForm: PropTypes.func.isRequired,
     resetForm: PropTypes.func,
     initialValues: PropTypes.object
   };
@@ -27,7 +30,18 @@ class ContactForm extends PureComponent {
     const language = window.Transifex
       ? window.Transifex.live.getSelectedLanguageCode()
       : 'en';
-    this.props.sendContactForm({ ...values, language });
+
+    return submitContactForm({ ...values, language })
+      .then(() => {})
+      .catch(error => {
+        const { errors } = error.response && error.response.data;
+
+        return {
+          [FORM_ERROR]:
+            (errors && error.length && errors[0].detail) ||
+            'Service unavailable'
+        };
+      });
   };
 
   render() {
@@ -41,6 +55,7 @@ class ContactForm extends PureComponent {
           valid,
           submitFailed,
           submitSucceeded,
+          submitError,
           values,
           form: { reset }
         }) => {
@@ -110,6 +125,7 @@ class ContactForm extends PureComponent {
                       valid={valid}
                       submitting={submitting}
                       submitFailed={submitFailed}
+                      submitError={submitError}
                     >
                       send
                     </Submit>

@@ -30,11 +30,25 @@
     display: none;
   }
 
+  input,
+  select,
+  textarea {
+    transition: all 0.1s ease-in-out;
+  }
+
   &.error {
     input,
     select,
     textarea {
       border-color: #ed1846;
+    }
+  }
+
+  &.active {
+    input,
+    select,
+    textarea {
+      border-color: $slate;
     }
   }
 }

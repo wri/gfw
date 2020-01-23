@@ -10,17 +10,31 @@ class FieldWrapper extends PureComponent {
     touched: PropTypes.bool,
     error: PropTypes.string,
     hidden: PropTypes.bool,
+    active: PropTypes.bool,
     label: PropTypes.string,
     children: PropTypes.node,
     required: PropTypes.bool
   };
 
   render() {
-    const { touched, error, hidden, label, children, required } = this.props;
+    const {
+      touched,
+      error,
+      hidden,
+      active,
+      label,
+      children,
+      required
+    } = this.props;
 
     return (
       <div
-        className={cx('c-form-field', { error: touched && error }, { hidden })}
+        className={cx(
+          'c-form-field',
+          { error: touched && error },
+          { active },
+          { hidden }
+        )}
       >
         <div className="label">
           <label htmlFor={name}>{`${label || ''}${

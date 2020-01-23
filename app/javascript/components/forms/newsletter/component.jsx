@@ -37,7 +37,13 @@ class NewsletterForm extends PureComponent {
           className="c-subscribe-form"
           onSubmit={saveNewsletterSubscription}
           initialValues={initialValues}
-          render={({ handleSubmit, valid, submitting, submitFailed }) => (
+          render={({
+            handleSubmit,
+            valid,
+            submitting,
+            submitFailed,
+            submitError
+          }) => (
             <form className="c-subscribe-form" onSubmit={handleSubmit}>
               <Input name="firstName" label="first name" required />
               <Input name="lastName" label="last name" required />
@@ -67,6 +73,7 @@ class NewsletterForm extends PureComponent {
                 valid={valid}
                 submitting={submitting}
                 submitFailed={submitFailed}
+                submitError={submitError}
               >
                 subscribe
               </Submit>

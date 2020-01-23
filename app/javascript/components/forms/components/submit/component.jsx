@@ -26,7 +26,9 @@ class Submit extends PureComponent {
 
     return (
       <div className="c-form-submit">
-        {!valid && submitFailed && <span>Required fields are empty!</span>}
+        {!submitError &&
+          !valid &&
+          submitFailed && <span>Required fields are empty!</span>}
         {submitError && <span>{submitError}</span>}
         <Button className="submit-btn" type="submit" disabled={submitting}>
           {submitting ? <Loader className="submit-loader" /> : children}
