@@ -162,7 +162,7 @@ class LoginForm extends PureComponent {
                     {showForm === 'reset' && (
                       <p>
                         To reset your password introduce your email and follow
-                        the instructions
+                        the instructions.
                       </p>
                     )}
                     <form className="c-login-form" onSubmit={handleSubmit}>
