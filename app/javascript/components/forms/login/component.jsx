@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
 import Button from 'components/ui/button';
+import Thankyou from 'components/thankyou';
 
 import { email } from 'components/forms/validations';
 
@@ -59,27 +60,47 @@ class LoginForm extends PureComponent {
         submitFunc: sendLoginForm,
         altView: 'register',
         altLabel: 'Register',
-        successMessage: 'Login successful'
+        successMessage: 'Login successful',
+        confirmation: {
+          title: '',
+          description: ''
+        }
       },
       register: {
         submit: 'register',
         submitFunc: sendRegisterUser,
         altView: 'login',
         altLabel: 'login',
-        successMessage: 'Account registered'
+        successMessage: 'Account registered',
+        confirmation: {
+          title:
+            'Thank you for registering, please check your email and confirm your account.',
+          description:
+            "You may wish to read our <a href='/privacy-policy'>privacy policy</a>, which provides further information about how we use personal data."
+        }
       },
       reset: {
         submit: 'reset',
         submitFunc: sendResetPassword,
         altView: 'login',
         altLabel: 'Login',
-        successMessage: 'Email sent'
+        confirmation: {
+          title:
+            'Thank you. Please, check your inbox and follow instructions to reset your password.',
+          description:
+            "You may wish to read our <a href='/privacy-policy'>privacy policy</a>, which provides further information about how we use personal data."
+        }
       }
     };
 
-    const { submit, submitFunc, altView, altLabel, successMessage } = formMeta[
-      showForm
-    ];
+    const {
+      submit,
+      submitFunc,
+      altView,
+      altLabel,
+      successMessage,
+      confirmation
+    } = formMeta[showForm];
 
     return (
       <Form
@@ -93,102 +114,122 @@ class LoginForm extends PureComponent {
           submitting,
           submitFailed,
           submitError,
+          submitSucceeded,
           form: { reset }
         }) => (
           <div className="c-login-form">
             <div className="row">
-              <div className="column small-12 medium-8 medium-offset-2">
-                <h1>Login to My GFW</h1>
-                <h3>
-                  Log in is required so you can view, manage, and delete your
-                  subscriptions.
-                </h3>
-              </div>
-              <div className="column small-12 medium-3 medium-offset-2">
-                <div className="social-btns">
-                  {socialButtons.map(s => (
-                    <Button
-                      key={s.value}
-                      className={`social-btn -${s.value}`}
-                      link={`${AUTH_URL}/${
-                        s.value
-                      }?applications=gfw&callbackUrl=${window.location.href}`}
-                    >
-                      Login with {s.label}
-                    </Button>
-                  ))}
+              {submitSucceeded ? (
+                <div className="column small-12 medium-8 medium-offset-2">
+                  <Thankyou {...confirmation} />
+                  <Button
+                    className="reset-form-btn"
+                    onClick={() => {
+                      reset();
+                      this.setState({ showForm: 'login' });
+                    }}
+                  >
+                    login
+                  </Button>
                 </div>
-              </div>
-              <div className="column small-12 medium-4 medium-offset-1">
-                {showForm === 'reset' && (
-                  <p>
-                    To reset your password introduce your email and follow the
-                    instructions
-                  </p>
-                )}
-                <form className="c-login-form" onSubmit={handleSubmit}>
-                  <Input
-                    name="email"
-                    type="email"
-                    label="email"
-                    placeholder="example@globalforestwatch.org"
-                    validate={[email]}
-                    required
-                  />
-                  {showForm !== 'reset' && (
-                    <Input
-                      name="password"
-                      label="password"
-                      type="password"
-                      placeholder="**********"
-                      required
-                    />
-                  )}
-                  {showForm === 'register' && (
-                    <Input
-                      name="repeatPassword"
-                      label="repeat password"
-                      type="password"
-                      placeholder="**********"
-                      required
-                    />
-                  )}
-                  {showForm === 'login' && (
-                    <div
-                      className="forgotten-password"
-                      onClick={() => {
-                        this.setState({ showForm: 'reset' });
-                        reset();
-                      }}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      Forgot password
-                    </div>
-                  )}
-                  <div className="submit-actions">
-                    <Button
-                      className="change-form"
-                      theme="theme-button-light"
-                      onClick={() => {
-                        this.setState({ showForm: altView });
-                        reset();
-                      }}
-                    >
-                      {altLabel}
-                    </Button>
-                    <Submit
-                      valid
-                      submitting={submitting}
-                      submitFailed={submitFailed}
-                      submitError={submitError}
-                      success={success}
-                    >
-                      {submit}
-                    </Submit>
+              ) : (
+                <Fragment>
+                  <div className="column small-12 medium-8 medium-offset-2">
+                    <h1>Login to My GFW</h1>
+                    <h3>
+                      Log in is required so you can view, manage, and delete
+                      your subscriptions.
+                    </h3>
                   </div>
-                </form>
-              </div>
+                  <div className="column small-12 medium-3 medium-offset-2">
+                    <div className="social-btns">
+                      {socialButtons.map(s => (
+                        <Button
+                          key={s.value}
+                          className={`social-btn -${s.value}`}
+                          link={`${AUTH_URL}/${
+                            s.value
+                          }?applications=gfw&callbackUrl=${
+                            window.location.href
+                          }`}
+                        >
+                          Login with {s.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="column small-12 medium-4 medium-offset-1">
+                    {showForm === 'reset' && (
+                      <p>
+                        To reset your password introduce your email and follow
+                        the instructions
+                      </p>
+                    )}
+                    <form className="c-login-form" onSubmit={handleSubmit}>
+                      <Input
+                        name="email"
+                        type="email"
+                        label="email"
+                        placeholder="example@globalforestwatch.org"
+                        validate={[email]}
+                        required
+                      />
+                      {showForm !== 'reset' && (
+                        <Input
+                          name="password"
+                          label="password"
+                          type="password"
+                          placeholder="**********"
+                          required
+                        />
+                      )}
+                      {showForm === 'register' && (
+                        <Input
+                          name="repeatPassword"
+                          label="repeat password"
+                          type="password"
+                          placeholder="**********"
+                          required
+                        />
+                      )}
+                      {showForm === 'login' && (
+                        <div
+                          className="forgotten-password"
+                          onClick={() => {
+                            this.setState({ showForm: 'reset' });
+                            reset();
+                          }}
+                          role="button"
+                          tabIndex={0}
+                        >
+                          Forgot password
+                        </div>
+                      )}
+                      <div className="submit-actions">
+                        <Button
+                          className="change-form"
+                          theme="theme-button-light"
+                          onClick={() => {
+                            this.setState({ showForm: altView });
+                            reset();
+                          }}
+                        >
+                          {altLabel}
+                        </Button>
+                        <Submit
+                          valid
+                          submitting={submitting}
+                          submitFailed={submitFailed}
+                          submitError={submitError}
+                          success={success}
+                        >
+                          {submit}
+                        </Submit>
+                      </div>
+                    </form>
+                  </div>
+                </Fragment>
+              )}
             </div>
           </div>
         )}
