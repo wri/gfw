@@ -3,13 +3,32 @@
 .c-login-form {
   text-align: left;
 
+  h1 {
+    font-weight: 300;
+    font-size: rem(36px);
+  }
+
+  h3 {
+    font-size: rem(18px);
+    margin-bottom: rem(50px);
+  }
+
+  p {
+    font-size: rem(16px);
+    margin-bottom: rem(40px);
+    line-height: 1.5;
+    margin-top: rem(22px);
+  }
+
   .forgotten-password {
-    margin-bottom: rem(15px);
+    margin-bottom: rem(30px);
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: rem(16px);
   }
 
   .change-form,
   .forgotten-password {
-    font-size: rem(14px);
     cursor: pointer;
 
     &:focus {
@@ -29,5 +48,39 @@
 
   .submit-btn {
     min-width: rem(120px);
+  }
+
+  .social-btns {
+    margin-top: rem(22px);
+  }
+
+  .social-btn {
+    width: 100%;
+
+    &.-twitter {
+      background-color: $twitter;
+      margin-bottom: rem(20px);
+
+      &:hover {
+        background-color: darken($twitter, 10%);
+      }
+    }
+
+    &.-facebook {
+      background-color: $facebook;
+      margin-bottom: rem(20px);
+
+      &:hover {
+        background-color: darken($facebook, 10%);
+      }
+    }
+
+    &.-google {
+      background-color: $googleplus;
+
+      &:hover {
+        background-color: darken($googleplus, 10%);
+      }
+    }
   }
 }

@@ -1,13 +1,31 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
+import Button from 'components/ui/button';
 
 import { email } from 'components/forms/validations';
 
 import './styles.scss';
+
+const AUTH_URL = `${process.env.GFW_API}/auth`;
+
+const socialButtons = [
+  {
+    label: 'Twitter',
+    value: 'twitter'
+  },
+  {
+    label: 'Facebook',
+    value: 'facebook'
+  },
+  {
+    label: 'Google',
+    value: 'google'
+  }
+];
 
 class LoginForm extends PureComponent {
   static propTypes = {
@@ -47,14 +65,14 @@ class LoginForm extends PureComponent {
         submit: 'register',
         submitFunc: sendRegisterUser,
         altView: 'login',
-        altLabel: 'I have an account',
+        altLabel: 'login',
         successMessage: 'Account registered'
       },
       reset: {
         submit: 'reset',
         submitFunc: sendResetPassword,
         altView: 'login',
-        altLabel: 'Sign in',
+        altLabel: 'Login',
         successMessage: 'Email sent'
       }
     };
@@ -78,71 +96,100 @@ class LoginForm extends PureComponent {
           form: { reset }
         }) => (
           <div className="c-login-form">
-            <Fragment>
-              <form className="c-login-form" onSubmit={handleSubmit}>
-                <Input
-                  name="email"
-                  type="email"
-                  label="email"
-                  placeholder="example@globalforestwatch.org"
-                  validate={[email]}
-                  required
-                />
-                {showForm !== 'reset' && (
-                  <Input
-                    name="password"
-                    label="password"
-                    type="password"
-                    placeholder="**********"
-                    required
-                  />
-                )}
-                {showForm === 'register' && (
-                  <Input
-                    name="repeatPassword"
-                    label="repeat password"
-                    type="password"
-                    placeholder="**********"
-                    required
-                  />
-                )}
-                {showForm === 'login' && (
-                  <div
-                    className="forgotten-password"
-                    onClick={() => {
-                      this.setState({ showForm: 'reset' });
-                      reset();
-                    }}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    Forgotten your password?
-                  </div>
-                )}
-                <div className="submit-actions">
-                  <div
-                    className="change-form"
-                    onClick={() => {
-                      this.setState({ showForm: altView });
-                      reset();
-                    }}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    {altLabel}
-                  </div>
-                  <Submit
-                    valid
-                    submitting={submitting}
-                    submitFailed={submitFailed}
-                    submitError={submitError}
-                    success={success}
-                  >
-                    {submit}
-                  </Submit>
+            <div className="row">
+              <div className="column small-12 medium-8 medium-offset-2">
+                <h1>Login to My GFW</h1>
+                <h3>
+                  Log in is required so you can view, manage, and delete your
+                  subscriptions.
+                </h3>
+              </div>
+              <div className="column small-12 medium-3 medium-offset-2">
+                <div className="social-btns">
+                  {socialButtons.map(s => (
+                    <Button
+                      key={s.value}
+                      className={`social-btn -${s.value}`}
+                      link={`${AUTH_URL}/${
+                        s.value
+                      }?applications=gfw&callbackUrl=${window.location.href}`}
+                    >
+                      Login with {s.label}
+                    </Button>
+                  ))}
                 </div>
-              </form>
-            </Fragment>
+              </div>
+              <div className="column small-12 medium-4 medium-offset-1">
+                {showForm === 'reset' && (
+                  <p>
+                    To reset your password introduce your email and follow the
+                    instructions
+                  </p>
+                )}
+                <form className="c-login-form" onSubmit={handleSubmit}>
+                  <Input
+                    name="email"
+                    type="email"
+                    label="email"
+                    placeholder="example@globalforestwatch.org"
+                    validate={[email]}
+                    required
+                  />
+                  {showForm !== 'reset' && (
+                    <Input
+                      name="password"
+                      label="password"
+                      type="password"
+                      placeholder="**********"
+                      required
+                    />
+                  )}
+                  {showForm === 'register' && (
+                    <Input
+                      name="repeatPassword"
+                      label="repeat password"
+                      type="password"
+                      placeholder="**********"
+                      required
+                    />
+                  )}
+                  {showForm === 'login' && (
+                    <div
+                      className="forgotten-password"
+                      onClick={() => {
+                        this.setState({ showForm: 'reset' });
+                        reset();
+                      }}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      Forgot password
+                    </div>
+                  )}
+                  <div className="submit-actions">
+                    <Button
+                      className="change-form"
+                      theme="theme-button-light"
+                      onClick={() => {
+                        this.setState({ showForm: altView });
+                        reset();
+                      }}
+                    >
+                      {altLabel}
+                    </Button>
+                    <Submit
+                      valid
+                      submitting={submitting}
+                      submitFailed={submitFailed}
+                      submitError={submitError}
+                      success={success}
+                    >
+                      {submit}
+                    </Submit>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         )}
       </Form>
