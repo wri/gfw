@@ -5,7 +5,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin: rem(10px) 0;
+    margin: rem(20px) 0 rem(20px);
 
     label {
       cursor: pointer;
@@ -21,10 +21,15 @@
     appearance: none;
     color: $green-gfw;
     cursor: pointer;
-  }
+    border-radius: rem(4px);
 
-  input[type=checkbox]::-ms-check {
-    display: none;
+    &::-ms-check {
+      display: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 
   input[type=checkbox]::before {

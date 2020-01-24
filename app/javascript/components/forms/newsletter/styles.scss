@@ -1,9 +1,19 @@
 @import '~styles/settings.scss';
 
 .c-subscribe-form {
-  h4 {
+  h1 {
+    font-size: rem(36px);
+    margin-bottom: rem(10px);
+    font-weight: 300;
+  }
+
+  h3 {
     font-size: rem(16px);
-    margin-bottom: rem(5px);
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(60px);
+    }
   }
 
   p {

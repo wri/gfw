@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import Component from './component';
-import * as actions from './actions';
 
 const mapStateToProps = ({ countryData, myGfw }) => ({
   countries: countryData && countryData.countries,
@@ -10,4 +9,4 @@ const mapStateToProps = ({ countryData, myGfw }) => ({
   }
 });
 
-export default connect(mapStateToProps, actions)(Component);
+export default connect(mapStateToProps)(Component);

@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+
+.c-thankyou {
+  .message {
+    padding: rem(60px) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(200px) 0;
+    }
+
+    img {
+      max-width: rem(200px);
+      margin-bottom: rem(20px);
+    }
+
+    h1 {
+      font-size: rem(36px);
+      color: $slate;
+      margin-bottom: rem(30px);
+      text-align: center;
+      font-weight: 300;
+
+      @media screen and (min-width: $screen-m) {
+      }
+    }
+
+    p {
+      font-size: rem(18px);
+      line-height: rem(30px);
+      color: $slate;
+      text-align: center;
+    }
+  }
+}

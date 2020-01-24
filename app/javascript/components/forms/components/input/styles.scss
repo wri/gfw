@@ -9,7 +9,6 @@
   height: rem(40px);
   padding: 0 rem(12px);
   width: 100%;
-  max-width: rem(300px);
 
   &::placeholder {
     color: #a8a8a8;
@@ -20,6 +19,5 @@
     padding: rem(12px);
     line-height: 1.5;
     resize: none;
-    max-width: rem(400px);
   }
 }

@@ -7,19 +7,15 @@
   flex-direction: column;
   margin-bottom: 0;
 
-  @media screen and (min-width: $screen-m) {
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-
   span {
+    align-self: flex-start;
     font-size: rem(14px);
     color: $error;
     margin-bottom: rem(15px);
 
     @media screen and (min-width: $screen-m) {
       margin-right: rem(20px);
-      margin-bottom: 0;
+      margin-bottom: rem(30px);
     }
 
     &.success {
@@ -29,6 +25,7 @@
 
   .submit-btn {
     position: relative;
+    align-self: flex-end;
 
     .submit-loader {
       > div {

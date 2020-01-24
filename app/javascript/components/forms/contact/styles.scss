@@ -15,6 +15,12 @@
     margin-bottom: rem(20px);
   }
 
+  input,
+  textarea,
+  select {
+    max-width: rem(350px);
+  }
+
   .submit-btn {
     min-width: rem(180px);
   }

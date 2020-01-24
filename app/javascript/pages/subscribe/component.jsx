@@ -8,12 +8,11 @@ class NewsletterPage extends PureComponent {
   render() {
     return (
       <div className="l-subscribe-page">
-        <h1>{"Stay Updated on the World's Forests"}</h1>
-        <h3>
-          Subscribe to monthly GFW newsletters and updates based on your
-          interests.
-        </h3>
-        <NewsletterForm />
+        <div className="row">
+          <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+            <NewsletterForm />
+          </div>
+        </div>
       </div>
     );
   }
