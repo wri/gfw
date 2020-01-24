@@ -119,7 +119,7 @@ class LoginForm extends PureComponent {
         }) => (
           <div className="c-login-form">
             <div className="row">
-              {submitSucceeded ? (
+              {submitSucceeded && showForm !== 'login' ? (
                 <div className="column small-12 medium-8 medium-offset-2">
                   <Thankyou {...confirmation} />
                   <Button

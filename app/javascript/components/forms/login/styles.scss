@@ -6,11 +6,16 @@
   h1 {
     font-weight: 300;
     font-size: rem(36px);
+    margin-top: 0;
   }
 
   h3 {
     font-size: rem(18px);
-    margin-bottom: rem(50px);
+    margin-bottom: rem(10px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(50px);
+    }
   }
 
   p {
@@ -57,6 +62,11 @@
 
   .social-btns {
     margin-top: rem(22px);
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
   }
 
   .social-btn {

@@ -1,5 +1,9 @@
 @import '~styles/settings.scss';
 
 .l-login-page {
-  padding: rem(100px) 0;
+  padding: rem(40px) 0;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(100px) 0;
+  }
 }
