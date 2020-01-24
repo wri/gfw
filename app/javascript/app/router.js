@@ -24,7 +24,7 @@ export const UNACCEPTABLE = 'location/UNACCEPTABLE';
 export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 export const SEARCH = 'location/SEARCH';
 export const SUBSCRIBE = 'location/SUBSCRIBE';
-export const LOGIN = 'location/LOGIN';
+export const MYGFW = 'location/MYGFW';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -238,10 +238,10 @@ export const routes = {
     controller: 'subscribe',
     component: 'subscribe'
   },
-  [LOGIN]: {
-    path: '/login',
-    controller: 'login',
-    component: 'login'
+  [MYGFW]: {
+    path: '/my_gfw',
+    controller: 'my_gfw',
+    component: 'my-gfw'
   }
 };
 

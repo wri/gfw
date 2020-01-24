@@ -50,8 +50,9 @@ class ApplicationController < ActionController::Base
       thankyou: {
         title: 'Thank You'
       },
-      login: {
-        title: 'Login'
+      my_gfw: {
+        title: 'My GFW',
+        desc: 'Create an account or log into My GFW. Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use.'
       },
       use: {
         title: 'Area of Interest',

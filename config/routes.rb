@@ -60,7 +60,7 @@ Gfw::Application.routes.draw do
   get '/thank-you' => 'thankyou#index'
 
   # login
-  get '/login' => 'login#index'
+  get '/my_gfw' => 'my_gfw#index'
 
   # stories
   get '/stories' => 'stories#index'
@@ -71,7 +71,6 @@ Gfw::Application.routes.draw do
   get '/grants-and-fellowships/*all' => 'grants_and_fellowships#index'
 
   # connect
-  get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
   # static #

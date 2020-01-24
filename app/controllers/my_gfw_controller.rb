@@ -1,0 +1,2 @@
+class MyGfwController < ApplicationController
+end

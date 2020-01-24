@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { translateText } from 'utils/transifex';
 
-import MyGFWLogin from 'components/mygfw-login';
+import MyGFWLogin from 'components/forms/login';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';

@@ -147,7 +147,8 @@ class LoginForm extends PureComponent {
                         <Button
                           key={s.value}
                           className={`social-btn -${s.value}`}
-                          link={`${AUTH_URL}/${
+                          target="_self"
+                          extLink={`${AUTH_URL}/${
                             s.value
                           }?applications=gfw&callbackUrl=${
                             window.location.href
