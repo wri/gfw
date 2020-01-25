@@ -61,7 +61,7 @@ class ProfileForm extends PureComponent {
                   </div>
                 ) : (
                   <Fragment>
-                    <div className="column small-12 medium-8 medium-offset-1 large-6 large-offset-2">
+                    <div className="column small-12 medium-8 medium-offset-1 large-7 large-offset-2">
                       <h1>Your profile information</h1>
                       <h3>
                         Help us help you! Tell us who you are and how you use

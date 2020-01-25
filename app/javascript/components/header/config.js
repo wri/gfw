@@ -60,7 +60,7 @@ export default {
     },
     {
       label: 'My profile',
-      extLink: '/my_gfw'
+      path: '/my_gfw'
     },
     {
       label: 'Logout',
