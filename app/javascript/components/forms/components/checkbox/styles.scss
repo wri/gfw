@@ -17,6 +17,7 @@
     position: relative;
     width: rem(25px);
     height: rem(25px);
+    min-width: rem(25px);
     border: 1px solid $border;
     appearance: none;
     color: $green-gfw;

@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import cx from 'classnames';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -18,7 +19,8 @@ class Select extends PureComponent {
     label: PropTypes.string,
     name: PropTypes.string,
     options: PropTypes.array,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    multiple: PropTypes.bool
   };
 
   render() {
@@ -29,17 +31,22 @@ class Select extends PureComponent {
       placeholder,
       options,
       hidden,
-      required
+      required,
+      multiple
     } = this.props;
-    const allOptions = options
-      ? [{ label: placeholder, value: '' }, ...options]
-      : [];
+
+    const allOptions = options || [];
+    const optionWithPlaceholder = placeholder
+      ? [{ label: placeholder, value: '' }, ...allOptions]
+      : allOptions;
 
     return (
       <Field
         name={name}
         validate={composeValidators(required, validate)}
         component="select"
+        type="select"
+        multiple={multiple}
       >
         {({ input, meta }) => (
           <FieldWrapper
@@ -49,8 +56,12 @@ class Select extends PureComponent {
             hidden={hidden}
             required={required}
           >
-            <select className="c-form-select" {...input}>
-              {allOptions.map(option => (
+            <select
+              className={cx('c-form-select', { multiple })}
+              {...input}
+              multiple={multiple}
+            >
+              {optionWithPlaceholder.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>

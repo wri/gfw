@@ -10,4 +10,13 @@
   height: rem(40px);
   padding: 0 rem(12px);
   cursor: pointer;
+
+  &.multiple {
+    height: rem(100px);
+    padding: 0;
+
+    option {
+      padding: 5px 12px;
+    }
+  }
 }

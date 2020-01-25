@@ -76,7 +76,7 @@ class LoginForm extends PureComponent {
           title:
             'Thank you for registering, please check your email and confirm your account.',
           description:
-            "You may wish to read our <a href='/privacy-policy'>privacy policy</a>, which provides further information about how we use personal data."
+            "You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
         }
       },
       reset: {
@@ -88,7 +88,7 @@ class LoginForm extends PureComponent {
           title:
             'Thank you. Please, check your inbox and follow instructions to reset your password.',
           description:
-            "You may wish to read our <a href='/privacy-policy'>privacy policy</a>, which provides further information about how we use personal data."
+            "You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
         }
       }
     };
@@ -120,7 +120,7 @@ class LoginForm extends PureComponent {
           <div className="c-login-form">
             <div className="row">
               {submitSucceeded && showForm !== 'login' ? (
-                <div className="column small-12 medium-8 medium-offset-2">
+                <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
                   <Thankyou {...confirmation} />
                   <Button
                     className="reset-form-btn"
@@ -134,14 +134,14 @@ class LoginForm extends PureComponent {
                 </div>
               ) : (
                 <Fragment>
-                  <div className="column small-12 medium-8 medium-offset-2">
+                  <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
                     <h1>Login to My GFW</h1>
                     <h3>
                       Log in is required so you can view, manage, and delete
                       your subscriptions.
                     </h3>
                   </div>
-                  <div className="column small-12 medium-3 medium-offset-2">
+                  <div className="column small-12 medium-4 medium-offset-1 large-3 large-offset-2">
                     <div className="social-btns">
                       {socialButtons.map(s => (
                         <Button
@@ -159,7 +159,7 @@ class LoginForm extends PureComponent {
                       ))}
                     </div>
                   </div>
-                  <div className="column small-12 medium-4 medium-offset-1">
+                  <div className="column small-12 medium-5 medium-offset-1 large-4 large-offset-1">
                     {showForm === 'reset' && (
                       <p>
                         To reset your password introduce your email and follow

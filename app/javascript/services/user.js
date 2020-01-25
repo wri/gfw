@@ -13,3 +13,13 @@ export const registerUser = formData =>
 
 export const resetPassword = formData =>
   axios.post(`${REQUEST_URL}/auth/reset-password`, formData);
+
+export const updateUserProfile = (id, data) => {
+  const url = `${process.env.GFW_API}/user/${id}`;
+  return axios({
+    method: 'PATCH',
+    data,
+    url,
+    withCredentials: true
+  });
+};

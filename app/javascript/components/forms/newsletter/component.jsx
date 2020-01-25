@@ -95,7 +95,7 @@ class NewsletterForm extends PureComponent {
                   <div className="column small-12">
                     <Thankyou
                       title="Thank you for subscribing to Global Forest Watch newsletters and updates!"
-                      description="You may wish to read our <a href='/privacy-policy'>privacy policy</a>, which provides further information about how we use personal data."
+                      description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
                     />
                   </div>
                 ) : (
