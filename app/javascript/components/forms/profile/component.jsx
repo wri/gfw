@@ -61,6 +61,13 @@ class ProfileForm extends PureComponent {
                   </div>
                 ) : (
                   <Fragment>
+                    <div className="column small-12 medium-8 medium-offset-1 large-6 large-offset-2">
+                      <h1>Your profile information</h1>
+                      <h3>
+                        Help us help you! Tell us who you are and how you use
+                        Global Forest Watch so we can better meet your needs.
+                      </h3>
+                    </div>
                     <div className="column small-12 medium-5 medium-offset-1 large-4 large-offset-2">
                       <Input name="fullName" label="name" required />
                       <Input
