@@ -14,6 +14,24 @@ import closeIcon from 'assets/icons/close.svg';
 import './styles.scss';
 
 class CustomModal extends PureComponent {
+  static propTypes = {
+    isOpen: PropTypes.bool,
+    loading: PropTypes.bool,
+    track: PropTypes.bool,
+    onRequestClose: PropTypes.func.isRequired,
+    contentLabel: PropTypes.string,
+    closeClass: PropTypes.string,
+    children: PropTypes.node,
+    title: PropTypes.string,
+    className: PropTypes.string,
+    customStyles: PropTypes.object
+  };
+
+  static defaultProps = {
+    contentLabel: 'Modal content',
+    track: true
+  };
+
   trackModalOpen = () => {
     if (this.props.track) {
       track('openModal', { label: this.props.contentLabel });
@@ -29,7 +47,8 @@ class CustomModal extends PureComponent {
       children,
       title,
       className,
-      loading
+      loading,
+      customStyles
     } = this.props;
 
     return (
@@ -38,29 +57,31 @@ class CustomModal extends PureComponent {
           <Modal
             isOpen={!!isOpen}
             onRequestClose={onRequestClose}
-            style={{
-              overlay: {
-                zIndex: 10000,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
-                backgroundColor: 'rgba(17, 55, 80, 0.4)',
-                overflow: 'auto',
-                padding: isDesktop ? '40px 10px' : '10px'
-              },
-              content: {
-                position: 'relative',
-                top: 'auto',
-                left: 'auto',
-                right: 'auto',
-                bottom: 'auto',
-                margin: 'auto',
-                padding: '0',
-                border: 'none',
-                borderRadius: 0
+            style={
+              customStyles || {
+                overlay: {
+                  zIndex: 10000,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
+                  backgroundColor: 'rgba(17, 55, 80, 0.4)',
+                  overflow: 'auto',
+                  padding: isDesktop ? '40px 10px' : '10px'
+                },
+                content: {
+                  position: 'relative',
+                  top: 'auto',
+                  left: 'auto',
+                  right: 'auto',
+                  bottom: 'auto',
+                  margin: 'auto',
+                  padding: '0',
+                  border: 'none',
+                  borderRadius: 0
+                }
               }
-            }}
+            }
             contentLabel={contentLabel}
             onAfterOpen={this.trackModalOpen}
             className={cx('c-modal', className)}
@@ -80,22 +101,5 @@ class CustomModal extends PureComponent {
     );
   }
 }
-
-CustomModal.propTypes = {
-  isOpen: PropTypes.bool,
-  loading: PropTypes.bool,
-  track: PropTypes.bool,
-  onRequestClose: PropTypes.func.isRequired,
-  contentLabel: PropTypes.string,
-  closeClass: PropTypes.string,
-  children: PropTypes.node,
-  title: PropTypes.string,
-  className: PropTypes.string
-};
-
-CustomModal.defaultProps = {
-  contentLabel: 'Modal content',
-  track: true
-};
 
 export default CustomModal;
