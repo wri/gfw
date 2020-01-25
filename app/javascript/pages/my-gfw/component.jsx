@@ -31,7 +31,11 @@ class LoginPage extends PureComponent {
             </div>
           </Fragment>
         ) : (
-          <LoginForm />
+          <div className="row">
+            <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+              <LoginForm />
+            </div>
+          </div>
         )}
       </div>
     );

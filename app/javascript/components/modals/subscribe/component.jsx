@@ -22,7 +22,7 @@ class ModalSubscribe extends PureComponent {
     resetSubscribe();
   };
 
-  renderUserLoginForm = () => <MyGFWLogin className="mygfw-subscribe" />;
+  renderUserLoginForm = () => <MyGFWLogin className="mygfw-subscribe" simple />;
 
   renderSaved = () => (
     <div className="saved">

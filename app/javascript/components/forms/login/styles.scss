@@ -98,4 +98,10 @@
       }
     }
   }
+
+  &.simple {
+    h1 {
+      font-size: rem(26px);
+    }
+  }
 }

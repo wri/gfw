@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
+import cx from 'classnames';
 
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
@@ -33,6 +34,7 @@ class LoginForm extends PureComponent {
     sendLoginForm: PropTypes.func.isRequired,
     sendRegisterUser: PropTypes.func.isRequired,
     sendResetPassword: PropTypes.func.isRequired,
+    simple: PropTypes.func.bool,
     initialValues: PropTypes.object
   };
 
@@ -50,7 +52,8 @@ class LoginForm extends PureComponent {
       sendLoginForm,
       sendRegisterUser,
       sendResetPassword,
-      initialValues
+      initialValues,
+      simple
     } = this.props;
     const { showForm, successMessage: success } = this.state;
 
@@ -117,10 +120,10 @@ class LoginForm extends PureComponent {
           submitSucceeded,
           form: { reset }
         }) => (
-          <div className="c-login-form">
+          <div className={cx('c-login-form', { simple })}>
             <div className="row">
               {submitSucceeded && showForm !== 'login' ? (
-                <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+                <div className="column small-12">
                   <Thankyou {...confirmation} />
                   <Button
                     className="reset-form-btn"
@@ -134,14 +137,14 @@ class LoginForm extends PureComponent {
                 </div>
               ) : (
                 <Fragment>
-                  <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
-                    <h1>Login to My GFW</h1>
+                  <div className="column small-12">
+                    {!simple && <h1>Login to My GFW</h1>}
                     <h3>
                       Log in is required so you can view, manage, and delete
                       your subscriptions.
                     </h3>
                   </div>
-                  <div className="column small-12 medium-4 medium-offset-1 large-3 large-offset-2">
+                  <div className="column small-12 medium-5">
                     <div className="social-btns">
                       {socialButtons.map(s => (
                         <Button
@@ -159,7 +162,7 @@ class LoginForm extends PureComponent {
                       ))}
                     </div>
                   </div>
-                  <div className="column small-12 medium-5 medium-offset-1 large-4 large-offset-1">
+                  <div className="column small-12 medium-6 medium-offset-1">
                     {showForm === 'reset' && (
                       <p>
                         To reset your password introduce your email and follow
