@@ -34,7 +34,7 @@ class LoginForm extends PureComponent {
     sendLoginForm: PropTypes.func.isRequired,
     sendRegisterUser: PropTypes.func.isRequired,
     sendResetPassword: PropTypes.func.isRequired,
-    simple: PropTypes.func.bool,
+    simple: PropTypes.bool,
     initialValues: PropTypes.object
   };
 

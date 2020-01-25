@@ -96,7 +96,9 @@ class Header extends PureComponent {
                   />
                 </Fragment>
               ) : (
-                <NavLink to="/my_gfw">My GFW</NavLink>
+                <NavLink className="nav-link" to="/my_gfw">
+                  My GFW
+                </NavLink>
               )}
             </div>
           )}
