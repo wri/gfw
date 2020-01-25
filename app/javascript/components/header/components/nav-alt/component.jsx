@@ -124,10 +124,14 @@ class NavAlt extends PureComponent {
                       icon={myGfwIcon}
                       className={cx({ 'logged-in': loggedIn })}
                     />
-                    {showMyGfw && (
-                      <DropdownMenu className="submenu" options={myGfwLinks} />
-                    )}
                   </NavLink>
+                  <button
+                    className="nav-link hidden"
+                    onClick={() => this.setState({ showMyGfw: !showMyGfw })}
+                  />
+                  {showMyGfw && (
+                    <DropdownMenu className="submenu" options={myGfwLinks} />
+                  )}
                 </OutsideClickHandler>
               ) : (
                 <NavLink

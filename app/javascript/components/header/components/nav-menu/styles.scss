@@ -13,17 +13,6 @@
     margin: 0 rem(5px);
     position: relative;
 
-    &.hidden {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-    }
-
     &.with-submenu {
       padding-right: rem(20px);
     }
