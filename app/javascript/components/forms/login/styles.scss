@@ -48,8 +48,9 @@
 
   .submit-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
+    flex-direction: row-reverse;
 
     .change-form {
       margin-right: rem(15px);

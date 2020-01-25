@@ -210,6 +210,15 @@ class LoginForm extends PureComponent {
                         </div>
                       )}
                       <div className="submit-actions">
+                        <Submit
+                          valid
+                          submitting={submitting}
+                          submitFailed={submitFailed}
+                          submitError={submitError}
+                          success={success}
+                        >
+                          {submit}
+                        </Submit>
                         <Button
                           className="change-form"
                           theme="theme-button-light"
@@ -220,15 +229,6 @@ class LoginForm extends PureComponent {
                         >
                           {altLabel}
                         </Button>
-                        <Submit
-                          valid
-                          submitting={submitting}
-                          submitFailed={submitFailed}
-                          submitError={submitError}
-                          success={success}
-                        >
-                          {submit}
-                        </Submit>
                       </div>
                     </form>
                   </div>
