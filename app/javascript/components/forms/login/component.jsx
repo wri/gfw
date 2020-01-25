@@ -39,8 +39,7 @@ class LoginForm extends PureComponent {
   };
 
   state = {
-    showForm: 'login',
-    successMessage: ''
+    showForm: 'login'
   };
 
   onSuccess = message => {
@@ -55,7 +54,7 @@ class LoginForm extends PureComponent {
       initialValues,
       simple
     } = this.props;
-    const { showForm, successMessage: success } = this.state;
+    const { showForm } = this.state;
 
     const formMeta = {
       login: {
@@ -63,7 +62,6 @@ class LoginForm extends PureComponent {
         submitFunc: sendLoginForm,
         altView: 'register',
         altLabel: 'Register',
-        successMessage: 'Login successful',
         confirmation: {
           title: '',
           description: ''
@@ -74,7 +72,6 @@ class LoginForm extends PureComponent {
         submitFunc: sendRegisterUser,
         altView: 'login',
         altLabel: 'login',
-        successMessage: 'Account registered',
         confirmation: {
           title:
             'Thank you for registering, please check your email and confirm your account.',
@@ -96,28 +93,19 @@ class LoginForm extends PureComponent {
       }
     };
 
-    const {
-      submit,
-      submitFunc,
-      altView,
-      altLabel,
-      successMessage,
-      confirmation
-    } = formMeta[showForm];
+    const { submit, submitFunc, altView, altLabel, confirmation } = formMeta[
+      showForm
+    ];
 
     return (
-      <Form
-        onSubmit={data =>
-          submitFunc({ data, success: () => this.onSuccess(successMessage) })
-        }
-        initialValues={initialValues}
-      >
+      <Form onSubmit={submitFunc} initialValues={initialValues}>
         {({
           handleSubmit,
           submitting,
           submitFailed,
           submitError,
           submitSucceeded,
+          valid,
           form: { reset }
         }) => (
           <div className={cx('c-login-form', { simple })}>
@@ -209,20 +197,25 @@ class LoginForm extends PureComponent {
                           Forgot password
                         </div>
                       )}
+                      {!submitError &&
+                        !valid &&
+                        submitFailed && (
+                        <span className="submit-error">
+                            Required fields are empty!
+                        </span>
+                      )}
+                      {submitError && (
+                        <span className="submit-error">{submitError}</span>
+                      )}
                       <div className="submit-actions">
-                        <Submit
-                          valid
-                          submitting={submitting}
-                          submitFailed={submitFailed}
-                          submitError={submitError}
-                          success={success}
-                        >
+                        <Submit valid submitting={submitting}>
                           {submit}
                         </Submit>
                         <Button
                           className="change-form"
                           theme="theme-button-light"
-                          onClick={() => {
+                          onClick={e => {
+                            e.preventDefault();
                             this.setState({ showForm: altView });
                             reset();
                           }}

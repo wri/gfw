@@ -3,29 +3,23 @@ import { FORM_ERROR } from 'final-form';
 
 import { loginUser, registerUser, resetPassword } from 'services/user';
 
-export const sendLoginForm = createThunkAction(
-  'sendLoginForm',
-  ({ data, success }) => () =>
-    loginUser(data)
-      .then(() => {
-        success();
-      })
-      .catch(error => {
-        const { errors } = error.response.data;
+export const sendLoginForm = createThunkAction('sendLoginForm', data => () =>
+  loginUser(data)
+    .then(() => {})
+    .catch(error => {
+      const { errors } = error.response.data;
 
-        return {
-          [FORM_ERROR]: errors[0].detail
-        };
-      })
+      return {
+        [FORM_ERROR]: errors[0].detail
+      };
+    })
 );
 
 export const sendRegisterUser = createThunkAction(
   'sendRegisterUser',
-  ({ data, success }) => () =>
+  data => () =>
     registerUser(data)
-      .then(() => {
-        success();
-      })
+      .then(() => {})
       .catch(error => {
         const { errors } = error.response.data;
 

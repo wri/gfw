@@ -26,7 +26,7 @@
   }
 
   .forgotten-password {
-    margin-bottom: rem(30px);
+    margin-bottom: rem(10px);
     text-decoration: underline;
     font-weight: 500;
     font-size: rem(16px);
@@ -51,6 +51,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: row-reverse;
+    margin-top: rem(20px);
 
     .change-form {
       margin-right: rem(15px);
@@ -60,6 +61,11 @@
 
   .submit-btn {
     min-width: rem(120px);
+  }
+
+  .submit-error {
+    font-size: rem(14px);
+    color: $error;
   }
 
   .social-btns {
