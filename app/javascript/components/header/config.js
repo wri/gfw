@@ -68,10 +68,14 @@ export default {
       onSelect: e => {
         e.preventDefault();
         axios
-          .get(`${process.env.GFW_API}/auth/logout`, { withCredentials: true })
+          .get(`${process.env.GFW_API}/auth/logout`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('userToken')}`
+            }
+          })
           .then(response => {
             if (response.status < 400) {
-              localStorage.removeItem('mygfw_token');
+              localStorage.removeItem('userToken');
               window.location.reload();
             } else {
               console.warn('Failed to logout');

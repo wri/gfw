@@ -31,7 +31,7 @@ const socialButtons = [
 
 class LoginForm extends PureComponent {
   static propTypes = {
-    sendLoginForm: PropTypes.func.isRequired,
+    logUserIn: PropTypes.func.isRequired,
     sendRegisterUser: PropTypes.func.isRequired,
     sendResetPassword: PropTypes.func.isRequired,
     simple: PropTypes.bool,
@@ -48,9 +48,9 @@ class LoginForm extends PureComponent {
 
   render() {
     const {
-      sendLoginForm,
       sendRegisterUser,
       sendResetPassword,
+      logUserIn,
       initialValues,
       simple
     } = this.props;
@@ -59,7 +59,7 @@ class LoginForm extends PureComponent {
     const formMeta = {
       login: {
         submit: 'login',
-        submitFunc: sendLoginForm,
+        submitFunc: logUserIn,
         altView: 'register',
         altLabel: 'Register',
         confirmation: {
@@ -141,7 +141,7 @@ class LoginForm extends PureComponent {
                           target="_self"
                           extLink={`${AUTH_URL}/${
                             s.value
-                          }?applications=gfw&callbackUrl=${
+                          }?applications=gfw&token=true&callbackUrl=${
                             window.location.href
                           }`}
                         >

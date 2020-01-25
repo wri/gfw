@@ -33,6 +33,21 @@ const routeChangeThunk = (dispatch, getState) => {
   if (prevLocation && currentLocation !== prevLocation) {
     handlePageTrack();
   }
+
+  const { type, payload, query } = location;
+  if (query && query.token) {
+    localStorage.setItem('userToken', query.token);
+    dispatch(
+      redirect({
+        type,
+        payload,
+        query: {
+          ...query,
+          token: undefined
+        }
+      })
+    );
+  }
 };
 
 const redirectThunk = (dispatch, getState) => {

@@ -3,10 +3,11 @@ import axios from 'axios';
 const REQUEST_URL = `${process.env.GFW_API}`;
 
 export const loginUser = formData =>
-  axios.post(
-    `${REQUEST_URL}/auth/login?callbackUrl=https://localhost:5000`,
-    formData
-  );
+  axios({
+    method: 'POST',
+    url: `${REQUEST_URL}/auth/login`,
+    data: formData
+  });
 
 export const registerUser = formData =>
   axios.post(`${REQUEST_URL}/auth/sign-up`, { ...formData, apps: ['gfw'] });
@@ -20,6 +21,14 @@ export const updateUserProfile = (id, data) => {
     method: 'PATCH',
     data,
     url,
-    withCredentials: true
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`
+    }
   });
 };
+
+export const checkLogged = token =>
+  axios.get(`${process.env.GFW_API}/user`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });

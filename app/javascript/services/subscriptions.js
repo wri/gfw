@@ -6,9 +6,9 @@ export const postSubscription = data =>
   axios({
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`
     },
-    withCredentials: true,
     data,
     url: REQUEST_URL
   });

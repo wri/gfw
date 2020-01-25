@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
+import { logUserIn } from 'providers/mygfw-provider/actions';
+import * as ownActions from './actions';
 import Component from './component';
-import * as actions from './actions';
 
-export default connect(null, actions)(Component);
+export default connect(null, { ...ownActions, logUserIn })(Component);
