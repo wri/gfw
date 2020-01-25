@@ -37,12 +37,7 @@ export const logUserIn = createThunkAction('logUserIn', data => dispatch =>
       if (response.status < 400 && response.data) {
         const { data: userData } = response.data;
         localStorage.setItem('userToken', userData.token);
-        dispatch(
-          setMyGFW({
-            loggedIn: true,
-            ...userData
-          })
-        );
+        dispatch(checkAuth());
       }
     })
     .catch(error => {
