@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const REQUEST_URL = `${process.env.GFW_API}`;
+import { apiRequest } from 'axios';
 
 export const submitContactForm = formData =>
-  axios.post(`${REQUEST_URL}/form/contact-us`, { ...formData });
+  apiRequest.post('/form/contact-us', { ...formData });

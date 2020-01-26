@@ -1,4 +1,4 @@
-import request from 'utils/request';
+import { apiRequest, cartoRequest } from 'utils/request';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import { getIndicator } from 'utils/strings';
@@ -6,8 +6,6 @@ import { getIndicator } from 'utils/strings';
 const ADM0_DATASET = process.env.GADM36_ADM0_DATASET;
 const ADM1_DATASET = process.env.GADM36_ADM1_DATASET;
 const ADM2_DATASET = process.env.GADM36_ADM2_DATASET;
-
-const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const NEW_SQL_QUERIES = {
   loss:
@@ -90,7 +88,7 @@ const buildPolynameSelects = () => {
 
 const getRequestUrl = (adm0, adm1, adm2, grouped) => {
   const dataset = getAdmDatasetId(adm0, adm1, adm2, grouped);
-  const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
+  const REQUEST_URL = '/query/{dataset}?sql=';
   return REQUEST_URL.replace('{dataset}', dataset);
 };
 
@@ -142,7 +140,7 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // disaggregated loss for child of location
@@ -153,7 +151,7 @@ export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // summed extent for single location
@@ -162,7 +160,7 @@ export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // disaggregated extent for child of location
@@ -180,7 +178,7 @@ export const getExtentGrouped = ({
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // total area for a given of polyname in location
@@ -209,7 +207,7 @@ export const getAreaIntersection = ({
       })
     );
 
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // total area for a given of polyname in location
@@ -238,7 +236,7 @@ export const getAreaIntersectionGrouped = ({
       })
     );
 
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // summed gain for single location
@@ -246,7 +244,7 @@ export const getGain = ({ adm0, adm1, adm2, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     NEW_SQL_QUERIES.gain
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 // disaggregated gain for child of location
@@ -256,68 +254,64 @@ export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 export const getFAO = ({ adm0 }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.fao}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.fao}`.replace(
     '{location}',
     adm0 ? `country = '${adm0}'` : '1 = 1'
   );
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 
 export const getFAOExtent = ({ period }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoExtent}`.replace(
-    '{period}',
-    period
-  );
-  return request.get(url);
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoExtent}`.replace('{period}', period);
+  return cartoRequest.get(url);
 };
 
 export const getFAODeforest = ({ adm0 }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforest}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoDeforest}`.replace(
     '{location}',
     adm0 ? `WHERE fao.country = '${adm0}'` : ''
   );
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 export const getFAODeforestRank = ({ period }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
     '{year}',
     period
   );
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 
 export const getFAOEcoLive = () => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoEcoLive}`;
-  return request.get(url);
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoEcoLive}`;
+  return cartoRequest.get(url);
 };
 
 export const getNonGlobalDatasets = () => {
-  const url = `${CARTO_REQUEST_URL}${
-    NEW_SQL_QUERIES.nonGlobalDatasets
-  }`.replace('{polynames}', buildPolynameSelects());
-  return request.get(url);
+  const url = `/sql?q=${NEW_SQL_QUERIES.nonGlobalDatasets}`.replace(
+    '{polynames}',
+    buildPolynameSelects()
+  );
+  return cartoRequest.get(url);
 };
 
 export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.globalLandCover}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.globalLandCover}`.replace(
     '{location}',
     getLocationQuery(adm0, adm1, adm2)
   );
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 
 export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
-  const url = `${CARTO_REQUEST_URL}${
-    NEW_SQL_QUERIES.getLocationPolynameWhitelist
-  }`
+  const url = `/sql?q=${NEW_SQL_QUERIES.getLocationPolynameWhitelist}`
     .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
     .replace('{polynames}', buildPolynameSelects())
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2 }));
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 
 // OLD TABLE FETCHES PRE 2018 DATA
@@ -350,7 +344,7 @@ export const getExtentOld = ({
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYearOld(extentYear));
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 export const getLossOld = ({
@@ -365,7 +359,7 @@ export const getLossOld = ({
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory));
-  return request.get(url);
+  return apiRequest.get(url);
 };
 
 export const getUSLandCover = params => {
@@ -378,7 +372,7 @@ export const getUSLandCover = params => {
     // adm 2
     admQuery = `AND adm1 = ${adm1} AND adm2 = ${adm2}`;
   }
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.getNLCDLandCover}`
+  const url = `/sql?q=${NEW_SQL_QUERIES.getNLCDLandCover}`
     .replace(
       '{select}',
       adm2
@@ -401,5 +395,5 @@ export const getUSLandCover = params => {
       }${adm2 ? `_${adm2}` : ''}_from_${startYear}_to_${endYear}`
     );
   }
-  return request.get(url);
+  return cartoRequest.get(url);
 };

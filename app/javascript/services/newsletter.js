@@ -1,8 +1,8 @@
-import axios from 'axios';
+import request from 'utils/request';
 import qs from 'query-string';
 
 export const postNewsletterSubscription = data =>
-  axios({
+  request({
     method: 'POST',
     data: qs.stringify(data),
     headers: { 'content-type': 'application/x-www-form-urlencoded' },

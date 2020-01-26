@@ -1,6 +1,4 @@
-import request from 'utils/request';
-
-const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
+import { cartoRequest } from 'utils/request';
 
 const SQL_QUERIES = {
   layerSpec:
@@ -8,9 +6,10 @@ const SQL_QUERIES = {
 };
 
 export const fetchLayerSpec = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.layerSpec}`.replace(
+  const url = `/sql?q=${SQL_QUERIES.layerSpec}`.replace(
     '{dataset}',
     process.env.LAYER_SPEC
   );
-  return request.get(url);
+
+  return cartoRequest.get(url);
 };
