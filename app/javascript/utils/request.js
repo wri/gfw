@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CancelToken } from 'axios';
 
 export const apiRequest = axios.create({
   timeout: 30 * 1000,
@@ -18,6 +18,8 @@ export const cartoRequest = axios.create({
   timeout: 30 * 1000,
   baseURL: process.env.CARTO_API
 });
+
+export const cancelToken = () => CancelToken.source();
 
 export default axios.create({
   timeout: 30 * 1000
