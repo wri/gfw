@@ -1,14 +1,8 @@
-import axios from 'axios';
-
-const REQUEST_URL = `${process.env.GFW_API}/subscriptions`;
+import { apiAuthRequest } from 'utils/request';
 
 export const postSubscription = data =>
-  axios({
+  apiAuthRequest({
     method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('userToken')}`
-    },
     data,
-    url: REQUEST_URL
+    url: '/subscriptions'
   });

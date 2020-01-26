@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { logout } from 'services/user';
 
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
@@ -67,20 +67,7 @@ export default {
       extLink: '/auth/logout',
       onSelect: e => {
         e.preventDefault();
-        axios
-          .get(`${process.env.GFW_API}/auth/logout`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('userToken')}`
-            }
-          })
-          .then(response => {
-            if (response.status < 400) {
-              localStorage.removeItem('userToken');
-              window.location.reload();
-            } else {
-              console.warn('Failed to logout');
-            }
-          });
+        logout();
       }
     }
   ],

@@ -1,16 +1,16 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { FORM_ERROR } from 'final-form';
 
-import { checkLogged, loginUser } from 'services/user';
+import { checkLoggedIn, login } from 'services/user';
 
 export const setMyGFWLoading = createAction('setMyGFWLoading');
 export const setMyGFW = createAction('setMyGFW');
 
-export const checkAuth = createThunkAction('checkAuth', () => dispatch => {
+export const getUserProfile = createThunkAction('checkAuth', () => dispatch => {
   dispatch(setMyGFWLoading({ loading: true, error: false }));
   const token = localStorage.getItem('userToken');
   if (token) {
-    checkLogged(token)
+    checkLoggedIn(token)
       .then(response => {
         if (response.status < 400 && response.data) {
           const { data } = response.data;
@@ -32,12 +32,10 @@ export const checkAuth = createThunkAction('checkAuth', () => dispatch => {
 });
 
 export const logUserIn = createThunkAction('logUserIn', data => dispatch =>
-  loginUser(data)
+  login(data)
     .then(response => {
       if (response.status < 400 && response.data) {
-        const { data: userData } = response.data;
-        localStorage.setItem('userToken', userData.token);
-        dispatch(checkAuth());
+        dispatch(getUserProfile());
       }
     })
     .catch(error => {

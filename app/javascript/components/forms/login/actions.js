@@ -1,12 +1,12 @@
 import { createThunkAction } from 'redux-tools';
 import { FORM_ERROR } from 'final-form';
 
-import { registerUser, resetPassword } from 'services/user';
+import { register, resetPassword } from 'services/user';
 
 export const sendRegisterUser = createThunkAction(
   'sendRegisterUser',
   data => () =>
-    registerUser(data)
+    register(data)
       .then(() => {})
       .catch(error => {
         const { errors } = error.response.data;

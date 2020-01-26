@@ -1,34 +1,38 @@
-import axios from 'axios';
+import { apiRequest, apiAuthRequest } from 'utils/request';
 
-const REQUEST_URL = `${process.env.GFW_API}`;
-
-export const loginUser = formData =>
-  axios({
+export const login = formData =>
+  apiRequest({
     method: 'POST',
-    url: `${REQUEST_URL}/auth/login`,
+    url: '/auth/login',
     data: formData
-  });
-
-export const registerUser = formData =>
-  axios.post(`${REQUEST_URL}/auth/sign-up`, { ...formData, apps: ['gfw'] });
-
-export const resetPassword = formData =>
-  axios.post(`${REQUEST_URL}/auth/reset-password`, formData);
-
-export const updateUserProfile = (id, data) => {
-  const url = `${process.env.GFW_API}/user/${id}`;
-  return axios({
-    method: 'PATCH',
-    data,
-    url,
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('userToken')}`
+  }).then(response => {
+    if (response.status < 400 && response.data) {
+      const { data: userData } = response.data;
+      localStorage.setItem('userToken', userData.token);
     }
   });
-};
 
-export const checkLogged = token =>
-  axios.get(`${process.env.GFW_API}/user`, {
-    headers: { Authorization: `Bearer ${token}` }
+export const register = formData =>
+  apiRequest.post('/auth/sign-up', { ...formData, apps: ['gfw'] });
+
+export const resetPassword = formData =>
+  apiRequest.post('/auth/reset-password', formData);
+
+export const updateProfile = (id, data) =>
+  apiAuthRequest({
+    method: 'PATCH',
+    data,
+    url: `/user/${id}`
+  });
+
+export const checkLoggedIn = () => apiAuthRequest.get('/user');
+
+export const logout = () =>
+  apiAuthRequest.get('/auth/logout').then(response => {
+    if (response.status < 400) {
+      localStorage.removeItem('userToken');
+      window.location.reload();
+    } else {
+      console.warn('Failed to logout');
+    }
   });

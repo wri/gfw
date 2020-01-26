@@ -8,8 +8,8 @@ import { getMyGfwProps } from './selectors';
 
 class MyGFWProvider extends PureComponent {
   componentDidMount() {
-    const { checkAuth } = this.props;
-    checkAuth();
+    const { getUserProfile } = this.props;
+    getUserProfile();
   }
 
   render() {
@@ -18,7 +18,7 @@ class MyGFWProvider extends PureComponent {
 }
 
 MyGFWProvider.propTypes = {
-  checkAuth: PropTypes.func.isRequired
+  getUserProfile: PropTypes.func.isRequired
 };
 
 export const reduxModule = {
