@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import request from 'utils/request';
 import compact from 'lodash/compact';

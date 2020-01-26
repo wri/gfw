@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { all, spread } from 'axios';
 import minBy from 'lodash/minBy';
 import { setComponentStateToUrl } from 'utils/stateToUrl';

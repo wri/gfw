@@ -1,4 +1,4 @@
-import { createThunkAction, createAction } from 'redux-tools';
+import { createThunkAction, createAction } from 'utils/redux';
 import request from 'utils/request';
 import { SEARCH } from 'router';
 

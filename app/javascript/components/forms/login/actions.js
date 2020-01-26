@@ -1,4 +1,4 @@
-import { createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'utils/redux';
 import { FORM_ERROR } from 'final-form';
 
 import { login, register, resetPassword } from 'services/user';

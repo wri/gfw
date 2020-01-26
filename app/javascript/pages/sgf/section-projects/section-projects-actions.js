@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import groupBy from 'lodash/groupBy';
 
 import { fetchSGFProjects } from 'services/projects';
