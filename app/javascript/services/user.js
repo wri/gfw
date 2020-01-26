@@ -9,7 +9,12 @@ export const login = formData =>
     if (response.status < 400 && response.data) {
       const { data: userData } = response.data;
       localStorage.setItem('userToken', userData.token);
+      apiAuthRequest.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+        'userToken'
+      )}`;
     }
+
+    return response;
   });
 
 export const register = formData =>
@@ -25,7 +30,7 @@ export const updateProfile = (id, data) =>
     url: `/user/${id}`
   });
 
-export const checkLoggedIn = () => apiAuthRequest.get('/user');
+export const getProfile = () => apiAuthRequest.get('/user');
 
 export const logout = () =>
   apiAuthRequest.get('/auth/logout').then(response => {

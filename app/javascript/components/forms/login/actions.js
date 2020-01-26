@@ -1,23 +1,38 @@
 import { createThunkAction } from 'redux-tools';
 import { FORM_ERROR } from 'final-form';
 
-import { register, resetPassword } from 'services/user';
+import { login, register, resetPassword } from 'services/user';
+import { getUserProfile } from 'providers/mygfw-provider/actions';
 
-export const sendRegisterUser = createThunkAction(
-  'sendRegisterUser',
-  data => () =>
-    register(data)
-      .then(() => {})
-      .catch(error => {
-        const { errors } = error.response.data;
+export const loginUser = createThunkAction('logUserIn', data => dispatch =>
+  login(data)
+    .then(response => {
+      if (response.status < 400 && response.data) {
+        dispatch(getUserProfile());
+      }
+    })
+    .catch(error => {
+      const { errors } = error.response.data;
 
-        return {
-          [FORM_ERROR]: errors[0].detail
-        };
-      })
+      return {
+        [FORM_ERROR]: errors[0].detail
+      };
+    })
 );
 
-export const sendResetPassword = createThunkAction(
+export const registerUser = createThunkAction('sendRegisterUser', data => () =>
+  register(data)
+    .then(() => {})
+    .catch(error => {
+      const { errors } = error.response.data;
+
+      return {
+        [FORM_ERROR]: errors[0].detail
+      };
+    })
+);
+
+export const resetUserPassword = createThunkAction(
   'sendResetPassword',
   ({ data, success }) => () =>
     resetPassword(data)
