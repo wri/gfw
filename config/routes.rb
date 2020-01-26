@@ -88,11 +88,6 @@ Gfw::Application.routes.draw do
   post 'media/upload' => 'media#upload'
   get  'media/show' => 'media#show'
 
-  #cache
-  get '/cache/keys' => 'cache#keys'
-  post '/cache/add' => 'cache#add'
-  get '/cache/*id' => 'cache#index'
-
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
   get '/robots.:format' => 'robots#index'
