@@ -1,9 +1,9 @@
 import { getExtentGrouped, getGainGrouped } from 'services/forest-data';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 export default ({ params }) =>
-  axios.all([getExtentGrouped(params), getGainGrouped(params)]).then(
-    axios.spread((extentGrouped, gainGrouped) => {
+  all([getExtentGrouped(params), getGainGrouped(params)]).then(
+    spread((extentGrouped, gainGrouped) => {
       let groupKey = 'iso';
       if (params.adm0) groupKey = 'adm1';
       if (params.adm1) groupKey = 'adm2';

@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import axios from 'axios';
+import { all, spread } from 'axios';
 import minBy from 'lodash/minBy';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
@@ -92,10 +92,9 @@ export const getMoreTiles = createThunkAction(
         })
       );
       const { sources, dataStatus, bands } = params;
-      axios
-        .all([getTiles({ sources, bands }), getThumbs({ sources, bands })])
+      all([getTiles({ sources, bands }), getThumbs({ sources, bands })])
         .then(
-          axios.spread((tilesResponse, thumbsReponse) => {
+          spread((tilesResponse, thumbsReponse) => {
             const tiles =
               tilesResponse.data &&
               tilesResponse.data.data &&

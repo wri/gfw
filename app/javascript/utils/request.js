@@ -1,11 +1,11 @@
-import axios, { CancelToken } from 'axios';
+import { CancelToken, create } from 'axios';
 
-export const apiRequest = axios.create({
+export const apiRequest = create({
   timeout: 30 * 1000,
   baseURL: process.env.GFW_API
 });
 
-export const apiAuthRequest = axios.create({
+export const apiAuthRequest = create({
   timeout: 30 * 1000,
   baseURL: process.env.GFW_API,
   headers: {
@@ -14,13 +14,13 @@ export const apiAuthRequest = axios.create({
   }
 });
 
-export const cartoRequest = axios.create({
+export const cartoRequest = create({
   timeout: 30 * 1000,
   baseURL: process.env.CARTO_API
 });
 
 export const cancelToken = () => CancelToken.source();
 
-export default axios.create({
+export default create({
   timeout: 30 * 1000
 });

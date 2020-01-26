@@ -1,9 +1,9 @@
 import { fetchFiresAlerts, fetchFiresLatest } from 'services/alerts';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 export default ({ params }) =>
-  axios.all([fetchFiresAlerts(params), fetchFiresLatest(params)]).then(
-    axios.spread((alerts, latest) => {
+  all([fetchFiresAlerts(params), fetchFiresLatest(params)]).then(
+    spread((alerts, latest) => {
       const { data } = alerts.data;
       return { alerts: data, latest } || {};
     })
