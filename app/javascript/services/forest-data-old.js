@@ -185,7 +185,17 @@ export const getExtent = ({
 }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${NEW_SQL_QUERIES.extent}`
     .replace('{extentYear}', getExtentYear(extentYear))
-    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        iso: adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ...params
+      })
+    );
 
   if (download) {
     return {
