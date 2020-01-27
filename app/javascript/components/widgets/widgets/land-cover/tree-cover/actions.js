@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getExtent } from 'services/analysis-cached';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getExtent(params),
@@ -48,3 +48,22 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = params => {
+  const urlArr =
+    params.forestType || params.landCategory
+      ? [getExtent({ ...params, download: true })]
+      : [];
+
+  return urlArr.concat([
+    getExtent({
+      ...params,
+      forestType: null,
+      landCategory: null,
+      download: true
+    }),
+    getExtent({ ...params, forestType: 'plantations', download: true })
+  ]);
+};
+
+export default getData;

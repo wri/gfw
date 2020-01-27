@@ -1,7 +1,7 @@
 import { getExtent } from 'services/analysis-cached';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getExtent({ ...params, forestType: '' }),
@@ -40,3 +40,18 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = params => [
+  getExtent({ ...params, forestType: '', download: true }),
+  getExtent({ ...params, download: true }),
+  getExtent({
+    ...params,
+    forestType:
+      params.forestType === 'primary_forest'
+        ? 'plantations'
+        : params.forestType,
+    download: true
+  })
+];
+
+export default getData;

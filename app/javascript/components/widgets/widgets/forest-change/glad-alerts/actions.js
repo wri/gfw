@@ -1,7 +1,7 @@
 import { fetchGladAlerts, fetchGLADLatest } from 'services/glad';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
     axios.spread((alerts, latest) => {
       let data = {};
@@ -19,3 +19,9 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = params => [
+  fetchGladAlerts({ ...params, download: true })
+];
+
+export default getData;

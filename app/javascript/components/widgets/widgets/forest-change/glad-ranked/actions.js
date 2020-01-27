@@ -2,7 +2,7 @@ import { fetchGladAlerts, fetchGLADLatest } from 'services/glad';
 import { getExtentGrouped } from 'services/analysis-cached';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       fetchGladAlerts({ ...params, grouped: true }),
@@ -25,3 +25,10 @@ export default ({ params }) =>
           : {};
       })
     );
+
+export const getDataURL = params => [
+  fetchGladAlerts({ ...params, download: true }),
+  getExtentGrouped({ ...params, download: true })
+];
+
+export default getData;

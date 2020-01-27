@@ -342,6 +342,7 @@ export const getWidgetsProps = createStructuredSelector({
   allLocation: selectAllLocation,
   location: selectLocation,
   locationType: selectLocationType,
+  parentLocationData: getParentLocationData,
   locationData: getActiveLocationData,
   locationObject: getLocationObject,
   locationName: getLocationName,

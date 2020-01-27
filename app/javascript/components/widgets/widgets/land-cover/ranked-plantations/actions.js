@@ -4,7 +4,7 @@ import {
 } from 'services/analysis-cached';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getExtentGrouped(params),
@@ -26,3 +26,14 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = params => [
+  getExtentGrouped({ ...params, download: true }),
+  getAreaIntersectionGrouped({
+    ...params,
+    forestType: 'plantations',
+    download: true
+  })
+];
+
+export default getData;

@@ -1,7 +1,7 @@
 import { getExtent, getAreaIntersection } from 'services/analysis-cached';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getExtent(params),
@@ -26,3 +26,10 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = params => [
+  getExtent({ ...params, download: true }),
+  getAreaIntersection({ ...params, forestType: 'plantations', download: true })
+];
+
+export default getData;
