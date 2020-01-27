@@ -354,10 +354,7 @@ class WidgetHeader extends PureComponent {
           {downloadLink && this.renderDownloadButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
-            {process.env.FEATURE_ENV === 'staging' &&
-              !simple &&
-              getDataURL &&
-              this.renderDownloadButton()}
+            {!simple && getDataURL && this.renderDownloadButton()}
             {!simple && this.renderShareButton()}
           </div>
         </div>
