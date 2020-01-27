@@ -7,7 +7,7 @@ import chroma from 'chroma-js';
 import { getDatasetsProvider } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
 
-import { reduceParams, reduceSqlParams, getMaxRValue } from './datasets-utils';
+import { reduceParams, reduceSqlParams } from './datasets-utils';
 import decodeLayersConfig from './datasets-decode-config';
 import decodeLayersClusters from './datasets-decode-clusters';
 
@@ -188,7 +188,6 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                           })
                         }))
                       }),
-                      // parseTileData: getMaxRValue,
                       // decode params selector config
                       ...(decode_config && {
                         decodeParamsSelectorConfig: decode_config.map(p => ({

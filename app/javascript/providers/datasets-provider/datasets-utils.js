@@ -47,7 +47,7 @@ export const reduceSqlParams = params => {
   }, {});
 };
 
-export const getMaxRValue = (imgEl) => {
+export const getMaxRValue = imgEl => {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext && canvas.getContext('2d');
   let data = null;
@@ -85,8 +85,6 @@ export const getMaxRValue = (imgEl) => {
         }
       }
     }
-
-    console.log(rMax, rMin);
 
     return {
       rMax,
