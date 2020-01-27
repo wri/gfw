@@ -1,4 +1,4 @@
-import { fetchGladAlerts, fetchGLADLatest } from 'services/glad';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
 import { getExtentGrouped } from 'services/forest-data-old';
 import axios from 'axios';
 
