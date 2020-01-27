@@ -43,9 +43,9 @@ export default {
   },
   // whitelists for options
   options: {
-    weeks: [13, 26, 52]
-    // forestTypes: true,
-    // landCategories: true
+    weeks: [13, 26, 52],
+    forestTypes: true,
+    landCategories: true
   },
   // custom whitelists for locations
   whitelistType: 'glad',

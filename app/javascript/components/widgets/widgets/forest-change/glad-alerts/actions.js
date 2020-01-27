@@ -1,4 +1,4 @@
-import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/glad';
 import axios from 'axios';
 
 export default ({ params }) =>

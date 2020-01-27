@@ -8,7 +8,9 @@ export default {
     thresholds: true,
     units: ['%', 'ha'],
     extentYears: true,
-    weeks: true
+    weeks: true,
+    forestTypes: true,
+    landCategories: true
   },
   metaKey: 'widget_deforestation_alert_location',
   colors: 'loss',

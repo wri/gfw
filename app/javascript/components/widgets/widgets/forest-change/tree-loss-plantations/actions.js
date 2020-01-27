@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getLoss } from 'services/forest-data-old';
+import { getLoss } from 'services/analysis-cached';
 
 export default ({ params }) =>
   axios

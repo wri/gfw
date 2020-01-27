@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux-tools';
 import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { getNonGlobalDatasets } from 'services/forest-data-old';
+import { getNonGlobalDatasets } from 'services/analysis-cached';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');

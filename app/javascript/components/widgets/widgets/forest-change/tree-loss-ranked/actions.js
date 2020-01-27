@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getLossGrouped, getExtentGrouped } from 'services/forest-data-old';
+import { getLossGrouped, getExtentGrouped } from 'services/analysis-cached';
 
 export default ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};

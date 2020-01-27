@@ -2,9 +2,6 @@ import request from 'utils/request';
 import moment from 'moment';
 
 const REQUEST_URL = process.env.GFW_API;
-const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
-const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
-const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
 const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
 const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
@@ -23,26 +20,14 @@ const QUERIES = {
     'SELECT year, week FROM data GROUP BY year, week ORDER BY year DESC, week DESC LIMIT 1'
 };
 
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
 const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
-
-export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if ((adm0 && grouped) || adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  if ((adm1 && grouped) || adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  }
-  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
-    QUERIES.gladIntersectionAlerts
-  }`
-    .replace('{location}', getLocation(adm0, adm1, adm2))
-    .replace('{polyname}', 'admin');
-  return request.get(url, 3600, 'gladRequest');
-};
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
@@ -132,33 +117,3 @@ export const fetchLatestDate = url =>
       })
     );
   });
-
-// Latest Dates for Alerts
-const lastFriday = moment()
-  .day(-2)
-  .format('YYYY-MM-DD');
-
-export const fetchGLADLatest = () => {
-  const url = `${process.env.GFW_API}/glad-alerts/latest`;
-  return request
-    .get(url)
-    .then(response => {
-      const { date } = response.data.data[0].attributes;
-
-      return {
-        attributes: { updatedAt: date },
-        id: null,
-        type: 'glad-alerts'
-      };
-    })
-    .catch(error => {
-      console.error('Error in gladRequest', error);
-      return new Promise(resolve =>
-        resolve({
-          attributes: { updatedAt: lastFriday },
-          id: null,
-          type: 'glad-alerts'
-        })
-      );
-    });
-};

@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import { getExtent, getLoss } from 'services/forest-data-old';
+import { getExtent, getLoss } from 'services/analysis-cached';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
