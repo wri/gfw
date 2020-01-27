@@ -28,12 +28,13 @@ const getLocation = (adm0, adm1, adm2) =>
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2 }) => {
+export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
   let glad_summary_table = GLAD_ISO_DATASET;
-  if (adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  } else if (adm1) {
+  if ((adm0 && grouped) || adm1) {
     glad_summary_table = GLAD_ADM1_DATASET;
+  }
+  if ((adm1 && grouped) || adm2) {
+    glad_summary_table = GLAD_ADM2_DATASET;
   }
   const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
     QUERIES.gladIntersectionAlerts
