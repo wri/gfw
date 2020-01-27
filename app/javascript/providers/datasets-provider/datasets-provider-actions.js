@@ -191,6 +191,26 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                           })
                         }))
                       }),
+                      // decode params selector config
+                      ...(decode_config && {
+                        decodeParamsSelectorConfig: decode_config.map(p => ({
+                          ...p,
+                          ...(p.key.includes('thresh') && {
+                            sentence:
+                              'Displaying {name} with {selector} canopy density',
+                            options: thresholdOptions
+                          }),
+                          ...(p.min &&
+                            p.max && {
+                            options: Array.from(
+                              Array(p.max - p.min + 1).keys()
+                            ).map(o => ({
+                              label: o + p.min,
+                              value: o + p.min
+                            }))
+                          })
+                        }))
+                      }),
                       // params for sql query
                       ...(sqlParams && {
                         sqlParams
