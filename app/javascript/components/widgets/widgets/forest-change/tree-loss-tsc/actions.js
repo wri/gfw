@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getExtent, getLoss } from 'services/forest-data-old';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getLoss({ ...params, forestType: 'tsc', tsc: true }),
@@ -19,3 +19,10 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = params => [
+  getLoss({ ...params, forestType: 'tsc', tsc: true, download: true }),
+  getExtent({ ...params, download: true })
+];
+
+export default getData;

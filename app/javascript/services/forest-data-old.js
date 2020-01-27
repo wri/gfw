@@ -2,6 +2,7 @@ import request from 'utils/request';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import { getIndicator } from 'utils/strings';
+import snakeCase from 'lodash/snakeCase';
 
 const ADM0_DATASET = process.env.GADM36_ADM0_DATASET;
 const ADM1_DATASET = process.env.GADM36_ADM1_DATASET;
@@ -137,30 +138,73 @@ export const getWHEREQuery = params => {
 };
 
 // summed loss for single location
-export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
+export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
   const { loss, lossTsc } = NEW_SQL_QUERIES;
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+
+  if (download) {
+    return {
+      name: 'treecover_loss__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
   return request.get(url);
 };
 
 // disaggregated loss for child of location
-export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
+export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
     NEW_SQL_QUERIES.lossGrouped
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
+  if (download) {
+    return {
+      name: 'treecover_loss_by_region__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
   return request.get(url);
 };
 
 // summed extent for single location
-export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
+export const getExtent = ({
+  adm0,
+  adm1,
+  adm2,
+  extentYear,
+  download,
+  forestType,
+  landCategory,
+  ...params
+}) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${NEW_SQL_QUERIES.extent}`
     .replace('{extentYear}', getExtentYear(extentYear))
-    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        iso: adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ...params
+      })
+    );
+
+  if (download) {
+    return {
+      name: `treecover_extent_${extentYear}${
+        forestType ? `_in_${forestType}` : ''
+      }${landCategory ? `_in_${landCategory}` : ''}__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url);
 };
@@ -171,6 +215,7 @@ export const getExtentGrouped = ({
   adm1,
   adm2,
   extentYear,
+  download,
   ...params
 }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
@@ -179,6 +224,13 @@ export const getExtentGrouped = ({
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+
+  if (download) {
+    return {
+      name: `treecover_extent_${extentYear}_by_region__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
 
   return request.get(url);
 };
@@ -190,8 +242,13 @@ export const getAreaIntersection = ({
   adm2,
   forestType,
   landCategory,
+  download,
   ...params
 }) => {
+  const intersectionPolyname = forestTypes
+    .concat(landCategories)
+    .find(o => [forestType, landCategory].includes(o.value));
+
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     NEW_SQL_QUERIES.areaIntersection
   }`
@@ -209,6 +266,13 @@ export const getAreaIntersection = ({
       })
     );
 
+  if (download) {
+    return {
+      name: `treecover_extent_in_${snakeCase(intersectionPolyname.label)}__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
   return request.get(url);
 };
 
@@ -219,8 +283,13 @@ export const getAreaIntersectionGrouped = ({
   adm2,
   forestType,
   landCategory,
+  download,
   ...params
 }) => {
+  const intersectionPolyname = forestTypes
+    .concat(landCategories)
+    .find(o => [forestType, landCategory].includes(o.value));
+
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
     NEW_SQL_QUERIES.areaIntersection
   }`
@@ -238,24 +307,49 @@ export const getAreaIntersectionGrouped = ({
       })
     );
 
+  if (download) {
+    return {
+      name: `treecover_extent_in_${snakeCase(
+        intersectionPolyname.label
+      )}_by_region__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
   return request.get(url);
 };
 
 // summed gain for single location
-export const getGain = ({ adm0, adm1, adm2, ...params }) => {
+export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     NEW_SQL_QUERIES.gain
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+
+  if (download) {
+    return {
+      name: 'treecover_gain_2000-2012__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
   return request.get(url);
 };
 
 // disaggregated gain for child of location
-export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
+export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
     NEW_SQL_QUERIES.gainGrouped
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+
+  if (download) {
+    return {
+      name: 'treecover_gain_2000-2012_by_region__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
   return request.get(url);
 };
 

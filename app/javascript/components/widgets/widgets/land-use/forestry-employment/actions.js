@@ -1,3 +1,8 @@
 import { getFAOEcoLive } from 'services/forest-data';
 
-export default () => getFAOEcoLive().then(response => response.data.rows);
+export const getData = () =>
+  getFAOEcoLive().then(response => response.data.rows);
+
+export const getDataURL = () => [getFAOEcoLive({ download: true })];
+
+export default getData;

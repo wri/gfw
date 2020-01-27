@@ -55,9 +55,7 @@ class ModalContactUs extends PureComponent {
             <div className="contact-form">
               <p className="subtitle">
                 For media inquiries, email{' '}
-                <a href="mailto:katie.lyons@wri.org">
-                  katie.lyons@wri.org
-                </a>
+                <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
               </p>
               <Contact onSubmit={this.handleSubmit} />
             </div>

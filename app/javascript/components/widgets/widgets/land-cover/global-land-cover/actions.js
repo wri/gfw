@@ -1,7 +1,14 @@
-import { getGlobalLandCover } from 'services/forest-data';
+import {
+  getGlobalLandCover,
+  getGlobalLandCoverURL
+} from 'services/forest-data';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   getGlobalLandCover(params).then(response => {
     const data = response.data.rows;
     return data;
   });
+
+export const getDataURL = params => [getGlobalLandCoverURL({ ...params })];
+
+export default getData;

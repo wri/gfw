@@ -13,9 +13,7 @@ const QUERIES = {
   gladIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  firesGrouped:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
+    "SELECT iso, adm1, adm2, week as alert__week, year as alert__year, alerts as alert__count, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
@@ -44,7 +42,7 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
   return request.get(url, 3600, 'gladRequest');
 };
 
-export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
+export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
   if (adm2) {
     fires_summary_table = FIRES_ADM2_DATASET;
@@ -57,10 +55,35 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
     .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
-  return request.get(url, 3600, 'firesRequest');
+
+  if (download) {
+    return {
+      name: 'viirs_fire_alerts__count',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return request.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: d.alert__week,
+        year: d.alert__year,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
 };
 
-export const fetchFiresAlertsGrouped = ({ adm0, adm1, adm2, dataset }) => {
+export const fetchFiresAlertsGrouped = ({
+  adm0,
+  adm1,
+  adm2,
+  dataset,
+  download
+}) => {
   let fires_summary_table = FIRES_ADM1_DATASET;
   if (adm1) {
     fires_summary_table = FIRES_ADM2_DATASET;
@@ -71,7 +94,26 @@ export const fetchFiresAlertsGrouped = ({ adm0, adm1, adm2, dataset }) => {
     .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
-  return request.get(url, 3600, 'firesRequest');
+
+  if (download) {
+    return {
+      name: 'viirs_fire_alerts__count',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return request.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: d.alert__week,
+        year: d.alert__year,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
 };
 
 export const fetchFiresLatest = ({ adm1, adm2 }) => {

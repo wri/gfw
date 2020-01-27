@@ -1,6 +1,6 @@
 import { getExtentGrouped } from 'services/forest-data-old';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   getExtentGrouped(params).then(response => {
     const { data } = response.data;
     let mappedData = {};
@@ -24,3 +24,9 @@ export default ({ params }) =>
     }
     return mappedData;
   });
+
+export const getDataURL = params => [
+  getExtentGrouped({ ...params, download: true })
+];
+
+export default getData;
