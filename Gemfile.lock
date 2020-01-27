@@ -1107,7 +1107,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
-    useragent (0.16.10)
     vcr (4.0.0)
     web-console (3.7.0)
       actionview (>= 5.0)
@@ -1173,7 +1172,6 @@ DEPENDENCIES
   typhoeus
   uglifier (~> 4.1.19)
   unf
-  useragent
   vcr
   web-console (~> 3.7)
   webpacker (~> 3.5.5)

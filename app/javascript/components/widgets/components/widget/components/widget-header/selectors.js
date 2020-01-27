@@ -3,6 +3,7 @@ import moment from 'moment';
 import qs from 'query-string';
 import { isTouch } from 'utils/browser';
 import { SCREEN_L } from 'utils/constants';
+import { translateText } from 'utils/transifex';
 
 export const selectModalOpen = state => state.modalMeta && state.modalMeta.open;
 export const selectModalClosing = state =>
@@ -28,7 +29,12 @@ export const getParsedTitle = createSelector(
   [selectTitle, selectLocationName],
   (title, locationName) => {
     const titleString = typeof title === 'string' ? title : title.default;
-    return titleString && titleString.replace('{location}', locationName || '');
+    const translatedTitle = translateText(titleString);
+    const translatedLocationName = translateText(locationName);
+    return (
+      translatedTitle &&
+      translatedTitle.replace('{location}', translatedLocationName || '')
+    );
   }
 );
 
