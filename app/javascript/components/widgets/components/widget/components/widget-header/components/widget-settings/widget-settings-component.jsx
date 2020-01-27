@@ -148,10 +148,18 @@ class WidgetSettings extends PureComponent {
                   onSettingsChange({
                     value: {
                       forestType: (option && option.value) || '',
-                      ...(!!(option && option.value === 'ifl') && {
+                      ...(!!(
+                        option &&
+                        option.value === 'ifl' &&
+                        settings.extentYear
+                      ) && {
                         extentYear: settings.ifl === '2016' ? 2010 : 2000
                       }),
-                      ...(!!(option && option.value === 'primary_forest') && {
+                      ...(!!(
+                        option &&
+                        option.value === 'primary_forest' &&
+                        settings.extentYear
+                      ) && {
                         extentYear: 2000
                       })
                     },
