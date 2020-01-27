@@ -1,6 +1,5 @@
 import request from 'utils/request';
 import moment from 'moment';
-import axios from 'axios';
 
 const REQUEST_URL = process.env.GFW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -21,6 +20,22 @@ const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
+
+export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
+  let glad_summary_table = GLAD_ISO_DATASET;
+  if ((adm0 && grouped) || adm1) {
+    glad_summary_table = GLAD_ADM1_DATASET;
+  }
+  if ((adm1 && grouped) || adm2) {
+    glad_summary_table = GLAD_ADM2_DATASET;
+  }
+  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
+    QUERIES.gladIntersectionAlerts
+  }`
+    .replace('{location}', getLocation(adm0, adm1, adm2))
+    .replace('{polyname}', 'admin');
+  return request.get(url, 3600, 'gladRequest');
+};
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
@@ -43,7 +58,7 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
     };
   }
 
-  return axios.get(url).then(response => ({
+  return request.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -82,7 +97,7 @@ export const fetchFiresAlertsGrouped = ({
     };
   }
 
-  return axios.get(url).then(response => ({
+  return request.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -139,11 +154,6 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
     });
 };
 
-// Latest Dates for Alerts
-const lastFriday = moment()
-  .day(-2)
-  .format('YYYY-MM-DD');
-
 export const fetchLatestDate = url =>
   request.get(url, 3600, 'gladRequest').catch(error => {
     console.error('Error in latest request:', error);
@@ -160,26 +170,17 @@ export const fetchLatestDate = url =>
     );
   });
 
-export const fetchGLADLatest = params => {
-  const { adm1, adm2 } = params || {};
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if (adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  } else if (adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
-    QUERIES.alertsLatest
-  }`;
+// Latest Dates for Alerts
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
+export const fetchGLADLatest = () => {
+  const url = `${process.env.GFW_API}/glad-alerts/latest`;
   return request
-    .get(url, 3600, 'gladRequestLatest')
+    .get(url)
     .then(response => {
-      const { week, year } = response.data.data[0];
-      const date = moment()
-        .year(year)
-        .day('Monday')
-        .week(week)
-        .format('YYYY-MM-DD');
+      const { date } = response.data.data[0].attributes;
 
       return {
         attributes: { updatedAt: date },

@@ -1,4 +1,4 @@
-import { getExtentGrouped } from 'services/analysis-cached';
+import { getExtentGrouped } from 'services/forest-data-old';
 
 export const getData = ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};

@@ -475,8 +475,7 @@ export const getAreaIntersectionGrouped = ({
     adm0,
     adm1,
     adm2,
-    grouped: true,
-    summary: true
+    grouped: true
   })}${SQL_QUERIES.areaIntersection}`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace(/{intersection}/g, intersectionPolyname.tableKey)

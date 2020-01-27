@@ -1,5 +1,5 @@
-import { fetchGladAlerts, fetchGLADLatest } from 'services/glad';
-import { getExtentGrouped } from 'services/analysis-cached';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { getExtentGrouped } from 'services/forest-data-old';
 import axios from 'axios';
 
 export const getData = ({ params }) =>

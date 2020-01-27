@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getExtent, getLoss } from 'services/analysis-cached';
+import { getExtent, getLoss } from 'services/forest-data-old';
 
 export const getData = ({ params }) =>
   axios
