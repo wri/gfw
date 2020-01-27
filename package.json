@@ -194,6 +194,7 @@
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
+    "ua-parser-js": "^0.7.21",
     "util": "^0.12.1",
     "vizzuality-components": "^3.0.0",
     "wri-json-api-serializer": "^1.0.1"
