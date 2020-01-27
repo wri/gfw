@@ -11,7 +11,6 @@
     "build": "./node_modules/bower/bin/bower install",
     "start": "./bin/server",
     "start:prod": "RAILS_ENV=production_local NODE_ENV=production yarn prod-server",
-    "redis": "redis-server /usr/local/etc/redis.conf",
     "prod-server": "bundle exec foreman start -f Procfile",
     "ci": "yarn test-ci",
     "lint": "eslint --ext js --ext jsx",

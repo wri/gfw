@@ -4,12 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :check_browser, if: proc { Rails.env.production? }
   before_action :check_production
-  before_action :cache_keys, if: proc { Rails.env.production? }
   before_action :set_metadata
-
-  def cache_keys
-    @cache_keys = $redis.keys('*')
-  end
 
   def check_production
     @is_production = Rails.env.production? || Rails.env.production_local?
