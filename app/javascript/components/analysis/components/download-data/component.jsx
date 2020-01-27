@@ -14,7 +14,9 @@ class DownloadData extends PureComponent {
       <ul className="download-list">
         {downloads.urls.map(l => (
           <li key={l.url}>
-            <a href={l.url}>{l.label}</a>
+            <a href={l.url} target="_blank">
+              {l.label}
+            </a>
           </li>
         ))}
       </ul>
