@@ -10,8 +10,13 @@ const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
 const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
 
 const QUERIES = {
+  gladIntersectionAlerts:
+    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week as alert__week, year as alert__year, alerts as alert__count, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
+  viirsAlerts: '{location}?group=true&period={period}&thresh=0',
+  firesStats:
+    '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
   alertsLatest:
     'SELECT year, week FROM data GROUP BY year, week ORDER BY year DESC, week DESC LIMIT 1'
 };
