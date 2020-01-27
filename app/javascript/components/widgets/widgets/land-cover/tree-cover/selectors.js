@@ -16,7 +16,11 @@ export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
   (whitelist, name) => {
     const hasPlantations =
-      name === 'global' ? true : whitelist && whitelist.includes('plantations');
+      name === 'global'
+        ? true
+        : whitelist &&
+          whitelist.annual &&
+          whitelist.annual.includes('plantations');
     return hasPlantations;
   }
 );
@@ -109,7 +113,7 @@ export const parseSentence = createSelector(
     const params = {
       year: settings.extentYear,
       location: locationName || 'global',
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator: indicator && indicator.label,
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%',
       value:

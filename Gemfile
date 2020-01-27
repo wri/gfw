@@ -12,7 +12,6 @@ gem 'sprockets-rails', '2.3.3'
 gem 'uglifier', '~> 4.1.19'
 gem 'httparty'
 gem 'typhoeus'
-gem 'useragent'
 gem 'carrierwave'
 gem 'fog'
 gem 'ffi',  '~> 1.9.24'
@@ -38,7 +37,7 @@ gem 'webpacker', '~> 3.5.5'
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
 gem 'responders', '~> 2.0'
 
-gem 'nokogiri', '~> 1.10.4'
+gem 'nokogiri', '~> 1.10.5'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8.1'

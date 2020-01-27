@@ -1,6 +1,6 @@
 export default {
   widget: 'gladBiodiversity',
-  title: 'Deforestation Alerts in Biodiversity Areas in {location}',
+  title: 'Deforestation alerts in biodiversity areas in {location}',
   categories: ['biodiversity'],
   options: {
     landCategories: ['kba', 'aze', 'tiger_cl', 'wdpa'],

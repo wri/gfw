@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { getLossGrouped, getExtentGrouped } from 'services/forest-data';
+import { getLossGrouped, getExtentGrouped } from 'services/forest-data-old';
 
-export default ({ params }) => {
+export const getData = ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};
   const parentLocation = {
     adm0: adm0 && !adm1 ? null : adm0,
@@ -33,3 +33,18 @@ export default ({ params }) => {
       })
     );
 };
+
+export const getDataURL = params => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const parentLocation = {
+    adm0: adm0 && !adm1 ? null : adm0,
+    adm1: adm1 && !adm2 ? null : adm1,
+    adm2: null
+  };
+  return [
+    getLossGrouped({ ...rest, ...parentLocation, download: true }),
+    getExtentGrouped({ ...rest, ...parentLocation, download: true })
+  ];
+};
+
+export default getData;

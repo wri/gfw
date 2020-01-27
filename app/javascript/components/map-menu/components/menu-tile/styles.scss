@@ -39,10 +39,16 @@ $map-menu-items-size: rem(76px);
       align-items: center;
       flex-direction: column;
       margin: auto;
+      padding: 5px;
+      overflow: hidden;
 
       @media screen and (min-width: $screen-m) {
         height: $map-menu-items-size;
         width: $map-menu-items-size;
+      }
+
+      span {
+        line-height: 1.2;
       }
     }
 

@@ -3,7 +3,7 @@ import sortBy from 'lodash/sortBy';
 
 import { getFAOEcoLive } from 'services/forest-data';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   getFAOEcoLive().then(response => {
     const { rows } = response.data;
     const { adm0, year } = params;
@@ -32,3 +32,7 @@ export default ({ params }) =>
     };
     return payload;
   });
+
+export const getDataURL = () => [getFAOEcoLive({ download: true })];
+
+export default getData;

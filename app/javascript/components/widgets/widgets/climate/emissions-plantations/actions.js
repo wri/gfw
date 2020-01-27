@@ -1,9 +1,9 @@
-import { getLoss } from 'services/forest-data';
+import { getLoss } from 'services/forest-data-old';
 import axios from 'axios';
 import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([getLoss(params), getLoss({ ...params, forestType: 'plantations' })])
     .then(
@@ -21,3 +21,10 @@ export default ({ params }) =>
         return { adminData, plantData, years: range(2013, maxYear + 1) };
       })
     );
+
+export const getDataURL = params => [
+  getLoss({ ...params, download: true }),
+  getLoss({ ...params, indicator: 'plantations', download: true })
+];
+
+export default getData;

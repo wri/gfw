@@ -36,6 +36,7 @@ class MapLegend extends Component {
       onToggleLayer,
       onChangeLayer,
       onChangeParam,
+      onChangeDecodeParam,
       onChangeInfo,
       loading,
       className,
@@ -71,12 +72,13 @@ class MapLegend extends Component {
               } =
                   lg || {};
 
-              const activeLayer =
-                  (layers && layers.find(l => l.active)) || [];
+              const activeLayer = layers && layers.find(l => l.active);
               const {
                 params,
-                moreInfo,
                 paramsSelectorConfig,
+                decodeParams,
+                decodeParamsSelectorConfig,
+                moreInfo,
                 timelineParams
               } =
                   activeLayer || {};
@@ -144,6 +146,29 @@ class MapLegend extends Component {
                             />
                           ) : null)
                       )}
+                  {activeLayer &&
+                      decodeParamsSelectorConfig &&
+                      decodeParams &&
+                      decodeParamsSelectorConfig.map(
+                        paramConfig =>
+                          (paramConfig.options ? (
+                            <SentenceSelector
+                              key={`${activeLayer.name}-${paramConfig.key}`}
+                              name={name}
+                              className="param-selector"
+                              {...paramConfig}
+                              value={
+                                decodeParams[paramConfig.key] ||
+                                paramConfig.default
+                              }
+                              onChange={e =>
+                                onChangeDecodeParam(activeLayer, {
+                                  [paramConfig.key]: parseInt(e, 10)
+                                })
+                              }
+                            />
+                          ) : null)
+                      )}
                   {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
                       <LayerSelectorMenu
@@ -203,6 +228,7 @@ MapLegend.propTypes = {
   onChangeThreshold: PropTypes.func,
   onToggleLayer: PropTypes.func,
   onChangeParam: PropTypes.func,
+  onChangeDecodeParam: PropTypes.func,
   onChangeLayer: PropTypes.func,
   onChangeInfo: PropTypes.func,
   layers: PropTypes.array

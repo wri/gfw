@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
-import lowerCase from 'lodash/lowerCase';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
@@ -268,10 +267,14 @@ export const filterWidgetsByLocationWhitelist = createSelector(
   (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
-      const { whitelists } = w.config;
-      if (!whitelists) return true;
+      const { whitelists, blacklists } = w.config;
+      if (!whitelists && !blacklists) return true;
       const whitelist = whitelists.adm0;
+      const blacklist = blacklists && blacklists.adm1;
       if (!whitelist) return true;
+      if (blacklist) {
+        if (blacklist.includes(location.adm1)) return false;
+      }
       return whitelist.includes(location.adm0);
     });
   }
@@ -279,15 +282,16 @@ export const filterWidgetsByLocationWhitelist = createSelector(
 
 export const filterWidgetsByIndicatorWhitelist = createSelector(
   [filterWidgetsByLocationWhitelist, selectWhitelists],
-  (widgets, indicatorWhitelist) => {
+  (widgets, indicatorWhitelists) => {
     if (!widgets) return null;
 
     return widgets.filter(w => {
+      const { whitelistType } = w.config;
       const { indicators } = w.config.whitelists || {};
       if (!indicators) return true;
-      const totalIndicators = concat(indicators, indicatorWhitelist).length;
-      const reducedIndicators = uniq(concat(indicators, indicatorWhitelist))
-        .length;
+      const whitelist = indicatorWhitelists[whitelistType || 'annual'];
+      const totalIndicators = concat(indicators, whitelist).length;
+      const reducedIndicators = uniq(concat(indicators, whitelist)).length;
       return totalIndicators !== reducedIndicators;
     });
   }
@@ -301,12 +305,13 @@ export const parseWidgetsWithOptions = createSelector(
     selectWhitelists,
     selectLocation
   ],
-  (widgets, options, polynameWhitelist, location) => {
+  (widgets, options, polynameWhitelists, location) => {
     if (!widgets) return null;
 
     return widgets.map(w => {
       const optionsConfig = w.config.options;
       const optionKeys = optionsConfig && Object.keys(optionsConfig);
+
       return {
         ...w,
         ...(optionsConfig && {
@@ -315,6 +320,13 @@ export const parseWidgetsWithOptions = createSelector(
             const configWhitelist = optionsConfig[optionKey];
             let filteredOptions = options[optionKey];
             if (Array.isArray(configWhitelist)) {
+              // USLC widget exception: reversing options without using Arr.reverse()
+              if (configWhitelist.includes('changes_only')) {
+                filteredOptions = filteredOptions.reduce(
+                  (acc, num) => [num, ...acc],
+                  []
+                );
+              }
               filteredOptions = filteredOptions
                 ? filteredOptions.filter(o => configWhitelist.includes(o.value))
                 : optionsConfig[optionKey].map(o => ({
@@ -324,26 +336,16 @@ export const parseWidgetsWithOptions = createSelector(
             }
 
             if (polynamesOptions.includes(optionKey)) {
+              const whitelist = polynameWhitelists[w.whitelistType || 'annual'];
               // some horrible an inexcusable filters for forest types and land categories
               filteredOptions =
                 location.type === 'global'
                   ? filteredOptions.filter(o => o.global)
                   : filteredOptions;
               filteredOptions =
-                polynameWhitelist && polynameWhitelist.length
-                  ? filteredOptions.filter(o =>
-                    polynameWhitelist.includes(o.value)
-                  )
+                whitelist && whitelist.length
+                  ? filteredOptions.filter(o => whitelist.includes(o.value))
                   : filteredOptions;
-              filteredOptions = filteredOptions.map(i => ({
-                ...i,
-                metaKey:
-                  i.metaKey === 'primary_forest'
-                    ? `${lowerCase(location.adm0)}_${i.metaKey}${
-                      location.adm0 === 'IDN' ? 's' : ''
-                    }`
-                    : i.metaKey
-              }));
             }
 
             return {
@@ -364,6 +366,7 @@ export const getWidgetsProps = createStructuredSelector({
   allLocation: selectAllLocation,
   location: selectLocation,
   locationType: selectLocationType,
+  parentLocationData: getParentLocationData,
   locationData: getActiveLocationData,
   locationObject: getLocationObject,
   locationName: getLocationName,

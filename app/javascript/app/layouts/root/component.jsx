@@ -34,7 +34,8 @@ const PageComponent = universal(
 
 class App extends PureComponent {
   componentDidMount() {
-    handlePageTrack();
+    const isSearch = window.location.pathname === '/search';
+    handlePageTrack(isSearch);
   }
 
   render() {

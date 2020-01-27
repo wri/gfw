@@ -27,7 +27,18 @@ import MapControls from './components/map-controls';
 
 import './styles.scss';
 
-class Page extends PureComponent {
+class DashboardsPage extends PureComponent {
+  static propTypes = {
+    showMapMobile: PropTypes.bool,
+    closeMobileMap: PropTypes.func.isRequired,
+    links: PropTypes.array.isRequired,
+    widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    noWidgetsMessage: PropTypes.string,
+    handleCategoryChange: PropTypes.func,
+    widgets: PropTypes.array,
+    activeWidgetSlug: PropTypes.string
+  };
+
   renderMap = () => {
     const { showMapMobile, closeMobileMap } = this.props;
 
@@ -108,15 +119,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  showMapMobile: PropTypes.bool,
-  closeMobileMap: PropTypes.func.isRequired,
-  links: PropTypes.array.isRequired,
-  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  noWidgetsMessage: PropTypes.string,
-  handleCategoryChange: PropTypes.func,
-  widgets: PropTypes.array,
-  activeWidgetSlug: PropTypes.string
-};
-
-export default Page;
+export default DashboardsPage;

@@ -40,7 +40,6 @@ export const getStatements = createSelector(
   (settings, type, datasets, indicator) => {
     if (!settings) return '';
     const { extentYear, threshold } = settings;
-
     const statements = compact([
       extentYear
         ? translateText('{extentYear} tree cover extent', { extentYear })
@@ -53,11 +52,16 @@ export const getStatements = createSelector(
           'these estimates do not take tree cover gain into account'
         )
         : null,
+      type === 'nlcd_landcover'
+        ? translateText(
+          '*raw NLCD categories have been re-classed to match IPCC categories'
+        )
+        : null,
       datasets && indicator
         ? translateText(
           '*{indicator} are available in {datasetsCount} countries only',
           {
-            indicator: indicator.label.toLowerCase(),
+            indicator: indicator.label,
             datasetsCount: datasets[indicator.value]
           }
         )
