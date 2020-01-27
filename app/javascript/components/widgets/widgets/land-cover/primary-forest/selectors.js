@@ -53,9 +53,8 @@ export const parseSentence = createSelector(
     const primaryData = parsedData.find(d => d.label === 'Primary Forest')
       .value;
     const primaryPercentage = primaryData && primaryData / totalExtent * 100;
-
     const indicatorLabel =
-      indicator && indicator.label ? indicator.label.toLowerCase() : null;
+      indicator && indicator.label ? indicator.label : null;
 
     const params = {
       location: `${locationName}'s`,

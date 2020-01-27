@@ -65,7 +65,7 @@ export const getWidgetOptions = createSelector(
         forestTypes: fTypes.map(f => ({
           ...f,
           label: f.label.includes('{iflYear}')
-            ? f.label.replace('{iflYear}', settings.ifl)
+            ? f.label.replace('{iflYear}', settings.ifl || f.default)
             : f.label
         }))
       })
@@ -193,6 +193,9 @@ export const getIndicator = createSelector(
     } else {
       label = forestType.label;
       value = forestType.value;
+    }
+    if (label !== 'Key Biodiversity Areas') {
+      label = label.toLowerCase();
     }
 
     return {

@@ -1,6 +1,6 @@
-import { getExtentGrouped } from 'services/forest-data';
+import { getExtentGrouped } from 'services/forest-data-old';
 
-export default ({ params }) => {
+export const getData = ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};
   const parentLocation = {
     adm0: adm0 && !adm1 ? null : adm0,
@@ -25,3 +25,15 @@ export default ({ params }) => {
     return mappedData;
   });
 };
+
+export const getDataURL = params => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const parentLocation = {
+    adm0: adm0 && !adm1 ? null : adm0,
+    adm1: adm1 && !adm2 ? null : adm1,
+    adm2: null
+  };
+  return [getExtentGrouped({ ...rest, ...parentLocation, download: true })];
+};
+
+export default getData;

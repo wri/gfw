@@ -7,7 +7,6 @@ import MediaQuery from 'react-responsive';
 import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
-import Newsletter from 'components/modals/newsletter';
 
 import wri from 'assets/logos/wri.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -22,25 +21,15 @@ import partners from 'data/partners.json';
 import './styles.scss';
 
 class Footer extends PureComponent {
+  static propTypes = {
+    setModalContactUsOpen: PropTypes.func
+  };
+
   render() {
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className="c-footer">
-            <div className="footer-subscribe">
-              <div className="row">
-                <div className="column small-12">
-                  <div className="footer-subscribe-wrapper">
-                    <Button
-                      onClick={() => this.props.setModalNewsletterOpen(true)}
-                      className="footer-subscribe-button"
-                    >
-                      STAY UPDATED
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="footer-main">
               <div className="row footer-links">
                 <div className="column small-12 medium-6">
@@ -110,10 +99,16 @@ class Footer extends PureComponent {
                 <div className="column small-12">
                   <div className="footer-contact-us">
                     <button
+                      className="contact-btn"
                       onClick={() => this.props.setModalContactUsOpen(true)}
                     >
                       CONTACT US
                     </button>
+                    <NavLink to="/subscribe">
+                      <Button className="subscribe-btn">
+                        Subscribe to the GFW newsletter
+                      </Button>
+                    </NavLink>
                   </div>
                 </div>
               </div>
@@ -206,17 +201,11 @@ class Footer extends PureComponent {
                 </div>
               </div>
             </div>
-            <Newsletter />
           </div>
         )}
       </MediaQuery>
     );
   }
 }
-
-Footer.propTypes = {
-  setModalContactUsOpen: PropTypes.func,
-  setModalNewsletterOpen: PropTypes.func
-};
 
 export default Footer;

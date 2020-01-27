@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
@@ -27,10 +28,14 @@ const sectionComponents = {
   contact: Contact
 };
 
-class Page extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+class AboutPage extends PureComponent {
+  static propTypes = {
+    sections: PropTypes.object,
+    setModalVideoData: PropTypes.func.isRequired
+  };
+
   render() {
-    const { sections, setModalVideoData, setModalNewsletterOpen } = this.props;
+    const { sections, setModalVideoData } = this.props;
     return (
       <div className="l-about-page">
         <Cover
@@ -38,17 +43,12 @@ class Page extends PureComponent {
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         >
-          <div
-            className="subscribe-btn"
-            onClick={() => setModalNewsletterOpen(true)}
-            role="button"
-            tabIndex={0}
-          >
+          <Link className="subscribe-btn" to="/subscribe">
             <Button theme="square" className="subscribe-icon">
               <Icon icon={mailIcon} />
             </Button>
             <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
-          </div>
+          </Link>
         </Cover>
         <SubnavMenu
           className="about-links"
@@ -76,10 +76,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  sections: PropTypes.object.isRequired,
-  setModalVideoData: PropTypes.func.isRequired,
-  setModalNewsletterOpen: PropTypes.func
-};
-
-export default Page;
+export default AboutPage;

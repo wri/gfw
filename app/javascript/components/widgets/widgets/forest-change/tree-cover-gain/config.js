@@ -1,7 +1,7 @@
 export default {
   widget: 'treeCoverGain',
   title: {
-    global: 'Global Tree cover gain',
+    global: 'Global tree cover gain',
     initial: 'Tree cover gain in {location} compared to other areas'
   },
   categories: ['summary', 'forest-change'],

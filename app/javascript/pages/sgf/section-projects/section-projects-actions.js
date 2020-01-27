@@ -28,8 +28,11 @@ export const fetchProjects = createThunkAction(
               const itemCountries =
                 countries.data &&
                 countries.data.rows.filter(
-                  c => d.country_iso_code.indexOf(c.iso) > -1
+                  c =>
+                    d.country_iso_code_ &&
+                    d.country_iso_code_.indexOf(c.iso) > -1
                 );
+
               return {
                 id: d.cartodb_id,
                 title: d.organization,
@@ -39,7 +42,7 @@ export const fetchProjects = createThunkAction(
                 meta: `${d.year}${itemCountries &&
                   ` - ${itemCountries.map(c => c.name).join(', ')}`}`,
                 year: d.year,
-                countries: d.country_iso_code,
+                countries: d.country_iso_code_,
                 imageKey: imagesPath[3],
                 blogSentence: d.blog_sentence,
                 blogLink: d.hyperlinks_for_blog_sentence,

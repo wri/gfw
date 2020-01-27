@@ -18,7 +18,7 @@ parserOptions:
     jsx: true
     experimentalObjectRestSpread: true
   sourceType: module
-plugins: [react, prettier]
+plugins: [react, prettier, react-hooks]
 
 rules:
   max-len: [1, 140, 2, {"ignoreUrls":true}]
@@ -43,6 +43,8 @@ rules:
   no-mixed-operators: 0
   class-methods-use-this: 0
   import/prefer-default-export: 0
+  react-hooks/rules-of-hooks: error
+  react-hooks/exhaustive-deps: warn
 settings:
   import/resolver:
     node:

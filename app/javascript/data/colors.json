@@ -19,13 +19,6 @@
       "Forestry": "#2FBF71",
       "Wildfire": "#ad6824",
       "Urbanization": "#B235CC"
-    },
-    "lossDriversOld": {
-      "1": "#F41D36",
-      "2": "#efd31a",
-      "3": "#2FBF71",
-      "4": "#ad6824",
-      "5": "#B235CC"
     }
   },
   "gain": {
@@ -45,6 +38,7 @@
   "plantations": {
     "main": "#d67828",
     "species": {
+      "Oil Palm": "#fdada9",
       "Oil Palm ": "#fdada9",
       "Wood fiber / Timber": "#98a7c4",
       "Rubber": "#9993a3",

@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import { getColorPalette } from 'utils/data';
 
@@ -19,18 +20,17 @@ const selectColors = state => state.colors || null;
 const selectActiveData = state => state.settings.activeData || null;
 const selectWeeks = state => (state.settings && state.settings.weeks) || null;
 const selectSentence = state => state.config.sentence || null;
+const getIndicator = state => state.indicator || null;
 
 export const parsePayload = payload => {
   const payloadData = payload && payload.find(p => p.name === 'count');
   const payloadValues = payloadData && payloadData.payload;
   if (payloadValues) {
-    const startDate = moment()
-      .year(payloadValues.year)
-      .week(payloadValues.week);
-
     return {
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),
+      startDate: payloadValues.date,
+      endDate: moment(payloadValues.date)
+        .add(7, 'days')
+        .format('YYYY-MM-DD'),
       updateLayer: true,
       ...payloadValues
     };
@@ -42,8 +42,7 @@ export const getData = createSelector(
   [selectAlerts, selectLatestDates],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const groupedByYear = groupBy(data, 'year');
-
+    const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
       (acc, next) => {
         const { year } = next[0];
@@ -54,6 +53,7 @@ export const getData = createSelector(
       },
       {}
     );
+
     const dataYears = Object.keys(hasAlertsByYears).filter(
       key => hasAlertsByYears[key] === true
     );
@@ -62,26 +62,31 @@ export const getData = createSelector(
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
     const years = [];
-    const latestFullWeek = moment(latest).subtract(1, 'weeks');
+    const latestWeek = moment(latest);
     const lastWeek = {
-      isoWeek: latestFullWeek.isoWeek(),
-      year: latestFullWeek.year()
+      isoWeek: latestWeek.isoWeek(),
+      year: latestWeek.year()
     };
 
     for (let i = startYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
+
     const yearLengths = {};
     years.forEach(y => {
-      if (lastWeek.year === parseInt(y, 10)) {
+      if (lastWeek.year === y) {
         yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).weekday() === 1) {
-        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+        yearLengths[y] = moment(`${y}-12-31`)
+          .subtract('week', 1)
+          .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
       }
     });
+
     const zeroFilledData = [];
+
     years.forEach(d => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
@@ -92,6 +97,7 @@ export const getData = createSelector(
         );
       }
     });
+
     return zeroFilledData;
   }
 );
@@ -135,8 +141,8 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, selectColors, selectActiveData, selectSentence],
-  (data, colors, activeData, sentence) => {
+  [parseData, selectColors, selectActiveData, selectSentence, getIndicator],
+  (data, colors, activeData, sentence, indicator) => {
     if (!data) return null;
 
     let lastDate = data[data.length - 1] || {};
@@ -185,6 +191,7 @@ export const parseSentence = createSelector(
     }
     const formattedDate = moment(date).format('Do of MMMM YYYY');
     const params = {
+      indicator: indicator && indicator.label,
       date: formattedDate,
       count: {
         value: lastDate.count ? format(',')(lastDate.count) : 0,
@@ -195,7 +202,10 @@ export const parseSentence = createSelector(
         color: statusColor
       }
     };
-    return { sentence, params };
+    return {
+      sentence: indicator ? sentence.withIndicator : sentence.initial,
+      params
+    };
   }
 );
 

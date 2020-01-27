@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import { translateText } from 'utils/transifex';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
@@ -48,6 +49,10 @@ class ModalSubscribe extends PureComponent {
 
   render() {
     const { open, userData, loading, locationName, saved } = this.props;
+    const title = translateText(
+      'Subscribe to forest change alerts for {location}'
+    );
+    const translatedLocation = translateText(locationName);
 
     return (
       <Modal
@@ -57,7 +62,7 @@ class ModalSubscribe extends PureComponent {
         title={
           saved
             ? 'Subscription saved'
-            : `Subscribe to forest change alerts for ${locationName}`
+            : title.replace('{location}', translatedLocation)
         }
       >
         <div className="c-modal-subscribe">

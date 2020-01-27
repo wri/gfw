@@ -30,7 +30,7 @@ class ModalContactUs extends PureComponent {
         title={
           showConfirm
             ? 'Thank you for contacting Global Forest Watch! Check your inbox for a confirmation email.'
-            : 'Contact us & feedback'
+            : 'Contact us'
         }
         className="c-contact-us"
       >
@@ -54,9 +54,8 @@ class ModalContactUs extends PureComponent {
           ) : (
             <div className="contact-form">
               <p className="subtitle">
-                Question, comment, request, feedback? We want to hear from you!
-                Help us improve Global Forest Watch by completing the form
-                below.
+                For media inquiries, email{' '}
+                <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
               </p>
               <Contact onSubmit={this.handleSubmit} />
             </div>
