@@ -1,10 +1,10 @@
-import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
-import { getExtentGrouped } from 'services/forest-data';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { getExtentGrouped } from 'services/forest-data-old';
 import { all, spread } from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([
-    fetchGladIntersectionAlerts(params),
+    fetchGladAlerts({ ...params, grouped: true }),
     fetchGLADLatest(params),
     getExtentGrouped(params)
   ]).then(
@@ -23,3 +23,10 @@ export default ({ params }) =>
         : {};
     })
   );
+
+export const getDataURL = params => [
+  fetchGladAlerts({ ...params, download: true }),
+  getExtentGrouped({ ...params, download: true })
+];
+
+export default getData;

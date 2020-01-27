@@ -1,8 +1,8 @@
 import { all, spread } from 'axios';
 import { getCumulative } from 'services/climate';
 
-export default ({ params }) =>
-  all([...getCumulative({ ...params })]).then(
+export const getData = ({ params }) =>
+  all(getCumulative(params)).then(
     spread((y2015, y2016, y2017, y2018) => {
       const years = [2015, 2016, 2017, 2018].map(year => ({
         label: year,
@@ -21,3 +21,8 @@ export default ({ params }) =>
       };
     })
   );
+
+export const getDataURL = params =>
+  getCumulative({ ...params, download: true });
+
+export default getData;

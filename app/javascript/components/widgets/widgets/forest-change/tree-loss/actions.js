@@ -1,13 +1,15 @@
 import { all, spread } from 'axios';
-import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
+import { getExtent, getLoss, getLossGrouped } from 'services/forest-data-old';
 
-export default ({ params }) => {
+const getGlobalLocation = params => ({
+  adm0: params.type === 'global' ? null : params.adm0,
+  adm1: params.type === 'global' ? null : params.adm1,
+  adm2: params.type === 'global' ? null : params.adm2
+});
+
+export const getData = ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};
-  const globalLocation = {
-    adm0: params.type === 'global' ? null : adm0,
-    adm1: params.type === 'global' ? null : adm1,
-    adm2: params.type === 'global' ? null : adm2
-  };
+  const globalLocation = getGlobalLocation(params);
   const lossFetch =
     params.type === 'global'
       ? getLossGrouped({ ...rest, ...globalLocation })
@@ -25,3 +27,15 @@ export default ({ params }) => {
     })
   );
 };
+
+export const getDataURL = params => {
+  const globalLocation = getGlobalLocation(params);
+  return [
+    params.type === 'global'
+      ? getLossGrouped({ ...params, ...globalLocation, download: true })
+      : getLoss({ ...params, ...globalLocation, download: true }),
+    getExtent({ ...params, download: true })
+  ];
+};
+
+export default getData;

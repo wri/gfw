@@ -14,13 +14,16 @@ export const selectConfig = (state, { config }) => config;
 export const selectTitle = (state, { config, title }) => title || config.title;
 export const selectWidget = (state, { widget }) => widget;
 export const selectLocationName = (state, { locationName }) => locationName;
-export const selectWidgetMetaKey = (state, { config, widget, whitelist }) =>
-  (widget === 'treeCover' &&
-  whitelist &&
-  whitelist.length &&
-  whitelist.includes('plantations')
+export const selectWidgetMetaKey = (state, { config, widget, whitelists }) => {
+  const whitelist = whitelists && whitelists[config.whitelistType || 'annual'];
+
+  return widget === 'treeCover' &&
+    whitelist &&
+    whitelist.length &&
+    whitelist.includes('plantations')
     ? 'widget_natural_vs_planted'
-    : config.metaKey);
+    : config.metaKey;
+};
 
 export const getParsedTitle = createSelector(
   [selectTitle, selectLocationName],

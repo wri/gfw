@@ -1,8 +1,8 @@
 import { all, spread } from 'axios';
 import { getEmissions } from 'services/climate';
 
-export default ({ params }) =>
-  all([...getEmissions({ ...params })]).then(
+export const getData = ({ params }) =>
+  all(getEmissions(params)).then(
     spread(
       (
         cYSF,
@@ -32,3 +32,7 @@ export default ({ params }) =>
       }
     )
   );
+
+export const getDataURL = params => getEmissions({ ...params, download: true });
+
+export default getData;

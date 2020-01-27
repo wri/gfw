@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
-import { getLoss } from 'services/forest-data';
+import { getLoss } from 'services/forest-data-old';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([
     getLoss({ ...params, forestType: 'plantations' }),
     getLoss({ ...params, forestType: '' })
@@ -24,3 +24,10 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = params => [
+  getLoss({ ...params, forestType: 'plantations', download: true }),
+  getLoss({ ...params, forestType: '', download: true })
+];
+
+export default getData;

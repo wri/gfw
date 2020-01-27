@@ -1,7 +1,7 @@
-import { getExtent, getAreaIntersection } from 'services/forest-data';
+import { getExtent, getAreaIntersection } from 'services/forest-data-old';
 import { all, spread } from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([
     getExtent(params),
     getAreaIntersection({ ...params, forestType: 'plantations' })
@@ -24,3 +24,10 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = params => [
+  getExtent({ ...params, download: true }),
+  getAreaIntersection({ ...params, forestType: 'plantations', download: true })
+];
+
+export default getData;

@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
-import { getExtent } from 'services/forest-data';
+import { getExtent } from 'services/forest-data-old';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([
     getExtent(params),
     getExtent({ ...params, forestType: '', landCategory: '' }),
@@ -46,3 +46,22 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = params => {
+  const urlArr =
+    params.forestType || params.landCategory
+      ? [getExtent({ ...params, download: true })]
+      : [];
+
+  return urlArr.concat([
+    getExtent({
+      ...params,
+      forestType: null,
+      landCategory: null,
+      download: true
+    }),
+    getExtent({ ...params, forestType: 'plantations', download: true })
+  ]);
+};
+
+export default getData;

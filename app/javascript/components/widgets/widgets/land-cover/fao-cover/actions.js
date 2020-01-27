@@ -2,11 +2,11 @@ import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 import omit from 'lodash/omit';
 
-import { getFAO } from 'services/forest-data';
+import { getFAOExtent } from 'services/forest-data';
 import { getRanking } from 'services/country';
 
-export default ({ params }) =>
-  all([getFAO({ ...params }), getRanking({ ...params })]).then(
+export const getData = ({ params }) =>
+  all([getFAOExtent(params), getRanking(params)]).then(
     spread((getFAOResponse, getRankingResponse) => {
       let data = {};
       const fao = getFAOResponse.data.rows;
@@ -31,3 +31,9 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = ({ params }) => [
+  getFAOExtent({ ...params, download: true })
+];
+
+export default getData;

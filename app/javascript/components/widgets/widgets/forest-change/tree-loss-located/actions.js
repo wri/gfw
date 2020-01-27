@@ -1,8 +1,8 @@
-import { getExtentGrouped, getLossGrouped } from 'services/forest-data';
+import { getExtentGrouped, getLossGrouped } from 'services/forest-data-old';
 import groupBy from 'lodash/groupBy';
 import { all, spread } from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([getExtentGrouped(params), getLossGrouped(params)]).then(
     spread((extentGrouped, lossGrouped) => {
       let groupKey = 'iso';
@@ -36,3 +36,10 @@ export default ({ params }) =>
       };
     })
   );
+
+export const getDataURL = params => [
+  getExtentGrouped({ ...params, download: true }),
+  getLossGrouped({ ...params, download: true })
+];
+
+export default getData;

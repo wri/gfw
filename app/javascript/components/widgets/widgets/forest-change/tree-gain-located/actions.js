@@ -1,7 +1,7 @@
-import { getExtentGrouped, getGainGrouped } from 'services/forest-data';
+import { getExtentGrouped, getGainGrouped } from 'services/forest-data-old';
 import { all, spread } from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([getExtentGrouped(params), getGainGrouped(params)]).then(
     spread((extentGrouped, gainGrouped) => {
       let groupKey = 'iso';
@@ -33,3 +33,10 @@ export default ({ params }) =>
       };
     })
   );
+
+export const getDataURL = params => [
+  getExtentGrouped({ ...params, download: true }),
+  getGainGrouped({ ...params, download: true })
+];
+
+export default getData;

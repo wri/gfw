@@ -1,19 +1,26 @@
 import { all, spread } from 'axios';
-import { getExtentOld, getLossOld } from 'services/forest-data';
+import { getExtent, getLoss } from 'services/forest-data-old';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([
-    getLossOld({ ...params, landCategory: 'tsc' }),
-    getExtentOld({ ...params })
+    getLoss({ ...params, forestType: 'tsc', tsc: true }),
+    getExtent({ ...params })
   ]).then(
     spread((loss, extent) => {
       let data = {};
       if (loss && loss.data && extent && extent.data) {
         data = {
-          loss: loss.data.data,
+          loss: loss.data.data.filter(d => d.bound1 !== 'Unknown'),
           extent: (loss.data.data && extent.data.data[0].value) || 0
         };
       }
       return data;
     })
   );
+
+export const getDataURL = params => [
+  getLoss({ ...params, forestType: 'tsc', tsc: true, download: true }),
+  getExtent({ ...params, download: true })
+];
+
+export default getData;

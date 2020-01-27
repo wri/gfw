@@ -1,10 +1,10 @@
 import {
   getExtentGrouped,
   getAreaIntersectionGrouped
-} from 'services/forest-data';
+} from 'services/forest-data-old';
 import { all, spread } from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   all([
     getExtentGrouped(params),
     getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
@@ -24,3 +24,14 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = params => [
+  getExtentGrouped({ ...params, download: true }),
+  getAreaIntersectionGrouped({
+    ...params,
+    forestType: 'plantations',
+    download: true
+  })
+];
+
+export default getData;
