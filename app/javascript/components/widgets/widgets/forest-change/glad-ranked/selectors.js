@@ -31,19 +31,15 @@ export const parseList = createSelector(
   ],
   (data, latest, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
-    const latestWeek = moment(latest)
-      .subtract(1, 'weeks')
-      .week();
-    const latestYear = moment(latest)
-      .subtract(1, 'weeks')
-      .year();
+    const latestWeek = moment(latest).isoWeek();
+    const latestYear = moment(latest).year();
     const alertsByDate = data.filter(d =>
       moment()
-        .week(d.week)
+        .isoWeek(d.week)
         .year(d.year)
         .isAfter(
           moment()
-            .week(latestWeek)
+            .isoWeek(latestWeek)
             .year(latestYear)
             .subtract(settings.weeks, 'weeks')
         )
@@ -55,9 +51,7 @@ export const parseList = createSelector(
       groupedAlerts &&
       Object.keys(groupedAlerts).map(k => {
         const region = meta.find(l => parseInt(k, 10) === l.value);
-        const regionExtent = extent.find(
-          a => parseInt(a[groupKey], 10) === parseInt(k, 10)
-        );
+        const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
         const regionData = groupedAlerts[k];
         const countsArea = sumBy(regionData, 'area_ha') || 0;
         const counts = sumBy(regionData, 'alerts') || 0;

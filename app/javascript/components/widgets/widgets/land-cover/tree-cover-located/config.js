@@ -9,7 +9,7 @@ export default {
   admins: ['global', 'adm0', 'adm1'],
   options: {
     units: ['ha', '%'],
-    forestTypes: true,
+    forestTypes: ['plantations', 'ifl', 'primary_forest'],
     landCategories: true,
     thresholds: true,
     extentYears: true

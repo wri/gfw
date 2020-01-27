@@ -2,7 +2,7 @@ import * as actions from './whitelists-provider-actions';
 
 export const initialState = {
   loading: false,
-  data: []
+  data: {}
 };
 
 const setWhitelistLoading = (state, { payload }) => ({
