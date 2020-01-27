@@ -1,7 +1,7 @@
 import {
   getExtentGrouped,
   getAreaIntersectionGrouped
-} from 'services/analysis-cached';
+} from 'services/forest-data-old';
 import axios from 'axios';
 
 export default ({ params }) =>

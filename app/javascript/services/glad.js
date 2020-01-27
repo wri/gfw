@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { getWHEREQuery } from 'services/analysis-cached';
+import { getWHEREQuery } from 'services/forest-data-old';
 import DATASETS from 'data/analysis-datasets.json';
 
 const { GLAD_ADM0_WEEKLY, GLAD_ADM1_WEEKLY, GLAD_ADM2_WEEKLY } = DATASETS[

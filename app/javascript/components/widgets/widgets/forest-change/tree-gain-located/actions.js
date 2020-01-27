@@ -1,4 +1,4 @@
-import { getExtentGrouped, getGainGrouped } from 'services/analysis-cached';
+import { getExtentGrouped, getGainGrouped } from 'services/forest-data-old';
 import axios from 'axios';
 
 export default ({ params }) =>

@@ -1,4 +1,4 @@
-import { getLoss } from 'services/analysis-cached';
+import { getLoss } from 'services/forest-data-old';
 import axios from 'axios';
 import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
