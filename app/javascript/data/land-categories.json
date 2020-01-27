@@ -3,6 +3,7 @@
     "label": "Mining concessions",
     "value": "mining",
     "metaKey": "gfw_mining",
+    "tableKey": "is__gfw_mining",
     "global": true,
     "datasets": [
       {
@@ -15,6 +16,7 @@
     "label": "Protected Areas",
     "value": "wdpa",
     "metaKey": "wdpa_protected_areas",
+    "tableKey": "wdpa_protected_area__iucn_cat",
     "global": true,
     "categories": ["Category Ia/b or II", "Other Category", "Unkown"],
     "datasets": [
@@ -28,12 +30,14 @@
     "label": "Key Biodiversity Areas",
     "value": "kba",
     "metaKey": "key_biodiversity_areas",
+    "tableKey": "is__key_biodiversity_area",
     "global": true
   },
   {
     "label": "Tiger Conservation Landscapes",
     "value": "tiger_cl",
     "metaKey": "tiger_conservation_landscapes",
+    "tableKey": "is__tiger_conservation_landscape",
     "global": true,
     "datasets": [
       {
@@ -46,6 +50,7 @@
     "label": "Alliance for Zero Extinction",
     "value": "aze",
     "metaKey": "alliance_for_zero_extinction_sites",
+    "tableKey": "is__alliance_for_zero_extinction_site",
     "global": true,
     "datasets": [
       {
@@ -58,6 +63,7 @@
     "label": "Indigenous Lands",
     "value": "landmark",
     "metaKey": "gfw_land_rights",
+    "tableKey": "is__gfw_land_right",
     "global": true,
     "datasets": [
       {
@@ -70,6 +76,7 @@
     "label": "Indonesia peat lands",
     "value": "idn_mys_peatlands",
     "metaKey": "idn_peat_lands",
+    "tableKey": "is__peat_land",
     "global": false,
     "datasets": [
       {
@@ -83,6 +90,7 @@
     "label": "Indonesia forest moratorium",
     "value": "idn_forest_moratorium",
     "metaKey": "idn_forest_moratorium",
+    "tableKey": "is__idn_forest_moratorium",
     "global": false,
     "datasets": [
       {
@@ -95,6 +103,7 @@
     "label": "Oil palm concessions",
     "value": "oil_palm",
     "metaKey": "gfw_oil_palm",
+    "tableKey": "is__gfw_oil_palm",
     "global": true,
     "datasets": [
       {
@@ -107,6 +116,7 @@
     "label": "Wood fiber concessions",
     "value": "wood_fiber",
     "metaKey": "gfw_wood_fiber",
+    "tableKey": "is__gfw_wood_fiber",
     "global": true,
     "datasets": [
       {
@@ -119,6 +129,7 @@
     "label": "Managed forests",
     "value": "managed_forests",
     "metaKey": "gfw_logging",
+    "tableKey": "is__gfw_logging",
     "global": true,
     "datasets": [
       {

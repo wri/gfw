@@ -20,12 +20,11 @@ class StoriesPage extends PureComponent {
               <img src={treeImage} alt="stories-tree" />
               <p>
                 Due to limited use, the user stories feature is no longer
-                available on GFW. If you would like us to email you a copy of
-                the stories you submitted, please{' '}
+                available on GFW. Please{' '}
                 <button onClick={() => setModalContactUsOpen(true)}>
                   contact us
                 </button>{' '}
-                by September 1, 2019.
+                if you have any questions.
               </p>
             </div>
           </div>

@@ -123,7 +123,7 @@ export const parseSentence = createSelector(
     sentence = `${sentence}.`;
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
+      indicator: indicator && indicator.label,
       location: locationName,
       startYear,
       endYear,

@@ -1,11 +1,11 @@
-import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
-import { getExtentGrouped } from 'services/forest-data';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { getExtentGrouped } from 'services/forest-data-old';
 import axios from 'axios';
 
 export default ({ params }) =>
   axios
     .all([
-      fetchGladIntersectionAlerts(params),
+      fetchGladAlerts({ ...params, grouped: true }),
       fetchGLADLatest(params),
       getExtentGrouped(params)
     ])

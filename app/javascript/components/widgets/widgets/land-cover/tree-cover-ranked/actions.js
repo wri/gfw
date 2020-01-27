@@ -1,4 +1,4 @@
-import { getExtentGrouped } from 'services/forest-data';
+import { getExtentGrouped } from 'services/forest-data-old';
 
 export default ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};

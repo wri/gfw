@@ -5,8 +5,6 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   options: {
-    forestTypes: true,
-    landCategories: ['mining', 'wdpa', 'landmark'],
     thresholds: true,
     units: ['%', 'ha'],
     extentYears: true,
@@ -31,6 +29,7 @@ export default {
     withInd:
       'In the last {timeframe} in {location}, {count} GLAD alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.'
   },
+  whitelistType: 'glad',
   whitelists: {
     adm0: [
       'BRA',

@@ -2,6 +2,8 @@ import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import compact from 'lodash/compact';
+import { checkBrowser } from 'utils/browser';
+
 import { handlePageTrack } from './analytics';
 import { getNewMapRedirect } from './utils';
 
@@ -27,6 +29,11 @@ export const SUBSCRIBE = 'location/SUBSCRIBE';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
+
+  if (location.type !== BROWSER_SUPPORT && !checkBrowser()) {
+    dispatch(redirect({ type: BROWSER_SUPPORT }));
+  }
+
   const currentLocation = location.pathname;
   const prevLocation = location && location.prev.pathname;
   if (prevLocation && currentLocation !== prevLocation) {

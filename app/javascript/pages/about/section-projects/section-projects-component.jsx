@@ -42,7 +42,7 @@ class SectionProjects extends PureComponent {
             }
           </MediaQuery>
           <div className="column small-12 large-6 project-side">
-            <h3>WHAT IS GLOBAL FOREST WATCH</h3>
+            <h3>WHAT IS GLOBAL FOREST WATCH?</h3>
             <div
               className="video-btn"
               onClick={() =>
@@ -85,8 +85,8 @@ class SectionProjects extends PureComponent {
         </div>
         <div className="visitors" style={{ backgroundImage: `url(${growth})` }}>
           <h4>
-            Since its launch in 2014, over 2.5 million people have visited
-            Global Forest Watch from every single country in the world.
+            Since its launch in 2014, over 3 million people have visited Global
+            Forest Watch from every single country in the world.
           </h4>
         </div>
       </div>

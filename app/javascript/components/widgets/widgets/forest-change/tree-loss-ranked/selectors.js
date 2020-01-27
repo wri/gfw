@@ -168,9 +168,7 @@ export const parseSentence = createSelector(
         ? 100 * globalLoss / globalExtent
         : (locationData && format('.1f')(locationData.percentage)) || 0;
     const lossPercent = loss && locationData ? 100 * loss / globalLoss : 0;
-    const indicatorName = !indicator
-      ? 'region-wide'
-      : `${indicator.label.toLowerCase()}`;
+    const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
     let sentence = !indicator ? initial : withIndicator;
     if (locationObject.label === 'global') {
       sentence = !indicator ? globalInitial : globalWithIndicator;

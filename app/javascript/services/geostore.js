@@ -26,7 +26,11 @@ export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
   return axios.get(url, { cancelToken: token });
 };
 
-export const getGeostoreKey = geojson => {
+export const getGeostoreKey = (
+  geojson,
+  onUploadProgress,
+  onDownloadProgress
+) => {
   const url = REQUEST_URL + QUERIES.geostore;
   return axios({
     method: 'POST',
@@ -34,6 +38,8 @@ export const getGeostoreKey = geojson => {
     data: {
       geojson
     },
-    url
+    url,
+    onUploadProgress,
+    onDownloadProgress
   });
 };

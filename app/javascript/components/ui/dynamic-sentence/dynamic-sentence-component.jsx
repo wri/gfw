@@ -32,20 +32,22 @@ class DynamicSentence extends PureComponent {
         if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {
+              const regex = new RegExp(`{${p}}`, 'g');
               formattedSentence =
                 formattedSentence &&
                 formattedSentence.replace(
-                  `{${p}}`,
+                  regex,
                   `<b style="color: ${param.color};">${translateText(
                     param.value
                   )}</b>`
                 );
             }
           } else {
+            const regex = new RegExp(`{${p}}`, 'g');
             formattedSentence =
               formattedSentence &&
               formattedSentence.replace(
-                `{${p}}`,
+                regex,
                 `<b>${translateText(param)}</b>`
               );
           }
@@ -59,6 +61,7 @@ class DynamicSentence extends PureComponent {
         ...component,
         pattern: `{${component.key}}`
       };
+
       formattedSentence = this.reduceSentence(
         formattedSentence[0],
         mappedComponent.pattern,
@@ -74,7 +77,7 @@ class DynamicSentence extends PureComponent {
           onHidden={handleMouseOut}
           duration={0}
         >
-          <span className="hover-text notranslate">
+          <span className="hover-text">
             {translateText(mappedComponent.key)}
           </span>
         </Tooltip>

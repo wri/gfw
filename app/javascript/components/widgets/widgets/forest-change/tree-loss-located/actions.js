@@ -1,4 +1,4 @@
-import { getExtentGrouped, getLossGrouped } from 'services/forest-data';
+import { getExtentGrouped, getLossGrouped } from 'services/forest-data-old';
 import groupBy from 'lodash/groupBy';
 import axios from 'axios';
 

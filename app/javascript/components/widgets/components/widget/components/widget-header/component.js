@@ -188,15 +188,14 @@ class WidgetHeader extends PureComponent {
 
     return (
       <div className={cx('c-widget-header', { simple })}>
-        <div className="title">{title}</div>
+        <div className="title notranslate">{title}</div>
         <div className="options">
           {!embed &&
             !simple &&
             (config.layers || config.datasets) &&
             !config.hideLayers &&
             this.renderMapButton()}
-          {!embed &&
-            !simple &&
+          {!simple &&
             settings &&
             options &&
             config.options &&
