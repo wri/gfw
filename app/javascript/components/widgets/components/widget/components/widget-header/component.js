@@ -354,7 +354,9 @@ class WidgetHeader extends PureComponent {
           {downloadLink && this.renderDownloadButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
-            {getDataURL && this.renderDownloadButton()}
+            {process.env.FEATURE_ENV === 'staging' &&
+              getDataURL &&
+              this.renderDownloadButton()}
             {!simple && this.renderShareButton()}
           </div>
         </div>
@@ -385,7 +387,7 @@ WidgetHeader.propTypes = {
   metakey: PropTypes.string,
   getDataURL: PropTypes.func,
   downloadLink: PropTypes.string,
-  allLocation: PropTypes.string,
+  allLocation: PropTypes.object,
   locationData: PropTypes.array,
   childLocationData: PropTypes.array,
   locationObject: PropTypes.object,
