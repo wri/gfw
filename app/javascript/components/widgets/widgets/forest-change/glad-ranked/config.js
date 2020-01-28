@@ -1,3 +1,5 @@
+import tropicalIsos from 'data/tropical-isos.json';
+
 export default {
   widget: 'gladRanked',
   title: 'Location of deforestation Alerts in {location}',
@@ -33,28 +35,6 @@ export default {
   },
   whitelistType: 'glad',
   whitelists: {
-    adm0: [
-      'BRA',
-      'COL',
-      'ECU',
-      'GUF',
-      'GUY',
-      'PER',
-      'SUR',
-      'BDI',
-      'CMR',
-      'CAF',
-      'GNQ',
-      'GAB',
-      'RWA',
-      'UGA',
-      'IDN',
-      'MYS',
-      'PNG',
-      'VEN',
-      'TLS',
-      'COD',
-      'COG'
-    ]
+    adm0: tropicalIsos
   }
 };

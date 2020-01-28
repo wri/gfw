@@ -1,7 +1,5 @@
-import request from 'utils/request';
+import { cartoRequest } from 'utils/request';
 import { buildGadm36Id } from 'utils/format';
-
-const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
@@ -21,38 +19,38 @@ const SQL_QUERIES = {
 };
 
 export const getCountriesProvider = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getCountries}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.getCountries}`;
+  return cartoRequest.get(url);
 };
 
 export const getFAOCountriesProvider = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getFAOCountries}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.getFAOCountries}`;
+  return cartoRequest.get(url);
 };
 
 export const getRegionsProvider = adm0 => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getRegions}`.replace('{iso}', adm0);
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.getRegions}`.replace('{iso}', adm0);
+  return cartoRequest.get(url);
 };
 
 export const getSubRegionsProvider = (adm0, adm1) => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getSubRegions}`
+  const url = `/sql?q=${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', adm0)
     .replace('{adm1}', buildGadm36Id(adm0, adm1));
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 
 export const getCountryLinksProvider = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getCountryLinks}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.getCountryLinks}`;
+  return cartoRequest.get(url);
 };
 
 export const getCountriesLatLng = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getCountriesLatLng}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.getCountriesLatLng}`;
+  return cartoRequest.get(url);
 };
 
 export const getRanking = ({ adm0 }) => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.getRanking}`.replace('{adm0}', adm0);
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.getRanking}`.replace('{adm0}', adm0);
+  return cartoRequest.get(url);
 };

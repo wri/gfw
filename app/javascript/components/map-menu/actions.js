@@ -1,6 +1,6 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import axios from 'axios';
+import request from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
 import { MAP } from 'router';
@@ -56,7 +56,7 @@ export const getLocationFromSearch = createThunkAction(
       );
 
       if (whereStatement) {
-        axios
+        request
           .get(
             `${
               process.env.CARTO_API

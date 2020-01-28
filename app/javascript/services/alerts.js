@@ -1,7 +1,6 @@
-import request from 'utils/request';
+import { apiRequest } from 'utils/request';
 import moment from 'moment';
 
-const REQUEST_URL = process.env.GFW_API;
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
 const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
 const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
@@ -32,7 +31,7 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   } else if (adm1) {
     fires_summary_table = FIRES_ADM1_DATASET;
   }
-  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+  const url = `/query/${fires_summary_table}?sql=${
     QUERIES.firesIntersectionAlerts
   }`
     .replace('{location}', getLocation(adm0, adm1, adm2))
@@ -46,7 +45,7 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
     };
   }
 
-  return request.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -71,7 +70,7 @@ export const fetchFiresAlertsGrouped = ({
   if (adm1) {
     fires_summary_table = FIRES_ADM2_DATASET;
   }
-  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+  const url = `/query/${fires_summary_table}?sql=${
     QUERIES.firesIntersectionAlerts
   }`
     .replace('{location}', getLocation(adm0, adm1, adm2))
@@ -85,7 +84,7 @@ export const fetchFiresAlertsGrouped = ({
     };
   }
 
-  return request.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -107,10 +106,8 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
     fires_summary_table = FIRES_ADM1_DATASET;
   }
 
-  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
-    QUERIES.alertsLatest
-  }`;
-  return request
+  const url = `/query/${fires_summary_table}?sql=${QUERIES.alertsLatest}`;
+  return apiRequest
     .get(url, 3600, 'firesRequest')
     .then(response => {
       const { week, year } = response.data.data[0];
@@ -143,7 +140,7 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
 };
 
 export const fetchLatestDate = url =>
-  request.get(url, 3600, 'gladRequest').catch(error => {
+  apiRequest.get(url, 3600, 'gladRequest').catch(error => {
     console.error('Error in latest request:', error);
     return new Promise(resolve =>
       resolve({

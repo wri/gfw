@@ -1,11 +1,6 @@
-import request from 'utils/request';
+import { apiRequest } from 'utils/request';
 
-const REQUEST_URL = `${process.env.GFW_API}/v1/gfw-metadata`;
-
-export const getMeta = slug => {
-  const url = `${REQUEST_URL}/${slug}`;
-  return request.get(url);
-};
+export const getMeta = slug => apiRequest.get(`/v1/gfw-metadata/${slug}`);
 
 export default {
   getMeta

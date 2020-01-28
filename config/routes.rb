@@ -59,6 +59,9 @@ Gfw::Application.routes.draw do
   # thank you
   get '/thank-you' => 'thankyou#index'
 
+  # login
+  get '/my_gfw' => 'my_gfw#index'
+
   # stories
   get '/stories' => 'stories#index'
   get '/stories/*all' => 'stories#index'
@@ -68,7 +71,6 @@ Gfw::Application.routes.draw do
   get '/grants-and-fellowships/*all' => 'grants_and_fellowships#index'
 
   # connect
-  get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
   # static #
@@ -85,11 +87,6 @@ Gfw::Application.routes.draw do
   # media
   post 'media/upload' => 'media#upload'
   get  'media/show' => 'media#show'
-
-  #cache
-  get '/cache/keys' => 'cache#keys'
-  post '/cache/add' => 'cache#add'
-  get '/cache/*id' => 'cache#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false

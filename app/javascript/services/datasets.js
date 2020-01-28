@@ -9,5 +9,5 @@ export const getDatasetsProvider = () =>
       REQUEST_URL
     }/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&env=production${
       featureEnv ? `,${featureEnv}` : ''
-    }&hash=${process.env.API_CACHE || new Date()}`
+    }`
   );

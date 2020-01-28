@@ -1,4 +1,4 @@
-import { handleModule } from 'redux-tools';
+import { handleModule } from 'utils/redux';
 
 // As seen in http://nicolasgallagher.com/redux-modules-and-code-splitting/
 class ReducerRegistry {

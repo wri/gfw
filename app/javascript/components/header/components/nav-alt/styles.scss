@@ -40,6 +40,10 @@
       height: 100%;
     }
 
+    .logged-in {
+      fill: $green-gfw;
+    }
+
     .lang-btn {
       max-width: rem(90px);
 
@@ -98,7 +102,7 @@
     }
 
     @media screen and (min-width: $screen-m) {
-      width: rem(320px);
+      width: rem(520px);
     }
   }
 
@@ -117,4 +121,3 @@
     }
   }
 }
-

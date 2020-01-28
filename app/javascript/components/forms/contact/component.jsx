@@ -1,170 +1,143 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Form } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
+
+import { submitContactForm } from 'services/forms';
+
+import Link from 'redux-first-router-link';
 import Button from 'components/ui/button';
-import { Field, reduxForm } from 'redux-form';
 
-import {
-  renderRadio,
-  renderTextarea,
-  renderSelect,
-  renderInput
-} from 'components/forms/form-fields';
-import 'components/forms/form-styles.scss';
+import Input from 'components/forms/components/input';
+import Select from 'components/forms/components/select';
+import Radio from 'components/forms/components/radio';
+import Submit from 'components/forms/components/submit';
 
-const validate = values => {
-  const errors = {};
-  if (
-    !values.email ||
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = true;
-  }
-  if (!values.topic) {
-    errors.topic = true;
-  }
-  if (!values.tool) {
-    errors.tool = true;
-  }
-  if (!values.message) {
-    errors.message = true;
-  }
+import { email } from 'components/forms/validations';
 
-  return errors;
-};
+import { topics, tools, testNewFeatures } from './config';
 
-const topics = [
-  {
-    key: 'report-a-bug-or-error',
-    name: 'Report a bug or error',
-    placeholder:
-      "Please tell us what browser and operating system you're using, including version numbers."
-  },
-  {
-    key: 'provide-feedback',
-    name: 'Provide feedback',
-    placeholder: ''
-  },
-  {
-    key: 'data-related-inquiry',
-    name: 'Data-related inquiry or suggestion',
-    placeholder: ''
-  },
-  {
-    key: 'general-inquiry',
-    name: 'General inquiry',
-    placeholder: ''
-  }
-];
-
-const tools = [
-  {
-    key: 'gfw',
-    name: 'Global Forest Watch'
-  },
-  {
-    key: 'gfw-pro',
-    name: 'GFW Pro'
-  },
-  {
-    key: 'fw',
-    name: 'Forest Watcher'
-  },
-  {
-    key: 'blog',
-    name: 'GFW Blog'
-  },
-  {
-    key: 'map-builder',
-    name: 'GFW MapBuilder'
-  },
-  {
-    key: 'not-applicable',
-    name: 'Not applicable'
-  }
-];
-
-const placeHolderValidator = value =>
-  (value && value === 'placeholder' ? 'Select a topic' : undefined);
-const toolValidator = value =>
-  (value && value === 'placeholder' ? 'Select a tool' : undefined);
+import './styles.scss';
 
 class ContactForm extends PureComponent {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    data: PropTypes.object,
-    submitting: PropTypes.bool
+    // sendContactForm: PropTypes.func.isRequired,
+    resetForm: PropTypes.func,
+    initialValues: PropTypes.object
+  };
+
+  sendContactForm = values => {
+    const language = window.Transifex
+      ? window.Transifex.live.getSelectedLanguageCode()
+      : 'en';
+
+    return submitContactForm({ ...values, language })
+      .then(() => {})
+      .catch(error => {
+        const { errors } = error.response && error.response.data;
+
+        return {
+          [FORM_ERROR]:
+            (errors && error.length && errors[0].detail) ||
+            'Service unavailable'
+        };
+      });
   };
 
   render() {
-    const { data, handleSubmit, submitting } = this.props;
-    const activeTopic =
-      data &&
-      data.values &&
-      data.values.topic &&
-      topics.find(t => t.key === data.values.topic);
+    const { resetForm, initialValues } = this.props;
+
     return (
-      <form className="c-form" onSubmit={handleSubmit}>
-        <Field
-          name="email"
-          type="email"
-          label="EMAIL *"
-          placeholder=""
-          component={renderInput}
-        />
-        <Field
-          name="topic"
-          label="TOPIC *"
-          options={topics}
-          component={renderSelect}
-          validate={[placeHolderValidator]}
-          placeholder="Select a topic"
-        />
-        <Field
-          name="tool"
-          label="TOOL *"
-          options={tools}
-          component={renderSelect}
-          validate={[toolValidator]}
-          placeholder="Select a tool that applies"
-        />
-        <Field
-          name="message"
-          label="MESSAGE *"
-          placeholder={activeTopic && activeTopic.placeholder}
-          component={renderTextarea}
-        />
-        <h4>Interested in testing new features?</h4>
-        <div className="radio">
-          <p>Sign up to become an official GFW tester!</p>
-          <Field
-            id="signup-true"
-            name="signup"
-            type="radio"
-            value="true"
-            label="Yes, sign me up."
-            component={renderRadio}
-          />
-          <Field
-            id="signup-false"
-            name="signup"
-            type="radio"
-            value="false"
-            label="No thanks."
-            component={renderRadio}
-          />
-        </div>
-        <Button className="submit-btn" type="submit" disabled={submitting}>
-          Submit
-        </Button>
-      </form>
+      <Form onSubmit={this.sendContactForm} initialValues={initialValues}>
+        {({
+          handleSubmit,
+          submitting,
+          valid,
+          submitFailed,
+          submitSucceeded,
+          submitError,
+          values,
+          form: { reset }
+        }) => {
+          const activeTopic = topics.find(t => t.value === values.topic);
+
+          return (
+            <div className="c-contact-form">
+              {submitSucceeded ? (
+                <div className="feedback-message">
+                  <h3>
+                    Thank you for contacting Global Forest Watch! Check your
+                    inbox for a confirmation email.
+                  </h3>
+                  <p>Interested in getting news and updates from us?</p>
+                  <div className="button-group">
+                    <Link to="/subscribe">
+                      <Button>Subscribe</Button>
+                    </Link>
+                    <Button
+                      className="close-button"
+                      onClick={resetForm || (() => reset())}
+                    >
+                      No thanks
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Fragment>
+                  <p className="subtitle">
+                    For media inquiries, email{' '}
+                    <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
+                  </p>
+                  <form onSubmit={handleSubmit}>
+                    <Input
+                      name="email"
+                      type="email"
+                      label="email"
+                      placeholder="example@globalforestwatch.org"
+                      validate={[email]}
+                      required
+                    />
+                    <Select
+                      name="topic"
+                      label="topic"
+                      placeholder="Select a topic"
+                      options={topics}
+                      required
+                    />
+                    <Select
+                      name="tool"
+                      label="tool"
+                      placeholder="Select a tool that applies"
+                      options={tools}
+                      required
+                    />
+                    <Input
+                      name="message"
+                      label="message"
+                      type="textarea"
+                      placeholder={activeTopic && activeTopic.placeholder}
+                      required
+                    />
+                    <h4>Interested in testing new features?</h4>
+                    <p>Sign up to become an official GFW tester!</p>
+                    <Radio name="signup" options={testNewFeatures} />
+                    <Submit
+                      valid={valid}
+                      submitting={submitting}
+                      submitFailed={submitFailed}
+                      submitError={submitError}
+                    >
+                      send
+                    </Submit>
+                  </form>
+                </Fragment>
+              )}
+            </div>
+          );
+        }}
+      </Form>
     );
   }
 }
 
-export default reduxForm({
-  form: 'contact',
-  validate,
-  initialValues: {
-    signup: 'false'
-  }
-})(ContactForm);
+export default ContactForm;

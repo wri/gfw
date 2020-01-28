@@ -2,9 +2,9 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { CancelToken } from 'axios';
+import { cancelToken } from 'utils/request';
 import { track } from 'app/analytics';
-import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/actions';
 
 import Component from './component';
 
@@ -29,7 +29,7 @@ class SearchMenu extends PureComponent {
     if (this.searchFetch) {
       this.searchFetch.cancel();
     }
-    this.searchFetch = CancelToken.source();
+    this.searchFetch = cancelToken();
     this.props.getLocationFromSearch({
       search,
       lang: this.props.lang,

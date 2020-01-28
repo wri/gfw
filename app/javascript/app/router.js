@@ -3,6 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import compact from 'lodash/compact';
 import { checkBrowser } from 'utils/browser';
+import { setUserToken } from 'services/user';
 
 import { handlePageTrack } from './analytics';
 import { getNewMapRedirect } from './utils';
@@ -26,6 +27,7 @@ export const UNACCEPTABLE = 'location/UNACCEPTABLE';
 export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 export const SEARCH = 'location/SEARCH';
 export const SUBSCRIBE = 'location/SUBSCRIBE';
+export const MYGFW = 'location/MYGFW';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -38,6 +40,21 @@ const routeChangeThunk = (dispatch, getState) => {
   const prevLocation = location && location.prev.pathname;
   if (prevLocation && currentLocation !== prevLocation) {
     handlePageTrack();
+  }
+
+  const { type, payload, query } = location;
+  if (query && query.token) {
+    setUserToken(query.token);
+    dispatch(
+      redirect({
+        type,
+        payload,
+        query: {
+          ...query,
+          token: undefined
+        }
+      })
+    );
   }
 };
 
@@ -243,6 +260,11 @@ export const routes = {
     path: '/subscribe',
     controller: 'subscribe',
     component: 'subscribe'
+  },
+  [MYGFW]: {
+    path: '/my_gfw',
+    controller: 'my_gfw',
+    component: 'my-gfw'
   }
 };
 
