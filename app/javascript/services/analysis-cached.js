@@ -30,7 +30,7 @@ const {
   ANNUAL_GEOSTORE_WHITELIST,
   GLAD_GEOSTORE_WEEKLY,
   GLAD_GEOSTORE_WHITELIST
-} = DATASETS[process.env.FEATURE_ENV];
+} = DATASETS[process.env.FEATURE_ENV || 'production'];
 
 const SQL_QUERIES = {
   loss:

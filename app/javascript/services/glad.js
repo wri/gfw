@@ -4,7 +4,7 @@ import { getWHEREQuery } from 'services/analysis-cached';
 import DATASETS from 'data/analysis-datasets.json';
 
 const { GLAD_ADM0_WEEKLY, GLAD_ADM1_WEEKLY, GLAD_ADM2_WEEKLY } = DATASETS[
-  process.env.FEATURE_ENV
+  process.env.FEATURE_ENV || 'production'
 ];
 
 const QUERIES = {
