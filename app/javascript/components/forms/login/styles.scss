@@ -56,7 +56,17 @@
 
     .change-form {
       margin-right: rem(15px);
-      width: rem(120px);
+      font-size: rem(16px);
+
+      b {
+        text-decoration: underline;
+        font-weight: 500;
+        display: block;
+
+        @media screen and (min-width: $screen-s) {
+          display: inline-block;
+        }
+      }
     }
   }
 

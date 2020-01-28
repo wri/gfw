@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import cx from 'classnames';
+import ReactHtmlParser from 'react-html-parser';
 
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
@@ -61,7 +62,7 @@ class LoginForm extends PureComponent {
         submit: 'login',
         submitFunc: loginUser,
         altView: 'register',
-        altLabel: 'Register',
+        altLabel: 'Not a member? <b>Sign up!</b>',
         confirmation: {
           title: '',
           description: ''
@@ -71,7 +72,7 @@ class LoginForm extends PureComponent {
         submit: 'register',
         submitFunc: registerUser,
         altView: 'login',
-        altLabel: 'login',
+        altLabel: 'Already joined? <b>Sign in!</b>',
         confirmation: {
           title:
             'Thank you for registering, please check your email and confirm your account.',
@@ -83,7 +84,7 @@ class LoginForm extends PureComponent {
         submit: 'reset',
         submitFunc: resetUserPassword,
         altView: 'login',
-        altLabel: 'Login',
+        altLabel: 'Already joined? <b>Sign in!</b>',
         confirmation: {
           title:
             'Thank you. Please, check your inbox and follow instructions to reset your password.',
@@ -211,7 +212,7 @@ class LoginForm extends PureComponent {
                         <Submit valid submitting={submitting}>
                           {submit}
                         </Submit>
-                        <Button
+                        <button
                           className="change-form"
                           theme="theme-button-light"
                           onClick={e => {
@@ -220,8 +221,8 @@ class LoginForm extends PureComponent {
                             reset();
                           }}
                         >
-                          {altLabel}
-                        </Button>
+                          {ReactHtmlParser(altLabel)}
+                        </button>
                       </div>
                     </form>
                   </div>
