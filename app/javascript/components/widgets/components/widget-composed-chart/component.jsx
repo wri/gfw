@@ -5,11 +5,12 @@ import isEqual from 'lodash/isEqual';
 
 import ComposedChart from 'components/charts/composed-chart';
 
-class WidgetAlerts extends Component {
+class WidgetComposedChart extends Component {
   shouldComponentUpdate = nextProps =>
     (!isEqual(nextProps.settings, this.props.settings) &&
       isEqual(nextProps.settings.activeData, this.props.settings.activeData)) ||
-    !isEqual(nextProps.data, this.props.data);
+    !isEqual(nextProps.data, this.props.data) ||
+    !isEqual(nextProps.barBackground, this.props.barBackground);
 
   handleMouseMove = debounce(data => {
     const { parsePayload, setWidgetsSettings, widget, layers } = this.props;
@@ -26,25 +27,34 @@ class WidgetAlerts extends Component {
   }, 100);
 
   render() {
-    const { data, config, active, simple } = this.props;
+    const {
+      className,
+      data,
+      config,
+      active,
+      simple,
+      handleClick,
+      barBackground
+    } = this.props;
 
     return (
-      <div className="c-widget-composed-chart">
-        <ComposedChart
-          className="loss-chart"
-          data={data}
-          config={config}
-          handleMouseMove={this.handleMouseMove}
-          handleMouseLeave={this.handleMouseLeave}
-          backgroundColor={active ? '#fefedc' : ''}
-          simple={simple}
-        />
-      </div>
+      <ComposedChart
+        className={className}
+        data={data}
+        config={config}
+        handleMouseMove={this.handleMouseMove}
+        handleMouseLeave={this.handleMouseLeave}
+        handleClick={handleClick}
+        backgroundColor={active ? '#fefedc' : ''}
+        barBackground={barBackground}
+        simple={simple}
+      />
     );
   }
 }
 
-WidgetAlerts.propTypes = {
+WidgetComposedChart.propTypes = {
+  className: PropTypes.string,
   data: PropTypes.array,
   config: PropTypes.object,
   settings: PropTypes.object,
@@ -53,7 +63,9 @@ WidgetAlerts.propTypes = {
   widget: PropTypes.string,
   active: PropTypes.bool,
   simple: PropTypes.bool,
-  layers: PropTypes.array
+  layers: PropTypes.array,
+  handleClick: PropTypes.func,
+  barBackground: PropTypes.object
 };
 
-export default WidgetAlerts;
+export default WidgetComposedChart;

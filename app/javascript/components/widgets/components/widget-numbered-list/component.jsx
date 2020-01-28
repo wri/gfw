@@ -5,10 +5,17 @@ import NumberedList from 'components/numbered-list';
 
 class WidgetNumberedList extends PureComponent {
   render() {
-    const { data, settings, setWidgetSettings, embed, widget } = this.props;
+    const {
+      className,
+      data,
+      settings,
+      setWidgetSettings,
+      embed,
+      widget
+    } = this.props;
     return (
       <NumberedList
-        className="locations-list"
+        className={className}
         data={data}
         settings={{
           ...settings,
@@ -27,6 +34,7 @@ class WidgetNumberedList extends PureComponent {
 }
 
 WidgetNumberedList.propTypes = {
+  className: PropTypes.string,
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   setWidgetSettings: PropTypes.func.isRequired,
