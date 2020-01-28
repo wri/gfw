@@ -37,10 +37,6 @@ define(
         name: 'GFW Fires inquiry',
         placeholder: 'How can we help you?'
       },
-      'gfw-climate-inquiry': {
-        name: 'GFW Climate inquiry',
-        placeholder: 'How can we help you?'
-      },
       'general-inquiry': {
         name: 'General inquiry',
         placeholder: 'How can we help you?'
