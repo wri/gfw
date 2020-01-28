@@ -191,7 +191,7 @@ const selectPTWDataOld = state => {
 
 const filterPTWData = createSelector(
   [
-    process.env.FEATURE_ENV === 'stagsing' ? selectPTWData : selectPTWDataOld,
+    process.env.FEATURE_ENV === 'staging' ? selectPTWData : selectPTWDataOld,
     selectPTWType
   ],
   (data, type) => {

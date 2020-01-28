@@ -62,7 +62,7 @@ class Explore extends PureComponent {
         <div className="content">
           <div className="row">
             <div className="column small-12">
-              {process.env.FEATURE_ENV === 'stagings' ? (
+              {process.env.FEATURE_ENV === 'staging' ? (
                 <div className="description">
                   {section === 'placesToWatch' ? (
                     <Fragment>
