@@ -1,28 +1,39 @@
-import axios from 'axios';
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
+
+import { checkLoggedIn, getProfile } from 'services/user';
 
 export const setMyGFWLoading = createAction('setMyGFWLoading');
 export const setMyGFW = createAction('setMyGFW');
 
-export const checkLogged = createThunkAction(
-  'checkLogged',
-  () => (dispatch, state) => {
-    const { myGfw } = state();
-    if (myGfw && !myGfw.loading) {
+export const getUserProfile = createThunkAction(
+  'getUserProfile',
+  () => dispatch => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
       dispatch(setMyGFWLoading({ loading: true, error: false }));
-      axios
-        .get(`${process.env.GFW_API}/user`, { withCredentials: true })
-        .then(response => {
-          if (response.status < 400 && response.data) {
-            const { data } = response.data;
-            dispatch(
-              setMyGFW({
-                loggedIn: true,
-                ...(data && data.attributes),
-                id: data && data.id
-              })
-            );
-          }
+      checkLoggedIn()
+        .then(authResponse => {
+          getProfile(authResponse.data.id)
+            .then(response => {
+              if (response.status < 400 && response.data) {
+                const { data } = response.data;
+                dispatch(
+                  setMyGFW({
+                    loggedIn: true,
+                    id: authResponse.data.id,
+                    ...(data && data.attributes)
+                  })
+                );
+              }
+            })
+            .catch(() => {
+              dispatch(
+                setMyGFW({
+                  loggedIn: true,
+                  ...authResponse.data
+                })
+              );
+            });
         })
         .catch(() => {
           dispatch(setMyGFWLoading({ loading: false, error: true }));

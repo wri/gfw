@@ -1,0 +1,61 @@
+@import '~styles/settings.scss';
+
+.c-contact-form {
+  .subtitle {
+    margin-bottom: rem(30px);
+    font-size: rem(16px);
+  }
+
+  h4 {
+    font-size: rem(16px);
+    margin-bottom: rem(5px);
+  }
+
+  p {
+    margin-bottom: rem(20px);
+  }
+
+  input,
+  textarea,
+  select {
+    max-width: rem(350px);
+  }
+
+  .submit-btn {
+    min-width: rem(180px);
+  }
+
+  .feedback-message {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: #fff;
+    max-width: rem(500px);
+
+    h3 {
+      font-size: rem(20px);
+      margin-bottom: rem(30px);
+      text-transform: none;
+      opacity: 1;
+    }
+
+    p {
+      margin-bottom: rem(30px);
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: row;
+
+      .close-button {
+        background-color: $error;
+        margin-bottom: 0.625rem;
+        margin-left: 0.625rem;
+
+        &:hover {
+          background-color: #c4143b;
+        }
+      }
+    }
+  }
+}

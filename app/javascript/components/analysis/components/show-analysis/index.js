@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import * as modalMetaActions from 'components/modals/meta/meta-actions';
+import * as modalMetaActions from 'components/modals/meta/actions';
 import * as modalShareActions from 'components/modals/share/share-actions';
 import * as modalSourcesActions from 'components/modals/sources/actions';
 import { setMenuSettings } from 'components/map-menu/actions';

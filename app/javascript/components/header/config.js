@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { logout } from 'services/user';
 
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
@@ -59,23 +59,14 @@ export default {
     },
     {
       label: 'My profile',
-      extLink: '/my_gfw'
+      path: '/my_gfw'
     },
     {
       label: 'Logout',
       extLink: '/auth/logout',
       onSelect: e => {
         e.preventDefault();
-        axios
-          .get(`${process.env.GFW_API}/auth/logout`, { withCredentials: true })
-          .then(response => {
-            if (response.status < 400) {
-              localStorage.removeItem('mygfw_token');
-              window.location.reload();
-            } else {
-              console.warn('Failed to logout');
-            }
-          });
+        logout();
       }
     }
   ],

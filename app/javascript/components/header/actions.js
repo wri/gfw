@@ -1,4 +1,4 @@
-import { createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'utils/redux';
 import { SEARCH } from 'router';
 
 export const setQueryToUrl = createThunkAction(

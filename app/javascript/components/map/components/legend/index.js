@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
 import { track } from 'app/analytics';
 
-import * as modalActions from 'components/modals/meta/meta-actions';
+import * as modalActions from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
 
 import Component from './component';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
 
-import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/actions';
 import Component from './component';
 
 class DatasetsMenuContainer extends PureComponent {

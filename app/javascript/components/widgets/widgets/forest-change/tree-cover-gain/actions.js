@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import { getGainGrouped } from 'services/forest-data-old';
 
@@ -9,8 +9,8 @@ export const getData = ({ params }) => {
     adm1: adm1 && !adm2 ? null : adm1,
     adm2: null
   };
-  return axios.all([getGainGrouped({ ...rest, ...parentLocation })]).then(
-    axios.spread(gainResponse => {
+  return all([getGainGrouped({ ...rest, ...parentLocation })]).then(
+    spread(gainResponse => {
       let groupKey = 'iso';
       if (adm1) groupKey = 'adm1';
       if (adm2) groupKey = 'adm2';
