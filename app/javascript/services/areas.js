@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { apiRequest } from 'utils/request';
+import { apiAuthRequest } from 'utils/request';
 import compact from 'lodash/compact';
 import {
   postSubscription,
@@ -11,7 +11,7 @@ const REQUEST_URL = '/v2/area';
 
 export const getAreasProvider = () =>
   all([
-    apiRequest.get(REQUEST_URL, {
+    apiAuthRequest.get(REQUEST_URL, {
       withCredentials: true
     }),
     getSubscriptions()
@@ -101,7 +101,7 @@ export const getAreasProvider = () =>
   );
 
 export const getAreaProvider = id =>
-  apiRequest
+  apiAuthRequest
     .get(`${REQUEST_URL}/${id}`, {
       withCredentials: true
     })
@@ -118,7 +118,7 @@ export const setAreasProvider = (data, method) => {
   const url =
     method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${data.id}`);
 
-  return apiRequest({
+  return apiAuthRequest({
     method,
     url,
     data,
@@ -198,19 +198,19 @@ export const deleteAreaProvider = ({ id, subscriptionId }) => {
   if (subscriptionId) {
     return deleteSubscription(subscriptionId)
       .then(() =>
-        apiRequest.delete(REQUEST_URL.concat(`/${id}`), {
+        apiAuthRequest.delete(REQUEST_URL.concat(`/${id}`), {
           withCredentials: true
         })
       )
       .catch(() =>
-        apiRequest.delete(REQUEST_URL.concat(`/${id}`), {
+        apiAuthRequest.delete(REQUEST_URL.concat(`/${id}`), {
           withCredentials: true
         })
       );
   }
 
   if (id) {
-    return apiRequest.delete(REQUEST_URL.concat(`/${id}`), {
+    return apiAuthRequest.delete(REQUEST_URL.concat(`/${id}`), {
       withCredentials: true
     });
   }
