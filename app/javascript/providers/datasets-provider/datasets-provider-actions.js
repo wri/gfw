@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
@@ -174,6 +174,26 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       // params selector config
                       ...(params_config && {
                         paramsSelectorConfig: params_config.map(p => ({
+                          ...p,
+                          ...(p.key.includes('thresh') && {
+                            sentence:
+                              'Displaying {name} with {selector} canopy density',
+                            options: thresholdOptions
+                          }),
+                          ...(p.min &&
+                            p.max && {
+                            options: Array.from(
+                              Array(p.max - p.min + 1).keys()
+                            ).map(o => ({
+                              label: o + p.min,
+                              value: o + p.min
+                            }))
+                          })
+                        }))
+                      }),
+                      // decode params selector config
+                      ...(decode_config && {
+                        decodeParamsSelectorConfig: decode_config.map(p => ({
                           ...p,
                           ...(p.key.includes('thresh') && {
                             sentence:

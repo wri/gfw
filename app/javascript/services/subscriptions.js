@@ -1,24 +1,13 @@
-import axios from 'axios';
-
-const REQUEST_URL = `${process.env.GFW_API}/subscriptions`;
+import { apiAuthRequest } from 'utils/request';
 
 export const postSubscription = (data, method) =>
-  axios({
+  apiAuthRequest({
     method,
-    headers: {
-      'content-type': 'application/json'
-    },
-    withCredentials: true,
     data: JSON.stringify(data),
-    url: method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${data.id}`)
+    url: method === 'post' ? '/subscriptions' : `/subscriptions/${data.id}`
   });
 
-export const getSubscriptions = () =>
-  axios.get(REQUEST_URL, {
-    withCredentials: true
-  });
+export const getSubscriptions = () => apiAuthRequest.get('/subscriptions');
 
 export const deleteSubscription = id =>
-  axios.delete(REQUEST_URL.concat(`/${id}`), {
-    withCredentials: true
-  });
+  apiAuthRequest.delete(`/subscriptions/${id}`);

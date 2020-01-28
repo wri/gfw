@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import { getLossGrouped, getExtentGrouped } from 'services/analysis-cached';
 import { getYearsRange } from 'components/widgets/utils/data';
@@ -107,39 +107,49 @@ export default {
       adm2: null
     };
 
-    return axios
-      .all([
-        getLossGrouped({ ...rest, ...parentLocation }),
-        getExtentGrouped({ ...rest, ...parentLocation })
-      ])
-      .then(
-        axios.spread((lossResponse, extentResponse) => {
-          const { data } = lossResponse.data;
-          let mappedData = [];
-          if (data && data.length) {
-            mappedData = data.map(item => {
-              const loss = item.area || 0;
-              return {
-                ...item,
-                loss
-              };
-            });
-          }
+    return all([
+      getLossGrouped({ ...rest, ...parentLocation }),
+      getExtentGrouped({ ...rest, ...parentLocation })
+    ]).then(
+      spread((lossResponse, extentResponse) => {
+        const { data } = lossResponse.data;
+        let mappedData = [];
+        if (data && data.length) {
+          mappedData = data.map(item => {
+            const loss = item.area || 0;
+            return {
+              ...item,
+              loss
+            };
+          });
+        }
 
-          const { startYear, endYear, range } = getYearsRange(mappedData);
-          return {
-            loss: mappedData,
-            extent: extentResponse.data.data,
-            settings: {
-              startYear,
-              endYear
-            },
-            options: {
-              years: range
-            }
-          };
-        })
-      );
+        const { startYear, endYear, range } = getYearsRange(mappedData);
+        return {
+          loss: mappedData,
+          extent: extentResponse.data.data,
+          settings: {
+            startYear,
+            endYear
+          },
+          options: {
+            years: range
+          }
+        };
+      })
+    );
+  },
+  getDataURL: params => {
+    const { adm0, adm1, adm2, ...rest } = params || {};
+    const parentLocation = {
+      adm0: adm0 && !adm1 ? null : adm0,
+      adm1: adm1 && !adm2 ? null : adm1,
+      adm2: null
+    };
+    return [
+      getLossGrouped({ ...rest, ...parentLocation, download: true }),
+      getExtentGrouped({ ...rest, ...parentLocation, download: true })
+    ];
   },
   getWidgetProps
 };

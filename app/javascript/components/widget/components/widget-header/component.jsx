@@ -67,7 +67,8 @@ class WidgetHeader extends PureComponent {
               handleShowMap={handleShowMap}
             />
           )}
-          {showDownloadBtn && (
+          {!simple &&
+            (showDownloadBtn || process.env.FEATURE_ENV === 'staging') && (
             <WidgetDownloadButton downloadLink={downloadLink} />
           )}
           {showSettingsBtn && (

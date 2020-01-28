@@ -70,5 +70,6 @@ export default {
   },
   getData: params =>
     getBiomassRanking(params).then(res => res.data && res.data.rows),
+  getDataURL: params => [getBiomassRanking({ ...params, download: true })],
   getWidgetProps
 };

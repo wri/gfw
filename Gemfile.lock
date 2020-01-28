@@ -368,25 +368,6 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.5)
       trollop (~> 2.1)
-    redis (4.0.3)
-    redis-actionpack (5.0.2)
-      actionpack (>= 4.0, < 6)
-      redis-rack (>= 1, < 3)
-      redis-store (>= 1.1.0, < 2)
-    redis-activesupport (5.0.4)
-      activesupport (>= 3, < 6)
-      redis-store (>= 1.3, < 2)
-    redis-namespace (1.6.0)
-      redis (>= 3.0.4)
-    redis-rack (2.0.4)
-      rack (>= 1.5, < 3)
-      redis-store (>= 1.2, < 2)
-    redis-rails (5.0.2)
-      redis-actionpack (>= 5.0, < 6)
-      redis-activesupport (>= 5.0, < 6)
-      redis-store (>= 1.2, < 2)
-    redis-store (1.5.0)
-      redis (>= 2.2, < 5)
     regexp_parser (1.2.0)
     representable (3.0.4)
       declarative (< 0.1.0)
@@ -458,7 +439,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
-    useragent (0.16.10)
     vcr (4.0.0)
     web-console (3.7.0)
       actionview (>= 5.0)
@@ -498,9 +478,6 @@ DEPENDENCIES
   rails (= 5.2.2.1)
   rails-controller-testing
   rails_12factor
-  redis
-  redis-namespace
-  redis-rails
   responders (~> 2.0)
   rspec-rails (~> 3.8.1)
   shoulda-matchers
@@ -512,7 +489,6 @@ DEPENDENCIES
   typhoeus
   uglifier (~> 4.1.19)
   unf
-  useragent
   vcr
   web-console (~> 3.7)
   webpacker (~> 3.5.5)

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import { getFAODeforest, getFAODeforestRank } from 'services/forest-data';
 
@@ -46,8 +46,8 @@ export default {
     page: 0
   },
   getData: params =>
-    axios.all([getFAODeforest(params), getFAODeforestRank(params)]).then(
-      axios.spread((getFAODeforestResponse, getFAODeforestRankResponse) => {
+    all([getFAODeforest(params), getFAODeforestRank(params)]).then(
+      spread((getFAODeforestResponse, getFAODeforestRankResponse) => {
         const fao = getFAODeforestResponse.data.rows;
         const rank = getFAODeforestRankResponse.data.rows;
         return {
@@ -56,5 +56,9 @@ export default {
         };
       })
     ),
+  getDataURL: params => [
+    getFAODeforest({ ...params, download: true }),
+    getFAODeforestRank({ ...params, download: true })
+  ],
   getWidgetProps
 };

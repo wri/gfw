@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
+import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   getExtentGrouped,
@@ -93,52 +94,32 @@ export default {
   },
   whitelistType: 'glad',
   whitelists: {
-    adm0: [
-      'BRA',
-      'COL',
-      'ECU',
-      'GUF',
-      'GUY',
-      'PER',
-      'SUR',
-      'BDI',
-      'CMR',
-      'CAF',
-      'GNQ',
-      'GAB',
-      'RWA',
-      'UGA',
-      'IDN',
-      'MYS',
-      'PNG',
-      'VEN',
-      'TLS',
-      'COD',
-      'COG'
-    ]
+    adm0: tropicalIsos
   },
   getData: params =>
-    axios
-      .all([
-        fetchGladAlerts({ ...params, grouped: true }),
-        fetchGLADLatest(params),
-        getExtentGrouped(params)
-      ])
-      .then(
-        axios.spread((alerts, latest, extent) => {
-          const { data } = alerts.data;
-          const areas = extent.data.data;
-          const latestDate = latest.attributes && latest.attributes.updatedAt;
+    all([
+      fetchGladAlerts({ ...params, grouped: true }),
+      fetchGLADLatest(params),
+      getExtentGrouped(params)
+    ]).then(
+      spread((alerts, latest, extent) => {
+        const { data } = alerts.data;
+        const areas = extent.data.data;
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
 
-          return data && extent && latest
-            ? {
-              alerts: data,
-              extent: areas,
-              latest: latestDate,
-              settings: { latestDate }
-            }
-            : {};
-        })
-      ),
+        return data && extent && latest
+          ? {
+            alerts: data,
+            extent: areas,
+            latest: latestDate,
+            settings: { latestDate }
+          }
+          : {};
+      })
+    ),
+  getDataURL: params => [
+    fetchGladAlerts({ ...params, download: true }),
+    getExtentGrouped({ ...params, download: true })
+  ],
   getWidgetProps
 };

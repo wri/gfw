@@ -1,4 +1,5 @@
-import gfwClimate from 'assets/logos/gfw-climate.png';
+import { logout } from 'services/user';
+
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
@@ -51,12 +52,25 @@ export default {
       path: '/about'
     }
   ],
-  apps: [
+  myGfwLinks: [
     {
-      label: 'GFW Climate',
-      extLink: 'https://climate.globalforestwatch.org',
-      image: gfwClimate
+      label: 'My subscriptions',
+      extLink: '/my_gfw/subscriptions'
     },
+    {
+      label: 'My profile',
+      path: '/my_gfw'
+    },
+    {
+      label: 'Logout',
+      extLink: '/auth/logout',
+      onSelect: e => {
+        e.preventDefault();
+        logout();
+      }
+    }
+  ],
+  apps: [
     {
       label: 'GFW Fires',
       extLink: 'http://fires.globalforestwatch.org',

@@ -110,5 +110,14 @@ export default {
       return mappedData;
     });
   },
+  getDataURL: params => {
+    const { adm0, adm1, adm2, ...rest } = params || {};
+    const parentLocation = {
+      adm0: adm0 && !adm1 ? null : adm0,
+      adm1: adm1 && !adm2 ? null : adm1,
+      adm2: null
+    };
+    return [getExtentGrouped({ ...rest, ...parentLocation, download: true })];
+  },
   getWidgetProps
 };

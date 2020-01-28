@@ -1,7 +1,7 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-import { updateUserProfile } from 'services/user';
+import { updateProfile } from 'services/user';
 import { setMyGFW } from 'providers/mygfw-provider/actions';
 
 export const setProfileSaving = createAction('setProfileSaving');
@@ -51,7 +51,7 @@ export const saveProfile = createThunkAction(
         signUpForTesting: signUpForTesting ? 'true' : false
       };
 
-      updateUserProfile(id, postData)
+      updateProfile(id, postData)
         .then(response => {
           if (response.data && response.data.data) {
             const { attributes } = response.data.data;

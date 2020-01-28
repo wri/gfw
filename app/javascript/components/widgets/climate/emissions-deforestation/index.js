@@ -1,6 +1,6 @@
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
-import tropicalIsos from 'data/tropical-isos.json';
+import biomassLossIsos from 'data/biomass-isos.json';
 
 import { getYearsRange } from 'components/widgets/utils/data';
 import getWidgetProps from './selectors';
@@ -67,7 +67,7 @@ export default {
     endYear: 2018
   },
   whitelists: {
-    adm0: tropicalIsos
+    adm0: biomassLossIsos
   },
   getData: params =>
     fetchAnalysisEndpoint({

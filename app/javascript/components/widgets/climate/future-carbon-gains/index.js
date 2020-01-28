@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import { getEmissions } from 'services/climate';
 
 import getWidgetProps from './selectors';
@@ -77,8 +77,8 @@ export default {
     ]
   },
   getData: params =>
-    axios.all([...getEmissions({ ...params })]).then(
-      axios.spread(
+    all([...getEmissions({ ...params })]).then(
+      spread(
         (
           cYSF,
           cMASF,
@@ -107,5 +107,6 @@ export default {
         }
       )
     ),
+  getDataURL: params => getEmissions({ ...params, download: true }),
   getWidgetProps
 };

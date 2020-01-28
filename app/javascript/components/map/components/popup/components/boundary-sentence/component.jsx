@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
+import { translateText } from 'utils/transifex';
+
+import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import './styles.scss';
 
@@ -20,24 +23,38 @@ class BoundarySentence extends Component {
       name = data[Object.keys(data).find(k => k.includes('name'))];
     }
     const area = data[Object.keys(data).find(k => k.includes('area'))];
+    const locationNameTranslated = translateText(name);
 
-    return data ? (
-      <div className="c-boundary-sentence">
-        <b>{name}</b>
-        {', '}
-        {data.level === 2 ? (
-          <button onClick={this.handleSetAnalysisView}>{data.name_1}</button>
-        ) : null}
-        {data.level === 2 && ', '}
-        {data.level > 0 ? (
-          <button onClick={this.handleSetAnalysisView}>{data.name_0}</button>
-        ) : null}
-        {data.level > 0 && ', '}
-        {'with a total area of '}
-        <b>{formatNumber({ num: area, unit: 'ha' })}</b>
-        {'.'}
-      </div>
-    ) : null;
+    let locationNames = [locationNameTranslated];
+
+    if (data.level === 2) {
+      locationNames = [
+        locationNameTranslated,
+        translateText(data.name_1),
+        translateText(data.name_0)
+      ];
+    } else if (data.level === 1) {
+      locationNames = [locationNameTranslated, translateText(data.name_0)];
+    }
+
+    const locationName = locationNames.join(', ');
+
+    const params = {
+      location: locationName,
+      area: formatNumber({ num: area, unit: 'ha' })
+    };
+
+    const sentence = translateText('{location}, with a total area of {area}');
+
+    return (
+      <DynamicSentence
+        className="c-boundary-sentence"
+        sentence={{
+          sentence,
+          params
+        }}
+      />
+    );
   }
 }
 

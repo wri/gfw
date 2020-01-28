@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import moment from 'moment';
 import { getYearsRange } from 'components/widgets/utils/data';
 
@@ -85,37 +85,37 @@ export default {
     checkStatus: true
   },
   getData: params =>
-    axios
-      .all([
-        getLoss({ ...params, landCategory: 'tsc', tsc: true }),
-        getExtent({ ...params })
-      ])
-      .then(
-        axios.spread((loss, extent) => {
-          let data = {};
-          if (loss && loss.data && extent && extent.data) {
-            data = {
-              loss: loss.data.data.filter(
-                d => d.tcs_driver__type !== 'Unknown'
-              ),
-              extent: (loss.data.data && extent.data.data[0].value) || 0
-            };
-          }
-
-          const { startYear, range } = getYearsRange(data.loss);
-
-          return {
-            ...data,
-            settings: {
-              startYear,
-              endYear: 2015
-            },
-            options: {
-              years: range.filter(y => y.value <= 2015)
-            }
+    all([
+      getLoss({ ...params, landCategory: 'tsc', tsc: true }),
+      getExtent({ ...params })
+    ]).then(
+      spread((loss, extent) => {
+        let data = {};
+        if (loss && loss.data && extent && extent.data) {
+          data = {
+            loss: loss.data.data.filter(d => d.tcs_driver__type !== 'Unknown'),
+            extent: (loss.data.data && extent.data.data[0].value) || 0
           };
-        })
-      ),
+        }
+
+        const { startYear, range } = getYearsRange(data.loss);
+
+        return {
+          ...data,
+          settings: {
+            startYear,
+            endYear: 2015
+          },
+          options: {
+            years: range.filter(y => y.value <= 2015)
+          }
+        };
+      })
+    ),
+  getDataURL: params => [
+    getLoss({ ...params, forestType: 'tsc', tsc: true, download: true }),
+    getExtent({ ...params, download: true })
+  ],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

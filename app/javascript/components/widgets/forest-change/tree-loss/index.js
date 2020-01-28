@@ -1,10 +1,16 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
 import { getYearsRange } from 'components/widgets/utils/data';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import getWidgetProps from './selectors';
+
+const getGlobalLocation = params => ({
+  adm0: params.type === 'global' ? null : params.adm0,
+  adm1: params.type === 'global' ? null : params.adm1,
+  adm2: params.type === 'global' ? null : params.adm2
+});
 
 export const getDataAPI = params =>
   fetchAnalysisEndpoint({
@@ -142,32 +148,39 @@ export default {
       type === 'global'
         ? getLossGrouped({ ...params, ...globalLocation })
         : getLoss({ ...params, ...globalLocation });
-    return axios
-      .all([lossFetch, getExtent({ ...params, ...globalLocation })])
-      .then(
-        axios.spread((loss, extent) => {
-          let data = {};
-          if (loss && loss.data && extent && extent.data) {
-            data = {
-              loss: loss.data.data,
-              extent: (loss.data.data && extent.data.data[0].extent) || 0
-            };
-          }
-
-          const { startYear, endYear, range } = getYearsRange(data.loss);
-
-          return {
-            ...data,
-            settings: {
-              startYear,
-              endYear
-            },
-            options: {
-              years: range
-            }
+    return all([lossFetch, getExtent({ ...params, ...globalLocation })]).then(
+      spread((loss, extent) => {
+        let data = {};
+        if (loss && loss.data && extent && extent.data) {
+          data = {
+            loss: loss.data.data,
+            extent: (loss.data.data && extent.data.data[0].extent) || 0
           };
-        })
-      );
+        }
+
+        const { startYear, endYear, range } = getYearsRange(data.loss);
+
+        return {
+          ...data,
+          settings: {
+            startYear,
+            endYear
+          },
+          options: {
+            years: range
+          }
+        };
+      })
+    );
+  },
+  getDataURL: params => {
+    const globalLocation = getGlobalLocation(params);
+    return [
+      params.type === 'global'
+        ? getLossGrouped({ ...params, ...globalLocation, download: true })
+        : getLoss({ ...params, ...globalLocation, download: true }),
+      getExtent({ ...params, download: true })
+    ];
   },
   getWidgetProps,
   parseInteraction: (payload = {}) => {

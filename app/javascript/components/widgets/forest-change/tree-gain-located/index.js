@@ -1,5 +1,5 @@
 import { getExtentGrouped, getGainGrouped } from 'services/analysis-cached';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import getWidgetProps from './selectors';
 
@@ -68,8 +68,8 @@ export default {
     ifl: 2000
   },
   getData: params =>
-    axios.all([getExtentGrouped(params), getGainGrouped(params)]).then(
-      axios.spread((extentGrouped, gainGrouped) => {
+    all([getExtentGrouped(params), getGainGrouped(params)]).then(
+      spread((extentGrouped, gainGrouped) => {
         let groupKey = 'iso';
         if (params.adm0) groupKey = 'adm1';
         if (params.adm1) groupKey = 'adm2';
@@ -99,5 +99,9 @@ export default {
         };
       })
     ),
+  getDataURL: params => [
+    getExtentGrouped({ ...params, download: true }),
+    getGainGrouped({ ...params, download: true })
+  ],
   getWidgetProps
 };

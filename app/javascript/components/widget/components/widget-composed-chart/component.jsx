@@ -13,7 +13,8 @@ class WidgetComposedChart extends Component {
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
     active: PropTypes.bool,
-    simple: PropTypes.bool
+    simple: PropTypes.bool,
+    barBackground: PropTypes.string
   };
 
   shouldComponentUpdate(nextProps) {
@@ -46,7 +47,7 @@ class WidgetComposedChart extends Component {
   }, 100);
 
   render() {
-    const { data, config, active, simple } = this.props;
+    const { data, config, active, simple, barBackground } = this.props;
 
     return (
       <div className="c-widget-composed-chart">
@@ -57,6 +58,7 @@ class WidgetComposedChart extends Component {
           handleMouseMove={this.handleMouseMove}
           handleMouseLeave={this.handleMouseLeave}
           backgroundColor={active ? '#fefedc' : ''}
+          barBackground={barBackground}
           simple={simple}
         />
       </div>

@@ -9,7 +9,7 @@ import reducerRegistry from 'app/registry';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { setMapSettings as setMapState } from 'components/map/actions';
-import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setShareModal } from 'components/modals/share/share-actions';
 
 import { getWidgetDatasets, getPolynameDatasets } from './utils/config';

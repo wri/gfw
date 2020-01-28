@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import moment from 'moment';
 
 import { fetchFiresAlerts, fetchFiresLatest } from 'services/alerts';
@@ -271,12 +271,13 @@ export default {
     ]
   },
   getData: params =>
-    axios.all([fetchFiresAlerts(params), fetchFiresLatest(params)]).then(
-      axios.spread((alerts, latest) => {
+    all([fetchFiresAlerts(params), fetchFiresLatest(params)]).then(
+      spread((alerts, latest) => {
         const { data } = alerts.data;
         return { alerts: data, latest } || {};
       })
     ),
+  getDataURL: params => [fetchFiresAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

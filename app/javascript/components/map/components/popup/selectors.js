@@ -73,7 +73,7 @@ export const getCardData = createSelector(
       return null;
     }
     const { data, layer } = interaction;
-    const { interactionConfig } = layer || {};
+    const { interactionConfig, customMeta } = layer || {};
     const articleData =
       interactionConfig &&
       interactionConfig.output &&
@@ -91,20 +91,22 @@ export const getCardData = createSelector(
       }, {});
     const { readMoreLink } = articleData || {};
 
-    const readMoreBtn = {
-      text: 'READ MORE',
-      extLink: readMoreLink,
-      theme: `theme-button-small ${data.bbox ? 'theme-button-light' : ''}`
-    };
-
-    const buttons = data.bbox
-      ? [readMoreBtn].concat([
+    const buttons = readMoreLink
+      ? [
         {
-          text: 'ZOOM',
-          theme: 'theme-button-small'
+          text: 'READ MORE',
+          extLink: readMoreLink,
+          theme: `theme-button-small ${data.bbox ? 'theme-button-light' : ''}`
         }
-      ])
-      : [readMoreBtn];
+      ]
+      : [];
+
+    if (data.bbox) {
+      buttons.push({
+        text: 'ZOOM',
+        theme: 'theme-button-small'
+      });
+    }
 
     let newBbox = data.bbox && JSON.parse(data.bbox).coordinates[0];
     if (newBbox) {
@@ -112,8 +114,34 @@ export const getCardData = createSelector(
       newBbox = bbox(lineString(bboxCoords));
     }
 
+    const splitGridId = data && data.grid_id && data.grid_id.split('_');
+    const locationFromGridId =
+      splitGridId &&
+      `${splitGridId[0]}${splitGridId[2] ? `, ${splitGridId[2]}` : ''}`;
+    const meta = customMeta && customMeta[data.type];
+    const locationName = locationFromGridId.toUpperCase();
+
     return {
       ...articleData,
+      ...(articleData.tag &&
+        meta && {
+        tag: meta.label,
+        tagColor: (meta && meta.color) || layer.color
+      }),
+      ...(!articleData.title &&
+        meta && {
+        title: `Place to Watch: ${meta.label}`
+      }),
+      ...(!articleData.summary &&
+        locationFromGridId &&
+        meta && {
+        summary: `FOREST CLEARING IN ${
+          locationName === 'SEA' ? 'SE Asia' : locationName
+        }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+          meta.label
+        }.`,
+        showFullSummary: true
+      }),
       ...(bbox && {
         bbox: newBbox
       }),

@@ -1,4 +1,4 @@
-import { createThunkAction, createAction } from 'redux-tools';
+import { createThunkAction, createAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 export const setMapLoading = createAction('setMapLoading');

@@ -40,6 +40,7 @@
     "main": "#d67828",
     "species": {
       "Oil Palm": "#fdada9",
+      "Oil Palm ": "#fdada9",
       "Wood fiber / Timber": "#98a7c4",
       "Rubber": "#9993a3",
       "Fruit": "#dada95",
@@ -103,5 +104,9 @@
     "ramp": ["#A878F3", "#7C38C5"],
     "male": "#A878F3",
     "female": "#7C38C5"
+  },
+  "biodiversity": {
+    "main": "#6d00e1",
+    "ramp": ["#6d00e1", "#9d36f7", "#c26dfe", "#dfa4ff", "#eccafc"]
   }
 }

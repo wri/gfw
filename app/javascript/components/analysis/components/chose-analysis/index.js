@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CancelToken } from 'axios';
+import { cancelToken } from 'utils/request';
 
 import * as ownActions from 'components/analysis/actions';
 import * as modalActions from 'components/modals/sources/actions';
@@ -123,7 +123,7 @@ class ChoseAnalysisContainer extends PureComponent {
     if (this.uploadShape) {
       this.uploadShape.cancel();
     }
-    this.uploadShape = CancelToken.source();
+    this.uploadShape = cancelToken();
     this.props.uploadShape({
       shape: file,
       onCheckUpload: this.handleCheckUpload,

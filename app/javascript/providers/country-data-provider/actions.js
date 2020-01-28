@@ -1,6 +1,6 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { parseGadm36Id } from 'utils/format';
-import axios from 'axios';
+import { all, spread } from 'axios';
 import uniqBy from 'lodash/uniqBy';
 
 import {
@@ -27,10 +27,9 @@ export const getCountries = createThunkAction(
   'getCountries',
   () => dispatch => {
     dispatch(setCountriesLoading(true));
-    axios
-      .all([getCountriesProvider(), getFAOCountriesProvider()])
+    all([getCountriesProvider(), getFAOCountriesProvider()])
       .then(
-        axios.spread((gadm36Countries, faoCountries) => {
+        spread((gadm36Countries, faoCountries) => {
           dispatch(setGadmCountries(gadm36Countries.data.rows));
           dispatch(setFAOCountries(faoCountries.data.rows));
           dispatch(setCountries(gadm36Countries.data.rows));

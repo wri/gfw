@@ -1,4 +1,7 @@
-import { getGlobalLandCover } from 'services/forest-data';
+import {
+  getGlobalLandCover,
+  getGlobalLandCoverURL
+} from 'services/forest-data';
 
 import getWidgetProps from './selectors';
 
@@ -40,5 +43,6 @@ export default {
       const data = response.data.rows;
       return data;
     }),
+  getDataURL: params => [getGlobalLandCoverURL({ ...params })],
   getWidgetProps
 };

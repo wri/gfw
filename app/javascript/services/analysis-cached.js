@@ -1,8 +1,9 @@
-import axios from 'axios';
-import moment from 'moment';
+import { apiRequest, cartoRequest } from 'utils/request';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import DATASETS from 'data/analysis-datasets.json';
+import snakeCase from 'lodash/snakeCase';
+import moment from 'moment';
 
 const {
   ANNUAL_ADM0_SUMMARY,
@@ -31,8 +32,6 @@ const {
   GLAD_GEOSTORE_WEEKLY,
   GLAD_GEOSTORE_WHITELIST
 } = DATASETS[process.env.FEATURE_ENV];
-
-const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   loss:
@@ -211,12 +210,20 @@ export const getWHEREQuery = params => {
 };
 
 // summed loss for single location
-export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
+export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
   const { loss, lossTsc } = SQL_QUERIES;
   const url = `${getRequestUrl({ adm0, adm1, adm2, ...params })}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
-  return axios.get(url).then(response => ({
+
+  if (download) {
+    return {
+      name: 'treecover_loss__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -231,21 +238,28 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
 };
 
 // disaggregated loss for child of location
-export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
+export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
   const url = `${getRequestUrl({
-    ...params,
     adm0,
     adm1,
     adm2,
-    grouped: true
+    grouped: true,
+    ...params
   })}${SQL_QUERIES.lossGrouped}`
     .replace(
       /{location}/g,
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return axios.get(url).then(response => ({
+  if (download) {
+    return {
+      name: 'treecover_loss_by_region__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -259,18 +273,42 @@ export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
 };
 
 // summed extent for single location
-export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
-  const url = `${getRequestUrl({
-    ...params,
-    adm0,
-    adm1,
-    adm2,
-    summary: true
-  })}${SQL_QUERIES.extent}`
+export const getExtent = ({
+  adm0,
+  adm1,
+  adm2,
+  extentYear,
+  download,
+  forestType,
+  landCategory,
+  ...params
+}) => {
+  const url = `${getRequestUrl({ adm0, adm1, adm2, summary: true })}${
+    SQL_QUERIES.extent
+  }`
     .replace(/{extentYear}/g, extentYear)
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        iso: adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ...params
+      })
+    );
 
-  return axios.get(url).then(response => ({
+  if (download) {
+    return {
+      name: `treecover_extent_${extentYear}${
+        forestType ? `_in_${forestType}` : ''
+      }${landCategory ? `_in_${landCategory}` : ''}__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -288,6 +326,7 @@ export const getExtentGrouped = ({
   adm1,
   adm2,
   extentYear,
+  download,
   ...params
 }) => {
   const url = `${getRequestUrl({
@@ -305,7 +344,14 @@ export const getExtentGrouped = ({
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
 
-  return axios.get(url).then(response => ({
+  if (download) {
+    return {
+      name: `treecover_extent_${extentYear}_by_region__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -318,7 +364,7 @@ export const getExtentGrouped = ({
 };
 
 // summed gain for single location
-export const getGain = ({ adm0, adm1, adm2, ...params }) => {
+export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -329,7 +375,15 @@ export const getGain = ({ adm0, adm1, adm2, ...params }) => {
     '{WHERE}',
     getWHEREQuery({ adm0, adm1, adm2, ...params })
   );
-  return axios.get(url).then(response => ({
+
+  if (download) {
+    return {
+      name: 'treecover_gain_2000-2012__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -342,7 +396,7 @@ export const getGain = ({ adm0, adm1, adm2, ...params }) => {
 };
 
 // disaggregated gain for child of location
-export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
+export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -355,8 +409,16 @@ export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
       /{location}/g,
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
-  return axios.get(url).then(response => ({
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+
+  if (download) {
+    return {
+      name: 'treecover_gain_2000-2012_by_region__ha',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -375,6 +437,7 @@ export const getAreaIntersection = ({
   adm2,
   forestType,
   landCategory,
+  download,
   ...params
 }) => {
   const intersectionPolyname = forestTypes
@@ -402,7 +465,14 @@ export const getAreaIntersection = ({
       })
     );
 
-  return axios.get(url).then(response => ({
+  if (download) {
+    return {
+      name: `treecover_extent_in_${snakeCase(intersectionPolyname.label)}__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -421,6 +491,7 @@ export const getAreaIntersectionGrouped = ({
   adm2,
   forestType,
   landCategory,
+  download,
   ...params
 }) => {
   const intersectionPolyname = forestTypes
@@ -451,7 +522,16 @@ export const getAreaIntersectionGrouped = ({
       })
     );
 
-  return axios.get(url).then(response => ({
+  if (download) {
+    return {
+      name: `treecover_extent_in_${snakeCase(
+        intersectionPolyname.label
+      )}_by_region__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -469,6 +549,7 @@ export const fetchGladAlerts = ({
   adm2,
   tsc,
   grouped,
+  download,
   ...params
 }) => {
   const { glad } = SQL_QUERIES;
@@ -478,7 +559,8 @@ export const fetchGladAlerts = ({
     adm1,
     adm2,
     grouped,
-    glad: true
+    glad: true,
+    ...params
   })}${glad}`
     .replace(
       /{location}/g,
@@ -487,7 +569,15 @@ export const fetchGladAlerts = ({
         : getLocationSelect({ adm1, adm2, ...params })
     )
     .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
-  return axios.get(url).then(response => ({
+
+  if (download) {
+    return {
+      name: 'glad_alerts__count',
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -507,8 +597,8 @@ const lastFriday = moment()
   .format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
-  const url = `${process.env.GFW_API}/glad-alerts/latest`;
-  return axios
+  const url = '/glad-alerts/latest';
+  return apiRequest
     .get(url)
     .then(response => {
       const { date } = response.data.data[0].attributes;
@@ -532,11 +622,11 @@ export const fetchGLADLatest = () => {
 };
 
 export const getNonGlobalDatasets = () => {
-  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
+  const url = `/sql?q=${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
     buildPolynameSelects(true)
   );
-  return axios.get(url);
+  return cartoRequest.get(url);
 };
 
 export const getLocationPolynameWhitelist = params => {
@@ -546,5 +636,5 @@ export const getLocationPolynameWhitelist = params => {
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{polynames}', buildPolynameSelects())
     .replace('{WHERE}', getWHEREQuery(params));
-  return axios.get(url);
+  return apiRequest.get(url);
 };

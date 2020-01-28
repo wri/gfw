@@ -11,60 +11,6 @@
     "ANALYTICS_PROPERTY_ID": {
       "required": true
     },
-    "ANNUAL_ADM0_SUMMARY": {
-      "required": true
-    },
-    "ANNUAL_ADM1_SUMMARY": {
-      "required": true
-    },
-    "ANNUAL_ADM2_SUMMARY": {
-      "required": true
-    },
-    "ANNUAL_ADM0_CHANGE": {
-      "required": true
-    },
-    "ANNUAL_ADM1_CHANGE": {
-      "required": true
-    },
-    "ANNUAL_ADM2_CHANGE": {
-      "required": true
-    },
-    "GLAD_ADM0_SUMMARY": {
-      "required": true
-    },
-    "GLAD_ADM1_SUMMARY": {
-      "required": true
-    },
-    "GLAD_ADM2_SUMMARY": {
-      "required": true
-    },
-    "GLAD_ADM0_WEEKLY": {
-      "required": true
-    },
-    "GLAD_ADM1_WEEKLY": {
-      "required": true
-    },
-    "GLAD_ADM2_WEEKLY": {
-      "required": true
-    },
-    "GLAD_ADM2_DAILY": {
-      "required": true
-    },
-    "ANNUAL_GEOSTORE_SUMMARY": {
-      "required": true
-    },
-    "ANNUAL_GEOSTORE_CHANGE": {
-      "required": true
-    },
-    "GLAD_GEOSTORE_SUMMARY": {
-      "required": true
-    },
-    "GLAD_GEOSTORE_DAILY": {
-      "required": true
-    },
-    "GLAD_GEOSTORE_WEEKLY": {
-      "required": true
-    },
     "AWS_ACCESS_KEY_ID": {
       "required": true
     },

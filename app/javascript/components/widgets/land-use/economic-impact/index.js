@@ -185,5 +185,6 @@ export default {
       };
       return payload;
     }),
+  getDataURL: () => [getFAOEcoLive({ download: true })],
   getWidgetProps
 };

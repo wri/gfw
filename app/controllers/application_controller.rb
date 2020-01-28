@@ -2,14 +2,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  before_action :check_browser, if: proc { Rails.env.production? }
   before_action :check_production
-  before_action :cache_keys, if: proc { Rails.env.production? }
   before_action :set_metadata
-
-  def cache_keys
-    @cache_keys = $redis.keys('*')
-  end
 
   def check_production
     @is_production = Rails.env.production? || Rails.env.production_local?
@@ -49,6 +43,10 @@ class ApplicationController < ActionController::Base
       },
       thankyou: {
         title: 'Thank You'
+      },
+      my_gfw: {
+        title: 'My GFW',
+        desc: 'Create an account or log into My GFW. Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use.'
       },
       use: {
         title: 'Area of Interest',
@@ -128,12 +126,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def check_browser
-    unless UserAgentValidator.user_agent_supported? request.user_agent
-      redirect_to "/browser-support"
-    end
-  end
 
   def check_location
     if !params[:adm0] && params[:type] && params[:type] != 'global'

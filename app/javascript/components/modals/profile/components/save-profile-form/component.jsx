@@ -8,7 +8,7 @@ import { validateEmail } from 'utils/format';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
-import Checkbox from 'components/ui/checkbox-v2';
+import Checkbox from 'components/ui/checkbox';
 
 import formConfig from './config';
 

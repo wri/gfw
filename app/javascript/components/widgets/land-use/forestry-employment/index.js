@@ -34,5 +34,6 @@ export default {
   },
   getData: params =>
     getFAOEcoLive(params.token).then(response => response.data.rows),
+  getDataURL: () => [getFAOEcoLive({ download: true })],
   getWidgetProps
 };

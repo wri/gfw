@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';

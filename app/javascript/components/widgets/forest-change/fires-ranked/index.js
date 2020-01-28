@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import { fetchFiresAlertsGrouped, fetchFiresLatest } from 'services/alerts';
 
 import getWidgetProps from './selectors';
@@ -42,11 +42,14 @@ export default {
     layerEndDate: null
   },
   getData: params =>
-    axios.all([fetchFiresAlertsGrouped(params), fetchFiresLatest(params)]).then(
-      axios.spread((alerts, latest) => {
+    all([fetchFiresAlertsGrouped(params), fetchFiresLatest(params)]).then(
+      spread((alerts, latest) => {
         const { data } = alerts.data;
         return { alerts: data, latest: latest.attributes.updatedAt } || {};
       })
     ),
+  getDataURL: params => [
+    fetchFiresAlertsGrouped({ ...params, download: true })
+  ],
   getWidgetProps
 };

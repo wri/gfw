@@ -1,4 +1,4 @@
-import { createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'utils/redux';
 import { MAP } from 'app/router';
 
 export const setMainMapView = createThunkAction(

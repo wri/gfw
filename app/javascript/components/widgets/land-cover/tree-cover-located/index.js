@@ -143,5 +143,6 @@ export default {
       }
       return mappedData;
     }),
+  getDataURL: params => [getExtentGrouped({ ...params, download: true })],
   getWidgetProps
 };

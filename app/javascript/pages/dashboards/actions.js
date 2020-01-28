@@ -1,4 +1,4 @@
-import { createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 

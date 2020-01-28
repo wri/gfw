@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 
 import { getAreaProvider, getAreasProvider } from 'services/areas';
 

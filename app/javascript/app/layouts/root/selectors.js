@@ -1,12 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
 import { buildFullLocationName } from 'utils/format';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
-const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
-const selectMyGFWLoading = state => state.myGfw && state.myGfw.loading;
+const selectLoggedIn = state =>
+  state.myGfw && state.myGfw.data && state.myGfw.data.loggedIn;
+const selectLoggingIn = state => state.myGfw && state.myGfw.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectedCountries = state =>
   state.countryData && state.countryData.countries;
@@ -85,9 +85,9 @@ export const getMetadata = createSelector(
 
 export const getPageProps = createStructuredSelector({
   loggedIn: selectLoggedIn,
+  authenticating: selectLoggingIn,
   route: selectPageLocation,
   metadata: getMetadata,
   isGFW: getIsGFW,
-  myGfwLoading: selectMyGFWLoading,
   isTrase: getIsTrase
 });

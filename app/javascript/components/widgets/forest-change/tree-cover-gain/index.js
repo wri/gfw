@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import { getGainGrouped } from 'services/analysis-cached';
 
@@ -7,7 +7,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'treeCoverGain',
   title: {
-    global: 'Global Tree cover gain',
+    global: 'Global tree cover gain',
     initial: 'Tree cover gain in {location} compared to other areas'
   },
   categories: ['summary', 'forest-change'],
@@ -82,8 +82,8 @@ export default {
       adm1: adm1 && !adm2 ? null : adm1,
       adm2: null
     };
-    return axios.all([getGainGrouped({ ...rest, ...parentLocation })]).then(
-      axios.spread(gainResponse => {
+    return all([getGainGrouped({ ...rest, ...parentLocation })]).then(
+      spread(gainResponse => {
         let groupKey = 'iso';
         if (adm1) groupKey = 'adm1';
         if (adm2) groupKey = 'adm2';
@@ -108,5 +108,6 @@ export default {
       })
     );
   },
+  getDataURL: params => [getGainGrouped({ ...params, download: true })],
   getWidgetProps
 };

@@ -59,26 +59,11 @@ $ yarn start
 
 The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 
-### REDIS
-We have a local redis server for caching in production. We don't run this locally by default but if you want to test or develop on this feature you will need to install redis and run it:
-
-```bash
-$ brew install redis
-$ yarn redis
-```
-
 ## Deployment
 
 We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the staging site. Additionally you can deploy `develop` or feature branches to staging if desired.
 
 ![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
-
-#### Clear Redis cache
-If you need to clear the Redis cache after deploy, run these commands on your local terminal:
-```bash
-$ heroku redis:cli -a MY_APP_ID --confirm MY_APP_ID
-$ flushall
-```
 
 ## Releases
 
@@ -94,7 +79,7 @@ So how do you make a release on GFW?
 2. Run `npx release [type]` where type can be `major`, `minor`, `patch`, or `pre` (see [zeit docs](https://github.com/zeit/release) for more details).
 3. Follow the prompts to manage commits.
 4. You will be taken to github draft release editor with all your commits grouped and ready to go.
-5. Enter your title and include any extra info you want. 
+5. Enter your title and include any extra info you want.
 6. Publish!
 
 ## Layers

@@ -60,5 +60,6 @@ export default {
   },
   getData: params =>
     getSoilOrganicCarbon(params).then(res => res.data && res.data.rows),
+  getDataURL: params => [getSoilOrganicCarbon({ ...params, download: true })],
   getWidgetProps
 };

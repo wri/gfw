@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { track } from 'app/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
-import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
 
 import { getBasemapsProps } from './selectors';

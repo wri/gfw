@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { createAction, createThunkAction } from 'redux-tools';
+import { all, spread } from 'axios';
+import { createAction, createThunkAction } from 'utils/redux';
 
 import { getLocationPolynameWhitelist } from 'services/analysis-cached';
 
@@ -19,13 +19,12 @@ export const getWhitelist = createThunkAction(
   'getWhitelist',
   params => dispatch => {
     dispatch(setWhitelistLoading(true));
-    axios
-      .all([
-        getLocationPolynameWhitelist(params),
-        getLocationPolynameWhitelist({ ...params, glad: true })
-      ])
+    all([
+      getLocationPolynameWhitelist(params),
+      getLocationPolynameWhitelist({ ...params, glad: true })
+    ])
       .then(
-        axios.spread((annualResponse, gladResponse) => {
+        spread((annualResponse, gladResponse) => {
           const annual =
             annualResponse &&
             annualResponse.data &&

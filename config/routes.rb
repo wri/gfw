@@ -70,6 +70,9 @@ Gfw::Application.routes.draw do
   # thank you
   get '/thank-you' => 'thankyou#index'
 
+  # my gfw
+  get '/my_gfw' => 'my_gfw#index'
+
   # stories
   get '/stories' => 'stories#index'
   get '/stories/*all' => 'stories#index'
@@ -91,11 +94,6 @@ Gfw::Application.routes.draw do
 
   # subscribe
   get '/subscribe' => 'subscribe#index'
-
-  #cache
-  get '/cache/keys' => 'cache#keys'
-  post '/cache/add' => 'cache#add'
-  get '/cache/*id' => 'cache#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false

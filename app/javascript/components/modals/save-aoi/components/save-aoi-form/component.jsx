@@ -6,7 +6,7 @@ import cx from 'classnames';
 import { getLanguages } from 'utils/lang';
 import { validateEmail, validateURL } from 'utils/format';
 
-import Checkbox from 'components/ui/checkbox-v2';
+import Checkbox from 'components/ui/checkbox';
 import Loader from 'components/ui/loader';
 import Dropdown from 'components/ui/dropdown';
 import Button from 'components/ui/button';

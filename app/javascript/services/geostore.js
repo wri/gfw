@@ -1,18 +1,11 @@
-import axios from 'axios';
-
 import { getGoogleLangCode } from 'utils/lang';
-
-const REQUEST_URL = `${process.env.GFW_API}`;
-const QUERIES = {
-  geostore: '/geostore',
-  admin: '/v2/geostore/admin'
-};
+import { apiRequest } from 'utils/request';
 
 const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   let slug = type !== 'geostore' ? type : '';
   if (type === 'country') slug = 'admin';
 
-  return `${REQUEST_URL}/v2/geostore${slug ? `/${slug}` : ''}/${adm0}${
+  return `/v2/geostore${slug ? `/${slug}` : ''}/${adm0}${
     adm1 ? `/${adm1}` : ''
   }${adm2 ? `/${adm2}` : ''}${`?simplify=${!adm1 ? thresh : thresh / 10}`}`;
 };
@@ -25,32 +18,26 @@ export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
   }
   const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
 
-  return axios.get(url, { cancelToken: token });
+  return apiRequest.get(url, { cancelToken: token });
 };
 
-export const getGeostoreKey = (
-  geojson,
-  onUploadProgress,
-  onDownloadProgress
-) => {
-  const url = REQUEST_URL + QUERIES.geostore;
-  return axios({
+export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>
+  apiRequest({
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     data: {
       geojson
     },
-    url,
+    url: '/geostore',
     onUploadProgress,
     onDownloadProgress
   });
-};
 
 export const getGeodescriberService = ({ geojson, lang, token }) =>
   // for now we are forcing english until API works
-  axios({
+  apiRequest({
     method: 'post',
-    url: `${REQUEST_URL}/geodescriber/geom?lang=${getGoogleLangCode(
+    url: `/geodescriber/geom?lang=${getGoogleLangCode(
       lang
     )}&template=true&app=gfw`,
     data: {

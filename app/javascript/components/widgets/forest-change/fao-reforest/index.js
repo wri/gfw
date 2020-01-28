@@ -1,4 +1,4 @@
-import { getFAOExtent } from 'services/forest-data';
+import { getFAOReforest } from 'services/forest-data';
 
 import getWidgetProps from './selectors';
 
@@ -40,10 +40,11 @@ export default {
     page: 0
   },
   getData: params =>
-    getFAOExtent({ ...params }).then(response => {
+    getFAOReforest({ ...params }).then(response => {
       const data = response.data.rows;
       const hasCountryData = (data.length && data.find(d => d.iso)) || null;
       return hasCountryData ? data : {};
     }),
+  getDataURL: params => [getFAOReforest({ ...params, download: true })],
   getWidgetProps
 };

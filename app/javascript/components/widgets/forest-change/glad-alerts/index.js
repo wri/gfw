@@ -1,5 +1,6 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import moment from 'moment';
+import tropicalIsos from 'data/tropical-isos.json';
 
 import { fetchAnalysisEndpoint } from 'services/analysis';
 import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
@@ -8,7 +9,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'gladAlerts',
-  title: 'Deforestation Alerts in {location}',
+  title: 'Deforestation alerts in {location}',
   sentence: {
     default:
       'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
@@ -71,138 +72,7 @@ export default {
   ],
   whitelistType: 'glad',
   whitelists: {
-    adm0: [
-      'ABW',
-      'AGO',
-      'AIA',
-      'ARG',
-      'ATG',
-      'AUS',
-      'BDI',
-      'BEN',
-      'BES',
-      'BFA',
-      'BGD',
-      'BHS',
-      'BLM',
-      'BLZ',
-      'BOL',
-      'BRA',
-      'BRB',
-      'BRN',
-      'BTN',
-      'BWA',
-      'CAF',
-      'CHL',
-      'CHN',
-      'CIV',
-      'CMR',
-      'COD',
-      'COG',
-      'COL',
-      'COM',
-      'CRI',
-      'CUB',
-      'CUW',
-      'CYM',
-      'DMA',
-      'DOM',
-      'ECU',
-      'EGY',
-      'ESP',
-      'ETH',
-      'FJI',
-      'GAB',
-      'GHA',
-      'GIN',
-      'GLP',
-      'GMB',
-      'GNB',
-      'GNQ',
-      'GRD',
-      'GTM',
-      'GUF',
-      'GUY',
-      'HKG',
-      'HND',
-      'HTI',
-      'IDN',
-      'IND',
-      'IRN',
-      'JAM',
-      'JPN',
-      'KEN',
-      'KHM',
-      'KNA',
-      'LAO',
-      'LBR',
-      'LCA',
-      'LKA',
-      'LSO',
-      'MAC',
-      'MAF',
-      'MDG',
-      'MEX',
-      'MLI',
-      'MMR',
-      'MOZ',
-      'MSR',
-      'MTQ',
-      'MUS',
-      'MWI',
-      'MYS',
-      'MYT',
-      'NAM',
-      'NCL',
-      'NER',
-      'NGA',
-      'NIC',
-      'NPL',
-      'OMN',
-      'PAK',
-      'PAN',
-      'PER',
-      'PHL',
-      'PLW',
-      'PNG',
-      'PRI',
-      'PRY',
-      'REU',
-      'RUS',
-      'RWA',
-      'SDN',
-      'SEN',
-      'SGP',
-      'SLB',
-      'SLE',
-      'SLV',
-      'SOM',
-      'SSD',
-      'SUR',
-      'SWZ',
-      'SXM',
-      'SYC',
-      'TCA',
-      'TCD',
-      'TGO',
-      'THA',
-      'TLS',
-      'TTO',
-      'TWN',
-      'TZA',
-      'UGA',
-      'USA',
-      'VCT',
-      'VEN',
-      'VGB',
-      'VIR',
-      'VNM',
-      'VUT',
-      'YEM',
-      'ZAF',
-      'ZMB',
-      'ZWE'
-    ]
+    adm0: tropicalIsos
   },
   settings: {
     period: 'week',
@@ -210,40 +80,38 @@ export default {
   },
   getData: params => {
     if (params.status === 'pending') {
-      return axios
-        .all([
-          fetchAnalysisEndpoint({
-            ...params,
-            params,
-            name: 'glad-alerts',
-            slug: 'glad-alerts',
-            version: 'v1',
-            aggregate: true,
-            aggregateBy: 'week'
-          }),
-          fetchGLADLatest(params)
-        ])
-        .then(
-          axios.spread((alertsResponse, latestResponse) => {
-            const alerts = alertsResponse.data.data.attributes.value;
-            const latestDate = latestResponse.attributes.updatedAt;
+      return all([
+        fetchAnalysisEndpoint({
+          ...params,
+          params,
+          name: 'glad-alerts',
+          slug: 'glad-alerts',
+          version: 'v1',
+          aggregate: true,
+          aggregateBy: 'week'
+        }),
+        fetchGLADLatest(params)
+      ]).then(
+        spread((alertsResponse, latestResponse) => {
+          const alerts = alertsResponse.data.data.attributes.value;
+          const latestDate = latestResponse.attributes.updatedAt;
 
-            return {
-              alerts:
-                alerts &&
-                alerts.map(d => ({
-                  ...d,
-                  alerts: d.count
-                })),
-              latest: latestDate,
-              settings: { latestDate }
-            };
-          })
-        );
+          return {
+            alerts:
+              alerts &&
+              alerts.map(d => ({
+                ...d,
+                alerts: d.count
+              })),
+            latest: latestDate,
+            settings: { latestDate }
+          };
+        })
+      );
     }
 
-    return axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
-      axios.spread((alerts, latest) => {
+    return all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
+      spread((alerts, latest) => {
         const gladsData = alerts && alerts.data.data;
         let data = {};
         if (gladsData && latest) {
@@ -261,6 +129,7 @@ export default {
       })
     );
   },
+  getDataURL: params => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {
