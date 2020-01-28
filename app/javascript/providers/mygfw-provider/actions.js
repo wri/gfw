@@ -27,7 +27,12 @@ export const getUserProfile = createThunkAction(
               }
             })
             .catch(() => {
-              dispatch(setMyGFWLoading({ loading: false, error: true }));
+              dispatch(
+                setMyGFW({
+                  loggedIn: true,
+                  ...authResponse.data
+                })
+              );
             });
         })
         .catch(() => {
