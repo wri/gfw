@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { getSoilOrganicCarbon, getBiomassRanking } from 'services/climate';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getSoilOrganicCarbon({ ...params }),
@@ -29,3 +29,10 @@ export default ({ params }) =>
         };
       })
     );
+
+export const getDataURL = params => [
+  getSoilOrganicCarbon({ ...params, download: true }),
+  getBiomassRanking({ ...params, download: true })
+];
+
+export default getData;

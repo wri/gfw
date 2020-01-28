@@ -1,6 +1,6 @@
 export default {
   widget: 'treeLossGlobal',
-  title: 'Global Annual Tree cover loss',
+  title: 'Global annual tree cover loss',
   sentence: {
     initial:
       'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location}, equivalent to a {percent} decrease in tree cover since {extentYear} and {emissions} of CO\u2082 emissions.',

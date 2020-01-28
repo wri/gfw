@@ -27,7 +27,7 @@ class SectionAbout extends PureComponent {
               <li>- Education</li>
             </ul>
             <p className="text -paragraph -color-2 -light -spaced">
-              Listen to the {' '}
+              Listen to the{' '}
               <a
                 className="text -paragraph -color-4 -bold"
                 href="https://www.youtube.com/watch?v=ddDyu_l663k&feature=youtu.be"
@@ -49,7 +49,14 @@ class SectionAbout extends PureComponent {
               <h2 className="section-title">Small Grants Fund</h2>
               <ul className="list">
                 <p className="text -paragraph -color-2 -light -spaced">
-                  The scope of this year’s Small Grants Fund is on using near real-time data to combat deforestation. Winning proposals will clearly demonstrate how they intend to use GLAD deforestation and/or VIIRs fire alerts, made available through GFW tools, to curb deforestation through enforcement or advocacy. Please note that this year’s call also has geographic restrictions. Applicants should carefully read through the Guidelines for Applicants and Frequently Asked Questions for more details.
+                  The scope of this year’s Small Grants Fund is on using near
+                  real-time data to combat deforestation. Winning proposals will
+                  clearly demonstrate how they intend to use GLAD deforestation
+                  and/or VIIRs fire alerts, made available through GFW tools, to
+                  curb deforestation through enforcement or advocacy. Please
+                  note that this year’s call also has geographic restrictions.
+                  Applicants should carefully read through the Guidelines for
+                  Applicants and Frequently Asked Questions for more details.
                 </p>
                 <li>
                   - Read the 2020&nbsp;
@@ -61,7 +68,7 @@ class SectionAbout extends PureComponent {
                   >
                     Guidelines for Applicants
                   </a>
-                </li>    
+                </li>
                 <li>
                   - Review the&nbsp;
                   <a
@@ -86,7 +93,8 @@ class SectionAbout extends PureComponent {
                 </li>
               </ul>
               <p className="text -paragraph -color-2 -light -spaced">
-                The 2020 Small Grants Fund application is open from January 15th, 2020 – March 1st, 2020.&nbsp; 
+                The 2020 Small Grants Fund application is open from January
+                15th, 2020 – March 1st, 2020.&nbsp;
                 <a
                   className="text -paragraph -color-4 -bold"
                   href="https://gfw.smapply.io/"

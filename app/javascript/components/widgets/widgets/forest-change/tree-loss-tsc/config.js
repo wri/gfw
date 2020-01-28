@@ -11,7 +11,8 @@ export default {
     thresholds: true,
     startYears: true,
     endYears: true,
-    yearsRange: [2001, 2015]
+    yearsRange: [2001, 2015],
+    forestTypes: ['tsc']
   },
   datasets: [
     // loss tsc

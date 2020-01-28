@@ -218,6 +218,7 @@ class Widget extends PureComponent {
           <Component
             widget={widget}
             data={data}
+            dataURL={data}
             config={dataConfig}
             settings={settings}
             setWidgetsSettings={setWidgetsSettings}
