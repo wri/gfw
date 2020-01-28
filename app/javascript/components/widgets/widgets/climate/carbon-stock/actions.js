@@ -3,10 +3,7 @@ import { all, spread } from 'axios';
 import { getSoilOrganicCarbon, getBiomassRanking } from 'services/climate';
 
 export const getData = ({ params }) =>
-  all([
-    getSoilOrganicCarbon({ ...params }),
-    getBiomassRanking({ ...params })
-  ]).then(
+  all([getSoilOrganicCarbon(params), getBiomassRanking(params)]).then(
     spread((soilOrganicCarbon, aboveGroundBiomass) => {
       let level = 'iso';
       let paramLevel = 'adm0';
