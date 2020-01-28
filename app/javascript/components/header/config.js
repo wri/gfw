@@ -1,6 +1,5 @@
-import axios from 'axios';
+import { logout } from 'services/user';
 
-import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
@@ -60,32 +59,18 @@ export default {
     },
     {
       label: 'My profile',
-      extLink: '/my_gfw'
+      path: '/my_gfw'
     },
     {
       label: 'Logout',
       extLink: '/auth/logout',
       onSelect: e => {
         e.preventDefault();
-        axios
-          .get(`${process.env.GFW_API}/auth/logout`, { withCredentials: true })
-          .then(response => {
-            if (response.status < 400) {
-              localStorage.removeItem('mygfw_token');
-              window.location.reload();
-            } else {
-              console.warn('Failed to logout');
-            }
-          });
+        logout();
       }
     }
   ],
   apps: [
-    {
-      label: 'GFW Climate',
-      extLink: 'https://climate.globalforestwatch.org',
-      image: gfwClimate
-    },
     {
       label: 'GFW Fires',
       extLink: 'http://fires.globalforestwatch.org',

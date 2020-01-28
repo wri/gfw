@@ -15,7 +15,8 @@ const setMyGFWLoading = (state, { payload }) => ({
 const setMyGFW = (state, { payload }) => ({
   ...state,
   data: payload,
-  loading: false
+  loading: false,
+  error: false
 });
 
 export default {

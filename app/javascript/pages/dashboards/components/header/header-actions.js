@@ -1,11 +1,11 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import { getExtent, getLoss } from 'services/forest-data-old';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import max from 'lodash/max';
 import reverse from 'lodash/reverse';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 export const setHeaderLoading = createAction('setHeaderLoading');
 export const setHeaderData = createAction('setHeaderData');
@@ -14,21 +14,20 @@ export const getHeaderData = createThunkAction(
   'getHeaderData',
   params => dispatch => {
     dispatch(setHeaderLoading({ loading: true, error: false }));
-    axios
-      .all([
-        getExtent(params),
-        getExtent({ ...params, forestType: 'plantations' }),
-        getExtent({
-          ...params,
-          forestType: 'primary_forest',
-          extentYear: 2000
-        }),
-        getLoss(params),
-        getLoss({ ...params, forestType: 'plantations' }),
-        getLoss({ ...params, forestType: 'primary_forest' })
-      ])
+    all([
+      getExtent(params),
+      getExtent({ ...params, forestType: 'plantations' }),
+      getExtent({
+        ...params,
+        forestType: 'primary_forest',
+        extentYear: 2000
+      }),
+      getLoss(params),
+      getLoss({ ...params, forestType: 'plantations' }),
+      getLoss({ ...params, forestType: 'primary_forest' })
+    ])
       .then(
-        axios.spread(
+        spread(
           (
             totalExtent,
             totalPlantationsExtent,

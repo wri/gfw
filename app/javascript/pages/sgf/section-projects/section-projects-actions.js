@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { createAction, createThunkAction } from 'redux-tools';
+import { all, spread } from 'axios';
+import { createAction, createThunkAction } from 'utils/redux';
 import groupBy from 'lodash/groupBy';
 
 import { fetchSGFProjects } from 'services/projects';
@@ -18,10 +18,9 @@ export const fetchProjects = createThunkAction(
     const { sgfProjects } = getState();
     if (sgfProjects && !sgfProjects.loading) {
       dispatch(setProjectsLoading({ loading: true, error: false }));
-      axios
-        .all([fetchSGFProjects(), getCountriesProvider(), getCountriesLatLng()])
+      all([fetchSGFProjects(), getCountriesProvider(), getCountriesLatLng()])
         .then(
-          axios.spread((data, countries, latLngs) => {
+          spread((data, countries, latLngs) => {
             const { rows } = data.data;
             const dataParsed = rows.map(d => {
               const imagesPath = d.image.split('>');

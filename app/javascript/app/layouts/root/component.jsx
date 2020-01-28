@@ -33,13 +33,29 @@ const PageComponent = universal(
 );
 
 class App extends PureComponent {
+  static propTypes = {
+    route: PropTypes.object.isRequired,
+    loggedIn: PropTypes.bool,
+    isGFW: PropTypes.bool,
+    isTrase: PropTypes.bool,
+    metadata: PropTypes.object,
+    authenticating: PropTypes.bool
+  };
+
   componentDidMount() {
     const isSearch = window.location.pathname === '/search';
     handlePageTrack(isSearch);
   }
 
   render() {
-    const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
+    const {
+      route,
+      loggedIn,
+      metadata,
+      isGFW,
+      isTrase,
+      authenticating
+    } = this.props;
     const { component, embed, fullScreen } = route;
     const isMapPage = component === 'map';
 
@@ -67,13 +83,18 @@ class App extends PureComponent {
               />
             )}
             <div className={cx('page', { mobile: !isDesktop && !isMapPage })}>
-              <PageComponent
-                path={route.component}
-                sections={route.sections}
-                isTrase={isTrase}
-                isDesktop={isDesktop}
-                metadata={metadata}
-              />
+              {authenticating ? (
+                <Loader className="page-loader" />
+              ) : (
+                <PageComponent
+                  path={route.component}
+                  sections={route.sections}
+                  isTrase={isTrase}
+                  isDesktop={isDesktop}
+                  metadata={metadata}
+                  loggedIn={loggedIn}
+                />
+              )}
             </div>
             {!embed && <MyGFWProvider />}
             {embed &&
@@ -98,13 +119,5 @@ class App extends PureComponent {
     );
   }
 }
-
-App.propTypes = {
-  route: PropTypes.object.isRequired,
-  loggedIn: PropTypes.bool,
-  isGFW: PropTypes.bool,
-  isTrase: PropTypes.bool,
-  metadata: PropTypes.object
-};
 
 export default App;

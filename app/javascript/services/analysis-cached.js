@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiRequest, cartoRquest } from 'utils/request';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import DATASETS from 'data/analysis-datasets.json';
@@ -31,8 +31,6 @@ const {
   GLAD_GEOSTORE_WEEKLY,
   GLAD_GEOSTORE_WHITELIST
 } = DATASETS[process.env.FEATURE_ENV];
-
-const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   loss:
@@ -215,7 +213,7 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -244,7 +242,7 @@ export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -293,7 +291,7 @@ export const getExtent = ({
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -332,7 +330,7 @@ export const getExtentGrouped = ({
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -364,7 +362,7 @@ export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -395,7 +393,7 @@ export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -445,7 +443,7 @@ export const getAreaIntersection = ({
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -500,7 +498,7 @@ export const getAreaIntersectionGrouped = ({
     };
   }
 
-  return axios.get(url).then(response => ({
+  return apiRequest.get(url).then(response => ({
     ...response,
     data: {
       data: response.data.data.map(d => ({
@@ -513,11 +511,11 @@ export const getAreaIntersectionGrouped = ({
 };
 
 export const getNonGlobalDatasets = () => {
-  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
+  const url = `/sql?q=${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
     buildPolynameSelects(true)
   );
-  return axios.get(url);
+  return cartoRquest.get(url);
 };
 
 export const getLocationPolynameWhitelist = params => {
@@ -527,5 +525,5 @@ export const getLocationPolynameWhitelist = params => {
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{polynames}', buildPolynameSelects())
     .replace('{WHERE}', getWHEREQuery({ iso: params.adm0, ...params }));
-  return axios.get(url);
+  return apiRequest.get(url);
 };

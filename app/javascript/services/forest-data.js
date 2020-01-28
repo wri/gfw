@@ -1,8 +1,6 @@
-import request from 'utils/request';
+import { cartoRequest } from 'utils/request';
 
 import globalLandCoverCategories from 'data/global-land-cover-categories.json';
-
-const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const NEW_SQL_QUERIES = {
   faoExtent:
@@ -45,7 +43,7 @@ const getLocationQuery = (adm0, adm1, adm2) =>
   }`;
 
 export const getFAOExtent = ({ adm0, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoExtent}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoExtent}`.replace(
     '{location}',
     adm0 ? `country = '${adm0}'` : '1 = 1'
   );
@@ -57,7 +55,7 @@ export const getFAOExtent = ({ adm0, download }) => {
     };
   }
 
-  return request.get(url).then(response => ({
+  return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
       rows: response.data.rows.map(o => {
@@ -79,7 +77,7 @@ export const getFAOExtent = ({ adm0, download }) => {
 };
 
 export const getFAOReforest = ({ period, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoReforest}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoReforest}`.replace(
     '{period}',
     period
   );
@@ -91,7 +89,7 @@ export const getFAOReforest = ({ period, download }) => {
     };
   }
 
-  return request.get(url).then(response => ({
+  return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
       rows: response.data.rows.map(o => {
@@ -106,7 +104,7 @@ export const getFAOReforest = ({ period, download }) => {
 };
 
 export const getFAODeforest = ({ adm0, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforest}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoDeforest}`.replace(
     '{location}',
     adm0 ? `WHERE fao.country = '${adm0}'` : ''
   );
@@ -118,7 +116,7 @@ export const getFAODeforest = ({ adm0, download }) => {
     };
   }
 
-  return request.get(url).then(response => ({
+  return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
       rows: response.data.rows.map(o => {
@@ -132,7 +130,7 @@ export const getFAODeforest = ({ adm0, download }) => {
 };
 
 export const getFAODeforestRank = ({ period, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
     '{year}',
     period
   );
@@ -143,7 +141,7 @@ export const getFAODeforestRank = ({ period, download }) => {
       url: url.concat('&format=csv')
     };
   }
-  return request.get(url).then(response => ({
+  return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
       rows: response.data.rows.map(o => {
@@ -157,7 +155,7 @@ export const getFAODeforestRank = ({ period, download }) => {
 
 export const getFAOEcoLive = params => {
   const { download } = params || {};
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoEcoLive}`;
+  const url = `/sql?q=${NEW_SQL_QUERIES.faoEcoLive}`;
 
   if (download) {
     return {
@@ -166,7 +164,7 @@ export const getFAOEcoLive = params => {
     };
   }
 
-  return request.get(url).then(response => ({
+  return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
       rows: response.data.rows.map(o => {
@@ -186,7 +184,7 @@ export const getFAOEcoLive = params => {
 };
 
 export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.globalLandCover}`.replace(
+  const url = `/sql?q=${NEW_SQL_QUERIES.globalLandCover}`.replace(
     '{location}',
     getLocationQuery(adm0, adm1, adm2)
   );
@@ -199,13 +197,14 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
   }
 
   // TODO: refactor global land cover widget to use method below
-  return request.get(url);
+  return cartoRequest.get(url);
 };
 
 export const getGlobalLandCoverURL = ({ adm0, adm1, adm2 }) => {
-  const url = `${CARTO_REQUEST_URL}${
-    NEW_SQL_QUERIES.globalLandCoverURL
-  }`.replace('{location}', getLocationQuery(adm0, adm1, adm2));
+  const url = `/sql?q=${NEW_SQL_QUERIES.globalLandCoverURL}`.replace(
+    '{location}',
+    getLocationQuery(adm0, adm1, adm2)
+  );
 
   return {
     name: 'global_land_cover',
@@ -223,7 +222,7 @@ export const getUSLandCover = params => {
     // adm 2
     admQuery = `AND adm1 = ${adm1} AND adm2 = ${adm2}`;
   }
-  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.getNLCDLandCover}`
+  const url = `/sql?q=${NEW_SQL_QUERIES.getNLCDLandCover}`
     .replace('{area}', adm2 ? 'class_area as area' : 'SUM(class_area) as area')
     .replace('{startYear}', startYear)
     .replace('{endYear}', endYear)
@@ -245,7 +244,7 @@ export const getUSLandCover = params => {
     };
   }
 
-  return request.get(url).then(response => ({
+  return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
       rows: response.data.rows.map(o => {

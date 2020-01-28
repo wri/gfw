@@ -7,7 +7,7 @@ import {
   setRecentImageryLoading,
   resetRecentImageryData
 } from 'components/recent-imagery/actions';
-import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/actions';
 
 import Component from './component';
 

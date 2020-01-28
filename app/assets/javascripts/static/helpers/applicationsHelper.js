@@ -73,16 +73,6 @@ define(['underscore'], function(_) {
         'asia, commodities, data, fires, global-forest-watch, maps, mining, palm-oil'
     },
     {
-      name: 'Climate',
-      svg: '#shape-climate',
-      content: 'Track carbon emissions and removals in forest landscapes.',
-      href: 'http://climate.globalforestwatch.org/',
-      link_text: 'Launch App',
-      classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute',
-      tags: 'data, global-forest-watch, maps'
-    },
-    {
       name: 'Global Forest Watch: Sumatra campaign on Tomnod',
       svg: '#shape-tomnod',
       content:

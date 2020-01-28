@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CancelToken } from 'axios';
+import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
@@ -39,7 +39,7 @@ class GeostoreProvider extends PureComponent {
 
   handleGetGeostore = () => {
     this.cancelGeostoreFetch();
-    this.geostoreFetch = CancelToken.source();
+    this.geostoreFetch = cancelToken();
     this.props.getGeostore({
       ...this.props.location,
       token: this.geostoreFetch.token

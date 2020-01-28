@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data-old';
 
 const getGlobalLocation = params => ({
@@ -14,8 +14,8 @@ export const getData = ({ params }) => {
     params.type === 'global'
       ? getLossGrouped({ ...rest, ...globalLocation })
       : getLoss({ ...rest, ...globalLocation });
-  return axios.all([lossFetch, getExtent({ ...rest, ...globalLocation })]).then(
-    axios.spread((loss, extent) => {
+  return all([lossFetch, getExtent({ ...rest, ...globalLocation })]).then(
+    spread((loss, extent) => {
       let data = {};
       if (loss && loss.data && extent && extent.data) {
         data = {
