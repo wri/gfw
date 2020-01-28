@@ -1,0 +1,47 @@
+{
+  "substitution_data": {
+    "alerts": [
+      {
+        "latitude": "GLAD",
+        "longitude": "09/12/2019 06:25 UTC",
+        "acq_date": "6,123 / 101.455"
+      },
+      {
+        "latitude": "GLAD",
+        "longitude": "09/12/2019 06:25 UTC",
+        "acq_date": "6,123 / 101.455"
+      },
+      {
+        "latitude": "GLAD",
+        "longitude": "09/12/2019 06:25 UTC",
+        "acq_date": "6,123 / 101.455"
+      },
+      {
+        "latitude": "GLAD",
+        "longitude": "09/12/2019 06:25 UTC",
+        "acq_date": "6,123 / 101.455"
+      },
+      {
+        "latitude": "GLAD",
+        "longitude": "09/12/2019 06:25 UTC",
+        "acq_date": "6,123 / 101.455"
+      }
+    ],
+    "tags": "test tag here",
+    "location": "Merile and Koiya",
+    "glad_count": "200k",
+    "fires_count": "13",
+    "priority_areas": {
+      "intact_forest": 1,
+      "primary_forest": 1,
+      "peat": 0,
+      "protected_areas": 12
+    },
+    "more_items": 125,
+    "csv_link": "https://staging-api.globalforestwatch.org/download/d47285cd-e304-462b-a8d8-e20dbdee4e2d?sql=SELECT%20SUM(treecover_extent_2010__ha)%20as%20treecover_extent_2010__ha,%20SUM(area__ha)%20as%20area__ha%20FROM%20data%20WHERE%20iso%20=%20%27BRA%27%20AND%20treecover_density__threshold%20=%2030",
+    "map_link": "https://www.globalforestwatch.org/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyfQ%3D%3D",
+    "dashboard_link": "https://www.globalforestwatch.org/dashboards/global?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImZkYzhkYzFiLTI3MjgtNGE3OS1iMjNmLWIwOTQ4NTA1MmI4ZCIsImxheWVycyI6WyI2ZjY3OThlNi0zOWVjLTQxNjMtOTc5ZS0xODJhNzRjYTY1ZWUiLCJjNWQxZTAxMC0zODNhLTQ3MTMtOWFhYS00NGY3MjhjMDU3MWMiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiODk3ZWNjNzYtMjMwOC00YzUxLWFlYjMtNDk1ZGUwYmRjYTc5IiwibGF5ZXJzIjpbImMzMDc1YzVhLTU1NjctNGIwOS1iYzBkLTk2ZWQxNjczZjhiNiJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJ0aW1lbGluZVBhcmFtcyI6eyJzdGFydERhdGUiOiIyMDAxLTAxLTAxIiwiZW5kRGF0ZSI6IjIwMTgtMTItMzEiLCJ0cmltRW5kRGF0ZSI6IjIwMTgtMTItMzEifSwicGFyYW1zIjp7InRocmVzaCI6MzAsInZpc2liaWxpdHkiOnRydWV9fV0sImNlbnRlciI6eyJsYXQiOjI3LCJsbmciOjEyfSwiYmVhcmluZyI6MCwicGl0Y2giOjAsInpvb20iOjJ9"
+  },
+  "metadata": {},
+  "options": {}
+}
