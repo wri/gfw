@@ -1,10 +1,10 @@
 import { getExtentGrouped, getLossGrouped } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 export const getData = ({ params }) =>
-  axios.all([getExtentGrouped(params), getLossGrouped(params)]).then(
-    axios.spread((extentGrouped, lossGrouped) => {
+  all([getExtentGrouped(params), getLossGrouped(params)]).then(
+    spread((extentGrouped, lossGrouped) => {
       let groupKey = 'iso';
       if (params.adm0) groupKey = 'adm1';
       if (params.adm1) groupKey = 'adm2';

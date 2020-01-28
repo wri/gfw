@@ -7,6 +7,7 @@ import { NavLink } from 'redux-first-router-link';
 
 import gfwLogo from 'assets/logos/gfw.png';
 import ContactUs from 'components/modals/contact-us';
+import ClimateModal from 'components/modals/climate';
 
 import NavMenu from './components/nav-menu';
 import NavAlt from './components/nav-alt';
@@ -110,6 +111,7 @@ class Header extends PureComponent {
               </div>
             </div>
             <ContactUs />
+            <ClimateModal />
           </div>
         )}
       </MediaQuery>

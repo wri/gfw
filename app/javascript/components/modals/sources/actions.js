@@ -1,3 +1,3 @@
-import { createAction } from 'redux-tools';
+import { createAction } from 'utils/redux';
 
 export const setModalSources = createAction('setModalSources');

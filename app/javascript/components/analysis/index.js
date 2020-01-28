@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { CancelToken } from 'axios';
+import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
 import { setSubscribeSettings } from 'components/modals/subscribe/actions';
@@ -63,7 +63,7 @@ class AnalysisContainer extends PureComponent {
     if (this.analysisFetch) {
       this.analysisFetch.cancel();
     }
-    this.analysisFetch = CancelToken.source();
+    this.analysisFetch = cancelToken();
     this.props.getAnalysis({
       endpoints,
       ...location,

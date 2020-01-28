@@ -1,5 +1,5 @@
-import { createThunkAction, createAction } from 'redux-tools';
-import axios from 'axios';
+import { createThunkAction, createAction } from 'utils/redux';
+import request from 'utils/request';
 import { SEARCH } from 'router';
 
 export const setSearchData = createAction('setSearchData');
@@ -12,7 +12,7 @@ export const getSearch = createThunkAction(
     dispatch(setQueryToUrl({ query }));
     if (query && search && !search.loading) {
       dispatch(setSearchLoading(true));
-      axios
+      request
         .get('https://www.googleapis.com/customsearch/v1', {
           params: {
             key: process.env.GOOGLE_SEARCH_API_KEY,

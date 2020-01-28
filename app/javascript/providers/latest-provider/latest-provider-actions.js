@@ -1,6 +1,6 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import moment from 'moment';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 import { fetchLatestDate } from 'services/alerts';
 
@@ -17,10 +17,9 @@ export const getLatest = createThunkAction(
     );
     if (newEndpoints && newEndpoints.length) {
       dispatch(setLatestLoading({ loading: true, error: false }));
-      axios
-        .all(newEndpoints.map(n => fetchLatestDate(n.latestUrl)))
+      all(newEndpoints.map(n => fetchLatestDate(n.latestUrl)))
         .then(
-          axios.spread((...responses) => {
+          spread((...responses) => {
             const latestDates =
               responses &&
               responses.reduce((obj, response, index) => {

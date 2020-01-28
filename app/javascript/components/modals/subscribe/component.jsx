@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { translateText } from 'utils/transifex';
 
+import LoginForm from 'components/forms/login';
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -22,7 +23,8 @@ class ModalSubscribe extends PureComponent {
     resetSubscribe();
   };
 
-  renderUserLoginForm = () => <MyGFWLogin className="mygfw-subscribe" />;
+  renderUserLoginForm = () =>
+    (process.env.FEATURE_ENV === 'staging' ? <LoginForm /> : <MyGFWLogin />);
 
   renderSaved = () => (
     <div className="saved">
