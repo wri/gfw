@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
+import cx from 'classnames';
 import {
   Line,
   Bar,
@@ -18,36 +19,42 @@ import {
 
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
+import CustomBackground from './custom-background-component';
 import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
     const { yKeys } = config;
     const maxValues = [];
-    Object.keys(yKeys).forEach(key => {
-      Object.keys(yKeys[key]).forEach(subKey => {
-        const maxValue =
-          yKeys[key][subKey].stackId === 1
-            ? // Total sum of values if graph is a stacked bar chart
-            {
-              [subKey]: max(
-                data.map(d =>
-                  Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+    if (yKeys) {
+      Object.keys(yKeys).forEach(key => {
+        Object.keys(yKeys[key]).forEach(subKey => {
+          const maxValue =
+            yKeys[key][subKey].stackId === 1
+              ? // Total sum of values if graph is a stacked bar chart
+              {
+                [subKey]: max(
+                  data.map(d =>
+                    Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+                  )
                 )
-              )
-            }
-            : maxBy(data, subKey);
-        if (maxValue) {
-          maxValues.push(maxValue[subKey]);
-        }
+              }
+              : maxBy(data, subKey);
+          if (maxValue) {
+            maxValues.push(maxValue[subKey]);
+          }
+        });
       });
-    });
-    return max(maxValues);
+      return max(maxValues);
+    }
+    return 0;
   };
 
   render() {
     const {
       xKey,
+      yKey,
+      xKeys,
       yKeys,
       xAxis,
       yAxis,
@@ -58,21 +65,26 @@ class CustomComposedChart extends PureComponent {
       height,
       margin
     } = this.props.config;
+
     const {
       className,
       data,
       config,
       simple,
       handleMouseMove,
-      handleMouseLeave
+      handleMouseLeave,
+      handleClick,
+      barBackground
     } = this.props;
 
-    const { lines, bars, areas } = yKeys;
+    const isVertical = !!xKeys;
+    const dataKeys = yKeys || xKeys;
+    const { lines, bars, areas } = dataKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     return (
       <div
-        className={`c-composed-chart ${className}`}
+        className={cx('c-composed-chart', className)}
         style={{ height: simple ? 100 : height || 250 }}
       >
         <ResponsiveContainer width="99%">
@@ -81,14 +93,16 @@ class CustomComposedChart extends PureComponent {
             margin={
               margin || {
                 top: !simple ? 15 : 0,
-                right: 0,
-                left: !simple ? 42 : 0,
+                right: isVertical ? 10 : 0,
+                left: simple || isVertical ? 0 : 42,
                 bottom: 0
               }
             }
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={handleClick}
+            layout={isVertical ? 'vertical' : 'horizontal'}
           >
             <defs>
               {gradients &&
@@ -121,11 +135,17 @@ class CustomComposedChart extends PureComponent {
             />
             {!simple && (
               <YAxis
+                dataKey={yKey || ''}
+                tickLine={!isVertical}
                 axisLine={false}
-                strokeDasharray="3 4"
-                tickSize={-42}
-                mirror
-                tickMargin={0}
+                {...(!isVertical
+                  ? {
+                    strokeDasharray: '3 4',
+                    tickSize: -42,
+                    mirror: true,
+                    tickMargin: 0
+                  }
+                  : {})}
                 tick={
                   <CustomTick
                     dataMax={maxYValue}
@@ -136,20 +156,29 @@ class CustomComposedChart extends PureComponent {
                         (value < 1 ? format('.2r')(value) : format('.2s')(value)))
                     }
                     fill="#555555"
+                    vertical={isVertical}
                   />
                 }
                 {...yAxis}
               />
             )}
             {!simple && (
-              <CartesianGrid vertical={false} strokeDasharray="3 4" />
+              <CartesianGrid
+                vertical={isVertical}
+                horizontal={!isVertical}
+                strokeDasharray="3 4"
+              />
             )}
+
             <Tooltip
               simple={simple}
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
-                ...(!!bars && { strokeWidth: `${1.2 * (100 / data.length)}%` })
+                ...(!!bars && {
+                  strokeWidth: `${1.2 *
+                    ((isVertical ? 45 : 100) / data.length)}%`
+                })
               }}
               content={<ChartToolTip settings={tooltip} />}
             />
@@ -169,7 +198,20 @@ class CustomComposedChart extends PureComponent {
               ))}
             {bars &&
               Object.keys(bars).map(key => (
-                <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
+                <Bar
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  background={d =>
+                    barBackground && (
+                      <CustomBackground
+                        {...d}
+                        activeIndex={barBackground.activeIndex}
+                      />
+                    )
+                  }
+                  {...bars[key]}
+                >
                   {bars[key].itemColor &&
                     data.map(item => (
                       <Cell key={`c_${item.color}`} fill={item.color} />
@@ -190,7 +232,9 @@ CustomComposedChart.propTypes = {
   simple: PropTypes.bool,
   handleMouseMove: PropTypes.func,
   handleMouseLeave: PropTypes.func,
-  backgroundColor: PropTypes.string
+  handleClick: PropTypes.func,
+  backgroundColor: PropTypes.string,
+  barBackground: PropTypes.object
 };
 
 export default CustomComposedChart;
