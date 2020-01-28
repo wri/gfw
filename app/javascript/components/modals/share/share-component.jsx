@@ -29,8 +29,8 @@ class Share extends PureComponent {
     const inputValue =
       selected === 'embed'
         ? `<iframe width="${embedSettings.width}" height="${
-            embedSettings.height
-          }" frameborder="0" src="${embedUrl}"></iframe>`
+          embedSettings.height
+        }" frameborder="0" src="${embedUrl}"></iframe>`
         : shareUrl;
 
     return (

@@ -5,6 +5,7 @@ import { track } from 'app/analytics';
 import ReactHtmlParser from 'react-html-parser';
 
 import SubnavMenu from 'components/subnav-menu';
+import Dropdown from 'components/ui/dropdown';
 import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import PTWProvider from 'providers/ptw-provider';
@@ -21,6 +22,7 @@ class Explore extends PureComponent {
       description,
       mapState,
       loading,
+      ptwType,
       setMapPromptsSettings
     } = this.props;
     const links = [
@@ -60,17 +62,60 @@ class Explore extends PureComponent {
         <div className="content">
           <div className="row">
             <div className="column small-12">
-              {description && (
+              {process.env.FEATURE_ENV === 'stagings' ? (
                 <div className="description">
                   {section === 'placesToWatch' ? (
                     <Fragment>
-                      {ReactHtmlParser(description)}
+                      <p>{ReactHtmlParser(description)}</p>
+                      <p className="ptw-type-intro">
+                        Showing information about
+                      </p>
+                      <Dropdown
+                        className="ptw-type-selector"
+                        theme="theme-dropdown-native-button"
+                        value={ptwType}
+                        options={[
+                          {
+                            label: 'All Places to Watch',
+                            value: 'all'
+                          },
+                          {
+                            label: 'Mongabay reporting',
+                            value: 'mongabay'
+                          },
+                          {
+                            label: 'Soy',
+                            value: 'soy'
+                          },
+                          {
+                            label: 'Palm oil',
+                            value: 'palm'
+                          }
+                        ]}
+                        onChange={value => setMenuSettings({ ptwType: value })}
+                        native
+                      />
                       <PTWProvider />
                     </Fragment>
                   ) : (
-                    description
+                    <p>{description}</p>
                   )}
                 </div>
+              ) : (
+                <Fragment>
+                  {description && (
+                    <div className="description">
+                      {section === 'placesToWatch' ? (
+                        <Fragment>
+                          {ReactHtmlParser(description)}
+                          <PTWProvider />
+                        </Fragment>
+                      ) : (
+                        description
+                      )}
+                    </div>
+                  )}
+                </Fragment>
               )}
             </div>
             {!loading &&
@@ -120,6 +165,7 @@ Explore.propTypes = {
   mapState: PropTypes.object,
   loading: PropTypes.bool,
   handleViewOnMap: PropTypes.func,
+  ptwType: PropTypes.string,
   setMapPromptsSettings: PropTypes.func
 };
 
