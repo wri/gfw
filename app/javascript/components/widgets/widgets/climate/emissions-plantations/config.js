@@ -1,4 +1,4 @@
-import tropicalIsos from 'data/tropical-isos.json';
+import biomassLossIsos from 'data/biomass-isos.json';
 
 export default {
   widget: 'emissions-plantations',
@@ -32,7 +32,7 @@ export default {
       'From {startYear} to {endYear}, a total of {emissions} of {variable} emissions were released from tree cover loss in {location} natural forests.'
   },
   whitelists: {
-    adm0: tropicalIsos,
+    adm0: biomassLossIsos,
     indicators: ['plantations']
   }
 };

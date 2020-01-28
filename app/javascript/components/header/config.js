@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
@@ -81,11 +80,6 @@ export default {
     }
   ],
   apps: [
-    {
-      label: 'GFW Climate',
-      extLink: 'https://climate.globalforestwatch.org',
-      image: gfwClimate
-    },
     {
       label: 'GFW Fires',
       extLink: 'http://fires.globalforestwatch.org',
