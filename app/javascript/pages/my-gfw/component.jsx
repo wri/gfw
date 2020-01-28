@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import LoginForm from 'components/forms/login';
-import MyGFWLogin from 'components/mygfw-login';
 import ProfileForm from 'components/forms/profile';
 
 import './styles.scss';
@@ -17,14 +16,8 @@ class LoginPage extends PureComponent {
     const { loggedIn } = this.props;
 
     return (
-      <div
-        className={cx(
-          'l-my-gfw-page',
-          { login: !loggedIn },
-          { 'old-theme': process.env.FEATURE_ENV !== 'staging' }
-        )}
-      >
-        {loggedIn || process.env.FEATURE_ENV !== 'staging' ? (
+      <div className={cx('l-my-gfw-page', { login: !loggedIn })}>
+        {loggedIn ? (
           <Fragment>
             <div className="header-banner">
               <div className="row">
@@ -34,15 +27,7 @@ class LoginPage extends PureComponent {
               </div>
             </div>
             <div className="profile-form">
-              {loggedIn ? (
-                <ProfileForm />
-              ) : (
-                <div className="row">
-                  <div className="column small-12 medium-4 medium-offset-4">
-                    <MyGFWLogin />
-                  </div>
-                </div>
-              )}
+              <ProfileForm />
             </div>
           </Fragment>
         ) : (
