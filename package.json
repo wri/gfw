@@ -174,7 +174,7 @@
     "react-stickynode": "1.4.1",
     "react-tippy": "1.2.2",
     "react-toggle": "^4.0.2",
-    "react-universal-component": "^4.0.1",
+    "react-universal-component": "5.0.0-alpha.0",
     "react-youtube": "^7.9.0",
     "recharts": "^1.7.1",
     "redux": "^4.0.0",

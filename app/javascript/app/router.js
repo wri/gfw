@@ -3,6 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import compact from 'lodash/compact';
 import { checkBrowser } from 'utils/browser';
+import { setUserToken } from 'services/user';
 
 import { handlePageTrack } from './analytics';
 import { getNewMapRedirect } from './utils';
@@ -43,7 +44,7 @@ const routeChangeThunk = (dispatch, getState) => {
 
   const { type, payload, query } = location;
   if (query && query.token) {
-    localStorage.setItem('userToken', query.token);
+    setUserToken(query.token);
     dispatch(
       redirect({
         type,

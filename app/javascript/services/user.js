@@ -1,5 +1,12 @@
 import { apiRequest, apiAuthRequest } from 'utils/request';
 
+export const setUserToken = token => {
+  localStorage.setItem('userToken', token);
+  apiAuthRequest.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    'userToken'
+  )}`;
+};
+
 export const login = formData =>
   apiRequest({
     method: 'POST',
@@ -8,10 +15,7 @@ export const login = formData =>
   }).then(response => {
     if (response.status < 400 && response.data) {
       const { data: userData } = response.data;
-      localStorage.setItem('userToken', userData.token);
-      apiAuthRequest.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-        'userToken'
-      )}`;
+      setUserToken(userData.token);
     }
 
     return response;
@@ -30,7 +34,9 @@ export const updateProfile = (id, data) =>
     url: `/user/${id}`
   });
 
-export const getProfile = () => apiAuthRequest.get('/user');
+export const checkLoggedIn = () => apiAuthRequest.get('/auth/check-logged');
+
+export const getProfile = id => apiAuthRequest.get(`/user/${id}`);
 
 export const logout = () =>
   apiAuthRequest.get('/auth/logout').then(response => {
