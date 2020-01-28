@@ -493,6 +493,7 @@ export default {
   'c05c32fd-289c-4b20-8d73-dc2458234e04': decodes.treeCover,
   'c3075c5a-5567-4b09-bc0d-96ed1673f8b6': decodes.treeCoverLoss,
   '0d35db15-9c05-4dbb-9879-ceded4f7951d': decodes.treeCoverLoss,
+  '12c56c51-5893-45a2-ba88-3cfd4e048b46': decodes.treeCoverLoss,
   'fd05bc2c-6ade-408c-862e-7318557dd4fc': decodes.treeLossByDriver,
   'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
   '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs,
