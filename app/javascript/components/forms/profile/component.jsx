@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
-import { getLanguages } from 'utils/lang';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
@@ -67,8 +66,9 @@ class ProfileForm extends PureComponent {
                         Global Forest Watch so we can better meet your needs.
                       </h3>
                     </div>
-                    <div className="column small-12 medium-6">
-                      <Input name="fullName" label="name" required />
+                    <div className="column small-12 medium-12">
+                      <Input name="firstName" label="first name" required />
+                      <Input name="lastName" label="last name" required />
                       <Input
                         name="email"
                         type="email"
@@ -78,19 +78,27 @@ class ProfileForm extends PureComponent {
                         required
                       />
                       <Select
-                        name="language"
-                        label="language"
-                        options={getLanguages()}
-                        placeholder="Select a language"
-                        required
-                      />
-                      <Select
                         name="sector"
                         label="sector"
                         options={sectors.map(s => ({ label: s, value: s }))}
-                        placeholder="Select a language"
+                        placeholder="Select a sector"
                         required
                       />
+                      <Input name="jobTitle" label="job title" />
+                      <Input name="company" label="Company / organization" />
+                      <h3>Location</h3>
+                      <Select
+                        name="country"
+                        label="country"
+                        options={countries}
+                        placeholder="Select a country"
+                      />
+                      <Input name="city" label="city" />
+                      <Input
+                        name="state"
+                        label="state / department / province"
+                      />
+                      <h3>Geographic area of interest*</h3>
                       <Select
                         name="country"
                         label="country"
@@ -98,13 +106,13 @@ class ProfileForm extends PureComponent {
                         placeholder="Select a country"
                         required
                       />
-                      <Input name="city" label="city" />
-                    </div>
-                    <div className="column small-12 medium-6">
+                      <Input name="city" label="city" required />
                       <Input
                         name="state"
                         label="state / department / province"
+                        required
                       />
+
                       <Select
                         name="primaryResponsibilities"
                         label="primary responsibilities (select all that apply)"

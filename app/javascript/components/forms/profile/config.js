@@ -1,9 +1,15 @@
 export const sectors = [
-  'Government (public sector)',
-  'NGO non-governmental organisation',
-  'Private company (private sector)',
-  'University or other school (acedemia/education)',
-  'Media or journalism'
+  'Government',
+  'Donor Institution / Agency',
+  'Local NGO (national or subnational)',
+  'International NGO',
+  'UN or International Organization',
+  'Academic / Research Organization',
+  'Journalist / Media Organization',
+  'Indigenous or Community-Based Organization',
+  'Private sector',
+  'Individual / No Affiliation',
+  'Other'
 ];
 
 export const responsibilities = [
