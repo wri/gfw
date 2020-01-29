@@ -1,24 +1,121 @@
 @import '~styles/settings.scss';
 
-.c-profile-form {
+.c-area-of-interest-form {
   h1 {
     font-size: rem(36px);
     margin-bottom: rem(10px);
     font-weight: 300;
   }
 
-  h3 {
-    font-size: rem(16px);
-    margin-bottom: rem(40px);
+  .aoi-map {
+    height: 300px;
+    position: relative;
+    margin-bottom: rem(30px);
+  }
+
+  .alerts-image {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 100%;
+    background: $border;
+    margin: rem(10px) 0 rem(30px);
+
+    img {
+      width: 100%;
+    }
+
+    p {
+      margin: rem(20px);
+    }
 
     @media screen and (min-width: $screen-m) {
-      margin-bottom: rem(60px);
+      flex-direction: row;
+      height: rem(160px);
+
+      p {
+        margin: 0 rem(30px) 0 rem(15px);
+      }
     }
   }
 
-  p {
-    margin-bottom: rem(20px);
+  details {
+    margin-bottom: rem(25px);
+
+    summary {
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      font-size: rem(12px);
+      color: #333;
+      margin-bottom: rem(5px);
+      font-weight: 500;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+
+      .info-button {
+        margin-left: rem(10px);
+      }
+    }
   }
+
+  .webhook-actions {
+    margin-top: rem(5px);
+
+    button {
+      color: $green-gfw;
+      margin-right: rem(10px);
+      font-style: italic;
+      cursor: pointer;
+      transition: color 0.1s ease-in-out;
+
+      &:hover {
+        color: darken($green-gfw, 10%);
+      }
+    }
+
+    .button-link {
+      position: relative;
+      padding-right: 16px;
+    }
+
+    .webhook-loader {
+      width: 12px;
+      height: 12px;
+      left: unset;
+      right: 0;
+    }
+
+    .spinner {
+      width: 12px;
+      height: 12px;
+      border-width: 2px;
+    }
+
+    .wh-success {
+      color: $green-gfw;
+    }
+
+    .wh-error {
+      color: $error;
+    }
+  }
+
+  // h3 {
+  //   font-size: rem(16px);
+  //   margin-bottom: rem(40px);
+
+  //   @media screen and (min-width: $screen-m) {
+  //     margin-bottom: rem(60px);
+  //   }
+  // }
+
+  // p {
+  //   margin-bottom: rem(20px);
+  // }
 
   .submit-btn {
     min-width: rem(180px);
