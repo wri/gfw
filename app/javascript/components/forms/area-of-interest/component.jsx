@@ -2,8 +2,10 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { getLanguages } from 'utils/lang';
+import request from 'utils/request';
 
 import ModalSource from 'components/modals/sources';
+import Loader from 'components/ui/loader';
 import Input from 'components/forms/components/input';
 import InputTags from 'components/forms/components/input-tags';
 import Select from 'components/forms/components/select';
@@ -12,11 +14,9 @@ import Submit from 'components/forms/components/submit';
 import Thankyou from 'components/thankyou';
 import Button from 'components/ui/button';
 import MapGeostore from 'components/map-geostore';
-import Icon from 'components/ui/icon';
 
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
-import infoIcon from 'assets/icons/info.svg';
 
 import {
   email as validateEmail,
@@ -32,8 +32,59 @@ class ProfileForm extends PureComponent {
     setModalSources: PropTypes.func
   };
 
+  state = {
+    webhookError: false,
+    webhookSuccess: false,
+    testingWebhook: false
+  };
+
+  testWebhook = url => {
+    this.setState({
+      webhookError: false,
+      webhookSuccess: false,
+      testingWebhook: true
+    });
+    request({
+      method: 'POST',
+      url
+    })
+      .then(() => {
+        setTimeout(() => {
+          this.setState({
+            webhookError: false,
+            webhookSuccess: true,
+            testingWebhook: false
+          });
+        }, 300);
+        setTimeout(() => {
+          this.setState({
+            webhookError: false,
+            webhookSuccess: false,
+            testingWebhook: false
+          });
+        }, 2500);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          this.setState({
+            webhookError: true,
+            webhookSuccess: false,
+            testingWebhook: false
+          });
+        }, 300);
+        setTimeout(() => {
+          this.setState({
+            webhookError: false,
+            webhookSuccess: false,
+            testingWebhook: false
+          });
+        }, 2500);
+      });
+  };
+
   render() {
     const { initialValues, saveAreaOfInterest, setModalSources } = this.props;
+    const { webhookError, webhookSuccess, testingWebhook } = this.state;
 
     return (
       <Fragment>
@@ -47,7 +98,8 @@ class ProfileForm extends PureComponent {
             submitFailed,
             submitError,
             submitSucceeded,
-            form: { reset }
+            form: { reset },
+            values: { webhookUrl }
           }) => (
             <form className="c-area-of-interest-form" onSubmit={handleSubmit}>
               <div className="row">
@@ -120,73 +172,45 @@ class ProfileForm extends PureComponent {
                         validate={[validateEmail]}
                         required
                       />
-                      <details
-                        open={!!initialValues && initialValues.webhookUrl}
-                      >
-                        <summary>
-                          <span>Webhook URL (Optional)</span>
-                          <Button
-                            className="info-button"
-                            theme="theme-button-tiny theme-button-grey-filled square"
-                            onClick={e => {
-                              e.preventDefault();
-                              setModalSources({
-                                open: true,
-                                source: 'webhookPreview'
-                              });
-                            }}
-                          >
-                            <Icon icon={infoIcon} className="info-icon" />
-                          </Button>
-                        </summary>
-                        <Input
-                          name="webhookUrl"
-                          type="text"
-                          placeholder="https://my-webhook-url.com"
-                          validate={[validateURL]}
-                        />
-                        {/* <div className="webhook-actions">
-                          {!!webhookUrl &&
-                            !webhookError && (
-                            <button
-                              className="button-link"
-                              onClick={() => {
-                                setLoader(true);
-                                testWebhook({
-                                  data: webhookData,
-                                  url: webhookUrl,
-                                  callback: message => {
-                                    // message is 'success' / 'error'
-                                    setTimeout(() => {
-                                      setLoader(false);
-                                      setWebhookMsg(message);
-                                    }, 300);
-                                    setTimeout(
-                                      () => setWebhookMsg(null),
-                                      message === 'error' ? 2500 : 1000
-                                    );
-                                  }
-                                });
-                              }}
-                            >
-                              <span>Test webhook</span>
-                              {showLoader && <Loader className="webhook-loader" />}
-                            </button>
+                      <Input
+                        name="webhookUrl"
+                        label="Webhook URL (Optional)"
+                        type="text"
+                        placeholder="https://my-webhook-url.com"
+                        validate={[validateURL]}
+                        infoClick={() =>
+                          setModalSources({
+                            open: true,
+                            source: 'webhookPreview'
+                          })
+                        }
+                        collapse
+                      />
+                      <div className="webhook-actions">
+                        <button
+                          className="test-webhook"
+                          onClick={e => {
+                            e.preventDefault();
+                            this.testWebhook(webhookUrl);
+                          }}
+                        >
+                          {!webhookError &&
+                            !webhookSuccess && <span>Test webhook</span>}
+                          {testingWebhook && (
+                            <Loader className="webhook-loader" />
                           )}
-                          {webhookMsg && (
-                            <span
-                              className={cx({
-                                'wh-error': webhookMsg === 'error',
-                                'wh-success': webhookMsg === 'success'
-                              })}
-                            >
-                              {webhookMsg === 'success' && 'Success!'}
-                              {webhookMsg === 'error' &&
-                                'POST error. Check the URL or CORS policy.'}
+                          {!testingWebhook &&
+                            webhookError && (
+                            <span className="wh-error">
+                                POST error. Check the URL or CORS policy.
                             </span>
                           )}
-                        </div> */}
-                      </details>
+                          {!testingWebhook &&
+                            webhookSuccess && (
+                            <span className="wh-success">Success!</span>
+                          )}
+                        </button>
+                      </div>
                       <Select
                         name="language"
                         label="language"

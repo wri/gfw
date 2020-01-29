@@ -39,60 +39,59 @@
     }
   }
 
-  details {
-    margin-bottom: rem(25px);
+  // details {
+  //   margin-bottom: rem(25px);
 
-    summary {
-      display: flex;
-      align-items: center;
-      text-transform: uppercase;
-      font-size: rem(12px);
-      color: #333;
-      margin-bottom: rem(5px);
-      font-weight: 500;
-      cursor: pointer;
+  //   summary {
+  //     display: flex;
+  //     align-items: center;
+  //     text-transform: uppercase;
+  //     font-size: rem(12px);
+  //     color: #333;
+  //     margin-bottom: rem(5px);
+  //     font-weight: 500;
+  //     cursor: pointer;
 
-      &:focus {
-        outline: none;
-      }
+  //     &:focus {
+  //       outline: none;
+  //     }
 
-      .info-button {
-        margin-left: rem(10px);
-      }
-    }
-  }
+  //     .info-button {
+  //       margin-left: rem(10px);
+  //     }
+  //   }
+  // }
 
   .webhook-actions {
-    margin-top: rem(5px);
+    margin: -25px 0 25px;
+    height: 20px;
 
-    button {
+    .test-webhook {
       color: $green-gfw;
       margin-right: rem(10px);
       font-style: italic;
+      font-size: rem(12px);
       cursor: pointer;
       transition: color 0.1s ease-in-out;
+      position: relative;
+      padding-right: 20px;
 
       &:hover {
         color: darken($green-gfw, 10%);
       }
-    }
 
-    .button-link {
-      position: relative;
-      padding-right: 16px;
-    }
+      .webhook-loader {
+        width: 12px;
+        height: 12px;
+        left: unset;
+        right: 0;
+      }
 
-    .webhook-loader {
-      width: 12px;
-      height: 12px;
-      left: unset;
-      right: 0;
-    }
-
-    .spinner {
-      width: 12px;
-      height: 12px;
-      border-width: 2px;
+      .spinner {
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+      }
     }
 
     .wh-success {

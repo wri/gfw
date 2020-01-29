@@ -1,5 +1,4 @@
 import { createThunkAction } from 'utils/redux';
-import request from 'utils/request';
 // import { FORM_ERROR } from 'final-form';
 
 import {
@@ -120,20 +119,4 @@ export const deleteAOI = createThunkAction(
         console.info(error);
       });
   }
-);
-
-export const testWebhook = createThunkAction(
-  'testWebhook',
-  ({ data, url, callback }) => () =>
-    request({
-      method: 'POST',
-      data,
-      url
-    })
-      .then(() => {
-        callback('success');
-      })
-      .catch(() => {
-        callback('error');
-      })
 );

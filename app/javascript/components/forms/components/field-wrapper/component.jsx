@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-for */
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
+
+import infoIcon from 'assets/icons/info.svg';
 
 import './styles.scss';
 
@@ -13,19 +18,36 @@ class FieldWrapper extends PureComponent {
     active: PropTypes.bool,
     label: PropTypes.string,
     children: PropTypes.node,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    infoClick: PropTypes.func,
+    collapse: PropTypes.func,
+    name: PropTypes.string
+  };
+
+  renderLabel = () => {
+    const { name, label, required, infoClick, touched, error } = this.props;
+    return (
+      <Fragment>
+        <label htmlFor={name}>{`${label || ''}${required ? ' *' : ''}`}</label>
+        {infoClick && (
+          <Button
+            className="info-button"
+            theme="theme-button-tiny theme-button-grey-filled square"
+            onClick={e => {
+              e.preventDefault();
+              infoClick();
+            }}
+          >
+            <Icon icon={infoIcon} className="info-icon" />
+          </Button>
+        )}
+        {touched && error && <span>{error}</span>}
+      </Fragment>
+    );
   };
 
   render() {
-    const {
-      touched,
-      error,
-      hidden,
-      active,
-      label,
-      children,
-      required
-    } = this.props;
+    const { touched, error, hidden, active, children, collapse } = this.props;
 
     return (
       <div
@@ -36,13 +58,17 @@ class FieldWrapper extends PureComponent {
           { hidden }
         )}
       >
-        <div className="label">
-          <label htmlFor={name}>{`${label || ''}${
-            required ? ' *' : ''
-          }`}</label>
-          {touched && error && <span>{error}</span>}
-        </div>
-        <div className="input-field">{children}</div>
+        {collapse ? (
+          <details>
+            <summary className="label">{this.renderLabel()}</summary>
+            <div className="input-field">{children}</div>
+          </details>
+        ) : (
+          <Fragment>
+            <div className="label">{this.renderLabel()}</div>
+            <div className="input-field">{children}</div>
+          </Fragment>
+        )}
       </div>
     );
   }
