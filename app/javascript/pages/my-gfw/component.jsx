@@ -13,7 +13,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import DashboardImage from 'assets/images/aois/aoi-dashboard-small.png';
 import DashboardImageLarge from 'assets/images/aois/aoi-dashboard-small@2x.png';
 
-import SaveAOIModal from 'components/modals/area-of-interest';
+import AreaOfInterestModal from 'components/modals/area-of-interest';
 import UserProfile from './components/user-profile';
 import AreasTable from './components/areas-table';
 import './styles.scss';
@@ -91,7 +91,7 @@ class MyGFWPage extends PureComponent {
             </div>
             <AreasProvider />
             <CountryDataProvider />
-            <SaveAOIModal canDelete />
+            <AreaOfInterestModal canDelete />
             <ShareModal />
             <ProfileModal />
           </Fragment>
