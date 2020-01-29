@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { logout } from 'utils/auth';
+
+import { logout } from 'services/user';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';

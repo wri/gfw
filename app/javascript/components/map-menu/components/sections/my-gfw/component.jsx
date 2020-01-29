@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
-import { logout } from 'utils/auth';
+import { logout } from 'services/user';
 import Link from 'redux-first-router-link';
 import slice from 'lodash/slice';
 
