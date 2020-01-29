@@ -78,7 +78,6 @@ class NewsletterForm extends PureComponent {
     return (
       <Fragment>
         <Form
-          className="c-subscribe-form"
           onSubmit={this.saveNewsletterSubscription}
           initialValues={initialValues}
           render={({
@@ -89,7 +88,7 @@ class NewsletterForm extends PureComponent {
             submitError,
             submitSucceeded
           }) => (
-            <form className="c-subscribe-form" onSubmit={handleSubmit}>
+            <form className="c-newsletter-form" onSubmit={handleSubmit}>
               <div className="row">
                 {submitSucceeded ? (
                   <div className="column small-12">

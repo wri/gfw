@@ -14,11 +14,11 @@ import './styles.scss';
 class UserProfile extends PureComponent {
   static propTypes = {
     userData: PropTypes.object,
-    setProfileSettings: PropTypes.func
+    setProfileModalOpen: PropTypes.func
   };
 
   render() {
-    const { userData, setProfileSettings } = this.props;
+    const { userData, setProfileModalOpen } = this.props;
     const { fullName, email } = userData || {};
 
     return (
@@ -32,7 +32,7 @@ class UserProfile extends PureComponent {
         <Button
           className="user-btn"
           theme="theme-button-clear theme-button-small"
-          onClick={() => setProfileSettings(true)}
+          onClick={() => setProfileModalOpen(true)}
         >
           Update profile
           <Icon className="user-btn-icon" icon={pencilIcon} />

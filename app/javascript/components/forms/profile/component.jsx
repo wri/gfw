@@ -30,7 +30,6 @@ class ProfileForm extends PureComponent {
     return (
       <Fragment>
         <Form
-          className="c-subscribe-form"
           onSubmit={saveProfile}
           initialValues={initialValues}
           render={({
@@ -42,10 +41,10 @@ class ProfileForm extends PureComponent {
             submitSucceeded,
             form: { reset }
           }) => (
-            <form className="c-subscribe-form" onSubmit={handleSubmit}>
+            <form className="c-profile-form" onSubmit={handleSubmit}>
               <div className="row">
                 {submitSucceeded ? (
-                  <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+                  <div className="column small-12">
                     <Thankyou
                       title="Thank you for updating your My GFW profile!"
                       description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
@@ -61,14 +60,14 @@ class ProfileForm extends PureComponent {
                   </div>
                 ) : (
                   <Fragment>
-                    <div className="column small-12 medium-8 medium-offset-1 large-7 large-offset-2">
+                    <div className="column small-12">
                       <h1>Your profile information</h1>
                       <h3>
                         Help us help you! Tell us who you are and how you use
                         Global Forest Watch so we can better meet your needs.
                       </h3>
                     </div>
-                    <div className="column small-12 medium-5 medium-offset-1 large-4 large-offset-2">
+                    <div className="column small-12 medium-6">
                       <Input name="fullName" label="name" required />
                       <Input
                         name="email"
@@ -101,7 +100,7 @@ class ProfileForm extends PureComponent {
                       />
                       <Input name="city" label="city" />
                     </div>
-                    <div className="column small-12 medium-5 large-4">
+                    <div className="column small-12 medium-6">
                       <Input
                         name="state"
                         label="state / department / province"

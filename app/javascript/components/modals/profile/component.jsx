@@ -9,12 +9,12 @@ import './styles.scss';
 class ModalSaveAOI extends PureComponent {
   static propTypes = {
     open: PropTypes.bool,
-    setProfileSettings: PropTypes.func
+    setProfileModalOpen: PropTypes.func
   };
 
   handleCloseModal = () => {
-    const { setProfileSettings } = this.props;
-    setProfileSettings(false);
+    const { setProfileModalOpen } = this.props;
+    setProfileModalOpen(false);
   };
 
   render() {
