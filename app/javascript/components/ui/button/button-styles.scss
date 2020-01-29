@@ -41,6 +41,7 @@ $button-height: rem(40px);
   }
 
   &.disabled {
+    pointer-events: none;
     cursor: not-allowed;
     background-color: $grey-dark;
 
