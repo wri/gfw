@@ -1,9 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-area-of-interest-form {
-  input,
-  textarea,
-  select {
+  .input-field {
     max-width: rem(350px);
   }
 

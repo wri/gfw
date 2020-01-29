@@ -8,6 +8,10 @@
 
   details {
     cursor: pointer;
+
+    input {
+      width: calc(100% - 26px);
+    }
   }
 
   .label {
