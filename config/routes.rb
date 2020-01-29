@@ -70,15 +70,12 @@ Gfw::Application.routes.draw do
   # thank you
   get '/thank-you' => 'thankyou#index'
 
-  # my gfw
-  get '/my_gfw' => 'my_gfw#index'
-
   # stories
   get '/stories' => 'stories#index'
   get '/stories/*all' => 'stories#index'
 
   # My GFW
-  get '/my-gfw' => 'mygfw#index'
+  get '/my-gfw' => 'my_gfw#index'
 
   # Small Grunts Fund
   get '/grants-and-fellowships' => 'grants_and_fellowships#index'

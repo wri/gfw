@@ -212,8 +212,8 @@ export const routes = {
   },
   [MYGFW]: {
     path: '/my-gfw',
-    component: 'mygfw',
-    controller: 'mygfw'
+    component: 'my-gfw',
+    controller: 'my_gfw'
   },
   [THANKYOU]: {
     path: '/thank-you',

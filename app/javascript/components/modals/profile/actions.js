@@ -1,10 +1,5 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createThunkAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-
-import { updateProfile } from 'services/user';
-import { setMyGFW } from 'providers/mygfw-provider/actions';
-
-export const setProfileSaving = createAction('setProfileSaving');
 
 export const setProfileSettings = createThunkAction(
   'setProfileSettings',
@@ -16,64 +11,4 @@ export const setProfileSettings = createThunkAction(
         state
       })
     )
-);
-
-export const saveProfile = createThunkAction(
-  'saveProfile',
-  ({
-    id,
-    name,
-    email,
-    lang,
-    sector,
-    primaryResponsibilities,
-    howDoYouUse,
-    country,
-    city,
-    state,
-    signUpForTesting
-  }) => (dispatch, getState) => {
-    const { profile } = getState();
-    if (profile && !profile.saving) {
-      dispatch(setProfileSaving({ saving: true, error: false }));
-
-      const postData = {
-        id,
-        fullName: name,
-        email,
-        language: lang,
-        sector,
-        primaryResponsibilities,
-        howDoYouUse,
-        country,
-        city,
-        state,
-        signUpForTesting: signUpForTesting ? 'true' : false
-      };
-
-      updateProfile(id, postData)
-        .then(response => {
-          if (response.data && response.data.data) {
-            const { attributes } = response.data.data;
-            dispatch(
-              setMyGFW({
-                loggedIn: true,
-                id: response.data.data.id,
-                ...attributes
-              })
-            );
-            dispatch(setProfileSaving({ saving: false, error: false }));
-          }
-        })
-        .catch(error => {
-          dispatch(
-            setProfileSaving({
-              saving: false,
-              error: true
-            })
-          );
-          console.info(error);
-        });
-    }
-  }
 );

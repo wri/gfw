@@ -72,10 +72,6 @@ class ApplicationController < ActionController::Base
         title: 'Area of Interest',
         desc: ''
       },
-      mygfw: {
-        title: 'My GFW',
-        desc: 'Create an account or log into My GFW. Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use.'
-      },
       terms: {
         title: 'Terms of Service',
         desc: 'Welcome to the WRI family of environmental data platforms. By using the Services, you agree to be bound by these Terms of Service and any future updates.',

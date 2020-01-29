@@ -31,7 +31,7 @@ class UserProfile extends PureComponent {
         <Button
           className="user-btn"
           theme="theme-button-clear theme-button-small"
-          onClick={() => setProfileSettings({ open: true })}
+          onClick={() => setProfileSettings(true)}
         >
           Update profile
           <Icon className="user-btn-icon" icon={pencilIcon} />
