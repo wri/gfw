@@ -10,6 +10,7 @@ import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
 import Thankyou from 'components/thankyou';
 import Button from 'components/ui/button';
+import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
@@ -130,14 +131,12 @@ class ProfileForm extends PureComponent {
                           }
                         ]}
                       />
-                      <Submit
+                      <Error
                         valid={valid}
-                        submitting={submitting}
                         submitFailed={submitFailed}
                         submitError={submitError}
-                      >
-                        save
-                      </Submit>
+                      />
+                      <Submit submitting={submitting}>save</Submit>
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">

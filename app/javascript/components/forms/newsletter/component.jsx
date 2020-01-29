@@ -11,6 +11,7 @@ import Select from 'components/forms/components/select';
 import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
 import Thankyou from 'components/thankyou';
+import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
@@ -133,15 +134,12 @@ class NewsletterForm extends PureComponent {
                         placeholder="Select a country"
                         required
                       />
-
-                      <Submit
+                      <Error
                         valid={valid}
-                        submitting={submitting}
                         submitFailed={submitFailed}
                         submitError={submitError}
-                      >
-                        subscribe
-                      </Submit>
+                      />
+                      <Submit submitting={submitting}>subscribe</Submit>
                     </div>
                   </Fragment>
                 )}

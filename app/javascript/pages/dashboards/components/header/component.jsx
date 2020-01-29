@@ -9,7 +9,7 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
-import SaveAOIModal from 'components/modals/area-of-interest';
+import AreaOfInterestModal from 'components/modals/area-of-interest';
 
 import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
@@ -312,7 +312,7 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
-        <SaveAOIModal viewAfterSave />
+        <AreaOfInterestModal viewAfterSave />
       </div>
     );
   }

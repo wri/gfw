@@ -237,20 +237,13 @@ class ProfileForm extends PureComponent {
                       }
                     ]}
                   />
-
                   <Error
                     valid={valid}
                     submitFailed={submitFailed}
                     submitError={submitError}
                   />
                   <div className="submit-actions">
-                    <Submit
-                      className="area-submit"
-                      valid={valid}
-                      submitting={submitting}
-                      submitFailed={submitFailed}
-                      submitError={submitError}
-                    >
+                    <Submit className="area-submit" submitting={submitting}>
                       save
                     </Submit>
                     {canDelete ? (
