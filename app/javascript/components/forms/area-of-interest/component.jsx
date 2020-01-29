@@ -5,6 +5,7 @@ import { getLanguages } from 'utils/lang';
 
 import ModalSource from 'components/modals/sources';
 import Input from 'components/forms/components/input';
+import InputTags from 'components/forms/components/input-tags';
 import Select from 'components/forms/components/select';
 import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
@@ -90,6 +91,10 @@ class ProfileForm extends PureComponent {
                         name="name"
                         label="Name this area for later reference"
                         required
+                      />
+                      <InputTags
+                        name="tags"
+                        label="Assign tags to organize and group areas"
                       />
                     </div>
                     <div className="column small-12">
@@ -191,6 +196,7 @@ class ProfileForm extends PureComponent {
                       />
                       <Checkbox
                         name="signUpForTesting"
+                        label="Would you like to recieve alert notifications?"
                         options={[
                           {
                             label: 'As soon as fires are detected',

@@ -9,7 +9,7 @@ import Modal from '../modal';
 
 import './styles.scss';
 
-class ModalSaveAOI extends PureComponent {
+class AreaOfInterestModal extends PureComponent {
   static propTypes = {
     open: PropTypes.bool,
     loggedIn: PropTypes.bool,
@@ -46,4 +46,4 @@ class ModalSaveAOI extends PureComponent {
   }
 }
 
-export default ModalSaveAOI;
+export default AreaOfInterestModal;

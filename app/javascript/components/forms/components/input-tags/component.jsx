@@ -2,9 +2,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import ReactTagsInput from 'react-tagsinput';
 
 import { composeValidators } from 'components/forms/validations';
 
+import Pill from 'components/ui/pill';
 import FieldWrapper from 'components/forms/components/field-wrapper';
 
 import './styles.scss';
@@ -21,21 +23,13 @@ class Input extends PureComponent {
   };
 
   render() {
-    const {
-      name,
-      label,
-      validate,
-      type,
-      placeholder,
-      hidden,
-      required
-    } = this.props;
+    const { name, label, validate, placeholder, hidden, required } = this.props;
 
     return (
       <Field
         name={name}
         validate={composeValidators(required, validate)}
-        type={type}
+        type="text"
       >
         {({ input, meta }) => (
           <FieldWrapper
@@ -45,21 +39,28 @@ class Input extends PureComponent {
             hidden={hidden}
             required={required}
           >
-            {type === 'textarea' ? (
-              <textarea
-                className="c-form-input textarea"
-                {...input}
-                type={type}
-                placeholder={placeholder}
-              />
-            ) : (
-              <input
-                className="c-form-input"
-                {...input}
-                type={type}
-                placeholder={placeholder}
-              />
-            )}
+            <ReactTagsInput
+              className="c-form-tags"
+              {...input}
+              inputProps={{
+                placeholder: placeholder || 'Add a new tag'
+              }}
+              renderTag={({ tag, key, onRemove }) => (
+                <Pill
+                  key={key}
+                  className="input-pill"
+                  active
+                  label={tag}
+                  onRemove={e => {
+                    e.preventDefault();
+                    onRemove(key);
+                  }}
+                />
+              )}
+            />
+            <span className="form-tags-instructions">
+              Hit enter to create and separate tags
+            </span>
           </FieldWrapper>
         )}
       </Field>
