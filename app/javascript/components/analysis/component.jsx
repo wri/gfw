@@ -27,7 +27,7 @@ class AnalysisComponent extends PureComponent {
     embed: PropTypes.bool,
     search: PropTypes.string,
     setSubscribeSettings: PropTypes.func,
-    setSaveAOISettings: PropTypes.func,
+    setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func,
     checkingShape: PropTypes.bool,
     uploadingShape: PropTypes.bool
@@ -47,7 +47,7 @@ class AnalysisComponent extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
-      setSaveAOISettings,
+      setAreaOfInterestModalSettings,
       endpoints,
       widgetLayers,
       embed,
@@ -162,7 +162,7 @@ class AnalysisComponent extends PureComponent {
               <Button
                 className="analysis-action-btn save-to-mygfw-btn"
                 onClick={() => {
-                  setSaveAOISettings({ open: true });
+                  setAreaOfInterestModalSettings({ open: true });
                 }}
               >
                   SAVE IN MY GFW

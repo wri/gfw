@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+
+.c-profile-form {
+  h1 {
+    font-size: rem(36px);
+    margin-bottom: rem(10px);
+    font-weight: 300;
+  }
+
+  h3 {
+    font-size: rem(16px);
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(60px);
+    }
+  }
+
+  p {
+    margin-bottom: rem(20px);
+  }
+
+  .submit-btn {
+    min-width: rem(180px);
+  }
+
+  .delete-profile {
+    text-align: center;
+    width: 100%;
+    margin-top: rem(60px);
+  }
+
+  .reset-form-btn {
+    margin: auto;
+    width: rem(200px);
+    margin-top: rem(30px);
+  }
+}

@@ -9,7 +9,7 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
-import SaveAOIModal from 'components/modals/save-aoi';
+import SaveAOIModal from 'components/modals/area-of-interest';
 
 import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
@@ -36,7 +36,7 @@ class Header extends PureComponent {
     downloadLink: PropTypes.string,
     selectorMeta: PropTypes.object,
     shareMeta: PropTypes.string,
-    setSaveAOISettings: PropTypes.func,
+    setAreaOfInterestModalSettings: PropTypes.func,
     title: PropTypes.string,
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
@@ -60,7 +60,7 @@ class Header extends PureComponent {
       downloadLink,
       selectorMeta,
       shareMeta,
-      setSaveAOISettings,
+      setAreaOfInterestModalSettings,
       title,
       activeArea,
       firstArea,
@@ -87,7 +87,7 @@ class Header extends PureComponent {
               className="theme-button-small"
               onClick={() => {
                 if (activeArea && !activeArea.userArea) {
-                  setSaveAOISettings({ open: true });
+                  setAreaOfInterestModalSettings({ open: true });
                 } else {
                   setShareModal(shareData);
                 }
@@ -103,7 +103,7 @@ class Header extends PureComponent {
                   text: `Edit ${locationNames.adm0.label}`,
                   position: 'bottom'
                 }}
-                onClick={() => setSaveAOISettings({ open: true })}
+                onClick={() => setAreaOfInterestModalSettings({ open: true })}
               >
                 <Icon icon={pencilIcon} />
               </Button>
@@ -115,7 +115,7 @@ class Header extends PureComponent {
                   text: 'Save as an area of interest',
                   position: 'bottom'
                 }}
-                onClick={() => setSaveAOISettings({ open: true })}
+                onClick={() => setAreaOfInterestModalSettings({ open: true })}
               >
                 <Icon icon={saveUserIcon} />
               </Button>

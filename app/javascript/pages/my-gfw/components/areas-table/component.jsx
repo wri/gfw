@@ -26,7 +26,7 @@ class AreasTable extends PureComponent {
     areas: PropTypes.array,
     tags: PropTypes.array,
     viewArea: PropTypes.func,
-    setSaveAOISettings: PropTypes.func,
+    setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func
   };
 
@@ -58,7 +58,7 @@ class AreasTable extends PureComponent {
   render() {
     const {
       viewArea,
-      setSaveAOISettings,
+      setAreaOfInterestModalSettings,
       setShareModal,
       areas,
       tags
@@ -257,7 +257,10 @@ class AreasTable extends PureComponent {
                     className="area-link"
                     theme="theme-button-clear"
                     onClick={() =>
-                      setSaveAOISettings({ open: true, activeAreaId: area.id })
+                      setAreaOfInterestModalSettings({
+                        open: true,
+                        activeAreaId: area.id
+                      })
                     }
                   >
                     <Icon className="link-icon" icon={editIcon} />

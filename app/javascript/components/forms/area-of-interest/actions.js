@@ -1,49 +1,17 @@
-import { createAction, createThunkAction } from 'utils/redux';
-import axios from 'axios';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { createThunkAction } from 'utils/redux';
+import request from 'utils/request';
+// import { FORM_ERROR } from 'final-form';
 
-import { setAreasWithSubscription, deleteAreaProvider } from 'services/areas';
 import {
   setArea,
   setAreas,
   viewArea,
   clearArea
 } from 'providers/areas-provider/actions';
+import { setAreasWithSubscription, deleteAreaProvider } from 'services/areas';
 
-export const setSaveAOISaving = createAction('setSaveAOISaving');
-export const resetSaveAOI = createAction('resetSaveAOI');
-
-export const setSaveAOISettings = createThunkAction(
-  'setSaveAOISettings',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'saveAOI',
-        change,
-        state
-      })
-    )
-);
-
-export const testWebhook = createThunkAction(
-  'testWebhook',
-  ({ data, url, callback }) => () =>
-    axios({
-      method: 'POST',
-      data,
-      headers: { 'content-type': 'application/json' },
-      url
-    })
-      .then(() => {
-        callback('success');
-      })
-      .catch(() => {
-        callback('error');
-      })
-);
-
-export const saveAOI = createThunkAction(
-  'saveAOI',
+export const saveAreaOfInterest = createThunkAction(
+  'saveAreaOfInterest',
   ({
     name,
     tags,
@@ -58,8 +26,6 @@ export const saveAOI = createThunkAction(
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore } = getState();
     if (modalSaveAOI && !modalSaveAOI.saving) {
-      dispatch(setSaveAOISaving({ saving: true, error: false, saved: false }));
-
       const { data: geostoreData } = geostore || {};
       const { id: geostoreId } = geostoreData || {};
       const { payload: { type, adm0, adm1, adm2 } } = location || {};
@@ -121,21 +87,11 @@ export const saveAOI = createThunkAction(
       setAreasWithSubscription(postData, method)
         .then(area => {
           dispatch(setArea(area));
-          dispatch(
-            setSaveAOISaving({ saving: false, error: false, saved: true })
-          );
           if (viewAfterSave) {
             dispatch(viewArea({ areaId: area.id }));
           }
         })
         .catch(error => {
-          dispatch(
-            setSaveAOISaving({
-              saving: false,
-              saved: false,
-              error: true
-            })
-          );
           console.info(error);
         });
     }
@@ -146,7 +102,6 @@ export const deleteAOI = createThunkAction(
   'deleteAOI',
   ({ id, subscriptionId, clearAfterDelete }) => (dispatch, getState) => {
     const { data: areas } = getState().areas || {};
-    dispatch(setSaveAOISaving({ saving: true, error: false, deleted: false }));
 
     deleteAreaProvider({ id, subscriptionId })
       .then(response => {
@@ -156,23 +111,29 @@ export const deleteAOI = createThunkAction(
           response.status < 300
         ) {
           dispatch(setAreas(areas.filter(a => a.id !== id)));
-          dispatch(
-            setSaveAOISaving({ saving: false, error: false, deleted: true })
-          );
           if (clearAfterDelete) {
             dispatch(clearArea());
           }
         }
       })
       .catch(error => {
-        dispatch(
-          setSaveAOISaving({
-            saving: false,
-            error: true,
-            deleted: false
-          })
-        );
         console.info(error);
       });
   }
+);
+
+export const testWebhook = createThunkAction(
+  'testWebhook',
+  ({ data, url, callback }) => () =>
+    request({
+      method: 'POST',
+      data,
+      url
+    })
+      .then(() => {
+        callback('success');
+      })
+      .catch(() => {
+        callback('error');
+      })
 );

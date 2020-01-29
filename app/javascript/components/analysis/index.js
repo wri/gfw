@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
-import { setSaveAOISettings } from 'components/modals/save-aoi/actions';
+import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 import { setShareModal } from 'components/modals/share/share-actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -98,6 +98,6 @@ reducerRegistry.registerModule('analysis', {
 
 export default connect(getAnalysisProps, {
   ...actions,
-  setSaveAOISettings,
+  setAreaOfInterestModalSettings,
   setShareModal
 })(AnalysisContainer);
