@@ -6,6 +6,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 import Checkbox from 'components/forms/components/checkbox';
+import Radio from 'components/forms/components/radio';
 import Submit from 'components/forms/components/submit';
 import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
@@ -39,7 +40,8 @@ class ProfileForm extends PureComponent {
             submitFailed,
             submitError,
             submitSucceeded,
-            form: { reset }
+            form: { reset },
+            values
           }) => (
             <form className="c-profile-form" onSubmit={handleSubmit}>
               <div className="row">
@@ -67,7 +69,7 @@ class ProfileForm extends PureComponent {
                         Global Forest Watch so we can better meet your needs.
                       </h3>
                     </div>
-                    <div className="column small-12 medium-12">
+                    <div className="column small-12 medium-6">
                       <Input name="firstName" label="first name" required />
                       <Input name="lastName" label="last name" required />
                       <Input
@@ -85,6 +87,14 @@ class ProfileForm extends PureComponent {
                         placeholder="Select a sector"
                         required
                       />
+                      {values.sector &&
+                        values.sector === 'International NGO' && (
+                        <Radio
+                          name="subsectortest_"
+                          label="asdftest"
+                          options={[]}
+                        />
+                      )}
                       <Input name="jobTitle" label="job title" />
                       <Input name="company" label="Company / organization" />
                       <h3>Location</h3>
@@ -99,6 +109,8 @@ class ProfileForm extends PureComponent {
                         name="state"
                         label="state / department / province"
                       />
+                    </div>
+                    <div className="column small-12 medium-6">
                       <h3>Geographic area of interest*</h3>
                       <Select
                         name="country"
