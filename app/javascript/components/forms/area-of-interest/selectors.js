@@ -34,29 +34,37 @@ export const getActiveArea = createSelector(
 export const getInitialValues = createSelector(
   [selectUserData, getActiveArea, getGeodescriberTitleFull, selectGeostoreId],
   (userData, area, locationName, geostoreId) => {
-    const { email, language } = userData;
-    const { fireAlerts, deforestationAlerts, monthlySummary, ...rest } =
+    const { email: userEmail, language: userLanguage } = userData;
+    const {
+      fireAlerts,
+      deforestationAlerts,
+      monthlySummary,
+      name,
+      email,
+      language,
+      ...rest
+    } =
       area || {};
 
     return {
-      email,
-      language,
       alerts: compact([
         fireAlerts ? 'fireAlerts' : false,
         deforestationAlerts ? 'deforestationAlerts' : false,
         monthlySummary ? 'monthlySummary' : false
       ]),
       geostore: geostoreId,
-      name: locationName,
-      ...rest
+      ...rest,
+      name: name || locationName,
+      email: email || userEmail,
+      language: language || userLanguage
     };
   }
 );
 
 export const getFormTitle = createSelector(
   [getInitialValues],
-  ({ id } = {}) => {
-    if (id) {
+  ({ id, userArea } = {}) => {
+    if (id && userArea) {
       return 'Edit area of Interest';
     }
 
