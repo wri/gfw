@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'utils/redux';
 
-import { getAreasWithSubscriptions, getArea } from 'services/areas';
+import { getAreas, getArea } from 'services/areas';
 
 export const setAreasLoading = createAction('setAreasLoading');
 export const setAreas = createAction('setAreas');
@@ -11,7 +11,7 @@ export const getAreasProvider = createThunkAction(
   () => (dispatch, getState) => {
     const { location } = getState();
     dispatch(setAreasLoading({ loading: true, error: false }));
-    getAreasWithSubscriptions()
+    getAreas()
       .then(areas => {
         const { type, adm0 } = location.payload || {};
         if (areas && !!areas.length) {

@@ -7,7 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
 import Button from 'components/ui/button';
-import Thankyou from 'components/thankyou';
+import ConfirmationMessage from 'components/confirmation-message';
 import Error from 'components/forms/components/error';
 
 import { email } from 'components/forms/validations';
@@ -114,7 +114,7 @@ class LoginForm extends PureComponent {
             <div className="row">
               {submitSucceeded && showForm !== 'login' ? (
                 <div className="column small-12">
-                  <Thankyou {...confirmation} />
+                  <ConfirmationMessage {...confirmation} />
                   <Button
                     className="reset-form-btn"
                     onClick={() => {

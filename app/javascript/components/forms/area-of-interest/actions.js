@@ -1,5 +1,5 @@
 import { createThunkAction } from 'utils/redux';
-// import { FORM_ERROR } from 'final-form';
+import { FORM_ERROR } from 'final-form';
 
 import { saveArea, deleteArea } from 'services/areas';
 import {
@@ -12,51 +12,33 @@ import {
 export const saveAreaOfInterest = createThunkAction(
   'saveAreaOfInterest',
   ({
+    id,
     name,
     tags,
     email,
     webhookUrl,
     language,
     alerts,
-    fireAlerts,
-    deforestationAlerts,
-    monthlySummary,
-    activeArea,
-    viewAfterSave
+    application,
+    viewAfterSave,
+    geostore: geostoreId
   }) => (dispatch, getState) => {
     const { location, geostore } = getState();
     const { data: geostoreData } = geostore || {};
-    const { id: geostoreId } = geostoreData || {};
     const { payload: { type, adm0, adm1, adm2 } } = location || {};
     const isCountry = type === 'country';
-    const {
-      id: activeAreaId,
-      application,
-      admin,
-      use,
-      wdpa,
-      subscriptionId
-    } =
-      activeArea || {};
-    const method = activeArea && activeArea.userArea ? 'patch' : 'post';
 
     const postData = {
+      id,
       name,
       type,
-      id: activeAreaId,
-      ...(subscriptionId && {
-        subscriptionId
-      }),
       application: application || 'gfw',
-      geostore: geostoreId,
+      geostore: geostoreId || (geostoreData && geostoreData.id),
       email,
       language,
-      deforestationAlerts,
-      monthlySummary,
-      fireAlerts,
-      admin,
-      use,
-      wdpa,
+      deforestationAlerts: alerts.includes('deforestationAlerts'),
+      monthlySummary: alerts.includes('monthlySummary'),
+      fireAlerts: alerts.includes('fireAlerts'),
       ...(isCountry && {
         admin: {
           adm0,
@@ -83,7 +65,7 @@ export const saveAreaOfInterest = createThunkAction(
       })
     };
 
-    saveArea(postData, method)
+    return saveArea(postData)
       .then(area => {
         dispatch(setArea(area));
         if (viewAfterSave) {
@@ -91,31 +73,36 @@ export const saveAreaOfInterest = createThunkAction(
         }
       })
       .catch(error => {
-        console.info(error);
+        const { errors } = error.response.data;
+
+        return {
+          [FORM_ERROR]: errors[0].detail
+        };
       });
   }
 );
 
-export const deleteAOI = createThunkAction(
-  'deleteAOI',
-  ({ id, subscriptionId, clearAfterDelete }) => (dispatch, getState) => {
+export const deleteAreaOfInterest = createThunkAction(
+  'deleteAreaOfInterest',
+  ({ id, clearAfterDelete, callBack }) => (dispatch, getState) => {
     const { data: areas } = getState().areas || {};
 
-    deleteArea({ id, subscriptionId })
-      .then(response => {
-        if (
-          response.status &&
-          response.status >= 200 &&
-          response.status < 300
-        ) {
-          dispatch(setAreas(areas.filter(a => a.id !== id)));
-          if (clearAfterDelete) {
-            dispatch(clearArea());
-          }
+    return deleteArea(id)
+      .then(() => {
+        dispatch(setAreas(areas.filter(a => a.id !== id)));
+        if (clearAfterDelete) {
+          dispatch(clearArea());
+        }
+        if (callBack) {
+          callBack();
         }
       })
       .catch(error => {
-        console.info(error);
+        const { errors } = error.response.data;
+
+        return {
+          [FORM_ERROR]: errors[0].detail
+        };
       });
   }
 );

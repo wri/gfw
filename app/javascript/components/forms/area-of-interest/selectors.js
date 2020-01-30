@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import compact from 'lodash/compact';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 
@@ -31,12 +32,30 @@ export const getInitialValues = createSelector(
   [selectUserData, getActiveArea],
   (userData, area) => {
     const { email, language } = userData;
+    const { fireAlerts, deforestationAlerts, monthlySummary, ...rest } =
+      area || {};
 
     return {
       email,
       language,
-      ...area
+      alerts: compact([
+        fireAlerts ? 'fireAlerts' : false,
+        deforestationAlerts ? 'deforestationAlerts' : false,
+        monthlySummary ? 'monthlySummary' : false
+      ]),
+      ...rest
     };
+  }
+);
+
+export const getFormTitle = createSelector(
+  [getInitialValues],
+  ({ id } = {}) => {
+    if (id) {
+      return 'Edit area of Interest';
+    }
+
+    return 'Save area of interest';
   }
 );
 
@@ -78,5 +97,6 @@ export const getInitialValues = createSelector(
 export const getAreaOfInterestProps = createStructuredSelector({
   loading: selectLoading,
   loggedIn: selectLoggedIn,
-  initialValues: getInitialValues
+  initialValues: getInitialValues,
+  title: getFormTitle
 });

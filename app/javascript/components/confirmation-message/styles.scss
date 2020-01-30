@@ -7,10 +7,12 @@
     align-items: center;
     flex-direction: column;
 
-    img {
+    img,
+    svg {
       max-width: rem(200px);
       height: rem(200px);
       margin-bottom: rem(10px);
+      width: 100%;
 
       @media screen and (min-width: $screen-m) {
         margin-bottom: rem(20px);

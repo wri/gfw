@@ -40,7 +40,13 @@ class AreaOfInterestModal extends PureComponent {
         <div className="save-aoi-body">
           {loading && <Loader />}
           {!loading && !loggedIn && <LoginForm />}
-          {!loading && loggedIn && <AreaOfInterestForm canDelete={canDelete} />}
+          {!loading &&
+            loggedIn && (
+            <AreaOfInterestForm
+              canDelete={canDelete}
+              closeForm={this.handleCloseModal}
+            />
+          )}
         </div>
       </Modal>
     );
