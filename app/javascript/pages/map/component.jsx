@@ -19,7 +19,7 @@ import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
-import SaveAOIModal from 'components/modals/area-of-interest';
+import AreaOfInterestModal from 'components/modals/area-of-interest';
 import MapPrompts from 'components/prompts/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
@@ -132,7 +132,7 @@ class MainMapComponent extends PureComponent {
             )}
             <Share />
             <ModalMeta />
-            <SaveAOIModal viewAfterSave clearAfterDelete canDelete />
+            <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
             <ModalSource />
             <CountryDataProvider />
             <WhitelistsProvider />

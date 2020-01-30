@@ -17,7 +17,9 @@ class Input extends PureComponent {
     validate: PropTypes.array,
     label: PropTypes.string,
     name: PropTypes.string,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    collapse: PropTypes.bool,
+    infoClick: PropTypes.func
   };
 
   render() {
@@ -28,7 +30,9 @@ class Input extends PureComponent {
       type,
       placeholder,
       hidden,
-      required
+      required,
+      infoClick,
+      collapse
     } = this.props;
 
     return (
@@ -44,6 +48,8 @@ class Input extends PureComponent {
             {...meta}
             hidden={hidden}
             required={required}
+            infoClick={infoClick}
+            collapse={collapse}
           >
             {type === 'textarea' ? (
               <textarea

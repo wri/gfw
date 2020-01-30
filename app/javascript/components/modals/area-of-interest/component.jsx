@@ -14,6 +14,7 @@ class AreaOfInterestModal extends PureComponent {
     open: PropTypes.bool,
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
+    canDelete: PropTypes.bool,
     setAreaOfInterestModalSettings: PropTypes.func
   };
 
@@ -27,7 +28,7 @@ class AreaOfInterestModal extends PureComponent {
   };
 
   render() {
-    const { open, loading, loggedIn } = this.props;
+    const { open, loading, loggedIn, canDelete } = this.props;
 
     return (
       <Modal
@@ -39,7 +40,7 @@ class AreaOfInterestModal extends PureComponent {
         <div className="save-aoi-body">
           {loading && <Loader />}
           {!loading && !loggedIn && <LoginForm />}
-          {!loading && loggedIn && <AreaOfInterestForm />}
+          {!loading && loggedIn && <AreaOfInterestForm canDelete={canDelete} />}
         </div>
       </Modal>
     );

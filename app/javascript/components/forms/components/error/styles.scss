@@ -1,6 +1,6 @@
 @import '~styles/settings.scss';
 
-.c-form-submit {
+.c-form-error {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,19 +8,19 @@
   margin-bottom: 0;
   position: relative;
 
-  .submit-btn {
-    position: relative;
+  span {
+    font-size: rem(14px);
+    color: $error;
+    margin-bottom: rem(20px);
 
     @media screen and (min-width: $screen-m) {
-      align-self: flex-end;
+      align-self: flex-start;
+      margin-right: rem(20px);
+      margin-bottom: rem(30px);
     }
 
-    .submit-loader {
-      > div {
-        width: rem(20px);
-        height: rem(20px);
-        border-width: 2px;
-      }
+    &.success {
+      color: $green-gfw;
     }
   }
 }

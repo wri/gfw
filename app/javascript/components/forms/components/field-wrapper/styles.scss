@@ -6,19 +6,40 @@
   display: flex;
   flex-direction: column;
 
+  details {
+    cursor: pointer;
+
+    input {
+      width: calc(100% - 26px);
+    }
+  }
+
   .label {
     text-transform: uppercase;
     font-size: rem(12px);
     color: #333;
     margin-bottom: rem(5px);
     font-weight: 500;
+    display: flex;
+    align-items: center;
+
+    &:focus {
+      outline: none;
+    }
+
+    label {
+      margin-right: rem(10px);
+    }
 
     span {
       text-transform: none;
       color: $error;
       font-size: rem(12px);
-      margin-left: rem(10px);
       font-weight: 400;
+    }
+
+    .info-button {
+      margin-right: rem(10px);
     }
   }
 

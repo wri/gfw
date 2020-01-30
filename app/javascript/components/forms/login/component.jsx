@@ -8,6 +8,7 @@ import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
 import Button from 'components/ui/button';
 import Thankyou from 'components/thankyou';
+import Error from 'components/forms/components/error';
 
 import { email } from 'components/forms/validations';
 
@@ -198,20 +199,13 @@ class LoginForm extends PureComponent {
                           Forgot password
                         </div>
                       )}
-                      {!submitError &&
-                        !valid &&
-                        submitFailed && (
-                        <span className="submit-error">
-                            Required fields are empty!
-                        </span>
-                      )}
-                      {submitError && (
-                        <span className="submit-error">{submitError}</span>
-                      )}
+                      <Error
+                        valid={valid}
+                        submitFailed={submitFailed}
+                        submitError={submitError}
+                      />
                       <div className="submit-actions">
-                        <Submit valid submitting={submitting}>
-                          {submit}
-                        </Submit>
+                        <Submit submitting={submitting}>{submit}</Submit>
                         <button
                           className="change-form"
                           theme="theme-button-light"

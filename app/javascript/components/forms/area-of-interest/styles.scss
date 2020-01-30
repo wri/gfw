@@ -1,16 +1,34 @@
 @import '~styles/settings.scss';
 
 .c-area-of-interest-form {
+  .input-field {
+    max-width: rem(350px);
+  }
+
   h1 {
-    font-size: rem(36px);
-    margin-bottom: rem(30px);
+    margin-bottom: rem(20px);
     font-weight: 300;
+    font-size: 18px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: rem(36px);
+      margin-bottom: rem(30px);
+    }
   }
 
   .aoi-map {
     height: 300px;
     position: relative;
     margin-bottom: rem(30px);
+    margin-left: -25px;
+    margin-right: -25px;
+    width: calc(100% + 50px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
   }
 
   .alerts-image {
@@ -39,60 +57,36 @@
     }
   }
 
-  details {
-    margin-bottom: rem(25px);
-
-    summary {
-      display: flex;
-      align-items: center;
-      text-transform: uppercase;
-      font-size: rem(12px);
-      color: #333;
-      margin-bottom: rem(5px);
-      font-weight: 500;
-      cursor: pointer;
-
-      &:focus {
-        outline: none;
-      }
-
-      .info-button {
-        margin-left: rem(10px);
-      }
-    }
-  }
-
   .webhook-actions {
-    margin-top: rem(5px);
+    margin: -25px 0 25px;
+    height: 20px;
 
-    button {
+    .test-webhook {
       color: $green-gfw;
       margin-right: rem(10px);
       font-style: italic;
+      font-size: rem(12px);
       cursor: pointer;
       transition: color 0.1s ease-in-out;
+      position: relative;
+      padding-right: 20px;
 
       &:hover {
         color: darken($green-gfw, 10%);
       }
-    }
 
-    .button-link {
-      position: relative;
-      padding-right: 16px;
-    }
+      .webhook-loader {
+        width: 12px;
+        height: 12px;
+        left: unset;
+        right: 0;
+      }
 
-    .webhook-loader {
-      width: 12px;
-      height: 12px;
-      left: unset;
-      right: 0;
-    }
-
-    .spinner {
-      width: 12px;
-      height: 12px;
-      border-width: 2px;
+      .spinner {
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+      }
     }
 
     .wh-success {
@@ -104,27 +98,42 @@
     }
   }
 
-  // h3 {
-  //   font-size: rem(16px);
-  //   margin-bottom: rem(40px);
+  .submit-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-  //   @media screen and (min-width: $screen-m) {
-  //     margin-bottom: rem(60px);
-  //   }
-  // }
-
-  // p {
-  //   margin-bottom: rem(20px);
-  // }
-
-  .submit-btn {
-    min-width: rem(180px);
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
   }
 
-  .delete-profile {
-    text-align: center;
+  .area-submit {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    .submit-btn {
+      min-width: rem(180px);
+    }
+  }
+
+  .delete-area {
+    padding: 0;
+    color: $error;
     width: 100%;
-    margin-top: rem(60px);
+
+    @media screen and (min-width: $screen-m) {
+      width: auto;
+    }
+
+    .delete-icon {
+      margin-right: rem(5px);
+      margin-top: rem(-1px);
+      position: relative;
+      fill: $error;
+    }
   }
 
   .reset-form-btn {

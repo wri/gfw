@@ -6,9 +6,9 @@ import Modal from '../modal';
 
 import './styles.scss';
 
-class ModalSaveAOI extends PureComponent {
+class ProfileModal extends PureComponent {
   static propTypes = {
-    open: PropTypes.bool,
+    open: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     setProfileModalOpen: PropTypes.func
   };
 
@@ -34,4 +34,4 @@ class ModalSaveAOI extends PureComponent {
   }
 }
 
-export default ModalSaveAOI;
+export default ProfileModal;
