@@ -1,23 +1,23 @@
 import { createAction, createThunkAction } from 'utils/redux';
 
-import { getAreaProvider, getAreasProvider } from 'services/areas';
+import { getAreasWithSubscriptions, getArea } from 'services/areas';
 
 export const setAreasLoading = createAction('setAreasLoading');
 export const setAreas = createAction('setAreas');
 export const setArea = createAction('setArea');
 
-export const getAreas = createThunkAction(
-  'getAreas',
+export const getAreasProvider = createThunkAction(
+  'getAreasProvider',
   () => (dispatch, getState) => {
     const { location } = getState();
     dispatch(setAreasLoading({ loading: true, error: false }));
-    getAreasProvider()
+    getAreasWithSubscriptions()
       .then(areas => {
         const { type, adm0 } = location.payload || {};
         if (areas && !!areas.length) {
           dispatch(setAreas(areas));
           if (type === 'aoi' && adm0 && !areas.find(d => d.id === adm0)) {
-            getAreaProvider(adm0)
+            getArea(adm0)
               .then(area => {
                 dispatch(setArea(area));
                 dispatch(setAreasLoading({ loading: false, error: false }));
@@ -45,13 +45,13 @@ export const getAreas = createThunkAction(
   }
 );
 
-export const getArea = createThunkAction(
-  'getArea',
+export const getAreaProvider = createThunkAction(
+  'getAreaProvider',
   id => (dispatch, getState) => {
     const { myGfw } = getState();
     const { data: userData } = myGfw || {};
     dispatch(setAreasLoading({ loading: true, error: false }));
-    getAreaProvider(id)
+    getArea(id)
       .then(area => {
         dispatch(
           setArea({

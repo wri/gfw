@@ -28,7 +28,7 @@ import {
 
 import './styles.scss';
 
-class ProfileForm extends PureComponent {
+class AreaOfInterestForm extends PureComponent {
   static propTypes = {
     initialValues: PropTypes.object,
     saveAreaOfInterest: PropTypes.func,
@@ -220,7 +220,7 @@ class ProfileForm extends PureComponent {
                     required
                   />
                   <Checkbox
-                    name="signUpForTesting"
+                    name="alerts"
                     label="Would you like to recieve alert notifications?"
                     options={[
                       {
@@ -276,4 +276,4 @@ class ProfileForm extends PureComponent {
   }
 }
 
-export default ProfileForm;
+export default AreaOfInterestForm;

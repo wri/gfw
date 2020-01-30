@@ -12,21 +12,21 @@ import { getAreasProps } from './selectors';
 class AreasProvider extends PureComponent {
   static propTypes = {
     areas: PropTypes.array,
-    getAreas: PropTypes.func.isRequired,
-    getArea: PropTypes.func.isRequired,
+    getAreasProvider: PropTypes.func.isRequired,
+    getAreaProvider: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
     location: PropTypes.object
   };
 
   componentDidMount() {
-    const { getArea, areas, loggedIn, location, loading } = this.props;
+    const { getAreaProvider, areas, loggedIn, location, loading } = this.props;
     if (!loading && isEmpty(areas) && loggedIn) {
       this.handleGetAreas();
     }
 
     if (!loading && !loggedIn && isEmpty(areas) && location.type === 'aoi') {
-      getArea(location.adm0);
+      getAreaProvider(location.adm0);
     }
   }
 
@@ -40,11 +40,11 @@ class AreasProvider extends PureComponent {
   }
 
   handleGetAreas = () => {
-    const { getAreas } = this.props;
+    const { getAreasProvider } = this.props;
     this.cancelAreasFetch();
     this.areasFetch = CancelToken.source();
 
-    getAreas(this.areasFetch.token);
+    getAreasProvider(this.areasFetch.token);
   };
 
   cancelAreasFetch = () => {
