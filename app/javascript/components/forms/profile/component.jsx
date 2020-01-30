@@ -7,7 +7,7 @@ import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
-import Thankyou from 'components/thankyou';
+import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
 import Error from 'components/forms/components/error';
 
@@ -45,7 +45,7 @@ class ProfileForm extends PureComponent {
               <div className="row">
                 {submitSucceeded ? (
                   <div className="column small-12">
-                    <Thankyou
+                    <ConfirmationMessage
                       title="Thank you for updating your My GFW profile!"
                       description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
                     />

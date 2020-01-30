@@ -1,7 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import compact from 'lodash/compact';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
 const selectAreaOfInterestModalState = state =>
   state.location &&
@@ -12,6 +14,8 @@ const selectLoggedIn = state =>
   state.myGfw && state.myGfw.data && state.myGfw.data.loggedIn;
 const selectLocation = state => state.location && state.location.payload;
 const selectUserData = state => state.myGfw && state.myGfw.data;
+const selectGeostoreId = state =>
+  state.geostore && state.geostore.data && state.geostore.data.id;
 
 export const getActiveArea = createSelector(
   [selectLocation, selectAreaOfInterestModalState, getAllAreas],
@@ -28,55 +32,53 @@ export const getActiveArea = createSelector(
 );
 
 export const getInitialValues = createSelector(
-  [selectUserData, getActiveArea],
-  (userData, area) => {
-    const { email, language } = userData;
-
-    return {
+  [selectUserData, getActiveArea, getGeodescriberTitleFull, selectGeostoreId],
+  (userData, area, locationName, geostoreId) => {
+    const { email: userEmail, language: userLanguage } = userData;
+    const {
+      fireAlerts,
+      deforestationAlerts,
+      monthlySummary,
+      name,
       email,
       language,
-      ...area
+      userArea,
+      id,
+      ...rest
+    } =
+      area || {};
+
+    return {
+      alerts: compact([
+        fireAlerts ? 'fireAlerts' : false,
+        deforestationAlerts ? 'deforestationAlerts' : false,
+        monthlySummary ? 'monthlySummary' : false
+      ]),
+      geostore: geostoreId,
+      ...rest,
+      id: userArea ? id : null,
+      userArea,
+      name: name || locationName,
+      email: email || userEmail,
+      language: language || userLanguage
     };
   }
 );
 
-// export const getModalTitle = createSelector(
-//   [getActiveArea, selectUserData, selectSaved, selectDeleted],
-//   (activeArea, userData, saved, deleted) => {
-//     if (deleted) {
-//       return 'Area of Interest Deleted';
-//     }
-//     if (saved) {
-//       return 'Area of Interest Saved';
-//     }
-//     if (activeArea && activeArea.userArea && !isEmpty(userData)) {
-//       return 'Edit Area of Interest';
-//     }
-//     return 'Save Area of Interest';
-//   }
-// );
+export const getFormTitle = createSelector(
+  [getInitialValues],
+  ({ userArea } = {}) => {
+    if (userArea) {
+      return 'Edit area of Interest';
+    }
 
-// export const getModalDesc = createSelector(
-//   [getActiveArea, selectSaved, selectDeleted],
-//   (area, saved, deleted) => {
-//     if (isEmpty(area)) return null;
-//     const { fireAlerts, deforestationAlerts, monthlySummary, confirmed } = area;
-//     const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
-
-//     if (deleted) {
-//       return 'This area of interest has been deleted from your My GFW.';
-//     }
-
-//     if (saved && hasSubscription && !confirmed) {
-//       return "<b>Check your email and click on the link to confirm your subscription.</b> If you don't see an email, check your junk or spam email folder.";
-//     }
-
-//     return 'Your area has been updated. You can view all your areas in My GFW.';
-//   }
-// );
+    return 'Save area of interest';
+  }
+);
 
 export const getAreaOfInterestProps = createStructuredSelector({
   loading: selectLoading,
   loggedIn: selectLoggedIn,
-  initialValues: getInitialValues
+  initialValues: getInitialValues,
+  title: getFormTitle
 });

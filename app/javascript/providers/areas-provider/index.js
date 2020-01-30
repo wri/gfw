@@ -1,7 +1,6 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import reducerRegistry from 'app/registry';
 import { CancelToken } from 'axios';
 
@@ -11,22 +10,21 @@ import { getAreasProps } from './selectors';
 
 class AreasProvider extends PureComponent {
   static propTypes = {
-    areas: PropTypes.array,
-    getAreas: PropTypes.func.isRequired,
-    getArea: PropTypes.func.isRequired,
+    getAreasProvider: PropTypes.func.isRequired,
+    getAreaProvider: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
     location: PropTypes.object
   };
 
   componentDidMount() {
-    const { getArea, areas, loggedIn, location, loading } = this.props;
-    if (!loading && isEmpty(areas) && loggedIn) {
+    const { getAreaProvider, loggedIn, location, loading } = this.props;
+    if (!loading && loggedIn) {
       this.handleGetAreas();
     }
 
-    if (!loading && !loggedIn && isEmpty(areas) && location.type === 'aoi') {
-      getArea(location.adm0);
+    if (!loading && location.type === 'aoi') {
+      getAreaProvider(location.adm0);
     }
   }
 
@@ -40,11 +38,11 @@ class AreasProvider extends PureComponent {
   }
 
   handleGetAreas = () => {
-    const { getAreas } = this.props;
+    const { getAreasProvider } = this.props;
     this.cancelAreasFetch();
     this.areasFetch = CancelToken.source();
 
-    getAreas(this.areasFetch.token);
+    getAreasProvider(this.areasFetch.token);
   };
 
   cancelAreasFetch = () => {

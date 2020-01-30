@@ -7,7 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
 import Button from 'components/ui/button';
-import Thankyou from 'components/thankyou';
+import ConfirmationMessage from 'components/confirmation-message';
 import Error from 'components/forms/components/error';
 
 import { email } from 'components/forms/validations';
@@ -37,6 +37,7 @@ class LoginForm extends PureComponent {
     registerUser: PropTypes.func.isRequired,
     resetUserPassword: PropTypes.func.isRequired,
     simple: PropTypes.bool,
+    narrow: PropTypes.bool,
     initialValues: PropTypes.object
   };
 
@@ -54,7 +55,8 @@ class LoginForm extends PureComponent {
       resetUserPassword,
       loginUser,
       initialValues,
-      simple
+      simple,
+      narrow
     } = this.props;
     const { showForm } = this.state;
 
@@ -114,7 +116,7 @@ class LoginForm extends PureComponent {
             <div className="row">
               {submitSucceeded && showForm !== 'login' ? (
                 <div className="column small-12">
-                  <Thankyou {...confirmation} />
+                  <ConfirmationMessage {...confirmation} />
                   <Button
                     className="reset-form-btn"
                     onClick={() => {
@@ -127,14 +129,18 @@ class LoginForm extends PureComponent {
                 </div>
               ) : (
                 <Fragment>
-                  <div className="column small-12">
-                    {!simple && <h1>Login to My GFW</h1>}
-                    <h3>
-                      Log in is required so you can view, manage, and delete
-                      your subscriptions.
-                    </h3>
-                  </div>
-                  <div className="column small-12 medium-5">
+                  {!simple && (
+                    <div className="column small-12">
+                      <h1>Login to My GFW</h1>
+                      <h3>
+                        Log in is required so you can view, manage, and delete
+                        your areas of interest.
+                      </h3>
+                    </div>
+                  )}
+                  <div
+                    className={cx('column small-12', { 'medium-5': !narrow })}
+                  >
                     <div className="social-btns">
                       {socialButtons.map(s => (
                         <Button
@@ -152,7 +158,11 @@ class LoginForm extends PureComponent {
                       ))}
                     </div>
                   </div>
-                  <div className="column small-12 medium-6 medium-offset-1">
+                  <div
+                    className={cx('column small-12', {
+                      'medium-6 medium-offset-1': !narrow
+                    })}
+                  >
                     {showForm === 'reset' && (
                       <p>
                         To reset your password introduce your email and follow

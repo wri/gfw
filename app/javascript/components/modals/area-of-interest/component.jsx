@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from 'components/ui/loader';
-import LoginForm from 'components/mygfw-login';
+import LoginForm from 'components/forms/login';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
 
 import Modal from '../modal';
@@ -15,7 +15,8 @@ class AreaOfInterestModal extends PureComponent {
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
     canDelete: PropTypes.bool,
-    setAreaOfInterestModalSettings: PropTypes.func
+    setAreaOfInterestModalSettings: PropTypes.func,
+    viewAfterSave: PropTypes.bool
   };
 
   componentWillUnmount() {
@@ -28,7 +29,7 @@ class AreaOfInterestModal extends PureComponent {
   };
 
   render() {
-    const { open, loading, loggedIn, canDelete } = this.props;
+    const { open, loading, loggedIn, canDelete, viewAfterSave } = this.props;
 
     return (
       <Modal
@@ -40,7 +41,14 @@ class AreaOfInterestModal extends PureComponent {
         <div className="save-aoi-body">
           {loading && <Loader />}
           {!loading && !loggedIn && <LoginForm />}
-          {!loading && loggedIn && <AreaOfInterestForm canDelete={canDelete} />}
+          {!loading &&
+            loggedIn && (
+            <AreaOfInterestForm
+              canDelete={canDelete}
+              closeForm={this.handleCloseModal}
+              viewAfterSave={viewAfterSave}
+            />
+          )}
         </div>
       </Modal>
     );

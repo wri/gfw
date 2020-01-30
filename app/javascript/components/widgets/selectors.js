@@ -8,6 +8,7 @@ import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
+import { translateText } from 'utils/transifex';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
@@ -520,7 +521,10 @@ export const getWidgets = createSelector(
         downloadLink,
         rawData,
         title: title
-          ? title.replace('{location}', locationLabelFull || '...')
+          ? translateText(title).replace(
+            '{location}',
+            locationLabelFull || '...'
+          )
           : ''
       };
     });

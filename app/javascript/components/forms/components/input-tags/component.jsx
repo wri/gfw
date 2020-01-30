@@ -42,6 +42,7 @@ class Input extends PureComponent {
             <ReactTagsInput
               className="c-form-tags"
               {...input}
+              value={input.value || []}
               inputProps={{
                 placeholder: placeholder || 'Add a new tag'
               }}

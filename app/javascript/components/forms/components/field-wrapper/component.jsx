@@ -20,8 +20,9 @@ class FieldWrapper extends PureComponent {
     children: PropTypes.node,
     required: PropTypes.bool,
     infoClick: PropTypes.func,
-    collapse: PropTypes.func,
-    name: PropTypes.string
+    collapse: PropTypes.bool,
+    name: PropTypes.string,
+    value: PropTypes.string
   };
 
   renderLabel = () => {
@@ -47,7 +48,15 @@ class FieldWrapper extends PureComponent {
   };
 
   render() {
-    const { touched, error, hidden, active, children, collapse } = this.props;
+    const {
+      touched,
+      error,
+      hidden,
+      active,
+      children,
+      collapse,
+      value
+    } = this.props;
 
     return (
       <div
@@ -59,7 +68,7 @@ class FieldWrapper extends PureComponent {
         )}
       >
         {collapse ? (
-          <details>
+          <details open={!!value}>
             <summary className="label">{this.renderLabel()}</summary>
             <div className="input-field">{children}</div>
           </details>

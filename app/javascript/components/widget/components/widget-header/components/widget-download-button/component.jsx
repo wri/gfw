@@ -17,7 +17,6 @@ import './styles.scss';
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     square: PropTypes.bool,
-    downloadLink: PropTypes.func.isRequired,
     getDataURL: PropTypes.func,
     settings: PropTypes.object,
     title: PropTypes.string,
@@ -160,7 +159,7 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const { downloadLink, square, getDataURL, settings } = this.props;
+    const { square, getDataURL, settings } = this.props;
     const params = { location, settings };
     const urls = getDataURL && getDataURL(params);
 
@@ -172,9 +171,6 @@ class WidgetDownloadButton extends PureComponent {
         })}
         {...getDataURL && {
           onClick: () => this.generateZipFromURL(urls)
-        }}
-        {...downloadLink && {
-          extLink: downloadLink
         }}
         tooltip={{ text: 'Download the data' }}
       >

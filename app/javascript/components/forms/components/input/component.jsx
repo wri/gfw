@@ -50,6 +50,7 @@ class Input extends PureComponent {
             required={required}
             infoClick={infoClick}
             collapse={collapse}
+            value={input.value}
           >
             {type === 'textarea' ? (
               <textarea

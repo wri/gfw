@@ -1,9 +1,10 @@
 import { createStructuredSelector } from 'reselect';
 
+import { getUserAreas } from 'providers/areas-provider/selectors';
+
 const selectAreasLoading = state => state.areas && state.areas.loading;
-const selectAreas = state => state.areas && state.areas.data;
 
 export const getMyGFWProps = createStructuredSelector({
   loading: selectAreasLoading,
-  areas: selectAreas
+  areas: getUserAreas
 });
