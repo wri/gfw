@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from 'components/ui/loader';
-import LoginForm from 'components/mygfw-login';
+import LoginForm from 'components/forms/login';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
 
 import Modal from '../modal';

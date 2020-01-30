@@ -82,10 +82,6 @@
   .social-btns {
     margin-top: rem(22px);
     margin-bottom: rem(40px);
-
-    @media screen and (min-width: $screen-m) {
-      margin-bottom: 0;
-    }
   }
 
   .social-btn {

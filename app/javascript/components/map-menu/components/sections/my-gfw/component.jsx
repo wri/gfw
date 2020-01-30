@@ -7,7 +7,7 @@ import Link from 'redux-first-router-link';
 import slice from 'lodash/slice';
 
 import AoICard from 'components/aoi-card';
-import MyGFWLogin from 'components/mygfw-login';
+import LoginForm from 'components/forms/login';
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
@@ -86,7 +86,7 @@ class MapMenuMyGFW extends PureComponent {
           in-depth analysis of the area, as well as receiving email
           notifications when new deforestation alerts are available.
         </p>
-        <MyGFWLogin className="mygfw-login" />
+        <LoginForm className="mygfw-login" simple narrow />
       </div>
     );
   }
