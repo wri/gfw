@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import WidgetComposedChart from 'components/widgets/components/widget-composed-chart';
-import WidgetNumberedList from 'components/widgets/components/widget-numbered-list';
+import WidgetComposedChart from 'components/widget/components/widget-composed-chart';
+import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import NoContent from 'components/ui/no-content';
 
 import './styles';
