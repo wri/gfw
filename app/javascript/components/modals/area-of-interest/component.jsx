@@ -15,7 +15,8 @@ class AreaOfInterestModal extends PureComponent {
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
     canDelete: PropTypes.bool,
-    setAreaOfInterestModalSettings: PropTypes.func
+    setAreaOfInterestModalSettings: PropTypes.func,
+    viewAfterSave: PropTypes.bool
   };
 
   componentWillUnmount() {
@@ -28,7 +29,7 @@ class AreaOfInterestModal extends PureComponent {
   };
 
   render() {
-    const { open, loading, loggedIn, canDelete } = this.props;
+    const { open, loading, loggedIn, canDelete, viewAfterSave } = this.props;
 
     return (
       <Modal
@@ -45,6 +46,7 @@ class AreaOfInterestModal extends PureComponent {
             <AreaOfInterestForm
               canDelete={canDelete}
               closeForm={this.handleCloseModal}
+              viewAfterSave={viewAfterSave}
             />
           )}
         </div>

@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import compact from 'lodash/compact';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
 const selectAreaOfInterestModalState = state =>
   state.location &&
@@ -13,6 +14,8 @@ const selectLoggedIn = state =>
   state.myGfw && state.myGfw.data && state.myGfw.data.loggedIn;
 const selectLocation = state => state.location && state.location.payload;
 const selectUserData = state => state.myGfw && state.myGfw.data;
+const selectGeostoreId = state =>
+  state.geostore && state.geostore.data && state.geostore.data.id;
 
 export const getActiveArea = createSelector(
   [selectLocation, selectAreaOfInterestModalState, getAllAreas],
@@ -29,8 +32,8 @@ export const getActiveArea = createSelector(
 );
 
 export const getInitialValues = createSelector(
-  [selectUserData, getActiveArea],
-  (userData, area) => {
+  [selectUserData, getActiveArea, getGeodescriberTitleFull, selectGeostoreId],
+  (userData, area, locationName, geostoreId) => {
     const { email, language } = userData;
     const { fireAlerts, deforestationAlerts, monthlySummary, ...rest } =
       area || {};
@@ -43,6 +46,8 @@ export const getInitialValues = createSelector(
         deforestationAlerts ? 'deforestationAlerts' : false,
         monthlySummary ? 'monthlySummary' : false
       ]),
+      geostore: geostoreId,
+      name: locationName,
       ...rest
     };
   }

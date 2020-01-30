@@ -53,7 +53,7 @@ class AreaOfInterestForm extends PureComponent {
     canDelete: PropTypes.bool,
     clearAfterDelete: PropTypes.bool,
     deleteAreaOfInterest: PropTypes.func,
-    viewAfterSave: PropTypes.func,
+    viewAfterSave: PropTypes.bool,
     closeForm: PropTypes.func
   };
 
@@ -145,7 +145,9 @@ class AreaOfInterestForm extends PureComponent {
           }) => {
             let metaKey = 'saved';
             if (alerts && !!alerts.length) metaKey = 'savedWithSub';
-            if (deleted || (initialValues && !initialValues.id)) { metaKey = 'deleted'; }
+            if (deleted && (initialValues && !initialValues.id)) {
+              metaKey = 'deleted';
+            }
             const confirmationMeta = confirmations[metaKey];
 
             return (
@@ -280,7 +282,8 @@ class AreaOfInterestForm extends PureComponent {
                       <Submit className="area-submit" submitting={submitting}>
                         save
                       </Submit>
-                      {canDelete && (
+                      {canDelete &&
+                        initialValues.id && (
                         <Button
                           className="delete-area"
                           theme="theme-button-clear"
@@ -294,7 +297,7 @@ class AreaOfInterestForm extends PureComponent {
                           }}
                         >
                           <Icon icon={deleteIcon} className="delete-icon" />
-                          Delete Area
+                            Delete Area
                         </Button>
                       )}
                     </div>

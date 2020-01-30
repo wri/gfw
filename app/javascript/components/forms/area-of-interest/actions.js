@@ -67,7 +67,7 @@ export const saveAreaOfInterest = createThunkAction(
 
     return saveArea(postData)
       .then(area => {
-        dispatch(setArea(area));
+        dispatch(setArea({ ...area, userArea: true }));
         if (viewAfterSave) {
           dispatch(viewArea({ areaId: area.id }));
         }
