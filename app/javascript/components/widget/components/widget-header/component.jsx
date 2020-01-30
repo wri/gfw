@@ -67,10 +67,7 @@ class WidgetHeader extends PureComponent {
               handleShowMap={handleShowMap}
             />
           )}
-          {!simple &&
-            (showDownloadBtn || process.env.FEATURE_ENV === 'staging') && (
-            <WidgetDownloadButton downloadLink={downloadLink} />
-          )}
+
           {showSettingsBtn && (
             <WidgetSettingsButton
               settingsConfig={settingsConfig}
@@ -83,6 +80,10 @@ class WidgetHeader extends PureComponent {
             />
           )}
           {showSeparator && <span className="separator" />}
+          {!simple &&
+            (showDownloadBtn || process.env.FEATURE_ENV === 'staging') && (
+            <WidgetDownloadButton downloadLink={downloadLink} />
+          )}
           <div className="small-options">
             <WidgetInfoButton
               square={simple}
