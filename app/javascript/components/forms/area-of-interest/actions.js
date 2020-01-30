@@ -19,6 +19,9 @@ export const saveAreaOfInterest = createThunkAction(
     webhookUrl,
     language,
     alerts,
+    admin,
+    wdpaid,
+    use,
     application,
     viewAfterSave,
     geostore: geostoreId
@@ -39,6 +42,15 @@ export const saveAreaOfInterest = createThunkAction(
       deforestationAlerts: alerts.includes('deforestationAlerts'),
       monthlySummary: alerts.includes('monthlySummary'),
       fireAlerts: alerts.includes('fireAlerts'),
+      ...(admin && {
+        admin
+      }),
+      ...(wdpaid && {
+        wdpaid
+      }),
+      ...(use && {
+        use
+      }),
       ...(isCountry && {
         admin: {
           adm0,
