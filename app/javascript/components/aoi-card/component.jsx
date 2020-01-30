@@ -29,8 +29,7 @@ class AoICard extends PureComponent {
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
-    onFetchAlerts: PropTypes.func,
-    status: PropTypes.string
+    onFetchAlerts: PropTypes.func
   };
 
   state = {
@@ -43,9 +42,9 @@ class AoICard extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { simple, status } = this.props;
+    const { simple } = this.props;
 
-    if (status !== 'pending' && !simple) {
+    if (!simple) {
       this.getAlerts();
     }
   }
@@ -108,8 +107,7 @@ class AoICard extends PureComponent {
       deforestationAlerts,
       fireAlerts,
       monthlySummary,
-      location,
-      status
+      location
     } = this.props;
     const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
@@ -179,14 +177,13 @@ class AoICard extends PureComponent {
               </div>
             )}
           </div>
-          {!simple &&
-            status !== 'pending' && (
+          {!simple && (
             <div className="activity">
               <span className="activity-intro">Last weeks activity:</span>
               {!loading &&
-                  dataError && (
+                dataError && (
                 <span className="data-error-msg">
-                      Sorry, we had trouble finding your alerts!
+                    Sorry, we had trouble finding your alerts!
                 </span>
               )}
               {!dataError && (
@@ -200,7 +197,7 @@ class AoICard extends PureComponent {
                             unit: 'counts'
                           })}
                         </span>{' '}
-                          GLAD alerts
+                        GLAD alerts
                       </Fragment>
                     ) : (
                       <ContentLoader width="100" height="15">
@@ -224,7 +221,7 @@ class AoICard extends PureComponent {
                             unit: 'counts'
                           })}
                         </span>{' '}
-                          VIIRS alerts
+                        VIIRS alerts
                       </Fragment>
                     ) : (
                       <ContentLoader width="100" height="15">

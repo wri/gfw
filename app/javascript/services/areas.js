@@ -1,9 +1,9 @@
-import { apiAuthRequest } from 'utils/request';
+import { apiAuthRequest, apiRequest } from 'utils/request';
 
 const REQUEST_URL = '/v2/area';
 
 export const getArea = id =>
-  apiAuthRequest.get(`${REQUEST_URL}/${id}`).then(areaResponse => {
+  apiRequest.get(`${REQUEST_URL}/${id}`).then(areaResponse => {
     const { data: area } = areaResponse.data;
 
     return {
