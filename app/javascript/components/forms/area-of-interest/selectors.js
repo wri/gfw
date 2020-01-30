@@ -42,6 +42,8 @@ export const getInitialValues = createSelector(
       name,
       email,
       language,
+      userArea,
+      id,
       ...rest
     } =
       area || {};
@@ -54,6 +56,8 @@ export const getInitialValues = createSelector(
       ]),
       geostore: geostoreId,
       ...rest,
+      id: userArea ? id : null,
+      userArea,
       name: name || locationName,
       email: email || userEmail,
       language: language || userLanguage
@@ -63,8 +67,8 @@ export const getInitialValues = createSelector(
 
 export const getFormTitle = createSelector(
   [getInitialValues],
-  ({ id, userArea } = {}) => {
-    if (id && userArea) {
+  ({ userArea } = {}) => {
+    if (userArea) {
       return 'Edit area of Interest';
     }
 
