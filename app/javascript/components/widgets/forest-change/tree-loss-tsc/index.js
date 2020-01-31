@@ -3,7 +3,7 @@ import moment from 'moment';
 import { getYearsRange } from 'components/widgets/utils/data';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getExtent, getLoss } from 'services/analysis-cached';
+import { getExtent, getLoss } from 'services/forest-data-old';
 
 import getWidgetProps from './selectors';
 

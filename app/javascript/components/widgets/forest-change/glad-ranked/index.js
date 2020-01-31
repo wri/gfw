@@ -1,11 +1,8 @@
 import { all, spread } from 'axios';
 import tropicalIsos from 'data/tropical-isos.json';
 
-import {
-  getExtentGrouped,
-  fetchGladAlerts,
-  fetchGLADLatest
-} from 'services/analysis-cached';
+import { getExtentGrouped } from 'services/forest-data-old';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
 
 import getWidgetProps from './selectors';
 
@@ -16,22 +13,22 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [
-    {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      whitelist: ['mining', 'wdpa', 'landmark'],
-      placeholder: 'All categories',
-      clearable: true,
-      border: true
-    },
+    // {
+    //   key: 'forestType',
+    //   label: 'Forest Type',
+    //   type: 'select',
+    //   placeholder: 'All tree cover',
+    //   clearable: true
+    // },
+    // {
+    //   key: 'landCategory',
+    //   label: 'Land Category',
+    //   type: 'select',
+    //   whitelist: ['mining', 'wdpa', 'landmark'],
+    //   placeholder: 'All categories',
+    //   clearable: true,
+    //   border: true
+    // },
     {
       key: 'weeks',
       label: 'show data for the last',

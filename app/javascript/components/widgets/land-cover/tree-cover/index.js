@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { getExtent } from 'services/analysis-cached';
+import { getExtent } from 'services/forest-data-old';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 import getWidgetProps from './selectors';
 

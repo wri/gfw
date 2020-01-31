@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 import { createAction, createThunkAction } from 'utils/redux';
 
-import { getLocationPolynameWhitelist } from 'services/analysis-cached';
+import { getLocationPolynameWhitelist } from 'services/forest-data-old';
 
 export const setWhitelistLoading = createAction('setWhitelistLoading');
 
@@ -28,9 +28,9 @@ export const getWhitelist = createThunkAction(
           const annual =
             annualResponse &&
             annualResponse.data &&
-            annualResponse.data.data[0];
+            annualResponse.data.rows[0];
           const glad =
-            gladResponse && gladResponse.data && gladResponse.data.data[0];
+            gladResponse && gladResponse.data && gladResponse.data.rows[0];
 
           dispatch(
             setWhitelist({
