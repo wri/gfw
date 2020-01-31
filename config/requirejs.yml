@@ -1,0 +1,125 @@
+modules:
+  - name: 'static'
+  - name: 'landing'
+  - name: 'connect'
+
+waitSeconds: 200
+
+wrap: false
+
+paths:
+  # Libs
+  amplify: "amplify/lib/amplify"
+  underscore: "underscore/underscore"
+  backbone: "backbone/backbone"
+  jquery: "jquery/dist/jquery"
+  d3: "d3/d3"
+  topojson: "topojson/topojson"
+  cartodb: "cartodb.js/index"
+  moment: "moment/moment"
+  text: "requirejs-text/text"
+  mps: "minpubsub/minpubsub.src"
+  _string: "underscore.string/dist/underscore.string.min"
+  chosen: "chosen/chosen.jquery"
+  jqueryui: "jquery-ui-1.10.4.custom.min"
+  jqueryujs: "jquery-ujs/src/rails"
+  markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
+  geojsonArea: "geojson-area"
+  uri: "uri-templates/uri-templates"
+  handlebars: "handlebars/handlebars"
+  slick: "slick.js/slick/slick.min"
+  simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  keymaster: "keymaster/keymaster"
+  enquire: "enquire/dist/enquire"
+  picker: "pickadate/lib/picker"
+  pickadate: "pickadate/lib/picker.date"
+  cookie: "js-cookie/src/js.cookie"
+  urijs: "urijs/src"
+
+  #countries
+  scrollit: "ScrollIt.js/scrollIt"
+  qtip: "qtip2/jquery.qtip.min"
+
+  # stories
+  jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
+  jquery_migrate: "jquery-migrate/jquery-migrate"
+  geojson: "geojson-google-maps/GeoJSON"
+  validate: "validate"
+
+  wax: "wax.g.min"
+  store: "store"
+  Class: "Class.js/Class"
+  jasmine: "jasmine"
+
+  # General
+  abstract: "abstract"
+  helpers: "helpers"
+  templates: "templates"
+  views: "views"
+
+shim:
+  underscore:
+    exports: "_"
+  _string:
+    exports: "_string"
+    deps:
+      - "underscore"
+  amplify:
+    deps:
+      - "jquery"
+    exports: "amplify"
+  backbone:
+    deps:
+      - "jquery"
+      - "underscore"
+    exports: "Backbone"
+  jqueryui:
+    deps:
+      - "jquery"
+    exports: "$"
+  chosen:
+    deps:
+      - "jquery"
+    exports: 'chosen'
+  pagination:
+    deps:
+      - "jquery"
+    exports: 'simplePagination'
+  Class:
+    exports: "Class"
+  uri:
+    exports: "UriTemplate"
+  handlebars:
+    exports: "Handlebars"
+  picker:
+    deps:
+      - "jquery"
+  pickadate:
+    deps:
+      - "jquery"
+      - "picker"
+    exports: "DatePicker"
+
+
+  geojson:
+    exports: "geojson"
+
+  jqueryujs:
+    deps:
+      - "jquery"
+    exports: "jqueryujs"
+
+  scrollit:
+    deps:
+      - "jquery"
+    exports: "scrollit"
+
+  jquery_migrate:
+    deps:
+      - "jquery"
+    exports: "jquery_migrate"
+
+  jquery_fileupload:
+    deps:
+      - "jquery"
+    exports: "jquery_fileupload"

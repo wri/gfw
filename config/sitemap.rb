@@ -20,7 +20,7 @@ SitemapGenerator::Sitemap.create do
   add '/topics/commodities', :changefreq => 'weekly', :priority => 0.8
   add '/topics/water', :changefreq => 'weekly', :priority => 0.8
 
-  add '/my-gfw', :changefreq => 'weekly', :priority => 0.8
+  add '/my_gfw', :changefreq => 'weekly', :priority => 0.8
   add '/about', :changefreq => 'weekly', :priority => 0.8
   add '/grants-and-fellowships', :changefreq => 'weekly', :priority => 0.8
 

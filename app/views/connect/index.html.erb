@@ -1,42 +1,42 @@
 <% content_for :header do %>
-  <div class="layout-header-bottom" id="layers-options">
-    <div class="inner">
-      <h1><a href="/">Global Forest Watch</a></h1>
+<div class="layout-header-bottom" id="layers-options">
+  <div class="inner">
+    <h1><a href="/">Global Forest Watch</a></h1>
 
-      <nav id="nav-mobile">
-        <ul class="mobile-hide my-gfw-nav" id="my-gfw-profile-nav">
-          <li>
-            <a href="/my_gfw/subscriptions" data-href="/my_gfw/subscriptions" data-page="subscriptions">My Subscriptions</a>
-          </li>
-          <li>
-            <a href="/my_gfw" data-href="/my_gfw" data-page="profile">My Profile</a>
-          </li>
-          <li>
-            <a href="/my_gfw/subscriptions/new" data-href="/my_gfw/subscriptions/new" data-page="subscriptions/new">Receive forest loss alerts</a>
-          </li>
-        </ul>
-      </nav>
+    <nav id="nav-mobile">
+      <ul class="mobile-hide my-gfw-nav" id="my-gfw-profile-nav">
+        <li>
+          <a href="/my_gfw/subscriptions" data-href="/my_gfw/subscriptions" data-page="subscriptions">My Subscriptions</a>
+        </li>
+        <li>
+          <a href="/my_gfw" data-href="/my_gfw" data-page="profile">My Profile</a>
+        </li>
+        <li>
+          <a href="/my_gfw/subscriptions/new" data-href="/my_gfw/subscriptions/new" data-page="subscriptions/new">Receive forest loss alerts</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<% end %>
+
+<div class="my-gfw-container">
+  <div class="m-spinner -fixed -start">
+    <div class="spinner-box">
+      <div class="icon"></div>
     </div>
   </div>
-  <% end %>
+</div>
 
-  <div class="my-gfw-container">
-    <div class="m-spinner -fixed -start">
-      <div class="spinner-box">
-        <div class="icon"></div>
-      </div>
-    </div>
-  </div>
+<div style="display:none">
+  <%= render 'shared/sources_map' %>
+</div>
 
-  <div style="display:none">
-    <%= render 'shared/sources_map' %>
-  </div>
+<%= render 'shared/icons/svg_icons_map' %>
+<%= render 'shared/icons/svg_icons_footer' %>
+<%= render 'shared/modal' %>
+<%= render 'shared/notifications' %>
 
-  <%= render 'shared/icons/svg_icons_map' %>
-  <%= render 'shared/icons/svg_icons_footer' %>
-  <%= render 'shared/modal' %>
-  <%= render 'shared/notifications' %>
-
-  <!-- Javascript -->
-  <%= render 'shared/google_carto' %>
-  <%= render 'shared/js_footer' %>
+<!-- Javascript -->
+<%= render 'shared/google_carto' %>
+<%= render 'shared/js_footer' %>
