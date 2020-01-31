@@ -83,16 +83,21 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="sector"
                         label="sector"
-                        options={sectors.map(s => ({ label: s, value: s }))}
+                        options={Object.keys(sectors).map(s => ({
+                          label: s,
+                          value: s
+                        }))}
                         placeholder="Select a sector"
                         required
                       />
-                      {values.sector &&
-                        values.sector === 'International NGO' && (
+                      {values.sector && (
                         <Radio
                           name="subsectortest_"
                           label="asdftest"
-                          options={[]}
+                          options={sectors[values.sector].map(s => ({
+                            label: s,
+                            value: s.replace(/( )+|(\/)+/g, '_')
+                          }))}
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
