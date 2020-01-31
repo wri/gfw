@@ -27,7 +27,7 @@ class Embed extends PureComponent {
         <CountryDataProvider />
         <WhitelistsProvider />
         <GeodescriberProvider />
-        {process.env.FEATURE_ENV === 'staging' && <AreasProvider />}
+        <AreasProvider />
         <GeostoreProvider />
       </div>
     );

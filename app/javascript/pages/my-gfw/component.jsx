@@ -6,7 +6,6 @@ import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import ShareModal from 'components/modals/share';
 import ProfileModal from 'components/modals/profile';
-import ProfileForm from 'components/forms/profile';
 import LoginForm from 'components/forms/login';
 
 import AreasProvider from 'providers/areas-provider';
@@ -39,8 +38,7 @@ class MyGFWPage extends PureComponent {
                   <h1>My GFW</h1>
                 </div>
                 <div className="column small-12 medium-6">
-                  {loggedIn &&
-                    process.env.FEATURE_ENV === 'staging' && <UserProfile />}
+                  {loggedIn && <UserProfile />}
                 </div>
               </div>
             </div>
@@ -48,13 +46,6 @@ class MyGFWPage extends PureComponent {
               <div className="row">
                 {loggedIn && loading && <Loader className="mygfw-loader" />}
                 {loggedIn &&
-                  process.env.FEATURE_ENV !== 'staging' && (
-                  <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
-                    <ProfileForm />
-                  </div>
-                )}
-                {loggedIn &&
-                  process.env.FEATURE_ENV === 'staging' &&
                   !loading && (
                   <div className="column small-12">
                     {areas && !!areas.length ? (
@@ -98,12 +89,8 @@ class MyGFWPage extends PureComponent {
                 )}
               </div>
             </div>
-            {process.env.FEATURE_ENV === 'staging' && (
-              <Fragment>
-                <AreasProvider />
-                <AreaOfInterestModal canDelete />
-              </Fragment>
-            )}
+            <AreasProvider />
+            <AreaOfInterestModal canDelete />
             <CountryDataProvider />
             <ShareModal />
             <ProfileModal />
