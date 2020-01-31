@@ -104,17 +104,15 @@ class ProfileForm extends PureComponent {
                       )}
                       <Input name="jobTitle" label="job title" />
                       <Input name="company" label="Company / organization" />
-                      <h4>
-                        What topics are you interested in? Select all that
-                        apply.*
-                      </h4>
-                      {/* TODO: Required fieldwrapper with title and at least 1 option required */}
-                      {interests.map(interest => (
-                        <Checkbox
-                          name={interest.replace(/( )+|(\/)+/g, '_')}
-                          options={[{ label: interest, value: 'yes' }]}
-                        />
-                      ))}
+                      <Checkbox
+                        name="interests"
+                        label="What topics are you interested in? Select all that apply."
+                        options={interests.map(interest => ({
+                          label: interest,
+                          value: interest.replace(/( )+|(\/)+/g, '_')
+                        }))}
+                        required
+                      />
                     </div>
                     <div className="column small-12 medium-6">
                       <h4>Location</h4>
