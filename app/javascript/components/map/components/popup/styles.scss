@@ -11,6 +11,10 @@
     top: rem(10px);
     right: rem(10px);
     z-index: 3;
+
+    .btn-on-card {
+      fill: $white;
+    }
   }
 
   .popup-card {

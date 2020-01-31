@@ -16,22 +16,20 @@ class Paginate extends PureComponent {
 
     return (
       <div className={`c-paginate ${className || ''}`}>
-        {showPrev && (
-          <Button
-            className="button-up square theme-button-small theme-button-grey"
-            onClick={() => onClickChange(-1)}
-          >
-            <Icon icon={arrowDownIcon} className="icon" />
-          </Button>
-        )}
-        {showNext && (
-          <Button
-            className="button-down square theme-button-small theme-button-grey"
-            onClick={() => onClickChange(1)}
-          >
-            <Icon icon={arrowDownIcon} className="icon" />
-          </Button>
-        )}
+        <Button
+          className="button-up square theme-button-small theme-button-grey"
+          onClick={() => onClickChange(-1)}
+          disabled={!showPrev}
+        >
+          <Icon icon={arrowDownIcon} className="icon" />
+        </Button>
+        <Button
+          className="button-down square theme-button-small theme-button-grey"
+          onClick={() => onClickChange(1)}
+          disabled={!showNext}
+        >
+          <Icon icon={arrowDownIcon} className="icon" />
+        </Button>
       </div>
     );
   }

@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const REQUEST_URL = process.env.GFW_API;
+import { apiRequest } from 'utils/request';
 
 const QUERIES = {
   ogrConvert: '/v2/ogr/convert'
@@ -12,11 +10,11 @@ export const uploadShapeFile = (
   onDownloadProgress,
   cancelToken
 ) => {
-  const url = `${REQUEST_URL}${QUERIES.ogrConvert}`;
+  const url = `${QUERIES.ogrConvert}`;
   const formData = new FormData();
   formData.append('file', file);
 
-  return axios({
+  return apiRequest({
     method: 'POST',
     data: formData,
     url,

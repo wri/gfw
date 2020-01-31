@@ -1,8 +1,6 @@
-import axios from 'axios';
+import { apiRequest } from 'utils/request';
 import qs from 'query-string';
 import moment from 'moment';
-
-const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
   umdAdmin: '/{version}/{slug}/admin/{location}{params}',
@@ -84,8 +82,8 @@ const reduceAnalysisResponse = response => {
 };
 
 export const fetchAnalysisEndpoint = ({ type, ...rest }) =>
-  axios.get(
-    `${REQUEST_URL}${buildAnalysisUrl({
+  apiRequest.get(
+    `${buildAnalysisUrl({
       urlTemplate: getUrlTemplate(type),
       type,
       ...rest
@@ -105,8 +103,8 @@ export const fetchUmdLossGain = ({
     endpoints.map(endpoint => {
       const urlTemplate = getUrlTemplate(type);
 
-      return axios.get(
-        `${REQUEST_URL}${buildAnalysisUrl({
+      return apiRequest.get(
+        `${buildAnalysisUrl({
           urlTemplate,
           ...endpoint,
           type,
@@ -117,13 +115,13 @@ export const fetchUmdLossGain = ({
       );
     });
 
-  return axios
+  return apiRequest
     .all(endpointUrls, {
       cancelToken: token,
       timeout: 1800
     })
     .then(
-      axios.spread(
+      apiRequest.spread(
         (...responses) =>
           responses &&
           responses.reduce((obj, response) => {

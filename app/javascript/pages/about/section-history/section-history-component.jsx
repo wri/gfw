@@ -56,7 +56,7 @@ const data = [
     imgPosition: 'right',
     title: '2015',
     paragraph:
-      'To address the many challenges related to deforestation, Global Forest Watch began expanding with several new web applications: GFW Commodities to evaluate sustainability in commodity supply chains, GFW Fires to monitor forest and land fires and haze in SE Asia, and GFW Climate to assess the climate impacts of deforestation.'
+      'To address the many challenges related to deforestation, Global Forest Watch began expanding with several new web applications: GFW Commodities to evaluate sustainability in commodity supply chains, and GFW Fires to monitor forest and land fires and haze in SE Asia'
   },
   {
     img: img2016,

@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import { getEmissions } from 'services/climate';
 
 export const getData = ({ params }) =>
-  axios.all(getEmissions(params)).then(
-    axios.spread(
+  all(getEmissions(params)).then(
+    spread(
       (
         cYSF,
         cMASF,

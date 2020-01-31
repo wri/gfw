@@ -1,9 +1,9 @@
 import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 export const getData = ({ params }) =>
-  axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
-    axios.spread((alerts, latest) => {
+  all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
+    spread((alerts, latest) => {
       let data = {};
       if (alerts && alerts.data && latest) {
         const latestDate =

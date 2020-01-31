@@ -18,7 +18,7 @@ class Card extends PureComponent {
 
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, theme, data, active, tag, tagColour } = this.props;
+    const { className, theme, data, active } = this.props;
     const {
       image,
       img1x,
@@ -29,6 +29,8 @@ class Card extends PureComponent {
       fullSummary,
       meta,
       buttons,
+      tag,
+      tagColor,
       selector
     } =
       data || {};
@@ -37,8 +39,8 @@ class Card extends PureComponent {
     return (
       <div className={cx('c-card', className, theme, { active })}>
         {tag &&
-          tagColour && (
-            <span className="tag" style={{ backgroundColor: tagColour }}>
+          tagColor && (
+            <span className="tag" style={{ backgroundColor: tagColor }}>
               <p>{tag}</p>
             </span>
           )}
@@ -53,7 +55,13 @@ class Card extends PureComponent {
             alt={title}
           />
         )}
-        <div className={cx('body', { 'no-image': !image })}>
+        <div
+          className={cx(
+            'body',
+            { 'no-image': !image },
+            { 'top-padding': tag && tagColor && !image }
+          )}
+        >
           <div className="text-content">
             {imageCredit && <span>{imageCredit}</span>}
             {title && <h3 className="title">{title}</h3>}
@@ -123,7 +131,7 @@ Card.propTypes = {
   onClick: PropTypes.func,
   active: PropTypes.bool,
   tag: PropTypes.string,
-  tagColour: PropTypes.string
+  tagColor: PropTypes.string
 };
 
 export default Card;

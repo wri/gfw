@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { NavLink } from 'redux-first-router-link';
@@ -8,7 +8,6 @@ import Search from 'components/ui/search';
 
 import moreIcon from 'assets/icons/more.svg';
 
-import MyGfwLogin from 'components/mygfw-login';
 import DropdownMenu from '../dropdown-menu';
 
 import './styles.scss';
@@ -88,14 +87,18 @@ class Header extends PureComponent {
           )}
           {isMobile && (
             <div className="menu-section">
-              <h4>My GFW</h4>
               {loggedIn ? (
-                <DropdownMenu
-                  className="sub-menu -plain"
-                  options={myGfwLinks}
-                />
+                <Fragment>
+                  <h4>My GFW</h4>
+                  <DropdownMenu
+                    className="sub-menu -plain"
+                    options={myGfwLinks}
+                  />
+                </Fragment>
               ) : (
-                <MyGfwLogin plain />
+                <NavLink className="nav-link" to="/my_gfw">
+                  My GFW
+                </NavLink>
               )}
             </div>
           )}

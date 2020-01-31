@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 import omit from 'lodash/omit';
 
@@ -6,8 +6,8 @@ import { getFAOExtent } from 'services/forest-data';
 import { getRanking } from 'services/country';
 
 export const getData = ({ params }) =>
-  axios.all([getFAOExtent(params), getRanking(params)]).then(
-    axios.spread((getFAOResponse, getRankingResponse) => {
+  all([getFAOExtent(params), getRanking(params)]).then(
+    spread((getFAOResponse, getRankingResponse) => {
       let data = {};
       const fao = getFAOResponse.data.rows;
       const ranking = getRankingResponse.data.rows;

@@ -2,30 +2,28 @@ import {
   getExtentGrouped,
   getAreaIntersectionGrouped
 } from 'services/forest-data-old';
-import axios from 'axios';
+import { all, spread } from 'axios';
 
 export const getData = ({ params }) =>
-  axios
-    .all([
-      getExtentGrouped(params),
-      getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
-    ])
-    .then(
-      axios.spread((extentGrouped, plantationsExtentResponse) => {
-        let data = {};
-        const extent = extentGrouped.data && extentGrouped.data.data;
-        const plantationsExtent =
-          plantationsExtentResponse.data && plantationsExtentResponse.data.data;
-        if (extent.length && plantationsExtent.length) {
-          data = {
-            extent,
-            plantations: plantationsExtent
-          };
-        }
+  all([
+    getExtentGrouped(params),
+    getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
+  ]).then(
+    spread((extentGrouped, plantationsExtentResponse) => {
+      let data = {};
+      const extent = extentGrouped.data && extentGrouped.data.data;
+      const plantationsExtent =
+        plantationsExtentResponse.data && plantationsExtentResponse.data.data;
+      if (extent.length && plantationsExtent.length) {
+        data = {
+          extent,
+          plantations: plantationsExtent
+        };
+      }
 
-        return data;
-      })
-    );
+      return data;
+    })
+  );
 
 export const getDataURL = params => [
   getExtentGrouped({ ...params, download: true }),

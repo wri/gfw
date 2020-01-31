@@ -1,6 +1,4 @@
-import request from 'utils/request';
-
-const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
+import { cartoRequest } from 'utils/request';
 
 const SQL_QUERIES = {
   aboutImpacts: 'SELECT * FROM gfw_outcomes_for_about_page_images',
@@ -10,16 +8,16 @@ const SQL_QUERIES = {
 };
 
 export const fetchAboutProjects = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.aboutImpacts}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.aboutImpacts}`;
+  return cartoRequest.get(url);
 };
 
 export const fetchAllProjects = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.allProjects}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.allProjects}`;
+  return cartoRequest.get(url);
 };
 
 export const fetchSGFProjects = () => {
-  const url = `${REQUEST_URL}${SQL_QUERIES.sgfProjects}`;
-  return request.get(url);
+  const url = `/sql?q=${SQL_QUERIES.sgfProjects}`;
+  return cartoRequest.get(url);
 };

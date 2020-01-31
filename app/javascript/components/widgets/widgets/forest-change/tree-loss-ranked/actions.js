@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { all, spread } from 'axios';
 import { getLossGrouped, getExtentGrouped } from 'services/forest-data-old';
 
 export const getData = ({ params }) => {
@@ -8,30 +8,28 @@ export const getData = ({ params }) => {
     adm1: adm1 && !adm2 ? null : adm1,
     adm2: null
   };
-  return axios
-    .all([
-      getLossGrouped({ ...rest, ...parentLocation }),
-      getExtentGrouped({ ...rest, ...parentLocation })
-    ])
-    .then(
-      axios.spread((lossResponse, extentResponse) => {
-        const { data } = lossResponse.data;
-        let mappedData = [];
-        if (data && data.length) {
-          mappedData = data.map(item => {
-            const loss = item.area || 0;
-            return {
-              ...item,
-              loss
-            };
-          });
-        }
-        return {
-          loss: mappedData,
-          extent: extentResponse.data.data
-        };
-      })
-    );
+  return all([
+    getLossGrouped({ ...rest, ...parentLocation }),
+    getExtentGrouped({ ...rest, ...parentLocation })
+  ]).then(
+    spread((lossResponse, extentResponse) => {
+      const { data } = lossResponse.data;
+      let mappedData = [];
+      if (data && data.length) {
+        mappedData = data.map(item => {
+          const loss = item.area || 0;
+          return {
+            ...item,
+            loss
+          };
+        });
+      }
+      return {
+        loss: mappedData,
+        extent: extentResponse.data.data
+      };
+    })
+  );
 };
 
 export const getDataURL = params => {

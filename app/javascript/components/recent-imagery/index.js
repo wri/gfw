@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
-import { CancelToken } from 'axios';
+import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
 import { setMapSettings } from 'components/map/actions';
@@ -30,7 +30,7 @@ class RecentImageryContainer extends PureComponent {
     if (this.getDataSource) {
       this.getDataSource.cancel();
     }
-    this.getDataSource = CancelToken.source();
+    this.getDataSource = cancelToken();
     if (active) {
       getRecentImageryData({
         ...position,
@@ -80,7 +80,7 @@ class RecentImageryContainer extends PureComponent {
           'Cancelling duplicate fetch for recent imagery'
         );
       }
-      this.getDataSource = CancelToken.source();
+      this.getDataSource = cancelToken();
       getRecentImageryData({
         ...position,
         start: dates.start,

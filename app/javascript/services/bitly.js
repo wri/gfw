@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 
 const REQUEST_URL = `${
   process.env.BITLY_API_URL
@@ -11,5 +11,5 @@ export const getShortenUrl = longUrl => {
     .replace('{url}', encodeURIComponent(longUrl))
     .replace('{login}', USERNAME)
     .replace('{apiKey}', API_KEY);
-  return axios.get(url);
+  return request.get(url);
 };

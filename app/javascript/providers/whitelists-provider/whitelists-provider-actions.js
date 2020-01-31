@@ -1,5 +1,5 @@
+import { createAction, createThunkAction } from 'utils/redux';
 import axios from 'axios';
-import { createAction, createThunkAction } from 'redux-tools';
 
 import { getLocationPolynameWhitelist } from 'services/forest-data-old';
 
