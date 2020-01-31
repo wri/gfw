@@ -40,10 +40,10 @@ class Card extends PureComponent {
       <div className={cx('c-card', className, theme, { active })}>
         {tag &&
           tagColor && (
-            <span className="tag" style={{ backgroundColor: tagColor }}>
-              <p>{tag}</p>
-            </span>
-          )}
+          <span className="tag" style={{ backgroundColor: tagColor }}>
+            <p>{tag}</p>
+          </span>
+        )}
         {image && (
           <div className="image" style={{ backgroundImage: `url(${image})` }} />
         )}

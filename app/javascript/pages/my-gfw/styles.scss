@@ -24,13 +24,48 @@
     }
   }
 
-  .profile-form {
-    padding: rem(30px) 0;
+  .login-intro {
+    text-align: center;
+    margin-bottom: rem(20px);
   }
 
-  &.old-theme {
-    &.login {
-      padding: 0;
+  .my-gfw-container {
+    padding: rem(30px) 0;
+    position: relative;
+    min-height: rem(300px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(50px) 0;
+    }
+
+    .mygfw-loader {
+      min-height: rem(300px);
+    }
+
+    .no-areas {
+      padding: rem(30px) 0 rem(50px);
+
+      .areas-image {
+        width: 100%;
+      }
+
+      h4 {
+        font-size: rem(30px);
+        color: $slate-light;
+        margin-bottom: rem(20px);
+        max-width: rem(400px);
+      }
+
+      p {
+        font-size: rem(18px);
+        line-height: 30px;
+        color: $slate;
+        margin-bottom: rem(40px);
+      }
+
+      .learn-btn {
+        width: rem(200px);
+      }
     }
   }
 }

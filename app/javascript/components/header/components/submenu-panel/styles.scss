@@ -18,6 +18,14 @@
     margin: auto;
   }
 
+  .my-gfw-link {
+    margin-top: rem(10px);
+
+    &.active {
+      color: $green-gfw;
+    }
+  }
+
   .menu-search {
     margin-bottom: rem(20px);
 

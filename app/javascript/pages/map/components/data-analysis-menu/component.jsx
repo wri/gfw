@@ -9,6 +9,18 @@ import SubNavMenu from 'components/subnav-menu';
 import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
+  static propTypes = {
+    showAnalysis: PropTypes.bool,
+    hidden: PropTypes.bool,
+    className: PropTypes.string,
+    menuSection: PropTypes.object,
+    links: PropTypes.array,
+    setMainMapSettings: PropTypes.func,
+    setMapSettings: PropTypes.func,
+    clearAnalysisError: PropTypes.func,
+    embed: PropTypes.bool
+  };
+
   getLinks = () => {
     const {
       links,
@@ -63,18 +75,6 @@ class DataAnalysisMenu extends PureComponent {
 
 DataAnalysisMenu.defaultProps = {
   tab: 'data'
-};
-
-DataAnalysisMenu.propTypes = {
-  showAnalysis: PropTypes.bool,
-  hidden: PropTypes.bool,
-  className: PropTypes.string,
-  menuSection: PropTypes.object,
-  links: PropTypes.array,
-  setMainMapSettings: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  clearAnalysisError: PropTypes.func,
-  embed: PropTypes.bool
 };
 
 export default DataAnalysisMenu;

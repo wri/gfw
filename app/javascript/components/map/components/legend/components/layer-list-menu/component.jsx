@@ -26,10 +26,10 @@ class LayerListMenu extends PureComponent {
                 />
                 {l.nestedLegend &&
                   l.active && (
-                    <div className="nested-legend">
-                      <LegendItemTypes activeLayer={l} />
-                    </div>
-                  )}
+                  <div className="nested-legend">
+                    <LegendItemTypes activeLayer={l} />
+                  </div>
+                )}
                 {l.legendDesc && (
                   <p className="layer-description">{l.legendDesc}</p>
                 )}

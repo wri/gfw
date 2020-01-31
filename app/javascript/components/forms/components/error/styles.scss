@@ -1,0 +1,26 @@
+@import '~styles/settings.scss';
+
+.c-form-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 0;
+  position: relative;
+
+  span {
+    font-size: rem(14px);
+    color: $error;
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      align-self: flex-start;
+      margin-right: rem(20px);
+      margin-bottom: rem(30px);
+    }
+
+    &.success {
+      color: $green-gfw;
+    }
+  }
+}

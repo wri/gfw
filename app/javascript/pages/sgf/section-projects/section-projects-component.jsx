@@ -113,11 +113,11 @@ class SectionProjects extends PureComponent {
               })}
             {!loading &&
               !hasData && (
-                <NoContent
-                  className="no-projects"
-                  message="No projects for that search"
-                />
-              )}
+              <NoContent
+                className="no-projects"
+                message="No projects for that search"
+              />
+            )}
             {loading && <Loader loading={loading} />}
           </ScrollEl>
         </div>

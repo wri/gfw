@@ -35,9 +35,9 @@ class GlobeComponent extends React.Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
-    const { data } = nextProps;
-    if (data && data !== this.props.data) {
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+    if (data && data !== prevProps.data) {
       this.removeMarkers();
       this.addMarkers(data);
     }

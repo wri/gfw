@@ -9,6 +9,7 @@ $subnav-height-dark: rem(40px);
 
   .buttons {
     height: rem(39px);
+    justify-content: flex-start;
 
     li {
       border-right: 0;

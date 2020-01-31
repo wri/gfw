@@ -1,5 +1,7 @@
 import { apiRequest } from 'utils/request';
 import moment from 'moment';
+import { all, spread } from 'axios';
+import { fetchAnalysisEndpoint } from 'services/analysis';
 
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
@@ -24,6 +26,34 @@ const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
+
+export const getLatestAlerts = ({ location, params }) =>
+  all([
+    fetchAnalysisEndpoint({
+      ...location,
+      params,
+      name: 'glad-alerts',
+      slug: 'glad-alerts',
+      version: 'v1'
+    }),
+    fetchAnalysisEndpoint({
+      ...location,
+      params,
+      name: 'viirs-alerts',
+      slug: 'viirs-active-fires',
+      version: 'v1'
+    })
+  ]).then(
+    spread((gladsResponse, firesResponse) => {
+      const { value: glads } = gladsResponse.data.data.attributes || {};
+      const { value: fires } = firesResponse.data.data.attributes || {};
+
+      return {
+        glads,
+        fires
+      };
+    })
+  );
 
 export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
   let glad_summary_table = GLAD_ISO_DATASET;
@@ -156,6 +186,34 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
     });
 };
 
+export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
+  const url = `/viirs-active-fires?geostore=${adm0}${QUERIES.viirsAlerts}`
+    .replace('{location}', !adm2 ? getLocation(adm0, adm1, adm2) : '')
+    .replace('{period}', `${dates[1]},${dates[0]}`);
+  return apiRequest.get(url);
+};
+
+export const fetchFireAlertsByGeostore = params =>
+  fetchAnalysisEndpoint({
+    ...params,
+    params,
+    name: 'viirs-alerts',
+    slug: 'viirs-active-fires',
+    version: 'v1'
+  });
+
+export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
+  const url = `/fire-alerts/summary-stats/admin/${QUERIES.firesStats}`
+    .replace('{location}', getLocation(adm0, adm1, adm2))
+    .replace('{period}', `${dates[1]},${dates[0]}`);
+  return apiRequest.get(url);
+};
+
+// Latest Dates for Alerts
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
 export const fetchLatestDate = url =>
   apiRequest.get(url, 3600, 'gladRequest').catch(error => {
     console.error('Error in latest request:', error);
@@ -171,11 +229,6 @@ export const fetchLatestDate = url =>
       })
     );
   });
-
-// Latest Dates for Alerts
-const lastFriday = moment()
-  .day(-2)
-  .format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
   const url = '/glad-alerts/latest';

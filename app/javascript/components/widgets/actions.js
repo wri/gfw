@@ -2,75 +2,56 @@ import { createAction, createThunkAction } from 'utils/redux';
 import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { getNonGlobalDatasets } from 'services/forest-data-old';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');
-export const setWidgetsSettings = createAction('setWidgetsSettings');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
-
-// widget
-export const setWidgetData = createAction('setWidgetData');
-export const setWidgetLoading = createAction('setWidgetLoading');
 
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
-  () => (dispatch, getState) => {
-    const { widgets } = getState();
-    if (widgets && !widgets.loading) {
-      dispatch(setWidgetsLoading({ loading: true, error: false }));
-      getNonGlobalDatasets()
-        .then(response => {
-          const { rows } = response.data;
-          dispatch(
-            setWidgetsData({
-              nonGlobalDatasets: rows && rows[0]
-            })
-          );
-        })
-        .catch(error => {
-          dispatch(setWidgetsLoading({ error: true, loading: false }));
-          console.info(error);
-        });
-    }
-  }
-);
-
-export const getWidgetData = createThunkAction(
-  'getWidgetData',
-  ({ getData, widget, params }) => (dispatch, state) => {
-    const widgetState = state().widgets && state().widgets.widgets[widget];
-    if (!widgetState || (widgetState && !widgetState.loading)) {
-      dispatch(setWidgetLoading({ widget, loading: true, error: false }));
-      getData({ params })
-        .then(data => {
-          dispatch(setWidgetData({ widget, data }));
-          if (data.settings) {
-            dispatch(setWidgetSettings({ widget, value: data.settings }));
-          }
-        })
-        .catch(error => {
-          dispatch(setWidgetLoading({ widget, error: true, loading: false }));
-          console.info(error);
-        });
-    }
+  () => dispatch => {
+    dispatch(setWidgetsLoading({ loading: true, error: false }));
+    getNonGlobalDatasets()
+      .then(response => {
+        const { rows } = response.data;
+        dispatch(
+          setWidgetsData({
+            nonGlobalDatasets: rows && rows[0]
+          })
+        );
+      })
+      .catch(error => {
+        dispatch(setWidgetsLoading({ error: true, loading: false }));
+        console.info(error);
+      });
   }
 );
 
 export const setWidgetSettings = createThunkAction(
   'setWidgetSettings',
-  ({ value, widget }) => (dispatch, state) => {
+  ({ change, widget }) => (dispatch, state) => {
     dispatch(
       setComponentStateToUrl({
         key: 'widget',
         subKey: widget,
-        change: value,
+        change,
         state
       })
     );
     track('changeWidgetSettings', {
       label: `${widget}`
     });
+    if (!change.interaction) {
+      dispatch(
+        setDashboardPromptsSettings({
+          open: true,
+          stepIndex: 0,
+          stepsKey: 'shareWidget'
+        })
+      );
+    }
   }
 );
 
@@ -85,6 +66,27 @@ export const setActiveWidget = createThunkAction(
         ...query,
         widget,
         showMap: true
+      }
+    });
+  }
+);
+
+export const goToWidgetLocation = createThunkAction(
+  'goToWidgetLocation',
+  params => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    dispatch({
+      type,
+      payload: {
+        type: payload.type === 'global' ? 'country' : payload.type,
+        ...params
+      },
+      query: {
+        ...query,
+        map: {
+          ...(query && query.map),
+          canBound: true
+        }
       }
     });
   }

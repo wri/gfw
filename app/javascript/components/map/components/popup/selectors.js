@@ -25,6 +25,11 @@ export const getIsBoundary = createSelector(
     interaction && interaction.layer && interaction.layer.isBoundary
 );
 
+export const getIsArea = createSelector(
+  getInteractionSelected,
+  interaction => interaction && interaction.aoi
+);
+
 export const getShouldZoomToShape = createSelector(
   [getInteractionSelected, getMap],
   (selected, map) => {
@@ -79,8 +84,8 @@ export const getCardData = createSelector(
           ...obj,
           ...(renderKey &&
             value && {
-              [renderKey]: `${prefix || ''}${value}`
-            })
+            [renderKey]: `${prefix || ''}${value}`
+          })
         };
         return newObj;
       }, {});
@@ -120,23 +125,23 @@ export const getCardData = createSelector(
       ...articleData,
       ...(articleData.tag &&
         meta && {
-          tag: meta.label,
-          tagColor: (meta && meta.color) || layer.color
-        }),
+        tag: meta.label,
+        tagColor: (meta && meta.color) || layer.color
+      }),
       ...(!articleData.title &&
         meta && {
-          title: `Place to Watch: ${meta.label}`
-        }),
+        title: `Place to Watch: ${meta.label}`
+      }),
       ...(!articleData.summary &&
         locationFromGridId &&
         meta && {
-          summary: `FOREST CLEARING IN ${
-            locationName === 'SEA' ? 'SE Asia' : locationName
-          }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
-            meta.label
-          }.`,
-          showFullSummary: true
-        }),
+        summary: `FOREST CLEARING IN ${
+          locationName === 'SEA' ? 'SE Asia' : locationName
+        }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+          meta.label
+        }.`,
+        showFullSummary: true
+      }),
       ...(bbox && {
         bbox: newBbox
       }),
@@ -182,5 +187,6 @@ export const getPopupProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
   isBoundary: getIsBoundary,
+  isArea: getIsArea,
   zoomToShape: getShouldZoomToShape
 });

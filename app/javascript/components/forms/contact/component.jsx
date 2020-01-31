@@ -8,6 +8,7 @@ import { submitContactForm } from 'services/forms';
 import Link from 'redux-first-router-link';
 import Button from 'components/ui/button';
 
+import Error from 'components/forms/components/error';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 import Radio from 'components/forms/components/radio';
@@ -121,14 +122,12 @@ class ContactForm extends PureComponent {
                     <h4>Interested in testing new features?</h4>
                     <p>Sign up to become an official GFW tester!</p>
                     <Radio name="signup" options={testNewFeatures} />
-                    <Submit
+                    <Error
                       valid={valid}
-                      submitting={submitting}
                       submitFailed={submitFailed}
                       submitError={submitError}
-                    >
-                      send
-                    </Submit>
+                    />
+                    <Submit submitting={submitting}>send</Submit>
                   </form>
                 </Fragment>
               )}

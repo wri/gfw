@@ -1,0 +1,49 @@
+@import '~styles/settings.scss';
+
+.c-widget-header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: rem(20px);
+
+  .title {
+    width: 100%;
+    font-size: rem(13px);
+    font-weight: 500;
+    line-height: 1.54;
+    color: $slate;
+    text-transform: uppercase;
+    padding-right: rem(20px);
+  }
+
+  .options {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .small-options {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+
+    .separator {
+      position: relative;
+      top: rem(3px);
+      border-right: solid 1px $border;
+      height: rem(15px);
+      margin-left: rem(5px);
+    }
+  }
+
+  button,
+  a {
+    margin-left: rem(5px);
+  }
+
+  &.simple {
+    padding-bottom: rem(10px);
+  }
+}

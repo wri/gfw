@@ -83,7 +83,7 @@ define([
     },
 
     _onClickMygfwButton: function () {
-      ga('send', 'event', 'Home', 'Go to my_gfw', 'click');
+      ga('send', 'event', 'Home', 'Go to my-gfw', 'click');
     },
 
   });

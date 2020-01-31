@@ -233,6 +233,7 @@ export const getUSLandCover = params => {
         ? ''
         : 'GROUP BY to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
     );
+
   if (download) {
     return {
       name: 'us_land_cover',
