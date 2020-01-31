@@ -17,6 +17,15 @@ import menuIcon from 'assets/icons/menu.svg';
 import './styles.scss';
 
 class NavAlt extends PureComponent {
+  static propTypes = {
+    isDesktop: PropTypes.bool,
+    loggedIn: PropTypes.bool,
+    showSubmenu: PropTypes.bool,
+    closeSubMenu: PropTypes.func,
+    setLangToUrl: PropTypes.func,
+    myGfwLinks: PropTypes.array
+  };
+
   constructor(props) {
     super(props);
 
@@ -35,7 +44,8 @@ class NavAlt extends PureComponent {
       languages,
       lang: txLang || 'en',
       showLang: false,
-      showMore: false
+      showMore: false,
+      showMyGfw: false
     };
 
     this.mounted = false;
@@ -73,8 +83,8 @@ class NavAlt extends PureComponent {
   };
 
   render() {
-    const { isDesktop, showSubmenu, loggedIn } = this.props;
-    const { showLang, showMore, languages, lang } = this.state;
+    const { isDesktop, showSubmenu, loggedIn, myGfwLinks } = this.props;
+    const { showLang, showMore, showMyGfw, languages, lang } = this.state;
     const activeLang = languages && languages.find(l => l.value === lang);
     const showMorePanel = showMore || showSubmenu;
     let moreMenuText = 'menu';
@@ -122,17 +132,43 @@ class NavAlt extends PureComponent {
               </OutsideClickHandler>
             </li>
             <li className="alt-link">
-              <NavLink
-                className="nav-link"
-                to="/my-gfw"
-                activeClassName="-active"
-              >
-                My GFW
-                <Icon
-                  icon={myGfwIcon}
-                  className={cx({ 'logged-in': loggedIn })}
-                />
-              </NavLink>
+              {loggedIn ? (
+                <OutsideClickHandler
+                  onOutsideClick={() => this.setState({ showMyGfw: false })}
+                >
+                  <NavLink
+                    className="nav-link"
+                    to="/my-gfw"
+                    activeClassName="-active"
+                    onClick={() => this.setState({ showMyGfw: !showMyGfw })}
+                  >
+                    My GFW
+                    <Icon
+                      icon={myGfwIcon}
+                      className={cx({ 'logged-in': loggedIn })}
+                    />
+                  </NavLink>
+                  <button
+                    className="nav-link hidden"
+                    onClick={() => this.setState({ showMyGfw: !showMyGfw })}
+                  />
+                  {showMyGfw && (
+                    <DropdownMenu className="submenu" options={myGfwLinks} />
+                  )}
+                </OutsideClickHandler>
+              ) : (
+                <NavLink
+                  className="nav-link"
+                  to="/my-gfw"
+                  activeClassName="-active"
+                >
+                  My GFW
+                  <Icon
+                    icon={myGfwIcon}
+                    className={cx({ 'logged-in': loggedIn })}
+                  />
+                </NavLink>
+              )}
             </li>
           </Fragment>
         )}
@@ -181,13 +217,5 @@ class NavAlt extends PureComponent {
     );
   }
 }
-
-NavAlt.propTypes = {
-  isDesktop: PropTypes.bool,
-  loggedIn: PropTypes.bool,
-  showSubmenu: PropTypes.bool,
-  closeSubMenu: PropTypes.func,
-  setLangToUrl: PropTypes.func
-};
 
 export default NavAlt;

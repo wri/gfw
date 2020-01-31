@@ -3,7 +3,7 @@ import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
-import { getNonGlobalDatasets } from 'services/analysis-cached';
+import { getNonGlobalDatasets } from 'services/forest-data-old';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');

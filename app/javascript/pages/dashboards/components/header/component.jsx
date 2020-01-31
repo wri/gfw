@@ -95,7 +95,8 @@ class Header extends PureComponent {
             >
               {shareMeta}
             </Button>
-            {activeArea &&
+            {process.env.FEATURE_ENV === 'staging' &&
+              activeArea &&
               activeArea.userArea && (
               <Button
                 className="theme-button-medium theme-button-clear square"
@@ -108,7 +109,8 @@ class Header extends PureComponent {
                 <Icon icon={pencilIcon} />
               </Button>
             )}
-            {location.type === 'country' && (
+            {process.env.FEATURE_ENV === 'staging' &&
+              location.type === 'country' && (
               <Button
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
@@ -151,7 +153,8 @@ class Header extends PureComponent {
                   Go to Global dashboard
                 </Link>
               )}
-              {isCountryDashboard &&
+              {process.env.FEATURE_ENV === 'staging' &&
+                isCountryDashboard &&
                 !!firstArea && (
                 <Link
                   className="breadcrumb-link"

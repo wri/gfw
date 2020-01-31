@@ -1,7 +1,7 @@
 import {
   getExtentGrouped,
   getAreaIntersectionGrouped
-} from 'services/analysis-cached';
+} from 'services/forest-data-old';
 import { all, spread } from 'axios';
 
 import getWidgetProps from './selectors';

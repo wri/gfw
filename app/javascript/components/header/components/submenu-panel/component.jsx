@@ -100,7 +100,7 @@ class Header extends PureComponent {
           {isMobile &&
             !loggedIn && (
             <div className="menu-section">
-              <NavLink className="nav-link" to="/my_gfw">
+              <NavLink className="nav-link" to="/my-gfw">
                   My GFW
               </NavLink>
             </div>

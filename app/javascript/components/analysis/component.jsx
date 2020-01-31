@@ -48,6 +48,7 @@ class AnalysisComponent extends PureComponent {
       handleCancelAnalysis,
       handleFetchAnalysis,
       setAreaOfInterestModalSettings,
+      setSubscribeSettings,
       endpoints,
       widgetLayers,
       embed,
@@ -68,6 +69,8 @@ class AnalysisComponent extends PureComponent {
       })
     };
     const isDeletedAoI = location.areaId && !activeArea;
+
+    const isStaging = process.env.FEATURE_ENV === 'staging';
 
     return (
       <Fragment>
@@ -162,10 +165,14 @@ class AnalysisComponent extends PureComponent {
               <Button
                 className="analysis-action-btn save-to-mygfw-btn"
                 onClick={() => {
-                  setAreaOfInterestModalSettings({ open: true });
+                  if (isStaging) {
+                    setAreaOfInterestModalSettings({ open: true });
+                  } else {
+                    setSubscribeSettings({ open: true });
+                  }
                 }}
               >
-                  SAVE IN MY GFW
+                {isStaging ? 'SAVE IN MY GFW' : 'subscribe'}
               </Button>
             )}
             {activeArea &&
