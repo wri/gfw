@@ -48,6 +48,7 @@ class AnalysisComponent extends PureComponent {
       handleCancelAnalysis,
       handleFetchAnalysis,
       setAreaOfInterestModalSettings,
+      setSubscribeSettings,
       endpoints,
       widgetLayers,
       embed,
@@ -164,7 +165,11 @@ class AnalysisComponent extends PureComponent {
               <Button
                 className="analysis-action-btn save-to-mygfw-btn"
                 onClick={() => {
-                  setAreaOfInterestModalSettings({ open: true });
+                  if (isStaging) {
+                    setAreaOfInterestModalSettings({ open: true });
+                  } else {
+                    setSubscribeSettings({ open: true });
+                  }
                 }}
               >
                 {isStaging ? 'SAVE IN MY GFW' : 'subscribe'}
