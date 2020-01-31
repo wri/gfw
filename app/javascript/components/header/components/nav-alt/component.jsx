@@ -132,30 +132,49 @@ class NavAlt extends PureComponent {
               </OutsideClickHandler>
             </li>
             <li className="alt-link">
-              {loggedIn ? (
-                <OutsideClickHandler
-                  onOutsideClick={() => this.setState({ showMyGfw: false })}
-                >
-                  <NavLink
-                    className="nav-link"
-                    to="/my-gfw"
-                    activeClassName="-active"
-                    onClick={() => this.setState({ showMyGfw: !showMyGfw })}
-                  >
-                    My GFW
-                    <Icon
-                      icon={myGfwIcon}
-                      className={cx({ 'logged-in': loggedIn })}
-                    />
-                  </NavLink>
-                  <button
-                    className="nav-link hidden"
-                    onClick={() => this.setState({ showMyGfw: !showMyGfw })}
-                  />
-                  {showMyGfw && (
-                    <DropdownMenu className="submenu" options={myGfwLinks} />
+              {process.env.FEATURE_ENV !== 'staging' ? (
+                <Fragment>
+                  {loggedIn ? (
+                    <OutsideClickHandler
+                      onOutsideClick={() => this.setState({ showMyGfw: false })}
+                    >
+                      <NavLink
+                        className="nav-link"
+                        to="/my-gfw"
+                        activeClassName="-active"
+                        onClick={() => this.setState({ showMyGfw: !showMyGfw })}
+                      >
+                        My GFW
+                        <Icon
+                          icon={myGfwIcon}
+                          className={cx({ 'logged-in': loggedIn })}
+                        />
+                      </NavLink>
+                      <button
+                        className="nav-link hidden"
+                        onClick={() => this.setState({ showMyGfw: !showMyGfw })}
+                      />
+                      {showMyGfw && (
+                        <DropdownMenu
+                          className="submenu"
+                          options={myGfwLinks}
+                        />
+                      )}
+                    </OutsideClickHandler>
+                  ) : (
+                    <NavLink
+                      className="nav-link"
+                      to="/my-gfw"
+                      activeClassName="-active"
+                    >
+                      My GFW
+                      <Icon
+                        icon={myGfwIcon}
+                        className={cx({ 'logged-in': loggedIn })}
+                      />
+                    </NavLink>
                   )}
-                </OutsideClickHandler>
+                </Fragment>
               ) : (
                 <NavLink
                   className="nav-link"
