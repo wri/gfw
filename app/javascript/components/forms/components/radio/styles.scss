@@ -41,4 +41,15 @@
       display: block;
     }
   }
+
+  .radio-input {
+    border-radius: 4px;
+    background-color: transparent;
+    border: solid 1px $border;
+    outline: none;
+    color: $slate;
+    height: rem(20px);
+    margin-left: rem(10px);
+    padding: 0 rem(12px);
+  }
 }

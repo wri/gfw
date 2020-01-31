@@ -14,7 +14,7 @@ import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
-import { sectors, responsibilities, howDoYouUse } from './config';
+import { sectors, responsibilities, howDoYouUse, interests } from './config';
 
 import './styles.scss';
 
@@ -92,17 +92,32 @@ class ProfileForm extends PureComponent {
                       />
                       {values.sector && (
                         <Radio
-                          name="subsectortest_"
-                          label="asdftest"
+                          name="subsector"
+                          label="Role"
                           options={sectors[values.sector].map(s => ({
                             label: s,
                             value: s.replace(/( )+|(\/)+/g, '_')
                           }))}
+                          selectedOption={values.subsector}
+                          // log={console.log(values.subsector_otherInput)}
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
                       <Input name="company" label="Company / organization" />
-                      <h3>Location</h3>
+                      <h4>
+                        What topics are you interested in? Select all that
+                        apply.*
+                      </h4>
+                      {/* TODO: Required fieldwrapper with title and at least 1 option required */}
+                      {interests.map(interest => (
+                        <Checkbox
+                          name={interest.replace(/( )+|(\/)+/g, '_')}
+                          options={[{ label: interest, value: 'yes' }]}
+                        />
+                      ))}
+                    </div>
+                    <div className="column small-12 medium-6">
+                      <h4>Location</h4>
                       <Select
                         name="country"
                         label="country"
@@ -114,9 +129,7 @@ class ProfileForm extends PureComponent {
                         name="state"
                         label="state / department / province"
                       />
-                    </div>
-                    <div className="column small-12 medium-6">
-                      <h3>Geographic area of interest*</h3>
+                      <h4>Geographic area of interest*</h4>
                       <Select
                         name="country"
                         label="country"

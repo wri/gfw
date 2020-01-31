@@ -15,6 +15,7 @@ class Radio extends PureComponent {
     type: PropTypes.string,
     hidden: PropTypes.bool,
     validate: PropTypes.array,
+    selectedOption: PropTypes.string,
     label: PropTypes.string,
     name: PropTypes.string,
     options: PropTypes.array,
@@ -22,7 +23,16 @@ class Radio extends PureComponent {
   };
 
   render() {
-    const { name, label, validate, options, hidden, required } = this.props;
+    const {
+      name,
+      label,
+      validate,
+      selectedOption,
+      options,
+      hidden,
+      required
+    } = this.props;
+    const otherRegex = /(.*Other.*write.*)/;
 
     return (
       <Field
@@ -54,6 +64,17 @@ class Radio extends PureComponent {
                       <label className="radio-label" htmlFor={id}>
                         <span />
                         {option.label}
+                        {otherRegex.test(option.label) &&
+                          selectedOption &&
+                          otherRegex.test(selectedOption) && (
+                          <Field
+                            id={id}
+                            name={`${input.name}_otherInput`}
+                            component="input"
+                            type="type"
+                            className="radio-input"
+                          />
+                        )}
                       </label>
                     </div>
                   );

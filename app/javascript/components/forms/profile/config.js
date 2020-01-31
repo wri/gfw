@@ -5,7 +5,7 @@ export const sectors = {
     'Legislature/Parliament',
     'Ministry/National Agency',
     'Subnational Agency',
-    'Other: write in'
+    'Other (write in):'
   ],
   'Donor Institution / Agency': [
     'Director/Executive',
@@ -13,7 +13,7 @@ export const sectors = {
     'Researcher',
     'Monitoring/Evaluation',
     'Field/Country Staff',
-    'Other: write in'
+    'Other (write in):'
   ],
   'Local NGO (national or subnational)': [
     'Director/Executive',
@@ -24,7 +24,7 @@ export const sectors = {
     'Field Staff',
     'Communications Specialist',
     'Park/Forest Ranger',
-    'Other: write in'
+    'Other (write in):'
   ],
   'International NGO': [
     'Director/Executive',
@@ -34,7 +34,7 @@ export const sectors = {
     'Field/Country Staff',
     'Communications Specialist',
     'Researcher',
-    'Other: write in'
+    'Other (write in):'
   ],
   'UN or International Organization': [
     'Director/Executive',
@@ -44,7 +44,7 @@ export const sectors = {
     'Monitoring/Evaluation Specialist',
     'GIS/Technical Specialist',
     'Communications Specialist',
-    'Other: write in'
+    'Other (write in):'
   ],
   'Academic / Research Organization': [
     'Faculty (Primary/Secondary)',
@@ -52,15 +52,19 @@ export const sectors = {
     'Studenty (Primary/Secondary)',
     'Student (University/Graduate)',
     'Researcher (Post-Doc, Fellow, etc.)',
-    'Other: write in'
+    'Other (write in):'
   ],
-  'Journalist / Media Organization': ['Reporter', 'Editor', 'Other: write in'],
+  'Journalist / Media Organization': [
+    'Reporter',
+    'Editor',
+    'Other (write in):'
+  ],
   'Indigenous or Community-Based Organization': [
     'Community Leader',
     'Forest Manager/Monitor',
     'GIS/Technical Specialist',
     'Communications Specialist',
-    'Other: write in'
+    'Other (write in):'
   ],
   'Private sector': [
     'Supply Chain Manager',
@@ -68,11 +72,25 @@ export const sectors = {
     'Procurement Staff',
     'Retailer/Trader',
     'Land or Concession Owner',
-    'Other: write in'
+    'Other (write in):'
   ],
-  'Individual / No Affiliation': ['Other: write in'],
-  Other: ['Other: write in']
+  'Individual / No Affiliation': ['Other (write in):'],
+  Other: ['Other (write in):']
 };
+
+export const interests = [
+  'Climate/Carbon',
+  'Biodiversity',
+  'Deforestation/Forest Degradation',
+  'Innovations in forest monitoring',
+  'Watersheds ',
+  'General information/Data about forests',
+  'Reforestation/Landscape restoration',
+  'Agricultural supply chains',
+  'Fires',
+  'Small Grants Fund and Tech Fellowship',
+  'My region or country'
+];
 
 export const responsibilities = [
   'Technical staff',
