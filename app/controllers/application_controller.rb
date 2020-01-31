@@ -68,6 +68,10 @@ class ApplicationController < ActionController::Base
         title: '',
         desc: 'Analyze and investigate data trends in forest change, cover and use with just a few clicks.'
       },
+      aoi: {
+        title: 'Area of Interest',
+        desc: ''
+      },
       terms: {
         title: 'Terms of Service',
         desc: 'Welcome to the WRI family of environmental data platforms. By using the Services, you agree to be bound by these Terms of Service and any future updates.',
