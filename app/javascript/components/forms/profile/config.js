@@ -92,25 +92,6 @@ export const interests = [
   'My region or country'
 ];
 
-export const responsibilities = [
-  'Technical staff',
-  'Researcher',
-  'Project/program manager',
-  'Forest/park manager or ranger',
-  'GIS or remote sensing specialist',
-  'Land use planning specialist',
-  'Student',
-  'Professor/lecturer/teacher',
-  'Community liaison or advocate',
-  'Reporter or editor',
-  'Policy or legal specialist',
-  'Supply chain analyst',
-  'Commodity procurement staff',
-  'Commodity retailer/trader',
-  'Sustainability officer',
-  'Other'
-];
-
 export const howDoYouUse = [
   'Obtain maps and data on tree cover',
   'Obtain maps and data on land use',

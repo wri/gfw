@@ -14,7 +14,7 @@ import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
-import { sectors, responsibilities, howDoYouUse, interests } from './config';
+import { sectors, howDoYouUse, interests } from './config';
 
 import './styles.scss';
 
@@ -129,27 +129,17 @@ class ProfileForm extends PureComponent {
                       />
                       <h4>Geographic area of interest*</h4>
                       <Select
-                        name="country"
+                        name="aoi-country"
                         label="country"
                         options={countries}
                         placeholder="Select a country"
                         required
                       />
-                      <Input name="city" label="city" required />
+                      <Input name="aoi-city" label="city" required />
                       <Input
-                        name="state"
+                        name="aoi-state"
                         label="state / department / province"
                         required
-                      />
-
-                      <Select
-                        name="primaryResponsibilities"
-                        label="primary responsibilities (select all that apply)"
-                        options={responsibilities.map(r => ({
-                          label: r,
-                          value: r
-                        }))}
-                        multiple
                       />
                       <Select
                         name="howDoYouUse"
