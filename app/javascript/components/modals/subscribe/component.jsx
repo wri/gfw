@@ -36,7 +36,7 @@ class ModalSubscribe extends PureComponent {
         <Button
           className="mygfw-btn"
           theme="theme-button-light"
-          extLink="/my_gfw/subscriptions"
+          extLink="/my-gfw/subscriptions"
         >
           VIEW IN MY GFW
         </Button>

@@ -15,6 +15,20 @@ import NavAlt from './components/nav-alt';
 import './styles.scss';
 
 class Header extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    setModalContactUsOpen: PropTypes.func,
+    navMain: PropTypes.array,
+    apps: PropTypes.array,
+    moreLinks: PropTypes.array,
+    fullScreen: PropTypes.bool,
+    loggedIn: PropTypes.bool,
+    hideMenu: PropTypes.bool,
+    setQueryToUrl: PropTypes.func,
+    setLangToUrl: PropTypes.func,
+    myGfwLinks: PropTypes.array
+  };
+
   state = {
     fullScreenOpen: false
   };
@@ -36,6 +50,7 @@ class Header extends PureComponent {
       hideMenu,
       navMain,
       moreLinks,
+      myGfwLinks,
       apps,
       setModalContactUsOpen,
       loggedIn,
@@ -97,6 +112,7 @@ class Header extends PureComponent {
                       }
                       isDesktop={isDesktop}
                       moreLinks={moreLinks}
+                      myGfwLinks={myGfwLinks}
                       navMain={navMain}
                       apps={apps}
                       toggleContactUs={setModalContactUsOpen}
@@ -116,18 +132,5 @@ class Header extends PureComponent {
     );
   }
 }
-
-Header.propTypes = {
-  className: PropTypes.string,
-  setModalContactUsOpen: PropTypes.func,
-  navMain: PropTypes.array,
-  apps: PropTypes.array,
-  moreLinks: PropTypes.array,
-  fullScreen: PropTypes.bool,
-  loggedIn: PropTypes.bool,
-  hideMenu: PropTypes.bool,
-  setQueryToUrl: PropTypes.func,
-  setLangToUrl: PropTypes.func
-};
 
 export default Header;
