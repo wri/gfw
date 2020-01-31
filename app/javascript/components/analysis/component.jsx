@@ -69,6 +69,8 @@ class AnalysisComponent extends PureComponent {
     };
     const isDeletedAoI = location.areaId && !activeArea;
 
+    const isStaging = process.env.FEATURE_ENV === 'staging';
+
     return (
       <Fragment>
         <div className={cx('c-analysis', className)}>
@@ -165,7 +167,7 @@ class AnalysisComponent extends PureComponent {
                   setAreaOfInterestModalSettings({ open: true });
                 }}
               >
-                  SAVE IN MY GFW
+                {isStaging ? 'SAVE IN MY GFW' : 'subscribe'}
               </Button>
             )}
             {activeArea &&

@@ -207,15 +207,18 @@ class MapComponent extends Component {
     if (this.map) {
       const { mapLabels } = this.props;
       const { layers, metadata } = this.map.getStyle();
+      const mapboxGroups = metadata && metadata['mapbox:groups'];
 
-      const groups = Object.keys(metadata['mapbox:groups']).filter(k => {
-        const { name } = metadata['mapbox:groups'][k];
-        const roadGroups = LABELS_GROUP.map(rgr =>
-          name.toLowerCase().includes(rgr)
-        );
+      const groups =
+        mapboxGroups &&
+        Object.keys(mapboxGroups).filter(k => {
+          const { name } = (mapboxGroups && mapboxGroups[k]) || {};
+          const roadGroups = LABELS_GROUP.map(rgr =>
+            name.toLowerCase().includes(rgr)
+          );
 
-        return roadGroups.some(bool => bool);
-      });
+          return roadGroups.some(bool => bool);
+        });
 
       const labelLayers = layers.filter(l => {
         const labelMetadata = l.metadata;
@@ -239,14 +242,16 @@ class MapComponent extends Component {
       const { mapRoads } = this.props;
       const { layers, metadata } = this.map.getStyle();
 
-      const groups = Object.keys(metadata['mapbox:groups']).filter(k => {
-        const { name } = metadata['mapbox:groups'][k];
-        const roadGroups = ROADS_GROUP.map(rgr =>
-          name.toLowerCase().includes(rgr)
-        );
+      const groups =
+        metadata &&
+        Object.keys(metadata['mapbox:groups']).filter(k => {
+          const { name } = metadata['mapbox:groups'][k];
+          const roadGroups = ROADS_GROUP.map(rgr =>
+            name.toLowerCase().includes(rgr)
+          );
 
-        return roadGroups.some(bool => bool);
-      });
+          return roadGroups.some(bool => bool);
+        });
 
       const roadLayers = layers.filter(l => {
         const roadMetadata = l.metadata;
