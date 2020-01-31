@@ -1,0 +1,15 @@
+/** category visualization */
+
+#concesion_forestal {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0.2;
+   line-opacity: 1;
+}
+
+#concesion_forestal [supervision="SUPERVISADO POR EL OSINFOR"] {
+   polygon-fill: #1F78B4;
+}
+#concesion_forestal [supervision="NO SUPERVISADO"] {
+   polygon-fill: #A6CEE3;
+}

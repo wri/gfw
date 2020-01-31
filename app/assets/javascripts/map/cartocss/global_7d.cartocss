@@ -1,0 +1,23 @@
+#global_7d {
+  marker-fill: #FFCC00;
+  marker-width: 3;
+  marker-line-color: #FFF;
+  marker-line-width: 1.5;
+  marker-line-opacity: 1;
+  marker-opacity: 0.9;
+  marker-comp-op: multiply;
+  marker-type: ellipse;
+  marker-placement: point;
+  marker-allow-overlap: true;
+  marker-clip: false;
+  marker-multi-policy: largest;
+}
+
+#global_7d[zoom>6]{ marker-width: 6; }
+#global_7d[zoom>11]{ marker-width: 13; }
+#global_7d[zoom>12]{ marker-width: 25; }
+#global_7d[zoom>13]{ marker-width: 50; }
+#global_7d[zoom>14]{ marker-width: 100; }
+#global_7d[zoom>15]{ marker-width: 200; }
+#global_7d[zoom>16]{ marker-width: 400; }
+#global_7d[zoom>17]{ marker-width: 800; }

@@ -1,0 +1,19 @@
+#khm_economic_land_concession_wgs {
+   polygon-opacity: 0.8;
+   line-color: #FFF;
+   line-width: 0;
+   line-opacity: 1;
+}
+
+#khm_economic_land_concession_wgs[adjustment_classification="Downsized"] {
+   polygon-fill: #FFCC00;
+}
+#khm_economic_land_concession_wgs[adjustment_classification="Downsized after revocation"] {
+   polygon-fill: #FF6600;
+}
+#khm_economic_land_concession_wgs[adjustment_classification="No evidence of adjustment"] {
+   polygon-fill: #055D00;
+}
+#khm_economic_land_concession_wgs[adjustment_classification="Revoked"] {
+   polygon-fill: #B40903;
+}

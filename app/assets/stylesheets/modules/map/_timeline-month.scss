@@ -1,0 +1,182 @@
+.widget-timeline .timeline-month {
+  height: 100%;
+  @media (min-width: $br-mobileMap){
+    padding-left: 50px;
+    &.no-play{
+      padding-left: 0;
+    }
+  }
+
+  .tooltip {
+    margin-left: 0;
+    text-transform: uppercase;
+    top: -16px;
+  }
+
+  // Play button
+  .play {
+    position: absolute;
+    float: left;
+    width: 50px;
+    height: 100%;
+    cursor: pointer;
+    padding: 20px;
+    top: 0;
+    left: 0;
+    &:after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(0,-50%);
+      width: 1px;
+      height: 60%;
+      background: $border;
+    }
+
+    &:hover {
+      .play-icon, .stop-icon {
+        opacity: 0.9;
+      }
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      margin: 0 0 0 1px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 7px 0 7px 10px;
+      border-color: transparent transparent transparent $dark;
+    }
+
+    .stop-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      display: none;
+      width: 10px;
+      height: 10px;
+      background: $dark;
+    }
+  }
+
+  .time {
+    height: 100%;
+    position: relative;
+    @media (min-width: $br-mobileMap){
+      padding: 0 5px;
+    }
+    svg{
+      width: auto;
+    }
+    .select-timeline-container{
+      line-height: 46px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .select-timeline-box{
+        margin: 0 0 0 10px;
+        &:first-child{
+          margin: 0;
+        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        > span {
+          margin: 0 5px 0 0;
+          font-size: 12px;
+          max-width: 100px;
+          overflow: hidden;
+          display: inline-block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          @media (min-width: $br-mobile-portrait){
+            max-width: none;
+          }
+        }
+        .select-box{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .month-box{
+            position: relative;
+            button{
+              border-radius: 40px 0 0 40px;
+              padding: 0 10px 0 12px;
+            }
+          }
+          .year-box{
+            position: relative;
+            button{
+              border-radius: 0 40px 40px 0;
+              border-left: none;
+              padding: 0 12px 0 10px;
+            }
+          }
+        }
+        button{
+          top: -1px;
+          padding: 0 20px;
+          margin: 0;
+        }
+        select{
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 10;
+          -webkit-appearance: none;
+        }
+      }
+    }
+  }
+
+  .slider .handle {
+    cursor: col-resize;
+  }
+
+  .domain {
+    stroke: $cGreen1;
+    stroke-width: 4;
+    // shape-rendering: crispEdges;
+  }
+
+  .xaxis-years text {
+    font-size: 11px;
+    fill: $dark;
+    font-weight: 500;
+    &.active {
+      fill: $cGreen1;
+    }
+  }
+
+  .xaxis {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .tick {
+      text {
+        pointer-events: none;
+        font-size: 9px;
+        fill: #bbb;
+        text-transform: uppercase;
+      }
+
+      &.highlight text {
+        fill: #111;
+      }
+    }
+  }
+
+}

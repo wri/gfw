@@ -1,0 +1,29 @@
+<div id="datasets-list" class="datasets-list">
+  {{#if datasets}}
+    <div class="field -default">
+      <div class="checkbox-box -divided">
+        {{#each datasets}}
+          <div class="custom-checkbox">
+            <input class="dataset-checkbox" type="checkbox" name="datasets" id="{{slug}}" {{#if checked}}checked{{/if}}>
+            <label for="{{slug}}">
+              <span></span>
+              {{title}}
+              <svg data-source="{{slug_source}}" class="source"><use xlink:href="#shape-info"></use></svg>
+              <em>({{sub_title}})</em>
+            </label>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="m-btncontainer is-flex-end">
+      <button class="btn medium green uppercase" id="datasets">Next</button>
+    </div>
+  {{else}}
+    <div class="m-spinner -start">
+      <div class="spinner-box">
+        <div class="icon"></div>
+      </div>
+    </div>
+  {{/if}}
+</div>

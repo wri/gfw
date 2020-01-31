@@ -1,0 +1,7 @@
+#can_protected_areas {
+   polygon-fill: #4d94c4;
+   polygon-opacity: 0.7;
+   line-color: #4d94c4;
+   line-width: 0.1;
+   line-opacity: 1;
+}

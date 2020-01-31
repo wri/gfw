@@ -1,0 +1,93 @@
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
+  </a>
+  <div class="modal-wrapper scroll-dark">
+    <div class="modal-content">
+      <ul class="modal-steps">
+        {{!-- STEP 1 --}}
+        <li class="modal-step is-active" data-step="1">
+          <header>
+            <h2>Provide feedback</h2>
+            <h3>We want to hear from you! Global Forest Watch is a user-driven platform and your intput is critical. Help us improve GFW websites by completing the feedback form below or by signing up to become an offcial GFW tester.</h3>
+          </header>
+          <div class="modal-step-content">
+            <h3><strong>We are interested in hearing:</strong></h3>
+            <ul class="bullets">
+              <li>Why you visited GFW</li>
+              <li>How you use GFW</li>
+              <li>If and how the information provided by GFW is useful for your work</li>
+              <li>If any additional features and/or data would be useful</li>
+              <li>If anything was confusing or difficult to use</li>
+              <li>If you encountered any bugs or problems while using GFW</li>
+              <li>Anything else you would like to tell us!</li>
+            </ul>
+          </div>
+        </li>
+
+        {{!-- STEP 2 --}}
+        <li class="modal-step" data-step="2">
+          <header>
+            <h2>Provide feedback</h2>
+            <h3>Help us learn how you use Global Forest Watch and how to improve it.</h3>
+          </header>
+          <div class="modal-step-content">
+            <form id="feedback-form" class="feedback-form">
+              <textarea name="feedback" id="feedback-textarea" placeholder="Type something"></textarea>
+              <div class="feedback-tester">
+                <p>Interested in testing new features and helping to improve the website?  Sign up to <strong>become an official GFW tester!</strong></p>
+                <div class="radio-box js-radio-box">
+                  <div class="custom-radio">
+                    <input id="signup_true1" name="signup" type="radio" value="true">
+                    <label for="signup_true1"><span></span>Yes, sign me up.</label>
+                  </div>
+                  <div class="custom-radio">
+                    <input id="signup_false1" name="signup" type="radio" value="false" checked="checked">
+                    <label for="signup_false1"><span></span>No thanks.</label>
+                  </div>
+                </div>
+                <p>
+                  <input id="feedback-email" name="email" placeholder="Email" type="email">
+                </p>
+              </div>
+              <div class="feedback-tester">
+                <p>Want to be the first to know about Global Forest Watch updates?  Sign up for <a href="http://www.wri.org/global-forest-watch-updates-and-newsletter" target="_blank">our newsletter</a>. </p>
+              </div>
+            </form>
+          </div>
+        </li>
+
+        {{!-- STEP 3 --}}
+        <li class="modal-step" data-step="3">
+          <header>
+            <h2>Thank you! </br>We appreciate your help</h2>
+            <h3><strong>Users have spoken and we have listened!</strong> </br>Below are examples of changes and additions we’ve made to the website in response to feedback from users like you:</h3>
+          </header>
+          <div class="modal-step-content">
+            <ul class="bullets">
+              <li>Threshold settings for the UMD/Google tree cover loss data (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
+              <li>Enhanced analysis functionality (i.e., for protected areas, subnational jurisdictions, and forest use concessions) (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
+              <li>Time slider for the NASA active fires data and information about each fire</li>
+              <li>“Share this map view” feature (read more <a href="http://blog.globalforestwatch.org/2014/05/five-gfw-site-updates/">here</a>)</li>
+              <li>A new homepage that better directs users to what they are looking for and communicates a clearer purpose</li>
+            </ul>
+            <p>Do you have questions about how to use GFW? Be sure to visit the <a href="/howto">How To</a> page, and if you still need help email <a href="mailto:gfw@wri.org">gfw@wri.org</a>. You can also connect with us on social media or by posting a comment to the <a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">GFW Discussion Forum</a>.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <footer class="modal-footer">
+    <span class="gradient"></span>
+    <ul class="m-btncontainer is-center is-steps">
+      <li>
+        <button data-step="1" class="btn green medium uppercase modal-step-btn js-btn-continue is-active">Continue</button>
+        <button data-step="2" class="btn green medium uppercase modal-step-btn js-btn-submit">Submit</button>
+        <button data-step="3" class="btn green medium uppercase modal-step-btn js-btn-close">Close</button>
+      </li>
+    </ul>
+  </footer>
+</div>

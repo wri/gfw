@@ -1,0 +1,24 @@
+.my-gfw-spinner {
+  padding: 40px 0;
+}
+
+.my-gfw-form-error {
+  color: #BF0C0C;
+  text-transform: none;
+}
+
+label .my-gfw-form-error {
+  margin-left: 10px;
+}
+
+p.my-gfw-form-error {
+  font-weight: 500;
+}
+
+.my-gfw-nav {
+  li:hover .tooltipmap {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+

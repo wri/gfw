@@ -1,0 +1,8 @@
+#cod_primary_forest_wgs {raster-opacity:1;
+  raster-scaling:near;
+  raster-colorizer-default-mode:discrete;
+  raster-colorizer-default-color:  transparent;
+  raster-colorizer-epsilon:0.41;
+  raster-colorizer-stops:
+    stop(0, transparent)
+    stop(1, #6e8e39)}

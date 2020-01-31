@@ -1,0 +1,129 @@
+.notifications {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1101;
+  padding: 20px 40px 20px 20px;
+  transition: all 0.25s $easeInOutSine;
+  transform: translate(0,-100%);
+  @media (min-width: $br-mobileMap){
+    padding: 20px;
+    text-align: center;
+  }
+
+  // CLOSE BUTTON
+  .close {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+    @media (min-width: $br-mobile){
+      top: 50%;
+      transform: translate(0,-50%);
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      fill: $white;
+      transform: translate(-50%,-50%);
+    }
+
+    &:hover {
+      svg {
+        fill: darken($white,10%);
+      }
+    }
+  }
+
+
+  .content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    @media (min-width: $br-mobile){
+      justify-content: center;
+      align-items: center;
+    }
+
+    svg {
+      width: 26px;
+      height: 26px;
+      fill: $white;
+      margin: 0 15px 0 0;
+    }
+
+    p {
+      color: $white;
+      font-size: 16px;
+      line-height: 1.25;
+      width: 100%;
+      @media (min-width: $br-mobile){
+        width: auto;
+      }
+
+      button {
+        margin: 7px 0 0;
+        display: block;
+        @media (min-width: $br-mobile){
+          margin: 0 0 0 10px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  // STATES
+  &.active{
+    transform: translate(0,0%);
+  }
+
+
+  // COLORS
+  &.success {
+    background: rgba($cGreen, 0.95);
+  }
+
+  &.info {
+    background: rgba(#3082BD, 0.95);
+  }
+
+  &.warning {
+    background: rgba(#FFF00E, 0.95);
+
+    .content {
+      svg {
+        fill: $dark;
+      }
+
+      p {
+        color: $dark;
+      }
+    }
+
+    // Close btn
+    .close {
+      svg {
+        fill: $dark;
+      }
+
+      &:hover {
+        svg {
+          fill: darken($dark,10%);
+        }
+      }
+    }
+  }
+
+  &.error {
+    background: rgba(#DD3E21, 0.95);
+  }
+}

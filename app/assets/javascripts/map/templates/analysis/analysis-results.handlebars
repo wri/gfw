@@ -1,0 +1,222 @@
+{{#if countries}}
+<div class="select-container">
+  <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select">
+    <option></option>
+    {{#each countries}}
+      <option value="{{iso}}">{{name}}</option>
+    {{/each}}
+  </select>
+  {{#if showRegions}}
+    <select data-placeholder="Select region (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select">
+      <option></option>
+    </select>
+  {{/if}}
+  {{#if showSubRegions}}
+    <select data-placeholder="Select region (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-subregion-select">
+      <option></option>
+    </select>
+  {{/if}}
+</div>
+{{/if}}
+
+<div class="analysis-results scroll-thin-dark">
+  {{!-- RESULTS --}}
+  <ul class="analysis-stats">
+    {{#if resource.areaHa}}
+      <li>
+        <span class="stats-title">Total selected area</span>
+        <span class="stats-count"><strong>{{resource.areaHa}}</strong> ha</span>
+      </li>
+    {{/if}}
+
+
+    {{!-- LOSS --}}
+    {{#if resource.baselayers.loss}}
+      <li>
+        <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+        <span class="stats-count" style="color: {{resource.baselayers.loss.category_color}};"><strong>{{resource.loss}}</strong> ha</span>
+      </li>
+    {{/if}}
+
+    {{#if resource.baselayers.loss_by_driver}}
+      <li>
+        <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+        <span class="stats-count" style="color: {{resource.baselayers.loss_by_driver.category_color}};"><strong>{{resource.loss}}</strong> ha</span>
+      </li>
+    {{/if}}
+
+    {{#if resource.baselayers.forestgain}}
+      <li>
+        <span class="stats-title">Gain 2001-2012</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forestgain.title_color}};"><strong>{{resource.gain}}</strong> ha</span>
+      </li>
+    {{/if}}
+
+    {{#if resource.baselayers.forest2000}}
+    <li>
+      <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+      <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.treeExtent}}</strong> ha</span>
+    </li>
+    {{/if}}
+
+    {{#if resource.baselayers.forest2010}}
+    <li>
+      <span class="stats-title">Tree cover (2010)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+      <span class="stats-count" style="color: {{resource.baselayers.forest2010.title_color}};"><strong>{{resource.treeExtent2010}}</strong> ha</span>
+    </li>
+    {{/if}}
+
+    {{!-- GLAD --}}
+    {{#if resource.baselayers.umd_as_it_happens}}
+      <li>
+        <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts}}</strong></span>
+      </li>
+    {{/if}}
+
+
+    {{!-- PRODES --}}
+    {{#if resource.baselayers.prodes}}
+      <li>
+        <span class="stats-title">Prodes tree cover loss ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.prodes.title_color}};"><strong>{{resource.alerts}}</strong> ha</span>
+      </li>
+    {{/if}}
+
+    {{!-- IMAZON --}}
+    {{#ifCond resource.slug "===" 'imazon-alerts'}}
+      <li>
+        <span class="stats-title">Deforestation alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: #F13689;"><strong>{{resource.defor}}</strong> ha</span>
+      </li>
+      <li>
+        <span class="stats-title">Degradation alerts</span>
+        <span class="stats-count" style="color: #FA98B9;"><strong>{{resource.degrad}}</strong> ha</span>
+      </li>
+    {{/ifCond}}
+
+    {{!-- GUYRA --}}
+    {{#ifCond resource.slug "===" 'guira-loss'}}
+      <li>
+        <span class="stats-title">Grand Chaco tree cover loss:</span>
+        <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts}}</strong> ha</span>
+      </li>
+    {{/ifCond}}
+
+
+    {{!-- GLAD PERU --}}
+    {{#ifCond resource.slug "===" 'umd_as_it_happens_per'}}
+      <li>
+        <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_per.category_color}};"><strong>{{resource.alerts}}</strong></span>
+      </li>
+    {{/ifCond}}
+
+
+    {{!-- GLAD CONGO --}}
+    {{#ifCond resource.slug "===" 'umd_as_it_happens_cog'}}
+      <li>
+        <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_cog.category_color}};"><strong>{{resource.alerts}}</strong></span>
+      </li>
+    {{/ifCond}}
+
+
+    {{!-- GLAD INDONESIA --}}
+    {{#ifCond resource.slug "===" 'umd_as_it_happens_idn'}}
+      <li>
+        <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_idn.category_color}};"><strong>{{resource.alerts}}</strong></span>
+      </li>
+    {{/ifCond}}
+
+
+    {{!-- FORMA --}}
+    {{#ifCond resource.slug "===" 'forma-alerts'}}
+      <li>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forma_activity.category_color}};"><strong>{{resource.alerts}}</strong> FORMA active clearing alerts</span>
+      </li>
+    {{/ifCond}}
+    {{#ifCond resource.slug "===" 'forma250GFW'}}
+      <li>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forma_month_3.category_color}};"><strong>{{resource.alerts}}</strong> FORMA alerts</span>
+      </li>
+    {{/ifCond}}
+
+
+    {{!-- TERRAi --}}
+    {{#ifCond resource.slug "===" 'terrai-alerts'}}
+      <li>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.terrailoss.category_color}};"><strong>{{resource.alerts}}</strong> Terra-i tree cover loss alerts</span>
+      </li>
+    {{/ifCond}}
+
+
+    {{!-- FIRES --}}
+    {{#ifCond resource.slug "===" 'viirs-active-fires'}}
+      <li>
+        <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
+        <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_alerts.title_color}};"><strong>{{resource.alerts}}</strong> VIIRS active fire alerts</span>
+      </li>
+    {{/ifCond}}
+
+    <li>
+      <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
+    </li>
+
+    <li>
+      <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
+    </li>
+
+  </ul>
+</div>
+
+{{!-- FOOTER --}}
+<footer class="analysis-footer">
+{{!--   <div class="m-btncontainer -col100">
+    <button class="btn green uppercase btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
+  </div>
+ --}}
+  <div class="m-btncontainer is-center -col50">
+    <button class="btn gray little uppercase full-width btn-analysis-advanced {{#unless resource.options.enabledAdvanced}}disabled{{/unless}}">Advanced analysis</button>
+    <button class="btn green little uppercase full-width btn-analysis-subscribe {{#unless resource.options.enabledSubscription}}disabled{{/unless}}">Subscribe</button>
+  </div>
+
+  <ul>
+    <li>
+      {{#ifCond resource.slug "===" 'umd-loss-gain'}}
+        <a class="analysis-footer-btn download-mobile-link" data-type="forest-change" href="https://earthenginepartners.appspot.com/science-2013-global-forest" target="_blank">
+          <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+          <span>Download data</span>
+        </a>
+      {{else}}
+        <button class="analysis-footer-btn btn-analysis-downloads {{#unless resource.options.enabledDownload}}-disabled{{/unless}}">
+          <div>
+            <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+            <svg class="icon -inactive"><use xlink:href="#shape-close"></use></svg>
+          </div>
+          <span>Download data</span>
+          {{#unless resource.options.enabledDownload}}
+            <div class="tooltipmap">Coming soon</div>
+          {{/unless}}
+        </button>
+      {{/ifCond}}
+    </li>
+    <li>
+      <button class="analysis-footer-btn btn-analysis-share">
+        <svg class="icon"><use xlink:href="#icon-analysis-share"></use></svg>
+        <span>Share</span>
+      </button>
+    </li>
+
+    <li>
+      <button class="analysis-footer-btn btn-analysis-delete">
+        <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
+        <span>Discard analysis</span>
+      </button>
+    </li>
+  </ul>
+</footer>

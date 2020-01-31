@@ -1,0 +1,45 @@
+<section class="m-header-static">
+  <div class="inner">
+    <header>
+      <h2>My Stories</h2>
+      <h3>View, manage, and delete your stories.</h3>
+      <a class="btn green uppercase" href="/stories/new">Create new story</a>
+    </header>
+  </div>
+</section>
+
+<section class='section'>
+  <div class="my-gfw-story-container">
+    <div class="content-form my-gfw-stories-list-container inner">
+      {{#if showSpinner}}
+        <div id="storiesSpinner" class="m-spinner -fixed">
+          <div class="spinner-box">
+            <div class="icon"></div>
+          </div>
+        </div>
+      {{else}}
+        {{#if stories.length}}
+          <table class="my-gfw-stories-list">
+            <tbody id="my-gfw-stories-table-body">
+            </tbody>
+          </table>
+
+          <div id="my-gfw-stories-pagination"></div>
+        {{else}}
+          <div class="my-gfw-stories-empty">
+            <h4>You haven't created any stories yet</h4>
+            <h5>
+              Share your story about issues affecting forests, forest communities, and how you use GFW to monitor and protect forests with the Global Forest Watch community.
+            </h5>
+
+            <div class="my-gfw-stories-how-to-create-story"></div>
+
+            <p>
+              <a href="/stories/new" class="btn green uppercase">Create a Story</a>
+            </p>
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+<div class="modal is-active">
+  <div class="modal-backdrop"></div>
+  <div class="modal-window">
+    <a href="#" class="modal-close">
+      <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
+    </a>
+
+    <div class="modal-wrapper scroll-dark -no-scroll">
+      <div class="modal-content">
+
+        <div class="modal-subscribe">
+          <div class="steps current">
+            <header>
+              <h2>Subscription saved</h2>
+            </header>
+
+            <div class="successful"></div>
+
+            <p>
+              This subscription has been added to your profile. <strong>Please
+              check your email and click on the link to confirm your
+              subscription.</strong>
+            </p>
+
+            <div class="m-btncontainer is-center">
+              {{#if uploadedData}}
+                <a href="#" class="btn medium gray uppercase" id="go-to-open-data">Add this data to the map</a>
+              {{/if}}
+              <a href="#" class="btn medium green uppercase" id="go-to-subscriptions">My subscriptions</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

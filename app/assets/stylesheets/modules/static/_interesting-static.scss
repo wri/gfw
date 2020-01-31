@@ -1,0 +1,68 @@
+// INTERESTING SECTION
+.m-interesting {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+
+
+  > li {
+    width: 100%;
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+
+    @media (min-width: $br-mobile){
+      width: 47.5%;
+      margin-bottom: 0;
+    }
+  }
+
+
+}
+
+.m-interesting-item {
+  border: 1px solid $border;
+
+  .img {
+    width: 100%;
+    padding-bottom: 46.391752577%;
+    position: relative;
+
+    .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+    } 
+  }
+
+  .info {
+    padding: 40px;
+    color: $dark;
+    
+    h3 {
+      font-size: 21px;
+      color: $cGreen;
+      text-transform: uppercase;
+      
+      a {
+        color: $cGreen;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    p {
+      padding: 15px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+}

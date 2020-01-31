@@ -1,0 +1,280 @@
+$aside-width: 270px;
+
+// NEW
+.m-new {
+  display: flex;
+  justify-content: space-between;
+
+  &.-no-aside {
+    .m-form {
+      @media (min-width: $br-mobile) {
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+
+
+  .m-aside {
+    display: none;
+    width: $aside-width;
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
+  }
+
+  .m-form {
+    width: 100%;
+    max-width: 950px;
+    @media (min-width: $br-mobile) {
+      width: calc(100% - #{$aside-width});
+      padding: 0 0px 0 60px;
+    }
+
+    h3 {
+      padding: 0 0 10px;
+      border-bottom: 1px solid $border;
+      font-weight: 500;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: $dark;
+    }
+
+    .test-webhook {
+
+      .webhook-loader {
+        color: $dark;
+      }
+
+      &:not(.-loading) .webhook-loader {
+        display: none;
+      }
+
+      &.-loading {
+        cursor: default;
+
+        .webhook-text {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.m-aside {
+  > * {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.5em;
+    color: #666;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: $cGreen;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+
+
+  h3 {
+    padding: 0 0 10px;
+    margin-top: 40px;
+    border-bottom: 1px solid $border;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: $dark;
+  }
+
+  ul {
+    li {
+      position: relative;
+      padding: 0 0 0 10px;
+      margin-bottom: 5px;
+      &:before{
+        content: "";
+        position: absolute;
+        display: block;
+        left: 0;
+        top: 7px;
+        height: 6px;
+        width: 6px;
+        border-radius: 50%;
+        background: #999;
+      }
+    }
+  }
+}
+
+
+// MAP CONTAINER
+.m-map {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 5px;
+
+  .map {
+    height: 295px;
+  }
+
+  // TOP BOTTOM RIGHT LEFT - MAP CONTROLS
+  .map-controls-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: absolute;
+
+    > * {
+      margin: 0 5px 0 0px;
+      &:last-child {
+        margin: 0px;
+      }
+    }
+
+    &.-top { top: 5px;}
+    &.-bottom { bottom: 5px;}
+    &.-left { left: 5px;}
+    &.-right { right: 5px;}
+  }
+
+  // BUTTONS
+  .map-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: $white;
+    box-shadow: $shadow1;
+    border:none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($white,5%);
+    }
+
+    svg {
+      display: block;
+      fill: $dark;
+      width: 20px;
+      height: 20px;
+      &.-inactive {
+        display: none;
+      }
+    }
+
+    &.-loading {
+      svg {
+        @include animation(loader2,1s,infinite,$easeInOutCubic);
+      }
+    }
+  }
+
+  .control-pin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: image-url('icons/marker_exclamation.png');
+    background-size: contain;
+    margin: -20px 0 0 -20px;
+  }
+
+  .control-search {
+    width: 175px;
+    padding: 0;
+    font-size: 12px;
+    background: $white;
+    box-shadow: $shadow1;
+    @media (min-width: $br-mobile) {
+      width: 300px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      height: 30px;
+      margin: 0;
+      font-family: inherit;
+      border-radius: 0;
+      box-shadow: none;
+      border:none;
+    }
+  }
+}
+
+.map-selection {
+  position: relative;
+  padding: 20px;
+  border: 1px solid $border;
+  display: none;
+
+  &.-active {
+    display: block;
+  }
+
+  .map-selection-delete {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    z-index: 20;
+  }
+
+  h2 {
+    font-size: 21px;
+    margin: 0 0 10px;
+    padding: 0 150px 0 0;
+    color: $dark;
+  }
+
+  ul {
+    > li {
+      display: flex;
+      justify-content: flex-start;
+      margin: 0 0 8px;
+      color: $dark;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      > * {
+        margin: 0 5px 0 0;
+        &:last-child {
+          margin: 0;
+        }
+      }
+
+      h4 {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+.layer-selection {
+  #country-field {
+    margin-bottom: 10px;
+  }
+
+  #layers-country-field {
+    margin-bottom: 0;
+  }
+}

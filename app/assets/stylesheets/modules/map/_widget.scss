@@ -1,0 +1,106 @@
+.widget {
+  user-select: none;
+
+  .widget-box {
+    position: absolute;
+    z-index: 20;
+  }
+
+}
+
+/**
+ * Widget button.
+ */
+.widget .widget-btn {
+  color: #999;
+  background-color: #fff;
+  cursor: pointer;
+  position: absolute;
+
+  border-radius: 3px;
+  @include box-shadow(0px 0px 3px #666);
+  @include box-sizing(border-box);
+
+  width: 25px;
+  height: 25px;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  &:hover  {
+    .tooltip1 {
+      margin: 0;
+      font-size: 12px;
+      color: $dark;
+      line-height: normal;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.widget .analysis-control li {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+
+/**
+ * Widget Modal.
+ */
+.widget .widget-box {
+  position: absolute;
+
+  width: 245px;
+  min-height: 20px;
+
+  transition: height 0.15s ease-in-out;
+
+  color: $dark;
+  background: $white;
+  box-shadow: $shadow1;
+
+  .widget-content {
+    width: 100%;
+  }
+
+  &.closed {
+    height: 40px;
+  }
+
+  &.closed .widget-toggle {
+    // @include home-icons-sprite(legend_toggle_open);
+    background: image-url('home-icons/legend_toggle_open.png');
+  }
+
+  &.closed .widget-toggle-grey {
+    // @include home-icons-sprite(info_bar_toggle_open);
+    background: image-url('home-icons/info_bar_toggle_open.png');
+  }
+
+  &.ui-draggable {
+    cursor: move;
+  }
+}
+
+/**
+ * Widget toogle button
+ */
+.widget .widget-toggle {
+  position: absolute;
+  top: 1px;
+  right: -25px;
+  width: 25px;
+  height: 38px;
+  cursor: pointer;
+  // @include home-icons-sprite(legend_toggle_close);
+  background: image-url('home-icons/legend_toggle_close.png');
+
+  &.widget-toggle-grey {
+    // @include home-icons-sprite(info_bar_toggle_close);
+    background: image-url('home-icons/info_bar_toggle_close.png');
+  }
+}

@@ -1,0 +1,36 @@
+// Compass
+@import "compass/reset";
+@import "compass/css3";
+
+// Images
+@import "logos/*.png";
+
+// Global
+// This will load all common settings, mixins and styles needed
+@import "global/global";
+
+// Layouts
+// This will load all common layouts styles
+@import "layouts/layouts";
+@import "layouts/foundation-grid";
+
+// Modules
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/form";
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/slick";
+@import "modules/carrousel";
+@import "modules/pagination";
+@import "modules/select";
+@import "modules/notifications";
+@import "modules/header-static";
+@import "modules/section-static";
+@import "modules/section-new";
+@import "modules/static/spinner";
+@import "modules/steps";
+@import "modules/terms";
+@import "modules/static/newsletter";
+@import "layouts/static";

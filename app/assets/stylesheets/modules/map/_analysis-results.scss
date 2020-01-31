@@ -1,0 +1,243 @@
+.analysis-results {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  
+  &.active{
+    transform: translate(0,0);
+  }
+
+  @media (min-height: 500px){
+    max-height: 21vh;
+  }
+
+  @media (min-height: 750px){
+    max-height: none;
+  }
+
+  .analysis-stats {
+    background: white;
+    font-size: 12px;
+
+    > li {
+      padding: 6px 0;
+      overflow: hidden;
+      // border-bottom: 1px solid #ddd;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .stats-title {
+      color: #999;
+      font-weight: 500;
+      font-size: 11px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      display: block;
+      .stats-threshold {
+        text-transform: lowercase;
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+      }
+    }
+    .stats-count {
+      font-weight: 500;
+      font-size: 15px;
+      color: #666;
+      strong {
+        font-size: 18px;
+        display: inline-block;
+      }
+    }
+
+    .stats-notice {
+      font-size: 11px;
+      background: $border;
+      border: 1px solid #CCC;
+      padding: 10px;
+      text-align: center;
+      line-height: 1.25;
+    }
+  }
+}
+
+// FOOTER ANALYSIS
+.analysis-footer {
+  margin: 15px 0 0;
+
+  .analysis-subscribe {
+    width: 100%;
+  }
+
+  // GRID
+  > ul {
+    margin: 15px -15px 0;
+    display: flex;
+    justify-content: space-between;
+
+    @media (min-width: 1500px){
+      margin: 15px -20px 0;
+    }
+
+    > li {
+      width: 33.33333%;
+    }
+  }
+
+
+
+  // FOOTER BTN
+  .analysis-footer-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    box-shadow: none;
+    border: none;
+    background: none;
+    text-align: center;
+    font-family: inherit;
+    outline: none;
+    color: $dark;
+    background: #eeeeee;
+    cursor: pointer;
+    font-size: 10px;
+    line-height: 1;
+    position: relative;
+
+    // ICON
+    svg {
+      fill: $dark;
+      width: 18px;
+      height: 18px;
+      margin: 0 auto 3px;
+
+      &.-inactive {
+        display: none;
+      }
+    }
+
+    > span {
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+
+    // STATES
+    &:hover {
+      background: lighten(#eeeeee, 5%);
+
+      .tooltipmap {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &.-active {
+      background: $white;
+      svg {
+        display: none;
+        &.-inactive {
+          display: block;
+        }
+      }
+    }
+
+    &.-disabled {
+      > span, svg {
+        opacity: 0.5;
+      }
+
+      &:hover {
+        background: #eeeeee;
+      }
+    }
+  }
+
+
+
+  // FOOTER DROPDOWN (we use this for the download "modal")
+  .analysis-footer-dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    z-index: 2000;
+
+    transition: all 0.25s $easeInOutSine;
+    transform: translate(0,15px);
+
+    font-size: 13px;
+    text-align: left;
+    background-color: $white;
+    line-height: 1.5;
+    visibility: hidden;
+    opacity: 0;
+
+    @media (min-width: $br-mobileMap){
+      bottom: 51px;
+    }
+
+    // Toggle -active class
+    &.-active {
+      transform: translate(0,0);
+      visibility: visible;
+      opacity: 1;
+    }
+
+    // Overlay
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 400%;
+      background: rgba(#000, 0.25);
+      z-index: 2;
+      bottom: 100%;
+      left: 0%;
+    }
+
+    // Items
+    > li {
+      padding: 4px 15px;
+      border-bottom: 1px solid $border;
+
+      &:first-child {
+        border-bottom: none;
+        font-size: 10px;
+        text-align: left;
+        border-bottom: none;
+        padding: 10px 15px;
+
+        &:hover {
+          background-color: $white;
+        }
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: darken($white,2.5%);
+      }
+
+      > a {
+        display: block;
+        color: $cGreen;
+      }
+    }
+  }
+}

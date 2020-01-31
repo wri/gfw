@@ -1,0 +1,36 @@
+.c-social {
+  display: none;
+  padding: rem(45px) 0;
+
+  .columns:last-child {
+    text-align: right;
+  }
+
+  .c-social__buttons {
+    margin-top: rem(17px);
+
+    .fb_iframe_widget {
+      top: rem(-7px);
+    }
+  }
+
+  .c-social__icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    float: right;
+    width: 100%;
+    max-width: rem(135px);
+    margin-top: rem(15px);
+
+    .icon {
+      fill: $slate;
+      height: rem(22px);
+      width: rem(22px);
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    display: block;
+  }
+}

@@ -1,0 +1,120 @@
+$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, positron, landsat, openstreet;
+$basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, landsat, openstreet;
+.tab-basemaps {
+  position: relative;
+
+  .maptype-list{
+    @media (min-width: $br-mobileMap){
+      max-height: 380px;
+      overflow: auto;
+    }
+
+    > li {
+      position: relative;
+      padding: 0 0 0 80px;
+      border-top: 1px solid $border;
+      cursor: pointer;
+
+      &:first-child {
+        border-top: none;
+      }
+
+      &:hover {
+        i {
+          border-color: $cGreen;
+        }        
+      }
+
+      &.selected{ 
+        background: $light;
+
+        i {
+          border-color: $cGreen;
+        }
+      }
+
+      @for $i from 1 through length($basemaps-img) {
+        &.#{nth($basemaps-class, $i)} i {
+          @include basemaps-sprite(nth($basemaps-img, $i));
+        }
+      }
+
+      span {
+        font-size: 12px;
+        line-height: 70px;
+        text-transform: uppercase;
+      }
+
+      i {
+        width: 46px;
+        height: 46px;
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        transform: translate(0,-50%);
+        background: #000;
+        border-radius: 50%;
+        border: 2px solid $border;
+      }
+
+      .source {
+        @extend .info-icon;
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translate(0,-50%);
+      }
+    }
+  }
+
+  .landsat-years {
+    display: none;
+    background: $white;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 3px 1px rgba($dark, 0.25);
+    padding: 10px;
+    @media (min-width: $br-mobileMap){
+      text-align: left;
+      width: auto;
+      position: absolute;
+      bottom: 0%;
+      right: 100%;
+    }
+
+    &.active {
+      display: flex;
+      min-width: 200px;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: calc(70px/2 - 12px);
+      right: 0;
+      display: none;
+      transform: translate(50%,-50%) rotate(45deg);
+      background: $white;
+      width: 12px;
+      height: 12px;
+      box-shadow: 1px -1px 1px 0px rgba($dark, 0.25);
+      @media (min-width: $br-mobileMap){
+        display: block;
+      }
+    }
+
+    > div {
+      width: 50%;
+      
+      > li {
+        cursor: pointer;
+        font-size: 12px;
+        padding: 10px;
+        white-space: nowrap;
+        &:hover{ background: darken($light,3%);}
+        &.selected{ background: darken($light,3%);}
+      }
+    }
+  }
+}

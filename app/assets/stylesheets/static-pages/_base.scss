@@ -1,0 +1,62 @@
+.static-page {
+
+  .main-title {
+    font-size: 35px;
+    color: $dark;
+    font-weight: 400;
+
+    @media (min-width: $br-mobile){
+      font-size: 47px;
+    }    
+  }
+
+  .section-title {
+  	font-size: 35px;
+  	line-height: 1.1;
+  	letter-spacing: .2px;
+
+  	color: $dark;
+
+    @media (min-width: $br-mobile){
+    	font-size: 35px;
+    }
+
+    > a {
+    	color: $dark;
+    }
+  }
+
+  h3 {
+  	font-size: 19px;
+    line-height: 1.25;
+  	text-transform: uppercase;
+
+    &.-primary {
+      color: $primary-color;
+    }
+
+    &.-secondary {
+      color: $dark;
+    }
+
+    @media (min-width: $br-mobile){
+    	font-size: 21px;
+    }
+  }
+
+  // paragraphs
+  p {
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: .1px;
+    color: $dark;
+
+    & + p {
+      margin-top: 15px;
+
+      @media screen and (min-width: $br-mobile) {
+        margin-top: 5px;
+      }
+    }
+  }
+}

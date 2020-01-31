@@ -76,6 +76,7 @@ Gfw::Application.routes.draw do
 
   # My GFW
   get '/my-gfw' => 'my_gfw#index'
+  get '/my-gfw/*all' => 'connect#index'
 
   # Small Grunts Fund
   get '/grants-and-fellowships' => 'grants_and_fellowships#index'

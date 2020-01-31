@@ -1,0 +1,353 @@
+// HEADER
+.layout-header {
+  z-index: 1000;
+
+  .brand {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+
+    &.is-fixed {
+      position: fixed;
+      left: auto;
+    }
+  }
+
+  .header-title {
+    text-align: center;
+
+    .is-home-page & {
+      float: left;
+      text-align: left;
+      font-size: 36px;
+      max-width: 50%;
+      margin: 1em 0 .5em 0;
+    }
+
+    .is-accept_terms-action & {
+      font-size: 36px;
+      margin: 1.5em auto 1em auto;
+    }
+
+    span {
+      color: $cGreen;
+    }
+  }
+}
+
+.layout-header-top {
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.layout-header-bottom {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 20px 0;
+}
+
+// CONTENT
+.layout-content {
+  margin-bottom: 40px;
+  @include clearfix;
+
+  .is-stories-page & {
+    margin-bottom: 0;
+  }
+
+  .section {
+    padding: 40px 0;
+    text-align: center;
+
+    &.section_dark {
+      background: #222;
+
+      .section-title {
+        color: #fff;
+      }
+
+      .section-footer {
+        border-top: 1px solid #333;
+      }
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.2;
+      color: #666;
+      @extend .fira_regular;
+
+      a {
+        font-weight: 500;
+      }
+    }
+    &.home_stories{
+      .columns{
+        height: calc(346px - (40px * 2));
+        .spinner {
+          display:block;
+          width: 24px; height: 24px;
+          background: image-url('icons/spinner.gif') no-repeat;
+          margin: 10px auto;
+        }
+      }
+    }
+  }
+
+  .section-footer {
+    border-top: 1px solid #ddd;
+    padding-top: 40px;
+
+    p + p {
+      margin-top: 15px;
+    }
+
+    .btn + .btn {
+      margin-left: 20px;
+    }
+  }
+
+  .section-title {
+    margin: 0 0 8px;
+    font-size: 37px;
+    @extend .fira_regular;
+    color: #222;
+  }
+
+  .columns {
+    @extend .clearfix;
+    padding: 40px 0;
+  }
+
+  .column {
+    position: relative;
+
+    &.three {
+      float: left;
+      display: table;
+      width: 266px;
+      margin: 0 27px;
+    }
+
+    &.five {
+      display: inline-block;
+      height: 117px;
+      width: 117px;
+      margin: 0 27px;
+    }
+
+    &.round {
+      height: 266px;
+
+      img {
+        position: absolute;
+        z-index: 20;
+        top: 5px; left: 5px;
+        width: 256px;
+        height: 256px;
+        border-radius: 129px;
+      }
+
+      a {
+        display: table;
+        height: 100%;
+        width: 100%;
+      }
+
+      .frame {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 134px;
+        background: #ccc;
+      }
+
+      .gradient {
+        position: absolute;
+        top: 5px; left: 5px;
+        z-index: 50;
+        height: 256px;
+        width: 256px;
+        background-image: image-url('backgrounds/bkg_circles_gradient.png');
+        border-radius: 129px;
+      }
+
+      .title {
+        display: table-cell;
+        position: relative;
+        z-index: 100;
+        vertical-align: middle;
+        @media screen and (min-width:0\0) {
+          /* IE9 and IE10 rule sets go here */
+          padding-top: 80px;
+        }
+
+        strong {
+          display: block;
+          margin: 0 30px 30px;
+          font-weight: 500;
+          font-size: 21px;
+
+          color: #fff;
+        }
+
+        span {
+          display: block;
+          font-weight: 500;
+          font-size: 12px;
+          text-transform: uppercase;
+          color: $cGreen;
+        }
+      }
+    }
+  }
+}
+
+
+// FOOTER
+.layout-footer {
+  background-color: #464352;
+  @include clearfix;
+
+  .right,
+  .left{
+    float: right;
+    width: 49%;
+  }
+  .left{
+    float: left;
+    .tweet-to{
+      margin-top: 15px;
+    }
+  }
+
+  .site-info {
+    @extend .clearfix;
+    font-size: 13px;
+    color: #b1afb6;
+
+    a {
+      color: #eee;
+      text-decoration: underline;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+
+  .footer-share {
+    display: block;
+    padding: 16px 0;
+    font-size: 17px;
+    font-weight: 400;
+    color: #fff;
+    @include clearfix;
+
+    p {
+      float: left;
+      line-height: 45px;
+
+      strong {
+        font-weight: 500;
+      }
+      .subscribe{
+        vertical-align: sub;
+      }
+    }
+    &.keep-updated{
+      margin-bottom: 0;
+      height: 35px;
+    }
+  }
+
+  .share_buttons {
+    float: left;
+    height: 27px;
+    padding: 12px 20px 6px 10px;
+    background: #fff;
+    border-radius: 23px;
+    @include clearfix;
+
+    .fb_iframe_widget{
+      top: -4px;
+    }
+  }
+
+  .footer-logos {
+    float: left;
+    margin-top: 37px;
+    width: 480px;
+  }
+
+  .footer-logos p { margin-bottom: 10px; }
+
+  .footer-address {
+    margin: 60px 0 40px;
+    @extend .footer-logos;
+
+
+    p,
+    address,
+    .footer-logo {
+      margin-bottom: 20px;
+    }
+
+    address {
+      line-height: 1.1;
+    }
+  }
+
+  .footer-logo {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 38px 38px 0;
+    width: 88px;
+
+    &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
+    &.google { height: 52px; @include logos-sprite(google); }
+    &.esri { height: 28px; @include logos-sprite(esri); }
+    &.universitymaryland { height: 52px; @include logos-sprite(universitymaryland); }
+    &.unep { height: 52px; @include logos-sprite(unep); }
+    &.imazon { height: 52px; @include logos-sprite(imazon); }
+    &.cfgd { height: 52px; @include logos-sprite(cfgd); }
+    &.osfac { height: 57px; @include logos-sprite(osfac); }
+    &.gfwca { height: 44px; @include logos-sprite(gfwca); }
+    &.scanex { height: 16px; @include logos-sprite(scannex); }
+    &.twrus { height: 36px; width: 147px; @include logos-sprite(twrus); }
+    &.norwegian { height: 55px; @include logos-sprite(norwegian); }
+    &.usaid { height: 64px; @include logos-sprite(usaid); }
+    &.gef { height: 59px; @include logos-sprite(gef); }
+    &.ukaid { height: 52px; @include logos-sprite(ukaid); }
+    &.tilia { height: 38px; @include logos-sprite(tilia); }
+    &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
+    &.cgiar { height: 56px; width: 147px; @include logos-sprite(cgiar); }
+    &.cartodb { height: 45px; @include logos-sprite(cartodb); }
+    &.vizzuality { height: 51px; margin-right: 32px; @include logos-sprite(vizzuality); }
+    &.blueraster { height: 51px; width: 97px; @include logos-sprite(blueraster); }
+    &.irishaid { height: 53px; width: 150px; @include logos-sprite(irishaid); }
+    &.haka { height: 63px; width: 69px; @include logos-sprite(haka); }
+    &.idb { height: 58px; width: 120px; @include logos-sprite(idb); }
+    &.macarthur { height: 42px; width: 120px; @include logos-sprite(macarthur); }
+    &.wilburforce { height: 31px; width: 120px; @include logos-sprite(wilburforce); }
+    &.last { margin-right: 0; }
+  }
+}
+
+.preview-container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  z-index: 5;
+  transform: translate(-50%,-50%);
+  opacity: 0;
+  visibility: hidden;
+  background: $dark;
+  &.active{
+    opacity: 1;
+    visibility: visible;
+  }
+}

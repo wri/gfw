@@ -1,0 +1,67 @@
+<div class="search-box">
+  <span class="searching-kinds">
+    <span class="kind selected" data-kind="regular">Address</span>
+    <span class="kind" data-kind="coordinates">Coordinates</span>
+    <span class="kind" data-kind="degrees">Decimal degrees</span>
+    <span class="kind" data-kind="utm">UTM coordinates</span>
+  </span>
+
+  <div class="search regular selected">
+    <input class="search-input" type='search' placeholder="E.g.: 10 G Street NE Suite 800, Washington, DC 20002"/>
+  </div>
+
+  <div class="search coordinates">
+    <div id="coord-lat" class="coord-box">
+      <input class="coord-input" name="degrees" type='text' maxlength="3"/>º
+      <input class="coord-input" name="minutes" type='text' maxlength="2"/>'
+      <input class="coord-input" name="seconds" type='text' maxlength="4"/>''
+      <select class="chosen-select default coord-select notranslate" id="coord-lat-cardinal" name="cardinal">
+        <option>N</option>
+        <option>S</option>
+      </select>
+    </div>
+    <div id="coord-lng" class="coord-box">
+      <input class="coord-input" name="degrees" type='text' maxlength="3"/>º
+      <input class="coord-input" name="minutes" type='text' maxlength="2"/>'
+      <input class="coord-input" name="seconds" type='text' maxlength="4"/>''
+      <select class="chosen-select default coord-select notranslate" id="coord-lng-cardinal" name="cardinal">
+        <option>W</option>
+        <option>E</option>
+      </select>
+    </div>
+    <button id="coord-btn" class="btn green uppercase">Search</button>
+  </div>
+
+  <div class="search degrees">
+    <div class="deg-box">
+      <span>Lat:</span> <input class="deg-input" id="deg-lat" name="deg-lat" type='text'/>
+    </div>
+    <div class="deg-box">
+      <span>Long:</span> <input class="deg-input" id="deg-lng" name="deg-lng" type='text'/>
+    </div>
+    <button id="deg-btn" class="btn green uppercase">Search</button>
+  </div>
+
+  <div class="search utm">
+    <div class="utm-box">
+      <span>East:</span>
+      <input class="utm-input" id="utm-easting" name="utm-easting" type='text'>
+    </div>
+    <div class="utm-box">
+      <span>North:</span>
+      <input class="utm-input" id="utm-northing" name="utm-northing" type='text'>
+    </div>
+    <div class="utm-box is-little">
+      <span>Zone:</span>
+      <input class="utm-input" id="utm-zone" name="utm-zone" type='text' maxlength="3">
+    </div>
+    <div class="utm-box">
+      <select class="chosen-select default coord-select notranslate" id="utm-hemisphere" name="utm-hemisphere">
+        <option value="">N</option>
+        <option value="+south">S</option>
+      </select>
+    </div>
+
+    <button id="utm-btn" class="btn green uppercase">Search</button>
+  </div>
+</div>

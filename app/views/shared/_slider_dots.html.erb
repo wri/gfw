@@ -1,0 +1,5 @@
+<ul class="c-slider-dots -<%= color %>">
+  <% (0..count - 1).each do |i| %>
+    <li class="c-slider-dots__item <% if i == 0 %>-selected<% end %>" data-index="<%= i %>"></li>
+  <% end %>
+</ul>

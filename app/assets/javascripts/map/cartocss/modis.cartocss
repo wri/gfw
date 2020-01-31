@@ -1,0 +1,41 @@
+#quicc_alerts {
+  marker-fill: #F768A1;
+  marker-width: 3;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 0;
+  marker-opacity: 1;
+  marker-type: ellipse;
+  marker-placement: point;
+  marker-allow-overlap: true;
+  marker-clip: false;
+  marker-multi-policy: largest;
+
+  [zoom<2] {
+    marker-width: 1.5;
+  }
+
+  [zoom=2] {
+    marker-width: 2.5;
+  }
+
+  [zoom=4] {
+    marker-width: 3.5;
+  }
+
+  [zoom=5] {
+    marker-width: 4;
+  }
+
+  [zoom=6] {
+    marker-width: 4.5;
+  }
+
+  [zoom=7] {
+    marker-width: 6.5;
+  }
+
+  [zoom>=8] {
+    marker-width: 8.5;
+  }
+}

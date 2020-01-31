@@ -1,0 +1,20 @@
+#tiger_conservation_landscapes {
+  polygon-fill: #FFCC00;
+  polygon-opacity: 0.8;
+  line-color: #FF5C00;
+  line-width: 0.5;
+  line-opacity: 0.5;
+
+  [tx2_tcl=1] {
+    polygon-fill: #FF5C00;
+    line-color: #081B47;
+  }
+  [tx2_tcl=null] {
+    polygon-fill: #FFCC00;
+    line-color: #FF5C00;
+  }
+}
+#tal_corridor {
+  polygon-fill: #229A00;
+  polygon-opacity: 0.7;
+}

@@ -1,0 +1,85 @@
+.m-post {
+  padding: 0 15px 40px;
+  font-size: 14px;
+  @media (min-width: $br-mobile){
+    padding: 0 40px 40px;
+  }
+
+  .content {
+    display: none;
+
+    > * {
+      padding-top: 20px;
+
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
+  // Elements
+  a:not(.btn) {
+    color: $primary-color;
+    &:hover {
+      text-decoration: underline;;
+    }
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  ul {
+    list-style-type: disc;
+    color: $dark;
+
+    > li{
+      list-style-type: disc;
+      padding: 10px 0 0;
+      margin-left: 20px;
+      line-height: 1.25;
+
+      &:first-child{
+        padding: 0;
+      }
+    }
+  }
+
+  ol {
+    counter-reset: mycounter;
+
+    li {
+      margin-top: 20px;
+      padding-left: 15px;
+      position: relative;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        margin: 0 5px 0 0;
+        content: counter(mycounter)'.';
+        counter-increment: mycounter;
+      }
+
+      > * {
+        margin-top: 10px;
+        // &:first-child {
+        //   margin-top: 0px;
+        // }
+      }
+    }
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    border: 1px solid $border1;
+  }
+}

@@ -1,0 +1,32 @@
+<div class="layer-details">
+  <ul class='layer-colors'>
+    <li><i class="circle" style='background:rgb(233, 189, 21);'></i></span>Recent alerts</li>
+  </ul>
+</div>
+<div data-autotoggle="true" data-sublayer="places_to_watch" data-parent="umd_as_it_happens" class="layer-sublayer js-toggle-sublayer">
+  <span class="onoffswitch {{places_to_watch.checked}}" style='background-color: {{places_to_watch.color}};'><span></span></span>
+  <div class="sublayer-title">Places to Watch
+    <a href="#" data-source="places_to_watch" class="source source-shape-info js-tooltip" data-description="High-priority alerts from last month">
+      <svg class="icon-info-green -source"><use xlink:href="#shape-info"></use></svg>
+    </a>
+  </div>
+  <div class="layer-details layer-details-places-to-watch">
+    <p class="canopy">To receive monthly email updates</p>
+    <p class="canopy"><a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank">Sign up for the PTW newsletter ➤</a></p>
+  </div>
+</div>
+{{#if staging}}
+  <div data-autotoggle="false" data-sublayer="uncurated_places_to_watch" data-parent="umd_as_it_happens" class="layer-sublayer js-toggle-sublayer">
+    <span class="onoffswitch {{uncurated_places_to_watch.checked}}" style='background-color: {{uncurated_places_to_watch.color}};'><span></span></span>
+    <div class="sublayer-title">Uncurated Places to Watch</div>
+  </div>
+{{/if}}
+<div class="layer-sublayer layer-option js-toggle-layer-option" data-option="gladConfirmOnly">
+  <span class="onoffswitch"><span></span></span>
+  <div class="sublayer-title">
+    Show only confirmed alerts
+		<a href="#" data-source="umd_as_it_happens_show_only_confirmed_alerts" class="source source-shape-info">
+      <svg class="icon-info-green -source"><use xlink:href="#shape-info"></use></svg>
+    </a>
+  </div>
+</div>

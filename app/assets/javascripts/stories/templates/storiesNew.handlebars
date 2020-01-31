@@ -1,0 +1,317 @@
+<section class="m-header-static">
+  <div class="inner">
+    <header>
+      <h2>Submit a story</h2>
+      <h3>Share your story about issues affecting forests, forest communities, and how you use GFW to monitor and protect forests with the Global Forest Watch community</h3>
+    </header>
+  </div>
+</section>
+
+<section class="m-section-static">
+  <div class="inner">
+    <div id="storiesEditView" class="m-new">
+      <aside class="m-aside">
+        <h3>HOW YOUR STORIES WILL BE USED</h3>
+
+        <p>Your stories will be immediately displayed in the <a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/580?begin=2001-01-01&end=2013-12-31&threshold=30">User Stories</a> layer on the GFW Map. You can submit a story by sharing text and uploading images, video, or web links to show how forests are being managed, cleared, or protected in your area.</p>
+
+        <p>Submit a story to:</p>
+
+        <ul>
+          <li>Report illegal activities</li>
+          <li>Call attention to a threat or conflict in your area</li>
+          <li>Tell a forest conservation success story</li>
+          <li>Confirm or refute remotely sensed data</li>
+          <li>Share your local expertise</li>
+        </ul>
+
+        <p>*WRI is not <a href="/terms">responsible</a> for how this information is used by visitors, and it reserves the right to remove stories that are inappropriate or not related to forest issues.</p>
+
+        <h3>TIPS FOR A BETTER STORY</h3>
+
+        <p>In order for your stories to have the most impact, please:</p>
+        <ul>
+          <li><strong>Try to fit your story to:</strong> a) verify data on Global Forest Watch; b) denounce actions affecting forests in your area; or c) promote a success case of forest management.</li>
+          <li><strong>Be brief:</strong> The User Stories layer is intended to highlight your story and direct readers to other materials with additional details. Keep your story short and concrete.
+          <li><strong>Add media:</strong> Utilize media quotations, technical articles, and publications from well-known sources. We recommend you use high quality videos or pictures to document your case.
+          <li><strong>Provide hard facts:</strong> Describe the region of your story using specific details: size, type of forest, forest change, etc.
+          <li><strong>Highlight your organization:</strong> Include the name of your organization on the story, as well as your website or contact information.
+        </ul>
+
+      </aside>
+
+      {{#if alreadyLoggedIn}}
+        <div class="m-form">
+        <form id="new_story">
+          <div class="field -required">
+            <label for="title">Title *</label>
+            <input type="text" name="title" id="title" placeholder="Illegal Logging in National Park" value="{{story.title}}">
+          </div>
+
+          <div class="field -required">
+            <div>
+              <label for="geojson">Location *</label>
+            </div>
+
+            <p class='hint'>
+              Select a location for your story by entering an address in
+              the search box, by dragging the map, or by clicking the
+              target icon to find your current location. The flag in the
+              center indicates where your story will be placed.
+            </p>
+
+            <div class="m-map" >
+              <div>
+                <div id="map" class="map"></div>
+                <div class="map-controls">
+                  <div class="control-pin"></div>
+                  <div class="map-controls-box -top -left">
+                    <div class="control-zoom">
+                      <button type="button" class="map-control-btn" id="controlZoomIn"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
+                      <button type="button" class="map-control-btn" id="controlZoomOut"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
+                    </div>
+                  </div>
+                  <div class="map-controls-box -top -right">
+                    <div class="control-search">
+                      <input class="map-search-input" type="text" placeholder="Search..."/>
+                    </div>
+                    <div class="control-locate" id="autoLocate">
+                      <button class="map-control-btn" type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="location">Location</label>
+            <input type="text" name="location" id="location" placeholder="“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”" value="{{story.location}}">
+          </div>
+
+          <div class="field short">
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" value="{{formatted_date}}">
+          </div>
+
+          <div class="field">
+            <label for="details">Details</label>
+            <textarea name="details" id="details" placeholder="“Selective logging with chainsaws,” “Burning peatland,” “Forest cleared for agriculture,” “Affected species”">{{story.details}}</textarea>
+          </div>
+
+          <div class="field">
+            <label for="video">Video</label>
+            <input type="text" name="video" id="video" placeholder="http://www.youtube.com/watch?v=lTG-0brb98I" value="{{video}}">
+          </div>
+
+          <div class="field">
+            <label for="media" class="-has-hint">Media</label>
+            <p class="hint mobile-hide">
+              Select images and videos to add
+              to your story. Drag &amp; drop to reorder them within the
+              carousel. The first one will become the default image for
+              the story. The maximum file size for uploads is 4 MB.
+            </p>
+
+            <p class="mobile-show">
+              Click below to upload photos or
+              videos to your story. The first photo will become the
+              default image. The maximum file size for uploads is 4
+              MB. If you are on an iOS device you must upload pictures
+              one by one.
+            </p>
+
+            <ul class="thumbnails">
+              <li><a href='#' class='upload_picture'></a></li>
+            </ul>
+          </div>
+
+          <div class="field">
+            <p>Enter the email address you would like to recieve the confirmation email. This information will not be visible on the GFW website.</p>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" placeholder="" value="{{user.email}}">
+          </div>
+
+          <div class="field">
+            <div class="checkbox-box">
+              <div class="custom-checkbox">
+                <input type="checkbox" name="hideUser" id="hideUser" {{#if hideUser}}checked{{/if}}>
+                <label for="hideUser" class="-uppercase"><span></span> Check this box to publish your name with your story.</label>
+              </div>
+            </div>
+            <p class="hint">
+              In some areas, forest clearing information is considered
+              to be highly sensitive—users are encouraged to be cautious
+              when sharing identifiable information.
+            </p>
+          </div>
+
+          <div id="field-personal-info" class="field {{#unless hideUser}}-hidden{{/unless}} -no-padding">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" placeholder="" value="{{user.fullName}}">
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="submit" id="submit" name="submit" value="{{#if edition}}Edit story{{else}}Submit story{{/if}}" class="btn green medium">
+            <p class="-terms">By uploading data you agree to the <a href="/terms">GFW Terms of Service</a></p>
+          </div>
+
+          <input id="fileupload" type="file" name="media[image]" multiple>
+        </form>
+      </div>
+      {{else}}
+        <div class="m-form">
+          <div class="login-notice">
+            <h3>Please log in to be able to use this feature</h3>
+
+            <ul class="my-gfw-authentication">
+              <li class="my-gfw-sign-in-twitter">
+                <a href="{{apiHost}}/auth/twitter?applications=gfw" class="my-gfw-sign-in my-gfw-sign-in-twitter">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
+                  Log in with Twitter
+                </a>
+              </li>
+
+              <li class="my-gfw-sign-in-facebook">
+                <a href="{{apiHost}}/auth/facebook?applications=gfw" class="my-gfw-sign-in">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
+                  Log in with Facebook
+                </a>
+              </li>
+
+              <li class="my-gfw-sign-in-google">
+                <a href="{{apiHost}}/auth/google?applications=gfw" class="my-gfw-sign-in">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
+                  Log in with Google
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+<section class="m-section-static -no-padding" id="latestStories">
+</section>
+
+<section class="m-section-static">
+  <div class="inner">
+    <!-- Pagination -->
+    <ul class="m-btncontainer is-center -fix-width-220 -mobile">
+      <li><a class="btn gray huge-padding full-width uppercase" href="/stories/crowdsourcedstories">View all</a></li>
+    </div>
+  </ul>
+</section>
+
+<section class="m-section-static">
+  <div class="inner">
+    <header>
+      <h2>You may find this interesting</h2>
+    </header>
+    <ul class="m-interesting">
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="http://blog.globalforestwatch.org/" target="_blank">
+            <div class="bg" style="background-image: url('/assets/interesting/interesting-blog.jpg')"></div>
+          </a>
+        </div>
+        <div class="info">
+          <h3><a href="http://blog.globalforestwatch.org/" target="_blank">BLOG</a></h3>
+          <p>The GFW blog catalyzes conversations around improved forest management by providing timely, credible analysis on threats to global forests.</p>
+        </div>
+      </li>
+
+      <li class="m-interesting-item">
+        <div class="img">
+          <a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">
+            <div class="bg" style="background-image: url('/assets/interesting/interesting-forum.jpg')"></div>
+          </a>
+        </div>
+        <div class="info">
+          <h3><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">DISCUSSION FORUM</a></h3>
+          <p>Read conversations about forest change data, learn about interesting applications of GFW, and view other data-related questions.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div id='sources' class="sources is-hidden" style="display:none;">
+  <ul class='sources'>
+    <li id='story-tips' class='source-item first'>
+      <div class='source_header'>
+        <strong class='source_title'>TELL US YOUR STORY!</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+        </div>
+
+        <div class='source_table'>
+          <p>
+            Global Forest Watch is not just about big data; it is a
+            movement to connect people on the ground with information that
+            can create tangible change. That is why we want to hear
+            <em>your</em> stories about issues affecting forests, forest
+            communities, and how you use GFW to monitor and protect
+            forests. Share your report with the world by putting it on the
+            GFW Map!
+          </p>
+
+          <h3>HOW YOUR STORIES WILL BE USED</h3>
+
+          <p>
+            Your stories will be immediately displayed in the <a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/580?begin=2001-01-01&end=2013-12-31&threshold=30">User Stories</a>
+            layer on the GFW Map. You can submit a story by sharing text
+            and uploading images, video, or web links to show how
+            forests are being managed, cleared, or protected in your
+            area.
+          </p>
+
+          <p>Submit a story to:</p>
+
+          <ul class="bullets">
+            <li>Report illegal activities</li>
+            <li>Call attention to a threat or conflict in your area</li>
+            <li>Tell a forest conservation success story</li>
+            <li>Confirm or refute remotely sensed data</li>
+            <li>Share your local expertise</li>
+          </ul>
+
+          <p>
+            *WRI is not <a href="/terms">responsible</a> for how this
+            information is used by visitors, and it reserves the right to
+            remove stories that are inappropriate or not related to forest
+            issues.
+          </p>
+
+          <h3>TIPS FOR A BETTER STORY</h3>
+
+          <p>In order for your stories to have the most impact, please:</p>
+          <ul class="bullets">
+            <li><strong>Try to fit your story to:</strong> a) verify data on Global Forest Watch; b) denounce actions affecting forests in your area; or c) promote a success case of forest management.</li>
+            <li><strong>Be brief:</strong> The User Stories layer is intended to highlight your story and direct readers to other materials with additional details. Keep your story short and concrete.
+            <li><strong>Add media:</strong> Utilize media quotations, technical articles, and publications from well-known sources. We recommend you use high quality videos or pictures to document your case.
+            <li><strong>Provide hard facts:</strong> Describe the region of your story using specific details: size, type of forest, forest change, etc.
+            <li><strong>Highlight your organization:</strong> Include the name of your organization on the story, as well as your website or contact information.
+          </ul>
+          <p></p>
+
+          <h3>EDITING OR DELETING REPORTS</h3>
+          <p>
+            Would you like to edit or delete a story you submitted?  No
+            problem!  Just send an email to <a class="contact-link" href="mailto:gfw@wri.org">gfw@wri.org</a>
+            explaining the change you would like to make or the story you
+            would like to delete.
+          </p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

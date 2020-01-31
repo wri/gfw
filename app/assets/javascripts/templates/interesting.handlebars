@@ -1,0 +1,24 @@
+  <div class="inner">
+    <h2 class="section-title">You may find this interesting</h2>
+    <div class="row">
+      {{#each interesting}}
+        <div class="col">
+          <div class="card">
+            <header>
+              <h2>{{this.title}}</h2>
+            </header>
+            <div class="content">
+              <p>{{this.description}}</p>
+            </div>
+            <footer>
+              {{#if this.link}}
+                <a {{#if this.new_browser_tab}}target="_blank"{{/if}} href="{{this.link}}" class="btn dark medium {{adittionalClass}}">{{#if this.button_text}}{{this.button_text}}{{else}}Read More{{/if}}</a>
+              {{else}}
+                <span class="btn soon">coming soon</span>
+              {{/if}}
+            </footer>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>

@@ -1,0 +1,167 @@
+// .source_window {
+//   $width: 500px;
+//   $height: auto;
+
+//   position: fixed;
+//   display: block;
+//   z-index: 1060;
+//   left: 50%; top: 50%;
+//   width: $width;
+//   height: $height;
+//   max-height: 56%;
+//   padding: 20px 20px 0;
+//   background: $white;
+//   border: none;
+//   border-bottom: 20px solid $white;
+//   box-shadow: 0 0 0 1px #CCC;
+//   overflow: auto;
+//   opacity: 0;
+//   visibility: hidden;
+
+//   &:after{
+//     content: "";
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 20px;
+//   }
+
+//   &.active{
+//     opacity: 1;
+//     visibility: visible;
+//   }
+
+//   .content {
+//     height: $height;
+//     width: 100%;
+//     outline: none;
+//     font-size: 15px;
+
+//     color: #666;
+//     z-index: 1061;
+//     position: relative;
+//     >li{
+//       list-style: none;
+//     }
+//   }
+
+//   .source_category_description,
+//   .overview_title,
+//   .source_download,
+//   .source_extended,
+//   .source_coverage_header,
+//   .source_coverage,
+//   .download {
+//     display: none;
+//   }
+
+//   .source_description {
+//     display: block;
+//     margin-top: 5px;
+//     font-size: 13px;
+//     line-height: 1.2;
+
+//     color: #999;
+//   }
+
+//   .source_title,
+//   .source_category_title,
+//   .source_coverage_title {
+//     display: block;
+//     font-weight: 500;
+//     font-size: 16px;
+//     text-transform: uppercase;
+//     color: $dark;
+
+//     span {
+//       text-transform: none;
+//     }
+
+//     sub {
+//       position: relative;
+//       bottom: -3px;
+//       font-size: 80%;
+//     }
+//   }
+
+//   .source_header,
+//   .source_category_title,
+//   .source_coverage_header {
+//     padding: 0 0 5px;
+//   }
+
+//   .source_category_title {
+//     border-bottom: 2px solid #ccc;
+//     margin: 0 0 20px;
+//   }
+
+//   .source_table {
+//     border-top: 1px solid #ccc;
+//     margin-bottom: 20px;
+//   }
+
+//   .object-box{
+//     padding-bottom: 88.333333%;
+//     position: relative;
+//     width: 100%;
+//     iframe{
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//     }
+//   }
+
+//   .forest_change .source_category_title {
+//     color: #F69;
+//     border-bottom-color: #F69;
+//   }
+
+//   .forest_cover .source_category_title {
+//     color: #B2D26E;
+//     border-bottom-color: #B2D26E;
+//   }
+
+//   .forest_use .source_category_title {
+//     color: #C98E6C;
+//     border-bottom-color: #C98E6C;
+//   }
+
+//   .conservation .source_category_title {
+//     color: #3182BD;
+//     border-bottom-color: #3182BD;
+//   }
+
+//   .people .source_category_title {
+//     color: #707D92;
+//     border-bottom-color: #707D92;
+//   }
+
+//   .stories .source_category_title {
+//     color: #F2B257;
+//     border-bottom-color: #F2B257;
+//   }
+
+//   .source_category_title {
+//     color: $cGreen;
+//     border-bottom-color: $cGreen;
+//   }
+
+//   .hidden {
+//     display: block;
+//   }
+
+//   .terms_inner .section {
+//     padding: 20px 0 10px;
+//   }
+
+//   .section-footer {
+//     padding: 30px 0 0;
+//   }
+
+//   .terms_footer {
+//     margin-bottom: 30px;
+//   }
+// }

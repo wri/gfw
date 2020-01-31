@@ -1,0 +1,18 @@
+<div class="select-container">
+	<select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select">
+		<option></option>
+    {{#each this.countries}}
+      <option value="{{this.iso}}">{{this.name}}</option>
+    {{/each}}
+	</select>
+	<select data-placeholder="Select region (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select">
+		<option></option>
+	</select>
+	<select data-placeholder="Select region (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-subregion-select">
+		<option></option>
+	</select>
+</div>
+<ul id="country-button-container" class="button-container one">
+  <li><button id="analysis-country-button" class="btn green uppercase disabled">Analyze</button></li>
+  <li><button id="subscribe-country-button" class="btn green uppercase disabled btn-analysis-subscribe">Subscribe</button></li>
+</ul>

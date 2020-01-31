@@ -1,0 +1,76 @@
+.widget-timeline .timeline-btn {
+  >svg{
+    width: auto;
+  }
+  .tick {
+    rect {
+      cursor: pointer;
+      fill: #EEEEEE;
+      stroke: #DDDDDD;
+      // shape-rendering: crispEdges;
+    }
+
+    text {
+      pointer-events: none;
+      font-size: 11px;
+      fill: $dark;
+      text-transform: uppercase;
+    }
+
+    &.selected rect {
+      fill: $cGreen1;
+      stroke: #839C26;
+    }
+
+    &.selected text {
+      fill: white;
+      font-weight: 500;
+    }
+  }
+
+  .tooltip {
+    text-transform: uppercase;
+  }
+  .time {
+    height: 100%;
+    position: relative;
+    @media (min-width: $br-mobileMap){
+      padding: 0 5px;
+    }
+    svg{
+      width: auto;
+    }
+    .select-timeline-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 46px;
+      .select-timeline-box{
+        margin: 0 0 0 10px;
+        &:first-child{
+          margin: 0;
+        }
+        position: relative;
+        span{
+          font-size: 12px;
+          // text-transform: uppercase;
+        }
+        button{
+          top: -1px;
+          padding: 0 20px;
+          margin: 0 0 0 5px;
+        }
+        select{
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 10;
+          -webkit-appearance: none;
+        }
+      }
+    }
+  }
+}

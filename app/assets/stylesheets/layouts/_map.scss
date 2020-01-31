@@ -1,0 +1,345 @@
+body,html{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.layout-header-bottom {
+  padding: 0;
+  border: 0;
+}
+
+@media (max-width:$br-mobile - 1){
+  .layout-header{
+    .layout-header-top{
+      position: absolute;
+    }
+    .layout-header-bottom {
+      position: fixed;
+    }
+  }
+}
+
+.layout-content {
+  margin-bottom: 0;
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  @media (min-width:$br-mobile){
+    height: calc(100% - 45px);
+    top: 40px;
+  }
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  background: #B3E2FF;
+
+  a[href^="http://maps.google.com/maps"]{display:none !important}
+  a[href^="https://maps.google.com/maps"]{display:none !important}
+
+  .gmnoprint a, .gmnoprint span, .gm-style-cc {
+    z-index: 1;
+  }
+  .gmnoprint div {
+    background:none !important;
+  }
+
+
+  // Footer
+  .map-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38px;
+
+    &:after {
+      content: "";
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $white;
+      z-index: 1;
+    }
+
+    &.active {
+      &:after {
+        display: block;
+      }
+    }
+
+    // logos
+    .map-logos {
+      display: none;
+      height: 100%;
+      position: relative;
+      z-index: 0;
+
+      @media (min-width:$br-mobile){
+        display: flex;
+        align-items: center;
+      }
+
+      > li {
+        display: inline-block;
+        margin-left: 20px;
+        position: relative;
+
+        &:first-child {
+          margin-left: 35px;
+        }
+
+        a {
+          position: relative;
+
+          &.google-logo, &.gee-logo, &.cartodb-logo {
+            top: 2px;
+          }
+
+          &.uc-logo {
+            display: none;
+          }
+
+          &.cartodb-logo {
+            img {
+              max-height: 26px;
+            }
+          }
+        }
+
+      }
+
+      img {
+        border: none;
+        max-height: 18px;
+      }
+    }
+
+    // button
+    .footer-toggle{
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%,0);
+      margin-left: 15px;
+      height: 38px;
+      line-height: 42px;
+      border: none;
+      border-radius: 0;
+      padding: 0 20px;
+      z-index: 2;
+      white-space: nowrap;
+      display: none;
+      color: $cGreen;
+      background: none;
+      text-transform: none;
+
+      &:after {
+        content: "";
+      }
+
+      &:hover {
+        color: $dark;
+      }
+
+      @media (min-width:$br-mobile){
+        display: block;
+      }
+    }
+  }
+
+  .gm-style{
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 38px;
+      background: rgba($white,0.75);
+      z-index: 0;
+    }
+  }
+
+
+}
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
+
+  user-select: none;
+  transition: opacity 1s ease;
+
+  &.is-loaded {
+    opacity: 1;
+  }
+
+  &.urthecast-incorrect-zoom {
+    &:after {
+      content: "";
+      display: block;
+      background-image: url(backgrounds/urthecastDisclaimer.png);
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &:hover .tooltip.-enabled {
+    opacity: 0.6;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .tooltip {
+    opacity: 0;
+    background: #000000;
+    color: $white;
+    margin-left: 15px;
+    padding: 15px;
+    position: absolute;
+    z-index: 1000;
+    font-size: 12px;
+  }
+}
+
+#zoom_controls,
+#zoom_controls_subscribe {
+
+  $zoomWidth: 36px;
+  $zoomHeight: 29px; // height of the top button + border line
+
+  position: absolute;
+  left: 15px;
+  top:  27px;
+
+  .zoom-in,
+  .zoom-out {
+    position:relative;
+    width: $zoomWidth;
+    height: $zoomHeight;
+    cursor: pointer;
+  }
+
+  .zoom-in {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 0;
+    &:hover {
+      background-position: (-$zoomWidth) 0;
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) 0;
+    }
+  }
+
+  .zoom-out {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 (-$zoomHeight);
+    &:hover {
+      background-position: (-$zoomWidth) (-$zoomHeight);
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) -29px;
+    }
+  }
+}
+
+
+.map-viewfinder {
+  // @include home-icons-sprite(viewfinder);
+  background-image: url(home-icons/viewfinder.png);
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  height: 20px;
+  width: 20px;
+  margin: -10px 0 0 -10px;
+  pointer-events:none;
+
+  &.hide{
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+
+.map-latlng {
+  position: absolute;
+  bottom: 20px;
+  right: 12px;
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 500;
+  text-shadow: 0px 0px 3px #000;
+  &.hidden{
+    display: none;
+  }
+}
+
+.overlay-mobile{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 21;
+  background: rgba($dark,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s $easeInOutSine;
+  @media (min-width:$br-mobile){
+    display: none !important;
+  }
+
+  &.active{
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+#credit-control{
+  display: none;
+  font-size: 10px;
+  font-family: Arial, 'sans-serif';
+  margin: 0;
+  padding: 2px 0;
+  color: $dark;
+  white-space: nowrap;
+  z-index: 9999999 !important;
+  a{
+    color: $dark;
+  }
+}
+
+
+@media (max-width:$br-mobile - 1){
+  .gmnoprint, .gm-style-cc {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+  .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
+    font-size: 8px !important;
+  }
+}
+
+.layout-header-bottom {
+  display: block !important;
+
+  &.-hidden {
+    display: none !important;
+  }
+}

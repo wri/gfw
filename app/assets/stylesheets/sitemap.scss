@@ -1,0 +1,26 @@
+// Compass
+@import "compass/reset";
+@import "compass/css3";
+
+// Images
+@import "logos/*.png";
+@import "icons/*.png";
+@import "home-icons/*.png";
+
+// Global
+// This will load all common settings, mixins and styles needed 
+@import "global/global";
+
+// Layouts
+// This will load all common layouts styles
+@import "layouts/layouts";
+
+// Modules
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/notifications";
+@import "modules/form";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/shared";
+@import "modules/slick";

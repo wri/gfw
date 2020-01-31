@@ -1,0 +1,333 @@
+$width: 500px;
+$height: auto;
+
+// Layout
+.m-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1101;
+  width: 100%;
+  height: 100%;
+  display: none;
+  &.-active {
+    display: block;
+
+    .modal-backdrop {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-window {
+      opacity: 1;
+      visibility: visible;
+      @media (min-width: $br-mobile){
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+
+  .-italic {
+    font-style: italic;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s $easeInOutSine;
+  }
+
+  .modal-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0s $easeInOutSine;
+
+    @media (min-width: $br-mobile){
+      left: 50%; top: 50%;
+      width: $width;
+      height: $height;
+      min-height: 100px;
+      transform: translate(-50%,-60%);
+
+      &.-video {
+        width: 800px;
+
+        .modal-wrapper {
+          padding: 0;
+        }
+
+        .modal-close {
+          display: none;
+        }
+
+        &:before, &:after {
+          display: none;
+        }
+      }
+    }
+
+    .modal-close {
+      display: block;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 40px;
+      height: 40px;
+      z-index: 20;
+
+      svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+}
+
+
+// Styles
+.modal-backdrop {
+  background: rgba(0,0,0,0.25);
+}
+
+.modal-window {
+  background: $white;
+  border: none;
+  box-shadow: $shadow1;
+
+  // GRADIENTS
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: calc(100% - 8px);
+    left: 0;
+  }
+
+  &:before {
+    top: 0;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  &:after {
+    bottom: 0;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+
+  // MODAL CLOSE BTN
+  .modal-close {
+    svg{
+      fill: $dark;
+    }
+
+    &:hover {
+      svg {
+        fill: darken($dark,10%);
+      }
+    }
+  }
+
+  // MODAL WRAPPER
+  .modal-wrapper{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    @media (min-width: $br-mobile){
+      max-height: 450px;
+    }
+
+    &.-footer {
+      border-bottom: 66px solid transparent;
+    }
+
+    .modal-content {
+      height: auto;
+      width: 100%;
+      outline: none;
+
+      font-size: 15px;
+      color: $dark;
+    }
+  }
+}
+
+// MODAL HEADER
+.modal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  z-index: 2;
+  padding: 20px;
+  @include clearfix();
+
+  // GRADIENTS
+  .gradient {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  ul{
+    margin: 15px 0;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    float: left;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid $primary-color;
+    border-radius: 45px;
+
+    li{
+      font-size: 19px;
+      padding: 10px 20px 7px;
+      color: $dark;
+      cursor: pointer;
+      font-weight: 500;
+      border-radius: 40px;
+      &:hover {
+        background: darken($white,1%);
+        text-decoration: underline;
+      }
+      &.-active {
+        color: $white;
+        background: $primary-color;
+      }
+    }
+  }
+}
+
+// MODAL FOOTER
+.modal-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  z-index: 2;
+  padding: 15px 0;
+  @include clearfix();
+  border-top: 1px solid $border1;
+  // GRADIENTS
+  .gradient {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: calc(100% - 10px);
+    left: 0;
+    bottom: 100%;
+    border-bottom: 1px solid $border1;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+}
+
+.modal-content {
+  font-size: 13px;
+
+  br {
+    display: none;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  ul {
+    list-style-type: disc;
+    color: $dark;
+    font-size: 13px;
+
+    > li{
+      list-style-type: disc;
+      padding: 10px 0 0;
+      margin-left: 20px;
+      line-height: 1.25;
+
+      > p {
+        margin: 0;
+      }
+
+      &:first-child{
+        padding: 0;
+      }
+    }
+  }
+
+  li { list-style: none;}
+
+  p {
+    line-height: 1.25;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    a:not(.btn){
+      color: $primary-color;
+      &:hover{
+        color: darken($primary-color,5%);
+      }
+    }
+  }
+}
+
+// Video
+.modal-video {
+  width: 100%;
+  height: 0;
+  padding-bottom: 56%;
+  position: relative;
+
+  embed, iframe, object {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Steps
+.modal-steps {
+  padding: 20px 20px 70px;
+  > li {
+    display: none;
+    &.-active {
+      display: block;
+    }
+    .modal-step-content {
+      padding: 20px 0 0;
+      > * {
+        margin: 15px 0 0;
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

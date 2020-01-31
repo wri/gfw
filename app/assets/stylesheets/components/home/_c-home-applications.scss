@@ -1,0 +1,250 @@
+.c-home-applications {
+  position: relative;
+  height: rem(448px);
+  overflow: hidden;
+
+  .c-home-applications__title {
+    position: relative;
+    margin-top: rem(23px);
+    opacity: 0.5;
+    z-index: 2;
+  }
+
+  .c-home-applications__section {
+    position: relative;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding-top: rem(87px);
+
+    .icon {
+      position: relative;
+      fill: $white;
+      height: rem(35px);
+    }
+
+    .c-home-applications__section-title {
+      position: relative;
+      margin-top: rem(7px);
+      z-index: 2;
+    }
+
+    .c-home-applications__section-description {
+      position: relative;
+      width: 80%;
+      z-index: 2;
+    }
+  }
+
+  .c-home-applications__app-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: rem(47px);
+    height: rem(47px);
+    background-color: rgba($white, 0.5);
+    border-radius: 100%;
+    font-size: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+
+    .icon {
+      position: relative;
+      width: rem(12px);
+      height: rem(7px);
+      fill: $white;
+    }
+
+    &.-left {
+      left: rem(-24px);
+
+      .icon {
+        transform: rotateZ(90deg);
+        left: rem(9px);
+      }
+    }
+
+    &.-right {
+      right: rem(-24px);
+
+      .icon {
+        transform: rotateZ(-90deg);
+        right: 9px;
+      }
+    }
+  }
+
+  .c-home-applications__list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    .slider {
+      position: relative;
+      height: 100%;
+    }
+
+    .frame {
+      position: relative;
+      height: 100%;
+      font-size: 0;
+      line-height: 0;
+      white-space: nowrap;
+    }
+
+    .slides {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      white-space: normal;
+      vertical-align: top;
+
+      &[data-section="fires"] .c-home-applications__background-color {
+        background-color: #F71949;
+      }
+
+      &[data-section="pro"] .c-home-applications__background-color {
+        background-color: #404042;;
+      }
+
+      &[data-section="water"] .c-home-applications__background-color {
+        background-color: #0AA1DF;
+      }
+
+      &[data-section="forestwatcher"] .c-home-applications__background-color {
+        background-color: #97be32;
+      }
+    }
+  }
+
+  .c-home-applications__background {
+    position: relative;
+    width: 100%;
+    max-width: rem(300px);
+    height: rem(120px);
+
+    img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 100%;
+    }
+  }
+
+  .c-home-applications__background-color {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .c-home-applications__linker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    max-width: rem(300px);
+    height: 100%;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(640px);
+
+    .columns {
+      position: relative;
+    }
+
+    .c-home-applications__title {
+      margin-top: rem(51px);
+    }
+
+    .c-home-applications__section {
+      padding-top: rem(90px);
+
+      .icon {
+        top: rem(-7px);
+        height: rem(48px);
+      }
+
+      .c-home-applications__section-title {
+        margin-top: rem(3px);
+      }
+
+      .c-home-applications__section-description {
+        width: 66.66667%;
+      }
+    }
+
+    .c-home-applications__app-button {
+      top: rem(207px);
+      bottom: auto;
+
+      .icon {
+        width: rem(16px);
+        height: rem(10px);
+      }
+
+      &.-left {
+        left: rem(18px);
+
+        .icon {
+          left: rem(-2px);
+        }
+      }
+
+      &.-right {
+        right: rem(18px);
+
+        .icon {
+          right: rem(-2px);
+        }
+      }
+    }
+
+    .c-home-applications__background {
+      height: rem(291px);
+      max-width: rem(729px);
+    }
+
+    .c-home-applications__linker {
+      max-width: rem(729px);
+    }
+  }
+
+  @media screen and (min-width: $screen-l) {
+
+    .c-home-applications__background {
+      height: rem(355px);
+      max-width: rem(890px);
+    }
+
+    .c-home-applications__linker {
+      max-width: rem(890px);
+    }
+  }
+}
