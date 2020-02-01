@@ -17,6 +17,7 @@ export const MAP = 'location/MAP';
 export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
+export const MYGFW = 'location/MYGFW';
 export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
 export const STORIES = 'location/STORIES';
@@ -27,7 +28,6 @@ export const UNACCEPTABLE = 'location/UNACCEPTABLE';
 export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 export const SEARCH = 'location/SEARCH';
 export const SUBSCRIBE = 'location/SUBSCRIBE';
-export const MYGFW = 'location/MYGFW';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -206,9 +206,14 @@ export const routes = {
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
-    path: '/embed/dashboards/:type/:adm0?/:adm1?/:adm2?',
+    path: '/embed/widget/:widgetSlug/:type/:adm0?/:adm1?/:adm2?',
     component: 'dashboards/components/embed',
     embed: true
+  },
+  [MYGFW]: {
+    path: '/my-gfw',
+    component: 'my-gfw',
+    controller: 'my_gfw'
   },
   [THANKYOU]: {
     path: '/thank-you',
@@ -260,11 +265,6 @@ export const routes = {
     path: '/subscribe',
     controller: 'subscribe',
     component: 'subscribe'
-  },
-  [MYGFW]: {
-    path: '/my_gfw',
-    controller: 'my_gfw',
-    component: 'my-gfw'
   }
 };
 

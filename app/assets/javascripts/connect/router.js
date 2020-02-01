@@ -44,10 +44,9 @@ define(
 
       routes: {
         '': 'profilePage',
-        my_gfw: 'profilePage',
-        'my_gfw/login': 'loginPage',
-        'my_gfw/subscriptions': 'subscriptionsPage',
-        'my_gfw/subscriptions/new(?*query)': 'subscriptionsNewPage'
+        'my-gfw': 'profilePage',
+        'my-gfw/subscriptions': 'subscriptionsPage',
+        'my-gfw/subscriptions/new(?*query)': 'subscriptionsNewPage'
       },
 
       routeViews: {

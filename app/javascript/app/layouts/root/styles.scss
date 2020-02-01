@@ -68,6 +68,10 @@
       position: relative;
       width: 100%;
       min-height: rem(400px);
+
+      &.mobile {
+        margin-top: 0;
+      }
     }
 
     .embed-footer {

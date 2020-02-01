@@ -38,6 +38,18 @@ $dd-font-size-large: rem(16px);
         outline: none;
       }
     }
+
+    &.multiple {
+      height: rem(120px);
+
+      select {
+        padding: 0;
+      }
+
+      option {
+        padding: rem(5px) rem(10px);
+      }
+    }
   }
 
   .arrow-icon {

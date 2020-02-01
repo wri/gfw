@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+
+.c-widget {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border: solid 1px rgba($medium-grey, 0.2);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: rem(20px) rem(15px);
+  justify-content: space-between;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(25px) rem(20px);
+  }
+
+  &.highlighted {
+    background: #fefedc;
+
+    .widget-loader {
+      background-color: rgba(#fefedc, 0.5);
+    }
+  }
+
+  &.embed {
+    border: 0;
+    padding: 0;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  &.simple {
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+
+    .widget-loader {
+      .spinner {
+        width: rem(30px);
+        height: rem(30px);
+        border-width: rem(3px);
+      }
+    }
+  }
+}

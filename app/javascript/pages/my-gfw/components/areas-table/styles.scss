@@ -1,0 +1,98 @@
+@import '~styles/settings.scss';
+
+.c-areas-table {
+  display: block;
+
+  .area-row {
+    padding: rem(20px) 0;
+    border-top: 1px solid $border;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(40px) 0;
+    }
+
+    &:last-child {
+      border-bottom: solid 1px $border;
+    }
+
+    .area-links {
+      display: flex;
+      height: 100%;
+      margin-top: rem(20px);
+
+      @media screen and (min-width: $screen-m) {
+        margin-top: 0;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .area-link {
+        font-size: rem(14px);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: rem(30px);
+        padding: 0;
+        margin-right: rem(15px);
+
+        @media screen and (min-width: $screen-m) {
+          margin-right: 0;
+        }
+
+        .link-icon {
+          width: rem(12px);
+          height: rem(12px);
+          margin-top: -2px;
+          margin-right: rem(6px);
+
+          @media screen and (min-width: $screen-m) {
+            margin-right: rem(10px);
+          }
+        }
+      }
+    }
+  }
+
+  .filter-group {
+    margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
+  }
+
+  .filter-row {
+    margin-bottom: rem(30px);
+  }
+
+  .filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    .filter-tag {
+      margin-top: rem(5px);
+      margin-right: rem(5px);
+    }
+  }
+
+  .filter-title {
+    font-size: rem(12px);
+    margin-bottom: rem(5px);
+    display: block;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .filter-search {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+  }
+
+  .no-content-row {
+    position: relative;
+    min-height: rem(200px);
+  }
+}

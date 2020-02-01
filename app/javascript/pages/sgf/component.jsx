@@ -17,7 +17,7 @@ const sectionComponents = {
   apply: Apply
 };
 
-class SGFPage extends PureComponent {
+class GrantsAndFellowshipsPage extends PureComponent {
   static propTypes = {
     section: PropTypes.object,
     links: PropTypes.array
@@ -45,4 +45,4 @@ class SGFPage extends PureComponent {
   }
 }
 
-export default SGFPage;
+export default GrantsAndFellowshipsPage;

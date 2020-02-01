@@ -489,7 +489,7 @@ define([
             this.subscription.set(attributesFromForm, { silent: true }).save()
               .then(function() {
                 // Scroll to top
-                this.router.navigateTo('my_gfw/subscriptions', {
+                this.router.navigateTo('my-gfw/subscriptions', {
                   trigger: true
                 });
                 mps.publish('Subscriptions/new', [this.subscription.toJSON()]);

@@ -31,7 +31,7 @@ define([
       event.preventDefault();
 
       this.remove();
-      window.location.href = '/my_gfw/stories';
+      window.location.href = '/my-gfw/stories';
     }
 
   });

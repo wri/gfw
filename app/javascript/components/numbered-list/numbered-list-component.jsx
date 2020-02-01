@@ -3,8 +3,10 @@ import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Paginate from 'components/paginate';
 import { formatNumber } from 'utils/format';
+
+import Paginate from 'components/paginate';
+
 import './numbered-list-styles.scss';
 
 class NumberedList extends PureComponent {
