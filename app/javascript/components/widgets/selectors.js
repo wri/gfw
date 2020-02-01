@@ -177,7 +177,7 @@ export const getLocationData = createSelector(
       location: currentLocation || { label: 'global', value: 'global' },
       locationData: locationData && buildLocationDict(locationData),
       locationLabel:
-        type === 'geostore' || type === 'global' || areaId
+        ['global', 'geostore', 'wdpa', 'use'].includes(type) || areaId
           ? locationLabel
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
