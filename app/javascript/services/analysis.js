@@ -1,4 +1,5 @@
 import { apiRequest } from 'utils/request';
+import { all, spread } from 'axios';
 import qs from 'query-string';
 import moment from 'moment';
 
@@ -118,22 +119,20 @@ export const fetchUmdLossGain = ({
       );
     });
 
-  return apiRequest
-    .all(endpointUrls, {
-      cancelToken: token,
-      timeout: 1800
-    })
-    .then(
-      apiRequest.spread(
-        (...responses) =>
-          responses &&
-          responses.reduce((obj, response) => {
-            const analysis = reduceAnalysisResponse(response);
-            return {
-              ...obj,
-              ...analysis
-            };
-          }, {})
-      )
-    );
+  return all(endpointUrls, {
+    cancelToken: token,
+    timeout: 1800
+  }).then(
+    spread(
+      (...responses) =>
+        responses &&
+        responses.reduce((obj, response) => {
+          const analysis = reduceAnalysisResponse(response);
+          return {
+            ...obj,
+            ...analysis
+          };
+        }, {})
+    )
+  );
 };
