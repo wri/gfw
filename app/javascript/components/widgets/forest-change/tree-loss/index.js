@@ -135,7 +135,7 @@ export default {
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type, status } = params || {};
 
-    if (status === 'pending') {
+    if (status === 'pending' || params.type !== 'country') {
       return getDataAPI(params);
     }
 
