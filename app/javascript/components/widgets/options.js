@@ -1,31 +1,31 @@
-import forestTypes from 'data/forest-types.json';
-import landCategories from 'data/land-categories.json';
-import thresholds from 'data/thresholds.json';
-import units from 'data/units.json';
-import variables from 'data/variables.json';
-import sources from 'data/sources.json';
-import periods from 'data/periods.json';
-import extentYears from 'data/extent-years.json';
-import tscDriverGroups from 'data/tsc-loss-groups.json';
-import types from 'data/types.json';
+import forestType from 'data/forest-types.json';
+import landCategory from 'data/land-categories.json';
+import threshold from 'data/thresholds.json';
+import unit from 'data/units.json';
+import variable from 'data/variables.json';
+import period from 'data/periods.json';
+import extentYear from 'data/extent-years.json';
+import tscDriverGroup from 'data/tsc-loss-groups.json';
+import type from 'data/types.json';
 import weeks from 'data/weeks.json';
-import datasets from 'data/datasets.json';
+import dataset from 'data/datasets.json';
 import bioTypes from 'data/biodiversity-int.json';
 import ifl from 'data/ifl.json';
+import source from 'data/sources.json';
 
 export default {
+  forestType: forestType.filter(f => !f.hidden),
+  landCategory: landCategory.filter(l => !l.hidden),
+  threshold,
+  unit,
+  period,
+  extentYear,
+  tscDriverGroup,
+  type,
   bioTypes,
-  forestTypes: forestTypes.filter(f => !f.hidden),
-  landCategories: landCategories.filter(l => !l.hidden),
-  thresholds,
-  units,
-  periods,
-  extentYears,
-  tscDriverGroups,
-  types,
   weeks,
-  datasets,
-  variables,
-  sources,
+  dataset,
+  variable,
+  source,
   ifl
 };

@@ -170,7 +170,7 @@ class MapLegend extends Component {
                           ) : null)
                       )}
                   {(isSelectorLayer || isMultiSelectorLayer) &&
-                    selectorLayerConfig && (
+                      selectorLayerConfig && (
                     <LayerSelectorMenu
                       className="layer-selector"
                       layerGroup={lg}

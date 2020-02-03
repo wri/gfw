@@ -24,7 +24,7 @@ import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
-    const { yKeys } = config;
+    const { yKeys } = config || {};
     const maxValues = [];
     if (yKeys) {
       Object.keys(yKeys).forEach(key => {
@@ -47,10 +47,22 @@ class CustomComposedChart extends PureComponent {
       });
       return max(maxValues);
     }
+
     return 0;
   };
 
   render() {
+    const {
+      className,
+      data,
+      config,
+      simple,
+      handleMouseMove,
+      handleMouseLeave,
+      handleClick,
+      barBackground
+    } = this.props;
+
     const {
       xKey,
       yKey,
@@ -64,18 +76,7 @@ class CustomComposedChart extends PureComponent {
       unitFormat,
       height,
       margin
-    } = this.props.config;
-
-    const {
-      className,
-      data,
-      config,
-      simple,
-      handleMouseMove,
-      handleMouseLeave,
-      handleClick,
-      barBackground
-    } = this.props;
+    } = config;
 
     const isVertical = !!xKeys;
     const dataKeys = yKeys || xKeys;

@@ -14,6 +14,18 @@ import Modal from '../modal';
 import './share-styles.scss';
 
 class Share extends PureComponent {
+  static propTypes = {
+    open: PropTypes.bool,
+    selected: PropTypes.string,
+    copied: PropTypes.bool,
+    data: PropTypes.object,
+    loading: PropTypes.bool,
+    setShareOpen: PropTypes.func,
+    setShareSelected: PropTypes.func,
+    handleFocus: PropTypes.func,
+    handleCopyToClipboard: PropTypes.func
+  };
+
   getContent() {
     const {
       selected,
@@ -25,12 +37,12 @@ class Share extends PureComponent {
       handleCopyToClipboard
     } = this.props;
     const { title, shareUrl, embedUrl, embedSettings } = data || {};
+    const { width, height } = embedSettings || {};
 
     const inputValue =
       selected === 'embed'
-        ? `<iframe width="${embedSettings.width}" height="${
-          embedSettings.height
-        }" frameborder="0" src="${embedUrl}"></iframe>`
+        ? `<iframe width="${width || 670}" height="${height ||
+            490}" frameborder="0" src="${embedUrl}"></iframe>`
         : shareUrl;
 
     return (
@@ -127,17 +139,5 @@ class Share extends PureComponent {
     );
   }
 }
-
-Share.propTypes = {
-  open: PropTypes.bool,
-  selected: PropTypes.string,
-  copied: PropTypes.bool,
-  data: PropTypes.object,
-  loading: PropTypes.bool,
-  setShareOpen: PropTypes.func,
-  setShareSelected: PropTypes.func,
-  handleFocus: PropTypes.func,
-  handleCopyToClipboard: PropTypes.func
-};
 
 export default Share;

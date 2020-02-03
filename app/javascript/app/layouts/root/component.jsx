@@ -13,9 +13,9 @@ import Footer from 'components/footer';
 import Cookies from 'components/cookies';
 import Button from 'components/ui/button';
 import MapMenu from 'components/map-menu';
+import ErrorPage from 'pages/error';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
-import FailedImport from 'pages/failed-import';
 
 import 'styles/styles.scss';
 import './styles.scss';
@@ -23,7 +23,12 @@ import './styles.scss';
 const universalOptions = {
   loading: <Loader className="page-loader" />,
   minDelay: 200,
-  error: <FailedImport />
+  error: (
+    <ErrorPage
+      title="Sorry, something went wrong."
+      desc="Try refreshing the page or check your connection."
+    />
+  )
 };
 
 const PageComponent = universal(
