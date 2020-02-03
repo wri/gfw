@@ -104,7 +104,10 @@ export default {
     extentYear: 2000
   },
   getData: params => {
-    if (params.status === 'pending' || params.type !== 'country') {
+    if (
+      params.status === 'pending' ||
+      !['global', 'country'].includes(params.type)
+    ) {
       return getDataAPI(params);
     }
 
