@@ -28,9 +28,9 @@ export const getWhitelist = createThunkAction(
           const annual =
             annualResponse &&
             annualResponse.data &&
-            annualResponse.data.rows[0];
+            annualResponse.data.data[0];
           const glad =
-            gladResponse && gladResponse.data && gladResponse.data.rows[0];
+            gladResponse && gladResponse.data && gladResponse.data.data[0];
 
           dispatch(
             setWhitelist({
