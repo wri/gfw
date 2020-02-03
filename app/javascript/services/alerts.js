@@ -54,22 +54,6 @@ export const getLatestAlerts = ({ location, params }) =>
     })
   );
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if ((adm0 && grouped) || adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  if ((adm1 && grouped) || adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  }
-  const url = `/query/${glad_summary_table}?sql=${
-    QUERIES.gladIntersectionAlerts
-  }`
-    .replace('{location}', getLocation(adm0, adm1, adm2))
-    .replace('{polyname}', 'admin');
-  return apiRequest.get(url, 3600, 'gladRequest');
-};
-
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
   if (adm2) {
@@ -223,28 +207,3 @@ export const fetchLatestDate = url =>
       })
     );
   });
-
-export const fetchGLADLatest = () => {
-  const url = '/glad-alerts/latest';
-  return apiRequest
-    .get(url)
-    .then(response => {
-      const { date } = response.data.data[0].attributes;
-
-      return {
-        attributes: { updatedAt: date },
-        id: null,
-        type: 'glad-alerts'
-      };
-    })
-    .catch(error => {
-      console.error('Error in gladRequest', error);
-      return new Promise(resolve =>
-        resolve({
-          attributes: { updatedAt: lastFriday },
-          id: null,
-          type: 'glad-alerts'
-        })
-      );
-    });
-};

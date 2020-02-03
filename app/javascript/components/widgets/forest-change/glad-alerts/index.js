@@ -3,7 +3,7 @@ import moment from 'moment';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import { fetchAnalysisEndpoint } from 'services/analysis';
-import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
