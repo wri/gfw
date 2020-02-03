@@ -79,7 +79,10 @@ export default {
     weeks: 13
   },
   getData: params => {
-    if (params.status === 'pending' || params.type !== 'country') {
+    if (
+      params.status === 'pending' ||
+      !['global', 'country'].includes(params.type)
+    ) {
       return all([
         fetchAnalysisEndpoint({
           ...params,

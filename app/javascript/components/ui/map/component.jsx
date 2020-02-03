@@ -191,29 +191,32 @@ class Map extends Component {
       ...viewport
     };
 
-    const { longitude, latitude, zoom } = new WebMercatorViewport(v).fitBounds(
-      [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
-      options
-    );
+    try {
+      const { longitude, latitude, zoom } = new WebMercatorViewport(
+        v
+      ).fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], options);
 
-    const newViewport = {
-      ...this.state.viewport,
-      longitude,
-      latitude,
-      zoom,
-      transitionDuration: 2500,
-      transitionInterruption: TRANSITION_EVENTS.UPDATE
-    };
+      const newViewport = {
+        ...this.state.viewport,
+        longitude,
+        latitude,
+        zoom,
+        transitionDuration: 2500,
+        transitionInterruption: TRANSITION_EVENTS.UPDATE
+      };
 
-    this.setState({
-      flying: true,
-      viewport: newViewport
-    });
-    onViewportChange(newViewport);
+      this.setState({
+        flying: true,
+        viewport: newViewport
+      });
+      onViewportChange(newViewport);
 
-    setTimeout(() => {
-      this.setState({ flying: false });
-    }, 2500);
+      setTimeout(() => {
+        this.setState({ flying: false });
+      }, 2500);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   render() {
