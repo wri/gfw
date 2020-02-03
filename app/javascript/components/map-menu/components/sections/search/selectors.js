@@ -3,7 +3,9 @@ import { deburrUpper } from 'utils/data';
 import { buildGadm36Id } from 'utils/format';
 import sortBy from 'lodash/sortBy';
 import { translateText } from 'utils/transifex';
+
 import { getActiveDatasetsFromState } from 'components/map/selectors';
+import { selectActiveLang } from 'app/layouts/root/selectors';
 
 const selectSearch = state =>
   state.location &&
@@ -14,13 +16,6 @@ const selectLocation = state => state.location && state.location.payload;
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLocations = state => state.mapMenu && state.mapMenu.locations;
 const selectLoading = state => state.mapMenu && state.mapMenu.loading;
-const selectActiveLang = state =>
-  (state.location &&
-    state.location &&
-    state.location.query &&
-    state.location.query.lang) ||
-  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
-  'en';
 
 const getDatasetWithUrlState = createSelector(
   [getActiveDatasetsFromState, selectDatasets, selectActiveLang],

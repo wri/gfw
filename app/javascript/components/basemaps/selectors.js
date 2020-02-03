@@ -28,8 +28,7 @@ const intervalOptions = [
   }
 ];
 
-const selectPlanetBasemaps = state =>
-  state.basemaps && state.basemaps.data && state.basemaps.data.planet;
+const selectPlanetBasemaps = state => state.planet && state.planet.data;
 
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],

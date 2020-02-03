@@ -10,7 +10,8 @@ import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
-import Thankyou from 'components/thankyou';
+import ConfirmationMessage from 'components/confirmation-message';
+import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
@@ -78,7 +79,6 @@ class NewsletterForm extends PureComponent {
     return (
       <Fragment>
         <Form
-          className="c-subscribe-form"
           onSubmit={this.saveNewsletterSubscription}
           initialValues={initialValues}
           render={({
@@ -89,11 +89,11 @@ class NewsletterForm extends PureComponent {
             submitError,
             submitSucceeded
           }) => (
-            <form className="c-subscribe-form" onSubmit={handleSubmit}>
+            <form className="c-newsletter-form" onSubmit={handleSubmit}>
               <div className="row">
                 {submitSucceeded ? (
                   <div className="column small-12">
-                    <Thankyou
+                    <ConfirmationMessage
                       title="Thank you for subscribing to Global Forest Watch newsletters and updates!"
                       description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
                     />
@@ -134,15 +134,12 @@ class NewsletterForm extends PureComponent {
                         placeholder="Select a country"
                         required
                       />
-
-                      <Submit
+                      <Error
                         valid={valid}
-                        submitting={submitting}
                         submitFailed={submitFailed}
                         submitError={submitError}
-                      >
-                        subscribe
-                      </Submit>
+                      />
+                      <Submit submitting={submitting}>subscribe</Submit>
                     </div>
                   </Fragment>
                 )}

@@ -17,10 +17,16 @@ export const getPTW = createThunkAction(
         .then(response => {
           const { rows } = response.data;
           if (rows && !!rows.length) {
-            const ptwResponse = uniqBy(rows, 'cartodb_id').map(p => ({
-              ...p,
-              bbox: reverseLatLng(JSON.parse(p.bbox).coordinates[0])
-            }));
+            const ptwResponse = uniqBy(rows, 'cartodb_id')
+              .filter(d => d.bbox)
+              .map(p => {
+                const bbox = JSON.parse(p.bbox);
+
+                return {
+                  ...p,
+                  bbox: reverseLatLng(bbox.coordinates[0])
+                };
+              });
             dispatch(setPTW(uniqBy(ptwResponse, 'cartodb_id')));
           }
           dispatch(setPTWLoading(false));

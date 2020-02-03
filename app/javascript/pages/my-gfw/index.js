@@ -1,3 +1,6 @@
-import PageComponent from './component';
+import { connect } from 'react-redux';
 
-export default PageComponent;
+import Component from './component';
+import { getMyGFWProps } from './selectors';
+
+export default connect(getMyGFWProps)(Component);

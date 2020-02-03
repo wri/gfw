@@ -1,0 +1,177 @@
+@import '~styles/settings.scss';
+
+.c-map-menu-my-gfw {
+  position: relative;
+  height: 100%;
+
+  .aoi-tag {
+    display: inline-block;
+    margin-right: rem(5px);
+    color: $slate;
+
+    &.-active {
+      color: $white;
+    }
+  }
+
+  .aoi-header {
+    padding: rem(5px) rem(15px) rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px);
+      padding-bottom: rem(5px);
+    }
+
+    h2.title-no-aois {
+      font-size: rem(18px);
+      max-width: 80%;
+    }
+
+    h3.title-login {
+      text-transform: uppercase;
+      color: $slate;
+      font-size: rem(14px);
+      font-weight: 500;
+      margin-bottom: rem(10px);
+    }
+
+    h3.title-create-aois {
+      font-size: rem(14px);
+      font-weight: 500;
+      text-transform: uppercase;
+      max-width: 80%;
+      color: $slate;
+    }
+
+    p {
+      margin: rem(10px) 0;
+      line-height: 1.7;
+    }
+
+    .mygfw-login {
+      margin: rem(40px) 0;
+    }
+
+    .aoi-tags {
+      display: flex;
+      flex-wrap: wrap;
+      margin: rem(15px) 0;
+      position: relative;
+      z-index: 2;
+
+      .aoi-tag,
+      .aoi-tags-dropdown {
+        margin-bottom: 0.3125rem;
+        margin-right: 0.3125rem;
+      }
+    }
+  }
+
+  .my-gfw {
+    position: relative;
+
+    .my-gfw-footer {
+      bottom: rem(50px);
+      height: rem(76px);
+      width: 100%;
+      padding-right: rem(20px);
+      background: $white;
+      border-top: 1px solid rgba($hot-grey, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media screen and (min-width: $screen-m) {
+        position: fixed;
+        bottom: 0;
+      }
+
+      .edit-button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: $slate;
+        font-size: 12px;
+        line-height: 14px;
+        text-transform: initial;
+        font-weight: 400;
+        margin-left: rem(16px);
+
+        .name {
+          margin-bottom: rem(10px);
+          font-weight: 500;
+        }
+
+        .email {
+          font-style: italic;
+        }
+      }
+
+      .logout-button {
+        color: $slate;
+        font-size: 12px;
+        line-height: 14px;
+        text-transform: initial;
+        font-weight: 400;
+
+        svg {
+          position: relative;
+          width: rem(16px);
+          height: rem(16px);
+          left: rem(4px);
+        }
+      }
+    }
+  }
+
+  .aoi-items {
+    @media screen and (min-width: $screen-m) {
+      padding-bottom: rem(76px);
+    }
+
+    .aoi-item {
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      padding: rem(10px) rem(15px);
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+
+      @media screen and (min-width: $screen-m) {
+        padding: rem(20px);
+      }
+
+      &.--active {
+        background-color: #f6f6f4;
+        border-top: 1px solid $green-gfw;
+        border-bottom: 1px solid $green-gfw;
+      }
+
+      &.--inactive {
+        opacity: 0.6;
+      }
+
+      .edit-button {
+        position: absolute;
+        right: rem(10px);
+        top: rem(10px);
+        width: rem(16px);
+        height: rem(16px);
+        min-width: rem(16px);
+      }
+    }
+  }
+
+  .areas-pagination {
+    margin-bottom: rem(20px);
+  }
+
+  .my-gfw-login-image {
+    position: absolute;
+    bottom: rem(76px);
+
+    &.--login {
+      position: relative;
+    }
+  }
+}

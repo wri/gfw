@@ -1,5 +1,6 @@
 import { createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
+import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
@@ -20,7 +21,7 @@ export const handleCategoryChange = createThunkAction(
 export const handleLocationChange = createThunkAction(
   'handleLocationChange',
   location => (dispatch, getState) => {
-    const { query, type } = getState().location || {};
+    const { query, type, payload } = getState().location || {};
     const { data, layer } = location || {};
     const newQuery = {};
 
@@ -47,37 +48,41 @@ export const handleLocationChange = createThunkAction(
       });
     }
 
-    let payload = {};
+    let newPayload = {};
     if (data) {
       const { cartodb_id, wdpaid } = data || {};
       const { analysisEndpoint, tableName } = layer || {};
       if (analysisEndpoint === 'admin') {
-        payload = {
-          type: 'country',
+        newPayload = {
+          type: payload.type === 'global' ? 'country' : payload.type,
           ...getLocationFromData(data)
         };
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
-        payload = {
+        newPayload = {
           type: analysisEndpoint,
           adm0: wdpaid || cartodb_id
         };
       } else if (cartodb_id && tableName) {
-        payload = {
+        newPayload = {
           type: 'use',
           adm0: tableName,
           adm1: cartodb_id
         };
       }
     } else {
-      payload = {
-        type: location.adm0 ? 'country' : 'global',
+      const newAdminType = !location.adm0 ? 'global' : 'country';
+      newPayload = {
+        type:
+          payload.type === 'global' || !location.adm0
+            ? newAdminType
+            : payload.type,
         ...location
       };
     }
 
     dispatch({
       type,
-      payload,
+      payload: newPayload,
       query: {
         ...newQuery,
         widget: undefined,
@@ -87,6 +92,14 @@ export const handleLocationChange = createThunkAction(
         }
       }
     });
+
+    dispatch(
+      setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'dashboardAnalyses'
+      })
+    );
   }
 );
 
@@ -100,6 +113,21 @@ export const closeMobileMap = createThunkAction(
       query: {
         ...query,
         showMap: undefined
+      }
+    });
+  }
+);
+
+export const clearScrollTo = createThunkAction(
+  'clearScrollTo',
+  () => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    dispatch({
+      type,
+      payload,
+      query: {
+        ...query,
+        scrollTo: false
       }
     });
   }

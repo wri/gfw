@@ -19,7 +19,7 @@ class ScrollTo extends PureComponent {
   };
 
   handleScroll = () => {
-    const { target } = this.props;
+    const { target, afterScroll } = this.props;
     if (target) {
       const targetBox = target.getBoundingClientRect();
       window.scrollTo({
@@ -29,6 +29,7 @@ class ScrollTo extends PureComponent {
       });
       this.handleFadeIn(target);
     }
+    afterScroll();
   };
 
   render() {
@@ -38,11 +39,12 @@ class ScrollTo extends PureComponent {
 
 ScrollTo.propTypes = {
   target: PropTypes.object,
-  delay: PropTypes.number
+  delay: PropTypes.number,
+  afterScroll: PropTypes.number
 };
 
 ScrollTo.defaultProps = {
-  delay: 150
+  delay: 500
 };
 
 export default ScrollTo;

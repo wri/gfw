@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getFullLocationName } from 'components/analysis/components/show-analysis/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveDatasetIds } from 'components/map/selectors';
 import { initialState } from './reducers';
 
@@ -80,7 +80,7 @@ export const getModalSubscribeProps = createStructuredSelector({
   datasets: getSubscriptionDatasets,
   activeMapDatasets: getActiveMapDatasets,
   activeDatasets: getActiveSubscriptionDatasets,
-  locationName: getFullLocationName,
+  locationName: getGeodescriberTitleFull,
   saving: selectSaving,
   saved: selectSaved,
   error: selectError,
