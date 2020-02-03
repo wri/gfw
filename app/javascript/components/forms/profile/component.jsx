@@ -90,7 +90,8 @@ class ProfileForm extends PureComponent {
                         }))}
                         placeholder="Select a sector"
                       />
-                      {values.sector && (
+                      {values.sector &&
+                        sectors[values.sector] && (
                         <Radio
                           name="subsector"
                           label="Role"
@@ -144,7 +145,10 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="howDoYouUse"
                         label="how do you plan to use global forest watch? (select all that apply)"
-                        options={howDoYouUse.map(r => ({ label: r, value: r }))}
+                        options={howDoYouUse.map(r => ({
+                          label: r,
+                          value: r
+                        }))}
                         multiple
                       />
                       <Checkbox
