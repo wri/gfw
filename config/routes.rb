@@ -49,7 +49,7 @@ Gfw::Application.routes.draw do
   # dashboards
   get '/dashboards' => redirect('/dashboards/global')
   get '/dashboards(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#index'
-  get '/embed/dashboards/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
+  get '/embed/widget/:slug/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
 
   # about
   get '/about' => 'about#index'
