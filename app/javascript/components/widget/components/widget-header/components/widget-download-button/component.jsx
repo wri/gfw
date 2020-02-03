@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import JSZip from 'jszip';
 import snakeCase from 'lodash/snakeCase';
 import JSZipUtils from 'jszip-utils';
@@ -159,16 +158,14 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const { square, getDataURL, settings } = this.props;
+    const { getDataURL, settings } = this.props;
     const params = { location, settings };
     const urls = getDataURL && getDataURL(params);
 
     return (
       <Button
         className="c-widget-download-button"
-        theme={cx('theme-button-small square', {
-          'theme-button-grey-filled theme-button-xsmall': square
-        })}
+        theme="theme-button-small square"
         {...getDataURL && {
           onClick: () => this.generateZipFromURL(urls)
         }}
