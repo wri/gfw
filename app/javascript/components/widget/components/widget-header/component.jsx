@@ -28,7 +28,7 @@ class WidgetHeader extends PureComponent {
     handleShowMap: PropTypes.func,
     handleShowShare: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
-    downloadLink: PropTypes.string
+    getDataURL: PropTypes.func
   };
 
   render() {
@@ -48,11 +48,12 @@ class WidgetHeader extends PureComponent {
       handleShowShare,
       preventCloseSettings,
       widget,
-      downloadLink
+      getDataURL
     } = this.props;
 
     const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
-    const showDownloadBtn = !embed && !simple && downloadLink;
+    const showDownloadBtn =
+      !embed && !simple && getDataURL && process.env.FEATURE_ENV === 'staging';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showDownloadBtn || showMapBtn;
 
@@ -80,11 +81,8 @@ class WidgetHeader extends PureComponent {
             />
           )}
           {showSeparator && <span className="separator" />}
-          {!simple &&
-            (showDownloadBtn || process.env.FEATURE_ENV === 'staging') && (
-            <WidgetDownloadButton downloadLink={downloadLink} />
-          )}
           <div className="small-options">
+            {showDownloadBtn && <WidgetDownloadButton {...this.props} />}
             <WidgetInfoButton
               square={simple}
               handleOpenInfo={() => handleShowInfo(metaKey)}
