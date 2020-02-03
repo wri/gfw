@@ -49,7 +49,7 @@ class MyGFWPage extends PureComponent {
                 {loggedIn && loading && <Loader className="mygfw-loader" />}
                 {loggedIn &&
                   process.env.FEATURE_ENV !== 'staging' && (
-                  <div className="column small-12">
+                  <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
                     <ProfileForm />
                   </div>
                 )}
