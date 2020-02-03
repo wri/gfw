@@ -58,11 +58,19 @@ const SQL_QUERIES = {
     'SELECT {location}, {polynames} FROM data {WHERE}'
 };
 
-const ALLOWED_PARAMS = [
+const ANNUAL_ALLOWED_PARAMS = [
   'adm0',
   'adm1',
   'adm2',
   'threshold',
+  'forestType',
+  'landCategory'
+];
+
+const GLAD_ALLOWED_PARAMS = [
+  'adm0',
+  'adm1',
+  'adm2',
   'forestType',
   'landCategory'
 ];
@@ -155,6 +163,9 @@ const getRequestUrl = ({ glad, ...params }) => {
 export const getWHEREQuery = params => {
   const allPolynames = forestTypes.concat(landCategories);
   const paramKeys = params && Object.keys(params);
+  const ALLOWED_PARAMS = params.glad
+    ? GLAD_ALLOWED_PARAMS
+    : ANNUAL_ALLOWED_PARAMS;
   const paramKeysFiltered = paramKeys.filter(
     p => (params[p] || p === 'threshold') && ALLOWED_PARAMS.includes(p)
   );
@@ -571,7 +582,10 @@ export const fetchGladAlerts = ({
         ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
         : getLocationSelect({ adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({ adm0, adm1, adm2, ...params, glad: true })
+    );
 
   if (download) {
     return {
