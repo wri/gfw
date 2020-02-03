@@ -163,7 +163,9 @@ export const getLocationData = createSelector(
     const currentLocation =
       locationData &&
       locationData.find(
-        d => d.value === locationObj[adminLevel] || d.id === locationObj.areaId
+        d =>
+          d.value === locationObj[adminLevel] ||
+          (d.id && d.id === locationObj.areaId)
       );
 
     const status = ['global', 'country', 'wdpa'].includes(locationObj.type)
