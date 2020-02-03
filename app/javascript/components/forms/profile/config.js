@@ -93,20 +93,28 @@ export const interests = [
 ];
 
 export const howDoYouUse = [
-  'Obtain maps and data on tree cover',
-  'Obtain maps and data on land use',
-  'Obtain maps and data on fires',
-  'Obtain maps and data on companies',
-  'Obtain maps and data on commodities',
-  'Obtain maps and data on biodiversity',
-  'Obtain maps and data on capacity building',
-  'Obtain general information for a specific country or region',
-  'Use country profile pages to find statistics about a specific country',
-  'Obtain information on the Small Grants Fund',
-  'Read stories',
-  'Read blog articles',
-  'Upload my own data',
-  'Download data from the Open Data Portal',
-  'Compare GFW data with data that is not on the website',
+  'Monitor or manage an area',
+  'Plan field work (patrols/investigations)',
+  'Identify illegal activity',
+  'Advocacy/campaigning',
+  'Land use planning/land use allocation',
+  'Inform grant funding decisions/results-based payments',
+  'Monitor results/impacts',
+  'General research',
+  'Data or visuals for blogs or media stories',
+  'Data or visuals for presentations and reports',
+  'Learn about forests/my country',
+  'Inform purchasing/procurement/investment decisions',
+  'Educational support materials',
+  'Not sure; new to GFW',
   'Other'
+];
+
+export const topics = [
+  'Innovations in Monitoring',
+  'Fires',
+  'Forest Watcher Mobile App',
+  'Climate and Biodiversity',
+  'Agricultural Supply Chains',
+  'Small Grants Fund and Tech Fellowship'
 ];

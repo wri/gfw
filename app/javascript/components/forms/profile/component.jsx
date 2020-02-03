@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
+import isEmpty from 'lodash/isEmpty';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
@@ -14,7 +15,7 @@ import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
-import { sectors, howDoYouUse, interests } from './config';
+import { sectors, howDoYouUse, interests, topics } from './config';
 
 import './styles.scss';
 
@@ -88,7 +89,6 @@ class ProfileForm extends PureComponent {
                           value: s
                         }))}
                         placeholder="Select a sector"
-                        required
                       />
                       {values.sector && (
                         <Radio
@@ -99,22 +99,10 @@ class ProfileForm extends PureComponent {
                             value: s.replace(/( )+|(\/)+/g, '_')
                           }))}
                           selectedOption={values.subsector}
-                          // log={console.log(values.subsector_otherInput)}
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
                       <Input name="company" label="Company / organization" />
-                      <Checkbox
-                        name="interests"
-                        label="What topics are you interested in? Select all that apply."
-                        options={interests.map(interest => ({
-                          label: interest,
-                          value: interest.replace(/( )+|(\/)+/g, '_')
-                        }))}
-                        required
-                      />
-                    </div>
-                    <div className="column small-12 medium-6">
                       <h4>Location</h4>
                       <Select
                         name="country"
@@ -127,7 +115,7 @@ class ProfileForm extends PureComponent {
                         name="state"
                         label="state / department / province"
                       />
-                      <h4>Geographic area of interest*</h4>
+                      <h4>Geographic area of interest *</h4>
                       <Select
                         name="aoi-country"
                         label="country"
@@ -140,6 +128,18 @@ class ProfileForm extends PureComponent {
                         name="aoi-state"
                         label="state / department / province"
                         required
+                      />
+                    </div>
+                    <div className="column small-12 medium-6">
+                      <Select
+                        name="interests"
+                        label="What topics are you interested in? Select all that apply."
+                        options={interests.map(interest => ({
+                          label: interest,
+                          value: interest.replace(/( )+|(\/)+/g, '_')
+                        }))}
+                        required
+                        multiple
                       />
                       <Select
                         name="howDoYouUse"
@@ -157,6 +157,28 @@ class ProfileForm extends PureComponent {
                           }
                         ]}
                       />
+                      <Checkbox
+                        name="signUpToNewsletter"
+                        options={[
+                          {
+                            label:
+                              'Subscribe to the newsletter to receive GFW updates',
+                            value: 'yes'
+                          }
+                        ]}
+                      />
+                      {!isEmpty(values.signUpToNewsletter) && (
+                        <Select
+                          name="topics"
+                          label="Topics you're interested in receiving communications about"
+                          options={topics.map(s => ({
+                            label: s,
+                            value: s.replace(/( )+|(\/)+/g, '_')
+                          }))}
+                          required
+                          multiple
+                        />
+                      )}
                       <Error
                         valid={valid}
                         submitFailed={submitFailed}
