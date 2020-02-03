@@ -25,7 +25,7 @@ class PromptTour extends PureComponent {
         continuous
         callback={data => {
           const { action, index, type, status, step } = data;
-          const { actions } = step || {};
+          const { actions, delay: actionDelay } = step || {};
           const { prev, next } = actions || {};
 
           if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
@@ -45,7 +45,7 @@ class PromptTour extends PureComponent {
           ) {
             const newStepIndex = index + (action === ACTIONS.PREV ? -1 : 1);
             // Update state to advance the tour
-            let delay = 400;
+            let delay = actionDelay || 400;
 
             if (action === 'prev' && prev) {
               prev();

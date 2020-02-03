@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { postSubscription } from 'services/subscriptions';
+import { saveSubscription as postSubscription } from 'services/subscriptions';
 
 export const setSubscribeSaving = createAction('setSubscribeSaving');
 export const setSubscribeSaved = createAction('setSubscribeSaved');

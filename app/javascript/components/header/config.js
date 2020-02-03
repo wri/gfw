@@ -55,11 +55,11 @@ export default {
   myGfwLinks: [
     {
       label: 'My subscriptions',
-      extLink: '/my_gfw/subscriptions'
+      extLink: '/my-gfw/subscriptions'
     },
     {
       label: 'My profile',
-      path: '/my_gfw'
+      path: '/my-gfw'
     },
     {
       label: 'Logout',

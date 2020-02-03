@@ -10,7 +10,7 @@ export const initialState = {
     subtitle: '',
     shareUrl: '',
     embedUrl: '',
-    embedSettings: { width: 0, height: 0 },
+    embedSettings: { width: 670, height: 490 },
     socialText: ''
   }
 };

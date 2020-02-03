@@ -27,7 +27,7 @@ class SearchMenu extends PureComponent {
 
   handleGetLocations = debounce(search => {
     if (this.searchFetch) {
-      this.searchFetch.cancel();
+      this.searchFetch.cancel('Cancelling search location fetch');
     }
     this.searchFetch = cancelToken();
     this.props.getLocationFromSearch({

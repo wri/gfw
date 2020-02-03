@@ -26,7 +26,7 @@
   .map-legend,
   .map-analysis {
     position: relative;
-    overflow-y: auto;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     display: flex;
     flex: 1;

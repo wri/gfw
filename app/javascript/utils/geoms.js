@@ -39,6 +39,16 @@ export const getCornersFromBounds = bounds => {
   return [min(xCoords), max(xCoords), min(yCoords), max(yCoords)];
 };
 
+export const buildGeostore = (data, params) => {
+  const { adm0, adm1 } = params || {};
+  const { bbox } = data || {};
+  return {
+    ...data,
+    bbox: getLeafletBbox(bbox, adm0, adm1),
+    bounds: getBoxBounds(bbox, adm0, adm1)
+  };
+};
+
 export const reverseLatLng = bounds => bounds.map(b => [b[1], b[0]]);
 
 export const validateLatLng = (lat, lng) =>

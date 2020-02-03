@@ -1,0 +1,19 @@
+@import '~styles/settings.scss';
+
+.c-widget-map-button {
+  position: relative;
+
+  &.-active {
+    cursor: default;
+
+    &:hover {
+      background-color: $green-gfw;
+    }
+  }
+
+  .map-icon {
+    width: rem(20px);
+    height: rem(20px);
+    margin-top: rem(1px);
+  }
+}

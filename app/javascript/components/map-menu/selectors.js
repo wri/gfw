@@ -59,6 +59,11 @@ export const getExploreType = createSelector(
   settings => settings.exploreType
 );
 
+export const getPTWType = createSelector(
+  [getMenuSettings],
+  settings => settings.ptwType
+);
+
 // get countries by datasets
 export const getAvailableCountries = createSelector(
   [getCountries, getDatasets],
@@ -269,6 +274,7 @@ export const getMenuProps = createStructuredSelector({
   datasetCategory: getDatasetCategory,
   datasetCategories: getDatasetCategories,
   exploreType: getExploreType,
+  ptwType: getPTWType,
   search: getSearch,
   searchType: getSearchType,
   location: getLocation,

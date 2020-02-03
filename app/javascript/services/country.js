@@ -28,21 +28,21 @@ export const getFAOCountriesProvider = () => {
   return cartoRequest.get(url);
 };
 
-export const getRegionsProvider = adm0 => {
+export const getRegionsProvider = ({ adm0, token }) => {
   const url = `/sql?q=${SQL_QUERIES.getRegions}`.replace('{iso}', adm0);
-  return cartoRequest.get(url);
+  return cartoRequest.get(url, { cancelToken: token });
 };
 
-export const getSubRegionsProvider = (adm0, adm1) => {
+export const getSubRegionsProvider = (adm0, adm1, token) => {
   const url = `/sql?q=${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', adm0)
     .replace('{adm1}', buildGadm36Id(adm0, adm1));
-  return cartoRequest.get(url);
+  return cartoRequest.get(url, { cancelToken: token });
 };
 
-export const getCountryLinksProvider = () => {
+export const getCountryLinksProvider = token => {
   const url = `/sql?q=${SQL_QUERIES.getCountryLinks}`;
-  return cartoRequest.get(url);
+  return cartoRequest.get(url, { cancelToken: token });
 };
 
 export const getCountriesLatLng = () => {
@@ -50,7 +50,7 @@ export const getCountriesLatLng = () => {
   return cartoRequest.get(url);
 };
 
-export const getRanking = ({ adm0 }) => {
+export const getRanking = ({ adm0, token }) => {
   const url = `/sql?q=${SQL_QUERIES.getRanking}`.replace('{adm0}', adm0);
-  return cartoRequest.get(url);
+  return cartoRequest.get(url, { cancelToken: token });
 };
