@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 import { createAction, createThunkAction } from 'utils/redux';
 
-import { getLocationPolynameWhitelist } from 'services/forest-data-old';
+import { getLocationPolynameWhitelist } from 'services/analysis-cached';
 
 export const setWhitelistLoading = createAction('setWhitelistLoading');
 

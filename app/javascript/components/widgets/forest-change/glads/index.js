@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import { fetchAnalysisEndpoint } from 'services/analysis';
-import { fetchGLADLatest } from 'services/alerts';
+import { fetchGLADLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
