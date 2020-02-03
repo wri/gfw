@@ -110,7 +110,7 @@ class NewsletterForm extends PureComponent {
                     <div className="column small-12 medium-6">
                       <Checkbox
                         name="gfwInterests"
-                        label="I'm interests in (check all that apply)"
+                        label="I'm interested in (check all that apply)"
                         options={subscriptions}
                       />
                     </div>
