@@ -1,0 +1,65 @@
+.m-subscription {
+
+  .datasets-selection {
+    .datasets-list {
+      min-height: 85px;
+      position: relative;
+
+      .m-spinner {
+        margin-top: 35px;
+      }
+    }
+  }
+
+  .m-map {
+    .map {
+      height: 400px;
+      position: relative;
+
+      &:hover .tooltip.-enabled {
+        opacity: 0.6;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .tooltip {
+        opacity: 0;
+        background: #000000;
+        color: $white;
+        margin-left: 15px;
+        padding: 15px;
+        position: absolute;
+        z-index: 1000;
+        font-size: 12px;
+      }
+    }
+
+    .map-controls-box {
+      &.-zoom {
+        top: 40px;
+      }
+    }
+
+    .module-legend {
+      width: 240px;
+      min-height: 100px;
+      max-height: 340px;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+
+      &.hide {
+        min-height: 0;
+        max-height: 0;
+      }
+
+      &.-compact {
+        .button-box-embed-legend,
+        .-country h2,
+        .legend-link,
+        .layer-close {
+          display: none;
+        }
+      }
+    }
+  }
+}

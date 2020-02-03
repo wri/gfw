@@ -1,0 +1,46 @@
+<section class="m-header-static">
+  <div class="inner">
+    <header>
+      <h2>My GFW</h2>
+    </header>
+  </div>
+</section>
+
+<section class="section" id="user-profile">
+  <div class="my-gfw-profile inner">
+    <div class="my-gfw-login">
+      <h2>Please log in</h2>
+
+      <p>
+        {{#if message}}
+          {{message}}
+        {{else}}
+          You need to log in to view your profile or subscriptions.
+        {{/if}}
+      </p>
+
+      <ul class="my-gfw-authentication">
+        <li class="my-gfw-sign-in-twitter">
+          <a href="{{apiHost}}/auth/twitter?applications=gfw" class="my-gfw-sign-in my-gfw-sign-in-twitter">
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
+            Log in with Twitter
+          </a>
+        </li>
+
+        <li class="my-gfw-sign-in-facebook">
+          <a href="{{apiHost}}/auth/facebook?applications=gfw" class="my-gfw-sign-in">
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
+            Log in with Facebook
+          </a>
+        </li>
+
+        <li class="my-gfw-sign-in-google">
+          <a href="{{apiHost}}/auth/google?applications=gfw" class="my-gfw-sign-in">
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
+            Log in with Google
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

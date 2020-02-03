@@ -1,0 +1,84 @@
+//DRAW TAB
+.analysis-draw-tab {
+  p {
+    &.-center {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    &.-terms {
+      font-size: 10px;
+      margin: 8px 0 0;
+      text-align: center;
+    }
+  }
+
+  .analysis-dropable {
+    margin: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .shape-droppable {
+      position: relative;
+      border: 1px dashed $cGreen;
+      display: inline-flex;
+      height: auto;
+      padding: 5px 0;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      font-size: 14px;
+      line-height: 25px;
+      border-radius: 40px;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      .m-spinner {
+        border-radius: 40px;
+        cursor: default;
+      }
+
+      input {
+        appearance: none;
+        display: block;
+        position: absolute;
+        width: calc(100% - 30px);
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+
+      &.-moving {
+        background-color: aliceblue;
+        border-width: 2px;
+      }
+    }
+
+    .drop-shape-text {
+      height: 36px;
+      width: 243px;
+      padding: 0 9px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        display: block;
+        width: 200px;
+        line-height: 1em;
+        padding-top: 1px;
+        font-size: 13px;
+      }
+    }
+
+    .source{
+      @extend .info-icon;
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+}

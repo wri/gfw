@@ -1,0 +1,65 @@
+<div class="tab-highresolution">
+  {{!--TODO: GET MODAL INFO--}}
+  {{!--<div id="highresolutionModal" class="highresolution-modal">
+    <p>Click on the map to view info about each Sentinel image</p>
+  </div>--}}
+  <div class="highresolution-content scroll-thin-dark">
+    <div id="highres-form" data-slug="highres">
+      <section>
+        <h3 class="-title">Recent satellite imagery
+          <a href='#' data-source="highres" class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a>
+          <span class="onoffswitch toggleSentinel" data-source="highres" ><span></span></span>
+        </h3>
+      </section>
+
+      <section>
+        <p id="disclaimer-zoom">Please move to <strong>zoom level 9</strong> to activate this imagery. Current zoom level is <strong><span id="currentZoom"></span></strong>.</p>
+      </section>
+
+      <section>
+        <h3>Acquired date minimum / maximum <a href='#' data-source="hr-dates" class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></h3>
+        <div class="btn-box-dates">
+          <div>
+            <input data-value="{{mindate}}" id="startDateUC" class="timeline-date-picker-start mindate" type="text" readonly="">
+          </div>
+          <div class="slash">/</div>
+          <div>
+            <input data-value="{{today}}" id="endDateUC" class="timeline-date-picker-end maxdate" type="text" readonly="">
+          </div>
+        </div>
+      </section>
+
+      <span class="advanced-controls">Open Advanced Settings</span>
+
+      <div class="advanced-options">
+        <section>
+          <h3>Renderer <a href='#' data-source="hr-renderer" class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></h3>
+          <select data-placeholder="Coming soon" class="chosen-select default notranslate" id="hres-filter-select" >
+            {{#each this.renderers}}
+              <option disabled value="{{@key}}">{{this}}</option>
+            {{/each}}
+          </select>
+        </section>
+        <section>
+          <h3>Sensor <a href='#' data-source="hr-sensor" class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></h3>
+          <select data-placeholder="Sentinel 2" class="chosen-select default notranslate" id="hres-filter-sensor">
+            {{#each this.sensors}}
+              <option value="{{@key}}">{{this}}</option>
+            {{/each}}
+          </select>
+        </section>
+        <section>
+          <h3>Maximum cloud cover percentage <a href='#' data-source="hr-cloud" class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></h3>
+          <div class="range-box">
+            <ul><li>0%</li><li>10</li><li>20</li><li>30</li><li>40</li><li>50</li><li>60</li><li>70</li><li>80</li><li>90</li><li>100%</li></ul>
+          </div>
+          <div class="range-box">
+            <div class="dots"></div>
+            <div id="progress-clouds" class="progress"></div>
+            <input id="range-clouds" type="range" class='cloud' step="10" value="30">
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

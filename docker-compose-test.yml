@@ -1,0 +1,7 @@
+test:
+  build: .
+  command: test
+  volumes:
+    - .:/gfw
+
+  env_file: .env

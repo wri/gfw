@@ -1,0 +1,108 @@
+.widget-timeline .timeline-year.timeline-torque {
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  @media (min-width: $br-mobileMap) {
+    display: block;
+    min-width: 715px;
+  }
+
+  .timeline-date-pickers {
+    display: inline-flex;
+    align-items: center;
+    height: 50px;
+    font-size: 11px;
+    float: left;
+
+    @media (min-width: $br-mobile) {
+      min-width: 350px;
+    }
+  }
+
+  .timeline-date-pickers input {
+    width: 100px;
+    margin: 0 10px;
+
+    @media (max-width: $br-mobile) {
+      height: 25px;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 24px;
+      white-space: nowrap;
+    }
+  }
+
+  .slider .handle {
+    transform: none;
+  }
+
+  .play {
+    display: inline-block;
+    left: auto;
+
+    @media (max-width: $br-mobile) {
+      display: none;
+    }
+  }
+
+  .play:after {
+    right: 100%;
+  }
+
+  .play .stop-icon {
+    display: block;
+  }
+
+  .domain {
+    stroke: #B1B1B1;
+    stroke-width: 4;
+  }
+
+  .played_domain {
+    stroke: #a1ba42;
+    stroke-width: 4;
+  }
+
+  .timeline-date {
+    width: 80px;
+    margin-top: 6px;
+
+    font-size: 12px;
+    color: #97bd3d;
+  }
+
+  .timeline-date-day,
+  .timeline-date-month,
+  .timeline-date-year {
+    display: inline-block;
+  }
+
+  .timeline-date-day {
+    width: 13px;
+  }
+
+  .timeline-date-month {
+    width: 23px;
+  }
+
+  .timeline-date-year {
+    width: 25px;
+  }
+
+  .timeline-slider {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-left: 40px;
+    width: 299px;
+
+    @media (max-width: $br-mobile) {
+      display: none;
+    }
+  }
+
+  .timeline-slider svg {
+    width: 240px;
+  }
+}

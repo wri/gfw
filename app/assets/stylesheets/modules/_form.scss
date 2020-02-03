@@ -1,0 +1,514 @@
+$label-width: 100px;
+
+
+input[type="password"],
+input[type="text"],
+input[type="date"],
+input[type="email"],
+textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid $border;
+  padding: 10px;
+  margin: 0;
+  font-size: 14px;
+  border-radius: 4px;
+  outline: none;
+  &:focus {
+    border-color: darken($border,10%);
+  }
+}
+
+.field-fieldset {
+  margin: 0 0 75px;
+  &:last-child {
+    margin: 0;
+  }
+
+  &.-js-fieldset {
+    display: none;
+  }
+
+  &.-active {
+    display: block;
+  }
+}
+
+.field-uploadtype {
+  display: none;
+
+  &.-active {
+    display: block;
+  }
+}
+
+.field-header {
+  &.-padding-top {
+    padding-top: 20px;
+  }
+  &.-padding-bottom {
+    padding-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 35px;
+    padding: 0 0 15px;
+    color: $dark;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 14px;
+    color: $dark;
+    line-height: 1.5;
+    &.-error {
+      color: $red;
+    }
+  }
+
+  > p {
+    color: $dark;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 5px;
+
+    &.-hint {
+      font-size: 12px;
+      margin: 5px 0;
+      font-style: italic;
+    }
+  }
+}
+
+.field-column {
+  display: flex;
+
+  &.-j-center { justify-content: center; }
+  &.-j-between { justify-content: space-between; }
+  &.-j-start { justify-content: flex-start; }
+  &.-j-end { justify-content: flex-end; }
+}
+
+/**
+ * Field
+ */
+.field {
+  @include clearfix();
+  position: relative;
+  width: 100%;
+  margin: 0 0 25px;
+
+  @media (min-width: $br-mobile) {
+    padding: 0px 0px 0px $label-width;
+  }
+
+  &.-default {
+    padding: 0;
+
+    > label {
+      display: block;
+      text-align: left;
+      width: 100%;
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      margin: 0 0 3px;
+
+      .source {
+        svg {
+          width: 12px;
+          height: 12px;
+          padding: 2px;
+          position: relative;
+          top: 0px;
+          fill: white;
+          background: #97bd3d;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  &.-hidden {
+    display: none;
+  }
+
+  // SIZES
+  &.-little {
+    max-width: 200px;
+  }
+
+  &.-medium {
+    max-width: 350px;
+  }
+
+  &.-huge {
+    max-width: 500px;
+  }
+
+  &.-disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  &.-separator {
+    width: 80px;
+    text-align: center;
+    padding: 25px 0 0 0;
+
+    span {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+
+
+  &.-no-padding {
+    padding: 0;
+  }
+
+  label {
+    padding: 0 15px 0 0;
+    width: 100%;
+    color: $dark;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.5;
+    @media (min-width: $br-mobile) {
+      width: $label-width;
+      position: absolute;
+      left: 0;
+      top: 21px;
+      transform: translate(0,-50%);
+      line-height: 1;
+    }
+
+    &.-error {
+      color: $red;
+    }
+
+    &.-no-padding {
+      padding: 0;
+    }
+  }
+
+  textarea {
+    height: 182px;
+    max-width: 100%;
+  }
+
+  > p {
+    color: $dark;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 5px;
+
+    &.-hint {
+      font-size: 12px;
+      margin: 5px 0;
+      font-style: italic;
+
+      a:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+
+    &.-terms {
+      font-size: 10px;
+      margin: 5px;
+    }
+  }
+
+  // STATES
+  &.-short {
+    input[type="password"],
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    textarea {
+      max-width: 400px;
+    }
+  }
+
+  &.-with-errors, &.field_with_errors {
+    label {
+      color: $red;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      border: 1px solid $red;
+    }
+
+    p {
+      margin-bottom: 25px;
+      font-weight: 500;
+      font-size: 12px;
+      color: $red;
+      text-transform: uppercase;
+    }
+  }
+
+  .separator {
+    width: 100%;
+    height: 11px;
+    border-bottom: 1px solid $border;
+    text-align: center;
+    margin-bottom: 16px;
+    margin-top: 11px;
+
+    span {
+      font-size: 14px;
+      color: $dark;
+      background-color: #FFF;
+      padding: 0 10px;
+    }
+  }
+}
+
+/**
+ * Radio
+ */
+.radio-box {
+  @include clearfix();
+  padding: 6px 0;
+  font-size: 12px;
+
+  .custom-radio {
+    display: flex;
+    width: 100%;
+
+    &.-with-input {
+      flex-wrap: wrap;
+
+      label {
+        width: 100%;
+      }
+
+      input[type=text] {
+        max-width: 250px;
+        margin: 0 0 0 25px;
+      }
+    }
+  }
+
+  label {
+    padding: 8px 0;
+    font-weight: 400;
+    text-transform: none;
+    position: relative;
+    padding-left: 25px;
+    line-height: 1;
+    cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
+    transform: none;
+    text-align: left;
+
+    &.-uppercase {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border: 1px solid $dark;
+      border-radius: 50%;
+      transform: translate(0,-50%);
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        background: $cGreen;
+        border-radius: 50%;
+        display: none;
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+
+  input[type=radio] {
+    display: none;
+  }
+
+  input[type=radio]:checked + label {
+    span{
+      &:after {
+        display: block;
+      }
+    }
+  }
+}
+
+
+/**
+ * Checkbox
+ */
+.checkbox-box {
+  @include clearfix();
+  padding: 6px 0;
+  font-size: 12px;
+
+  .custom-checkbox {
+    display: flex;
+    width: 100%;
+  }
+
+  &.-divided {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 15px 0;
+
+    .custom-checkbox {
+      display: flex;
+      width: 50%;
+    }
+
+  }
+
+  label {
+    padding: 8px 0;
+    font-weight: 400;
+    text-transform: none;
+    position: relative;
+    padding-left: 25px;
+    line-height: 1;
+    cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
+    transform: none;
+    text-align: left;
+
+    &.-uppercase {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    em {
+      color: #999;
+      font-style: italic;
+      font-size: 12px;
+      display: block;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      padding: 2px;
+      position: relative;
+      top: 0px;
+      fill: white;
+      background: #97bd3d;
+      border-radius: 50%;
+    }
+
+    span {
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border: 1px solid $dark;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        background: $cGreen;
+        display: none;
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+
+  input[type=checkbox] {
+    display: none;
+  }
+
+  input[type=checkbox]:checked + label {
+    span{
+      &:after {
+        display: block;
+      }
+    }
+  }
+}
+
+.file-box {
+  position: relative;
+  display: inline-block;
+
+  .file-btn-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+
+    > p {
+      display: block;
+      width: 100%;
+      border: 1px solid $border;
+      padding: 10px;
+      margin: 0;
+      font-size: 14px;
+      border-radius: 4px;
+      outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 250px;
+    }
+
+    > button {
+      border-radius: 0;
+    }
+
+  }
+
+  .file-progress {
+    display: block;
+    height: 5px;
+    width: 100%;
+
+    > span {
+      display: block;
+      background: $cGreen;
+      width: 0;
+      height: 100%;
+    }
+
+    &.-uploading {
+      background: $dark;
+    }
+  }
+
+  input[type="file"] {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+}

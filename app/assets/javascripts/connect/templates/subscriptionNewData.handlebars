@@ -1,0 +1,87 @@
+<div id="layer-selection" class="layer-selection field-column -j-between">
+  <div id="layers-field" class="field -default -medium"></div>
+  <div class="field -separator"><span>or<span></div>
+  <div class="field -default -medium">
+    <div id="country-field" class="field -default -medium"></div>
+    <div id="layers-country-field" class="field -default -medium"></div>
+  </div>
+</div>
+
+<div class="field -default">
+  <label for="name">Select an area by clicking a shape on the map</label>
+
+  <div class="m-map">
+    <div>
+      <div id="map" class="map -loading"></div>
+      <div id="map-loader" class="m-spinner">
+        <div class="spinner-box">
+          <div class="icon"></div>
+        </div>
+      </div>
+
+      <div id="module-legend" class="module-legend -compact scroll-thin-dark module-toggle hide"></div>
+
+      <div id="map-controls" class="map-controls">
+        <div class="map-controls-box -top -right -zoom">
+          <div class="control-zoom">
+            <button type="button" class="map-control-btn js-map-controls-zoom-in"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
+            <button type="button" class="map-control-btn js-map-controls-zoom-out"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
+          </div>
+        </div>
+        <div class="map-controls-box -top -right">
+          <div class="control-search">
+            <input class="map-search-input" id="map-controls-search" type="text" placeholder="Search..."/>
+          </div>
+          <div>
+            <button id="map-controls-autolocate" class="map-control-btn js-map-controls-autolocate" type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div id="map-selection" class="map-selection"></div>
+    </div>
+  </div>
+</div>
+
+<div id="datasets-selection" class="datasets-selection"></div>
+
+<div class="field -default -medium">
+  <label for="name">Name your subscription for later reference</label>
+  <input type="text" name="name" placeholder="Enter the name of your subscription">
+</div>
+
+<div class="field -default -medium">
+  <label for="email">Enter your email address</label>
+  <input type="email" name="email" placeholder="Enter your email" value="{{email}}">
+
+  <div class="separator">
+    <span>or</span>
+  </div>
+
+  <label for="url">URL (Webhook) <a href="#" class="source" data-source="webhook_description"><svg><use xlink:href="#shape-info"></use></svg></a></label>
+  <input id="subscriptionUrl" type="text" name="url" placeholder="Enter your url" value="{{url}}">
+  <p class="-hint">
+      <a href="#" class="source" data-static="true" data-source="webhook">Preview of payload</a>
+      <a href="#" class="js-test-webhook test-webhook">
+          <span class="webhook-text">Test webhook</span>
+          <span class="webhook-loader"></span>
+      </a>
+  </p>
+</div>
+
+<div class="field -default -medium">
+  <label for="select-language">Select a language for notification emails</label>
+  <div class="m-select">
+    <select id="select-language" name="language" class="chosen-select default" data-placeholder="Select a language">
+      {{#each languages}}
+        <option value="{{key}}" {{selected}}>{{name}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="field -default">
+  <div class="m-btncontainer is-flex-start">
+    <input type="submit" id="submit" name="submit" value="Subscribe" class="btn medium green medium huge-padding">
+  </div>
+</div>

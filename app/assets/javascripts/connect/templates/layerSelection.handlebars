@@ -1,0 +1,16 @@
+<label for="select-layers">{{name}}</label>
+<div class="m-select">
+  <select id="{{id}}" class="chosen-select default {{#unless layers}}disabled{{/unless}} js-select-layer" data-placeholder="{{placeholder}}" {{#unless layers}}disabled{{/unless}}>
+    <option value=""></option>
+    {{#each layers}}
+      <optgroup label="{{@key}}">
+        {{#each this}}
+          <option value="{{this.slug}}" {{#if selected}}selected{{/if}}>{{this.title}}</option>
+        {{/each}}
+      </optgroup>
+    {{/each}}
+  </select>
+</div>
+<p class="-hint">
+  {{hint}}
+</p>

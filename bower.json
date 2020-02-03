@@ -1,0 +1,62 @@
+{
+  "name": "globalforestwatch",
+  "version": "0.1.0",
+  "homepage": "http://www.globalforestwatch.org",
+  "authors": [
+    "Simbiótica <info@simbiotica.es>"
+  ],
+  "description": "Global Forest Watch",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor/assets/bower_components",
+    "spec",
+    "jstests"
+  ],
+  "dependencies": {
+    "chroma-js": "1.3.5",
+    "jquery": "1.11.1",
+    "underscore": "~1.6.0",
+    "backbone": "~1.1.2",
+    "minpubsub": "~0.0.2",
+    "d3": "~3.4.8",
+    "requirejs-text": "~2.0.12",
+    "requirejs": "~2.1.14",
+    "moment": "~2.7.0",
+    "underscore.string": "~2.3.3",
+    "handlebars": "~1.3.0",
+    "amplify": "~1.1.2",
+    "topojson": "1.6.20",
+    "gmaps-markerclusterer-plus": "~2.1.1",
+    "Class.js": "~1.0.0",
+    "uri-templates": "~0.1.5",
+    "slick.js": "~1.3.13",
+    "jquery.simplePagination": "*",
+    "jquery-migrate": "~1.2.1",
+    "jquery.iframe-transport": "~1.0.0",
+    "jquery-file-upload": "~9.8.1",
+    "geojson-google-maps": "*",
+    "blueimp-load-image": "~1.13.0",
+    "jquery-ujs": "~1.0.2",
+    "qtip2": "~2.2.1",
+    "ScrollIt.js": "*",
+    "chosen": "~1.5.1",
+    "keymaster": "~1.6.3",
+    "enquire": "~2.1.2",
+    "pickadate": "~3.5.6",
+    "proj4": "~2.3.12",
+    "js-cookie": "~2.1.0",
+    "bluebird": "~3.1.1",
+    "turf": "~2.0.2",
+    "lory": "^2.1.0",
+    "backbone.syphon": "^0.6.3",
+    "validate": "^0.10.0",
+    "urijs": "URIjs#^1.18.2"
+  },
+  "resolutions": {
+    "jquery": "1.11.1",
+    "underscore": ">=1.8.3 <2.0"
+  },
+  "devDependencies": {}
+}

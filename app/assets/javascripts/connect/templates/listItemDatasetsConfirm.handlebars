@@ -1,0 +1,42 @@
+<div class="modal is-active">
+  <div class="modal-backdrop"></div>
+  <div class="modal-window">
+    <a href="#" class="modal-close">
+      <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
+    </a>
+    <div class="modal-wrapper">
+      <header>
+        <h2>Edit data sets</h2>
+        <h3>Select the data sets that you want to subscribe to</h3>
+      </header>
+
+      <div class="modal-content -compact">
+        {{#if datasets}}
+          <div class="checkbox-box -divided">
+            {{#each datasets}}
+              <div class="custom-checkbox">
+                <input class="dataset-checkbox" type="checkbox" name="datasets" id="{{slug}}" {{#if checked}}checked{{/if}}>
+                <label for="{{slug}}">
+                  <span></span>
+                  {{title}}
+                  <em>({{sub_title}})</em>
+                </label>
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="m-spinner -start -relative">
+            <div class="spinner-box">
+              <div class="icon"></div>
+            </div>
+          </div>
+        {{/if}}
+
+        <div class="delete-button-container">
+          <a href="#" class="btn gray uppercase" id="cancel-delete">Cancel</a>
+          <a href="#" class="btn green uppercase" id="confirm-delete">Save</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

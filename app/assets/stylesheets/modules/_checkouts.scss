@@ -1,0 +1,64 @@
+.mod-checkouts {
+  float: right;
+  margin-top: 40px;
+
+  .gfw_sticker {
+    width: 115px;
+    max-height: 40px;
+    border-radius: 6px;
+    border: 2px solid #EF1731;
+    position: relative;
+    z-index: 1030;
+    display: block;
+    float: right;
+    margin-top: 10px;
+    margin-left: 26px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #7B7784;
+    padding: 8px;
+    font-weight: 500;
+    line-height: 15px;
+    background-color: rgba(254, 254, 254, 0.7);
+
+    &.for_business {
+      border-color: #EB8300;
+      span {
+        color: #EB8300;
+      }
+    }
+
+    &:hover {
+      background-color: rgba(251, 251, 251, 1);
+      color: #7B7784;
+    }
+
+    span {
+      display: block;
+      font-weight: 500;
+      color: #EF1731;
+    }
+  }
+  .gfw_testers {
+    height: 85px;
+    width: 85px;
+    position: relative;
+    float: left;
+    background: #97bd3d;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    top: 140px;
+    padding-top: 0;
+    left: 322px;
+    span {
+      left: 0px;
+      position: absolute;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 13px;
+      padding: 23px 10px;
+    }
+  }
+}

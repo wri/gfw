@@ -315,7 +315,9 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
-        <AreaOfInterestModal viewAfterSave />
+        {process.env.FEATURE_ENV === 'staging' && (
+          <AreaOfInterestModal viewAfterSave />
+        )}
       </div>
     );
   }

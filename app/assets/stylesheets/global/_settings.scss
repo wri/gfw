@@ -1,0 +1,39 @@
+$baseurl: '/* @echo BASEURL */';
+
+// Grid
+$max-container-width: 1600px;
+$min-container-width: 960px;
+
+$br-mobile-portrait: 600px;
+$br-mobile: 850px;
+$br-tablet: 1050px;
+$br-mobileMap: 1000px;
+
+//Colors
+$cGreen: #97Bd3d;
+$cGreen1: #A1BA42;
+$white: #FFF;
+$dark: #555555;
+$light: #F7F7F7;
+$red: #ED1846;
+$orange: #E98300;
+$blue: #5B80A0;
+$border: #E5E5DF;
+$border1: #E5E5DF;
+
+$lossColor: #F69;
+$gainColor: #6D6DE5;
+
+
+
+
+$shadow1: 0px 1px 2px rgba(0,0,0,0.25);
+//Animations
+// Cubic
+$easeInCubic:  cubic-bezier(0.550, 0.055, 0.675, 0.190);
+$easeOutCubic:  cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$easeInOutCubic :  cubic-bezier(0.645, 0.045, 0.355, 1.000);
+// Sine
+$easeInSine:  cubic-bezier(0.470, 0.000, 0.745, 0.715);
+$easeOutSine:  cubic-bezier(0.390, 0.575, 0.565, 1.000);
+$easeInOutSine:  cubic-bezier(0.445, 0.050, 0.550, 0.950);

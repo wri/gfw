@@ -1,0 +1,32 @@
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
+  </a>
+  <div class="modal-wrapper scroll-dark has-footer">
+    <div class="modal-content">
+      <div class='modal-source'>
+
+        <div class="modal-overview is-center">
+          <h3>By downloading data you agree to the <a href="/terms">GFW Terms of Service</a></h3>
+          <div class="checkbox-box">
+            <div class="custom-checkbox">
+              <input type="checkbox" name="checkbox" id="confirm-understand">
+              <label for="confirm-understand"><span></span> Don't show me this message again</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <div class="m-btncontainer is-center">
+        <a href="{{this.download_link}}" target="_blank" class="btn green uppercase">Confirm</a>
+        <button class="btn gray uppercase modal-hide">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

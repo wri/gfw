@@ -1,0 +1,17 @@
+<script>
+  if (! !!window.gfw) {
+    var gfw = window.gfw = {
+      config: {
+        GFW_API: "<%= ENV['GFW_API'] %>",
+        CARTO_API: "<%= ENV['CARTO_API'] %>",
+        SENTINEL_KEY: "<%= ENV['SENTINEL_KEY'] %>",
+        LANDSTAD_KEY: "<%= ENV['LANDSTAD_KEY'] %>",
+        GFW_MOBILE: 1000,
+        AWS_HOST: "<%= ENV['AWS_HOST'] %>",
+        RAILS_ENV: "<%= ENV['RAILS_ENV'] %>"
+      },
+      cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
+      layer_spec: "<%= ENV['LAYER_SPEC'] %>"
+    };
+  }
+</script>

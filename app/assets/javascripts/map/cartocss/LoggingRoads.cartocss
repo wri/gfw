@@ -1,0 +1,53 @@
+#r {
+   line-width: 1.5;
+   line-opacity: 1;
+}
+
+#r[time<2001] {
+   line-color: #193219;
+}
+#r[time=2001] {
+   line-color: #CC973E;
+}
+#r[time=2002] {
+   line-color: #CC973E;
+}
+#r[time=2003] {
+   line-color: #CC973E;
+}
+#r[time=2004] {
+   line-color: #C56228;
+}
+#r[time=2005] {
+   line-color: #C56228;
+}
+#r[time=2006] {
+   line-color: #C56228;
+}
+#r[time=2007] {
+   line-color: #A3752A;
+}
+#r[time=2008] {
+   line-color: #A3752A;
+}
+#r[time=2009] {
+   line-color: #A3752A;
+}
+#r[time=2010] {
+   line-color: #83A03C;
+}
+#r[time=2011] {
+   line-color: #83A03C;
+}
+#r[time=2012] {
+   line-color: #83A03C;
+}
+#r[time=2013] {
+   line-color: #B1D135;
+}
+#r[time=2014] {
+   line-color: #B1D135;
+}
+#r {
+   line-color: #BFBEBE;
+}

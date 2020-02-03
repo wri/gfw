@@ -1,0 +1,34 @@
+.m-spinner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	background: rgba($white, 0.85);
+	opacity: 0;
+	visibility: hidden;
+
+	&.-fixed {
+		position: fixed;
+	}
+
+  &.-start {
+    visibility: visible;
+    opacity: 1;
+  }		
+
+	.loader {
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  width: 30px;
+	  height: 30px;
+	  transform: translate(-50%,-50%);
+	  @include animation(loader,1s,infinite,$easeInOutCubic);
+	  
+	  svg {
+	    fill: $cGreen;
+	  }
+	}
+}

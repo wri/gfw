@@ -1,0 +1,31 @@
+/* FONTS */
+@import 'https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i';
+$font-family-1: 'Fira Sans', sans-serif;
+
+/* SCREENS */
+$screen-xs: 320px;
+$screen-s: 540px;
+$screen-m: 850px;
+$screen-l: 1024px;
+$screen-xl: 1280px;
+$screen-xxl: 2000px;
+
+/* COLORS */
+$white: #fff;
+$black: #000;
+$green-gfw: #97be32;
+$grey-light: #f7f7f7;
+$grey-dark: #d6d6d9;
+$slate: #555;
+$slate-dark: #444;
+$slate-light: #333;
+$warm-grey: #999;
+$medium-grey: #676867;
+
+/* FONT COLORS */
+$font-color-1: $white;
+$font-color-2: $slate;
+$font-color-3: $slate-dark;
+$font-color-4: $green-gfw;
+$font-color-5: $warm-grey;
+$font-color-6: $slate-light;

@@ -1,0 +1,15 @@
+#rushcv {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0;
+   line-opacity: 1;
+  [cat="Predominance of dark coniferous species"] {
+     polygon-fill: #012700;
+  }
+  [cat="Predominance of larch"] {
+      polygon-fill: #178c11;
+  }
+  [cat="Predominance of pine and larch"] {
+     polygon-fill: #B2DF8A;
+  }
+}

@@ -1,0 +1,26 @@
+<div class="overlay"></div>
+<div class="country-download-content mini-modal-content">
+  <a href="#" class="close"><svg><use xlink:href="#shape-close"></use></svg></a>
+  <header>
+    <h2>{{text.title}}</h2>
+    <div><p>{{text.description}}</p></div>
+  </header>
+
+  <form id="download_email_form" action="/download" method="post" enctype="multipart/form-data">
+    <div class="mini-modal-input">
+      <input class="field" type="email" name="email" placeholder="your@email.com">
+
+      <ul class="button-container one">
+        <li>
+          <button class="btn gray uppercase" data-type="embed">Submit</button>
+        </li>
+      </ul>
+    </div>
+
+    <p class="error">
+    </p>
+  </form>
+
+  <div id="mini-modal-loader" class="mini-modal-loader"></div>
+
+</div>

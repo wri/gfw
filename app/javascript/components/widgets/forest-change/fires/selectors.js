@@ -16,7 +16,7 @@ export const parseData = createSelector(
         label: 'Active fire alerts',
         value: data,
         color: colors.main,
-        unit: ' '
+        unit: 'counts'
       }
     ];
   }
@@ -26,7 +26,7 @@ export const parseSentence = createSelector(
   [parseData, getCurrentLocation, getSentences],
   (data, currentLabel, sentences) => {
     const { initial } = sentences;
-    const count = data > 0 ? data : 'No';
+    const count = data && data[0].value > 0 ? data[0].value : 'No';
     const params = {
       location: currentLabel,
       count: typeof count === 'number' ? format(',')(count) : count

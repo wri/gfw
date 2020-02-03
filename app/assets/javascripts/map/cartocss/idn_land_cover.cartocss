@@ -1,0 +1,107 @@
+/** simple visualization */
+
+#idn_land_cover{
+  polygon-opacity: 0.7;
+  polygon-fill:#FF0000;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 0.0;
+
+  // primary forest
+  [desc_in='Hutan Lahan Kering Primer']{
+  	polygon-fill:#35B538;
+  }
+  // secondary forest
+  [desc_in='Hutan Lahan Kering Sekunder']{
+    polygon-fill:#72FE00;
+  }
+  //primary mangrove forest
+  [desc_in='Hutan Mangrove Primer']{
+  	polygon-fill:#35B538;
+  }
+  //primary swamp forest
+  [desc_in='Hutan Rawa Primer']{
+  	polygon-fill:#35B538;
+  }
+  //secondary mangrove forest
+  [desc_in='Hutan Mangrove Sekunder']{
+  	polygon-fill:#72FE00;
+  }
+  // secondary swamp forest
+  [desc_in='Hutan Rawa Sekunder']{
+    polygon-fill:#72FE00;
+  }
+  // Industrial Plantation Forest
+  [desc_in='Hutan Tanaman']{
+  	polygon-fill:#D3E599;
+  }
+  //Shrub
+  [desc_in='Belukar']{
+   	polygon-fill:#4F6027;
+  }
+  //Plantation
+  [desc_in='Perkebunan']{
+  	polygon-fill:#CEA561;
+  }
+  //Settlement
+  [desc_in='Pemukiman']{
+  	polygon-fill:#000000;
+  }
+  //bare ground
+  [desc_in='Tanah Terbuka']{
+  	polygon-fill:#EE6F30;
+  }
+  //cloud
+  [desc_in='Awan']{
+    polygon-fill:#D1D1D1;
+  }
+  //Savannah
+  [desc_in='Savana']{
+  	polygon-fill:#4F6027;
+  }
+  //water-body
+  [desc_in='Badan Air']{
+  	polygon-fill:#1284BE;
+  }
+  //Swamp/shrub
+  [desc_in='Belukar Rawa']{
+  	polygon-fill:#99E5E5;
+  }
+  // Dryland farming - agriculture
+  [desc_in='Pertanian Lahan Kering']{
+  	polygon-fill:#CEA561;
+  }
+  // Dryland farm -shrub mixed dryland farm
+  [desc_in='Pertanian Lahan Kering Campur']{
+  	polygon-fill:#CEA561;
+  }
+  // Rice field
+  [desc_in='Sawah']{
+  	polygon-fill:#CEA561;
+  }
+  //Fish pond
+  [desc_in='Tambak']{
+  	polygon-fill:#EE6F30;
+  }
+  //Airport/harbour
+  [desc_in='Bandara/ Pelabuhan']{
+  	polygon-fill:#EE6F30;
+  }
+  //Tansmigrasi (not sure what that is)
+  [desc_in='Transmigrasi']{
+  	polygon-fill:#000000;
+  }
+  //mining
+  [desc_in='Pertambangan']{
+  	polygon-fill:#EE6F30;
+  }
+  //Swamp
+  [desc_in='Rawa']{
+  	polygon-fill:#99E5E5;
+  }
+  //Savanna / Meadow
+  [desc_in='Savanna/ Padang rumput']{
+   	polygon-fill:#D5FE00;
+  }
+
+}

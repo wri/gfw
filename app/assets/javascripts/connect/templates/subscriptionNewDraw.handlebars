@@ -1,0 +1,90 @@
+<div class="field -default">
+  <div class="m-map">
+    <div>
+      <div id="map" class="map"></div>
+      <div id="map-controls" class="map-controls">
+        <div class="map-controls-box -top -right -zoom">
+          <div class="control-zoom">
+            <button type="button" class="map-control-btn js-map-controls-zoom-in"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
+            <button type="button" class="map-control-btn js-map-controls-zoom-out"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
+          </div>
+        </div>
+        <div class="map-controls-box -top -right">
+          <div class="control-search">
+            <input class="map-search-input" id="map-controls-search" type="text" placeholder="Search..."/>
+          </div>
+          <div>
+            <button id="map-controls-autolocate" class="map-control-btn js-map-controls-autolocate" type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
+          </div>
+          <!-- <div>
+            <button id="map-controls-delete-drawing" class="map-control-btn js-map-controls-delete-drawing" type="button">
+              <svg><use xlink:href="#icon-analysis-remove"></use></svg>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field -default">
+  <ul class="m-btncontainer is-space-between -col50">
+    <li>
+      <button id="map-drawing" type="button" class="btn green uppercase full-width">
+        Start drawing
+      </button>
+    </li>
+    <li>
+      <button id="map-uploading" type="button" class="btn gray uppercase full-width with-inline-icon">
+        Upload a file
+        <svg data-source="drop-shapefile" data-static="true" class="source"><use xlink:href="#shape-info"></use></svg>
+        <div id="map-upload" class="m-upload">
+          <input type="file" id="input-upload-shape">
+        </div>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div id="datasets-selection" class="datasets-selection"></div>
+
+<div class="field -default -medium">
+  <label for="name">Name your subscription for later reference</label>
+  <input type="text" name="name" placeholder="Enter the name of your subscription">
+</div>
+
+<div class="field -default -medium">
+  <label for="email">Enter your email address</label>
+  <input type="email" name="email" placeholder="Enter your email" value="{{email}}">
+
+  <div class="separator">
+    <span>or</span>
+  </div>
+
+  <label for="url">URL (Webhook) <a href="#" class="source" data-source="webhook_description"><svg><use xlink:href="#shape-info"></use></svg></a></label>
+  <input id="subscriptionUrl" type="text" name="url" placeholder="Enter your url" value="{{url}}">
+  <p class="-hint">
+      <a href="#" class="source" data-static="true" data-source="webhook">Preview of payload</a>
+      <a href="#" class="js-test-webhook test-webhook">
+          <span class="webhook-text">Test webhook</span>
+          <span class="webhook-loader"></span>
+      </a>
+  </p>
+</div>
+
+<div class="field -default -medium">
+  <label for="select-language">Select a language for notification emails</label>
+  <div class="m-select">
+    <select id="select-language" name="language" class="chosen-select default" data-placeholder="Select a language">
+      {{#each languages}}
+        <option value="{{key}}" {{selected}}>{{name}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="field -default">
+  <div class="m-btncontainer is-flex-start">
+    <input type="submit" id="submit" name="submit" value="Subscribe" class="btn medium green medium huge-padding">
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="story-popup">
+  <div class="story-popup-content">
+    <a href="{{#if link}}{{link}}{{else}}/stories/{{id}}{{/if}}" target='_blank'>
+      {{#if image}}
+        <img src="{{image}}" style="width:195px;margin-top:20px;">
+      {{/if}}
+      <h3>{{title}} {{!-- {{#if autor}}<span>by {{autor}} &middot;</span>{{/if}} --}}</h3>
+      <p>read more</p>
+    </a>
+  </div>
+</div>

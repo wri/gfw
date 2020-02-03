@@ -1,0 +1,133 @@
+.widget-timeline {
+  .widget-box {
+    bottom: 44px;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid $border;
+    transform: translate(0,100%);
+    transition: all 0.25s $easeInOutSine;
+    &.active{
+      transform: translate(0,0%);
+    }
+    @media (min-width: $br-mobile){
+      bottom: 44px;
+    }
+
+    @media (min-width: $br-mobileMap){
+      z-index: 101;
+      bottom: 50px;
+      left: auto;
+      right: 35px;
+      width: auto;
+      height: 50px;
+      transform: translate(0,0%);
+      transition: all 0s $easeInOutSine;
+      border-bottom: none;
+    }
+
+    @media (min-width: 1300px){
+      bottom: 50px;
+      left: 50%;
+      right: auto;
+      margin-left: -350px; // => calc(itemwith/2); Firefox issue
+      // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      //   right: 35px;
+      //   left: auto;
+      // }
+
+      &.transform {
+        transform: translate(-50%,0);
+        margin-left: 0;
+        // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        //   transform: translate(0%,0);
+        // }
+      }
+    }
+  }
+
+  .timeline-mobile-call-to-action {
+    display: none;
+  }
+
+  .timeline-legend {
+    display: none;
+    height: 20px;
+    width: 100%;
+    position: absolute;
+    top: -18px;
+    color: #333;
+    font-weight: 500;
+    font-size: 12px;
+    text-shadow: 0px 0px 3px #fff;
+
+    @media (min-width: $br-mobileMap){
+      display: block;
+    }
+
+    span {
+      font-weight: normal;
+    }
+
+    .timeline-name {
+      margin-left: 10px;
+      float: left;
+    }
+
+    .timeline-latlng {
+      font-size: 11px;
+      margin-right: 10px;
+      float: right;
+    }
+  }
+
+  .timeline-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tooltip {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    z-index: 2000;
+    background: $white;
+    color: $dark;
+    text-align: center;
+    font-size: 10px;
+    padding: 6px 8px;
+    border-radius: 2px;
+    box-shadow: $shadow1;
+    min-width: 40px;
+    margin-left: 6px;
+    // margin-left: 2px; // trail and triangle aligned
+
+    &:before {
+      content:'';
+      display:block;
+      width:0;
+      height:0;
+      position:absolute;
+      background-color: $white;
+      width: 8px;
+      height: 8px;
+      transform: rotate(45deg);
+
+      box-shadow: 1px 1px 1px 0 rgba($dark,0.5);
+
+      right: 0;
+      left: 0;
+      margin: auto;
+      bottom: -4px;
+    }
+  }
+
+  .tipsy {
+    .trail {
+      stroke: $cGreen1;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+  }
+
+}

@@ -1,0 +1,182 @@
+/**
+ * MAIN ELEMENT
+ */
+.m-latest-stories {
+	position: relative;
+	// padding-top: 30px;
+	
+  @media (min-width: $br-mobile) {
+		// padding-top: 70px;
+		margin: 0 0 80px;
+		min-height: 660px;
+	}
+}
+
+
+/**
+ * NAVIGATION
+ */
+.m-latest-navigation {
+	display: none;
+	align-items: center;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%,50%);
+  @media (min-width: $br-mobile) {
+  	display: flex;
+  }
+
+	> li {
+		margin: 0 55px 0 0;
+		position: relative;
+		cursor: pointer;
+		
+		&:last-child {
+			margin: 0 0 0 0;
+		}
+
+		&:hover {
+			.img .bg {
+				-webkit-filter: grayscale(0.5);
+				filter: grayscale(0.5);				
+			}
+		}
+
+		&.-active {
+			.img .bg {
+				-webkit-filter: grayscale(0);
+				filter: grayscale(0);				
+			}
+		}
+
+		.img {
+			width: 100px;
+			height: 100px;
+
+			.bg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-size: cover;
+				background-position: center;
+				border-radius: 50%;
+				overflow: hidden;
+				-webkit-filter: grayscale(1);
+				filter: grayscale(1);				
+			}
+		}
+	}
+}
+
+/**
+ * SLIDE LIST
+ */
+.m-latest-list {
+	> li {
+		margin-bottom: 35px;
+	  @media (min-width: $br-mobile) {
+	  	margin-bottom: 0;
+	  }
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+/**
+ * SLIDE
+ */
+.m-latest-story {
+	flex-wrap: wrap;
+	justify-content: space-between;
+  @media (min-width: $br-mobile) {
+		display: none;
+		// min height to prevent jumps when you change between slides
+		min-height: 660px;
+  }
+
+	&.-active {
+	  @media (min-width: $br-mobile) {
+	  	display: flex;
+	  }
+	}
+
+	> * {
+		width: 100%;
+    @media (min-width: $br-mobile) {
+      width: 50%;
+    }
+	}
+
+	.info {
+		color: $dark;
+    @media (min-width: $br-mobile) {
+			background: $light;
+			padding: 110px 50px;
+    }
+
+
+		h3 {
+			font-size: 21px;
+			color: $dark;
+			text-transform: uppercase;
+			display: none;
+	    @media (min-width: $br-mobile) {
+				display: block;
+	    }
+		}
+
+		h2 {
+			color: $cGreen;
+			font-weight: 300;
+			line-height: 1.35;
+			font-size: 21px;
+	    @media (min-width: $br-mobile) {
+				font-size: 30px;
+				padding: 40px 0 0;
+	    }
+
+			a {
+				color: $cGreen;
+				display: block;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+
+		p {
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 20px 0 0;
+      font-weight: 300;
+      @media (min-width: $br-mobile) {
+        font-size: 19px;
+      }
+		}
+	}
+
+	.img {
+		display: none;
+		position: relative;
+
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
+
+		.bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-size: cover;
+			background-position: center;
+		}
+	}
+}

@@ -98,9 +98,13 @@ class MyGFWPage extends PureComponent {
                 )}
               </div>
             </div>
-            <AreasProvider />
+            {process.env.FEATURE_ENV === 'staging' && (
+              <Fragment>
+                <AreasProvider />
+                <AreaOfInterestModal canDelete />
+              </Fragment>
+            )}
             <CountryDataProvider />
-            <AreaOfInterestModal canDelete />
             <ShareModal />
             <ProfileModal />
           </Fragment>

@@ -1,0 +1,15 @@
+#ifl_2000_2013_2016 {
+  polygon-opacity: 0.9;
+  polygon-fill: #5C8C50;
+  line-width: 0;
+  line-opacity: 1;
+}
+
+#ifl_2000_2013_2016[class="IFL2000"] {
+  polygon-fill:  #969904;
+}
+
+#ifl_2000_2013_2016[class="IFL2013"] {
+  polygon-fill:  #635731;
+}
+

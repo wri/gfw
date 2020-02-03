@@ -1,0 +1,102 @@
+/* eslint-disable */
+// Compass
+@import "compass/reset";
+@import "compass/css3";
+
+// Settings
+@import "settings/settings";
+
+// Images
+@import
+  "icons/*.png",
+  "logos/*.png",
+  "basemaps/*.png",
+  "home-icons/*.png",
+  "static-logos/*.png";
+
+// Global
+// This will load all common settings, mixins and styles needed
+@import
+  "global/global",
+  "global/texts";
+
+// Layouts
+// This will load all common layouts styles
+@import "layouts/layouts";
+
+//modules
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+//@import "modules/slick";
+@import "modules/notifications";
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/form";
+@import "modules/static/spinner";
+@import "modules/common/subscription-modal";
+@import "modules/common/tabs";
+
+@import "modules/connect/user-form";
+
+@import
+
+  // Layouts
+
+  "layouts/map",
+  "layouts/embed-map",
+
+  // Modules
+  "modules/notice",
+  "modules/navbar",
+  "modules/guide",
+
+  // layer nav
+  "modules/map/layer-nav",
+  "modules/map/onoffswitch",
+  "modules/map/onoffradio",
+
+  "modules/map/mode",
+  "modules/map/country-select",
+
+  // Real Modules
+  "modules/map/module",
+
+  // legend
+  "modules/map/module-legend",
+
+  // controls
+  "modules/map/module-mapcontrols",
+  "modules/map/control-searchbox",
+  "modules/map/control-share",
+  "modules/map/control-threshold",
+  "modules/map/advanced-analysis",
+  // tabs
+  "modules/map/module-tabs",
+  "modules/map/tab-analysis",
+  "modules/map/tab-basemaps",
+  "modules/map/tab-countries",
+  "modules/map/tab-highresolution",
+
+  // analysis
+  "modules/map/analysis-draw",
+  "modules/map/analysis-country",
+  "modules/map/analysis-shape",
+  "modules/map/analysis-spinner",
+  "modules/map/analysis-results",
+  "modules/map/analysis-downloads",
+
+  // timeline
+  "modules/map/widget",
+  "modules/map/timeline",
+  "modules/map/timeline-btn",
+  "modules/map/timeline-year",
+  "modules/map/timeline-month",
+  "modules/map/timeline-torque",
+  "modules/map/timeline-torque-date-picker",
+  "modules/map/timeline-torque-monthly-picker",
+
+  //Nav mobile
+  "modules/map/module-navmobile",
+
+  "modules/map/infowindow";

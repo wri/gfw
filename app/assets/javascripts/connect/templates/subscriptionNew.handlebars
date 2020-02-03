@@ -1,0 +1,71 @@
+<section class="m-header-static">
+  <div class="inner">
+    <header>
+      <h2>Receive deforestation alerts</h2>
+      <h3>Be the first to know about deforestation in areas you care about by subscribing to alerts from Global Forest Watch.</h3>
+    </header>
+  </div>
+</section>
+
+<section class="m-section-static">
+  <div class="inner">
+    <div class="m-new">
+      <aside class="m-aside">
+        <h3>How it works</h3>
+        <p>Global Forest Watch offers the latest data and tools for monitoring forests. Our satellite-based deforestation alerts notify you where deforestation is happening on a weekly, monthly, or annual basis, depending on the geographic area.</p>
+        <p>Subscribing to GFW's deforestation alerts is easy. Just log in to GFW, select the area you want to monitor, choose the alerts you want to subscribe to, and start receiving email notifications when new alerts are detected within your area.</p>
+      </aside>
+
+      <div class="m-form">
+        {{#if loggedIn }}
+          <form id="new-subscription" class="m-subscription">
+            <div class="field -default -medium">
+              <label for="aoi">Select the area you’d like to receive alerts for</label>
+              <div class="m-select">
+                <select id="aoi" class="chosen-select default" data-placeholder="Select your area of interest" value="{{aoi}}">
+                  <option value=""></option>
+                  <option value="draw" {{#ifCond aoi "==" "draw"}}selected{{/ifCond}}>Draw or upload a shape</option>
+                  <option value="data" {{#ifCond aoi "==" "data"}}selected{{/ifCond}}>Select an area from a GFW data set</option>
+                  <option value="country" {{#ifCond aoi "==" "country"}}selected{{/ifCond}}>Select a country or jurisdiction</option>
+                </select>
+              </div>
+            </div>
+            <div id="new-subscription-content">
+
+            </div>
+          </form>
+
+        {{else}}
+          <div class="login-notice">
+            <div class="text">Please log in to be able to use this feature</div>
+
+            <ul class="my-gfw-authentication">
+              <li class="my-gfw-sign-in-twitter">
+                <a href="{{apiHost}}/auth/twitter?applications=gfw" class="my-gfw-sign-in my-gfw-sign-in-twitter">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg>
+                  Log in with Twitter
+                </a>
+              </li>
+
+              <li class="my-gfw-sign-in-facebook">
+                <a href="{{apiHost}}/auth/facebook?applications=gfw" class="my-gfw-sign-in">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg>
+                  Log in with Facebook
+                </a>
+              </li>
+
+              <li class="my-gfw-sign-in-google">
+                <a href="{{apiHost}}/auth/google?applications=gfw" class="my-gfw-sign-in">
+                  <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-googleplus"></use></svg>
+                  Log in with Google
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        {{/if}}
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,333 @@
+<div class="noselect">
+  <ul class="categories-list">
+
+    <li class="forest-change">
+      <span class="category-name">FOREST CHANGE <i id="forest_clearing-category-num" class="category-num"></i></span>
+
+      <div id="layersnav-forest-change" class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-forestchange"></use></svg></div>
+          <span class="category-name">FOREST CHANGE</span>
+        </div>
+        <ul class="layers-list scroll-thin-dark">
+          <div class="layer-group">
+            <span class="group-name">Deforestation alerts <em>(near real-time)</em></span>
+            <li class="layer" data-layer="umd_as_it_happens" data-open-with-sublayer="places_to_watch">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">GLAD alerts<a href='#' data-source='umd_landsat_alerts' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(weekly, 30m, select countries, UMD/GLAD)
+              </span>
+            </li>
+            <li class="layer" data-layer="forma_month_3">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">FORMA alerts<a href='#' data-source='forma_250_alerts' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(daily,  250m, tropics, WRI/Google)</span>
+            </li>
+            <li class="layer" data-layer="forma_activity">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">FORMA active clearing alerts<a href='#' data-source='forma_250_active_clearing_alerts' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(daily, 250m, tropics, WRI/Google)</span>
+            </li>
+            <li class="layer" data-layer="terrailoss">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Terra-i alerts<a href='#' data-source='terra_i_alerts' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 250m, tropics, CIAT)</span>
+            </li>
+            <li class="layer" data-layer="imazon">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">SAD alerts<a href='#' data-source='imazon_sad' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 250m, Brazilian Amazon, Imazon)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <li class="layer" data-layer="viirs_fires_alerts">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">VIIRS active fires<a href='#' data-source='viirs_fires' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(daily, 375 m, global, NASA)</span>
+            </li>
+          </div>
+          <div id="umd-group" class="layer-group">
+            <span class="group-name" data-color="#f69">Tree cover change</span>
+              <li class="wrapped-layer" data-color="#f69">
+                <span class="onoffswitch"><span></span></span>
+                <span class="layer-title">Tree cover loss<a href='#' data-source='tree_cover_loss' class='source '><svg><use xlink:href="#shape-info"></use></svg></a></span>
+                <span class="layer-info">(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)</span>
+                <span class="layer-info -hidden">
+                <label data-layer="loss" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Tree Cover Loss
+                </label>
+                <label data-layer="loss_by_driver" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Loss by Driver
+                </label>
+              </span>
+            </li>
+            <li class="layer" data-layer="forestgain">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Tree cover gain<a href='#' data-source='tree_cover_gain' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(12 years, 30m, global, Hansen/UMD/Google/USGS/NASA)</span>
+            </li>
+            <li class="layer" data-layer="guyra">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Gran Chaco deforestation<a href='#' data-source='gran_chaco_deforestation' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 30m, Gran Chaco, Guyra)</span>
+            </li>
+            <li class="layer" data-layer="prodes">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">PRODES deforestation<a href='#' data-source='prodes' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(annual, 30m, Brazilian Amazon, INPE)</span>
+            </li>
+          </div>
+        </ul>
+      </div>
+    </li>
+
+    <li class="forest-cover">
+      <span class="category-name">LAND COVER <i id="forest_cover-category-num" class="category-num"></i></span>
+
+      <div id="layersnav-forest-cover" class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-forestcover"></use></svg></div>
+          <span class="category-name">LAND COVER</span>
+        </div>
+        <ul class="layers-list scroll-thin-dark">
+          <li class="wrapped-layer" data-color="#B2D26E">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Tree cover<a href='#' data-source='tree_cover' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000/2010, Hansen/UMD/Google/USGS/NASA)</span>
+            <span class="layer-info -hidden">
+              <label data-layer="forest2000" class="layer wrapped">
+                <span></span>
+                <input type="radio" />2000
+              </label>
+              <label data-layer="forest2010" class="layer wrapped">
+                <span></span>
+                <input type="radio" />2010
+              </label>
+            </span>
+          </li>
+          <li class="layer" data-layer="ifl_2013_deg">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Intact Forest Landscapes<a href='#' data-source='intact_forest_landscapes_change' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000/2013/2016)</span>
+            {{!-- <span class="layer-info">
+              <label data-layer="ifl_2000" class="layer wrapped">
+                <span></span>
+                <input type="radio" />2000
+              </label>
+              <label data-layer="ifl_2013_deg" class="layer wrapped">
+                <span></span>
+                <input type="radio" />2013
+              </label>
+            </span> --}}
+          </li>
+          <li class="layer" data-layer="primary_forest">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Primary Forests<a href='#' data-source='regional_primary_forests' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2001, select countries)</span>
+          </li>
+          <li class="layer" data-layer="pantropical">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Aboveground live woody biomass density<a href='#' data-source='aboveground_biomass' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000)</span>
+          </li>
+          <li class="layer" data-layer="mangrove_watch">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Mangrove forests <a href='#' data-source='mangrove_2010_gmw' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2010, Global Mangrove Watch)</span>
+          </li>
+          <li class="layer" data-layer="global_land_cover">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Land cover<a href='#' data-source='global_landcover_2015' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(ESA/UCLouvain, 2015)</span>
+          </li>
+          <li class="wrapped-layer" data-color="#D67828">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Tree plantations<a href='#' data-source='gfw_plantations' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2013-2014, select countries)</span>
+            <span class="layer-info -hidden">
+              <label data-layer="plantations_by_type" class="layer wrapped">
+                <span></span>
+                <input type="radio" />by type
+              </label>
+              <label data-layer="plantations_by_species" class="layer wrapped">
+                <span></span>
+                <input type="radio" />by species
+              </label>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="forest-use">
+      <span class="category-name">LAND USE <i id="forest_use-category-num" class="category-num"></i></span>
+      <div id="layersnav-forest-use" class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-forestuse"></use></svg></div>
+          <span class="category-name">LAND USE</span>
+        </div>
+        <ul class="layers-list scroll-thin-dark">
+          <div class="layer-group">
+            <span class="group-name">Concessions</span>
+            <li class="layer" data-layer="logging">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Managed forests<a href='#' data-source='gfw_logging' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(select countries)</span>
+            </li>
+            <li class="layer" data-layer="mining">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Mining<a href='#' data-source='gfw_mining' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(select countries)</span>
+            </li>
+            <!--<li class="layer" data-layer="raisg_mining">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Amazon basin mining concessions <a href='#' data-source='raisg_mining' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(RAISG)</span>
+            </li>-->
+            <li class="layer" data-layer="oil_palm">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Oil palm<a href='#' data-source='gfw_oil_palm' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(select countries)</span>
+            </li>
+            <li class="layer" data-layer="rspo_oil_palm">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">RSPO oil palm<a href='#' data-source='rspo_oil_palm' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="wood_fiber_plantations">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Wood fiber<a href='#' data-source='gfw_wood_fiber' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(select countries)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <span class="group-name">Infrastructure</span>
+            <li class="layer" data-layer="dam_hotspots">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Major dams<a href='#' data-source='dam_hotspots' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="oil_palm_mills">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Palm Oil Mills<a href='#' data-source='oil_palm_mills' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="logging_roads">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Congo Basin logging roads<a href='#' data-source='osm_logging_roads' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+          </div>
+        </ul>
+      </div>
+    </li>
+
+    <li class="conservation">
+      <span class="category-name">CONSERVATION <i id="conservation-category-num" class="category-num"></i></span>
+
+      <div id="layersnav-conservation" class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-conservation"></use></svg></div>
+          <span class="category-name">CONSERVATION</span>
+        </div>
+        <ul class="layers-list scroll-thin-dark">
+          <li class="layer" data-layer="protected_areasCDB">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Protected areas<a href='#' data-source='wdpa_protected_areas' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="wrapped-layer" data-color="#6D00E1">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Global Forest Biodiversity<a href='#' data-source='biodiversity_intactness' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">Forest Biodiversity Significance and Intactness</span>
+            <span class="layer-info -hidden">
+              <label data-layer="biodiversity_completeness" class="layer wrapped">
+                <span></span>
+                <input type="radio" />Significance
+              </label>
+              <label data-layer="biodiversity_intactness" class="layer wrapped">
+                <span></span>
+                <input type="radio" />Intactness
+              </label>
+            </span>
+          </li>
+          <li class="layer" data-layer="biodiversity_hotspots">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="layer" data-layer="birdlife">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">BirdLife Endemic Bird Areas<a href='#' data-source='endemic_bird_areas' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="layer" data-layer="azepoly">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Alliance for Zero Extinction sites<a href='#' data-source='alliance_for_zero_extinction_sites' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="layer" data-layer="tigers">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Tiger Conservation Landscapes<a href='#' data-source='tiger_conservation_landscapes' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="people">
+      <span class="category-name">PEOPLE <i id="people-category-num" class="category-num"></i></span>
+
+      <div id="layersnav-people" class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-people"></use></svg></div>
+          <span class="category-name">PEOPLE</span>
+        </div>
+        <ul class="layers-list scroll-thin-dark">
+          <li class="layer" data-layer="resource_rights">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Resource rights<a href='#' data-source='gfw_resource_rights' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(select countries)</span>
+          </li>
+          <li class="layer" data-layer="land_rights">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Land rights<a href='#' data-source='gfw_land_rights' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(select countries)</span>
+          </li>
+          <li class="layer" data-layer="grump2000">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Population density<a href='#' data-source='population_density' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000)</span>
+          </li>
+          <!--<li class="layer" data-layer="raisg">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Amazon basin indigenous territories<a href='#' data-source='raisg_indigenous_territories' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(RAISG)</span>
+          </li>-->
+        </ul>
+      </div>
+    </li>
+
+    <li class="stories">
+      <span class="category-name">STORIES <i id="stories-category-num" class="category-num"></i></span>
+
+      <div id="layersnav-stories" class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-stories"></use></svg></div>
+          <span class="category-name">STORIES</span>
+        </div>
+        <ul class="layers-list scroll-thin-dark">
+          <li class="layer" data-layer="user_stories">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">User stories<a href='#' data-source='user_stories' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="layer" data-layer="mongabay">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Mongabay stories<a href='#' data-source='mongabay_stories' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+          <li class="layer" data-layer="infoamazonia">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Earth Journalism Network stories<a href='#' data-source='ejn_stories' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li id="country-layers" class="country-layers-nav country">
+      <span class="category-name">COUNTRY DATA</span>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,28 @@
+<div class="overlay"></div>
+<div class="content-share mini-modal-content">
+  <a href="#" class="close"><svg><use xlink:href="#shape-close"></use></svg></a>
+  <header>
+    <h2>Share this view</h2>
+    <div id="share-info"><p>Click and paste link in email or IM</p></div>
+  </header>
+  <div class="mini-modal-input">
+    {{#if hideEmbed}}
+      <input class='field copy-input' type='text' id='share_field' value="" readonly />
+      <button class="btn gray uppercase copy_url" data-type="link">Copy</button>
+    {{else}}
+      <input class='field copy-input' type='text' id='share_field' value="" readonly />
+      <button class="btn gray uppercase copy_url" data-type="embed">Copy</button>
+      <ul class="button-container">
+        <li><button class="change-type btn gray uppercase" data-type="embed">Embed</button></li>
+        <li><button class="change-type btn green uppercase" data-type="link">Link</button></li>
+      </ul>
+    {{/if}}
+  </div>
+  <div class="share-sozial">
+    <ul>
+      <li><a href="https://plus.google.com/share?url=" target="_blank" class="google_plus popup"><svg class="icon"><use xlink:href="#icon-googleplus"></use></svg></a></li>
+      <li><a href="https://twitter.com/share?url=" target="_blank" class="twitter popup"><svg class="icon"><use xlink:href="#icon-twitter"></use></svg></a></li>
+      <li><a href="http://www.facebook.com/sharer.php?u=" target="_blank" class="facebook popup"><svg class="icon"><use xlink:href="#icon-facebook"></use></svg></a></li>
+    </ul>
+  </div>
+</div>

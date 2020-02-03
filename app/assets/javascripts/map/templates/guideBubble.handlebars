@@ -1,0 +1,22 @@
+<div class="guideBubble-arrow {{this.options.position}}{{#if this.options.align}}-{{this.options.align}}{{/if}}"></div>
+<div class="guide-navigation">
+	<span class="js-skip-tour close">
+		<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-close"></use></svg>
+	</span>
+	<div class="step">{{this.index}}</div>
+	<div class="btn-group pull-right">
+		{{#if this.prev}}
+			<button class="js-prev-button btn uppercase gray">Prev</button>
+		{{/if}}
+
+		{{#if this.next}}
+			<button class="js-next-button btn uppercase green">Next</button>
+		{{else}}
+			<button class="js-next-button btn uppercase green">Finish</button>
+		{{/if}}
+
+	</div>
+</div>
+<div class="intro">
+	{{{this.text}}}
+</div>

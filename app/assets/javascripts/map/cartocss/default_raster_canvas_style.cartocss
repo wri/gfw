@@ -1,0 +1,6 @@
+raster-opacity: 1;
+raster-scaling: fast;
+raster-colorizer-default-mode: linear;
+raster-colorizer-default-color: transparent;
+raster-colorizer-epsilon: 0.41;
+raster-colorizer-stops: stop(0,transparent, exact) stop(1,rgb(1,0,0), linear) stop(255,rgb(255,0,0), linear) stop(256,rgb(0,1,0), linear) stop(510,rgb(0,255,0), linear) stop(511,rgb(1,1,0), linear) stop(766,rgb(1,255,0), linear) stop(767, transparent, discrete);

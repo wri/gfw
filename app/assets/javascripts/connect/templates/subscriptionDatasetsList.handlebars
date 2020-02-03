@@ -1,0 +1,26 @@
+<div id="datasets-list" class="datasets-list">
+  <div class="field -default">
+    <label>Select the forest change alerts you would like to receive</label>
+    <div class="checkbox-box">
+      {{#if datasets}}
+        {{#each datasets}}
+          <div class="custom-checkbox">
+            <input class="dataset-checkbox" type="checkbox" name="datasets" id="{{slug}}" {{#if checked}}checked{{/if}}>
+            <label for="{{slug}}">
+              <span></span>
+              {{title}}
+              <svg data-source="{{slug_source}}" class="source"><use xlink:href="#shape-info"></use></svg>
+              <em>({{sub_title}})</em>
+            </label>
+          </div>
+        {{/each}}
+      {{else}}
+        <div class="m-spinner m-spinner -start -relative">
+          <div class="spinner-box">
+            <div class="icon"></div>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

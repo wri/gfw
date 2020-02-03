@@ -159,7 +159,7 @@ export const parseSentence = createSelector(
   (data, settings, locationObject, sentence) => {
     if (isEmpty(data) || !locationObject) return null;
     const selectedFAO = data.filter(item => item.iso === locationObject.value);
-    if (!selectedFAO.length) return '';
+    if (!selectedFAO.length) return null;
 
     const params = {
       location: `${locationObject && locationObject && locationObject.label}'s`,

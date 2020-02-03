@@ -1,0 +1,31 @@
+.onoffswitch {
+  cursor: pointer;
+  z-index: 10;
+  display: inline-block;
+  position: relative;
+  float: left;
+  width: 17px;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+
+  &.checked span {
+    transform: translate(7px,0%);
+  }
+
+  &.-right {
+    float: right;
+  }
+}
+
+.onoffswitch span {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  transform: translate(0px,0%);
+  border-radius: 4px;
+  transition: all 0.2s $easeInOutSine;
+}

@@ -1,0 +1,12 @@
+.is-hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.is-clearfix, .clearfix {
+  @include clearfix;
+}
+
+.is-no-scroll {
+  overflow: hidden;
+}
