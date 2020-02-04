@@ -41,7 +41,11 @@ class Widget extends PureComponent {
     showAttribution: PropTypes.bool,
     statements: PropTypes.array,
     getDataURL: PropTypes.func,
-    onClickWidget: PropTypes.func
+    onClickWidget: PropTypes.func,
+    parentData: PropTypes.object,
+    locationData: PropTypes.object,
+    childData: PropTypes.object,
+    adminLevel: PropTypes.string
   };
 
   render() {
@@ -77,7 +81,11 @@ class Widget extends PureComponent {
       showAttribution,
       statements,
       getDataURL,
-      onClickWidget
+      onClickWidget,
+      parentData,
+      childData,
+      adminLevel,
+      locationData
     } = this.props;
     const { main } = colors || {};
 
@@ -113,6 +121,10 @@ class Widget extends PureComponent {
           preventCloseSettings={preventCloseSettings}
           getDataURL={getDataURL}
           settings={settings}
+          parentData={parentData}
+          childData={childData}
+          adminLevel={adminLevel}
+          locationData={locationData}
         />
         <WidgetBody
           chartType={chartType}

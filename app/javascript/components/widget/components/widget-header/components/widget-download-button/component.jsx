@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import JSZip from 'jszip';
+import isEmpty from 'lodash/isEmpty';
 import snakeCase from 'lodash/snakeCase';
 import JSZipUtils from 'jszip-utils';
 import moment from 'moment';
@@ -18,10 +19,10 @@ class WidgetDownloadButton extends PureComponent {
     getDataURL: PropTypes.func,
     settings: PropTypes.object,
     title: PropTypes.string,
-    parentLocationData: PropTypes.object,
+    parentData: PropTypes.object,
     locationData: PropTypes.object,
-    childLocationData: PropTypes.object,
-    locationObject: PropTypes.object,
+    childData: PropTypes.object,
+    adminLevel: PropTypes.object,
     metaKey: PropTypes.string
   };
 
@@ -29,10 +30,10 @@ class WidgetDownloadButton extends PureComponent {
     const {
       title,
       settings,
-      parentLocationData,
+      parentData,
       locationData,
-      childLocationData,
-      locationObject,
+      childData,
+      adminLevel: intAdminLevel,
       metaKey,
       getDataURL
     } = this.props;
@@ -71,7 +72,7 @@ class WidgetDownloadButton extends PureComponent {
       .join('\n');
 
     let parentAdminLevel = 'global';
-    let adminLevel = (locationObject && locationObject.adminLevel) || 'global';
+    let adminLevel = intAdminLevel || 'global';
     let childAdminLevel = 'adm2';
 
     if (adminLevel === 'global') {
@@ -89,25 +90,35 @@ class WidgetDownloadButton extends PureComponent {
     }
 
     const parentLocationMetadataFile =
-      parentLocationData &&
+      !isEmpty(parentData) &&
+      adminLevel !== 'global' &&
+      adminLevel !== 'iso' &&
       [`name,${parentAdminLevel}${parentAdminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
-          parentLocationData.map(entry => `"${entry.label}","${entry.value}"`)
+          Object.values(parentData).map(
+            entry => `"${entry.label}","${entry.value}"`
+          )
         )
         .join('\n');
 
     const locationMetadataFile =
-      locationData &&
+      !isEmpty(locationData) &&
       adminLevel !== 'global' &&
       [`name,${adminLevel}${adminLevel !== 'iso' ? '__id' : ''}`]
-        .concat(locationData.map(entry => `"${entry.label}","${entry.value}"`))
+        .concat(
+          Object.values(locationData).map(
+            entry => `"${entry.label}","${entry.value}"`
+          )
+        )
         .join('\n');
 
     const childLocationMetadataFile =
-      childLocationData &&
+      !isEmpty(childData) &&
       [`name,${childAdminLevel}${childAdminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
-          childLocationData.map(entry => `"${entry.label}","${entry.value}"`)
+          Object.values(childData).map(
+            entry => `"${entry.label}","${entry.value}"`
+          )
         )
         .join('\n');
 

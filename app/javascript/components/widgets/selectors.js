@@ -31,17 +31,18 @@ import {
 import allWidgets from './manifest';
 
 const buildLocationDict = locations =>
-  location &&
-  locations.length &&
-  locations.reduce(
-    (dict, next) => ({
-      ...dict,
-      [next.value || next.id]: {
-        ...next
-      }
-    }),
-    {}
-  );
+  (location &&
+    !!locations.length &&
+    locations.reduce(
+      (dict, next) => ({
+        ...dict,
+        [next.value || next.id]: {
+          ...next
+        }
+      }),
+      {}
+    )) ||
+  {};
 
 export const selectLocation = state => state.location && state.location.payload;
 export const selectRouteType = state => state.location && state.location.type;
