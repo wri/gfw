@@ -22,7 +22,8 @@ class WidgetDownloadButton extends PureComponent {
     parentData: PropTypes.object,
     locationData: PropTypes.object,
     childData: PropTypes.object,
-    adminLevel: PropTypes.object,
+    location: PropTypes.object,
+    adminLevel: PropTypes.string,
     metaKey: PropTypes.string
   };
 
@@ -35,7 +36,8 @@ class WidgetDownloadButton extends PureComponent {
       childData,
       adminLevel: intAdminLevel,
       metaKey,
-      getDataURL
+      getDataURL,
+      location
     } = this.props;
 
     const params = { ...location, ...settings };
