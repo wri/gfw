@@ -15,30 +15,30 @@ import './styles.scss';
 
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
-    square: PropTypes.bool,
     getDataURL: PropTypes.func,
     settings: PropTypes.object,
     title: PropTypes.string,
-    allLocation: PropTypes.object,
     parentLocationData: PropTypes.object,
     locationData: PropTypes.object,
     childLocationData: PropTypes.object,
     locationObject: PropTypes.object,
-    config: PropTypes.object
+    metaKey: PropTypes.string
   };
 
-  generateZipFromURL = files => {
+  generateZipFromURL = () => {
     const {
       title,
-      config,
       settings,
-      allLocation,
       parentLocationData,
       locationData,
       childLocationData,
-      locationObject
+      locationObject,
+      metaKey,
+      getDataURL
     } = this.props;
-    const { metaKey } = config;
+
+    const params = { location, settings };
+    const files = getDataURL && getDataURL(params);
 
     const metadata = {
       title,
@@ -57,11 +57,7 @@ class WidgetDownloadButton extends PureComponent {
       metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${
         metaKey
       }`,
-      link: 'https://www.globalforestwatch.org'.concat(
-        allLocation.pathname,
-        '?',
-        allLocation.search
-      )
+      link: window.location.href
     };
 
     const metadataFile = Object.entries(metadata)
@@ -158,17 +154,11 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const { getDataURL, settings } = this.props;
-    const params = { location, settings };
-    const urls = getDataURL && getDataURL(params);
-
     return (
       <Button
         className="c-widget-download-button"
         theme="theme-button-small square"
-        {...getDataURL && {
-          onClick: () => this.generateZipFromURL(urls)
-        }}
+        onClick={this.generateZipFromURL}
         tooltip={{ text: 'Download the data' }}
       >
         <Icon icon={downloadIcon} className="download-icon" />
