@@ -2,6 +2,8 @@ import { cartoRequest } from 'utils/request';
 
 import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 
+const CARTO_API = process.env.CARTO_API;
+
 const NEW_SQL_QUERIES = {
   faoExtent:
     'SELECT country AS iso, name, plantfor * 1000 AS planted_forest__ha, primfor * 1000 AS primary_forest__ha, natregfor * 1000 AS regenerated_forest__ha, forest * 1000 AS fao_treecover__ha, totarea as area_ha FROM table_1_forest_area_and_characteristics WHERE {location} AND year = 2015',
@@ -51,7 +53,7 @@ export const getFAOExtent = ({ adm0, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_extent__ha',
-      url: url.concat('&format=csv')
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
 
@@ -85,7 +87,7 @@ export const getFAOReforest = ({ period, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_reforestation__ha',
-      url: url.concat('&format=csv')
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
 
@@ -112,7 +114,7 @@ export const getFAODeforest = ({ adm0, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_deforestation__ha',
-      url: url.concat('&format=csv')
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
 
@@ -138,9 +140,10 @@ export const getFAODeforestRank = ({ period, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_deforestation_rank',
-      url: url.concat('&format=csv')
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
+
   return cartoRequest.get(url).then(response => ({
     ...response,
     data: {
@@ -160,7 +163,7 @@ export const getFAOEcoLive = params => {
   if (download) {
     return {
       name: 'fao_treecover_economic_live',
-      url: url.concat('&format=csv')
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
 
@@ -192,24 +195,11 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
   if (download) {
     return {
       name: 'global_land_cover',
-      url: url.concat('&format=csv')
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
 
-  // TODO: refactor global land cover widget to use method below
   return cartoRequest.get(url);
-};
-
-export const getGlobalLandCoverURL = ({ adm0, adm1, adm2 }) => {
-  const url = `/sql?q=${NEW_SQL_QUERIES.globalLandCoverURL}`.replace(
-    '{location}',
-    getLocationQuery(adm0, adm1, adm2)
-  );
-
-  return {
-    name: 'global_land_cover',
-    url: encodeURI(url.concat('&format=csv')).replace(/\+/g, '%2B')
-  };
 };
 
 export const getUSLandCover = params => {
@@ -236,12 +226,10 @@ export const getUSLandCover = params => {
 
   if (download) {
     return {
-      name: 'us_land_cover',
-      url: url.concat(
-        `&format=csv&filename=land_cover_in_ha_in_${adm0}${
-          adm1 ? `_${adm1}` : ''
-        }${adm2 ? `_${adm2}` : ''}_from_${startYear}_to_${endYear}`
-      )
+      name: `land_cover_in_ha_in_${adm0}${adm1 ? `_${adm1}` : ''}${
+        adm2 ? `_${adm2}` : ''
+      }_from_${startYear}_to_${endYear}`,
+      url: `${CARTO_API}${url}&format=csv`
     };
   }
 
