@@ -94,7 +94,7 @@ export default {
 
         if (loss && loss.data && extent && extent.data) {
           data = {
-            loss: loss.data.data.filter(d => d.tcs !== 'Unknown'),
+            loss: loss.data.data.filter(d => d.tcs_driver__type !== 'Unknown'),
             extent: (loss.data.data && extent.data.data[0].value) || 0
           };
         }
