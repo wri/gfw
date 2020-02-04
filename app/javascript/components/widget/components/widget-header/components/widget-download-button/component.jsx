@@ -37,7 +37,7 @@ class WidgetDownloadButton extends PureComponent {
       getDataURL
     } = this.props;
 
-    const params = { location, settings };
+    const params = { ...location, ...settings };
     const files = getDataURL && getDataURL(params);
 
     const metadata = {
@@ -46,7 +46,13 @@ class WidgetDownloadButton extends PureComponent {
         ...Object.keys(settings).reduce(
           (obj, key) => ({
             ...obj,
-            ...(!['activeData', 'page', 'page_size', 'ifl'].includes(key) && {
+            ...(![
+              'interaction',
+              'activeData',
+              'page',
+              'page_size',
+              'ifl'
+            ].includes(key) && {
               [snakeCase(key)]: settings[key]
             })
           }),
