@@ -16,22 +16,22 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [
-    // {
-    //   key: 'forestType',
-    //   label: 'Forest Type',
-    //   type: 'select',
-    //   placeholder: 'All tree cover',
-    //   clearable: true
-    // },
-    // {
-    //   key: 'landCategory',
-    //   label: 'Land Category',
-    //   type: 'select',
-    //   whitelist: ['mining', 'wdpa', 'landmark'],
-    //   placeholder: 'All categories',
-    //   clearable: true,
-    //   border: true
-    // },
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      whitelist: ['mining', 'wdpa', 'landmark'],
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
     {
       key: 'weeks',
       label: 'show data for the last',
