@@ -112,6 +112,7 @@ class Widget extends PureComponent {
           handleShowShare={handleShowShare}
           preventCloseSettings={preventCloseSettings}
           getDataURL={getDataURL}
+          settings={settings}
         />
         <WidgetBody
           chartType={chartType}
