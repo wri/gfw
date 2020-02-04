@@ -63,14 +63,14 @@ class ProfileForm extends PureComponent {
                   </div>
                 ) : (
                   <Fragment>
-                    <div className="column small-12">
+                    <div className="column small-12 medium-12">
                       <h1>Your profile information</h1>
                       <h3>
                         Help us help you! Tell us who you are and how you use
                         Global Forest Watch so we can better meet your needs.
                       </h3>
                     </div>
-                    <div className="column small-12 medium-6">
+                    <div className="column small-12 medium-12">
                       <Input name="firstName" label="first name" required />
                       <Input name="lastName" label="last name" required />
                       <Input
@@ -97,7 +97,8 @@ class ProfileForm extends PureComponent {
                           label="Role"
                           options={sectors[values.sector].map(s => ({
                             label: s,
-                            value: s.replace(/( )+|(\/)+/g, '_')
+                            value: s.replace(/( )+|(\/)+/g, '_'),
+                            radioInput: s === 'Other (write in):'
                           }))}
                           selectedOption={values.subsector}
                         />
@@ -130,15 +131,10 @@ class ProfileForm extends PureComponent {
                         label="state / department / province"
                         required
                       />
-                    </div>
-                    <div className="column small-12 medium-6">
                       <Select
                         name="interests"
                         label="What topics are you interested in? Select all that apply."
-                        options={interests.map(interest => ({
-                          label: interest,
-                          value: interest.replace(/( )+|(\/)+/g, '_')
-                        }))}
+                        options={interests}
                         required
                         multiple
                       />
@@ -175,10 +171,7 @@ class ProfileForm extends PureComponent {
                         <Select
                           name="topics"
                           label="Topics you're interested in receiving communications about"
-                          options={topics.map(s => ({
-                            label: s,
-                            value: s.replace(/( )+|(\/)+/g, '_')
-                          }))}
+                          options={topics}
                           required
                           multiple
                         />
