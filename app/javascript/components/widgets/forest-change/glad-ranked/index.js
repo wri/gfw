@@ -1,8 +1,11 @@
 import { all, spread } from 'axios';
 import tropicalIsos from 'data/tropical-isos.json';
 
-import { getExtentGrouped } from 'services/forest-data-old';
-import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import {
+  getExtentGrouped,
+  fetchGladAlerts,
+  fetchGLADLatest
+} from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 

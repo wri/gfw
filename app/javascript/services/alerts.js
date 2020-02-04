@@ -1,5 +1,6 @@
 import { apiRequest } from 'utils/request';
 import moment from 'moment';
+import { all, spread } from 'axios';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
@@ -24,6 +25,34 @@ const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
+
+export const getLatestAlerts = ({ location, params }) =>
+  all([
+    fetchAnalysisEndpoint({
+      ...location,
+      params,
+      name: 'glad-alerts',
+      slug: 'glad-alerts',
+      version: 'v1'
+    }),
+    fetchAnalysisEndpoint({
+      ...location,
+      params,
+      name: 'viirs-alerts',
+      slug: 'viirs-active-fires',
+      version: 'v1'
+    })
+  ]).then(
+    spread((gladsResponse, firesResponse) => {
+      const { value: glads } = gladsResponse.data.data.attributes || {};
+      const { value: fires } = firesResponse.data.data.attributes || {};
+
+      return {
+        glads,
+        fires
+      };
+    })
+  );
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;

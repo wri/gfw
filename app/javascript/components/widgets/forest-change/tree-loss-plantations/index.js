@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { getLoss } from 'services/forest-data-old';
+import { getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 

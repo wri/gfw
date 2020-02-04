@@ -7,7 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 
-import { getExtent, getLoss } from 'services/forest-data-old';
+import { getExtent, getLoss } from 'services/analysis-cached';
 import { getGeodescriberService } from 'services/geostore';
 
 export const setGeodescriberLoading = createAction('setGeodescriberLoading');
