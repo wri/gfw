@@ -30,6 +30,9 @@ Gfw::Application.routes.draw do
   # sources
   get '/sources' => redirect("http://data.globalforestwatch.org/")
   get '/sources/*all' => redirect("http://data.globalforestwatch.org/")
+
+  get '/my_gfw' => redirect("/my-gfw")
+  get '/my_gfw/*all' => redirect("/my-gfw")
   ########### /LEGACY #############
 
   ########### ACTIVE ROUTES #############
@@ -46,7 +49,7 @@ Gfw::Application.routes.draw do
   # dashboards
   get '/dashboards' => redirect('/dashboards/global')
   get '/dashboards(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#index'
-  get '/embed/dashboards/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
+  get '/embed/widget/:slug/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
 
   # about
   get '/about' => 'about#index'
@@ -59,8 +62,9 @@ Gfw::Application.routes.draw do
   # thank you
   get '/thank-you' => 'thankyou#index'
 
-  # login
-  get '/my_gfw' => 'my_gfw#index'
+  # my gfw
+  get '/my-gfw' => 'my_gfw#index'
+  get '/my-gfw/*all' => 'connect#index', as: 'user_profile'
 
   # stories
   get '/stories' => 'stories#index'
@@ -69,9 +73,6 @@ Gfw::Application.routes.draw do
   # Small Grunts Fund
   get '/grants-and-fellowships' => 'grants_and_fellowships#index'
   get '/grants-and-fellowships/*all' => 'grants_and_fellowships#index'
-
-  # connect
-  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
   # static #
   get '/browser-support' => 'browser_support#index'

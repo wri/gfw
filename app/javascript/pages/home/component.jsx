@@ -268,7 +268,7 @@ class HomePage extends PureComponent {
               <Button
                 className="my-gfw-btn"
                 theme="theme-button-light"
-                extLink="/my_gfw"
+                extLink="/my-gfw"
               >
                 My GFW
               </Button>

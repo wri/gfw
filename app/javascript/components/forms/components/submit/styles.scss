@@ -6,26 +6,14 @@
   justify-content: center;
   flex-direction: column;
   margin-bottom: 0;
-
-  span {
-    align-self: flex-start;
-    font-size: rem(14px);
-    color: $error;
-    margin-bottom: rem(15px);
-
-    @media screen and (min-width: $screen-m) {
-      margin-right: rem(20px);
-      margin-bottom: rem(30px);
-    }
-
-    &.success {
-      color: $green-gfw;
-    }
-  }
+  position: relative;
 
   .submit-btn {
     position: relative;
-    align-self: flex-end;
+
+    @media screen and (min-width: $screen-m) {
+      align-self: flex-end;
+    }
 
     .submit-loader {
       > div {

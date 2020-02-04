@@ -13,36 +13,34 @@ class ChartTooltip extends PureComponent {
         {settings &&
           settings.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
-            {settings.map(
-              d =>
-                (hideZeros && (!values || !values[d.key]) ? null : (
-                  <div
-                    key={d.key}
-                    className={`data-line ${d.position || ''}`}
-                  >
-                    {(d.label || d.labelKey) && (
-                      <div className="data-label">
-                        {d.color && (
-                          <div
-                            className="data-color"
-                            style={{ backgroundColor: d.color }}
-                          />
-                        )}
-                        {d.key === 'break' ? (
-                          <span className="break-label">{d.label}</span>
-                        ) : (
-                          <span>{d.label || values[d.labelKey]}</span>
-                        )}
-                      </div>
-                    )}
-                    <div className="notranslate">
-                      {d.unit && d.unitFormat
-                        ? `${d.unitFormat(values[d.key])}${d.unit}`
-                        : values[d.key]}
+            {settings.map(d => {
+              const value = d.unitFormat
+                ? d.unitFormat(values[d.key])
+                : values[d.key];
+
+              return hideZeros && (!values || !value) ? null : (
+                <div key={d.key} className={`data-line ${d.position || ''}`}>
+                  {(d.label || d.labelKey) && (
+                    <div className="data-label">
+                      {d.color && (
+                        <div
+                          className="data-color"
+                          style={{ backgroundColor: d.color }}
+                        />
+                      )}
+                      {d.key === 'break' ? (
+                        <span className="break-label">{d.label}</span>
+                      ) : (
+                        <span>{d.label || values[d.labelKey]}</span>
+                      )}
                     </div>
+                  )}
+                  <div className="notranslate">
+                    {d.unit && d.unitFormat ? `${value}${d.unit}` : value}
                   </div>
-                ))
-            )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

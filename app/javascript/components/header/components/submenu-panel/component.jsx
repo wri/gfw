@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { NavLink } from 'redux-first-router-link';
@@ -7,6 +7,7 @@ import Icon from 'components/ui/icon';
 import Search from 'components/ui/search';
 
 import moreIcon from 'assets/icons/more.svg';
+import myGfwIcon from 'assets/icons/mygfw.svg';
 
 import DropdownMenu from '../dropdown-menu';
 
@@ -38,7 +39,6 @@ class Header extends PureComponent {
       navMain,
       activeLang,
       languages,
-      myGfwLinks,
       handleLangSelect,
       loggedIn,
       toggleContactUs,
@@ -70,6 +70,18 @@ class Header extends PureComponent {
                 options={navMain}
                 hideMenu={hideMenu}
               />
+              <NavLink
+                className="nav-link my-gfw-link"
+                to="/my-gfw"
+                activeClassName="active"
+                onClick={() => hideMenu()}
+              >
+                My GFW
+                <Icon
+                  icon={myGfwIcon}
+                  className={cx({ 'logged-in': loggedIn })}
+                />
+              </NavLink>
             </div>
           )}
           {isMobile && (
@@ -85,21 +97,12 @@ class Header extends PureComponent {
               />
             </div>
           )}
-          {isMobile && (
+          {isMobile &&
+            !loggedIn && (
             <div className="menu-section">
-              {loggedIn ? (
-                <Fragment>
-                  <h4>My GFW</h4>
-                  <DropdownMenu
-                    className="sub-menu -plain"
-                    options={myGfwLinks}
-                  />
-                </Fragment>
-              ) : (
-                <NavLink className="nav-link" to="/my_gfw">
+              <NavLink className="nav-link" to="/my-gfw">
                   My GFW
-                </NavLink>
-              )}
+              </NavLink>
             </div>
           )}
           <div className="menu-section">
@@ -184,7 +187,6 @@ Header.propTypes = {
   navMain: PropTypes.array,
   activeLang: PropTypes.object,
   languages: PropTypes.array,
-  myGfwLinks: PropTypes.array,
   hideMenu: PropTypes.func,
   handleLangSelect: PropTypes.func,
   toggleContactUs: PropTypes.func,

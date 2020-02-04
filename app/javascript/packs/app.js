@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => render(App));
 
 if (module.hot) {
   /* eslint-disable global-require */
-  module.hot.accept('../app', () => {
+  module.hot.accept(['../app'], () => {
     render(require('../app').default);
   });
 }

@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+
+.c-user-profile {
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: $screen-m) {
+    align-items: flex-end;
+  }
+
+  .name,
+  .email {
+    font-size: rem(18px);
+    color: $white;
+    margin-bottom: rem(10px);
+  }
+
+  .user-btn {
+    color: #aaa;
+    font-size: rem(14px);
+    text-align: right;
+    padding: 0;
+    height: auto;
+    text-transform: none;
+    margin: rem(10px) 0;
+
+    .user-btn-icon {
+      width: rem(15px);
+      height: rem(15px);
+      fill: #aaa;
+      margin-left: rem(10px);
+    }
+
+    &:hover {
+      color: darken(#aaa, 20%);
+
+      .user-btn-icon {
+        fill: darken(#aaa, 20%);
+
+        &:hover {
+          fill: darken(#aaa, 20%);
+        }
+      }
+    }
+  }
+}

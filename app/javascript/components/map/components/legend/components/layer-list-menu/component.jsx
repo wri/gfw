@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { LegendItemTypes } from 'vizzuality-components/dist/legend';
 import LayerToggle from '../layer-toggle';
 import LayerMoreInfo from '../layer-more-info';
 
@@ -23,6 +24,15 @@ class LayerListMenu extends PureComponent {
                   onInfoClick={() => onInfoClick(l.metadata)}
                   small
                 />
+                {l.nestedLegend &&
+                  l.active && (
+                  <div className="nested-legend">
+                    <LegendItemTypes activeLayer={l} />
+                  </div>
+                )}
+                {l.legendDesc && (
+                  <p className="layer-description">{l.legendDesc}</p>
+                )}
                 {l.moreInfo && (
                   <LayerMoreInfo className="more-info" {...l.moreInfo} />
                 )}

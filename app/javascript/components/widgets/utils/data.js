@@ -6,13 +6,13 @@ import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
 import upperCase from 'lodash/upperCase';
 import moment from 'moment';
+import range from 'lodash/range';
 
 const translateMeans = (means, latest) => {
   if (!means || !means.length) return null;
   const currentWeek = moment(latest).isoWeek();
   const firstHalf = means.slice(0, currentWeek);
   const secondHalf = means.slice(currentWeek);
-
   return secondHalf.concat(firstHalf);
 };
 
@@ -66,7 +66,7 @@ export const getMeansData = (data, latest) => {
   const pastYear = data.slice(-52);
   const parsedData = pastYear.map((d, i) => ({
     ...d,
-    mean: translatedMeans[i]
+    mean: (translatedMeans && translatedMeans[i]) || 0
   }));
   return parsedData;
 };
@@ -189,4 +189,20 @@ export const yearTicksFormatter = (tick, startYear, endYear) => {
     return year.format('YYYY');
   }
   return `'${year.format('YY')}`;
+};
+
+export const getYearsRange = (data, interval) => {
+  const startYearObj = minBy(data, 'year');
+  const endYearObj = maxBy(data, 'year');
+  const startYear = startYearObj && startYearObj.year;
+  const endYear = endYearObj && endYearObj.year;
+
+  return {
+    startYear,
+    endYear,
+    range: range(startYear, endYear + 1, interval || 1).map(y => ({
+      label: y,
+      value: y
+    }))
+  };
 };

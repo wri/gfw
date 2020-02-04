@@ -31,4 +31,19 @@ $desktop-padding: rem(50px);
   a {
     color: $green-gfw;
   }
+
+  pre {
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+
+    .json-key {
+      color: #d46c75;
+    }
+
+    .json-string {
+      color: #67995a;
+    }
+  }
 }
