@@ -1,4 +1,4 @@
-import { getExtent, getAreaIntersection } from 'services/forest-data-old';
+import { getExtent, getAreaIntersection } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import getWidgetProps from './selectors';
@@ -33,7 +33,6 @@ export default {
   },
   settings: {
     threshold: 10,
-    type: 'bound2',
     extentYear: 2010
   },
   sentences: {

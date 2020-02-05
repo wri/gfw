@@ -3,7 +3,7 @@ import moment from 'moment';
 import { getYearsRange } from 'components/widgets/utils/data';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getExtent, getLoss } from 'services/forest-data-old';
+import { getExtent, getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -94,7 +94,7 @@ export default {
 
         if (loss && loss.data && extent && extent.data) {
           data = {
-            loss: loss.data.data.filter(d => d.tcs !== 'Unknown'),
+            loss: loss.data.data.filter(d => d.tcs_driver__type !== 'Unknown'),
             extent: (loss.data.data && extent.data.data[0].value) || 0
           };
         }
