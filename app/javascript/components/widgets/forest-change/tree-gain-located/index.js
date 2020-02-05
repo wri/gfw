@@ -1,4 +1,4 @@
-import { getExtentGrouped, getGainGrouped } from 'services/forest-data-old';
+import { getExtentGrouped, getGainGrouped } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import getWidgetProps from './selectors';

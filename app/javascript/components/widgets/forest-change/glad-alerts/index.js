@@ -3,7 +3,7 @@ import moment from 'moment';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import { fetchAnalysisEndpoint } from 'services/analysis';
-import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
+import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -47,21 +47,21 @@ export default {
   pendingKeys: ['weeks'],
   refetchKeys: ['forestType', 'landCategory'],
   settingsConfig: [
-    // {
-    //   key: 'forestType',
-    //   label: 'Forest Type',
-    //   type: 'select',
-    //   placeholder: 'All tree cover',
-    //   clearable: true
-    // },
-    // {
-    //   key: 'landCategory',
-    //   label: 'Land Category',
-    //   type: 'select',
-    //   placeholder: 'All categories',
-    //   clearable: true,
-    //   border: true
-    // },
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
     {
       key: 'weeks',
       label: 'show data for the last',
