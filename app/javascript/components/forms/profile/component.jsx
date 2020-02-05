@@ -119,15 +119,15 @@ class ProfileForm extends PureComponent {
                       />
                       <h4>Geographic area of interest *</h4>
                       <Select
-                        name="aoi-country"
+                        name="aoiCountry"
                         label="country"
                         options={countries}
                         placeholder="Select a country"
                         required
                       />
-                      <Input name="aoi-city" label="city" required />
+                      <Input name="aoiCity" label="city" required />
                       <Input
-                        name="aoi-state"
+                        name="aoiState"
                         label="state / department / province"
                         required
                       />
