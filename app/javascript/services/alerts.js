@@ -88,7 +88,7 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   if (download) {
     return {
       name: 'viirs_fire_alerts__count',
-      url: url.replace('query', 'download')
+      url: `${process.env.GFW_API}${url.replace('query', 'download')}`
     };
   }
 
@@ -127,7 +127,7 @@ export const fetchFiresAlertsGrouped = ({
   if (download) {
     return {
       name: 'viirs_fire_alerts__count',
-      url: url.replace('query', 'download')
+      url: `${process.env.GFW_API}${url.replace('query', 'download')}`
     };
   }
 

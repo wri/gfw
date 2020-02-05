@@ -20,12 +20,9 @@
     }
 
     .page-loader {
+      position: relative;
       z-index: 1;
-      min-height: calc(100vh - 56px - 583px);
-
-      @media screen and (min-width: $screen-m) {
-        min-height: calc(100vh - 56px - 384px);
-      }
+      min-height: 60vh;
     }
 
     &.mobile {

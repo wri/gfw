@@ -14,9 +14,8 @@ class SectionAbout extends PureComponent {
         <div className="row">
           <div className="column small-12 medium-9">
             <p className="text -paragraph -color-2 -light -spaced">
-              The Small Grants Fund and Fellowship Calls for Applications open
-              once a year. Though the specific focus of the Calls varies from
-              year to year, successful applicants must clearly articulate how
+              The specific focus of the Calls for Applications varies from year
+              to year, though successful applicants must clearly articulate how
               GFW will support and enhance their ongoing work related to:
             </p>
             <ul className="list">
@@ -26,18 +25,6 @@ class SectionAbout extends PureComponent {
               <li>- Journalism</li>
               <li>- Education</li>
             </ul>
-            <p className="text -paragraph -color-2 -light -spaced">
-              Listen to the{' '}
-              <a
-                className="text -paragraph -color-4 -bold"
-                href="https://www.youtube.com/watch?v=ddDyu_l663k&feature=youtu.be"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                2019 GFW Grants and Fellowships Webinar
-              </a>
-              .
-            </p>
             <p className="text -paragraph -color-2 -light -spaced">
               For details on how to apply to each, please see below:
             </p>
@@ -77,18 +64,18 @@ class SectionAbout extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Small Grants Fund Frequently Asked Questions.
+                    Small Grants Fund Frequently Asked Questions
                   </a>
                 </li>
                 <li>
                   - Listen to the&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="https://www.youtube.com/watch?v=uHt1FqaSPwQ"
+                    href="https://youtu.be/hHar_nUYi9k"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    webinar featuring past SGF project recipients.
+                    2020 Small Grants Fund Webinar
                   </a>
                 </li>
               </ul>
