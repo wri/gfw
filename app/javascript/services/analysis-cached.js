@@ -58,11 +58,19 @@ const SQL_QUERIES = {
     'SELECT {location}, {polynames} FROM data {WHERE}'
 };
 
-const ALLOWED_PARAMS = [
+const ANNUAL_ALLOWED_PARAMS = [
   'adm0',
   'adm1',
   'adm2',
   'threshold',
+  'forestType',
+  'landCategory'
+];
+
+const GLAD_ALLOWED_PARAMS = [
+  'adm0',
+  'adm1',
+  'adm2',
   'forestType',
   'landCategory'
 ];
@@ -155,6 +163,9 @@ const getRequestUrl = ({ glad, ...params }) => {
 export const getWHEREQuery = params => {
   const allPolynames = forestTypes.concat(landCategories);
   const paramKeys = params && Object.keys(params);
+  const ALLOWED_PARAMS = params.glad
+    ? GLAD_ALLOWED_PARAMS
+    : ANNUAL_ALLOWED_PARAMS;
   const paramKeysFiltered = paramKeys.filter(
     p => (params[p] || p === 'threshold') && ALLOWED_PARAMS.includes(p)
   );
@@ -250,7 +261,7 @@ export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
       /{location}/g,
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
 
   if (download) {
     return {
@@ -283,14 +294,18 @@ export const getExtent = ({
   landCategory,
   ...params
 }) => {
-  const url = `${getRequestUrl({ adm0, adm1, adm2, summary: true })}${
-    SQL_QUERIES.extent
-  }`
+  const url = `${getRequestUrl({
+    adm0,
+    adm1,
+    adm2,
+    summary: true,
+    ...params
+  })}${SQL_QUERIES.extent}`
     .replace(/{extentYear}/g, extentYear)
     .replace(
       '{WHERE}',
       getWHEREQuery({
-        iso: adm0,
+        adm0,
         adm1,
         adm2,
         forestType,
@@ -409,7 +424,7 @@ export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
       /{location}/g,
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
 
   if (download) {
     return {
@@ -559,8 +574,7 @@ export const fetchGladAlerts = ({
     adm1,
     adm2,
     grouped,
-    glad: true,
-    ...params
+    glad: true
   })}${glad}`
     .replace(
       /{location}/g,
@@ -568,7 +582,10 @@ export const fetchGladAlerts = ({
         ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
         : getLocationSelect({ adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({ adm0, adm1, adm2, ...params, glad: true })
+    );
 
   if (download) {
     return {
@@ -630,7 +647,7 @@ export const getNonGlobalDatasets = () => {
 };
 
 export const getLocationPolynameWhitelist = params => {
-  const url = `${getRequestUrl({ ...params, whitelist: true })}${
+  const url = `${getRequestUrl({ ...params, whitelist: true, summary: true })}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))

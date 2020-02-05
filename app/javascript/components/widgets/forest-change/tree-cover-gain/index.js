@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 
-import { getGainGrouped } from 'services/forest-data-old';
+import { getGainGrouped } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 

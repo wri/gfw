@@ -1,4 +1,4 @@
-import { getExtent } from 'services/forest-data-old';
+import { getExtent } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import getWidgetProps from './selectors';
