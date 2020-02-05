@@ -9,11 +9,15 @@
 
   h3 {
     font-size: rem(16px);
-    margin-bottom: rem(28px);
+    margin-bottom: rem(40px);
 
     @media screen and (min-width: $screen-m) {
       margin-bottom: rem(60px);
     }
+  }
+
+  h4 {
+    margin-bottom: rem(12px);
   }
 
   p {
