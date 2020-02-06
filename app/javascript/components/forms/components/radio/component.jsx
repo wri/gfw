@@ -71,17 +71,18 @@ class Radio extends PureComponent {
                       <label className="radio-label" htmlFor={id}>
                         <span />
                         {option.label}
-                        {selectedOption === option.value &&
-                          option.radioInput && (
-                          <Field
-                            id={id}
-                            name={`${input.name}_otherInput`}
-                            component="input"
-                            type="type"
-                            className="radio-input"
-                          />
-                        )}
                       </label>
+                      {selectedOption === option.value &&
+                        option.radioInput && (
+                        <Field
+                          id={id}
+                          name={`${input.name}_otherInput`}
+                          component="input"
+                          type="type"
+                          className="radio-input"
+                          autoFocus
+                        />
+                      )}
                     </div>
                   );
                 })}

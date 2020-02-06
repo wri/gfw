@@ -105,7 +105,7 @@ class ProfileForm extends PureComponent {
                       )}
                       <Input name="jobTitle" label="job title" />
                       <Input name="company" label="Company / organization" />
-                      <h4>Location</h4>
+                      <p className="section-name">In which location are you?</p>
                       <Select
                         name="country"
                         label="country"
@@ -117,7 +117,9 @@ class ProfileForm extends PureComponent {
                         name="state"
                         label="state / department / province"
                       />
-                      <h4>Geographic area of interest *</h4>
+                      <p className="section-name">
+                        Which geographical location are you interested in? *
+                      </p>
                       <Select
                         name="aoiCountry"
                         label="country"

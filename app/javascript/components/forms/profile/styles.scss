@@ -16,12 +16,15 @@
     }
   }
 
-  h4 {
-    margin-bottom: rem(12px);
-  }
-
   p {
     margin-bottom: rem(20px);
+  }
+
+  .section-name {
+    margin-bottom: rem(12px);
+    color: $slate-light;
+    font-size: rem(18px);
+    line-height: rem(30px);
   }
 
   .submit-btn {
