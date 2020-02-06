@@ -105,6 +105,7 @@ class Popup extends Component {
             <Card
               className="popup-card"
               theme="theme-card-small"
+              clamp={5}
               data={{
                 ...cardData,
                 buttons: cardData.buttons.map(
