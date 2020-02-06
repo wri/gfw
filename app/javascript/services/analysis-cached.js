@@ -120,9 +120,9 @@ const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
   if (type === 'wdpa' && whitelist) return GLAD_WDPA_WHITELIST;
   if (type === 'wdpa') return GLAD_WDPA_WEEKLY;
 
-  if (adm2 || (adm1 && grouped && whitelist)) return GLAD_ADM2_WHITELIST;
+  if ((adm2 || (adm1 && grouped)) && whitelist) return GLAD_ADM2_WHITELIST;
   if (adm2 || (adm1 && grouped)) return GLAD_ADM2_WEEKLY;
-  if (adm1 || (adm0 && grouped && whitelist)) return GLAD_ADM1_WHITELIST;
+  if ((adm1 || (adm0 && grouped)) && whitelist) return GLAD_ADM1_WHITELIST;
   if (adm1 || (adm0 && grouped)) return GLAD_ADM1_WEEKLY;
   if (whitelist) return GLAD_ADM0_WHITELIST;
 
