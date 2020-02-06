@@ -9,7 +9,9 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
     myGfw.data && {
     initialValues: {
       ...myGfw.data,
-      signUpForTesting: myGfw.data.signUpForTesting ? ['yes'] : false
+      signUpNewsletterOrTesting: myGfw.data.signUpForTesting
+        ? ['testing']
+        : []
     }
   })
 });

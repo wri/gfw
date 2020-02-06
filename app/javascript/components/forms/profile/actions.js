@@ -6,12 +6,20 @@ import { setMyGFW } from 'providers/mygfw-provider/actions';
 
 export const saveProfile = createThunkAction(
   'saveProfile',
-  ({ id, signUpForTesting, ...rest }) => dispatch => {
+  ({ id, signUpNewsletterOrTesting, ...rest }) => dispatch => {
     const postData = {
       id,
       ...rest,
       signUpForTesting:
-        signUpForTesting && signUpForTesting[0] === 'yes' ? 'true' : false
+        signUpNewsletterOrTesting &&
+        signUpNewsletterOrTesting.indexOf('testing') !== -1
+          ? 'true'
+          : false,
+      signUpForNewsletter:
+        signUpNewsletterOrTesting &&
+        signUpNewsletterOrTesting.indexOf('newsletter') !== -1
+          ? 'true'
+          : false
     };
 
     return updateProfile(id, postData)

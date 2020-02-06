@@ -150,22 +150,17 @@ class ProfileForm extends PureComponent {
                         multiple
                       />
                       <Checkbox
-                        name="signUpForTesting"
-                        options={[
-                          {
-                            label:
-                              'Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!',
-                            value: 'yes'
-                          }
-                        ]}
-                      />
-                      <Checkbox
-                        name="signUpToNewsletter"
+                        name="signUpNewsletterOrTesting"
                         options={[
                           {
                             label:
                               'Subscribe to the newsletter to receive GFW updates',
-                            value: 'yes'
+                            value: 'newsletter'
+                          },
+                          {
+                            label:
+                              'Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!',
+                            value: 'testing'
                           }
                         ]}
                       />
