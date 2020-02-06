@@ -268,7 +268,8 @@ export const getLoss = ({
         bound1: d.tcs_driver__type,
         year: d.treecover_loss__year,
         area: d.treecover_loss__ha,
-        emissions: d.aboveground_biomass_loss__Mg
+        emissions: d.aboveground_co2_emissions__Mg,
+        biomassLoss: d.aboveground_biomass_loss__Mg
       }))
     }
   }));
@@ -326,7 +327,8 @@ export const getLossGrouped = ({
         ...d,
         year: d.treecover_loss__year,
         area: d.treecover_loss__ha,
-        emissions: d.aboveground_biomass_loss__Mg
+        emissions: d.aboveground_co2_emissions__Mg,
+        biomassLoss: d.aboveground_biomass_loss__Mg
       }))
     }
   }));
