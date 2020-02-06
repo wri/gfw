@@ -1,9 +1,51 @@
 import { fetchAnalysisEndpoint } from 'services/analysis';
+import { getLoss } from 'services/analysis-cached';
 
 import biomassLossIsos from 'data/biomass-isos.json';
 
 import { getYearsRange } from 'components/widgets/utils/data';
 import getWidgetProps from './selectors';
+
+const getDataFromAPI = params =>
+  fetchAnalysisEndpoint({
+    ...params,
+    name: 'Umd',
+    params,
+    slug: ['wdpa', 'use', 'geostore'].includes(params.type)
+      ? 'biomass-loss'
+      : 'umd-loss-gain',
+    version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
+    aggregate: false
+  }).then(response => {
+    const { attributes: data } =
+      (response && response.data && response.data.data) || {};
+    let loss = [];
+
+    if (['wdpa', 'use', 'geostore'].includes(params.type)) {
+      const biomassData = data.biomassLossByYear;
+      const emissionsData = data.co2LossByYear;
+      loss = Object.keys(biomassData).map(l => ({
+        year: parseInt(l, 10),
+        emissions: emissionsData[l],
+        biomassLoss: biomassData[l]
+      }));
+    } else {
+      loss = data.years;
+    }
+
+    const { startYear, endYear, range } = getYearsRange(loss);
+
+    return {
+      loss,
+      settings: {
+        startYear,
+        endYear
+      },
+      options: {
+        years: range
+      }
+    };
+  });
 
 export default {
   widget: 'emissionsDeforestation',
@@ -69,33 +111,15 @@ export default {
   whitelists: {
     adm0: biomassLossIsos
   },
-  getData: params =>
-    fetchAnalysisEndpoint({
-      ...params,
-      name: 'Umd',
-      params,
-      slug: ['wdpa', 'use', 'geostore'].includes(params.type)
-        ? 'biomass-loss'
-        : 'umd-loss-gain',
-      version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
-      aggregate: false
-    }).then(response => {
-      const { attributes: data } =
-        (response && response.data && response.data.data) || {};
-      let loss = [];
+  getData: params => {
+    const { status, type } = params || {};
 
-      if (['wdpa', 'use', 'geostore'].includes(params.type)) {
-        const biomassData = data.biomassLossByYear;
-        const emissionsData = data.co2LossByYear;
-        loss = Object.keys(biomassData).map(l => ({
-          year: parseInt(l, 10),
-          emissions: emissionsData[l],
-          biomassLoss: biomassData[l]
-        }));
-      } else {
-        loss = data.years;
-      }
+    if (status === 'pending' || !['global', 'country'].includes(type)) {
+      return getDataFromAPI(params);
+    }
 
+    return getLoss(params).then(response => {
+      const loss = response.data.data;
       const { startYear, endYear, range } = getYearsRange(loss);
 
       return {
@@ -108,6 +132,8 @@ export default {
           years: range
         }
       };
-    }),
+    });
+  },
+  getDataURL: params => [getLoss({ ...params, download: true })],
   getWidgetProps
 };
