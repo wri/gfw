@@ -55,8 +55,8 @@ class WidgetHeader extends PureComponent {
 
     const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
     const showDownloadBtn =
-      !embed && !simple && getDataURL && process.env.FEATURE_ENV === 'staging';
-    const showMapBtn = !embed && !simple && datasets && status !== 'pending';
+      !embed && !simple && getDataURL && status !== 'pending';
+    const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
 
     return (
