@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import compact from 'lodash/compact';
 
 import Component from './component';
 import * as actions from './actions';
@@ -9,9 +10,10 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
     myGfw.data && {
     initialValues: {
       ...myGfw.data,
-      signUpNewsletterOrTesting: myGfw.data.signUpForTesting
-        ? ['testing']
-        : []
+      signUpNewsletterOrTesting: compact([
+        myGfw.data.signUpForTesting ? 'testing' : false,
+        myGfw.data.signUpForNewsletter ? 'newsletter' : false
+      ])
     }
   })
 });

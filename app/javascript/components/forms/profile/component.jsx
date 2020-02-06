@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
-import isEmpty from 'lodash/isEmpty';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
@@ -154,17 +153,20 @@ class ProfileForm extends PureComponent {
                         options={[
                           {
                             label:
-                              'Subscribe to the newsletter to receive GFW updates',
-                            value: 'newsletter'
+                              'Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!',
+                            value: 'testing'
                           },
                           {
                             label:
-                              'Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!',
-                            value: 'testing'
+                              'Subscribe to the newsletter to receive GFW updates',
+                            value: 'newsletter'
                           }
                         ]}
                       />
-                      {!isEmpty(values.signUpToNewsletter) && (
+                      {values.signUpNewsletterOrTesting &&
+                        values.signUpNewsletterOrTesting.includes(
+                          'newsletter'
+                        ) && (
                         <Select
                           name="topics"
                           label="Topics you're interested in receiving communications about"

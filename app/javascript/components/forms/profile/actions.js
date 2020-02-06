@@ -12,12 +12,12 @@ export const saveProfile = createThunkAction(
       ...rest,
       signUpForTesting:
         signUpNewsletterOrTesting &&
-        signUpNewsletterOrTesting.indexOf('testing') !== -1
+        signUpNewsletterOrTesting.includes('testing')
           ? 'true'
           : false,
       signUpForNewsletter:
         signUpNewsletterOrTesting &&
-        signUpNewsletterOrTesting.indexOf('newsletter') !== -1
+        signUpNewsletterOrTesting.includes('newsletter')
           ? 'true'
           : false
     };
