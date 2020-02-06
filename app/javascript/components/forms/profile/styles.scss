@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .c-profile-form {
+  max-width: rem(500px);
+
   h1 {
     font-size: rem(36px);
     margin-bottom: rem(10px);
@@ -14,6 +16,12 @@
     @media screen and (min-width: $screen-m) {
       margin-bottom: rem(60px);
     }
+  }
+
+  input,
+  textarea,
+  select {
+    max-width: rem(350px);
   }
 
   p {
