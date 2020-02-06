@@ -14,20 +14,20 @@ const INDICATORS = [
 
 const SQL_QUERIES = {
   aboveground_biomass: {
-    globalAndCountry: `SELECT iso, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE threshold = ${' '}
-      {threshold} GROUP BY iso`,
-    adm1: `SELECT iso, admin_1, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE iso =${' '}
-'     {adm0}' AND threshold = {threshold} GROUP BY iso, admin_1`,
-    adm2: `SELECT iso, admin_1, admin_2, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36${' '}
-      WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2`
+    globalAndCountry:
+      'SELECT iso, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE threshold = {threshold} GROUP BY iso',
+    adm1:
+      "SELECT iso, admin_1, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND threshold = {threshold} GROUP BY iso, admin_1",
+    adm2:
+      "SELECT iso, admin_1, admin_2, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36$ WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2"
   },
   soil_organic_carbon: {
     globalAndCountry:
       'SELECT iso, SUM(total_soil_carbon) as soil_carbon__t, SUM(soil_carbon_density) as soil_carbon_density__t_ha FROM soil_carbon_gadm36 GROUP BY iso',
-    adm1: `SELECT iso, admin_1, SUM(total_soil_carbon) as soil_carbon__t, SUM(soil_carbon_density) as soil_carbon_density__t_ha FROM soil_carbon_gadm36${' '}
-      WHERE iso = '{adm0}' GROUP BY iso, admin_1`,
-    adm2: `SELECT iso, admin_1, admin_2, SUM(total_soil_carbon) as soil_carbon__t, SUM(soil_carbon_density) as soil_carbon_density__t_ha FROM${' '}
-      soil_carbon_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} GROUP BY iso, admin_1, admin_2`
+    adm1:
+      "SELECT iso, admin_1, SUM(total_soil_carbon) as soil_carbon__t, SUM(soil_carbon_density) as soil_carbon_density__t_ha FROM soil_carbon_gadm36 WHERE iso = '{adm0}' GROUP BY iso, admin_1",
+    adm2:
+      "SELECT iso, admin_1, admin_2, SUM(total_soil_carbon) as soil_carbon__t, SUM(soil_carbon_density) as soil_carbon_density__t_ha FROM soil_carbon_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} GROUP BY iso, admin_1, admin_2"
   },
   cummulative: `SELECT sum(alerts) AS alert__count, sum(cumulative_emissions) AS cumulative_emissions__t_C02, sum(cumulative_deforestation) AS${' '}
     cumulative_deforestation__ha, sum(loss_ha) AS treecover_loss__ha, sum(percent_to_emissions_target) AS percent_to_emissions_target,${' '}
