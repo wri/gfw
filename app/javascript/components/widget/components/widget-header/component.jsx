@@ -28,7 +28,8 @@ class WidgetHeader extends PureComponent {
     handleShowMap: PropTypes.func,
     handleShowShare: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
-    getDataURL: PropTypes.func
+    getDataURL: PropTypes.func,
+    status: PropTypes.string
   };
 
   render() {
@@ -48,13 +49,14 @@ class WidgetHeader extends PureComponent {
       handleShowShare,
       preventCloseSettings,
       widget,
-      getDataURL
+      getDataURL,
+      status
     } = this.props;
 
     const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
     const showDownloadBtn =
       !embed && !simple && getDataURL && process.env.FEATURE_ENV === 'staging';
-    const showMapBtn = !embed && !simple && datasets;
+    const showMapBtn = !embed && !simple && datasets && status !== 'pending';
     const showSeparator = showSettingsBtn || showMapBtn;
 
     return (
