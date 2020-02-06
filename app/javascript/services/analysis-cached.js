@@ -5,6 +5,8 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
+import { getIndicator } from 'utils/format';
+
 const {
   ANNUAL_ADM0_SUMMARY,
   ANNUAL_ADM1_SUMMARY,
@@ -221,15 +223,39 @@ export const getWHEREQuery = params => {
 };
 
 // summed loss for single location
-export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
+export const getLoss = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  download,
+  forestType,
+  landCategory,
+  ifl,
+  ...params
+}) => {
   const { loss, lossTsc } = SQL_QUERIES;
   const url = `${getRequestUrl({ adm0, adm1, adm2, ...params })}${
     tsc ? lossTsc : loss
-  }`.replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+  }`.replace(
+    '{WHERE}',
+    getWHEREQuery({
+      adm0,
+      adm1,
+      adm2,
+      forestType,
+      landCategory,
+      ifl,
+      ...params
+    })
+  );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: 'treecover_loss__ha',
+      name: `treecover_loss${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -249,7 +275,16 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, download, ...params }) => {
 };
 
 // disaggregated loss for child of location
-export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
+export const getLossGrouped = ({
+  adm0,
+  adm1,
+  adm2,
+  download,
+  forestType,
+  landCategory,
+  ifl,
+  ...params
+}) => {
   const url = `${getRequestUrl({
     adm0,
     adm1,
@@ -261,11 +296,25 @@ export const getLossGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
       /{location}/g,
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ifl,
+        ...params
+      })
+    );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: 'treecover_loss_by_region__ha',
+      name: `treecover_loss_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -292,6 +341,7 @@ export const getExtent = ({
   download,
   forestType,
   landCategory,
+  ifl,
   ...params
 }) => {
   const url = `${getRequestUrl({
@@ -310,15 +360,17 @@ export const getExtent = ({
         adm2,
         forestType,
         landCategory,
+        ifl,
         ...params
       })
     );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
       name: `treecover_extent_${extentYear}${
-        forestType ? `_in_${forestType}` : ''
-      }${landCategory ? `_in_${landCategory}` : ''}__ha`,
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -342,6 +394,9 @@ export const getExtentGrouped = ({
   adm2,
   extentYear,
   download,
+  forestType,
+  landCategory,
+  ifl,
   ...params
 }) => {
   const url = `${getRequestUrl({
@@ -357,11 +412,25 @@ export const getExtentGrouped = ({
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
     .replace(/{extentYear}/g, extentYear)
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ifl,
+        ...params
+      })
+    );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_extent_${extentYear}_by_region__ha`,
+      name: `treecover_extent_${extentYear}_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -379,7 +448,16 @@ export const getExtentGrouped = ({
 };
 
 // summed gain for single location
-export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
+export const getGain = ({
+  adm0,
+  adm1,
+  adm2,
+  download,
+  forestType,
+  landCategory,
+  ifl,
+  ...params
+}) => {
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -388,12 +466,23 @@ export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
     summary: true
   })}${SQL_QUERIES.gain}`.replace(
     '{WHERE}',
-    getWHEREQuery({ adm0, adm1, adm2, ...params })
+    getWHEREQuery({
+      adm0,
+      adm1,
+      adm2,
+      forestType,
+      landCategory,
+      ifl,
+      ...params
+    })
   );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: 'treecover_gain_2000-2012__ha',
+      name: `treecover_gain_2000-2012${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -411,7 +500,16 @@ export const getGain = ({ adm0, adm1, adm2, download, ...params }) => {
 };
 
 // disaggregated gain for child of location
-export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
+export const getGainGrouped = ({
+  adm0,
+  adm1,
+  adm2,
+  download,
+  forestType,
+  landCategory,
+  ifl,
+  ...params
+}) => {
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -424,11 +522,25 @@ export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
       /{location}/g,
       getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
     )
-    .replace('{WHERE}', getWHEREQuery({ adm0, adm1, adm2, ...params }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ifl,
+        ...params
+      })
+    );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: 'treecover_gain_2000-2012_by_region__ha',
+      name: `treecover_gain_2000-2012_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -453,6 +565,7 @@ export const getAreaIntersection = ({
   forestType,
   landCategory,
   download,
+  ifl,
   ...params
 }) => {
   const intersectionPolyname = forestTypes
@@ -476,13 +589,17 @@ export const getAreaIntersection = ({
         adm2,
         forestType,
         landCategory,
+        ifl,
         ...params
       })
     );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_extent_in_${snakeCase(intersectionPolyname.label)}__ha`,
+      name: `treecover_extent_in_${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -506,6 +623,7 @@ export const getAreaIntersectionGrouped = ({
   adm2,
   forestType,
   landCategory,
+  ifl,
   download,
   ...params
 }) => {
@@ -533,15 +651,17 @@ export const getAreaIntersectionGrouped = ({
         adm2,
         forestType,
         landCategory,
+        ifl,
         ...params
       })
     );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_extent_in_${snakeCase(
-        intersectionPolyname.label
-      )}_by_region__ha`,
+      name: `treecover_extent_in_${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }_by_region__ha`,
       url: url.replace('query', 'download')
     };
   }
@@ -563,6 +683,9 @@ export const fetchGladAlerts = ({
   adm1,
   adm2,
   tsc,
+  forestType,
+  landCategory,
+  ifl,
   grouped,
   download,
   ...params
@@ -584,12 +707,24 @@ export const fetchGladAlerts = ({
     )
     .replace(
       '{WHERE}',
-      getWHEREQuery({ adm0, adm1, adm2, ...params, glad: true })
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ifl,
+        ...params,
+        glad: true
+      })
     );
 
   if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: 'glad_alerts__count',
+      name: `glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
       url: url.replace('query', 'download')
     };
   }
