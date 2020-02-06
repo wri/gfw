@@ -128,6 +128,7 @@ class Explore extends PureComponent {
                   <Card
                     className="map-card"
                     theme="theme-card-small"
+                    clamp={5}
                     data={{
                       ...item,
                       buttons: item.buttons.map(b => ({
