@@ -6,10 +6,19 @@ import { setMyGFW } from 'providers/mygfw-provider/actions';
 
 export const saveProfile = createThunkAction(
   'saveProfile',
-  ({ id, signUpNewsletterOrTesting, ...rest }) => dispatch => {
+  ({
+    id,
+    signUpNewsletterOrTesting,
+    subsector,
+    subsector_otherInput,
+    ...rest
+  }) => dispatch => {
     const postData = {
       id,
       ...rest,
+      subsector: subsector.includes('Other')
+        ? `Other: ${subsector_otherInput}`
+        : subsector,
       signUpForTesting:
         signUpNewsletterOrTesting &&
         signUpNewsletterOrTesting.includes('testing')

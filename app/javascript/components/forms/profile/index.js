@@ -10,6 +10,15 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
     myGfw.data && {
     initialValues: {
       ...myGfw.data,
+      subsector:
+          myGfw.data.subsector && myGfw.data.subsector.includes('Other')
+            ? // From `Other: ${subsector_otherInput}` -> 'Other_(write_in):' (value)
+            'Other_(write_in):'
+            : myGfw.data.subsector,
+      subsector_otherInput:
+          myGfw.data.subsector && myGfw.data.subsector.includes('Other')
+            ? myGfw.data.subsector.split('Other:')[1].trim()
+            : null,
       signUpNewsletterOrTesting: compact([
         myGfw.data.signUpForTesting ? 'testing' : false,
         myGfw.data.signUpForNewsletter ? 'newsletter' : false
