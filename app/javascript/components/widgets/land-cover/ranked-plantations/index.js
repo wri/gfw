@@ -49,7 +49,11 @@ export default {
   getData: params =>
     all([
       getExtentGrouped(params),
-      getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
+      getAreaIntersectionGrouped({
+        ...params,
+        forestType: 'plantations',
+        summary: true
+      })
     ]).then(
       spread((extentGrouped, plantationsExtentResponse) => {
         let data = {};
@@ -71,7 +75,8 @@ export default {
     getAreaIntersectionGrouped({
       ...params,
       forestType: 'plantations',
-      download: true
+      download: true,
+      summary: true
     })
   ],
   getWidgetProps
