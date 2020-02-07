@@ -24,5 +24,13 @@
 
   .submit-btn {
     min-width: rem(180px);
+    align-self: center;
+  }
+
+  .c-form-error {
+    span {
+      align-self: center;
+      margin-right: 0;
+    }
   }
 }

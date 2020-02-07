@@ -107,7 +107,7 @@ class NewsletterForm extends PureComponent {
                         on your interests.
                       </h3>
                     </div>
-                    <div className="column small-12 medium-10 medium-offset-1 large-8 large-offset-2">
+                    <div className="column small-12 medium-8 medium-offset-2">
                       <Input name="firstName" label="first name" required />
                       <Input name="lastName" label="last name" required />
                       <Input
