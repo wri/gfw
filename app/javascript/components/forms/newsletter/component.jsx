@@ -107,14 +107,7 @@ class NewsletterForm extends PureComponent {
                         on your interests.
                       </h3>
                     </div>
-                    <div className="column small-12 medium-6">
-                      <Checkbox
-                        name="gfwInterests"
-                        label="I'm interested in (check all that apply)"
-                        options={subscriptions}
-                      />
-                    </div>
-                    <div className="column small-12 medium-6">
+                    <div className="column small-12 medium-8 medium-offset-2">
                       <Input name="firstName" label="first name" required />
                       <Input name="lastName" label="last name" required />
                       <Input
@@ -133,6 +126,11 @@ class NewsletterForm extends PureComponent {
                         options={countries}
                         placeholder="Select a country"
                         required
+                      />
+                      <Checkbox
+                        name="gfwInterests"
+                        label="I'm interested in (check all that apply)"
+                        options={subscriptions}
                       />
                       <Error
                         valid={valid}
