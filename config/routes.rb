@@ -17,6 +17,12 @@ Gfw::Application.routes.draw do
     "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}?widget=#{params[:widget]}&#{req.query_string}" }
   get '/country/embed/:widget/:adm0/:adm1/:adm2', to: redirect { |params, req|
     "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/embed/dashboards/country/:adm0', to: redirect { |params, req| puts req
+    "/embed/widget/#{req[:widget]}/country/#{params[:adm0]}?#{req.query_string}" }
+  get '/embed/dashboards/country/:adm0/:adm1', to: redirect { |params, req| puts req
+    "/embed/widget/#{req[:widget]}/country/#{params[:adm0]}/#{params[:adm1]}?#{req.query_string}" }
+  get '/embed/dashboards/country/:adm0/:adm1/:adm2', to: redirect { |params, req| puts req
+    "/embed/widget/#{req[:widget]}/country/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?#{req.query_string}" }
   get '/country/*all', to: redirect { |params, req| "/dashboards#{req.fullpath}" }
   get '/countries' => redirect('/dashboards/global')
   get '/countries/*all' => redirect('/dashboards/global')
