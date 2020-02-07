@@ -114,12 +114,7 @@ export const getCardData = createSelector(
       newBbox = bbox(lineString(bboxCoords));
     }
 
-    const splitGridId = data && data.grid_id && data.grid_id.split('_');
-    const locationFromGridId =
-      splitGridId &&
-      `${splitGridId[0]}${splitGridId[2] ? `, ${splitGridId[2]}` : ''}`;
     const meta = customMeta && customMeta[data.type];
-    const locationName = locationFromGridId.toUpperCase();
 
     return {
       ...articleData,
@@ -133,11 +128,8 @@ export const getCardData = createSelector(
         title: `Place to Watch: ${meta.label}`
       }),
       ...(!articleData.summary &&
-        locationFromGridId &&
         meta && {
-        summary: `FOREST CLEARING IN ${
-          locationName === 'SEA' ? 'SE Asia' : locationName
-        }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+        summary: `This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
           meta.label
         }.`,
         showFullSummary: true

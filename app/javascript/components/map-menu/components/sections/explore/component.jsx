@@ -85,7 +85,7 @@ class Explore extends PureComponent {
                           value: 'soy'
                         },
                         {
-                          label: 'Palm oil',
+                          label: 'Oil palm',
                           value: 'palm'
                         }
                       ]}
