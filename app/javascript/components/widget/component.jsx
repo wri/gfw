@@ -116,6 +116,7 @@ class Widget extends PureComponent {
           settingsConfig={settingsConfig}
           metaKey={metaKey}
           simple={simple}
+          status={status}
           handleShowMap={handleShowMap}
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}

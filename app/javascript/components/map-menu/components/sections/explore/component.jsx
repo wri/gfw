@@ -62,61 +62,42 @@ class Explore extends PureComponent {
         <div className="content">
           <div className="row">
             <div className="column small-12">
-              {process.env.FEATURE_ENV === 'staging' ? (
-                <div className="description">
-                  {section === 'placesToWatch' ? (
-                    <Fragment>
-                      <p>{ReactHtmlParser(description)}</p>
-                      <p className="ptw-type-intro">
-                        Showing information about
-                      </p>
-                      <Dropdown
-                        className="ptw-type-selector"
-                        theme="theme-dropdown-native-button"
-                        value={ptwType}
-                        options={[
-                          {
-                            label: 'All Places to Watch',
-                            value: 'all'
-                          },
-                          {
-                            label: 'Mongabay reporting',
-                            value: 'mongabay'
-                          },
-                          {
-                            label: 'Soy',
-                            value: 'soy'
-                          },
-                          {
-                            label: 'Palm oil',
-                            value: 'palm'
-                          }
-                        ]}
-                        onChange={value => setMenuSettings({ ptwType: value })}
-                        native
-                      />
-                      <PTWProvider />
-                    </Fragment>
-                  ) : (
-                    <p>{description}</p>
-                  )}
-                </div>
-              ) : (
-                <Fragment>
-                  {description && (
-                    <div className="description">
-                      {section === 'placesToWatch' ? (
-                        <Fragment>
-                          {ReactHtmlParser(description)}
-                          <PTWProvider />
-                        </Fragment>
-                      ) : (
-                        description
-                      )}
-                    </div>
-                  )}
-                </Fragment>
-              )}
+              <div className="description">
+                {section === 'placesToWatch' ? (
+                  <Fragment>
+                    <p>{ReactHtmlParser(description)}</p>
+                    <p className="ptw-type-intro">Showing information about</p>
+                    <Dropdown
+                      className="ptw-type-selector"
+                      theme="theme-dropdown-native-button"
+                      value={ptwType}
+                      options={[
+                        {
+                          label: 'All Places to Watch',
+                          value: 'all'
+                        },
+                        {
+                          label: 'Mongabay reporting',
+                          value: 'mongabay'
+                        },
+                        {
+                          label: 'Soy',
+                          value: 'soy'
+                        },
+                        {
+                          label: 'Oil palm',
+                          value: 'palm'
+                        }
+                      ]}
+                      onChange={value => setMenuSettings({ ptwType: value })}
+                      native
+                    />
+                    <PTWProvider />
+                  </Fragment>
+                ) : (
+                  <p>{description}</p>
+                )}
+              </div>
             </div>
             {!loading &&
               data &&
@@ -128,6 +109,7 @@ class Explore extends PureComponent {
                   <Card
                     className="map-card"
                     theme="theme-card-small"
+                    clamp={5}
                     data={{
                       ...item,
                       buttons: item.buttons.map(b => ({

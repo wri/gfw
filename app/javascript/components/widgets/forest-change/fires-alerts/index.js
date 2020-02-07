@@ -277,7 +277,7 @@ export default {
         return { alerts: data, latest } || {};
       })
     ),
-  getDataURL: params => [fetchFiresAlerts({ ...params, download: true })],
+  // getDataURL: params => [fetchFiresAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

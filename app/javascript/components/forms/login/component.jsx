@@ -80,7 +80,7 @@ class LoginForm extends PureComponent {
           title:
             'Thank you for registering, please check your email and confirm your account.',
           description:
-            "You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
+            "<b>If it doesn't appear check your spam folder.</b> You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
         }
       },
       reset: {
@@ -92,7 +92,7 @@ class LoginForm extends PureComponent {
           title:
             'Thank you. Please, check your inbox and follow instructions to reset your password.',
           description:
-            "You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
+            "<b>If it doesn't appear check your spam folder.</b> You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
         }
       }
     };

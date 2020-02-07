@@ -39,10 +39,7 @@ export default {
   sentences:
     '{location} has a total carbon store of {carbonValue}, with most of the carbon stored in {carbonStored}.',
   getData: params =>
-    all([
-      getSoilOrganicCarbon({ ...params }),
-      getBiomassRanking({ ...params })
-    ]).then(
+    all([getSoilOrganicCarbon(params), getBiomassRanking(params)]).then(
       spread((soilOrganicCarbon, aboveGroundBiomass) => {
         let level = 'iso';
         let paramLevel = 'adm0';
