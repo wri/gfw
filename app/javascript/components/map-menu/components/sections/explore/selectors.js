@@ -19,7 +19,7 @@ const types = {
     color: '#1b6e03'
   },
   palm: {
-    label: 'palm oil',
+    label: 'Oil palm',
     color: '#ff4a00'
   }
 };
