@@ -1,7 +1,7 @@
 import {
   getExtentGrouped,
   getAreaIntersectionGrouped
-} from 'services/forest-data-old';
+} from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import getWidgetProps from './selectors';
@@ -49,7 +49,11 @@ export default {
   getData: params =>
     all([
       getExtentGrouped(params),
-      getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
+      getAreaIntersectionGrouped({
+        ...params,
+        forestType: 'plantations',
+        summary: true
+      })
     ]).then(
       spread((extentGrouped, plantationsExtentResponse) => {
         let data = {};
@@ -71,7 +75,8 @@ export default {
     getAreaIntersectionGrouped({
       ...params,
       forestType: 'plantations',
-      download: true
+      download: true,
+      summary: true
     })
   ],
   getWidgetProps

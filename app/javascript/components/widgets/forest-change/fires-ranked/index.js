@@ -48,8 +48,8 @@ export default {
         return { alerts: data, latest: latest.attributes.updatedAt } || {};
       })
     ),
-  getDataURL: params => [
-    fetchFiresAlertsGrouped({ ...params, download: true })
-  ],
+  // getDataURL: params => [
+  //   fetchFiresAlertsGrouped({ ...params, download: true })
+  // ],
   getWidgetProps
 };

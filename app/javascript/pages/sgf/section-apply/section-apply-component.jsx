@@ -14,8 +14,8 @@ class SectionAbout extends PureComponent {
         <div className="row">
           <div className="column small-12 medium-9">
             <p className="text -paragraph -color-2 -light -spaced">
-              The specific focus of the Calls for Applications varies from
-              year to year, though successful applicants must clearly articulate how
+              The specific focus of the Calls for Applications varies from year
+              to year, though successful applicants must clearly articulate how
               GFW will support and enhance their ongoing work related to:
             </p>
             <ul className="list">

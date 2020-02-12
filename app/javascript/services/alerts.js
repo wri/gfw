@@ -3,16 +3,11 @@ import moment from 'moment';
 import { all, spread } from 'axios';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
-const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
-const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
-const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
 const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
 const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
 
 const QUERIES = {
-  gladIntersectionAlerts:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week as alert__week, year as alert__year, alerts as alert__count, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
@@ -21,6 +16,10 @@ const QUERIES = {
   alertsLatest:
     'SELECT year, week FROM data GROUP BY year, week ORDER BY year DESC, week DESC LIMIT 1'
 };
+
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
 
 const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
@@ -55,22 +54,6 @@ export const getLatestAlerts = ({ location, params }) =>
     })
   );
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2, grouped }) => {
-  let glad_summary_table = GLAD_ISO_DATASET;
-  if ((adm0 && grouped) || adm1) {
-    glad_summary_table = GLAD_ADM1_DATASET;
-  }
-  if ((adm1 && grouped) || adm2) {
-    glad_summary_table = GLAD_ADM2_DATASET;
-  }
-  const url = `/query/${glad_summary_table}?sql=${
-    QUERIES.gladIntersectionAlerts
-  }`
-    .replace('{location}', getLocation(adm0, adm1, adm2))
-    .replace('{polyname}', 'admin');
-  return apiRequest.get(url, 3600, 'gladRequest');
-};
-
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
   if (adm2) {
@@ -88,7 +71,7 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   if (download) {
     return {
       name: 'viirs_fire_alerts__count',
-      url: url.replace('query', 'download')
+      url: `${process.env.GFW_API}${url.replace('query', 'download')}`
     };
   }
 
@@ -127,7 +110,7 @@ export const fetchFiresAlertsGrouped = ({
   if (download) {
     return {
       name: 'viirs_fire_alerts__count',
-      url: url.replace('query', 'download')
+      url: `${process.env.GFW_API}${url.replace('query', 'download')}`
     };
   }
 
@@ -209,11 +192,6 @@ export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
   return apiRequest.get(url);
 };
 
-// Latest Dates for Alerts
-const lastFriday = moment()
-  .day(-2)
-  .format('YYYY-MM-DD');
-
 export const fetchLatestDate = url =>
   apiRequest.get(url, 3600, 'gladRequest').catch(error => {
     console.error('Error in latest request:', error);
@@ -229,28 +207,3 @@ export const fetchLatestDate = url =>
       })
     );
   });
-
-export const fetchGLADLatest = () => {
-  const url = '/glad-alerts/latest';
-  return apiRequest
-    .get(url)
-    .then(response => {
-      const { date } = response.data.data[0].attributes;
-
-      return {
-        attributes: { updatedAt: date },
-        id: null,
-        type: 'glad-alerts'
-      };
-    })
-    .catch(error => {
-      console.error('Error in gladRequest', error);
-      return new Promise(resolve =>
-        resolve({
-          attributes: { updatedAt: lastFriday },
-          id: null,
-          type: 'glad-alerts'
-        })
-      );
-    });
-};

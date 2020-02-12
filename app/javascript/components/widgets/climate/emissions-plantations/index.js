@@ -1,4 +1,4 @@
-import { getLoss } from 'services/forest-data-old';
+import { getLoss } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 import max from 'lodash/max';
 import maxBy from 'lodash/maxBy';
@@ -72,6 +72,7 @@ export default {
   },
   settings: {
     forestType: 'ifl',
+    ifl: 2016,
     threshold: 30,
     startYear: 2013,
     endYear: 2018,
@@ -109,7 +110,7 @@ export default {
     ),
   getDataURL: params => [
     getLoss({ ...params, download: true }),
-    getLoss({ ...params, indicator: 'plantations', download: true })
+    getLoss({ ...params, forestType: 'plantations', download: true })
   ],
   getWidgetProps
 };

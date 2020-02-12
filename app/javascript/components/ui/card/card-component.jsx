@@ -12,13 +12,24 @@ import './themes/card-small.scss';
 import './themes/card-dark.scss';
 
 class Card extends PureComponent {
+  static propTypes = {
+    data: PropTypes.object,
+    className: PropTypes.string,
+    theme: PropTypes.string,
+    onClick: PropTypes.func,
+    active: PropTypes.bool,
+    tag: PropTypes.string,
+    tagColor: PropTypes.string,
+    clamp: PropTypes.number
+  };
+
   state = {
     selectorValue: {}
   };
 
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, theme, data, active } = this.props;
+    const { className, theme, data, active, clamp } = this.props;
     const {
       image,
       img1x,
@@ -70,7 +81,7 @@ class Card extends PureComponent {
                 {fullSummary ? (
                   summary
                 ) : (
-                  <Dotdotdot clamp={3}>{summary}</Dotdotdot>
+                  <Dotdotdot clamp={clamp || 3}>{summary}</Dotdotdot>
                 )}
               </div>
             )}
@@ -123,15 +134,5 @@ class Card extends PureComponent {
     );
   }
 }
-
-Card.propTypes = {
-  data: PropTypes.object,
-  className: PropTypes.string,
-  theme: PropTypes.string,
-  onClick: PropTypes.func,
-  active: PropTypes.bool,
-  tag: PropTypes.string,
-  tagColor: PropTypes.string
-};
 
 export default Card;

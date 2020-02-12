@@ -19,7 +19,7 @@ const types = {
     color: '#1b6e03'
   },
   palm: {
-    label: 'palm oil',
+    label: 'Oil palm',
     color: '#ff4a00'
   }
 };
@@ -43,11 +43,6 @@ const selectPTWData = state => {
       ];
 
       const meta = types[d.type];
-      const splitGridId = d.grid_id.split('_');
-      const locationFromGridId = `${splitGridId[0]}${
-        splitGridId[2] ? `, ${splitGridId[2]}` : ''
-      }`;
-      const locationName = locationFromGridId.toUpperCase();
 
       return {
         tag: meta.label,
@@ -59,9 +54,7 @@ const selectPTWData = state => {
         title: d.name || `Place to Watch: ${meta.label}`,
         summary:
           d.description ||
-          `FOREST CLEARING IN ${
-            locationName === 'SEA' ? 'SE Asia' : locationName
-          }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+          `This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
             meta.label
           }.`,
         showFullSummary: true,
@@ -120,80 +113,8 @@ const selectPTWData = state => {
   );
 };
 
-const selectPTWDataOld = state => {
-  const { data } = state.ptw || {};
-
-  return (
-    data &&
-    data.map(d => {
-      const bboxCoords = d.bbox.slice(0, 4);
-      const bboxFromCoords = bbox(lineString(bboxCoords));
-      const reverseBbox = [
-        bboxFromCoords[1],
-        bboxFromCoords[0],
-        bboxFromCoords[3],
-        bboxFromCoords[2]
-      ];
-
-      return {
-        id: d.cartodb_id,
-        image: d.image,
-        imageCredit: d.image_source,
-        title: d.name,
-        summary: d.description,
-        buttons: [
-          {
-            text: 'READ MORE',
-            extLink: d.link,
-            theme: 'theme-button-light theme-button-small'
-          },
-          {
-            text: 'VIEW ON MAP',
-            theme: 'theme-button-small'
-          }
-        ],
-        payload: {
-          mergeQuery: true,
-          map: {
-            datasets: [
-              // admin boundaries
-              {
-                dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-                layers: [
-                  '6f6798e6-39ec-4163-979e-182a74ca65ee',
-                  'c5d1e010-383a-4713-9aaa-44f728c0571c'
-                ],
-                opacity: 1,
-                visibility: true
-              },
-              // GLADs
-              {
-                dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
-                layers: [
-                  '581ecc62-9a70-4ef4-8384-0d59363e511d',
-                  'dd5df87f-39c2-4aeb-a462-3ef969b20b66'
-                ],
-                opacity: 1,
-                visibility: true
-              }
-            ],
-            bbox: reverseBbox,
-            basemap: {
-              value: 'default'
-            },
-            label: 'default'
-          }
-        }
-      };
-    })
-  );
-};
-
 const filterPTWData = createSelector(
-  [
-    process.env.FEATURE_ENV === 'staging' ? selectPTWData : selectPTWDataOld,
-    selectPTWType
-  ],
+  [selectPTWData, selectPTWType],
   (data, type) => {
     if (!data || !data.length || type === 'all') return data;
 
