@@ -18,7 +18,12 @@ const selectError = state => state.analysis && state.analysis.error;
 
 export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, selectLocation, getWidgetLayers],
-  (layers, data, location, widgetLayers) => {
+  (
+    layers,
+    data,
+    location
+    // , widgetLayers
+  ) => {
     if (!layers || !layers.length) return null;
 
     const { type } = location;
@@ -31,7 +36,7 @@ export const getDataFromLayers = createSelector(
           !l.isBoundary &&
           !l.isRecentImagery &&
           l.analysisConfig &&
-          (!widgetLayers || !widgetLayers.includes(l.id)) &&
+          // (!widgetLayers || !widgetLayers.includes(l.id)) &&
           (!l.admLevels || l.admLevels.includes(admLevel))
       )
       .map(l => {
@@ -85,6 +90,7 @@ export const getCountryDownloadLink = createSelector(
 export const getDownloadLinks = createSelector(
   [getDataFromLayers, getCountryDownloadLink],
   (data, countryUrl) => {
+    // dataset-related download links
     const layerLinks =
       data &&
       data.filter(d => d.downloadUrls && d.value).map(d => {
@@ -112,6 +118,7 @@ export const getDownloadLinks = createSelector(
         };
       });
 
+    // admin-related download links
     return countryUrl
       ? [
         {
