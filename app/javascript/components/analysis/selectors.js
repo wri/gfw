@@ -101,18 +101,13 @@ export const getWidgetLayers = createSelector(
 );
 
 export const getLayerEndpoints = createSelector(
-  [getAllLayers, getDataLocation, getWidgetLayers],
-  (
-    layers,
-    location
-    // , widgetLayers
-  ) => {
+  [getAllLayers, getDataLocation],
+  (layers, location) => {
     if (!layers || !layers.length) return null;
 
     const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
-    // const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
 
     const admLevel = locationLevelToStr(location);
     const endpoints = compact(
@@ -121,7 +116,6 @@ export const getLayerEndpoints = createSelector(
           l =>
             l.analysisConfig &&
             !l.analysisDisabled &&
-            // (!hasWidgetLayers || !widgetLayers.includes(l.id)) &&
             (!l.admLevels || l.admLevels.includes(admLevel))
         )
         .map(l => {

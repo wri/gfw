@@ -17,13 +17,8 @@ const selectData = state => state.analysis && state.analysis.data;
 const selectError = state => state.analysis && state.analysis.error;
 
 export const getDataFromLayers = createSelector(
-  [getActiveLayers, selectData, selectLocation, getWidgetLayers],
-  (
-    layers,
-    data,
-    location
-    // , widgetLayers
-  ) => {
+  [getActiveLayers, selectData, selectLocation],
+  (layers, data, location) => {
     if (!layers || !layers.length) return null;
 
     const { type } = location;
@@ -36,7 +31,6 @@ export const getDataFromLayers = createSelector(
           !l.isBoundary &&
           !l.isRecentImagery &&
           l.analysisConfig &&
-          // (!widgetLayers || !widgetLayers.includes(l.id)) &&
           (!l.admLevels || l.admLevels.includes(admLevel))
       )
       .map(l => {
