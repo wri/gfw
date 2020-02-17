@@ -18,6 +18,7 @@ import * as treeLossTsc from './widgets/forest-change/tree-loss-tsc';
 import * as treeCover from './widgets/land-cover/tree-cover';
 import * as treeCover2000 from './widgets/land-cover/tree-cover-2000';
 import * as treeCover2010 from './widgets/land-cover/tree-cover-2010';
+import * as treeCover2019 from './widgets/land-cover/tree-cover-2019';
 import * as treeCoverRanked from './widgets/land-cover/tree-cover-ranked';
 import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
 import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
@@ -67,6 +68,7 @@ export default {
   treeCover,
   treeCover2000,
   treeCover2010,
+  treeCover2019,
   treeCoverRanked,
   rankedPlantations,
   USLandCover,

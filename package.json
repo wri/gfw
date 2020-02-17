@@ -181,6 +181,7 @@
     "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
     "reselect": "3.0.1",
+    "rvm": "^0.3.2",
     "stylelint": "8.3.1",
     "terser-webpack-plugin": "^1.1.0",
     "three": "0.87.1",
