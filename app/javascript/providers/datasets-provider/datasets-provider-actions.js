@@ -43,7 +43,12 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
           // we need a default layer so we can set it when toggled onto the map
           if (!defaultLayer) return null;
 
-          const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } =
+          const {
+            isSelectorLayer,
+            isMultiSelectorLayer,
+            isLossLayer,
+            isLossDriverLayer
+          } =
             info || {};
           const { id, iso, applicationConfig } = defaultLayer || {};
           const { global, selectorConfig } = applicationConfig || {};
@@ -56,6 +61,10 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
           if (isLossLayer) {
             statementConfig = {
               type: 'lossLayer'
+            };
+          } else if (isLossDriverLayer) {
+            statementConfig = {
+              type: 'lossDriverLayer'
             };
           } else if (global && !!iso.length && iso[0]) {
             statementConfig = {

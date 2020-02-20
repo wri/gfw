@@ -222,7 +222,7 @@ export const parseSentence = createSelector(
       component: {
         key: 'deforestation',
         tooltip:
-          'The drivers of permanent deforestation are urbanization and commodity-driven deforestation.'
+          'The drivers of permanent deforestation are mainly urbanization and commodity-driven deforestation. Shifting agriculture may or may not lead to deforestation, depending upon the impact and permanence of agricultural activities.'
       }
     };
 
