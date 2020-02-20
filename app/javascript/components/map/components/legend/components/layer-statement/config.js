@@ -10,7 +10,7 @@ export default {
     statementHighlight: 'certain countries.'
   },
   lossDriverLayer: {
-    statementHighlight: 'Hover for more info.',
+    statementHighlight: 'Hover for details on drivers classes.',
     tooltipDesc: `Commodity driven deforestation: Large-scale deforestation linked primarily to commercial agricultural expansion.\n
       Shifting agriculture: Temporary loss or permanent deforestation due to small- and medium-scale agriculture.\n
       Forestry: Temporary loss from plantation and natural forest harvesting, with some deforestation of primary forests.\n
