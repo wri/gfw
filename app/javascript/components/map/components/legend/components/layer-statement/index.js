@@ -15,7 +15,8 @@ const mapStateToProps = ({ countryData }, { type, isos, statement }) => ({
         .filter(c => isos.includes(c.value))
         .map(c => c.label)
         .join(', ')
-  })
+  }),
+  tooltipClassname: `statement-tooltip-text-${type}`
 });
 
 export default connect(mapStateToProps, null)(Component);
