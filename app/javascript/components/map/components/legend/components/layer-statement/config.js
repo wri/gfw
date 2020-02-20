@@ -15,6 +15,6 @@ export default {
       Shifting agriculture: Temporary loss or permanent deforestation due to small- and medium-scale agriculture.\n
       Forestry: Temporary loss from plantation and natural forest harvesting, with some deforestation of primary forests.\n
       Wildfire: Temporary loss, does not include fire clearing for agriculture.\n
-      Urbanization: Deforestation for expansion of urban centers.`
+      Urbanization: Deforestation for expansion/intensification of urban centers.`
   }
 };
