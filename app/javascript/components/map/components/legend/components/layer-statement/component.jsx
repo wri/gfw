@@ -10,6 +10,7 @@ class LayerStatement extends PureComponent {
   render() {
     const {
       className,
+      tooltipClassname,
       statementPlain,
       statementHighlight,
       tooltipDesc
@@ -19,7 +20,7 @@ class LayerStatement extends PureComponent {
       <Tooltip
         theme="tip"
         hideOnClick
-        html={<Tip text={tooltipDesc} />}
+        html={<Tip text={tooltipDesc} className={tooltipClassname} />}
         position="top"
         followCursor
         animateFill={false}
@@ -36,6 +37,7 @@ class LayerStatement extends PureComponent {
 
 LayerStatement.propTypes = {
   className: PropTypes.string,
+  tooltipClassname: PropTypes.string,
   statementPlain: PropTypes.string,
   statementHighlight: PropTypes.string,
   tooltipDesc: PropTypes.string
