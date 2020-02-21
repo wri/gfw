@@ -124,6 +124,12 @@ class MapLegend extends Component {
                   }
                 >
                   <LegendItemTypes />
+                  {statementConfig && (
+                    <LayerStatement
+                      className="layer-statement"
+                      {...statementConfig}
+                    />
+                  )}
                   {activeLayer &&
                       paramsSelectorConfig &&
                       params &&
@@ -178,12 +184,6 @@ class MapLegend extends Component {
                       multi={isMultiSelectorLayer}
                       onChange={onChangeLayer}
                       {...selectorLayerConfig}
-                    />
-                  )}
-                  {statementConfig && (
-                    <LayerStatement
-                      className="layer-statement"
-                      {...statementConfig}
                     />
                   )}
                   {timelineParams && (
