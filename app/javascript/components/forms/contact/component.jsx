@@ -11,12 +11,11 @@ import Button from 'components/ui/button';
 import Error from 'components/forms/components/error';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
-import Radio from 'components/forms/components/radio';
 import Submit from 'components/forms/components/submit';
 
 import { email } from 'components/forms/validations';
 
-import { topics, tools, testNewFeatures } from './config';
+import { topics, tools } from './config';
 
 import './styles.scss';
 
@@ -119,9 +118,6 @@ class ContactForm extends PureComponent {
                       placeholder={activeTopic && activeTopic.placeholder}
                       required
                     />
-                    <h4>Interested in testing new features?</h4>
-                    <p>Sign up to become an official GFW tester!</p>
-                    <Radio name="signup" options={testNewFeatures} />
                     <Error
                       valid={valid}
                       submitFailed={submitFailed}
