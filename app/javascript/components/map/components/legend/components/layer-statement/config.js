@@ -1,5 +1,10 @@
 export default {
   lossLayer: {
+    // if we want to add this disclaimer (with the hover) to a widget in the legend,
+    // - type must be 'lossLayer' in the 'legend' section of the layer, OR
+    // - the layer has to have 'isLossLayer=true' in the metadata.
+    // For the second case (isLossLayer), type is being overwritten to 'lossLayer'
+    // in dataset-provider-actions#L56 (add more special here cases if needed)
     statementPlain: 'Tree cover loss',
     statementHighlight: 'is not always deforestation.',
     tooltipDesc:
