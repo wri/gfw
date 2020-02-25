@@ -562,6 +562,6 @@ export default {
   '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
   '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover,
   '7b6acc5f-bc18-4e13-951c-0d81639d68a7': decodes.grossCarbonEmissions,
-  '3c26f54b-f3c5-49eb-be48-3005987d4be2': decodes.cumulativeCarbonGain,
-  'b6499f2d-225e-41aa-acb5-2d73d1227f38': decodes.netCarbonFlux
+  '5614e8ef-3e10-43d8-9e0c-7a9ddde93b81': decodes.cumulativeCarbonGain,
+  'b2070db1-f01c-4107-8c2a-50fe77d3fbce': decodes.netCarbonFlux
 };
