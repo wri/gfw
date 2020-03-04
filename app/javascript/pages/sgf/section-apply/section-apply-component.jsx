@@ -80,16 +80,7 @@ class SectionAbout extends PureComponent {
                 </li>
               </ul>
               <p className="text -paragraph -color-2 -light -spaced">
-                The 2020 Small Grants Fund application is open from January
-                15th, 2020 – March 1st, 2020.&nbsp;
-                <a
-                  className="text -paragraph -color-4 -bold"
-                  href="https://gfw.smapply.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apply now.
-                </a>
+                The 2020 Small Grants Fund application window is now closed.
               </p>
             </div>
             <div className="column small-12 medium-3 logo">
