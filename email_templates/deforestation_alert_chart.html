@@ -141,16 +141,17 @@
 										<!-- END Section 1 -->
 										
 									<!-- IMAGE -->
-									<table>
+									<table style="border-spacing: 0 16px;">
 									  <tr>
-									    <td width="700" height="350" style="background-color: green;">
+									    <td width="700">
+									      <img width="650" height="350" src={{{image_url_big}}}></img>
 									    </td>
 									  </tr>
 									  <tr><td>
-									    <p style="color: #333333;	font-family: Arial;	font-size: 14px; line-height: 14px;">Image source, Date</p>
+									    <p style="color: #333333;	font-family: Arial;	font-size: 14px; line-height: 14px;">{{{image_source}}}</p>
 									  </td></tr>
 									</table>
-									<!-- END IMAGE -->
+								  <!-- END IMAGE -->
 
 	                <!-- SECTION 2 -->
 	                <table style="border-spacing: 0 32px;">
@@ -173,8 +174,8 @@
 	                    </td>
 	                    <td style="width: 67%; color: #4A4A4A;	font-family: Arial;	font-size: 18px;	letter-spacing: 0.1px;	line-height: 30px;">
 	                      <p style="margin: auto;">
-	                        There were <span style="color: #F26798;">{{glad_count}} GLAD deforestation alerts</span> reported in the week of the 25th of December (From 9/12/2019 to 9/19/2019).
-	                          This is <span style="color: #F26798;">unusually high</span> compared to the same week in previous years.
+	                        There were <span style="color: #F26798;">{{glad_count}} GLAD deforestation alerts</span> reported in the week of the {{{week_of}}} (From {{{week_start}}} to {{{week_end}}}).
+	                          This is <span style="color: #F26798;">{{{glad_frequency}}}</span> compared to the same week in previous years.
 	                      </p>
 	                    </td>
 	                  </tr>
@@ -183,9 +184,9 @@
 	                <!-- CHART -->
 	                <table style="border-spacing: 0 32px;">
 	                  <tr>
-	                    <td width="700" height="234" style="background-color: grey;">
-	                      
-	                    </td>
+	                    <td width="700">
+									      <img width="650" height="234" src={{{glad_chart_url}}}></img>
+									    </td>
 	                  </tr>
 	                </table>
 	                <!-- END CHART -->
@@ -201,7 +202,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{glad_alerts.intact_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -217,7 +218,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.primary_forest}}
+  	                              {{glad_alerts.primary_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -233,7 +234,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.peat}}
+  	                              {{glad_alerts.peat}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -249,7 +250,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.protected_areas}}
+  	                              {{glad_alerts.protected_areas}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -299,7 +300,7 @@
 													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase;">
 													  <div style="display: flex; width: 100%; align-items: center;">
 													    <span style="height: 12px; width: 12px; border-radius: 120px; background-color: #F26798; display: inline-block; margin-right: 28px;"></span>
-														  {{loop_vars.alerts.latitude}}
+														  {{loop_vars.alerts.alert_type}}
 													  </div>
 													</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
@@ -309,7 +310,7 @@
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left; text-transform:uppercase">
-														{{loop_vars.alerts.longitude}}
+														{{loop_vars.alerts.date}}
 													</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 												</td>
@@ -317,7 +318,7 @@
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:right; text-transform:uppercase">
-														{{loop_vars.alerts.acq_date}}
+														{{loop_vars.alerts.lat_long}}
 													</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 

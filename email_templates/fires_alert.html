@@ -140,17 +140,18 @@
 										</table>
 										<!-- END Section 1 -->
 
-										<!-- IMAGE -->
-									<table>
+									<!-- IMAGE -->
+									<table style="border-spacing: 0 16px;">
 									  <tr>
-									    <td width="700" height="350" style="background-color: green;">
+									    <td width="700">
+									      <img width="650" height="350" src={{{image_url_big}}}></img>
 									    </td>
 									  </tr>
 									  <tr><td>
-									    <p style="color: #333333;	font-family: Arial;	font-size: 14px; line-height: 14px;">Image source, Date</p>
+									    <p style="color: #333333;	font-family: Arial;	font-size: 14px; line-height: 14px;">{{{image_source}}}</p>
 									  </td></tr>
 									</table>
-									<!-- END IMAGE -->
+								  <!-- END IMAGE -->
 
 	                <!-- SECTION 2 -->
 	                <table style="border-spacing: 0 32px;">
@@ -165,7 +166,7 @@
 	                        <table>
 	                          <tr>
 	                            <td valign="middle" height="114" width="120">
-	                              {{fires_count}}
+	                              {{viirs_count}}
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -173,12 +174,13 @@
 	                    </td>
 	                    <td style="height: 90px; width: 67%; color: #4A4A4A;	font-family: Arial;	font-size: 18px;	letter-spacing: 0.1px;	line-height: 30px;">
 	                      <p style="margin: auto;">
-	                        There were <span style="color: #ED4602;">{{fires_count}} VIIRS fire alerts</span> reported in the past 2 days (From 9/12/2019 to 9/14/2019).
+	                        There were <span style="color: #ED4602;">{{fires_count}} VIIRS fire alerts</span> reported
+	                        in the past {{{viirs_days_count}}} days (From {{{viirs_day_start}}} to {{{viirs_day_end}}}).
 	                      </p>
 	                    </td>
 	                  </tr>
 	                </table>
-	                
+
 	                <p style="height: 20px; color: #555555;	font-family: Arial;	font-size: 13px;	font-weight: bold;	line-height: 20px; text-transform: uppercase;">
 	                      Fire Alerts in priority areas
 	                    </p>
@@ -190,7 +192,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{viirs_alerts.intact_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -206,7 +208,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.primary_forest}}
+  	                              {{viirs_alerts.primary_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -222,7 +224,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.peat}}
+  	                              {{viirs_alerts.peat}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -238,7 +240,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.protected_areas}}
+  	                              {{viirs_alerts.protected_areas}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -257,25 +259,26 @@
 	                <p style="height: 20px; color: #555555;	font-family: Arial;	font-size: 13px;	font-weight: bold;	line-height: 20px; text-transform: uppercase;">
                     Recent alerts
                   </p>
-
-									<table>
-                    <tr height="24"><td></td></tr>
-										<tr>
+                  
+                  <table><tr height="12"><td></td></tr></table>
+                  <table>
+                    <tr>
 	                    <td colspan="4">
 	                      <p style="color: #777777;	font-family: Arial;	font-size: 14px;	line-height: 21px;">
-	                        The confidence value range is between 0-100 (the values range from <25 = low, 25-75 = medium to >75=high). This is placeholder text to explain how to interpret confidence levels.
+	                        The confidence value range is between 1-100 (the values range from <30% for low, 30-80% for nominal, and >80% for high).
 	                      </p>
 	                    </td>
 	                  </tr>
-	                  <tr height="24"><td></td></tr>
-									</table>
+                  </table>
+                  <table><tr height="24"><td></td></tr></table>
 
 										<!-- Table Secondary -->
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 										  <colgroup>
-                        <col style="width: 33%;">
-                        <col style="width: 33%;">
-                        <col style="width: 33%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
+                        <col style="width: 25%;">
                       </colgroup>
 											<tr>
 											  <td style="color: #4A4A4A;	font-family: Arial;	font-size: 12px;	font-weight: bold;	line-height: 12px;">
@@ -287,6 +290,9 @@
 											  <td style="color: #4A4A4A;	font-family: Arial;	font-size: 12px;	font-weight: bold;	line-height: 12px; text-align: right;">
 											    Lat / Lon
 											  </td>
+											  <td style="color: #4A4A4A;	font-family: Arial;	font-size: 12px;	font-weight: bold;	line-height: 12px; text-align: right;">
+											    Confidence
+											  </td>
 											</tr>
 
 											{{each alerts}}
@@ -297,17 +303,17 @@
 													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:center; text-transform:uppercase;">
 													  <div style="display: flex; width: 100%; align-items: center;">
 													    <span style="height: 12px; width: 12px; border-radius: 120px; background-color: #ED4602; display: inline-block; margin-right: 28px;"></span>
-														  {{loop_vars.alerts.latitude}}
+														  {{loop_vars.alerts.alert_type}}
 													  </div>
 													</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 												</td>
-												<td width="152" height="50">
+												<td width="132" height="50">
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:left; text-transform:uppercase">
-														{{loop_vars.alerts.longitude}}
+														{{loop_vars.alerts.date}}
 													</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 												</td>
@@ -315,14 +321,21 @@
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:right; text-transform:uppercase">
-														{{loop_vars.alerts.acq_date}}
+														{{loop_vars.alerts.lat_long}}
 													</div>
 													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 												</td>
-										    <!-- <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#e7e7e7" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td bgcolor="#e7e7e7" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table> -->
+												<td class="wauto" height="50">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+													<div class="text-td" style="color:#262626; font-family:Arial,sans-serif; font-size:12px; line-height:16px; text-align:right; text-transform:uppercase">
+														{{loop_vars.alerts.confidence}}
+													</div>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="4" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+												</td>
 											</tr>
-											<tr bgcolor="#E7E7E9" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%; background-color: #E7E7E9;"><td></td><td></td><td></td></tr>
+											<tr bgcolor="#E7E7E9" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%; background-color: #E7E7E9;"><td></td><td></td><td></td><td></td></tr>
 											{{end}}
 										</table>
 										<!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>-->

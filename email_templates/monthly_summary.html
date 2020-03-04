@@ -123,37 +123,37 @@
 											<tr>
 												<td>
 													<div class="h2" style="color:#333333; font-family:Arial,sans-serif; font-size:32px; line-height:38px; text-align:left; font-weight:bold">
-													  <span style="color: #97BD3D;">December 2019 summary</span> of deforestation and fire alerts for {{location}}
+													  <span style="color: #97BD3D;">{{{month}}} {{{year}}} summary</span> of deforestation and fire alerts for {{location}}
 													</div>
 												</td>
 											</tr>
 										</table>
 										<!-- END Section 1 -->
-										
+
 										<!-- IMAGE -->
 										<table style="border-spacing: 0 32px;">
 										  <tr>
 										    <td style="	height: 240px;	width: 628px;	background-color: #F7F7F7;">
 										      <table>
 										        <tr>
-										          <td width="240" height="240" style="background-color: green;"></td>
+										          <td width="240" height="240">
+										            <img width="240" height="240" src={{{image_url}}}></img>
+										          </td>
 										          <td>
 										            <table>
-										              <tr width="388" height="65"></tr>
 										              <tr>
 										                <td width="48"></td>
 										                <td>
-										                <h3 style="width: 198px;	color: #333333;	font-family: Arial;	font-size: 24px;	font-weight: bold;">
+										                <h3 style="width: 300px;	color: #333333;	font-family: Arial;	font-size: 24px;	font-weight: bold; line-height: 1.25em;">
 										                  {{location}}
 										                </h3>
 										                <p style="color: #555555;	font-family: Arial;	font-size: 14px;	line-height: 28px;">
 										                  {{tags}}
 										                </p>
-										                <a href="" style="width: 130px;	color: #97BD3D;	font-family: Arial;	font-size: 14px; line-height: 28px; margin-top: 10px; text-decoration: underline">
+										                <a href="{{{subscriptions_url}}}" style="width: 130px;	color: #97BD3D;	font-family: Arial;	font-size: 14px; line-height: 28px; margin-top: 10px; text-decoration: underline">
 										                  Manage subscription
 										                </a>
 										              </td></tr>
-										              <tr width="388" height="65"></tr>
 										            </table>
 										          </td>
 										        </tr>
@@ -161,6 +161,7 @@
 										    </td>
 										  </tr>
 										</table>
+									<!-- END IMAGE -->
 
 	                <!-- SECTION 2 -->
 	                <table style="border-spacing: 0 16px;">
@@ -172,7 +173,7 @@
 	                  <tr>
 	                    <td>
 	                      <p style="color: #4A4A4A;	font-family: Arial;	font-size: 18px;	letter-spacing: 0.1px;	line-height: 30px;">
-	                        A total of <strong>{{glad_count}} GLAD deforestation and VIIRS fire</strong> were reported in the month of December 2019.
+	                        A total of <strong>{{glad_count}} GLAD deforestation and {{{viirs_count}}} VIIRS fire alerts</strong> were reported in the month of {{{month}}} {{{year}}}.
 	                      </p>
 	                    </td>
 	                  </tr>
@@ -253,7 +254,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{{priority_areas.plantations}}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -269,7 +270,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{{priority_areas.other}}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -297,7 +298,8 @@
 	                    </td>
 	                  </tr>
 	                  <tr>
-	                    <td width="700" height="350" style="background-color: green;" colspan="2">
+	                    <td colspan="2" width="700">
+	                      <image width="650" height="350" style="background-color: green;" src={{{glad_image_url}}}></image>
 	                    </td>
 	                  </tr>
 	                  <tr>
@@ -314,8 +316,8 @@
 	                    </td>
 	                    <td style="height: 90px; width: 60%; color: #4A4A4A;	font-family: Arial;	font-size: 18px;	letter-spacing: 0.1px;	line-height: 30px;">
 	                      <p style="margin: auto;">
-	                        There were <span style="color: #F26798;">{{glad_count}} GLAD deforestation alerts</span> reported in the week of the 25th of December (From 9/12/2019 to 9/19/2019).
-	                        This is <span style="color: #F26798;">unusually high</span> compared to the same week in previous years
+	                        There were <span style="color: #F26798;">{{glad_count}} GLAD deforestation alerts</span> reported in the week of the {{week_of}} (From {{{week_start}}} to {{{week_end}}}).
+	                        This is <span style="color: #F26798;">{{{glad_frequency}}}</span> compared to the same week in previous years
 	                      </p>
 	                    </td>
 	                  </tr>
@@ -324,8 +326,8 @@
 	                 <!-- CHART -->
 	                <table style="border-spacing: 0 32px;">
 	                  <tr>
-	                    <td width="700" height="270" style="background-color: grey;">
-	                      
+	                    <td width="700">
+	                      <image width="650" height="270" src={{{glad_chart_url}}}></image>
 	                    </td>
 	                  </tr>
 	                </table>
@@ -342,7 +344,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{glad_alerts.confirmed}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -358,7 +360,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.primary_forest}}
+  	                              {{glad_alerts.unconfirmed}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -386,7 +388,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{glad_alerts.intact_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -402,7 +404,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.primary_forest}}
+  	                              {{glad_alerts.primary_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -418,7 +420,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.peat}}
+  	                              {{glad_alerts.peat}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -434,7 +436,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.protected_areas}}
+  	                              {{glad_alerts.protected_areas}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -463,7 +465,9 @@
 	                    </td>
 	                  </tr>
 									  <tr>
-									    <td width="700" height="350" style="background-color: green;"></td>
+									    <td colspan="2" width="700">
+	                      <image width="650" height="350" style="background-color: green;" src={{{viirs_image_url}}}></image>
+	                    </td>
 									  </tr>
 									</table>
 								  <!-- END IMAGE -->
@@ -481,7 +485,7 @@
 	                        <table>
 	                          <tr>
 	                            <td valign="middle" height="114" width="120">
-	                              {{fires_count}}
+	                              {{viirs_count}}
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -489,8 +493,8 @@
 	                    </td>
 	                    <td style="height: 90px; width: 60%; color: #4A4A4A;	font-family: Arial;	font-size: 18px;	letter-spacing: 0.1px;	line-height: 30px;">
 	                      <p style="margin: auto;">
-	                        There were <span style="color: #ED4602;">{{fires_count}} VIIRS fire alerts</span> reported in the past 2 days (From 9/12/2019 to 9/14/2019).
-	                        This is <span style="color: #ED4602;">normal</span> compared to the same period in previous years.
+	                        There were <span style="color: #ED4602;">{{viirs_count}} VIIRS fire alerts</span> reported in the past {{{viirs_days_count}}} days (From {{{viirs_day_start}}} to {{{viirs_day_end}}}).
+	                        This is <span style="color: #ED4602;">{{{viirs_frequency}}}</span> compared to the same period in previous years.
 	                      </p>
 	                    </td>
 	                  </tr>
@@ -499,8 +503,8 @@
 	                 <!-- CHART -->
 	                <table style="border-spacing: 0 32px;">
 	                  <tr>
-	                    <td width="700" height="270" style="background-color: grey;">
-	                      
+	                    <td width="700">
+	                      <image width="650" height="270" src={{{viirs_chart_url}}}></image>
 	                    </td>
 	                  </tr>
 	                </table>
@@ -513,7 +517,7 @@
 	                  <tr>
 	                    <td colspan="4">
 	                      <p style="color: #777777;	font-family: Arial;	font-size: 14px;	line-height: 21px;">
-	                        The confidence value range is between 0-100 (the values range from <25 = low, 25-75 = medium to >75=high). This is placeholder text to explain how to interpret confidence levels.
+	                        The confidence value range is between 1-100 (the values range from <30% for low, 30-80% for nominal, and >80% for high).
 	                      </p>
 	                    </td>
 	                  </tr>
@@ -524,7 +528,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{viirs_alerts.low}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -540,7 +544,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.primary_forest}}
+  	                              {{viirs_alerts.medium}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -556,7 +560,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.peat}}
+  	                              {{viirs_alerts.high}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -582,7 +586,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.intact_forest}}
+  	                              {{viirs_alerts.intact_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -598,7 +602,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.primary_forest}}
+  	                              {{viirs_alerts.primary_forest}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -614,7 +618,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.peat}}
+  	                              {{viirs_alerts.peat}}
   	                            </td>
   	                          </tr>
   	                        </table>
@@ -630,7 +634,7 @@
 	                          <table>
   	                          <tr>
   	                            <td valign="middle" height="44" width="48">
-  	                              {{priority_areas.protected_areas}}
+  	                              {{viirs_alerts.protected_areas}}
   	                            </td>
   	                          </tr>
   	                        </table>
