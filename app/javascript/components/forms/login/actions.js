@@ -34,11 +34,9 @@ export const registerUser = createThunkAction('sendRegisterUser', data => () =>
 
 export const resetUserPassword = createThunkAction(
   'sendResetPassword',
-  ({ data, success }) => () =>
+  data => () =>
     resetPassword(data)
-      .then(() => {
-        success();
-      })
+      .then(() => {})
       .catch(error => {
         const { errors } = error.response.data;
 

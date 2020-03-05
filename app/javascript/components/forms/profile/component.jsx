@@ -6,7 +6,6 @@ import { getLanguages } from 'utils/lang';
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
-import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
 import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
@@ -120,16 +119,6 @@ class ProfileForm extends PureComponent {
                         label="how do you plan to use global forest watch? (select all that apply)"
                         options={howDoYouUse.map(r => ({ label: r, value: r }))}
                         multiple
-                      />
-                      <Checkbox
-                        name="signUpForTesting"
-                        options={[
-                          {
-                            label:
-                              'Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!',
-                            value: 'yes'
-                          }
-                        ]}
                       />
                       <Error
                         valid={valid}
