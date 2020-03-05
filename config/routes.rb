@@ -40,7 +40,7 @@ Gfw::Application.routes.draw do
   get '/sources/*all' => redirect("http://data.globalforestwatch.org/")
 
   get '/my_gfw' => redirect("/my-gfw")
-  get '/my-gfw' => redirect("/my-gfw")
+  # get '/my-gfw' => redirect("/my-gfw")
   get '/my_gfw/*all' => redirect("/my-gfw")
   ########### /LEGACY #############
 
