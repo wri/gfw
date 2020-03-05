@@ -33,7 +33,7 @@ export default {
   intro: {
     title: '80% of terrestrial species live in forests.',
     text:
-      'We are currently undergoing the sixth great mass extinction of species. Human activity is driving extinction at a rate 1,000 to 10,000 times beyond natural levels. Protecting forest habitats is key to protecting our planet’s remaining biodiversity.',
+      'We are currently undergoing the sixth greatest mass extinction of species. Human activity is driving extinction at a rate 1,000 to 10,000 times beyond natural levels. Protecting forest habitats is key to protecting our planet’s remaining biodiversity.',
     img1x: intro1x,
     img2x: intro2x
   },
