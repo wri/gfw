@@ -17,14 +17,14 @@ Gfw::Application.routes.draw do
     "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}?widget=#{params[:widget]}&#{req.query_string}" }
   get '/country/embed/:widget/:adm0/:adm1/:adm2', to: redirect { |params, req|
     "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?widget=#{params[:widget]}&#{req.query_string}" }
-
-  get '/embed/dashboards/country/:adm0', to: redirect { |params, req| puts req
-    "/embed/widget/#{req[:widget]}/country/#{params[:adm0]}?#{req.query_string}" }
-  get '/embed/dashboards/country/:adm0/:adm1', to: redirect { |params, req| puts req
-    "/embed/widget/#{req[:widget]}/country/#{params[:adm0]}/#{params[:adm1]}?#{req.query_string}" }
-  get '/embed/dashboards/country/:adm0/:adm1/:adm2', to: redirect { |params, req| puts req
-    "/embed/widget/#{req[:widget]}/country/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?#{req.query_string}" }
-
+    get '/embed/dashboards/:type', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}?#{req.query_string}" }
+  get '/embed/dashboards/:type/:adm0', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}/#{params[:adm0]}?#{req.query_string}" }
+  get '/embed/dashboards/:type/:adm0/:adm1', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}/#{params[:adm0]}/#{params[:adm1]}?#{req.query_string}" }
+  get '/embed/dashboards/:type/:adm0/:adm1/:adm2', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?#{req.query_string}" }
   get '/country/*all', to: redirect { |params, req| "/dashboards#{req.fullpath}" }
   get '/countries' => redirect('/dashboards/global')
   get '/countries/*all' => redirect('/dashboards/global')
@@ -40,6 +40,7 @@ Gfw::Application.routes.draw do
   get '/sources/*all' => redirect("http://data.globalforestwatch.org/")
 
   get '/my_gfw' => redirect("/my-gfw")
+  # get '/my-gfw' => redirect("/my-gfw")
   get '/my_gfw/*all' => redirect("/my-gfw")
   ########### /LEGACY #############
 
@@ -50,13 +51,15 @@ Gfw::Application.routes.draw do
   get '/map' => 'map#index'
   get '/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map#index'
   get '/map/*all' => 'map#index'
-  get '/embed/map' => 'map#index'
-  get '/embed/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map#index'
-  get '/embed/map/*all' => 'map#index'
 
   # dashboards
   get '/dashboards' => redirect('/dashboards/global')
   get '/dashboards(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#index'
+
+  # Embeds
+  get '/embed/map' => 'map#index'
+  get '/embed/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map#index'
+  get '/embed/map/*all' => 'map#index'
   get '/embed/widget/:slug/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
 
   # about
@@ -72,7 +75,6 @@ Gfw::Application.routes.draw do
 
   # my gfw
   get '/my-gfw' => 'my_gfw#index'
-  get '/my-gfw/*all' => 'connect#index', as: 'user_profile'
 
   # stories
   get '/stories' => 'stories#index'
@@ -92,10 +94,6 @@ Gfw::Application.routes.draw do
 
   # subscribe
   get '/subscribe' => 'subscribe#index'
-
-  # media
-  post 'media/upload' => 'media#upload'
-  get  'media/show' => 'media#show'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false

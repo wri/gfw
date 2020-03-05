@@ -20,7 +20,6 @@ import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
-import SubscribeModal from 'components/modals/subscribe';
 import MapPrompts from 'components/prompts/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
@@ -140,14 +139,8 @@ class MainMapComponent extends PureComponent {
             <LatestProvider />
             <GeostoreProvider />
             <GeodescriberProvider />
-            {process.env.FEATURE_ENV === 'staging' ? (
-              <Fragment>
-                <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
-                <AreasProvider />
-              </Fragment>
-            ) : (
-              <SubscribeModal />
-            )}
+            <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+            <AreasProvider />
             <PlanetBasemapsProvider />
           </div>
         )}
