@@ -59,7 +59,7 @@ const Button = props => {
           { disabled },
           { '--active': active }
         )}
-        href={extLink}
+        href={`//${extLink}`}
         target={target || '_blank'}
         rel="noopener"
         onClick={handleClick}
