@@ -206,7 +206,7 @@ class WidgetDownloadButton extends PureComponent {
   render() {
     const tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
-        ? 'Download the data. Please add .csv to the file if extension is missing.'
+        ? 'Download the data. Please add .csv to the filename if extension is missing.'
         : 'Download the data.';
 
     return (
