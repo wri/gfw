@@ -163,6 +163,10 @@ export default {
         return {
           ...data,
           settings: {
+            forestType:
+              params && params.adm0 && params.adm0 === 'IDN'
+                ? 'primary_forest'
+                : null,
             startYear,
             endYear
           },
