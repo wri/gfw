@@ -15,6 +15,7 @@ import {
 
 // get list data
 const selectAlerts = state => state.data && state.data.alerts;
+const selectDownloadUrls = state => state.data && state.data.downloadUrls;
 const selectLatestDates = state => state.data && state.data.latest;
 const selectColors = state => state.colors;
 const selectInteraction = state => state.settings.interaction;
@@ -212,5 +213,6 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
+  gladAlertsDownloadUrls: selectDownloadUrls
 });
