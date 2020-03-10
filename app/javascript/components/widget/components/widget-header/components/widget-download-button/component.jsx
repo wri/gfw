@@ -15,9 +15,13 @@ import downloadIcon from 'assets/icons/download.svg';
 
 import './styles.scss';
 
+const { GFW_API } = process.env;
+const GLAD_ALERTS_WIDGET = 'gladAlerts';
+
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     getDataURL: PropTypes.func,
+    gladAlertsDownloadUrls: PropTypes.obj,
     settings: PropTypes.object,
     title: PropTypes.string,
     parentData: PropTypes.object,
@@ -26,7 +30,8 @@ class WidgetDownloadButton extends PureComponent {
     location: PropTypes.object,
     adminLevel: PropTypes.string,
     metaKey: PropTypes.string,
-    simple: PropTypes.bool
+    simple: PropTypes.bool,
+    widget: PropTypes.string
   };
 
   generateZipFromURL = () => {
@@ -174,7 +179,36 @@ class WidgetDownloadButton extends PureComponent {
     });
   };
 
+  isGladAlertsWidget = () => {
+    const { widget } = this.props;
+    return widget === GLAD_ALERTS_WIDGET;
+  };
+
+  isCustomShape = () => {
+    const { location } = this.props;
+    return location && location.type === 'geostore';
+  };
+
+  onClickDownloadBtn = () => {
+    const { gladAlertsDownloadUrls } = this.props;
+
+    const isGladAlertsWidget = this.isGladAlertsWidget();
+    const isCustomShape = this.isCustomShape();
+
+    if (isGladAlertsWidget && isCustomShape) {
+      const csvFile = `${GFW_API}/${gladAlertsDownloadUrls.csv}`;
+      saveAs(csvFile, 'download.csv');
+    }
+
+    this.generateZipFromURL();
+  };
+
   render() {
+    const tooltipText =
+      this.isGladAlertsWidget() && this.isCustomShape()
+        ? 'Download the data. Please add .csv to the file if extension is missing.'
+        : 'Download the data.';
+
     return (
       <Button
         className={cx('c-widget-download-button', {
@@ -183,8 +217,8 @@ class WidgetDownloadButton extends PureComponent {
         theme={cx('theme-button-small square', {
           'theme-button-grey-filled theme-button-xsmall': this.props.simple
         })}
-        onClick={this.generateZipFromURL}
-        tooltip={{ text: 'Download the data' }}
+        onClick={this.onClickDownloadBtn}
+        tooltip={{ text: tooltipText }}
       >
         <Icon icon={downloadIcon} className="download-icon" />
       </Button>
