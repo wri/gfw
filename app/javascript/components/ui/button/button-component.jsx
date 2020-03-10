@@ -50,6 +50,9 @@ const Button = props => {
   const isDeviceTouch = isTouch();
   let button = null;
   if (extLink) {
+    const pattern = /^((http|https):\/\/)/;
+    const url = !pattern.test(extLink) ? `http://${extLink}` : extLink;
+
     button = (
       <a
         className={cx(
@@ -59,7 +62,7 @@ const Button = props => {
           { disabled },
           { '--active': active }
         )}
-        href={`//${extLink}`}
+        href={url}
         target={target || '_blank'}
         rel="noopener"
         onClick={handleClick}
