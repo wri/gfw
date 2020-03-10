@@ -98,6 +98,7 @@ export default {
         spread((alertsResponse, latestResponse) => {
           const alerts = alertsResponse.data.data.attributes.value;
           const latestDate = latestResponse.attributes.updatedAt;
+          const downloadUrls = alertsResponse.data.data.attributes.downloadUrls;
 
           return {
             alerts:
@@ -107,7 +108,8 @@ export default {
                 alerts: d.count
               })),
             latest: latestDate,
-            settings: { latestDate }
+            settings: { latestDate },
+            downloadUrls
           };
         })
       );

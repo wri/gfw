@@ -6,6 +6,7 @@ import snakeCase from 'lodash/snakeCase';
 import JSZipUtils from 'jszip-utils';
 import moment from 'moment';
 import { saveAs } from 'file-saver';
+import cx from 'classnames';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -14,9 +15,13 @@ import downloadIcon from 'assets/icons/download.svg';
 
 import './styles.scss';
 
+const { GFW_API } = process.env;
+const GLAD_ALERTS_WIDGET = 'gladAlerts';
+
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     getDataURL: PropTypes.func,
+    gladAlertsDownloadUrls: PropTypes.obj,
     settings: PropTypes.object,
     title: PropTypes.string,
     parentData: PropTypes.object,
@@ -24,7 +29,9 @@ class WidgetDownloadButton extends PureComponent {
     childData: PropTypes.object,
     location: PropTypes.object,
     adminLevel: PropTypes.string,
-    metaKey: PropTypes.string
+    metaKey: PropTypes.string,
+    simple: PropTypes.bool,
+    widget: PropTypes.string
   };
 
   generateZipFromURL = () => {
@@ -172,13 +179,43 @@ class WidgetDownloadButton extends PureComponent {
     });
   };
 
+  isGladAlertsWidget = () => {
+    const { widget } = this.props;
+    return widget === GLAD_ALERTS_WIDGET;
+  };
+
+  isCustomShape = () => {
+    const { location } = this.props;
+    return location && location.type === 'geostore';
+  };
+
+  onClickDownloadBtn = () => {
+    const { gladAlertsDownloadUrls } = this.props;
+
+    if (this.isGladAlertsWidget() && this.isCustomShape()) {
+      const csvFile = `${GFW_API}${gladAlertsDownloadUrls.csv}`;
+      saveAs(csvFile, 'download');
+    } else {
+      this.generateZipFromURL();
+    }
+  };
+
   render() {
+    const tooltipText =
+      this.isGladAlertsWidget() && this.isCustomShape()
+        ? 'Download the data. Please add .csv to the filename if extension is missing.'
+        : 'Download the data.';
+
     return (
       <Button
-        className="c-widget-download-button"
-        theme="theme-button-small square"
-        onClick={this.generateZipFromURL}
-        tooltip={{ text: 'Download the data' }}
+        className={cx('c-widget-download-button', {
+          'small-download-button': this.props.simple
+        })}
+        theme={cx('theme-button-small square', {
+          'theme-button-grey-filled theme-button-xsmall': this.props.simple
+        })}
+        onClick={this.onClickDownloadBtn}
+        tooltip={{ text: tooltipText }}
       >
         <Icon icon={downloadIcon} className="download-icon" />
       </Button>
