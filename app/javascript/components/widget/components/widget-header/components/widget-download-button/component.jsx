@@ -192,10 +192,7 @@ class WidgetDownloadButton extends PureComponent {
   onClickDownloadBtn = () => {
     const { gladAlertsDownloadUrls } = this.props;
 
-    const isGladAlertsWidget = this.isGladAlertsWidget();
-    const isCustomShape = this.isCustomShape();
-
-    if (isGladAlertsWidget && isCustomShape) {
+    if (this.isGladAlertsWidget() && this.isCustomShape()) {
       const csvFile = `${GFW_API}/${gladAlertsDownloadUrls.csv}`;
       saveAs(csvFile, 'download.csv');
     }
