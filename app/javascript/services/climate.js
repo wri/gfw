@@ -19,7 +19,7 @@ const SQL_QUERIES = {
     adm1:
       "SELECT iso, admin_1, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND threshold = {threshold} GROUP BY iso, admin_1",
     adm2:
-      "SELECT iso, admin_1, admin_2, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36$ WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2"
+      "SELECT iso, admin_1, admin_2, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2"
   },
   soil_organic_carbon: {
     globalAndCountry:

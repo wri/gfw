@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import compact from 'lodash/compact';
 
 import Component from './component';
 import * as actions from './actions';
@@ -19,10 +18,9 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
           myGfw.data.subsector && myGfw.data.subsector.includes('Other')
             ? myGfw.data.subsector.split('Other:')[1].trim()
             : null,
-      signUpNewsletterOrTesting: compact([
-        myGfw.data.signUpForTesting ? 'testing' : false,
-        myGfw.data.signUpForNewsletter ? 'newsletter' : false
-      ])
+      signUpForNewsletter: myGfw.data.signUpForNewsletter
+        ? ['newsletter']
+        : null
     }
   })
 });

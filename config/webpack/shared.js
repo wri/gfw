@@ -71,6 +71,7 @@ module.exports = {
       styles: 'styles',
       router: 'router',
       utils: 'utils',
+      'react-dom': '@hot-loader/react-dom',
       'lodash-es': 'lodash'
     }
   },

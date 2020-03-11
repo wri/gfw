@@ -105,10 +105,10 @@ export default {
           ...data,
           settings: {
             startYear,
-            endYear: 2015
+            endYear: 2018
           },
           options: {
-            years: range.filter(y => y.value <= 2015)
+            years: range.filter(y => y.value <= 2018)
           }
         };
       })

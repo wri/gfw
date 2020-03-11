@@ -48,14 +48,3 @@ export const tools = [
     label: 'Not applicable'
   }
 ];
-
-export const testNewFeatures = [
-  {
-    label: 'Yes, sign me up',
-    value: 'yes'
-  },
-  {
-    label: 'No thanks',
-    value: 'no'
-  }
-];

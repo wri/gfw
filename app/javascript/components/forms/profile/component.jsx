@@ -5,8 +5,10 @@ import { Form } from 'react-final-form';
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
+
 import Checkbox from 'components/forms/components/checkbox';
 import Radio from 'components/forms/components/radio';
+
 import Submit from 'components/forms/components/submit';
 import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
@@ -149,13 +151,8 @@ class ProfileForm extends PureComponent {
                         multiple
                       />
                       <Checkbox
-                        name="signUpNewsletterOrTesting"
+                        name="signUpForNewsletter"
                         options={[
-                          {
-                            label:
-                              'Interested in testing new features and helping to improve Global Forest Watch? Sign up to become an official tester!',
-                            value: 'testing'
-                          },
                           {
                             label:
                               'Subscribe to the newsletter to receive GFW updates',
@@ -163,10 +160,8 @@ class ProfileForm extends PureComponent {
                           }
                         ]}
                       />
-                      {values.signUpNewsletterOrTesting &&
-                        values.signUpNewsletterOrTesting.includes(
-                          'newsletter'
-                        ) && (
+                      {values.signUpForNewsletter &&
+                        values.signUpForNewsletter.includes('newsletter') && (
                         <Select
                           name="topics"
                           label="Topics you're interested in receiving communications about"

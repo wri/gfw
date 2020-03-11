@@ -8,7 +8,7 @@ export const saveProfile = createThunkAction(
   'saveProfile',
   ({
     id,
-    signUpNewsletterOrTesting,
+    signUpForNewsletter,
     subsector,
     subsector_otherInput,
     ...rest
@@ -16,17 +16,14 @@ export const saveProfile = createThunkAction(
     const postData = {
       id,
       ...rest,
-      subsector: subsector.includes('Other')
-        ? `Other: ${subsector_otherInput}`
-        : subsector,
-      signUpForTesting:
-        signUpNewsletterOrTesting &&
-        signUpNewsletterOrTesting.includes('testing')
-          ? 'true'
-          : false,
+      subsector:
+        subsector && subsector.includes('Other')
+          ? `Other: ${subsector_otherInput}`
+          : subsector,
       signUpForNewsletter:
-        signUpNewsletterOrTesting &&
-        signUpNewsletterOrTesting.includes('newsletter')
+        !!signUpForNewsletter &&
+        signUpForNewsletter.length &&
+        signUpForNewsletter.includes('newsletter')
           ? 'true'
           : false
     };
