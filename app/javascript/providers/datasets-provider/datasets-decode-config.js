@@ -1,3 +1,5 @@
+import { FOREST_LOSS, FOREST_EXTENT } from 'data/layers';
+
 const decodes = {
   treeCover: `
     // values for creating power scale, domain (input), and range (output)
@@ -548,9 +550,9 @@ const decodes = {
 };
 
 export default {
-  '78747ea1-34a9-4aa7-b099-bdb8948200f4': decodes.treeCover,
+  [FOREST_EXTENT]: decodes.treeCover,
   'c05c32fd-289c-4b20-8d73-dc2458234e04': decodes.treeCover,
-  'c3075c5a-5567-4b09-bc0d-96ed1673f8b6': decodes.treeCoverLoss,
+  [FOREST_LOSS]: decodes.treeCoverLoss,
   '0d35db15-9c05-4dbb-9879-ceded4f7951d': decodes.treeCoverLoss,
   '63473160-c95c-4693-a9b1-405fe6e4bbed': decodes.treeLossByDriver,
   'fd05bc2c-6ade-408c-862e-7318557dd4fc': decodes.treeLossByDriver,

@@ -2,23 +2,23 @@
   {
     "slug": "loss",
     "cartodb_id": 597,
-    "dataset": "897ecc76-2308-4c51-aeb3-495de0bdca79",
-    "layer": "c3075c5a-5567-4b09-bc0d-96ed1673f8b6"
+    "dataset": "eab9655f-dd37-4bb3-b223-4c5df166564c",
+    "layer": "dce8004f-4d0f-4c2d-ae4b-dcf55e14035f"
   },
   {
     "slug": "forestgain",
-    "dataset": "70e2549c-d722-44a6-a8d7-4a385d78565e",
-    "layer": "3b22a574-2507-4b4a-a247-80057c1a1ad4"
+    "dataset": "190acb0d-2b06-48d8-b894-234a7413674b",
+    "layer": "0abe4aea-cc86-4c75-8c16-2f16bf78d8be"
   },
   {
     "slug": "gain",
-    "dataset": "70e2549c-d722-44a6-a8d7-4a385d78565e",
-    "layer": "3b22a574-2507-4b4a-a247-80057c1a1ad4"
+    "dataset": "190acb0d-2b06-48d8-b894-234a7413674b",
+    "layer": "0abe4aea-cc86-4c75-8c16-2f16bf78d8be"
   },
   {
     "slug": "forest2000",
     "cartodb_id": 591,
-    "dataset": "044f4af8-be72-4999-b7dd-13434fc4a394",
+    "dataset": "c92b6411-f0e5-4606-bbd9-138e40e50eb8",
     "layer": "c05c32fd-289c-4b20-8d73-dc2458234e04"
   },
   {
@@ -1017,8 +1017,8 @@
   {
     "cartodb_id": 782,
     "slug": "forest2010",
-    "dataset": "044f4af8-be72-4999-b7dd-13434fc4a394",
-    "layer": "78747ea1-34a9-4aa7-b099-bdb8948200f4",
+    "dataset": "c92b6411-f0e5-4606-bbd9-138e40e50eb8",
+    "layer": "2351399c-ef2c-48da-9485-20698190acb0",
     "name": "tree cover 2010"
   },
   {

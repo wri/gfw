@@ -1,4 +1,7 @@
 import treeCover from 'components/widgets/land-cover/tree-cover';
+import { FOREST_EXTENT_DATASET } from 'data/layers-datasets';
+
+import { FOREST_EXTENT } from 'data/layers';
 
 export default {
   ...treeCover,
@@ -6,8 +9,8 @@ export default {
   datasets: [
     // tree cover
     {
-      dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
-      layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4']
+      dataset: FOREST_EXTENT_DATASET,
+      layers: [FOREST_EXTENT]
     }
   ],
   visible: ['analysis'],
