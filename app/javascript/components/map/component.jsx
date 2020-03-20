@@ -20,7 +20,7 @@ import Draw from './components/draw';
 import Attributions from './components/attributions';
 
 // Components
-import LayerManager from './components/layer-manager';
+import LayerManagerWrapper from './components/layer-manager';
 
 // Styles
 import './styles.scss';
@@ -340,7 +340,7 @@ class MapComponent extends Component {
                   onSelectBoundary={onSelectBoundary}
                 />
                 {/* LAYER MANAGER */}
-                <LayerManager map={map} />
+                <LayerManagerWrapper map={map} />
                 {/* DRAWING */}
                 <Draw
                   map={map}

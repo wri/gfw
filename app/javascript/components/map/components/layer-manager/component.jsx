@@ -13,7 +13,7 @@ class LayerManagerComponent extends PureComponent {
   };
 
   render() {
-    const { layers, setMapLoading, basemap, map } = this.props;
+    const { layers, /* setMapLoading, */ basemap, map } = this.props;
 
     const basemapLayer =
       basemap && basemap.url
@@ -22,7 +22,7 @@ class LayerManagerComponent extends PureComponent {
           name: 'Basemap',
           provider: 'leaflet',
           layerConfig: {
-            body: {
+            source: {
               url: basemap.url
             }
           },
@@ -36,9 +36,10 @@ class LayerManagerComponent extends PureComponent {
       <LayerManager
         map={map}
         plugin={PluginMapboxGl}
-        onLayerLoading={loading => setMapLoading(loading)}
+        // onLayerLoading={loading => setMapLoading(loading)} // removed in LMv3
       >
-        {allLayers && allLayers.map(l => <Layer key={l.id} {...l} />)}
+        {allLayers &&
+          allLayers.map(l => <Layer key={l.id} {...l} {...l.layerConfig} />)}
       </LayerManager>
     );
   }

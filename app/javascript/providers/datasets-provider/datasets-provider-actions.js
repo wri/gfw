@@ -20,7 +20,6 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
       const parsedDatasets = wriAPISerializer(allDatasets.data)
         .filter(
           d =>
-            d.published &&
             d.layer.length &&
             (d.env === 'production' || d.env === process.env.FEATURE_ENV)
         )
@@ -39,7 +38,6 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                   l.applicationConfig.default
               )) ||
             layer[0];
-
           // we need a default layer so we can set it when toggled onto the map
           if (!defaultLayer) return null;
 
@@ -101,9 +99,8 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                 layer
                   .filter(
                     l =>
-                      (l.env === 'production' ||
-                        l.env === process.env.FEATURE_ENV) &&
-                      l.published
+                      l.env === 'production' ||
+                      l.env === process.env.FEATURE_ENV
                   )
                   .map((l, i) => {
                     const { layerConfig, legendConfig } = l;
@@ -114,10 +111,11 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       decode_config,
                       sql_config,
                       timeline_config,
-                      body,
-                      url
+                      source, // v3
+                      decode_function // v3
                     } = layerConfig;
-                    const decodeFunction = decodeLayersConfig[l.id];
+                    const { tiles } = source; // previously url
+                    const decodeFunction = decodeLayersConfig[decode_function];
                     const decodeClusters = decodeLayersClusters[l.id];
                     const customColor =
                       legendConfig &&
@@ -171,7 +169,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       // params for tile url
                       ...(params && {
                         params: {
-                          url: body.url || url,
+                          url: tiles && tiles.length && tiles[0],
                           ...params,
                           ...(hasParamsTimeline && {
                             minDate: params && params.startDate,

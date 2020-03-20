@@ -9,14 +9,18 @@ import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_GAIN_DATASET,
   FOREST_LOSS_DATASET,
-  FOREST_EXTENT_DATASET
+  FOREST_EXTENT_DATASET,
+  RIVER_BASINS_BOUNDARIES_DATASET,
+  BIOMASS_LOSS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_GAIN,
   FOREST_LOSS,
-  FOREST_EXTENT
+  FOREST_EXTENT,
+  RIVER_BASINS_BOUNDARIES,
+  BIOMASS_LOSS
 } from 'data/layers';
 
 export const descriptions = {
@@ -201,8 +205,8 @@ export const topics = {
           },
           // biomass loss
           {
-            dataset: 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b',
-            layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
+            dataset: BIOMASS_LOSS_DATASET,
+            layers: [BIOMASS_LOSS],
             opacity: 1,
             visibility: true
           }
@@ -265,15 +269,15 @@ export const topics = {
           },
           // oil palm
           {
-            dataset: 'c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e',
-            layers: ['0911abc4-d861-4d7a-84d6-0fa07b51d7d8'],
+            dataset: 'c5aac280-9dac-4e97-8f44-afc52a52c255',
+            layers: ['aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1'],
             opacity: 1,
             visibility: true
           },
           // wood fiber
           {
-            dataset: '93e67a77-1a31-4d04-a75d-86a4d6e35d54',
-            layers: ['f680828e-be68-4895-b1ed-1d0915d07457'],
+            dataset: '1f016faa-5940-4dd3-a848-a00086e20e38',
+            layers: ['82229960-13c2-4810-84e7-bdd4812d4578'],
             opacity: 1,
             visibility: true
           },
@@ -318,8 +322,8 @@ export const topics = {
         datasets: [
           // admin boundaries
           {
-            dataset: '63295b05-55a1-456c-a56c-c9ccb3a711ec',
-            layers: ['d590f83c-9b54-4542-8d27-f61b8b19df46'],
+            dataset: RIVER_BASINS_BOUNDARIES_DATASET,
+            layers: [RIVER_BASINS_BOUNDARIES],
             opacity: 1,
             visibility: true
           },

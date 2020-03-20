@@ -1,6 +1,9 @@
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  GLAD_DEFORESTATION_ALERTS_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES
@@ -24,7 +27,7 @@ export default {
       boundary: true
     },
     {
-      dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
+      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
       layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
     }
   ],

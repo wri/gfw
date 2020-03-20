@@ -2,10 +2,14 @@ import { fetchAnalysisEndpoint } from 'services/analysis';
 import { getLoss } from 'services/analysis-cached';
 
 import biomassLossIsos from 'data/biomass-isos.json';
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  BIOMASS_LOSS_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  BIOMASS_LOSS
 } from 'data/layers';
 
 import { getYearsRange } from 'components/widgets/utils/data';
@@ -89,8 +93,8 @@ export default {
     },
     // biomass loss
     {
-      dataset: 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b',
-      layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
+      dataset: BIOMASS_LOSS_DATASET,
+      layers: [BIOMASS_LOSS]
     }
   ],
   pendingKeys: ['threshold', 'unit'],

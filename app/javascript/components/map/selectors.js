@@ -362,14 +362,18 @@ export const getActiveLayers = createSelector(
       })
     };
 
-    return filteredLayers.concat({
+    const parsedLayers = filteredLayers.concat({
       id: geostore.id,
       name: isAoI ? 'Area of Interest' : 'Geojson',
-      provider: 'geojson',
-      layerConfig: {
-        data: geojson,
-        body: {
-          vectorLayers: [
+      config: {
+        type: 'geojson',
+        source: {
+          provider: 'geojson',
+          data: geojson,
+          type: 'geojson'
+        },
+        render: {
+          layers: [
             {
               type: 'fill',
               paint: {
@@ -401,6 +405,8 @@ export const getActiveLayers = createSelector(
       }),
       zIndex: 1060
     });
+
+    return parsedLayers;
   }
 );
 
@@ -440,13 +446,18 @@ export const getInteractiveLayerIds = createSelector(
   getActiveLayers,
   layers => {
     if (isEmpty(layers)) return [];
+
     const interactiveLayers = layers.filter(
-      l => !isEmpty(l.interactionConfig) && l.layerConfig.body.vectorLayers
+      l =>
+        !isEmpty(l.interactionConfig) &&
+        l.layerConfig.render &&
+        l.layerConfig.render.layers
     );
 
     return flatMap(
       interactiveLayers.reduce((arr, layer) => {
-        const clickableLayers = layer.layerConfig.body.vectorLayers;
+        const clickableLayers =
+          layer.layerConfig.render && layer.layerConfig.render.layers;
 
         return [
           ...arr,

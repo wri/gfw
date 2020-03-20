@@ -187,34 +187,36 @@ class MapGeostore extends Component {
                   <Layer
                     id={geostore.id}
                     name="Geojson"
-                    provider="geojson"
-                    layerConfig={{
+                    // provider="geojson"
+                    type="geojson"
+                    source={{
                       data: geostore.geojson,
-                      body: {
-                        vectorLayers: [
-                          {
-                            type: 'fill',
-                            paint: {
-                              'fill-color': 'transparent'
-                            }
-                          },
-                          {
-                            type: 'line',
-                            paint: {
-                              'line-color': '#C0FF24',
-                              'line-width': 3,
-                              'line-offset': 2
-                            }
-                          },
-                          {
-                            type: 'line',
-                            paint: {
-                              'line-color': '#000',
-                              'line-width': 2
-                            }
+                      type: 'geojson'
+                    }}
+                    render={{
+                      layers: [
+                        {
+                          type: 'fill',
+                          paint: {
+                            'fill-color': 'transparent'
                           }
-                        ]
-                      }
+                        },
+                        {
+                          type: 'line',
+                          paint: {
+                            'line-color': '#C0FF24',
+                            'line-width': 3,
+                            'line-offset': 2
+                          }
+                        },
+                        {
+                          type: 'line',
+                          paint: {
+                            'line-color': '#000',
+                            'line-width': 2
+                          }
+                        }
+                      ]
                     }}
                     zIndex={1060}
                   />
@@ -223,11 +225,9 @@ class MapGeostore extends Component {
                   key={basemap.url}
                   id={basemap.url}
                   name="Basemap"
-                  provider="leaflet"
-                  layerConfig={{
-                    body: {
-                      url: basemap.url
-                    }
+                  // provider="leaflet"
+                  source={{
+                    url: basemap.url
                   }}
                   zIndex={100}
                 />
