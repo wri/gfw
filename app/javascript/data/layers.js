@@ -11,3 +11,6 @@ export const RIVER_BASINS_BOUNDARIES = '6a18fc40-18ff-4c4d-bad6-685a5e1ad0fa'; /
 export const BIOMASS_LOSS = '929662b6-3bf8-4413-b4b3-9b8c116f68bb'; // v3
 export const SOIL_CARBON_DENSITY = 'd86c0afe-298a-4f7d-be69-e398b6a8ab20'; // v3
 export const TREE_BIOMASS_DENSITY = '1a1199e2-896b-4051-9419-eb4f67c554a7'; // v3
+export const BIODIVERSITY_HOTSPOTS_2016 =
+  '8e9a86e2-5e34-452e-bf55-d7c6648ea42e'; // v3
+export const GLAD_ALERTS = '8e4a527d-1bcd-4a12-82b0-5a108ffec452'; // v3

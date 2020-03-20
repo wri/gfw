@@ -25,7 +25,7 @@
     "slug": "umd_as_it_happens",
     "cartodb_id": 723,
     "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
-    "layer": "dd5df87f-39c2-4aeb-a462-3ef969b20b66"
+    "layer": "8e4a527d-1bcd-4a12-82b0-5a108ffec452"
   },
   {
     "slug": "prodes",
@@ -359,8 +359,8 @@
   {
     "cartodb_id": 592,
     "slug": "biodiversity_hotspots",
-    "dataset": "a684a9bb-63f2-4bea-bf62-fd5e80d23d75",
-    "layer": "dfd9deb6-8d39-4640-8571-4389d5d8898a",
+    "dataset": "8eb4da13-7cc3-4dd1-8f4f-f43c2be56631",
+    "layer": "8e9a86e2-5e34-452e-bf55-d7c6648ea42e",
     "name": "2016 biodiversity hotspots"
   },
   {
@@ -877,8 +877,8 @@
   {
     "cartodb_id": 618,
     "slug": "birdlife",
-    "dataset": "3bc67d97-cd01-4242-b72b-315e7f320543",
-    "layer": "ab579981-e77c-4cd3-b2d4-5b8a279aa173",
+    "dataset": "c026c2d5-4a2d-43fe-ab1d-215c47af3231",
+    "layer": "5dd45d79-7d09-421d-b7b9-baca3db3820d",
     "name": "2014 endemic bird areas"
   },
   {
@@ -1157,8 +1157,8 @@
   {
     "cartodb_id": 624,
     "slug": "azepoly",
-    "dataset": "3a638102-ab50-4717-a0fe-b27bd79d18c2",
-    "layer": "3c44da8f-159a-41f2-9fdb-448e4cd0923d",
+    "dataset": "d0a44e1d-7c07-4182-9d50-315cbcaa6ae1",
+    "layer": "04118785-27f4-4fb0-8980-a786a44f5c6d",
     "name": "2010 endangered species sites\u2014alliance for zero extinction (aze)"
   },
   {
@@ -1255,8 +1255,8 @@
   {
     "cartodb_id": 590,
     "slug": "pantropical",
-    "dataset": "b67fc529-af07-4443-85a9-24b5cf6f2eae",
-    "layer": "d33a6dc5-eb74-4c4d-bf3b-1f0054c0e247",
+    "dataset": "6b643041-3435-405d-9ce2-f5073385f471",
+    "layer": "131657d3-c9dd-4c21-86c9-0e7886f0e5e1",
     "name": "aboveground mangrove biomass density"
   },
   {

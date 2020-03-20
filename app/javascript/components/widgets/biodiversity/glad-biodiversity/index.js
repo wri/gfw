@@ -6,7 +6,8 @@ import {
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  GLAD_ALERTS
 } from 'data/layers';
 
 export default {
@@ -28,7 +29,7 @@ export default {
     },
     {
       dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
+      layers: [GLAD_ALERTS]
     }
   ],
   settingsConfig: [

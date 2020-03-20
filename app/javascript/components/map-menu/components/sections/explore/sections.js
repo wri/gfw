@@ -11,7 +11,8 @@ import {
   FOREST_LOSS_DATASET,
   FOREST_EXTENT_DATASET,
   RIVER_BASINS_BOUNDARIES_DATASET,
-  BIOMASS_LOSS_DATASET
+  BIOMASS_LOSS_DATASET,
+  BIODIVERSITY_HOTSPOTS_2016_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -20,7 +21,8 @@ import {
   FOREST_LOSS,
   FOREST_EXTENT,
   RIVER_BASINS_BOUNDARIES,
-  BIOMASS_LOSS
+  BIOMASS_LOSS,
+  BIODIVERSITY_HOTSPOTS_2016
 } from 'data/layers';
 
 export const descriptions = {
@@ -152,8 +154,8 @@ export const topics = {
           },
           // biodiversity hotspots
           {
-            dataset: 'a684a9bb-63f2-4bea-bf62-fd5e80d23d75',
-            layers: ['dfd9deb6-8d39-4640-8571-4389d5d8898a'],
+            dataset: BIODIVERSITY_HOTSPOTS_2016_DATASET,
+            layers: [BIODIVERSITY_HOTSPOTS_2016],
             opacity: 1,
             visibility: true
           },

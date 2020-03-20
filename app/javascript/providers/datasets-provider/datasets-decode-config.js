@@ -551,8 +551,8 @@ export default {
   treeCover: decodes.treeCover,
   treeCoverLoss: decodes.treeCoverLoss,
   treeLossByDriver: decodes.treeLossByDriver,
-  'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
-  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs,
+  GLADs: decodes.GLADs,
+  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs, // TODO: remove?
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,

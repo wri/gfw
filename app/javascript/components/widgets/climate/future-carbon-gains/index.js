@@ -1,7 +1,10 @@
 import { all, spread } from 'axios';
 import { getEmissions } from 'services/climate';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  PROJECTED_CARBON_STORAGE_FOREST_REGROWTH
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES
@@ -42,7 +45,7 @@ export default {
     },
     // potential carbon gains
     {
-      dataset: 'b7a34457-1d8a-456e-af46-876e0b42fb96',
+      dataset: PROJECTED_CARBON_STORAGE_FOREST_REGROWTH,
       layers: ['fffa76d3-5008-48b7-afeb-2c7054548f2e']
     }
   ],

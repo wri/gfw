@@ -13,7 +13,8 @@ import {
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  GLAD_ALERTS
 } from 'data/layers';
 
 import { descriptions, topics, stories } from './sections';
@@ -99,10 +100,7 @@ const selectPTWData = state => {
               // GLADs
               {
                 dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-                layers: [
-                  '581ecc62-9a70-4ef4-8384-0d59363e511d',
-                  'dd5df87f-39c2-4aeb-a462-3ef969b20b66'
-                ],
+                layers: ['581ecc62-9a70-4ef4-8384-0d59363e511d', GLAD_ALERTS],
                 opacity: 1,
                 visibility: true
               }
