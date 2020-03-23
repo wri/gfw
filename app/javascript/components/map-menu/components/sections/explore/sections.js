@@ -12,7 +12,10 @@ import {
   FOREST_EXTENT_DATASET,
   RIVER_BASINS_BOUNDARIES_DATASET,
   BIOMASS_LOSS_DATASET,
-  BIODIVERSITY_HOTSPOTS_2016_DATASET
+  BIODIVERSITY_HOTSPOTS_2016_DATASET,
+  BIODIVERSITY_INTACTNESS_2016_DATASET,
+  GFW_STORIES_DATASET,
+  MINING_CONCESSIONS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -22,7 +25,11 @@ import {
   FOREST_EXTENT,
   RIVER_BASINS_BOUNDARIES,
   BIOMASS_LOSS,
-  BIODIVERSITY_HOTSPOTS_2016
+  BIODIVERSITY_HOTSPOTS_2016,
+  BIODIVERSITY_INTACTNESS,
+  MONGABAY_STORIES,
+  EARTH_JOURNALISM_NETWORK_STORIES,
+  MINING_CONCESSIONS
 } from 'data/layers';
 
 export const descriptions = {
@@ -66,8 +73,8 @@ export const stories = {
             visibility: true
           },
           {
-            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
-            layers: ['e097ebfe-56d9-4564-8e2a-d3328bdaea38'],
+            dataset: GFW_STORIES_DATASET,
+            layers: [MONGABAY_STORIES],
             opacity: 1,
             visibility: true
           }
@@ -109,8 +116,8 @@ export const stories = {
             visibility: true
           },
           {
-            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
-            layers: ['2f4d9b87-6629-4658-8175-87d7892a5f32'],
+            dataset: GFW_STORIES_DATASET,
+            layers: [EARTH_JOURNALISM_NETWORK_STORIES],
             opacity: 1,
             visibility: true
           }
@@ -161,8 +168,8 @@ export const topics = {
           },
           // biodiversity intactness
           {
-            dataset: '6a1afe78-0813-45c4-822f-b52fe10f93f2',
-            layers: ['647998c2-cdf6-43fd-bbff-15358f111fe9'],
+            dataset: BIODIVERSITY_INTACTNESS_2016_DATASET,
+            layers: [BIODIVERSITY_INTACTNESS],
             opacity: 1,
             visibility: true
           }
@@ -257,8 +264,8 @@ export const topics = {
           },
           // mining
           {
-            dataset: '7a4d9a64-ecb1-45ec-a01e-658f1364fb2e',
-            layers: ['fcd10026-e892-4fb8-8d79-8d76e3b94005'],
+            dataset: MINING_CONCESSIONS_DATASET,
+            layers: [MINING_CONCESSIONS],
             opacity: 1,
             visibility: true
           },

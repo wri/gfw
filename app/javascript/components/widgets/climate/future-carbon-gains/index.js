@@ -7,7 +7,8 @@ import {
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  POTENTIAL_CARBON_GAINS
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -46,7 +47,7 @@ export default {
     // potential carbon gains
     {
       dataset: PROJECTED_CARBON_STORAGE_FOREST_REGROWTH,
-      layers: ['fffa76d3-5008-48b7-afeb-2c7054548f2e']
+      layers: [POTENTIAL_CARBON_GAINS]
     }
   ],
   visible: ['dashboard', 'analysis'],

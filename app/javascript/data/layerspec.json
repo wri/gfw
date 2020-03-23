@@ -30,7 +30,7 @@
   {
     "slug": "prodes",
     "cartodb_id": 671,
-    "dataset": "5da0c609-c20c-4e99-9d2c-3b1120a2983b",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
     "layer": "b3529b7f-8fdd-4d10-a6eb-71c6effcbcd5"
   },
   {
@@ -48,8 +48,8 @@
   {
     "slug": "imazon",
     "cartodb_id": 584,
-    "dataset": "b3fa1221-db2a-4826-95a1-37ac0973cc4b",
-    "layer": "3ec29734-4627-45b1-b320-680e4b4b939e"
+    "dataset": "5f9d0a63-bedb-4eeb-ae14-d8b08d7d117b",
+    "layer": "9aca1fac-cc66-41a9-826c-d0f19c849fb5"
   },
   {
     "slug": "viirs_fires_alerts",
@@ -72,8 +72,8 @@
   {
     "cartodb_id": 668,
     "slug": "us_land_cover_change",
-    "dataset": "dddcba3c-f746-4787-9915-f24c141a94da",
-    "layer": "2b4b882b-1d2b-44fd-92b9-a1ffcabe6ca6",
+    "dataset": "fed39abb-00dd-4b5a-be67-77a831a47233",
+    "layer": "859eb596-c07a-4c4d-916f-9fa4aa2a29e7",
     "name": "usa land cover change"
   },
   {
@@ -93,8 +93,8 @@
   {
     "cartodb_id": 732,
     "slug": "mys_peat_lands",
-    "dataset": "759de49c-a599-4369-821a-8d27350b0393",
-    "layer": "ee1c56cb-6418-4029-8d0b-1b3ae96607fe",
+    "dataset": "19b04e18-9534-4814-9317-4990e3524300",
+    "layer": "dc129899-7410-4351-b595-2a288d429934",
     "name": "malaysia peat lands"
   },
   {
@@ -107,15 +107,15 @@
   {
     "cartodb_id": 653,
     "slug": "us_land_cover",
-    "dataset": "dddcba3c-f746-4787-9915-f24c141a94da",
+    "dataset": "fed39abb-00dd-4b5a-be67-77a831a47233",
     "layer": "27bbbfbe-60c4-4ac0-84c3-bf4be26c3753",
     "name": "usa land cover"
   },
   {
     "cartodb_id": 758,
     "slug": "lbr_mineral_exploration_license",
-    "dataset": "795633ea-88ba-4019-b4ed-d9575886e8ee",
-    "layer": "f8f8bc4d-7a6e-4152-95ed-b20fd572861b",
+    "dataset": "4b2a8463-c040-4ad6-ba76-630ab2c0197b",
+    "layer": "c6df9658-2717-4288-b1a0-c670baa7f31a",
     "name": "liberia mineral exploration licenses"
   },
   {
@@ -191,8 +191,8 @@
   {
     "cartodb_id": 760,
     "slug": "lbr_development_exploration_license",
-    "dataset": "936b191c-8119-4752-8472-c918b9638241",
-    "layer": "d471ff15-7cbf-466f-9953-fdb436da778d",
+    "dataset": "196ce556-327f-4a8b-b3d2-93f553ba9a04",
+    "layer": "5ef4fb04-de42-4bd4-a5f8-27c98ea9f11f",
     "name": "liberia mineral development exploration license"
   },
   {
@@ -212,8 +212,8 @@
   {
     "cartodb_id": 724,
     "slug": "mex_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -296,15 +296,15 @@
   {
     "cartodb_id": 684,
     "slug": "gtm_forest_density",
-    "dataset": "8f96c227-b45a-43a7-9235-d08d722867ba",
-    "layer": "df321c9d-2099-458f-9d77-eabb6c68763a",
+    "dataset": "7bee31e5-77be-47e1-92ca-723a08df6d57",
+    "layer": "a2795ace-ca08-4dd0-829a-c39580804ec8",
     "name": "guatemala forest density"
   },
   {
     "cartodb_id": 685,
     "slug": "usa_forest_ownership",
-    "dataset": "10964a62-eff1-469a-8513-770e71f29445",
-    "layer": "e6c0d961-981a-4016-bf90-775386f2f7ba",
+    "dataset": "70d72141-a10d-4c6d-8ba8-ba5833fafdb7",
+    "layer": "2978f7b2-fcdb-4fe6-bca4-7ef56b469805",
     "name": "usa forest ownership type"
   },
   {
@@ -401,8 +401,8 @@
   {
     "cartodb_id": 759,
     "slug": "lbr_mineral_development_agreement",
-    "dataset": "c876f097-ad66-4ebc-ac36-a069790ad9a7",
-    "layer": "aedbcdba-17ca-4504-8a0e-9296f07a61d9",
+    "dataset": "e553fd29-92a7-439d-b5f4-93b2785e2350",
+    "layer": "329a5130-9e9b-4635-b2df-f91ecfd52a99",
     "name": "liberia mineral development agreements"
   },
   {
@@ -569,8 +569,8 @@
   {
     "cartodb_id": 636,
     "slug": "can_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -583,8 +583,8 @@
   {
     "cartodb_id": 789,
     "slug": "primary_forest",
-    "dataset": "714339c1-c775-4303-aad4-16d975b2f023",
-    "layer": "079fae08-5696-4926-9417-794bd3a7e8dc",
+    "dataset": "fe8b5f03-0ff9-4c18-ba39-77dcfe69908f",
+    "layer": "41086554-5ca5-456c-80dd-f6bee61bc45f",
     "name": "primary forests"
   },
   {
@@ -597,22 +597,22 @@
   {
     "cartodb_id": 726,
     "slug": "per_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 725,
     "slug": "bra_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 683,
     "slug": "gtm_forest_cover",
-    "dataset": "746089a3-0c24-402f-81b6-f8d91fab77fe",
-    "layer": "cfd95864-1e95-4a7f-bdf8-e47e4bb5815e",
+    "dataset": "fa1c99d1-33c6-4259-97ab-fabf8a2210f8",
+    "layer": "86fe7099-4c2c-4171-b11a-57c7ff7e4e57",
     "name": "guatemala forest cover"
   },
   {
@@ -632,8 +632,8 @@
   {
     "cartodb_id": 695,
     "slug": "cod_primary_forest_wgs",
-    "dataset": "714339c1-c775-4303-aad4-16d975b2f023",
-    "layer": "079fae08-5696-4926-9417-794bd3a7e8dc",
+    "dataset": "fe8b5f03-0ff9-4c18-ba39-77dcfe69908f",
+    "layer": "41086554-5ca5-456c-80dd-f6bee61bc45f",
     "name": "primary forests"
   },
   {
@@ -773,7 +773,7 @@
     "cartodb_id": 673,
     "slug": "per_prod_for",
     "dataset": "43abbefa-f9db-48e8-b72e-000343acfdf8",
-    "layer": "eb72add0-efda-4b95-9298-75e73b6a3902",
+    "layer": "2862a3c9-3809-401c-94fc-b2bd29f9255a",
     "name": "peru permanent production forests"
   },
   {
@@ -793,8 +793,8 @@
   {
     "cartodb_id": 600,
     "slug": "idn_primary",
-    "dataset": "51267795-de96-462f-9dfb-dd1d07b44057",
-    "layer": "bf171b35-5dd7-4be6-825a-c98b238107de",
+    "dataset": "b05ad94a-0084-461d-897a-6b8b9d5b20ca",
+    "layer": "60eb4495-dc01-459e-ba18-4a0c820d9619",
     "name": "indonesia primary forest"
   },
   {
@@ -821,8 +821,8 @@
   {
     "cartodb_id": 778,
     "slug": "idn_suitability",
-    "dataset": "7ce357f0-ca71-45f6-88ab-a2f13568017e",
-    "layer": "60820c54-2950-4b5a-8198-84b61e55ef6a",
+    "dataset": "d9ab2e3f-0dfd-4fcd-81fa-7aacb84c0bc4",
+    "layer": "0aaaaec8-3279-4a75-bedb-829c6cc88f36",
     "name": "wri oil palm suitability standard"
   },
   {
@@ -849,8 +849,8 @@
   {
     "cartodb_id": 722,
     "slug": "raisg_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -863,15 +863,15 @@
   {
     "cartodb_id": 641,
     "slug": "gab_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 662,
     "slug": "col_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -905,8 +905,8 @@
   {
     "cartodb_id": 640,
     "slug": "cog_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -919,22 +919,22 @@
   {
     "cartodb_id": 638,
     "slug": "cod_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 637,
     "slug": "cmr_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 573,
     "slug": "mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -947,8 +947,8 @@
   {
     "cartodb_id": 664,
     "slug": "khm_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -975,8 +975,8 @@
   {
     "cartodb_id": 629,
     "slug": "colombia_forest_change",
-    "dataset": "e5aed7ff-b569-4918-887f-192d66fd95de",
-    "layer": "43300ba5-03c4-4bc1-b02f-d699d9ba91ba",
+    "dataset": "6251fa42-8b5d-4438-ac04-5edc17c902b2",
+    "layer": "435d5254-c44e-49e2-9e31-0ff12b5f0514",
     "name": "guatemala forest change 2001-2006"
   },
   {
@@ -1073,50 +1073,50 @@
   {
     "cartodb_id": 746,
     "slug": "mex_land_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 613,
     "slug": "terraicanvas_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 603,
     "slug": "modis_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 605,
     "slug": "forma_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 604,
     "slug": "imazon_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 681,
     "slug": "gtm_forest_change1",
-    "dataset": "e5aed7ff-b569-4918-887f-192d66fd95de",
-    "layer": "43300ba5-03c4-4bc1-b02f-d699d9ba91ba",
+    "dataset": "6251fa42-8b5d-4438-ac04-5edc17c902b2",
+    "layer": "435d5254-c44e-49e2-9e31-0ff12b5f0514",
     "name": "gtm forest change 2001-2006"
   },
   {
     "cartodb_id": 682,
     "slug": "gtm_forest_change2",
-    "dataset": "e5aed7ff-b569-4918-887f-192d66fd95de",
-    "layer": "2fe559f6-9ae7-4a47-87fb-a33a128652ed",
+    "dataset": "6251fa42-8b5d-4438-ac04-5edc17c902b2",
+    "layer": "20152c7f-cbd7-4ed8-b483-06f0495c68b3",
     "name": "gtm forest change 2006-2010"
   },
   {
@@ -1185,8 +1185,8 @@
   {
     "cartodb_id": 586,
     "slug": "mongabay",
-    "dataset": "d7b12b17-9ed4-43ab-b8e4-efa2668c47f8",
-    "layer": "e097ebfe-56d9-4564-8e2a-d3328bdaea38",
+    "dataset": "af192b21-a200-443a-8d40-cc9d303c853b",
+    "layer": "51c9b85c-1e7a-4b79-8041-d906251c0d68",
     "name": "mongabay stories"
   },
   {
@@ -1199,7 +1199,7 @@
   {
     "cartodb_id": 672,
     "slug": "prodes_coverage",
-    "dataset": "5da0c609-c20c-4e99-9d2c-3b1120a2983b",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
     "layer": "b3529b7f-8fdd-4d10-a6eb-71c6effcbcd5",
     "name": "prodes deforestation"
   },

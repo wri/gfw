@@ -26,3 +26,14 @@ export const PROJECTED_CARBON_STORAGE_FOREST_REGROWTH =
 
 export const BIODIVERSITY_HOTSPOTS_2016_DATASET =
   '8eb4da13-7cc3-4dd1-8f4f-f43c2be56631'; // v3
+
+export const BIODIVERSITY_INTACTNESS_2016_DATASET =
+  '0be7e9d7-3d88-4c95-89cf-019a77b85f8f'; // v3
+
+export const USA_LAND_COVER_DATASET = '588d0611-0ae0-4282-8fa9-ebc97a0b11f5'; // v3
+
+export const GFW_STORIES_DATASET = 'af192b21-a200-443a-8d40-cc9d303c853b'; // v3
+
+export const MINING_CONCESSIONS_DATASET =
+  '780e8976-9e7c-4661-9b3d-fc4517c417de'; // v3
+export const TREE_PLANTATIONS_DATASET = '1e605c89-fa3a-4531-aaca-70f975de24bb'; // v3
