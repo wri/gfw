@@ -17,10 +17,7 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
       subsector_otherInput:
           myGfw.data.subsector && myGfw.data.subsector.includes('Other')
             ? myGfw.data.subsector.split('Other:')[1].trim()
-            : null,
-      signUpForNewsletter: myGfw.data.signUpForNewsletter
-        ? ['newsletter']
-        : null
+            : null
     }
   })
 });

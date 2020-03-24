@@ -72,7 +72,7 @@ class ProfileForm extends PureComponent {
                       </h3>
                     </div>
                     <div className="column small-12">
-                      <Input name="firstName" label="first name" required />
+                      <Input name="firstName" label="first name" />
                       <Input name="lastName" label="last name" required />
                       <Input
                         name="email"
@@ -119,20 +119,18 @@ class ProfileForm extends PureComponent {
                         label="state / department / province"
                       />
                       <p className="section-name">
-                        Which geographical location are you interested in? *
+                        Which geographical location are you interested in?
                       </p>
                       <Select
                         name="aoiCountry"
                         label="country"
                         options={countries}
                         placeholder="Select a country"
-                        required
                       />
-                      <Input name="aoiCity" label="city" required />
+                      <Input name="aoiCity" label="city" />
                       <Input
                         name="aoiState"
                         label="state / department / province"
-                        required
                       />
                       <Select
                         name="interests"
@@ -151,17 +149,17 @@ class ProfileForm extends PureComponent {
                         multiple
                       />
                       <Checkbox
-                        name="signUpForNewsletter"
+                        name="signUpToNewsletter"
                         options={[
                           {
                             label:
                               'Subscribe to the newsletter to receive GFW updates',
-                            value: 'newsletter'
+                            value: true
                           }
                         ]}
                       />
-                      {values.signUpForNewsletter &&
-                        values.signUpForNewsletter.includes('newsletter') && (
+
+                      {values.signUpToNewsletter && (
                         <Select
                           name="topics"
                           label="Topics you're interested in receiving communications about"
