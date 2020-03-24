@@ -284,7 +284,7 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
-    json (2.1.0)
+    json (2.3.0)
     jwt (2.1.0)
     loofah (2.3.1)
       crass (~> 1.0.2)
