@@ -9,7 +9,6 @@ import thresholdOptions from 'data/thresholds.json';
 
 import { reduceParams, reduceSqlParams } from './datasets-utils';
 import decodeLayersConfig from './datasets-decode-config';
-import decodeLayersClusters from './datasets-decode-clusters';
 
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
@@ -116,7 +115,6 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                     } = layerConfig;
                     const { tiles } = source; // previously url
                     const decodeFunction = decodeLayersConfig[decode_function];
-                    const decodeClusters = decodeLayersClusters[l.id];
                     const customColor =
                       legendConfig &&
                       legendConfig.items &&
@@ -224,9 +222,6 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       }),
                       // decode func and params for canvas layers
                       decodeFunction,
-                      ...(decodeClusters && {
-                        decodeGeoJson: decodeClusters
-                      }),
                       ...(decodeParams && {
                         decodeParams: {
                           // timeline config
