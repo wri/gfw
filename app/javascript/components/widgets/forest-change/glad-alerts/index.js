@@ -5,6 +5,8 @@ import tropicalIsos from 'data/tropical-isos.json';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
 
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -79,58 +81,55 @@ export default {
     weeks: 13
   },
   getData: params => {
-    if (
-      params.status === 'pending' ||
-      !['global', 'country'].includes(params.type)
-    ) {
-      return all([
-        fetchAnalysisEndpoint({
-          ...params,
-          params,
-          name: 'glad-alerts',
-          slug: 'glad-alerts',
-          version: 'v1',
-          aggregate: true,
-          aggregateBy: 'week'
-        }),
-        fetchGLADLatest(params)
-      ]).then(
-        spread((alertsResponse, latestResponse) => {
-          const alerts = alertsResponse.data.data.attributes.value;
-          const latestDate = latestResponse.attributes.updatedAt;
-          const downloadUrls = alertsResponse.data.data.attributes.downloadUrls;
+    if (shouldQueryPrecomputedTables(params)) {
+      return all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
+        spread((alerts, latest) => {
+          const gladsData = alerts && alerts.data.data;
+          let data = {};
+          if (gladsData && latest) {
+            const latestDate =
+              latest && latest.attributes && latest.attributes.updatedAt;
 
-          return {
-            alerts:
-              alerts &&
-              alerts.map(d => ({
-                ...d,
-                alerts: d.count
-              })),
-            latest: latestDate,
-            settings: { latestDate },
-            downloadUrls
-          };
+            data = {
+              alerts: gladsData,
+              latest: latestDate,
+              settings: { latestDate }
+            };
+          }
+
+          return data;
         })
       );
     }
 
-    return all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
-      spread((alerts, latest) => {
-        const gladsData = alerts && alerts.data.data;
-        let data = {};
-        if (gladsData && latest) {
-          const latestDate =
-            latest && latest.attributes && latest.attributes.updatedAt;
+    return all([
+      fetchAnalysisEndpoint({
+        ...params,
+        params,
+        name: 'glad-alerts',
+        slug: 'glad-alerts',
+        version: 'v1',
+        aggregate: true,
+        aggregateBy: 'week'
+      }),
+      fetchGLADLatest(params)
+    ]).then(
+      spread((alertsResponse, latestResponse) => {
+        const alerts = alertsResponse.data.data.attributes.value;
+        const latestDate = latestResponse.attributes.updatedAt;
+        const downloadUrls = alertsResponse.data.data.attributes.downloadUrls;
 
-          data = {
-            alerts: gladsData,
-            latest: latestDate,
-            settings: { latestDate }
-          };
-        }
-
-        return data;
+        return {
+          alerts:
+            alerts &&
+            alerts.map(d => ({
+              ...d,
+              alerts: d.count
+            })),
+          latest: latestDate,
+          settings: { latestDate },
+          downloadUrls
+        };
       })
     );
   },
