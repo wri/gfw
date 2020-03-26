@@ -85,7 +85,7 @@ class SectionProjects extends PureComponent {
         </div>
         <div className="visitors" style={{ backgroundImage: `url(${growth})` }}>
           <h4>
-            Since its launch in 2014, over 3 million people have visited Global
+            Since its launch in 2014, over 3.5 million people have visited Global
             Forest Watch from every single country in the world.
           </h4>
         </div>

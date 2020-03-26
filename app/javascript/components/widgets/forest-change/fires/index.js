@@ -15,7 +15,7 @@ export default {
     summary: 7,
     forestChange: 11
   },
-  visible: ['dashboard', 'analysis'],
+  visible: ['analysis'],
   chartType: 'listLegend',
   sentences: {
     initial: '{count} active fires detected in {location} in the last 7 days.'

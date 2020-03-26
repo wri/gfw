@@ -4,6 +4,8 @@ import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
 import { getYearsRange } from 'components/widgets/utils/data';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
+
 import getWidgetProps from './selectors';
 
 const getGlobalLocation = params => ({
@@ -133,49 +135,49 @@ export default {
     ifl: 2000
   },
   getData: (params = {}) => {
-    const { adm0, adm1, adm2, type, status } = params || {};
+    const { adm0, adm1, adm2, type } = params || {};
 
-    if (status === 'pending' || !['global', 'country'].includes(params.type)) {
-      return getDataAPI(params);
+    if (shouldQueryPrecomputedTables(params)) {
+      const globalLocation = {
+        adm0: type === 'global' ? null : adm0,
+        adm1: type === 'global' ? null : adm1,
+        adm2: type === 'global' ? null : adm2
+      };
+      const lossFetch =
+        type === 'global'
+          ? getLossGrouped({ ...params, ...globalLocation })
+          : getLoss({ ...params, ...globalLocation });
+      return all([lossFetch, getExtent({ ...params, ...globalLocation })]).then(
+        spread((loss, extent) => {
+          let data = {};
+          if (loss && loss.data && extent && extent.data) {
+            data = {
+              loss: loss.data.data,
+              extent: (loss.data.data && extent.data.data[0].extent) || 0
+            };
+          }
+
+          const { startYear, endYear, range } = getYearsRange(data.loss);
+
+          return {
+            ...data,
+            settings: {
+              forestType:
+                params && params.adm0 && params.adm0 === 'IDN'
+                  ? 'primary_forest'
+                  : null,
+              startYear,
+              endYear
+            },
+            options: {
+              years: range
+            }
+          };
+        })
+      );
     }
 
-    const globalLocation = {
-      adm0: type === 'global' ? null : adm0,
-      adm1: type === 'global' ? null : adm1,
-      adm2: type === 'global' ? null : adm2
-    };
-    const lossFetch =
-      type === 'global'
-        ? getLossGrouped({ ...params, ...globalLocation })
-        : getLoss({ ...params, ...globalLocation });
-    return all([lossFetch, getExtent({ ...params, ...globalLocation })]).then(
-      spread((loss, extent) => {
-        let data = {};
-        if (loss && loss.data && extent && extent.data) {
-          data = {
-            loss: loss.data.data,
-            extent: (loss.data.data && extent.data.data[0].extent) || 0
-          };
-        }
-
-        const { startYear, endYear, range } = getYearsRange(data.loss);
-
-        return {
-          ...data,
-          settings: {
-            forestType:
-              params && params.adm0 && params.adm0 === 'IDN'
-                ? 'primary_forest'
-                : null,
-            startYear,
-            endYear
-          },
-          options: {
-            years: range
-          }
-        };
-      })
-    );
+    return getDataAPI(params);
   },
   getDataURL: params => {
     const globalLocation = getGlobalLocation(params);
