@@ -47,7 +47,7 @@ const SQL_QUERIES = {
   extentGrouped:
     'SELECT {location}, SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha FROM data {WHERE}',
+    'SELECT SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE}',
   gainGrouped:
     'SELECT {location}, SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
@@ -488,7 +488,7 @@ export const getGain = ({
       url: url.replace('query', 'download')
     };
   }
-
+  
   return apiRequest.get(url).then(response => ({
     ...response,
     data: {
