@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import { getGain } from 'services/analysis-cached';
@@ -61,9 +60,8 @@ export default {
     if (shouldQueryPrecomputedTables(params)) {
       return getGain(params).then(response => {
         const { data } = (response && response.data) || {};
-        console.log('data', data[0])
-        const gain = data[0].gain || 0; //get(data, 'data[0].treecover_gain_2000-2012__ha');
-        const extent = data[0].extent || 0; //get(data, 'data[0].treecover_extent_2000__ha');
+        const gain = (data[0] && data[0].gain) || 0;
+        const extent = (data[0] && data[0].extent) || 0;
 
         return {
           gain,
