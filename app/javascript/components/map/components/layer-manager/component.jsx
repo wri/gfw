@@ -21,9 +21,9 @@ class LayerManagerComponent extends PureComponent {
         ? {
           id: basemap.url,
           name: 'Basemap',
-          provider: 'leaflet',
           layerConfig: {
             source: {
+              type: 'raster',
               url: basemap.url
             }
           },
@@ -44,23 +44,25 @@ class LayerManagerComponent extends PureComponent {
             const { provider } = source;
 
             fetch('get', provider.url, provider.options, layerModel)
-              .then(response => resolve({
-                ...layer,
-                source: {
-                  ...omit(layer.source, 'provider'),
-                  data: {
-                    type: 'FeatureCollection',
-                    features: response.rows.map(r => ({
-                      type: 'Feature',
-                      properties: r,
-                      geometry: {
-                        type: 'Point',
-                        coordinates: [r.lon, r.lat]
-                      }
-                    }))
+              .then(response =>
+                resolve({
+                  ...layer,
+                  source: {
+                    ...omit(layer.source, 'provider'),
+                    data: {
+                      type: 'FeatureCollection',
+                      features: response.rows.map(r => ({
+                        type: 'Feature',
+                        properties: r,
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [r.lon, r.lat]
+                        }
+                      }))
+                    }
                   }
-                }
-              }))
+                })
+              )
               .catch(e => {
                 reject(e);
               });
@@ -68,7 +70,10 @@ class LayerManagerComponent extends PureComponent {
         }}
       >
         {allLayers &&
-          allLayers.map(l => <Layer key={l.id} {...l} {...l.layerConfig} />)}
+          allLayers.map(l => {
+            const config = l.config ? l.config : l.layerConfig;
+            return <Layer key={l.id} {...l} {...config} />;
+          })}
       </LayerManager>
     );
   }

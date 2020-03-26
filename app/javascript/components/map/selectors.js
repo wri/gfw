@@ -368,7 +368,6 @@ export const getActiveLayers = createSelector(
       config: {
         type: 'geojson',
         source: {
-          provider: 'geojson',
           data: geojson,
           type: 'geojson'
         },
