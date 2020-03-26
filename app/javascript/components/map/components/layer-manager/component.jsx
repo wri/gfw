@@ -22,10 +22,10 @@ class LayerManagerComponent extends PureComponent {
           id: basemap.url,
           name: 'Basemap',
           layerConfig: {
-            type: 'geojson',
+            type: 'raster',
             source: {
-              type: 'geojson',
-              data: basemap.url
+              type: 'raster',
+              tiles: [basemap.url]
             }
           },
           zIndex: 100
