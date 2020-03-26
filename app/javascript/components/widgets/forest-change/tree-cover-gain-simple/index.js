@@ -61,8 +61,9 @@ export default {
     if (shouldQueryPrecomputedTables(params)) {
       return getGain(params).then(response => {
         const { data } = (response && response.data) || {};
-        const gain = get(data, 'data[0].treecover_gain_2000-2012__ha');
-        const extent = get(data, 'data[0].extent');
+        console.log('data', data[0])
+        const gain = data[0].gain || 0; //get(data, 'data[0].treecover_gain_2000-2012__ha');
+        const extent = data[0].extent || 0; //get(data, 'data[0].treecover_extent_2000__ha');
 
         return {
           gain,
