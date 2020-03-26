@@ -69,7 +69,7 @@ class ProfileForm extends PureComponent {
                       <h1>Your profile information</h1>
                       <h3>
                         {source === 'AreaOfInterestModal'
-                          ? `Help us help you! Please complete the mandatory fields to be able to save your aoi.
+                          ? `Help us help you! Please complete the mandatory fields to be able to save your area of interest.
                         We will be using this information to help us guide GFW’s future developments.`
                           : `Help us help you! Tell us who you are and how you use
                         Global Forest Watch so we can better meet your needs.`}
@@ -94,7 +94,9 @@ class ProfileForm extends PureComponent {
                           value: s
                         }))}
                         placeholder="Select a sector"
-                        required
+                        required={
+                          source === 'AreaOfInterestModal' ? true : undefined
+                        }
                       />
                       {values.sector &&
                         sectors[values.sector] && (
@@ -107,7 +109,11 @@ class ProfileForm extends PureComponent {
                             radioInput: s === 'Other (write in):'
                           }))}
                           selectedOption={values.subsector}
-                          required
+                          required={
+                            source === 'AreaOfInterestModal'
+                              ? true
+                              : undefined
+                          }
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
