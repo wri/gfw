@@ -44,7 +44,11 @@ class AreaOfInterestModal extends PureComponent {
         <div className="save-aoi-body">
           {loading && <Loader />}
           {!loading && !loggedIn && <LoginForm />}
-          {!loading && loggedIn && !isProfileFormFilled && <ProfileForm />}
+          {!loading &&
+            loggedIn &&
+            !isProfileFormFilled && (
+            <ProfileForm source="AreaOfInterestModal" />
+          )}
           {!loading &&
             loggedIn &&
             isProfileFormFilled && (

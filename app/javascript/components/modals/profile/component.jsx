@@ -28,7 +28,7 @@ class ProfileModal extends PureComponent {
         onRequestClose={this.handleCloseModal}
       >
         <div className="c-profile-modal">
-          <ProfileForm />
+          <ProfileForm source="myGfw" />
         </div>
       </Modal>
     );

@@ -24,11 +24,12 @@ class ProfileForm extends PureComponent {
   static propTypes = {
     initialValues: PropTypes.object,
     countries: PropTypes.array,
-    saveProfile: PropTypes.func
+    saveProfile: PropTypes.func,
+    source: PropTypes.string
   };
 
   render() {
-    const { initialValues, countries, saveProfile } = this.props;
+    const { initialValues, countries, saveProfile, source } = this.props;
 
     return (
       <Fragment>
@@ -67,8 +68,11 @@ class ProfileForm extends PureComponent {
                     <div className="column small-12">
                       <h1>Your profile information</h1>
                       <h3>
-                        Help us help you! Tell us who you are and how you use
-                        Global Forest Watch so we can better meet your needs.
+                        {source === 'AreaOfInterestModal'
+                          ? `Help us help you! Please complete the mandatory fields to be able to save your aoi.
+                        We will be using this information to help us guide GFW’s future developments.`
+                          : `Help us help you! Tell us who you are and how you use
+                        Global Forest Watch so we can better meet your needs.`}
                       </h3>
                     </div>
                     <div className="column small-12">
@@ -90,6 +94,7 @@ class ProfileForm extends PureComponent {
                           value: s
                         }))}
                         placeholder="Select a sector"
+                        required
                       />
                       {values.sector &&
                         sectors[values.sector] && (
@@ -102,6 +107,7 @@ class ProfileForm extends PureComponent {
                             radioInput: s === 'Other (write in):'
                           }))}
                           selectedOption={values.subsector}
+                          required
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
@@ -173,7 +179,9 @@ class ProfileForm extends PureComponent {
                         submitFailed={submitFailed}
                         submitError={submitError}
                       />
-                      <Submit submitting={submitting}>save</Submit>
+                      <Submit submitting={submitting}>
+                        {source === 'AreaOfInterestModal' ? 'next' : 'save'}
+                      </Submit>
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">
