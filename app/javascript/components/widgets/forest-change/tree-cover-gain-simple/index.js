@@ -1,4 +1,9 @@
+import get from 'lodash/get';
 import { fetchAnalysisEndpoint } from 'services/analysis';
+
+import { getGain } from 'services/analysis-cached';
+
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
@@ -52,8 +57,21 @@ export default {
   colors: 'gain',
   sentence:
     'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
-  getData: params =>
-    fetchAnalysisEndpoint({
+  getData: params => {
+    if (shouldQueryPrecomputedTables(params)) {
+      return getGain(params).then(response => {
+        const { data } = (response && response.data) || {};
+        const gain = get(data, 'data[0].treecover_gain_2000-2012__ha');
+        const extent = get(data, 'data[0].extent');
+
+        return {
+          gain,
+          extent
+        };
+      });
+    }
+
+    return fetchAnalysisEndpoint({
       ...params,
       name: 'umd',
       params,
@@ -71,6 +89,7 @@ export default {
         gain,
         extent
       };
-    }),
+    });
+  },
   getWidgetProps
 };

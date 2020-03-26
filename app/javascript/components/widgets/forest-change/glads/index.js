@@ -17,7 +17,7 @@ export default {
     summary: 8,
     forestChange: 12
   },
-  visible: ['dashboard', 'analysis'],
+  visible: ['analysis'],
   chartType: 'composedChart',
   sentence:
     '{count} deforestation alerts detected in {location} in the last 7 days, compared to a weekly average of {weeklyMean} in the last year.',
