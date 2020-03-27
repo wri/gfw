@@ -3,7 +3,6 @@ import biodiversity from 'assets/images/biodiversity.jpg';
 import water from 'assets/images/water.jpg';
 import commodities from 'assets/images/commodities.jpg';
 import mongabay from 'assets/images/mongabay.jpg';
-import earthJournalism from 'assets/images/earth-journalism.jpg';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -15,7 +14,11 @@ import {
   BIODIVERSITY_HOTSPOTS_2016_DATASET,
   BIODIVERSITY_INTACTNESS_2016_DATASET,
   GFW_STORIES_DATASET,
-  MINING_CONCESSIONS_DATASET
+  MINING_CONCESSIONS_DATASET,
+  RSPO_OIL_PALM_CONCESSIONS_DATASET,
+  WOOD_FIBER_DATASET,
+  OIL_PALM_DATASET,
+  LOGGING_CONCESSIONS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -28,8 +31,11 @@ import {
   BIODIVERSITY_HOTSPOTS_2016,
   BIODIVERSITY_INTACTNESS,
   MONGABAY_STORIES,
-  EARTH_JOURNALISM_NETWORK_STORIES,
-  MINING_CONCESSIONS
+  MINING_CONCESSIONS,
+  RSPO_OIL_PALM_CONCESSIONS_2017,
+  WOOD_FIBER,
+  OIL_PALM,
+  LOGGING_CONCESSIONS
 } from 'data/layers';
 
 export const descriptions = {
@@ -75,49 +81,6 @@ export const stories = {
           {
             dataset: GFW_STORIES_DATASET,
             layers: [MONGABAY_STORIES],
-            opacity: 1,
-            visibility: true
-          }
-        ]
-      }
-    }
-  },
-  earthJournalism: {
-    slug: 'earth-journalism',
-    title: 'Earth Journalism Network Stories',
-    summary:
-      'This layer displays stories sourced from the Earth Journalism Network, a project of Internews that empowers and enables journalists from developing countries to cover the environment more effectively.',
-    image: earthJournalism,
-    buttons: [
-      {
-        text: 'READ MORE',
-        theme: 'theme-button-light theme-button-small',
-        extLink: '/stories'
-      },
-      {
-        text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
-    ],
-    payload: {
-      mergeQuery: true,
-      map: {
-        center: {
-          lat: 27,
-          lng: 12
-        },
-        zoom: 2,
-        datasets: [
-          // admin boundaries
-          {
-            dataset: POLITICAL_BOUNDARIES_DATASET,
-            layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-            opacity: 1,
-            visibility: true
-          },
-          {
-            dataset: GFW_STORIES_DATASET,
-            layers: [EARTH_JOURNALISM_NETWORK_STORIES],
             opacity: 1,
             visibility: true
           }
@@ -271,22 +234,22 @@ export const topics = {
           },
           // managed forests
           {
-            dataset: '4fc24a03-cb3e-4df3-a2ee-e2a8dca342b3',
-            layers: ['c26db41a-b586-461c-b648-93205eafea0b'],
+            dataset: LOGGING_CONCESSIONS_DATASET,
+            layers: [LOGGING_CONCESSIONS],
             opacity: 1,
             visibility: true
           },
           // oil palm
           {
-            dataset: 'c5aac280-9dac-4e97-8f44-afc52a52c255',
-            layers: ['aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1'],
+            dataset: OIL_PALM_DATASET,
+            layers: [OIL_PALM],
             opacity: 1,
             visibility: true
           },
           // wood fiber
           {
-            dataset: '1f016faa-5940-4dd3-a848-a00086e20e38',
-            layers: ['82229960-13c2-4810-84e7-bdd4812d4578'],
+            dataset: WOOD_FIBER_DATASET,
+            layers: [WOOD_FIBER],
             opacity: 1,
             visibility: true
           },
@@ -294,6 +257,13 @@ export const topics = {
           {
             dataset: FOREST_LOSS_DATASET,
             layers: [FOREST_LOSS],
+            opacity: 1,
+            visibility: true
+          },
+          // rspo oil palm concessions
+          {
+            dataset: RSPO_OIL_PALM_CONCESSIONS_DATASET,
+            layers: [RSPO_OIL_PALM_CONCESSIONS_2017],
             opacity: 1,
             visibility: true
           }
