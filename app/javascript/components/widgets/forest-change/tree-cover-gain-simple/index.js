@@ -15,19 +15,14 @@ export default {
   metaKey: 'widget_tree_cover_gain',
   settingsConfig: [
     {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch'
-    },
-    {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
       metaKey: 'widget_canopy_density'
     }
   ],
-  pendingKeys: ['threshold', 'extentYear'],
-  refetchKeys: ['threshold', 'extentYear'],
+  pendingKeys: ['threshold'],
+  refetchKeys: ['threshold'],
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -82,7 +77,7 @@ export default {
       const gain = data && data.attributes.gain;
       const extent =
         data &&
-        data.attributes[`treeExtent${params.extentYear === 2010 ? 2010 : ''}`];
+        data.attributes[`treeExtent${params.extentYear === 2000 ? 2000 : ''}`];
 
       return {
         gain,
