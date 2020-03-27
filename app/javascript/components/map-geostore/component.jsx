@@ -257,7 +257,6 @@ class MapGeostore extends Component {
                   key={basemap.url}
                   id={basemap.url}
                   name="Basemap"
-                  // provider="leaflet"
                   source={{
                     url: basemap.url
                   }}
