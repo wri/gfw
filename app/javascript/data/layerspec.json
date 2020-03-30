@@ -507,7 +507,7 @@
     "cartodb_id": 737,
     "slug": "places_to_watch",
     "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
@@ -682,7 +682,7 @@
     "cartodb_id": 729,
     "slug": "umd_as_it_happens_per",
     "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
@@ -997,14 +997,14 @@
     "cartodb_id": 730,
     "slug": "umd_as_it_happens_cog",
     "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
     "cartodb_id": 731,
     "slug": "umd_as_it_happens_idn",
     "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
