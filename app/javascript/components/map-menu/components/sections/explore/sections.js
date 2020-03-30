@@ -55,7 +55,7 @@ export const stories = {
       {
         text: 'READ MORE',
         theme: 'theme-button-light theme-button-small',
-        extLink: '/stories'
+        link: '/stories'
       },
       {
         text: 'VIEW ON MAP',
@@ -100,7 +100,7 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        extLink: '/topics/biodiversity'
+        link: '/topics/biodiversity'
       },
       {
         text: 'VIEW ON MAP',
@@ -153,7 +153,7 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        extLink: '/topics/climate'
+        link: '/topics/climate'
       },
       {
         text: 'VIEW ON MAP',
@@ -203,7 +203,7 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        extLink: '/topics/commodities'
+        link: '/topics/commodities'
       },
       {
         text: 'VIEW ON MAP',
@@ -284,7 +284,7 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        extLink: '/topics/water'
+        link: '/topics/water'
       },
       {
         text: 'VIEW ON MAP',
