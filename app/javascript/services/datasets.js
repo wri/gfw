@@ -17,5 +17,5 @@ export const getDatasetsProvider = () =>
   request.get(
     `${
       REQUEST_URL
-    }/dataset?app=gfw&includes=vocabulary,metadata,layer&env=staging&page[size]=1000&vocabulary[layer_manager_ver]=3.0&hash=352`
+    }/dataset?app=gfw&includes=vocabulary,metadata,layer&env=staging&page[size]=1000&hash=352`
   );

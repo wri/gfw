@@ -13,6 +13,12 @@ import decodeLayersConfig from './datasets-decode-config';
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
 
+const byVocabulary = dataset =>
+  dataset.vocabulary &&
+  dataset.vocabulary.some(
+    o => o.name === 'layer_manager_ver' && o.tags.includes('3.0')
+  );
+
 export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
   getDatasetsProvider()
     .then(allDatasets => {
@@ -22,6 +28,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
             d.layer.length &&
             (d.env === 'production' || d.env === process.env.FEATURE_ENV)
         )
+        .filter(byVocabulary)
         .map(d => {
           const { layer, metadata } = d;
           const appMeta =
