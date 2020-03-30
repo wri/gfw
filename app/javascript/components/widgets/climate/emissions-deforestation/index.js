@@ -9,45 +9,46 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
-const getDataFromAPI = params => fetchAnalysisEndpoint({
-  ...params,
-  name: 'Umd',
-  params,
-  slug: ['wdpa', 'use', 'geostore'].includes(params.type)
-    ? 'biomass-loss'
-    : 'umd-loss-gain',
-  version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
-  aggregate: false
-}).then(response => {
-  const { attributes: data } =
+const getDataFromAPI = params =>
+  fetchAnalysisEndpoint({
+    ...params,
+    name: 'Umd',
+    params,
+    slug: ['wdpa', 'use', 'geostore'].includes(params.type)
+      ? 'biomass-loss'
+      : 'umd-loss-gain',
+    version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
+    aggregate: false
+  }).then(response => {
+    const { attributes: data } =
       (response && response.data && response.data.data) || {};
-  let loss = [];
+    let loss = [];
 
-  if (['wdpa', 'use', 'geostore'].includes(params.type)) {
-    const biomassData = data.biomassLossByYear;
-    const emissionsData = data.co2LossByYear;
-    loss = Object.keys(biomassData).map(l => ({
-      year: parseInt(l, 10),
-      emissions: emissionsData[l],
-      biomassLoss: biomassData[l]
-    }));
-  } else {
-    loss = data.years;
-  }
-
-  const { startYear, endYear, range } = getYearsRange(loss);
-
-  return {
-    loss,
-    settings: {
-      startYear,
-      endYear
-    },
-    options: {
-      years: range
+    if (['wdpa', 'use', 'geostore'].includes(params.type)) {
+      const biomassData = data.biomassLossByYear;
+      const emissionsData = data.co2LossByYear;
+      loss = Object.keys(biomassData).map(l => ({
+        year: parseInt(l, 10),
+        emissions: emissionsData[l],
+        biomassLoss: biomassData[l]
+      }));
+    } else {
+      loss = data.years;
     }
-  };
-});
+
+    const { startYear, endYear, range } = getYearsRange(loss);
+
+    return {
+      loss,
+      settings: {
+        startYear,
+        endYear
+      },
+      options: {
+        years: range
+      }
+    };
+  });
 
 export default {
   widget: 'emissionsDeforestation',
@@ -103,7 +104,7 @@ export default {
     climate: 2
   },
   sentences:
-    'Between {startYear} and {endYear}, a total of {value} of {type} ({annualAvg} per year) was released into the atmosphere as a result of tree cover loss in {location}.',
+    'Between {startYear} and {endYear}, a total of {value} of {type} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year.',
   settings: {
     unit: 'co2LossByYear',
     threshold: 30,
