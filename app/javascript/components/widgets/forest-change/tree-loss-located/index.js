@@ -4,6 +4,16 @@ import { all, spread } from 'axios';
 
 import { getYearsRange } from 'components/widgets/utils/data';
 
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FOREST_LOSS_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  FOREST_LOSS
+} from 'data/layers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -63,17 +73,14 @@ export default {
   refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     // loss
     {
-      dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
-      layers: ['c3075c5a-5567-4b09-bc0d-96ed1673f8b6']
+      dataset: FOREST_LOSS_DATASET,
+      layers: [FOREST_LOSS]
     }
   ],
   metaKey: 'widget_tree_cover_loss_location',

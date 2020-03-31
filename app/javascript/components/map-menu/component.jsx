@@ -5,6 +5,8 @@ import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { track } from 'app/analytics';
 
+import { BIOMASS_LOSS_DATASET } from 'data/layers-datasets';
+
 import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
 import MenuMobile from './components/menu-mobile';
@@ -28,8 +30,8 @@ class MapMenu extends PureComponent {
           layers: [layer],
           ...(iso &&
             iso.length === 1 && {
-              iso: iso[0]
-            })
+            iso: iso[0]
+          })
         }
       ].concat([...newActiveDatasets]);
     }
@@ -53,7 +55,7 @@ class MapMenu extends PureComponent {
       zoom > 3 &&
       (category === 'landUse' ||
         category === 'biodiversity' ||
-        dataset === 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b')
+        dataset === BIOMASS_LOSS_DATASET)
     ) {
       this.props.setMapPromptsSettings({
         stepsKey: 'analyzeAnArea',
@@ -130,13 +132,13 @@ class MapMenu extends PureComponent {
         <div className={cx('menu-tiles', 'map-tour-data-layers', { embed })}>
           {isDesktop &&
             !embed && (
-              <MenuDesktop
-                className="menu-desktop"
-                datasetSections={datasetSections}
-                searchSections={searchSections}
-                setMenuSettings={setMenuSettings}
-              />
-            )}
+            <MenuDesktop
+              className="menu-desktop"
+              datasetSections={datasetSections}
+              searchSections={searchSections}
+              setMenuSettings={setMenuSettings}
+            />
+          )}
           {!isDesktop && (
             <MenuMobile
               sections={mobileSections}

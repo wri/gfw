@@ -8,6 +8,8 @@ import { setMenuSettings } from 'components/map-menu/actions';
 import { setMapSettings } from 'components/map/actions';
 import { setMainMapSettings } from 'pages/map/actions';
 
+import { BIOMASS_LOSS_DATASET } from 'data/layers-datasets';
+
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
@@ -38,7 +40,7 @@ class MapPromptsContainer extends PureComponent {
         activeCategories &&
         (activeCategories.includes('landUse') ||
           activeCategories.includes('biodiversity') ||
-          datasetIds.includes('a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b')));
+          datasetIds.includes(BIOMASS_LOSS_DATASET)));
 
     if (shouldOpenRecentImageryPrompt) {
       setMapPromptsSettings({

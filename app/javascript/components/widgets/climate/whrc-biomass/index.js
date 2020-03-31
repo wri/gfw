@@ -1,5 +1,15 @@
 import { getBiomassRanking } from 'services/climate';
 
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  TREE_BIOMASS_DENSITY_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  TREE_BIOMASS_DENSITY
+} from 'data/layers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -30,17 +40,14 @@ export default {
   chartType: 'rankedList',
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     // above ground woody biomass
     {
-      dataset: '81c802aa-5feb-4fbe-9986-8f30c0597c4d',
-      layers: ['f10bded4-94e2-40b6-8602-ae5bdfc07c08']
+      dataset: TREE_BIOMASS_DENSITY_DATASET,
+      layers: [TREE_BIOMASS_DENSITY]
     }
   ],
   visible: ['dashboard', 'analysis'],

@@ -2,6 +2,15 @@ import { fetchAnalysisEndpoint } from 'services/analysis';
 import { getLoss } from 'services/analysis-cached';
 
 import biomassLossIsos from 'data/biomass-isos.json';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  BIOMASS_LOSS_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  BIOMASS_LOSS
+} from 'data/layers';
 
 import { getYearsRange } from 'components/widgets/utils/data';
 
@@ -9,45 +18,46 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
-const getDataFromAPI = params => fetchAnalysisEndpoint({
-  ...params,
-  name: 'Umd',
-  params,
-  slug: ['wdpa', 'use', 'geostore'].includes(params.type)
-    ? 'biomass-loss'
-    : 'umd-loss-gain',
-  version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
-  aggregate: false
-}).then(response => {
-  const { attributes: data } =
+const getDataFromAPI = params =>
+  fetchAnalysisEndpoint({
+    ...params,
+    name: 'Umd',
+    params,
+    slug: ['wdpa', 'use', 'geostore'].includes(params.type)
+      ? 'biomass-loss'
+      : 'umd-loss-gain',
+    version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
+    aggregate: false
+  }).then(response => {
+    const { attributes: data } =
       (response && response.data && response.data.data) || {};
-  let loss = [];
+    let loss = [];
 
-  if (['wdpa', 'use', 'geostore'].includes(params.type)) {
-    const biomassData = data.biomassLossByYear;
-    const emissionsData = data.co2LossByYear;
-    loss = Object.keys(biomassData).map(l => ({
-      year: parseInt(l, 10),
-      emissions: emissionsData[l],
-      biomassLoss: biomassData[l]
-    }));
-  } else {
-    loss = data.years;
-  }
-
-  const { startYear, endYear, range } = getYearsRange(loss);
-
-  return {
-    loss,
-    settings: {
-      startYear,
-      endYear
-    },
-    options: {
-      years: range
+    if (['wdpa', 'use', 'geostore'].includes(params.type)) {
+      const biomassData = data.biomassLossByYear;
+      const emissionsData = data.co2LossByYear;
+      loss = Object.keys(biomassData).map(l => ({
+        year: parseInt(l, 10),
+        emissions: emissionsData[l],
+        biomassLoss: biomassData[l]
+      }));
+    } else {
+      loss = data.years;
     }
-  };
-});
+
+    const { startYear, endYear, range } = getYearsRange(loss);
+
+    return {
+      loss,
+      settings: {
+        startYear,
+        endYear
+      },
+      options: {
+        years: range
+      }
+    };
+  });
 
 export default {
   widget: 'emissionsDeforestation',
@@ -80,17 +90,14 @@ export default {
   ],
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     // biomass loss
     {
-      dataset: 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b',
-      layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
+      dataset: BIOMASS_LOSS_DATASET,
+      layers: [BIOMASS_LOSS]
     }
   ],
   pendingKeys: ['threshold', 'unit'],

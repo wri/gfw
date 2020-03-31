@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import cx from 'classnames';
 import ContentLoader from 'react-content-loader';
 
@@ -11,7 +12,7 @@ import { getGeostoreProvider } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginMapboxGl } from 'layer-manager';
+import { PluginMapboxGl, fetch } from 'layer-manager';
 
 import { TRANSITION_EVENTS } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project';
@@ -182,39 +183,73 @@ class MapGeostore extends Component {
             getCursor={() => cursor}
           >
             {map => (
-              <LayerManager map={map} plugin={PluginMapboxGl}>
+              <LayerManager
+                map={map}
+                plugin={PluginMapboxGl}
+                providers={{
+                  stories: (layerModel, layer, resolve, reject) => {
+                    const { source } = layerModel;
+                    const { provider } = source;
+
+                    fetch('get', provider.url, provider.options, layerModel)
+                      .then(response =>
+                        resolve({
+                          ...layer,
+                          source: {
+                            ...omit(layer.source, 'provider'),
+                            data: {
+                              type: 'FeatureCollection',
+                              features: response.rows.map(r => ({
+                                type: 'Feature',
+                                properties: r,
+                                geometry: {
+                                  type: 'Point',
+                                  coordinates: [r.lon, r.lat]
+                                }
+                              }))
+                            }
+                          }
+                        })
+                      )
+                      .catch(e => {
+                        reject(e);
+                      });
+                  }
+                }}
+              >
                 {geostore && (
                   <Layer
                     id={geostore.id}
                     name="Geojson"
-                    provider="geojson"
-                    layerConfig={{
+                    type="geojson"
+                    source={{
                       data: geostore.geojson,
-                      body: {
-                        vectorLayers: [
-                          {
-                            type: 'fill',
-                            paint: {
-                              'fill-color': 'transparent'
-                            }
-                          },
-                          {
-                            type: 'line',
-                            paint: {
-                              'line-color': '#C0FF24',
-                              'line-width': 3,
-                              'line-offset': 2
-                            }
-                          },
-                          {
-                            type: 'line',
-                            paint: {
-                              'line-color': '#000',
-                              'line-width': 2
-                            }
+                      type: 'geojson'
+                    }}
+                    render={{
+                      layers: [
+                        {
+                          type: 'fill',
+                          paint: {
+                            'fill-color': 'transparent'
                           }
-                        ]
-                      }
+                        },
+                        {
+                          type: 'line',
+                          paint: {
+                            'line-color': '#C0FF24',
+                            'line-width': 3,
+                            'line-offset': 2
+                          }
+                        },
+                        {
+                          type: 'line',
+                          paint: {
+                            'line-color': '#000',
+                            'line-width': 2
+                          }
+                        }
+                      ]
                     }}
                     zIndex={1060}
                   />
@@ -223,11 +258,8 @@ class MapGeostore extends Component {
                   key={basemap.url}
                   id={basemap.url}
                   name="Basemap"
-                  provider="leaflet"
-                  layerConfig={{
-                    body: {
-                      url: basemap.url
-                    }
+                  source={{
+                    url: basemap.url
                   }}
                   zIndex={100}
                 />

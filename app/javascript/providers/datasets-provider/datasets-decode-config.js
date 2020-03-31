@@ -548,19 +548,16 @@ const decodes = {
 };
 
 export default {
-  '78747ea1-34a9-4aa7-b099-bdb8948200f4': decodes.treeCover,
-  'c05c32fd-289c-4b20-8d73-dc2458234e04': decodes.treeCover,
-  'c3075c5a-5567-4b09-bc0d-96ed1673f8b6': decodes.treeCoverLoss,
-  '0d35db15-9c05-4dbb-9879-ceded4f7951d': decodes.treeCoverLoss,
-  '63473160-c95c-4693-a9b1-405fe6e4bbed': decodes.treeLossByDriver,
-  'fd05bc2c-6ade-408c-862e-7318557dd4fc': decodes.treeLossByDriver,
-  'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
-  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs,
-  'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
-  'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
+  treeCover: decodes.treeCover,
+  treeCoverLoss: decodes.treeCoverLoss,
+  treeLossByDriver: decodes.treeLossByDriver,
+  GLADs: decodes.GLADs,
+  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs, // TODO: remove?
+  biomassLoss: decodes.biomassLoss,
+  woodyBiomass: decodes.woodyBiomass,
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
-  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
-  '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover,
+  terrai: decodes.terrai,
+  braLandCover: decodes.braLandCover,
   '7b6acc5f-bc18-4e13-951c-0d81639d68a7': decodes.grossCarbonEmissions,
   '5614e8ef-3e10-43d8-9e0c-7a9ddde93b81': decodes.cumulativeCarbonGain,
   'b2070db1-f01c-4107-8c2a-50fe77d3fbce': decodes.netCarbonFlux
