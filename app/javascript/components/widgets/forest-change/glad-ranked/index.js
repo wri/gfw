@@ -2,6 +2,16 @@ import { all, spread } from 'axios';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import {
+  POLITICAL_BOUNDARIES_DATASET,
+  GLAD_DEFORESTATION_ALERTS_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  GLAD_ALERTS
+} from 'data/layers';
+
+import {
   getExtentGrouped,
   fetchGladAlerts,
   fetchGLADLatest
@@ -60,17 +70,14 @@ export default {
   colors: 'loss',
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     // GLAD
     {
-      dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
-      layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
+      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
+      layers: [GLAD_ALERTS]
     }
   ],
   sortOrder: {

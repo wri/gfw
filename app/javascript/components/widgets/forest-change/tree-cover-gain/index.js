@@ -2,6 +2,16 @@ import { all, spread } from 'axios';
 
 import { getGainGrouped } from 'services/analysis-cached';
 
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FOREST_GAIN_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  FOREST_GAIN
+} from 'data/layers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -36,17 +46,14 @@ export default {
   metaKey: 'widget_tree_cover_gain',
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     // gain
     {
-      dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
-      layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4']
+      dataset: FOREST_GAIN_DATASET,
+      layers: [FOREST_GAIN]
     }
   ],
   visible: ['dashboard', 'analysis'],

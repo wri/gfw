@@ -1,4 +1,11 @@
 import { getUSLandCover } from 'services/forest-data';
+import { USA_LAND_COVER_DATASET } from 'data/layers-datasets';
+import {
+  USA_LAND_COVER_2001,
+  USA_LAND_COVER_2006,
+  USA_LAND_COVER_2011,
+  USA_LAND_COVER_2016
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
@@ -17,12 +24,12 @@ export default {
   refetchKeys: ['source', 'startYear', 'endYear'],
   datasets: [
     {
-      dataset: 'd95bcd10-bdaf-4787-83a8-f8293af1c2f4',
+      dataset: USA_LAND_COVER_DATASET,
       layers: {
-        2001: '49a4801f-4c23-435a-9f8c-e7543bd875fc',
-        2006: 'a12a37fa-06a0-4437-957e-f01675d0c4bd',
-        2011: '3d829585-970b-47ce-b33d-6c218eea543e',
-        2016: 'a7058917-006e-4742-bdfc-6e372812eb0e'
+        2001: USA_LAND_COVER_2001,
+        2006: USA_LAND_COVER_2006,
+        2011: USA_LAND_COVER_2011,
+        2016: USA_LAND_COVER_2016
       }
     }
   ],

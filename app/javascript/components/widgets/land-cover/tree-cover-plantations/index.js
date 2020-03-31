@@ -1,6 +1,16 @@
 import { getExtent, getAreaIntersection } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  TREE_PLANTATIONS_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  TREE_PLANTATIONS
+} from 'data/layers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -13,17 +23,14 @@ export default {
   chartType: 'pieChart',
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     {
       // global plantations
-      dataset: 'bb1dced4-3ae8-4908-9f36-6514ae69713f',
-      layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
+      dataset: TREE_PLANTATIONS_DATASET,
+      layers: [TREE_PLANTATIONS]
     }
   ],
   visible: ['dashboard', 'analysis'],
