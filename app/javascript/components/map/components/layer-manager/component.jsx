@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginMapboxGl } from 'layer-manager';
+import { PluginMapboxGl, fetch } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   static propTypes = {
@@ -13,17 +14,18 @@ class LayerManagerComponent extends PureComponent {
   };
 
   render() {
-    const { layers, setMapLoading, basemap, map } = this.props;
+    const { layers, basemap, map } = this.props;
 
     const basemapLayer =
       basemap && basemap.url
         ? {
           id: basemap.url,
           name: 'Basemap',
-          provider: 'leaflet',
           layerConfig: {
-            body: {
-              url: basemap.url
+            type: 'raster',
+            source: {
+              type: 'raster',
+              tiles: [basemap.url]
             }
           },
           zIndex: 100
@@ -36,9 +38,42 @@ class LayerManagerComponent extends PureComponent {
       <LayerManager
         map={map}
         plugin={PluginMapboxGl}
-        onLayerLoading={loading => setMapLoading(loading)}
+        providers={{
+          stories: (layerModel, layer, resolve, reject) => {
+            const { source } = layerModel;
+            const { provider } = source;
+
+            fetch('get', provider.url, provider.options, layerModel)
+              .then(response =>
+                resolve({
+                  ...layer,
+                  source: {
+                    ...omit(layer.source, 'provider'),
+                    data: {
+                      type: 'FeatureCollection',
+                      features: response.rows.map(r => ({
+                        type: 'Feature',
+                        properties: r,
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [r.lon, r.lat]
+                        }
+                      }))
+                    }
+                  }
+                })
+              )
+              .catch(e => {
+                reject(e);
+              });
+          }
+        }}
       >
-        {allLayers && allLayers.map(l => <Layer key={l.id} {...l} />)}
+        {allLayers &&
+          allLayers.map(l => {
+            const config = l.config ? l.config : l.layerConfig;
+            return <Layer key={l.id} {...l} {...config} />;
+          })}
       </LayerManager>
     );
   }
