@@ -258,7 +258,9 @@ class MapGeostore extends Component {
                   key={basemap.url}
                   id={basemap.url}
                   name="Basemap"
+                  type="raster"
                   source={{
+                    type: 'raster',
                     url: basemap.url
                   }}
                   zIndex={100}
