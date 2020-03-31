@@ -192,23 +192,25 @@ class MapGeostore extends Component {
                     const { provider } = source;
 
                     fetch('get', provider.url, provider.options, layerModel)
-                      .then(response => resolve({
-                        ...layer,
-                        source: {
-                          ...omit(layer.source, 'provider'),
-                          data: {
-                            type: 'FeatureCollection',
-                            features: response.rows.map(r => ({
-                              type: 'Feature',
-                              properties: r,
-                              geometry: {
-                                type: 'Point',
-                                coordinates: [r.lon, r.lat]
-                              }
-                            }))
+                      .then(response =>
+                        resolve({
+                          ...layer,
+                          source: {
+                            ...omit(layer.source, 'provider'),
+                            data: {
+                              type: 'FeatureCollection',
+                              features: response.rows.map(r => ({
+                                type: 'Feature',
+                                properties: r,
+                                geometry: {
+                                  type: 'Point',
+                                  coordinates: [r.lon, r.lat]
+                                }
+                              }))
+                            }
                           }
-                        }
-                      }))
+                        })
+                      )
                       .catch(e => {
                         reject(e);
                       });
@@ -219,7 +221,6 @@ class MapGeostore extends Component {
                   <Layer
                     id={geostore.id}
                     name="Geojson"
-                    // provider="geojson"
                     type="geojson"
                     source={{
                       data: geostore.geojson,

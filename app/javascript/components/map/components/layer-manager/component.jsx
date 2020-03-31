@@ -14,7 +14,7 @@ class LayerManagerComponent extends PureComponent {
   };
 
   render() {
-    const { layers, /* setMapLoading, */ basemap, map } = this.props;
+    const { layers, basemap, map } = this.props;
 
     const basemapLayer =
       basemap && basemap.url
@@ -38,7 +38,6 @@ class LayerManagerComponent extends PureComponent {
       <LayerManager
         map={map}
         plugin={PluginMapboxGl}
-        // onLayerLoading={loading => setMapLoading(loading)} // removed in LMv3
         providers={{
           stories: (layerModel, layer, resolve, reject) => {
             const { source } = layerModel;
