@@ -20,7 +20,7 @@ export default {
     initial: 'Annual tree cover loss by dominant driver in {location}',
     global: 'Global annual tree cover loss by dominant driver'
   },
-  types: ['global', 'country', 'geostore'],
+  types: ['global', 'country'],
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
