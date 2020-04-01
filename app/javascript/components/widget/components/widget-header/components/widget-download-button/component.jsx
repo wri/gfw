@@ -21,7 +21,7 @@ const GLAD_ALERTS_WIDGET = 'gladAlerts';
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     getDataURL: PropTypes.func,
-    gladAlertsDownloadUrls: PropTypes.obj,
+    gladAlertsDownloadUrls: PropTypes.object,
     settings: PropTypes.object,
     title: PropTypes.string,
     parentData: PropTypes.object,
