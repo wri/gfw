@@ -558,5 +558,6 @@ export default {
   braLandCover: decodes.braLandCover,
   grossCarbonEmissions: decodes.grossCarbonEmissions,
   cumulativeCarbonGain: decodes.cumulativeCarbonGain,
-  netGHGFlux: decodes.netCarbonFlux
+  netGHGFlux: decodes.netCarbonFlux,
+  formaAlerts: decodes.forma
 };
