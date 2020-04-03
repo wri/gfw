@@ -41,6 +41,7 @@ export const mapData = createSelector(
       return {
         label: (region && region.label) || '',
         loss,
+        path: (region && region.path) || '',
         percentage: normalPercentage,
         value: settings.unit === 'ha' ? loss : normalPercentage
       };
