@@ -17,16 +17,9 @@ export default {
   widget: 'primaryForest',
   title: 'Primary forest in {location}',
   categories: ['land-cover'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
-    {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
     {
       key: 'landCategory',
       label: 'Land Category',
@@ -34,6 +27,12 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
     }
   ],
   chartType: 'pieChart',
@@ -54,6 +53,7 @@ export default {
       }
     }
   ],
+  visible: ['dashboard', 'analysis'],
   sortOrder: {
     landCover: 4
   },
@@ -68,6 +68,7 @@ export default {
     withIndicator:
       'As of 2001, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
   },
+  refetchKeys: ['landCategory', 'threshold', 'extentYear'],
   whitelists: {
     adm0: [
       'IDN',
