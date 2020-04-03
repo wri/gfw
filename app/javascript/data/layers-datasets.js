@@ -5,6 +5,9 @@ export const FOREST_GAIN_DATASET = '190acb0d-2b06-48d8-b894-234a7413674b';
 
 export const FOREST_LOSS_DATASET = 'eab9655f-dd37-4bb3-b223-4c5df166564c';
 
+export const FOREST_LOSS_BY_DRIVER_DATASET =
+  'f23a1803-ba17-4fe3-a1ad-39abfbfb56c6';
+
 export const FOREST_EXTENT_DATASET = 'c92b6411-f0e5-4606-bbd9-138e40e50eb8';
 
 export const GLAD_DEFORESTATION_ALERTS_DATASET =

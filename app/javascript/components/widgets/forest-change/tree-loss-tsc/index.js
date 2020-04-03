@@ -2,10 +2,14 @@ import { all, spread } from 'axios';
 import moment from 'moment';
 import { getYearsRange } from 'components/widgets/utils/data';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FOREST_LOSS_BY_DRIVER_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  TREE_COVER_LOSS_BY_DOMINANT_DRIVER
 } from 'data/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
@@ -57,8 +61,8 @@ export default {
     },
     // loss tsc
     {
-      dataset: 'f23a1803-ba17-4fe3-a1ad-39abfbfb56c6',
-      layers: ['04774cb7-912c-4612-bbd8-ba982d532c88']
+      dataset: FOREST_LOSS_BY_DRIVER_DATASET,
+      layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER]
     }
   ],
   metaKey: 'widget_tsc_drivers',
