@@ -57,8 +57,8 @@ export default {
     },
     // loss tsc
     {
-      dataset: '89755b9f-df05-4e22-a9bc-05217c8eafc8',
-      layers: ['fd05bc2c-6ade-408c-862e-7318557dd4fc']
+      dataset: 'f23a1803-ba17-4fe3-a1ad-39abfbfb56c6',
+      layers: ['04774cb7-912c-4612-bbd8-ba982d532c88']
     }
   ],
   metaKey: 'widget_tsc_drivers',
