@@ -28,6 +28,8 @@ const selectEmbed = state =>
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
 const selectDatasets = state => state.datasets && state.datasets.data;
+const selectGeostoreSize = state =>
+  state.geostore && state.geostore.data && state.geostore.data.areaHa;
 
 export const getLoading = createSelector(
   [
@@ -172,6 +174,17 @@ export const getLayerEndpoints = createSelector(
   }
 );
 
+export const checkGeostoreSize = createSelector(
+  [selectGeostoreSize, getDataLocation],
+  (areaHa, location) => {
+    if (['aoi', 'geostore'].includes(location.type)) {
+      return areaHa > 100000000;
+    }
+
+    return false;
+  }
+);
+
 export const getAnalysisProps = createStructuredSelector({
   loading: getLoading,
   error: selectError,
@@ -183,5 +196,6 @@ export const getAnalysisProps = createStructuredSelector({
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
   activeArea: getActiveArea,
-  search: selectSearch
+  search: selectSearch,
+  areaTooLarge: checkGeostoreSize
 });
