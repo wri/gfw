@@ -177,11 +177,11 @@ export const getLayerEndpoints = createSelector(
 export const checkGeostoreSize = createSelector(
   [selectGeostoreSize, getDataLocation],
   (areaHa, location) => {
-    if (!['aoi', 'geostore'].includes(location.type)) {
-      return false;
+    if (['aoi', 'geostore'].includes(location.type)) {
+      return areaHa > 100000000;
     }
 
-    return areaHa > 100000000;
+    return false;
   }
 );
 
