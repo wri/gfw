@@ -16,6 +16,7 @@ class AreaOfInterestModal extends PureComponent {
     loading: PropTypes.bool,
     canDelete: PropTypes.bool,
     setAreaOfInterestModalSettings: PropTypes.func,
+    setMenuSettings: PropTypes.func,
     viewAfterSave: PropTypes.bool
   };
 
@@ -24,8 +25,9 @@ class AreaOfInterestModal extends PureComponent {
   }
 
   handleCloseModal = () => {
-    const { setAreaOfInterestModalSettings } = this.props;
+    const { setAreaOfInterestModalSettings, setMenuSettings } = this.props;
     setAreaOfInterestModalSettings({ open: false, activeAreaId: null });
+    setMenuSettings({ menuSection: 'my-gfw' });
   };
 
   render() {
