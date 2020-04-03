@@ -168,7 +168,7 @@ class AnalysisComponent extends PureComponent {
                 {...areaTooLarge && {
                   tooltip: {
                     text:
-                        'Your area is too large! Please try again with an area smaller than 1 billion hectares.'
+                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).'
                   }
                 }}
               >
