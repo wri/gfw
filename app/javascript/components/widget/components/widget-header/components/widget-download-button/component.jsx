@@ -31,7 +31,8 @@ class WidgetDownloadButton extends PureComponent {
     adminLevel: PropTypes.string,
     metaKey: PropTypes.string,
     simple: PropTypes.bool,
-    widget: PropTypes.string
+    widget: PropTypes.string,
+    areaTooLarge: PropTypes.bool
   };
 
   generateZipFromURL = () => {
@@ -201,10 +202,17 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const tooltipText =
+    const { areaTooLarge } = this.props;
+
+    let tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
         ? 'Download the data. Please add .csv to the filename if extension is missing.'
         : 'Download the data.';
+
+    if (areaTooLarge) {
+      tooltipText =
+        'Your area is too large for downloading data! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).';
+    }
 
     return (
       <Button
@@ -216,6 +224,7 @@ class WidgetDownloadButton extends PureComponent {
         })}
         onClick={this.onClickDownloadBtn}
         tooltip={{ text: tooltipText }}
+        disabled={areaTooLarge}
       >
         <Icon icon={downloadIcon} className="download-icon" />
       </Button>
