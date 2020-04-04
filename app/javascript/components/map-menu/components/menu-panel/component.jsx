@@ -1,13 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import startCase from 'lodash/startCase';
 
+import { Media } from 'utils/responsive';
+
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import closeIcon from 'assets/icons/close.svg';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import posed, { PoseGroup } from 'react-pose';
 
 import './styles.scss';
@@ -17,27 +19,27 @@ const PanelMobile = posed.div({
     y: 0,
     opacity: 1,
     delay: 200,
-    transition: { duration: 200 }
+    transition: { duration: 200 },
   },
   exit: {
     y: 50,
     opacity: 0,
     delay: 200,
-    transition: { duration: 200 }
-  }
+    transition: { duration: 200 },
+  },
 });
 
 const PanelDesktop = posed.div({
   enter: {
     x: 66,
     opacity: 1,
-    delay: 300
+    delay: 300,
   },
   exit: {
     x: 0,
     opacity: 0,
-    transition: { duration: 200 }
-  }
+    transition: { duration: 200 },
+  },
 });
 
 class MenuPanel extends PureComponent {
@@ -45,7 +47,6 @@ class MenuPanel extends PureComponent {
     const {
       active,
       className,
-      isDesktop,
       label,
       category,
       large,
@@ -54,55 +55,69 @@ class MenuPanel extends PureComponent {
       children,
       loading,
       setMenuSettings,
-      collapsed
+      collapsed,
     } = this.props;
-    const Panel = isDesktop ? PanelDesktop : PanelMobile;
 
     return (
       <PoseGroup>
         {active && (
-          <Panel
-            key="menu-container"
-            className={cx(
-              'c-menu-panel',
-              'map-tour-menu-panel',
-              { large },
-              className
-            )}
-          >
-            {!isDesktop ? (
-              <div className="panel-header">
-                <div className="panel-label">
-                  {category ? (
-                    <button
-                      onClick={() => setMenuSettings({ datasetCategory: '' })}
-                    >
-                      <Icon icon={arrowIcon} className="icon-return" />
-                      <span>{startCase(category)}</span>
-                    </button>
-                  ) : (
-                    <span>{label}</span>
-                  )}
+          <Fragment>
+            <Media greaterThanOrEqual="md">
+              <PanelDesktop
+                key="menu-container"
+                className={cx(
+                  'c-menu-panel',
+                  'map-tour-menu-panel',
+                  { large },
+                  className
+                )}
+              >
+                <button className="close-menu" onClick={onClose}>
+                  <Icon icon={closeIcon} className="icon-close-panel" />
+                </button>
+                {!loading && <div className="panel-body">{children}</div>}
+                {loading && <Loader className="map-menu-loader" />}
+              </PanelDesktop>
+            </Media>
+            <Media lessThan="md">
+              <PanelMobile
+                key="menu-container"
+                className={cx(
+                  'c-menu-panel',
+                  'map-tour-menu-panel',
+                  { large },
+                  className
+                )}
+              >
+                <div className="panel-header">
+                  <div className="panel-label">
+                    {category ? (
+                      <button
+                        onClick={() => setMenuSettings({ datasetCategory: '' })}
+                      >
+                        <Icon icon={arrowIcon} className="icon-return" />
+                        <span>{startCase(category)}</span>
+                      </button>
+                    ) : (
+                      <span>{label}</span>
+                    )}
+                  </div>
+                  <Button
+                    className="panel-close"
+                    theme="theme-button-clear"
+                    onClick={collapsed ? onOpen : onClose}
+                  >
+                    <Icon
+                      icon={arrowIcon}
+                      className={cx('icon-close-panel', { collapsed })}
+                    />
+                  </Button>
                 </div>
-                <Button
-                  className="panel-close"
-                  theme="theme-button-clear"
-                  onClick={collapsed ? onOpen : onClose}
-                >
-                  <Icon
-                    icon={arrowIcon}
-                    className={cx('icon-close-panel', { collapsed })}
-                  />
-                </Button>
-              </div>
-            ) : (
-              <button className="close-menu" onClick={onClose}>
-                <Icon icon={closeIcon} className="icon-close-panel" />
-              </button>
-            )}
-            {!loading && <div className="panel-body">{children}</div>}
-            {loading && <Loader className="map-menu-loader" />}
-          </Panel>
+                {!loading && <div className="panel-body">{children}</div>}
+                {loading && <Loader className="map-menu-loader" />}
+              </PanelMobile>
+            </Media>
+          </Fragment>
         )}
       </PoseGroup>
     );
@@ -115,13 +130,12 @@ MenuPanel.propTypes = {
   className: PropTypes.string,
   onClose: PropTypes.func,
   setMenuSettings: PropTypes.func,
-  isDesktop: PropTypes.bool,
   label: PropTypes.string,
   category: PropTypes.string,
   active: PropTypes.bool,
   loading: PropTypes.bool,
   collapsed: PropTypes.bool,
-  onOpen: PropTypes.func
+  onOpen: PropTypes.func,
 };
 
 export default MenuPanel;

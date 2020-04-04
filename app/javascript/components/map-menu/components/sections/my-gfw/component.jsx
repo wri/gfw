@@ -2,29 +2,30 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
-import { logout } from 'services/user';
 import Link from 'redux-first-router-link';
 import slice from 'lodash/slice';
 
+import { Media } from 'utils/responsive';
+import { logout } from 'services/user';
+
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
-import Button from 'components/ui/button/button-component';
+import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';
 
-import editIcon from 'assets/icons/edit.svg';
-import logoutIcon from 'assets/icons/logout.svg';
-import screenImg1x from 'assets/images/aois/aoi-dashboard.png';
-import screenImg2x from 'assets/images/aois/aoi-dashboard@2x.png';
+import editIcon from 'assets/icons/edit.svg?sprite';
+import logoutIcon from 'assets/icons/logout.svg?sprite';
+import screenImg1x from 'assets/images/aois/aoi-dashboard.png?webp';
+import screenImg2x from 'assets/images/aois/aoi-dashboard@2x.png?webp';
 
 import './styles.scss';
 
 class MapMenuMyGFW extends PureComponent {
   static propTypes = {
-    isDesktop: PropTypes.bool,
     loggedIn: PropTypes.bool,
     areas: PropTypes.array,
     activeArea: PropTypes.object,
@@ -35,7 +36,7 @@ class MapMenuMyGFW extends PureComponent {
     tags: PropTypes.array,
     loading: PropTypes.bool,
     userData: PropTypes.object,
-    setMapPromptsSettings: PropTypes.func
+    setMapPromptsSettings: PropTypes.func,
   };
 
   state = {
@@ -44,19 +45,20 @@ class MapMenuMyGFW extends PureComponent {
     selectedTags: [],
     unselectedTags: [],
     pageSize: 6,
-    pageNum: 0
+    pageNum: 0,
   };
 
   static getDerivedStateFromProps(prevProps, prevState) {
     const { areas, tags } = prevProps;
     const { activeTags, pageSize, pageNum } = prevState;
 
-    const selectedTags = tags && tags.filter(t => activeTags.includes(t.value));
+    const selectedTags =
+      tags && tags.filter((t) => activeTags.includes(t.value));
     const unselectedTags =
-      tags && tags.filter(t => !activeTags.includes(t.value));
+      tags && tags.filter((t) => !activeTags.includes(t.value));
     const filteredAreas =
       selectedTags && selectedTags.length && areas && areas.length
-        ? areas.filter(a => !!intersection(a.tags, activeTags).length)
+        ? areas.filter((a) => !!intersection(a.tags, activeTags).length)
         : areas;
 
     const areasTrimmed = slice(
@@ -68,38 +70,37 @@ class MapMenuMyGFW extends PureComponent {
     return {
       selectedTags,
       unselectedTags,
-      areas: areasTrimmed
+      areas: areasTrimmed,
     };
   }
 
-  renderLoginWindow() {
-    const { isDesktop } = this.props;
-    return (
-      <div className="aoi-header">
-        {isDesktop && <h3 className="title-login">Please log in</h3>}
-        <p>
-          Log in is required so you can view, manage, and delete your Areas of
-          Interest.
-        </p>
-        <p>
-          Creating an Area of Interest lets you customize and perform an
-          in-depth analysis of the area, as well as receiving email
-          notifications when new deforestation alerts are available.
-        </p>
-        <LoginForm className="mygfw-login" simple narrow />
-      </div>
-    );
-  }
+  renderLoginWindow = () => (
+    <div className="aoi-header">
+      <Media greaterThanOrEqual="md">
+        <h3 className="title-login">Please log in</h3>
+      </Media>
+      <p>
+        Log in is required so you can view, manage, and delete your Areas of
+        Interest.
+      </p>
+      <p>
+        Creating an Area of Interest lets you customize and perform an in-depth
+        analysis of the area, as well as receiving email notifications when new
+        deforestation alerts are available.
+      </p>
+      <LoginForm className="mygfw-login" simple narrow />
+    </div>
+  );
 
   renderNoAreas() {
-    const { isDesktop, setMapPromptsSettings } = this.props;
+    const { setMapPromptsSettings } = this.props;
     return (
       <div className="aoi-header">
-        {isDesktop && (
+        <Media greaterThanOrEqual="md">
           <h2 className="title-no-aois">
             You haven&apos;t created any Areas of Interest yet
           </h2>
-        )}
+        </Media>
         <p>
           Creating an Area of Interest lets you customize and perform an
           in-depth analysis of the area, as well as receiving email
@@ -112,9 +113,8 @@ class MapMenuMyGFW extends PureComponent {
               open: true,
               stepsKey: 'areaOfInterestTour',
               stepIndex: 0,
-              force: true
-            })
-          }
+              force: true,
+            })}
         >
           Learn how
         </Button>
@@ -123,31 +123,25 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderAreas() {
-    const {
-      isDesktop,
-      activeArea,
-      viewArea,
-      onEditClick,
-      areas: allAreas
-    } = this.props;
+    const { activeArea, viewArea, onEditClick, areas: allAreas } = this.props;
     const {
       activeTags,
       areas,
       selectedTags,
       unselectedTags,
       pageSize,
-      pageNum
+      pageNum,
     } = this.state;
 
     return (
       <div>
         <div className="aoi-header">
-          {isDesktop && (
+          <Media greaterThanOrEqual="md">
             <h3 className="title-create-aois">Areas of interest</h3>
-          )}
+          </Media>
           <div className="aoi-tags">
             {selectedTags &&
-              selectedTags.map(tag => (
+              selectedTags.map((tag) => (
                 <Pill
                   className="aoi-tag"
                   key={tag.value}
@@ -155,13 +149,11 @@ class MapMenuMyGFW extends PureComponent {
                   label={tag.label}
                   onRemove={() =>
                     this.setState({
-                      activeTags: activeTags.filter(t => t !== tag.value)
-                    })
-                  }
+                      activeTags: activeTags.filter((t) => t !== tag.value),
+                    })}
                 />
               ))}
-            {unselectedTags &&
-              !!unselectedTags.length && (
+            {unselectedTags && !!unselectedTags.length && (
               <Dropdown
                 className="aoi-tags-dropdown"
                 theme="theme-dropdown-button theme-dropdown-button-small"
@@ -177,12 +169,11 @@ class MapMenuMyGFW extends PureComponent {
                     : 'Filter by tags'
                 }
                 options={unselectedTags}
-                onChange={tag =>
+                onChange={(tag) =>
                   tag.value &&
-                    this.setState({
-                      activeTags: [...activeTags, tag.value]
-                    })
-                }
+                  this.setState({
+                    activeTags: [...activeTags, tag.value],
+                  })}
               />
             )}
           </div>
@@ -196,7 +187,7 @@ class MapMenuMyGFW extends PureComponent {
                   <div
                     className={cx('aoi-item', {
                       '--active': active,
-                      '--inactive': activeArea && !active
+                      '--inactive': activeArea && !active,
                     })}
                     onClick={() => viewArea({ areaId: area.id })}
                     role="button"
@@ -208,7 +199,7 @@ class MapMenuMyGFW extends PureComponent {
                       <Button
                         className="edit-button"
                         theme="square theme-button-clear"
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
                           onEditClick({ open: true });
@@ -225,12 +216,11 @@ class MapMenuMyGFW extends PureComponent {
                 className="areas-pagination"
                 settings={{
                   page: pageNum,
-                  pageSize
+                  pageSize,
                 }}
                 count={allAreas.length}
-                onClickChange={increment =>
-                  this.setState({ pageNum: pageNum + increment })
-                }
+                onClickChange={(increment) =>
+                  this.setState({ pageNum: pageNum + increment })}
               />
             )}
           </Fragment>
@@ -274,22 +264,22 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   render() {
-    const { loggedIn, areas, isDesktop, loading } = this.props;
+    const { loggedIn, areas, loading } = this.props;
 
     return (
       <div className="c-map-menu-my-gfw">
         {loading && <Loader />}
         {!loading && loggedIn && this.renderMyGFW()}
         {!loading && !loggedIn && this.renderLoginWindow()}
-        {!loading &&
-          (!loggedIn || !(areas && areas.length > 0)) &&
-          isDesktop && (
-          <img
-            className={cx('my-gfw-login-image', { '--login': !loggedIn })}
-            src={screenImg1x}
-            srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
-            alt="aoi screenshot"
-          />
+        {!loading && (!loggedIn || !(areas && areas.length > 0)) && (
+          <Media greaterThanOrEqual="md">
+            <img
+              className={cx('my-gfw-login-image', { '--login': !loggedIn })}
+              src={screenImg1x}
+              srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
+              alt="aoi screenshot"
+            />
+          </Media>
         )}
       </div>
     );

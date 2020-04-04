@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 
-import mapboxLogo from 'assets/logos/mapbox.svg';
-import geeLogo from 'assets/logos/gee.png';
-import cartoLogo from 'assets/logos/carto.png';
+import mapboxLogo from 'assets/logos/mapbox.svg?sprite';
+import geeLogo from 'assets/logos/gee.png?webp';
+import cartoLogo from 'assets/logos/carto.png?webp';
 import Modal from '../modal';
 
 import './styles.scss';

@@ -12,7 +12,7 @@ class ModalSources extends PureComponent {
       <div>
         {ReactHtmlParser(html, {
           transform: node =>
-            (node.name === 'a' ? (
+            node.name === 'a' ? (
               <a
                 key={node.attribs.href}
                 href={node.attribs.href}
@@ -23,7 +23,7 @@ class ModalSources extends PureComponent {
               </a>
             ) : (
               ''
-            ))
+            )
         })}
       </div>
     );

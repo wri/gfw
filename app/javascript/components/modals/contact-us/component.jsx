@@ -7,28 +7,26 @@ import Modal from '../modal';
 import './styles.scss';
 
 class ModalContactUs extends PureComponent {
+  static propTypes = {
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+  }
+
   render() {
-    const { open, setModalContactUsOpen } = this.props;
+    const { open, onClose } = this.props;
 
     return (
       <Modal
-        isOpen={!!open}
+        isOpen={open}
         contentLabel="Contact Us"
-        onRequestClose={() => {
-          setModalContactUsOpen(false);
-        }}
+        onRequestClose={onClose}
         title="Contact Us"
         className="c-contact-us-modal"
       >
-        <ContactForm resetForm={() => setModalContactUsOpen(false)} />
+        <ContactForm onClose={onClose} />
       </Modal>
     );
   }
 }
-
-ModalContactUs.propTypes = {
-  open: PropTypes.bool,
-  setModalContactUsOpen: PropTypes.func
-};
 
 export default ModalContactUs;

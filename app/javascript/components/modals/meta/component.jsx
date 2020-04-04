@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
@@ -42,9 +42,29 @@ class ModalMeta extends PureComponent {
       metaData.title &&
       metaData.title !== prevProps.metaData.title
     ) {
-      track('openModal', { label: `Metadata: ${metaData && metaData.title}` });
+      logEvent('openModal', { label: `Metadata: ${metaData && metaData.title}` });
     }
   }
+
+  parseContent = (html) => (
+    <div>
+      {ReactHtmlParser(html, {
+        transform: node =>
+          node.name === 'a' ? (
+            <a
+              key={node.attribs.href}
+              href={node.attribs.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {node.children[0].data}
+            </a>
+          ) : (
+            ''
+          )
+      })}
+    </div>
+  );
 
   getContent() {
     const { metaData, tableData, loading, error, locationName } = this.props;
@@ -69,26 +89,26 @@ class ModalMeta extends PureComponent {
       <div className="modal-meta-content">
         {error &&
           !loading && (
-          <NoContent message="There was a problem finding this info. Please try again later." />
-        )}
+            <NoContent message="There was a problem finding this info. Please try again later." />
+          )}
         {!loading &&
           isEmpty(metaData) &&
           !error && (
-          <NoContent message="Sorry, we cannot find what you are looking for." />
-        )}
+            <NoContent message="Sorry, we cannot find what you are looking for." />
+          )}
         {!loading &&
           !error &&
           !isEmpty(metaData) && (
-          <div>
-            <p
-              className="subtitle"
+            <div>
+              <p
+                className="subtitle"
                 dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
-            />
-            <div className="meta-table element-fullwidth">
-              {tableData &&
+              />
+              <div className="meta-table element-fullwidth">
+                {tableData &&
                   Object.keys(tableData).map(
                     key =>
-                      (tableData[key] ? (
+                      tableData[key] ? (
                         <div key={key} className="table-row">
                           <div
                             className="title-column"
@@ -98,69 +118,47 @@ class ModalMeta extends PureComponent {
                             {this.parseContent(tableData[key])}
                           </div>
                         </div>
-                      ) : null)
+                      ) : null
                   )}
-            </div>
-            {overview && (
-              <div className="overview">
-                <h4>Overview</h4>
-                <div className="body">{this.parseContent(overview)}</div>
               </div>
-            )}
-            {parsedCitation && (
-              <div className="citation">
-                <h5>Citation</h5>
-                <div className="body">
-                  {this.parseContent(parsedCitation)}
+              {overview && (
+                <div className="overview">
+                  <h4>Overview</h4>
+                  <div className="body">{this.parseContent(overview)}</div>
                 </div>
-              </div>
-            )}
-            {(learn_more || download_data || map_service || amazon_link) && (
-              <div className="ext-actions">
-                {learn_more && (
-                  <Button theme="theme-button-medium" extLink={learn_more}>
+              )}
+              {parsedCitation && (
+                <div className="citation">
+                  <h5>Citation</h5>
+                  <div className="body">
+                    {this.parseContent(parsedCitation)}
+                  </div>
+                </div>
+              )}
+              {(learn_more || download_data || map_service || amazon_link) && (
+                <div className="ext-actions">
+                  {learn_more && (
+                    <Button theme="theme-button-medium" extLink={learn_more}>
                       LEARN MORE
-                  </Button>
-                )}
-                {download_data && (
-                  <Button theme="theme-button-medium" extLink={download_data}>
+                    </Button>
+                  )}
+                  {download_data && (
+                    <Button theme="theme-button-medium" extLink={download_data}>
                       DOWNLOAD DATA
-                  </Button>
-                )}
-                {(map_service || amazon_link) && (
-                  <Button
-                    theme="theme-button-medium"
-                    extLink={map_service || amazon_link}
-                  >
+                    </Button>
+                  )}
+                  {(map_service || amazon_link) && (
+                    <Button
+                      theme="theme-button-medium"
+                      extLink={map_service || amazon_link}
+                    >
                       OPEN IN ARCGIS
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  parseContent(html) {
-    return (
-      <div>
-        {ReactHtmlParser(html, {
-          transform: node =>
-            (node.name === 'a' ? (
-              <a
-                key={node.attribs.href}
-                href={node.attribs.href}
-                target="_blank"
-                rel="noopener"
-              >
-                {node.children[0].data}
-              </a>
-            ) : (
-              ''
-            ))
-        })}
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
       </div>
     );
   }

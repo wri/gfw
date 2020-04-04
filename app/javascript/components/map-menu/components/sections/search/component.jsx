@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { Media } from 'utils/responsive';
+
 import Dropdown from 'components/ui/dropdown';
 
 import DatasetsLocationsSearch from './components/datasets-locations';
@@ -12,11 +14,13 @@ import './styles.scss';
 
 class MapMenuSearch extends PureComponent {
   render() {
-    const { searchType, setMenuSettings, isDesktop } = this.props;
+    const { searchType, setMenuSettings } = this.props;
 
     return (
       <div className="c-map-menu-search">
-        {isDesktop && <h3>Search</h3>}
+        <Media greaterThanOrEqual="md">
+          <h3>Search</h3>
+        </Media>
         <div className="search-type">
           Search for a
           <Dropdown
@@ -26,22 +30,22 @@ class MapMenuSearch extends PureComponent {
             options={[
               {
                 label: 'dataset or location',
-                value: 'dataset'
+                value: 'dataset',
               },
               {
                 label: 'coordinates',
-                value: 'coords'
+                value: 'coords',
               },
               {
                 label: 'decimal degrees',
-                value: 'decimals'
+                value: 'decimals',
               },
               {
                 label: 'UTM coordinates',
-                value: 'utm'
-              }
+                value: 'utm',
+              },
             ]}
-            onChange={value => setMenuSettings({ searchType: value.value })}
+            onChange={(value) => setMenuSettings({ searchType: value.value })}
           />
         </div>
         {searchType === 'dataset' && (
@@ -67,7 +71,6 @@ MapMenuSearch.propTypes = {
   handleClickLocation: PropTypes.func,
   setMapSettings: PropTypes.func,
   loading: PropTypes.bool,
-  isDesktop: PropTypes.bool
 };
 
 export default MapMenuSearch;

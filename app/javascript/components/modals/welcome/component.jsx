@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import Checkbox from 'components/ui/checkbox';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import helpGreenIcon from 'assets/icons/help-green.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import helpGreenIcon from 'assets/icons/help-green.svg?sprite';
 
 import Modal from '../modal';
 
@@ -36,7 +36,7 @@ class ModalWelcome extends PureComponent {
               stepsKey: 'mapTour',
               force: true
             });
-            track('welcomeModal', { label: 'Tour' });
+            logEvent('welcomeModal', { label: 'Tour' });
           }}
         >
           <Icon className="guide-btn-icon" icon={helpGreenIcon} />
@@ -52,7 +52,7 @@ class ModalWelcome extends PureComponent {
             onClick={() => setShowMapPrompts(!showPrompts)}
           >
             <Checkbox className="prompts-checkbox" value={showPrompts} />
-            {'Show me tips'}
+            Show me tips
           </button>
         </p>
         {mapTourSteps &&
@@ -87,7 +87,7 @@ class ModalWelcome extends PureComponent {
         contentLabel="Welcome"
         onRequestClose={() => {
           setModalWelcome(false);
-          track('welcomeModal', { label: 'Close' });
+          logEvent('welcomeModal', { label: 'Close' });
         }}
         title="Welcome to the new Global Forest Watch map!"
         className="c-modal-welcome"

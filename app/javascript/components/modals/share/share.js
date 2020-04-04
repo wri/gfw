@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 import reducerRegistry from 'app/registry';
 
 import * as actions from './share-actions';
@@ -26,7 +26,7 @@ class ShareContainer extends PureComponent {
       alert('This browser does not support clipboard access'); // eslint-disable-line
     }
 
-    track(selected === 'link' ? 'shareCopyLink' : 'shareCopyEmbed', {
+    logEvent(selected === 'link' ? 'shareCopyLink' : 'shareCopyEmbed', {
       label: shareUrl
     });
   };

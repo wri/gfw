@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import Component from './component';
@@ -30,7 +30,7 @@ class DatasetsMenuContainer extends PureComponent {
     setMenuSettings({
       selectedCountries: [...selectedCountries.map(c => c.value), country.value]
     });
-    track('mapMenuAddCountry', {
+    logEvent('mapMenuAddCountry', {
       label: country.label
     });
   };

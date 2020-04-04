@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Modal from '../modal';
 
-import './video-styles.scss';
+import './styles.scss';
 
 class ModalVideo extends PureComponent {
   getContent() {
@@ -27,7 +27,7 @@ class ModalVideo extends PureComponent {
     const { open, setModalVideoClosed } = this.props;
     return (
       <Modal
-        isOpen={open}
+        isOpen={!!open}
         contentLabel="Video"
         onRequestClose={() => setModalVideoClosed()}
         customStyles={{
@@ -39,7 +39,7 @@ class ModalVideo extends PureComponent {
             boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
             backgroundColor: 'rgba(17, 55, 80, 0.4)',
             overflow: 'auto',
-            padding: 0
+            padding: 0,
           },
           content: {
             position: 'relative',
@@ -50,8 +50,8 @@ class ModalVideo extends PureComponent {
             bottom: 'auto',
             padding: '0',
             border: 'none',
-            borderRadius: 0
-          }
+            borderRadius: 0,
+          },
         }}
         className="c-modal-video"
       >
@@ -64,7 +64,7 @@ class ModalVideo extends PureComponent {
 ModalVideo.propTypes = {
   open: PropTypes.bool,
   setModalVideoClosed: PropTypes.func,
-  data: PropTypes.object
+  data: PropTypes.object,
 };
 
 export default ModalVideo;

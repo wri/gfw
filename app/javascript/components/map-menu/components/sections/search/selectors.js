@@ -39,14 +39,14 @@ const getDatasetWithUrlState = createSelector(
 const getFilteredDatasets = createSelector(
   [getDatasetWithUrlState, selectSearch, selectActiveLang],
   (datasets, search) =>
-    (search && datasets
+    search && datasets
       ? datasets.filter(
-        d =>
-          deburrUpper(d.name).includes(deburrUpper(search)) ||
+          d =>
+            deburrUpper(d.name).includes(deburrUpper(search)) ||
             deburrUpper(d.localeName).includes(deburrUpper(search)) ||
             deburrUpper(d.description).includes(deburrUpper(search))
-      )
-      : null)
+        )
+      : null
 );
 
 const getLocations = createSelector(

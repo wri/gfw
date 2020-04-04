@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 import ReactHtmlParser from 'react-html-parser';
 
 import SubnavMenu from 'components/subnav-menu';
@@ -31,7 +31,7 @@ class Explore extends PureComponent {
         active: section === 'topics',
         onClick: () => {
           setMenuSettings({ exploreType: 'topics' });
-          track('mapMenuExploreCategory', { label: 'Topics' });
+          logEvent('mapMenuExploreCategory', { label: 'Topics' });
         }
       },
       {
@@ -39,7 +39,7 @@ class Explore extends PureComponent {
         active: section === 'placesToWatch',
         onClick: () => {
           setMenuSettings({ exploreType: 'placesToWatch' });
-          track('mapMenuExploreCategory', { label: 'Places to watch' });
+          logEvent('mapMenuExploreCategory', { label: 'Places to watch' });
         }
       },
       {
@@ -47,7 +47,7 @@ class Explore extends PureComponent {
         active: section === 'stories',
         onClick: () => {
           setMenuSettings({ exploreType: 'stories' });
-          track('mapMenuExploreCategory', { label: 'Stories' });
+          logEvent('mapMenuExploreCategory', { label: 'Stories' });
         }
       }
     ];
@@ -122,7 +122,7 @@ class Explore extends PureComponent {
                               stepIndex: 0,
                               stepsKey: `topics${item.title}`
                             });
-                            track('mapMenuAddTopic', { label: item.title });
+                            logEvent('mapMenuAddTopic', { label: item.title });
                           }
                         })
                       }))

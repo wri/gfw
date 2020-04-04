@@ -8,7 +8,7 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 
-import locationIcon from 'assets/icons/location.svg';
+import locationIcon from 'assets/icons/location.svg?sprite';
 import './styles.scss';
 
 class DatasetsLocationsSearch extends PureComponent {
