@@ -7,9 +7,10 @@ import cx from 'classnames';
 import withRouter from 'utils/withRouter';
 import { MediaContextProvider } from 'utils/responsive';
 
+import { Header } from 'gfw-components';
+
 import Meta from 'layouts/meta';
 import NavLink from 'components/nav-link';
-import Header from 'components/header';
 import Footer from 'components/footer';
 import ContactUsModal from 'components/modals/contact-us';
 import ClimateModal from 'components/modals/climate';
@@ -65,20 +66,83 @@ class Layout extends React.Component {
     const { pathname, query } = router;
 
     return (
-      <MediaContextProvider>
-        <Meta
-          title={title}
-          description={description}
-          titleParams={titleParams}
-          descriptionParams={descriptionParams}
-          keywords={keywords}
-        />
-        {!hideHeader && (
-          <Header
-            setQueryToUrl={(searchQuery) => {
+      <div className="l-page">
+        <MediaContextProvider>
+          <Meta
+            title={title}
+            description={description}
+            titleParams={titleParams}
+            descriptionParams={descriptionParams}
+            keywords={keywords}
+          />
+          {!hideHeader && (
+            <Header
+              className="header"
+              setQueryToUrl={(searchQuery) => {
+                router.pushDynamic({
+                  pathname: '/search',
+                  query: { query: searchQuery },
+                });
+              }}
+              openContactUsModal={() => {
+                router.pushDynamic({
+                  pathname,
+                  query: { ...query, contactUs: true },
+                  hash:
+                    typeof window !== 'undefined' ? window.location.hash : null,
+                });
+              }}
+              loggedIn={loggedIn}
+              loggingIn={loggingIn}
+              NavLinkComponent={({ children, className, ...props }) => (
+                <NavLink {...props}>
+                  <a className={className}>{children}</a>
+                </NavLink>
+              )}
+            />
+          )}
+          <div className={cx('page-container', { 'full-screen': fullScreen })}>
+            {this.props.children}
+          </div>
+          {!hideFooter && !fullScreen && (
+            <Footer
+              NavLinkComponent={({ href, children, className }) => (
+                <NavLink href={href}>
+                  <a className={className}>{children}</a>
+                </NavLink>
+              )}
+              openContactUsModal={() => {
+                router.pushDynamic({
+                  pathname,
+                  query: { ...query, contactUs: true },
+                  hash:
+                    typeof window !== 'undefined' ? window.location.hash : null,
+                });
+              }}
+            />
+          )}
+          <Cookies onClose={() => logEvent('acceptCookies')} />
+          <ContactUsModal
+            open={!!query.contactUs}
+            onClose={() => {
+              delete query.contactUs;
               router.pushDynamic({
-                pathname: '/search',
-                query: { query: searchQuery },
+                pathname,
+                query,
+                hash:
+                  typeof window !== 'undefined' ? window.location.hash : null,
+              });
+            }}
+          />
+          <ClimateModal
+            open={!!query.gfwclimate}
+            onClose={() => {
+              delete query.gfwclimate;
+              router.pushDynamic({
+                pathname,
+                query,
+                hash:
+                  typeof window !== 'undefined' ? window.location.hash : null,
               });
             }}
             openContactUsModal={() => {
@@ -89,66 +153,9 @@ class Layout extends React.Component {
                   typeof window !== 'undefined' ? window.location.hash : null,
               });
             }}
-            loggedIn={loggedIn}
-            loggingIn={loggingIn}
-            NavLinkComponent={({ children, className, ...props }) => (
-              <NavLink {...props}>
-                <a className={className}>{children}</a>
-              </NavLink>
-            )}
           />
-        )}
-        <div className={cx('l-page', { 'full-screen': fullScreen })}>
-          {this.props.children}
-        </div>
-        {!hideFooter && !fullScreen && (
-          <Footer
-            NavLinkComponent={({ href, children, className }) => (
-              <NavLink href={href}>
-                <a className={className}>{children}</a>
-              </NavLink>
-            )}
-            openContactUsModal={() => {
-              router.pushDynamic({
-                pathname,
-                query: { ...query, contactUs: true },
-                hash:
-                  typeof window !== 'undefined' ? window.location.hash : null,
-              });
-            }}
-          />
-        )}
-        <Cookies onClose={() => logEvent('acceptCookies')} />
-        <ContactUsModal
-          open={!!query.contactUs}
-          onClose={() => {
-            delete query.contactUs;
-            router.pushDynamic({
-              pathname,
-              query,
-              hash: typeof window !== 'undefined' ? window.location.hash : null,
-            });
-          }}
-        />
-        <ClimateModal
-          open={!!query.gfwclimate}
-          onClose={() => {
-            delete query.gfwclimate;
-            router.pushDynamic({
-              pathname,
-              query,
-              hash: typeof window !== 'undefined' ? window.location.hash : null,
-            });
-          }}
-          openContactUsModal={() => {
-            router.pushDynamic({
-              pathname,
-              query: { ...query, contactUs: true },
-              hash: typeof window !== 'undefined' ? window.location.hash : null,
-            });
-          }}
-        />
-      </MediaContextProvider>
+        </MediaContextProvider>
+      </div>
     );
   }
 }
