@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 
 import * as actions from './latest-provider-actions';
-import { getLatestProps } from './latest-provider-selectors';
+import getLatestProps from './latest-provider-selectors';
 import reducers, { initialState } from './latest-provider-reducers';
 
 class LatestProvider extends PureComponent {
@@ -25,12 +25,12 @@ class LatestProvider extends PureComponent {
 
 LatestProvider.propTypes = {
   getLatest: PropTypes.func.isRequired,
-  latestEndpoints: PropTypes.array
+  latestEndpoints: PropTypes.array,
 };
 
 reducerRegistry.registerModule('latest', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 export default connect(getLatestProps, actions)(LatestProvider);

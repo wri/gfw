@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import { getActiveLayers } from 'components/map/selectors';
 
-const getLatestEndpoints = createSelector(getActiveLayers, layers => {
+const getLatestEndpoints = createSelector(getActiveLayers, (layers) => {
   if (!layers || !layers.length) return [];
   return (
     layers &&
@@ -13,17 +13,17 @@ const getLatestEndpoints = createSelector(getActiveLayers, layers => {
         (next.decodeParams && next.decodeParams.latestUrl);
       return latestUrl
         ? [
-          ...arr,
-          {
-            latestUrl,
-            id: next.id
-          }
-        ]
+            ...arr,
+            {
+              latestUrl,
+              id: next.id,
+            },
+          ]
         : arr;
     }, [])
   );
 });
 
-export const getLatestProps = createStructuredSelector({
-  latestEndpoints: getLatestEndpoints
+export default createStructuredSelector({
+  latestEndpoints: getLatestEndpoints,
 });

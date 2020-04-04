@@ -19,26 +19,26 @@ const adminSentences = {
     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
   countrySpecific: {
     IDN:
-      'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions. In 2010 {location} had {naturalForest} of natural forest**, extending over {percentageNatForest} of its land area. In <b>2018</b>, it lost {naturalLoss} of natural forest**, equivalent to {emissions} of CO₂ of emissions.'
+      'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions. In 2010 {location} had {naturalForest} of natural forest**, extending over {percentageNatForest} of its land area. In <b>2018</b>, it lost {naturalLoss} of natural forest**, equivalent to {emissions} of CO₂ of emissions.',
   },
   co2Emissions: ', equivalent to {emissions} of CO\u2082 of emissions.',
-  end: '.'
+  end: '.',
 };
 
-export const selectGeojson = state =>
+export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
-export const selectGeodescriber = state =>
+export const selectGeodescriber = (state) =>
   state.geodescriber && state.geodescriber.data;
-export const selectLoading = state =>
+export const selectLoading = (state) =>
   state.geodescriber && state.geodescriber.loading;
-export const selectCountryData = state =>
+export const selectCountryData = (state) =>
   state.countryData && {
     adm0: state.countryData.countries,
     adm1: state.countryData.regions,
-    adm2: state.countryData.subRegions
+    adm2: state.countryData.subRegions,
   };
 
-export const selectActiveLang = state =>
+export const selectActiveLang = (state) =>
   (state.location &&
     state.location &&
     state.location.query &&
@@ -48,25 +48,28 @@ export const selectActiveLang = state =>
 
 export const getAdm0Data = createSelector(
   [selectCountryData],
-  data => data && data.adm0
+  (data) => data && data.adm0
 );
 
 export const getAdm1Data = createSelector(
   [selectCountryData],
-  data => data && data.adm1
+  (data) => data && data.adm1
 );
 
 export const getAdm2Data = createSelector(
   [selectCountryData],
-  data => data && data.adm2
+  (data) => data && data.adm2
 );
 
 export const getAdminsSelected = createSelector(
   [getAdm0Data, getAdm1Data, getAdm2Data, getDataLocation],
   (adm0s, adm1s, adm2s, location) => {
-    const adm0 = (adm0s && adm0s.find(i => i.value === location.adm0)) || null;
-    const adm1 = (adm1s && adm1s.find(i => i.value === location.adm1)) || null;
-    const adm2 = (adm2s && adm2s.find(i => i.value === location.adm2)) || null;
+    const adm0 =
+      (adm0s && adm0s.find((i) => i.value === location.adm0)) || null;
+    const adm1 =
+      (adm1s && adm1s.find((i) => i.value === location.adm1)) || null;
+    const adm2 =
+      (adm2s && adm2s.find((i) => i.value === location.adm2)) || null;
     let current = adm0;
     if (location.adm2) {
       current = adm2;
@@ -78,7 +81,7 @@ export const getAdminsSelected = createSelector(
       ...current,
       adm0,
       adm1,
-      adm2
+      adm2,
     };
   }
 );
@@ -100,7 +103,7 @@ export const getGeodescriberTitle = createSelector(
       activeArea.userArea
     ) {
       return {
-        sentence: activeArea.name
+        sentence: activeArea.name,
       };
     }
 
@@ -108,25 +111,25 @@ export const getGeodescriberTitle = createSelector(
     if (!['global', 'country'].includes(location.type)) {
       return {
         sentence: geodescriber.title,
-        params: geodescriber.title_params
+        params: geodescriber.title_params,
       };
     }
 
     // if an admin we need to calculate the params
     return {
-      sentence: adminTitle
+      sentence: adminTitle,
     };
   }
 );
 
 export const getGeodescriberTitleFull = createSelector(
   [getGeodescriberTitle],
-  title => {
+  (title) => {
     if (isEmpty(title)) return null;
 
-    let sentence = title.sentence;
+    let { sentence } = title;
     if (title.params) {
-      Object.keys(title.params).forEach(p => {
+      Object.keys(title.params).forEach((p) => {
         sentence = sentence.replace(`{${p}}`, title.params[p]);
       });
     }
@@ -150,7 +153,7 @@ export const getAdminDescription = createSelector(
       globalInitial,
       countrySpecific,
       co2Emissions,
-      end
+      end,
     } = adminSentences;
     const {
       extent,
@@ -159,9 +162,8 @@ export const getAdminDescription = createSelector(
       totalArea,
       totalLoss,
       plantationsLoss,
-      primaryLoss
-    } =
-      data || {};
+      primaryLoss,
+    } = data || {};
     const { area, emissions, year } = totalLoss || {};
     const { area: areaPlantations, emissions: emissionsPlantations } =
       plantationsLoss || {};
@@ -179,12 +181,12 @@ export const getAdminDescription = createSelector(
         ? format('.3r')(primaryExtent)
         : format('.3s')(primaryExtent);
     const percentageCover =
-      extent && totalArea ? format('.2r')(extent / totalArea * 100) : 0;
+      extent && totalArea ? format('.2r')((extent / totalArea) * 100) : 0;
     const percentageNatForest = format('.2r')(
-      (extent - plantationsExtent) / totalArea * 100
+      ((extent - plantationsExtent) / totalArea) * 100
     );
     const percentagePrimaryForest = format('.2r')(
-      primaryExtent / totalArea * 100
+      (primaryExtent / totalArea) * 100
     );
     const naturalLoss = format('.3s')((area || 0) - (areaPlantations || 0));
     const emissionsNaturalForest = format('.3s')(
@@ -212,7 +214,7 @@ export const getAdminDescription = createSelector(
       year,
       treeCoverLoss: `${loss}ha`,
       primaryLoss: `${primaryLossFormatted}ha`,
-      naturalLoss: `${naturalLoss}ha`
+      naturalLoss: `${naturalLoss}ha`,
     };
 
     let sentence = adminSentences.default;
@@ -229,7 +231,7 @@ export const getAdminDescription = createSelector(
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -243,7 +245,7 @@ export const getGeodescriberDescription = createSelector(
     if (!['global', 'country'].includes(location.type)) {
       return {
         sentence: geodescriber.description,
-        params: geodescriber.description_params
+        params: geodescriber.description_params,
       };
     }
 
@@ -256,5 +258,5 @@ export const getGeodescriberProps = createStructuredSelector({
   loading: selectLoading,
   location: getDataLocation,
   geojson: selectGeojson,
-  lang: selectActiveLang
+  lang: selectActiveLang,
 });

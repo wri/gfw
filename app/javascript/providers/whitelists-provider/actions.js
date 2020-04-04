@@ -7,21 +7,21 @@ export const setWhitelistLoading = createAction('setWhitelistLoading');
 
 export const setWhitelist = createAction('setWhitelist');
 
-const parseWhitelist = whitelist =>
-  (whitelist
+const parseWhitelist = (whitelist) =>
+  whitelist
     ? Object.keys(whitelist).reduce(
-      (arr, item) => (whitelist[item] ? arr.concat(item) : arr),
-      []
-    )
-    : []);
+        (arr, item) => (whitelist[item] ? arr.concat(item) : arr),
+        []
+      )
+    : [];
 
 export const getWhitelist = createThunkAction(
   'getWhitelist',
-  params => dispatch => {
+  (params) => (dispatch) => {
     dispatch(setWhitelistLoading(true));
     all([
       getLocationPolynameWhitelist(params),
-      getLocationPolynameWhitelist({ ...params, glad: true })
+      getLocationPolynameWhitelist({ ...params, glad: true }),
     ])
       .then(
         spread((annualResponse, gladResponse) => {
@@ -35,12 +35,12 @@ export const getWhitelist = createThunkAction(
           dispatch(
             setWhitelist({
               annual: parseWhitelist(annual),
-              glad: parseWhitelist(glad)
+              glad: parseWhitelist(glad),
             })
           );
         })
       )
-      .catch(error => {
+      .catch((error) => {
         dispatch(setWhitelistLoading(false));
         console.info(error);
       });
