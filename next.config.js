@@ -11,7 +11,6 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const nextConfig = {
-  distDir: 'build',
   webpack: (config) => {
     config.resolve.alias.components = path.join(
       __dirname,
