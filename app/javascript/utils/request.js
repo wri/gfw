@@ -1,26 +1,27 @@
 import { CancelToken, create } from 'axios';
+import { GFW_API, CARTO_API } from 'utils/constants';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
-  baseURL: process.env.GFW_API
+  baseURL: GFW_API,
 });
 
 export const apiAuthRequest = create({
   timeout: 30 * 1000,
-  baseURL: process.env.GFW_API,
+  baseURL: GFW_API,
   headers: {
     'content-type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('userToken')}`
-  }
+    Authorization: `Bearer {token}`,
+  },
 });
 
 export const cartoRequest = create({
   timeout: 30 * 1000,
-  baseURL: process.env.CARTO_API
+  baseURL: CARTO_API,
 });
 
 export const cancelToken = () => CancelToken.source();
 
 export default create({
-  timeout: 30 * 1000
+  timeout: 30 * 1000,
 });
