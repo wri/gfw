@@ -11,20 +11,19 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const nextConfig = {
-  distDir: 'build',
   webpack: (config) => {
-    config.resolve.alias.components = path.join(__dirname, 'components');
-    config.resolve.alias.lib = path.join(__dirname, 'lib');
+    config.resolve.alias.components = path.join(__dirname, 'app/javascript/components');
+    config.resolve.alias.lib = path.join(__dirname, 'app/lib');
     config.resolve.alias.app = path.join(__dirname, 'app');
-    config.resolve.alias.layouts = path.join(__dirname, 'layouts');
+    config.resolve.alias.layouts = path.join(__dirname, 'app/javascript/pages');
     config.resolve.alias.pages = path.join(__dirname, 'pages');
-    config.resolve.alias.assets = path.join(__dirname, 'assets');
-    config.resolve.alias.analytics = path.join(__dirname, 'analytics');
-    config.resolve.alias.services = path.join(__dirname, 'services');
-    config.resolve.alias.utils = path.join(__dirname, 'utils');
-    config.resolve.alias.providers = path.join(__dirname, 'providers');
-    config.resolve.alias.styles = path.join(__dirname, 'styles');
-    config.resolve.alias.data = path.join(__dirname, 'data');
+    config.resolve.alias.assets = path.join(__dirname, 'app/assets');
+    config.resolve.alias.analytics = path.join(__dirname, 'app/javascript/analytics');
+    config.resolve.alias.services = path.join(__dirname, 'app/javascript/services');
+    config.resolve.alias.utils = path.join(__dirname, 'app/javascript/utils');
+    config.resolve.alias.providers = path.join(__dirname, 'app/javascript/providers');
+    config.resolve.alias.styles = path.join(__dirname, 'app/javascript/styles');
+    config.resolve.alias.data = path.join(__dirname, 'app/javascript/data');
     config.plugins = [
       ...config.plugins,
       new Dotenv({

@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import bgImage from 'pages/topics/assets/bg-leaf.jpeg';
-import bgImageLarge from 'pages/topics/assets/bg-leaf@2x.jpeg';
+import bgImage from 'layouts/topics/assets/bg-leaf.jpeg?webp';
 
 import Intro from './topics-intro';
 
@@ -16,14 +15,7 @@ import './styles.scss';
 
 class TopicsHeader extends PureComponent {
   render() {
-    const {
-      topics,
-      intro,
-      fullpageApi,
-      title,
-      handleSkipToTools,
-      isDesktop
-    } = this.props;
+    const { topics, intro, fullpageApi, title, handleSkipToTools } = this.props;
     return (
       <div className="c-topics-header">
         <div className="intro-top">
@@ -31,14 +23,13 @@ class TopicsHeader extends PureComponent {
             title="Topics"
             description="Explore the relationship between forests and several key themes critical to sustainability and the health of our
             future ecosystems."
-            bgImage={isDesktop ? bgImageLarge : bgImage}
+            bgImage={bgImage}
           />
           <SubnavMenu links={topics} theme="theme-subnav-dark" />
           <Intro
             className={title}
             intro={intro}
             handleSkipToTools={handleSkipToTools}
-            isDesktop={isDesktop}
           />
         </div>
         <div className="intro-bottom">
@@ -69,7 +60,6 @@ TopicsHeader.propTypes = {
   fullpageApi: PropTypes.object,
   title: PropTypes.string,
   handleSkipToTools: PropTypes.func,
-  isDesktop: PropTypes.bool
 };
 
 export default TopicsHeader;

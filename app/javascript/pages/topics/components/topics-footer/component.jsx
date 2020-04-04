@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
+import withRouter from 'utils/withRouter';
+import Link from 'next/link';
 
 import Footer from 'components/footer';
 import Carousel from 'components/ui/carousel';
@@ -10,8 +12,16 @@ import CountryDataProvider from 'providers/country-data-provider';
 import './styles.scss';
 
 class TopicsFooter extends PureComponent {
+  static propTypes = {
+    cards: PropTypes.array,
+    topic: PropTypes.string,
+    countries: PropTypes.array,
+    router: PropTypes.object,
+  };
+
   render() {
-    const { cards, topic, setModalContactUsOpen, countries } = this.props;
+    const { cards, topic, countries, router } = this.props;
+    const { pathname, query } = router;
 
     return (
       <div className="c-topics-footer">
@@ -24,7 +34,7 @@ class TopicsFooter extends PureComponent {
           <div className="column small-12">
             <Carousel>
               {cards &&
-                cards.map(c => (
+                cards.map((c) => (
                   <Card
                     key={c.title}
                     theme={c.theme}
@@ -38,47 +48,60 @@ class TopicsFooter extends PureComponent {
                             extLink: c.extLink,
                             onClick: () => {
                               if (c.id === 'feedback') {
-                                setModalContactUsOpen(true);
+                                router.pushDynamic({
+                                  pathname,
+                                  query: { ...query, contactUs: true },
+                                  hash:
+                                    typeof window !== 'undefined'
+                                      ? window.location.hash
+                                      : null,
+                                });
                               }
-                              track('topicsCardClicked', {
-                                label: `${topic}: ${c.title}`
+                              logEvent('topicsCardClicked', {
+                                label: `${topic}: ${c.title}`,
                               });
-                            }
-                          }
-                        ]
+                            },
+                          },
+                        ],
                       }),
                       ...(c.selector && {
                         selector: {
                           ...c.selector,
-                          options: c.selector.options.map(o => {
+                          options: c.selector.options.map((o) => {
                             const country =
                               countries &&
-                              countries.find(adm0 => adm0.value === o.value);
+                              countries.find((adm0) => adm0.value === o.value);
                             return {
                               ...o,
-                              label: country && country.label
+                              label: country && country.label,
                             };
-                          })
-                        }
-                      })
+                          }),
+                        },
+                      }),
                     }}
                   />
                 ))}
             </Carousel>
           </div>
         </div>
-        <Footer />
+        <Footer
+          NavLinkComponent={({ href, children, className }) => (
+            <Link href={href}>
+              <a className={className}>{children}</a>
+            </Link>
+          )}
+          openContactUsModal={() => {
+            router.pushDynamic({
+              pathname,
+              query: { ...query, contactUs: true },
+              hash: typeof window !== 'undefined' ? window.location.hash : null,
+            });
+          }}
+        />
         <CountryDataProvider />
       </div>
     );
   }
 }
 
-TopicsFooter.propTypes = {
-  cards: PropTypes.array,
-  topic: PropTypes.string,
-  setModalContactUsOpen: PropTypes.func,
-  countries: PropTypes.array
-};
-
-export default TopicsFooter;
+export default withRouter(TopicsFooter);

@@ -62,7 +62,8 @@ class ThankyouPage extends PureComponent {
                     change the features and functions of the Services, including
                     APIs, over time. It is Your responsibility to ensure that
                     Your use of the Services is compatible with the current
-                    version.{' '}
+                    version.
+                    {' '}
                   </li>
                 </ol>
               </li>
@@ -72,7 +73,8 @@ class ThankyouPage extends PureComponent {
                   <li>
                     In order to use many of the Services, You must register for
                     an account. WRI reserves the right to reject any account
-                    registration request, in its sole discretion.{' '}
+                    registration request, in its sole discretion.
+                    {' '}
                   </li>
                   <li>
                     When You request to open an account in the Global Forest
