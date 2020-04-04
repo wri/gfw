@@ -1,0 +1,86 @@
+// Don't delete this file without removing
+// public/trase-fonts directory
+// -trase class from app/layouts/root/styles.scss
+
+/* stylelint-disable */
+
+@font-face {
+  font-family: 'DecimaMonoPro';
+  font-weight: 400;
+  src:
+    url('/trase-fonts/DecimaMonoPro.woff2') format('woff2'),
+    url('/trase-fonts/DecimaMonoPro.woff') format('woff'),
+    url('/trase-fonts/DecimaMonoPro.otf') format('embedded-opentype'),
+    url('/trase-fonts/DecimaMonoPro.otf');
+}
+
+@font-face {
+  font-family: 'DecimaMonoPro';
+  font-weight: 700;
+  src:
+    url('/trase-fonts/DecimaMonoPro-Bold.woff2') format('woff2'),
+    url('/trase-fonts/DecimaMonoPro-Bold.woff') format('woff'),
+    url('/trase-fonts/DecimaMonoPro-Bold.otf') format('embedded-opentype'),
+    url('/trase-fonts/DecimaMonoPro-Bold.otf');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 300;
+  src: url('/trase-fonts/Merriweather-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 400;
+  src: url('/trase-fonts/Merriweather-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 700;
+  src: url('/trase-fonts/Merriweather-Bold.ttf');
+}
+
+$charcoal-grey: #34444c;
+$trase-font-family-1: 'DecimaMonoPro';
+$trase-font-family-2: 'Merriweather';
+
+// Custom class for TRASE/GFW integration
+// READ COMMENT FROM TOP
+.c-embed.-trase {
+  .c-widget-header {
+    .options {
+      display: none;
+    }
+
+    .title {
+      font-family: $trase-font-family-1;
+      font-weight: 700;
+      color: $charcoal-grey;
+    }
+  }
+
+  .container .sentence {
+    font-family: $trase-font-family-2;
+    color: $charcoal-grey;
+  }
+
+  text {
+    filter: none;
+    fill: $charcoal-grey;
+  }
+
+  .c-widget-footer {
+    display: flex;
+    justify-content: space-between;
+    font-family: $trase-font-family-2;
+    color: $charcoal-grey;
+    font-weight: 300;
+
+    a {
+      color: $charcoal-grey;
+      font-weight: 700;
+    }
+  }
+}

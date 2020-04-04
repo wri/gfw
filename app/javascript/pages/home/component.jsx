@@ -1,11 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
+import Link from 'redux-first-router-link';
 import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
 
-import NavLink from 'components/nav-link';
 import Cover from 'components/cover';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -14,12 +14,12 @@ import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 
-import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-import profileIcon from 'assets/icons/profile.svg?sprite';
-import mailIcon from 'assets/icons/mail.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg';
+import profileIcon from 'assets/icons/profile.svg';
+import mailIcon from 'assets/icons/mail.svg';
 
-import newsImage from './assets/news-bg.jpg?webp';
-import bgImage from './assets/home-bg.jpg?webp';
+import newsImage from './assets/news-bg.jpg';
+import bgImage from './assets/home-bg.jpg';
 import './styles.scss';
 
 class HomePage extends PureComponent {
@@ -29,14 +29,15 @@ class HomePage extends PureComponent {
     news: PropTypes.array,
     newsLoading: PropTypes.bool,
     uses: PropTypes.array.isRequired,
+    isDesktop: PropTypes.bool
   };
 
   state = {
-    showVideo: false,
+    showVideo: false
   };
 
   render() {
-    const { summary, uses, apps, news, newsLoading } = this.props;
+    const { summary, uses, apps, news, newsLoading, isDesktop } = this.props;
 
     return (
       <div className="l-home-page">
@@ -47,58 +48,55 @@ class HomePage extends PureComponent {
           bgImage={bgImage}
           large
         >
-          <Fragment>
-            <div className={cx('home-video', { show: this.state.showVideo })}>
-              <YouTube
-                videoId="0XsJNU75Si0"
-                opts={{
-                  height: '100%',
-                  width: '100%',
-                  playerVars: {
-                    autoplay: 1,
-                    autohide: 1,
-                    loop: 1,
-                    modestbranding: 1,
-                    rel: 0,
-                    showinfo: 0,
-                    controls: 0,
-                    disablekb: 1,
-                    enablejsapi: 0,
-                    iv_load_policy: 3,
-                  },
-                }}
-                onPlay={() =>
-                  setTimeout(() => this.setState({ showVideo: true }), 300)}
-                onEnd={() => this.setState({ showVideo: false })}
-              />
-            </div>
-            {this.state.showVideo && (
-              <Button
-                className="stop-video-btn"
-                onClick={() => {
-                  this.setState({ showVideo: false });
-                }}
-              >
-                STOP VIDEO
-              </Button>
-            )}
-            <NavLink href="/subscribe">
-              <a className="subscribe-btn">
+          {isDesktop && (
+            <Fragment>
+              <div className={cx('home-video', { show: this.state.showVideo })}>
+                <YouTube
+                  videoId="0XsJNU75Si0"
+                  opts={{
+                    height: '100%',
+                    width: '100%',
+                    playerVars: {
+                      autoplay: 1,
+                      autohide: 1,
+                      loop: 1,
+                      modestbranding: 1,
+                      rel: 0,
+                      showinfo: 0,
+                      controls: 0,
+                      disablekb: 1,
+                      enablejsapi: 0,
+                      iv_load_policy: 3
+                    }
+                  }}
+                  onPlay={() =>
+                    setTimeout(() => this.setState({ showVideo: true }), 300)
+                  }
+                  onEnd={() => this.setState({ showVideo: false })}
+                />
+              </div>
+              {this.state.showVideo && (
                 <Button
-                  theme="square"
-                  className="subscribe-icon"
-                  ariaLabel="subscribe"
+                  className="stop-video-btn"
+                  onClick={() => {
+                    this.setState({ showVideo: false });
+                  }}
                 >
+                  STOP VIDEO
+                </Button>
+              )}
+              <Link className="subscribe-btn" to="/subscribe">
+                <Button theme="square" className="subscribe-icon">
                   <Icon icon={mailIcon} />
                 </Button>
                 <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
-              </a>
-            </NavLink>
-          </Fragment>
+              </Link>
+            </Fragment>
+          )}
         </Cover>
         <div
           className="row"
-          ref={(ref) => {
+          ref={ref => {
             this.uses = ref;
           }}
         >
@@ -111,16 +109,15 @@ class HomePage extends PureComponent {
                   window.scrollTo({
                     behavior: 'smooth',
                     left: 0,
-                    top: this.uses.offsetTop,
+                    top: this.uses.offsetTop
                   });
                 }}
-                ariaLabel="scroll to summary"
               >
                 <Icon icon={arrowIcon} />
               </Button>
               {summary && (
                 <Carousel settings={{ dots: true }}>
-                  {summary.map((c) => (
+                  {summary.map(c => (
                     <Card
                       className="summary-card"
                       key={c.title}
@@ -144,15 +141,15 @@ class HomePage extends PureComponent {
                 dots: true,
                 arrows: false,
                 speed: 0,
-                customPaging: (i) => (
+                customPaging: i => (
                   <div className="use-user">
                     <Icon className="icon-user" icon={profileIcon} />
                     {uses[i].profile}
                   </div>
-                ),
+                )
               }}
             >
-              {uses.map((c) => (
+              {uses.map(c => (
                 <div className="row expanded uses" key={c.example}>
                   <div className="column small-12 medium-6">
                     <p className="use-example">
@@ -172,7 +169,7 @@ class HomePage extends PureComponent {
                         className="use-credit"
                         href={c.credit.extLink}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener nofollower"
                       >
                         {c.credit.name}
                       </a>
@@ -190,21 +187,20 @@ class HomePage extends PureComponent {
               className="apps-carousel"
               settings={{
                 slidesToShow: 1,
-                infinite: true,
-                lazyLoad: true,
+                infinite: true
               }}
             >
-              {apps.map((app) => (
+              {apps.map(app => (
                 <a
                   key={app.title}
                   href={app.extLink}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener nofollower"
                 >
                   <div
                     className="app-slide"
                     style={{
-                      backgroundColor: app.color,
+                      backgroundColor: app.color
                     }}
                   >
                     <div className="row apps">
@@ -219,7 +215,7 @@ class HomePage extends PureComponent {
                           <div
                             className="app-image"
                             style={{
-                              backgroundImage: `url(${app.background})`,
+                              backgroundImage: `url(${app.background})`
                             }}
                           />
                         </div>
@@ -234,7 +230,7 @@ class HomePage extends PureComponent {
         <div
           className="section-news"
           style={{
-            backgroundImage: `url(${newsImage})`,
+            backgroundImage: `url(${newsImage})`
           }}
         >
           <div className="row">
@@ -245,21 +241,21 @@ class HomePage extends PureComponent {
                 {!newsLoading && news ? (
                   <Carousel
                     settings={{
-                      slidesToShow: 3,
+                      slidesToShow: 3
                     }}
                   >
-                    {news.map((item) => (
+                    {news.map(item => (
                       <a
                         key={item.name}
                         href={item.link}
                         target="_blank"
                         className="news-card"
-                        rel="noopener noreferrer"
+                        rel="noopener nofollower"
                       >
                         <Card
                           data={{
                             title: item.name,
-                            summary: item.description,
+                            summary: item.description
                           }}
                         />
                       </a>
@@ -269,13 +265,13 @@ class HomePage extends PureComponent {
                   <NoContent className="no-news" message="No news available" />
                 )}
               </div>
-              <NavLink href="/my-gfw">
-                <a>
-                  <Button className="my-gfw-btn" theme="theme-button-light">
-                    My GFW
-                  </Button>
-                </a>
-              </NavLink>
+              <Button
+                className="my-gfw-btn"
+                theme="theme-button-light"
+                extLink="/my-gfw"
+              >
+                My GFW
+              </Button>
             </div>
           </div>
         </div>

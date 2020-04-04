@@ -1,8 +1,8 @@
 import { createStructuredSelector } from 'reselect';
 
 // get list data
-const selectUserData = (state) => state?.myGfw?.data;
+const selectUserData = state => state.myGfw && state.myGfw.data;
 
-export default createStructuredSelector({
-  userData: selectUserData,
+export const getUserProfleProps = createStructuredSelector({
+  userData: selectUserData
 });

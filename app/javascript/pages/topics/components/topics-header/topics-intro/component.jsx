@@ -1,26 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { logEvent } from 'app/analytics';
-
-import { Media } from 'utils/responsive';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import infoIcon from 'assets/icons/info.svg?sprite';
+import infoIcon from 'assets/icons/info.svg';
 import './styles.scss';
 
 class Intro extends PureComponent {
   render() {
-    const { intro, className, handleSkipToTools } = this.props;
+    const { intro, className, handleSkipToTools, isDesktop } = this.props;
     const { img1x, img2x, title, text, citation } = intro;
 
     return (
       <div className={cx('c-topics-intro', className)}>
         <div className="row titleRow">
           <div className="column small-12 medium-6 titleCol">
-            <Media greaterThanOrEqual="md">
+            {isDesktop && (
               <div className="intro-img">
                 <img
                   srcSet={`${img1x} 2x, ${img2x} 1x,`}
@@ -28,7 +26,7 @@ class Intro extends PureComponent {
                   alt={title}
                 />
               </div>
-            </Media>
+            )}
           </div>
           <div className="column small-12 medium-6 titleCol">
             <h1 className="intro-title">{title}</h1>
@@ -37,10 +35,9 @@ class Intro extends PureComponent {
                 className="citation-link"
                 href={citation}
                 target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => {
-                  logEvent('topicsCitation', {
-                    label: title,
+                  track('topicsCitation', {
+                    label: title
                   });
                 }}
               >
@@ -53,17 +50,17 @@ class Intro extends PureComponent {
           <div className="column small-12 medium-6" />
           <div className="column small-12 medium-6">
             <p className="intro-text">{text}</p>
-            <Media greaterThanOrEqual="md">
+            {isDesktop && (
               <Button
                 theme="theme-button-light skip-to-tools"
                 onClick={handleSkipToTools}
               >
                 Related tools
               </Button>
-            </Media>
+            )}
           </div>
         </div>
-        <Media lessThan="md">
+        {!isDesktop && (
           <div className="intro-img">
             <img
               srcSet={`${img1x} 2x, ${img2x} 1x,`}
@@ -71,7 +68,7 @@ class Intro extends PureComponent {
               alt={title}
             />
           </div>
-        </Media>
+        )}
       </div>
     );
   }
@@ -81,6 +78,7 @@ Intro.propTypes = {
   intro: PropTypes.object,
   className: PropTypes.string,
   handleSkipToTools: PropTypes.func,
+  isDesktop: PropTypes.bool
 };
 
 export default Intro;

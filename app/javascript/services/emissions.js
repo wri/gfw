@@ -1,8 +1,6 @@
 import request from 'utils/request';
 
-import { CLIMATE_WATCH_API } from 'utils/constants';
-
-const REQUEST_URL = `${CLIMATE_WATCH_API}/emissions`;
+const REQUEST_URL = `${process.env.CLIMATE_WATCH_API}/emissions`;
 
 const QUERIES = {
   meta: '/meta',

@@ -1,6 +1,6 @@
 import request from 'utils/request';
 
-import { TRASE_API } from 'utils/constants';
+const { TRASE_API } = process.env;
 
 export const fetchTraseContexts = () => request.get(`${TRASE_API}/contexts`);
 

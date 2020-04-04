@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { logEvent } from 'app/analytics';
+import { track } from 'app/analytics';
 
-import { Media } from 'utils/responsive';
+import MediaQuery from 'react-responsive';
+import { SCREEN_M } from 'utils/constants';
 
 import Button from 'components/ui/button';
 
@@ -11,17 +12,20 @@ import TopicsHeader from './components/topics-header';
 import TopicsFooter from './components/topics-footer';
 import TopicsSlide from './components/topics-slide';
 
+import scrollOverflow from './vendors/scrolloverflow.min';
 import './styles.scss';
 
 const anchors = ['intro', 'slides', 'footer'];
+const pluginWrapper = () => ({
+  scrollOverflow
+});
 
 class TopicsPage extends PureComponent {
   state = {
     skip: false,
     slideLeaving: 0,
     leaving: false,
-    showRelated:
-      typeof window !== 'undefined' && window.location.hash.includes('slides'),
+    showRelated: window.location.hash.includes('slides')
   };
 
   componentDidUpdate(prevProps) {
@@ -37,10 +41,7 @@ class TopicsPage extends PureComponent {
   };
 
   handleLeave = (origin, destination, direction) => {
-    const location =
-      typeof window !== 'undefined' &&
-      window.location.hash &&
-      window.location.hash.split('/');
+    const location = window.location.hash && window.location.hash.split('/');
     const slide =
       (location && location.length > 1 && parseInt(location[1], 10)) || 0;
 
@@ -62,8 +63,11 @@ class TopicsPage extends PureComponent {
     if (direction === 'down' && origin.anchor === 'slides' && slide !== 3) {
       this.fullpageApi.moveSlideRight();
       return false;
-    }
-    if (direction === 'up' && origin.anchor === 'slides' && slide !== 0) {
+    } else if (
+      direction === 'up' &&
+      origin.anchor === 'slides' &&
+      slide !== 0
+    ) {
       this.fullpageApi.moveSlideLeft();
       return false;
     }
@@ -93,12 +97,12 @@ class TopicsPage extends PureComponent {
     this.handleSetLeaving();
   };
 
-  handleSkipToTools = (source) => {
+  handleSkipToTools = source => {
     this.setState({ skip: true }, () => {
       this.fullpageApi.moveTo('footer');
     });
-    logEvent('topicsRelatedTools', {
-      label: source,
+    track('topicsRelatedTools', {
+      label: source
     });
   };
 
@@ -106,103 +110,89 @@ class TopicsPage extends PureComponent {
     this.setState({ leaving: true });
     setTimeout(() => {
       this.setState({
-        leaving: false,
+        leaving: false
       });
     }, 500);
   };
 
-  renderFullPageContent = (fullpageApi, isDesktop) => {
+  render() {
     const { links, topicData, title } = this.props;
     const { cards, slides, intro } = topicData || {};
 
     return (
-      <ReactFullpage.Wrapper>
-        <div className="topic-header section">
-          <TopicsHeader
-            topics={links}
-            intro={intro}
-            fullpageApi={fullpageApi}
-            title={title}
-            handleSkipToTools={() => this.handleSkipToTools('intro')}
-          />
-        </div>
-        <div className="topic-slides section">
-          {slides &&
-            slides.map((s, index) => (
-              <TopicsSlide
-                key={s.subtitle}
-                {...s}
-                index={index}
-                isLeaving={this.state.slideLeaving === index}
-                isLast={index === 3}
-                handleSkipToTools={() =>
-                  this.handleSkipToTools(`${s.title}: ${s.subtitle}`)}
-                leaving={this.state.leaving}
-                isDesktop={isDesktop}
-              />
-            ))}
-        </div>
-        <div className="topic-footer section">
-          <TopicsFooter cards={cards} topic={title} />
-        </div>
-      </ReactFullpage.Wrapper>
-    );
-  };
-
-  render() {
-    return (
-      <div className="l-topics-page">
-        {this.state.showRelated && (
-          <Media lessThan="md">
-            <div className="related-tools-btn">
-              <Button
-                theme="theme-button-light"
-                onClick={() => {
-                  this.fullpageApi.moveSectionDown();
-                }}
-              >
-                Related Tools
-              </Button>
-            </div>
-          </Media>
+      <MediaQuery minWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className="l-topics-page">
+            {!isDesktop &&
+              this.state.showRelated && (
+                <div className="related-tools-btn">
+                  <Button
+                    theme="theme-button-light"
+                    onClick={() => {
+                      this.fullpageApi.moveSectionDown();
+                    }}
+                  >
+                    Related Tools
+                  </Button>
+                </div>
+              )}
+            <ReactFullpage
+              licenseKey={process.env.FULLPAGE_LICENSE}
+              pluginWrapper={pluginWrapper}
+              scrollOverflow
+              anchors={anchors}
+              animateAnchor={false}
+              slidesNavigation={isDesktop}
+              onLeave={isDesktop ? this.handleLeave : this.handleMobileLeave}
+              onSlideLeave={this.handleSlideLeave}
+              controlArrows={false}
+              render={({ fullpageApi }) => {
+                if (!this.fullpageApi) {
+                  this.fullpageApi = fullpageApi;
+                }
+                return (
+                  <ReactFullpage.Wrapper>
+                    <div className="topic-header section">
+                      <TopicsHeader
+                        topics={links}
+                        intro={intro}
+                        fullpageApi={fullpageApi}
+                        title={title}
+                        handleSkipToTools={() =>
+                          this.handleSkipToTools('intro')
+                        }
+                        isDesktop={isDesktop}
+                      />
+                    </div>
+                    <div className="topic-slides section">
+                      {slides &&
+                        slides.map((s, index) => (
+                          <TopicsSlide
+                            key={s.subtitle}
+                            {...s}
+                            index={index}
+                            isDesktop={isDesktop}
+                            isLeaving={this.state.slideLeaving === index}
+                            isLast={index === 3}
+                            handleSkipToTools={() =>
+                              this.handleSkipToTools(
+                                `${s.title}: ${s.subtitle}`
+                              )
+                            }
+                            leaving={this.state.leaving}
+                          />
+                        ))}
+                    </div>
+                    <div className="topic-footer section">
+                      <TopicsFooter cards={cards} topic={title} />
+                    </div>
+                  </ReactFullpage.Wrapper>
+                );
+              }}
+            />
+          </div>
         )}
-        <Media greaterThanOrEqual="md">
-          <ReactFullpage
-            licenseKey={process.env.FULLPAGE_LICENSE}
-            scrollOverflow
-            anchors={anchors}
-            animateAnchor={false}
-            onLeave={this.handleLeave}
-            onSlideLeave={this.handleSlideLeave}
-            controlArrows={false}
-            render={({ fullpageApi }) => {
-              if (!this.fullpageApi) {
-                this.fullpageApi = fullpageApi;
-              }
-
-              return this.renderFullPageContent(fullpageApi, true);
-            }}
-          />
-        </Media>
-        <Media lessThan="md">
-          <ReactFullpage
-            licenseKey={process.env.FULLPAGE_LICENSE}
-            scrollOverflow
-            anchors={anchors}
-            animateAnchor={false}
-            onLeave={this.handleMobileLeave}
-            onSlideLeave={this.handleSlideLeave}
-            controlArrows={false}
-            render={({ fullpageApi }) => {
-              if (!this.fullpageApi) {
-                this.fullpageApi = fullpageApi;
-              }
-
-              return this.renderFullPageContent(fullpageApi);
-            }}
-          />
-        </Media>
-      </div>
+      </MediaQuery>
     );
   }
 }
@@ -210,7 +200,7 @@ class TopicsPage extends PureComponent {
 TopicsPage.propTypes = {
   links: PropTypes.array.isRequired,
   topicData: PropTypes.object,
-  title: PropTypes.string,
+  title: PropTypes.string
 };
 
 export default TopicsPage;

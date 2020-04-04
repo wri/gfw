@@ -24,7 +24,7 @@ export const getLatest = createThunkAction(
               responses &&
               responses.reduce((obj, response, index) => {
                 const latestResponse = response.data.data || response.data;
-                let { date } = latestResponse;
+                let date = latestResponse.date;
                 if (!date) {
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes

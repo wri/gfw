@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import withRouter from 'utils/withRouter';
 
 import Biodiversity from './config/biodiversity';
 import Commodities from './config/commodities';
@@ -12,44 +11,21 @@ const contents = {
   biodiversity: Biodiversity,
   commodities: Commodities,
   climate: Climate,
-  water: Water,
+  water: Water
 };
 
-const sections = {
-  biodiversity: {
-    label: 'Biodiversity',
-    component: 'biodiversity',
-    path: '/topics/biodiversity',
-  },
-  climate: {
-    label: 'Climate',
-    component: 'climate',
-    path: '/topics/climate',
-  },
-  commodities: {
-    label: 'Commodities',
-    component: 'commodities',
-    path: '/topics/commodities',
-  },
-  water: {
-    label: 'Water',
-    component: 'water',
-    path: '/topics/water',
-  },
-};
-
-const mapStateToProps = (state, { router }) => ({
-  title: router?.query?.topic || 'biodiversity',
-  section: sections && sections[router?.query?.topic || 'biodiversity'],
-  topicData: contents[router?.query?.topic] || contents.biodiversity,
+const mapStateToProps = ({ location }, { sections }) => ({
+  title: location.payload.tab || 'biodiversity',
+  section:
+    location && sections && sections[location.payload.tab || 'biodiversity'],
+  topicData:
+    (location && contents[location.payload.tab]) || contents.biodiversity,
   links: sections
-    ? Object.values(sections).map((r) => ({
-        label: r.label,
-        href: '/topics/[topic]',
-        as: `/topics/${r.component}`,
-        activeShallow: !router?.query?.topic && r.component === 'biodiversity',
-      }))
+    ? Object.values(sections)
+      .filter(r => r.submenu)
+      .map(r => ({ label: r.label, path: r.path }))
     : [],
+  location
 });
 
-export default withRouter(connect(mapStateToProps)(PageComponent));
+export default connect(mapStateToProps)(PageComponent);

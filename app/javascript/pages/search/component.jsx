@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
-import { logPageView } from 'app/analytics';
-import { Media } from 'utils/responsive';
+import { handlePageTrack } from 'app/analytics';
 
-import treeImage from 'assets/icons/error.svg?sprite';
+import treeImage from 'assets/icons/error.svg';
 import Search from 'components/ui/search';
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
@@ -14,16 +13,8 @@ import Icon from 'components/ui/icon';
 import './styles.scss';
 
 class SearchPage extends PureComponent {
-  static propTypes = {
-    query: PropTypes.string,
-    data: PropTypes.array,
-    loading: PropTypes.bool,
-    getSearch: PropTypes.func,
-    router: PropTypes.object,
-  };
-
   state = {
-    search: this.props.query || '',
+    search: this.props.query || ''
   };
 
   componentDidMount() {
@@ -33,19 +24,18 @@ class SearchPage extends PureComponent {
     }
   }
 
-  handleSearchChange = (search) => {
+  handleSearchChange = search => {
     this.setState({ search });
     this.fetchSearchResults(search);
   };
 
-  fetchSearchResults = debounce((query) => {
-    this.props.router.push({ pathname: '/search', query: { query } });
+  fetchSearchResults = debounce(query => {
     this.props.getSearch({ query, page: 1 });
-    logPageView();
+    handlePageTrack(true);
   }, 300);
 
   render() {
-    const { data, loading } = this.props;
+    const { data, isDesktop, loading } = this.props;
 
     return (
       <div className="l-search-page">
@@ -70,7 +60,7 @@ class SearchPage extends PureComponent {
                 {!loading &&
                   data &&
                   !!data.length &&
-                  data.map((item) => (
+                  data.map(item => (
                     <div
                       key={`${item.title}-${item.cacheId}`}
                       className="search-item"
@@ -79,35 +69,30 @@ class SearchPage extends PureComponent {
                         <a
                           href={item.link}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="noopener nofollower"
                           className="notranslate"
                         >
                           <h3>{item.title}</h3>
                         </a>
                         <p className="notranslate">{item.snippet}</p>
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Button theme="theme-button-light">MORE</Button>
-                        </a>
+                        <Button theme="theme-button-light" extLink={item.link}>
+                          MORE
+                        </Button>
                       </div>
-                      <Media greaterThanOrEqual="md">
+                      {isDesktop && (
                         <div
                           className="item-image"
                           style={{
-                            backgroundImage: `url(${
-                              item.pagemap &&
+                            backgroundImage: `url(${item.pagemap &&
                               item.pagemap.cse_image &&
-                              item.pagemap.cse_image[0].src
-                            })`,
+                              item.pagemap.cse_image[0].src})`
                           }}
                         />
-                      </Media>
+                      )}
                     </div>
                   ))}
-                {!loading && (!data || data.length === 0) && (
+                {!loading &&
+                  (!data || data.length === 0) && (
                   <div className="no-results">
                     {this.state.search && (
                       <Icon icon={treeImage} className="error-tree" />
@@ -127,5 +112,13 @@ class SearchPage extends PureComponent {
     );
   }
 }
+
+SearchPage.propTypes = {
+  query: PropTypes.string,
+  data: PropTypes.array,
+  isDesktop: PropTypes.bool,
+  loading: PropTypes.bool,
+  getSearch: PropTypes.func
+};
 
 export default SearchPage;

@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.c-embed {
+  display: flex;
+
+  .widget-wrapper {
+    width: 100%;
+  }
+}

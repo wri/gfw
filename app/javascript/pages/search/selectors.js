@@ -1,11 +1,13 @@
 import { createStructuredSelector } from 'reselect';
 
-const selectSearchData = (state) => state?.search?.data;
-const selectSearchLoading = (state) => state?.search?.loading;
-const selectQuery = (state, props) => props?.router?.query?.query;
+// get list data
+const selectQuery = state =>
+  state.location && state.location.query && state.location.query.query;
+const selectSearchData = state => state.search && state.search.data;
+const selectSearchLoading = state => state.search && state.search.loading;
 
-export default createStructuredSelector({
-  data: selectSearchData,
-  loading: selectSearchLoading,
+export const getSearchProps = createStructuredSelector({
   query: selectQuery,
+  data: selectSearchData,
+  loading: selectSearchLoading
 });

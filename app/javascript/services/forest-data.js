@@ -2,7 +2,7 @@ import { cartoRequest } from 'utils/request';
 
 import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 
-import { CARTO_API } from 'utils/constants';
+const CARTO_API = process.env.CARTO_API;
 
 const NEW_SQL_QUERIES = {
   faoExtent:
