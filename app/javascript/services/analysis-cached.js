@@ -5,6 +5,7 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
+import { GFW_API } from 'utils/constants';
 import { getIndicator } from 'utils/format';
 
 const {
@@ -158,7 +159,7 @@ const buildPolynameSelects = nonTable => {
 
 const getRequestUrl = ({ glad, ...params }) => {
   const dataset = glad ? getGladDatasetId(params) : getAnnualDataset(params);
-  const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
+  const REQUEST_URL = `${GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
 
@@ -194,26 +195,26 @@ export const getWHEREQuery = params => {
 
       const polynameString = `
         ${
-  isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
-}${
-  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
-}${
-  isPolyname &&
-        polynameMeta &&
-        !tableKey.includes('is__') &&
-        polynameMeta.default &&
-        polynameMeta.categories
-    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
-      polynameMeta.default
-    }'`
-    : ''
-}${
-  !isPolyname
-    ? `${paramKey} = ${
-      typeof value === 'number' || p !== 'adm0' ? value : `'${value}'`
-    }`
-    : ''
-}${isLast ? '' : ' AND '}`;
+          isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
+        }${
+          isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
+        }${
+          isPolyname &&
+                polynameMeta &&
+                !tableKey.includes('is__') &&
+                polynameMeta.default &&
+                polynameMeta.categories
+            ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
+              polynameMeta.default
+            }'`
+            : ''
+        }${
+          !isPolyname
+            ? `${paramKey} = ${
+              typeof value === 'number' || p !== 'adm0' ? value : `'${value}'`
+            }`
+            : ''
+        }${isLast ? '' : ' AND '}`;
 
       paramString = paramString.concat(polynameString);
     });

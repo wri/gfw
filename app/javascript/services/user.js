@@ -1,18 +1,18 @@
 import { apiRequest, apiAuthRequest } from 'utils/request';
 
-export const setUserToken = token => {
-  localStorage.setItem('userToken', token);
-  apiAuthRequest.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    'userToken'
-  )}`;
+export const setUserToken = (token) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('userToken', token);
+    apiAuthRequest.defaults.headers.Authorization = `Bearer ${token}`;
+  }
 };
 
-export const login = formData =>
+export const login = (formData) =>
   apiRequest({
     method: 'POST',
     url: '/auth/login',
-    data: formData
-  }).then(response => {
+    data: formData,
+  }).then((response) => {
     if (response.status < 400 && response.data) {
       const { data: userData } = response.data;
       setUserToken(userData.token);
@@ -21,29 +21,38 @@ export const login = formData =>
     return response;
   });
 
-export const register = formData =>
+export const register = (formData) =>
   apiRequest.post('/auth/sign-up', { ...formData, apps: ['gfw'] });
 
-export const resetPassword = formData =>
+export const resetPassword = (formData) =>
   apiRequest.post('/auth/reset-password', formData);
 
 export const updateProfile = (id, data) =>
   apiAuthRequest({
     method: 'PATCH',
     data,
-    url: `/user/${id}`
+    url: `/user/${id}`,
   });
 
-export const checkLoggedIn = () => apiAuthRequest.get('/auth/check-logged');
+export const checkLoggedIn = (token) => {
+  if (
+    token &&
+    apiAuthRequest.defaults.headers.Authorization === 'Bearer {token}'
+  ) {
+    setUserToken(token);
+  }
 
-export const getProfile = id => apiAuthRequest.get(`/user/${id}`);
+  return apiAuthRequest.get('/auth/check-logged');
+};
+
+export const getProfile = (id) => apiAuthRequest.get(`/user/${id}`);
 
 export const logout = () =>
-  apiAuthRequest.get('/auth/logout').then(response => {
+  apiAuthRequest.get('/auth/logout').then((response) => {
     if (response.status < 400) {
-      localStorage.removeItem('userToken');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('userToken');
+      }
       window.location.reload();
-    } else {
-      console.warn('Failed to logout');
     }
   });
