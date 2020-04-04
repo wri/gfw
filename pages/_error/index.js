@@ -1,0 +1,44 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import Layout from 'layouts/page';
+import ConfirmationMessage from 'components/confirmation-message';
+
+import './styles.scss';
+
+function Error({ statusCode }) {
+  return (
+    <Layout
+      title={
+        `An error ${statusCode} occurred` ||
+        "We're sorry, something went wrong."
+      }
+      description="Try refreshing the page or check your connection."
+    >
+      <div className="l-error-page">
+        <div className="row">
+          <div className="column small-12 medium-8 medium-offset-2">
+            <ConfirmationMessage
+              title={
+                `An error ${statusCode} occurred` ||
+                "We're sorry, something went wrong."
+              }
+              description="Try refreshing the page or check your connection."
+              error
+            />
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+}
+
+Error.getInitialProps = ({ res, err }) => ({
+  statusCode: (res && res.statusCode) || (err && err.statusCode) || 404,
+});
+
+Error.propTypes = {
+  statusCode: PropTypes.number,
+};
+
+export default Error;
