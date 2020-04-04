@@ -13,12 +13,12 @@ const getLatestEndpoints = createSelector(getActiveLayers, layers => {
         (next.decodeParams && next.decodeParams.latestUrl);
       return latestUrl
         ? [
-          ...arr,
-          {
-            latestUrl,
-            id: next.id
-          }
-        ]
+            ...arr,
+            {
+              latestUrl,
+              id: next.id
+            }
+          ]
         : arr;
     }, [])
   );

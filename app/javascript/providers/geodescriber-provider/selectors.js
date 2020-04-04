@@ -124,7 +124,7 @@ export const getGeodescriberTitleFull = createSelector(
   title => {
     if (isEmpty(title)) return null;
 
-    let sentence = title.sentence;
+    let { sentence } = title;
     if (title.params) {
       Object.keys(title.params).forEach(p => {
         sentence = sentence.replace(`{${p}}`, title.params[p]);

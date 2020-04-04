@@ -1,8 +1,8 @@
 import request from 'utils/request';
 
-const REQUEST_URL = `${
-  process.env.BITLY_API_URL
-}/shorten?longUrl={url}&login={login}&apiKey={apiKey}`;
+import { BITLY_API_URL } from 'utils/constants';
+
+const REQUEST_URL = `${BITLY_API_URL}/shorten?longUrl={url}&login={login}&apiKey={apiKey}`;
 const USERNAME = process.env.BITLY_USER;
 const API_KEY = process.env.BITLY_API_KEY;
 
@@ -13,3 +13,5 @@ export const getShortenUrl = longUrl => {
     .replace('{apiKey}', API_KEY);
   return request.get(url);
 };
+
+export default getShortenUrl;

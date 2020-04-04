@@ -1,6 +1,8 @@
 import request from 'utils/request';
 import range from 'lodash/range';
 
+import { CARTO_API } from 'utils/constants';
+
 const INDICATORS = [
   3110, // (Carbon) Young Secondary Forest
   3111, // (Carbon) Mid-Age Secondary Forests
@@ -37,7 +39,7 @@ const SQL_QUERIES = {
 
 export const getEmissions = ({ threshold, adm0, download }) =>
   INDICATORS.map(indicator => {
-    const url = `${process.env.CARTO_API}/sql?q=${SQL_QUERIES.emissions}`;
+    const url = `${CARTO_API}/sql?q=${SQL_QUERIES.emissions}`;
     const newUrl = url
       .replace('{indicator}', indicator)
       .replace('{threshold}', threshold || 0)
@@ -108,7 +110,7 @@ export const getBiomassRanking = ({
       .replace('{adm1}', adm1)
       .replace('{threshold}', threshold);
   }
-  const url = `${process.env.CARTO_API}/sql?q=${query}`;
+  const url = `${CARTO_API}/sql?q=${query}`;
 
   if (download) {
     return {
@@ -141,7 +143,7 @@ export const getSoilOrganicCarbon = ({ adm0, adm1, adm2, download }) => {
       .replace('{adm0}', adm0)
       .replace('{adm1}', adm1);
   }
-  const url = `${process.env.CARTO_API}/sql?q=${query}`;
+  const url = `${CARTO_API}/sql?q=${query}`;
 
   if (download) {
     return {

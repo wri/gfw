@@ -53,7 +53,7 @@ export const getColorBucket = (buckets, value) =>
 
 export const flattenObj = (target, opts = {}) => {
   const delimiter = opts.delimiter || '.';
-  const maxDepth = opts.maxDepth;
+  const { maxDepth } = opts;
   const output = {};
 
   const step = (object, prev, currentDepth = 1) => {

@@ -5,6 +5,7 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
+import { GFW_API } from 'utils/constants';
 import { getIndicator } from 'utils/format';
 
 const {
@@ -37,17 +38,17 @@ const {
 
 const SQL_QUERIES = {
   loss:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY treecover_loss__year ORDER BY treecover_loss__year',
+    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY treecover_loss__year ORDER BY treecover_loss__year',
   lossTsc:
-    'SELECT tcs_driver__type, treecover_loss__year, SUM(treecover_loss__ha) AS treecover_loss__ha, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY tcs_driver__type, treecover_loss__year',
+    'SELECT tcs_driver__type, treecover_loss__year, SUM(treecover_loss__ha) AS treecover_loss__ha, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg FROM data {WHERE} GROUP BY tcs_driver__type, treecover_loss__year',
   lossGrouped:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY treecover_loss__year, {location} ORDER BY treecover_loss__year, {location}',
+    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY treecover_loss__year, {location} ORDER BY treecover_loss__year, {location}',
   extent:
     'SELECT SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
     'SELECT {location}, SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha FROM data {WHERE}',
   gainGrouped:
     'SELECT {location}, SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
@@ -158,7 +159,7 @@ const buildPolynameSelects = nonTable => {
 
 const getRequestUrl = ({ glad, ...params }) => {
   const dataset = glad ? getGladDatasetId(params) : getAnnualDataset(params);
-  const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
+  const REQUEST_URL = `${GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
 
@@ -194,26 +195,26 @@ export const getWHEREQuery = params => {
 
       const polynameString = `
         ${
-  isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
-}${
-  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
-}${
-  isPolyname &&
+          isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
+        }${
+        isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
+      }${
+        isPolyname &&
         polynameMeta &&
         !tableKey.includes('is__') &&
         polynameMeta.default &&
         polynameMeta.categories
-    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
-      polynameMeta.default
-    }'`
-    : ''
-}${
-  !isPolyname
-    ? `${paramKey} = ${
-      typeof value === 'number' || p !== 'adm0' ? value : `'${value}'`
-    }`
-    : ''
-}${isLast ? '' : ' AND '}`;
+          ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
+              polynameMeta.default
+            }'`
+          : ''
+      }${
+        !isPolyname
+          ? `${paramKey} = ${
+              typeof value === 'number' || p !== 'adm0' ? value : `'${value}'`
+            }`
+          : ''
+      }${isLast ? '' : ' AND '}`;
 
       paramString = paramString.concat(polynameString);
     });

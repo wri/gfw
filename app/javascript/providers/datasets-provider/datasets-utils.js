@@ -19,12 +19,12 @@ export const reduceParams = params => {
       [key]: paramValue,
       ...(key === 'endDate' &&
         param.url && {
-        latestUrl: param.url
-      }),
+          latestUrl: param.url
+        }),
       ...(key === 'date' &&
         param.format && {
-        latestFormat: param.format
-      })
+          latestFormat: param.format
+        })
     };
     return newObj;
   }, {});

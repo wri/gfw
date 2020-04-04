@@ -14,11 +14,11 @@ const setAreaLocation = area => {
     adm0: geostore,
     ...(admin &&
       admin.adm0 && {
-      type: 'country',
-      adm0: admin.adm0,
-      adm1: admin.adm1,
-      adm2: admin.adm2
-    }),
+        type: 'country',
+        adm0: admin.adm0,
+        adm1: admin.adm1,
+        adm2: admin.adm2
+      }),
     ...(wdpaid && {
       type: 'wdpa',
       adm0: wdpaid

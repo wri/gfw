@@ -3,9 +3,11 @@ import moment from 'moment';
 import { all, spread } from 'axios';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
-const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
-const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
-const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
+import { GFW_API } from 'utils/constants';
+
+const { FIRES_ISO_DATASET } = process.env;
+const { FIRES_ADM1_DATASET } = process.env;
+const { FIRES_ADM2_DATASET } = process.env;
 
 const QUERIES = {
   firesIntersectionAlerts:
@@ -71,7 +73,7 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   if (download) {
     return {
       name: 'viirs_fire_alerts__count',
-      url: `${process.env.GFW_API}${url.replace('query', 'download')}`
+      url: `${GFW_API}${url.replace('query', 'download')}`
     };
   }
 
@@ -110,7 +112,7 @@ export const fetchFiresAlertsGrouped = ({
   if (download) {
     return {
       name: 'viirs_fire_alerts__count',
-      url: `${process.env.GFW_API}${url.replace('query', 'download')}`
+      url: `${GFW_API}${url.replace('query', 'download')}`
     };
   }
 

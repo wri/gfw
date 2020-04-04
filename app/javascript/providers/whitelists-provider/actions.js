@@ -8,12 +8,12 @@ export const setWhitelistLoading = createAction('setWhitelistLoading');
 export const setWhitelist = createAction('setWhitelist');
 
 const parseWhitelist = whitelist =>
-  (whitelist
+  whitelist
     ? Object.keys(whitelist).reduce(
-      (arr, item) => (whitelist[item] ? arr.concat(item) : arr),
-      []
-    )
-    : []);
+        (arr, item) => (whitelist[item] ? arr.concat(item) : arr),
+        []
+      )
+    : [];
 
 export const getWhitelist = createThunkAction(
   'getWhitelist',
