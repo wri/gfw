@@ -1,7 +1,0 @@
-/jstest
-docker-compose.yml
-docker-compose-test.yml
-docker-compose-develop.yml
-/spec
-docs
-coverage

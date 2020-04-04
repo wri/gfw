@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "ANALYTICS_PROPERTY_ID": "@ga-property-id",
+      "FEATURE_ENV": "@feature-env"
+    }
+  }
+}
