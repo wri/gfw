@@ -4,7 +4,7 @@ import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
 import { deburrUpper } from 'utils/data';
-import Link from 'redux-first-router-link';
+import NavLink from 'components/nav-link';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -15,9 +15,9 @@ import Dropdown from 'components/ui/dropdown';
 import Search from 'components/ui/search';
 import Paginate from 'components/paginate';
 
-import mapIcon from 'assets/icons/view-map.svg';
-import editIcon from 'assets/icons/edit.svg';
-import shareIcon from 'assets/icons/share.svg';
+import mapIcon from 'assets/icons/view-map.svg?sprite';
+import editIcon from 'assets/icons/edit.svg?sprite';
+import shareIcon from 'assets/icons/share.svg?sprite';
 
 import './styles.scss';
 
@@ -27,19 +27,19 @@ class AreasTable extends PureComponent {
     tags: PropTypes.array,
     viewArea: PropTypes.func,
     setAreaOfInterestModalSettings: PropTypes.func,
-    setShareModal: PropTypes.func
+    setShareModal: PropTypes.func,
   };
 
   state = {
     activeTags: [],
-    areas: [],
-    selectedTags: [],
-    unselectedTags: [],
+    // areas: [],
+    // selectedTags: [],
+    // unselectedTags: [],
     sortBy: '',
     search: '',
     alerts: {},
     pageSize: 6,
-    pageNum: 0
+    pageNum: 0,
   };
 
   componentDidUpdate(prevProps) {
@@ -61,31 +61,31 @@ class AreasTable extends PureComponent {
       setAreaOfInterestModalSettings,
       setShareModal,
       areas,
-      tags
+      tags,
     } = this.props;
     const {
       activeTags,
       search,
       pageSize,
       pageNum,
-      alerts: allAlerts
+      alerts: allAlerts,
     } = this.state;
 
     const areasWithAlerts =
       areas &&
-      areas.map(area => {
+      areas.map((area) => {
         const alerts = allAlerts[area.id];
         return {
           ...area,
-          ...alerts
+          ...alerts,
         };
       });
 
     // get tags based on areas available
     const selectedTags =
-      activeTags && tags && tags.filter(t => activeTags.includes(t.value));
+      activeTags && tags && tags.filter((t) => activeTags.includes(t.value));
     const unselectedTags =
-      activeTags && tags && tags.filter(t => !activeTags.includes(t.value));
+      activeTags && tags && tags.filter((t) => !activeTags.includes(t.value));
 
     // filter areas based on tags selected
     const filteredAreas =
@@ -93,15 +93,17 @@ class AreasTable extends PureComponent {
       selectedTags.length &&
       areasWithAlerts &&
       areasWithAlerts.length
-        ? areasWithAlerts.filter(a => !!intersection(a.tags, activeTags).length)
+        ? areasWithAlerts.filter(
+            (a) => !!intersection(a.tags, activeTags).length
+          )
         : areasWithAlerts;
 
     // filter areas by search
     const filterAreasBySearch =
       filteredAreas && filteredAreas.length && search
-        ? filteredAreas.filter(a =>
-          deburrUpper(a.name).includes(deburrUpper(search))
-        )
+        ? filteredAreas.filter((a) =>
+            deburrUpper(a.name).includes(deburrUpper(search))
+          )
         : filteredAreas;
 
     // sort areas by given parameter
@@ -132,7 +134,7 @@ class AreasTable extends PureComponent {
             )}
             <div className="filter-tags">
               {hasSelectedTags &&
-                selectedTags.map(tag => (
+                selectedTags.map((tag) => (
                   <Pill
                     className="filter-tag"
                     key={tag.value}
@@ -140,10 +142,9 @@ class AreasTable extends PureComponent {
                     label={tag.label}
                     onRemove={() =>
                       this.setState({
-                        activeTags: activeTags.filter(t => t !== tag.value),
-                        pageNum: 0
-                      })
-                    }
+                        activeTags: activeTags.filter((t) => t !== tag.value),
+                        pageNum: 0,
+                      })}
                   />
                 ))}
               {hasUnselectedTags && (
@@ -162,13 +163,12 @@ class AreasTable extends PureComponent {
                       : 'Filter by tags'
                   }
                   options={unselectedTags}
-                  onChange={tag =>
+                  onChange={(tag) =>
                     tag.value &&
                     this.setState({
                       activeTags: [...activeTags, tag.value],
-                      pageNum: 0
-                    })
-                  }
+                      pageNum: 0,
+                    })}
                 />
               )}
             </div>
@@ -184,9 +184,8 @@ class AreasTable extends PureComponent {
                   this.setState({
                     sortBy:
                       this.state.sortBy === 'createdAt' ? '' : 'createdAt',
-                    pageNum: 0
-                  })
-                }
+                    pageNum: 0,
+                  })}
               />
               {/* <Pill
                 className="filter-tag"
@@ -218,25 +217,25 @@ class AreasTable extends PureComponent {
                 theme="theme-search-small"
                 placeholder="Search"
                 input={search}
-                onChange={value => this.setState({ search: value, pageNum: 0 })}
+                onChange={(value) =>
+                  this.setState({ search: value, pageNum: 0 })}
               />
             </div>
           </div>
         </div>
         {areasTrimmed && !!areasTrimmed.length ? (
-          areasTrimmed.map(area => (
+          areasTrimmed.map((area) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
-                <Link to={`/dashboards/aoi/${area.id}`}>
+                <NavLink to={`/dashboards/aoi/${area.id}`}>
                   <AoICard
                     {...area}
-                    onFetchAlerts={alertsResponse =>
+                    onFetchAlerts={(alertsResponse) =>
                       this.setState({
-                        alerts: { ...allAlerts, [area.id]: alertsResponse }
-                      })
-                    }
+                        alerts: { ...allAlerts, [area.id]: alertsResponse },
+                      })}
                   />
-                </Link>
+                </NavLink>
               </div>
               <div className="column small-12 medium-3">
                 <div className="area-links">
@@ -246,9 +245,8 @@ class AreasTable extends PureComponent {
                     onClick={() =>
                       viewArea({
                         areaId: area.id,
-                        locationType: 'location/MAP'
-                      })
-                    }
+                        locationType: 'location/MAP',
+                      })}
                   >
                     <Icon className="link-icon" icon={mapIcon} />
                     view on map
@@ -259,9 +257,8 @@ class AreasTable extends PureComponent {
                     onClick={() =>
                       setAreaOfInterestModalSettings({
                         open: true,
-                        activeAreaId: area.id
-                      })
-                    }
+                        activeAreaId: area.id,
+                      })}
                   >
                     <Icon className="link-icon" icon={editIcon} />
                     edit
@@ -272,11 +269,8 @@ class AreasTable extends PureComponent {
                     onClick={() =>
                       setShareModal({
                         title: 'Share your area',
-                        shareUrl: `${window.location.host}/dashboards/aoi/${
-                          area.id
-                        }`
-                      })
-                    }
+                        shareUrl: `${window.location.host}/dashboards/aoi/${area.id}`,
+                      })}
                   >
                     <Icon className="link-icon" icon={shareIcon} />
                     share
@@ -299,12 +293,11 @@ class AreasTable extends PureComponent {
           <Paginate
             settings={{
               page: pageNum,
-              pageSize
+              pageSize,
             }}
             count={orderedAreas.length}
-            onClickChange={increment =>
-              this.setState({ pageNum: pageNum + increment })
-            }
+            onClickChange={(increment) =>
+              this.setState({ pageNum: pageNum + increment })}
           />
         )}
       </div>

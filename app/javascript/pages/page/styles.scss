@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.l-page {
+  position: relative;
+  min-height: calc(100vh - 56px - 583px);
+  z-index: 0;
+  margin-top: rem(56px);
+
+  > div {
+    width: 100%;
+  }
+
+  // temp
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (min-width: $screen-m) {
+    min-height: calc(100vh - 56px - 384px);
+    margin-top: 0;
+  }
+
+  &.full-screen {
+    margin-top: 0;
+    height: calc(100% - 50px);
+    min-height: calc(100% - 50px);
+    position: fixed;
+    width: 100%;
+    top: 0;
+  }
+}

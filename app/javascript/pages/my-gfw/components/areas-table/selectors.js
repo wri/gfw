@@ -2,7 +2,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { getUserAreas, getAreaTags } from 'providers/areas-provider/selectors';
 
-export const getAreasTableProps = createStructuredSelector({
+export default createStructuredSelector({
   areas: getUserAreas,
-  tags: getAreaTags
+  tags: getAreaTags,
 });
