@@ -83,7 +83,6 @@ function SankeyNode({ x, y, height, index, payload, config }) {
 SankeyNode.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
-  width: PropTypes.number,
   height: PropTypes.number,
   index: PropTypes.number,
   payload: PropTypes.shape({
@@ -104,14 +103,21 @@ SankeyNode.propTypes = {
     unit: PropTypes.string,
     suffix: PropTypes.string,
     // Padding for the titles, before and after the chart
-    titlePadding: PropTypes.number
+    titlePadding: PropTypes.number,
+    highlight: PropTypes.bool,
+    padding: PropTypes.number,
+    nodeWidth: PropTypes.number,
+    shouldShowLabel: PropTypes.bool,
+    fontSize: PropTypes.number,
+    lineHeigth: PropTypes.number,
+    textHeight: PropTypes.number,
+    tspanLineHeight: PropTypes.number
   })
 };
 
 SankeyNode.defaultProps = {
   x: 0,
   y: 0,
-  width: 20,
   height: 20,
   index: 0,
   payload: {},

@@ -148,6 +148,34 @@
           margin-top: rem(10px);
         }
 
+        .carousel-slide {
+          a {
+            position: relative;
+            display: block;
+
+            .logo-color {
+              position: absolute;
+              height: auto;
+              width: auto;
+              left: 0;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              opacity: 0;
+            }
+          }
+
+          &:hover {
+            .logo-grey {
+              opacity: 0;
+            }
+
+            .logo-color {
+              opacity: 1;
+            }
+          }
+        }
+
         .slick-list {
           overflow: hidden;
         }

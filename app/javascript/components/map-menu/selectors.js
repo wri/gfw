@@ -189,9 +189,9 @@ export const getActiveSection = createSelector(
 
     return sections.find(
       s =>
-        (s.category
+        s.category
           ? s.category === datasetCategory && s.slug === menuSection
-          : s.slug === menuSection)
+          : s.slug === menuSection
     );
   }
 );

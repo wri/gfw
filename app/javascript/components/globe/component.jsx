@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import orbitControl from 'three-orbit-controls';
-import markerFellow from 'assets/icons/markers/marker_fellow.png';
-import markerGrantee from 'assets/icons/markers/marker_grantee.png';
-import earthImage from './img/earth-image.jpg';
+import markerFellow from 'assets/icons/markers/marker_fellow.png?webp';
+import markerGrantee from 'assets/icons/markers/marker_grantee.png?webp';
+import earthImage from './img/earth-image.jpg?webp';
 
 function latLongToVector3(lat, lon, radius, height) {
   const phi = lat * (Math.PI / 180);
@@ -213,9 +213,9 @@ class GlobeComponent extends React.Component {
     const mesh =
       d.cluster && d.cluster.length > 1
         ? [
-          new THREE.PlaneGeometry(50, 25),
-          this.getTextLabel(d.cluster.length, 50)
-        ]
+            new THREE.PlaneGeometry(50, 25),
+            this.getTextLabel(d.cluster.length, 50)
+          ]
         : [new THREE.PlaneGeometry(25, 25), this.getUserIcon(isFellow)];
     const marker = new THREE.Mesh(...mesh);
     marker.position.set(position.x, position.y, position.z);
@@ -281,7 +281,7 @@ class GlobeComponent extends React.Component {
 }
 
 GlobeComponent.defaultProps = {
-  width: window.innerWidth,
+  width: typeof window !== 'undefined' && window.innerWidth,
   height: 500,
   radius: 205,
   autorotate: true,

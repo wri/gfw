@@ -94,9 +94,9 @@ export const selectPlanetBasemapsIntervalOptions = createSelector(
 export const getPlanetBasemapsInvertalSelected = createSelector(
   [selectPlanetBasemapsIntervalOptions, getBasemap],
   (options, basemap) =>
-    (basemap.interval
+    basemap.interval
       ? options.find(o => o.value === basemap.interval)
-      : options[0])
+      : options[0]
 );
 
 export const getPlanetBasemapsOptions = createSelector(

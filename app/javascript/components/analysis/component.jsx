@@ -1,9 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
-import Button from 'components/ui/button/button-component';
+import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
 import ShowAnalysis from 'components/analysis/components/show-analysis';
@@ -79,124 +79,124 @@ class AnalysisComponent extends PureComponent {
           )}
           {!loading &&
             isDeletedAoI && (
-            <NoContent
-              className="deleted-area-message"
-              message="This area has been deleted."
-            />
-          )}
+              <NoContent
+                className="deleted-area-message"
+                message="This area has been deleted."
+              />
+            )}
           {location.type &&
             location.adm0 &&
             !isDeletedAoI &&
             (loading || (!loading && error)) && (
-            <div className={cx('cancel-analysis', { fetching: loading })}>
-              {!loading &&
+              <div className={cx('cancel-analysis', { fetching: loading })}>
+                {!loading &&
                   error && (
-                <Button
-                  className="refresh-analysis-btn"
-                  onClick={() => handleFetchAnalysis(endpoints)}
-                >
+                    <Button
+                      className="refresh-analysis-btn"
+                      onClick={() => handleFetchAnalysis(endpoints)}
+                    >
                       REFRESH ANALYSIS
-                </Button>
-              )}
-              <Button
-                className="cancel-analysis-btn"
-                onClick={handleCancelAnalysis}
-              >
+                    </Button>
+                  )}
+                <Button
+                  className="cancel-analysis-btn"
+                  onClick={handleCancelAnalysis}
+                >
                   CANCEL ANALYSIS
-              </Button>
-              {!loading && error && <p className="error-message">{error}</p>}
-            </div>
-          )}
+                </Button>
+                {!loading && error && <p className="error-message">{error}</p>}
+              </div>
+            )}
           {location.type &&
             location.adm0 &&
             !isDeletedAoI && (
-            <ShowAnalysis
-              clearAnalysis={clearAnalysis}
-              goToDashboard={goToDashboard}
-              hasLayers={hasLayers}
-              activeArea={activeArea}
-              hasWidgetLayers={hasWidgetLayers}
-              analysis
-            />
-          )}
+              <ShowAnalysis
+                clearAnalysis={clearAnalysis}
+                goToDashboard={goToDashboard}
+                hasLayers={hasLayers}
+                activeArea={activeArea}
+                hasWidgetLayers={hasWidgetLayers}
+                analysis
+              />
+            )}
           {!location.type &&
             !location.adm0 &&
             !isDeletedAoI && (
-            <ChoseAnalysis
-              checkingShape={checkingShape}
-              uploadingShape={uploadingShape}
-              handleCancelAnalysis={handleCancelAnalysis}
-            />
-          )}
+              <ChoseAnalysis
+                checkingShape={checkingShape}
+                uploadingShape={uploadingShape}
+                handleCancelAnalysis={handleCancelAnalysis}
+              />
+            )}
         </div>
         {!loading &&
           !error &&
           location.type &&
           !isDeletedAoI &&
           location.adm0 && (
-          <div className="analysis-actions">
-            {location.type === 'country' &&
+            <div className="analysis-actions">
+              {location.type === 'country' &&
                 !location.areaId && (
-              <Button
-                className="analysis-action-btn"
-                theme="theme-button-light"
-                {...linkProps}
-                onClick={() =>
-                  track('analysisViewDashboards', {
-                    label: location.adm0
-                  })
-                }
-              >
+                  <Button
+                    className="analysis-action-btn"
+                    theme="theme-button-light"
+                    {...linkProps}
+                    onClick={() =>
+                      logEvent('analysisViewDashboards', {
+                        label: location.adm0
+                      })
+                    }
+                  >
                     DASHBOARD
-              </Button>
-            )}
-            {activeArea && (
-              <Button
-                className="analysis-action-btn"
-                theme="theme-button-light"
-                link={activeArea && `/dashboards/aoi/${activeArea.id}`}
-                tooltip={{ text: 'Go to Areas of Interest dashboard' }}
-              >
+                  </Button>
+                )}
+              {activeArea && (
+                <Button
+                  className="analysis-action-btn"
+                  theme="theme-button-light"
+                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+                >
                   DASHBOARD
-              </Button>
-            )}
-            {(!activeArea || (activeArea && !activeArea.userArea)) && (
-              <Button
-                className="analysis-action-btn save-to-mygfw-btn"
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
-                disabled={areaTooLarge}
-                {...areaTooLarge && {
-                  tooltip: {
-                    text:
-                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).'
-                  }
-                }}
-              >
+                </Button>
+              )}
+              {(!activeArea || (activeArea && !activeArea.userArea)) && (
+                <Button
+                  className="analysis-action-btn save-to-mygfw-btn"
+                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                  disabled={areaTooLarge}
+                  {...areaTooLarge && {
+                    tooltip: {
+                      text:
+                          'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).'
+                    }
+                  }}
+                >
                   save in my gfw
-              </Button>
-            )}
-            {activeArea &&
+                </Button>
+              )}
+              {activeArea &&
                 activeArea.userArea && (
-              <Button
-                className="analysis-action-btn"
-                onClick={() =>
-                  setShareModal({
-                    title: 'Share this view',
-                    shareUrl: window.location.href.includes('embed')
-                      ? window.location.href.replace('/embed', '')
-                      : window.location.href,
-                    embedUrl: window.location.href.includes('embed')
-                      ? window.location.href
-                      : window.location.href.replace('/map', '/embed/map')
-                  })
-                }
-                tooltip={{ text: 'Share or embed this area' }}
-              >
+                  <Button
+                    className="analysis-action-btn"
+                    onClick={() =>
+                      setShareModal({
+                        title: 'Share this view',
+                        shareUrl: window.location.href.includes('embed')
+                          ? window.location.href.replace('/embed', '')
+                          : window.location.href,
+                        embedUrl: window.location.href.includes('embed')
+                          ? window.location.href
+                          : window.location.href.replace('/map', '/embed/map')
+                      })
+                    }
+                    tooltip={{ text: 'Share or embed this area' }}
+                  >
                     Share area
-              </Button>
-            )}
-          </div>
-        )}
+                  </Button>
+                )}
+            </div>
+          )}
       </Fragment>
     );
   }

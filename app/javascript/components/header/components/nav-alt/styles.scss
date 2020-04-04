@@ -60,6 +60,10 @@
     z-index: 1;
   }
 
+  .submenu-link {
+    min-width: 60px;
+  }
+
   .submenu-panel {
     position: fixed;
     top: rem(56px);
@@ -120,4 +124,13 @@
       top: rem(75px);
     }
   }
+
+  .animate-user-icon {
+    animation: user-icon 2s ease-in-out infinite;
+  }
+}
+
+@keyframes user-icon {
+  from, to { opacity: 1 }
+  50% { opacity: 0.5 }
 }

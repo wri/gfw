@@ -1,17 +1,17 @@
-import forestChangeIcon from 'assets/icons/forest-change.svg';
-import landCoverIcon from 'assets/icons/land-cover.svg';
-import landUseIcon from 'assets/icons/land-use.svg';
-import climateIcon from 'assets/icons/climate.svg';
-import biodiversityIcon from 'assets/icons/biodiversity.svg';
-import exploreIcon from 'assets/icons/explore.svg';
-import layersIcon from 'assets/icons/layers.svg';
-import globeIcon from 'assets/icons/globe.svg';
-import analysisIcon from 'assets/icons/analysis.svg';
-import searchIcon from 'assets/icons/search.svg';
+import forestChangeIcon from 'assets/icons/forest-change.svg?sprite';
+import landCoverIcon from 'assets/icons/land-cover.svg?sprite';
+import landUseIcon from 'assets/icons/land-use.svg?sprite';
+import climateIcon from 'assets/icons/climate.svg?sprite';
+import biodiversityIcon from 'assets/icons/biodiversity.svg?sprite';
+import exploreIcon from 'assets/icons/explore.svg?sprite';
+import layersIcon from 'assets/icons/layers.svg?sprite';
+import globeIcon from 'assets/icons/globe.svg?sprite';
+import analysisIcon from 'assets/icons/analysis.svg?sprite';
+import searchIcon from 'assets/icons/search.svg?sprite';
 
 // TODO: leave only one, refactor icon styles
-import userIcon from 'assets/icons/user.svg';
-import myGFWIcon from 'assets/icons/mygfw.svg';
+import userIcon from 'assets/icons/user.svg?sprite';
+import myGFWIcon from 'assets/icons/mygfw.svg?sprite';
 
 import RecentImagerySettings from 'components/recent-imagery/components/recent-imagery-settings';
 import Analysis from 'components/analysis';

@@ -15,7 +15,7 @@ class LayerListMenu extends PureComponent {
       <div className={`c-layer-list-menu ${className || ''}`}>
         {layers.map(
           (l, i) =>
-            (!l.default ? (
+            !l.default ? (
               <div className="layer-toggle" key={l.id}>
                 <LayerToggle
                   tabIndex={i}
@@ -26,10 +26,10 @@ class LayerListMenu extends PureComponent {
                 />
                 {l.nestedLegend &&
                   l.active && (
-                  <div className="nested-legend">
-                    <LegendItemTypes activeLayer={l} />
-                  </div>
-                )}
+                    <div className="nested-legend">
+                      <LegendItemTypes activeLayer={l} />
+                    </div>
+                  )}
                 {l.legendDesc && (
                   <p className="layer-description">{l.legendDesc}</p>
                 )}
@@ -37,7 +37,7 @@ class LayerListMenu extends PureComponent {
                   <LayerMoreInfo className="more-info" {...l.moreInfo} />
                 )}
               </div>
-            ) : null)
+            ) : null
         )}
       </div>
     );

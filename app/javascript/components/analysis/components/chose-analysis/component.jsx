@@ -2,19 +2,17 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import cx from 'classnames';
-import { SCREEN_M } from 'utils/constants';
-import MediaQuery from 'react-responsive';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 import { format } from 'd3-format';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Dropdown from 'components/ui/dropdown';
 
-import infoIcon from 'assets/icons/info.svg';
-import closeIcon from 'assets/icons/close.svg';
-import squarePointIcon from 'assets/icons/square-point.svg';
-import polygonIcon from 'assets/icons/polygon.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import squarePointIcon from 'assets/icons/square-point.svg?sprite';
+import polygonIcon from 'assets/icons/polygon.svg?sprite';
 
 import './styles.scss';
 
@@ -38,7 +36,7 @@ class ChoseAnalysis extends PureComponent {
     handleCancelUpload: PropTypes.func,
     drawing: PropTypes.bool,
     setMapSettings: PropTypes.func,
-    file: PropTypes.object
+    file: PropTypes.object,
   };
 
   renderLayerOption = () => {
@@ -46,55 +44,49 @@ class ChoseAnalysis extends PureComponent {
       boundaries,
       activeBoundary,
       selectBoundaries,
-      setMenuSettings
+      setMenuSettings,
     } = this.props;
     const selectedBoundaries = activeBoundary || (boundaries && boundaries[0]);
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div className="layer-menu">
-            <div className="layer-title">
-              {isDesktop
-                ? 'One click analysis on shape or:'
-                : 'Analysis on shape or:'}
-            </div>
-            <Dropdown
-              className="boundary-selector analysis-boundary-menu"
-              options={boundaries}
-              value={selectedBoundaries && selectedBoundaries.value}
-              onChange={selectBoundaries}
-              native
-            />
-            <div className="layer-description">
-              {isDesktop ? 'One-click analysis ' : 'Analysis '}
-              is also available by default for most data layers under the{' '}
-              <button
-                onClick={() =>
-                  setMenuSettings({
-                    menuSection: 'datasets',
-                    datasetCategory: 'landUse'
-                  })
-                }
-              >
-                land use
-              </button>{' '}
-              and{' '}
-              <button
-                onClick={() =>
-                  setMenuSettings({
-                    menuSection: 'datasets',
-                    datasetCategory: 'biodiversity'
-                  })
-                }
-              >
-                biodiversity
-              </button>{' '}
-              tabs.
-            </div>
-          </div>
-        )}
-      </MediaQuery>
+      <div className="layer-menu">
+        <div className="layer-title">One click analysis on shape or:</div>
+        <Dropdown
+          className="boundary-selector analysis-boundary-menu"
+          options={boundaries}
+          value={selectedBoundaries && selectedBoundaries.value}
+          onChange={selectBoundaries}
+          native
+        />
+        <div className="layer-description">
+          One-click analysis is also available by default for most data layers
+          under the
+          {' '}
+          <button
+            onClick={() =>
+              setMenuSettings({
+                menuSection: 'datasets',
+                datasetCategory: 'landUse',
+              })}
+          >
+            land use
+          </button>
+          {' '}
+          and
+          {' '}
+          <button
+            onClick={() =>
+              setMenuSettings({
+                menuSection: 'datasets',
+                datasetCategory: 'biodiversity',
+              })}
+          >
+            biodiversity
+          </button>
+          {' '}
+          tabs.
+        </div>
+      </div>
     );
   };
 
@@ -112,7 +104,7 @@ class ChoseAnalysis extends PureComponent {
       uploadConfig,
       uploading,
       uploadStatus,
-      file
+      file,
     } = this.props;
     const hasError = error && errorMessage;
 
@@ -129,7 +121,7 @@ class ChoseAnalysis extends PureComponent {
             if (!drawing) {
               setMenuSettings({ menuSection: '' });
             }
-            track(drawing ? 'analysisDrawCancel' : 'analysisDrawStart');
+            logEvent(drawing ? 'analysisDrawCancel' : 'analysisDrawStart');
           }}
         >
           {drawing ? 'CANCEL' : 'START DRAWING'}
@@ -148,30 +140,31 @@ class ChoseAnalysis extends PureComponent {
           multiple={false}
           disabled={uploading}
         >
-          {hasError &&
-            !uploading && (
+          {hasError && !uploading && (
             <Fragment>
               <p className="error-title">{error}</p>
               <p className="small-text error-desc">{errorMessage}</p>
             </Fragment>
           )}
-          {!hasError &&
-            !uploading && (
+          {!hasError && !uploading && (
             <Fragment>
               <p>
-                  Drag and drop your <b>polygon data file</b> or click here to
-                  upload
+                Drag and drop your 
+                {' '}
+                <b>polygon data file</b>
+                {' '}
+                or click here to
+                upload
               </p>
               <p className="small-text">{'Recommended file size < 1 MB'}</p>
             </Fragment>
           )}
-          {!hasError &&
-            uploading && (
+          {!hasError && uploading && (
             <div className="uploading-shape">
               <p className="file-name">{file && file.name}</p>
-              <p className="file-size">{`Uploading ${(file &&
-                  format('.2s')(file.size)) ||
-                  0}B`}</p>
+              <p className="file-size">
+                {`Uploading ${(file && format('.2s')(file.size)) || 0}B`}
+              </p>
               <div className="upload-bar">
                 <div className="loading-bar">
                   <span className="full-bar" />
@@ -197,7 +190,7 @@ class ChoseAnalysis extends PureComponent {
             <Button
               className="info-button"
               theme="theme-button-tiny square"
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 setModalSources({ open: true, source: 'uploads' });
@@ -207,7 +200,8 @@ class ChoseAnalysis extends PureComponent {
             </Button>
           </p>
           <p>
-            By uploading data you agree to the{' '}
+            By uploading data you agree to the
+            {' '}
             <a href="/terms" target="_blank" rel="noopenner nofollower">
               GFW Terms of Service
             </a>
@@ -222,7 +216,7 @@ class ChoseAnalysis extends PureComponent {
       showDraw,
       setMapSettings,
       setAnalysisSettings,
-      clearAnalysisError
+      clearAnalysisError,
     } = this.props;
     return (
       <div className="c-chose-analysis">

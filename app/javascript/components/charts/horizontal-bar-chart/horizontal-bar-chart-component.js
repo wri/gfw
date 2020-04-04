@@ -64,7 +64,7 @@ class HorizontalBarChart extends PureComponent {
               pageData.length &&
               Object.keys(pageData[0]).map(
                 (key, index) =>
-                  (yKeys.indexOf(key) === -1 ? null : (
+                  yKeys.indexOf(key) === -1 ? null : (
                     <Bar
                       key={key}
                       dataKey={key}
@@ -73,7 +73,7 @@ class HorizontalBarChart extends PureComponent {
                       fill={colors[key]}
                       background={!index ? { fill: '#e9e9ea' } : false}
                     />
-                  ))
+                  )
               )}
           </BarChart>
         </ResponsiveContainer>

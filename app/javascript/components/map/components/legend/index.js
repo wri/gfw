@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import * as modalActions from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
@@ -58,7 +58,7 @@ class Legend extends PureComponent {
       datasets: newActiveDatasets,
       ...(enable && { canBound: true })
     });
-    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
+    logEvent(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
       label: layer.layer
     });
   };
@@ -74,7 +74,7 @@ class Legend extends PureComponent {
         return dataset;
       })
     });
-    track('mapAddLayer', {
+    logEvent('mapAddLayer', {
       label: newLayerKey
     });
   };
@@ -88,7 +88,7 @@ class Legend extends PureComponent {
       }
     });
     setMapSettings({ datasets: activeDatasets });
-    track('mapRemoveLayer', {
+    logEvent('mapRemoveLayer', {
       label: currentLayer.id
     });
   };

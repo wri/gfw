@@ -7,11 +7,11 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
   countries: countryData && countryData.countries,
   ...(myGfw &&
     myGfw.data && {
-    initialValues: {
-      ...myGfw.data,
-      signUpForTesting: myGfw.data.signUpForTesting ? ['yes'] : false
-    }
-  })
+      initialValues: {
+        ...myGfw.data,
+        signUpForTesting: myGfw.data.signUpForTesting ? ['yes'] : false
+      }
+    })
 });
 
 export default connect(mapStateToProps, actions)(Component);

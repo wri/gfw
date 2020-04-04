@@ -32,13 +32,13 @@ class CustomComposedChart extends PureComponent {
           const maxValue =
             yKeys[key][subKey].stackId === 1
               ? // Total sum of values if graph is a stacked bar chart
-              {
-                [subKey]: max(
-                  data.map(d =>
-                    Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+                {
+                  [subKey]: max(
+                    data.map(d =>
+                      Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+                    )
                   )
-                )
-              }
+                }
               : maxBy(data, subKey);
           if (maxValue) {
             maxValues.push(maxValue[subKey]);
@@ -141,11 +141,11 @@ class CustomComposedChart extends PureComponent {
                 axisLine={false}
                 {...(!isVertical
                   ? {
-                    strokeDasharray: '3 4',
-                    tickSize: -42,
-                    mirror: true,
-                    tickMargin: 0
-                  }
+                      strokeDasharray: '3 4',
+                      tickSize: -42,
+                      mirror: true,
+                      tickMargin: 0
+                    }
                   : {})}
                 tick={
                   <CustomTick
@@ -154,7 +154,7 @@ class CustomComposedChart extends PureComponent {
                     unitFormat={
                       unitFormat ||
                       (value =>
-                        (value < 1 ? format('.2r')(value) : format('.2s')(value)))
+                        value < 1 ? format('.2r')(value) : format('.2s')(value))
                     }
                     fill="#555555"
                     vertical={isVertical}

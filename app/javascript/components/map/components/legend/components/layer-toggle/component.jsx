@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import Toggle from 'components/ui/toggle';
 import Button from 'components/ui/button';
@@ -8,8 +8,8 @@ import Icon from 'components/ui/icon';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
-import infoIcon from 'assets/icons/info.svg';
-import helpIcon from 'assets/icons/help.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import helpIcon from 'assets/icons/help.svg?sprite';
 
 import './styles.scss';
 
@@ -59,29 +59,29 @@ class LayerToggle extends PureComponent {
             </div>
             {((!metadata && description) ||
               (metadata && typeof metadata === 'string')) && (
-                <Tooltip
-                  theme="tip"
-                  arrow
-                  hideOnClick
-                  position="top"
-                  disabled={!description}
-                  html={<Tip text={description} />}
-                  onShow={() =>
-                    track('hoverModalBtn', {
-                      label: `${layer}: ${metadata || description}`
-                    })
-                  }
+              <Tooltip
+                theme="tip"
+                arrow
+                hideOnClick
+                position="top"
+                disabled={!description}
+                html={<Tip text={description} />}
+                onShow={() =>
+                  logEvent('hoverModalBtn', {
+                    label: `${layer}: ${metadata || description}`
+                  })
+                }
+              >
+                <Button
+                  className={`theme-button-tiny theme-button-grey-filled square info-button ${
+                    !metadata ? '-help' : ''
+                  }`}
+                  onClick={metadata && (() => onInfoClick(metadata))}
                 >
-                  <Button
-                    className={`theme-button-tiny theme-button-grey-filled square info-button ${
-                      !metadata ? '-help' : ''
-                    }`}
-                    onClick={metadata && (() => onInfoClick(metadata))}
-                  >
-                    <Icon icon={metadata ? infoIcon : helpIcon} />
-                  </Button>
-                </Tooltip>
-              )}
+                  <Icon icon={metadata ? infoIcon : helpIcon} />
+                </Button>
+              </Tooltip>
+            )}
           </div>
           {citation &&
             showSubtitle && (

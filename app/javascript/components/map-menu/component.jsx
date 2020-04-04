@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import { BIOMASS_LOSS_DATASET } from 'data/layers-datasets';
 
@@ -30,8 +30,8 @@ class MapMenu extends PureComponent {
           layers: [layer],
           ...(iso &&
             iso.length === 1 && {
-            iso: iso[0]
-          })
+              iso: iso[0]
+            })
         }
       ].concat([...newActiveDatasets]);
     }
@@ -64,7 +64,7 @@ class MapMenu extends PureComponent {
       });
     }
 
-    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
+    logEvent(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
       label: layer
     });
   };
@@ -132,13 +132,13 @@ class MapMenu extends PureComponent {
         <div className={cx('menu-tiles', 'map-tour-data-layers', { embed })}>
           {isDesktop &&
             !embed && (
-            <MenuDesktop
-              className="menu-desktop"
-              datasetSections={datasetSections}
-              searchSections={searchSections}
-              setMenuSettings={setMenuSettings}
-            />
-          )}
+              <MenuDesktop
+                className="menu-desktop"
+                datasetSections={datasetSections}
+                searchSections={searchSections}
+                setMenuSettings={setMenuSettings}
+              />
+            )}
           {!isDesktop && (
             <MenuMobile
               sections={mobileSections}

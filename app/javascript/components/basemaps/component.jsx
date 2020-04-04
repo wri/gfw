@@ -9,22 +9,17 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import Switch from 'components/ui/switch';
 
-import infoIcon from 'assets/icons/info.svg';
-import closeIcon from 'assets/icons/close.svg';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
-import boundariesIcon from 'assets/icons/boundaries.svg';
-import labelsIcon from 'assets/icons/labels.svg';
-import roadsIcon from 'assets/icons/roads.svg';
+import boundariesIcon from 'assets/icons/boundaries.svg?sprite';
+import labelsIcon from 'assets/icons/labels.svg?sprite';
+import roadsIcon from 'assets/icons/roads.svg?sprite';
 
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { showBasemaps: false };
-  }
-
   static propTypes = {
     onClose: PropTypes.func,
     boundaries: PropTypes.array,
@@ -50,11 +45,16 @@ class Basemaps extends React.PureComponent {
     planetYears: PropTypes.array,
     planetYearSelected: PropTypes.object,
     planetPeriods: PropTypes.array,
-    planetPeriodSelected: PropTypes.object
+    planetPeriodSelected: PropTypes.object,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { showBasemaps: false };
+  }
+
   state = {
-    planetTooltipOpen: false
+    planetTooltipOpen: false,
   };
 
   renderButtonBasemap(item) {
@@ -73,7 +73,7 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(${item.image})`
+            backgroundImage: `url(${item.image})`,
           }}
         />
         <p className="basemaps-list-item-name">{item.label}</p>
@@ -87,7 +87,7 @@ class Basemaps extends React.PureComponent {
       activeBasemap,
       landsatYears,
       basemaps,
-      isDesktop
+      isDesktop,
     } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
     const basemap = basemaps[item.value]
@@ -100,7 +100,7 @@ class Basemaps extends React.PureComponent {
         onClick={() => {
           selectBasemap({
             value: 'landsat',
-            year: basemap.defaultYear
+            year: basemap.defaultYear,
           });
           if (!isDesktop) {
             this.setState({ showBasemaps: !this.state.showBasemaps });
@@ -110,12 +110,12 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(${item.image})`
+            backgroundImage: `url(${item.image})`,
           }}
         />
         <span
           className="basemaps-list-item-name"
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           {item.label}
           <div className="basemaps-list-item-selectors">
@@ -124,11 +124,11 @@ class Basemaps extends React.PureComponent {
               theme="theme-dropdown-native-inline"
               value={year}
               options={landsatYears}
-              onChange={value => {
+              onChange={(value) => {
                 const selectedYear = parseInt(value, 10);
                 selectBasemap({
                   value: 'landsat',
-                  year: selectedYear
+                  year: selectedYear,
                 });
                 if (!isDesktop) {
                   this.setState({ showBasemaps: !this.state.showBasemaps });
@@ -152,7 +152,7 @@ class Basemaps extends React.PureComponent {
       planetYears,
       planetYearSelected,
       planetPeriods,
-      planetPeriodSelected
+      planetPeriodSelected,
     } = this.props;
     const { planetTooltipOpen } = this.state;
     const { name, interval, year, period } = planetBasemapSelected || {};
@@ -161,7 +161,7 @@ class Basemaps extends React.PureComponent {
       name,
       interval,
       planetYear: year,
-      period
+      period,
     };
 
     return (
@@ -177,12 +177,12 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(${item.image})`
+            backgroundImage: `url(${item.image})`,
           }}
         />
         <span
           className="basemaps-list-item-name"
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           {item.label}
           <div className="basemaps-list-item-selectors">
@@ -193,7 +193,7 @@ class Basemaps extends React.PureComponent {
               interactive
               onRequestClose={() => this.setState({ planetTooltipOpen: false })}
               open={planetTooltipOpen}
-              html={
+              html={(
                 <div className="c-basemaps-tooltip">
                   <span
                     className="planet-tooltip-close"
@@ -208,9 +208,9 @@ class Basemaps extends React.PureComponent {
                       planetIntervalSelected && planetIntervalSelected.value
                     }
                     options={planetInvertalOptions}
-                    onChange={selected => {
+                    onChange={(selected) => {
                       const selectedInvertal = planetInvertalOptions.find(
-                        f => f.value === selected
+                        (f) => f.value === selected
                       );
                       selectBasemap({
                         value: 'planet',
@@ -219,7 +219,7 @@ class Basemaps extends React.PureComponent {
                           (selectedInvertal && selectedInvertal.period) || null,
                         planetYear:
                           (selectedInvertal && selectedInvertal.year) || null,
-                        name: (selectedInvertal && selectedInvertal.name) || ''
+                        name: (selectedInvertal && selectedInvertal.name) || '',
                       });
                     }}
                   />
@@ -231,9 +231,9 @@ class Basemaps extends React.PureComponent {
                         theme="theme-dropdown-native"
                         value={planetYearSelected}
                         options={planetYears}
-                        onChange={selected => {
+                        onChange={(selected) => {
                           const selectedYear = planetYears.find(
-                            f => f.value === parseInt(selected, 10)
+                            (f) => f.value === parseInt(selected, 10)
                           );
                           selectBasemap({
                             value: 'planet',
@@ -242,7 +242,7 @@ class Basemaps extends React.PureComponent {
                             period:
                               (selectedYear && selectedYear.period) || null,
                             planetYear: parseInt(selected, 10),
-                            name: (selectedYear && selectedYear.name) || ''
+                            name: (selectedYear && selectedYear.name) || '',
                           });
                         }}
                         native
@@ -253,9 +253,9 @@ class Basemaps extends React.PureComponent {
                         theme="theme-dropdown-native"
                         value={planetPeriodSelected}
                         options={planetPeriods}
-                        onChange={selected => {
+                        onChange={(selected) => {
                           const selectedPeriod = planetPeriods.find(
-                            f => f.value === selected
+                            (f) => f.value === selected
                           );
                           selectBasemap({
                             value: 'planet',
@@ -264,7 +264,7 @@ class Basemaps extends React.PureComponent {
                               (selectedPeriod && selectedPeriod.interval) || '',
                             planetYear:
                               (selectedPeriod && selectedPeriod.year) || '',
-                            name: (selectedPeriod && selectedPeriod.name) || ''
+                            name: (selectedPeriod && selectedPeriod.name) || '',
                           });
                         }}
                         native
@@ -276,7 +276,7 @@ class Basemaps extends React.PureComponent {
                     </div>
                   )}
                 </div>
-              }
+              )}
               trigger="click"
               position="top"
             >
@@ -310,7 +310,7 @@ class Basemaps extends React.PureComponent {
         )}
         <div className="basemap-list-scroll-wrapper">
           <ul className="basemaps-list">
-            {Object.values(basemaps).map(item => {
+            {Object.values(basemaps).map((item) => {
               let basemapButton = this.renderButtonBasemap(item);
               if (item.value === 'landsat') {
                 basemapButton = this.renderLandsatBasemap(item);
@@ -322,7 +322,7 @@ class Basemaps extends React.PureComponent {
                 <li
                   key={item.value}
                   className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.value === item.value
+                    '-active': activeBasemap.value === item.value,
                   })}
                 >
                   {basemapButton}
@@ -350,7 +350,7 @@ class Basemaps extends React.PureComponent {
       setModalMetaSettings,
       roadsSelected,
       selectRoads,
-      roads
+      roads,
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -386,8 +386,7 @@ class Basemaps extends React.PureComponent {
                   theme="theme-button-dark-round"
                   background={`url(${activeBasemap.image})`}
                   onClick={() =>
-                    this.setState({ showBasemaps: !this.state.showBasemaps })
-                  }
+                    this.setState({ showBasemaps: !this.state.showBasemaps })}
                 >
                   <span className="value">
                     {activeBasemap.label}
@@ -400,7 +399,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
+                  'theme-dropdown-dark-squared': isDesktop,
                 })}
                 value={selectedBoundaries}
                 options={boundaries}
@@ -412,7 +411,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
+                  'theme-dropdown-dark-squared': isDesktop,
                 })}
                 value={labelSelected}
                 options={labels}
@@ -424,7 +423,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
+                  'theme-dropdown-dark-squared': isDesktop,
                 })}
                 className="basemaps-roads"
                 value={roadsSelected}

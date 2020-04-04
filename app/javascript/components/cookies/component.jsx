@@ -1,14 +1,39 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { track } from 'app/analytics';
 import Button from 'components/ui/button';
 
 import './styles.scss';
 
 class Cookies extends PureComponent {
+  static propTypes = {
+    open: PropTypes.bool,
+    onClose: PropTypes.func.isRequired,
+  };
+
+  state = {
+    open: this.props.open,
+  };
+
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      const agreeCookies = localStorage && localStorage.getItem('agreeCookies');
+      this.setState({ open: !agreeCookies });
+    }
+  }
+
+  handleOnClose = () => {
+    const { onClose } = this.props;
+    this.setState({ open: false });
+    if (typeof window !== 'undefined' && localStorage) {
+      localStorage.setItem('agreeCookies', true);
+    }
+    onClose();
+  };
+
   render() {
-    const { agreeCookies, open } = this.props;
+    const { open } = this.state;
+
     return open ? (
       <div className="c-cookies">
         <div className="row">
@@ -23,8 +48,10 @@ class Cookies extends PureComponent {
                 rel="noopener noreferrer"
               >
                 {' '}
-                privacy policy{' '}
-              </a>{' '}
+                privacy policy
+                {' '}
+              </a>
+              {' '}
               for further details.
             </p>
           </div>
@@ -32,10 +59,7 @@ class Cookies extends PureComponent {
             <Button
               className="cookies-btn"
               theme="theme-button-grey theme-button-small"
-              onClick={() => {
-                agreeCookies();
-                track('acceptCookies');
-              }}
+              onClick={this.handleOnClose}
             >
               I agree
             </Button>
@@ -45,10 +69,5 @@ class Cookies extends PureComponent {
     ) : null;
   }
 }
-
-Cookies.propTypes = {
-  open: PropTypes.bool,
-  agreeCookies: PropTypes.func
-};
 
 export default Cookies;

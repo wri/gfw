@@ -6,6 +6,8 @@ import { parseGadm36Id } from 'utils/format';
 import { MAP } from 'router';
 import uniqBy from 'lodash/uniqBy';
 
+import { CARTO_API } from 'utils/constants';
+
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
 
@@ -59,7 +61,7 @@ export const getLocationFromSearch = createThunkAction(
         request
           .get(
             `${
-              process.env.CARTO_API
+              CARTO_API
             }/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${
               nameString
             }) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${
@@ -143,11 +145,11 @@ export const handleViewOnMap = createThunkAction(
               query &&
               query.map &&
               query.map.datasets && {
-              datasets: uniqBy(
-                [...datasets, ...query.map.datasets],
-                'dataset'
-              )
-            }),
+                datasets: uniqBy(
+                  [...datasets, ...query.map.datasets],
+                  'dataset'
+                )
+              }),
             canBound: true
           }
         }),

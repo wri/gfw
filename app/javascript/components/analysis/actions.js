@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'utils/redux';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
 import { DASHBOARDS } from 'router';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
@@ -57,7 +57,7 @@ export const getAnalysis = createThunkAction(
   'getAnalysis',
   location => dispatch => {
     const { type, adm0, adm1, adm2, endpoints } = location;
-    track('analysis', {
+    logEvent('analysis', {
       action: compact([type, adm0, adm1, adm2]).join(', '),
       label:
         endpoints && endpoints.length && endpoints.map(e => e.slug).join(', ')

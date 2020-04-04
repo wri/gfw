@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import infoIcon from 'assets/icons/info.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
 
 import './styles.scss';
 

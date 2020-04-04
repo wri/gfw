@@ -409,38 +409,6 @@ class Sankey extends PureComponent {
     margin: { top: 5, right: 5, bottom: 5, left: 5 }
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = this.constructor.createDefaultState(props);
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      data,
-      width,
-      height,
-      margin,
-      iterations,
-      nodeWidth,
-      nodePadding,
-      nameKey
-    } = this.props;
-    if (
-      prevProps.data !== data ||
-      prevProps.width !== width ||
-      prevProps.height !== height ||
-      !shallowEqual(prevProps.margin, margin) ||
-      prevProps.iterations !== iterations ||
-      prevProps.nodeWidth !== nodeWidth ||
-      prevProps.nodePadding !== nodePadding ||
-      prevProps.nameKey !== nameKey
-    ) {
-      // eslint-disable-next-line
-      this.setState(this.constructor.createDefaultState(prevProps));
-    }
-  }
-
   /**
    * Returns default, reset state for the sankey chart.
    * @param  {Object} props The latest props
@@ -476,6 +444,38 @@ class Sankey extends PureComponent {
       nodes,
       links
     };
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = this.constructor.createDefaultState(props);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      data,
+      width,
+      height,
+      margin,
+      iterations,
+      nodeWidth,
+      nodePadding,
+      nameKey
+    } = this.props;
+    if (
+      prevProps.data !== data ||
+      prevProps.width !== width ||
+      prevProps.height !== height ||
+      !shallowEqual(prevProps.margin, margin) ||
+      prevProps.iterations !== iterations ||
+      prevProps.nodeWidth !== nodeWidth ||
+      prevProps.nodePadding !== nodePadding ||
+      prevProps.nameKey !== nameKey
+    ) {
+      // eslint-disable-next-line
+      this.setState(this.constructor.createDefaultState(prevProps));
+    }
   }
 
   handleMouseEnter(el, type, e) {
@@ -550,8 +550,8 @@ class Sankey extends PureComponent {
         d={`
           M${sourceX},${sourceY}
           C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${
-        targetX
-      },${targetY}
+          targetX
+        },${targetY}
         `}
         fill="none"
         stroke="#333"

@@ -23,16 +23,16 @@ const subscriptions = [
   { label: 'Forest Watcher Mobile App', value: 'fwapp' },
   { label: 'Climate and Biodiversity', value: 'climate' },
   { label: 'Agricultural Supply Chains', value: 'supplychains' },
-  { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' }
+  { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' },
 ];
 
 class NewsletterForm extends PureComponent {
   static propTypes = {
     countries: PropTypes.array,
-    initialValues: PropTypes.object
+    initialValues: PropTypes.object,
   };
 
-  saveNewsletterSubscription = values => {
+  saveNewsletterSubscription = (values) => {
     const {
       firstName,
       lastName,
@@ -41,7 +41,7 @@ class NewsletterForm extends PureComponent {
       city,
       country,
       comments,
-      gfwInterests
+      gfwInterests,
     } = values;
 
     const postData = {
@@ -53,22 +53,22 @@ class NewsletterForm extends PureComponent {
       country,
       gfw_interests: gfwInterests
         ? Object.entries(gfwInterests)
-          .filter(([, val]) => val)
-          .map(([key]) => key)
-          .join(', ')
+            .filter(([, val]) => val)
+            .map(([key]) => key)
+            .join(', ')
         : '',
-      pardot_extra_field: comments
+      pardot_extra_field: comments,
     };
 
     return postNewsletterSubscription(postData)
       .then(() => {})
-      .catch(error => {
+      .catch((error) => {
         if (!error.response) {
           return true;
         }
 
         return {
-          [FORM_ERROR]: 'Service unavailable'
+          [FORM_ERROR]: 'Service unavailable',
         };
       });
   };
@@ -87,7 +87,7 @@ class NewsletterForm extends PureComponent {
             submitting,
             submitFailed,
             submitError,
-            submitSucceeded
+            submitSucceeded,
           }) => (
             <form className="c-newsletter-form" onSubmit={handleSubmit}>
               <div className="row">
@@ -101,7 +101,7 @@ class NewsletterForm extends PureComponent {
                 ) : (
                   <Fragment>
                     <div className="column small-12">
-                      <h1>{"Stay Updated on the World's Forests"}</h1>
+                      <h1>Stay Updated on the World&apos;s Forests</h1>
                       <h3>
                         Subscribe to monthly GFW newsletters and updates based
                         on your interests.

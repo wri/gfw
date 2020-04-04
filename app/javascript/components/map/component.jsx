@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import { handleMapLatLonTrack, track } from 'app/analytics';
+import {  logMapLatLonTrack, logEvent } from 'app/analytics';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -12,7 +12,7 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Map from 'components/ui/map';
 
-import iconCrosshair from 'assets/icons/crosshair.svg';
+import iconCrosshair from 'assets/icons/crosshair.svg?sprite';
 
 import Scale from './components/scale';
 import Popup from './components/popup';
@@ -20,7 +20,7 @@ import Draw from './components/draw';
 import Attributions from './components/attributions';
 
 // Components
-import LayerManagerWrapper from './components/layer-manager';
+import LayerManager from './components/layer-manager';
 
 // Styles
 import './styles.scss';
@@ -29,7 +29,7 @@ class MapComponent extends Component {
   static propTypes = {
     className: PropTypes.string,
     viewport: PropTypes.shape().isRequired,
-    bounds: PropTypes.shape(),
+    // bounds: PropTypes.shape(),
     mapStyle: PropTypes.string.isRequired,
     setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
@@ -54,9 +54,9 @@ class MapComponent extends Component {
     lang: PropTypes.string
   };
 
-  static defaultProps = {
-    bounds: {}
-  };
+  // static defaultProps = {
+  //   bounds: {}
+  // };
 
   state = {
     bounds: {},
@@ -130,7 +130,7 @@ class MapComponent extends Component {
 
     // fit bounds on cluster if clicked
     if (interaction && !isEqual(interaction, prevInteraction)) {
-      track('mapInteraction', {
+      logEvent('mapInteraction', {
         label: interaction.label
       });
 
@@ -167,7 +167,7 @@ class MapComponent extends Component {
       pitch,
       zoom
     });
-    handleMapLatLonTrack(location);
+    logMapLatLonTrack(location);
   }, 250);
 
   onStyleLoad = () => {
@@ -326,8 +326,8 @@ class MapComponent extends Component {
             maxZoom={maxZoom}
             getCursor={({ isHovering, isDragging }) => {
               if (drawing) return 'crosshair';
-              else if (isDragging) return 'grabbing';
-              else if (isHovering) return 'pointer';
+              if (isDragging) return 'grabbing';
+              if (isHovering) return 'pointer';
               return 'grab';
             }}
           >
@@ -340,7 +340,7 @@ class MapComponent extends Component {
                   onSelectBoundary={onSelectBoundary}
                 />
                 {/* LAYER MANAGER */}
-                <LayerManagerWrapper map={map} />
+                <LayerManager map={map} />
                 {/* DRAWING */}
                 <Draw
                   map={map}

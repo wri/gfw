@@ -17,9 +17,9 @@ import Button from 'components/ui/button';
 import MapGeostore from 'components/map-geostore';
 import Icon from 'components/ui/icon';
 
-import screenImg1x from 'assets/images/aois/alert-email.png';
-import screenImg2x from 'assets/images/aois/alert-email@2x.png';
-import deleteIcon from 'assets/icons/delete.svg';
+import screenImg1x from 'assets/images/aois/alert-email.png?webp';
+import screenImg2x from 'assets/images/aois/alert-email@2x.png?webp';
+import deleteIcon from 'assets/icons/delete.svg?sprite';
 
 import {
   email as validateEmail,
@@ -238,14 +238,14 @@ class AreaOfInterestForm extends PureComponent {
                         )}
                         {!testingWebhook &&
                           webhookError && (
-                          <span className="wh-error">
+                            <span className="wh-error">
                               POST error. Check the URL or CORS policy.
-                          </span>
-                        )}
+                            </span>
+                          )}
                         {!testingWebhook &&
                           webhookSuccess && (
-                          <span className="wh-success">Success!</span>
-                        )}
+                            <span className="wh-success">Success!</span>
+                          )}
                       </button>
                     </div>
                     <Select
@@ -266,11 +266,11 @@ class AreaOfInterestForm extends PureComponent {
                         {
                           label: 'As soon as forest change is detected',
                           value: 'deforestationAlerts'
+                        },
+                        {
+                          label: 'Monthly summary',
+                          value: 'monthlySummary'
                         }
-                        // {
-                        //   label: 'Monthly summary',
-                        //   value: 'monthlySummary'
-                        // }
                       ]}
                     />
                     <Error
@@ -284,22 +284,22 @@ class AreaOfInterestForm extends PureComponent {
                       </Submit>
                       {canDelete &&
                         initialValues.id && (
-                        <Button
-                          className="delete-area"
-                          theme="theme-button-clear"
-                          onClick={e => {
-                            e.preventDefault();
-                            deleteAreaOfInterest({
-                              id: initialValues.id,
-                              clearAfterDelete,
-                              callBack: () => this.setState({ deleted: true })
-                            });
-                          }}
-                        >
-                          <Icon icon={deleteIcon} className="delete-icon" />
+                          <Button
+                            className="delete-area"
+                            theme="theme-button-clear"
+                            onClick={e => {
+                              e.preventDefault();
+                              deleteAreaOfInterest({
+                                id: initialValues.id,
+                                clearAfterDelete,
+                                callBack: () => this.setState({ deleted: true })
+                              });
+                            }}
+                          >
+                            <Icon icon={deleteIcon} className="delete-icon" />
                             Delete Area
-                        </Button>
-                      )}
+                          </Button>
+                        )}
                     </div>
                   </Fragment>
                 )}

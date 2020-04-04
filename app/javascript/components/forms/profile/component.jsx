@@ -130,7 +130,8 @@ class ProfileForm extends PureComponent {
                     <div className="column small-12">
                       <p className="delete-profile">
                         If you wish to delete your My GFW account, please{' '}
-                        <a href="mailto:gfw@wri-org">email us</a>.
+                        <a href="mailto:gfw@wri-org">email us</a>
+                        .
                       </p>
                     </div>
                   </Fragment>

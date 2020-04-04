@@ -4,7 +4,7 @@ import { FORM_ERROR } from 'final-form';
 import { updateProfile } from 'services/user';
 import { setMyGFW } from 'providers/mygfw-provider/actions';
 
-export const saveProfile = createThunkAction(
+export default createThunkAction(
   'saveProfile',
   ({ id, signUpForTesting, ...rest }) => dispatch => {
     const postData = {

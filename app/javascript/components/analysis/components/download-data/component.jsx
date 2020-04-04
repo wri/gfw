@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
 
@@ -14,7 +14,7 @@ class DownloadData extends PureComponent {
       <ul className="download-list">
         {downloads.urls.map(l => (
           <li key={l.url}>
-            <a href={l.url} target="_blank">
+            <a href={l.url} target="_blank" rel="noopener noreferrer">
               {l.label}
             </a>
           </li>

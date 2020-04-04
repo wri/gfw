@@ -13,8 +13,8 @@ import { formatNumber } from 'utils/format';
 import Icon from 'components/ui/icon/icon-component';
 import MapGeostore from 'components/map-geostore';
 
-import tagIcon from 'assets/icons/tag.svg';
-import subscribedIcon from 'assets/icons/subscribed.svg';
+import tagIcon from 'assets/icons/tag.svg?sprite';
+import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 
 import './styles.scss';
 
@@ -34,8 +34,7 @@ class AoICard extends PureComponent {
 
   state = {
     alerts: {},
-    loading: true,
-    error: false
+    loading: true
   };
 
   mounted = false;
@@ -165,11 +164,11 @@ class AoICard extends PureComponent {
           <div className="meta">
             {tags &&
               tags.length > 0 && (
-              <div className="tags">
-                <Icon icon={tagIcon} className="tag-icon" />
-                <p>{tags.join(', ')}</p>
-              </div>
-            )}
+                <div className="tags">
+                  <Icon icon={tagIcon} className="tag-icon" />
+                  <p>{tags.join(', ')}</p>
+                </div>
+              )}
             {(deforestationAlerts || fireAlerts || monthlySummary) && (
               <div className="subscribed">
                 <Icon icon={subscribedIcon} className="subscribed-icon" />
@@ -182,10 +181,10 @@ class AoICard extends PureComponent {
               <span className="activity-intro">Last weeks activity:</span>
               {!loading &&
                 dataError && (
-                <span className="data-error-msg">
+                  <span className="data-error-msg">
                     Sorry, we had trouble finding your alerts!
-                </span>
-              )}
+                  </span>
+                )}
               {!dataError && (
                 <Fragment>
                   <span className="glad">

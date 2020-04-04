@@ -16,18 +16,18 @@ class SankeyTooltip extends PureComponent {
           content.payload.length > 0 &&
           content.payload.map(
             node =>
-              (node.payload ? (
+              node.payload ? (
                 <div key={node.name}>
                   <div className="tp-header">
                     <span className="tp-target-name">
                       {node.payload.payload &&
                         node.payload.payload.target &&
-                        `${node.payload.payload.target.name} 
+                        `${node.payload.payload.target.name}
                            ${
-                node.payload.payload.timeframes
-                  ? node.payload.payload.timeframes
-                  : ''
-                }`}
+                             node.payload.payload.timeframes
+                               ? node.payload.payload.timeframes
+                               : ''
+                           }`}
                     </span>
                     {config.unit && (
                       <span className="tp-unit">{config.unit}</span>
@@ -59,7 +59,7 @@ class SankeyTooltip extends PureComponent {
                     {tooltipChildren && tooltipChildren(node)}
                   </div>
                 </div>
-              ) : null)
+              ) : null
           )}
         {content && !content.payload && <div>No data</div>}
       </div>
@@ -72,7 +72,10 @@ SankeyTooltip.propTypes = {
     payload: PropTypes.array
   }),
   config: PropTypes.shape({
-    unit: PropTypes.string
+    unit: PropTypes.string,
+    suffix: PropTypes.string,
+    scale: PropTypes.number,
+    format: PropTypes.string
   }),
   tooltipChildren: PropTypes.func
 };

@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
+import { GFW_API } from 'utils/constants';
 import { locationLevelToStr } from 'utils/format';
 
 import { getActiveLayers, getMapZoom } from 'components/map/selectors';
@@ -78,10 +79,10 @@ export const getDataFromLayers = createSelector(
 export const getCountryDownloadLink = createSelector(
   [selectLocation],
   location =>
-    (location.type === 'country'
+    location.type === 'country'
       ? `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
           'global'}.xlsx`
-      : null)
+      : null
 );
 
 export const getDownloadLinks = createSelector(
@@ -101,7 +102,7 @@ export const getDownloadLinks = createSelector(
               downloads = downloads.concat({
                 url:
                   downloadUrlsFirstKey === '/'
-                    ? `${process.env.GFW_API}${downloadUrls[key]}`
+                    ? `${GFW_API}${downloadUrls[key]}`
                     : downloadUrls[key],
                 label: key
               });
@@ -118,16 +119,16 @@ export const getDownloadLinks = createSelector(
     // admin-related download links
     return countryUrl
       ? [
-        {
-          label: 'National Data',
-          urls: [
-            {
-              label: 'xlxs',
-              url: countryUrl
-            }
-          ]
-        }
-      ].concat(layerLinks)
+          {
+            label: 'National Data',
+            urls: [
+              {
+                label: 'xlxs',
+                url: countryUrl
+              }
+            ]
+          }
+        ].concat(layerLinks)
       : layerLinks;
   }
 );

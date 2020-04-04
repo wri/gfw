@@ -2,59 +2,54 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { NavLink } from 'redux-first-router-link';
+
+import { Media } from 'utils/responsive';
+import { APP_URL } from 'utils/constants';
 
 import Icon from 'components/ui/icon';
 import DropdownMenu from 'components/header/components/dropdown-menu';
 import SubmenuPanel from 'components/header/components/submenu-panel';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import myGfwIcon from 'assets/icons/mygfw.svg';
-import closeIcon from 'assets/icons/close.svg';
-import moreIcon from 'assets/icons/more.svg';
-import menuIcon from 'assets/icons/menu.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import myGfwIcon from 'assets/icons/mygfw.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import moreIcon from 'assets/icons/more.svg?sprite';
+import menuIcon from 'assets/icons/menu.svg?sprite';
 
 import './styles.scss';
 
 class NavAlt extends PureComponent {
   static propTypes = {
-    isDesktop: PropTypes.bool,
     loggedIn: PropTypes.bool,
+    loggingIn: PropTypes.bool,
     showSubmenu: PropTypes.bool,
     closeSubMenu: PropTypes.func,
-    setLangToUrl: PropTypes.func
+    NavLinkComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
-  constructor(props) {
-    super(props);
+  state = {
+    lang: 'en',
+    languages: [],
+    showLang: false,
+    showMore: false,
+  };
 
-    const txData = JSON.parse(localStorage.getItem('txlive:languages'));
-    const txLang = JSON.parse(localStorage.getItem('txlive:selectedlang'));
-    const languages =
-      txData &&
-      txData.source &&
-      [txData.source].concat(txData.translation).map(l => ({
-        label: l.name,
-        value: l.code
-      }));
-
-    this.state = {
-      showHeader: false,
-      languages,
-      lang: txLang || 'en',
-      showLang: false,
-      showMore: false
-    };
-
-    this.mounted = false;
-  }
+  mounted = false;
 
   componentDidMount() {
     this.mounted = true;
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+    if (
+      typeof window !== 'undefined' &&
+      window.Transifex &&
+      window.Transifex.live
+    ) {
+      const languages = window.Transifex.live.getAllLanguages();
+      this.setState({
+        lang: window.Transifex.live.detectLanguage(),
+        languages:
+          languages && languages.map((l) => ({ label: l.name, value: l.code })),
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -66,13 +61,15 @@ class NavAlt extends PureComponent {
     }
   }
 
-  handleLangSelect = lang => {
-    localStorage.setItem('txlive:selectedlang', `"${lang}"`);
-    window.Transifex.live.translateTo(lang);
-    this.setState({ lang, showLang: false, showMore: false });
-    window.Transifex.live.onTranslatePage(newLang => {
-      this.props.setLangToUrl(newLang);
-    });
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  handleLangSelect = (lang) => {
+    if (window.Transifex) {
+      window.Transifex.live.translateTo(lang);
+      this.setState({ lang, showLang: false, showMore: false });
+    }
   };
 
   handleCloseSubmenu = () => {
@@ -81,20 +78,14 @@ class NavAlt extends PureComponent {
   };
 
   render() {
-    const { isDesktop, showSubmenu, loggedIn } = this.props;
-    const { showLang, showMore, languages, lang } = this.state;
-    const activeLang = languages && languages.find(l => l.value === lang);
+    const { showSubmenu, loggedIn, loggingIn, NavLinkComponent } = this.props;
+    const { showLang, showMore, lang, languages } = this.state;
+    const activeLang = languages && languages.find((l) => l.value === lang);
     const showMorePanel = showMore || showSubmenu;
-    let moreMenuText = 'menu';
-    if (showSubmenu && isDesktop) {
-      moreMenuText = 'close';
-    } else if (isDesktop) {
-      moreMenuText = 'more';
-    }
 
     return (
       <ul className={cx('c-nav-alt', { 'full-screen': showSubmenu })}>
-        {isDesktop && (
+        <Media greaterThanOrEqual="md">
           <Fragment>
             <li className="alt-link">
               <OutsideClickHandler
@@ -108,11 +99,12 @@ class NavAlt extends PureComponent {
                         this.setState({ showLang: !showLang });
                       }
                     }}
+                    aria-label="translate"
                   >
-                    {(activeLang && activeLang.label) || 'English'}
+                    {activeLang && <span>{activeLang.label}</span>}
                     <Icon
                       className={cx('icon-arrow', {
-                        active: showLang
+                        active: showLang,
                       })}
                       icon={arrowIcon}
                     />
@@ -130,26 +122,49 @@ class NavAlt extends PureComponent {
               </OutsideClickHandler>
             </li>
             <li className="alt-link">
-              <NavLink
-                className="nav-link"
-                to="/my-gfw"
-                activeClassName="-active"
-              >
-                My GFW
-                <Icon
-                  icon={myGfwIcon}
-                  className={cx({ 'logged-in': loggedIn })}
-                />
-              </NavLink>
+              {NavLinkComponent ? (
+                <NavLinkComponent
+                  href="/my-gfw"
+                  className={cx('nav-link', {
+                    'animate-user-icon': !loggedIn && loggingIn,
+                  })}
+                  activeClassName="active"
+                >
+                  My GFW
+                  <Icon
+                    icon={myGfwIcon}
+                    className={cx({ 'logged-in': loggedIn })}
+                  />
+                </NavLinkComponent>
+              ) : (
+                <a
+                  href={`${APP_URL}/my-gfw`}
+                  className={cx(
+                    'nav-link',
+                    { 'animate-user-icon': !loggedIn && loggingIn },
+                    {
+                      active:
+                        typeof window !== 'undefined' &&
+                        window.location.pathname.includes('my-gfw'),
+                    }
+                  )}
+                >
+                  My GFW
+                  <Icon
+                    icon={myGfwIcon}
+                    className={cx({ 'logged-in': loggedIn })}
+                  />
+                </a>
+              )}
             </li>
           </Fragment>
-        )}
+        </Media>
         <li className="alt-link">
           <OutsideClickHandler
             onOutsideClick={() => this.setState({ showMore: false })}
           >
             <button
-              className="menu-link"
+              className="menu-link submenu-link"
               onClick={() => {
                 if (showSubmenu) {
                   this.handleCloseSubmenu();
@@ -158,24 +173,24 @@ class NavAlt extends PureComponent {
                 }
               }}
             >
-              {moreMenuText}
-              {isDesktop && (
+              <Media greaterThanOrEqual="md" className="menu-link">
+                {showMorePanel ? 'close' : 'more'}
                 <Icon
                   className={showMorePanel ? 'icon-close' : 'icon-more'}
                   icon={showMorePanel ? closeIcon : moreIcon}
                 />
-              )}
-              {!isDesktop && (
+              </Media>
+              <Media lessThan="md" className="menu-link">
+                {showMorePanel ? 'close' : 'menu'}
                 <Icon
                   className={showMorePanel ? 'icon-close' : 'icon-menu'}
                   icon={showMorePanel ? closeIcon : menuIcon}
                 />
-              )}
+              </Media>
             </button>
             {showMorePanel && (
               <SubmenuPanel
                 className="submenu-panel"
-                isMobile={!isDesktop}
                 languages={languages}
                 activeLang={activeLang}
                 handleLangSelect={this.handleLangSelect}

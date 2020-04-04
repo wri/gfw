@@ -95,7 +95,7 @@ export const getWidgetLayers = createSelector(
           w.datasets &&
             w.datasets.map(
               d =>
-                (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
+                Array.isArray(d.layers) ? d.layers : Object.values(d.layers)
             )
         )
       )
@@ -138,8 +138,8 @@ export const getLayerEndpoints = createSelector(
             params: {
               ...(analysisConfig.service === 'umd-loss-gain' &&
                 lossLayer && {
-                ...lossLayer.decodeParams
-              }),
+                  ...lossLayer.decodeParams
+                }),
               ...decodeParams,
               ...params,
               query: analysisConfig.query

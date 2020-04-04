@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './cover-styles.scss';
+import './styles.scss';
 
 class Cover extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -35,7 +35,7 @@ Cover.propTypes = {
   description: PropTypes.string.isRequired,
   large: PropTypes.bool,
   bgImage: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default Cover;
