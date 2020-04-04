@@ -1,4 +1,4 @@
-import makeStore from '../app/store';
+import makeStore from 'app/store';
 
 const isServer = typeof window === 'undefined';
 const NEXT_REDUX_STORE = 'NEXT_REDUX_STORE';
