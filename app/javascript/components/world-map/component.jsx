@@ -143,13 +143,13 @@ class WorldMap extends React.PureComponent {
       <Tooltip
         className={className}
         theme="tip"
-        html={
+        html={(
           <div className="c-world-map-tooltip">
             <p>{text && text.toLowerCase()}</p>
             <p>{items && items[0].value}</p>
             <p>{items && items[0].percentage}</p>
           </div>
-        }
+        )}
         followCursor
         animateFill={false}
         open={!!tooltipConfig}

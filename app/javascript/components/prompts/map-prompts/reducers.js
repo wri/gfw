@@ -1,4 +1,4 @@
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 import * as actions from './actions';
 
 const showMapPrompts = JSON.parse(localStorage.getItem('showPrompts'));
@@ -16,7 +16,7 @@ export const initialState = {
 
 const setShowMapPrompts = (state, { payload }) => {
   localStorage.setItem('showPrompts', payload);
-  track('userPromptShowHide', {
+  logEvent('userPromptShowHide', {
     label: payload ? 'User enables prompts' : 'User hides prompts'
   });
 

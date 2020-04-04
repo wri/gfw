@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import { Slider } from 'vizzuality-components';
 
@@ -18,8 +18,8 @@ import RefreshButton from 'components/ui/refresh-button';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
-import closeIcon from 'assets/icons/close.svg';
-import infoIcon from 'assets/icons/info.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import infoIcon from 'assets/icons/info.svg?sprite';
 
 import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
@@ -77,7 +77,7 @@ class RecentImagerySettings extends PureComponent {
                 options={WEEKS}
                 onChange={option => {
                   setRecentImagerySettings({ weeks: option });
-                  track('recentImageryDateRange');
+                  logEvent('recentImageryDateRange');
                 }}
                 native
               />
@@ -86,7 +86,7 @@ class RecentImagerySettings extends PureComponent {
                 date={date ? moment(date) : moment()}
                 handleOnDateChange={d => {
                   setRecentImagerySettings({ date: d.format('YYYY-MM-DD') });
-                  track('recentImageryDate');
+                  logEvent('recentImageryDate');
                 }}
                 settings={{
                   minDate: '2013-01-01',
@@ -120,7 +120,7 @@ class RecentImagerySettings extends PureComponent {
               onChange={this.handleCloundsChange}
               onAfterChange={d => {
                 setRecentImagerySettings({ clouds: d });
-                track('recentImageryClouds');
+                logEvent('recentImageryClouds');
               }}
               handleStyle={{
                 backgroundColor: 'white',
@@ -136,36 +136,39 @@ class RecentImagerySettings extends PureComponent {
         <div className="thumbnails">
           {tiles &&
             !!tiles.length && (
-            <Fragment>
-              <div key="thumbnails-header" className="header">
-                <div className="description">
-                  <p>
-                    {moment(selected.dateTime)
-                      .format('DD MMM YYYY')
-                      .toUpperCase()}
-                  </p>
-                  <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
-                  <p>{startCase(selected.instrument)}</p>
+              <Fragment>
+                <div key="thumbnails-header" className="header">
+                  <div className="description">
+                    <p>
+                      {moment(selected.dateTime)
+                        .format('DD MMM YYYY')
+                        .toUpperCase()}
+                    </p>
+                    <p>
+                      {format('.0f')(selected.cloudScore)}
+                      % cloud coverage
+                    </p>
+                    <p>{startCase(selected.instrument)}</p>
+                  </div>
+                  <Dropdown
+                    className="band-selector"
+                    theme="theme-dropdown-button"
+                    value={bands}
+                    options={BANDS}
+                    onChange={option => {
+                      resetRecentImageryData();
+                      setRecentImagerySettings({
+                        bands: option === '0' ? 0 : option,
+                        selected: null,
+                        selectedIndex: 0
+                      });
+                      logEvent('recentImageryImageType');
+                    }}
+                    native
+                  />
                 </div>
-                <Dropdown
-                  className="band-selector"
-                  theme="theme-dropdown-button"
-                  value={bands}
-                  options={BANDS}
-                  onChange={option => {
-                    resetRecentImageryData();
-                    setRecentImagerySettings({
-                      bands: option === '0' ? 0 : option,
-                      selected: null,
-                      selectedIndex: 0
-                    });
-                    track('recentImageryImageType');
-                  }}
-                  native
-                />
-              </div>
-              <div className="thumbnail-grid">
-                {tiles &&
+                <div className="thumbnail-grid">
+                  {tiles &&
                     !error &&
                     !!tiles.length &&
                     tiles.map((tile, i) => (
@@ -190,14 +193,14 @@ class RecentImagerySettings extends PureComponent {
                         }}
                       />
                     ))}
-              </div>
-            </Fragment>
-          )}
+                </div>
+              </Fragment>
+            )}
           {error && (
             <RefreshButton
               refetchFn={() => {
                 setRecentImageryLoading({ loading: false, error: false });
-                track('refetchDataBtn', {
+                logEvent('refetchDataBtn', {
                   label: 'Recent imagery'
                 });
               }}
@@ -206,11 +209,11 @@ class RecentImagerySettings extends PureComponent {
           {!error &&
             (!tiles || !tiles.length) &&
             !loading && (
-            <NoContent
-              className="placeholder"
-              message="We can't find additional images for the selection"
-            />
-          )}
+              <NoContent
+                className="placeholder"
+                message="We can't find additional images for the selection"
+              />
+            )}
           {loading &&
             !error &&
             (!tiles || !tiles.length) && <Loader className="placeholder" />}

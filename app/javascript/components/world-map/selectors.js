@@ -223,18 +223,18 @@ export const getWorldMapFlows = createSelector(
 
     const contextFlows = countries
       ? countries
-        .filter(country => country.geoId !== originGeoId)
-        .sort((a, b) => {
-          if (a.value < b.value) return -1;
-          if (a.value > b.value) return 1;
-          return 0;
-        })
-        .map((country, index) => ({
-          ...country,
-          strokeWidth: index + 1,
-          coordinates: COUNTRIES_COORDINATES[country.geo_id],
-          geoId: country.geo_id
-        }))
+          .filter(country => country.geoId !== originGeoId)
+          .sort((a, b) => {
+            if (a.value < b.value) return -1;
+            if (a.value > b.value) return 1;
+            return 0;
+          })
+          .map((country, index) => ({
+            ...country,
+            strokeWidth: index + 1,
+            coordinates: COUNTRIES_COORDINATES[country.geo_id],
+            geoId: country.geo_id
+          }))
       : [];
 
     const contextFlowsWithCoordinates = contextFlows.filter(

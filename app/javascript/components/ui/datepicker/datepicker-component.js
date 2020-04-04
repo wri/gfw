@@ -1,24 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
-import { SCREEN_M } from 'utils/constants';
-import MediaQuery from 'react-responsive';
 import cx from 'classnames';
 import range from 'lodash/range';
 import { Portal } from 'react-portal';
-
 import moment from 'moment';
-import Dropdown from 'components/ui/dropdown';
 
+import { Media } from 'utils/responsive';
+
+import Dropdown from 'components/ui/dropdown';
 import Input from 'components/ui/input';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './datepicker-styles.scss';
 
 class Datepicker extends PureComponent {
   state = {
-    position: {}
+    position: {},
   };
 
   componentDidMount() {
@@ -41,7 +40,7 @@ class Datepicker extends PureComponent {
     decreaseMonth,
     increaseMonth,
     prevMonthButtonDisabled,
-    nextMonthButtonDisabled
+    nextMonthButtonDisabled,
   }) => {
     const { settings } = this.props;
     const { minDate, maxDate } = settings;
@@ -67,7 +66,8 @@ class Datepicker extends PureComponent {
             .filter((m, i) => {
               if (date.getFullYear() === minMoment.year()) {
                 return i >= minMoment.month();
-              } else if (date.getFullYear() === maxMoment.year()) {
+              }
+              if (date.getFullYear() === maxMoment.year()) {
                 return i <= maxMoment.month();
               }
               return true;
@@ -82,7 +82,7 @@ class Datepicker extends PureComponent {
           options={range(
             parseInt(minMoment.year(), 10),
             parseInt(maxMoment.year(), 10) + 1
-          ).map(i => ({ value: i, label: i }))}
+          ).map((i) => ({ value: i, label: i }))}
           onChange={changeYear}
           value={date.getFullYear()}
           native
@@ -104,36 +104,41 @@ class Datepicker extends PureComponent {
 
     return (
       <Portal>
-        <MediaQuery minWidth={SCREEN_M}>
-          {isDesktop => (
+        <Media greaterThanOrEqual="md">
+          <div
+            className="react-datepicker-portal"
+            style={{
+              transform: `translate(${position.x}px, calc(${position.y}px + 1.75rem))`,
+            }}
+          >
+            <CalendarContainer className={className}>
+              {children}
+            </CalendarContainer>
+          </div>
+        </Media>
+        <Media lessThan="md">
+          <div
+            className="react-datepicker-portal react-datepicker-modal"
+            style={{
+              transform: `translate(${position.x}px, calc(${position.y}px + 1.75rem))`,
+            }}
+          >
+            <CalendarContainer className={className}>
+              {children}
+            </CalendarContainer>
             <div
-              className={`react-datepicker-portal ${
-                !isDesktop ? 'react-datepicker-modal' : ''
-              }`}
+              className="clickable-modal"
               style={{
-                transform: `translate(${position.x}px, calc(${
-                  position.y
-                }px + 1.75rem))`
+                width: '100vw',
+                height: '100vh',
+                position: 'absolute',
               }}
-            >
-              <CalendarContainer className={className}>
-                {children}
-              </CalendarContainer>
-              {!isDesktop && (
-                <div
-                  className="clickable-modal"
-                  style={{
-                    width: '100vw',
-                    height: '100vh',
-                    position: 'absolute'
-                  }}
-                  role="button"
-                  tabIndex={-1}
-                />
-              )}
-            </div>
-          )}
-        </MediaQuery>
+              role="button"
+              tabIndex={-1}
+              aria-label="open modal"
+            />
+          </div>
+        </Media>
       </Portal>
     );
   };
@@ -146,7 +151,7 @@ class Datepicker extends PureComponent {
 
     return (
       <div
-        ref={ref => {
+        ref={(ref) => {
           this.ref = ref;
         }}
         className={cx('c-datepicker', theme, className)}
@@ -154,7 +159,7 @@ class Datepicker extends PureComponent {
         {position && (
           <ReactDatePicker
             selected={momentDate.toDate()}
-            onSelect={d => {
+            onSelect={(d) => {
               handleOnDateChange(moment(d), 0);
             }}
             minDate={new Date(minDate)}
@@ -177,7 +182,7 @@ Datepicker.propTypes = {
   theme: PropTypes.string,
   date: PropTypes.object,
   handleOnDateChange: PropTypes.func.isRequired,
-  settings: PropTypes.object
+  settings: PropTypes.object,
 };
 
 export default Datepicker;

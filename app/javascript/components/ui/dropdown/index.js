@@ -45,9 +45,9 @@ class DropdownContainer extends PureComponent {
     return groupBy(
       inputValue
         ? options.filter(
-          item =>
-            deburrUpper(item.label).indexOf(deburrUpper(inputValue)) > -1
-        )
+            item =>
+              deburrUpper(item.label).indexOf(deburrUpper(inputValue)) > -1
+          )
         : options,
       groupKey || 'group'
     );

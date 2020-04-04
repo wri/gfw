@@ -1,6 +1,6 @@
 import { createThunkAction, createAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 export const setShowDashboardPrompts = createAction('setShowDashboardPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
@@ -24,7 +24,7 @@ export const setDashboardPromptsSettings = createThunkAction(
         })
       );
       if (stepsKey) {
-        track('userPrompt', {
+        logEvent('userPrompt', {
           label: `${stepsKey}: ${stepIndex + 1}`
         });
       }

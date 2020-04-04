@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './icon-styles.scss';
+import './styles.scss';
 
 const Icon = ({ icon, className }) => (
   <svg className={`c-icon ${className}`} viewBox={icon.viewBox || '0 0 32 32'}>
@@ -10,7 +10,11 @@ const Icon = ({ icon, className }) => (
 );
 
 Icon.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func
+  ]),
   className: PropTypes.string
 };
 

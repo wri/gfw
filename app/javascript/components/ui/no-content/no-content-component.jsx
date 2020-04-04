@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import tree from 'assets/icons/tree.png';
+import tree from 'assets/icons/tree.png?webp';
 import './no-content-styles.scss';
 
 const NoContent = ({ className, message, icon, children }) => (

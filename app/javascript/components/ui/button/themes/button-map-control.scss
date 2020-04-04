@@ -17,7 +17,7 @@
     background-color: darken($white, 10%);
   }
 
-  &.--active {
+  &.active {
     svg {
       fill: $green-gfw;
     }

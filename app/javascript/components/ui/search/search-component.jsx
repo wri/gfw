@@ -5,8 +5,8 @@ import Button from 'components/ui/button';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import searchIcon from 'assets/icons/search.svg';
-import closeIcon from 'assets/icons/close.svg';
+import searchIcon from 'assets/icons/search.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
 import './search-styles.scss';
 import './themes/search-small.scss'; // eslint-disable-line
 

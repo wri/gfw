@@ -115,8 +115,8 @@ export const getMoreTiles = createThunkAction(
                   ...d,
                   ...(tile &&
                     i > 0 && {
-                    tile_url: tile.tile_url
-                  }),
+                      tile_url: tile.tile_url
+                    }),
                   ...(thumb && {
                     thumbnail_url: thumb.thumbnail_url
                   })

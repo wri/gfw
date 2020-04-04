@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
-import closeIcon from 'assets/icons/close.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
 
@@ -55,10 +55,10 @@ const Selector = props => {
         <input {...inputProps()} />
         {clearable &&
           activeValue && (
-          <button className="clear-btn" onClick={handleClearSelection}>
-            <Icon icon={closeIcon} className="clear-icon" />
-          </button>
-        )}
+            <button className="clear-btn" onClick={handleClearSelection}>
+              <Icon icon={closeIcon} className="clear-icon" />
+            </button>
+          )}
         {arrowPosition !== 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
             <Icon className="arrow" icon={arrowDownIcon} />

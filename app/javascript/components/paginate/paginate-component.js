@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 
 import './paginate-styles.scss';
 

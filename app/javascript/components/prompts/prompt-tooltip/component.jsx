@@ -6,7 +6,7 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Checkbox from 'components/ui/checkbox';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
 
@@ -35,9 +35,9 @@ class PromptTooltip extends PureComponent {
         <button className="step-close" {...closeProps}>
           <Icon className="step-close-btn" icon={closeIcon} />
         </button>
-        <div className="step-title">{`${title}${
-          size > 1 ? ` · ${index + 1}/${size}` : ''
-        }`}</div>
+        <div className="step-title">
+          {`${title}${size > 1 ? ` · ${index + 1}/${size}` : ''}`}
+        </div>
         <div className="step-content">
           {typeof content === 'string' ? content : content}
         </div>
@@ -78,7 +78,7 @@ class PromptTooltip extends PureComponent {
                 onClick={() => handleShowPrompts(!showPrompts)}
               >
                 <Checkbox className="prompts-checkbox" value={showPrompts} />
-                {'Show me tips'}
+                Show me tips
               </button>
             )}
           </div>

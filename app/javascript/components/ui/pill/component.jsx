@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 import './styles.scss';
 
 const Button = props => {

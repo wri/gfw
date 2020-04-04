@@ -2,16 +2,15 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 class ScrollTo extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
     setTimeout(this.handleScroll, this.props.delay);
   }
 
-  handleFadeOut = el => {
+  handleFadeOut = (el) => {
     el.style.backgroundColor = null; // eslint-disable-line
   };
 
-  handleFadeIn = el => {
+  handleFadeIn = (el) => {
     const initialColor = el.style.backgroundColor;
     el.style.transition = 'background-color 1.5s linear'; // eslint-disable-line
     el.style.backgroundColor = '#fefedc'; // eslint-disable-line
@@ -25,11 +24,13 @@ class ScrollTo extends PureComponent {
       window.scrollTo({
         behavior: 'smooth',
         left: 0,
-        top: targetBox.top - 100
+        top: targetBox.top - 100,
       });
       this.handleFadeIn(target);
     }
-    afterScroll();
+    if (afterScroll) {
+      afterScroll();
+    }
   };
 
   render() {
@@ -40,11 +41,11 @@ class ScrollTo extends PureComponent {
 ScrollTo.propTypes = {
   target: PropTypes.object,
   delay: PropTypes.number,
-  afterScroll: PropTypes.number
+  afterScroll: PropTypes.number,
 };
 
 ScrollTo.defaultProps = {
-  delay: 500
+  delay: 500,
 };
 
 export default ScrollTo;

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
-import infoIcon from 'assets/icons/info.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
+import infoIcon from 'assets/icons/info.svg?sprite';
 
 import './styles.scss';
 
@@ -72,13 +72,13 @@ const Item = props => {
       )}
       {groupParent &&
         showGroup !== groupParent && (
-        <Icon
-          icon={arrowDownIcon}
-          className={`group-icon ${
-            showGroup === groupParent ? 'selected' : ''
-          }`}
-        />
-      )}
+          <Icon
+            icon={arrowDownIcon}
+            className={`group-icon ${
+              showGroup === groupParent ? 'selected' : ''
+            }`}
+          />
+        )}
     </div>
   );
 };

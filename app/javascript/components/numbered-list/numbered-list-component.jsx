@@ -73,23 +73,23 @@ class NumberedList extends PureComponent {
                 <li key={`${item.label}-${item.id}`}>
                   {item.path &&
                     linksExt && (
-                    <a
-                      href={`https://${window.location.host}${item.path}`}
-                      target="_blank"
-                      rel="noopener nofollower"
-                    >
-                      {linkContent}
-                    </a>
-                  )}
+                      <a
+                        href={`https://${window.location.host}${item.path}`}
+                        target="_blank"
+                        rel="noopener nofollower"
+                      >
+                        {linkContent}
+                      </a>
+                    )}
                   {item.path &&
                     !linksExt && (
-                    <Link
-                      className={`${linksDisabled ? 'disabled' : ''}`}
-                      to={item.path}
-                    >
-                      {linkContent}
-                    </Link>
-                  )}
+                      <Link
+                        className={`${linksDisabled ? 'disabled' : ''}`}
+                        to={item.path}
+                      >
+                        {linkContent}
+                      </Link>
+                    )}
                   {!item.path && (
                     <div className={`${linksDisabled ? 'disabled' : ''}`}>
                       {linkContent}
@@ -101,12 +101,12 @@ class NumberedList extends PureComponent {
         </ul>
         {handlePageChange &&
           data.length > settings.pageSize && (
-          <Paginate
-            settings={settings}
-            count={data.length}
-            onClickChange={handlePageChange}
-          />
-        )}
+            <Paginate
+              settings={settings}
+              count={data.length}
+              onClickChange={handlePageChange}
+            />
+          )}
       </div>
     );
   }

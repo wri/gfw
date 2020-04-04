@@ -80,9 +80,9 @@ export const getTileBounds = createSelector([getActiveTile], activeTile => {
 export const getPositionInsideTile = createSelector(
   [getTileBounds, getPosition],
   (bounds, position) =>
-    (bounds
+    bounds
       ? checkLocationInsideBbox([position.lng, position.lat], bounds)
-      : true)
+      : true
 );
 
 export const getSources = createSelector(

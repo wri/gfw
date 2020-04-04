@@ -4,10 +4,10 @@ import SlickSlider from 'react-slick';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import { SCREEN_M } from 'utils/constants';
 
-import './carousel-styles.scss';
+import './styles.scss';
 
 const defaultSettings = {
   dots: false,
@@ -15,14 +15,14 @@ const defaultSettings = {
   infinite: false,
   slidesToShow: 2,
   slidesToScroll: 1,
-  customPaging: () => <button />,
+  customPaging: (i) => <button aria-label={`slide ${i}`} />,
   nextArrow: (
-    <Button theme="square">
+    <Button theme="square" ariaLabel="carousel next">
       <Icon icon={arrowIcon} />
     </Button>
   ),
   prevArrow: (
-    <Button theme="square">
+    <Button theme="square" ariaLabel="carousel previous">
       <Icon icon={arrowIcon} />
     </Button>
   ),
@@ -30,24 +30,38 @@ const defaultSettings = {
     {
       breakpoint: SCREEN_M,
       settings: {
-        slidesToShow: 1
-      }
-    }
-  ]
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 
 class Carousel extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+  state = {
+    isClient: false,
+  };
+
+  componentDidMount() {
+    this.setState({ isClient: true });
+  }
+
   render() {
     const { className, children, settings } = this.props;
+    const { isClient } = this.state;
     const sliderSettings = {
       ...defaultSettings,
-      ...settings
+      ...settings,
     };
 
     return (
       <div className={`c-carousel ${className || ''}`}>
-        <SlickSlider {...sliderSettings}>{children}</SlickSlider>
+        <SlickSlider
+          key={isClient ? 'client' : 'server'}
+          {...sliderSettings}
+          responsive={isClient ? sliderSettings.responsive : null}
+        >
+          {children}
+        </SlickSlider>
       </div>
     );
   }
@@ -56,7 +70,7 @@ class Carousel extends PureComponent {
 Carousel.propTypes = {
   children: PropTypes.node.isRequired,
   settings: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Carousel;
