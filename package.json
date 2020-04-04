@@ -18,7 +18,7 @@
     }
   },
   "lint-staged": {
-    "*.scss": "sass-lint -c .sass-lint.yml -v -q",
+    "*.scss": "stylelint --config .stylelintrc.json",
     "*.{js,jsx}": [
       "prettier --parser flow --write --single-quote",
       "eslint --ext .js --ext .jsx --fix"
@@ -135,7 +135,9 @@
     "istanbul-lib-coverage": "^3.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.2",
-    "sass-lint": "^1.13.1",
-    "start-server-and-test": "^1.10.11"
+    "start-server-and-test": "^1.10.11",
+    "stylelint": "^13.3.0",
+    "stylelint-config-sass-guidelines": "^7.0.0",
+    "stylelint-scss": "^3.16.0"
   }
 }
