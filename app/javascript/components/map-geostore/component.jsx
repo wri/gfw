@@ -89,14 +89,14 @@ class MapGeostore extends Component {
     const { width, height } = this.props;
     const geostore = this.state.geostore && this.state.geostore.geojson.features[0];
     if (geostore) {
-      const simpleGeostore = simplify(this.state.geostore.geojson, { tolerance: 0.01 });
+      const simpleGeostore = simplify(this.state.geostore.geojson, { tolerance: 0.05 });
       const simpGeostore = simpleGeostore.features[0];
       const geojson = {
         ...simpGeostore,
         properties: {
           fill: 'transparent',
           stroke: '%23C0FF24',
-          'stroke-width': 3
+          'stroke-width': 2
         }
       };
       const geojsonOutline = {
@@ -104,7 +104,7 @@ class MapGeostore extends Component {
         properties: {
           fill: 'transparent',
           stroke: '%23000',
-          'stroke-width': 8
+          'stroke-width': 5
         }
       };
 
