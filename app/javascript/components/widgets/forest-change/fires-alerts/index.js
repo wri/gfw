@@ -57,7 +57,7 @@ export default {
   },
   settings: {
     period: 'week',
-    weeks: 13,
+    weeks: 50,
     dataset: 'VIIRS',
     layerStartDate: null,
     layerEndDate: null

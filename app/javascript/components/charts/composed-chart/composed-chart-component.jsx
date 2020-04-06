@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  Brush,
   Tooltip,
   ResponsiveContainer,
   ComposedChart
@@ -75,7 +76,8 @@ class CustomComposedChart extends PureComponent {
       unit,
       unitFormat,
       height,
-      margin
+      margin,
+      brush
     } = config;
 
     const isVertical = !!xKeys;
@@ -219,6 +221,8 @@ class CustomComposedChart extends PureComponent {
                     ))}
                 </Bar>
               ))}
+
+            {brush && <Brush {...brush} />}
           </ComposedChart>
         </ResponsiveContainer>
       </div>

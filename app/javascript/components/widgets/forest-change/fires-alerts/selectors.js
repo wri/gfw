@@ -115,7 +115,12 @@ export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
 
 export const parseConfig = createSelector(
   [getColors, getLatest],
-  (colors, latest) => getChartConfig(colors, moment(latest))
+  (colors, latest) => ({
+    ...getChartConfig(colors, moment(latest)),
+    brush: {
+      dataKey: 'date'
+    }
+  })
 );
 
 export const parseSentence = createSelector(
