@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
 
-import { fetchFiresAlerts, fetchFiresLatest } from 'services/alerts';
+import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
 import {
@@ -274,7 +274,7 @@ export default {
     ]
   },
   getData: params =>
-    all([fetchFiresAlerts(params), fetchFiresLatest(params)]).then(
+    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         return { alerts: data, latest } || {};

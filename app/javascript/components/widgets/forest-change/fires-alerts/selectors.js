@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import maxBy from 'lodash/maxBy';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import moment from 'moment';
@@ -22,55 +22,65 @@ const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.sentence || null;
 
 export const getData = createSelector(
-  [getAlerts, getDataset],
-  (data, dataset) => {
+  [getAlerts, getLatest],
+  (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const dataMax = maxBy(data, 'year');
-    const dataMaxYear = (dataMax && dataMax.year) || null;
-    const dataMaxFiltered = maxBy(
-      data.filter(el => el && el.year === dataMaxYear),
-      'week'
+    const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
+    const hasAlertsByYears = Object.values(groupedByYear).reduce(
+      (acc, next) => {
+        const { year } = next[0];
+        return {
+          ...acc,
+          [year]: next.some(item => item.alerts > 0)
+        };
+      },
+      {}
     );
-    const dataMaxWeek = (dataMaxFiltered && dataMaxFiltered.week) || null;
-    const groupedByYear = groupBy(data, 'year');
+
+    const dataYears = Object.keys(hasAlertsByYears).filter(
+      key => hasAlertsByYears[key] === true
+    );
+    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
+    const startYear =
+      minYear === moment().year() ? moment().year() - 1 : minYear;
+
     const years = [];
+    const latestWeek = moment(latest);
     const lastWeek = {
-      isoWeek:
-        dataMaxWeek ||
-        moment()
-          .subtract(2, 'w')
-          .isoWeek(),
-      year:
-        dataMaxYear ||
-        moment()
-          .subtract(2, 'w')
-          .year()
+      isoWeek: latestWeek.isoWeek(),
+      year: latestWeek.year()
     };
-    const min_year = dataset === 'MODIS' ? 2001 : 2016;
-    for (let i = min_year; i <= lastWeek.year; i += 1) {
+
+    for (let i = startYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
+
     const yearLengths = {};
     years.forEach(y => {
-      if (lastWeek.year === parseInt(y, 10)) {
+      if (lastWeek.year === y) {
         yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).weekday() === 1) {
-        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+        yearLengths[y] = moment(`${y}-12-31`)
+          .subtract('week', 1)
+          .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
       }
     });
+
     const zeroFilledData = [];
+
     years.forEach(d => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
         zeroFilledData.push(
           yearDataByWeek[i]
             ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(d, 10) }
+            : { alerts: 0, count: 0, week: i, year: parseInt(d, 10) }
         );
       }
     });
+
     return zeroFilledData;
   }
 );

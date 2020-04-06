@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { apiRequest, cartoRequest } from 'utils/request';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
@@ -54,6 +55,8 @@ const SQL_QUERIES = {
     'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  viirsFires:
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -770,6 +773,98 @@ export const fetchGLADLatest = () => {
           attributes: { updatedAt: lastFriday },
           id: null,
           type: 'glad-alerts'
+        })
+      );
+    });
+};
+
+export const fetchVIIRSAlerts = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  forestType,
+  landCategory,
+  ifl,
+  grouped,
+  download,
+  ...params
+}) => {
+  const { viirsFires } = SQL_QUERIES;
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    glad: true
+  })}${viirsFires}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
+        : getLocationSelect({ adm1, adm2, ...params })
+    )
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        ifl,
+        ...params,
+        glad: true
+      })
+    );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchVIIRSLatest = () => {
+  const url =
+    'http://ec2-54-237-221-136.compute-1.amazonaws.com/nasa_viirs_fire_alerts/v202003/max_alert__date';
+
+  return axios
+    .get(url)
+    .then(({ data }) => {
+      const date = data.max_date;
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'viirs-alerts'
+      };
+    })
+    .catch(error => {
+      console.error('Error in gladRequest', error);
+      return new Promise(resolve =>
+        resolve({
+          attributes: { updatedAt: moment().format('YYYY-MM-DD') },
+          id: null,
+          type: 'viirs-alerts'
         })
       );
     });
