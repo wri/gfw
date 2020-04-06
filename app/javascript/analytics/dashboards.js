@@ -14,6 +14,11 @@ export default {
     action: 'Download page',
     label: '[country]'
   },
+  downloadWidgetData: {
+    category: 'Dashboards page',
+    action: 'Download widget',
+    label: '[widget name] [indicator]'
+  },
   visitMainMapFromDashboard: {
     category: 'Dashboards page',
     action: 'User clicks through to main map',

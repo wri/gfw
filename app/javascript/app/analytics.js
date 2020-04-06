@@ -13,7 +13,7 @@ export const initGA = () => {
   if (ANALYTICS_PROPERTY_ID) {
     if (!gaInitialized) {
       ReactGA.initialize(ANALYTICS_PROPERTY_ID, {
-        debug: false
+        debug: true
       });
       gaInitialized = true;
     }

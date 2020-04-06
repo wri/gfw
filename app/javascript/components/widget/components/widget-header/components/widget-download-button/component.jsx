@@ -8,6 +8,7 @@ import moment from 'moment';
 import { saveAs } from 'file-saver';
 import cx from 'classnames';
 
+import { track } from 'app/analytics';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -199,6 +200,7 @@ class WidgetDownloadButton extends PureComponent {
     } else {
       this.generateZipFromURL();
     }
+    track('downloadWidgetData', { label: this.props.title });
   };
 
   render() {
