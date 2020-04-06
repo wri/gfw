@@ -110,7 +110,7 @@ export default {
     climate: 2
   },
   sentences:
-    'Between {startYear} and {endYear}, a total of {value} of {type} ({annualAvg} per year) was released into the atmosphere as a result of tree cover loss in {location}.',
+    'Between {startYear} and {endYear}, a total of {value} of {type} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year.',
   settings: {
     unit: 'co2LossByYear',
     threshold: 30,

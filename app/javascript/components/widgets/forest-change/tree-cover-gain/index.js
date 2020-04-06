@@ -38,9 +38,15 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
     }
   ],
-  refetchKeys: ['forestType', 'landCategory'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
   colors: 'gain',
   metaKey: 'widget_tree_cover_gain',

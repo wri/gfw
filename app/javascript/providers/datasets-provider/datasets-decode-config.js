@@ -552,13 +552,12 @@ export default {
   treeCoverLoss: decodes.treeCoverLoss,
   treeLossByDriver: decodes.treeLossByDriver,
   GLADs: decodes.GLADs,
-  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs, // TODO: remove?
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
-  '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
   terrai: decodes.terrai,
   braLandCover: decodes.braLandCover,
-  '7b6acc5f-bc18-4e13-951c-0d81639d68a7': decodes.grossCarbonEmissions,
-  '5614e8ef-3e10-43d8-9e0c-7a9ddde93b81': decodes.cumulativeCarbonGain,
-  'b2070db1-f01c-4107-8c2a-50fe77d3fbce': decodes.netCarbonFlux
+  grossCarbonEmissions: decodes.grossCarbonEmissions,
+  cumulativeCarbonGain: decodes.cumulativeCarbonGain,
+  netGHGFlux: decodes.netCarbonFlux,
+  formaAlerts: decodes.forma
 };

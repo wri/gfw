@@ -449,6 +449,7 @@ export const getInteractiveLayerIds = createSelector(
     const interactiveLayers = layers.filter(
       l =>
         !isEmpty(l.interactionConfig) &&
+        l.layerConfig &&
         l.layerConfig.render &&
         l.layerConfig.render.layers
     );
