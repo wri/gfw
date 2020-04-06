@@ -34,7 +34,7 @@ class AreaOfInterestModal extends PureComponent {
   render() {
     const { open, loading, userData, canDelete, viewAfterSave } = this.props;
     const { email, fullName, lastName, loggedIn } = userData || {};
-    const isProfileFormFilled = email && (fullName || lastName);
+    const isProfileFormFilled = !!email && (!!fullName || !!lastName);
 
     return (
       <Modal

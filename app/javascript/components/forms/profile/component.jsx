@@ -94,9 +94,7 @@ class ProfileForm extends PureComponent {
                           value: s
                         }))}
                         placeholder="Select a sector"
-                        required={
-                          source === 'AreaOfInterestModal' ? true : undefined
-                        }
+                        required={source === 'AreaOfInterestModal'}
                       />
                       {values.sector &&
                         sectors[values.sector] && (
@@ -109,11 +107,7 @@ class ProfileForm extends PureComponent {
                             radioInput: s === 'Other (write in):'
                           }))}
                           selectedOption={values.subsector}
-                          required={
-                            source === 'AreaOfInterestModal'
-                              ? true
-                              : undefined
-                          }
+                          required={source === 'AreaOfInterestModal'}
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
