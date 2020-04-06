@@ -146,7 +146,7 @@ class ProfileForm extends PureComponent {
                       />
                       <Select
                         name="interests"
-                        label="What topics are you interested in? Select all that apply."
+                        label="What topics are you interested in? (select all that apply)"
                         options={interests}
                         required
                         multiple
@@ -174,7 +174,7 @@ class ProfileForm extends PureComponent {
                       {values.signUpToNewsletter && (
                         <Select
                           name="topics"
-                          label="Topics you're interested in receiving communications about"
+                          label="Topics you're interested in receiving communications about (select all that apply)"
                           options={topics}
                           required
                           multiple
