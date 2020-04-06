@@ -5,7 +5,7 @@ export const sectors = {
     'Legislature/Parliament',
     'Ministry/National Agency',
     'Subnational Agency',
-    'Other (write in):'
+    'Other:'
   ],
   'Donor Institution / Agency': [
     'Director/Executive',
@@ -13,7 +13,7 @@ export const sectors = {
     'Researcher',
     'Monitoring/Evaluation',
     'Field/Country Staff',
-    'Other (write in):'
+    'Other:'
   ],
   'Local NGO (national or subnational)': [
     'Director/Executive',
@@ -24,7 +24,7 @@ export const sectors = {
     'Field Staff',
     'Communications Specialist',
     'Park/Forest Ranger',
-    'Other (write in):'
+    'Other:'
   ],
   'International NGO': [
     'Director/Executive',
@@ -34,7 +34,7 @@ export const sectors = {
     'Field/Country Staff',
     'Communications Specialist',
     'Researcher',
-    'Other (write in):'
+    'Other:'
   ],
   'UN or International Organization': [
     'Director/Executive',
@@ -44,27 +44,23 @@ export const sectors = {
     'Monitoring/Evaluation Specialist',
     'GIS/Technical Specialist',
     'Communications Specialist',
-    'Other (write in):'
+    'Other:'
   ],
   'Academic / Research Organization': [
     'Faculty (Primary/Secondary)',
     'Faculty (University)',
-    'Studenty (Primary/Secondary)',
+    'Student (Primary/Secondary)',
     'Student (University/Graduate)',
     'Researcher (Post-Doc, Fellow, etc.)',
-    'Other (write in):'
+    'Other:'
   ],
-  'Journalist / Media Organization': [
-    'Reporter',
-    'Editor',
-    'Other (write in):'
-  ],
+  'Journalist / Media Organization': ['Reporter', 'Editor', 'Other:'],
   'Indigenous or Community-Based Organization': [
     'Community Leader',
     'Forest Manager/Monitor',
     'GIS/Technical Specialist',
     'Communications Specialist',
-    'Other (write in):'
+    'Other:'
   ],
   'Private sector': [
     'Supply Chain Manager',
@@ -72,10 +68,10 @@ export const sectors = {
     'Procurement Staff',
     'Retailer/Trader',
     'Land or Concession Owner',
-    'Other (write in):'
+    'Other:'
   ],
-  'Individual / No Affiliation': ['Other (write in):'],
-  Other: ['Other (write in):']
+  'Individual / No Affiliation': ['Other:'],
+  Other: ['Other:']
 };
 
 export const interests = [

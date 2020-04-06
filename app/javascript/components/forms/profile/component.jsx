@@ -77,7 +77,7 @@ class ProfileForm extends PureComponent {
                     </div>
                     <div className="column small-12">
                       <Input name="firstName" label="first name" />
-                      <Input name="lastName" label="last name" required />
+                      <Input name="lastName" label="surname" required />
                       <Input
                         name="email"
                         type="email"
@@ -104,7 +104,7 @@ class ProfileForm extends PureComponent {
                           options={sectors[values.sector].map(s => ({
                             label: s,
                             value: s.replace(/( )+|(\/)+/g, '_'),
-                            radioInput: s === 'Other (write in):'
+                            radioInput: s === 'Other:'
                           }))}
                           selectedOption={values.subsector}
                           required={source === 'AreaOfInterestModal'}
@@ -112,7 +112,7 @@ class ProfileForm extends PureComponent {
                       )}
                       <Input name="jobTitle" label="job title" />
                       <Input name="company" label="Company / organization" />
-                      <p className="section-name">In which location are you?</p>
+                      <p className="section-name">Where are you located?</p>
                       <Select
                         name="country"
                         label="country"
@@ -125,7 +125,7 @@ class ProfileForm extends PureComponent {
                         label="state / department / province"
                       />
                       <p className="section-name">
-                        Which geographical location are you interested in?
+                        What area are you most interested in?
                       </p>
                       <Select
                         name="aoiCountry"
@@ -147,7 +147,7 @@ class ProfileForm extends PureComponent {
                       />
                       <Select
                         name="howDoYouUse"
-                        label="how do you plan to use global forest watch? (select all that apply)"
+                        label="how do you use global forest watch? (select all that apply)"
                         options={howDoYouUse.map(r => ({
                           label: r,
                           value: r
@@ -159,7 +159,7 @@ class ProfileForm extends PureComponent {
                         options={[
                           {
                             label:
-                              'Subscribe to the newsletter to receive GFW updates',
+                              'Subscribe to monthly GFW newsletters and updates based on your interests.',
                             value: true
                           }
                         ]}
@@ -168,7 +168,7 @@ class ProfileForm extends PureComponent {
                       {values.signUpToNewsletter && (
                         <Select
                           name="topics"
-                          label="Topics you're interested in receiving communications about (select all that apply)"
+                          label="I’m interested in receiving communications about (select all that apply)"
                           options={topics}
                           required
                           multiple
@@ -185,8 +185,8 @@ class ProfileForm extends PureComponent {
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">
-                        If you wish to delete your My GFW account, please{' '}
-                        <a href="mailto:gfw@wri-org">email us</a>.
+                        <a href="mailto:gfw@wri-org">Email us </a>
+                        to delete your MyGFW account.
                       </p>
                     </div>
                   </Fragment>
