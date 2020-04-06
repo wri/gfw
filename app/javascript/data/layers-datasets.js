@@ -5,6 +5,9 @@ export const FOREST_GAIN_DATASET = '190acb0d-2b06-48d8-b894-234a7413674b';
 
 export const FOREST_LOSS_DATASET = 'eab9655f-dd37-4bb3-b223-4c5df166564c';
 
+export const FOREST_LOSS_BY_DRIVER_DATASET =
+  'f23a1803-ba17-4fe3-a1ad-39abfbfb56c6';
+
 export const FOREST_EXTENT_DATASET = 'c92b6411-f0e5-4606-bbd9-138e40e50eb8';
 
 export const GLAD_DEFORESTATION_ALERTS_DATASET =
@@ -44,3 +47,6 @@ export const WOOD_FIBER_DATASET = '1f016faa-5940-4dd3-a848-a00086e20e38';
 export const OIL_PALM_DATASET = 'c5aac280-9dac-4e97-8f44-afc52a52c255';
 export const LOGGING_CONCESSIONS_DATASET =
   '62c3d70c-d218-458f-8342-ee6a2b0ba434';
+
+export const RECENT_SATELLITE_IMAGERY_DATASET =
+  'f1b4b202-5a2a-421e-9a12-54888e86e140';

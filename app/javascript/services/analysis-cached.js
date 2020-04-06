@@ -37,11 +37,11 @@ const {
 
 const SQL_QUERIES = {
   loss:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY treecover_loss__year ORDER BY treecover_loss__year',
+    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY treecover_loss__year ORDER BY treecover_loss__year',
   lossTsc:
-    'SELECT tcs_driver__type, treecover_loss__year, SUM(treecover_loss__ha) AS treecover_loss__ha, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg FROM data {WHERE} GROUP BY tcs_driver__type, treecover_loss__year',
+    'SELECT tcs_driver__type, treecover_loss__year, SUM(treecover_loss__ha) AS treecover_loss__ha, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY tcs_driver__type, treecover_loss__year',
   lossGrouped:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY treecover_loss__year, {location} ORDER BY treecover_loss__year, {location}',
+    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY treecover_loss__year, {location} ORDER BY treecover_loss__year, {location}',
   extent:
     'SELECT SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
@@ -488,7 +488,7 @@ export const getGain = ({
       url: url.replace('query', 'download')
     };
   }
-  
+
   return apiRequest.get(url).then(response => ({
     ...response,
     data: {

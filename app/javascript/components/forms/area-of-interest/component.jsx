@@ -266,11 +266,11 @@ class AreaOfInterestForm extends PureComponent {
                         {
                           label: 'As soon as forest change is detected',
                           value: 'deforestationAlerts'
-                        },
-                        {
-                          label: 'Monthly summary',
-                          value: 'monthlySummary'
                         }
+                        // {
+                        //   label: 'Monthly summary',
+                        //   value: 'monthlySummary'
+                        // }
                       ]}
                     />
                     <Error

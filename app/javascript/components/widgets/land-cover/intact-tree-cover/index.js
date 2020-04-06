@@ -70,7 +70,7 @@ export default {
     extentYear: 2010,
     ifl: 2016
   },
-  refetchKeys: ['forestType', 'threshold', 'extentYear'],
+  refetchKeys: ['landCategory', 'threshold', 'extentYear'],
   sentences: {
     initial:
       'As of 2016, {percentage} of {location} tree cover was <b>intact forest</b>.',

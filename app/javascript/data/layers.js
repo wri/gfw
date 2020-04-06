@@ -31,3 +31,4 @@ export const WOOD_FIBER = '82229960-13c2-4810-84e7-bdd4812d4578';
 export const OIL_PALM = 'aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1';
 export const LOGGING_CONCESSIONS = '08fd9f5d-51c4-4c01-8c37-d63e86a0de30';
 export const PLACES_TO_WATCH = '40816dac-d957-47bd-82e4-22f8840601eb';
+export const RECENT_SATELLITE_IMAGERY = '8130614b-3bca-4cc3-8c9f-30a69a9f60ac';

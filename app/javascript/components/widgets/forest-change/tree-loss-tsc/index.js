@@ -2,10 +2,14 @@ import { all, spread } from 'axios';
 import moment from 'moment';
 import { getYearsRange } from 'components/widgets/utils/data';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FOREST_LOSS_BY_DRIVER_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  TREE_COVER_LOSS_BY_DOMINANT_DRIVER
 } from 'data/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
@@ -20,7 +24,7 @@ export default {
     initial: 'Annual tree cover loss by dominant driver in {location}',
     global: 'Global annual tree cover loss by dominant driver'
   },
-  types: ['global', 'country', 'geostore'],
+  types: ['global', 'country'],
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
@@ -57,8 +61,8 @@ export default {
     },
     // loss tsc
     {
-      dataset: '89755b9f-df05-4e22-a9bc-05217c8eafc8',
-      layers: ['fd05bc2c-6ade-408c-862e-7318557dd4fc']
+      dataset: FOREST_LOSS_BY_DRIVER_DATASET,
+      layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER]
     }
   ],
   metaKey: 'widget_tsc_drivers',

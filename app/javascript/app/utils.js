@@ -1,8 +1,12 @@
 import layerSpec from 'data/layerspec.json';
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  RECENT_SATELLITE_IMAGERY_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  RECENT_SATELLITE_IMAGERY
 } from 'data/layers';
 import { MAP, MAP_EMBED } from './router';
 
@@ -152,8 +156,8 @@ export const getNewMapRedirect = ({ slugs, query }) => {
         datasets: recentImagery
           ? newDatasets.concat([
             {
-              dataset: '3668bb78-d77e-4215-bc2a-07433e204823',
-              layers: ['babd9968-4b55-4bc5-b771-d471ef8fbd8c'],
+              dataset: RECENT_SATELLITE_IMAGERY_DATASET,
+              layers: [RECENT_SATELLITE_IMAGERY],
               opacity: 1,
               visibility: true,
               isRecentImagery: true
