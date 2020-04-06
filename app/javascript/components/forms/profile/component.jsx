@@ -140,14 +140,14 @@ class ProfileForm extends PureComponent {
                       />
                       <Select
                         name="interests"
-                        label="What topics are you interested in? (select all that apply)"
+                        label="What topics are you interested in?"
                         options={interests}
                         required
                         multiple
                       />
                       <Select
                         name="howDoYouUse"
-                        label="how do you use global forest watch? (select all that apply)"
+                        label="how do you use global forest watch?"
                         options={howDoYouUse.map(r => ({
                           label: r,
                           value: r
@@ -168,7 +168,7 @@ class ProfileForm extends PureComponent {
                       {values.signUpToNewsletter && (
                         <Select
                           name="topics"
-                          label="I’m interested in receiving communications about (select all that apply)"
+                          label="I’m interested in receiving communications about"
                           options={topics}
                           required
                           multiple

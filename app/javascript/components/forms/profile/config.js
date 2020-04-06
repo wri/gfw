@@ -107,10 +107,10 @@ export const howDoYouUse = [
 ];
 
 export const topics = [
-  'Innovations in Monitoring',
+  'Agricultural Supply Chains',
+  'Climate and Biodiversity',
   'Fires',
   'Forest Watcher Mobile App',
-  'Climate and Biodiversity',
-  'Agricultural Supply Chains',
+  'Innovations in Monitoring',
   'Small Grants Fund and Tech Fellowship'
 ];

@@ -64,6 +64,12 @@ class Select extends PureComponent {
             hidden={hidden}
             required={required}
           >
+            {multiple && (
+              <p className="label sublabel">
+                Select all that apply, press &quot;ctrl&quot; to select multiple
+                options.
+              </p>
+            )}
             <select
               className={cx('c-form-select', { multiple })}
               {...input}
