@@ -56,7 +56,7 @@ class WidgetHeader extends PureComponent {
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
-    console.log(this.props);
+
     return (
       <div className={cx('c-widget-header', { simple })}>
         <div className="title">{title}</div>
