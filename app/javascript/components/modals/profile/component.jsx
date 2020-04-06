@@ -13,17 +13,24 @@ class ProfileModal extends PureComponent {
     filledProfile: PropTypes.bool
   };
 
+  componentDidMount() {
+    const { filledProfile, setProfileModalOpen } = this.props;
+    if (!filledProfile) {
+      setProfileModalOpen(true);
+    }
+  }
+
   handleCloseModal = () => {
     const { setProfileModalOpen } = this.props;
     setProfileModalOpen(false);
   };
 
   render() {
-    const { open, filledProfile } = this.props;
+    const { open } = this.props;
 
     return (
       <Modal
-        isOpen={!!open || !filledProfile}
+        isOpen={open}
         contentLabel="Update your profile"
         onRequestClose={this.handleCloseModal}
       >
