@@ -43,5 +43,20 @@ export default {
     category: 'Areas of interest',
     action: 'User changes between global and areas dashboard',
     label: 'changes to [type]'
+  },
+  saveArea: {
+    category: 'User AOIs',
+    action: 'User saves aoi',
+    label: '[id]'
+  },
+  editArea: {
+    category: 'User AOIs',
+    action: 'User edits aoi',
+    label: '[id]'
+  },
+  deleteArea: {
+    category: 'User AOIs',
+    action: 'User deletes aoi',
+    label: '[id]'
   }
 };
