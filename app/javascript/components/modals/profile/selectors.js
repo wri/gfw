@@ -6,7 +6,7 @@ const selectProfileUrlState = state =>
 const selectUsername = state =>
   state.myGfw &&
   state.myGfw.data &&
-  (state.myGfw.data.fullName || state.myGfw.data.lastName);
+  !!(state.myGfw.data.fullName || state.myGfw.data.lastName);
 
 export const getModalAOIProps = createStructuredSelector({
   open: selectProfileUrlState,
