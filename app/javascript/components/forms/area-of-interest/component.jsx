@@ -248,13 +248,6 @@ class AreaOfInterestForm extends PureComponent {
                         )}
                       </button>
                     </div>
-                    <Select
-                      name="language"
-                      label="language"
-                      options={getLanguages()}
-                      placeholder="Select a language"
-                      required
-                    />
                     <Checkbox
                       name="alerts"
                       label="Would you like to recieve alert notifications?"
@@ -272,6 +265,13 @@ class AreaOfInterestForm extends PureComponent {
                         //   value: 'monthlySummary'
                         // }
                       ]}
+                    />
+                    <Select
+                      name="language"
+                      label="language"
+                      options={getLanguages()}
+                      placeholder="Select a language"
+                      required={metaKey === 'savedWithSub'}
                     />
                     <Error
                       valid={valid}

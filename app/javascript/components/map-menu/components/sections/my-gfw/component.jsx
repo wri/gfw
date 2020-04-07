@@ -290,7 +290,8 @@ class MapMenuMyGFW extends PureComponent {
         {!loading && loggedIn && this.renderMyGFW()}
         {!loading && !loggedIn && this.renderLoginWindow()}
         {!loading &&
-          (!loggedIn || !(areas && areas.length > 0)) &&
+          loggedIn &&
+          !(areas && areas.length > 0) &&
           isDesktop && (
           <img
             className={cx('my-gfw-login-image', { '--login': !loggedIn })}

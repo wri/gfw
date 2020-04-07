@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/ui/loader';
 import LoginForm from 'components/forms/login';
+import ProfileForm from 'components/forms/profile';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
 
 import Modal from '../modal';
@@ -12,7 +13,7 @@ import './styles.scss';
 class AreaOfInterestModal extends PureComponent {
   static propTypes = {
     open: PropTypes.bool,
-    loggedIn: PropTypes.bool,
+    userData: PropTypes.object,
     loading: PropTypes.bool,
     canDelete: PropTypes.bool,
     setAreaOfInterestModalSettings: PropTypes.func,
@@ -32,7 +33,9 @@ class AreaOfInterestModal extends PureComponent {
   };
 
   render() {
-    const { open, loading, loggedIn, canDelete, viewAfterSave, activeArea } = this.props;
+    const { open, loading, userData, canDelete, viewAfterSave, activeArea } = this.props;
+    const { email, fullName, lastName, loggedIn } = userData || {};
+    const isProfileFormFilled = !!email && (!!fullName || !!lastName);
 
     return (
       <Modal
@@ -45,7 +48,13 @@ class AreaOfInterestModal extends PureComponent {
           {loading && <Loader />}
           {!loading && !loggedIn && <LoginForm />}
           {!loading &&
-            loggedIn && (
+            loggedIn &&
+            !isProfileFormFilled && (
+            <ProfileForm source="AreaOfInterestModal" />
+          )}
+          {!loading &&
+            loggedIn &&
+            isProfileFormFilled && (
             <AreaOfInterestForm
               canDelete={canDelete}
               closeForm={this.handleCloseModal}
