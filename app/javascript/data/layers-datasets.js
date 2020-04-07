@@ -47,3 +47,8 @@ export const LOGGING_CONCESSIONS_DATASET =
 
 export const RECENT_SATELLITE_IMAGERY_DATASET =
   'f1b4b202-5a2a-421e-9a12-54888e86e140';
+
+export const FIRES_VIIRS_DATASET = '1d3ccf9b-102e-4c0b-b2ea-2abcc712e194';
+export const LAND_COVER_DATASET = '4ed47a85-0304-42ad-8dac-c4af7da83c28';
+export const INTACT_FOREST_LANDSCAPES_DATASET =
+  'b29f48ff-dd92-4cb4-a37f-82080ed80da0';

@@ -1,9 +1,13 @@
 import { fetchFireAlertsByGeostore } from 'services/alerts';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FIRES_VIIRS_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  FIRES_ALERTS_VIIRS
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -33,8 +37,8 @@ export default {
       boundary: true
     },
     {
-      dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',
-      layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
+      dataset: FIRES_VIIRS_DATASET,
+      layers: [FIRES_ALERTS_VIIRS]
     }
   ],
   getData: params =>
