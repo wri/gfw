@@ -2,53 +2,34 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 import cx from 'classnames';
 import ContentLoader from 'react-content-loader';
-
-import Map from 'components/ui/map';
+import simplify from '@turf/simplify';
 
 import { getGeostoreProvider } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 
-import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginMapboxGl, fetch } from 'layer-manager';
-
-import { TRANSITION_EVENTS } from 'react-map-gl';
-import WebMercatorViewport from 'viewport-mercator-project';
-
 import './styles.scss';
-
-const DEFAULT_VIEWPORT = {
-  zoom: 2,
-  lat: 0,
-  lng: 0
-};
 
 class MapGeostore extends Component {
   static propTypes = {
-    basemap: PropTypes.object,
     className: PropTypes.string,
-    padding: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
-    cursor: PropTypes.string,
     small: PropTypes.bool,
     location: PropTypes.object
   };
 
   static defaultProps = {
-    padding: 25,
     height: 140,
-    width: 140,
-    cursor: 'default'
+    width: 140
   };
 
   state = {
     loading: true,
     error: false,
-    viewport: DEFAULT_VIEWPORT,
-    geostore: null
+    geostore: null,
+    imgSrc: null
   };
 
   mounted = false;
@@ -73,7 +54,7 @@ class MapGeostore extends Component {
     const { geostore: prevGeostore } = prevState;
 
     if (!isEmpty(geostore) && !isEqual(geostore, prevGeostore)) {
-      this.fitBounds();
+      this.showMapImage();
     }
   }
 
@@ -104,47 +85,36 @@ class MapGeostore extends Component {
     }
   };
 
-  onLoad = ({ map }) => {
-    map.on('render', () => {
-      if (map.areTilesLoaded() && this.mounted) {
-        this.setState({ loading: false });
-        map.off('render');
-      }
-    });
-  };
-
-  fitBounds = () => {
-    const { viewport, geostore } = this.state;
-    const { bbox } = geostore;
-
-    const v = {
-      width: this.mapContainer.offsetWidth,
-      height: this.mapContainer.offsetHeight,
-      ...viewport
-    };
-
-    const { longitude, latitude, zoom } = new WebMercatorViewport(v).fitBounds(
-      [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
-      { padding: this.props.padding }
-    );
-
-    if (this.mounted) {
-      this.setState({
-        viewport: {
-          ...this.state.viewport,
-          longitude,
-          latitude,
-          zoom,
-          transitionDuration: 0,
-          transitionInterruption: TRANSITION_EVENTS.UPDATE
+  showMapImage = () => {
+    const { width, height } = this.props;
+    const geostore = this.state.geostore && this.state.geostore.geojson.features[0];
+    if (geostore) {
+      const simpleGeostore = simplify(this.state.geostore.geojson, { tolerance: 0.05 });
+      const simpGeostore = simpleGeostore.features[0];
+      const geojson = {
+        ...simpGeostore,
+        properties: {
+          fill: 'transparent',
+          stroke: '%23C0FF24',
+          'stroke-width': 2
         }
-      });
+      };
+      const geojsonOutline = {
+        ...simpGeostore,
+        properties: {
+          fill: 'transparent',
+          stroke: '%23000',
+          'stroke-width': 5
+        }
+      };
+
+      this.setState({ loading: false, imgSrc: `https://api.mapbox.com/styles/v1/resourcewatch/cjhqiecof53wv2rl9gw4cehmy/static/geojson(${JSON.stringify(geojsonOutline)}),geojson(${JSON.stringify(geojson)})/auto/${width}x${height}@2x?access_token=${process.env.MapboxAccessToken}&attribution=false&logo=false` });
     }
-  };
+  }
 
   render() {
-    const { basemap, className, width, height, cursor, small } = this.props;
-    const { loading, viewport, geostore, error } = this.state;
+    const { className, width, height, small } = this.props;
+    const { loading, error, imgSrc } = this.state;
 
     return (
       <div
@@ -167,108 +137,9 @@ class MapGeostore extends Component {
           !loading && (
           <p className="error-msg">we had trouble finding a recent image</p>
         )}
-        {basemap && (
-          <Map
-            mapStyle={basemap.mapStyle}
-            viewport={viewport}
-            attributionControl={false}
-            onLoad={this.onLoad}
-            dragPan={false}
-            dragRotate={false}
-            scrollZoom={false}
-            doubleClickZoom={false}
-            touchZoom={false}
-            touchRotate={false}
-            keyboard={false}
-            getCursor={() => cursor}
-          >
-            {map => (
-              <LayerManager
-                map={map}
-                plugin={PluginMapboxGl}
-                providers={{
-                  stories: (layerModel, layer, resolve, reject) => {
-                    const { source } = layerModel;
-                    const { provider } = source;
-
-                    fetch('get', provider.url, provider.options, layerModel)
-                      .then(response =>
-                        resolve({
-                          ...layer,
-                          source: {
-                            ...omit(layer.source, 'provider'),
-                            data: {
-                              type: 'FeatureCollection',
-                              features: response.rows.map(r => ({
-                                type: 'Feature',
-                                properties: r,
-                                geometry: {
-                                  type: 'Point',
-                                  coordinates: [r.lon, r.lat]
-                                }
-                              }))
-                            }
-                          }
-                        })
-                      )
-                      .catch(e => {
-                        reject(e);
-                      });
-                  }
-                }}
-              >
-                {geostore && (
-                  <Layer
-                    id={geostore.id}
-                    name="Geojson"
-                    type="geojson"
-                    source={{
-                      data: geostore.geojson,
-                      type: 'geojson'
-                    }}
-                    render={{
-                      layers: [
-                        {
-                          type: 'fill',
-                          paint: {
-                            'fill-color': 'transparent'
-                          }
-                        },
-                        {
-                          type: 'line',
-                          paint: {
-                            'line-color': '#C0FF24',
-                            'line-width': 3,
-                            'line-offset': 2
-                          }
-                        },
-                        {
-                          type: 'line',
-                          paint: {
-                            'line-color': '#000',
-                            'line-width': 2
-                          }
-                        }
-                      ]
-                    }}
-                    zIndex={1060}
-                  />
-                )}
-                <Layer
-                  key={basemap.url}
-                  id={basemap.url}
-                  name="Basemap"
-                  type="raster"
-                  source={{
-                    type: 'raster',
-                    tiles: [basemap.url]
-                  }}
-                  zIndex={100}
-                />
-              </LayerManager>
-            )}
-          </Map>
-        )}
+        {imgSrc &&
+          <div className="map-image" style={{ backgroundImage: `url('${imgSrc}')` }} />
+        }
       </div>
     );
   }
