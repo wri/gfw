@@ -1,11 +1,14 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
-import { getLanguages } from 'utils/lang';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
+
+import Checkbox from 'components/forms/components/checkbox';
+import Radio from 'components/forms/components/radio';
+
 import Submit from 'components/forms/components/submit';
 import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
@@ -13,7 +16,7 @@ import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
-import { sectors, responsibilities, howDoYouUse } from './config';
+import { sectors, howDoYouUse, interests, topics } from './config';
 
 import './styles.scss';
 
@@ -21,11 +24,12 @@ class ProfileForm extends PureComponent {
   static propTypes = {
     initialValues: PropTypes.object,
     countries: PropTypes.array,
-    saveProfile: PropTypes.func
+    saveProfile: PropTypes.func,
+    source: PropTypes.string
   };
 
   render() {
-    const { initialValues, countries, saveProfile } = this.props;
+    const { initialValues, countries, saveProfile, source } = this.props;
 
     return (
       <Fragment>
@@ -39,7 +43,8 @@ class ProfileForm extends PureComponent {
             submitFailed,
             submitError,
             submitSucceeded,
-            form: { reset }
+            form: { reset },
+            values
           }) => (
             <form className="c-profile-form" onSubmit={handleSubmit}>
               <div className="row">
@@ -63,12 +68,16 @@ class ProfileForm extends PureComponent {
                     <div className="column small-12">
                       <h1>Your profile information</h1>
                       <h3>
-                        Help us help you! Tell us who you are and how you use
-                        Global Forest Watch so we can better meet your needs.
+                        {source === 'AreaOfInterestModal'
+                          ? `Help us help you! Please complete the mandatory fields to be able to save your area of interest.
+                        We will be using this information to help us guide GFW’s future developments.`
+                          : `Help us help you! Tell us who you are and how you use
+                        Global Forest Watch so we can better meet your needs.`}
                       </h3>
                     </div>
-                    <div className="column small-12 medium-6">
-                      <Input name="fullName" label="name" required />
+                    <div className="column small-12">
+                      <Input name="firstName" label="first name" />
+                      <Input name="lastName" label="surname" required />
                       <Input
                         name="email"
                         type="email"
@@ -78,59 +87,106 @@ class ProfileForm extends PureComponent {
                         required
                       />
                       <Select
-                        name="language"
-                        label="language"
-                        options={getLanguages()}
-                        placeholder="Select a language"
-                        required
-                      />
-                      <Select
                         name="sector"
                         label="sector"
-                        options={sectors.map(s => ({ label: s, value: s }))}
-                        placeholder="Select a language"
-                        required
+                        options={Object.keys(sectors).map(s => ({
+                          label: s,
+                          value: s
+                        }))}
+                        placeholder="Select a sector"
+                        required={source === 'AreaOfInterestModal'}
                       />
+                      {values.sector &&
+                        sectors[values.sector] && (
+                        <Radio
+                          name="subsector"
+                          label="Role"
+                          options={sectors[values.sector].map(s => ({
+                            label: s,
+                            value: s.replace(/( )+|(\/)+/g, '_'),
+                            radioInput: s === 'Other:'
+                          }))}
+                          selectedOption={values.subsector}
+                          required={source === 'AreaOfInterestModal'}
+                        />
+                      )}
+                      <Input name="jobTitle" label="job title" />
+                      <Input name="company" label="Company / organization" />
+                      <p className="section-name">Where are you located?</p>
                       <Select
                         name="country"
                         label="country"
                         options={countries}
                         placeholder="Select a country"
-                        required
                       />
                       <Input name="city" label="city" />
-                    </div>
-                    <div className="column small-12 medium-6">
                       <Input
                         name="state"
                         label="state / department / province"
                       />
+                      <p className="section-name">
+                        What area are you most interested in?
+                      </p>
                       <Select
-                        name="primaryResponsibilities"
-                        label="primary responsibilities (select all that apply)"
-                        options={responsibilities.map(r => ({
+                        name="aoiCountry"
+                        label="country"
+                        options={countries}
+                        placeholder="Select a country"
+                      />
+                      <Input name="aoiCity" label="city" />
+                      <Input
+                        name="aoiState"
+                        label="state / department / province"
+                      />
+                      <Select
+                        name="interests"
+                        label="What topics are you interested in?"
+                        options={interests}
+                        required
+                        multiple
+                      />
+                      <Select
+                        name="howDoYouUse"
+                        label="how do you use global forest watch?"
+                        options={howDoYouUse.map(r => ({
                           label: r,
                           value: r
                         }))}
                         multiple
                       />
-                      <Select
-                        name="howDoYouUse"
-                        label="how do you plan to use global forest watch? (select all that apply)"
-                        options={howDoYouUse.map(r => ({ label: r, value: r }))}
-                        multiple
+                      <Checkbox
+                        name="signUpToNewsletter"
+                        options={[
+                          {
+                            label:
+                              'Subscribe to monthly GFW newsletters and updates based on your interests.',
+                            value: true
+                          }
+                        ]}
                       />
+
+                      {values.signUpToNewsletter && (
+                        <Select
+                          name="topics"
+                          label="I’m interested in receiving communications about"
+                          options={topics}
+                          required
+                          multiple
+                        />
+                      )}
                       <Error
                         valid={valid}
                         submitFailed={submitFailed}
                         submitError={submitError}
                       />
-                      <Submit submitting={submitting}>save</Submit>
+                      <Submit submitting={submitting}>
+                        {source === 'AreaOfInterestModal' ? 'next' : 'save'}
+                      </Submit>
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">
-                        If you wish to delete your My GFW account, please{' '}
-                        <a href="mailto:gfw@wri-org">email us</a>.
+                        <a href="mailto:gfw@wri-org">Email us </a>
+                        to delete your MyGFW account.
                       </p>
                     </div>
                   </Fragment>

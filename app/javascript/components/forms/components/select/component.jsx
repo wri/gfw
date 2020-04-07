@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import cx from 'classnames';
+import isEmpty from 'lodash/isEmpty';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -35,7 +36,14 @@ class Select extends PureComponent {
       multiple
     } = this.props;
 
-    const allOptions = options || [];
+    const parsedOptions =
+      !isEmpty(options) && !options[0].label && !options[0].value
+        ? options.map(o => ({
+          label: o,
+          value: o.replace(/( )+|(\/)+/g, '_')
+        }))
+        : options;
+    const allOptions = parsedOptions || [];
     const optionWithPlaceholder = placeholder
       ? [{ label: placeholder, value: '' }, ...allOptions]
       : allOptions;
@@ -56,6 +64,12 @@ class Select extends PureComponent {
             hidden={hidden}
             required={required}
           >
+            {multiple && (
+              <p className="label sublabel">
+                Select all that apply, press &quot;ctrl&quot; to select multiple
+                options.
+              </p>
+            )}
             <select
               className={cx('c-form-select', { multiple })}
               {...input}
