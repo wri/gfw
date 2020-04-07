@@ -15,6 +15,7 @@ export const BIODIVERSITY_HOTSPOTS_2016 =
   '8e9a86e2-5e34-452e-bf55-d7c6648ea42e';
 export const GLAD_ALERTS = '8e4a527d-1bcd-4a12-82b0-5a108ffec452';
 export const BIODIVERSITY_INTACTNESS = 'bd2798d1-c771-4bff-84d9-c4d69d3b3121';
+export const BIODIVERSITY_SIGNIFICANCE = 'c1c306a3-31b6-409a-acf0-2a8f09e28363';
 export const POTENTIAL_CARBON_GAINS = 'adc98378-1a0b-4b57-8c18-27848ad3ca31';
 export const USA_LAND_COVER_2001 = '578b7ffe-ce22-4ede-b51d-dbe16dc22af8';
 export const USA_LAND_COVER_2006 = '7a9b0a06-7fda-4e12-824a-c9ae1ced3177';

@@ -2,12 +2,14 @@ import request from 'utils/request';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
+  BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
   BIODIVERSITY_INTACTNESS_2016_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  BIODIVERSITY_INTACTNESS
+  BIODIVERSITY_INTACTNESS,
+  BIODIVERSITY_SIGNIFICANCE
 } from 'data/layers';
 
 import { getWidgetProps } from './selectors';
@@ -26,7 +28,7 @@ export default {
   colors: 'biodiversity',
   dataType: 'biodiversity',
   metaKey: 'biodiversity_intactness',
-  layers: [BIODIVERSITY_INTACTNESS, 'f13f86cb-08b5-4e6c-bb8d-b4782052f9e5'],
+  layers: [BIODIVERSITY_INTACTNESS, BIODIVERSITY_SIGNIFICANCE],
   chartType: 'chartAndList',
   sortOrder: {
     summary: 0,
@@ -83,8 +85,12 @@ export default {
       boundary: true
     },
     {
+      dataset: BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
+      layers: [BIODIVERSITY_SIGNIFICANCE]
+    },
+    {
       dataset: BIODIVERSITY_INTACTNESS_2016_DATASET,
-      layers: [BIODIVERSITY_INTACTNESS, 'f13f86cb-08b5-4e6c-bb8d-b4782052f9e5']
+      layers: [BIODIVERSITY_INTACTNESS]
     }
   ],
   getData: params => {
