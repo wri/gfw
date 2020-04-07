@@ -103,8 +103,18 @@ class MapGeostore extends Component {
     }
   };
 
-  onLoad = () => {
-    this.setState({ loading: false });
+  onLoad = ({ map }) => {
+    if (map) {
+      map.on('render', () => {
+        if (this.state.loading) {
+          if (map.areTilesLoaded() && this.mounted) {
+            this.setState({ loading: false });
+          }
+        } else {
+          map.off('render');
+        }
+      });
+    }
   };
 
   fitBounds = () => {
