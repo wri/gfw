@@ -1,5 +1,3 @@
-import { BIODIVERSITY_INTACTNESS } from 'data/layers';
-
 /* eslint-disable */
 /**
  * Modified from the Forest2010 layer
@@ -21,9 +19,8 @@ define(
     var BiodiversityCompleteness = CanvasLayerClass.extend({
       options: {
         dataMaxZoom: 12,
-        urlTemplate: `https://api.resourcewatch.org/v1/layer/${
-          BIODIVERSITY_INTACTNESS
-        }/tile/gee/{z}/{x}/{y}`
+        urlTemplate:
+          'https://api.resourcewatch.org/v1/layer/bd2798d1-c771-4bff-84d9-c4d69d3b3121/tile/gee/{z}/{x}/{y}'
       },
 
       init: function(layer, options, map) {
