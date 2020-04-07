@@ -52,3 +52,6 @@ export const FIRES_VIIRS_DATASET = '1d3ccf9b-102e-4c0b-b2ea-2abcc712e194';
 export const LAND_COVER_DATASET = '4ed47a85-0304-42ad-8dac-c4af7da83c28';
 export const INTACT_FOREST_LANDSCAPES_DATASET =
   'b29f48ff-dd92-4cb4-a37f-82080ed80da0';
+
+export const TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET =
+  'f23a1803-ba17-4fe3-a1ad-39abfbfb56c6';
