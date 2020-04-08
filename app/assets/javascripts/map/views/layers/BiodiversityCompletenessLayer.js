@@ -20,7 +20,7 @@ define(
       options: {
         dataMaxZoom: 12,
         urlTemplate:
-          'https://api.resourcewatch.org/v1/layer/43a205fe-aad3-4db1-8807-c399a3264349/tile/gee/{z}/{x}/{y}'
+          'https://api.resourcewatch.org/v1/layer/bd2798d1-c771-4bff-84d9-c4d69d3b3121/tile/gee/{z}/{x}/{y}'
       },
 
       init: function(layer, options, map) {

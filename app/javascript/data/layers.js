@@ -15,6 +15,7 @@ export const BIODIVERSITY_HOTSPOTS_2016 =
   '8e9a86e2-5e34-452e-bf55-d7c6648ea42e';
 export const GLAD_ALERTS = '8e4a527d-1bcd-4a12-82b0-5a108ffec452';
 export const BIODIVERSITY_INTACTNESS = 'bd2798d1-c771-4bff-84d9-c4d69d3b3121';
+export const BIODIVERSITY_SIGNIFICANCE = 'c1c306a3-31b6-409a-acf0-2a8f09e28363';
 export const POTENTIAL_CARBON_GAINS = 'adc98378-1a0b-4b57-8c18-27848ad3ca31';
 export const USA_LAND_COVER_2001 = '578b7ffe-ce22-4ede-b51d-dbe16dc22af8';
 export const USA_LAND_COVER_2006 = '7a9b0a06-7fda-4e12-824a-c9ae1ced3177';
@@ -32,3 +33,6 @@ export const OIL_PALM = 'aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1';
 export const LOGGING_CONCESSIONS = '08fd9f5d-51c4-4c01-8c37-d63e86a0de30';
 export const PLACES_TO_WATCH = '40816dac-d957-47bd-82e4-22f8840601eb';
 export const RECENT_SATELLITE_IMAGERY = '8130614b-3bca-4cc3-8c9f-30a69a9f60ac';
+export const FIRES_ALERTS_VIIRS = '93e33932-3959-4201-b8c8-6ec0b32596e0';
+export const LAND_COVER = 'e67f4276-c1d0-4970-b2d6-6dd17843f4c9';
+export const INTACT_FOREST_LANDSCAPES = 'af4e9e0b-cbf9-437b-80cb-9b0f795161ca';

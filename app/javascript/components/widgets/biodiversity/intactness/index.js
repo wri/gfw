@@ -2,11 +2,14 @@ import request from 'utils/request';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET
+  BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
+  BIODIVERSITY_INTACTNESS_2016_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  BIODIVERSITY_INTACTNESS,
+  BIODIVERSITY_SIGNIFICANCE
 } from 'data/layers';
 
 import { getWidgetProps } from './selectors';
@@ -25,10 +28,7 @@ export default {
   colors: 'biodiversity',
   dataType: 'biodiversity',
   metaKey: 'biodiversity_intactness',
-  layers: [
-    '43a205fe-aad3-4db1-8807-c399a3264349',
-    'f13f86cb-08b5-4e6c-bb8d-b4782052f9e5'
-  ],
+  layers: [BIODIVERSITY_INTACTNESS, BIODIVERSITY_SIGNIFICANCE],
   chartType: 'chartAndList',
   sortOrder: {
     summary: 0,
@@ -85,11 +85,12 @@ export default {
       boundary: true
     },
     {
-      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: [
-        '43a205fe-aad3-4db1-8807-c399a3264349',
-        'f13f86cb-08b5-4e6c-bb8d-b4782052f9e5'
-      ]
+      dataset: BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
+      layers: [BIODIVERSITY_SIGNIFICANCE]
+    },
+    {
+      dataset: BIODIVERSITY_INTACTNESS_2016_DATASET,
+      layers: [BIODIVERSITY_INTACTNESS]
     }
   ],
   getData: params => {
