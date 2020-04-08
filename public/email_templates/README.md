@@ -9,6 +9,8 @@ Forest change alert (GLADS): when the GLADs data has changed inside your area of
 Forest Change alert (VIIRS): when the VIIRS data has changed inside your area of interest
 Monthly summary: regardless of data change, sends latest stats for area of interest each month
 
+You can view each template at `/email_templates/{template_name}.html`
+
 ## Dashboards
 
 3 Template ids:
