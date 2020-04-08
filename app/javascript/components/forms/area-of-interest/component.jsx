@@ -169,13 +169,7 @@ class AreaOfInterestForm extends PureComponent {
                     <h1>{title}</h1>
                     <MapGeostore
                       className="aoi-map"
-                      location={
-                        initialValues &&
-                        initialValues.geostore && {
-                          type: 'geostore',
-                          adm0: initialValues.geostore
-                        }
-                      }
+                      location={initialValues && initialValues.location}
                       padding={50}
                       height={300}
                       width={600}
