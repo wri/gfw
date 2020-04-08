@@ -3,9 +3,9 @@ param list:
 ## Dashboards
 
 3 Template ids:
-`dashboard-pending-${lang}-copy`
-`dashboard-complete-${lang}-copy`
-`subscription-preference-change-${lang}-copy`
+`dashboard-pending-{lang}`
+`dashboard-complete-{lang}`
+`subscription-preference-change-{lang}`
 
 The following parameters are provided:
 `id `: the ID of the AOI.
@@ -27,7 +27,7 @@ The following parameters are provided:
 `week_end`: last day of the week for that day, e.g. "12/29/2019",
 
 `priority_areas`: distribution of alerts. First row of bubbles, this variable is an object. e.g.:
-  { 
+  {
       "intact_forest": 1,
       "primary_forest": 1,
       "peat": 0,
@@ -80,4 +80,3 @@ The following parameters are provided:
 
 `more_items`: number of alerts ? (rows of the table) minus the ones we're showing. Used to show "{more_items} MORE ITEMS" below the table. e.g. if there are 128 rows and we show max 5 in the table, more_items should be 123.
 `csv_link` : we use this to trigger the download of the data we see in the table.
-
