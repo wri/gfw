@@ -133,7 +133,7 @@ export const getAdminsSelected = createSelector(
 export const getShareData = createSelector(
   [getAdminsSelected, selectLocation],
   (adminsSelected, location) => ({
-    title: 'Share this Dashboard',
+    title: location.type === 'aoi' ? 'Share this area' : 'Share this Dashboard',
     shareUrl: `${window.location.href}`,
     socialText: `${(adminsSelected &&
       adminsSelected.adm0 &&

@@ -18,7 +18,8 @@ class AreaOfInterestModal extends PureComponent {
     canDelete: PropTypes.bool,
     setAreaOfInterestModalSettings: PropTypes.func,
     setMenuSettings: PropTypes.func,
-    viewAfterSave: PropTypes.bool
+    viewAfterSave: PropTypes.bool,
+    activeArea: PropTypes.object
   };
 
   componentWillUnmount() {
@@ -32,14 +33,14 @@ class AreaOfInterestModal extends PureComponent {
   };
 
   render() {
-    const { open, loading, userData, canDelete, viewAfterSave } = this.props;
+    const { open, loading, userData, canDelete, viewAfterSave, activeArea } = this.props;
     const { email, fullName, lastName, loggedIn } = userData || {};
     const isProfileFormFilled = !!email && (!!fullName || !!lastName);
 
     return (
       <Modal
         isOpen={open}
-        contentLabel="Area of interest"
+        contentLabel={`${activeArea ? 'Edit' : 'Save'} area of interest`}
         onRequestClose={this.handleCloseModal}
         className="c-area-of-interest-modal"
       >
