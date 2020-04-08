@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'utils/redux';
 import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
@@ -9,10 +9,15 @@ import thresholdOptions from 'data/thresholds.json';
 
 import { reduceParams, reduceSqlParams } from './datasets-utils';
 import decodeLayersConfig from './datasets-decode-config';
-import decodeLayersClusters from './datasets-decode-clusters';
 
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
+
+const byVocabulary = dataset =>
+  dataset.vocabulary &&
+  dataset.vocabulary.some(
+    o => o.name === 'layer_manager_ver' && o.tags.includes('3.0')
+  );
 
 export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
   getDatasetsProvider()
@@ -20,10 +25,10 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
       const parsedDatasets = wriAPISerializer(allDatasets.data)
         .filter(
           d =>
-            d.published &&
             d.layer.length &&
             (d.env === 'production' || d.env === process.env.FEATURE_ENV)
         )
+        .filter(byVocabulary)
         .map(d => {
           const { layer, metadata } = d;
           const appMeta =
@@ -39,11 +44,15 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                   l.applicationConfig.default
               )) ||
             layer[0];
-
           // we need a default layer so we can set it when toggled onto the map
           if (!defaultLayer) return null;
 
-          const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } =
+          const {
+            isSelectorLayer,
+            isMultiSelectorLayer,
+            isLossLayer,
+            isLossDriverLayer
+          } =
             info || {};
           const { id, iso, applicationConfig } = defaultLayer || {};
           const { global, selectorConfig } = applicationConfig || {};
@@ -56,6 +65,10 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
           if (isLossLayer) {
             statementConfig = {
               type: 'lossLayer'
+            };
+          } else if (isLossDriverLayer) {
+            statementConfig = {
+              type: 'lossDriverLayer'
             };
           } else if (global && !!iso.length && iso[0]) {
             statementConfig = {
@@ -92,9 +105,8 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                 layer
                   .filter(
                     l =>
-                      (l.env === 'production' ||
-                        l.env === process.env.FEATURE_ENV) &&
-                      l.published
+                      l.env === 'production' ||
+                      l.env === process.env.FEATURE_ENV
                   )
                   .map((l, i) => {
                     const { layerConfig, legendConfig } = l;
@@ -105,11 +117,11 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       decode_config,
                       sql_config,
                       timeline_config,
-                      body,
-                      url
+                      source, // v3
+                      decode_function // v3
                     } = layerConfig;
-                    const decodeFunction = decodeLayersConfig[l.id];
-                    const decodeClusters = decodeLayersClusters[l.id];
+                    const { tiles } = source; // previously url
+                    const decodeFunction = decodeLayersConfig[decode_function];
                     const customColor =
                       legendConfig &&
                       legendConfig.items &&
@@ -162,7 +174,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       // params for tile url
                       ...(params && {
                         params: {
-                          url: body.url || url,
+                          url: tiles && tiles.length && tiles[0],
                           ...params,
                           ...(hasParamsTimeline && {
                             minDate: params && params.startDate,
@@ -191,15 +203,32 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                           })
                         }))
                       }),
+                      // decode params selector config
+                      ...(decode_config && {
+                        decodeParamsSelectorConfig: decode_config.map(p => ({
+                          ...p,
+                          ...(p.key.includes('thresh') && {
+                            sentence:
+                              'Displaying {name} with {selector} canopy density',
+                            options: thresholdOptions
+                          }),
+                          ...(p.min &&
+                            p.max && {
+                            options: Array.from(
+                              Array(p.max - p.min + 1).keys()
+                            ).map(o => ({
+                              label: o + p.min,
+                              value: o + p.min
+                            }))
+                          })
+                        }))
+                      }),
                       // params for sql query
                       ...(sqlParams && {
                         sqlParams
                       }),
                       // decode func and params for canvas layers
                       decodeFunction,
-                      ...(decodeClusters && {
-                        decodeGeoJson: decodeClusters
-                      }),
                       ...(decodeParams && {
                         decodeParams: {
                           // timeline config

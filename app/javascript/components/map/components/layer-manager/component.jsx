@@ -1,83 +1,82 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginMapboxGl } from 'layer-manager';
+import { PluginMapboxGl, fetch } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
+  static propTypes = {
+    loading: PropTypes.bool,
+    layers: PropTypes.array,
+    basemap: PropTypes.object,
+    setMapLoading: PropTypes.func,
+    map: PropTypes.object
+  };
+
   render() {
-    const { layers, geostore, setMapLoading, basemap, map } = this.props;
+    const { layers, basemap, map } = this.props;
+
+    const basemapLayer =
+      basemap && basemap.url
+        ? {
+          id: basemap.url,
+          name: 'Basemap',
+          layerConfig: {
+            type: 'raster',
+            source: {
+              type: 'raster',
+              tiles: [basemap.url]
+            }
+          },
+          zIndex: 100
+        }
+        : null;
+
+    const allLayers = [basemapLayer].concat(layers).filter(l => l);
 
     return (
       <LayerManager
         map={map}
         plugin={PluginMapboxGl}
-        onLayerLoading={loading => setMapLoading(loading)}
-      >
-        {geostore &&
-          geostore.id && (
-          <Layer
-            key={geostore.id}
-            id={geostore.id}
-            name="Geojson"
-            provider="geojson"
-            params={{
-              id: geostore.id
-            }}
-            layerConfig={{
-              data: geostore.geojson,
-              body: {
-                vectorLayers: [
-                  {
-                    id: `${geostore.id}-fill`,
-                    type: 'fill',
-                    source: geostore.id,
-                    paint: {
-                      'fill-color': 'transparent'
-                    }
-                  },
-                  {
-                    id: `${geostore.id}-line`,
-                    type: 'line',
-                    source: geostore.id,
-                    paint: {
-                      'line-color': '#000',
-                      'line-width': 2
+        providers={{
+          stories: (layerModel, layer, resolve, reject) => {
+            const { source } = layerModel;
+            const { provider } = source;
+
+            fetch('get', provider.url, provider.options, layerModel)
+              .then(response =>
+                resolve({
+                  ...layer,
+                  source: {
+                    ...omit(layer.source, 'provider'),
+                    data: {
+                      type: 'FeatureCollection',
+                      features: response.rows.map(r => ({
+                        type: 'Feature',
+                        properties: r,
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [r.lon, r.lat]
+                        }
+                      }))
                     }
                   }
-                ]
-              }
-            }}
-            zIndex={1060}
-          />
-        )}
-        {layers && layers.map(l => <Layer key={l.id} {...l} />)}
-        {basemap &&
-          basemap.url && (
-          <Layer
-            key={basemap.url}
-            id={basemap.url}
-            name="Basemap"
-            provider="leaflet"
-            layerConfig={{
-              body: {
-                url: basemap.url
-              }
-            }}
-            zIndex={100}
-          />
-        )}
+                })
+              )
+              .catch(e => {
+                reject(e);
+              });
+          }
+        }}
+      >
+        {allLayers &&
+          allLayers.map(l => {
+            const config = l.config ? l.config : l.layerConfig;
+            return <Layer key={l.id} {...l} {...config} />;
+          })}
       </LayerManager>
     );
   }
 }
-
-LayerManagerComponent.propTypes = {
-  loading: PropTypes.bool,
-  layers: PropTypes.array,
-  basemap: PropTypes.object,
-  geostore: PropTypes.object,
-  setMapLoading: PropTypes.func,
-  map: PropTypes.object
-};
 
 export default LayerManagerComponent;

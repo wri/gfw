@@ -34,7 +34,7 @@ import arrowsMedium from 'pages/topics/assets/climate/animations/arrow-medium.sv
 import arrowsLarge from 'pages/topics/assets/climate/animations/arrow-large.svg';
 
 // NYC tracker widget config
-import nycWidgetConfig from 'components/widgets/widgets/climate/cumulative-emissions/config';
+import nycWidgetConfig from 'components/widgets/climate/cumulative-emissions';
 
 const nycWidgetIsos = nycWidgetConfig.whitelists.adm0;
 
@@ -288,7 +288,7 @@ export default {
       title: 'View carbon and emissions statistics',
       summary:
         'Find answers to questions about carbon and emissions globally, by country or even subnationally.',
-      extLink: '/dashboards/global?category=climate',
+      extLink: 'https://www.globalforestwatch.org/dashboards/global?category=climate',
       img1x: carbon,
       img2x: carbonLarge,
       btnText: 'view data'

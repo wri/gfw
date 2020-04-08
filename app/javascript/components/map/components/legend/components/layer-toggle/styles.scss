@@ -24,6 +24,10 @@
     margin-top: -2px;
     padding-left: rem(6px);
     cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .subtitle {

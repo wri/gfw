@@ -1,5 +1,4 @@
 import forestWatcherIcon from 'assets/icons/forest-watcher.svg';
-import climateIcon from 'assets/icons/climate-leaf.svg';
 import firesIcon from 'assets/icons/fires-flame.svg';
 import proIcon from 'assets/icons/gfw-pro.svg';
 
@@ -15,7 +14,6 @@ import card4 from './assets/card-3.png';
 import card5 from './assets/card-4.png';
 
 import forestWatcherImage from './assets/forestwatcher@2x.jpg';
-import climateImage from './assets/climate@2x.jpg';
 import firesImage from './assets/fires@2x.jpg';
 import proImage from './assets/pro-bg@2x.png';
 
@@ -144,14 +142,6 @@ export default {
       extLink: 'https://fires.globalforestwatch.org',
       color: '#F71949',
       icon: firesIcon
-    },
-    {
-      title: 'Climate',
-      description: 'Track carbon emissions and removals in forest landscapes',
-      background: climateImage,
-      extLink: 'http://climate.globalforestwatch.org',
-      color: '#5B80A0',
-      icon: climateIcon
     },
     {
       title: 'GFW Pro',

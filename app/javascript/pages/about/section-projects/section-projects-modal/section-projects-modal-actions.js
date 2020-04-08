@@ -1,4 +1,4 @@
-import { createAction } from 'redux-tools';
+import { createAction } from 'utils/redux';
 
 export const setSectionProjectsModal = createAction('setSectionProjectsModal');
 

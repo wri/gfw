@@ -1,0 +1,50 @@
+@import '~styles/settings.scss';
+
+.c-thankyou {
+  .message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img,
+    svg {
+      max-width: rem(200px);
+      height: rem(200px);
+      margin-bottom: rem(10px);
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: rem(20px);
+      }
+    }
+
+    h1 {
+      font-size: rem(26px);
+      color: $slate;
+      margin-bottom: rem(10px);
+      text-align: center;
+      font-weight: 300;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: rem(36px);
+        margin-bottom: rem(30px);
+      }
+    }
+
+    p {
+      font-size: rem(16px);
+      line-height: rem(30px);
+      color: $slate;
+      text-align: center;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: rem(18px);
+      }
+    }
+
+    b {
+      font-weight: 500;
+    }
+  }
+}

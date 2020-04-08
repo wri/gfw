@@ -36,52 +36,17 @@
     bottom: 0;
     left: 0;
     right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
     background-color: $white;
-    max-width: $max-width;
-    padding: $mobile-gutter;
     margin: auto;
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
     h3 {
-      font-size: rem(35px);
-      margin-bottom: rem(20px);
-      text-transform: none;
-      opacity: 1;
-    }
-
-    p {
-      margin-bottom: rem(20px);
-    }
-
-    button,
-    a {
-      margin-bottom: rem(10px);
-      margin-right: rem(10px);
-      width: 100%;
-
-      @media screen and (min-width: $screen-m) {
-        width: rem(240px);
-      }
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-
-      @media screen and (min-width: $screen-m) {
-        flex-direction: row;
-      }
-    }
-
-    .close-button {
-      background-color: #ed1846;
-    }
-
-    @media screen and (min-width: $screen-m) {
-      padding: $desktop-gutter;
+      font-size: rem(30px);
+      max-width: rem(600px);
     }
   }
 }

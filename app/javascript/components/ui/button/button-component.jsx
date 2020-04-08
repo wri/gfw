@@ -33,7 +33,8 @@ const Button = props => {
     onClick,
     tooltip,
     background,
-    trackingData
+    trackingData,
+    target
   } = props;
 
   const handleClick = e => {
@@ -49,6 +50,9 @@ const Button = props => {
   const isDeviceTouch = isTouch();
   let button = null;
   if (extLink) {
+    const pattern = /^((http|https):\/\/)/;
+    const url = !pattern.test(extLink) ? `http://${extLink}` : extLink;
+
     button = (
       <a
         className={cx(
@@ -58,8 +62,8 @@ const Button = props => {
           { disabled },
           { '--active': active }
         )}
-        href={extLink}
-        target="_blank"
+        href={url}
+        target={target || '_blank'}
         rel="noopener"
         onClick={handleClick}
         disabled={disabled}
@@ -133,7 +137,8 @@ Button.propTypes = {
   tooltip: PropTypes.object,
   trackingData: PropTypes.object,
   buttonClicked: PropTypes.func,
-  background: PropTypes.string
+  background: PropTypes.string,
+  target: PropTypes.string
 };
 
 export default Button;

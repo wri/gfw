@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
 import { track } from 'app/analytics';
 
-import * as modalActions from 'components/modals/meta/meta-actions';
+import * as modalActions from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
 
 import Component from './component';
@@ -134,6 +134,22 @@ class Legend extends PureComponent {
     });
   };
 
+  onChangeDecodeParam = (currentLayer, newParam) => {
+    const { setMapSettings, activeDatasets } = this.props;
+    setMapSettings({
+      datasets: activeDatasets.map(l => {
+        const dataset = { ...l };
+        if (l.layers.includes(currentLayer.id)) {
+          dataset.decodeParams = {
+            ...dataset.params,
+            ...newParam
+          };
+        }
+        return dataset;
+      })
+    });
+  };
+
   setConfirmed = layer => {
     const { activeDatasets, setMapSettings } = this.props;
     const { dataset } = layer;
@@ -159,6 +175,7 @@ class Legend extends PureComponent {
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,
       onChangeParam: this.onChangeParam,
+      onChangeDecodeParam: this.onChangeDecodeParam,
       setConfirmed: this.setConfirmed
     });
   }

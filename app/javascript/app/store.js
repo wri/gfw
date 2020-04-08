@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { reducer as formReducer } from 'redux-form';
 
 import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
 import reducerRegistry from './registry';
@@ -8,7 +7,6 @@ import router from './router';
 
 // register fixed reducers
 reducerRegistry.register('location', router.reducer);
-reducerRegistry.register('form', formReducer);
 reducerRegistry.registerModule('myGfw', myGfwReduxModule);
 
 const initialReducers = combineReducers(reducerRegistry.getReducers());

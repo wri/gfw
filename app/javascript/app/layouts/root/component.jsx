@@ -13,9 +13,9 @@ import Footer from 'components/footer';
 import Cookies from 'components/cookies';
 import Button from 'components/ui/button';
 import MapMenu from 'components/map-menu';
+import ErrorPage from 'pages/error';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
-import FailedImport from 'pages/failed-import';
 
 import 'styles/styles.scss';
 import './styles.scss';
@@ -23,7 +23,12 @@ import './styles.scss';
 const universalOptions = {
   loading: <Loader className="page-loader" />,
   minDelay: 200,
-  error: <FailedImport />
+  error: (
+    <ErrorPage
+      title="Sorry, something went wrong."
+      desc="Try refreshing the page or check your connection."
+    />
+  )
 };
 
 const PageComponent = universal(
@@ -33,13 +38,29 @@ const PageComponent = universal(
 );
 
 class App extends PureComponent {
+  static propTypes = {
+    route: PropTypes.object.isRequired,
+    loggedIn: PropTypes.bool,
+    isGFW: PropTypes.bool,
+    isTrase: PropTypes.bool,
+    metadata: PropTypes.object,
+    authenticating: PropTypes.bool
+  };
+
   componentDidMount() {
     const isSearch = window.location.pathname === '/search';
     handlePageTrack(isSearch);
   }
 
   render() {
-    const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
+    const {
+      route,
+      loggedIn,
+      metadata,
+      isGFW,
+      isTrase,
+      authenticating
+    } = this.props;
     const { component, embed, fullScreen } = route;
     const isMapPage = component === 'map';
 
@@ -67,13 +88,18 @@ class App extends PureComponent {
               />
             )}
             <div className={cx('page', { mobile: !isDesktop && !isMapPage })}>
-              <PageComponent
-                path={route.component}
-                sections={route.sections}
-                isTrase={isTrase}
-                isDesktop={isDesktop}
-                metadata={metadata}
-              />
+              {authenticating ? (
+                <Loader className="page-loader" />
+              ) : (
+                <PageComponent
+                  path={route.component}
+                  sections={route.sections}
+                  isTrase={isTrase}
+                  isDesktop={isDesktop}
+                  metadata={metadata}
+                  loggedIn={loggedIn}
+                />
+              )}
             </div>
             {!embed && <MyGFWProvider />}
             {embed &&
@@ -98,13 +124,5 @@ class App extends PureComponent {
     );
   }
 }
-
-App.propTypes = {
-  route: PropTypes.object.isRequired,
-  loggedIn: PropTypes.bool,
-  isGFW: PropTypes.bool,
-  isTrase: PropTypes.bool,
-  metadata: PropTypes.object
-};
 
 export default App;

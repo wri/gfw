@@ -50,6 +50,10 @@ $summary-color: #aaa;
     justify-content: space-between;
     z-index: 2;
 
+    &.top-padding {
+      padding-top: rem(40px);
+    }
+
     @media screen and (min-width: $screen-m) {
       padding: rem(20px) rem(40px) rem(40px);
     }
@@ -79,7 +83,6 @@ $summary-color: #aaa;
       font-size: rem(16px);
       margin-bottom: rem(20px);
       line-height: 1.5;
-      // height: rem(80px);
       overflow: hidden;
     }
 

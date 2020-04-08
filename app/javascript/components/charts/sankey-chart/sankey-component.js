@@ -415,7 +415,7 @@ class Sankey extends PureComponent {
     this.state = this.constructor.createDefaultState(props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const {
       data,
       width,
@@ -427,16 +427,17 @@ class Sankey extends PureComponent {
       nameKey
     } = this.props;
     if (
-      nextProps.data !== data ||
-      nextProps.width !== width ||
-      nextProps.height !== height ||
-      !shallowEqual(nextProps.margin, margin) ||
-      nextProps.iterations !== iterations ||
-      nextProps.nodeWidth !== nodeWidth ||
-      nextProps.nodePadding !== nodePadding ||
-      nextProps.nameKey !== nameKey
+      prevProps.data !== data ||
+      prevProps.width !== width ||
+      prevProps.height !== height ||
+      !shallowEqual(prevProps.margin, margin) ||
+      prevProps.iterations !== iterations ||
+      prevProps.nodeWidth !== nodeWidth ||
+      prevProps.nodePadding !== nodePadding ||
+      prevProps.nameKey !== nameKey
     ) {
-      this.setState(this.constructor.createDefaultState(nextProps));
+      // eslint-disable-next-line
+      this.setState(this.constructor.createDefaultState(prevProps));
     }
   }
 

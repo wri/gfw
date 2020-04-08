@@ -5,17 +5,6 @@ export const pluralise = str => {
     : `${str}s`;
 };
 
-export const getIndicator = (forestType, landCategory) => {
-  if (landCategory && !forestType) {
-    return landCategory;
-  } else if (landCategory && forestType) {
-    return `${forestType}__${landCategory}`;
-  } else if (!landCategory && forestType) {
-    return forestType;
-  }
-  return 'admin';
-};
-
 // formats/create ellipsis nodes text using # of lines available, node width, etc
 export const splitSVGText = (
   text,

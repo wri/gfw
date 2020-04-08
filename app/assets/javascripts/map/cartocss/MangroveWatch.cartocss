@@ -1,7 +1,0 @@
-#layer {
-  polygon-fill: #06ef9f;
-  polygon-opacity: 0.7;
-  line-color: #06ef9f;
-  line-width: 1;
-  line-opacity: 1;
-}

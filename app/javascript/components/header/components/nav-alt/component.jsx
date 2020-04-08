@@ -2,10 +2,10 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { NavLink } from 'redux-first-router-link';
 
 import Icon from 'components/ui/icon';
 import DropdownMenu from 'components/header/components/dropdown-menu';
-import MyGFWLogin from 'components/mygfw-login';
 import SubmenuPanel from 'components/header/components/submenu-panel';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -17,6 +17,14 @@ import menuIcon from 'assets/icons/menu.svg';
 import './styles.scss';
 
 class NavAlt extends PureComponent {
+  static propTypes = {
+    isDesktop: PropTypes.bool,
+    loggedIn: PropTypes.bool,
+    showSubmenu: PropTypes.bool,
+    closeSubMenu: PropTypes.func,
+    setLangToUrl: PropTypes.func
+  };
+
   constructor(props) {
     super(props);
 
@@ -35,9 +43,18 @@ class NavAlt extends PureComponent {
       languages,
       lang: txLang || 'en',
       showLang: false,
-      showMyGfw: false,
       showMore: false
     };
+
+    this.mounted = false;
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -64,8 +81,8 @@ class NavAlt extends PureComponent {
   };
 
   render() {
-    const { isDesktop, myGfwLinks, loggedIn, showSubmenu } = this.props;
-    const { showLang, showMyGfw, showMore, languages, lang } = this.state;
+    const { isDesktop, showSubmenu, loggedIn } = this.props;
+    const { showLang, showMore, languages, lang } = this.state;
     const activeLang = languages && languages.find(l => l.value === lang);
     const showMorePanel = showMore || showSubmenu;
     let moreMenuText = 'menu';
@@ -86,7 +103,11 @@ class NavAlt extends PureComponent {
                 <Fragment>
                   <button
                     className="menu-link lang-btn notranslate"
-                    onClick={() => this.setState({ showLang: !showLang })}
+                    onClick={() => {
+                      if (this.mounted) {
+                        this.setState({ showLang: !showLang });
+                      }
+                    }}
                   >
                     {(activeLang && activeLang.label) || 'English'}
                     <Icon
@@ -109,25 +130,17 @@ class NavAlt extends PureComponent {
               </OutsideClickHandler>
             </li>
             <li className="alt-link">
-              <OutsideClickHandler
-                onOutsideClick={() => this.setState({ showMyGfw: false })}
+              <NavLink
+                className="nav-link"
+                to="/my-gfw"
+                activeClassName="-active"
               >
-                <button
-                  className="menu-link"
-                  onClick={() => this.setState({ showMyGfw: !showMyGfw })}
-                >
-                  My GFW
-                  <Icon icon={myGfwIcon} />
-                  {showMyGfw &&
-                    loggedIn && (
-                    <DropdownMenu className="submenu" options={myGfwLinks} />
-                  )}
-                  {showMyGfw &&
-                    !loggedIn && (
-                    <MyGFWLogin className="mygfw-header submenu" />
-                  )}
-                </button>
-              </OutsideClickHandler>
+                My GFW
+                <Icon
+                  icon={myGfwIcon}
+                  className={cx({ 'logged-in': loggedIn })}
+                />
+              </NavLink>
             </li>
           </Fragment>
         )}
@@ -176,14 +189,5 @@ class NavAlt extends PureComponent {
     );
   }
 }
-
-NavAlt.propTypes = {
-  isDesktop: PropTypes.bool,
-  myGfwLinks: PropTypes.array,
-  loggedIn: PropTypes.bool,
-  showSubmenu: PropTypes.bool,
-  closeSubMenu: PropTypes.func,
-  setLangToUrl: PropTypes.func
-};
 
 export default NavAlt;

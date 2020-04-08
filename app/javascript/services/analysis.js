@@ -1,8 +1,7 @@
-import axios from 'axios';
+import { apiRequest } from 'utils/request';
+import { all, spread } from 'axios';
 import qs from 'query-string';
 import moment from 'moment';
-
-const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
   umdAdmin: '/{version}/{slug}/admin/{location}{params}',
@@ -21,7 +20,9 @@ const buildAnalysisUrl = ({
   adm0,
   adm1,
   adm2,
-  params
+  params,
+  aggregate,
+  aggregateBy
 }) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
   const { startDate, endDate, threshold, query, number_of_days } = params;
@@ -35,24 +36,25 @@ const buildAnalysisUrl = ({
 
   const thresh = params.thresh || threshold ? params.thresh || threshold : '';
   const geostore = type === 'geostore' ? adm0 : '';
-  const hasParams = period || thresh || geostore || hasParams;
 
-  const queryParams = hasParams
-    ? qs.stringify({
-      ...(period && {
-        period
-      }),
-      ...(thresh && {
-        thresh
-      }),
-      ...(geostore && {
-        geostore
-      }),
-      ...(query && {
-        [query.param]: query.value
-      })
+  const queryParams = qs.stringify({
+    ...(period && {
+      period
+    }),
+    ...(thresh && {
+      thresh
+    }),
+    ...(geostore && {
+      geostore
+    }),
+    aggregate_values: aggregate ? 'True' : false,
+    ...(aggregateBy && {
+      aggregate_by: aggregateBy
+    }),
+    ...(query && {
+      [query.param]: query.value
     })
-    : '';
+  });
 
   return urlTemplate
     .replace('{version}', version || 'v1')
@@ -83,14 +85,13 @@ const reduceAnalysisResponse = response => {
   return {};
 };
 
-export const fetchAnalysisEndpoint = ({ type, ...rest }) =>
-  axios.get(
-    `${REQUEST_URL}${buildAnalysisUrl({
-      urlTemplate: getUrlTemplate(type),
-      type,
-      ...rest
-    })}`
-  );
+export const fetchAnalysisEndpoint = ({ type, ...rest }) => apiRequest.get(
+  `${buildAnalysisUrl({
+    urlTemplate: getUrlTemplate(type),
+    type,
+    ...rest
+  })}`
+);
 
 export const fetchUmdLossGain = ({
   endpoints,
@@ -105,8 +106,8 @@ export const fetchUmdLossGain = ({
     endpoints.map(endpoint => {
       const urlTemplate = getUrlTemplate(type);
 
-      return axios.get(
-        `${REQUEST_URL}${buildAnalysisUrl({
+      return apiRequest.get(
+        `${buildAnalysisUrl({
           urlTemplate,
           ...endpoint,
           type,
@@ -117,22 +118,20 @@ export const fetchUmdLossGain = ({
       );
     });
 
-  return axios
-    .all(endpointUrls, {
-      cancelToken: token,
-      timeout: 1800
-    })
-    .then(
-      axios.spread(
-        (...responses) =>
-          responses &&
-          responses.reduce((obj, response) => {
-            const analysis = reduceAnalysisResponse(response);
-            return {
-              ...obj,
-              ...analysis
-            };
-          }, {})
-      )
-    );
+  return all(endpointUrls, {
+    cancelToken: token,
+    timeout: 1800
+  }).then(
+    spread(
+      (...responses) =>
+        responses &&
+        responses.reduce((obj, response) => {
+          const analysis = reduceAnalysisResponse(response);
+          return {
+            ...obj,
+            ...analysis
+          };
+        }, {})
+    )
+  );
 };

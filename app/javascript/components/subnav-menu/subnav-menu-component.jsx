@@ -64,7 +64,14 @@ class SubNavMenu extends PureComponent {
                   </NavLink>
                 );
               }
-              return <li key={link.label}>{LinkComponent}</li>;
+              return (
+                <li
+                  key={link.label}
+                  className={`subnav-link-${link.label.toLowerCase()}`}
+                >
+                  {LinkComponent}
+                </li>
+              );
             })
             : ''}
         </ul>

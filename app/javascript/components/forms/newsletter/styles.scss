@@ -1,0 +1,36 @@
+@import '~styles/settings.scss';
+
+.c-newsletter-form {
+  h1 {
+    font-size: rem(36px);
+    margin-bottom: rem(10px);
+    font-weight: 300;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: rem(16px);
+    margin-bottom: rem(40px);
+    text-align: center;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(60px);
+    }
+  }
+
+  p {
+    margin-bottom: rem(20px);
+  }
+
+  .submit-btn {
+    min-width: rem(180px);
+    align-self: center;
+  }
+
+  .c-form-error {
+    span {
+      align-self: center;
+      margin-right: 0;
+    }
+  }
+}

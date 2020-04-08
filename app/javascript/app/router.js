@@ -3,6 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import compact from 'lodash/compact';
 import { checkBrowser } from 'utils/browser';
+import { setUserToken } from 'services/user';
 
 import { handlePageTrack } from './analytics';
 import { getNewMapRedirect } from './utils';
@@ -16,6 +17,7 @@ export const MAP = 'location/MAP';
 export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
+export const MYGFW = 'location/MYGFW';
 export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
 export const STORIES = 'location/STORIES';
@@ -38,6 +40,21 @@ const routeChangeThunk = (dispatch, getState) => {
   const prevLocation = location && location.prev.pathname;
   if (prevLocation && currentLocation !== prevLocation) {
     handlePageTrack();
+  }
+
+  const { type, payload, query } = location;
+  if (query && query.token) {
+    setUserToken(query.token);
+    dispatch(
+      redirect({
+        type,
+        payload,
+        query: {
+          ...query,
+          token: undefined
+        }
+      })
+    );
   }
 };
 
@@ -189,9 +206,14 @@ export const routes = {
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
-    path: '/embed/dashboards/:type/:adm0?/:adm1?/:adm2?',
+    path: '/embed/widget/:widgetSlug/:type/:adm0?/:adm1?/:adm2?',
     component: 'dashboards/components/embed',
     embed: true
+  },
+  [MYGFW]: {
+    path: '/my-gfw',
+    component: 'my-gfw',
+    controller: 'my_gfw'
   },
   [THANKYOU]: {
     path: '/thank-you',

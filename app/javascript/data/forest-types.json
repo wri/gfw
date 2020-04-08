@@ -8,8 +8,8 @@
     "categories": ["Unknown", "Wood fiber / Timber", "Oil Palm ", "Fruit", "Rubber", "Other", "Fruit Mix", "Unknown Mix", "Oil Palm Mix", "Rubber Mix", "Wood fiber / Timber Mix", "Recently Cleared"],
     "datasets": [
       {
-        "dataset": "bb1dced4-3ae8-4908-9f36-6514ae69713f",
-        "layers": ["b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4"]
+        "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+        "layers": ["f2604a93-8059-4b24-9d02-c43ac224e286"]
       }
     ]
   },
@@ -25,8 +25,8 @@
     "categories": [2016, 2000],
     "datasets": [
       {
-        "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-        "layers": ["fd44b976-62e6-4072-8218-8abf6e254ed8"]
+        "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+        "layers": ["af4e9e0b-cbf9-437b-80cb-9b0f795161ca"]
       }
     ]
   },
@@ -38,8 +38,8 @@
     "global": true,
     "datasets": [
       {
-        "dataset": "714339c1-c775-4303-aad4-16d975b2f023",
-        "layers": ["079fae08-5696-4926-9417-794bd3a7e8dc"]
+        "dataset": "fe8b5f03-0ff9-4c18-ba39-77dcfe69908f",
+        "layers": ["41086554-5ca5-456c-80dd-f6bee61bc45f"]
       }
     ]
   },
@@ -51,7 +51,7 @@
     "global": true,
     "datasets": [
       {
-        "dataset": "b3b8ca9d-a071-4383-b898-d7f64573b51f",
+        "dataset": "63857a77-a666-4807-a705-a067b640febb",
         "layers": [
           "9d4f2d65-71bc-4930-baf2-efa63dcd0ab9"
         ]

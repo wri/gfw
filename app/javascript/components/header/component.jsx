@@ -7,6 +7,7 @@ import { NavLink } from 'redux-first-router-link';
 
 import gfwLogo from 'assets/logos/gfw.png';
 import ContactUs from 'components/modals/contact-us';
+import ClimateModal from 'components/modals/climate';
 
 import NavMenu from './components/nav-menu';
 import NavAlt from './components/nav-alt';
@@ -14,6 +15,20 @@ import NavAlt from './components/nav-alt';
 import './styles.scss';
 
 class Header extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    setModalContactUsOpen: PropTypes.func,
+    navMain: PropTypes.array,
+    apps: PropTypes.array,
+    moreLinks: PropTypes.array,
+    fullScreen: PropTypes.bool,
+    loggedIn: PropTypes.bool,
+    hideMenu: PropTypes.bool,
+    setQueryToUrl: PropTypes.func,
+    setLangToUrl: PropTypes.func,
+    myGfwLinks: PropTypes.array
+  };
+
   state = {
     fullScreenOpen: false
   };
@@ -96,8 +111,8 @@ class Header extends PureComponent {
                         this.setState({ fullScreenOpen: false })
                       }
                       isDesktop={isDesktop}
-                      myGfwLinks={myGfwLinks}
                       moreLinks={moreLinks}
+                      myGfwLinks={myGfwLinks}
                       navMain={navMain}
                       apps={apps}
                       toggleContactUs={setModalContactUsOpen}
@@ -110,25 +125,12 @@ class Header extends PureComponent {
               </div>
             </div>
             <ContactUs />
+            <ClimateModal />
           </div>
         )}
       </MediaQuery>
     );
   }
 }
-
-Header.propTypes = {
-  className: PropTypes.string,
-  setModalContactUsOpen: PropTypes.func,
-  myGfwLinks: PropTypes.array,
-  navMain: PropTypes.array,
-  apps: PropTypes.array,
-  moreLinks: PropTypes.array,
-  fullScreen: PropTypes.bool,
-  loggedIn: PropTypes.bool,
-  hideMenu: PropTypes.bool,
-  setQueryToUrl: PropTypes.func,
-  setLangToUrl: PropTypes.func
-};
 
 export default Header;

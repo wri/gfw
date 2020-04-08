@@ -1,96 +1,9 @@
 @import '~styles/settings.scss';
-$mobile-padding: rem(20px);
-$desktop-padding: rem(40px);
-$mobile-margin: rem(10px);
 
-.c-contact-us {
-  margin-top: $mobile-margin !important;
-
+.c-contact-us-modal {
   @media screen and (min-width: $screen-m) {
-    margin-top: auto !important;
-  }
-
-  .contact-us-content {
-    .contact-form {
-      position: relative;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      left: 0;
-      border-bottom: 66px solid transparent;
-      outline: none;
-      margin: 0 auto;
-      max-width: 700px;
-      color: #333;
-      border: none;
-      box-shadow: none;
-      background: transparent;
-      border-radius: 0;
-      font-size: 14px;
-      line-height: 1.25;
-      padding: 0;
-
-      .submit-btn {
-        margin: rem(30px) 0;
-      }
-
-      h2 {
-        font-weight: 300;
-        font-size: rem(36px);
-        color: $slate;
-        margin-bottom: rem(20px);
-      }
-
-      .subtitle {
-        margin-top: 0.3125rem;
-        font-size: rem(18px);
-        line-height: rem(25px);
-        margin-bottom: rem(40px);
-      }
-    }
-
-    .feedback-message {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      flex-direction: column;
-      background-color: #fff;
-      max-width: 70rem;
-      width: 600px;
-      padding: 1rem;
-      margin: auto;
-
-      h3 {
-        font-size: 2.1875rem;
-        margin-bottom: 1.25rem;
-        text-transform: none;
-        opacity: 1;
-      }
-
-      p {
-        margin-bottom: 1.25rem;
-      }
-
-      .button-group {
-        display: flex;
-        flex-direction: row;
-
-        a,
-        button {
-          width: rem(260px);
-        }
-
-        .close-button {
-          background-color: $error;
-          margin-bottom: 0.625rem;
-          margin-left: 0.625rem;
-
-          &:hover {
-            background-color: #c4143b;
-          }
-        }
-      }
+    .modal-content {
+      min-width: rem(700px);
     }
   }
 }
-

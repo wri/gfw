@@ -14,9 +14,8 @@ class SectionAbout extends PureComponent {
         <div className="row">
           <div className="column small-12 medium-9">
             <p className="text -paragraph -color-2 -light -spaced">
-              The Small Grants Fund and Fellowship Calls for Applications open
-              once a year. Though the specific focus of the Calls varies from
-              year to year, successful applicants must clearly articulate how
+              The specific focus of the Calls for Applications varies from year
+              to year, though successful applicants must clearly articulate how
               GFW will support and enhance their ongoing work related to:
             </p>
             <ul className="list">
@@ -26,18 +25,6 @@ class SectionAbout extends PureComponent {
               <li>- Journalism</li>
               <li>- Education</li>
             </ul>
-            <p className="text -paragraph -color-2 -light -spaced">
-              Listen to the {' '}
-              <a
-                className="text -paragraph -color-4 -bold"
-                href="https://www.youtube.com/watch?v=ddDyu_l663k&feature=youtu.be"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                2019 GFW Grants and Fellowships Webinar
-              </a>
-              .
-            </p>
             <p className="text -paragraph -color-2 -light -spaced">
               For details on how to apply to each, please see below:
             </p>
@@ -49,7 +36,14 @@ class SectionAbout extends PureComponent {
               <h2 className="section-title">Small Grants Fund</h2>
               <ul className="list">
                 <p className="text -paragraph -color-2 -light -spaced">
-                  The scope of this year’s Small Grants Fund is on using near real-time data to combat deforestation. Winning proposals will clearly demonstrate how they intend to use GLAD deforestation and/or VIIRs fire alerts, made available through GFW tools, to curb deforestation through enforcement or advocacy. Please note that this year’s call also has geographic restrictions. Applicants should carefully read through the Guidelines for Applicants and Frequently Asked Questions for more details.
+                  The scope of this year’s Small Grants Fund is on using near
+                  real-time data to combat deforestation. Winning proposals will
+                  clearly demonstrate how they intend to use GLAD deforestation
+                  and/or VIIRs fire alerts, made available through GFW tools, to
+                  curb deforestation through enforcement or advocacy. Please
+                  note that this year’s call also has geographic restrictions.
+                  Applicants should carefully read through the Guidelines for
+                  Applicants and Frequently Asked Questions for more details.
                 </p>
                 <li>
                   - Read the 2020&nbsp;
@@ -61,7 +55,7 @@ class SectionAbout extends PureComponent {
                   >
                     Guidelines for Applicants
                   </a>
-                </li>    
+                </li>
                 <li>
                   - Review the&nbsp;
                   <a
@@ -70,31 +64,23 @@ class SectionAbout extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Small Grants Fund Frequently Asked Questions.
+                    Small Grants Fund Frequently Asked Questions
                   </a>
                 </li>
                 <li>
                   - Listen to the&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="https://www.youtube.com/watch?v=uHt1FqaSPwQ"
+                    href="https://youtu.be/hHar_nUYi9k"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    webinar featuring past SGF project recipients.
+                    2020 Small Grants Fund Webinar
                   </a>
                 </li>
               </ul>
               <p className="text -paragraph -color-2 -light -spaced">
-                The 2020 Small Grants Fund application is open from January 15th, 2020 – March 1st, 2020.&nbsp; 
-                <a
-                  className="text -paragraph -color-4 -bold"
-                  href="https://gfw.smapply.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apply now.
-                </a>
+                The 2020 Small Grants Fund application window is now closed.
               </p>
             </div>
             <div className="column small-12 medium-3 logo">

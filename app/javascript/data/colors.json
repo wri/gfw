@@ -24,7 +24,8 @@
   "gain": {
     "main": "#6d6de5",
     "ramp": ["#070752", "#231f74", "#3c3898", "#5452be", "#6d6de5", "#8a86ec", "#a49ff3", "#bdb9f9", "#d4d4ff"],
-    "noGain": "#e7e5a4"
+    "noGain": "#e7e5a4",
+    "extent": "#a0c746"
   },
   "climate": {
     "main": "#5b80a0",
@@ -39,7 +40,6 @@
     "main": "#d67828",
     "species": {
       "Oil Palm": "#fdada9",
-      "Oil Palm ": "#fdada9",
       "Wood fiber / Timber": "#98a7c4",
       "Rubber": "#9993a3",
       "Fruit": "#dada95",
@@ -103,5 +103,9 @@
     "ramp": ["#A878F3", "#7C38C5"],
     "male": "#A878F3",
     "female": "#7C38C5"
+  },
+  "biodiversity": {
+    "main": "#6d00e1",
+    "ramp": ["#6d00e1", "#9d36f7", "#c26dfe", "#dfa4ff", "#eccafc"]
   }
 }

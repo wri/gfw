@@ -9,6 +9,10 @@ import globeIcon from 'assets/icons/globe.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
+// TODO: leave only one, refactor icon styles
+import userIcon from 'assets/icons/user.svg';
+import myGFWIcon from 'assets/icons/mygfw.svg';
+
 import RecentImagerySettings from 'components/recent-imagery/components/recent-imagery-settings';
 import Analysis from 'components/analysis';
 import Legend from 'components/map/components/legend';
@@ -16,6 +20,7 @@ import Legend from 'components/map/components/legend';
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 import Search from './components/sections/search';
+import MyGFW from './components/sections/my-gfw';
 
 export const mobileSections = [
   {
@@ -45,10 +50,10 @@ export const mobileSections = [
     Component: Explore
   },
   {
-    label: 'search',
-    slug: 'search',
-    icon: searchIcon,
-    Component: Search
+    label: 'my gfw',
+    slug: 'my-gfw',
+    icon: myGFWIcon,
+    Component: MyGFW
   },
   {
     label: 'Recent Satellite Imagery',
@@ -78,6 +83,12 @@ export const searchSections = [
     slug: 'search',
     icon: searchIcon,
     Component: Search
+  },
+  {
+    label: 'my gfw',
+    slug: 'my-gfw',
+    icon: userIcon,
+    Component: MyGFW
   }
 ];
 

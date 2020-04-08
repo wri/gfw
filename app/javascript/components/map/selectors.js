@@ -6,6 +6,9 @@ import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
 
+import { selectActiveLang } from 'app/layouts/root/selectors';
+import { getActiveArea } from 'providers/areas-provider/selectors';
+
 import { initialState } from './reducers';
 import basemaps from './basemaps';
 
@@ -22,13 +25,7 @@ const selectMapData = state => state.map && state.map.data;
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest && state.latest.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
-const selectActiveLang = state =>
-  (state.location &&
-    state.location &&
-    state.location.query &&
-    state.location.query.lang) ||
-  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
-  'en';
+const selectLocation = state => state.location && state.location.payload;
 
 // CONSTS
 export const getBasemaps = () => basemaps;
@@ -46,7 +43,8 @@ export const getMapViewport = createSelector([getMapSettings], settings => {
     bearing,
     pitch,
     latitude: center.lat,
-    longitude: center.lng
+    longitude: center.lng,
+    transitionDuration: 500
   };
 });
 
@@ -228,7 +226,7 @@ export const getDatasetsWithConfig = createSelector(
             opacity,
             bbox,
             color: d.color,
-            active: layers && layers.includes(l.id),
+            active: layers && layers.length && layers.includes(l.id),
             ...(!isEmpty(l.params) && {
               params: {
                 ...l.params,
@@ -343,10 +341,73 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
 });
 
 // all layers for importing by other components
-export const getActiveLayers = createSelector(getAllLayers, layers => {
-  if (isEmpty(layers)) return [];
-  return layers.filter(l => !l.confirmedOnly);
-});
+export const getActiveLayers = createSelector(
+  [getAllLayers, selectGeostore, selectLocation, getActiveArea],
+  (layers, geostore, location, activeArea) => {
+    if (isEmpty(layers)) return [];
+    const filteredLayers = layers.filter(l => !l.confirmedOnly);
+    if (!geostore || !geostore.id) return filteredLayers;
+    const { type, adm0 } = location || {};
+    const isAoI = type === 'aoi' && adm0;
+
+    const geojson = {
+      ...geostore.geojson,
+      ...(activeArea && {
+        features: [
+          {
+            ...geostore.geojson.features[0],
+            properties: activeArea
+          }
+        ]
+      })
+    };
+
+    const parsedLayers = filteredLayers.concat({
+      id: geostore.id,
+      name: isAoI ? 'Area of Interest' : 'Geojson',
+      config: {
+        type: 'geojson',
+        source: {
+          data: geojson,
+          type: 'geojson'
+        },
+        render: {
+          layers: [
+            {
+              type: 'fill',
+              paint: {
+                'fill-color': 'transparent'
+              }
+            },
+            {
+              type: 'line',
+              paint: {
+                'line-color': '#C0FF24',
+                'line-width': isAoI ? 3 : 1,
+                'line-offset': isAoI ? 2 : 0
+              }
+            },
+            {
+              type: 'line',
+              paint: {
+                'line-color': '#000',
+                'line-width': 2
+              }
+            }
+          ]
+        }
+      },
+      ...(isAoI && {
+        interactionConfig: {
+          output: []
+        }
+      }),
+      zIndex: 1060
+    });
+
+    return parsedLayers;
+  }
+);
 
 export const getActiveLayersWithDates = createSelector(
   getActiveLayers,
@@ -384,13 +445,19 @@ export const getInteractiveLayerIds = createSelector(
   getActiveLayers,
   layers => {
     if (isEmpty(layers)) return [];
+
     const interactiveLayers = layers.filter(
-      l => !isEmpty(l.interactionConfig) && l.layerConfig.body.vectorLayers
+      l =>
+        !isEmpty(l.interactionConfig) &&
+        l.layerConfig &&
+        l.layerConfig.render &&
+        l.layerConfig.render.layers
     );
 
     return flatMap(
       interactiveLayers.reduce((arr, layer) => {
-        const clickableLayers = layer.layerConfig.body.vectorLayers;
+        const clickableLayers =
+          layer.layerConfig.render && layer.layerConfig.render.layers;
 
         return [
           ...arr,
@@ -427,12 +494,14 @@ export const getInteractions = createSelector(
     if (isEmpty(interactions)) return null;
     return Object.keys(interactions).map(i => {
       const layer = activeLayers.find(l => l.id === i);
+
       return {
         data: interactions[i].data,
         geometry: interactions[i].geometry,
         layer,
         label: layer && layer.name,
         value: layer && layer.id,
+        aoi: layer && layer.name === 'Area of Interest',
         article:
           layer && layer.interactionConfig && layer.interactionConfig.article
       };

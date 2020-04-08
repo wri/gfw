@@ -1,0 +1,55 @@
+@import '~styles/settings.scss';
+
+.c-form-radio {
+  .radio-option {
+    margin-bottom: rem(15px);
+    cursor: pointer;
+
+    label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: rem(5px);
+
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(16px);
+        height: rem(16px);
+        border-radius: 100%;
+        border: solid 1px $slate;
+        margin-right: rem(10px);
+
+        &::after {
+          content: '';
+          width: rem(8px);
+          height: rem(8px);
+          background-color: $green-gfw;
+          border-radius: 100%;
+          display: none;
+        }
+      }
+    }
+
+    input[type=radio] {
+      display: none;
+    }
+
+    input[type=radio]:checked + label span::after {
+      display: block;
+    }
+  }
+
+  .radio-input {
+    border-radius: 4px;
+    background-color: transparent;
+    border: solid 1px $border;
+    outline: none;
+    color: $slate;
+    height: rem(40px);
+    width: 100%;
+    padding: 0 rem(12px);
+  }
+}

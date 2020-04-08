@@ -13,7 +13,7 @@ $map-menu-items-size: rem(76px);
   width: $map-menu-items-size;
   height: 100%;
 
-  @media screen and (min-height: 608px) {
+  @media screen and (min-height: 684px) {
     display: flex;
     overflow-y: hidden;
   }

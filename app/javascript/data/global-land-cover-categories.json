@@ -1,9 +1,5 @@
 [
   {
-    "label": "No data",
-    "classes": ["class_0"]
-  },
-  {
     "label": "Agriculture",
     "classes": [
       "class_10",
@@ -18,8 +14,6 @@
     "label": "Forest",
     "classes": [
       "class_50",
-      "class_51",
-      "class_52",
       "class_60",
       "class_61",
       "class_62",

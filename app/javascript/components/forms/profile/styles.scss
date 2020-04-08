@@ -1,0 +1,53 @@
+@import '~styles/settings.scss';
+
+.c-profile-form {
+  max-width: rem(500px);
+
+  h1 {
+    font-size: rem(36px);
+    margin-bottom: rem(10px);
+    font-weight: 300;
+  }
+
+  h3 {
+    font-size: rem(16px);
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(60px);
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    max-width: rem(350px);
+  }
+
+  p {
+    margin-bottom: rem(20px);
+  }
+
+  .section-name {
+    margin-bottom: rem(12px);
+    color: $slate-light;
+    font-size: rem(18px);
+    line-height: rem(30px);
+  }
+
+  .submit-btn {
+    min-width: rem(180px);
+  }
+
+  .delete-profile {
+    text-align: center;
+    width: 100%;
+    margin-top: rem(60px);
+  }
+
+  .reset-form-btn {
+    margin: auto;
+    width: rem(200px);
+    margin-top: rem(30px);
+  }
+}

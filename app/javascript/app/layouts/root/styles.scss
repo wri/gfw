@@ -12,12 +12,17 @@
 
   .page {
     position: relative;
-    min-height: 50vh;
+    min-height: calc(100vh - 56px - 583px);
     z-index: 0;
 
+    @media screen and (min-width: $screen-m) {
+      min-height: calc(100vh - 56px - 384px);
+    }
+
     .page-loader {
+      position: relative;
       z-index: 1;
-      min-height: 50vh;
+      min-height: 60vh;
     }
 
     &.mobile {
@@ -60,6 +65,10 @@
       position: relative;
       width: 100%;
       min-height: rem(400px);
+
+      &.mobile {
+        margin-top: 0;
+      }
     }
 
     .embed-footer {
@@ -104,4 +113,3 @@
     }
   }
 }
-

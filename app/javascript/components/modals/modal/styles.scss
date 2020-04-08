@@ -1,0 +1,93 @@
+@import '~styles/settings.scss';
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS */
+  .ReactModal__Overlay {
+    align-items: flex-start !important;
+  }
+
+  .ReactModal__Content {
+    margin: 0 !important;
+  }
+}
+
+html,
+body {
+  overflow-x: visible !important;
+}
+
+.c-modal {
+  background: #fff;
+  outline: none;
+
+  /* Predefined modal size when loading content */
+  min-width: 200px;
+  min-height: 150px;
+
+  .modal-title {
+    padding: $vertical-modal-padding-mobile $horizontal-modal-padding-mobile 0;
+    color: $greyish-brown;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 30px;
+  }
+
+  .modal-content {
+    padding: $vertical-modal-padding-mobile $horizontal-modal-padding-mobile;
+    margin: auto;
+
+    .element-fullwidth {
+      width: calc(100% + 2 * #{$horizontal-modal-padding-mobile});
+      margin-left: -$horizontal-modal-padding-mobile;
+
+      @media screen and (min-width: $screen-m) {
+        width: calc(100% + 2 * #{$horizontal-modal-padding-desktop});
+        margin-left: -$horizontal-modal-padding-desktop;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-m) {
+    width: auto;
+    max-width: rem(900px);
+
+    .modal-title {
+      padding: $vertical-modal-padding-desktop $horizontal-modal-padding-desktop 0;
+      color: #333;
+      line-height: 40px;
+      margin: 0 auto;
+      font-size: 30px;
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .modal-content {
+      padding: rem(30px) $horizontal-modal-padding-desktop $vertical-modal-padding-desktop;
+    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 10;
+
+    @media screen and (min-width: $screen-m) {
+      top: 25px;
+      right: 25px;
+    }
+
+    svg {
+      width: rem(15px);
+      height: rem(15px);
+      fill: $slate;
+    }
+  }
+}

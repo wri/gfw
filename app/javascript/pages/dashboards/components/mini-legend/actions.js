@@ -1,4 +1,4 @@
-import { createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'utils/redux';
 import { MAP } from 'app/router';
 
 export const setMainMapView = createThunkAction(
@@ -17,7 +17,8 @@ export const setMainMapView = createThunkAction(
         ...query,
         map: {
           ...map,
-          datasets
+          datasets,
+          canBound: true
         },
         mainMap: {
           ...mainMap,

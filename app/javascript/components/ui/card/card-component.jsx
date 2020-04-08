@@ -12,13 +12,24 @@ import './themes/card-small.scss';
 import './themes/card-dark.scss';
 
 class Card extends PureComponent {
+  static propTypes = {
+    data: PropTypes.object,
+    className: PropTypes.string,
+    theme: PropTypes.string,
+    onClick: PropTypes.func,
+    active: PropTypes.bool,
+    tag: PropTypes.string,
+    tagColor: PropTypes.string,
+    clamp: PropTypes.number
+  };
+
   state = {
     selectorValue: {}
   };
 
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, theme, data, active, tag, tagColour } = this.props;
+    const { className, theme, data, active, clamp } = this.props;
     const {
       image,
       img1x,
@@ -29,6 +40,8 @@ class Card extends PureComponent {
       fullSummary,
       meta,
       buttons,
+      tag,
+      tagColor,
       selector
     } =
       data || {};
@@ -37,11 +50,11 @@ class Card extends PureComponent {
     return (
       <div className={cx('c-card', className, theme, { active })}>
         {tag &&
-          tagColour && (
-            <span className="tag" style={{ backgroundColor: tagColour }}>
-              <p>{tag}</p>
-            </span>
-          )}
+          tagColor && (
+          <span className="tag" style={{ backgroundColor: tagColor }}>
+            <p>{tag}</p>
+          </span>
+        )}
         {image && (
           <div className="image" style={{ backgroundImage: `url(${image})` }} />
         )}
@@ -53,7 +66,13 @@ class Card extends PureComponent {
             alt={title}
           />
         )}
-        <div className={cx('body', { 'no-image': !image })}>
+        <div
+          className={cx(
+            'body',
+            { 'no-image': !image },
+            { 'top-padding': tag && tagColor && !image }
+          )}
+        >
           <div className="text-content">
             {imageCredit && <span>{imageCredit}</span>}
             {title && <h3 className="title">{title}</h3>}
@@ -62,7 +81,7 @@ class Card extends PureComponent {
                 {fullSummary ? (
                   summary
                 ) : (
-                  <Dotdotdot clamp={3}>{summary}</Dotdotdot>
+                  <Dotdotdot clamp={clamp || 3}>{summary}</Dotdotdot>
                 )}
               </div>
             )}
@@ -115,15 +134,5 @@ class Card extends PureComponent {
     );
   }
 }
-
-Card.propTypes = {
-  data: PropTypes.object,
-  className: PropTypes.string,
-  theme: PropTypes.string,
-  onClick: PropTypes.func,
-  active: PropTypes.bool,
-  tag: PropTypes.string,
-  tagColour: PropTypes.string
-};
 
 export default Card;

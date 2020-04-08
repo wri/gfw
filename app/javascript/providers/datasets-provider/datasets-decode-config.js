@@ -356,20 +356,208 @@ const decodes = {
     } else {
       alpha = 0.;
     }
+  `,
+  grossCarbonEmissions: `
+    float rCol = color.r;
+    float bCol = color.b;
+    float threshold = bCol * 255.;
+
+    float rVal = rCol * 3885.;
+
+    float r5 = 250. / 255.;
+    float g5 = 247. / 255.;
+    float b5 = 202. / 255.;
+    float col5 = 0.;
+    vec3 color5 = vec3(r5, g5, b5);
+
+    float r6 = 245. / 255.;
+    float g6 = 193. / 255.;
+    float b6 = 95. / 255.;
+    float col6 = 3.5;
+    vec3 color6 = vec3(r6, g6, b6);
+
+    float r7 = 227. / 255.;
+    float g7 = 134. / 255.;
+    float b7 = 64. / 255.;
+    float col7 = 13.9;
+    vec3 color7 = vec3(r7, g7, b7);
+
+    float r8 = 199. / 255.;
+    float g8 = 78. / 255.;
+    float b8 = 34. / 255.;
+    float col8 = 139.;
+    vec3 color8 = vec3(r8, g8, b8);
+
+    float r9 = 166. / 255.;
+    float g9 = 0. / 255.;
+    float b9 = 0. / 255.;
+    float col9 = 3885.;
+    vec3 color9 = vec3(r9, g9, b9);
+
+    // map to years
+    if (threshold >= thresh) {
+      if (rVal <= col6) {
+        color = mix(color5, color6, rCol);
+      } else if (rVal <= col7) {
+        color = mix(color6, color7, rCol);
+      } else if (rVal <= col8) {
+        color = mix(color7, color8, rCol);
+      } else {
+        color = mix(color8, color9, rCol);
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
+  cumulativeCarbonGain: `
+    float rCol = color.r;
+    float gCol = color.g;
+    float threshold = gCol * 255.;
+
+    float rVal = rCol * 1116.;
+
+    float r1 = 0. / 255.;
+    float g1 = 105. / 255.;
+    float b1 = 42. / 255.;
+    float col1 = 1116.;
+    vec3 color1 = vec3(r1, g1, b1);
+
+    float r2 = 68. / 255.;
+    float g2 = 140. / 255.;
+    float b2 = 53. / 255.;
+    float col2 = 250.;
+    vec3 color2 = vec3(r2, g2, b2);
+
+    float r3 = 125. / 255.;
+    float g3 = 179. / 255.;
+    float b3 = 68. / 255.;
+    float col3 = 124.;
+    vec3 color3 = vec3(r3, g3, b3);
+
+    float r4 = 190. / 255.;
+    float g4 = 214. / 255.;
+    float b4 = 92. / 255.;
+    float col4 = 25.;
+    vec3 color4 = vec3(r4, g4, b4);
+
+    float r5 = 250. / 255.;
+    float g5 = 247. / 255.;
+    float b5 = 202. / 255.;
+    float col5 = 0.;
+    vec3 color5 = vec3(r5, g5, b5);
+
+    // map to years
+    if (threshold >= thresh) {
+      if (rVal >= col2) {
+        color = mix(color1, color2, rCol);
+      } else if (rVal >= col3) {
+        color = mix(color2, color3, rCol);
+      } else if (rVal >= col4) {
+        color = mix(color3, color4, rCol);
+      } else {
+        color = mix(color4, color5, rCol);
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
+  netCarbonFlux: `
+    float rCol = color.r;
+    float gCol = color.g;
+    float threshold = gCol * 255.;
+
+    float rVal = rCol * 5001.;
+
+    float r1 = 0. / 255.;
+    float g1 = 105. / 255.;
+    float b1 = 42. / 255.;
+    float col1 = 0.;
+    vec3 color1 = vec3(r1, g1, b1);
+
+    float r2 = 68. / 255.;
+    float g2 = 140. / 255.;
+    float b2 = 53. / 255.;
+    float col2 = 886.;
+    vec3 color2 = vec3(r2, g2, b2);
+
+    float r3 = 125. / 255.;
+    float g3 = 179. / 255.;
+    float b3 = 68. / 255.;
+    float col3 = 992.;
+    vec3 color3 = vec3(r3, g3, b3);
+
+    float r4 = 190. / 255.;
+    float g4 = 214. / 255.;
+    float b4 = 92. / 255.;
+    float col4 = 1091.;
+    vec3 color4 = vec3(r4, g4, b4);
+
+    float r5 = 250. / 255.;
+    float g5 = 247. / 255.;
+    float b5 = 202. / 255.;
+    float col5 = 1116.;
+    vec3 color5 = vec3(r5, g5, b5);
+
+    float r6 = 245. / 255.;
+    float g6 = 193. / 255.;
+    float b6 = 95. / 255.;
+    float col6 = 1119.5;
+    vec3 color6 = vec3(r6, g6, b6);
+
+    float r7 = 227. / 255.;
+    float g7 = 134. / 255.;
+    float b7 = 64. / 255.;
+    float col7 = 1129.9;
+    vec3 color7 = vec3(r7, g7, b7);
+
+    float r8 = 199. / 255.;
+    float g8 = 78. / 255.;
+    float b8 = 34. / 255.;
+    float col8 = 1255.;
+    vec3 color8 = vec3(r8, g8, b8);
+
+    float r9 = 166. / 255.;
+    float g9 = 0. / 255.;
+    float b9 = 0. / 255.;
+    float col9 = 3885.;
+    vec3 color9 = vec3(r9, g9, b9);
+
+    // map to years
+    if (threshold >= thresh) {
+      if (rVal <= col2) {
+        color = mix(color1, color2, rCol);
+      } else if (rVal <= col3) {
+        color = mix(color2, color3, rCol);
+      } else if (rVal <= col4) {
+        color = mix(color3, color4, rCol);
+      } else if (rVal <= col5) {
+        color = mix(color4, color5, rCol);
+      } else if (rVal <= col6) {
+        color = mix(color5, color6, rCol);
+      } else if (rVal <= col7) {
+        color = mix(color6, color7, rCol);
+      } else if (rVal <= col8) {
+        color = mix(color7, color8, rCol);
+      } else {
+        color = mix(color8, color9, rCol);
+      }
+    } else {
+      alpha = 0.;
+    }
   `
 };
 
 export default {
-  '78747ea1-34a9-4aa7-b099-bdb8948200f4': decodes.treeCover,
-  'c05c32fd-289c-4b20-8d73-dc2458234e04': decodes.treeCover,
-  'c3075c5a-5567-4b09-bc0d-96ed1673f8b6': decodes.treeCoverLoss,
-  '0d35db15-9c05-4dbb-9879-ceded4f7951d': decodes.treeCoverLoss,
-  'fd05bc2c-6ade-408c-862e-7318557dd4fc': decodes.treeLossByDriver,
-  'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
-  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs,
-  'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
-  'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
-  '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
-  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
-  '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover
+  treeCover: decodes.treeCover,
+  treeCoverLoss: decodes.treeCoverLoss,
+  treeLossByDriver: decodes.treeLossByDriver,
+  GLADs: decodes.GLADs,
+  biomassLoss: decodes.biomassLoss,
+  woodyBiomass: decodes.woodyBiomass,
+  terrai: decodes.terrai,
+  braLandCover: decodes.braLandCover,
+  grossCarbonEmissions: decodes.grossCarbonEmissions,
+  cumulativeCarbonGain: decodes.cumulativeCarbonGain,
+  netGHGFlux: decodes.netCarbonFlux,
+  formaAlerts: decodes.forma
 };

@@ -97,6 +97,8 @@ class SectionProjects extends PureComponent {
                       className="project-card"
                       data={{
                         ...d,
+                        tag: isFellow ? 'fellow' : 'grantee',
+                        tagColor: isFellow ? '#f88000' : '#97bd3d',
                         buttons: [
                           {
                             className: 'read-more',
@@ -105,19 +107,17 @@ class SectionProjects extends PureComponent {
                           }
                         ]
                       }}
-                      tag={isFellow ? 'fellow' : 'grantee'}
-                      tagColour={isFellow ? '#f88000' : '#97bd3d'}
                     />
                   </div>
                 );
               })}
             {!loading &&
               !hasData && (
-                <NoContent
-                  className="no-projects"
-                  message="No projects for that search"
-                />
-              )}
+              <NoContent
+                className="no-projects"
+                message="No projects for that search"
+              />
+            )}
             {loading && <Loader loading={loading} />}
           </ScrollEl>
         </div>

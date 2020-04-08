@@ -1,0 +1,16 @@
+@import '~styles/settings.scss';
+
+.c-widget-download-button {
+  .download-icon {
+    width: rem(10px);
+    height: rem(10px);
+  }
+
+  &,
+  .small-download-button {
+    .download-icon {
+      width: rem(8px);
+      height: rem(8px);
+    }
+  }
+}
