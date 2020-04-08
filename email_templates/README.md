@@ -1,4 +1,13 @@
-param list:
+# Areas of interest email templates
+
+The `gfw-areas` and `gfw-subscriptions` services send emails based on certain triggers.
+
+Dashboard pending: when a user creates an area for a previously non existent geostore
+Dashboard complete: when the API has generated the cached tables to display full data for a given geostore
+Subscription preference changed: when a user has subscribed to an area and has updated the preferences about the area
+Forest change alert (GLADS): when the GLADs data has changed inside your area of interest
+Forest Change alert (VIIRS): when the VIIRS data has changed inside your area of interest
+Monthly summary: regardless of data change, sends latest stats for area of interest each month
 
 ## Dashboards
 
