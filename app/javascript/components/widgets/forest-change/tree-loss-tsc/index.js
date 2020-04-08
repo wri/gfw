@@ -4,7 +4,7 @@ import { getYearsRange } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_BY_DRIVER_DATASET
+  TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -61,7 +61,7 @@ export default {
     },
     // loss tsc
     {
-      dataset: FOREST_LOSS_BY_DRIVER_DATASET,
+      dataset: TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
       layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER]
     }
   ],

@@ -1,9 +1,13 @@
 import { getGlobalLandCover } from 'services/forest-data';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  LAND_COVER_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  LAND_COVER
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -23,8 +27,8 @@ export default {
       boundary: true
     },
     {
-      dataset: '588f2f1f-cc62-46aa-9859-befa031412ca',
-      layers: ['c09767f5-0ff0-419b-a21b-1b0b06f4745f']
+      dataset: LAND_COVER_DATASET,
+      layers: [LAND_COVER]
     }
   ],
   colors: 'plantations',
