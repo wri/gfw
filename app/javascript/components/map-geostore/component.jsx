@@ -89,7 +89,7 @@ class MapGeostore extends Component {
             const { data } = response.data || {};
             const geostore = buildGeostore(
               { id: data.id, ...data.attributes },
-              this.props
+              this.props.location
             );
             this.setState({ geostore });
           }
