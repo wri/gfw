@@ -22,10 +22,6 @@ class AreaOfInterestModal extends PureComponent {
     activeArea: PropTypes.object
   };
 
-  componentWillUnmount() {
-    this.handleCloseModal();
-  }
-
   handleCloseModal = () => {
     const { setAreaOfInterestModalSettings, setMenuSettings } = this.props;
     setAreaOfInterestModalSettings({ open: false, activeAreaId: null });
@@ -33,7 +29,14 @@ class AreaOfInterestModal extends PureComponent {
   };
 
   render() {
-    const { open, loading, userData, canDelete, viewAfterSave, activeArea } = this.props;
+    const {
+      open,
+      loading,
+      userData,
+      canDelete,
+      viewAfterSave,
+      activeArea
+    } = this.props;
     const { email, fullName, lastName, loggedIn } = userData || {};
     const isProfileFormFilled = !!email && (!!fullName || !!lastName);
 
