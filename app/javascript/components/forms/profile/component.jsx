@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
+import sortBy from 'lodash/sortBy';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
@@ -68,11 +69,10 @@ class ProfileForm extends PureComponent {
                     <div className="column small-12">
                       <h1>Your profile information</h1>
                       <h3>
-                        {source === 'AreaOfInterestModal'
-                          ? `Help us help you! Please complete the mandatory fields to be able to save your area of interest.
-                        We will be using this information to help us guide GFW’s future developments.`
-                          : `Help us help you! Tell us who you are and how you use
-                        Global Forest Watch so we can better meet your needs.`}
+                        We use this information to make Global Forest Watch more
+                        useful for you. Your privacy is important to us and
+                        we&apos;ll never share your information without your
+                        consent.
                       </h3>
                     </div>
                     <div className="column small-12">
@@ -111,13 +111,18 @@ class ProfileForm extends PureComponent {
                         />
                       )}
                       <Input name="jobTitle" label="job title" />
-                      <Input name="company" label="Company / organization" />
+                      <Input
+                        name="company"
+                        label="Company / organization"
+                        required
+                      />
                       <p className="section-name">Where are you located?</p>
                       <Select
                         name="country"
                         label="country"
                         options={countries}
                         placeholder="Select a country"
+                        required
                       />
                       <Input name="city" label="city" />
                       <Input
@@ -141,18 +146,22 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="interests"
                         label="What topics are you interested in?"
-                        options={interests}
+                        options={interests.sort()}
                         required
                         multiple
                       />
                       <Select
                         name="howDoYouUse"
                         label="how do you use global forest watch?"
-                        options={howDoYouUse.map(r => ({
-                          label: r,
-                          value: r
-                        }))}
+                        options={sortBy(
+                          howDoYouUse.map(r => ({
+                            label: r,
+                            value: r
+                          })),
+                          'label'
+                        )}
                         multiple
+                        required
                       />
                       <Checkbox
                         name="signUpToNewsletter"
