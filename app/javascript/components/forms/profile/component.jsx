@@ -77,7 +77,11 @@ class ProfileForm extends PureComponent {
                     </div>
                     <div className="column small-12">
                       <Input name="firstName" label="first name" />
-                      <Input name="lastName" label="surname" required />
+                      <Input
+                        name="lastName"
+                        label="last name / surname"
+                        required
+                      />
                       <Input
                         name="email"
                         type="email"
