@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import cx from 'classnames';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -63,7 +64,7 @@ class Input extends PureComponent {
               />
             ) : (
               <input
-                className={`c-form-input ${className}`}
+                className={cx('c-form-input', className)}
                 {...input}
                 type={type}
                 placeholder={placeholder}
