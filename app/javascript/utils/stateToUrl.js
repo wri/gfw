@@ -26,11 +26,13 @@ export const decodeUrlForState = url => {
   if (paramsParsed.map) {
     paramsParsed.map = {
       ...paramsParsed.map,
-      datasets: paramsParsed.map.datasets.reduce((arr, dataset) => [...arr, {
-        ...dataset,
-        dataset: oldLayersAndDatasets[dataset.dataset] || dataset,
-        layers: dataset.layers.reduce((lArr, layerId) => [...lArr, oldLayersAndDatasets[layerId] || layerId], [])
-      }], [])
+      ...paramsParsed.map.datasets && {
+        datasets: paramsParsed.map && paramsParsed.map.datasets.reduce((arr, dataset) => [...arr, {
+          ...dataset,
+          dataset: oldLayersAndDatasets[dataset.dataset] || dataset,
+          layers: dataset.layers.reduce((lArr, layerId) => [...lArr, oldLayersAndDatasets[layerId] || layerId], [])
+        }], [])
+      }
     };
   }
 
