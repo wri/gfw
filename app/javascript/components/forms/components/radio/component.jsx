@@ -8,6 +8,7 @@ import isEmpty from 'lodash/isEmpty';
 import { composeValidators } from 'components/forms/validations';
 
 import FieldWrapper from 'components/forms/components/field-wrapper';
+import Input from 'components/forms/components/input';
 
 import './styles.scss';
 
@@ -74,13 +75,10 @@ class Radio extends PureComponent {
                       </label>
                       {selectedOption === option.value &&
                         option.radioInput && (
-                        <Field
-                          id={id}
+                        <Input
                           name={`${input.name}_otherInput`}
-                          component="input"
-                          type="type"
                           className="radio-input"
-                          autoFocus
+                          required={required}
                         />
                       )}
                     </div>
