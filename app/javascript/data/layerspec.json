@@ -2,36 +2,36 @@
   {
     "slug": "loss",
     "cartodb_id": 597,
-    "dataset": "897ecc76-2308-4c51-aeb3-495de0bdca79",
-    "layer": "c3075c5a-5567-4b09-bc0d-96ed1673f8b6"
+    "dataset": "eab9655f-dd37-4bb3-b223-4c5df166564c",
+    "layer": "dce8004f-4d0f-4c2d-ae4b-dcf55e14035f"
   },
   {
     "slug": "forestgain",
-    "dataset": "70e2549c-d722-44a6-a8d7-4a385d78565e",
-    "layer": "3b22a574-2507-4b4a-a247-80057c1a1ad4"
+    "dataset": "190acb0d-2b06-48d8-b894-234a7413674b",
+    "layer": "0abe4aea-cc86-4c75-8c16-2f16bf78d8be"
   },
   {
     "slug": "gain",
-    "dataset": "70e2549c-d722-44a6-a8d7-4a385d78565e",
-    "layer": "3b22a574-2507-4b4a-a247-80057c1a1ad4"
+    "dataset": "190acb0d-2b06-48d8-b894-234a7413674b",
+    "layer": "0abe4aea-cc86-4c75-8c16-2f16bf78d8be"
   },
   {
     "slug": "forest2000",
     "cartodb_id": 591,
-    "dataset": "044f4af8-be72-4999-b7dd-13434fc4a394",
-    "layer": "c05c32fd-289c-4b20-8d73-dc2458234e04"
+    "dataset": "c92b6411-f0e5-4606-bbd9-138e40e50eb8",
+    "layer": "0cba3c4f-2d3b-4fb1-8c93-c951dc1da84b"
   },
   {
     "slug": "umd_as_it_happens",
     "cartodb_id": 723,
-    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
-    "layer": "dd5df87f-39c2-4aeb-a462-3ef969b20b66"
+    "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
+    "layer": "8e4a527d-1bcd-4a12-82b0-5a108ffec452"
   },
   {
     "slug": "prodes",
     "cartodb_id": 671,
-    "dataset": "5da0c609-c20c-4e99-9d2c-3b1120a2983b",
-    "layer": "d1d52ca8-f716-4f85-afcb-ad1a90d6c321"
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "b3529b7f-8fdd-4d10-a6eb-71c6effcbcd5"
   },
   {
     "slug": "guyra",
@@ -43,19 +43,19 @@
     "slug": "terrailoss",
     "cartodb_id": 614,
     "dataset": "461e6f3f-c03c-40b2-8a40-47d1354c93bf",
-    "layer": "790b46ce-715a-4173-8f2c-53980073acb6"
+    "layer": "50a76478-9f6e-4315-874a-611d10a50338"
   },
   {
     "slug": "imazon",
     "cartodb_id": 584,
-    "dataset": "b3fa1221-db2a-4826-95a1-37ac0973cc4b",
-    "layer": "3ec29734-4627-45b1-b320-680e4b4b939e"
+    "dataset": "5f9d0a63-bedb-4eeb-ae14-d8b08d7d117b",
+    "layer": "9aca1fac-cc66-41a9-826c-d0f19c849fb5"
   },
   {
     "slug": "viirs_fires_alerts",
     "cartodb_id": 727,
-    "dataset": "0f0ea013-20ac-4f4b-af56-c57e99f39e08",
-    "layer": "5371d0c0-4e5f-45f7-9ff2-fe538914f7a3"
+    "dataset": "1d3ccf9b-102e-4c0b-b2ea-2abcc712e194",
+    "layer": "93e33932-3959-4201-b8c8-6ec0b32596e0"
   },
   {
     "slug": "forma_month_3",
@@ -72,8 +72,8 @@
   {
     "cartodb_id": 668,
     "slug": "us_land_cover_change",
-    "dataset": "dddcba3c-f746-4787-9915-f24c141a94da",
-    "layer": "2b4b882b-1d2b-44fd-92b9-a1ffcabe6ca6",
+    "dataset": "fed39abb-00dd-4b5a-be67-77a831a47233",
+    "layer": "859eb596-c07a-4c4d-916f-9fa4aa2a29e7",
     "name": "usa land cover change"
   },
   {
@@ -86,64 +86,64 @@
   {
     "cartodb_id": 706,
     "slug": "lbr_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 732,
     "slug": "mys_peat_lands",
-    "dataset": "759de49c-a599-4369-821a-8d27350b0393",
-    "layer": "ee1c56cb-6418-4029-8d0b-1b3ae96607fe",
+    "dataset": "19b04e18-9534-4814-9317-4990e3524300",
+    "layer": "dc129899-7410-4351-b595-2a288d429934",
     "name": "malaysia peat lands"
   },
   {
     "cartodb_id": 704,
     "slug": "mys_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 653,
     "slug": "us_land_cover",
-    "dataset": "dddcba3c-f746-4787-9915-f24c141a94da",
+    "dataset": "fed39abb-00dd-4b5a-be67-77a831a47233",
     "layer": "27bbbfbe-60c4-4ac0-84c3-bf4be26c3753",
     "name": "usa land cover"
   },
   {
     "cartodb_id": 758,
     "slug": "lbr_mineral_exploration_license",
-    "dataset": "795633ea-88ba-4019-b4ed-d9575886e8ee",
-    "layer": "f8f8bc4d-7a6e-4152-95ed-b20fd572861b",
+    "dataset": "4b2a8463-c040-4ad6-ba76-630ab2c0197b",
+    "layer": "c6df9658-2717-4288-b1a0-c670baa7f31a",
     "name": "liberia mineral exploration licenses"
   },
   {
     "cartodb_id": 670,
     "slug": "plantations_by_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 752,
     "slug": "uga_protected_areas",
-    "dataset": "3b12cc5f-4bf8-4857-909e-a8791125bbf1",
-    "layer": "fdfd426b-11d0-45fc-91f4-3706ebb0e798",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "f135d3cf-44d0-454e-8e82-87ce43b46a68",
     "name": "protected areas by category"
   },
   {
     "cartodb_id": 663,
     "slug": "global_land_cover",
-    "dataset": "588f2f1f-cc62-46aa-9859-befa031412ca",
-    "layer": "c09767f5-0ff0-419b-a21b-1b0b06f4745f",
+    "dataset": "4ed47a85-0304-42ad-8dac-c4af7da83c28",
+    "layer": "e67f4276-c1d0-4970-b2d6-6dd17843f4c9",
     "name": "land cover"
   },
   {
     "cartodb_id": 711,
     "slug": "khm_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
@@ -156,8 +156,8 @@
   {
     "cartodb_id": 715,
     "slug": "col_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
@@ -170,29 +170,29 @@
   {
     "cartodb_id": 696,
     "slug": "mys_protected_areas",
-    "dataset": "41a26503-d708-4b95-bbde-c613fba04f44",
-    "layer": "2ac2cd50-6b9d-4b7a-b960-325671fc610f",
+    "dataset": "22578843-e923-47d2-a601-441de0b7f5c2",
+    "layer": "846c2b1b-da5a-4133-876e-004099672dd1",
     "name": "sarawak protected areas"
   },
   {
     "cartodb_id": 744,
     "slug": "mexican_pa",
-    "dataset": "3a8e0ae1-fcc5-4a50-abd1-37f158f173ec",
-    "layer": "ccf5f7a5-6549-4f0c-82a4-bcc88ac392ac",
+    "dataset": "e4a834b7-80c3-48c4-986b-9696e5e4409c",
+    "layer": "0d723e17-323f-45a0-bfd5-5dc211875874",
     "name": "mexico protected areas"
   },
   {
     "cartodb_id": 714,
     "slug": "idn_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 760,
     "slug": "lbr_development_exploration_license",
-    "dataset": "936b191c-8119-4752-8472-c918b9638241",
-    "layer": "d471ff15-7cbf-466f-9953-fdb436da778d",
+    "dataset": "196ce556-327f-4a8b-b3d2-93f553ba9a04",
+    "layer": "5ef4fb04-de42-4bd4-a5f8-27c98ea9f11f",
     "name": "liberia mineral development exploration license"
   },
   {
@@ -205,50 +205,50 @@
   {
     "cartodb_id": 574,
     "slug": "protected_areas",
-    "dataset": "3b12cc5f-4bf8-4857-909e-a8791125bbf1",
-    "layer": "fdfd426b-11d0-45fc-91f4-3706ebb0e798",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "f135d3cf-44d0-454e-8e82-87ce43b46a68",
     "name": "protected areas by category"
   },
   {
     "cartodb_id": 724,
     "slug": "mex_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 734,
     "slug": "mex_forest_zoning_cat",
-    "dataset": "81469de5-176c-487f-9b1a-7217d61de080",
-    "layer": "221d2c6e-120d-4567-808f-de2e82950107",
+    "dataset": "98a7336d-a360-4693-98f7-a8853130076d",
+    "layer": "88bfc6b9-1962-4fea-b179-ecff5ac236f7",
     "name": "mexico forest zoning by category"
   },
   {
     "cartodb_id": 582,
     "slug": "wood_fiber_plantations",
-    "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+    "dataset": "1f016faa-5940-4dd3-a848-a00086e20e38",
     "layer": "557dc2cf-0ba7-4410-813c-99d692725fe7",
     "name": "wood fiber"
   },
   {
     "cartodb_id": 754,
     "slug": "mex_forest_zoning_prod",
-    "dataset": "81469de5-176c-487f-9b1a-7217d61de080",
-    "layer": "221d2c6e-120d-4567-808f-de2e82950107",
+    "dataset": "98a7336d-a360-4693-98f7-a8853130076d",
+    "layer": "88bfc6b9-1962-4fea-b179-ecff5ac236f7",
     "name": "mexico forest zoning by category"
   },
   {
     "cartodb_id": 735,
     "slug": "mex_forest_zoning_subcat",
-    "dataset": "81469de5-176c-487f-9b1a-7217d61de080",
-    "layer": "221d2c6e-120d-4567-808f-de2e82950107",
+    "dataset": "98a7336d-a360-4693-98f7-a8853130076d",
+    "layer": "88bfc6b9-1962-4fea-b179-ecff5ac236f7",
     "name": "mexico forest zoning by category"
   },
   {
     "cartodb_id": 745,
     "slug": "mex_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
@@ -261,50 +261,50 @@
   {
     "cartodb_id": 753,
     "slug": "mex_forest_zoning_conserv",
-    "dataset": "81469de5-176c-487f-9b1a-7217d61de080",
-    "layer": "221d2c6e-120d-4567-808f-de2e82950107",
+    "dataset": "98a7336d-a360-4693-98f7-a8853130076d",
+    "layer": "88bfc6b9-1962-4fea-b179-ecff5ac236f7",
     "name": "mexico forest zoning by category"
   },
   {
     "cartodb_id": 654,
     "slug": "usa_conservation_easements",
-    "dataset": "e8b873a3-5665-4b46-ae7e-040c531a77d2",
-    "layer": "e89c223d-ddd4-4ac4-83a1-cdb79ec04889",
+    "dataset": "e162b9ba-c10d-434f-8a26-7f88f04b0101",
+    "layer": "1389d434-400b-4de3-a831-c96dd7c0c741",
     "name": "usa conservation easements"
   },
   {
     "cartodb_id": 742,
     "slug": "mys_wood_fiber_sabah",
-    "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+    "dataset": "1f016faa-5940-4dd3-a848-a00086e20e38",
     "layer": "557dc2cf-0ba7-4410-813c-99d692725fe7",
     "name": "wood fiber"
   },
   {
     "cartodb_id": 736,
     "slug": "mex_forest_zoning_wrapper",
-    "dataset": "81469de5-176c-487f-9b1a-7217d61de080",
-    "layer": "221d2c6e-120d-4567-808f-de2e82950107",
+    "dataset": "98a7336d-a360-4693-98f7-a8853130076d",
+    "layer": "88bfc6b9-1962-4fea-b179-ecff5ac236f7",
     "name": "mexico forest zoning by category"
   },
   {
     "cartodb_id": 755,
     "slug": "mex_forest_zoning_rest",
-    "dataset": "81469de5-176c-487f-9b1a-7217d61de080",
-    "layer": "221d2c6e-120d-4567-808f-de2e82950107",
+    "dataset": "98a7336d-a360-4693-98f7-a8853130076d",
+    "layer": "88bfc6b9-1962-4fea-b179-ecff5ac236f7",
     "name": "mexico forest zoning by category"
   },
   {
     "cartodb_id": 684,
     "slug": "gtm_forest_density",
-    "dataset": "8f96c227-b45a-43a7-9235-d08d722867ba",
-    "layer": "df321c9d-2099-458f-9d77-eabb6c68763a",
+    "dataset": "7bee31e5-77be-47e1-92ca-723a08df6d57",
+    "layer": "a2795ace-ca08-4dd0-829a-c39580804ec8",
     "name": "guatemala forest density"
   },
   {
     "cartodb_id": 685,
     "slug": "usa_forest_ownership",
-    "dataset": "10964a62-eff1-469a-8513-770e71f29445",
-    "layer": "e6c0d961-981a-4016-bf90-775386f2f7ba",
+    "dataset": "70d72141-a10d-4c6d-8ba8-ba5833fafdb7",
+    "layer": "2978f7b2-fcdb-4fe6-bca4-7ef56b469805",
     "name": "usa forest ownership type"
   },
   {
@@ -317,8 +317,8 @@
   {
     "cartodb_id": 709,
     "slug": "khm_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
@@ -352,15 +352,15 @@
   {
     "cartodb_id": 697,
     "slug": "logging_roads",
-    "dataset": "aaf2d74a-4a75-441e-9b3c-73bcb590611e",
-    "layer": "3cadd60a-aec8-4e93-a847-8308840c9d59",
+    "dataset": "58b05fa5-96c8-403d-8128-a6079b15711e",
+    "layer": "35b17f0d-3537-41dc-9bf3-27174fddf9e2",
     "name": "congo basin logging roads"
   },
   {
     "cartodb_id": 592,
     "slug": "biodiversity_hotspots",
-    "dataset": "a684a9bb-63f2-4bea-bf62-fd5e80d23d75",
-    "layer": "dfd9deb6-8d39-4640-8571-4389d5d8898a",
+    "dataset": "8eb4da13-7cc3-4dd1-8f4f-f43c2be56631",
+    "layer": "8e9a86e2-5e34-452e-bf55-d7c6648ea42e",
     "name": "2016 biodiversity hotspots"
   },
   {
@@ -387,8 +387,8 @@
   {
     "cartodb_id": 712,
     "slug": "idn_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
@@ -401,15 +401,15 @@
   {
     "cartodb_id": 759,
     "slug": "lbr_mineral_development_agreement",
-    "dataset": "c876f097-ad66-4ebc-ac36-a069790ad9a7",
-    "layer": "aedbcdba-17ca-4504-8a0e-9296f07a61d9",
+    "dataset": "e553fd29-92a7-439d-b5f4-93b2785e2350",
+    "layer": "329a5130-9e9b-4635-b2df-f91ecfd52a99",
     "name": "liberia mineral development agreements"
   },
   {
     "cartodb_id": 786,
     "slug": "biodiversity_completeness",
     "dataset": "fee5fc38-7a62-49b8-8874-dfa31cbb1ef6",
-    "layer": "43a205fe-aad3-4db1-8807-c399a3264349",
+    "layer": "0be7e9d7-3d88-4c95-89cf-019a77b85f8f",
     "name": "biodiversity significance"
   },
   {
@@ -422,8 +422,8 @@
   {
     "cartodb_id": 705,
     "slug": "mys_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
@@ -436,15 +436,15 @@
   {
     "cartodb_id": 669,
     "slug": "plantations_by_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
     "cartodb_id": 717,
     "slug": "col_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
@@ -457,8 +457,8 @@
   {
     "cartodb_id": 708,
     "slug": "lbr_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
@@ -471,7 +471,7 @@
   {
     "cartodb_id": 661,
     "slug": "idn_wood_fiber",
-    "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+    "dataset": "1f016faa-5940-4dd3-a848-a00086e20e38",
     "layer": "557dc2cf-0ba7-4410-813c-99d692725fe7",
     "name": "wood fiber"
   },
@@ -485,15 +485,15 @@
   {
     "cartodb_id": 649,
     "slug": "pan_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 675,
     "slug": "per_reg_pa",
-    "dataset": "c2615e10-584e-4e7f-ba27-7c4f52594150",
-    "layer": "27fe728b-92a6-4308-8f1c-0abdb34cb6b7",
+    "dataset": "40a79fd8-341f-4631-8640-c7a77d22e99f",
+    "layer": "9d0a910a-f119-411c-a5cc-3206657a2c92",
     "name": "peru protected areas"
   },
   {
@@ -506,119 +506,119 @@
   {
     "cartodb_id": 737,
     "slug": "places_to_watch",
-    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
     "cartodb_id": 690,
     "slug": "mys_wood_fiber",
-    "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+    "dataset": "1f016faa-5940-4dd3-a848-a00086e20e38",
     "layer": "557dc2cf-0ba7-4410-813c-99d692725fe7",
     "name": "wood fiber"
   },
   {
     "cartodb_id": 648,
     "slug": "bra_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 710,
     "slug": "khm_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 643,
     "slug": "gab_wood_fiber",
-    "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+    "dataset": "1f016faa-5940-4dd3-a848-a00086e20e38",
     "layer": "557dc2cf-0ba7-4410-813c-99d692725fe7",
     "name": "wood fiber"
   },
   {
     "cartodb_id": 720,
     "slug": "bra_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 700,
     "slug": "per_plantations_type",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 707,
     "slug": "lbr_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 692,
     "slug": "nzl_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 636,
     "slug": "can_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 655,
     "slug": "cri_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 789,
     "slug": "primary_forest",
-    "dataset": "714339c1-c775-4303-aad4-16d975b2f023",
-    "layer": "079fae08-5696-4926-9417-794bd3a7e8dc",
+    "dataset": "fe8b5f03-0ff9-4c18-ba39-77dcfe69908f",
+    "layer": "41086554-5ca5-456c-80dd-f6bee61bc45f",
     "name": "primary forests"
   },
   {
     "cartodb_id": 602,
     "slug": "land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 726,
     "slug": "per_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 725,
     "slug": "bra_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 683,
     "slug": "gtm_forest_cover",
-    "dataset": "746089a3-0c24-402f-81b6-f8d91fab77fe",
-    "layer": "cfd95864-1e95-4a7f-bdf8-e47e4bb5815e",
+    "dataset": "fa1c99d1-33c6-4259-97ab-fabf8a2210f8",
+    "layer": "86fe7099-4c2c-4171-b11a-57c7ff7e4e57",
     "name": "guatemala forest cover"
   },
   {
     "cartodb_id": 644,
     "slug": "cog_wood_fiber",
-    "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+    "dataset": "1f016faa-5940-4dd3-a848-a00086e20e38",
     "layer": "557dc2cf-0ba7-4410-813c-99d692725fe7",
     "name": "wood fiber"
   },
@@ -632,71 +632,71 @@
   {
     "cartodb_id": 695,
     "slug": "cod_primary_forest_wgs",
-    "dataset": "714339c1-c775-4303-aad4-16d975b2f023",
-    "layer": "079fae08-5696-4926-9417-794bd3a7e8dc",
+    "dataset": "fe8b5f03-0ff9-4c18-ba39-77dcfe69908f",
+    "layer": "41086554-5ca5-456c-80dd-f6bee61bc45f",
     "name": "primary forests"
   },
   {
     "cartodb_id": 701,
     "slug": "per_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
     "cartodb_id": 676,
     "slug": "per_priv_pa",
-    "dataset": "c2615e10-584e-4e7f-ba27-7c4f52594150",
-    "layer": "27fe728b-92a6-4308-8f1c-0abdb34cb6b7",
+    "dataset": "40a79fd8-341f-4631-8640-c7a77d22e99f",
+    "layer": "9d0a910a-f119-411c-a5cc-3206657a2c92",
     "name": "peru protected areas"
   },
   {
     "cartodb_id": 650,
     "slug": "aus_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 716,
     "slug": "col_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 719,
     "slug": "bra_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 741,
     "slug": "mys_proteced_areas_sabah",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 729,
     "slug": "umd_as_it_happens_per",
-    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
     "cartodb_id": 718,
     "slug": "bra_plantations_species",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "e0f7d731-f80a-49ec-840f-bcd40f092933",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "b19effa5-0d9e-4b62-a0bb-2740b95d162b",
     "name": "by species"
   },
   {
     "cartodb_id": 659,
     "slug": "dam_hotspots",
-    "dataset": "b70f070b-c9ae-4452-aa8e-2280a2604666",
-    "layer": "8b29d89b-f827-4fbf-8978-81290670be8f",
+    "dataset": "c27310e2-1c58-42c8-994c-f5277fae5d2c",
+    "layer": "d5f69c5a-14c5-46ee-81c8-bad794e52471",
     "name": "major dams"
   },
   {
@@ -716,8 +716,8 @@
   {
     "cartodb_id": 702,
     "slug": "per_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
@@ -730,36 +730,36 @@
   {
     "cartodb_id": 748,
     "slug": "per_protected_areas",
-    "dataset": "c2615e10-584e-4e7f-ba27-7c4f52594150",
-    "layer": "27fe728b-92a6-4308-8f1c-0abdb34cb6b7",
+    "dataset": "40a79fd8-341f-4631-8640-c7a77d22e99f",
+    "layer": "9d0a910a-f119-411c-a5cc-3206657a2c92",
     "name": "peru protected areas"
   },
   {
     "cartodb_id": 733,
     "slug": "can_ifl",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "af4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest"
   },
   {
     "cartodb_id": 646,
     "slug": "can_land_rights",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 558,
     "slug": "intact_forest",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "af4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest landscapes 2000-2016"
   },
   {
     "cartodb_id": 703,
     "slug": "mys_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
@@ -772,43 +772,43 @@
   {
     "cartodb_id": 673,
     "slug": "per_prod_for",
-    "dataset": "ba9a6f22-c89c-4d8a-b843-bca2067b09de",
-    "layer": "eb72add0-efda-4b95-9298-75e73b6a3902",
+    "dataset": "43abbefa-f9db-48e8-b72e-000343acfdf8",
+    "layer": "2862a3c9-3809-401c-94fc-b2bd29f9255a",
     "name": "peru permanent production forests"
   },
   {
     "cartodb_id": 713,
     "slug": "idn_plantation_wrapper",
-    "dataset": "83f8365b-f40b-4b91-87d6-829425093da1",
-    "layer": "a7ccb4f5-0057-4078-907d-bcd8c280e08b",
+    "dataset": "1e605c89-fa3a-4531-aaca-70f975de24bb",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "type"
   },
   {
     "cartodb_id": 677,
     "slug": "per_nat_pa",
-    "dataset": "c2615e10-584e-4e7f-ba27-7c4f52594150",
-    "layer": "27fe728b-92a6-4308-8f1c-0abdb34cb6b7",
+    "dataset": "40a79fd8-341f-4631-8640-c7a77d22e99f",
+    "layer": "9d0a910a-f119-411c-a5cc-3206657a2c92",
     "name": "peru protected areas"
   },
   {
     "cartodb_id": 600,
     "slug": "idn_primary",
-    "dataset": "51267795-de96-462f-9dfb-dd1d07b44057",
-    "layer": "bf171b35-5dd7-4be6-825a-c98b238107de",
+    "dataset": "b05ad94a-0084-461d-897a-6b8b9d5b20ca",
+    "layer": "60eb4495-dc01-459e-ba18-4a0c820d9619",
     "name": "indonesia primary forest"
   },
   {
     "cartodb_id": 599,
     "slug": "resource_rights",
-    "dataset": "493ea3f3-90ea-4fc8-89d6-98f1f4ac341f",
-    "layer": "353f9c13-4c6b-4ce8-bb40-0452540d9238",
+    "dataset": "ffebf84f-cb27-4c16-bd4c-739fb17a9743",
+    "layer": "5f357ec8-3541-4c35-b386-6230bd384147",
     "name": "resource rights"
   },
   {
     "cartodb_id": 791,
     "slug": "loss_by_driver",
-    "dataset": "a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b",
-    "layer": "b32a2f15-25e8-4ecc-98e0-68782ab1c0fe",
+    "dataset": "f6c67028-d820-46f3-9190-97cc56e7fef0",
+    "layer": "929662b6-3bf8-4413-b4b3-9b8c116f68bb",
     "name": "biomass loss"
   },
   {
@@ -821,8 +821,8 @@
   {
     "cartodb_id": 778,
     "slug": "idn_suitability",
-    "dataset": "7ce357f0-ca71-45f6-88ab-a2f13568017e",
-    "layer": "60820c54-2950-4b5a-8198-84b61e55ef6a",
+    "dataset": "d9ab2e3f-0dfd-4fcd-81fa-7aacb84c0bc4",
+    "layer": "0aaaaec8-3279-4a75-bedb-829c6cc88f36",
     "name": "wri oil palm suitability standard"
   },
   {
@@ -835,22 +835,22 @@
   {
     "cartodb_id": 660,
     "slug": "cmr_resource_rights",
-    "dataset": "493ea3f3-90ea-4fc8-89d6-98f1f4ac341f",
-    "layer": "353f9c13-4c6b-4ce8-bb40-0452540d9238",
+    "dataset": "ffebf84f-cb27-4c16-bd4c-739fb17a9743",
+    "layer": "5f357ec8-3541-4c35-b386-6230bd384147",
     "name": "resource rights"
   },
   {
     "cartodb_id": 780,
     "slug": "pry_rtrs",
-    "dataset": "7411c30d-88e4-487a-b809-3028c60ee207",
-    "layer": "882b0d99-7826-442a-ba06-e5b94658d4e8",
+    "dataset": "11f1cbc4-6c69-4ce6-b680-a4ec542b6f88",
+    "layer": "bd0f1b68-4d70-41bd-bfb2-1831efc0c26e",
     "name": "rtrs guides for responsible soy expansion"
   },
   {
     "cartodb_id": 722,
     "slug": "raisg_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -863,36 +863,36 @@
   {
     "cartodb_id": 641,
     "slug": "gab_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 662,
     "slug": "col_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 618,
     "slug": "birdlife",
-    "dataset": "3bc67d97-cd01-4242-b72b-315e7f320543",
-    "layer": "ab579981-e77c-4cd3-b2d4-5b8a279aa173",
+    "dataset": "c026c2d5-4a2d-43fe-ab1d-215c47af3231",
+    "layer": "5dd45d79-7d09-421d-b7b9-baca3db3820d",
     "name": "2014 endemic bird areas"
   },
   {
     "cartodb_id": 779,
     "slug": "bra_rtrs",
-    "dataset": "7411c30d-88e4-487a-b809-3028c60ee207",
-    "layer": "882b0d99-7826-442a-ba06-e5b94658d4e8",
+    "dataset": "11f1cbc4-6c69-4ce6-b680-a4ec542b6f88",
+    "layer": "bd0f1b68-4d70-41bd-bfb2-1831efc0c26e",
     "name": "rtrs guides for responsible soy expansion"
   },
   {
     "cartodb_id": 656,
     "slug": "gnq_resource_rights",
-    "dataset": "493ea3f3-90ea-4fc8-89d6-98f1f4ac341f",
-    "layer": "353f9c13-4c6b-4ce8-bb40-0452540d9238",
+    "dataset": "ffebf84f-cb27-4c16-bd4c-739fb17a9743",
+    "layer": "5f357ec8-3541-4c35-b386-6230bd384147",
     "name": "resource rights"
   },
   {
@@ -905,36 +905,36 @@
   {
     "cartodb_id": 640,
     "slug": "cog_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 777,
     "slug": "oil_palm_mills",
-    "dataset": "c8c7e5ae-d7bd-4e00-98e7-48677791d8f6",
-    "layer": "3c8354f9-c076-4aa2-91ab-25668b143350",
+    "dataset": "bc8376cd-35ee-43d0-8563-11c74b274044",
+    "layer": "4167a83a-d401-4c5f-bb27-55785ca51228",
     "name": "oil palm mills"
   },
   {
     "cartodb_id": 638,
     "slug": "cod_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 637,
     "slug": "cmr_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
     "cartodb_id": 573,
     "slug": "mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -947,8 +947,8 @@
   {
     "cartodb_id": 664,
     "slug": "khm_mining",
-    "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
-    "layer": "fcd10026-e892-4fb8-8d79-8d76e3b94005",
+    "dataset": "780e8976-9e7c-4661-9b3d-fc4517c417de",
+    "layer": "b8dbd752-08ea-4538-b15a-107a05f11463",
     "name": "mining"
   },
   {
@@ -961,29 +961,29 @@
   {
     "cartodb_id": 658,
     "slug": "lbr_resource_rights",
-    "dataset": "493ea3f3-90ea-4fc8-89d6-98f1f4ac341f",
-    "layer": "353f9c13-4c6b-4ce8-bb40-0452540d9238",
+    "dataset": "ffebf84f-cb27-4c16-bd4c-739fb17a9743",
+    "layer": "5f357ec8-3541-4c35-b386-6230bd384147",
     "name": "resource rights"
   },
   {
     "cartodb_id": 657,
     "slug": "nam_resource_rights",
-    "dataset": "493ea3f3-90ea-4fc8-89d6-98f1f4ac341f",
-    "layer": "353f9c13-4c6b-4ce8-bb40-0452540d9238",
+    "dataset": "ffebf84f-cb27-4c16-bd4c-739fb17a9743",
+    "layer": "5f357ec8-3541-4c35-b386-6230bd384147",
     "name": "resource rights"
   },
   {
     "cartodb_id": 629,
     "slug": "colombia_forest_change",
-    "dataset": "e5aed7ff-b569-4918-887f-192d66fd95de",
-    "layer": "43300ba5-03c4-4bc1-b02f-d699d9ba91ba",
+    "dataset": "6251fa42-8b5d-4438-ac04-5edc17c902b2",
+    "layer": "435d5254-c44e-49e2-9e31-0ff12b5f0514",
     "name": "guatemala forest change 2001-2006"
   },
   {
     "cartodb_id": 783,
     "slug": "mangrove_watch",
-    "dataset": "bd5d7924-611e-4302-9185-8054acb0b44b",
-    "layer": "49e3f955-2bab-4f73-8589-c9c039b8da29",
+    "dataset": "f224619d-b194-4ea7-9209-d71a902648b6",
+    "layer": "9b4ba439-d5c9-412f-9628-683152b03093",
     "name": "mangrove change (2010\u20132016)"
   },
   {
@@ -996,15 +996,15 @@
   {
     "cartodb_id": 730,
     "slug": "umd_as_it_happens_cog",
-    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
     "cartodb_id": 731,
     "slug": "umd_as_it_happens_idn",
-    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
-    "layer": "581ecc62-9a70-4ef4-8384-0d59363e511d",
+    "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
+    "layer": "40816dac-d957-47bd-82e4-22f8840601eb",
     "name": "Places to watch"
   },
   {
@@ -1017,113 +1017,113 @@
   {
     "cartodb_id": 782,
     "slug": "forest2010",
-    "dataset": "044f4af8-be72-4999-b7dd-13434fc4a394",
-    "layer": "78747ea1-34a9-4aa7-b099-bdb8948200f4",
+    "dataset": "c92b6411-f0e5-4606-bbd9-138e40e50eb8",
+    "layer": "2351399c-ef2c-48da-9485-20698190acb0",
     "name": "tree cover 2010"
   },
   {
     "cartodb_id": 651,
     "slug": "lbr_oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 645,
     "slug": "idn_oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 647,
     "slug": "cmr_oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 689,
     "slug": "mys_oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 790,
     "slug": "rspo_oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 652,
     "slug": "cog_oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 556,
     "slug": "oil_palm",
-    "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
-    "layer": "0911abc4-d861-4d7a-84d6-0fa07b51d7d8",
+    "dataset": "c5aac280-9dac-4e97-8f44-afc52a52c255",
+    "layer": "aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1",
     "name": "oil palm"
   },
   {
     "cartodb_id": 746,
     "slug": "mex_land_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 613,
     "slug": "terraicanvas_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 603,
     "slug": "modis_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 605,
     "slug": "forma_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 604,
     "slug": "imazon_cover",
-    "dataset": "8d59a30f-9537-44ff-a6ca-29cf5c62a607",
-    "layer": "b0b75996-1287-4f8f-884a-ff0da931be81",
+    "dataset": "32bb168c-882b-4bd2-ad3e-988f9ccdefb6",
+    "layer": "c396b4aa-737b-4d3c-a3fe-fd292b4a455b",
     "name": "mexico forest cover"
   },
   {
     "cartodb_id": 681,
     "slug": "gtm_forest_change1",
-    "dataset": "e5aed7ff-b569-4918-887f-192d66fd95de",
-    "layer": "43300ba5-03c4-4bc1-b02f-d699d9ba91ba",
+    "dataset": "6251fa42-8b5d-4438-ac04-5edc17c902b2",
+    "layer": "435d5254-c44e-49e2-9e31-0ff12b5f0514",
     "name": "gtm forest change 2001-2006"
   },
   {
     "cartodb_id": 682,
     "slug": "gtm_forest_change2",
-    "dataset": "e5aed7ff-b569-4918-887f-192d66fd95de",
-    "layer": "2fe559f6-9ae7-4a47-87fb-a33a128652ed",
+    "dataset": "6251fa42-8b5d-4438-ac04-5edc17c902b2",
+    "layer": "20152c7f-cbd7-4ed8-b483-06f0495c68b3",
     "name": "gtm forest change 2006-2010"
   },
   {
     "cartodb_id": 762,
     "slug": "sen_user_protected_areas",
-    "dataset": "3b12cc5f-4bf8-4857-909e-a8791125bbf1",
-    "layer": "fdfd426b-11d0-45fc-91f4-3706ebb0e798",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "f135d3cf-44d0-454e-8e82-87ce43b46a68",
     "name": "protected areas by category"
   },
   {
@@ -1136,8 +1136,8 @@
   {
     "cartodb_id": 678,
     "slug": "per_buffer",
-    "dataset": "c2615e10-584e-4e7f-ba27-7c4f52594150",
-    "layer": "27fe728b-92a6-4308-8f1c-0abdb34cb6b7",
+    "dataset": "40a79fd8-341f-4631-8640-c7a77d22e99f",
+    "layer": "9d0a910a-f119-411c-a5cc-3206657a2c92",
     "name": "peru protected areas"
   },
   {
@@ -1150,57 +1150,57 @@
   {
     "cartodb_id": 765,
     "slug": "umd_coverage_2015",
-    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
+    "dataset": "bfd1d211-8106-4393-86c3-9e1ab2ee1b9b",
     "layer": "98d2d65c-df0a-4b6e-b420-8181f44df6f1",
     "name": "geographic coverage"
   },
   {
     "cartodb_id": 624,
     "slug": "azepoly",
-    "dataset": "3a638102-ab50-4717-a0fe-b27bd79d18c2",
-    "layer": "3c44da8f-159a-41f2-9fdb-448e4cd0923d",
+    "dataset": "d0a44e1d-7c07-4182-9d50-315cbcaa6ae1",
+    "layer": "04118785-27f4-4fb0-8980-a786a44f5c6d",
     "name": "2010 endangered species sites\u2014alliance for zero extinction (aze)"
   },
   {
     "cartodb_id": 612,
     "slug": "protected_areasCDB",
-    "dataset": "3b12cc5f-4bf8-4857-909e-a8791125bbf1",
-    "layer": "fdfd426b-11d0-45fc-91f4-3706ebb0e798",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "f135d3cf-44d0-454e-8e82-87ce43b46a68",
     "name": "protected areas by category"
   },
   {
     "cartodb_id": 593,
     "slug": "fires",
-    "dataset": "0f0ea013-20ac-4f4b-af56-c57e99f39e08",
-    "layer": "5371d0c0-4e5f-45f7-9ff2-fe538914f7a3",
+    "dataset": "1d3ccf9b-102e-4c0b-b2ea-2abcc712e194",
+    "layer": "93e33932-3959-4201-b8c8-6ec0b32596e0",
     "name": "viirs active fire alerts"
   },
   {
     "cartodb_id": 674,
     "slug": "raisg",
-    "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
-    "layer": "d3e870f0-3387-4fbd-b635-80ca554f8a79",
+    "dataset": "101fb2b9-5a0a-4ec4-9f86-96c0819b97cd",
+    "layer": "a0c1b479-10ed-4538-9c8d-cdc9815b7054",
     "name": "land rights"
   },
   {
     "cartodb_id": 586,
     "slug": "mongabay",
-    "dataset": "d7b12b17-9ed4-43ab-b8e4-efa2668c47f8",
-    "layer": "e097ebfe-56d9-4564-8e2a-d3328bdaea38",
+    "dataset": "af192b21-a200-443a-8d40-cc9d303c853b",
+    "layer": "51c9b85c-1e7a-4b79-8041-d906251c0d68",
     "name": "mongabay stories"
   },
   {
     "cartodb_id": 781,
     "slug": "bra_soy",
-    "dataset": "7411c30d-88e4-487a-b809-3028c60ee207",
-    "layer": "882b0d99-7826-442a-ba06-e5b94658d4e8",
+    "dataset": "11f1cbc4-6c69-4ce6-b680-a4ec542b6f88",
+    "layer": "bd0f1b68-4d70-41bd-bfb2-1831efc0c26e",
     "name": "rtrs guides for responsible soy expansion"
   },
   {
     "cartodb_id": 672,
     "slug": "prodes_coverage",
-    "dataset": "5da0c609-c20c-4e99-9d2c-3b1120a2983b",
-    "layer": "d1d52ca8-f716-4f85-afcb-ad1a90d6c321",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "b3529b7f-8fdd-4d10-a6eb-71c6effcbcd5",
     "name": "prodes deforestation"
   },
   {
@@ -1220,15 +1220,15 @@
   {
     "cartodb_id": 738,
     "slug": "mexican_psa",
-    "dataset": "fb8987b6-7ad8-4172-b6ef-9c8f917fdafb",
-    "layer": "96240b7a-02c8-4f2d-9f3d-ac04bebc5870",
+    "dataset": "6766c9c1-12ba-493c-beef-da2002773de9",
+    "layer": "50f5209c-97a6-47f5-bb79-75dfc904eedf",
     "name": "mexico payments for ecosystem services"
   },
   {
     "cartodb_id": 620,
     "slug": "wwf",
-    "dataset": "86863b72-bf1e-47db-8e7e-007cf3d00291",
-    "layer": "d5465679-fd73-4097-a17c-cec32426a899",
+    "dataset": "98682a9d-dcab-4d4d-9bb4-8c94effd3a22",
+    "layer": "dff7fb25-5db1-4afe-b66a-65ed14fa557d",
     "name": "terrestrial ecoregions"
   },
   {
@@ -1248,29 +1248,29 @@
   {
     "cartodb_id": 763,
     "slug": "ecu_user_protected_areas",
-    "dataset": "3b12cc5f-4bf8-4857-909e-a8791125bbf1",
-    "layer": "fdfd426b-11d0-45fc-91f4-3706ebb0e798",
+    "dataset": "a481466d-de8a-450c-b792-271901d20d3b",
+    "layer": "f135d3cf-44d0-454e-8e82-87ce43b46a68",
     "name": "protected areas by category"
   },
   {
     "cartodb_id": 590,
     "slug": "pantropical",
-    "dataset": "b67fc529-af07-4443-85a9-24b5cf6f2eae",
-    "layer": "d33a6dc5-eb74-4c4d-bf3b-1f0054c0e247",
+    "dataset": "6b643041-3435-405d-9ce2-f5073385f471",
+    "layer": "131657d3-c9dd-4c21-86c9-0e7886f0e5e1",
     "name": "aboveground mangrove biomass density"
   },
   {
     "cartodb_id": 608,
     "slug": "ifl_2000",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "af4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest landscapes 2000-2016"
   },
   {
     "cartodb_id": 619,
     "slug": "tigers",
-    "dataset": "c7c76cc1-5178-474a-8b6a-60b895e02260",
-    "layer": "42427a55-c8b5-4fac-8db3-a9d59e1b26f7",
+    "dataset": "4c659b43-f19e-4f36-8126-3f0449cc3a8c",
+    "layer": "9df142fb-d56d-4001-90fb-a0008117793e",
     "name": "tiger conservation landscapes and corridors"
   },
   {
@@ -1283,8 +1283,8 @@
   {
     "cartodb_id": 607,
     "slug": "ifl_2013_deg",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "faf4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest landscapes 2000-2016"
   },
   {

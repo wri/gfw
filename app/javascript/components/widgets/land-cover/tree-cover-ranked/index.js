@@ -1,5 +1,16 @@
 import { getExtentGrouped } from 'services/analysis-cached';
 
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FOREST_EXTENT_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  FOREST_EXTENT,
+  TREE_COVER
+} from 'data/layers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -50,19 +61,16 @@ export default {
   ],
   datasets: [
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
     // tree cover
     {
-      dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
+      dataset: FOREST_EXTENT_DATASET,
       layers: {
-        2010: '78747ea1-34a9-4aa7-b099-bdb8948200f4',
-        2000: 'c05c32fd-289c-4b20-8d73-dc2458234e04'
+        2010: FOREST_EXTENT,
+        2000: TREE_COVER
       }
     }
   ],

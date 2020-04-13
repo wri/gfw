@@ -9,8 +9,10 @@ import {
   getGeodescriberDescription
 } from 'providers/geodescriber-provider/selectors';
 
-const gainID = '3b22a574-2507-4b4a-a247-80057c1a1ad4';
-const lossID = 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6';
+import { FOREST_GAIN, FOREST_LOSS } from 'data/layers';
+
+const gainID = FOREST_GAIN;
+const lossID = FOREST_LOSS;
 
 const selectLocation = state => state.location && state.location.payload;
 const selectData = state => state.analysis && state.analysis.data;

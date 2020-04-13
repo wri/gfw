@@ -1,4 +1,13 @@
 import layerSpec from 'data/layerspec.json';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  RECENT_SATELLITE_IMAGERY_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  RECENT_SATELLITE_IMAGERY
+} from 'data/layers';
 import { MAP, MAP_EMBED } from './router';
 
 const paramKeys = [
@@ -125,11 +134,8 @@ export const getNewMapRedirect = ({ slugs, query }) => {
   const newDatasets = [
     // admin boundaries
     {
-      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-      layers: [
-        '6f6798e6-39ec-4163-979e-182a74ca65ee',
-        'c5d1e010-383a-4713-9aaa-44f728c0571c'
-      ],
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       opacity: 1,
       visibility: true
     },
@@ -150,8 +156,8 @@ export const getNewMapRedirect = ({ slugs, query }) => {
         datasets: recentImagery
           ? newDatasets.concat([
             {
-              dataset: '3668bb78-d77e-4215-bc2a-07433e204823',
-              layers: ['babd9968-4b55-4bc5-b771-d471ef8fbd8c'],
+              dataset: RECENT_SATELLITE_IMAGERY_DATASET,
+              layers: [RECENT_SATELLITE_IMAGERY],
               opacity: 1,
               visibility: true,
               isRecentImagery: true

@@ -1,3 +1,16 @@
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FOREST_GAIN_DATASET,
+  FOREST_LOSS_DATASET,
+  FOREST_EXTENT_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  FOREST_GAIN,
+  FOREST_LOSS,
+  FOREST_EXTENT
+} from 'data/layers';
 import * as actions from './actions';
 
 export const initialState = {
@@ -30,32 +43,29 @@ export const initialState = {
     datasets: [
       // admin boundaries
       {
-        dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-        layers: [
-          '6f6798e6-39ec-4163-979e-182a74ca65ee',
-          'c5d1e010-383a-4713-9aaa-44f728c0571c'
-        ],
+        dataset: POLITICAL_BOUNDARIES_DATASET,
+        layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
         opacity: 1,
         visibility: true
       },
       // gain
       {
-        dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
-        layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4'],
+        dataset: FOREST_GAIN_DATASET,
+        layers: [FOREST_GAIN],
         opacity: 1,
         visibility: true
       },
       // loss
       {
-        dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
-        layers: ['c3075c5a-5567-4b09-bc0d-96ed1673f8b6'],
+        dataset: FOREST_LOSS_DATASET,
+        layers: [FOREST_LOSS],
         opacity: 1,
         visibility: true
       },
       // extent
       {
-        dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
-        layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4'],
+        dataset: FOREST_EXTENT_DATASET,
+        layers: [FOREST_EXTENT],
         opacity: 1,
         visibility: true
       }
