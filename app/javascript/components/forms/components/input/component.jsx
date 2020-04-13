@@ -19,7 +19,8 @@ class Input extends PureComponent {
     name: PropTypes.string,
     required: PropTypes.bool,
     collapse: PropTypes.bool,
-    infoClick: PropTypes.func
+    infoClick: PropTypes.func,
+    className: PropTypes.string
   };
 
   render() {
@@ -32,7 +33,8 @@ class Input extends PureComponent {
       hidden,
       required,
       infoClick,
-      collapse
+      collapse,
+      className
     } = this.props;
 
     return (
@@ -61,7 +63,7 @@ class Input extends PureComponent {
               />
             ) : (
               <input
-                className="c-form-input"
+                className={`c-form-input ${className}`}
                 {...input}
                 type={type}
                 placeholder={placeholder}

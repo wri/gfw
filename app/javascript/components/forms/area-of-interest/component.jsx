@@ -265,7 +265,7 @@ class AreaOfInterestForm extends PureComponent {
                       label="language"
                       options={getLanguages()}
                       placeholder="Select a language"
-                      required={metaKey === 'savedWithSub'}
+                      required
                     />
                     <Error
                       valid={valid}
