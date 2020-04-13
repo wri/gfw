@@ -1,5 +1,16 @@
 import queryString from 'query-string';
 import omit from 'lodash/omit';
+import oldLayers from 'data/v2-v3-datasets-layers.json';
+
+const oldLayersAndDatasets = oldLayers.reduce((obj, item) => ({
+  ...obj,
+  ...item.v2_dataset_id && {
+    [item.v2_dataset_id]: item.v3_dataset_id
+  },
+  ...item.v2_layer_id && {
+    [item.v2_layer_id]: item.v3_layer_id
+  }
+}), {});
 
 export const decodeUrlForState = url => {
   const paramsParsed = {};
@@ -11,6 +22,18 @@ export const decodeUrlForState = url => {
       paramsParsed[key] = params[key];
     }
   });
+
+  if (paramsParsed.map) {
+    paramsParsed.map = {
+      ...paramsParsed.map,
+      datasets: paramsParsed.map.datasets.reduce((arr, dataset) => [...arr, {
+        ...dataset,
+        dataset: oldLayersAndDatasets[dataset.dataset] || dataset,
+        layers: dataset.layers.reduce((lArr, layerId) => [...lArr, oldLayersAndDatasets[layerId] || layerId], [])
+      }], [])
+    };
+  }
+
   return paramsParsed;
 };
 
