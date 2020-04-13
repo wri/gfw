@@ -196,6 +196,12 @@ export const routes = {
         submenu: true,
         component: 'water',
         path: '/topics/water'
+      },
+      fires: {
+        label: 'Fires',
+        submenu: true,
+        component: 'fires',
+        path: '/topics/fires'
       }
     }
   },
