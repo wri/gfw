@@ -18,10 +18,21 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
-      key: 'dataset',
-      label: 'fires dataset',
-      type: 'select'
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
     },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+
     {
       key: 'weeks',
       label: 'show data for the last',
@@ -30,7 +41,7 @@ export default {
       noSort: true
     }
   ],
-  refetchKeys: ['dataset'],
+  refetchKeys: ['forestType', 'landCategory'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -57,7 +68,7 @@ export default {
   },
   settings: {
     period: 'week',
-    weeks: 50,
+    weeks: 52,
     dataset: 'VIIRS',
     layerStartDate: null,
     layerEndDate: null
@@ -280,7 +291,7 @@ export default {
         return { alerts: data, latest } || {};
       })
     ),
-  // getDataURL: params => [fetchFiresAlerts({ ...params, download: true })],
+  getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {
