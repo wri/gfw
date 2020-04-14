@@ -132,6 +132,9 @@ export const getChartConfig = (colors, latest, unit = '') => {
         count: {
           stroke: colors.main
         },
+        compareCount: {
+          stroke: '#00F'
+        },
         target: { stroke: 'grey' }
       },
       areas: {

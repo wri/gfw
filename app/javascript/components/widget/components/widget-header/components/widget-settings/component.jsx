@@ -76,6 +76,26 @@ class WidgetSettings extends PureComponent {
             />
           </div>
         );
+
+      case 'compare-select':
+        return (
+          <div className={cx('widget-settings-selector', type)}>
+            <span className="label">{label}</span>
+
+            <Dropdown
+              theme={cx('theme-select-light', {
+                'theme-dropdown-button': type === 'mini-select'
+              })}
+              value={value}
+              options={options}
+              clearable={clearable}
+              onChange={change =>
+                handleChangeSettings({ [key]: change && change.value })
+              }
+            />
+          </div>
+        );
+
       default:
         return (
           options &&

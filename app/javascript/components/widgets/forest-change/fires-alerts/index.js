@@ -1,5 +1,6 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
+import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
@@ -18,6 +19,13 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
+      key: 'compareYear',
+      label: 'Compare with the same period in',
+      type: 'compare-select',
+      clearable: true,
+      border: true
+    },
+    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -31,14 +39,6 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true
-    },
-
-    {
-      key: 'weeks',
-      label: 'show data for the last',
-      type: 'select',
-      whitelist: [13, 26, 52],
-      noSort: true
     }
   ],
   refetchKeys: ['forestType', 'landCategory'],
@@ -67,11 +67,7 @@ export default {
     forestChange: 100
   },
   settings: {
-    period: 'week',
-    weeks: 52,
-    dataset: 'VIIRS',
-    layerStartDate: null,
-    layerEndDate: null
+    dataset: 'VIIRS'
   },
   sentence:
     'There were {count} {dataset} fire alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
@@ -288,7 +284,21 @@ export default {
     all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
-        return { alerts: data, latest } || {};
+        const years = uniq(data.map(d => d.year));
+        const maxYear = Math.max(...years);
+
+        return (
+          {
+            alerts: data,
+            latest,
+            options: {
+              compareYear: years.filter(y => y !== maxYear).map(y => ({
+                label: y,
+                value: y
+              }))
+            }
+          } || {}
+        );
       })
     ),
   getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],

@@ -57,6 +57,22 @@ $settings-items-margin: rem(25px);
     }
   }
 
+  .compare-select {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    font-size: 13px;
+
+    .label {
+      text-align: left;
+      text-transform: none;
+    }
+
+    > * {
+      width: 47.5%;
+    }
+  }
+
   .mini-select {
     justify-content: space-between;
     flex-direction: row;

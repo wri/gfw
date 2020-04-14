@@ -1,9 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import moment from 'moment';
+import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
-import moment from 'moment';
+import max from 'lodash/max';
+
 import { getColorPalette } from 'utils/data';
 
 import {
@@ -18,6 +20,7 @@ const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getInteraction = state => state.settings.interaction || null;
 const getWeeks = state => state.settings.weeks || null;
+const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.sentence || null;
 
@@ -108,10 +111,34 @@ export const getDates = createSelector([getStdDev], data => {
   return getDatesData(data);
 });
 
-export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
-  if (!data) return null;
-  return data.slice(-weeks);
-});
+export const parseData = createSelector(
+  [getData, getDates, getWeeks, getCompareYear],
+  (data, currentData, weeks, compareYear) => {
+    if (!data || !currentData) return null;
+
+    const maxYear = max(currentData.map(d => d.year));
+
+    return currentData
+      .map(d => {
+        const yearDifference = maxYear - d.year;
+        const week = d.week;
+
+        if (compareYear) {
+          const compareWeek = data.find(
+            dt => dt.year === compareYear - yearDifference && dt.week === week
+          );
+
+          return {
+            ...d,
+            compareCount: compareWeek ? compareWeek.count : null
+          };
+        }
+
+        return d;
+      })
+      .slice(-weeks);
+  }
+);
 
 export const parseConfig = createSelector(
   [getColors, getLatest],
