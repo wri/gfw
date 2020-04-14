@@ -18,22 +18,40 @@ const {
   ANNUAL_ADM0_WHITELIST,
   ANNUAL_ADM1_WHITELIST,
   ANNUAL_ADM2_WHITELIST,
+
+  ANNUAL_WDPA_SUMMARY,
+  ANNUAL_WDPA_CHANGE,
+  ANNUAL_WDPA_WHITELIST,
+
+  ANNUAL_GEOSTORE_SUMMARY,
+  ANNUAL_GEOSTORE_CHANGE,
+  ANNUAL_GEOSTORE_WHITELIST,
+
   GLAD_ADM0_WEEKLY,
   GLAD_ADM1_WEEKLY,
   GLAD_ADM2_WEEKLY,
   GLAD_ADM0_WHITELIST,
   GLAD_ADM1_WHITELIST,
   GLAD_ADM2_WHITELIST,
-  ANNUAL_WDPA_SUMMARY,
-  ANNUAL_WDPA_CHANGE,
-  ANNUAL_WDPA_WHITELIST,
+
   GLAD_WDPA_WEEKLY,
   GLAD_WDPA_WHITELIST,
-  ANNUAL_GEOSTORE_SUMMARY,
-  ANNUAL_GEOSTORE_CHANGE,
-  ANNUAL_GEOSTORE_WHITELIST,
+
   GLAD_GEOSTORE_WEEKLY,
-  GLAD_GEOSTORE_WHITELIST
+  GLAD_GEOSTORE_WHITELIST,
+
+  VIIRS_ADM0_WEEKLY,
+  VIIRS_ADM1_WEEKLY,
+  VIIRS_ADM2_WEEKLY,
+  VIIRS_ADM0_WHITELIST,
+  VIIRS_ADM1_WHITELIST,
+  VIIRS_ADM2_WHITELIST,
+
+  VIIRS_WDPA_WEEKLY,
+  VIIRS_WDPA_WHITELIST,
+
+  VIIRS_GEOSTORE_WEEKLY,
+  VIIRS_GEOSTORE_WHITELIST
 } = DATASETS[process.env.FEATURE_ENV || 'production'];
 
 const SQL_QUERIES = {
@@ -63,22 +81,11 @@ const SQL_QUERIES = {
     'SELECT {location}, {polynames} FROM data {WHERE}'
 };
 
-const ANNUAL_ALLOWED_PARAMS = [
-  'adm0',
-  'adm1',
-  'adm2',
-  'threshold',
-  'forestType',
-  'landCategory'
-];
-
-const GLAD_ALLOWED_PARAMS = [
-  'adm0',
-  'adm1',
-  'adm2',
-  'forestType',
-  'landCategory'
-];
+const ALLOWED_PARAMS = {
+  default: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
+  glad: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory'],
+  fires: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence']
+};
 
 const getAnnualDataset = ({
   adm0,
@@ -132,6 +139,22 @@ const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
   return GLAD_ADM0_WEEKLY;
 };
 
+const getFiresDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
+  if (type === 'geostore' && whitelist) return VIIRS_GEOSTORE_WHITELIST;
+  if (type === 'geostore') return VIIRS_GEOSTORE_WEEKLY;
+
+  if (type === 'wdpa' && whitelist) return VIIRS_WDPA_WHITELIST;
+  if (type === 'wdpa') return VIIRS_WDPA_WEEKLY;
+
+  if ((adm2 || (adm1 && grouped)) && whitelist) return VIIRS_ADM2_WHITELIST;
+  if (adm2 || (adm1 && grouped)) return VIIRS_ADM2_WEEKLY;
+  if ((adm1 || (adm0 && grouped)) && whitelist) return VIIRS_ADM1_WHITELIST;
+  if (adm1 || (adm0 && grouped)) return VIIRS_ADM1_WEEKLY;
+  if (whitelist) return VIIRS_ADM0_WHITELIST;
+
+  return VIIRS_ADM0_WEEKLY;
+};
+
 const getLocationSelect = ({ type, adm1, adm2 }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
   if (['geostore', 'use'].includes(type)) return 'geostore__id';
@@ -159,8 +182,23 @@ const buildPolynameSelects = nonTable => {
   return polyString;
 };
 
-const getRequestUrl = ({ glad, ...params }) => {
-  const dataset = glad ? getGladDatasetId(params) : getAnnualDataset(params);
+const getRequestUrl = params => {
+  const getDataset = type => {
+    switch (type) {
+      case 'glad': {
+        return getGladDatasetId(params);
+      }
+
+      case 'fires': {
+        return getFiresDatasetId(params);
+      }
+
+      default: {
+        return getAnnualDataset(params);
+      }
+    }
+  };
+  const dataset = getDataset(params.allowedParams);
   const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
@@ -168,11 +206,10 @@ const getRequestUrl = ({ glad, ...params }) => {
 export const getWHEREQuery = params => {
   const allPolynames = forestTypes.concat(landCategories);
   const paramKeys = params && Object.keys(params);
-  const ALLOWED_PARAMS = params.glad
-    ? GLAD_ALLOWED_PARAMS
-    : ANNUAL_ALLOWED_PARAMS;
+  const allowedParams = ALLOWED_PARAMS[params.allowedParams || 'default'];
+
   const paramKeysFiltered = paramKeys.filter(
-    p => (params[p] || p === 'threshold') && ALLOWED_PARAMS.includes(p)
+    p => (params[p] || p === 'threshold') && allowedParams.includes(p)
   );
   const { type, glad } = params || {};
   if (paramKeysFiltered && paramKeysFiltered.length) {
@@ -190,6 +227,7 @@ export const getWHEREQuery = params => {
           ? polynameMeta.gladTableKey
           : polynameMeta.tableKey);
       let paramKey = p;
+      if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') paramKey = 'treecover_density__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
@@ -213,7 +251,9 @@ export const getWHEREQuery = params => {
 }${
   !isPolyname
     ? `${paramKey} = ${
-      typeof value === 'number' || p !== 'adm0' ? value : `'${value}'`
+      typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
+        ? value
+        : `'${value}'`
     }`
     : ''
 }${isLast ? '' : ' AND '}`;
@@ -702,7 +742,7 @@ export const fetchGladAlerts = ({
     adm1,
     adm2,
     grouped,
-    glad: true
+    allowedParams: 'glad'
   })}${glad}`
     .replace(
       /{location}/g,
@@ -720,7 +760,7 @@ export const fetchGladAlerts = ({
         landCategory,
         ifl,
         ...params,
-        glad: true
+        allowedParams: 'glad'
       })
     );
 
@@ -785,6 +825,7 @@ export const fetchVIIRSAlerts = ({
   tsc,
   forestType,
   landCategory,
+  confidence,
   ifl,
   grouped,
   download,
@@ -797,7 +838,8 @@ export const fetchVIIRSAlerts = ({
     adm1,
     adm2,
     grouped,
-    glad: true
+    confidence,
+    allowedParams: 'fires'
   })}${viirsFires}`
     .replace(
       /{location}/g,
@@ -813,9 +855,10 @@ export const fetchVIIRSAlerts = ({
         adm2,
         forestType,
         landCategory,
+        confidence,
         ifl,
         ...params,
-        glad: true
+        allowedParams: 'fires'
       })
     );
 
@@ -845,7 +888,7 @@ export const fetchVIIRSAlerts = ({
 
 export const fetchVIIRSLatest = () => {
   const url =
-    'http://ec2-54-237-221-136.compute-1.amazonaws.com/nasa_viirs_fire_alerts/v202003/max_alert__date';
+    'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/latest/max_alert__date';
 
   return axios
     .get(url)
@@ -859,7 +902,7 @@ export const fetchVIIRSLatest = () => {
       };
     })
     .catch(error => {
-      console.error('Error in gladRequest', error);
+      console.error('Error in VIIRS request', error);
       return new Promise(resolve =>
         resolve({
           attributes: { updatedAt: moment().format('YYYY-MM-DD') },

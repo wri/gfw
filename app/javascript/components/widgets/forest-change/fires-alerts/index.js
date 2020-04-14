@@ -26,6 +26,13 @@ export default {
       border: true
     },
     {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      border: true
+    },
+    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -41,7 +48,7 @@ export default {
       border: true
     }
   ],
-  refetchKeys: ['forestType', 'landCategory'],
+  refetchKeys: ['forestType', 'landCategory', 'confidence'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -67,7 +74,8 @@ export default {
     forestChange: 100
   },
   settings: {
-    dataset: 'VIIRS'
+    dataset: 'VIIRS',
+    confidence: 'h'
   },
   sentence:
     'There were {count} {dataset} fire alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
@@ -295,7 +303,11 @@ export default {
               compareYear: years.filter(y => y !== maxYear).map(y => ({
                 label: y,
                 value: y
-              }))
+              })),
+              confidence: [
+                { label: 'All', value: '' },
+                { label: 'High', value: 'h' }
+              ]
             }
           } || {}
         );
