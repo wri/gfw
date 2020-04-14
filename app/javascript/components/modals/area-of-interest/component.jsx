@@ -37,8 +37,15 @@ class AreaOfInterestModal extends PureComponent {
       viewAfterSave,
       activeArea
     } = this.props;
-    const { email, fullName, lastName, loggedIn } = userData || {};
-    const isProfileFormFilled = !!email && (!!fullName || !!lastName);
+    const { email, fullName, lastName, loggedIn, sector, subsector } =
+      userData || {};
+    const isProfileFormFilled =
+      !!email &&
+      (!!fullName || !!lastName) &&
+      !!sector &&
+      (subsector.includes('Other')
+        ? !!subsector.split('Other:')[1].trim()
+        : false);
 
     return (
       <Modal
