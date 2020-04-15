@@ -7,11 +7,10 @@ import cx from 'classnames';
 import withRouter from 'utils/withRouter';
 import { MediaContextProvider } from 'utils/responsive';
 
-import { Header } from 'gfw-components';
+import { Header, Footer } from 'gfw-components';
 
 import Meta from 'layouts/meta';
 import NavLink from 'components/nav-link';
-import Footer from 'components/footer';
 import ContactUsModal from 'components/modals/contact-us';
 import ClimateModal from 'components/modals/climate';
 import Cookies from 'components/cookies';
