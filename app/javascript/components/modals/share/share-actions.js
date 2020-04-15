@@ -22,8 +22,8 @@ export const setShareModal = createThunkAction(
 
     getShortenUrl(shareUrl).then(response => {
       let shortShareUrl = '';
-      if (response.data.status_code === 200) {
-        shortShareUrl = response.data.data.url;
+      if (response.status < 400) {
+        shortShareUrl = response.data.link;
         dispatch(setShareUrl(shortShareUrl));
       } else {
         dispatch(setShareLoading(false));
