@@ -54,9 +54,9 @@
         "VIIRS_WDPA_WHITELIST": "",
 
         "VIIRS_GEOSTORE_SUMMARY": "",
-        "VIIRS_GEOSTORE_WEEKLY": "",
-        "VIIRS_GEOSTORE_DAILY": "",
-        "VIIRS_GEOSTORE_WHITELIST": ""
+        "VIIRS_GEOSTORE_WEEKLY": "c223fd5c-a029-426c-978d-26afcff66921",
+        "VIIRS_GEOSTORE_DAILY": "e17593fd-fdcf-40c5-8e6e-c437c9fc15a2",
+        "VIIRS_GEOSTORE_WHITELIST": "099b27b7-0868-4505-a2c2-603b76fae5f8"
 
     },
     "preproduction": {
