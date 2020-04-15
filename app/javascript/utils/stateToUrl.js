@@ -29,7 +29,7 @@ export const decodeUrlForState = url => {
       ...paramsParsed.map.datasets && {
         datasets: paramsParsed.map && paramsParsed.map.datasets.reduce((arr, dataset) => [...arr, {
           ...dataset,
-          dataset: oldLayersAndDatasets[dataset.dataset] || dataset,
+          dataset: oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
           layers: dataset.layers.reduce((lArr, layerId) => [...lArr, oldLayersAndDatasets[layerId] || layerId], [])
         }], [])
       }
