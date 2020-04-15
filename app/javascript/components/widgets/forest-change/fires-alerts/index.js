@@ -78,7 +78,7 @@ export default {
     confidence: 'h'
   },
   sentence:
-    'There were {count} {dataset} fire alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+    'In {location} the peak fire season typically begins in {fires_season_month} and lasts {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
   whitelists: {
     adm0: [
       'AFG',

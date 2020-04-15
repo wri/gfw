@@ -3,6 +3,7 @@ import moment from 'moment';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 
@@ -23,6 +24,7 @@ const getWeeks = state => state.settings.weeks || null;
 const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.sentence || null;
+const getLocationObject = state => state.location;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -151,13 +153,26 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getInteraction, getSentences, getDataset],
-  (data, colors, interaction, sentence, dataset) => {
+  [
+    parseData,
+    getColors,
+    getInteraction,
+    getSentences,
+    getDataset,
+    getLocationObject
+  ],
+  (data, colors, interaction, sentence, dataset, location) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
+    const firstDate = data[0] || {};
     if (!isEmpty(interaction)) {
       lastDate = interaction;
     }
+    // NOTE: the first/last date should reflect the brush start/end
+    const total = sumBy(
+      data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
+      'count'
+    );
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
     const {
@@ -197,12 +212,19 @@ export const parseSentence = createSelector(
       status = 'low';
       statusColor = colorRange[3];
     }
+
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       date: formattedData,
+      location: location.label || '',
+      fire_season_month: null, // helper neededd
+      fire_season_length: 5,
+      start_date: null, // brush start date
+      end_date: null, // brush end date
+      dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       dataset,
       count: {
-        value: lastDate.count ? format(',')(lastDate.count) : 0,
+        value: total ? format(',')(total) : 0,
         color: colors.main
       },
       status: {
