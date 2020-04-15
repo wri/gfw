@@ -56,7 +56,25 @@
         "VIIRS_GEOSTORE_SUMMARY": "",
         "VIIRS_GEOSTORE_WEEKLY": "c223fd5c-a029-426c-978d-26afcff66921",
         "VIIRS_GEOSTORE_DAILY": "e17593fd-fdcf-40c5-8e6e-c437c9fc15a2",
-        "VIIRS_GEOSTORE_WHITELIST": "099b27b7-0868-4505-a2c2-603b76fae5f8"
+        "VIIRS_GEOSTORE_WHITELIST": "099b27b7-0868-4505-a2c2-603b76fae5f8",
+
+        "MODIS_ADM0_WEEKLY": "be3bdf28-a969-4312-a9e3-3ea517908a2a",
+        "MODIS_ADM1_WEEKLY": "832df160-13ab-42b8-9409-38cc3128db4c",
+        "MODIS_ADM2_WEEKLY": "ab047d27-1ff1-4a7e-a1f2-1a165d5e0a4b",
+        "MODIS_ADM2_DAILY": "b80c6564-ed47-44b4-8baf-b1831441bcb7",
+        "MODIS_ADM0_WHITELIST": "8dea6297-ad98-4655-9e91-ec04c0eb26a3",
+        "MODIS_ADM1_WHITELIST": "a314b2c7-b853-4db8-9d58-137445f6fd45",
+        "MODIS_ADM2_WHITELIST": "d8fb1e61-abc0-4468-b8a6-0fa154ac89ed",
+
+        "MODIS_WDPA_SUMMARY": "",
+        "MODIS_WDPA_WEEKLY": "",
+        "MODIS_WDPA_DAILY": "",
+        "MODIS_WDPA_WHITELIST": "",
+
+        "MODIS_GEOSTORE_SUMMARY": "",
+        "MODIS_GEOSTORE_WEEKLY": "1e6bb2c0-61d4-421e-be26-9bd09cb65cdf",
+        "MODIS_GEOSTORE_DAILY": "0a25370f-e20e-43b2-bd87-075c38b67d2e",
+        "MODIS_GEOSTORE_WHITELIST": "263cae9b-8471-4f16-8322-c8ae34425378"
 
     },
     "preproduction": {
