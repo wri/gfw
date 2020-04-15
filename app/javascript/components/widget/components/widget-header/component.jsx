@@ -48,7 +48,6 @@ class WidgetHeader extends PureComponent {
       handleChangeSettings,
       handleShowShare,
       preventCloseSettings,
-      widget,
       getDataURL,
       status
     } = this.props;
@@ -74,7 +73,7 @@ class WidgetHeader extends PureComponent {
             <WidgetSettingsButton
               settingsConfig={settingsConfig}
               loading={loading}
-              widget={widget}
+              title={title}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}

@@ -19,7 +19,7 @@
     "slug": "forest2000",
     "cartodb_id": 591,
     "dataset": "c92b6411-f0e5-4606-bbd9-138e40e50eb8",
-    "layer": "c05c32fd-289c-4b20-8d73-dc2458234e04"
+    "layer": "0cba3c4f-2d3b-4fb1-8c93-c951dc1da84b"
   },
   {
     "slug": "umd_as_it_happens",
@@ -54,8 +54,8 @@
   {
     "slug": "viirs_fires_alerts",
     "cartodb_id": 727,
-    "dataset": "0f0ea013-20ac-4f4b-af56-c57e99f39e08",
-    "layer": "5371d0c0-4e5f-45f7-9ff2-fe538914f7a3"
+    "dataset": "1d3ccf9b-102e-4c0b-b2ea-2abcc712e194",
+    "layer": "93e33932-3959-4201-b8c8-6ec0b32596e0"
   },
   {
     "slug": "forma_month_3",
@@ -135,8 +135,8 @@
   {
     "cartodb_id": 663,
     "slug": "global_land_cover",
-    "dataset": "588f2f1f-cc62-46aa-9859-befa031412ca",
-    "layer": "c09767f5-0ff0-419b-a21b-1b0b06f4745f",
+    "dataset": "4ed47a85-0304-42ad-8dac-c4af7da83c28",
+    "layer": "e67f4276-c1d0-4970-b2d6-6dd17843f4c9",
     "name": "land cover"
   },
   {
@@ -409,7 +409,7 @@
     "cartodb_id": 786,
     "slug": "biodiversity_completeness",
     "dataset": "fee5fc38-7a62-49b8-8874-dfa31cbb1ef6",
-    "layer": "43a205fe-aad3-4db1-8807-c399a3264349",
+    "layer": "0be7e9d7-3d88-4c95-89cf-019a77b85f8f",
     "name": "biodiversity significance"
   },
   {
@@ -737,8 +737,8 @@
   {
     "cartodb_id": 733,
     "slug": "can_ifl",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "af4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest"
   },
   {
@@ -751,8 +751,8 @@
   {
     "cartodb_id": 558,
     "slug": "intact_forest",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "af4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest landscapes 2000-2016"
   },
   {
@@ -1171,8 +1171,8 @@
   {
     "cartodb_id": 593,
     "slug": "fires",
-    "dataset": "0f0ea013-20ac-4f4b-af56-c57e99f39e08",
-    "layer": "5371d0c0-4e5f-45f7-9ff2-fe538914f7a3",
+    "dataset": "1d3ccf9b-102e-4c0b-b2ea-2abcc712e194",
+    "layer": "93e33932-3959-4201-b8c8-6ec0b32596e0",
     "name": "viirs active fire alerts"
   },
   {
@@ -1262,8 +1262,8 @@
   {
     "cartodb_id": 608,
     "slug": "ifl_2000",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "af4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest landscapes 2000-2016"
   },
   {
@@ -1283,8 +1283,8 @@
   {
     "cartodb_id": 607,
     "slug": "ifl_2013_deg",
-    "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
-    "layer": "fd44b976-62e6-4072-8218-8abf6e254ed8",
+    "dataset": "b29f48ff-dd92-4cb4-a37f-82080ed80da0",
+    "layer": "faf4e9e0b-cbf9-437b-80cb-9b0f795161ca",
     "name": "intact forest landscapes 2000-2016"
   },
   {

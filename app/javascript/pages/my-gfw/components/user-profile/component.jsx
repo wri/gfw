@@ -19,11 +19,16 @@ class UserProfile extends PureComponent {
 
   render() {
     const { userData, setProfileModalOpen } = this.props;
-    const { fullName, email } = userData || {};
+    const { fullName, email, firstName, lastName } = userData || {};
 
     return (
       <div className="c-user-profile">
-        {fullName && <p className="name">{fullName}</p>}
+        {!lastName && fullName && <p className="name">{fullName}</p>}
+        {(firstName || lastName) && (
+          <p className="name">
+            {firstName} {lastName}
+          </p>
+        )}
         {email && (
           <p className="email">
             <i>{email}</i>

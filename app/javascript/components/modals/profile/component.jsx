@@ -9,8 +9,16 @@ import './styles.scss';
 class ProfileModal extends PureComponent {
   static propTypes = {
     open: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    setProfileModalOpen: PropTypes.func
+    setProfileModalOpen: PropTypes.func,
+    filledProfile: PropTypes.bool
   };
+
+  componentDidMount() {
+    const { filledProfile, setProfileModalOpen } = this.props;
+    if (!filledProfile) {
+      setProfileModalOpen(true);
+    }
+  }
 
   handleCloseModal = () => {
     const { setProfileModalOpen } = this.props;
@@ -22,12 +30,12 @@ class ProfileModal extends PureComponent {
 
     return (
       <Modal
-        isOpen={!!open}
+        isOpen={open}
         contentLabel="Update your profile"
         onRequestClose={this.handleCloseModal}
       >
         <div className="c-profile-modal">
-          <ProfileForm />
+          <ProfileForm source="myGfw" />
         </div>
       </Modal>
     );

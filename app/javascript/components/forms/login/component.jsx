@@ -148,13 +148,13 @@ class LoginForm extends PureComponent {
                             s.value
                           }?applications=gfw&token=true&callbackUrl=${
                             typeof window !== 'undefined'
-                              ? window.location.href
+                              ? encodeURIComponent(window.location.href)
                               : ''
                           }`}
                           target="_self"
                         >
                           <Button className={`social-btn -${s.value}`}>
-                            Login with 
+                            Login with
                             {' '}
                             {s.label}
                           </Button>

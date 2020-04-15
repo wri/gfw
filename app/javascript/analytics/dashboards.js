@@ -14,6 +14,11 @@ export default {
     action: 'Download page',
     label: '[country]'
   },
+  downloadWidgetData: {
+    category: 'Dashboards page',
+    action: 'Download widget',
+    label: '[widget name] [indicator]'
+  },
   visitMainMapFromDashboard: {
     category: 'Dashboards page',
     action: 'User clicks through to main map',
@@ -38,5 +43,20 @@ export default {
     category: 'Areas of interest',
     action: 'User changes between global and areas dashboard',
     label: 'changes to [type]'
+  },
+  saveArea: {
+    category: 'User AOIs',
+    action: 'User saves aoi',
+    label: '[id]'
+  },
+  editArea: {
+    category: 'User AOIs',
+    action: 'User edits aoi',
+    label: '[id]'
+  },
+  deleteArea: {
+    category: 'User AOIs',
+    action: 'User deletes aoi',
+    label: '[id]'
   }
 };

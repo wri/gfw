@@ -50,7 +50,9 @@ class Checkbox extends PureComponent {
                         id={id}
                         component="input"
                         type="checkbox"
-                        value={option.value}
+                        // undefined := don't overwrite value prop
+                        // this turns the values array into a single value
+                        value={options.length > 1 ? option.value : undefined}
                       />
                       <label className="checkbox-label" htmlFor={id}>
                         <span />

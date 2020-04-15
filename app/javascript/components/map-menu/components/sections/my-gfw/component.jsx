@@ -7,6 +7,7 @@ import slice from 'lodash/slice';
 
 import { Media } from 'utils/responsive';
 import { logout } from 'services/user';
+import { track } from 'app/analytics';
 
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
@@ -169,11 +170,15 @@ class MapMenuMyGFW extends PureComponent {
                     : 'Filter by tags'
                 }
                 options={unselectedTags}
-                onChange={(tag) =>
-                  tag.value &&
-                  this.setState({
-                    activeTags: [...activeTags, tag.value],
-                  })}
+                onChange={tag => {
+                  if (tag.value) {
+                    this.setState({
+                      activeTags: [...activeTags, tag.value]
+                    });
+                    track('userSelectsAoiTag', { label: tag.label });
+                  }
+                }
+                }
               />
             )}
           </div>
@@ -189,7 +194,10 @@ class MapMenuMyGFW extends PureComponent {
                       '--active': active,
                       '--inactive': activeArea && !active,
                     })}
-                    onClick={() => viewArea({ areaId: area.id })}
+                    onClick={() => {
+                      viewArea({ areaId: area.id });
+                      track('clickAreaOfInterest', { label: area.id });
+                    }}
                     role="button"
                     tabIndex={0}
                     key={area.id}

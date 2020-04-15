@@ -5,7 +5,7 @@ import { setAreaOfInterestModalSettings } from 'components/modals/area-of-intere
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
 
 import Component from './component';
-import { mapStateToProps } from './selectors';
+import mapStateToProps from './selectors';
 
 export default connect(mapStateToProps, {
   viewArea,

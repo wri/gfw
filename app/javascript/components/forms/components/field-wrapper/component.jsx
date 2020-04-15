@@ -29,7 +29,9 @@ class FieldWrapper extends PureComponent {
     const { name, label, required, infoClick, touched, error } = this.props;
     return (
       <Fragment>
-        <label htmlFor={name}>{`${label || ''}${required ? ' *' : ''}`}</label>
+        {label && (
+          <label htmlFor={name}>{`${label}${required ? ' *' : ''}`}</label>
+        )}
         {infoClick && (
           <Button
             className="info-button"
