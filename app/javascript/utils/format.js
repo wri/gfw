@@ -47,7 +47,7 @@ export const parseGadm36Id = gid => {
 export const getLocationFromData = data => {
   let newLocation = {};
   if (data && data.gid_0) {
-    newLocation = parseGadm36Id(data[`gid_${data.level}`]);
+    newLocation = parseGadm36Id(data[`gid_${data.level || '0'}`]);
   }
   return {
     type: 'country',
