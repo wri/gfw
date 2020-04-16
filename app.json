@@ -29,6 +29,9 @@
     "BITLY_API_URL": {
       "required": true
     },
+    "BITLY_TOKEN": {
+      "required": true
+    },
     "BITLY_USER": {
       "required": true
     },
