@@ -200,7 +200,7 @@ class WidgetDownloadButton extends PureComponent {
     } else {
       this.generateZipFromURL();
     }
-    track('downloadWidgetData', { label: this.props.title });
+    track('downloadWidgetData', { label: this.props.widget });
   };
 
   render() {

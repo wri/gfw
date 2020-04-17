@@ -1,5 +1,6 @@
 import { createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
+import { track } from 'app/analytics';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 export const handleCategoryChange = createThunkAction(
@@ -92,6 +93,8 @@ export const handleLocationChange = createThunkAction(
         }
       }
     });
+
+    track('changeDashboardLocation', { label: `${type === 'global' ? type : ''}${newPayload.adm0 ? ` ${newPayload.adm0}` : ''}${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${newPayload.adm2 ? `.${newPayload.adm2}` : ''}` });
 
     dispatch(
       setDashboardPromptsSettings({
