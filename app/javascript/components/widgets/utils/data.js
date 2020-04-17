@@ -19,7 +19,7 @@ const translateMeans = (means, latest) => {
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
   return Object.keys(grouped).map(key => ({
-    year: key,
+    year: parseInt(key, 10),
     weeks: grouped[key].slice(
       startSlice < 0 ? grouped[key].length + startSlice : startSlice,
       endSlice < 0 ? grouped[key].length : endSlice
@@ -35,6 +35,32 @@ const meanData = data => {
     });
   });
   return means.map(w => mean(w));
+};
+
+const statsData = data => {
+  const grouped_week = [];
+
+  data.forEach(w => {
+    w.weeks.forEach((y, i) => {
+      grouped_week[i] = grouped_week[i]
+        ? [...grouped_week[i], y.count]
+        : [y.count];
+    });
+  });
+
+  const stats = grouped_week.map(w => {
+    const week_mean = mean(w);
+    const sumOfSquares = w.reduce(
+      (sum, value) => sum + (week_mean - value) ** 2,
+      0
+    );
+
+    return {
+      mean: week_mean,
+      std: (sumOfSquares / w.length) ** 0.5
+    };
+  });
+  return stats;
 };
 
 const runningMean = (data, windowSize) => {
@@ -68,6 +94,56 @@ export const getMeansData = (data, latest) => {
     ...d,
     mean: (translatedMeans && translatedMeans[i]) || 0
   }));
+  return parsedData;
+};
+
+export const getStatsData = (data, latest) => {
+  const minYear = minBy(data, 'year').year;
+  const maxYear = maxBy(data, 'year').year;
+  const leftYears = getYearsObj(data.filter(d => d.year !== maxYear), -6);
+  const rightYears = getYearsObj(data.filter(d => d.year !== minYear), 0, 6);
+  const centralYears = getYearsObj(
+    data.filter(d => d.year !== minYear),
+    0,
+    data.length
+  );
+
+  // Get an array of all data with start/end buffers for smoothing
+  const allYears = centralYears.map(({ year, weeks }) => {
+    const leftYear = leftYears.find(el => el.year === year - 1) || {};
+    const rightYear = rightYears.find(el => el.year === year + 1) || {};
+
+    const leftWeeks = leftYear.weeks || [];
+    const rightWeeks = rightYear.weeks || [];
+
+    return {
+      year,
+      weeks: concat(leftWeeks, weeks, rightWeeks)
+    };
+  });
+
+  const stats = statsData(allYears);
+
+  const smoothedMeans = runningMean(stats.map(el => el.mean), 12);
+  const smoothedStds = runningMean(stats.map(el => el.std), 12);
+  const translatedMeans = translateMeans(smoothedMeans, latest);
+  const translatedStds = translateMeans(smoothedStds, latest);
+  // These are len 54... 1 or 2 longet than expected!!!
+
+  const pastYear = data.slice(-52);
+  const parsedData = pastYear.map((d, i) => {
+    const weekMean = (translatedMeans && translatedMeans[i]) || 0;
+    const stdDev = (translatedStds && translatedStds[i]) || 0;
+
+    return {
+      ...d,
+      mean,
+      plusStdDev: [weekMean, weekMean + stdDev],
+      minusStdDev: [weekMean - stdDev, weekMean],
+      twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
+      twoMinusStdDev: [weekMean - stdDev * 2, weekMean - stdDev]
+    };
+  });
   return parsedData;
 };
 

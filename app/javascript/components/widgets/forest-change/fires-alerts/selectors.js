@@ -10,8 +10,7 @@ import max from 'lodash/max';
 import { getColorPalette } from 'utils/data';
 
 import {
-  getMeansData,
-  getStdDevData,
+  getStatsData,
   getDatesData,
   getChartConfig
 } from 'components/widgets/utils/data';
@@ -97,7 +96,7 @@ export const getData = createSelector(
 
 export const getMeans = createSelector([getData], data => {
   if (!data) return null;
-  return getMeansData(
+  return getStatsData(
     data,
     moment()
       .subtract(2, 'w')
@@ -105,15 +104,7 @@ export const getMeans = createSelector([getData], data => {
   );
 });
 
-export const getStdDev = createSelector(
-  [getMeans, getData],
-  (data, rawData) => {
-    if (!data) return null;
-    return getStdDevData(data, rawData);
-  }
-);
-
-export const getDates = createSelector([getStdDev], data => {
+export const getDates = createSelector([getMeans], data => {
   if (!data) return null;
   return getDatesData(data);
 });
