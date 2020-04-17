@@ -61,7 +61,7 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              to: 'blog',
+              to: 'https://blog.globalforestwatch.org',
             },
             {
               label: 'GitHub',
