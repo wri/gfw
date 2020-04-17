@@ -7,11 +7,12 @@ module.exports = {
   organizationName: 'vizzuality', // Usually your GitHub org/user name.
   projectName: 'gfw', // Usually your repo name.
   themeConfig: {
+    disableDarkMode: true,
     navbar: {
-      title: 'GFW',
+      title: 'Documentation',
       logo: {
         alt: 'GFW',
-        src: 'img/logo.svg'
+        src: 'img/gfw.png'
       },
       links: [
         {
@@ -28,7 +29,7 @@ module.exports = {
       ]
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'Docs',
@@ -47,12 +48,12 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Feedback',
+              href: 'https://github.com/Vizzuality/gfw/issues',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Contact',
+              href: 'mailto:',
             },
           ],
         },
@@ -66,11 +67,7 @@ module.exports = {
             {
               label: 'GitHub',
               href: 'https://github.com/Vizzuality/gfw',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
-            },
+            }
           ],
         },
       ],
