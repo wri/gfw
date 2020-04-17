@@ -1,17 +1,13 @@
 import request from 'utils/request';
 
-import { BITLY_API_URL } from 'utils/constants';
-
-const REQUEST_URL = `${BITLY_API_URL}/shorten?longUrl={url}&login={login}&apiKey={apiKey}`;
-const USERNAME = process.env.BITLY_USER;
-const API_KEY = process.env.BITLY_API_KEY;
-
 export const getShortenUrl = longUrl => {
-  const url = `${REQUEST_URL}`
-    .replace('{url}', encodeURIComponent(longUrl))
-    .replace('{login}', USERNAME)
-    .replace('{apiKey}', API_KEY);
-  return request.get(url);
+  return request.post('https://api-ssl.bitly.com/v4/shorten', {
+    long_url: longUrl
+  },
+  {
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${process.env.BITLY_TOKEN}`
+    }
+  });
 };
-
-export default getShortenUrl;

@@ -18,6 +18,11 @@ cypress/screenshots
 # production
 /build
 
+#docs
+/docs/.docusaurus
+/docs/node_modules
+/docs/build
+
 # misc
 .DS_Store
 .env*
