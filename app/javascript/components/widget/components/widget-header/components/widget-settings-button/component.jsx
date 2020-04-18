@@ -15,7 +15,7 @@ import './styles.scss';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
-    title: PropTypes.string,
+    widget: PropTypes.string,
     settingsConfig: PropTypes.array,
     loading: PropTypes.bool,
     active: PropTypes.bool,
@@ -35,7 +35,7 @@ class WidgetSettingsButton extends PureComponent {
       preventCloseSettings,
       handleChangeSettings,
       handleShowInfo,
-      title,
+      widget,
       active
     } = this.props;
     const { tooltipOpen } = this.state;
@@ -62,7 +62,7 @@ class WidgetSettingsButton extends PureComponent {
         onShow={() => {
           this.setState({ tooltipOpen: true });
           track('openWidgetSettings', {
-            label: title
+            label: widget
           });
         }}
         arrow
