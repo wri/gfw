@@ -56,10 +56,10 @@ export default {
       'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
     fullScreen: true,
   },
-  '/map/aoi/[adm0]': {
-    title: '{areaName} | Interactive Map',
+  '/map/aoi/[id]': {
+    title: '{locationName} | Interactive Map',
     description:
-      'Explore the status of forests in {areaName} by layering data to create custom maps of forest change, cover and use.',
+      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
     keywords:
       'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
     fullScreen: true,

@@ -26,11 +26,11 @@ export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     data: {
-      geojson
+      geojson,
     },
     url: '/geostore',
     onUploadProgress,
-    onDownloadProgress
+    onDownloadProgress,
   });
 
 export const getGeodescriberService = ({ geojson, lang, token }) =>
@@ -41,7 +41,17 @@ export const getGeodescriberService = ({ geojson, lang, token }) =>
       lang
     )}&template=true&app=gfw`,
     data: {
-      geojson
+      geojson,
     },
-    cancelToken: token
+    cancelToken: token,
+  });
+
+export const getGeodescriber = ({ geostore, lang, token }) =>
+  // for now we are forcing english until API works
+  apiRequest({
+    method: 'get',
+    url: `/geodescriber/?geostore=${geostore}&lang=${getGoogleLangCode(
+      lang
+    )}&app=gfw`,
+    cancelToken: token,
   });
