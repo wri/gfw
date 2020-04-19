@@ -24,62 +24,6 @@ export default {
       'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
     fullScreen: true,
   },
-  '/map/country/[adm0]': {
-    title: '{locationName} | Interactive Map',
-    description:
-      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
-  '/map/country/[adm0]/[adm1]': {
-    title: '{locationName} | Interactive Map',
-    description:
-      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
-  '/map/country/[adm0]/[adm1]/[adm2]': {
-    title: '{locationName} | Interactive Map',
-    description:
-      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
-  '/map/wdpa/[id]': {
-    title: '{locationName} | Protected Areas | Interactive Map',
-    description:
-      'Explore the status of forests in protected areas by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
-  '/map/geostore/[id]': {
-    title: '{locationName} | Interactive Map',
-    description:
-      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
-  '/map/aoi/[id]': {
-    title: '{locationName} | Interactive Map',
-    description:
-      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
-  '/map/use/[table_name]/[id]': {
-    title: '{locationName} | Interactive Map',
-    description:
-      'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
-    keywords:
-      'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
-    fullScreen: true,
-  },
   '/dashboards/global': {
     title: 'Global | Dashboards',
     description:
@@ -92,48 +36,6 @@ export default {
     title: '{locationName} | Dashboards',
     description:
       'Analyze and investigate data trends in forest change, cover and use in {locationName} with just a few clicks.',
-    keywords:
-      'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
-  },
-  '/dashboards/country/[adm0]/[adm1]': {
-    title: '{adm1} | {adm0} | Dashboards',
-    description:
-      'Analyze and investigate data trends in forest change, cover and use in {adm1} with just a few clicks.',
-    keywords:
-      'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
-  },
-  '/dashboards/country/[adm0]/[adm1]/[adm2]': {
-    title: '{adm2} | {adm1} | {adm0} | Dashboards',
-    description:
-      'Analyze and investigate data trends in forest change, cover and use in {adm2} with just a few clicks.',
-    keywords:
-      'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
-  },
-  '/dashboards/wdpa/[adm0]': {
-    title: '{wdpaid} | Protected Areas | Dashboards',
-    description:
-      'Analyze and investigate data trends in forest change, cover and use in protected areas with just a few clicks.',
-    keywords:
-      'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
-  },
-  '/dashboards/geostore/[id]': {
-    title: '{geodescriberTitle} | Dashboards',
-    description:
-      'Analyze and investigate data trends in forest change, cover and use in {geodescriberTitle} with just a few clicks.',
-    keywords:
-      'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
-  },
-  '/dashboards/aoi/[id]': {
-    title: '{areaName} | Dashboards',
-    description:
-      'Analyze and investigate data trends in forest change, cover and use in {areaName} with just a few clicks.',
-    keywords:
-      'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
-  },
-  '/dashboards/use/[adm0]/[adm1]': {
-    title: '{geodescriberTitle} | Dashboards',
-    description:
-      'Analyze and investigate data trends in forest change, cover and use in {geodescriberTitle} with just a few clicks.',
     keywords:
       'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.',
   },

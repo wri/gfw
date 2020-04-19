@@ -84,6 +84,7 @@ export const config = {
 
         return {
           locationName,
+          title: `${locationName} | Protected Areas`,
           ...props,
         };
       }),

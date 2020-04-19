@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
 
 import Layout from 'layouts/page';
@@ -15,10 +14,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => ({
   props: {
-    titleParams: {
-      topic: params ? capitalize(params.topic) : '',
-    },
-  },
+    title: `${capitalize(params?.topic)} | Topics`
+  }
 });
 
 const TopicPage = (props) => {
@@ -27,10 +24,6 @@ const TopicPage = (props) => {
       <Topics />
     </Layout>
   );
-};
-
-TopicPage.propTypes = {
-  titleParams: PropTypes.object.isRequired,
 };
 
 export default TopicPage;

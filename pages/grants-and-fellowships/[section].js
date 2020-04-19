@@ -18,10 +18,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => ({
   props: {
-    titleParams: {
-      section: params ? capitalize(params.section) : '',
-    },
-  },
+    title: `${capitalize(params?.section)} | Grants & Fellowships`
+  }
 });
 
 const GrantsAndFellowshipsPage = (props) => {

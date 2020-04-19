@@ -6,9 +6,7 @@ class AppHead extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    keywords: PropTypes.string,
-    titleParams: PropTypes.object,
-    descriptionParams: PropTypes.object,
+    keywords: PropTypes.string
   };
 
   static defaultProps = {
@@ -17,41 +15,12 @@ class AppHead extends PureComponent {
     keywords: '',
   };
 
-  getTitle = () => {
-    const { title, titleParams } = this.props;
-    let newTitle = title;
-    Object.keys(titleParams).forEach((key) => {
-      newTitle = newTitle.replace(`{${key}}`, titleParams[key]);
-    });
-
-    return newTitle;
-  };
-
-  getDescription = () => {
-    const { description, descriptionParams } = this.props;
-    let newDescription = description;
-    Object.keys(descriptionParams).forEach((key) => {
-      newDescription = newDescription.replace(
-        `{${key}}`,
-        descriptionParams[key]
-      );
-    });
-
-    return newDescription;
-  };
-
   render() {
     const {
-      title: titleTemplate,
-      description: descriptionTemplate,
-      keywords,
-      titleParams,
-      descriptionParams,
+      title,
+      description,
+      keywords
     } = this.props;
-    const title = titleParams ? this.getTitle() : titleTemplate;
-    const description = descriptionParams
-      ? this.getDescription()
-      : descriptionTemplate;
 
     return (
       <Head>

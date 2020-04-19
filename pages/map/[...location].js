@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Layout from 'layouts/page';
 import ConfirmationMessage from 'components/confirmation-message';
 
-import getLocationData from 'app/config';
+import getLocationData from 'app/location';
 
 export const getServerSideProps = getLocationData;
 

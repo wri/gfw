@@ -281,7 +281,7 @@ class GlobeComponent extends React.Component {
 }
 
 GlobeComponent.defaultProps = {
-  width: typeof window !== 'undefined' && window.innerWidth,
+  width: typeof window !== 'undefined' ? window.innerWidth : 500,
   height: 500,
   radius: 205,
   autorotate: true,
