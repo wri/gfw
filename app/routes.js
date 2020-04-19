@@ -25,7 +25,7 @@ export default {
     fullScreen: true,
   },
   '/map/country/[adm0]/[adm1]': {
-    title: '{adm1} | {adm0} | Interactive Map',
+    title: '{locationName} | Interactive Map',
     description:
       'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
     keywords:
@@ -33,7 +33,7 @@ export default {
     fullScreen: true,
   },
   '/map/country/[adm0]/[adm1]/[adm2]': {
-    title: '{adm2} | {adm1} | {adm0} | Interactive Map',
+    title: '{locationName} | Interactive Map',
     description:
       'Explore the status of forests in {locationName} by layering data to create custom maps of forest change, cover and use.',
     keywords:
