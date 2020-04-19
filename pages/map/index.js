@@ -1,5 +1,4 @@
 import { PureComponent } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Layout from 'layouts/page';
@@ -18,4 +17,4 @@ class DashboardsPage extends PureComponent {
   }
 }
 
-export default connect()(DashboardsPage);
+export default DashboardsPage;
