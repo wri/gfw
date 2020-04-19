@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Layout from 'layouts/page';
 
-class DashboardsPage extends PureComponent {
+class MapPage extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
   };
@@ -17,4 +17,4 @@ class DashboardsPage extends PureComponent {
   }
 }
 
-export default DashboardsPage;
+export default MapPage;
