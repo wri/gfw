@@ -19,9 +19,10 @@ const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getInteraction = state => state.settings.interaction || null;
-const getWeeks = state => state.settings.weeks || null;
 const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
+const getStartIndex = state => state.settings.startIndex || 0;
+const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
 
@@ -105,31 +106,29 @@ export const getDates = createSelector([getStats], data => {
 });
 
 export const parseData = createSelector(
-  [getData, getDates, getWeeks, getCompareYear],
-  (data, currentData, weeks, compareYear) => {
+  [getData, getDates, getCompareYear],
+  (data, currentData, compareYear) => {
     if (!data || !currentData) return null;
 
     const maxYear = max(currentData.map(d => d.year));
 
-    return currentData
-      .map(d => {
-        const yearDifference = maxYear - d.year;
-        const week = d.week;
+    return currentData.map(d => {
+      const yearDifference = maxYear - d.year;
+      const week = d.week;
 
-        if (compareYear) {
-          const compareWeek = data.find(
-            dt => dt.year === compareYear - yearDifference && dt.week === week
-          );
+      if (compareYear) {
+        const compareWeek = data.find(
+          dt => dt.year === compareYear - yearDifference && dt.week === week
+        );
 
-          return {
-            ...d,
-            compareCount: compareWeek ? compareWeek.count : null
-          };
-        }
+        return {
+          ...d,
+          compareCount: compareWeek ? compareWeek.count : null
+        };
+      }
 
-        return d;
-      })
-      .slice(-weeks);
+      return d;
+    });
   }
 );
 
@@ -150,15 +149,28 @@ export const parseSentence = createSelector(
     getInteraction,
     getSentences,
     getDataset,
-    getLocationObject
+    getLocationObject,
+    getStartIndex,
+    getEndIndex
   ],
-  (data, colors, interaction, sentence, dataset, location) => {
+  (
+    data,
+    colors,
+    interaction,
+    sentence,
+    dataset,
+    location,
+    startIndex,
+    endIndex
+  ) => {
     if (!data) return null;
-    let lastDate = data[data.length - 1] || {};
-    const firstDate = data[0] || {};
-    if (!isEmpty(interaction)) {
-      lastDate = interaction;
-    }
+
+    const start = startIndex;
+    const end = endIndex || data.length - 1;
+
+    const lastDate = !isEmpty(interaction) ? interaction : data[end] || {};
+    const firstDate = data[start] || {};
+
     // NOTE: the first/last date should reflect the brush start/end
     const total = sumBy(
       data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
@@ -210,8 +222,8 @@ export const parseSentence = createSelector(
       location: location.label || '',
       fire_season_month: null, // helper neededd
       fire_season_length: 5,
-      start_date: null, // brush start date
-      end_date: null, // brush end date
+      start_date: firstDate.date, // brush start date
+      end_date: lastDate.date, // brush end date
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       dataset,
       count: {
