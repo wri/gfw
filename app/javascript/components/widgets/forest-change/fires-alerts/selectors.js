@@ -94,17 +94,12 @@ export const getData = createSelector(
   }
 );
 
-export const getMeans = createSelector([getData], data => {
+export const getStats = createSelector([getData, getLatest], (data, latest) => {
   if (!data) return null;
-  return getStatsData(
-    data,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  );
+  return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
 });
 
-export const getDates = createSelector([getMeans], data => {
+export const getDates = createSelector([getStats], data => {
   if (!data) return null;
   return getDatesData(data);
 });

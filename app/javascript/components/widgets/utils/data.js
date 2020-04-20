@@ -66,8 +66,8 @@ const statsData = data => {
 const runningMean = (data, windowSize) => {
   const smoothedMean = [];
   data.forEach((d, i) => {
-    const slice = data.slice(i, i + windowSize);
     if (i < data.length - windowSize + 1) {
+      const slice = data.slice(i, i + windowSize);
       smoothedMean.push(mean(slice));
     }
   });
@@ -98,6 +98,16 @@ export const getMeansData = (data, latest) => {
 };
 
 export const getStatsData = (data, latest) => {
+  /*
+  Creates yearly data structure and uses this to generate weekly mean and standard deviation stats.
+  Yearly data structure groups alert data by year and appends the first (or last) 6 weeks
+  of data from neighbouring years:
+
+  e.g. The element with year=2015 contains the last 6 weeks of 2014 data,
+  followed by 52 weeks of 2015 data, followed by the first 6 weeks of 2016 data
+
+  This is done so that when the data is smoothed we are left with 52 weeks of stats per year.
+  */
   const minYear = minBy(data, 'year').year;
   const maxYear = maxBy(data, 'year').year;
   const leftYears = getYearsObj(data.filter(d => d.year !== maxYear), -6);
@@ -116,19 +126,21 @@ export const getStatsData = (data, latest) => {
     const leftWeeks = leftYear.weeks || [];
     const rightWeeks = rightYear.weeks || [];
 
+    // If current year is 53 weeks, we only need to append 5 from the next year
+    const trimmedRightWeeks =
+      weeks.length === 53 ? rightWeeks.slice(0, 5) : rightWeeks;
+
     return {
       year,
-      weeks: concat(leftWeeks, weeks, rightWeeks)
+      weeks: concat(leftWeeks, weeks, trimmedRightWeeks)
     };
   });
 
   const stats = statsData(allYears);
-
   const smoothedMeans = runningMean(stats.map(el => el.mean), 12);
   const smoothedStds = runningMean(stats.map(el => el.std), 12);
   const translatedMeans = translateMeans(smoothedMeans, latest);
   const translatedStds = translateMeans(smoothedStds, latest);
-  // These are len 54... 1 or 2 longet than expected!!!
 
   const pastYear = data.slice(-52);
   const parsedData = pastYear.map((d, i) => {
