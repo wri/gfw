@@ -5,13 +5,11 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
-import max from 'lodash/max';
 
 import { getColorPalette } from 'utils/data';
 
 import {
   getMeansData,
-  getStdDevData,
   getDatesData,
   getChartConfig
 } from 'components/widgets/utils/data';
@@ -21,7 +19,6 @@ const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getInteraction = state => state.settings.interaction || null;
 const getWeeks = state => state.settings.weeks || null;
-const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
@@ -100,55 +97,27 @@ export const getMeans = createSelector([getData], data => {
   );
 });
 
-export const getStdDev = createSelector(
-  [getMeans, getData],
-  (data, rawData) => {
-    if (!data) return null;
-    return getStdDevData(data, rawData);
-  }
-);
-
-export const getDates = createSelector([getStdDev], data => {
+export const getDates = createSelector([getMeans], data => {
   if (!data) return null;
   return getDatesData(data);
 });
 
 export const parseData = createSelector(
-  [getData, getDates, getWeeks, getCompareYear],
-  (data, currentData, weeks, compareYear) => {
+  [getData, getDates, getWeeks],
+  (data, currentData, weeks) => {
     if (!data || !currentData) return null;
 
-    const maxYear = max(currentData.map(d => d.year));
-
-    return currentData
-      .map(d => {
-        const yearDifference = maxYear - d.year;
-        const week = d.week;
-
-        if (compareYear) {
-          const compareWeek = data.find(
-            dt => dt.year === compareYear - yearDifference && dt.week === week
-          );
-
-          return {
-            ...d,
-            compareCount: compareWeek ? compareWeek.count : null
-          };
-        }
-
-        return d;
-      })
-      .slice(-weeks);
+    return currentData.slice(-weeks);
   }
 );
 
 export const parseConfig = createSelector(
   [getColors, getLatest],
   (colors, latest) => ({
-    ...getChartConfig(colors, moment(latest)),
-    brush: {
-      dataKey: 'date'
-    }
+    ...getChartConfig(colors, moment(latest))
+    // brush: {
+    //   dataKey: 'date'
+    // }
   })
 );
 
