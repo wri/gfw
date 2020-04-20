@@ -19,6 +19,11 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
+      key: 'dataset',
+      label: 'fires dataset',
+      type: 'select'
+    },
+    {
       key: 'compareYear',
       label: 'Compare with the same period in',
       type: 'compare-select',
@@ -48,7 +53,7 @@ export default {
       border: true
     }
   ],
-  refetchKeys: ['forestType', 'landCategory', 'confidence'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],

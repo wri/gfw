@@ -8,6 +8,8 @@ import moment from 'moment';
 
 import { getIndicator } from 'utils/format';
 
+const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
+
 const {
   ANNUAL_ADM0_SUMMARY,
   ANNUAL_ADM1_SUMMARY,
@@ -25,33 +27,7 @@ const {
 
   ANNUAL_GEOSTORE_SUMMARY,
   ANNUAL_GEOSTORE_CHANGE,
-  ANNUAL_GEOSTORE_WHITELIST,
-
-  GLAD_ADM0_WEEKLY,
-  GLAD_ADM1_WEEKLY,
-  GLAD_ADM2_WEEKLY,
-  GLAD_ADM0_WHITELIST,
-  GLAD_ADM1_WHITELIST,
-  GLAD_ADM2_WHITELIST,
-
-  GLAD_WDPA_WEEKLY,
-  GLAD_WDPA_WHITELIST,
-
-  GLAD_GEOSTORE_WEEKLY,
-  GLAD_GEOSTORE_WHITELIST,
-
-  VIIRS_ADM0_WEEKLY,
-  VIIRS_ADM1_WEEKLY,
-  VIIRS_ADM2_WEEKLY,
-  VIIRS_ADM0_WHITELIST,
-  VIIRS_ADM1_WHITELIST,
-  VIIRS_ADM2_WHITELIST,
-
-  VIIRS_WDPA_WEEKLY,
-  VIIRS_WDPA_WHITELIST,
-
-  VIIRS_GEOSTORE_WEEKLY,
-  VIIRS_GEOSTORE_WHITELIST
+  ANNUAL_GEOSTORE_WHITELIST
 } = DATASETS[process.env.FEATURE_ENV || 'production'];
 
 const SQL_QUERIES = {
@@ -73,7 +49,7 @@ const SQL_QUERIES = {
     'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  viirsFires:
+  fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -124,35 +100,43 @@ const getAnnualDataset = ({
 };
 
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) return GLAD_GEOSTORE_WHITELIST;
-  if (type === 'geostore') return GLAD_GEOSTORE_WEEKLY;
+  if (type === 'geostore' && whitelist) { return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST; }
+  if (type === 'geostore') return DATASETS_ENV.GLAD_GEOSTORE_WEEKLY;
 
-  if (type === 'wdpa' && whitelist) return GLAD_WDPA_WHITELIST;
-  if (type === 'wdpa') return GLAD_WDPA_WEEKLY;
+  if (type === 'wdpa' && whitelist) return DATASETS_ENV.GLAD_WDPA_WHITELIST;
+  if (type === 'wdpa') return DATASETS_ENV.GLAD_WDPA_WEEKLY;
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) return GLAD_ADM2_WHITELIST;
-  if (adm2 || (adm1 && grouped)) return GLAD_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) return GLAD_ADM1_WHITELIST;
-  if (adm1 || (adm0 && grouped)) return GLAD_ADM1_WEEKLY;
-  if (whitelist) return GLAD_ADM0_WHITELIST;
+  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM2_WHITELIST; }
+  if (adm2 || (adm1 && grouped)) return DATASETS_ENV.GLAD_ADM2_WEEKLY;
+  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM1_WHITELIST; }
+  if (adm1 || (adm0 && grouped)) return DATASETS_ENV.GLAD_ADM1_WEEKLY;
+  if (whitelist) return DATASETS_ENV.GLAD_ADM0_WHITELIST;
 
-  return GLAD_ADM0_WEEKLY;
+  return DATASETS_ENV.GLAD_ADM0_WEEKLY;
 };
 
-const getFiresDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) return VIIRS_GEOSTORE_WHITELIST;
-  if (type === 'geostore') return VIIRS_GEOSTORE_WEEKLY;
+const getFiresDatasetId = ({
+  adm0,
+  adm1,
+  adm2,
+  grouped,
+  type,
+  whitelist,
+  dataset
+}) => {
+  if (type === 'geostore' && whitelist) { return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`]; }
+  if (type === 'geostore') return DATASETS_ENV[`${dataset}_GEOSTORE_WEEKLY`];
 
-  if (type === 'wdpa' && whitelist) return VIIRS_WDPA_WHITELIST;
-  if (type === 'wdpa') return VIIRS_WDPA_WEEKLY;
+  if (type === 'wdpa' && whitelist) { return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`]; }
+  if (type === 'wdpa') return DATASETS_ENV[`${dataset}_WDPA_WEEKLY`];
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) return VIIRS_ADM2_WHITELIST;
-  if (adm2 || (adm1 && grouped)) return VIIRS_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) return VIIRS_ADM1_WHITELIST;
-  if (adm1 || (adm0 && grouped)) return VIIRS_ADM1_WEEKLY;
-  if (whitelist) return VIIRS_ADM0_WHITELIST;
+  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`]; }
+  if (adm2 || (adm1 && grouped)) return DATASETS_ENV[`${dataset}_ADM2_WEEKLY`];
+  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`]; }
+  if (adm1 || (adm0 && grouped)) return DATASETS_ENV[`${dataset}_ADM1_WEEKLY`];
+  if (whitelist) return DATASETS_ENV[`${dataset}_ADM0_WHITELIST`];
 
-  return VIIRS_ADM0_WEEKLY;
+  return DATASETS_ENV[`${dataset}_ADM0_WEEKLY`];
 };
 
 const getLocationSelect = ({ type, adm1, adm2 }) => {
@@ -831,7 +815,7 @@ export const fetchVIIRSAlerts = ({
   download,
   ...params
 }) => {
-  const { viirsFires } = SQL_QUERIES;
+  const { fires } = SQL_QUERIES;
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -840,7 +824,7 @@ export const fetchVIIRSAlerts = ({
     grouped,
     confidence,
     allowedParams: 'fires'
-  })}${viirsFires}`
+  })}${fires}`
     .replace(
       /{location}/g,
       grouped
