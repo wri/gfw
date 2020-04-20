@@ -5,7 +5,9 @@ export const setModalWelcomeOpen = createAction('setModalWelcomeOpen');
 export const setModalWelcome = createThunkAction(
   'setModalWelcome',
   () => dispatch => {
-    localStorage.setItem('welcomeModalHidden', true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('welcomeModalHidden', true);
+    }
     dispatch(setModalWelcomeOpen(false));
   }
 );

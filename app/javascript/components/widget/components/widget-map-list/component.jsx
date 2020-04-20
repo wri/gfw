@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import WorldMap from 'components/world-map';
 import NumberedList from 'components/widget/components/widget-numbered-list';
 
-import './styles';
+import './styles.scss';
 
 class WidgetMapList extends PureComponent {
   static propTypes = {

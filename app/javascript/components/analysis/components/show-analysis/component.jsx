@@ -4,7 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import { logEvent } from 'app/analytics';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';

@@ -3,7 +3,7 @@ import flatMap from 'lodash/flatMap';
 import uniq from 'lodash/uniq';
 
 import { getMapZoom, getActiveDatasets } from 'components/map/selectors';
-import { getShowRecentImagery } from 'pages/map/selectors';
+import { getShowRecentImagery } from 'layouts/map/selectors';
 
 import { initialState } from './reducers';
 

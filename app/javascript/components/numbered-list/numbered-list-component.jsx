@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -76,7 +76,7 @@ class NumberedList extends PureComponent {
                       <a
                         href={`https://${window.location.host}${item.path}`}
                         target="_blank"
-                        rel="noopener nofollower"
+                        rel="noopener noreferrer"
                       >
                         {linkContent}
                       </a>

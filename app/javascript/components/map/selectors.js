@@ -6,7 +6,7 @@ import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
 
-import { selectActiveLang } from 'app/layouts/root/selectors';
+import { selectActiveLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import { initialState } from './reducers';

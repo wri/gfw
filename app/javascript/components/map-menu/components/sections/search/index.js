@@ -8,7 +8,7 @@ import { setModalMetaSettings } from 'components/modals/meta/actions';
 
 import Component from './component';
 
-import { mapStateToProps } from './selectors';
+import mapStateToProps from './selectors';
 
 class SearchMenu extends PureComponent {
   componentDidMount() {

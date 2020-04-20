@@ -5,7 +5,7 @@ import WidgetComposedChart from 'components/widget/components/widget-composed-ch
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import NoContent from 'components/ui/no-content';
 
-import './styles';
+import './styles.scss';
 
 class WidgetChartAndList extends PureComponent {
   handleClick = payload => {

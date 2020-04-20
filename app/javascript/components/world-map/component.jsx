@@ -14,7 +14,7 @@ import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 
 import WORLD_GEOGRAPHIES from 'data/WORLD.topo.json';
-import './style.scss';
+import './styles.scss';
 
 class WorldMap extends React.PureComponent {
   static buildCurves(start, end, arc) {
@@ -173,7 +173,10 @@ class WorldMap extends React.PureComponent {
 }
 
 WorldMap.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  flows: PropTypes.array,
+  originGeoId: PropTypes.string,
+  originCoordinates: PropTypes.array
 };
 
 export default WorldMap;

@@ -2,10 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEmpty from 'lodash/isEmpty';
-import MediaQuery from 'react-responsive';
 
-import { SCREEN_M } from 'utils/constants';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -61,82 +59,77 @@ class Widgets extends PureComponent {
     const hasWidgets = !isEmpty(widgets);
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div
-            className={cx(
-              'c-widgets',
-              className,
-              { simple: this.props.simple },
-              { 'no-widgets': !hasWidgets }
-            )}
-          >
-            {loadingData && <Loader className="widgets-loader large" />}
-            {!loadingData &&
-              widgets &&
-              widgets.map(w => (
-                <Widget
-                  key={w.widget}
-                  {...w}
-                  large={w.large && isDesktop}
-                  active={activeWidget && activeWidget.widget === w.widget}
-                  embed={embed}
-                  simple={simple}
-                  location={location}
-                  geostore={geostore}
-                  metaLoading={loadingMeta || loadingData}
-                  setWidgetData={data => setWidgetsData({ [w.widget]: data })}
-                  handleChangeSettings={change =>
-                    setWidgetSettings({
-                      widget: w.widget,
-                      change: {
-                        ...change,
-                        ...(change.forestType === 'ifl' &&
-                          w.settings &&
-                          w.settings.extentYear && {
-                          extentYear: w.settings.ifl === '2016' ? 2010 : 2000
-                        }),
-                        ...(change.forestType === 'primary_forest' &&
-                          w.settings &&
-                          w.settings.extentYear && {
-                          extentYear: 2000
-                        })
-                      }
-                    })
-                  }
-                  handleShowMap={() => {
-                    setActiveWidget(w.widget);
-                    track('viewWidgetOnMap', {
-                      label: w.widget
-                    });
-                  }}
-                  handleShowInfo={setModalMetaSettings}
-                  handleShowShare={() =>
-                    setShareModal({
-                      title: 'Share this widget',
-                      shareUrl: w.shareUrl,
-                      embedUrl: w.embedUrl,
-                      embedSettings: !w.large
-                        ? { width: 315, height: 460 }
-                        : { width: 630, height: 460 }
-                    })
-                  }
-                  preventCloseSettings={modalClosing}
-                  onClickWidget={handleClickWidget}
-                />
-              ))}
-            {!loadingData &&
-              !hasWidgets &&
-              !simple && (
-              <NoContent
-                className="no-widgets-message large"
-                message={noDataMessage}
-                icon
-              />
-            )}
-          </div>
+      <div
+        className={cx(
+          'c-widgets',
+          className,
+          { simple: this.props.simple },
+          { 'no-widgets': !hasWidgets }
         )}
-      </MediaQuery>
+      >
+        {loadingData && <Loader className="widgets-loader large" />}
+        {!loadingData &&
+          widgets &&
+          widgets.map(w => (
+            <Widget
+              key={w.widget}
+              {...w}
+              active={activeWidget && activeWidget.widget === w.widget}
+              embed={embed}
+              simple={simple}
+              location={location}
+              geostore={geostore}
+              metaLoading={loadingMeta || loadingData}
+              setWidgetData={data => setWidgetsData({ [w.widget]: data })}
+              handleChangeSettings={change =>
+                setWidgetSettings({
+                  widget: w.widget,
+                  change: {
+                    ...change,
+                    ...(change.forestType === 'ifl' &&
+                      w.settings &&
+                      w.settings.extentYear && {
+                      extentYear: w.settings.ifl === '2016' ? 2010 : 2000
+                    }),
+                    ...(change.forestType === 'primary_forest' &&
+                      w.settings &&
+                      w.settings.extentYear && {
+                      extentYear: 2000
+                    })
+                  }
+                })
+              }
+              handleShowMap={() => {
+                setActiveWidget(w.widget);
+                logEvent('viewWidgetOnMap', {
+                  label: w.widget
+                });
+              }}
+              handleShowInfo={setModalMetaSettings}
+              handleShowShare={() =>
+                setShareModal({
+                  title: 'Share this widget',
+                  shareUrl: w.shareUrl,
+                  embedUrl: w.embedUrl,
+                  embedSettings: !w.large
+                    ? { width: 315, height: 460 }
+                    : { width: 630, height: 460 }
+                })
+              }
+              preventCloseSettings={modalClosing}
+              onClickWidget={handleClickWidget}
+            />
+          ))}
+        {!loadingData &&
+          !hasWidgets &&
+          !simple && (
+          <NoContent
+            className="no-widgets-message large"
+            message={noDataMessage}
+            icon
+          />
+        )}
+      </div>
     );
   }
 }

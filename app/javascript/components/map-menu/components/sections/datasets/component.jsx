@@ -40,7 +40,7 @@ class Datasets extends PureComponent {
           datasetCategories &&
           datasetCategories.length && (
             <Media greaterThanOrEqual="md">
-              <Basemaps />
+              <Basemaps isDesktop />
               <CategoriesMenu
                 categories={datasetCategories}
                 onSelectCategory={setMenuSettings}
@@ -96,7 +96,7 @@ class Datasets extends PureComponent {
                         </Fragment>
                       );
                     })}
-                    for 
+                    for
                     {' '}
                     {datasetCategory && datasetCategory.toLowerCase()}
                     .

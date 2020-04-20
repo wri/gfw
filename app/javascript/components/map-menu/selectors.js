@@ -8,7 +8,7 @@ import {
   getLayerGroups,
   getMapZoom
 } from 'components/map/selectors';
-import { getEmbed, getShowRecentImagery } from 'pages/map/selectors';
+import { getEmbed, getShowRecentImagery } from 'layouts/map/selectors';
 
 import { initialState } from './reducers';
 import { datasetsSections, searchSections, mobileSections } from './sections';
@@ -245,7 +245,7 @@ export const getMobileSections = createSelector(
         layerCount: activeDatasets && activeDatasets.length
       }),
       ...(s.slug === 'analysis' && {
-        highlight: location && !!location.type && !!location.adm0
+        highlight: !!location?.type && !!location?.adm0
       }),
       active: menuSection === s.slug
     }))

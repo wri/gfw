@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
@@ -49,9 +49,8 @@ class MapControlsButtons extends PureComponent {
     const { setMainMapSettings, setMenuSettings, hidePanels } = this.props;
     setMainMapSettings({ hidePanels: !hidePanels });
     setMenuSettings({ menuSection: '' });
-    this.setState({ showBasemaps: false });
     if (!hidePanels) {
-      track('hidePanels');
+      logEvent('hidePanels');
     }
   };
 
@@ -93,7 +92,7 @@ class MapControlsButtons extends PureComponent {
       zoom: showRecentImagery && zoom < 9 ? 9 : zoom
     });
     if (showRecentImagery) {
-      track('recentImageryEnable');
+      logEvent('recentImageryEnable');
     }
   };
 
@@ -243,7 +242,7 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
-            track('zoomOut');
+            logEvent('zoomOut');
           }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom <= minZoom}
@@ -254,7 +253,7 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
-            track('zoomIn');
+            logEvent('zoomIn');
           }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom >= maxZoom}
@@ -310,7 +309,7 @@ class MapControlsButtons extends PureComponent {
     <Button
       theme="theme-button-map-control"
       tooltip={{ text: 'Print (not yet available)' }}
-      onClick={() => track('printMap')}
+      onClick={() => logEvent('printMap')}
       disabled
     >
       <Icon icon={printIcon} className="print-icon" />

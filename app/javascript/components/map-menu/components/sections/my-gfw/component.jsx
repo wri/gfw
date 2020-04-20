@@ -2,18 +2,18 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 import slice from 'lodash/slice';
 
 import { Media } from 'utils/responsive';
 import { logout } from 'services/user';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
 import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
-import Icon from 'components/ui/icon/icon-component';
+import Icon from 'components/ui/icon';
 import Pill from 'components/ui/pill';
 import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';
@@ -175,7 +175,7 @@ class MapMenuMyGFW extends PureComponent {
                     this.setState({
                       activeTags: [...activeTags, tag.value]
                     });
-                    track('userSelectsAoiTag', { label: tag.label });
+                    logEvent('userSelectsAoiTag', { label: tag.label });
                   }
                 }
                 }
@@ -196,7 +196,7 @@ class MapMenuMyGFW extends PureComponent {
                     })}
                     onClick={() => {
                       viewArea({ areaId: area.id });
-                      track('clickAreaOfInterest', { label: area.id });
+                      logEvent('clickAreaOfInterest', { label: area.id });
                     }}
                     role="button"
                     tabIndex={0}

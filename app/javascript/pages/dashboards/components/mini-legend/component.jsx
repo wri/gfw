@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { isTouch } from 'utils/browser';
 import cx from 'classnames';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -31,7 +31,7 @@ class MiniLegend extends PureComponent {
             theme="theme-button-small square"
             onClick={() => {
               setMainMapView(activeDatasets);
-              track('visitMainMapFromDashboard', {
+              logEvent('visitMainMapFromDashboard', {
                 label: layers && layers.map(l => l.name).join(', ')
               });
             }}

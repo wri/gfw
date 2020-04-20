@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 
-import './styles';
+import './styles.scss';
 
 class WidgetPieChart extends PureComponent {
   render() {

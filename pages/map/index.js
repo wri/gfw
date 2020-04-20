@@ -2,6 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Layout from 'layouts/page';
+import Map from 'layouts/map';
 
 class MapPage extends PureComponent {
   static propTypes = {
@@ -11,7 +12,7 @@ class MapPage extends PureComponent {
   render() {
     return (
       <Layout {...this.props}>
-        <h1>{this.props.title}</h1>
+        <Map />
       </Layout>
     );
   }

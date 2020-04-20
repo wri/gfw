@@ -1,8 +1,8 @@
 import { logEvent } from 'app/analytics';
 import * as actions from './actions';
 
-const showDashboardPrompts = JSON.parse(localStorage.getItem('showPrompts'));
-const dashboardPromptsViewed = JSON.parse(
+const showDashboardPrompts = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('showPrompts'));
+const dashboardPromptsViewed = typeof window !== 'undefined' && JSON.parse(
   localStorage.getItem('dashboardPromptsViewed')
 );
 
@@ -17,7 +17,9 @@ export const initialState = {
 };
 
 const setShowDashboardPrompts = (state, { payload }) => {
-  localStorage.setItem('showPrompts', payload);
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('showPrompts', payload);
+  }
   logEvent('userPromptShowHide', {
     label: payload ? 'User enables prompts' : 'User hides prompts'
   });
@@ -34,10 +36,13 @@ const setShowPromptsViewed = (state, { payload }) => {
     promptsViewed && promptsViewed.length && promptsViewed.includes(payload)
       ? promptsViewed
       : promptsViewed.concat([payload]);
-  localStorage.setItem(
-    'dashboardPromptsViewed',
-    JSON.stringify(newPromptsViewed)
-  );
+
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(
+      'dashboardPromptsViewed',
+      JSON.stringify(newPromptsViewed)
+    );
+  }
 
   return {
     ...state,

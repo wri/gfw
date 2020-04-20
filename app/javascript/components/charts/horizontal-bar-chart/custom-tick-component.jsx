@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 
 const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
   const { region, path, rank, total, extLink } = data[index];

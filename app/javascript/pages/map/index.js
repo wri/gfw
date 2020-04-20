@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
@@ -32,7 +32,7 @@ class MainMapContainer extends PureComponent {
   componentDidMount() {
     const { activeDatasets } = this.props;
     const layerIds = flatMap(activeDatasets.map(d => d.layers));
-    track('mapInitialLayers', {
+    logEvent('mapInitialLayers', {
       label: layerIds && layerIds.join(', ')
     });
   }

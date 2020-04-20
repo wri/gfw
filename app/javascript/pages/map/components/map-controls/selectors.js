@@ -16,12 +16,12 @@ import {
   getHidePanels,
   getShowBasemaps,
   getShowRecentImagery
-} from 'pages/map/selectors';
+} from 'layouts/map/selectors';
 
 const getDatasetsLoading = state => state.datasets && state.datasets.loading;
 const getMapTourOpen = state => state.mapTour && state.mapTour.open;
 
-export const getMapControlsProps = createStructuredSelector({
+export default createStructuredSelector({
   recentLoading: getRecentImageryLoading,
   datasetsLoading: getDatasetsLoading,
   hidePanels: getHidePanels,

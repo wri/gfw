@@ -70,7 +70,7 @@ export const getOneClickAnalysis = createSelector(
     getShowAnalysis
   ],
   (showDraw, location, draw, loading, showAnalysis) => {
-    const hasLocation = !!location.adm0;
+    const hasLocation = !!location?.adm0;
     const isDrawing = draw || showDraw;
     return !hasLocation && !isDrawing && !loading && showAnalysis;
   }

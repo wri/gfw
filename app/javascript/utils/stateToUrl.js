@@ -52,7 +52,7 @@ export const encodeStateForUrl = params => {
 };
 
 export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
-  const { location: { query, payload, type } } = state();
+  const { query, payload, type } = state()?.location || {};
   let params = change;
   if (query && query[subKey || key] && !!change && typeof change === 'object') {
     params = {

@@ -1,8 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Link from 'redux-first-router-link';
-import { track } from 'app/analytics';
+import Link from 'next/link';
+import { logEvent } from 'app/analytics';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -131,7 +131,7 @@ class Header extends PureComponent {
                   position: 'bottom'
                 }}
                 onClick={() => {
-                  track('downloadDashboardPage', { label: locationNames.adm0 && locationNames.adm0.label || 'Global' });
+                  logEvent('downloadDashboardPage', { label: locationNames.adm0 && locationNames.adm0.label || 'Global' });
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -147,7 +147,7 @@ class Header extends PureComponent {
                   className="breadcrumb-link"
                   to="/dashboards/global"
                   onClick={() =>
-                    track('switchDashboardType', { label: 'changes to global' })
+                    logEvent('switchDashboardType', { label: 'changes to global' })
                   }
                 >
                   <Icon icon={arrowIcon} className="breadcrumb-icon" />
@@ -160,7 +160,7 @@ class Header extends PureComponent {
                   className="breadcrumb-link"
                   to={`/dashboards/aoi/${firstArea.id}`}
                   onClick={() =>
-                    track('switchDashboardType', {
+                    logEvent('switchDashboardType', {
                       label: 'changes to areas'
                     })
                   }

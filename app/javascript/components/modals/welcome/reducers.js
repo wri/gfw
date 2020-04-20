@@ -1,6 +1,6 @@
 import * as actions from './actions';
 
-const hideModal = JSON.parse(localStorage.getItem('welcomeModalHidden'));
+const hideModal = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('welcomeModalHidden'));
 
 export const initialState = {
   open: !hideModal,

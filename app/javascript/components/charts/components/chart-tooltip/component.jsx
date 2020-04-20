@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './chart-tooltip-styles.scss';
+import './styles.scss';
 
 class ChartTooltip extends PureComponent {
   render() {

@@ -2,9 +2,8 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import isEqual from 'lodash/isEqual';
-import { SCREEN_M } from 'utils/constants';
-import { track } from 'app/analytics';
-import MediaQuery from 'react-responsive';
+import { logEvent } from 'app/analytics';
+import { Media } from 'utils/responsive';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
@@ -77,7 +76,7 @@ class DashboardsPage extends PureComponent {
       !activeArea.userArea &&
       !isEqual(activeArea, prevActiveArea)
     ) {
-      track('publicArea', {
+      logEvent('publicArea', {
         label: activeArea.id
       });
     }
@@ -143,74 +142,75 @@ class DashboardsPage extends PureComponent {
       !['country', 'wdpa'].includes(location.type);
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div className="l-dashboards-page">
-            {isAreaDashboard && !activeArea && !areaLoading ? (
-              <ErrorPage
-                title="Area not found"
-                desc="This area has either been deleted or is no longer available."
-              />
-            ) : (
-              <Fragment>
-                <div className="content-panel">
-                  <Header className="header" />
-                  {links &&
-                    !!links.length && (
-                    <SubNavMenu
-                      className="nav"
-                      theme="theme-subnav-dark"
-                      links={links.map(l => ({
-                        ...l,
-                        onClick: () => {
-                          handleCategoryChange(l.category);
-                          track('selectDashboardCategory', {
-                            label: l.category
-                          });
-                        }
-                      }))}
-                      checkActive
-                    />
-                  )}
-                  {isPendingDashboard && (
-                    <PendingDashboard
-                      className="pending-message"
-                      isUserDashboard={activeArea && activeArea.userArea}
-                      areaId={activeArea && activeArea.id}
-                    />
-                  )}
-                  <Widgets className="dashboard-widgets" />
-                </div>
-                <div
-                  className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}
-                >
-                  {isDesktop ? (
-                    <Sticky bottomBoundary=".l-dashboards-page">
-                      {this.renderMap()}
-                    </Sticky>
-                  ) : (
-                    this.renderMap()
-                  )}
-                </div>
-                <MapControls className="map-controls" />
-                <Share />
-                <ModalMeta />
-                {widgetAnchor && (
-                  <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
-                )}
-                <DatasetsProvider />
-                <LatestProvider />
-                <CountryDataProvider />
-                <WhitelistsProvider />
-                <GeostoreProvider />
-                <GeodescriberProvider />
-              </Fragment>
+      <div className="l-dashboards-page">
+        {isAreaDashboard && !activeArea && !areaLoading ? (
+          <ErrorPage
+            title="Area not found"
+            desc="This area has either been deleted or is no longer available."
+          />
+        ) : (
+          <Fragment>
+            <div className="content-panel">
+              <Header className="header" />
+              {links &&
+                !!links.length && (
+                <SubNavMenu
+                  className="nav"
+                  theme="theme-subnav-dark"
+                  links={links.map(l => ({
+                    ...l,
+                    onClick: () => {
+                      handleCategoryChange(l.category);
+                      logEvent('selectDashboardCategory', {
+                        label: l.category
+                      });
+                    }
+                  }))}
+                  checkActive
+                />
+              )}
+              {isPendingDashboard && (
+                <PendingDashboard
+                  className="pending-message"
+                  isUserDashboard={activeArea && activeArea.userArea}
+                  areaId={activeArea && activeArea.id}
+                />
+              )}
+              <Widgets className="dashboard-widgets" />
+            </div>
+            <div
+              className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}
+            >
+              <Media greaterThanOrEqual="md">
+                <Sticky bottomBoundary=".l-dashboards-page">
+                  {this.renderMap()}
+                </Sticky>
+              </Media>
+              <Media lessThan="md">
+                {this.renderMap()}
+              </Media>
+            </div>
+            <MapControls className="map-controls" />
+            <Share />
+            <ModalMeta />
+            {widgetAnchor && (
+              <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
             )}
-            <AreasProvider />
-            {!embed && isDesktop && <DashboardPrompts />}
-          </div>
+            <DatasetsProvider />
+            <LatestProvider />
+            <CountryDataProvider />
+            <WhitelistsProvider />
+            <GeostoreProvider />
+            <GeodescriberProvider />
+          </Fragment>
         )}
-      </MediaQuery>
+        <AreasProvider />
+        {!embed && (
+          <Media greaterThanOrEqual="md">
+            <DashboardPrompts />
+          </Media>
+        )}
+      </div>
     );
   }
 }

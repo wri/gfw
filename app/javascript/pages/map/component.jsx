@@ -1,9 +1,8 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
-import MediaQuery from 'react-responsive';
 import { Tooltip } from 'react-tippy';
+import { Media } from 'utils/responsive';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -66,85 +65,87 @@ class MainMapComponent extends PureComponent {
     } = this.props;
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div className={cx('c-map-main', { embed })}>
-            <div
-              className="main-map-container"
-              role="button"
-              tabIndex={0}
-              onClick={handleClickMap}
-              onMouseOver={() =>
-                oneClickAnalysis &&
-                handleShowTooltip(true, 'Click shape to analyze.')
-              }
-              onMouseOut={() => handleShowTooltip(false, '')}
-            >
-              <Tooltip
-                className="map-tooltip"
-                theme="tip"
-                html={
-                  <Tip
-                    className="map-hover-tooltip"
-                    text={this.renderInfoTooltip(tooltipData)}
-                  />
+      <div className={cx('c-map-main', { embed })}>
+        <div
+          className="main-map-container"
+          role="button"
+          tabIndex={0}
+          onClick={handleClickMap}
+          onMouseOver={() =>
+            oneClickAnalysis &&
+            handleShowTooltip(true, 'Click shape to analyze.')
+          }
+          onMouseOut={() => handleShowTooltip(false, '')}
+        >
+          <Tooltip
+            className="map-tooltip"
+            theme="tip"
+            html={<Tip
+              className="map-hover-tooltip"
+              text={this.renderInfoTooltip(tooltipData)}
+            />}
+            position="top"
+            followCursor
+            hideOnClick
+            animateFill={false}
+            open={showTooltip}
+          >
+            <Map
+              className="main-map"
+              onSelectBoundary={setMainMapAnalysisView}
+              onDrawComplete={onDrawComplete}
+              popupActions={[
+                {
+                  label: 'Analyze',
+                  action: handleClickAnalysis
                 }
-                position="top"
-                followCursor
-                hideOnClick
-                animateFill={false}
-                open={showTooltip}
-                disabled={!isDesktop}
-              >
-                <Map
-                  className="main-map"
-                  onSelectBoundary={setMainMapAnalysisView}
-                  onDrawComplete={onDrawComplete}
-                  popupActions={[
-                    {
-                      label: 'Analyze',
-                      action: handleClickAnalysis
-                    }
-                  ]}
-                />
-              </Tooltip>
-            </div>
-            {isDesktop &&
-              !hidePanels && (
-              <DataAnalysisMenu
-                className="data-analysis-menu"
-                embed={embed}
-              />
-            )}
-            {!embed && (
+              ]}
+            />
+          </Tooltip>
+        </div>
+        {!hidePanels && (
+          <Media greaterThanOrEqual="md">
+            <DataAnalysisMenu
+              className="data-analysis-menu"
+              embed={embed}
+            />
+          </Media>
+        )}
+        {!embed && (
+          <>
+            <Media greaterThanOrEqual="md">
               <MapControlButtons
                 className="main-map-controls"
-                isDesktop={isDesktop}
+                isDesktop
               />
-            )}
-            <RecentImagery active={recentActive} />
-            {!embed &&
-              isDesktop && (
-              <Fragment>
-                {!embed && <MapPrompts />}
-                <ModalWelcome />
-              </Fragment>
-            )}
-            <Share />
-            <ModalMeta />
-            <ModalSource />
-            <CountryDataProvider />
-            <WhitelistsProvider />
-            <DatasetsProvider />
-            <LatestProvider />
-            <GeostoreProvider />
-            <GeodescriberProvider />
-            <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
-            <AreasProvider />
-            <PlanetBasemapsProvider />
-          </div>
+            </Media>
+            <Media lessThan="md">
+              <MapControlButtons
+                className="main-map-controls"
+              />
+            </Media>
+          </>
         )}
-      </MediaQuery>
+        <RecentImagery active={recentActive} />
+        {!embed && (
+          <Media greaterThanOrEqual="md">
+            {!embed && <MapPrompts />}
+            <ModalWelcome />
+          </Media>
+        )}
+        <Share />
+        <ModalMeta />
+        <ModalSource />
+        <CountryDataProvider />
+        <WhitelistsProvider />
+        <DatasetsProvider />
+        <LatestProvider />
+        <GeostoreProvider />
+        <GeodescriberProvider />
+        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+        <AreasProvider />
+        <PlanetBasemapsProvider />
+      </div>
     );
   }
 }

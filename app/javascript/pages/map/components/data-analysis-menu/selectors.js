@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getShowAnalysis, getHideLegend, getEmbed } from 'pages/map/selectors';
+import { getShowAnalysis, getHideLegend, getEmbed } from 'layouts/map/selectors';
 import { getActiveSection } from 'components/map-menu/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';

@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'utils/redux';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/analysis-cached';
@@ -40,7 +40,7 @@ export const setWidgetSettings = createThunkAction(
         state
       })
     );
-    track('changeWidgetSettings', {
+    logEvent('changeWidgetSettings', {
       label: `${widget}`
     });
     if (!change.interaction) {

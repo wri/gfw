@@ -7,7 +7,7 @@ import facebookIcon from 'assets/icons/facebook.svg?sprite';
 
 import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
-import Icon from 'components/ui/icon/icon';
+import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
 import Modal from '../modal';
 

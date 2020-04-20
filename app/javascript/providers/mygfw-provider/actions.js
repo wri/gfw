@@ -8,7 +8,10 @@ export const setMyGFW = createAction('setMyGFW');
 export const getUserProfile = createThunkAction(
   'getUserProfile',
   (urlToken) => (dispatch) => {
-    const token = urlToken || localStorage.getItem('userToken');
+    let token = '';
+    if (typeof window !== 'undefined') {
+      token = urlToken || localStorage.getItem('userToken');
+    }
     if (token) {
       dispatch(setMyGFWLoading({ loading: true, error: false }));
       checkLoggedIn(token)

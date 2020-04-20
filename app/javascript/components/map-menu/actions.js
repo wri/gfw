@@ -3,7 +3,6 @@ import { setComponentStateToUrl } from 'utils/stateToUrl';
 import request from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
-import { MAP } from 'router';
 import uniqBy from 'lodash/uniqBy';
 
 import { CARTO_API } from 'utils/constants';
@@ -83,8 +82,7 @@ export const getLocationFromSearch = createThunkAction(
             }
             dispatch(setMenuLoading(false));
           })
-          .catch(error => {
-            console.info(error);
+          .catch(() => {
             dispatch(setMenuLoading(false));
           });
       }
@@ -102,7 +100,7 @@ export const handleClickLocation = createThunkAction(
 
     if (newLocation) {
       dispatch({
-        type: MAP,
+        type: 'MAP',
         payload: {
           type: 'country',
           ...newLocation
@@ -134,7 +132,7 @@ export const handleViewOnMap = createThunkAction(
     const { datasets } = map || {};
 
     dispatch({
-      type: MAP,
+      type: 'MAP',
       payload,
       query: {
         ...(map && {

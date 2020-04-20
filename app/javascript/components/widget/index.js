@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import WidgetComponent from './component';
 
@@ -18,13 +18,6 @@ class WidgetContainer extends Component {
     handleChangeSettings: PropTypes.func,
     geostore: PropTypes.object,
     status: PropTypes.string
-  };
-
-  static defaultProps = {
-    widget: '',
-    location: {},
-    getData: fetch,
-    setWidgetData: () => {}
   };
 
   state = {
@@ -97,7 +90,7 @@ class WidgetContainer extends Component {
     const { settings, location, widget } = this.props;
     const params = { ...location, ...settings };
     this.handleGetWidgetData(params);
-    track('refetchDataBtn', {
+    logEvent('refetchDataBtn', {
       label: `Widget: ${widget}`
     });
   };

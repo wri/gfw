@@ -18,7 +18,7 @@ class PendingDashboardMessage extends PureComponent {
 
   state = {
     visible: true,
-    hiddenAreas: JSON.parse(localStorage.getItem('hiddenPendingAreas')) || []
+    hiddenAreas: typeof window !== 'undefined' && JSON.parse(localStorage.getItem('hiddenPendingAreas')) || []
   };
 
   handleHidePanel = () => {
@@ -27,11 +27,14 @@ class PendingDashboardMessage extends PureComponent {
     this.setState({ visible: false });
 
     const hiddenAreaIds =
-      JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
-    localStorage.setItem(
-      'hiddenPendingAreas',
-      JSON.stringify([...hiddenAreaIds, areaId])
-    );
+      typeof window !== 'undefined' && JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        'hiddenPendingAreas',
+        JSON.stringify([...hiddenAreaIds, areaId])
+      );
+    }
   };
 
   render() {

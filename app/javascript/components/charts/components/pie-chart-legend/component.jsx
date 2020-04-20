@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import cx from 'classnames';
 
-import './pie-chart-legend-styles.scss';
+import './styles.scss';
 
 class PieChartLegend extends PureComponent {
   render() {

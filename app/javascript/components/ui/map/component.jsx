@@ -10,7 +10,6 @@ import WebMercatorViewport from 'viewport-mercator-project';
 
 import { easeCubic } from 'd3-ease';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
 import './styles.scss';
 
 const DEFAULT_VIEWPORT = {

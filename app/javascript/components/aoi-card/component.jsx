@@ -10,7 +10,7 @@ import applicationsMeta from 'data/applications.json';
 
 import { formatNumber } from 'utils/format';
 
-import Icon from 'components/ui/icon/icon-component';
+import Icon from 'components/ui/icon';
 import MapGeostore from 'components/map-geostore';
 
 import tagIcon from 'assets/icons/tag.svg?sprite';
