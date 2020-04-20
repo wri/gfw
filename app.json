@@ -129,5 +129,10 @@
       "required": true
     }
   },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
   "name": "gfw"
 }
