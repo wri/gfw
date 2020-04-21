@@ -3,14 +3,10 @@ import intro1x from 'pages/topics/assets/biodiversity/intro/tiger.png';
 import intro2x from 'pages/topics/assets/biodiversity/intro/tiger@2x.png';
 
 // slides
-import biodiversity1 from 'pages/topics/assets/fires/slides/fires2.webp';
-import biodiversity1Large from 'pages/topics/assets/fires/slides/fires2.webp';
-import biodiversity2 from 'pages/topics/assets/biodiversity/slides/biodiversity2.png';
-import biodiversity2Large from 'pages/topics/assets/biodiversity/slides/biodiversity2@2x.png';
-import biodiversity3 from 'pages/topics/assets/biodiversity/slides/biodiversity3.png';
-import biodiversity3Large from 'pages/topics/assets/biodiversity/slides/biodiversity3@2x.png';
-import biodiversity4 from 'pages/topics/assets/biodiversity/slides/biodiversity4.png';
-import biodiversity4Large from 'pages/topics/assets/biodiversity/slides/biodiversity4@2x.png';
+import fires1 from 'pages/topics/assets/fires/slides/fires1.png';
+import fires2 from 'pages/topics/assets/fires/slides/fires2.png';
+import fires3 from 'pages/topics/assets/fires/slides/fires3.png';
+import fires4 from 'pages/topics/assets/fires/slides/fires4.png';
 
 // cards
 import investigate from 'pages/topics/assets/biodiversity/cards/investigate.png';
@@ -21,63 +17,61 @@ import tigers from 'pages/topics/assets/biodiversity/cards/tigers.png';
 import tigersLarge from 'pages/topics/assets/biodiversity/cards/tigers@2x.png';
 
 // animations
-import scene1 from 'pages/topics/assets/fires/animations/fire.json';
-import birds1 from 'pages/topics/assets/fires/animations/lightening.json';
-import scene2 from 'pages/topics/assets/biodiversity/animations/scene2.json';
-import birds2 from 'pages/topics/assets/biodiversity/animations/birds2.json';
-import scene3 from 'pages/topics/assets/biodiversity/animations/scene3.json';
-import scene4 from 'pages/topics/assets/biodiversity/animations/scene4.json';
-import birds4 from 'pages/topics/assets/biodiversity/animations/birds4.json';
+import scene1 from 'pages/topics/assets/fires/animations/scene1.json';
+import birds1 from 'pages/topics/assets/fires/animations/birds1.json';
+import scene2 from 'pages/topics/assets/fires/animations/scene2.json';
+import scene3 from 'pages/topics/assets/fires/animations/scene3.json';
+import sunHeat3 from 'pages/topics/assets/fires/animations/heat_sun3.json';
+import scene4 from 'pages/topics/assets/fires/animations/scene4.json';
 
 export default {
   intro: {
-    title: '80% of terrestrial species live in forests.',
+    title: 'Fires',
     text:
-      'We are currently undergoing the sixth greatest mass extinction of species. Human activity is driving extinction at a rate 1,000 to 10,000 times beyond natural levels. Protecting forest habitats is key to protecting our planet’s remaining biodiversity.',
+      'Although wildfires are a natural occurrence within some forest ecosystems, fire seasons are becoming more extreme and widespread, even in tropical rainforests where fires are atypical and particularly damaging. Hotter, drier weather caused by climate change and poor land management create conditions favorable for more frequent, larger and higher-intensity wildfires.',
     img1x: intro1x,
     img2x: intro2x
   },
   slides: [
     {
-      title: 'Biodiversity',
+      title: 'Fires',
       subtitle: 'Natural state',
       text:
-        'Forests are critical homes to plant and animal species. In turn, species that live within forests play an important role in maintaining forest health.',
-      img1x: biodiversity1,
-      img2x: biodiversity1Large,
+        'In higher-latitude forests, fires help maintain a healthy forest ecosystem by releasing important nutrients into the soil and aiding in seed dispersal. In tropical forests, local and indigenous communities have used controlled fires for centuries to clear land for agriculture.',
+      img1x: fires1,
       prompts: [
         {
-          id: 'bio-learn',
-          content: 'GFW helps visualize areas most important for biodiversity.',
-          btnText: 'Explore the data',
+          id: 'fires-learn',
+          content: 'Learn about forest fires and climate change in boreal forests',
+          btnText: 'Read the blog',
           link:
-            '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhNjg0YTliYi02M2YyLTRiZWEtYmY2Mi1mZDVlODBkMjNkNzUiLCJsYXllcnMiOlsiZGZkOWRlYjYtOGQzOS00NjQwLTg1NzEtNDM4OWQ1ZDg4OThhIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyI0M2EyMDVmZS1hYWQzLTRkYjEtODgwNy1jMzk5YTMyNjQzNDkiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZX0%3D&menu=eyJtZW51U2VjdGlvbiI6IiJ9',
+            'https://blog.globalforestwatch.org/fires/boreal-forest-fires-a-climate-concern',
           position: [65, 38]
         }
       ],
       animations: [
         {
-          id: 'bio-scene1',
+          id: 'fires-scene1',
           data: scene1
         },
         {
-          id: 'bio-birds1',
-          data: birds1
+          id: 'fires-birds1',
+          data: birds1,
+          behind: true
         }
       ]
     },
     {
-      title: 'Biodiversity',
+      title: 'Fires',
       subtitle: 'Drivers of change',
       text:
-        'Changes to forested habitats can lead to the extinction of the species that depend on them. With fewer species, the resilience of the entire food chain suffers.',
-      img1x: biodiversity2,
-      img2x: biodiversity2Large,
+        'Climate change and forest degradation and fragmentation have led to more fire-prone conditions globally. With hotter and drier conditions, fires - either ignited by humans or by lightning - are more likely to burn over larger areas and at hotter temperatures. Forests degraded by logging and disease, and fragmented by deforestation are also more susceptible to fire.',
+      img1x: fires2,
       prompts: [
         {
-          id: 'bio-learn',
+          id: 'fires-learn',
           content:
-            'GFW shows the current status of ecological areas as compared to their natural, undisturbed state.',
+            'Explore recent global trends in fire alerts',
           btnText: 'Explore the data',
           link:
             '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiNmExYWZlNzgtMDgxMy00NWM0LTgyMmYtYjUyZmUxMGY5M2YyIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjY0Nzk5OGMyLWNkZjYtNDNmZC1iYmZmLTE1MzU4ZjExMWZlOSJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyJmMTNmODZjYi0wOGI1LTRlNmMtYmI4ZC1iNDc4MjA1MmY5ZTUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZSwiYmJveCI6bnVsbCwiYmVhcmluZyI6MCwicGl0Y2giOjB9&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiYmlvZGl2ZXJzaXR5In0%3D',
@@ -86,29 +80,23 @@ export default {
       ],
       animations: [
         {
-          id: 'bio-scene2',
+          id: 'fires-scene2',
           data: scene2
-        },
-        {
-          id: 'bio-birds2',
-          data: birds2,
-          behind: true
         }
       ]
     },
     {
-      title: 'Biodiversity',
+      title: 'Fires',
       subtitle: 'Compromised state',
       text:
-        'Failure to protect critical wildlife areas from deforestation means the loss of biodiversity and extinction of endangered species.',
-      img1x: biodiversity3,
-      img2x: biodiversity3Large,
+        'Wildfires release carbon dioxide and other pollutants into the atmosphere, exacerbating global warming, and in severe cases, irreparably damaging forests ecosystems. The resulting smoke and haze can travel miles, creating public health crises as people breathe in unhealthy levels of pollutants. Uncontrolled wildfires cause billions of dollars in economic damage each year as property and natural tourist attractions are destroyed, water supplies are polluted, and economies are crippled by evacuations.',
+      img1x: fires3,
       prompts: [
         {
-          id: 'bio-status',
+          id: 'fires-status',
           content:
-            'Learn how the loss of Intact Forest Landscapes affects biodiversity.',
-          btnText: 'Read the blog',
+            'View fire alerts to see where the most fires are occurring now.',
+          btnText: 'Explore the data',
           link:
             'https://blog.globalforestwatch.org/data/worlds-last-intact-forests-are-becoming-increasingly-fragmented',
           position: [38, 45]
@@ -116,37 +104,36 @@ export default {
       ],
       animations: [
         {
-          id: 'bio-scene3',
+          id: 'fires-scene3',
           data: scene3
+        },
+        {
+          id: 'fires-sun3',
+          data: sunHeat3
         }
       ]
     },
     {
-      title: 'Biodiversity',
+      title: 'Fires',
       subtitle: 'Recovery state',
       text:
         'Protecting forest habitats is key to maintaining biodiversity. With better data on where tree cover loss in important biodiversity areas is happening, governments can make more informed decisions related to concessions and conservation projects and civil society can call attention to areas at risk.',
-      img1x: biodiversity4,
-      img2x: biodiversity4Large,
+      img1x: fires4,
       prompts: [
         {
-          id: 'bio-learn',
+          id: 'fires-learn',
           content:
-            'Read how GFW data help protect the Leuser Ecosystem in Indonesia.',
+            "Learn about one organization's fire safety efforts in Riau, Indonesia",
           btnText: 'Read the blog',
           link:
-            'https://blog.globalforestwatch.org/uncategorized/glad-alerts-help-protect-sumatras-leuser-rainforest-ecosystem',
+            'https://blog.globalforestwatch.org/people/women-research-institute-blazes-path-towards-fire-safety-in-riau-communities',
           position: [35, 55]
         }
       ],
       animations: [
         {
-          id: 'bio-scene4',
-          data: scene4
-        },
-        {
-          id: 'bio-birds4',
-          data: birds4,
+          id: 'fires-scene4',
+          data: scene4,
           behind: true
         }
       ]
