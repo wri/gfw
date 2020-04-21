@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
 
-import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import { fetchMODISHistorical } from 'services/analysis-cached';
 
 import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
 import {
@@ -18,13 +18,6 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
-      border: true
-    },
-    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -37,6 +30,22 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
+      border: true
+    },
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      type: 'range-select',
+      options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
+        .map(y => ({ label: `${y}`, value: y }))
+    },
+    {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
       border: true
     }
   ],
@@ -67,10 +76,12 @@ export default {
   },
   settings: {
     dataset: 'VIIRS',
-    confidence: 'h'
+    confidence: '',
+    startYear: 2001,
+    endYear: 2020
   },
   sentence:
-    'This is a widget test? In {location} the peak fire season typically begins in {fires_season_month} and lasts {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} fires.',
   whitelists: {
     adm0: [
       'AFG',
@@ -281,14 +292,13 @@ export default {
     ]
   },
   getData: params =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
-      spread((alerts, latest) => {
+    all([fetchMODISHistorical(params)]).then(
+      spread(alerts => {
         const { data } = alerts.data;
 
         return (
           {
             alerts: data,
-            latest,
             options: {
               confidence: [
                 { label: 'All', value: '' },
@@ -299,7 +309,7 @@ export default {
         );
       })
     ),
-  getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
+  getDataURL: params => [fetchMODISHistorical({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

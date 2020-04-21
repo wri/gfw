@@ -27,7 +27,46 @@ const {
 
   ANNUAL_GEOSTORE_SUMMARY,
   ANNUAL_GEOSTORE_CHANGE,
-  ANNUAL_GEOSTORE_WHITELIST
+  ANNUAL_GEOSTORE_WHITELIST,
+
+  GLAD_ADM0_WEEKLY,
+  GLAD_ADM1_WEEKLY,
+  GLAD_ADM2_WEEKLY,
+  GLAD_ADM0_WHITELIST,
+  GLAD_ADM1_WHITELIST,
+  GLAD_ADM2_WHITELIST,
+
+  GLAD_WDPA_WEEKLY,
+  GLAD_WDPA_WHITELIST,
+
+  GLAD_GEOSTORE_WEEKLY,
+  GLAD_GEOSTORE_WHITELIST,
+
+  VIIRS_ADM0_WEEKLY,
+  VIIRS_ADM1_WEEKLY,
+  VIIRS_ADM2_WEEKLY,
+  VIIRS_ADM0_WHITELIST,
+  VIIRS_ADM1_WHITELIST,
+  VIIRS_ADM2_WHITELIST,
+
+  VIIRS_WDPA_WEEKLY,
+  VIIRS_WDPA_WHITELIST,
+
+  VIIRS_GEOSTORE_WEEKLY,
+  VIIRS_GEOSTORE_WHITELIST,
+
+  MODIS_ADM0_WEEKLY,
+  MODIS_ADM1_WEEKLY,
+  MODIS_ADM2_WEEKLY,
+  MODIS_ADM2_DAILY,
+  MODIS_ADM0_WHITELIST,
+  MODIS_ADM1_WHITELIST,
+  MODIS_ADM2_WHITELIST,
+
+  MODIS_GEOSTORE_SUMMARY,
+  MODIS_GEOSTORE_WEEKLY,
+  MODIS_GEOSTORE_DAILY,
+  MODIS_GEOSTORE_WHITELIST
 } = DATASETS[process.env.FEATURE_ENV || 'production'];
 
 const SQL_QUERIES = {
@@ -54,7 +93,9 @@ const SQL_QUERIES = {
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE}'
+    'SELECT {location}, {polynames} FROM data {WHERE}',
+  modisFires:
+    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -139,6 +180,32 @@ const getFiresDatasetId = ({
   return DATASETS_ENV[`${dataset}_ADM0_WEEKLY`];
 };
 
+const getModisDatasetId = ({
+  adm0,
+  adm1,
+  adm2,
+  grouped,
+  type,
+  whitelist,
+  freq
+}) => {
+  if (type === 'geostore') {
+    if (whitelist) return MODIS_GEOSTORE_WHITELIST;
+    else if (freq === 'weekly') return MODIS_GEOSTORE_WEEKLY;
+    else if (freq === 'daily') return MODIS_GEOSTORE_DAILY;
+    return MODIS_GEOSTORE_SUMMARY;
+  }
+
+  if ((adm2 || (adm1 && grouped)) && whitelist) return MODIS_ADM2_WHITELIST;
+  if (adm2 || (adm1 && grouped)) return MODIS_ADM2_WEEKLY;
+  if (adm2 || (adm1 && grouped && freq === 'daily')) return MODIS_ADM2_DAILY;
+  if ((adm1 || (adm0 && grouped)) && whitelist) return MODIS_ADM1_WHITELIST;
+  if (adm1 || (adm0 && grouped)) return MODIS_ADM1_WEEKLY;
+  if (whitelist) return MODIS_ADM0_WHITELIST;
+
+  return MODIS_ADM0_WEEKLY;
+};
+
 const getLocationSelect = ({ type, adm1, adm2 }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
   if (['geostore', 'use'].includes(type)) return 'geostore__id';
@@ -175,6 +242,10 @@ const getRequestUrl = params => {
 
       case 'fires': {
         return getFiresDatasetId(params);
+      }
+
+      case 'modis': {
+        return getModisDatasetId(params);
       }
 
       default: {
@@ -895,6 +966,76 @@ export const fetchVIIRSLatest = () => {
         })
       );
     });
+};
+
+export const fetchMODISHistorical = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  forestType,
+  landCategory,
+  confidence,
+  ifl,
+  grouped,
+  download,
+  freq,
+  ...params
+}) => {
+  const { modisFires } = SQL_QUERIES;
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    confidence,
+    freq: 'weekly',
+    allowedParams: 'modis'
+  })}${modisFires}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
+        : getLocationSelect({ adm1, adm2, ...params })
+    )
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        confidence,
+        ifl,
+        ...params,
+        allowedParams: 'fires'
+      })
+    );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
 };
 
 export const getNonGlobalDatasets = () => {
