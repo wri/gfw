@@ -1,10 +1,14 @@
-import { getExtent } from 'services/analysis-cached';
+import { fetchFiresWithin, fetchVIIRSLatest } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FIRES_VIIRS_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  FIRES_ALERTS_VIIRS
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -16,6 +20,25 @@ export default {
   types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
+    {
+      key: 'weeks',
+      label: 'show data for the last',
+      type: 'select',
+      whitelist: [13, 26, 52],
+      noSort: true
+    },
+    {
+      key: 'dataset',
+      label: 'fires dataset',
+      type: 'select'
+    },
+    {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      border: true
+    },
     {
       key: 'forestType',
       label: 'Forest Type',
@@ -29,10 +52,11 @@ export default {
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
-      clearable: true,
+      clearable: false,
       border: true
     }
   ],
+  dataType: 'fires',
   chartType: 'pieChart',
   colors: 'fires',
   metaKey: '',
@@ -41,64 +65,62 @@ export default {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
+    },
+    {
+      dataset: FIRES_VIIRS_DATASET,
+      layers: [FIRES_ALERTS_VIIRS]
     }
   ],
   sortOrder: {
     forestChange: -1
   },
   settings: {
+    period: 'week',
+    weeks: 13,
+    dataset: 'VIIRS',
+    confidence: 'h',
     landCategory: 'wdpa',
     forestType: ''
   },
-  refetchKeys: ['landCategory', 'forestType'],
+  refetchKeys: ['dataset', 'confidence', 'landCategory', 'forestType'],
   sentences: {
-    initial:
-      'As of 2016, {percentage} of {location} tree cover was <b>intact forest</b>.',
-    withIndicator:
-      'As of 2016, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.',
-    noIntact:
-      'As of 2016, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
-    noIntactwithIndicator:
-      'As of 2016, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.'
+    initial: 'Test sentence {location} fires in {indicator}...'
   },
   whitelists: {
     checkStatus: true
   },
   getData: params =>
     all([
-      getExtent({ ...params, forestType: '' }),
-      getExtent({ ...params }),
-      getExtent({ ...params, forestType: 'plantations' })
+      fetchFiresWithin(params),
+      fetchFiresWithin({ ...params, forestType: '', landCategory: '' }),
+      fetchVIIRSLatest(params)
     ]).then(
-      spread((gadm28Response, iflResponse, plantationsResponse) => {
-        const gadmExtent = gadm28Response.data && gadm28Response.data.data;
-        const iflExtent = iflResponse.data && iflResponse.data.data;
-        let totalArea = 0;
-        let totalExtent = 0;
-        let extent = 0;
-        let plantations = 0;
+      spread((firesWithin, allFires, latest) => {
+        const fireIn = firesWithin.data && firesWithin.data.data;
+        const AllFire = allFires.data && allFires.data.data;
         let data = {};
-        const plantationsData =
-          plantationsResponse.data && plantationsResponse.data.data;
-        plantations = plantationsData.length ? plantationsData[0].extent : 0;
-        if (iflExtent.length && gadmExtent.length) {
-          totalArea = gadmExtent[0].total_area;
-          totalExtent = gadmExtent[0].extent;
-          extent = iflExtent[0].extent;
+        if (fireIn.length && AllFire.length) {
+          const fireCountIn =
+            fireIn[0] && fireIn[0].count ? fireIn[0].count : 0;
+          const fireCountAll =
+            AllFire[0] && AllFire[0].count ? AllFire[0].count : 0;
+
           data = {
-            totalArea,
-            totalExtent,
-            extent,
-            plantations
+            fireCountIn,
+            fireCountAll
           };
         }
         return data;
       })
     ),
   getDataURL: params => [
-    getExtent({ ...params, forestType: '', download: true }),
-    getExtent({ ...params, download: true }),
-    getExtent({ ...params, forestType: 'plantations', download: true })
+    fetchFiresWithin({ ...params, download: true }),
+    fetchFiresWithin({
+      ...params,
+      forestType: '',
+      landCategory: '',
+      download: true
+    })
   ],
   getWidgetProps
 };

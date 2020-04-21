@@ -51,6 +51,8 @@ const SQL_QUERIES = {
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  firesWithin:
+    'SELECT {location}, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year = 2020 AND alert__week >= 1',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -100,15 +102,21 @@ const getAnnualDataset = ({
 };
 
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST;
+  }
   if (type === 'geostore') return DATASETS_ENV.GLAD_GEOSTORE_WEEKLY;
 
   if (type === 'wdpa' && whitelist) return DATASETS_ENV.GLAD_WDPA_WHITELIST;
   if (type === 'wdpa') return DATASETS_ENV.GLAD_WDPA_WEEKLY;
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM2_WHITELIST; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM2_WHITELIST;
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV.GLAD_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM1_WHITELIST; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM1_WHITELIST;
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV.GLAD_ADM1_WEEKLY;
   if (whitelist) return DATASETS_ENV.GLAD_ADM0_WHITELIST;
 
@@ -124,15 +132,23 @@ const getFiresDatasetId = ({
   whitelist,
   dataset
 }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`]; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`];
+  }
   if (type === 'geostore') return DATASETS_ENV[`${dataset}_GEOSTORE_WEEKLY`];
 
-  if (type === 'wdpa' && whitelist) { return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`]; }
+  if (type === 'wdpa' && whitelist) {
+    return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`];
+  }
   if (type === 'wdpa') return DATASETS_ENV[`${dataset}_WDPA_WEEKLY`];
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`]; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`];
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV[`${dataset}_ADM2_WEEKLY`];
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`]; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`];
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV[`${dataset}_ADM1_WEEKLY`];
   if (whitelist) return DATASETS_ENV[`${dataset}_ADM0_WHITELIST`];
 
@@ -219,28 +235,28 @@ export const getWHEREQuery = params => {
 
       const polynameString = `
         ${
-  isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
-}${
-  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
-}${
-  isPolyname &&
+          isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
+        }${
+        isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
+      }${
+        isPolyname &&
         polynameMeta &&
         !tableKey.includes('is__') &&
         polynameMeta.default &&
         polynameMeta.categories
-    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
-      polynameMeta.default
-    }'`
-    : ''
-}${
-  !isPolyname
-    ? `${paramKey} = ${
-      typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
-        ? value
-        : `'${value}'`
-    }`
-    : ''
-}${isLast ? '' : ' AND '}`;
+          ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
+              polynameMeta.default
+            }'`
+          : ''
+      }${
+        !isPolyname
+          ? `${paramKey} = ${
+              typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
+                ? value
+                : `'${value}'`
+            }`
+          : ''
+      }${isLast ? '' : ' AND '}`;
 
       paramString = paramString.concat(polynameString);
     });
@@ -865,6 +881,72 @@ export const fetchVIIRSAlerts = ({
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchFiresWithin = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  forestType,
+  landCategory,
+  confidence,
+  ifl,
+  // startDate,
+  grouped,
+  download,
+  ...params
+}) => {
+  const { firesWithin } = SQL_QUERIES;
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    confidence,
+    allowedParams: 'fires'
+  })}${firesWithin}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
+        : getLocationSelect({ adm1, adm2, ...params })
+    )
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        confidence,
+        ifl,
+        ...params,
+        allowedParams: 'fires'
+      })
+    );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        count: d.alert__count,
+        alerts: d.alert__count
       }))
     }
   }));

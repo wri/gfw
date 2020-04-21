@@ -12,28 +12,28 @@ const getTitle = state => state.title;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getColors],
-  (data, colors) => {
+  [getData, getColors, getIndicator],
+  (data, colors, indicator) => {
     if (isEmpty(data)) return null;
-    const { totalArea, totalExtent, extent } = data;
+    const { fireCountIn, fireCountAll } = data;
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label : null;
+    const fireCountOutside =
+      fireCountAll - fireCountIn > 0 ? fireCountAll - fireCountIn : 0;
     const parsedData = [
       {
-        label: 'Intact Forest',
-        value: extent,
-        color: colors.intactForest,
-        percentage: extent / totalArea * 100
+        label: `Fires within ${indicatorLabel}`,
+        value: fireCountIn,
+        color: colors.main,
+        unit: 'counts',
+        percentage: fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 0
       },
       {
-        label: 'Other Tree Cover',
-        value: totalExtent - extent,
-        color: colors.otherCover,
-        percentage: (totalExtent - extent) / totalArea * 100
-      },
-      {
-        label: 'Non-Forest',
-        value: totalArea - totalExtent,
-        color: colors.nonForest,
-        percentage: (totalArea - totalExtent) / totalArea * 100
+        label: `Fires outside ${indicatorLabel}`,
+        value: fireCountOutside,
+        color: colors.otherColor,
+        unit: 'counts',
+        percentage: fireCountAll > 0 ? fireCountOutside / fireCountAll * 100 : 0
       }
     ];
     return parsedData;
@@ -44,35 +44,17 @@ export const parseSentence = createSelector(
   [parseData, getLocationName, getIndicator, getSentences],
   (parsedData, locationName, indicator, sentences) => {
     if (!parsedData) return null;
-    const {
-      initial,
-      withIndicator,
-      noIntact,
-      noIntactWithIndicator
-    } = sentences;
-    const totalExtent = parsedData
-      .filter(d => d.label !== 'Non-Forest')
-      .map(d => d.value)
-      .reduce((sum, d) => sum + d);
-    const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
-    const intactPercentage = intactData && intactData / totalExtent * 100;
+    const { initial } = sentences;
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
 
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
-      indicator: indicatorLabel,
-      percentage:
-        intactPercentage < 0.1
-          ? '< 0.1%'
-          : `${format('.2r')(intactPercentage)}%`
+      indicator: indicatorLabel
     };
 
-    let sentence = indicator ? withIndicator : initial;
-    if (intactPercentage === 0) {
-      sentence = indicator ? noIntactWithIndicator : noIntact;
-    }
-
+    const sentence = indicator ? initial : '';
     return {
       sentence,
       params
