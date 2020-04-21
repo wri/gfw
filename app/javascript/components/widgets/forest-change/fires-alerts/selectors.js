@@ -151,17 +151,9 @@ export const parseSentence = createSelector(
     getDataset,
     getLocationObject,
     getStartIndex,
-    getEndIndex,
+    getEndIndex
   ],
-  (
-    data,
-    colors,
-    sentence,
-    dataset,
-    location,
-    startIndex,
-    endIndex,
-  ) => {
+  (data, colors, sentence, dataset, location, startIndex, endIndex) => {
     if (!data) return null;
 
     const start = startIndex;
@@ -170,34 +162,27 @@ export const parseSentence = createSelector(
     const lastDate = data[end] || {};
     const firstDate = data[start] || {};
 
-    const slicedData = data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date);
+    const slicedData = data.filter(
+      el => el.date >= firstDate.date && el.date <= lastDate.date
+    );
     const variance = getVariance(slicedData);
 
-    const total = sumBy(
-      slicedData,
-      'count'
-    );
+    const total = sumBy(slicedData, 'count');
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
-    const {
-      date
-    } =
-      lastDate || {};
+    const { date } = lastDate || {};
 
     let status = 'unusually low';
     if (variance > 2) {
       status = 'unusually high';
       statusColor = colorRange[0];
-    } else if (variance <= 2 && variance > 1
-    ) {
+    } else if (variance <= 2 && variance > 1) {
       status = 'high';
       statusColor = colorRange[1];
-    } else if (variance <= 1 && variance > -1
-    ) {
+    } else if (variance <= 1 && variance > -1) {
       status = 'average';
       statusColor = colorRange[2];
-    } else if (variance <= -1 && variance > -2
-    ) {
+    } else if (variance <= -1 && variance > -2) {
       status = 'low';
       statusColor = colorRange[3];
     }
@@ -206,7 +191,7 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedData,
       location: location.label || '',
-      fire_season_month: null, // helper neededd
+      fire_season_month: null, // helper needed
       fire_season_length: 5,
       start_date: firstDate.date, // brush start date
       end_date: lastDate.date, // brush end date

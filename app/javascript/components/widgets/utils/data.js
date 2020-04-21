@@ -161,16 +161,18 @@ export const getStatsData = (data, latest) => {
   return parsedData;
 };
 
-export const getVariance = (data) => {
+export const getVariance = data => {
   // const varianceByWeek = data.map(({mean, stdDev, count}) => {
   //   return stdDev > 0 ? (count - mean) / stdDev : 0;
   // });
   // return mean(varianceByWeek)
-  const meanTotal = sumBy(data, 'mean')
-  const countTotal = sumBy(data, 'count')
-  const sumOfStdDevs = Math.sqrt(data.reduce((sum, d) => sum + d.stdDev ** 2, 0));
+  const meanTotal = sumBy(data, 'mean');
+  const countTotal = sumBy(data, 'count');
+  const sumOfStdDevs = Math.sqrt(
+    data.reduce((sum, d) => sum + d.stdDev ** 2, 0)
+  );
   return (countTotal - meanTotal) / sumOfStdDevs;
-}
+};
 
 export const getStdDevData = (data, rawData) => {
   const stdDevs = [];
