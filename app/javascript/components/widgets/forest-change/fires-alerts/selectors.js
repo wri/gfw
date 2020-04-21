@@ -12,6 +12,7 @@ import { getColorPalette } from 'utils/data';
 import {
   getStatsData,
   getDatesData,
+  getVariance,
   getChartConfig
 } from 'components/widgets/utils/data';
 
@@ -146,72 +147,42 @@ export const parseSentence = createSelector(
   [
     parseData,
     getColors,
-    getInteraction,
     getSentences,
     getDataset,
     getLocationObject,
     getStartIndex,
     getEndIndex
   ],
-  (
-    data,
-    colors,
-    interaction,
-    sentence,
-    dataset,
-    location,
-    startIndex,
-    endIndex
-  ) => {
+  (data, colors, sentence, dataset, location, startIndex, endIndex) => {
     if (!data) return null;
 
     const start = startIndex;
     const end = endIndex || data.length - 1;
 
-    const lastDate = !isEmpty(interaction) ? interaction : data[end] || {};
+    const lastDate = data[end] || {};
     const firstDate = data[start] || {};
 
-    // NOTE: the first/last date should reflect the brush start/end
-    const total = sumBy(
-      data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
-      'count'
+    const slicedData = data.filter(
+      el => el.date >= firstDate.date && el.date <= lastDate.date
     );
+    const variance = getVariance(slicedData);
+
+    const total = sumBy(slicedData, 'count');
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
-    const {
-      count,
-      twoPlusStdDev,
-      plusStdDev,
-      minusStdDev,
-      twoMinusStdDev,
-      date
-    } =
-      lastDate || {};
+    const { date } = lastDate || {};
 
     let status = 'unusually low';
-    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
+    if (variance > 2) {
       status = 'unusually high';
       statusColor = colorRange[0];
-    } else if (
-      twoPlusStdDev &&
-      count <= twoPlusStdDev[1] &&
-      count > twoPlusStdDev[0]
-    ) {
+    } else if (variance <= 2 && variance > 1) {
       status = 'high';
       statusColor = colorRange[1];
-    } else if (
-      plusStdDev &&
-      minusStdDev &&
-      count <= plusStdDev[1] &&
-      count > minusStdDev[0]
-    ) {
+    } else if (variance <= 1 && variance > -1) {
       status = 'average';
       statusColor = colorRange[2];
-    } else if (
-      twoMinusStdDev &&
-      count >= twoMinusStdDev[0] &&
-      count < twoMinusStdDev[1]
-    ) {
+    } else if (variance <= -1 && variance > -2) {
       status = 'low';
       statusColor = colorRange[3];
     }
@@ -220,7 +191,7 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedData,
       location: location.label || '',
-      fire_season_month: null, // helper neededd
+      fire_season_month: null, // helper needed
       fire_season_length: 5,
       start_date: firstDate.date, // brush start date
       end_date: lastDate.date, // brush end date
