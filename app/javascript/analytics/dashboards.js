@@ -17,7 +17,7 @@ export default {
   downloadWidgetData: {
     category: 'Dashboards page',
     action: 'Download widget',
-    label: '[widget name] [indicator]'
+    label: '[widget]'
   },
   visitMainMapFromDashboard: {
     category: 'Dashboards page',
@@ -43,6 +43,11 @@ export default {
     category: 'Areas of interest',
     action: 'User changes between global and areas dashboard',
     label: 'changes to [type]'
+  },
+  changeDashboardLocation: {
+    category: 'Dashboards page',
+    action: 'User changes dashboard location',
+    label: '[location]'
   },
   saveArea: {
     category: 'User AOIs',

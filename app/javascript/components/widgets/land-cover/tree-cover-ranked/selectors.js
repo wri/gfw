@@ -13,8 +13,6 @@ const getColors = state => state.colors;
 const getIndicator = state => state.indicator;
 const getLocationObject = state => state.location;
 const getSentences = state => state.sentences;
-const getForestType = state => state.forestType;
-const getLandCategory = state => state.landCategory;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -69,22 +67,12 @@ export const parseSentence = createSelector(
     parseData,
     getSettings,
     getIndicator,
-    getForestType,
-    getLandCategory,
     getLocationObject,
     getSentences
   ],
-  (
-    rawData,
-    data,
-    settings,
-    indicator,
-    forestType,
-    landCategory,
-    locationObject,
-    sentences
-  ) => {
+  (rawData, data, settings, indicator, locationObject, sentences) => {
     if (!data || !data.length || !locationObject) return null;
+    const { forestType, landCategory } = settings;
     const { initial, withInd, landCatOnly } = sentences;
     const locationData =
       locationObject && data.find(l => l.id === locationObject.value);

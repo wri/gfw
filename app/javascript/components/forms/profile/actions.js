@@ -18,7 +18,7 @@ export const saveProfile = createThunkAction(
       ...rest,
       subsector:
         subsector && subsector.includes('Other')
-          ? `Other: ${subsector_otherInput}`
+          ? `Other: ${subsector_otherInput || ''}`
           : subsector,
       signUpForNewsletter:
         !!signUpForNewsletter &&

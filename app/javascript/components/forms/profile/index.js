@@ -27,8 +27,8 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
           (myGfw.data.fullName && splitLastName(myGfw.data.fullName)),
       subsector:
           myGfw.data.subsector && myGfw.data.subsector.includes('Other')
-            ? // From `Other: ${subsector_otherInput}` -> 'Other_(write_in):' (value)
-            'Other_(write_in):'
+            ? // From `Other: ${subsector_otherInput}` -> 'Other:' (value)
+            'Other:'
             : myGfw.data.subsector,
       subsector_otherInput:
           myGfw.data.subsector && myGfw.data.subsector.includes('Other')
