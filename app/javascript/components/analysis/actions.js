@@ -34,19 +34,18 @@ const getErrorMessage = (error, file) => {
 
   return {
     title,
-    desc
+    desc,
   };
 };
 
 // url action
 export const setAnalysisSettings = createThunkAction(
   'setAnalysisSettings',
-  change => (dispatch, state) => {
+  (change) => (dispatch) => {
     dispatch(
       setComponentStateToUrl({
         key: 'analysis',
         change,
-        state
       })
     );
   }
@@ -54,16 +53,18 @@ export const setAnalysisSettings = createThunkAction(
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',
-  location => dispatch => {
+  (location) => (dispatch) => {
     const { type, adm0, adm1, adm2, endpoints } = location;
     logEvent('analysis', {
       action: compact([type, adm0, adm1, adm2]).join(', '),
       label:
-        endpoints && endpoints.length && endpoints.map(e => e.slug).join(', ')
+        endpoints &&
+        endpoints.length &&
+        endpoints.map((e) => e.slug).join(', '),
     });
     dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     fetchUmdLossGain(location)
-      .then(responses =>
+      .then((responses) =>
         dispatch(
           setAnalysisData({
             responses,
@@ -72,15 +73,15 @@ export const getAnalysis = createThunkAction(
               type,
               adm0,
               adm1,
-              adm2
-            }
+              adm2,
+            },
           })
         )
       )
-      .catch(error => {
+      .catch((error) => {
         const slugUrl = error.config.url.split('/')[4];
         const slug = slugUrl.split('?')[0];
-        const layerName = endpoints.find(e => e.slug === slug).name;
+        const layerName = endpoints.find((e) => e.slug === slug).name;
         const { response } = error;
         const errors =
           response &&
@@ -97,7 +98,7 @@ export const getAnalysis = createThunkAction(
             data: {},
             location: {},
             loading: false,
-            error: errorMessage
+            error: errorMessage,
           })
         );
       });
@@ -112,19 +113,19 @@ export const uploadShape = createThunkAction(
     onCheckDownload,
     onGeostoreUpload,
     onGeostoreDownload,
-    token
+    token,
   }) => (dispatch, getState) => {
     dispatch(
       setAnalysisLoading({
         uploading: true,
         loading: false,
         error: '',
-        data: {}
+        data: {},
       })
     );
 
     uploadShapeFile(shape, onCheckUpload, onCheckDownload, token)
-      .then(response => {
+      .then((response) => {
         if (response && response.data && response.data.data) {
           const { attributes: geojsonShape } = response.data.data;
 
@@ -143,7 +144,7 @@ export const uploadShape = createThunkAction(
                 uploading: false,
                 error: 'Too many features',
                 errorMessage:
-                  'We cannot support an analysis for a file with more than 1000 features.'
+                  'We cannot support an analysis for a file with more than 1000 features.',
               })
             );
           } else if (
@@ -156,12 +157,12 @@ export const uploadShape = createThunkAction(
                 uploading: false,
                 error: 'Please upload polygon data',
                 errorMessage:
-                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.'
+                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.',
               })
             );
           } else {
             getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
-              .then(geostore => {
+              .then((geostore) => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
                   const { query, type } = getState().location || {};
@@ -170,7 +171,7 @@ export const uploadShape = createThunkAction(
                       type,
                       payload: {
                         type: 'geostore',
-                        adm0: id
+                        adm0: id,
                       },
                       ...(query && {
                         query: {
@@ -178,23 +179,23 @@ export const uploadShape = createThunkAction(
                           ...(query.map && {
                             map: {
                               ...query.map,
-                              canBound: true
-                            }
-                          })
-                        }
-                      })
+                              canBound: true,
+                            },
+                          }),
+                        },
+                      }),
                     });
                     dispatch(
                       setAnalysisLoading({
                         uploading: false,
                         error: '',
-                        errorMessage: ''
+                        errorMessage: '',
                       })
                     );
                   }, 300);
                 }
               })
-              .catch(error => {
+              .catch((error) => {
                 const errorMessage = getErrorMessage(error, shape);
 
                 dispatch(
@@ -202,7 +203,7 @@ export const uploadShape = createThunkAction(
                     loading: false,
                     uploading: false,
                     error: errorMessage.title,
-                    errorMessage: errorMessage.desc
+                    errorMessage: errorMessage.desc,
                   })
                 );
               });
@@ -212,12 +213,13 @@ export const uploadShape = createThunkAction(
             setAnalysisLoading({
               uploading: false,
               error: 'File is empty',
-              errorMessage: 'Please attach a file that contains geometric data.'
+              errorMessage:
+                'Please attach a file that contains geometric data.',
             })
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMessage = getErrorMessage(error, shape);
 
         if (errorMessage.title !== 'cancel upload shape') {
@@ -226,7 +228,7 @@ export const uploadShape = createThunkAction(
               loading: false,
               uploading: false,
               error: errorMessage.title,
-              errorMessage: errorMessage.desc
+              errorMessage: errorMessage.desc,
             })
           );
         }
@@ -241,8 +243,8 @@ export const clearAnalysis = createThunkAction(
     dispatch({
       type,
       ...(query && {
-        query
-      })
+        query,
+      }),
     });
     dispatch(clearAnalysisData());
   }
@@ -257,8 +259,8 @@ export const goToDashboard = createThunkAction(
       type: 'DASHBOARDS',
       payload,
       ...(query && {
-        query
-      })
+        query,
+      }),
     });
   }
 );
