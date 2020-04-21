@@ -94,8 +94,10 @@ const SQL_QUERIES = {
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM data {WHERE}',
-  modisFires:
-    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
+  modisFiresWeekly:
+    'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
+  modisFiresDaily:
+    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -980,9 +982,11 @@ export const fetchMODISHistorical = ({
   grouped,
   download,
   freq,
+  startYear,
+  endYear,
   ...params
 }) => {
-  const { modisFires } = SQL_QUERIES;
+  const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -990,9 +994,9 @@ export const fetchMODISHistorical = ({
     adm2,
     grouped,
     confidence,
-    freq: 'weekly',
+    freq: startYear === endYear ? 'daily' : 'weekly',
     allowedParams: 'modis'
-  })}${modisFires}`
+  })}${startYear === endYear ? modisFiresDaily : modisFiresWeekly}`
     .replace(
       /{location}/g,
       grouped
