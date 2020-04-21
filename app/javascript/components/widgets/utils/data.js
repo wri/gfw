@@ -4,6 +4,7 @@ import meanBy from 'lodash/meanBy';
 import concat from 'lodash/concat';
 import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
+import sumBy from 'lodash/sumBy';
 import upperCase from 'lodash/upperCase';
 import moment from 'moment';
 import range from 'lodash/range';
@@ -149,7 +150,8 @@ export const getStatsData = (data, latest) => {
 
     return {
       ...d,
-      mean,
+      stdDev,
+      mean: weekMean,
       plusStdDev: [weekMean, weekMean + stdDev],
       minusStdDev: [weekMean - stdDev, weekMean],
       twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
@@ -158,6 +160,17 @@ export const getStatsData = (data, latest) => {
   });
   return parsedData;
 };
+
+export const getVariance = (data) => {
+  // const varianceByWeek = data.map(({mean, stdDev, count}) => {
+  //   return stdDev > 0 ? (count - mean) / stdDev : 0;
+  // });
+  // return mean(varianceByWeek)
+  const meanTotal = sumBy(data, 'mean')
+  const countTotal = sumBy(data, 'count')
+  const sumOfStdDevs = Math.sqrt(data.reduce((sum, d) => sum + d.stdDev ** 2, 0));
+  return (countTotal - meanTotal) / sumOfStdDevs;
+}
 
 export const getStdDevData = (data, rawData) => {
   const stdDevs = [];
