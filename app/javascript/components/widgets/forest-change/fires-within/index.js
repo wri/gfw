@@ -24,19 +24,8 @@ export default {
       key: 'weeks',
       label: 'show data for the last',
       type: 'select',
-      whitelist: [13, 26, 52],
-      noSort: true
-    },
-    {
-      key: 'dataset',
-      label: 'fires dataset',
-      type: 'select'
-    },
-    {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
+      whitelist: [1, 13, 26, 52],
+      noSort: true,
       border: true
     },
     {
@@ -45,7 +34,7 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: false
     },
     {
       key: 'landCategory',
@@ -53,7 +42,7 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: false,
-      border: true
+      border: false
     }
   ],
   dataType: 'fires',
@@ -82,7 +71,7 @@ export default {
     landCategory: 'wdpa',
     forestType: ''
   },
-  refetchKeys: ['dataset', 'confidence', 'landCategory', 'forestType'],
+  refetchKeys: ['confidence', 'landCategory', 'forestType'],
   sentences: {
     initial: 'Test sentence {location} fires in {indicator}...'
   },

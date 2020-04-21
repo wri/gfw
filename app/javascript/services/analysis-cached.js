@@ -235,28 +235,28 @@ export const getWHEREQuery = params => {
 
       const polynameString = `
         ${
-          isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
-        }${
-        isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
-      }${
-        isPolyname &&
+  isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
+}${
+  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
+}${
+  isPolyname &&
         polynameMeta &&
         !tableKey.includes('is__') &&
         polynameMeta.default &&
         polynameMeta.categories
-          ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
-              polynameMeta.default
-            }'`
-          : ''
-      }${
-        !isPolyname
-          ? `${paramKey} = ${
-              typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
-                ? value
-                : `'${value}'`
-            }`
-          : ''
-      }${isLast ? '' : ' AND '}`;
+    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
+      polynameMeta.default
+    }'`
+    : ''
+}${
+  !isPolyname
+    ? `${paramKey} = ${
+      typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
+        ? value
+        : `'${value}'`
+    }`
+    : ''
+}${isLast ? '' : ' AND '}`;
 
       paramString = paramString.concat(polynameString);
     });
