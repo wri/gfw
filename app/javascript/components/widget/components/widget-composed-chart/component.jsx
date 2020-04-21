@@ -46,6 +46,13 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
+  handleBrush = debounce(values => {
+    const { handleChangeSettings } = this.props;
+    if (handleChangeSettings) {
+      handleChangeSettings(values);
+    }
+  }, 100);
+
   render() {
     const { data, config, active, simple, barBackground } = this.props;
 
@@ -57,6 +64,7 @@ class WidgetComposedChart extends Component {
           config={config}
           handleMouseMove={this.handleMouseMove}
           handleMouseLeave={this.handleMouseLeave}
+          handleBrush={this.handleBrush}
           backgroundColor={active ? '#fefedc' : ''}
           barBackground={barBackground}
           simple={simple}

@@ -1,7 +1,8 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
+import uniq from 'lodash/uniq';
 
-import { fetchFiresAlerts, fetchFiresLatest } from 'services/alerts';
+import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -27,14 +28,36 @@ export default {
       type: 'select'
     },
     {
-      key: 'weeks',
-      label: 'show data for the last',
+      key: 'compareYear',
+      label: 'Compare with the same period in',
+      type: 'compare-select',
+      clearable: true,
+      border: true
+    },
+    {
+      key: 'confidence',
+      label: 'Confidence level',
       type: 'select',
-      whitelist: [13, 26, 52],
-      noSort: true
+      clearable: false,
+      border: true
+    },
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
     }
   ],
-  refetchKeys: ['dataset'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -60,14 +83,11 @@ export default {
     forestChange: 100
   },
   settings: {
-    period: 'week',
-    weeks: 13,
     dataset: 'VIIRS',
-    layerStartDate: null,
-    layerEndDate: null
+    confidence: 'h'
   },
   sentence:
-    'There were {count} {dataset} fire alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+    'In {location} the peak fire season typically begins in {fires_season_month} and lasts {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
   whitelists: {
     adm0: [
       'AFG',
@@ -278,13 +298,31 @@ export default {
     ]
   },
   getData: params =>
-    all([fetchFiresAlerts(params), fetchFiresLatest(params)]).then(
+    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
-        return { alerts: data, latest } || {};
+        const years = uniq(data.map(d => d.year));
+        const maxYear = Math.max(...years);
+
+        return (
+          {
+            alerts: data,
+            latest,
+            options: {
+              compareYear: years.filter(y => y !== maxYear).map(y => ({
+                label: y,
+                value: y
+              })),
+              confidence: [
+                { label: 'All', value: '' },
+                { label: 'High', value: 'h' }
+              ]
+            }
+          } || {}
+        );
       })
     ),
-  // getDataURL: params => [fetchFiresAlerts({ ...params, download: true })],
+  getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

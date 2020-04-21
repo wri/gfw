@@ -1,14 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
-import maxBy from 'lodash/maxBy';
-import { format } from 'd3-format';
-import groupBy from 'lodash/groupBy';
 import moment from 'moment';
+import { format } from 'd3-format';
+import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
+import sumBy from 'lodash/sumBy';
+import groupBy from 'lodash/groupBy';
+import max from 'lodash/max';
+
 import { getColorPalette } from 'utils/data';
 
 import {
-  getMeansData,
-  getStdDevData,
+  getStatsData,
   getDatesData,
   getChartConfig
 } from 'components/widgets/utils/data';
@@ -17,50 +19,68 @@ const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getInteraction = state => state.settings.interaction || null;
-const getWeeks = state => state.settings.weeks || null;
+const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
+const getStartIndex = state => state.settings.startIndex || 0;
+const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
+const getLocationObject = state => state.location;
 
 export const getData = createSelector(
-  [getAlerts, getDataset],
-  (data, dataset) => {
+  [getAlerts, getLatest],
+  (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const dataMax = maxBy(data, 'year');
-    const dataMaxYear = (dataMax && dataMax.year) || null;
-    const dataMaxFiltered = maxBy(
-      data.filter(el => el && el.year === dataMaxYear),
-      'week'
+    const parsedData = data.map(d => ({
+      ...d,
+      count: d.alert__count,
+      week: parseInt(d.alert__week, 10),
+      year: parseInt(d.alert__year, 10)
+    }));
+    const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
+    const hasAlertsByYears = Object.values(groupedByYear).reduce(
+      (acc, next) => {
+        const { year } = next[0];
+        return {
+          ...acc,
+          [year]: next.some(item => item.alerts > 0)
+        };
+      },
+      {}
     );
-    const dataMaxWeek = (dataMaxFiltered && dataMaxFiltered.week) || null;
-    const groupedByYear = groupBy(data, 'year');
+
+    const dataYears = Object.keys(hasAlertsByYears).filter(
+      key => hasAlertsByYears[key] === true
+    );
+    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
+    const startYear =
+      minYear === moment().year() ? moment().year() - 1 : minYear;
+
     const years = [];
+    const latestWeek = moment(latest);
     const lastWeek = {
-      isoWeek:
-        dataMaxWeek ||
-        moment()
-          .subtract(2, 'w')
-          .isoWeek(),
-      year:
-        dataMaxYear ||
-        moment()
-          .subtract(2, 'w')
-          .year()
+      isoWeek: latestWeek.isoWeek(),
+      year: latestWeek.year()
     };
-    const min_year = dataset === 'MODIS' ? 2001 : 2016;
-    for (let i = min_year; i <= lastWeek.year; i += 1) {
+
+    for (let i = startYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
+
     const yearLengths = {};
     years.forEach(y => {
-      if (lastWeek.year === parseInt(y, 10)) {
+      if (lastWeek.year === y) {
         yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).weekday() === 1) {
-        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+        yearLengths[y] = moment(`${y}-12-31`)
+          .subtract('week', 1)
+          .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
       }
     });
+
     const zeroFilledData = [];
+
     years.forEach(d => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
@@ -75,47 +95,87 @@ export const getData = createSelector(
   }
 );
 
-export const getMeans = createSelector([getData], data => {
+export const getStats = createSelector([getData, getLatest], (data, latest) => {
   if (!data) return null;
-  return getMeansData(
-    data,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  );
+  return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
 });
 
-export const getStdDev = createSelector(
-  [getMeans, getData],
-  (data, rawData) => {
-    if (!data) return null;
-    return getStdDevData(data, rawData);
-  }
-);
-
-export const getDates = createSelector([getStdDev], data => {
+export const getDates = createSelector([getStats], data => {
   if (!data) return null;
   return getDatesData(data);
 });
 
-export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
-  if (!data) return null;
-  return data.slice(-weeks);
-});
+export const parseData = createSelector(
+  [getData, getDates, getCompareYear],
+  (data, currentData, compareYear) => {
+    if (!data || !currentData) return null;
+
+    const maxYear = max(currentData.map(d => d.year));
+
+    return currentData.map(d => {
+      const yearDifference = maxYear - d.year;
+      const week = d.week;
+
+      if (compareYear) {
+        const compareWeek = data.find(
+          dt => dt.year === compareYear - yearDifference && dt.week === week
+        );
+
+        return {
+          ...d,
+          compareCount: compareWeek ? compareWeek.count : null
+        };
+      }
+
+      return d;
+    });
+  }
+);
 
 export const parseConfig = createSelector(
   [getColors, getLatest],
-  (colors, latest) => getChartConfig(colors, moment(latest))
+  (colors, latest) => ({
+    ...getChartConfig(colors, moment(latest)),
+    brush: {
+      dataKey: 'date'
+    }
+  })
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getInteraction, getSentences, getDataset],
-  (data, colors, interaction, sentence, dataset) => {
+  [
+    parseData,
+    getColors,
+    getInteraction,
+    getSentences,
+    getDataset,
+    getLocationObject,
+    getStartIndex,
+    getEndIndex
+  ],
+  (
+    data,
+    colors,
+    interaction,
+    sentence,
+    dataset,
+    location,
+    startIndex,
+    endIndex
+  ) => {
     if (!data) return null;
-    let lastDate = data[data.length - 1] || {};
-    if (!isEmpty(interaction)) {
-      lastDate = interaction;
-    }
+
+    const start = startIndex;
+    const end = endIndex || data.length - 1;
+
+    const lastDate = !isEmpty(interaction) ? interaction : data[end] || {};
+    const firstDate = data[start] || {};
+
+    // NOTE: the first/last date should reflect the brush start/end
+    const total = sumBy(
+      data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
+      'count'
+    );
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
     const {
@@ -155,12 +215,19 @@ export const parseSentence = createSelector(
       status = 'low';
       statusColor = colorRange[3];
     }
+
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       date: formattedData,
+      location: location.label || '',
+      fire_season_month: null, // helper neededd
+      fire_season_length: 5,
+      start_date: firstDate.date, // brush start date
+      end_date: lastDate.date, // brush end date
+      dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       dataset,
       count: {
-        value: lastDate.count ? format(',')(lastDate.count) : 0,
+        value: total ? format(',')(total) : 0,
         color: colors.main
       },
       status: {

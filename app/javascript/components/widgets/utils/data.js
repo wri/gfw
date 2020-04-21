@@ -19,7 +19,7 @@ const translateMeans = (means, latest) => {
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
   return Object.keys(grouped).map(key => ({
-    year: key,
+    year: parseInt(key, 10),
     weeks: grouped[key].slice(
       startSlice < 0 ? grouped[key].length + startSlice : startSlice,
       endSlice < 0 ? grouped[key].length : endSlice
@@ -37,11 +37,37 @@ const meanData = data => {
   return means.map(w => mean(w));
 };
 
+const statsData = data => {
+  const grouped_week = [];
+
+  data.forEach(w => {
+    w.weeks.forEach((y, i) => {
+      grouped_week[i] = grouped_week[i]
+        ? [...grouped_week[i], y.count]
+        : [y.count];
+    });
+  });
+
+  const stats = grouped_week.map(w => {
+    const week_mean = mean(w);
+    const sumOfSquares = w.reduce(
+      (sum, value) => sum + (week_mean - value) ** 2,
+      0
+    );
+
+    return {
+      mean: week_mean,
+      std: (sumOfSquares / w.length) ** 0.5
+    };
+  });
+  return stats;
+};
+
 const runningMean = (data, windowSize) => {
   const smoothedMean = [];
   data.forEach((d, i) => {
-    const slice = data.slice(i, i + windowSize);
     if (i < data.length - windowSize + 1) {
+      const slice = data.slice(i, i + windowSize);
       smoothedMean.push(mean(slice));
     }
   });
@@ -68,6 +94,68 @@ export const getMeansData = (data, latest) => {
     ...d,
     mean: (translatedMeans && translatedMeans[i]) || 0
   }));
+  return parsedData;
+};
+
+export const getStatsData = (data, latest) => {
+  /*
+  Creates yearly data structure and uses this to generate weekly mean and standard deviation stats.
+  Yearly data structure groups alert data by year and appends the first (or last) 6 weeks
+  of data from neighbouring years:
+
+  e.g. The element with year=2015 contains the last 6 weeks of 2014 data,
+  followed by 52 weeks of 2015 data, followed by the first 6 weeks of 2016 data
+
+  This is done so that when the data is smoothed we are left with 52 weeks of stats per year.
+  */
+  const minYear = minBy(data, 'year').year;
+  const maxYear = maxBy(data, 'year').year;
+  const leftYears = getYearsObj(data.filter(d => d.year !== maxYear), -6);
+  const rightYears = getYearsObj(data.filter(d => d.year !== minYear), 0, 6);
+  const centralYears = getYearsObj(
+    data.filter(d => d.year !== minYear),
+    0,
+    data.length
+  );
+
+  // Get an array of all data with start/end buffers for smoothing
+  const allYears = centralYears.map(({ year, weeks }) => {
+    const leftYear = leftYears.find(el => el.year === year - 1) || {};
+    const rightYear = rightYears.find(el => el.year === year + 1) || {};
+
+    const leftWeeks = leftYear.weeks || [];
+    const rightWeeks = rightYear.weeks || [];
+
+    // If current year is 53 weeks, we only need to append 5 from the next year
+    const trimmedRightWeeks =
+      weeks.length === 53 ? rightWeeks.slice(0, 5) : rightWeeks;
+
+    return {
+      year,
+      weeks: concat(leftWeeks, weeks, trimmedRightWeeks)
+    };
+  });
+
+  const stats = statsData(allYears);
+  const smoothedMeans = runningMean(stats.map(el => el.mean), 12);
+  const smoothedStds = runningMean(stats.map(el => el.std), 12);
+  const translatedMeans = translateMeans(smoothedMeans, latest);
+  const translatedStds = translateMeans(smoothedStds, latest);
+
+  const pastYear = data.slice(-52);
+  const parsedData = pastYear.map((d, i) => {
+    const weekMean = (translatedMeans && translatedMeans[i]) || 0;
+    const stdDev = (translatedStds && translatedStds[i]) || 0;
+
+    return {
+      ...d,
+      mean,
+      plusStdDev: [weekMean, weekMean + stdDev],
+      minusStdDev: [weekMean - stdDev, weekMean],
+      twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
+      twoMinusStdDev: [weekMean - stdDev * 2, weekMean - stdDev]
+    };
+  });
   return parsedData;
 };
 
@@ -131,6 +219,9 @@ export const getChartConfig = (colors, latest, unit = '') => {
       lines: {
         count: {
           stroke: colors.main
+        },
+        compareCount: {
+          stroke: '#00F'
         },
         target: { stroke: 'grey' }
       },
