@@ -16,9 +16,8 @@ const oldLayersAndDatasets = oldLayers.reduce(
   {}
 );
 
-export const decodeUrlForState = (url) => {
+export const decodeUrlForState = (params) => {
   const paramsParsed = {};
-  const params = queryString.parse(url);
   Object.keys(params).forEach((key) => {
     try {
       paramsParsed[key] = JSON.parse(atob(params[key]));
