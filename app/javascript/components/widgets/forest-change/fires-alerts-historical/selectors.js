@@ -6,62 +6,31 @@ import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 
-import { getColorPalette } from 'utils/data';
-
-import {
-  getMeansData,
-  getDatesData,
-  getChartConfig
-} from 'components/widgets/utils/data';
+import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data && state.data.alerts;
-const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getInteraction = state => state.settings.interaction || null;
-const getWeeks = state => state.settings.weeks || null;
 const getDataset = state => state.settings.dataset || null;
+const getStartYear = state => state.settings.startYear;
+const getEndYear = state => state.settings.endYear;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
 
 export const getData = createSelector(
-  [getAlerts, getLatest],
-  (data, latest) => {
+  [getAlerts, getStartYear, getEndYear],
+  (data, startYear, endYear) => {
     if (!data || isEmpty(data)) return null;
-    const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
-    const hasAlertsByYears = Object.values(groupedByYear).reduce(
-      (acc, next) => {
-        const { year } = next[0];
-        return {
-          ...acc,
-          [year]: next.some(item => item.alerts > 0)
-        };
-      },
-      {}
-    );
-
-    const dataYears = Object.keys(hasAlertsByYears).filter(
-      key => hasAlertsByYears[key] === true
-    );
-    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
-    const startYear =
-      minYear === moment().year() ? moment().year() - 1 : minYear;
 
     const years = [];
-    const latestWeek = moment(latest);
-    const lastWeek = {
-      isoWeek: latestWeek.isoWeek(),
-      year: latestWeek.year()
-    };
 
-    for (let i = startYear; i <= lastWeek.year; i += 1) {
+    for (let i = startYear; i <= endYear; i += 1) {
       years.push(i);
     }
 
     const yearLengths = {};
     years.forEach(y => {
-      if (lastWeek.year === y) {
-        yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+      if (moment(`${y}-12-31`).isoWeek() === 1) {
         yearLengths[y] = moment(`${y}-12-31`)
           .subtract('week', 1)
           .isoWeek();
@@ -71,53 +40,73 @@ export const getData = createSelector(
     });
 
     const zeroFilledData = [];
+    if (startYear === endYear && !!data[0].alert__date) {
+      // daily frequency
+      // why check `alert__date`? Sometimes settings change before refetching,
+      // and `data` is still the weekly data
 
-    years.forEach(d => {
-      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
-      for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(
-          yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { alerts: 0, count: 0, week: i, year: parseInt(d, 10) }
-        );
-      }
-    });
+      const dataWithYears = data
+        .map(d => ({
+          ...d,
+          year: moment(d.alert__date).year(),
+          week: moment(d.alert__date).isoWeek(),
+          dayOfYear: moment(d.alert__date).dayOfYear() // zero-filling
+        }))
+        // optional, lightens data:
+        .filter(d => d.year === startYear);
+
+      const groupedByYear = groupBy(
+        sortBy(dataWithYears, ['year', 'dayOfYear']),
+        'year'
+      );
+
+      years.filter(year => year === startYear).forEach(year => {
+        const yearDataByDay = groupBy(groupedByYear[year], 'dayOfYear');
+        for (let i = 1; i <= moment(`${year}-12-31`).dayOfYear(); i += 1) {
+          zeroFilledData.push(
+            yearDataByDay[i]
+              ? yearDataByDay[i][0]
+              : { alerts: 0, count: 0, year: parseInt(year, 10) }
+          );
+        }
+      });
+    } else {
+      // weekly frequency
+
+      const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
+
+      years.forEach(year => {
+        const yearDataByWeek = groupBy(groupedByYear[year], 'week');
+        for (let i = 1; i <= yearLengths[year]; i += 1) {
+          zeroFilledData.push(
+            yearDataByWeek[i]
+              ? yearDataByWeek[i][0]
+              : { alerts: 0, count: 0, week: i, year: parseInt(year, 10) }
+          );
+        }
+      });
+    }
 
     return zeroFilledData;
   }
 );
 
-export const getMeans = createSelector([getData], data => {
+export const parseData = createSelector([getData], data => {
   if (!data) return null;
-  return getMeansData(
-    data,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  );
-});
-
-export const getDates = createSelector([getMeans], data => {
-  if (!data) return null;
+  // TODO: group by month if yearsRange > 7
+  // getDatesData: adds date and month info to data array
   return getDatesData(data);
 });
 
-export const parseData = createSelector(
-  [getData, getDates, getWeeks],
-  (data, currentData, weeks) => {
-    if (!data || !currentData) return null;
-
-    return currentData.slice(-weeks);
-  }
-);
-
 export const parseConfig = createSelector(
-  [getColors, getLatest],
-  (colors, latest) => ({
-    ...getChartConfig(colors, moment(latest))
-    // brush: {
-    //   dataKey: 'date'
-    // }
+  [getColors, getStartYear, getEndYear],
+  (colors, startYear, endYear) => ({
+    ...getChartConfig(colors),
+    xAxis: {
+      tickCount: 12,
+      interval: startYear === endYear ? 60 : undefined,
+      tickFormatter: t => moment(t).format('MMM-YY')
+    }
   })
 );
 
@@ -128,9 +117,20 @@ export const parseSentence = createSelector(
     getInteraction,
     getSentences,
     getDataset,
-    getLocationObject
+    getLocationObject,
+    getStartYear,
+    getEndYear
   ],
-  (data, colors, interaction, sentence, dataset, location) => {
+  (
+    data,
+    colors,
+    interaction,
+    sentence,
+    dataset,
+    location,
+    startYear,
+    endYear
+  ) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
     const firstDate = data[0] || {};
@@ -142,63 +142,17 @@ export const parseSentence = createSelector(
       data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
       'count'
     );
-    const colorRange = getColorPalette(colors.ramp, 5);
-    let statusColor = colorRange[4];
-    const {
-      count,
-      twoPlusStdDev,
-      plusStdDev,
-      minusStdDev,
-      twoMinusStdDev,
-      date
-    } =
-      lastDate || {};
 
-    let status = 'unusually low';
-    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
-      status = 'unusually high';
-      statusColor = colorRange[0];
-    } else if (
-      twoPlusStdDev &&
-      count <= twoPlusStdDev[1] &&
-      count > twoPlusStdDev[0]
-    ) {
-      status = 'high';
-      statusColor = colorRange[1];
-    } else if (
-      plusStdDev &&
-      minusStdDev &&
-      count <= plusStdDev[1] &&
-      count > minusStdDev[0]
-    ) {
-      status = 'average';
-      statusColor = colorRange[2];
-    } else if (
-      twoMinusStdDev &&
-      count >= twoMinusStdDev[0] &&
-      count < twoMinusStdDev[1]
-    ) {
-      status = 'low';
-      statusColor = colorRange[3];
-    }
-
-    const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
-      date: formattedData,
       location: location.label || '',
       fire_season_month: null, // helper neededd
       fire_season_length: 5,
-      start_date: null, // brush start date
-      end_date: null, // brush end date
-      dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
+      start_year: startYear,
+      end_year: endYear,
       dataset,
-      count: {
-        value: total ? format(',')(total) : 0,
-        color: colors.main
-      },
+      total_alerts: total ? format(',')(total) : 0,
       status: {
-        value: status,
-        color: statusColor
+        value: status
       }
     };
     return { sentence, params };

@@ -49,7 +49,13 @@ export default {
       border: true
     }
   ],
-  refetchKeys: ['forestType', 'landCategory', 'confidence'],
+  refetchKeys: [
+    'forestType',
+    'landCategory',
+    'endYear',
+    'startYear',
+    'confidence'
+  ],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -75,7 +81,6 @@ export default {
     forestChange: 100
   },
   settings: {
-    dataset: 'VIIRS',
     confidence: '',
     startYear: 2001,
     endYear: 2020

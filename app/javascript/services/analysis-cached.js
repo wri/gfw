@@ -97,7 +97,7 @@ const SQL_QUERIES = {
   modisFiresWeekly:
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
   modisFiresDaily:
-    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data GROUP BY alert__date ORDER BY alert__date DESC'
+    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -198,9 +198,10 @@ const getModisDatasetId = ({
     return MODIS_GEOSTORE_SUMMARY;
   }
 
+  if (adm0 && freq === 'daily') return MODIS_ADM2_DAILY;
   if ((adm2 || (adm1 && grouped)) && whitelist) return MODIS_ADM2_WHITELIST;
   if (adm2 || (adm1 && grouped)) return MODIS_ADM2_WEEKLY;
-  if (adm2 || (adm1 && grouped && freq === 'daily')) return MODIS_ADM2_DAILY;
+
   if ((adm1 || (adm0 && grouped)) && whitelist) return MODIS_ADM1_WHITELIST;
   if (adm1 || (adm0 && grouped)) return MODIS_ADM1_WEEKLY;
   if (whitelist) return MODIS_ADM0_WHITELIST;
@@ -981,7 +982,6 @@ export const fetchMODISHistorical = ({
   ifl,
   grouped,
   download,
-  freq,
   startYear,
   endYear,
   ...params
