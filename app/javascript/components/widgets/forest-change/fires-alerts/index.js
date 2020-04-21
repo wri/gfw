@@ -54,6 +54,7 @@ export default {
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
+  preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],

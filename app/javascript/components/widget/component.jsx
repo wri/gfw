@@ -46,6 +46,7 @@ class Widget extends PureComponent {
     locationData: PropTypes.object,
     childData: PropTypes.object,
     location: PropTypes.object,
+    preventRenderKeys: PropTypes.array,
     adminLevel: PropTypes.string
   };
 
@@ -87,7 +88,8 @@ class Widget extends PureComponent {
       childData,
       adminLevel,
       locationData,
-      location
+      location,
+      preventRenderKeys
     } = this.props;
     const { main } = colors || {};
 
@@ -140,6 +142,7 @@ class Widget extends PureComponent {
           data={data}
           rawData={rawData}
           settings={settings}
+          preventRenderKeys={preventRenderKeys}
           sentence={sentence}
           config={config}
           handleRefetchData={handleRefetchData}
