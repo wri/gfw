@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import Layout from 'layouts/page';
 import ConfirmationMessage from 'components/confirmation-message';
+import Map from 'layouts/map';
 
 import getLocationData from 'app/location';
 
@@ -13,7 +14,7 @@ const MapLocationPage = (props) => {
       {props.locationName.includes('not found') ? (
         <ConfirmationMessage title={props.locationName} error large />
       ) : (
-        props.locationName
+        <Map />
       )}
     </Layout>
   );

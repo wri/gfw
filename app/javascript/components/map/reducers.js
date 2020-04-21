@@ -48,28 +48,29 @@ export const initialState = {
         opacity: 1,
         visibility: true
       },
-      // gain
-      {
-        dataset: FOREST_GAIN_DATASET,
-        layers: [FOREST_GAIN],
-        opacity: 1,
-        visibility: true
-      },
-      // loss
-      {
-        dataset: FOREST_LOSS_DATASET,
-        layers: [FOREST_LOSS],
-        opacity: 1,
-        visibility: true
-      },
-      // extent
-      {
-        dataset: FOREST_EXTENT_DATASET,
-        layers: [FOREST_EXTENT],
-        opacity: 1,
-        visibility: true
-      }
     ]
+    //   // gain
+    //   {
+    //     dataset: FOREST_GAIN_DATASET,
+    //     layers: [FOREST_GAIN],
+    //     opacity: 1,
+    //     visibility: true
+    //   },
+    //   // loss
+    //   {
+    //     dataset: FOREST_LOSS_DATASET,
+    //     layers: [FOREST_LOSS],
+    //     opacity: 1,
+    //     visibility: true
+    //   },
+    //   // extent
+    //   {
+    //     dataset: FOREST_EXTENT_DATASET,
+    //     layers: [FOREST_EXTENT],
+    //     opacity: 1,
+    //     visibility: true
+    //   }
+    // ]
   }
 };
 

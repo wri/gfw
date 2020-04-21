@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import omit from 'lodash/omit';
 import oldLayers from 'data/v2-v3-datasets-layers.json';
-import { useRouter } from 'next/router';
+import { router } from 'utils/withRouter';
 
 const oldLayersAndDatasets = oldLayers.reduce(
   (obj, item) => ({
@@ -70,28 +70,31 @@ export const encodeStateForUrl = (params) => {
 };
 
 export const setComponentStateToUrl = ({ key, subKey, change }) => {
-  const router = useRouter();
-  const { query, pathname } = router;
+  if (router) {
+    const { query, pathname } = router;
 
-  let params = change;
-  if (query && query[subKey || key] && !!change && typeof change === 'object') {
-    params = {
-      ...query[subKey || key],
-      ...change,
-    };
+    let params = change;
+    if (query && query[subKey || key] && !!change && typeof change === 'object') {
+      params = {
+        ...query[subKey || key],
+        ...change,
+      };
+    }
+
+    // if a false value is sent we should remove the key from the url
+    const cleanLocationQuery =
+      !change && query ? omit(query, [subKey || key]) : query;
+
+    router.pushDynamic({
+      pathname,
+      query: {
+        ...cleanLocationQuery,
+        ...(params && {
+          [subKey || key]: params,
+        }),
+      },
+    });
   }
 
-  // if a false value is sent we should remove the key from the url
-  const cleanLocationQuery =
-    !change && query ? omit(query, [subKey || key]) : query;
-
-  router.pushDynamic({
-    pathname,
-    query: {
-      ...cleanLocationQuery,
-      ...(params && {
-        [subKey || key]: params,
-      }),
-    },
-  });
+  return router;
 };

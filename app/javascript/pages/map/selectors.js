@@ -11,21 +11,16 @@ import { getShowDraw } from 'components/analysis/selectors';
 import initialState from './initial-state';
 
 // state from url
-const selectMainMapUrlState = state =>
-  state.location && state.location.query && state.location.query.mainMap;
-const selectLocation = state => state.location && state.location;
-const selectLocationPayload = state => state.location && state.location.payload;
-const selectMenuSection = state =>
-  state.location &&
-  state.location.query &&
-  state.location.query.menu &&
-  state.location.query.menu.menuSection;
+const selectMainMapUrlState = (state, props) => props?.router?.query?.mainMap;
+const selectLocation = (state, props) => props?.router?.pathname;
+const selectLocationPayload = (state, props) => props?.router?.location;
+const selectMenuSection = (state, props) => props?.router?.query?.menu?.menuSection;
 const getDrawGeostoreId = state => state.draw && state.draw.geostoreId;
 
 // SELECTORS
 export const getEmbed = createSelector(
   [selectLocation],
-  location => location && location.routesMap[location.type].embed
+  location => location?.includes('embed')
 );
 
 export const getMainMapSettings = createSelector(
@@ -76,7 +71,7 @@ export const getOneClickAnalysis = createSelector(
   }
 );
 
-export const getMapProps = createStructuredSelector({
+export default createStructuredSelector({
   analysisActive: getShowAnalysis,
   recentActive: getShowRecentImagery,
   oneClickAnalysis: getOneClickAnalysis,

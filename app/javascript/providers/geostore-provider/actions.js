@@ -22,9 +22,8 @@ export const getGeostore = createThunkAction(
           dispatch(setGeostore(geostore));
         }
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(setGeostoreLoading({ loading: false, error: true }));
-        console.info(error);
       });
   }
 );
@@ -43,12 +42,11 @@ export const getGeostoreId = createThunkAction(
           }
         }
       })
-      .catch(error => {
+      .catch(() => {
         setGeostoreLoading({
           loading: false,
           error: true
         });
-        console.info(error);
       });
   }
 );

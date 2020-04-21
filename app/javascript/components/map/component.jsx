@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
 import {  logMapLatLonTrack, logEvent } from 'app/analytics';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -67,7 +68,6 @@ class MapComponent extends Component {
     const {
       mapLabels,
       mapRoads,
-      setMapSettings,
       canBound,
       stateBbox,
       geostoreBbox,
@@ -123,7 +123,7 @@ class MapComponent extends Component {
       this.state.bounds &&
       !isEqual(this.state.bounds, prevState.bounds)
     ) {
-      setMapSettings({ canBound: false, bbox: [] });
+      this.setMapSettings({ canBound: false, bbox: [] });
       // eslint-disable-next-line
       this.setState({ bounds: {} });
     }
@@ -142,7 +142,7 @@ class MapComponent extends Component {
             if (err) return;
             const { coordinates } = geometry;
             const difference = Math.abs(viewport.zoom - newZoom);
-            setMapSettings({
+            this.setMapSettings({
               center: {
                 lat: coordinates[1],
                 lng: coordinates[0]
@@ -155,10 +155,16 @@ class MapComponent extends Component {
     }
   }
 
+  setMapSettings = change =>
+    setComponentStateToUrl({
+      key: 'map',
+      change
+    })
+
   onViewportChange = debounce(viewport => {
     const { setMapSettings, location } = this.props;
     const { latitude, longitude, bearing, pitch, zoom } = viewport;
-    setMapSettings({
+    this.setMapSettings({
       center: {
         lat: latitude,
         lng: longitude
@@ -338,6 +344,7 @@ class MapComponent extends Component {
                   map={this.map}
                   buttons={popupActions}
                   onSelectBoundary={onSelectBoundary}
+                  setMapSettings={this.setMapSettings}
                 />
                 {/* LAYER MANAGER */}
                 <LayerManager map={map} />
