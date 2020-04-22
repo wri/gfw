@@ -282,7 +282,6 @@ export default {
     all([fetchMODISHistorical(params)]).then(
       spread(alerts => {
         const { data } = alerts.data;
-
         return (
           {
             alerts: data,

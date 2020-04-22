@@ -982,9 +982,9 @@ export const fetchMODISHistorical = ({
     adm2,
     grouped,
     confidence,
-    freq: startYear === endYear ? 'daily' : 'weekly',
+    freq: endYear - startYear <= 2 ? 'daily' : 'weekly',
     allowedParams: 'modis'
-  })}${startYear === endYear ? modisFiresDaily : modisFiresWeekly}`
+  })}${endYear - startYear <= 2 ? modisFiresDaily : modisFiresWeekly}`
     .replace(
       /{location}/g,
       grouped
@@ -1015,13 +1015,12 @@ export const fetchMODISHistorical = ({
       url: url.replace('query', 'download')
     };
   }
-
   return apiRequest.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        week: parseInt(d.alert__week, 10),
-        year: parseInt(d.alert__year, 10),
+        week: parseInt(d.alert__week, 10) || null,
+        year: parseInt(d.alert__year, 10) || null,
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha
