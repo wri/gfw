@@ -6,6 +6,7 @@ import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
+import min from 'lodash/min';
 
 import { getColorPalette } from 'utils/data';
 
@@ -19,7 +20,6 @@ import {
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
-const getInteraction = state => state.settings.interaction || null;
 const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
@@ -106,15 +106,27 @@ export const getDates = createSelector([getStats], data => {
   return getDatesData(data);
 });
 
+export const getMaxMinDates = createSelector(
+  [getData, getDates],
+  (data, currentData) => {
+    if (!data || !currentData) return {};
+    const minYear = min(data.map(d => d.year));
+    const maxYear = max(data.map(d => d.year));
+
+    return {
+      min: minYear,
+      max: maxYear
+    };
+  }
+);
+
 export const parseData = createSelector(
-  [getData, getDates, getCompareYear],
-  (data, currentData, compareYear) => {
+  [getData, getDates, getMaxMinDates, getCompareYear],
+  (data, currentData, maxminYear, compareYear) => {
     if (!data || !currentData) return null;
 
-    const maxYear = max(currentData.map(d => d.year));
-
     return currentData.map(d => {
-      const yearDifference = maxYear - d.year;
+      const yearDifference = maxminYear.max - d.year;
       const week = d.week;
 
       if (compareYear) {
@@ -134,13 +146,76 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [getColors, getLatest],
-  (colors, latest) => ({
-    ...getChartConfig(colors, moment(latest)),
-    brush: {
-      dataKey: 'date'
+  [
+    getColors,
+    getLatest,
+    getMaxMinDates,
+    getCompareYear,
+    getDataset,
+    getStartIndex,
+    getEndIndex
+  ],
+  (colors, latest, maxminYear, compareYear, dataset, startIndex, endIndex) => {
+    const tooltip = [
+      {
+        label: 'Fire alerts'
+      },
+      {
+        key: 'count',
+        labelKey: 'date',
+        labelFormat: value => moment(value).format('DD-MM-YYYY'),
+        unit: ` ${dataset} alerts`,
+        color: colors.main,
+        unitFormat: value =>
+          (Number.isInteger(value) ? format(',')(value) : value)
+      }
+    ];
+
+    if (compareYear) {
+      tooltip.push({
+        key: 'compareCount',
+        labelKey: 'date',
+        labelFormat: value => {
+          const date = moment(value);
+          const yearDifference = maxminYear.max - date.year();
+          date.set('year', compareYear - yearDifference);
+
+          return date.format('DD-MM-YYYY');
+        },
+        unit: ` ${dataset} alerts`,
+        color: '#00F',
+        unitFormat: value =>
+          (Number.isInteger(value) ? format(',')(value) : value)
+      });
     }
-  })
+
+    return {
+      ...getChartConfig(colors, moment(latest)),
+      margin: {
+        top: 16,
+        right: 10,
+        left: 42,
+        bottom: 40
+      },
+      xAxis: {
+        interval: 0,
+        tickFormatter: t => moment(t).format('MM-DD'),
+        ...(typeof endIndex === 'number' &&
+          typeof startIndex === 'number' &&
+          endIndex - startIndex > 12 && {
+          tickCount: 12,
+          interval: 4,
+          tickFormatter: t => moment(t).format('MMM')
+        })
+      },
+      tooltip,
+      brush: {
+        dataKey: 'date',
+        startIndex,
+        endIndex
+      }
+    };
+  }
 );
 
 export const parseSentence = createSelector(

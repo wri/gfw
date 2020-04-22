@@ -24,15 +24,17 @@ class WidgetComposedChart extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { data, settings } = this.props;
+    const { data, settings, config } = this.props;
     const {
       data: nextData,
       settings: nextSettings,
+      config: nextConfig,
       preventRenderKeys: nextPreventRenderKeys
     } = nextProps;
 
     return (
       !isEqual(data, nextData) ||
+      !isEqual(config, nextConfig) ||
       (!isEqual(
         omit(nextSettings, nextPreventRenderKeys),
         omit(settings, nextPreventRenderKeys)
@@ -64,7 +66,7 @@ class WidgetComposedChart extends Component {
     if (handleChangeSettings) {
       handleChangeSettings(values);
     }
-  }, 100);
+  }, 50);
 
   render() {
     const { data, config, active, simple, barBackground } = this.props;

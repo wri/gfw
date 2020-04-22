@@ -14,13 +14,17 @@ class ChartTooltip extends PureComponent {
           settings.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
             {settings.map(d => {
+              const label = d.labelFormat
+                ? d.labelFormat(d.label || values[d.labelKey])
+                : d.label || values[d.labelKey];
+
               const value = d.unitFormat
                 ? d.unitFormat(values[d.key])
                 : values[d.key];
 
               return hideZeros && (!values || !value) ? null : (
                 <div key={d.key} className={`data-line ${d.position || ''}`}>
-                  {(d.label || d.labelKey) && (
+                  {label && (
                     <div className="data-label">
                       {d.color && (
                         <div
@@ -31,7 +35,7 @@ class ChartTooltip extends PureComponent {
                       {d.key === 'break' ? (
                         <span className="break-label">{d.label}</span>
                       ) : (
-                        <span>{d.label || values[d.labelKey]}</span>
+                        <span>{label}</span>
                       )}
                     </div>
                   )}
