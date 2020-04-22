@@ -115,7 +115,7 @@ class MainMapComponent extends PureComponent {
             />
           </Media>
         )} */}
-        {/* {!embed && (
+        {!embed && (
           <>
             <Media greaterThanOrEqual="md">
               <MapControlButtons
@@ -129,7 +129,7 @@ class MainMapComponent extends PureComponent {
               />
             </Media>
           </>
-        )} */}
+        )}
         {/* <RecentImagery active={recentActive} /> */}
         {/* {!embed && (
           <Media greaterThanOrEqual="md">

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 // import { logEvent } from 'app/analytics';
 import withRouter from 'utils/withRouter';
 import { getLocationFromData } from 'utils/format';
+import reducerRegistry from 'app/registry';
 
 // import { getGeostoreId } from 'providers/geostore-provider/actions';
 // import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
@@ -14,6 +15,7 @@ import { getLocationFromData } from 'utils/format';
 // import { setMenuSettings } from 'components/map-menu/actions';
 
 import * as ownActions from './actions';
+import reducers, { initialState } from './reducers';
 import getMapProps from './selectors';
 import MapComponent from './component';
 
@@ -204,5 +206,12 @@ class MainMapContainer extends PureComponent {
     });
   }
 }
+
+reducerRegistry.registerModule('mainMap', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
+
 
 export default withRouter(connect(getMapProps, actions)(MainMapContainer));
