@@ -3,12 +3,6 @@ import moment from 'moment';
 
 import { fetchMODISHistorical } from 'services/analysis-cached';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
-import {
-  DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
-} from 'data/layers';
-
 import getWidgetProps from './selectors';
 
 export default {
@@ -60,18 +54,6 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
-  datasets: [
-    {
-      dataset: POLITICAL_BOUNDARIES_DATASET,
-      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
-    },
-    // fires
-    {
-      dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',
-      layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
-    }
-  ],
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',

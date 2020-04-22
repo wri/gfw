@@ -60,11 +60,22 @@ export const getData = createSelector(
 
       years.filter(year => year === startYear).forEach(year => {
         const yearDataByDay = groupBy(groupedByYear[year], 'dayOfYear');
-        for (let i = 1; i <= moment(`${year}-12-31`).dayOfYear(); i += 1) {
+        const maxDay =
+          year === moment().year()
+            ? Object.keys(yearDataByDay).pop()
+            : moment(`${year}-12-31`).dayOfYear();
+        for (let i = 1; i <= maxDay; i += 1) {
           zeroFilledData.push(
             yearDataByDay[i]
               ? yearDataByDay[i][0]
-              : { alerts: 0, count: 0, year: parseInt(year, 10) }
+              : {
+                alerts: 0,
+                count: 0,
+                week: moment()
+                  .dayOfYear(i)
+                  .isoWeek(),
+                year: parseInt(year, 10)
+              }
           );
         }
       });
@@ -75,7 +86,11 @@ export const getData = createSelector(
 
       years.forEach(year => {
         const yearDataByWeek = groupBy(groupedByYear[year], 'week');
-        for (let i = 1; i <= yearLengths[year]; i += 1) {
+        const maxWeek =
+          year === moment().year()
+            ? Object.keys(yearDataByWeek).pop()
+            : yearLengths[year];
+        for (let i = 1; i <= maxWeek; i += 1) {
           zeroFilledData.push(
             yearDataByWeek[i]
               ? yearDataByWeek[i][0]
@@ -102,7 +117,7 @@ export const parseConfig = createSelector(
     ...getChartConfig(colors),
     xAxis: {
       tickCount: 12,
-      interval: startYear === endYear ? 60 : undefined,
+      interval: startYear === endYear ? 31 : undefined,
       tickFormatter: t => moment(t).format('MMM-YY')
     }
   })
