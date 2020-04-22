@@ -9,6 +9,7 @@ import groupBy from 'lodash/groupBy';
 import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data && state.data.alerts;
+const getFrequency = state => state.data && state.data.frequency;
 const getColors = state => state.colors || null;
 const getStartYear = state => state.settings.startYear;
 const getEndYear = state => state.settings.endYear;
@@ -16,9 +17,9 @@ const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
 
 export const getData = createSelector(
-  [getAlerts, getStartYear, getEndYear],
-  (data, startYear, endYear) => {
-    if (!data || isEmpty(data)) return null;
+  [getAlerts, getFrequency, getStartYear, getEndYear],
+  (data, frequency, startYear, endYear) => {
+    if (!data || !frequency || isEmpty(data)) return null;
 
     const years = [];
 
@@ -38,8 +39,7 @@ export const getData = createSelector(
     });
 
     const zeroFilledData = [];
-    if (endYear - startYear <= 2 && !!data[0].alert__date) {
-      // daily frequency
+    if (frequency === 'daily' && !!data[0].alert__date) {
       // why check `alert__date`? Sometimes settings change before refetching,
       // and `data` is still the weekly data
 
@@ -81,8 +81,6 @@ export const getData = createSelector(
         }
       });
     } else {
-      // weekly frequency
-
       const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
 
       years.forEach(year => {
@@ -113,8 +111,8 @@ export const parseData = createSelector([getData], data => {
 });
 
 export const parseConfig = createSelector(
-  [getColors, getStartYear, getEndYear],
-  (colors, startYear, endYear) => {
+  [getColors, getFrequency],
+  (colors, frequency) => {
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -135,7 +133,7 @@ export const parseConfig = createSelector(
       tooltip,
       xAxis: {
         tickCount: 12,
-        interval: endYear - startYear <= 2 ? 31 : undefined,
+        interval: frequency === 'daily' ? 31 : undefined,
         tickFormatter: t => moment(t).format('MMM-YY')
       }
     };

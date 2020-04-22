@@ -177,16 +177,16 @@ const getModisDatasetId = ({
   grouped,
   type,
   whitelist,
-  freq
+  frequency
 }) => {
   if (type === 'geostore') {
     if (whitelist) return MODIS_GEOSTORE_WHITELIST;
-    else if (freq === 'weekly') return MODIS_GEOSTORE_WEEKLY;
-    else if (freq === 'daily') return MODIS_GEOSTORE_DAILY;
+    else if (frequency === 'weekly') return MODIS_GEOSTORE_WEEKLY;
+    else if (frequency === 'daily') return MODIS_GEOSTORE_DAILY;
     return MODIS_GEOSTORE_SUMMARY;
   }
 
-  if (adm0 && freq === 'daily') return MODIS_ADM2_DAILY;
+  if (adm0 && frequency === 'daily') return MODIS_ADM2_DAILY;
   if ((adm2 || (adm1 && grouped)) && whitelist) return MODIS_ADM2_WHITELIST;
   if (adm2 || (adm1 && grouped)) return MODIS_ADM2_WEEKLY;
 
@@ -970,8 +970,7 @@ export const fetchMODISHistorical = ({
   ifl,
   grouped,
   download,
-  startYear,
-  endYear,
+  frequency,
   ...params
 }) => {
   const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
@@ -982,9 +981,9 @@ export const fetchMODISHistorical = ({
     adm2,
     grouped,
     confidence,
-    freq: endYear - startYear <= 2 ? 'daily' : 'weekly',
+    frequency,
     allowedParams: 'modis'
-  })}${endYear - startYear <= 2 ? modisFiresDaily : modisFiresWeekly}`
+  })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
     .replace(
       /{location}/g,
       grouped

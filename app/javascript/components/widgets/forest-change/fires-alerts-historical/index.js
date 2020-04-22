@@ -1,4 +1,3 @@
-import { all, spread } from 'axios';
 import moment from 'moment';
 
 import { fetchMODISHistorical } from 'services/analysis-cached';
@@ -278,23 +277,25 @@ export default {
       'ZWE'
     ]
   },
-  getData: params =>
-    all([fetchMODISHistorical(params)]).then(
-      spread(alerts => {
-        const { data } = alerts.data;
-        return (
-          {
-            alerts: data,
-            options: {
-              confidence: [
-                { label: 'All', value: '' },
-                { label: 'High', value: 'h' }
-              ]
-            }
-          } || {}
-        );
-      })
-    ),
+  getData: params => {
+    const { startYear, endYear } = params;
+    const frequency = endYear - startYear <= 2 ? 'daily' : 'weekly';
+    return fetchMODISHistorical({ ...params, frequency }).then(alerts => {
+      const { data } = alerts.data;
+      return (
+        {
+          alerts: data,
+          frequency,
+          options: {
+            confidence: [
+              { label: 'All', value: '' },
+              { label: 'High', value: 'h' }
+            ]
+          }
+        } || {}
+      );
+    });
+  },
   getDataURL: params => [fetchMODISHistorical({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
