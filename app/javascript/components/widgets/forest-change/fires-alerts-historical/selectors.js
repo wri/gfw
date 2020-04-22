@@ -48,6 +48,7 @@ export const getData = createSelector(
           ...d,
           year: moment(d.alert__date).year(),
           week: moment(d.alert__date).isoWeek(),
+          date: d.alert__date,
           dayOfYear: moment(d.alert__date).dayOfYear() // zero-filling
         }))
         // optional, lightens data:

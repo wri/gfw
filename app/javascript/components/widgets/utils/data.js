@@ -203,11 +203,13 @@ export const getStdDevData = (data, rawData) => {
 export const getDatesData = data =>
   data.map(d => ({
     ...d,
-    date: moment()
-      .year(d.year)
-      .isoWeek(d.week)
-      .startOf('isoWeek')
-      .format('YYYY-MM-DD'),
+    date: d.date
+      ? moment(d.date).format('YYYY-MM-DD')
+      : moment()
+        .year(d.year)
+        .isoWeek(d.week)
+        .startOf('isoWeek')
+        .format('YYYY-MM-DD'),
     month: upperCase(
       moment()
         .year(d.year)
