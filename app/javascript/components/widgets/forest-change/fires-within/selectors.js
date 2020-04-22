@@ -5,6 +5,7 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getLocationName = state => state.locationLabel;
+const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
@@ -22,14 +23,14 @@ export const parseData = createSelector(
       fireCountAll - fireCountIn > 0 ? fireCountAll - fireCountIn : 0;
     const parsedData = [
       {
-        label: `Fires within ${indicatorLabel}`,
+        label: `Fire alerts in ${indicatorLabel}`,
         value: fireCountIn,
         color: colors.main,
         unit: 'counts',
         percentage: fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 0
       },
       {
-        label: `Fires outside ${indicatorLabel}`,
+        label: `Fire alerts outside ${indicatorLabel}`,
         value: fireCountOutside,
         color: colors.otherColor,
         unit: 'counts',
@@ -41,20 +42,25 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getLocationName, getIndicator, getSentences],
-  (parsedData, locationName, indicator, sentences) => {
-    if (!parsedData) return null;
-    const { initial } = sentences;
-
+  [parseData, getOptionsSelected, getLocationName, getIndicator, getSentences],
+  (parsedData, optionsSelected, locationName, indicator, sentences) => {
+    if (!parsedData || !optionsSelected || !locationName) return null;
+    const { withInd } = sentences;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
+    const timeFrame = optionsSelected.weeks;
+    const fireswithinper = parsedData[0].percentage;
 
     const params = {
-      location: locationName !== 'global' ? `${locationName}'s` : locationName,
-      indicator: indicatorLabel
+      timeframe: timeFrame && timeFrame.label,
+      location:
+        locationName !== 'global' && indicatorLabel !== null
+          ? locationName
+          : '',
+      indicator: indicatorLabel,
+      perfireswithin: `${format('.2r')(fireswithinper)}%`
     };
-
-    const sentence = indicator ? initial : '';
+    const sentence = indicator ? withInd : '';
     return {
       sentence,
       params

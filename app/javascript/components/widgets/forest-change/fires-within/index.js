@@ -15,7 +15,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesWithin',
-  title: 'Fires within {indicator} in {location}',
+  title: 'Fires alerts in {location} {indicator}',
   categories: ['forest-change'],
   types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -73,7 +73,8 @@ export default {
   },
   refetchKeys: ['confidence', 'landCategory', 'forestType'],
   sentences: {
-    initial: 'Test sentence {location} fires in {indicator}...'
+    withInd:
+      'In the last {timeframe}, {perfireswithin} of all fires alerts detected in {location} ocurred within {indicator}.'
   },
   whitelists: {
     checkStatus: true
@@ -84,7 +85,7 @@ export default {
       fetchFiresWithin({ ...params, forestType: '', landCategory: '' }),
       fetchVIIRSLatest(params)
     ]).then(
-      spread((firesWithin, allFires, latest) => {
+      spread((firesWithin, allFires) => {
         const fireIn = firesWithin.data && firesWithin.data.data;
         const AllFire = allFires.data && allFires.data.data;
         let data = {};
