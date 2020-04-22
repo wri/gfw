@@ -11,6 +11,13 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      border: true
+    },
+    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -33,13 +40,6 @@ export default {
       type: 'range-select',
       options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
         .map(y => ({ label: `${y}`, value: y }))
-    },
-    {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
-      border: true
     }
   ],
   refetchKeys: [
