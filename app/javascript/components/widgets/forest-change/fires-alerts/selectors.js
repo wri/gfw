@@ -198,14 +198,15 @@ export const parseConfig = createSelector(
         bottom: 40
       },
       xAxis: {
-        interval: 0,
-        tickFormatter: t => moment(t).format('MM-DD'),
+        tickCount: 12,
+        interval: 4,
+        tickFormatter: t => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
-          endIndex - startIndex > 12 && {
-          tickCount: 12,
-          interval: 4,
-          tickFormatter: t => moment(t).format('MMM')
+          endIndex - startIndex < 15 && {
+          tickCount: 5,
+          interval: 0,
+          tickFormatter: t => moment(t).format('MM-DD')
         })
       },
       tooltip,

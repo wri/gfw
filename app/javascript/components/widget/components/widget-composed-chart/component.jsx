@@ -61,12 +61,12 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
-  handleBrush = debounce(values => {
+  handleBrush = values => {
     const { handleChangeSettings } = this.props;
     if (handleChangeSettings) {
       handleChangeSettings(values);
     }
-  }, 50);
+  };
 
   render() {
     const { data, config, active, simple, barBackground } = this.props;
