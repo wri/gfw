@@ -29,32 +29,6 @@ const {
   ANNUAL_GEOSTORE_CHANGE,
   ANNUAL_GEOSTORE_WHITELIST,
 
-  GLAD_ADM0_WEEKLY,
-  GLAD_ADM1_WEEKLY,
-  GLAD_ADM2_WEEKLY,
-  GLAD_ADM0_WHITELIST,
-  GLAD_ADM1_WHITELIST,
-  GLAD_ADM2_WHITELIST,
-
-  GLAD_WDPA_WEEKLY,
-  GLAD_WDPA_WHITELIST,
-
-  GLAD_GEOSTORE_WEEKLY,
-  GLAD_GEOSTORE_WHITELIST,
-
-  VIIRS_ADM0_WEEKLY,
-  VIIRS_ADM1_WEEKLY,
-  VIIRS_ADM2_WEEKLY,
-  VIIRS_ADM0_WHITELIST,
-  VIIRS_ADM1_WHITELIST,
-  VIIRS_ADM2_WHITELIST,
-
-  VIIRS_WDPA_WEEKLY,
-  VIIRS_WDPA_WHITELIST,
-
-  VIIRS_GEOSTORE_WEEKLY,
-  VIIRS_GEOSTORE_WHITELIST,
-
   MODIS_ADM0_WEEKLY,
   MODIS_ADM1_WEEKLY,
   MODIS_ADM2_WEEKLY,
@@ -143,15 +117,21 @@ const getAnnualDataset = ({
 };
 
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST;
+  }
   if (type === 'geostore') return DATASETS_ENV.GLAD_GEOSTORE_WEEKLY;
 
   if (type === 'wdpa' && whitelist) return DATASETS_ENV.GLAD_WDPA_WHITELIST;
   if (type === 'wdpa') return DATASETS_ENV.GLAD_WDPA_WEEKLY;
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM2_WHITELIST; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM2_WHITELIST;
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV.GLAD_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM1_WHITELIST; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM1_WHITELIST;
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV.GLAD_ADM1_WEEKLY;
   if (whitelist) return DATASETS_ENV.GLAD_ADM0_WHITELIST;
 
@@ -167,15 +147,23 @@ const getFiresDatasetId = ({
   whitelist,
   dataset
 }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`]; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`];
+  }
   if (type === 'geostore') return DATASETS_ENV[`${dataset}_GEOSTORE_WEEKLY`];
 
-  if (type === 'wdpa' && whitelist) { return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`]; }
+  if (type === 'wdpa' && whitelist) {
+    return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`];
+  }
   if (type === 'wdpa') return DATASETS_ENV[`${dataset}_WDPA_WEEKLY`];
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`]; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`];
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV[`${dataset}_ADM2_WEEKLY`];
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`]; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`];
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV[`${dataset}_ADM1_WEEKLY`];
   if (whitelist) return DATASETS_ENV[`${dataset}_ADM0_WHITELIST`];
 
