@@ -9,7 +9,7 @@ import {
 } from 'components/map/selectors';
 import { getShowDraw } from 'components/analysis/selectors';
 
-import initialState from './initial-state';
+import { initialState } from './reducers';
 
 // state from url
 const selectMainMapUrlState = state => state?.mainMap;

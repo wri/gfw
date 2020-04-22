@@ -1,7 +1,7 @@
-import queryString from 'query-string';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
+import qs from 'query-string';
 
 import { getRouter } from 'utils/withRouter';
 
@@ -70,7 +70,7 @@ export const encodeStateForUrl = (params) => {
       paramsParsed[key] = params[key];
     }
   });
-  return queryString.stringify(paramsParsed);
+  return qs.stringify(paramsParsed);
 };
 
 export const setComponentStateToUrl = ({ key, subKey, change }) => {
@@ -164,7 +164,7 @@ const handleLocationUpdate = (store, params) => {
     const actionsToDispatch = queryKeys && queryKeys.reduce((arr, key) => {
       const value = query[key];
       const decodedValue = JSON.parse(atob(query[key]));
-      if ((isEmpty(lastQueryValues) || lastQueryValues[key] !== value)) {
+      if (params[key] && (isEmpty(lastQueryValues) || lastQueryValues[key] !== value)) {
         const { selector, action } = params[key];
         lastQueryValues[key] = value
         if (selector(state) !== decodedValue) {

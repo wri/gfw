@@ -1,5 +1,4 @@
 import { createAction, createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 import request from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
@@ -9,13 +8,7 @@ import { CARTO_API } from 'utils/constants';
 
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
-
-export const setMenuSettings =
-  change =>
-    setComponentStateToUrl({
-      key: 'menu',
-      change
-    })
+export const setMenuSettings = createAction('setMenuSettings')
 
 const getSearchSQL = (string, nameString, nameStringSimple) => {
   const words = string && string.split(/,| |, /);

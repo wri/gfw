@@ -41,7 +41,19 @@ export default (initialState) => {
         actionName: 'setMapSettings',
         selector: state => state?.map?.settings,
         action: payload => ({ type: 'setMapSettings', payload })
-      }
+      },
+      mainMap: {
+        key: 'mainMap',
+        actionName: 'setMainMapSettings',
+        selector: state => state?.mainMap,
+        action: payload => ({ type: 'setMainMapSettings', payload })
+      },
+      menu: {
+        key: 'menu',
+        actionName: 'setMenuSettings',
+        selector: state => state?.mapMenu,
+        action: payload => ({ type: 'setMenuSettings', payload })
+      },
     }
   })
 

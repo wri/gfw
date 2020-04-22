@@ -17,6 +17,11 @@ const setLocationsData = (state, { payload }) => ({
   locations: payload
 });
 
+const setMenuSettings = (state, { payload }) => ({
+  ...state,
+  ...payload
+});
+
 const setMenuLoading = (state, { payload }) => ({
   ...state,
   loading: payload
@@ -24,5 +29,6 @@ const setMenuLoading = (state, { payload }) => ({
 
 export default {
   [actions.setLocationsData]: setLocationsData,
-  [actions.setMenuLoading]: setMenuLoading
+  [actions.setMenuLoading]: setMenuLoading,
+  [actions.setMenuSettings]: setMenuSettings
 };

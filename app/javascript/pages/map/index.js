@@ -13,7 +13,7 @@ import { getLocationFromData } from 'utils/format';
 // import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 // import { setMenuSettings } from 'components/map-menu/actions';
 
-// import * as ownActions from './actions';
+import * as ownActions from './actions';
 import getMapProps from './selectors';
 import MapComponent from './component';
 
@@ -22,7 +22,7 @@ const actions = {
   // setMenuSettings,
   // setMapPromptsSettings,
   // getGeostoreId,
-  // ...ownActions
+  ...ownActions
 };
 
 class MainMapContainer extends PureComponent {
@@ -86,10 +86,10 @@ class MainMapContainer extends PureComponent {
             ...map,
             canBound: true
           },
-          // mainMap: {
-          //   ...mainMap,
-          //   showAnalysis: true
-          // }
+          mainMap: {
+            ...mainMap,
+            showAnalysis: true
+          }
         }
       })
     }
