@@ -12,14 +12,13 @@ import { getColorPalette } from 'utils/data';
 import {
   getStatsData,
   getDatesData,
-  getVariance,
+  getPeriodVariance,
   getChartConfig
 } from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
-const getInteraction = state => state.settings.interaction || null;
 const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
@@ -145,6 +144,7 @@ export const parseConfig = createSelector(
 
 export const parseSentence = createSelector(
   [
+    getData,
     parseData,
     getColors,
     getSentences,
@@ -153,7 +153,16 @@ export const parseSentence = createSelector(
     getStartIndex,
     getEndIndex
   ],
-  (data, colors, sentence, dataset, location, startIndex, endIndex) => {
+  (
+    raw_data,
+    data,
+    colors,
+    sentence,
+    dataset,
+    location,
+    startIndex,
+    endIndex
+  ) => {
     if (!data) return null;
 
     const start = startIndex;
@@ -165,7 +174,7 @@ export const parseSentence = createSelector(
     const slicedData = data.filter(
       el => el.date >= firstDate.date && el.date <= lastDate.date
     );
-    const variance = getVariance(slicedData);
+    const variance = getPeriodVariance(slicedData, raw_data);
 
     const total = sumBy(slicedData, 'count');
     const colorRange = getColorPalette(colors.ramp, 5);
@@ -193,8 +202,8 @@ export const parseSentence = createSelector(
       location: location.label || '',
       fire_season_month: null, // helper needed
       fire_season_length: 5,
-      start_date: firstDate.date, // brush start date
-      end_date: lastDate.date, // brush end date
+      start_date: firstDate.date,
+      end_date: lastDate.date,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       dataset,
       count: {

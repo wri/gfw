@@ -38,6 +38,15 @@ const meanData = data => {
   return means.map(w => mean(w));
 };
 
+const stdDevData = data => {
+  const dataMean = mean(data);
+  const sumOfSquares = data.reduce(
+    (sum, value) => sum + (dataMean - value) ** 2,
+    0
+  );
+  return (sumOfSquares / data.length) ** 0.5;
+};
+
 const statsData = data => {
   const grouped_week = [];
 
@@ -51,14 +60,9 @@ const statsData = data => {
 
   const stats = grouped_week.map(w => {
     const week_mean = mean(w);
-    const sumOfSquares = w.reduce(
-      (sum, value) => sum + (week_mean - value) ** 2,
-      0
-    );
-
     return {
       mean: week_mean,
-      std: (sumOfSquares / w.length) ** 0.5
+      std: stdDevData(w)
     };
   });
   return stats;
@@ -161,17 +165,35 @@ export const getStatsData = (data, latest) => {
   return parsedData;
 };
 
-export const getVariance = data => {
-  // const varianceByWeek = data.map(({mean, stdDev, count}) => {
-  //   return stdDev > 0 ? (count - mean) / stdDev : 0;
-  // });
-  // return mean(varianceByWeek)
-  const meanTotal = sumBy(data, 'mean');
-  const countTotal = sumBy(data, 'count');
-  const sumOfStdDevs = Math.sqrt(
-    data.reduce((sum, d) => sum + d.stdDev ** 2, 0)
-  );
-  return (countTotal - meanTotal) / sumOfStdDevs;
+export const getPeriodVariance = (data, raw_data) => {
+  const minYear = minBy(raw_data, 'year').year;
+  const maxYear = maxBy(raw_data, 'year').year;
+  const startWeek = data.length && data[0].week;
+  const endWeek = data.length && data[data.length - 1].week;
+
+  const yearlyPeriodSum = range(minYear, maxYear, 1).map(year => {
+    let slicedData = [];
+    if (endWeek > startWeek) {
+      slicedData = raw_data.filter(
+        d => d.year == year && d.week >= startWeek && d.week <= endWeek
+      );
+    } else {
+      const filteredDataStart = raw_data.filter(
+        d => d.year == year && d.week >= startWeek
+      );
+      const filteredDataEnd = raw_data.filter(
+        d => d.year == year + 1 && d.week <= endWeek
+      );
+      slicedData = concat(filteredDataStart, filteredDataEnd);
+    }
+    return slicedData.length ? sumBy(slicedData, 'count') : 0;
+  });
+  const meanPeriodTotal = mean(yearlyPeriodSum);
+  const stdPeriodTotal = stdDevData(yearlyPeriodSum);
+  const currentperiodTotal = sumBy(data, 'count');
+  return stdPeriodTotal > 0
+    ? (currentperiodTotal - meanPeriodTotal) / stdPeriodTotal
+    : 0;
 };
 
 export const getStdDevData = (data, rawData) => {
