@@ -298,6 +298,22 @@ export const parseSentence = createSelector(
     );
     const variance = getPeriodVariance(slicedData, raw_data);
 
+    const maxMean = max(data.map(d => d.mean));
+    const minMean = min(data.map(d => d.mean));
+    const halfMax = (maxMean - minMean) * 0.5;
+
+    const peakWeeks = data.filter(d => d.mean > halfMax);
+    const seasonStartDate = peakWeeks.length && peakWeeks[0].date;
+    const seasonMonth = moment(seasonStartDate).format('MMMM');
+    const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
+
+    let seasonStatement = `late ${seasonMonth}`;
+    if (seasonDay <= 10) {
+      seasonStatement = `early ${seasonMonth}`;
+    } else if (seasonDay > 10 && seasonDay <= 20) {
+      seasonStatement = `mid-${seasonMonth}`;
+    }
+
     const total = sumBy(slicedData, 'count');
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
@@ -322,8 +338,8 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedData,
       location: location.label || '',
-      fire_season_month: null, // helper needed
-      fire_season_length: 5,
+      fires_season_start: seasonStatement,
+      fire_season_length: peakWeeks.length,
       start_date: firstDate.date,
       end_date: lastDate.date,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
