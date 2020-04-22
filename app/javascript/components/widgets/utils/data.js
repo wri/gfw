@@ -255,15 +255,21 @@ export const getChartConfig = (colors, latest, unit = '') => {
     yKeys: {
       lines: {
         count: {
-          stroke: colors.main
+          stroke: colors.main,
+          isAnimationActive: false
         },
         compareCount: {
-          stroke: '#00F'
+          stroke: '#00F',
+          isAnimationActive: false
         },
-        target: { stroke: 'grey' }
+        target: {
+          stroke: 'grey',
+          isAnimationActive: false
+        }
       },
       areas: {
         plusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.1,
@@ -272,6 +278,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         minusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.1,
@@ -280,6 +287,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         twoPlusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.2,
@@ -288,6 +296,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         twoMinusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.2,
