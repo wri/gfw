@@ -2,8 +2,9 @@ import Router, { withRouter } from 'next/router';
 import qs from 'query-string';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
-const buildRouter = router => {
+const buildRouter = (router = {}) => {
   if (router) {
+    // get all query
     if (router.asPath.includes('?')) {
       router.query = {
         ...router.query,
@@ -11,8 +12,10 @@ const buildRouter = router => {
       };
     }
 
+    // decode query
     router.query = decodeUrlForState(router.query);
 
+    // if query has location
     const { location } = router?.query || {};
     if (location) {
       router.location = {
@@ -47,7 +50,7 @@ const buildRouter = router => {
   return router;
 }
 
-export const router = buildRouter(Router.router);
+export const getRouter = () => buildRouter(Router.router);
 
 export default (Component) =>
   withRouter(({ router: oldRouter, ...props }) => {

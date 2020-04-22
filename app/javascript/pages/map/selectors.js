@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { getRouter } from 'utils/withRouter';
 
 import {
   getDrawing,
@@ -11,10 +12,10 @@ import { getShowDraw } from 'components/analysis/selectors';
 import initialState from './initial-state';
 
 // state from url
-const selectMainMapUrlState = (state, props) => props?.router?.query?.mainMap;
-const selectLocation = (state, props) => props?.router?.pathname;
-const selectLocationPayload = (state, props) => props?.router?.location;
-const selectMenuSection = (state, props) => props?.router?.query?.menu?.menuSection;
+const selectMainMapUrlState = state => state?.mainMap;
+const selectLocation = () => getRouter()?.pathname;
+const selectLocationPayload = () => getRouter()?.location;
+const selectMenuSection = state => state?.menu?.menuSection;
 const getDrawGeostoreId = state => state.draw && state.draw.geostoreId;
 
 // SELECTORS

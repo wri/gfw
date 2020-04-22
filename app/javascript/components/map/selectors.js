@@ -5,6 +5,7 @@ import moment from 'moment';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
+import { getRouter } from 'utils/withRouter';
 
 import { selectActiveLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
@@ -13,19 +14,17 @@ import { initialState } from './reducers';
 import basemaps from './basemaps';
 
 // map state
-const selectMapUrlState = state =>
-  state.location && state.location.query && state.location.query.map;
-const selectMapLoading = state => state.map && state.map.loading;
-const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
-const selectLatestLoading = state => state.latest && state.latest.loading;
-const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
-const selectRecentImageryLoading = state =>
-  state.recentImagery && state.recentImagery.loading;
-const selectMapData = state => state.map && state.map.data;
-const selectDatasets = state => state.datasets && state.datasets.data;
-const selectLatest = state => state.latest && state.latest.data;
-export const selectGeostore = state => state.geostore && state.geostore.data;
-const selectLocation = state => state.location && state.location.payload;
+const selectMapUrlState = (state) => state?.map?.settings;
+const selectLocation = () => getRouter()?.location;
+const selectMapLoading = state => state?.map?.loading;
+const selectGeostoreLoading = state => state?.geostore?.loading;
+const selectLatestLoading = state => state?.latest?.loading;
+const selectDatasetsLoading = state => state?.datasets?.loading;
+const selectRecentImageryLoading = state => state?.recentImagery?.loading;
+const selectMapData = state => state?.map?.data;
+const selectDatasets = state => state?.datasets?.data;
+const selectLatest = state => state?.latest?.data;
+export const selectGeostore = state => state?.geostore?.data;
 
 // CONSTS
 export const getBasemaps = () => basemaps;
@@ -38,6 +37,7 @@ export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
 
 export const getMapViewport = createSelector([getMapSettings], settings => {
   const { zoom, bearing, pitch, center } = settings;
+
   return {
     zoom,
     bearing,

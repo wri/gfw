@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logEvent } from 'app/analytics';
 
 import TimelineComponent from './component';
-import { getTicks } from './selectors';
+import getTicks from './selectors';
 
 const mapStateToProps = (
   state,

@@ -6,19 +6,20 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
 import { logEvent } from 'app/analytics';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-import plusIcon from 'assets/icons/plus.svg';
-import minusIcon from 'assets/icons/minus.svg';
-import shareIcon from 'assets/icons/share.svg';
-import fullscreenIcon from 'assets/icons/fit-zoom.svg';
-import printIcon from 'assets/icons/print.svg';
-import helpIocn from 'assets/icons/help.svg';
-import globeIcon from 'assets/icons/globe.svg';
-import satelliteIcon from 'assets/icons/satellite.svg';
+import plusIcon from 'assets/icons/plus.svg?sprite';
+import minusIcon from 'assets/icons/minus.svg?sprite';
+import shareIcon from 'assets/icons/share.svg?sprite';
+import fullscreenIcon from 'assets/icons/fit-zoom.svg?sprite';
+import printIcon from 'assets/icons/print.svg?sprite';
+import helpIocn from 'assets/icons/help.svg?sprite';
+import globeIcon from 'assets/icons/globe.svg?sprite';
+import satelliteIcon from 'assets/icons/satellite.svg?sprite';
 
 import Basemaps from 'components/basemaps';
 import RecentImagerySettings from 'components/recent-imagery/components/recent-imagery-settings';
-import Button from 'components/ui/button';
+import { Button } from 'gfw-components';
 import Icon from 'components/ui/icon';
 
 import './styles.scss';
@@ -43,12 +44,30 @@ class MapControlsButtons extends PureComponent {
     }
   }
 
+  setMapSettings = change =>
+    setComponentStateToUrl({
+      key: 'map',
+      change
+    })
+
+  setMainMapSettings = change =>
+    setComponentStateToUrl({
+      key: 'mainMap',
+      change
+    })
+
+  setMenuSettings = change =>
+    setComponentStateToUrl({
+      key: 'menu',
+      change
+    })
+
   setPulseTourBtn = pulseTourBtn => this.setState({ pulseTourBtn });
 
   handleHidePanels = () => {
-    const { setMainMapSettings, setMenuSettings, hidePanels } = this.props;
-    setMainMapSettings({ hidePanels: !hidePanels });
-    setMenuSettings({ menuSection: '' });
+    const { hidePanels } = this.props;
+    this.setMainMapSettings({ hidePanels: !hidePanels });
+    this.setMenuSettings({ menuSection: '' });
     if (!hidePanels) {
       logEvent('hidePanels');
     }
@@ -63,16 +82,15 @@ class MapControlsButtons extends PureComponent {
   };
 
   toggleBasemaps = () => {
-    const { setMainMapSettings, showBasemaps, showRecentImagery } = this.props;
-    setMainMapSettings({ showBasemaps: !showBasemaps });
+    const { showBasemaps, showRecentImagery } = this.props;
+    this.setMainMapSettings({ showBasemaps: !showBasemaps });
     if (showRecentImagery) {
-      setMainMapSettings({ showRecentImagery: false });
+      this.setMainMapSettings({ showRecentImagery: false });
     }
   };
 
   handleToggleRecentImagery = () => {
     const {
-      setMapSettings,
       recentImageryDataset,
       showRecentImagery,
       datasets,
@@ -87,7 +105,7 @@ class MapControlsButtons extends PureComponent {
         opacity: 1,
         isRecentImagery: true
       });
-    setMapSettings({
+    this.setMapSettings({
       datasets: newDatasets,
       zoom: showRecentImagery && zoom < 9 ? 9 : zoom
     });
@@ -108,7 +126,6 @@ class MapControlsButtons extends PureComponent {
     const {
       showRecentImagery,
       datasetsLoading,
-      setMainMapSettings
     } = this.props;
 
     return (
@@ -118,10 +135,9 @@ class MapControlsButtons extends PureComponent {
           { active: showRecentImagery },
           'map-tour-recent-imagery'
         )}
-        theme="theme-button-map-control wide"
+        theme="button-light square"
         onClick={() =>
-          setMainMapSettings({ showRecentImagery: !showRecentImagery })
-        }
+          this.setMainMapSettings({ showRecentImagery: !showRecentImagery })}
         disabled={datasetsLoading}
         tooltip={{
           text: 'Recent Satellite Imagery'
@@ -143,7 +159,7 @@ class MapControlsButtons extends PureComponent {
     return (
       <Button
         className={cx('map-tool-btn basemaps-btn', { active: showBasemaps })}
-        theme="theme-button-map-control wide"
+        theme="button-light square"
         onClick={this.toggleBasemaps}
         tooltip={
           !showBasemaps
@@ -182,7 +198,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderRecentImageryTooltip = () => {
-    const { showRecentImagery, setMainMapSettings } = this.props;
+    const { showRecentImagery } = this.props;
 
     return (
       <Tooltip
@@ -193,13 +209,12 @@ class MapControlsButtons extends PureComponent {
         animateFill={false}
         arrow
         open={showRecentImagery}
-        html={
+        html={(
           <RecentImagerySettings
             onClickClose={() =>
-              setMainMapSettings({ showRecentImagery: false })
-            }
+              this.setMainMapSettings({ showRecentImagery: false })}
           />
-        }
+        )}
         offset={120}
       >
         {this.renderRecentImageryBtn()}
@@ -220,13 +235,13 @@ class MapControlsButtons extends PureComponent {
         animateFill={false}
         open={showBasemaps}
         onRequestClose={this.onBasemapsRequestClose}
-        html={
+        html={(
           <Basemaps
             onClose={this.toggleBasemaps}
             ref={this.setBasemapsRef}
             isDesktop={this.props.isDesktop}
           />
-        }
+        )}
       >
         {this.renderBasemapsBtn()}
       </Tooltip>
@@ -234,14 +249,14 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderZoomButtons = () => {
-    const { viewport: { zoom }, setMapSettings, maxZoom, minZoom } = this.props;
+    const { viewport: { zoom }, maxZoom, minZoom } = this.props;
 
     return (
       <Fragment>
         <Button
-          theme="theme-button-map-control"
+          theme="button-light square"
           onClick={() => {
-            setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
+            this.setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
             logEvent('zoomOut');
           }}
           tooltip={{ text: 'Zoom out' }}
@@ -250,9 +265,9 @@ class MapControlsButtons extends PureComponent {
           <Icon icon={minusIcon} className="minus-icon" />
         </Button>
         <Button
-          theme="theme-button-map-control"
+          theme="button-light square"
           onClick={() => {
-            setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
+            this.setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
             logEvent('zoomIn');
           }}
           tooltip={{ text: 'Zoom in' }}
@@ -269,7 +284,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        theme="theme-button-map-control"
+        theme="button-light square"
         onClick={this.handleHidePanels}
         tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
       >
@@ -286,7 +301,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className="theme-button-map-control"
+        className="button-light square"
         onClick={() =>
           setShareModal({
             title: 'Share this view',
@@ -307,7 +322,7 @@ class MapControlsButtons extends PureComponent {
 
   renderPrintButton = () => (
     <Button
-      theme="theme-button-map-control"
+      theme="button-light square"
       tooltip={{ text: 'Print (not yet available)' }}
       onClick={() => logEvent('printMap')}
       disabled
@@ -318,7 +333,7 @@ class MapControlsButtons extends PureComponent {
 
   renderMapTourBtn = () => (
     <Button
-      theme="theme-button-map-control"
+      theme="button-light square"
       tooltip={{ text: 'Map How-To Guide' }}
       onClick={() => this.props.setModalWelcomeOpen(true)}
     >
@@ -381,11 +396,8 @@ class MapControlsButtons extends PureComponent {
 
 MapControlsButtons.propTypes = {
   className: PropTypes.string,
-  setMapSettings: PropTypes.func,
-  setMainMapSettings: PropTypes.func,
   setShareModal: PropTypes.func,
   viewport: PropTypes.object,
-  setMenuSettings: PropTypes.func,
   setModalWelcomeOpen: PropTypes.func,
   mapTourOpen: PropTypes.bool,
   showBasemaps: PropTypes.bool,

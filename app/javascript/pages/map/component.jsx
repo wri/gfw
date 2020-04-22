@@ -2,29 +2,29 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
-// import { Media } from 'utils/responsive';
+import { Media } from 'utils/responsive';
 
-// import CountryDataProvider from 'providers/country-data-provider';
+import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
-// import GeodescriberProvider from 'providers/geodescriber-provider';
-// import WhitelistsProvider from 'providers/whitelists-provider';
+import GeodescriberProvider from 'providers/geodescriber-provider';
+import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
-// import AreasProvider from 'providers/areas-provider';
-// import PlanetBasemapsProvider from 'providers/planet-provider';
+import AreasProvider from 'providers/areas-provider';
+import PlanetBasemapsProvider from 'providers/planet-provider';
 
 import Map from 'components/map';
-// import ModalMeta from 'components/modals/meta';
-// import ModalSource from 'components/modals/sources';
-// import Share from 'components/modals/share';
+import ModalMeta from 'components/modals/meta';
+import ModalSource from 'components/modals/sources';
+import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
-// import AreaOfInterestModal from 'components/modals/area-of-interest';
+import AreaOfInterestModal from 'components/modals/area-of-interest';
 // import MapPrompts from 'components/prompts/map-prompts';
 // import ModalWelcome from 'components/modals/welcome';
 // import RecentImagery from 'components/recent-imagery';
 
 // import DataAnalysisMenu from './components/data-analysis-menu';
-// import MapControlButtons from './components/map-controls';
+import MapControlButtons from './components/map-controls';
 
 import './styles.scss';
 
@@ -114,8 +114,8 @@ class MainMapComponent extends PureComponent {
               embed={embed}
             />
           </Media>
-        )}
-        {!embed && (
+        )} */}
+        {/* {!embed && (
           <>
             <Media greaterThanOrEqual="md">
               <MapControlButtons
@@ -129,15 +129,15 @@ class MainMapComponent extends PureComponent {
               />
             </Media>
           </>
-        )}
-        <RecentImagery active={recentActive} />
-        {!embed && (
+        )} */}
+        {/* <RecentImagery active={recentActive} /> */}
+        {/* {!embed && (
           <Media greaterThanOrEqual="md">
             {!embed && <MapPrompts />}
             <ModalWelcome />
           </Media>
         )} */}
-        {/* <Share />
+        <Share />
         <ModalMeta />
         <ModalSource />
         <CountryDataProvider />
@@ -145,7 +145,7 @@ class MainMapComponent extends PureComponent {
         <GeodescriberProvider />
         <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <AreasProvider />
-        <PlanetBasemapsProvider /> */}
+        <PlanetBasemapsProvider />
         <LatestProvider />
         <GeostoreProvider />
         <DatasetsProvider />

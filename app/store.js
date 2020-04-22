@@ -2,7 +2,10 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import reduxQuerySync from 'utils/stateToUrl';
+
 import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
+
 import reducerRegistry from './registry';
 
 reducerRegistry.registerModule('myGfw', myGfwReduxModule);
@@ -18,10 +21,29 @@ const initialReducers = combineReducers(reducerRegistry.getReducers());
  * @param {string} options.storeKey This key will be used to preserve store in global namespace for safe HMR
  */
 
+// action sync to url
+// push changes path and query -> set query to store, location to store
+// back in history set url state to store
+// path change with query change -> set path and then set query change also (compare)
+
 export default (initialState) => {
-  return createStore(
+  const store = createStore(
     initialReducers,
     initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );
+
+  reduxQuerySync({
+    store,
+    params: {
+      map: {
+        key: 'map',
+        actionName: 'setMapSettings',
+        selector: state => state?.map?.settings,
+        action: payload => ({ type: 'setMapSettings', payload })
+      }
+    }
+  })
+
+  return store;
 };

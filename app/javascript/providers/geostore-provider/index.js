@@ -42,7 +42,7 @@ class GeostoreProvider extends PureComponent {
       activeArea,
       clearGeostore
     } = this.props;
-    const { location: { adm0, adm1, adm2 } } = router || {};
+    const { adm0, adm1, adm2 } = router?.location || {};
     const hasAdm0Changed = adm0 && adm0 !== prevProps?.router?.location?.adm0;
     const hasAdm1Changed = adm0 && adm1 !== prevProps?.router?.location?.adm1;
     const hasAdm2Changed = adm0 && adm1 && adm2 !== prevProps?.router?.location?.adm2;

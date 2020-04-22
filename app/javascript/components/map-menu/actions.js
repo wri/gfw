@@ -10,18 +10,12 @@ import { CARTO_API } from 'utils/constants';
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
 
-export const setMenuSettings = createThunkAction(
-  'setMenuSettings',
-  change => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'menu',
-        change,
-        state
-      })
-    );
-  }
-);
+export const setMenuSettings =
+  change =>
+    setComponentStateToUrl({
+      key: 'menu',
+      change
+    })
 
 const getSearchSQL = (string, nameString, nameStringSimple) => {
   const words = string && string.split(/,| |, /);

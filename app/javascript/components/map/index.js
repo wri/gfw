@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
+import withRouter from 'utils/withRouter';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -12,4 +13,4 @@ reducerRegistry.registerModule('map', {
   initialState
 });
 
-export default connect(getMapProps, actions)(MapComponent);
+export default withRouter(connect(getMapProps, actions)(MapComponent));

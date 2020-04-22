@@ -4,7 +4,7 @@ import range from 'lodash/range';
 
 const getDates = state => state.dates;
 
-export const getTicks = createSelector(getDates, dates => {
+export default createSelector(getDates, dates => {
   if (!dates) return null;
   const { minDate, maxDate } = dates;
   const numOfYears = moment(maxDate).diff(minDate, 'years');

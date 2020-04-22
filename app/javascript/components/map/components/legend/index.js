@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
 import { logEvent } from 'app/analytics';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import * as modalActions from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
@@ -16,9 +17,15 @@ const actions = {
 };
 
 class Legend extends PureComponent {
+  setMapSettings = change =>
+    setComponentStateToUrl({
+      key: 'map',
+      change
+    })
+
   onChangeOpacity = (currentLayer, opacity) => {
-    const { setMapSettings, activeDatasets } = this.props;
-    setMapSettings({
+    const { activeDatasets } = this.props;
+    this.setMapSettings({
       datasets: activeDatasets.map(d => {
         const activeDataset = { ...d };
         if (d.layers.includes(currentLayer.id)) {
@@ -30,13 +37,13 @@ class Legend extends PureComponent {
   };
 
   onChangeOrder = layerGroupsIds => {
-    const { setMapSettings, activeDatasets } = this.props;
+    const { activeDatasets } = this.props;
     const datasetIds = activeDatasets.map(d => d.dataset);
     const datasetsDiff = difference(datasetIds, layerGroupsIds);
     const newActiveDatasets = datasetsDiff
       .concat(layerGroupsIds)
       .map(id => activeDatasets.find(d => d.dataset === id));
-    setMapSettings({ datasets: newActiveDatasets });
+    this.setMapSettings({ datasets: newActiveDatasets });
   };
 
   onToggleLayer = (layer, enable) => {
@@ -54,7 +61,7 @@ class Legend extends PureComponent {
       }
       return newDataset;
     });
-    setMapSettings({
+    this.setMapSettings({
       datasets: newActiveDatasets,
       ...(enable && { canBound: true })
     });
@@ -64,8 +71,8 @@ class Legend extends PureComponent {
   };
 
   onChangeLayer = (layerGroup, newLayerKey) => {
-    const { setMapSettings, activeDatasets } = this.props;
-    setMapSettings({
+    const { activeDatasets } = this.props;
+    this.setMapSettings({
       datasets: activeDatasets.map(l => {
         const dataset = l;
         if (l.dataset === layerGroup.dataset) {
@@ -87,7 +94,7 @@ class Legend extends PureComponent {
         activeDatasets.splice(i, 1);
       }
     });
-    setMapSettings({ datasets: activeDatasets });
+    this.setMapSettings({ datasets: activeDatasets });
     logEvent('mapRemoveLayer', {
       label: currentLayer.id
     });
@@ -101,8 +108,8 @@ class Legend extends PureComponent {
   };
 
   onChangeTimeline = (dates, currentLayer) => {
-    const { setMapSettings, activeDatasets } = this.props;
-    setMapSettings({
+    const { activeDatasets } = this.props;
+    this.setMapSettings({
       datasets: activeDatasets.map(l => {
         const dataset = { ...l };
         if (l.layers.indexOf(currentLayer.id) > -1) {
@@ -119,8 +126,8 @@ class Legend extends PureComponent {
   };
 
   onChangeParam = (currentLayer, newParam) => {
-    const { setMapSettings, activeDatasets } = this.props;
-    setMapSettings({
+    const { activeDatasets } = this.props;
+    this.setMapSettings({
       datasets: activeDatasets.map(l => {
         const dataset = { ...l };
         if (l.layers.includes(currentLayer.id)) {
@@ -135,8 +142,8 @@ class Legend extends PureComponent {
   };
 
   onChangeDecodeParam = (currentLayer, newParam) => {
-    const { setMapSettings, activeDatasets } = this.props;
-    setMapSettings({
+    const { activeDatasets } = this.props;
+    this.setMapSettings({
       datasets: activeDatasets.map(l => {
         const dataset = { ...l };
         if (l.layers.includes(currentLayer.id)) {
@@ -161,7 +168,7 @@ class Legend extends PureComponent {
       confirmedOnly: true
     };
     newActiveDatasets[datasetIndex] = newDataset;
-    setMapSettings({ datasets: newActiveDatasets || [] });
+    this.setMapSettings({ datasets: newActiveDatasets || [] });
   };
 
   render() {

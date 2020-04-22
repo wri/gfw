@@ -79,6 +79,14 @@ const setMapLoading = (state, { payload }) => ({
   loading: payload
 });
 
+const setMapSettings = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload
+  }
+});
+
 const setMapInteractions = (state, { payload }) => {
   const interactions =
     payload &&
@@ -135,6 +143,7 @@ const clearMapInteractions = state => ({
 
 export default {
   [actions.setMapLoading]: setMapLoading,
+  [actions.setMapSettings]: setMapSettings,
   [actions.setMapInteractions]: setMapInteractions,
   [actions.setMapInteractionSelected]: setMapInteractionSelected,
   [actions.clearMapInteractions]: clearMapInteractions

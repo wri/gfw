@@ -86,10 +86,10 @@ class MainMapContainer extends PureComponent {
             ...map,
             canBound: true
           },
-          mainMap: {
-            ...mainMap,
-            showAnalysis: true
-          }
+          // mainMap: {
+          //   ...mainMap,
+          //   showAnalysis: true
+          // }
         }
       })
     }
@@ -159,9 +159,9 @@ class MainMapContainer extends PureComponent {
   };
 
   handleClickMap = () => {
-    if (this.props.menuSection) {
-      this.props.setMenuSettings({ menuSection: '' });
-    }
+    // if (this.props.menuSection) {
+    //   this.props.setMenuSettings({ menuSection: '' });
+    // }
     // if (this.props?.location?.type) {
     //   this.props.setMapPromptsSettings({
     //     open: true,

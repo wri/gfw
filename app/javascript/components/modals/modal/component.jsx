@@ -15,7 +15,7 @@ Modal.setAppElement('#maincontent');
 
 class CustomModal extends PureComponent {
   static propTypes = {
-    isOpen: PropTypes.bool.isRequired,
+    isOpen: PropTypes.bool,
     loading: PropTypes.bool,
     track: PropTypes.bool,
     onRequestClose: PropTypes.func.isRequired,

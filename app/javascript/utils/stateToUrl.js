@@ -1,7 +1,11 @@
 import queryString from 'query-string';
+import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
+import isEqual from 'lodash/isEqual';
+
+import { getRouter } from 'utils/withRouter';
+
 import oldLayers from 'data/v2-v3-datasets-layers.json';
-import { router } from 'utils/withRouter';
 
 const oldLayersAndDatasets = oldLayers.reduce(
   (obj, item) => ({
@@ -70,31 +74,130 @@ export const encodeStateForUrl = (params) => {
 };
 
 export const setComponentStateToUrl = ({ key, subKey, change }) => {
-  if (router) {
-    const { query, pathname } = router;
+  const router = getRouter();
+  const { query, pathname, pushDynamic } = router || {};
 
-    let params = change;
-    if (query && query[subKey || key] && !!change && typeof change === 'object') {
-      params = {
-        ...query[subKey || key],
-        ...change,
-      };
-    }
-
-    // if a false value is sent we should remove the key from the url
-    const cleanLocationQuery =
-      !change && query ? omit(query, [subKey || key]) : query;
-
-    router.pushDynamic({
-      pathname,
-      query: {
-        ...cleanLocationQuery,
-        ...(params && {
-          [subKey || key]: params,
-        }),
-      },
-    });
+  let params = change;
+  if (query && query[subKey || key] && !!change && typeof change === 'object') {
+    params = {
+      ...query[subKey || key],
+      ...change,
+    };
   }
 
-  return router;
+  // if a false value is sent we should remove the key from the url
+  const cleanLocationQuery =
+    !change && query ? omit(query, [subKey || key]) : query;
+  pushDynamic({
+    pathname,
+    query: {
+      ...cleanLocationQuery,
+      ...query.location && {
+        location: query.location.join('/')
+      },
+      ...(params && {
+        [subKey || key]: params,
+      }),
+    },
+  });
 };
+
+const handleStateUpdate = (store, params) => {
+  const state = store.getState()
+  const { query, pathname, pushDynamic } = getRouter();
+  // Parse the current location's query string.
+
+  // object with pathname params inside
+  const locationParams = {};
+  // object with query for seaerch
+  const queryParams = {};
+
+  // split query from pathname params
+  Object.keys(query).forEach(param => {
+    if (pathname.includes(`[${param}]`)) {
+      locationParams[param] = query[param];
+    } else if (pathname.includes(`[...${param}]`)) {
+      locationParams[param] = query[param].join('/')
+    } else {
+      queryParams[param] = query[param]
+    }
+  })
+
+  // object for state merged with query
+  const stateWithQueryParams = { ...queryParams };
+
+  // update query params with state values
+  Object.keys(params).forEach(param => {
+    const { selector, defaultValue } = params[param]
+    const value = selector(state)
+    if (value !== defaultValue) {
+      stateWithQueryParams[param] = value
+    } else {
+      delete stateWithQueryParams[param]
+    }
+  })
+
+  const stateChanged = !isEqual(stateWithQueryParams, queryParams);
+
+  if (stateChanged) {
+    const newLocation = {
+      pathname,
+      query: {
+        ...stateWithQueryParams,
+        ...locationParams
+      }
+    }
+    pushDynamic(newLocation)
+  }
+}
+
+const lastQueryValues = {};
+
+const handleLocationUpdate = (store, params) => {
+  const state = store.getState()
+  const { asPath } = getRouter();
+
+  const query = asPath.includes('?') ? qs.parse(asPath.split('?')[1]) : {};
+
+  if (query) {
+    const queryKeys = Object.keys(query);
+    const actionsToDispatch = queryKeys && queryKeys.reduce((arr, key) => {
+      const value = query[key];
+      const decodedValue = JSON.parse(atob(query[key]));
+      if ((isEmpty(lastQueryValues) || lastQueryValues[key] !== value)) {
+        const { selector, action } = params[key];
+        lastQueryValues[key] = value
+        if (selector(state) !== decodedValue) {
+          return [...arr, action(decodedValue)]
+        }
+      }
+      return []
+    }, [])
+
+    actionsToDispatch.forEach(action => {
+      store.dispatch(action)
+    })
+  }
+}
+
+export default ({
+  store,
+  params
+}) => {
+  const router = getRouter();
+  if (router) {
+    // Sync location to store on every location change, and vice versa.
+    const unsubscribeFromLocation = router.events.on('routeChangeComplete', () => handleLocationUpdate(store, params))
+    const unsubscribeFromStore = store.subscribe(() => handleStateUpdate(store, params))
+
+    // Sync location to store now, or vice versa, or neither.
+    handleLocationUpdate(store, params)
+
+    return function unsubscribe() {
+      unsubscribeFromLocation()
+      unsubscribeFromStore()
+    }
+  }
+
+  return false;
+}

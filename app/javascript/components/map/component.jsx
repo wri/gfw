@@ -5,7 +5,6 @@ import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
 import {  logMapLatLonTrack, logEvent } from 'app/analytics';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -30,9 +29,7 @@ class MapComponent extends Component {
   static propTypes = {
     className: PropTypes.string,
     viewport: PropTypes.shape().isRequired,
-    // bounds: PropTypes.shape(),
     mapStyle: PropTypes.string.isRequired,
-    setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
     clearMapInteractions: PropTypes.func.isRequired,
     mapLabels: PropTypes.bool,
@@ -52,12 +49,9 @@ class MapComponent extends Component {
     popupActions: PropTypes.array,
     onSelectBoundary: PropTypes.func,
     onDrawComplete: PropTypes.func,
-    lang: PropTypes.string
+    lang: PropTypes.string,
+    setMapSettings: PropTypes.func
   };
-
-  // static defaultProps = {
-  //   bounds: {}
-  // };
 
   state = {
     bounds: {},
@@ -75,6 +69,7 @@ class MapComponent extends Component {
       viewport,
       lang,
       drawing,
+      setMapSettings,
       clearMapInteractions
     } = this.props;
     const {
@@ -120,10 +115,10 @@ class MapComponent extends Component {
     // reset canBound after fitting bounds
     if (
       canBound &&
-      this.state.bounds &&
+      this.state?.bounds?.bbox?.length &&
       !isEqual(this.state.bounds, prevState.bounds)
     ) {
-      this.setMapSettings({ canBound: false, bbox: [] });
+      setMapSettings({ canBound: false, bbox: [] });
       // eslint-disable-next-line
       this.setState({ bounds: {} });
     }
@@ -142,7 +137,7 @@ class MapComponent extends Component {
             if (err) return;
             const { coordinates } = geometry;
             const difference = Math.abs(viewport.zoom - newZoom);
-            this.setMapSettings({
+            setMapSettings({
               center: {
                 lat: coordinates[1],
                 lng: coordinates[0]
@@ -155,16 +150,16 @@ class MapComponent extends Component {
     }
   }
 
-  setMapSettings = change =>
-    setComponentStateToUrl({
-      key: 'map',
-      change
-    })
+  // setMapSettings = change =>
+  //   setComponentStateToUrl({
+  //     key: 'map',
+  //     change
+  //   })
 
   onViewportChange = debounce(viewport => {
-    const { setMapSettings, location } = this.props;
+    const { location, setMapSettings } = this.props;
     const { latitude, longitude, bearing, pitch, zoom } = viewport;
-    this.setMapSettings({
+    setMapSettings({
       center: {
         lat: latitude,
         lng: longitude
@@ -292,7 +287,8 @@ class MapComponent extends Component {
       basemap,
       popupActions,
       onSelectBoundary,
-      onDrawComplete
+      onDrawComplete,
+      setMapSettings
     } = this.props;
 
     let tipText;
@@ -344,7 +340,7 @@ class MapComponent extends Component {
                   map={this.map}
                   buttons={popupActions}
                   onSelectBoundary={onSelectBoundary}
-                  setMapSettings={this.setMapSettings}
+                  setMapSettings={setMapSettings}
                 />
                 {/* LAYER MANAGER */}
                 <LayerManager map={map} />
