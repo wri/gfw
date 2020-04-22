@@ -113,14 +113,32 @@ export const parseData = createSelector([getData], data => {
 
 export const parseConfig = createSelector(
   [getColors, getStartYear, getEndYear],
-  (colors, startYear, endYear) => ({
-    ...getChartConfig(colors),
-    xAxis: {
-      tickCount: 12,
-      interval: endYear - startYear <= 2 ? 31 : undefined,
-      tickFormatter: t => moment(t).format('MMM-YY')
-    }
-  })
+  (colors, startYear, endYear) => {
+    const tooltip = [
+      {
+        label: 'Fire alerts'
+      },
+      {
+        key: 'count',
+        labelKey: 'date',
+        labelFormat: value => moment(value).format('DD-MM-YYYY'),
+        unit: ' MODIS alerts',
+        color: colors.main,
+        unitFormat: value =>
+          (Number.isInteger(value) ? format(',')(value) : value)
+      }
+    ];
+
+    return {
+      ...getChartConfig(colors),
+      tooltip,
+      xAxis: {
+        tickCount: 12,
+        interval: endYear - startYear <= 2 ? 31 : undefined,
+        tickFormatter: t => moment(t).format('MMM-YY')
+      }
+    };
+  }
 );
 
 export const parseSentence = createSelector(
