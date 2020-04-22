@@ -10,8 +10,6 @@ import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data && state.data.alerts;
 const getColors = state => state.colors || null;
-const getInteraction = state => state.settings.interaction || null;
-const getDataset = state => state.settings.dataset || null;
 const getStartYear = state => state.settings.startYear;
 const getEndYear = state => state.settings.endYear;
 const getSentences = state => state.sentence || null;
@@ -114,45 +112,26 @@ export const parseSentence = createSelector(
   [
     parseData,
     getColors,
-    getInteraction,
     getSentences,
-    getDataset,
     getLocationObject,
     getStartYear,
     getEndYear
   ],
-  (
-    data,
-    colors,
-    interaction,
-    sentence,
-    dataset,
-    location,
-    startYear,
-    endYear
-  ) => {
+  (data, colors, sentence, location, startYear, endYear) => {
     if (!data) return null;
-    let lastDate = data[data.length - 1] || {};
+    const lastDate = data[data.length - 1] || {};
     const firstDate = data[0] || {};
-    if (!isEmpty(interaction)) {
-      lastDate = interaction;
-    }
-    // NOTE: the first/last date should reflect the brush start/end
     const total = sumBy(
       data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
       'count'
     );
-
     const params = {
       location: location.label || '',
-      fire_season_month: null, // helper neededd
-      fire_season_length: 5,
       start_year: startYear,
       end_year: endYear,
-      dataset,
-      total_alerts: total ? format(',')(total) : 0,
-      status: {
-        value: status
+      total_alerts: {
+        value: total ? format(',')(total) : 0,
+        color: colors.main
       }
     };
     return { sentence, params };

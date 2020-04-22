@@ -86,7 +86,7 @@ export default {
     endYear: 2020
   },
   sentence:
-    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} fires.',
+    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} <b>MODIS</b> fire alerts.',
   whitelists: {
     adm0: [
       'AFG',
