@@ -8,12 +8,12 @@ import fires3 from 'pages/topics/assets/fires/slides/fires3.png';
 import fires4 from 'pages/topics/assets/fires/slides/fires4.png';
 
 // cards
-import investigate from 'pages/topics/assets/biodiversity/cards/investigate.png';
-import investigateLarge from 'pages/topics/assets/biodiversity/cards/investigate@2x.png';
-import explore from 'pages/topics/assets/biodiversity/cards/explore.png';
-import exploreLarge from 'pages/topics/assets/biodiversity/cards/explore@2x.png';
-import tigers from 'pages/topics/assets/biodiversity/cards/tigers.png';
-import tigersLarge from 'pages/topics/assets/biodiversity/cards/tigers@2x.png';
+import areas from 'pages/topics/assets/fires/cards/areas.png';
+import widgetStats from 'pages/topics/assets/fires/cards/widget-stats.png';
+import widgetCumulative from 'pages/topics/assets/fires/cards/widget-cumulative.png';
+import mapLayer from 'pages/topics/assets/fires/cards/map-layer.png';
+import forestFire from 'pages/topics/assets/fires/cards/forest-fire.png';
+import forestWatcher from 'pages/topics/assets/fires/cards/forest-watcher.png';
 
 // animations
 import scene1 from 'pages/topics/assets/fires/animations/scene1.json';
@@ -22,6 +22,9 @@ import scene2 from 'pages/topics/assets/fires/animations/scene2.json';
 import scene3 from 'pages/topics/assets/fires/animations/scene3.json';
 import sunHeat3 from 'pages/topics/assets/fires/animations/heat_sun3.json';
 import scene4 from 'pages/topics/assets/fires/animations/scene4.json';
+import nycWidgetConfig from 'components/widgets/climate/cumulative-emissions';
+
+const nycWidgetIsos = nycWidgetConfig.whitelists.adm0;
 
 export default {
   intro: {
@@ -140,42 +143,75 @@ export default {
   ],
   cards: [
     {
-      id: 'alerts',
-      title: 'Investigate and monitor biodiversity areas',
+      id: 'aois',
+      title: 'Monitor fires in your area',
       summary:
-        'View recent deforestation alerts and satellite imagery and and subscribe to alerts',
+        'Save an area and subscribe to receive emails when new fire alerts are detected',
       link:
-        '/map?map=eyJjZW50ZXIiOnsibGF0Ijo1LjM1MzUyMTM1NTMzNzMzNCwibG5nIjotMi40NjA5Mzc1MDAwMDAwMDA0fSwiem9vbSI6MywiZGF0YXNldHMiOlt7ImRhdGFzZXQiOiJlNjYzZWIwOS0wNGRlLTRmMzktYjg3MS0zNWM2YzJlZDEwYjUiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiZGQ1ZGY4N2YtMzljMi00YWViLWE0NjItM2VmOTY5YjIwYjY2Il19LHsiZGF0YXNldCI6IjNiMTJjYzVmLTRiZjgtNDg1Ny05MDllLWE4NzkxMTI1YmJmMSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJmZGZkNDI2Yi0xMWQwLTQ1ZmMtOTFmNC0zNzA2ZWJiMGU3OTgiXX0seyJkYXRhc2V0IjoiM2E2MzgxMDItYWI1MC00NzE3LWEwZmUtYjI3YmQ3OWQxOGMyIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjNjNDRkYThmLTE1OWEtNDFmMi05ZmRiLTQ0OGU0Y2QwOTIzZCJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRlZmF1bHQifSwibGFiZWwiOiJkZWZhdWx0IiwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
-      img1x: investigate,
-      img2x: investigateLarge,
+        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjFkM2NjZjliLTEwMmUtNGMwYi1iMmVhLTJhYmNjNzEyZTE5NCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI5M2UzMzkzMi0zOTU5LTQyMDEtYjhjOC02ZWMwYjMyNTk2ZTAiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6Im15LWdmdyJ9',
+      img1x: areas,
       btnText: 'view on map'
     },
     {
       id: 'map',
-      title: 'Explore data on the map',
+      title: 'Explore recent trends in fire alerts',
       summary:
-        'View important areas for biodiversity, biodiversity hotspots and more',
+        'See if current trends in fire alerts are normal, above or below average',
+      img1x: widgetStats,
+      selector: {
+        options: nycWidgetIsos.map(iso => ({
+          label: iso,
+          value: iso,
+          path: `/dashboards/country/${
+            iso
+          }?widget=cumulativeGlad&category=climate#cumulativeGlad`
+        }))
+      }
+    },
+    {
+      id: 'cumulative',
+      title: 'View cumulative fire alerts',
+      summary:
+        'Compare cumulative fire alerts this year to past years.',
       link:
-        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhNjg0YTliYi02M2YyLTRiZWEtYmY2Mi1mZDVlODBkMjNkNzUiLCJsYXllcnMiOlsiZGZkOWRlYjYtOGQzOS00NjQwLTg1NzEtNDM4OWQ1ZDg4OThhIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyI0M2EyMDVmZS1hYWQzLTRkYjEtODgwNy1jMzk5YTMyNjQzNDkiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZX0%3D&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiYmlvZGl2ZXJzaXR5In0%3D',
-      img1x: explore,
-      img2x: exploreLarge,
+        '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXSwidGltZWxpbmVQYXJhbXMiOnsic3RhcnREYXRlIjoiMjAxNy0wMy0xMSIsImVuZERhdGUiOiIyMDE3LTEyLTMwIiwidHJpbUVuZERhdGUiOiIyMDE3LTEyLTMwIn19LHsiZGF0YXNldCI6ImM3Yzc2Y2MxLTUxNzgtNDc0YS04YjZhLTYwYjg5NWUwMjI2MCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0MjQyN2E1NS1jOGI1LTRmYWMtOGRiMy1hOWQ1OWUxYjI2ZjciXSwiaXNvIjoiIn0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NSwiY2VudGVyIjp7ImxhdCI6MTIuNzA0NjUwNTA4Mjg3ODkzLCJsbmciOjk2LjI4NDE3OTY4NzUwMDAxfSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
+      img1x: widgetCumulative,
       btnText: 'view on map'
     },
     {
-      id: 'tigers',
-      title: 'How is tiger habitat faring?',
+      id: 'cumulative',
+      title: 'View fire alerts on the map',
       summary:
-        '13 countries aim to double the wild tiger population by 2022 - the next year of the tiger. View tree cover loss in the past year in important tiger habitat.',
+        'View fire alerts - updated daily - on the map anywhere in the world.',
       link:
-        '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXSwidGltZWxpbmVQYXJhbXMiOnsic3RhcnREYXRlIjoiMjAxNy0wMy0xMSIsImVuZERhdGUiOiIyMDE3LTEyLTMwIiwidHJpbUVuZERhdGUiOiIyMDE3LTEyLTMwIn19LHsiZGF0YXNldCI6ImM3Yzc2Y2MxLTUxNzgtNDc0YS04YjZhLTYwYjg5NWUwMjI2MCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0MjQyN2E1NS1jOGI1LTRmYWMtOGRiMy1hOWQ1OWUxYjI2ZjciXSwiaXNvIjoiIn0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NSwiY2VudGVyIjp7ImxhdCI6MTIuNzA0NjUwNTA4Mjg3ODkzLCJsbmciOjk2LjI4NDE3OTY4NzUwMDAxfSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
-      img1x: tigers,
-      img2x: tigersLarge,
+        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjFkM2NjZjliLTEwMmUtNGMwYi1iMmVhLTJhYmNjNzEyZTE5NCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI5M2UzMzkzMi0zOTU5LTQyMDEtYjhjOC02ZWMwYjMyNTk2ZTAiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6Im15LWdmdyJ9',
+      img1x: mapLayer,
       btnText: 'view on map'
+    },
+    {
+      id: 'blog',
+      title: 'The latest research and insights on fires from GFW',
+      summary:
+        'Learn about the complex relationship between forests and fires on the GFW blog.',
+      link:
+        'https://blog.globalforestwatch.org/fires',
+      img1x: forestFire,
+      btnText: 'read the blog'
+    },
+    {
+      id: 'blog',
+      title: 'Navigate to and report on fire alerts in the field',
+      summary:
+        'Use the Forest Watcher mobile app to navigate to and report on fire alerts offline in the field.',
+      link:
+        'https://forestwatcher.globalforestwatch.org/',
+      img1x: forestWatcher,
+      btnText: 'view the page'
     },
     {
       id: 'feedback',
       title:
-        'What other biodiversity data and analysis would you like to see on GFW?',
+        'What other fires data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
       theme: 'theme-card-dark',
       btnText: 'feedback'
