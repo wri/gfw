@@ -38,7 +38,7 @@ export const getData = createSelector(
     });
 
     const zeroFilledData = [];
-    if (startYear === endYear && !!data[0].alert__date) {
+    if (endYear - startYear <= 2 && !!data[0].alert__date) {
       // daily frequency
       // why check `alert__date`? Sometimes settings change before refetching,
       // and `data` is still the weekly data
@@ -117,7 +117,7 @@ export const parseConfig = createSelector(
     ...getChartConfig(colors),
     xAxis: {
       tickCount: 12,
-      interval: startYear === endYear ? 31 : undefined,
+      interval: endYear - startYear <= 2 ? 31 : undefined,
       tickFormatter: t => moment(t).format('MMM-YY')
     }
   })
