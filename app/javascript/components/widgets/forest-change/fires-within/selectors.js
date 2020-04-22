@@ -69,12 +69,10 @@ export const parseSentence = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationName],
-  (title, name) => {
-    let selectedTitle = title.initial;
-    if (name === 'global') {
-      selectedTitle = title.global;
-    }
+  [getTitle, getIndicator],
+  (title, indicator) => {
+    const indicatorLabel = indicator && indicator.label ? indicator.label : '';
+    const selectedTitle = title.replace('{indicator}', indicatorLabel);
     return selectedTitle;
   }
 );

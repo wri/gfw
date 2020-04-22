@@ -29,11 +29,18 @@ export default {
       border: true
     },
     {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      border: true
+    },
+    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All categories',
-      clearable: true,
+      clearable: false,
       border: false
     },
     {
@@ -41,7 +48,7 @@ export default {
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
-      clearable: false,
+      clearable: true,
       border: false
     }
   ],
@@ -68,10 +75,10 @@ export default {
     weeks: 13,
     dataset: 'VIIRS',
     confidence: 'h',
-    landCategory: 'wdpa',
-    forestType: ''
+    landCategory: '',
+    forestType: 'ifl'
   },
-  refetchKeys: ['confidence', 'landCategory', 'forestType'],
+  refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
     withInd:
       'In the last {timeframe}, {perfireswithin} of all fires alerts detected in {location} ocurred within {indicator}.'
