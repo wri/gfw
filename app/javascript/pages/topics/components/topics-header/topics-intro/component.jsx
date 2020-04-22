@@ -21,8 +21,13 @@ class Intro extends PureComponent {
             {isDesktop && img1x && (
               <div className="intro-img">
                 <img
-                  srcSet={`${img2x} 2x, ${img1x} 1x,`}
-                  src={`${img1x} 1x`}
+                  {...img2x && {
+                    srcSet: `${img2x} 2x, ${img1x} 1x,`,
+                    src: `${img1x} 1x`
+                  }}
+                  {...!img2x && {
+                    src: img1x
+                  }}
                   alt={title}
                 />
               </div>

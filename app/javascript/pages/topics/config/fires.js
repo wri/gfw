@@ -1,6 +1,5 @@
 // intro
-import intro1x from 'pages/topics/assets/biodiversity/intro/tiger.png';
-import intro2x from 'pages/topics/assets/biodiversity/intro/tiger@2x.png';
+import intro1x from 'pages/topics/assets/fires/intro/intro-fires.png';
 
 // slides
 import fires1 from 'pages/topics/assets/fires/slides/fires1.png';
@@ -28,7 +27,8 @@ export default {
   intro: {
     title: 'Fires',
     text:
-      'Although wildfires are a natural occurrence within some forest ecosystems, fire seasons are becoming more extreme and widespread, even in tropical rainforests where fires are atypical and particularly damaging. Hotter, drier weather caused by climate change and poor land management create conditions favorable for more frequent, larger and higher-intensity wildfires.'
+      'Although wildfires are a natural occurrence within some forest ecosystems, fire seasons are becoming more extreme and widespread, even in tropical rainforests where fires are atypical and particularly damaging. Hotter, drier weather caused by climate change and poor land management create conditions favorable for more frequent, larger and higher-intensity wildfires.',
+    img1x: intro1x
   },
   slides: [
     {
@@ -107,7 +107,8 @@ export default {
         },
         {
           id: 'fires-sun3',
-          data: sunHeat3
+          data: sunHeat3,
+          behind: true
         }
       ]
     },
