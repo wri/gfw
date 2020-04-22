@@ -1,0 +1,16 @@
+.c-brush {
+  position: relative;
+  margin: 16px 0 0;
+
+  .brush--chart {
+
+  }
+
+  .brush--svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+}

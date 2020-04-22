@@ -145,6 +145,18 @@ export const parseData = createSelector(
   }
 );
 
+export const parseBrushedData = createSelector(
+  [parseData, getStartIndex, getEndIndex],
+  (data, startIndex, endIndex) => {
+    if (!data) return null;
+
+    const start = startIndex || 0;
+    const end = endIndex || data.length - 1;
+
+    return data.slice(start, end + 1);
+  }
+);
+
 export const parseConfig = createSelector(
   [
     getColors,
@@ -163,7 +175,7 @@ export const parseConfig = createSelector(
       {
         key: 'count',
         labelKey: 'date',
-        labelFormat: value => moment(value).format('DD-MM-YYYY'),
+        labelFormat: value => moment(value).format('YYYY-MM-DD'),
         unit: ` ${dataset} alerts`,
         color: colors.main,
         unitFormat: value =>
@@ -180,7 +192,7 @@ export const parseConfig = createSelector(
           const yearDifference = maxminYear.max - date.year();
           date.set('year', compareYear - yearDifference);
 
-          return date.format('DD-MM-YYYY');
+          return date.format('YYYY-MM-DD');
         },
         unit: ` ${dataset} alerts`,
         color: '#00F',
@@ -191,12 +203,6 @@ export const parseConfig = createSelector(
 
     return {
       ...getChartConfig(colors, moment(latest)),
-      margin: {
-        top: 16,
-        right: 10,
-        left: 42,
-        bottom: 40
-      },
       xAxis: {
         tickCount: 12,
         interval: 4,
@@ -211,9 +217,48 @@ export const parseConfig = createSelector(
       },
       tooltip,
       brush: {
+        width: '100%',
+        height: 60,
+        margin: {
+          top: 0,
+          right: 10,
+          left: 48,
+          bottom: 12
+        },
         dataKey: 'date',
         startIndex,
-        endIndex
+        endIndex,
+        config: {
+          margin: {
+            top: 5,
+            right: 0,
+            left: 42,
+            bottom: 20
+          },
+          yKeys: {
+            lines: {
+              count: {
+                stroke: colors.main,
+                isAnimationActive: false
+              },
+              compareCount: {
+                stroke: '#00F',
+                isAnimationActive: false
+              }
+            }
+          },
+          xAxis: {
+            hide: true
+          },
+          yAxis: {
+            hide: true
+          },
+          cartesianGrid: {
+            horizontal: false,
+            vertical: false
+          },
+          height: 60
+        }
       }
     };
   }
@@ -297,7 +342,8 @@ export const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  originalData: parseData,
+  data: parseBrushedData,
   config: parseConfig,
   sentence: parseSentence
 });

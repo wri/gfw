@@ -5,9 +5,11 @@ import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 
 import ComposedChart from 'components/charts/composed-chart';
+import Brush from 'components/charts/brush-chart';
 
 class WidgetComposedChart extends Component {
   static propTypes = {
+    originalData: PropTypes.array,
     data: PropTypes.array,
     config: PropTypes.object,
     settings: PropTypes.object,
@@ -61,7 +63,7 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
-  handleBrush = values => {
+  handleBrushEnd = values => {
     const { handleChangeSettings } = this.props;
     if (handleChangeSettings) {
       handleChangeSettings(values);
@@ -69,7 +71,15 @@ class WidgetComposedChart extends Component {
   };
 
   render() {
-    const { data, config, active, simple, barBackground } = this.props;
+    const {
+      originalData,
+      data,
+      config,
+      active,
+      simple,
+      barBackground
+    } = this.props;
+    const { brush } = config;
 
     return (
       <div className="c-widget-composed-chart">
@@ -84,6 +94,14 @@ class WidgetComposedChart extends Component {
           barBackground={barBackground}
           simple={simple}
         />
+
+        {brush && (
+          <Brush
+            {...brush}
+            data={originalData}
+            onBrushEnd={this.handleBrushEnd}
+          />
+        )}
       </div>
     );
   }
