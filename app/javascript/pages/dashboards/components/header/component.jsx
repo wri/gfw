@@ -11,12 +11,12 @@ import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 
-import tagIcon from 'assets/icons/tag.svg';
-import downloadIcon from 'assets/icons/download.svg';
-import saveUserIcon from 'assets/icons/save-user.svg';
-import subscribedIcon from 'assets/icons/subscribed.svg';
-import pencilIcon from 'assets/icons/pencil.svg';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import tagIcon from 'assets/icons/tag.svg?sprite';
+import downloadIcon from 'assets/icons/download.svg?sprite';
+import saveUserIcon from 'assets/icons/save-user.svg?sprite';
+import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
+import pencilIcon from 'assets/icons/pencil.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
 
 class Header extends PureComponent {
@@ -40,7 +40,7 @@ class Header extends PureComponent {
     title: PropTypes.string,
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
-    errorMsg: PropTypes.string
+    errorMsg: PropTypes.string,
   };
 
   render() {
@@ -64,7 +64,7 @@ class Header extends PureComponent {
       title,
       activeArea,
       firstArea,
-      errorMsg
+      errorMsg,
     } = this.props;
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
@@ -95,13 +95,12 @@ class Header extends PureComponent {
             >
               {shareMeta}
             </Button>
-            {activeArea &&
-              activeArea.userArea && (
+            {activeArea && activeArea.userArea && (
               <Button
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
                   text: `Edit ${locationNames.adm0.label}`,
-                  position: 'bottom'
+                  position: 'bottom',
                 }}
                 onClick={() => setAreaOfInterestModalSettings({ open: true })}
               >
@@ -113,7 +112,7 @@ class Header extends PureComponent {
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
                   text: 'Save as an area of interest',
-                  position: 'bottom'
+                  position: 'bottom',
                 }}
                 onClick={() => setAreaOfInterestModalSettings({ open: true })}
               >
@@ -128,10 +127,14 @@ class Header extends PureComponent {
                   text: `Download the data${
                     locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
                   }`,
-                  position: 'bottom'
+                  position: 'bottom',
                 }}
                 onClick={() => {
-                  logEvent('downloadDashboardPage', { label: locationNames.adm0 && locationNames.adm0.label || 'Global' });
+                  logEvent('downloadDashboardPage', {
+                    label:
+                      (locationNames.adm0 && locationNames.adm0.label) ||
+                      'Global',
+                  });
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -147,34 +150,33 @@ class Header extends PureComponent {
                   className="breadcrumb-link"
                   to="/dashboards/global"
                   onClick={() =>
-                    logEvent('switchDashboardType', { label: 'changes to global' })
-                  }
+                    logEvent('switchDashboardType', {
+                      label: 'changes to global',
+                    })}
                 >
                   <Icon icon={arrowIcon} className="breadcrumb-icon" />
                   Go to Global dashboard
                 </Link>
               )}
-              {isCountryDashboard &&
-                !!firstArea && (
+              {isCountryDashboard && !!firstArea && (
                 <Link
                   className="breadcrumb-link"
                   to={`/dashboards/aoi/${firstArea.id}`}
                   onClick={() =>
                     logEvent('switchDashboardType', {
-                      label: 'changes to areas'
-                    })
-                  }
+                      label: 'changes to areas',
+                    })}
                 >
                   <Icon icon={arrowIcon} className="breadcrumb-icon" />
-                    Go to Areas dashboard
+                  Go to Areas dashboard
                 </Link>
               )}
               {title && (
                 <h3 className={cx({ global: title === 'global' })}>{title}</h3>
               )}
-              {isAreaDashboard &&
-                !activeArea &&
-                !loading && <h3>{errorMsg}</h3>}
+              {isAreaDashboard && !activeArea && !loading && (
+                <h3>{errorMsg}</h3>
+              )}
               {adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
@@ -183,16 +185,13 @@ class Header extends PureComponent {
                   noSelectedValue={`Select ${selectorMeta.typeName}`}
                   value={locationNames.adm0}
                   options={adm0s}
-                  onChange={adm0 =>
-                    handleLocationChange({ adm0: adm0 && adm0.value })
-                  }
+                  onChange={(adm0) =>
+                    handleLocationChange({ adm0: adm0 && adm0.value })}
                   searchable
                   disabled={loading}
                   tooltip={{
-                    text: `Choose the ${
-                      selectorMeta.typeName
-                    } you want to explore`,
-                    delay: 1000
+                    text: `Choose the ${selectorMeta.typeName} you want to explore`,
+                    delay: 1000,
                   }}
                   arrowPosition="left"
                   clearable={isCountryDashboard}
@@ -203,75 +202,70 @@ class Header extends PureComponent {
                 adm0s &&
                 adm1s &&
                 adm1s.length > 1 && (
-                <Dropdown
-                  theme="theme-dropdown-dark"
-                  placeholder="Select a region"
-                  noItemsFound="No region found"
-                  noSelectedValue="Select a region"
-                  value={locationNames.adm1}
-                  options={adm1s}
-                  onChange={adm1 =>
-                    handleLocationChange({
-                      adm0: location.adm0,
-                      adm1: adm1 && adm1.value
-                    })
-                  }
-                  searchable
-                  disabled={loading}
-                  tooltip={{
-                    text: 'Choose the region you want to explore',
-                    delay: 1000
-                  }}
-                  arrowPosition="left"
-                  clearable
-                />
-              )}
+                  <Dropdown
+                    theme="theme-dropdown-dark"
+                    placeholder="Select a region"
+                    noItemsFound="No region found"
+                    noSelectedValue="Select a region"
+                    value={locationNames.adm1}
+                    options={adm1s}
+                    onChange={(adm1) =>
+                      handleLocationChange({
+                        adm0: location.adm0,
+                        adm1: adm1 && adm1.value,
+                      })}
+                    searchable
+                    disabled={loading}
+                    tooltip={{
+                      text: 'Choose the region you want to explore',
+                      delay: 1000,
+                    }}
+                    arrowPosition="left"
+                    clearable
+                  />
+                )}
               {isCountryDashboard &&
                 location.adm1 &&
                 adm1s &&
                 adm2s &&
                 adm2s.length > 1 && (
-                <Dropdown
-                  theme="theme-dropdown-dark"
-                  placeholder="Select a region"
-                  noItemsFound="No region found"
-                  noSelectedValue="Select a region"
-                  value={locationNames.adm2}
-                  options={adm2s}
-                  onChange={adm2 =>
-                    handleLocationChange({
-                      adm0: location.adm0,
-                      adm1: location.adm1,
-                      adm2: adm2 && adm2.value
-                    })
-                  }
-                  searchable
-                  disabled={loading}
-                  tooltip={{
-                    text: 'Choose the region you want to explore',
-                    delay: 1000
-                  }}
-                  arrowPosition="left"
-                  clearable
-                />
-              )}
+                  <Dropdown
+                    theme="theme-dropdown-dark"
+                    placeholder="Select a region"
+                    noItemsFound="No region found"
+                    noSelectedValue="Select a region"
+                    value={locationNames.adm2}
+                    options={adm2s}
+                    onChange={(adm2) =>
+                      handleLocationChange({
+                        adm0: location.adm0,
+                        adm1: location.adm1,
+                        adm2: adm2 && adm2.value,
+                      })}
+                    searchable
+                    disabled={loading}
+                    tooltip={{
+                      text: 'Choose the region you want to explore',
+                      delay: 1000,
+                    }}
+                    arrowPosition="left"
+                    clearable
+                  />
+                )}
             </div>
           </div>
-          {!loading &&
-            activeArea &&
-            activeArea.userArea && (
+          {!loading && activeArea && activeArea.userArea && (
             <div className="columns small-12 medium-10">
               <div className="metadata">
-                {tags &&
-                    !!tags.length && (
+                {tags && !!tags.length && (
                   <div className="tags">
                     <Icon icon={tagIcon} className="tag-icon" />
                     <p>{tags.join(', ')}</p>
                   </div>
                 )}
                 {(activeArea.deforestationAlerts ||
-                    activeArea.monthlySummary ||
-                    activeArea.fireAlerts) && (
+                  activeArea.monthlySummary ||
+                  activeArea.fireAlerts) && (
                   <div className="subscribed">
                     <Icon icon={subscribedIcon} className="subscribed-icon" />
                     <p>Subscribed</p>
@@ -285,29 +279,27 @@ class Header extends PureComponent {
               {!loading && (
                 <div>
                   <DynamicSentence className="sentence" sentence={sentence} />
-                  {location &&
-                    location.adm0 === 'IDN' && (
+                  {location && location.adm0 === 'IDN' && (
                     <Fragment>
                       <p className="disclaimer">
-                          *Primary forest is defined as mature natural humid
-                          tropical forest that has not been completely cleared
-                          and regrown in recent history.
+                        *Primary forest is defined as mature natural humid
+                        tropical forest that has not been completely cleared and
+                        regrown in recent history.
                       </p>
                       <p className="disclaimer">
-                          **Natural forest is defined as all tree cover (all
-                          vegetation taller than 5 meters in height) with 30%
-                          minimum tree cover density excluding tree cover within
-                          mapped tree plantations.
+                        **Natural forest is defined as all tree cover (all
+                        vegetation taller than 5 meters in height) with 30%
+                        minimum tree cover density excluding tree cover within
+                        mapped tree plantations.
                       </p>
                     </Fragment>
                   )}
-                  {forestAtlasLink &&
-                    isCountryDashboard && (
+                  {forestAtlasLink && isCountryDashboard && (
                     <Button
                       className="forest-atlas-btn"
                       extLink={forestAtlasLink.url}
                     >
-                        EXPLORE FOREST ATLAS
+                      EXPLORE FOREST ATLAS
                     </Button>
                   )}
                 </div>

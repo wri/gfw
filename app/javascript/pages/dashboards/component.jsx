@@ -24,7 +24,7 @@ import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
 import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import Map from './components/map';
 import Header from './components/header';
@@ -45,11 +45,11 @@ class DashboardsPage extends PureComponent {
     areaLoading: PropTypes.bool,
     embed: PropTypes.bool,
     clearScrollTo: PropTypes.func,
-    setDashboardPromptsSettings: PropTypes.func
+    setDashboardPromptsSettings: PropTypes.func,
   };
 
   state = {
-    scrollY: 0
+    scrollY: 0,
   };
 
   componentDidMount() {
@@ -58,7 +58,7 @@ class DashboardsPage extends PureComponent {
       setDashboardPromptsSettings({
         open: true,
         stepIndex: 0,
-        stepsKey: 'viewNationalDashboards'
+        stepsKey: 'viewNationalDashboards',
       });
     }
 
@@ -77,7 +77,7 @@ class DashboardsPage extends PureComponent {
       !isEqual(activeArea, prevActiveArea)
     ) {
       logEvent('publicArea', {
-        label: activeArea.id
+        label: activeArea.id,
       });
     }
 
@@ -86,7 +86,7 @@ class DashboardsPage extends PureComponent {
       setDashboardPromptsSettings({
         open: true,
         stepIndex: 0,
-        stepsKey: 'downloadDashboardStats'
+        stepsKey: 'downloadDashboardStats',
       });
     }
   }
@@ -97,7 +97,7 @@ class DashboardsPage extends PureComponent {
 
   listenToScroll = () => {
     this.setState({
-      scrollY: window.pageYOffset
+      scrollY: window.pageYOffset,
     });
   };
 
@@ -130,7 +130,7 @@ class DashboardsPage extends PureComponent {
       activeArea,
       areaLoading,
       clearScrollTo,
-      embed
+      embed,
     } = this.props;
 
     const { status, location } = activeArea || {};
@@ -152,19 +152,18 @@ class DashboardsPage extends PureComponent {
           <Fragment>
             <div className="content-panel">
               <Header className="header" />
-              {links &&
-                !!links.length && (
+              {links && !!links.length && (
                 <SubNavMenu
                   className="nav"
                   theme="theme-subnav-dark"
-                  links={links.map(l => ({
+                  links={links.map((l) => ({
                     ...l,
                     onClick: () => {
                       handleCategoryChange(l.category);
                       logEvent('selectDashboardCategory', {
-                        label: l.category
+                        label: l.category,
                       });
-                    }
+                    },
                   }))}
                   checkActive
                 />
@@ -178,17 +177,13 @@ class DashboardsPage extends PureComponent {
               )}
               <Widgets className="dashboard-widgets" />
             </div>
-            <div
-              className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}
-            >
+            <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
               <Media greaterThanOrEqual="md">
                 <Sticky bottomBoundary=".l-dashboards-page">
                   {this.renderMap()}
                 </Sticky>
               </Media>
-              <Media lessThan="md">
-                {this.renderMap()}
-              </Media>
+              <Media lessThan="md">{this.renderMap()}</Media>
             </div>
             <MapControls className="map-controls" />
             <Share />

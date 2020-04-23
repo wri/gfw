@@ -5,8 +5,8 @@ import { logEvent } from 'app/analytics';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 
-import plusIcon from 'assets/icons/plus.svg';
-import minusIcon from 'assets/icons/minus.svg';
+import plusIcon from 'assets/icons/plus.svg?sprite';
+import minusIcon from 'assets/icons/minus.svg?sprite';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -15,7 +15,12 @@ import './styles.scss';
 
 class MapControlsButtons extends PureComponent {
   renderZoomButtons = () => {
-    const { viewport: { zoom }, setMapSettings, maxZoom, minZoom } = this.props;
+    const {
+      viewport: { zoom },
+      setMapSettings,
+      maxZoom,
+      minZoom,
+    } = this.props;
 
     return (
       <Fragment>
@@ -63,7 +68,7 @@ MapControlsButtons.propTypes = {
   setMapSettings: PropTypes.func,
   viewport: PropTypes.object,
   minZoom: PropTypes.number,
-  maxZoom: PropTypes.number
+  maxZoom: PropTypes.number,
 };
 
 export default connect()(MapControlsButtons);

@@ -1,0 +1,144 @@
+@import '~styles/settings.scss';
+
+$header-height: rem(56px);
+$full-screen-height: rem(76px);
+
+.c-header {
+  height: $header-height;
+  border-bottom: solid 1px $border;
+  background: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  @media screen and (min-width: $screen-m) {
+    position: relative;
+    z-index: 5;
+  }
+
+  .logo {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    cursor: pointer;
+    width: rem(76px);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    height: $header-height;
+  }
+
+  .nav-menu {
+    padding-left: 0;
+
+    @media screen and (min-width: $screen-m) {
+      padding-left: rem(80px);
+    }
+
+    @media screen and (min-width: 850px) {
+      padding-left: rem(100px);
+    }
+
+    &.mobile {
+      padding-left: 0;
+    }
+  }
+
+  li {
+    height: 100%;
+    position: relative;
+    font-size: rem(14px);
+
+    .nav-link {
+      &::after {
+        content: '';
+        height: rem(5px);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: transparent;
+      }
+
+      &.active {
+        &::after {
+          background-color: $green-gfw;
+        }
+      }
+
+      &.hidden {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .nav-link,
+    .menu-link {
+      position: relative;
+      font-family: $font-family-1;
+      color: $slate;
+      height: 100%;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        color: darken($slate, 30%);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    svg {
+      fill: $slate;
+
+      &:hover {
+        color: darken($slate, 30%);
+      }
+    }
+  }
+
+  &.full-screen {
+    height: 0;
+    border-bottom-width: 0;
+
+    .nav-menu {
+      padding-left: rem(80px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      .logo {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+      .nav {
+        height: $full-screen-height;
+      }
+    }
+
+    &.full-screen-open {
+      height: $header-height;
+      border-bottom-width: 1px;
+
+      @media screen and (min-width: $screen-m) {
+        height: $full-screen-height;
+      }
+    }
+  }
+}

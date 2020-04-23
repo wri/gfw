@@ -8,7 +8,7 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Tip from 'components/ui/tip';
 
-import linkIcon from 'assets/icons/link.svg';
+import linkIcon from 'assets/icons/link.svg?sprite';
 import './styles.scss';
 
 class MiniLegend extends PureComponent {
@@ -19,7 +19,7 @@ class MiniLegend extends PureComponent {
     return layers && layers.length ? (
       <div className={cx('c-mini-legend', className)}>
         <ul>
-          {layers.map(l => (
+          {layers.map((l) => (
             <li key={l.name}>
               <span style={{ backgroundColor: l.color }} />
               {l.name}
@@ -32,7 +32,7 @@ class MiniLegend extends PureComponent {
             onClick={() => {
               setMainMapView(activeDatasets);
               logEvent('visitMainMapFromDashboard', {
-                label: layers && layers.map(l => l.name).join(', ')
+                label: layers && layers.map((l) => l.name).join(', '),
               });
             }}
             tooltip={{
@@ -40,7 +40,7 @@ class MiniLegend extends PureComponent {
               position: 'top',
               arrow: true,
               disabled: isDeviceTouch,
-              html: <Tip text="Explore the data on the global map" />
+              html: <Tip text="Explore the data on the global map" />,
             }}
           >
             <Icon icon={linkIcon} className="info-icon" />
@@ -55,7 +55,7 @@ MiniLegend.propTypes = {
   layers: PropTypes.array,
   setMainMapView: PropTypes.func,
   className: PropTypes.string,
-  activeDatasets: PropTypes.array
+  activeDatasets: PropTypes.array,
 };
 
 export default MiniLegend;

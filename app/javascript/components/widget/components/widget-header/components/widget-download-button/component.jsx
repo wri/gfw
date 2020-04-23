@@ -12,7 +12,7 @@ import { logEvent } from 'app/analytics';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import downloadIcon from 'assets/icons/download.svg';
+import downloadIcon from 'assets/icons/download.svg?sprite';
 
 import './styles.scss';
 
@@ -33,7 +33,7 @@ class WidgetDownloadButton extends PureComponent {
     metaKey: PropTypes.string,
     simple: PropTypes.bool,
     widget: PropTypes.string,
-    areaTooLarge: PropTypes.bool
+    areaTooLarge: PropTypes.bool,
   };
 
   generateZipFromURL = () => {
@@ -46,7 +46,7 @@ class WidgetDownloadButton extends PureComponent {
       adminLevel: intAdminLevel,
       metaKey,
       getDataURL,
-      location
+      location,
     } = this.props;
 
     const params = { ...location, ...settings };
@@ -63,23 +63,21 @@ class WidgetDownloadButton extends PureComponent {
               'activeData',
               'page',
               'page_size',
-              'ifl'
+              'ifl',
             ].includes(key) && {
-              [snakeCase(key)]: settings[key]
-            })
+              [snakeCase(key)]: settings[key],
+            }),
           }),
           {}
-        )
+        ),
       }),
       date_downloaded: moment().format('YYYY-MM-DD'),
-      metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${
-        metaKey
-      }`,
-      link: window.location.href
+      metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${metaKey}`,
+      link: window.location.href,
     };
 
     const metadataFile = Object.entries(metadata)
-      .map(entry => `${entry[0]},${entry[1]}`)
+      .map((entry) => `${entry[0]},${entry[1]}`)
       .join('\n');
 
     let parentAdminLevel = 'global';
@@ -107,7 +105,7 @@ class WidgetDownloadButton extends PureComponent {
       [`name,${parentAdminLevel}${parentAdminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
           Object.values(parentData).map(
-            entry => `"${entry.label}","${entry.value}"`
+            (entry) => `"${entry.label}","${entry.value}"`
           )
         )
         .join('\n');
@@ -118,7 +116,7 @@ class WidgetDownloadButton extends PureComponent {
       [`name,${adminLevel}${adminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
           Object.values(locationData).map(
-            entry => `"${entry.label}","${entry.value}"`
+            (entry) => `"${entry.label}","${entry.value}"`
           )
         )
         .join('\n');
@@ -128,12 +126,12 @@ class WidgetDownloadButton extends PureComponent {
       [`name,${childAdminLevel}${childAdminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
           Object.values(childData).map(
-            entry => `"${entry.label}","${entry.value}"`
+            (entry) => `"${entry.label}","${entry.value}"`
           )
         )
         .join('\n');
 
-    const urlToPromise = url =>
+    const urlToPromise = (url) =>
       new Promise((resolve, reject) => {
         JSZipUtils.getBinaryContent(url, (err, data) => {
           if (err) {
@@ -149,12 +147,7 @@ class WidgetDownloadButton extends PureComponent {
       const { name, url } = file;
       let filename;
       try {
-        filename =
-          name ||
-          url
-            .split('?')[0]
-            .split('/')
-            .pop();
+        filename = name || url.split('?')[0].split('/').pop();
         if (filenames.includes(filename)) {
           filename = filename.concat(`-${index}.csv`);
         } else {
@@ -176,7 +169,7 @@ class WidgetDownloadButton extends PureComponent {
     if (childLocationMetadataFile) {
       zip.file(`${childAdminLevel}_metadata.csv`, childLocationMetadataFile);
     }
-    zip.generateAsync({ type: 'blob' }).then(content => {
+    zip.generateAsync({ type: 'blob' }).then((content) => {
       saveAs(content, `${title}.zip`);
     });
   };
@@ -219,10 +212,10 @@ class WidgetDownloadButton extends PureComponent {
     return (
       <Button
         className={cx('c-widget-download-button', {
-          'small-download-button': this.props.simple
+          'small-download-button': this.props.simple,
         })}
         theme={cx('theme-button-small square', {
-          'theme-button-grey-filled theme-button-xsmall': this.props.simple
+          'theme-button-grey-filled theme-button-xsmall': this.props.simple,
         })}
         onClick={this.onClickDownloadBtn}
         tooltip={{ text: tooltipText }}

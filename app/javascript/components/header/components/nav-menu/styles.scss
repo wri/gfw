@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+.c-nav-menu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-start;
+  flex: 1;
+  z-index: 1;
+
+  .nav-link {
+    padding: 0 rem(10px);
+    margin: 0 rem(5px);
+    position: relative;
+
+    &.with-submenu {
+      padding-right: rem(20px);
+    }
+  }
+
+  .icon-arrow {
+    height: rem(10px);
+    margin-left: rem(5px);
+
+    &.active {
+      transform: rotate(180deg);
+    }
+  }
+
+  .submenu {
+    position: absolute;
+    top: 55px;
+    left: -70%;
+  }
+
+  &.full-screen {
+    .submenu {
+      top: 75px;
+    }
+  }
+}
