@@ -14,6 +14,8 @@ export default class Brush extends PureComponent {
   static propTypes = {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    startIndex: PropTypes.number,
+    endIndex: PropTypes.number,
     margin: PropTypes.object,
     data: PropTypes.array,
     config: PropTypes.object,
@@ -36,19 +38,22 @@ export default class Brush extends PureComponent {
   };
 
   componentDidMount() {
-    const { margin, data } = this.props;
+    const { margin, data, startIndex, endIndex } = this.props;
     const { width, height } = this.svg.getBoundingClientRect();
 
     this.scale = scaleLinear()
       .domain([0, data.length - 1])
       .range([margin.left, width - margin.right]);
 
+    const start = startIndex || 0;
+    const end = endIndex || data.length - 1;
+
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       ready: true,
       brushSelection: [
-        [this.scale(0), margin.top],
-        [this.scale(data.length - 1), height - margin.bottom]
+        [this.scale(start), margin.top],
+        [this.scale(end), height - margin.bottom]
       ]
     });
   }

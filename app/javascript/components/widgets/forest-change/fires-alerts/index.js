@@ -67,8 +67,8 @@ export default {
     },
     // fires
     {
-      dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',
-      layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
+      dataset: 'd8d93fbb-8304-424f-99fb-1e521b5df56a',
+      layers: ['d621ce0f-0872-41ef-b2ec-18faec3fd1d9']
     }
   ],
   hideLayers: true,
