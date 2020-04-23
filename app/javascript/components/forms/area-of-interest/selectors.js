@@ -44,6 +44,7 @@ export const getInitialValues = createSelector(
       language,
       userArea,
       id,
+      location,
       ...rest
     } =
       area || {};
@@ -55,6 +56,11 @@ export const getInitialValues = createSelector(
         monthlySummary ? 'monthlySummary' : false
       ]),
       geostore: geostoreId,
+      location: {
+        type: 'geostore',
+        adm0: geostoreId,
+        ...location
+      },
       ...rest,
       id: userArea ? id : null,
       userArea,

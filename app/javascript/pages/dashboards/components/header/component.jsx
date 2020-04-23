@@ -95,8 +95,7 @@ class Header extends PureComponent {
             >
               {shareMeta}
             </Button>
-            {process.env.FEATURE_ENV === 'staging' &&
-              activeArea &&
+            {activeArea &&
               activeArea.userArea && (
               <Button
                 className="theme-button-medium theme-button-clear square"
@@ -109,8 +108,7 @@ class Header extends PureComponent {
                 <Icon icon={pencilIcon} />
               </Button>
             )}
-            {process.env.FEATURE_ENV === 'staging' &&
-              location.type === 'country' && (
+            {location.type === 'country' && (
               <Button
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
@@ -131,6 +129,9 @@ class Header extends PureComponent {
                     locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
                   }`,
                   position: 'bottom'
+                }}
+                onClick={() => {
+                  track('downloadDashboardPage', { label: locationNames.adm0 && locationNames.adm0.label || 'Global' });
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -153,8 +154,7 @@ class Header extends PureComponent {
                   Go to Global dashboard
                 </Link>
               )}
-              {process.env.FEATURE_ENV === 'staging' &&
-                isCountryDashboard &&
+              {isCountryDashboard &&
                 !!firstArea && (
                 <Link
                   className="breadcrumb-link"
@@ -315,9 +315,7 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
-        {process.env.FEATURE_ENV === 'staging' && (
-          <AreaOfInterestModal viewAfterSave />
-        )}
+        <AreaOfInterestModal viewAfterSave />
       </div>
     );
   }

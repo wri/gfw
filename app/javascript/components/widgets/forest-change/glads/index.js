@@ -20,14 +20,14 @@ export default {
   title: 'Deforestation alerts for the last week in {location}',
   categories: ['forest-change', 'summary'],
   admins: ['adm0', 'adm1', 'adm2'],
-  types: ['geostore', 'wdpa', 'use'],
+  types: [],
   type: 'loss',
   colors: 'loss',
   sortOrder: {
     summary: 8,
     forestChange: 12
   },
-  visible: ['dashboard', 'analysis'],
+  visible: ['analysis'],
   chartType: 'composedChart',
   sentence:
     '{count} deforestation alerts detected in {location} in the last 7 days, compared to a weekly average of {weeklyMean} in the last year.',

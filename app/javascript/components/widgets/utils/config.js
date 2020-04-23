@@ -17,7 +17,7 @@ export const getForestTypes = ({
       const isGlobal = !polynamesWhitelist && o.global;
       const hasPolyname =
         isGlobal ||
-        (polynamesWhitelist && polynamesWhitelist.includes(o.value));
+        (polynamesWhitelist && polynamesWhitelist.includes(o.tableKey));
       return isGlobal || hasPolyname;
     })
     .map(f => ({
@@ -35,7 +35,8 @@ export const getLandCategories = ({ landCategories, polynamesWhitelist }) =>
   landCategories.filter(o => {
     const isGlobal = !polynamesWhitelist && o.global;
     const hasPolyname =
-      isGlobal || (polynamesWhitelist && polynamesWhitelist.includes(o.value));
+      isGlobal ||
+      (polynamesWhitelist && polynamesWhitelist.includes(o.tableKey));
     return isGlobal || hasPolyname;
   });
 

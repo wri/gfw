@@ -30,6 +30,7 @@ class AnalysisComponent extends PureComponent {
     setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func,
     checkingShape: PropTypes.bool,
+    areaTooLarge: PropTypes.bool,
     uploadingShape: PropTypes.bool
   };
 
@@ -48,11 +49,11 @@ class AnalysisComponent extends PureComponent {
       handleCancelAnalysis,
       handleFetchAnalysis,
       setAreaOfInterestModalSettings,
-      setSubscribeSettings,
       endpoints,
       widgetLayers,
       embed,
-      setShareModal
+      setShareModal,
+      areaTooLarge
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -69,8 +70,6 @@ class AnalysisComponent extends PureComponent {
       })
     };
     const isDeletedAoI = location.areaId && !activeArea;
-
-    const isStaging = process.env.FEATURE_ENV === 'staging';
 
     return (
       <Fragment>
@@ -164,15 +163,16 @@ class AnalysisComponent extends PureComponent {
             {(!activeArea || (activeArea && !activeArea.userArea)) && (
               <Button
                 className="analysis-action-btn save-to-mygfw-btn"
-                onClick={() => {
-                  if (isStaging) {
-                    setAreaOfInterestModalSettings({ open: true });
-                  } else {
-                    setSubscribeSettings({ open: true });
+                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                disabled={areaTooLarge}
+                {...areaTooLarge && {
+                  tooltip: {
+                    text:
+                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).'
                   }
                 }}
               >
-                {isStaging ? 'SAVE IN MY GFW' : 'subscribe'}
+                  save in my gfw
               </Button>
             )}
             {activeArea &&

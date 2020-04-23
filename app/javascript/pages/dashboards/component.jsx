@@ -206,7 +206,7 @@ class DashboardsPage extends PureComponent {
                 <GeodescriberProvider />
               </Fragment>
             )}
-            {process.env.FEATURE_ENV === 'staging' && <AreasProvider />}
+            <AreasProvider />
             {!embed && isDesktop && <DashboardPrompts />}
           </div>
         )}

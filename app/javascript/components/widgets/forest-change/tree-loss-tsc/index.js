@@ -24,7 +24,7 @@ export default {
     initial: 'Annual tree cover loss by dominant driver in {location}',
     global: 'Global annual tree cover loss by dominant driver'
   },
-  types: ['global', 'country', 'geostore'],
+  types: ['global', 'country'],
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
@@ -109,10 +109,10 @@ export default {
           ...data,
           settings: {
             startYear,
-            endYear: 2015
+            endYear: 2018
           },
           options: {
-            years: range.filter(y => y.value <= 2015)
+            years: range.filter(y => y.value <= 2018)
           }
         };
       })

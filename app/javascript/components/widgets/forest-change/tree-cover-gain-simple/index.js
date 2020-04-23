@@ -1,5 +1,9 @@
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
+import { getGain } from 'services/analysis-cached';
+
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
+
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_GAIN_DATASET
@@ -21,19 +25,14 @@ export default {
   metaKey: 'widget_tree_cover_gain',
   settingsConfig: [
     {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch'
-    },
-    {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
       metaKey: 'widget_canopy_density'
     }
   ],
-  pendingKeys: ['threshold', 'extentYear'],
-  refetchKeys: ['threshold', 'extentYear'],
+  pendingKeys: ['threshold'],
+  refetchKeys: ['threshold'],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -59,8 +58,21 @@ export default {
   colors: 'gain',
   sentence:
     'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
-  getData: params =>
-    fetchAnalysisEndpoint({
+  getData: params => {
+    if (shouldQueryPrecomputedTables(params)) {
+      return getGain(params).then(response => {
+        const { data } = (response && response.data) || {};
+        const gain = (data[0] && data[0].gain) || 0;
+        const extent = (data[0] && data[0].extent) || 0;
+
+        return {
+          gain,
+          extent
+        };
+      });
+    }
+
+    return fetchAnalysisEndpoint({
       ...params,
       name: 'umd',
       params,
@@ -72,12 +84,13 @@ export default {
       const gain = data && data.attributes.gain;
       const extent =
         data &&
-        data.attributes[`treeExtent${params.extentYear === 2010 ? 2010 : ''}`];
+        data.attributes[`treeExtent${params.extentYear === 2000 ? 2000 : ''}`];
 
       return {
         gain,
         extent
       };
-    }),
+    });
+  },
   getWidgetProps
 };

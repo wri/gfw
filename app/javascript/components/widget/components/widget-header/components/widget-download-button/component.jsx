@@ -8,6 +8,7 @@ import moment from 'moment';
 import { saveAs } from 'file-saver';
 import cx from 'classnames';
 
+import { track } from 'app/analytics';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -21,7 +22,7 @@ const GLAD_ALERTS_WIDGET = 'gladAlerts';
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     getDataURL: PropTypes.func,
-    gladAlertsDownloadUrls: PropTypes.obj,
+    gladAlertsDownloadUrls: PropTypes.object,
     settings: PropTypes.object,
     title: PropTypes.string,
     parentData: PropTypes.object,
@@ -31,7 +32,8 @@ class WidgetDownloadButton extends PureComponent {
     adminLevel: PropTypes.string,
     metaKey: PropTypes.string,
     simple: PropTypes.bool,
-    widget: PropTypes.string
+    widget: PropTypes.string,
+    areaTooLarge: PropTypes.bool
   };
 
   generateZipFromURL = () => {
@@ -198,13 +200,21 @@ class WidgetDownloadButton extends PureComponent {
     } else {
       this.generateZipFromURL();
     }
+    track('downloadWidgetData', { label: this.props.widget });
   };
 
   render() {
-    const tooltipText =
+    const { areaTooLarge } = this.props;
+
+    let tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
         ? 'Download the data. Please add .csv to the filename if extension is missing.'
         : 'Download the data.';
+
+    if (areaTooLarge) {
+      tooltipText =
+        'Your area is too large for downloading data! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).';
+    }
 
     return (
       <Button
@@ -216,6 +226,7 @@ class WidgetDownloadButton extends PureComponent {
         })}
         onClick={this.onClickDownloadBtn}
         tooltip={{ text: tooltipText }}
+        disabled={areaTooLarge}
       >
         <Icon icon={downloadIcon} className="download-icon" />
       </Button>
