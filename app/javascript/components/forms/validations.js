@@ -21,6 +21,11 @@ export const phoneNumber = value =>
     ? 'Invalid phone number, must be 10 digits'
     : undefined);
 
+export const hasValidOption = (value, options) =>
+  (!options.find(o => o.value === value)
+    ? 'Please select an option'
+    : undefined);
+
 export const composeValidators = (req, vals) => value => {
   let validations = req ? [required] : [];
   if (vals) {
