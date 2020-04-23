@@ -11702,6 +11702,14 @@ react-sortable-hoc@^1.9.1:
     invariant "^2.2.4"
     prop-types "^15.5.7"
 
+react-spring@^8.0.27:
+  version "8.0.27"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.27.tgz#97d4dee677f41e0b2adcb696f3839680a3aa356a"
+  integrity sha512-nDpWBe3ZVezukNRandTeLSPcwwTMjNVu1IDq9qA/AMiUqHuRN4BeSWvKr3eIxxg1vtiYiOLy4FqdfCP5IoP77g==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    prop-types "^15.5.8"
+
 react-stickynode@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-stickynode/-/react-stickynode-1.4.1.tgz#de48e78a8767f21d6d5e1f81a859f31f7e466094"

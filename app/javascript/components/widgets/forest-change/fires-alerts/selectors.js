@@ -6,19 +6,20 @@ import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
+import min from 'lodash/min';
 
 import { getColorPalette } from 'utils/data';
 
 import {
   getStatsData,
   getDatesData,
+  getPeriodVariance,
   getChartConfig
 } from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
-const getInteraction = state => state.settings.interaction || null;
 const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
@@ -105,15 +106,27 @@ export const getDates = createSelector([getStats], data => {
   return getDatesData(data);
 });
 
+export const getMaxMinDates = createSelector(
+  [getData, getDates],
+  (data, currentData) => {
+    if (!data || !currentData) return {};
+    const minYear = min(data.map(d => d.year));
+    const maxYear = max(data.map(d => d.year));
+
+    return {
+      min: minYear,
+      max: maxYear
+    };
+  }
+);
+
 export const parseData = createSelector(
-  [getData, getDates, getCompareYear],
-  (data, currentData, compareYear) => {
+  [getData, getDates, getMaxMinDates, getCompareYear],
+  (data, currentData, maxminYear, compareYear) => {
     if (!data || !currentData) return null;
 
-    const maxYear = max(currentData.map(d => d.year));
-
     return currentData.map(d => {
-      const yearDifference = maxYear - d.year;
+      const yearDifference = maxminYear.max - d.year;
       const week = d.week;
 
       if (compareYear) {
@@ -132,21 +145,130 @@ export const parseData = createSelector(
   }
 );
 
+export const parseBrushedData = createSelector(
+  [parseData, getStartIndex, getEndIndex],
+  (data, startIndex, endIndex) => {
+    if (!data) return null;
+
+    const start = startIndex || 0;
+    const end = endIndex || data.length - 1;
+
+    return data.slice(start, end + 1);
+  }
+);
+
 export const parseConfig = createSelector(
-  [getColors, getLatest],
-  (colors, latest) => ({
-    ...getChartConfig(colors, moment(latest)),
-    brush: {
-      dataKey: 'date'
+  [
+    getColors,
+    getLatest,
+    getMaxMinDates,
+    getCompareYear,
+    getDataset,
+    getStartIndex,
+    getEndIndex
+  ],
+  (colors, latest, maxminYear, compareYear, dataset, startIndex, endIndex) => {
+    const tooltip = [
+      {
+        label: 'Fire alerts'
+      },
+      {
+        key: 'count',
+        labelKey: 'date',
+        labelFormat: value => moment(value).format('YYYY-MM-DD'),
+        unit: ` ${dataset} alerts`,
+        color: colors.main,
+        unitFormat: value =>
+          (Number.isInteger(value) ? format(',')(value) : value)
+      }
+    ];
+
+    if (compareYear) {
+      tooltip.push({
+        key: 'compareCount',
+        labelKey: 'date',
+        labelFormat: value => {
+          const date = moment(value);
+          const yearDifference = maxminYear.max - date.year();
+          date.set('year', compareYear - yearDifference);
+
+          return date.format('YYYY-MM-DD');
+        },
+        unit: ` ${dataset} alerts`,
+        color: '#00F',
+        unitFormat: value =>
+          (Number.isInteger(value) ? format(',')(value) : value)
+      });
     }
-  })
+
+    return {
+      ...getChartConfig(colors, moment(latest)),
+      xAxis: {
+        tickCount: 12,
+        interval: 4,
+        tickFormatter: t => moment(t).format('MMM'),
+        ...(typeof endIndex === 'number' &&
+          typeof startIndex === 'number' &&
+          endIndex - startIndex < 12 && {
+          tickCount: 5,
+          interval: 0,
+          tickFormatter: t => moment(t).format('MMM-DD')
+        })
+      },
+      tooltip,
+      brush: {
+        width: '100%',
+        height: 60,
+        margin: {
+          top: 0,
+          right: 10,
+          left: 48,
+          bottom: 12
+        },
+        dataKey: 'date',
+        startIndex,
+        endIndex,
+        config: {
+          margin: {
+            top: 5,
+            right: 0,
+            left: 42,
+            bottom: 20
+          },
+          yKeys: {
+            lines: {
+              count: {
+                stroke: colors.main,
+                isAnimationActive: false
+              },
+              compareCount: {
+                stroke: '#00F',
+                isAnimationActive: false
+              }
+            }
+          },
+          xAxis: {
+            hide: true
+          },
+          yAxis: {
+            hide: true
+          },
+          cartesianGrid: {
+            horizontal: false,
+            vertical: false
+          },
+          height: 60
+        }
+      }
+    };
+  }
 );
 
 export const parseSentence = createSelector(
   [
+    getData,
     parseData,
     getColors,
-    getInteraction,
     getSentences,
     getDataset,
     getLocationObject,
@@ -154,9 +276,9 @@ export const parseSentence = createSelector(
     getEndIndex
   ],
   (
+    raw_data,
     data,
     colors,
-    interaction,
     sentence,
     dataset,
     location,
@@ -168,50 +290,46 @@ export const parseSentence = createSelector(
     const start = startIndex;
     const end = endIndex || data.length - 1;
 
-    const lastDate = !isEmpty(interaction) ? interaction : data[end] || {};
+    const lastDate = data[end] || {};
     const firstDate = data[start] || {};
 
-    // NOTE: the first/last date should reflect the brush start/end
-    const total = sumBy(
-      data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
-      'count'
+    const slicedData = data.filter(
+      el => el.date >= firstDate.date && el.date <= lastDate.date
     );
+    const variance = getPeriodVariance(slicedData, raw_data);
+
+    const maxMean = max(data.map(d => d.mean));
+    const minMean = min(data.map(d => d.mean));
+    const halfMax = (maxMean - minMean) * 0.5;
+
+    const peakWeeks = data.filter(d => d.mean > halfMax);
+    const seasonStartDate = peakWeeks.length && peakWeeks[0].date;
+    const seasonMonth = moment(seasonStartDate).format('MMMM');
+    const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
+
+    let seasonStatement = `late ${seasonMonth}`;
+    if (seasonDay <= 10) {
+      seasonStatement = `early ${seasonMonth}`;
+    } else if (seasonDay > 10 && seasonDay <= 20) {
+      seasonStatement = `mid-${seasonMonth}`;
+    }
+
+    const total = sumBy(slicedData, 'count');
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
-    const {
-      count,
-      twoPlusStdDev,
-      plusStdDev,
-      minusStdDev,
-      twoMinusStdDev,
-      date
-    } =
-      lastDate || {};
+    const { date } = lastDate || {};
 
     let status = 'unusually low';
-    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
+    if (variance > 2) {
       status = 'unusually high';
       statusColor = colorRange[0];
-    } else if (
-      twoPlusStdDev &&
-      count <= twoPlusStdDev[1] &&
-      count > twoPlusStdDev[0]
-    ) {
+    } else if (variance <= 2 && variance > 1) {
       status = 'high';
       statusColor = colorRange[1];
-    } else if (
-      plusStdDev &&
-      minusStdDev &&
-      count <= plusStdDev[1] &&
-      count > minusStdDev[0]
-    ) {
+    } else if (variance <= 1 && variance > -1) {
       status = 'average';
       statusColor = colorRange[2];
-    } else if (
-      twoMinusStdDev &&
-      count >= twoMinusStdDev[0] &&
-      count < twoMinusStdDev[1]
-    ) {
+    } else if (variance <= -1 && variance > -2) {
       status = 'low';
       statusColor = colorRange[3];
     }
@@ -220,10 +338,10 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedData,
       location: location.label || '',
-      fire_season_month: null, // helper neededd
-      fire_season_length: 5,
-      start_date: firstDate.date, // brush start date
-      end_date: lastDate.date, // brush end date
+      fires_season_start: seasonStatement,
+      fire_season_length: peakWeeks.length,
+      start_date: firstDate.date,
+      end_date: lastDate.date,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       dataset,
       count: {
@@ -240,7 +358,8 @@ export const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  originalData: parseData,
+  data: parseBrushedData,
   config: parseConfig,
   sentence: parseSentence
 });

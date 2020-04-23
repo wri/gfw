@@ -27,6 +27,7 @@ class Widget extends PureComponent {
     error: PropTypes.bool,
     locationLabelFull: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    originalData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
     sentence: PropTypes.object,
@@ -47,6 +48,7 @@ class Widget extends PureComponent {
     childData: PropTypes.object,
     location: PropTypes.object,
     adminLevel: PropTypes.string,
+    preventRenderKeys: PropTypes.array,
     geostore: PropTypes.object
   };
 
@@ -69,6 +71,7 @@ class Widget extends PureComponent {
       locationLabelFull,
       data,
       rawData,
+      originalData,
       config,
       sentence,
       metaKey,
@@ -89,7 +92,8 @@ class Widget extends PureComponent {
       adminLevel,
       locationData,
       location,
-      geostore
+      geostore,
+      preventRenderKeys
     } = this.props;
     const { main } = colors || {};
 
@@ -142,7 +146,9 @@ class Widget extends PureComponent {
           locationName={locationLabelFull}
           data={data}
           rawData={rawData}
+          originalData={originalData}
           settings={settings}
+          preventRenderKeys={preventRenderKeys}
           sentence={sentence}
           config={config}
           handleRefetchData={handleRefetchData}

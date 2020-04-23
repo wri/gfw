@@ -4,6 +4,7 @@ import meanBy from 'lodash/meanBy';
 import concat from 'lodash/concat';
 import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
+import sumBy from 'lodash/sumBy';
 import upperCase from 'lodash/upperCase';
 import moment from 'moment';
 import range from 'lodash/range';
@@ -37,6 +38,15 @@ const meanData = data => {
   return means.map(w => mean(w));
 };
 
+const stdDevData = data => {
+  const dataMean = mean(data);
+  const sumOfSquares = data.reduce(
+    (sum, value) => sum + (dataMean - value) ** 2,
+    0
+  );
+  return (sumOfSquares / data.length) ** 0.5;
+};
+
 const statsData = data => {
   const grouped_week = [];
 
@@ -50,14 +60,9 @@ const statsData = data => {
 
   const stats = grouped_week.map(w => {
     const week_mean = mean(w);
-    const sumOfSquares = w.reduce(
-      (sum, value) => sum + (week_mean - value) ** 2,
-      0
-    );
-
     return {
       mean: week_mean,
-      std: (sumOfSquares / w.length) ** 0.5
+      std: stdDevData(w)
     };
   });
   return stats;
@@ -149,7 +154,8 @@ export const getStatsData = (data, latest) => {
 
     return {
       ...d,
-      mean,
+      stdDev,
+      mean: weekMean,
       plusStdDev: [weekMean, weekMean + stdDev],
       minusStdDev: [weekMean - stdDev, weekMean],
       twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
@@ -157,6 +163,37 @@ export const getStatsData = (data, latest) => {
     };
   });
   return parsedData;
+};
+
+export const getPeriodVariance = (data, raw_data) => {
+  const minYear = minBy(raw_data, 'year').year;
+  const maxYear = maxBy(raw_data, 'year').year;
+  const startWeek = data.length && data[0].week;
+  const endWeek = data.length && data[data.length - 1].week;
+
+  const yearlyPeriodSum = range(minYear, maxYear, 1).map(year => {
+    let slicedData = [];
+    if (endWeek > startWeek) {
+      slicedData = raw_data.filter(
+        d => d.year === year && d.week >= startWeek && d.week <= endWeek
+      );
+    } else {
+      const filteredDataStart = raw_data.filter(
+        d => d.year === year && d.week >= startWeek
+      );
+      const filteredDataEnd = raw_data.filter(
+        d => d.year === year + 1 && d.week <= endWeek
+      );
+      slicedData = concat(filteredDataStart, filteredDataEnd);
+    }
+    return slicedData.length ? sumBy(slicedData, 'count') : 0;
+  });
+  const meanPeriodTotal = mean(yearlyPeriodSum);
+  const stdPeriodTotal = stdDevData(yearlyPeriodSum);
+  const currentperiodTotal = sumBy(data, 'count');
+  return stdPeriodTotal > 0
+    ? (currentperiodTotal - meanPeriodTotal) / stdPeriodTotal
+    : 0;
 };
 
 export const getStdDevData = (data, rawData) => {
@@ -218,15 +255,21 @@ export const getChartConfig = (colors, latest, unit = '') => {
     yKeys: {
       lines: {
         count: {
-          stroke: colors.main
+          stroke: colors.main,
+          isAnimationActive: false
         },
         compareCount: {
-          stroke: '#00F'
+          stroke: '#00F',
+          isAnimationActive: false
         },
-        target: { stroke: 'grey' }
+        target: {
+          stroke: 'grey',
+          isAnimationActive: false
+        }
       },
       areas: {
         plusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.1,
@@ -235,6 +278,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         minusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.1,
@@ -243,6 +287,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         twoPlusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.2,
@@ -251,6 +296,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         twoMinusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.2,

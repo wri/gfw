@@ -58,6 +58,7 @@ export default {
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
+  preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -87,7 +88,7 @@ export default {
     confidence: 'h'
   },
   sentence:
-    'In {location} the peak fire season typically begins in {fires_season_month} and lasts {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+    'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
   whitelists: {
     adm0: [
       'AFG',

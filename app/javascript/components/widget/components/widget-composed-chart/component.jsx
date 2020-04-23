@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 
 import ComposedChart from 'components/charts/composed-chart';
+import Brush from 'components/charts/brush-chart';
 
 class WidgetComposedChart extends Component {
   static propTypes = {
+    originalData: PropTypes.array,
     data: PropTypes.array,
     config: PropTypes.object,
     settings: PropTypes.object,
+    preventRenderKeys: PropTypes.array,
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
     active: PropTypes.bool,
@@ -17,13 +21,26 @@ class WidgetComposedChart extends Component {
     barBackground: PropTypes.string
   };
 
+  static defaultProps = {
+    preventRenderKeys: []
+  };
+
   shouldComponentUpdate(nextProps) {
-    const { data, settings } = this.props;
-    const { data: nextData, settings: nextSettings } = nextProps;
+    const { data, settings, config } = this.props;
+    const {
+      data: nextData,
+      settings: nextSettings,
+      config: nextConfig,
+      preventRenderKeys: nextPreventRenderKeys
+    } = nextProps;
 
     return (
       !isEqual(data, nextData) ||
-      (!isEqual(nextSettings, settings) &&
+      !isEqual(config, nextConfig) ||
+      (!isEqual(
+        omit(nextSettings, nextPreventRenderKeys),
+        omit(settings, nextPreventRenderKeys)
+      ) &&
         isEqual(nextSettings.interaction, settings.interaction))
     );
   }
@@ -46,15 +63,23 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
-  handleBrush = debounce(values => {
+  handleBrushEnd = values => {
     const { handleChangeSettings } = this.props;
     if (handleChangeSettings) {
       handleChangeSettings(values);
     }
-  }, 100);
+  };
 
   render() {
-    const { data, config, active, simple, barBackground } = this.props;
+    const {
+      originalData,
+      data,
+      config,
+      active,
+      simple,
+      barBackground
+    } = this.props;
+    const { brush } = config;
 
     return (
       <div className="c-widget-composed-chart">
@@ -69,6 +94,14 @@ class WidgetComposedChart extends Component {
           barBackground={barBackground}
           simple={simple}
         />
+
+        {brush && (
+          <Brush
+            {...brush}
+            data={originalData}
+            onBrushEnd={this.handleBrushEnd}
+          />
+        )}
       </div>
     );
   }
