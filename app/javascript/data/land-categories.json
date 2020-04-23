@@ -60,10 +60,10 @@
     ]
   },
   {
-    "label": "Indigenous Lands",
+    "label": "Indigenous and Community Lands",
     "value": "landmark",
-    "metaKey": "gfw_land_rights",
-    "tableKey": "is__gfw_land_right",
+    "metaKey": "landmark_icls_2020",
+    "tableKey": "is__landmark",
     "global": true,
     "datasets": [
       {
