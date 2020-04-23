@@ -2,16 +2,17 @@ import { createAction, createThunkAction } from 'utils/redux';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
 import { logEvent } from 'app/analytics';
+import { getRouter } from 'utils/withRouter';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
 import { getGeostoreKey } from 'services/geostore';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import uploadFileConfig from './upload-config.json';
 
 // store actions
 export const setAnalysisData = createAction('setAnalysisData');
+export const setAnalysisSettings = createAction('setAnalysisSettings');
 export const setAnalysisLoading = createAction('setAnalysisLoading');
 export const clearAnalysisError = createAction('clearAnalysisError');
 export const clearAnalysisData = createAction('clearAnalysisData');
@@ -38,29 +39,13 @@ const getErrorMessage = (error, file) => {
   };
 };
 
-// url action
-export const setAnalysisSettings = createThunkAction(
-  'setAnalysisSettings',
-  (change) => (dispatch) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'analysis',
-        change,
-      })
-    );
-  }
-);
-
 export const getAnalysis = createThunkAction(
   'getAnalysis',
   (location) => (dispatch) => {
     const { type, adm0, adm1, adm2, endpoints } = location;
     logEvent('analysis', {
       action: compact([type, adm0, adm1, adm2]).join(', '),
-      label:
-        endpoints &&
-        endpoints.length &&
-        endpoints.map((e) => e.slug).join(', '),
+      label: endpoints?.length && endpoints.map((e) => e.slug).join(', '),
     });
     dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     fetchUmdLossGain(location)
@@ -81,7 +66,7 @@ export const getAnalysis = createThunkAction(
       .catch((error) => {
         const slugUrl = error.config.url.split('/')[4];
         const slug = slugUrl.split('?')[0];
-        const layerName = endpoints.find((e) => e.slug === slug).name;
+        const layerName = endpoints?.find((e) => e.slug === slug).name;
         const { response } = error;
         const errors =
           response &&
@@ -238,29 +223,9 @@ export const uploadShape = createThunkAction(
 
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
-  () => (dispatch, getState) => {
-    const { query, type } = getState().location || {};
-    dispatch({
-      type,
-      ...(query && {
-        query,
-      }),
-    });
+  () => (dispatch) => {
+    const router = getRouter();
+    router.push(`/map?${router.query}`);
     dispatch(clearAnalysisData());
-  }
-);
-
-export const goToDashboard = createThunkAction(
-  'goToDashboard',
-  () => (dispatch, getState) => {
-    const { location } = getState() || {};
-    const { payload, query } = location || {};
-    dispatch({
-      type: 'DASHBOARDS',
-      payload,
-      ...(query && {
-        query,
-      }),
-    });
   }
 );

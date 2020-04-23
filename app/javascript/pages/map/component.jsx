@@ -23,7 +23,7 @@ import AreaOfInterestModal from 'components/modals/area-of-interest';
 // import ModalWelcome from 'components/modals/welcome';
 // import RecentImagery from 'components/recent-imagery';
 
-// import DataAnalysisMenu from './components/data-analysis-menu';
+import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
 
 import './styles.scss';
@@ -107,14 +107,14 @@ class MainMapComponent extends PureComponent {
             />
           </Tooltip>
         </div>
-        {/* {!hidePanels && (
+        {!hidePanels && (
           <Media greaterThanOrEqual="md">
             <DataAnalysisMenu
               className="data-analysis-menu"
               embed={embed}
             />
           </Media>
-        )} */}
+        )}
         {!embed && (
           <>
             <Media greaterThanOrEqual="md">

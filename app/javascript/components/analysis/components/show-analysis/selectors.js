@@ -15,9 +15,9 @@ import { FOREST_GAIN, FOREST_LOSS } from 'data/layers';
 const gainID = FOREST_GAIN;
 const lossID = FOREST_LOSS;
 
-const selectLocation = state => state.location && state.location.payload;
-const selectData = state => state.analysis && state.analysis.data;
-const selectError = state => state.analysis && state.analysis.error;
+const selectLocation = state => state?.location?.payload;
+const selectData = state => state?.analysis?.data;
+const selectError = state => state?.analysis?.error;
 
 export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, selectLocation, getWidgetLayers],

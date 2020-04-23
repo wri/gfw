@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
-import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
 import { logEvent } from 'app/analytics';
@@ -238,13 +237,13 @@ class MapControlsButtons extends PureComponent {
         arrow
         animateFill={false}
         open={showBasemaps}
-        onRequestClose={this.onBasemapsRequestClose}
+        // onRequestClose={this.onBasemapsRequestClose}
         html={(
-          <Basemaps
-            onClose={this.toggleBasemaps}
+          <div
             ref={this.setBasemapsRef}
-            isDesktop={this.props.isDesktop}
-          />
+          >
+            ddsadd
+          </div>
         )}
       >
         {this.renderBasemapsBtn()}
@@ -366,7 +365,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon: 
+          lat, lon:
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
@@ -409,4 +408,4 @@ class MapControlsButtons extends PureComponent {
   }
 }
 
-export default connect()(MapControlsButtons);
+export default MapControlsButtons;

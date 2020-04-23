@@ -24,6 +24,14 @@ const setAnalysisLoading = (state, { payload }) => ({
   ...payload
 });
 
+const setAnalysisSettings = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload
+  }
+});
+
 const clearAnalysisError = state => ({
   ...state,
   error: '',
@@ -38,6 +46,7 @@ const clearAnalysisData = state => ({
 
 export default {
   [actions.setAnalysisData]: setAnalysisData,
+  [actions.setAnalysisSettings]: setAnalysisSettings,
   [actions.setAnalysisLoading]: setAnalysisLoading,
   [actions.clearAnalysisError]: clearAnalysisError,
   [actions.clearAnalysisData]: clearAnalysisData

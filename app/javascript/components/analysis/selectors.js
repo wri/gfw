@@ -10,26 +10,17 @@ import { getDataLocation } from 'utils/location';
 import { locationLevelToStr } from 'utils/format';
 import { getWidgets } from 'components/widgets/selectors';
 
-import { initialState } from './reducers';
-
-const selectAnalysisUrlState = state =>
-  state.location && state.location.query && state.location.query.analysis;
-const selectAnalysisLoading = state => state.analysis && state.analysis.loading;
-const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
-const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
-const selectGeodecriberLoading = state =>
-  state.geodescriber && state.geodescriber.loading;
-const selectSearch = state => state.location && state.location.search;
-const selectAnalysisLocation = state =>
-  state.analysis && state.analysis.location;
-const selectEmbed = state =>
-  state.location &&
-  state.location.pathname &&
-  state.location.pathname.includes('/embed');
-const selectError = state => state.analysis && state.analysis.error;
-const selectDatasets = state => state.datasets && state.datasets.data;
-const selectGeostoreSize = state =>
-  state.geostore && state.geostore.data && state.geostore.data.areaHa;
+const selectAnalysisSettings = state => state?.analysis?.settings;
+const selectAnalysisLoading = state => state?.analysis?.loading;
+const selectDatasetsLoading = state => state?.datasets?.loading;
+const selectGeostoreLoading = state => state?.geostore?.loading;
+const selectGeodecriberLoading = state => state?.geodescriber?.loading;
+const selectSearch = state => state?.location?.search;
+const selectAnalysisLocation = state => state?.analysis?.location;
+const selectEmbed = state => state?.location?.pathname?.includes('/embed');
+const selectError = state => state?.analysis?.error;
+const selectDatasets = state => state?.datasets?.data;
+const selectGeostoreSize = state => state?.geostore?.data?.areaHa;
 
 export const getLoading = createSelector(
   [
@@ -42,17 +33,9 @@ export const getLoading = createSelector(
     analysisLoading || datasetsLoading || geostoreLoading || geodescriberLoading
 );
 
-export const getAnalysisSettings = createSelector(
-  [selectAnalysisUrlState],
-  urlState => ({
-    ...initialState.settings,
-    ...urlState
-  })
-);
-
 export const getShowDraw = createSelector(
-  getAnalysisSettings,
-  settings => settings.showDraw
+  selectAnalysisSettings,
+  settings => settings?.showDraw
 );
 
 export const getBoundaryDatasets = createSelector(

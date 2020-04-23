@@ -20,7 +20,6 @@ class AnalysisComponent extends PureComponent {
     loading: PropTypes.bool,
     location: PropTypes.object,
     activeArea: PropTypes.object,
-    goToDashboard: PropTypes.func,
     error: PropTypes.string,
     handleCancelAnalysis: PropTypes.func,
     handleFetchAnalysis: PropTypes.func,
@@ -44,7 +43,6 @@ class AnalysisComponent extends PureComponent {
       search,
       activeArea,
       clearAnalysis,
-      goToDashboard,
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
@@ -112,7 +110,6 @@ class AnalysisComponent extends PureComponent {
             !isDeletedAoI && (
               <ShowAnalysis
                 clearAnalysis={clearAnalysis}
-                goToDashboard={goToDashboard}
                 hasLayers={hasLayers}
                 activeArea={activeArea}
                 hasWidgetLayers={hasWidgetLayers}
