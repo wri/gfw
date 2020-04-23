@@ -7,7 +7,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 
-import Checkbox from 'components/forms/components/checkbox';
+// import Checkbox from 'components/forms/components/checkbox';
 import Radio from 'components/forms/components/radio';
 
 import Submit from 'components/forms/components/submit';
@@ -17,7 +17,7 @@ import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
-import { sectors, howDoYouUse, interests, topics } from './config';
+import { sectors, howDoYouUse, interests } from './config';
 
 import './styles.scss';
 
@@ -167,7 +167,7 @@ class ProfileForm extends PureComponent {
                         multiple
                         required
                       />
-                      <Checkbox
+                      {/* <Checkbox
                         name="signUpToNewsletter"
                         options={[
                           {
@@ -177,7 +177,6 @@ class ProfileForm extends PureComponent {
                           }
                         ]}
                       />
-
                       {values.signUpToNewsletter && (
                         <Select
                           name="topics"
@@ -186,7 +185,7 @@ class ProfileForm extends PureComponent {
                           required
                           multiple
                         />
-                      )}
+                      )} */}
                       <Error
                         valid={valid}
                         submitFailed={submitFailed}
