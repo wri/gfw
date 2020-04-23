@@ -209,10 +209,10 @@ export const parseConfig = createSelector(
         tickFormatter: t => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
-          endIndex - startIndex < 15 && {
+          endIndex - startIndex < 12 && {
           tickCount: 5,
           interval: 0,
-          tickFormatter: t => moment(t).format('MM-DD')
+          tickFormatter: t => moment(t).format('MMM-DD')
         })
       },
       tooltip,
