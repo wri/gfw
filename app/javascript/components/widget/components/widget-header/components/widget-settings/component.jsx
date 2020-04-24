@@ -92,6 +92,7 @@ class WidgetSettings extends PureComponent {
               onChange={change =>
                 handleChangeSettings({ [key]: change && change.value })
               }
+              noSelectedValue={placeholder}
             />
           </div>
         );
