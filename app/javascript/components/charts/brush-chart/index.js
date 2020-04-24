@@ -205,6 +205,22 @@ export default class Brush extends PureComponent {
             this.svg = input;
           }}
         >
+          <defs>
+            <filter id="shadow1" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow
+                stdDeviation="2"
+                in="blur"
+                dx="0"
+                dy="0"
+                floodColor="#1F3646"
+                floodOpacity="0.5"
+                width="100%"
+                height="100%"
+                result="dropShadow"
+              />
+            </filter>
+          </defs>
+
           {ready && this._renderBackground()}
           {ready && this._renderBrush()}
           {ready && this._renderAxis()}

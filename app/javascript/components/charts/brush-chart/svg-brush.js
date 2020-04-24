@@ -171,19 +171,22 @@ class SVGBrush extends PureComponent {
       return [y0 + dy, y1 + dy];
     };
 
+    const hW = 14;
+    const hH = h - 10;
+
     return (
       <React.Fragment>
         <rect
           className="selection"
           cursor="move"
           fill="#777"
-          fillOpacity="0.3"
-          stroke="#fff"
+          fillOpacity="0"
+          stroke="#333"
           shapeRendering="crispEdges"
           x={x}
-          y={y}
+          y={y + 1}
           width={w}
-          height={h}
+          height={h - 2}
           onPointerDown={this._handleBrushStart}
           onPointerMove={event => {
             if (this.move) {
@@ -215,102 +218,123 @@ class SVGBrush extends PureComponent {
           }}
           onPointerUp={this._handleBrushEnd}
         />
-        <rect
-          ref={input => (this.handleE = input)}
-          className="handle handle--e"
-          cursor="ew-resize"
-          x={x + w - 5}
-          y={y - 5}
-          width={10}
-          height={h + 10}
-          fill="none"
-          pointerEvents="visible"
-          onPointerDown={this._handleBrushStart}
-          onPointerMove={event => {
-            if (this.move) {
-              const [x, y] = this.props.getEventMouse(event);
-              const [sx, sy] = this.move;
-              const dx = x - sx;
-              const mx = xbf(x1 + dx);
-              const [mx0, mx1] = x0 < mx ? [x0, mx] : [x0, x0];
+        <g transform={`translate(${x + w - hW / 2},${y + 5})`}>
+          <rect
+            ref={input => (this.handleE = input)}
+            className="handle handle--e"
+            cursor="ew-resize"
+            width={hW}
+            height={hH}
+            fill="none"
+            filter="url(#shadow1)"
+            pointerEvents="visible"
+            onPointerDown={this._handleBrushStart}
+            onPointerMove={event => {
+              if (this.move) {
+                const [x, y] = this.props.getEventMouse(event);
+                const [sx, sy] = this.move;
+                const dx = x - sx;
+                const mx = xbf(x1 + dx);
+                const [mx0, mx1] = x0 < mx ? [x0, mx] : [x0, x0];
 
-              // minimum GAP
-              const scaleX0 = scale.invert(mx0);
-              const scaleX1 = scale.invert(mx1);
-              const [smx0, smx1] =
-                scaleX1 - scaleX0 >= minimumGap
-                  ? [mx0, mx1]
-                  : [mx0, scale(scaleX0 + minimumGap)];
+                // minimum GAP
+                const scaleX0 = scale.invert(mx0);
+                const scaleX1 = scale.invert(mx1);
+                const [smx0, smx1] =
+                  scaleX1 - scaleX0 >= minimumGap
+                    ? [mx0, mx1]
+                    : [mx0, scale(scaleX0 + minimumGap)];
 
-              let selection = this.state.selection;
-              switch (brushType) {
-                case '2d':
-                case 'x':
-                  selection = [[smx0, y0], [smx1, y1]];
+                let selection = this.state.selection;
+                switch (brushType) {
+                  case '2d':
+                  case 'x':
+                    selection = [[smx0, y0], [smx1, y1]];
+                }
+                this.move = [x, y];
+                this.setState({ selection });
+                this.props.onBrush({
+                  target: this,
+                  type: 'brush',
+                  selection,
+                  sourceEvent: event
+                });
+                if (x0 >= mx) {
+                  this.handleW.setPointerCapture(event.pointerId);
+                }
               }
-              this.move = [x, y];
-              this.setState({ selection });
-              this.props.onBrush({
-                target: this,
-                type: 'brush',
-                selection,
-                sourceEvent: event
-              });
-              if (x0 >= mx) {
-                this.handleW.setPointerCapture(event.pointerId);
-              }
-            }
-          }}
-          onPointerUp={this._handleBrushEnd}
-        />
-        <rect
-          ref={input => (this.handleW = input)}
-          className="handle handle--w"
-          cursor="ew-resize"
-          x={x - 5}
-          y={y - 5}
-          width={10}
-          height={h + 10}
-          fill="none"
-          pointerEvents="visible"
-          onPointerDown={this._handleBrushStart}
-          onPointerMove={event => {
-            if (this.move) {
-              const [x, y] = this.props.getEventMouse(event);
-              const [sx, sy] = this.move;
-              const dx = x - sx;
-              const mx = xbf(x0 + dx);
-              const [mx0, mx1] = mx < x1 ? [mx, x1] : [x1, x1];
+            }}
+            onPointerUp={this._handleBrushEnd}
+          />
+          <circle
+            cx="7"
+            cy={(h - 10) / 2}
+            r="3"
+            fill="#333"
+            cx="7"
+            cy={(h - 10) / 2}
+            r="3"
+            fill="#333"
+            pointerEvents="none"
+          />
+        </g>
 
-              // minimum GAP
-              const scaleX0 = scale.invert(mx0);
-              const scaleX1 = scale.invert(mx1);
-              const [smx0, smx1] =
-                scaleX1 - scaleX0 >= minimumGap
-                  ? [mx0, mx1]
-                  : [scale(scaleX1 - minimumGap), mx1];
+        <g transform={`translate(${x - hW / 2},${y + 5})`}>
+          <rect
+            ref={input => (this.handleW = input)}
+            className="handle handle--w"
+            cursor="ew-resize"
+            width={hW}
+            height={hH}
+            fill="none"
+            filter="url(#shadow1)"
+            pointerEvents="visible"
+            onPointerDown={this._handleBrushStart}
+            onPointerMove={event => {
+              if (this.move) {
+                const [x, y] = this.props.getEventMouse(event);
+                const [sx, sy] = this.move;
+                const dx = x - sx;
+                const mx = xbf(x0 + dx);
+                const [mx0, mx1] = mx < x1 ? [mx, x1] : [x1, x1];
 
-              let selection = this.state.selection;
-              switch (brushType) {
-                case '2d':
-                case 'x':
-                  selection = [[smx0, y0], [smx1, y1]];
+                // minimum GAP
+                const scaleX0 = scale.invert(mx0);
+                const scaleX1 = scale.invert(mx1);
+                const [smx0, smx1] =
+                  scaleX1 - scaleX0 >= minimumGap
+                    ? [mx0, mx1]
+                    : [scale(scaleX1 - minimumGap), mx1];
+
+                let selection = this.state.selection;
+                switch (brushType) {
+                  case '2d':
+                  case 'x':
+                    selection = [[smx0, y0], [smx1, y1]];
+                }
+                this.move = [x, y];
+                this.setState({ selection });
+                this.props.onBrush({
+                  target: this,
+                  type: 'brush',
+                  selection,
+                  sourceEvent: event
+                });
+                if (mx >= x1) {
+                  this.handleE.setPointerCapture(event.pointerId);
+                }
               }
-              this.move = [x, y];
-              this.setState({ selection });
-              this.props.onBrush({
-                target: this,
-                type: 'brush',
-                selection,
-                sourceEvent: event
-              });
-              if (mx >= x1) {
-                this.handleE.setPointerCapture(event.pointerId);
-              }
-            }
-          }}
-          onPointerUp={this._handleBrushEnd}
-        />
+            }}
+            onPointerUp={this._handleBrushEnd}
+          />
+          <circle
+            cx="7"
+            cy={(h - 10) / 2}
+            r="3"
+            fill="#333"
+            pointerEvents="none"
+          />
+        </g>
       </React.Fragment>
     );
   }

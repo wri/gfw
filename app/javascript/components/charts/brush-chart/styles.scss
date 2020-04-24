@@ -12,5 +12,13 @@
     height: 100%;
     top: 0;
     left: 0;
+
+    .handle {
+      fill: #fff;
+
+      circle {
+        pointer-events: none;
+      }
+    }
   }
 }
