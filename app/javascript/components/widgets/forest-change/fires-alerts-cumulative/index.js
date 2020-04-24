@@ -85,7 +85,7 @@ export default {
     confidence: 'h'
   },
   sentence:
-    'In {location} there were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The worst year on record was {maxYear}, with {maxTotal} fires.',
+    'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The worst year on record was {maxYear}, with {maxTotal} fires.',
   whitelists: {
     adm0: [
       'AFG',

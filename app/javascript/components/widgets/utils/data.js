@@ -59,11 +59,12 @@ const statsData = data => {
   });
 
   const stats = grouped_week.map((w, i) => {
-    const week_mean = mean(w);
+    const validWeeks = w.filter(el => el !== null);
+    const week_mean = mean(validWeeks);
     return {
       week: i + 1,
       mean: week_mean,
-      std: stdDevData(w)
+      std: stdDevData(validWeeks)
     };
   });
   return stats;
@@ -83,14 +84,18 @@ const runningMean = (data, windowSize) => {
 const runningMeanWindowed = (data, windowSize) => {
   const smoothedMean = [];
   const buffer = Math.round(windowSize / 2);
+  let increment = 1;
   data.forEach((d, i) => {
     let slice = [];
-    if (i < windowSize) {
-      slice = data.slice(0, i + 1);
-    } else if (i > data.length - buffer) {
-      slice = data.slice(i - buffer, data.length);
+    if (i < buffer) {
+      slice = data.slice(0, i + increment);
+      increment += 1;
+    } else if (i >= data.length - buffer) {
+      slice = data.slice(i - increment, data.length);
+      increment -= 1;
     } else {
       slice = data.slice(i - buffer, i + buffer);
+      increment = 5;
     }
     smoothedMean.push(mean(slice));
   });
@@ -248,7 +253,8 @@ export const getCumulativeStatsData = data => {
   const stats = statsData(allYears);
   const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12);
   const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12);
-  const pastYear = data.filter(d => d.year === maxYear);
+
+  const pastYear = data.filter(d => d.year === maxYear).slice(-52);
   const parsedData = pastYear.map((d, i) => {
     const weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
     const stdDev = (smoothedStds && smoothedStds[i]) || 0;

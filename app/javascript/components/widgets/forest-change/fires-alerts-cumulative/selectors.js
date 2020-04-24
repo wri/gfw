@@ -340,8 +340,7 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedData,
       location: location.label || '',
-      start_date: firstDate.date,
-      end_date: lastDate.date,
+      latestYear,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       maxYear,
       maxTotal: {
