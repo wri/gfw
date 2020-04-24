@@ -58,9 +58,10 @@ const statsData = data => {
     });
   });
 
-  const stats = grouped_week.map(w => {
+  const stats = grouped_week.map((w, i) => {
     const week_mean = mean(w);
     return {
+      week: i + 1,
       mean: week_mean,
       std: stdDevData(w)
     };
@@ -75,6 +76,23 @@ const runningMean = (data, windowSize) => {
       const slice = data.slice(i, i + windowSize);
       smoothedMean.push(mean(slice));
     }
+  });
+  return smoothedMean;
+};
+
+const runningMeanWindowed = (data, windowSize) => {
+  const smoothedMean = [];
+  const buffer = Math.round(windowSize / 2);
+  data.forEach((d, i) => {
+    let slice = [];
+    if (i < buffer) {
+      slice = data.slice(0, i + buffer);
+    } else if (i > data.length - buffer) {
+      slice = data.slice(i - buffer, data.length - 1);
+    } else {
+      slice = data.slice(i - buffer, i + buffer);
+    }
+    smoothedMean.push(mean(slice));
   });
   return smoothedMean;
 };
@@ -175,14 +193,14 @@ export const getPeriodVariance = (data, raw_data) => {
     let slicedData = [];
     if (endWeek > startWeek) {
       slicedData = raw_data.filter(
-        d => d.year == year && d.week >= startWeek && d.week <= endWeek
+        d => d.year === year && d.week >= startWeek && d.week <= endWeek
       );
     } else {
       const filteredDataStart = raw_data.filter(
-        d => d.year == year && d.week >= startWeek
+        d => d.year === year && d.week >= startWeek
       );
       const filteredDataEnd = raw_data.filter(
-        d => d.year == year + 1 && d.week <= endWeek
+        d => d.year === year + 1 && d.week <= endWeek
       );
       slicedData = concat(filteredDataStart, filteredDataEnd);
     }
@@ -220,6 +238,43 @@ export const getStdDevData = (data, rawData) => {
     twoPlusStdDev: [d.mean + stdDev, d.mean + stdDev * 2],
     twoMinusStdDev: [d.mean - stdDev * 2, d.mean - stdDev]
   }));
+};
+
+export const getCumulativeStatsData = data => {
+  /*
+  Creates yearly data structure and uses this to generate weekly mean and standard deviation stats.
+  Yearly data structure groups alert data by year and appends the first (or last) 6 weeks
+  of data from neighbouring years:
+
+  e.g. The element with year=2015 contains the last 6 weeks of 2014 data,
+  followed by 52 weeks of 2015 data, followed by the first 6 weeks of 2016 data
+
+  This is done so that when the data is smoothed we are left with 52 weeks of stats per year.
+  */
+  const maxYear = maxBy(data, 'year').year;
+
+  const allYears = getYearsObj(data, 0, data.length);
+
+  const stats = statsData(allYears);
+  const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12);
+  const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12);
+
+  const pastYear = data.filter(d => d.year === maxYear);
+  const parsedData = pastYear.map((d, i) => {
+    const weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
+    const stdDev = (smoothedStds && smoothedStds[i]) || 0;
+
+    return {
+      ...d,
+      stdDev,
+      mean: weekMean,
+      plusStdDev: [weekMean, weekMean + stdDev],
+      minusStdDev: [weekMean - stdDev, weekMean],
+      twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
+      twoMinusStdDev: [weekMean - stdDev * 2, weekMean - stdDev]
+    };
+  });
+  return parsedData;
 };
 
 export const getDatesData = data =>
