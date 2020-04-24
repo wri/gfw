@@ -9,8 +9,6 @@ import { format } from 'd3-format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getIndicator = state => state.indicator;
-const getLandCategory = state => state.landCategory;
-const getForestType = state => state.forestType;
 const getLocationsMeta = state => state.childData;
 const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
@@ -50,21 +48,10 @@ export const parseSentence = createSelector(
     parseData,
     getSettings,
     getIndicator,
-    getForestType,
-    getLandCategory,
     getLocationName,
     getSentences
   ],
-  (
-    sortedList,
-    data,
-    settings,
-    indicator,
-    forestType,
-    landCategory,
-    locationName,
-    sentences
-  ) => {
+  (sortedList, data, settings, indicator, locationName, sentences) => {
     if (!data || !locationName) return null;
     const {
       initial,
@@ -81,6 +68,7 @@ export const parseSentence = createSelector(
       percGlobalLandCatOnly,
       noCover
     } = sentences;
+    const { forestType, landCategory } = settings;
     const topRegion = (data.length && data[0]) || {};
     const totalExtent = sumBy(data, 'extent') || 0;
     const avgExtent = sumBy(data, 'extent') || 0 / data.length;

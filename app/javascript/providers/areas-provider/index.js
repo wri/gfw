@@ -23,7 +23,7 @@ class AreasProvider extends PureComponent {
       this.handleGetAreas();
     }
 
-    if (!loading && location.type === 'aoi') {
+    if (!loading && location.type === 'aoi' && !loggedIn) {
       getAreaProvider(location.adm0);
     }
   }

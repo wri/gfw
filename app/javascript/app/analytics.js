@@ -27,17 +27,11 @@ const events = {
   ...topicsEvents
 };
 
-export const handlePageTrack = noDecode => {
+export const handlePageTrack = () => {
   initGA();
   if (gaInitialized) {
     ReactGA.set({ page: window.location.pathname });
-    ReactGA.pageview(
-      `${window.location.pathname}?${
-        noDecode
-          ? window.location.search
-          : JSON.stringify(decodeUrlForState(window.location.search))
-      }`
-    );
+    ReactGA.pageview(window.location.pathname);
   }
 };
 

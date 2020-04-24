@@ -85,14 +85,13 @@ const reduceAnalysisResponse = response => {
   return {};
 };
 
-export const fetchAnalysisEndpoint = ({ type, ...rest }) =>
-  apiRequest.get(
-    `${buildAnalysisUrl({
-      urlTemplate: getUrlTemplate(type),
-      type,
-      ...rest
-    })}`
-  );
+export const fetchAnalysisEndpoint = ({ type, ...rest }) => apiRequest.get(
+  `${buildAnalysisUrl({
+    urlTemplate: getUrlTemplate(type),
+    type,
+    ...rest
+  })}`
+);
 
 export const fetchUmdLossGain = ({
   endpoints,

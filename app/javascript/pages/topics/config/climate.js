@@ -288,7 +288,7 @@ export default {
       title: 'View carbon and emissions statistics',
       summary:
         'Find answers to questions about carbon and emissions globally, by country or even subnationally.',
-      extLink: '/dashboards/global?category=climate',
+      extLink: 'https://www.globalforestwatch.org/dashboards/global?category=climate',
       img1x: carbon,
       img2x: carbonLarge,
       btnText: 'view data'
