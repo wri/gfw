@@ -175,14 +175,14 @@ export const getPeriodVariance = (data, raw_data) => {
     let slicedData = [];
     if (endWeek > startWeek) {
       slicedData = raw_data.filter(
-        d => d.year == year && d.week >= startWeek && d.week <= endWeek
+        d => d.year === year && d.week >= startWeek && d.week <= endWeek
       );
     } else {
       const filteredDataStart = raw_data.filter(
-        d => d.year == year && d.week >= startWeek
+        d => d.year === year && d.week >= startWeek
       );
       const filteredDataEnd = raw_data.filter(
-        d => d.year == year + 1 && d.week <= endWeek
+        d => d.year === year + 1 && d.week <= endWeek
       );
       slicedData = concat(filteredDataStart, filteredDataEnd);
     }
@@ -259,7 +259,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           isAnimationActive: false
         },
         compareCount: {
-          stroke: '#00F',
+          stroke: '#49b5e3',
           isAnimationActive: false
         },
         target: {

@@ -195,7 +195,7 @@ export const parseConfig = createSelector(
           return date.format('YYYY-MM-DD');
         },
         unit: ` ${dataset} alerts`,
-        color: '#00F',
+        color: '#49b5e3',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       });
@@ -242,7 +242,7 @@ export const parseConfig = createSelector(
                 isAnimationActive: false
               },
               compareCount: {
-                stroke: '#00F',
+                stroke: '#49b5e3',
                 isAnimationActive: false
               }
             }
