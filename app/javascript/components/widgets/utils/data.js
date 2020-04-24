@@ -309,7 +309,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           isAnimationActive: false
         },
         compareCount: {
-          stroke: '#00F',
+          stroke: '#49b5e3',
           isAnimationActive: false
         },
         target: {
