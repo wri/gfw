@@ -26,6 +26,7 @@ export default {
     {
       key: 'compareYear',
       label: 'Compare with the same period in',
+      placeholder: 'None',
       type: 'compare-select',
       clearable: true,
       border: true
