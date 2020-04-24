@@ -19,6 +19,7 @@ export default class Brush extends PureComponent {
     margin: PropTypes.object,
     data: PropTypes.array,
     config: PropTypes.object,
+    minimumGap: PropTypes.number,
     onBrushEnd: PropTypes.func
   };
 
@@ -28,7 +29,8 @@ export default class Brush extends PureComponent {
       left: 0,
       bottom: 0,
       right: 0
-    }
+    },
+    minimumGap: 4
   };
 
   state = {
@@ -43,7 +45,7 @@ export default class Brush extends PureComponent {
 
     this.scale = scaleLinear()
       .domain([0, data.length - 1])
-      .range([margin.left, width - margin.right]);
+      .rangeRound([margin.left, width - margin.right]);
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -120,7 +122,7 @@ export default class Brush extends PureComponent {
 
   _renderBrush() {
     const { width, height } = this.svg.getBoundingClientRect();
-    const { margin, onBrushEnd } = this.props;
+    const { margin, minimumGap, onBrushEnd } = this.props;
     const { brushSelection, intermediateBrushSelection } = this.state;
     const fs = intermediateBrushSelection || brushSelection;
     const ts = brushSelection;
@@ -135,6 +137,8 @@ export default class Brush extends PureComponent {
       >
         {props => (
           <SVGBrush
+            scale={this.scale}
+            minimumGap={minimumGap}
             extent={[
               [margin.left, margin.top],
               [width - margin.right, height - margin.bottom]
