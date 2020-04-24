@@ -17,6 +17,7 @@ import CATEGORIES from 'data/categories.json';
 const selectShowMap = state =>
   state.location && state.location.query && !!state.location.query.showMap;
 const selectLocation = state => state.location;
+const selectAreaError = state => state.areas && state.areas.error;
 const selectLocationType = state =>
   state.location && state.location.payload && state.location.payload.type;
 const selectCategory = state =>
@@ -71,5 +72,6 @@ export const getDashboardsProps = createStructuredSelector({
   locationType: selectLocationType,
   activeArea: getActiveArea,
   areaLoading: selectAreaLoading,
-  widgets: filterWidgetsByLocation
+  widgets: filterWidgetsByLocation,
+  areaError: selectAreaError
 });
