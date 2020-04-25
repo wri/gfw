@@ -6,34 +6,31 @@ import ConfirmationMessage from 'components/confirmation-message';
 
 import './styles.scss';
 
-function Error({ statusCode }) {
-  return (
-    <Layout
-      title={
-        `An error ${statusCode} occurred` ||
-        "We're sorry, something went wrong."
-      }
-      description="Try refreshing the page or check your connection."
-    >
-      <div className="l-error-page">
-        <div className="row">
-          <div className="column small-12 medium-8 medium-offset-2">
-            <ConfirmationMessage
-              title={
-                `An error ${statusCode} occurred` ||
-                "We're sorry, something went wrong."
-              }
-              description="Try refreshing the page or check your connection."
-              error
-            />
-          </div>
+const Error = ({ statusCode }) => (
+  <Layout
+    title={
+      `An error ${statusCode} occurred` || "We're sorry, something went wrong."
+    }
+    description="Try refreshing the page or check your connection."
+  >
+    <div className="l-error-page">
+      <div className="row">
+        <div className="column small-12 medium-8 medium-offset-2">
+          <ConfirmationMessage
+            title={
+              `An error ${statusCode} occurred` ||
+              "We're sorry, something went wrong."
+            }
+            description="Try refreshing the page or check your connection."
+            error
+          />
         </div>
       </div>
-    </Layout>
-  );
-}
+    </div>
+  </Layout>
+);
 
-Error.getInitialProps = ({ res, err }) => ({
+Error.getServerSideProps = ({ res, err }) => ({
   statusCode: (res && res.statusCode) || (err && err.statusCode) || 404,
 });
 

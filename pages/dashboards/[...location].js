@@ -7,17 +7,15 @@ import getLocationData from 'app/location';
 
 export const getServerSideProps = getLocationData;
 
-const DashboardsLocationPage = (props) => {
-  return (
-    <Layout {...props}>
-      {props.locationName.includes('not found') ? (
-        <ConfirmationMessage title={props.locationName} error large />
-      ) : (
-        props.locationName
-      )}
-    </Layout>
-  );
-};
+const DashboardsLocationPage = (props) => (
+  <Layout {...props}>
+    {props.locationName.includes('not found') ? (
+      <ConfirmationMessage title={props.locationName} error large />
+    ) : (
+      props.locationName
+    )}
+  </Layout>
+);
 
 DashboardsLocationPage.propTypes = {
   locationName: PropTypes.string.isRequired,

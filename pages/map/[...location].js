@@ -8,17 +8,15 @@ import getLocationData from 'app/location';
 
 export const getServerSideProps = getLocationData;
 
-const MapLocationPage = (props) => {
-  return (
-    <Layout {...props}>
-      {props.locationName.includes('not found') ? (
-        <ConfirmationMessage title={props.locationName} error large />
-      ) : (
-        <Map />
-      )}
-    </Layout>
-  );
-};
+const MapLocationPage = (props) => (
+  <Layout {...props}>
+    {props.locationName.includes('not found') ? (
+      <ConfirmationMessage title={props.locationName} error large />
+    ) : (
+      <Map />
+    )}
+  </Layout>
+);
 
 MapLocationPage.propTypes = {
   locationName: PropTypes.string.isRequired,

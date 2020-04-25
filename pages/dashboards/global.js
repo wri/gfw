@@ -1,20 +1,15 @@
-import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Layout from 'layouts/page';
 
-class DashboardsPage extends PureComponent {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-  };
+const DashboardsPage = (props) => (
+  <Layout {...props}>
+    <h1>{props.title}</h1>
+  </Layout>
+);
 
-  render() {
-    return (
-      <Layout {...this.props}>
-        <h1>{this.props.title}</h1>
-      </Layout>
-    );
-  }
-}
+DashboardsPage.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default DashboardsPage;
