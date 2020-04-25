@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { getMeta } from 'services/meta';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { setComponentStateToUrl } from 'app/stateToUrl';
 
 export const setModalMetaData = createAction('setModalMetaData');
 export const setModalMetaLoading = createAction('setModalMetaLoading');
@@ -28,8 +28,7 @@ export const getModalMetaData = createThunkAction(
         .then(response => {
           dispatch(setModalMetaData(response.data));
         })
-        .catch(error => {
-          console.info(error);
+        .catch(() => {
           dispatch(setModalMetaLoading({ loading: false, error: true }));
         });
     }

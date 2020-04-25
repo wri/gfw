@@ -1,7 +1,7 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { all, spread } from 'axios';
 import minBy from 'lodash/minBy';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { setComponentStateToUrl } from 'app/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 
@@ -69,9 +69,8 @@ export const getRecentImageryData = createThunkAction(
             dispatch(setRecentImageryLoading({ loading: false, error: false }));
           }
         })
-        .catch(error => {
+        .catch(() => {
           dispatch(setRecentImageryLoading({ loading: false, error: true }));
-          console.info(error);
         });
     }
   }

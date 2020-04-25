@@ -1,56 +1,39 @@
 import Router from 'next/router';
 import qs from 'query-string';
 
-import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
+// import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
 
-const buildRouter = (router = {}) => {
+export default () => {
+  // get all query
+  const { router } = Router;
   if (router) {
-    // get all query
-    if (router.asPath.includes('?')) {
+    if (router?.asPath.includes('?')) {
       router.query = {
         ...router.query,
         ...qs.parse(router.asPath.split('?')[1]),
       };
     }
 
-    // decode query
-    router.query = decodeUrlForState(router.query);
-
-    // if query has location
-    const { location } = router?.query || {};
-    if (location) {
-      router.location = {
-        type: location?.[0],
-        adm0: location?.[1],
-        adm1: location?.[2],
-        adm2: location?.[3]
-      }
-    }
-
-    router.pushDynamic = ({ pathname, query, hash }) => {
-      let asPath = pathname;
-      if (query) {
-        Object.keys(query).forEach((key) => {
-          if (asPath.includes(`[${key}]`)) {
-            asPath = asPath.replace(`[${key}]`, query[key]);
-            delete query[key];
-          } else if (asPath.includes(`[...${key}]`)) {
-            asPath = asPath.replace(`[...${key}]`, query[key]);
-            delete query[key];
-          }
-        });
-      }
-      const queryString = encodeStateForUrl(query);
-      router.push(
-        `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,
-        `${asPath}${queryString ? `?${queryString}` : ''}${hash || ''}`
-      );
-    };
+    // router.pushDynamic = ({ pathname, query, hash }) => {
+    //   let asPath = pathname;
+    //   if (query) {
+    //     Object.keys(query).forEach((key) => {
+    //       if (asPath.includes(`[${key}]`)) {
+    //         asPath = asPath.replace(`[${key}]`, query[key]);
+    //         delete query[key];
+    //       } else if (asPath.includes(`[...${key}]`)) {
+    //         asPath = asPath.replace(`[...${key}]`, query[key]);
+    //         delete query[key];
+    //       }
+    //     });
+    //   }
+    //   const queryString = query;
+    //   router.push(
+    //     `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,
+    //     `${asPath}${queryString ? `?${queryString}` : ''}${hash || ''}`
+    //   );
+    // };
   }
 
-  return router;
-}
-
-export const getRouter = () => buildRouter(Router.router);
-
-export default getRouter();
+  return router || {};
+};

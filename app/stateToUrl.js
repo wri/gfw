@@ -3,7 +3,7 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import qs from 'query-string';
 
-import { getRouter } from 'app/router';
+import useRouter from 'app/router';
 
 import oldLayers from 'data/v2-v3-datasets-layers.json';
 
@@ -74,8 +74,7 @@ export const encodeStateForUrl = (params) => {
 };
 
 export const setComponentStateToUrl = ({ key, subKey, change }) => {
-  const router = getRouter();
-  const { query, pathname, pushDynamic } = router || {};
+  const { query, pathname, pushDynamic } = useRouter();
 
   let params = change;
   if (query && query[subKey || key] && !!change && typeof change === 'object') {
@@ -104,7 +103,7 @@ export const setComponentStateToUrl = ({ key, subKey, change }) => {
 
 const handleStateUpdate = (store, params) => {
   const state = store.getState()
-  const { query, pathname, pushDynamic } = getRouter();
+  const { query, pathname, pushDynamic } = useRouter();
   // Parse the current location's query string.
 
   // object with pathname params inside
@@ -155,7 +154,7 @@ const lastQueryValues = {};
 
 const handleLocationUpdate = (store, params) => {
   const state = store.getState()
-  const { asPath } = getRouter();
+  const { asPath } = useRouter();
 
   const query = asPath.includes('?') ? qs.parse(asPath.split('?')[1]) : {};
 
@@ -184,7 +183,7 @@ export default ({
   store,
   params
 }) => {
-  const router = getRouter();
+  const router = useRouter();
   if (router) {
     // Sync location to store on every location change, and vice versa.
     const unsubscribeFromLocation = router.events.on('routeChangeComplete', () => handleLocationUpdate(store, params))

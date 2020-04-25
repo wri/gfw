@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getRouter } from 'app/router';
 
 import {
   getDrawing,
@@ -13,15 +12,14 @@ import { initialState } from './reducers';
 
 // state from url
 const selectMainMapUrlState = state => state?.mainMap;
-const selectLocation = () => getRouter()?.pathname;
-const selectLocationPayload = () => getRouter()?.location;
+const selectLocation = state => state.location;
 const selectMenuSection = state => state?.menu?.menuSection;
-const getDrawGeostoreId = state => state.draw && state.draw.geostoreId;
+const getDrawGeostoreId = state => state?.draw?.geostoreId;
 
 // SELECTORS
 export const getEmbed = createSelector(
   [selectLocation],
-  location => location?.includes('embed')
+  location => location?.embed
 );
 
 export const getMainMapSettings = createSelector(
@@ -60,7 +58,7 @@ export const getShowAnalysis = createSelector(
 export const getOneClickAnalysis = createSelector(
   [
     getShowDraw,
-    selectLocationPayload,
+    selectLocation,
     getDrawing,
     getMapLoading,
     getShowAnalysis
@@ -82,5 +80,5 @@ export default createStructuredSelector({
   embed: getEmbed,
   geostoreId: getDrawGeostoreId,
   selectedInteraction: getInteractionSelected,
-  location: selectLocationPayload
+  location: selectLocation
 });

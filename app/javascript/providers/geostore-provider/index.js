@@ -9,20 +9,21 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ areas, location }) => ({
-  activeArea: areas?.data?.find(a => a.id === location?.adm0)
+  activeArea: areas?.data?.find(a => a.id === location?.adm0),
+  location
 })
 
 class GeostoreProvider extends PureComponent {
   static propTypes = {
-    router: PropTypes.object.isRequired,
     getGeostore: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
     clearGeostore: PropTypes.func.isRequired,
     activeArea: PropTypes.object
   }
 
   componentDidMount() {
-    const { router, activeArea } = this.props;
-    const { adm0, type } = router?.location || {};
+    const { activeArea, location } = this.props;
+    const { adm0, type } = location || {};
     if ((adm0 && type !== 'aoi') || (type === 'aoi' && activeArea)) {
       this.handleGetGeostore();
     }
@@ -30,18 +31,17 @@ class GeostoreProvider extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      router,
       activeArea,
       clearGeostore
     } = this.props;
-    const { adm0, adm1, adm2 } = router?.location || {};
-    const hasAdm0Changed = adm0 && adm0 !== prevProps?.router?.location?.adm0;
-    const hasAdm1Changed = adm0 && adm1 !== prevProps?.router?.location?.adm1;
-    const hasAdm2Changed = adm0 && adm1 && adm2 !== prevProps?.router?.location?.adm2;
+    const { adm0, adm1, adm2 } = location || {};
+    const hasAdm0Changed = adm0 && adm0 !== prevProps?.location?.adm0;
+    const hasAdm1Changed = adm0 && adm1 !== prevProps?.location?.adm1;
+    const hasAdm2Changed = adm0 && adm1 && adm2 !== prevProps?.location?.adm2;
     const hasAoiChanged =
       activeArea && !isEqual(activeArea, prevProps.activeArea);
 
-    if (!adm0 && adm0 !== prevProps?.router?.location?.adm0) {
+    if (!adm0 && adm0 !== prevProps?.location?.adm0) {
       this.cancelGeostoreFetch();
       clearGeostore({});
     }
@@ -55,7 +55,7 @@ class GeostoreProvider extends PureComponent {
     this.cancelGeostoreFetch();
     this.geostoreFetch = cancelToken();
     this.props.getGeostore({
-      ...this.props?.router?.location,
+      ...this.props?.location,
       token: this.geostoreFetch.token
     });
   };

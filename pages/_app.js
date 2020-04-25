@@ -1,13 +1,14 @@
 import App from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
-import finallyShim from 'promise.prototype.finally';
-import reducerRegistry from 'app/registry';
 import { combineReducers } from 'redux';
-import { getRouter } from 'app/withRouter';
+import isEmpty from 'lodash/isEmpty';
 
+import finallyShim from 'promise.prototype.finally';
+
+import reducerRegistry from 'app/registry';
 import routes from 'app/routes';
-import makeStore from 'lib/with-redux-store';
+import makeStore from 'app/makeStore';
 
 import MyGFWProvider from 'providers/mygfw-provider';
 
@@ -16,7 +17,7 @@ import 'styles/styles.scss';
 finallyShim.shim();
 
 const getLocationFromParams = (url, params) => {
-  if (url.includes('[...location]')) {
+  if (url?.includes('[...location]')) {
     return {
       type: params?.location?.[0],
       adm0: params?.location?.[1],
@@ -25,8 +26,8 @@ const getLocationFromParams = (url, params) => {
     }
   }
 
-  const location = Object.keys(params).reduce((obj, key) => {
-    if (url.includes(`[${key}]`)) {
+  const location = params && Object.keys(params).reduce((obj, key) => {
+    if (url?.includes(`[${key}]`)) {
       return {
         ...obj,
         [key]: params[key]
@@ -43,10 +44,10 @@ class MyApp extends App {
   store = makeStore();
 
   componentDidMount() {
+    const { router } = this.props;
     this.handleRouteChange();
-    const Router = getRouter();
 
-    Router.events.on('routeChangeComplete', () => {
+    router.events.on('routeChangeComplete', () => {
       this.handleRouteChange();
     })
 
@@ -58,15 +59,16 @@ class MyApp extends App {
   }
 
   handleRouteChange = () => {
+    const { router } = this.props;
     const { dispatch } = this.store;
-    const { query, pathname } = getRouter();
+    const { query, pathname } = router;
     const location = getLocationFromParams(pathname, query);
-    dispatch({ type: 'setLocation', payload: { ...location, query } });
+    dispatch({ type: 'setLocation', payload: { ...location, ...!isEmpty(query) && { query } } });
   }
 
   render() {
-    const { Component, router, pageProps } = this.props;
-    const { route } = router;
+    const { Component, pageProps, router } = this.props;
+    const { route } = router || {};
     const routeConfig = routes[route];
 
     return (

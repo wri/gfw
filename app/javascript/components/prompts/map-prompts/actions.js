@@ -1,5 +1,5 @@
 import { createThunkAction, createAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { setComponentStateToUrl } from 'app/stateToUrl';
 import { logEvent } from 'app/analytics';
 
 export const setShowMapPrompts = createAction('setShowMapPrompts');

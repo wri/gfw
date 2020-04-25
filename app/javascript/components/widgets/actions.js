@@ -1,7 +1,7 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { logEvent } from 'app/analytics';
 
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { setComponentStateToUrl } from 'app/stateToUrl';
 import { getNonGlobalDatasets } from 'services/analysis-cached';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
@@ -22,9 +22,8 @@ export const getWidgetsData = createThunkAction(
           })
         );
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(setWidgetsLoading({ error: true, loading: false }));
-        console.info(error);
       });
   }
 );

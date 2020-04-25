@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'utils/redux';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
 import { logEvent } from 'app/analytics';
-import Router from 'next/router';
+import useRouter from 'app/router';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
@@ -224,7 +224,8 @@ export const uploadShape = createThunkAction(
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch) => {
-    Router.push(`/map?${Router.router?.query}`);
+    const { push, query } = useRouter();
+    push(`/map?${query}`);
     dispatch(clearAnalysisData());
   }
 );

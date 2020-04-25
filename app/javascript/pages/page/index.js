@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { initGA, logPageView, logEvent } from 'app/analytics';
 import checkBrowser from 'utils/browser';
 import cx from 'classnames';
-import router from 'app/router';
+import useRouter from 'app/router';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Meta from 'layouts/meta';
@@ -39,7 +39,7 @@ class Layout extends React.Component {
 
     const isValidBrowser = checkBrowser();
     if (!isValidBrowser) {
-      router.push('/browser-support');
+      useRouter().push('/browser-support');
     }
   }
 
@@ -54,7 +54,7 @@ class Layout extends React.Component {
       loggedIn,
       loggingIn
     } = this.props;
-    const { pathname, query } = router;
+    const { pathname, query, pushDynamic } = useRouter();
 
     return (
       <div className="l-page">
@@ -68,13 +68,13 @@ class Layout extends React.Component {
             <Header
               className="header"
               setQueryToUrl={(searchQuery) => {
-                router.pushDynamic({
+                pushDynamic({
                   pathname: '/search',
                   query: { query: searchQuery },
                 });
               }}
               openContactUsModal={() => {
-                router.pushDynamic({
+                pushDynamic({
                   pathname,
                   query: { ...query, contactUs: true },
                   hash:
@@ -101,7 +101,7 @@ class Layout extends React.Component {
                 </NavLink>
               )}
               openContactUsModal={() => {
-                router.pushDynamic({
+                pushDynamic({
                   pathname,
                   query: { ...query, contactUs: true },
                   hash:
@@ -112,10 +112,10 @@ class Layout extends React.Component {
           )}
           <Cookies onClose={() => logEvent('acceptCookies')} />
           <ContactUsModal
-            open={!!query.contactUs}
+            open={!!query?.contactUs}
             onClose={() => {
               delete query.contactUs;
-              router.pushDynamic({
+              pushDynamic({
                 pathname,
                 query,
                 hash:
@@ -124,10 +124,10 @@ class Layout extends React.Component {
             }}
           />
           <ClimateModal
-            open={!!query.gfwclimate}
+            open={!!query?.gfwclimate}
             onClose={() => {
               delete query.gfwclimate;
-              router.pushDynamic({
+              pushDynamic({
                 pathname,
                 query,
                 hash:
@@ -135,7 +135,7 @@ class Layout extends React.Component {
               });
             }}
             openContactUsModal={() => {
-              router.pushDynamic({
+              pushDynamic({
                 pathname,
                 query: { ...query, contactUs: true },
                 hash:
