@@ -1,7 +1,6 @@
 import { createStructuredSelector } from 'reselect';
 
-const selectUrlToken = (state) =>
-  state.location && state.location.query && state.location.query.token;
+const selectUrlToken = (state) => state?.location?.query?.token;
 const selectLocalToken = () =>
   typeof window !== 'undefined'
     ? localStorage && localStorage.getItem('mygfw_token')

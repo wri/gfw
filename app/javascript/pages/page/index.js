@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { initGA, logPageView, logEvent } from 'app/analytics';
 import checkBrowser from 'utils/browser';
 import cx from 'classnames';
-import { withRouter } from 'next/router';
+import router from 'app/router';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Meta from 'layouts/meta';
@@ -23,7 +23,6 @@ class Layout extends React.Component {
     description: PropTypes.string.isRequired,
     keywords: PropTypes.string,
     children: PropTypes.node.isRequired,
-    router: PropTypes.object.isRequired,
     hideHeader: PropTypes.bool,
     hideFooter: PropTypes.bool,
     fullScreen: PropTypes.bool,
@@ -32,8 +31,6 @@ class Layout extends React.Component {
   };
 
   componentDidMount() {
-    const { router } = this.props;
-
     if (!window.GA_INITIALIZED) {
       initGA();
       window.GA_INITIALIZED = true;
@@ -51,7 +48,6 @@ class Layout extends React.Component {
       title,
       description,
       keywords,
-      router,
       hideFooter,
       hideHeader,
       fullScreen,
@@ -153,9 +149,7 @@ class Layout extends React.Component {
   }
 }
 
-export default withRouter(
-  connect(({ myGfw }) => ({
-    loggedIn: myGfw?.data?.loggedIn,
-    loggingIn: myGfw?.loading,
-  }))(Layout)
-);
+export default connect(({ myGfw }) => ({
+  loggedIn: myGfw?.data?.loggedIn,
+  loggingIn: myGfw?.loading,
+}))(Layout)

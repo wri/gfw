@@ -27,17 +27,14 @@ const adminSentences = {
   end: '.',
 };
 
-export const selectGeojson = (state) =>
-  state.geostore && state.geostore.data && state.geostore.data.geojson;
-export const selectGeodescriber = (state) =>
-  state.geodescriber && state.geodescriber.data;
-export const selectLoading = (state) =>
-  state.geodescriber && state.geodescriber.loading;
+export const selectGeojson = (state) => state?.geostore?.data?.geojson;
+export const selectGeodescriber = (state) => state?.geodescriber?.data;
+export const selectLoading = (state) => state?.geodescriber?.loading;
 export const selectCountryData = (state) =>
   state.countryData && {
-    adm0: state.countryData.countries,
-    adm1: state.countryData.regions,
-    adm2: state.countryData.subRegions,
+    adm0: state.countryData?.countries,
+    adm1: state.countryData?.regions,
+    adm2: state.countryData?.subRegions,
   };
 
 export const getAdm0Data = createSelector(

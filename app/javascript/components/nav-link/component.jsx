@@ -1,15 +1,14 @@
 import React, { Children, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { withRouter } from 'next/router';
+import router from 'app/router';
 import cx from 'classnames';
 
 class NavLink extends PureComponent {
   static propTypes = {
     activeClassName: PropTypes.string,
     activeShallow: PropTypes.bool,
-    children: PropTypes.node.isRequired,
-    router: PropTypes.object.isRequired,
+    children: PropTypes.node.isRequired
   };
 
   static defaultProps = {
@@ -20,7 +19,6 @@ class NavLink extends PureComponent {
     const {
       activeClassName,
       children,
-      router,
       activeShallow,
       ...props
     } = this.props;
@@ -45,4 +43,4 @@ class NavLink extends PureComponent {
   }
 }
 
-export default withRouter(NavLink);
+export default NavLink;

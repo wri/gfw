@@ -1,4 +1,4 @@
-import * as actions from './datasets-provider-actions';
+import * as actions from './actions';
 
 export const initialState = {
   loading: true,

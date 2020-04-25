@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 
-import * as actions from './latest-provider-actions';
-import getLatestProps from './latest-provider-selectors';
-import reducers, { initialState } from './latest-provider-reducers';
+import * as actions from './actions';
+import getLatestProps from './selectors';
+import reducers, { initialState } from './reducers';
 
 class LatestProvider extends PureComponent {
   componentDidUpdate(prevProps) {

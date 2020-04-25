@@ -8,7 +8,7 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ planet }) => ({
-  data: planet && planet.data
+  data: planet?.data
 });
 
 class PlanetBasemapsProvider extends PureComponent {

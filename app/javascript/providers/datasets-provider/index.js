@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 
-import * as actions from './datasets-provider-actions';
-import reducers, { initialState } from './datasets-provider-reducers';
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
 
 class DatasetsProvider extends PureComponent {
   componentDidMount() {
@@ -26,4 +26,5 @@ reducerRegistry.registerModule('datasets', {
   reducers,
   initialState
 });
+
 export default connect(null, actions)(DatasetsProvider);

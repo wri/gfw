@@ -8,7 +8,7 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ news }) => ({
-  data: news && news.data
+  data: news?.data
 });
 
 class NewsProvider extends PureComponent {

@@ -7,8 +7,8 @@ import chroma from 'chroma-js';
 import { getDatasetsProvider } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
 
-import { reduceParams, reduceSqlParams } from './datasets-utils';
-import decodeLayersConfig from './datasets-decode-config';
+import { reduceParams, reduceSqlParams } from './utils';
+import decodeLayersConfig from './config';
 
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');

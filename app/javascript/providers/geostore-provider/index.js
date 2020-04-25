@@ -4,21 +4,13 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
-import withRouter from 'utils/withRouter';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = (state) => {
-  const { areas } = state;
-
-  return {
-    activeArea:
-      areas &&
-      areas.data &&
-      areas.data.find(a => a.id === (location && location.adm0))
-  };
-};
+const mapStateToProps = ({ areas, location }) => ({
+  activeArea: areas?.data?.find(a => a.id === location?.adm0)
+})
 
 class GeostoreProvider extends PureComponent {
   static propTypes = {
@@ -84,4 +76,5 @@ reducerRegistry.registerModule('geostore', {
   reducers,
   initialState
 });
-export default withRouter(connect(mapStateToProps, actions)(GeostoreProvider));
+
+export default connect(mapStateToProps, actions)(GeostoreProvider);

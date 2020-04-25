@@ -1,6 +1,7 @@
-import Router, { withRouter } from 'next/router';
+import Router from 'next/router';
 import qs from 'query-string';
-import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
+
+import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
 
 const buildRouter = (router = {}) => {
   if (router) {
@@ -52,9 +53,4 @@ const buildRouter = (router = {}) => {
 
 export const getRouter = () => buildRouter(Router.router);
 
-export default (Component) =>
-  withRouter(({ router: oldRouter, ...props }) => {
-    const newRouter = buildRouter(oldRouter);
-
-    return <Component {...props} router={newRouter} />;
-  });
+export default getRouter();

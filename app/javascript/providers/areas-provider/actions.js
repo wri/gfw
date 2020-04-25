@@ -36,14 +36,13 @@ export const getAreasProvider = createThunkAction(
                 dispatch(setArea(area));
                 dispatch(setAreasLoading({ loading: false, error: false }));
               })
-              .catch(error => {
+              .catch(() => {
                 dispatch(
                   setAreasLoading({
                     loading: false,
                     error: true
                   })
                 );
-                console.info(error);
               });
           } else {
             dispatch(setAreasLoading({ loading: false, error: false }));

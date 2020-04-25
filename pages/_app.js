@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import finallyShim from 'promise.prototype.finally';
 import reducerRegistry from 'app/registry';
 import { combineReducers } from 'redux';
-import Router from 'next/router'
+import { getRouter } from 'app/withRouter';
 
 import routes from 'app/routes';
 import makeStore from 'lib/with-redux-store';
@@ -44,6 +44,7 @@ class MyApp extends App {
 
   componentDidMount() {
     this.handleRouteChange();
+    const Router = getRouter();
 
     Router.events.on('routeChangeComplete', () => {
       this.handleRouteChange();
@@ -58,8 +59,9 @@ class MyApp extends App {
 
   handleRouteChange = () => {
     const { dispatch } = this.store;
-    const location = getLocationFromParams(Router.router.pathname, Router.router.query);
-    dispatch({ type: 'setLocation', payload: location });
+    const { query, pathname } = getRouter();
+    const location = getLocationFromParams(pathname, query);
+    dispatch({ type: 'setLocation', payload: { ...location, query } });
   }
 
   render() {

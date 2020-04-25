@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { getRouter } from 'utils/withRouter';
+import { getRouter } from 'app/router';
 
 import {
   getDrawing,

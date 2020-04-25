@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 // import isEmpty from 'lodash/isEmpty';
 // import flatMap from 'lodash/flatMap';
 // import { logEvent } from 'app/analytics';
-import { withRouter } from 'next/router';
 import { getLocationFromData } from 'utils/format';
 import reducerRegistry from 'app/registry';
+import router from 'app/router';
 
 // import { getGeostoreId } from 'providers/geostore-provider/actions';
 // import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
@@ -29,7 +29,6 @@ const actions = {
 
 class MainMapContainer extends PureComponent {
   static propTypes = {
-    router: PropTypes.object.isRequired,
     oneClickAnalysis: PropTypes.bool,
     setMainMapAnalysisView: PropTypes.func,
     getGeostoreId: PropTypes.func,
@@ -53,7 +52,7 @@ class MainMapContainer extends PureComponent {
   setMainMapAnalysisView = ({ data, layer } = {}) => {
     const { cartodb_id: cartodbId, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
-    const { query, pushDynamic } = this.props.router || {};
+    const { query, pushDynamic } = router || {};
     const { map, mainMap } = query || {};
 
     // get location payload based on layer type
@@ -98,7 +97,7 @@ class MainMapContainer extends PureComponent {
   }
 
   setDrawnGeostore = geostoreId => {
-    const { query, pushDynamic } = this.props.router;
+    const { query, pushDynamic } = router;
     const { map, mainMap } = query || {};
     pushDynamic({
       pathname: '/map/[...location]',
@@ -214,4 +213,4 @@ reducerRegistry.registerModule('mainMap', {
 });
 
 
-export default withRouter(connect(getMapProps, actions)(MainMapContainer));
+export default connect(getMapProps, actions)(MainMapContainer);

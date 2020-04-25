@@ -3,7 +3,7 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import qs from 'query-string';
 
-import { getRouter } from 'utils/withRouter';
+import { getRouter } from 'app/router';
 
 import oldLayers from 'data/v2-v3-datasets-layers.json';
 
