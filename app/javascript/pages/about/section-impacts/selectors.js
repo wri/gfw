@@ -10,9 +10,9 @@ export function deburrUpper(string) {
 
 export const allProjectsCategory = 'All';
 
-const getProjects = (state) => state.data || null;
-const getCategory = (state) => state.categorySelected || null;
-const getSearch = (state) => state.search || null;
+const getProjects = (state) => state.data;
+const getCategory = (state) => state.categorySelected;
+const getSearch = (state) => state.search;
 
 export const getProjectList = createSelector(
   getProjects,

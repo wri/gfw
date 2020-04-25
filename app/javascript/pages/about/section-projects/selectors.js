@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 import groupBy from 'lodash/groupBy';
 
-const getProjects = (state) => state.data || null;
-const getCategory = (state) => state.categorySelected || null;
+const getProjects = (state) => state.data;
+const getCategory = (state) => state.categorySelected;
 
 export const getProjectsByCategory = createSelector(getProjects, (projects) => {
   if (!projects) return null;
