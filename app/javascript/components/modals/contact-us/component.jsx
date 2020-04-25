@@ -9,21 +9,21 @@ import './styles.scss';
 class ModalContactUs extends PureComponent {
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
+    setContactUsModalOpen: PropTypes.func.isRequired,
   }
 
   render() {
-    const { open, onClose } = this.props;
+    const { open, setContactUsModalOpen } = this.props;
 
     return (
       <Modal
         isOpen={open}
         contentLabel="Contact Us"
-        onRequestClose={onClose}
+        onRequestClose={() => setContactUsModalOpen(false)}
         title="Contact Us"
         className="c-contact-us-modal"
       >
-        <ContactForm onClose={onClose} />
+        <ContactForm onClose={() => setContactUsModalOpen(false)} />
       </Modal>
     );
   }

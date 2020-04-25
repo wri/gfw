@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { logEvent } from 'app/analytics';
-import withRouter from 'utils/withRouter';
 import Link from 'next/link';
 
 import Footer from 'components/footer';
@@ -16,12 +15,11 @@ class TopicsFooter extends PureComponent {
     cards: PropTypes.array,
     topic: PropTypes.string,
     countries: PropTypes.array,
-    router: PropTypes.object,
+    setContactUsModalOpen: PropTypes.func,
   };
 
   render() {
-    const { cards, topic, countries, router } = this.props;
-    const { pathname, query } = router;
+    const { cards, topic, countries, setContactUsModalOpen } = this.props;
 
     return (
       <div className="c-topics-footer">
@@ -48,14 +46,7 @@ class TopicsFooter extends PureComponent {
                             extLink: c.extLink,
                             onClick: () => {
                               if (c.id === 'feedback') {
-                                router.pushDynamic({
-                                  pathname,
-                                  query: { ...query, contactUs: true },
-                                  hash:
-                                    typeof window !== 'undefined'
-                                      ? window.location.hash
-                                      : null,
-                                });
+                                setContactUsModalOpen(true);
                               }
                               logEvent('topicsCardClicked', {
                                 label: `${topic}: ${c.title}`,
@@ -90,13 +81,7 @@ class TopicsFooter extends PureComponent {
               <a className={className}>{children}</a>
             </Link>
           )}
-          openContactUsModal={() => {
-            router.pushDynamic({
-              pathname,
-              query: { ...query, contactUs: true },
-              hash: typeof window !== 'undefined' ? window.location.hash : null,
-            });
-          }}
+          openContactUsModal={() => setContactUsModalOpen(true)}
         />
         <CountryDataProvider />
       </div>
@@ -104,4 +89,4 @@ class TopicsFooter extends PureComponent {
   }
 }
 
-export default withRouter(TopicsFooter);
+export default TopicsFooter;

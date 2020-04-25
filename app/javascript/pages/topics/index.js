@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import withRouter from 'utils/withRouter';
 
 import Biodiversity from './config/biodiversity';
 import Commodities from './config/commodities';
@@ -38,18 +37,18 @@ const sections = {
   },
 };
 
-const mapStateToProps = (state, { router }) => ({
-  title: router?.query?.topic || 'biodiversity',
-  section: sections && sections[router?.query?.topic || 'biodiversity'],
-  topicData: contents[router?.query?.topic] || contents.biodiversity,
+const mapStateToProps = ({ location }) => ({
+  title: location?.topic || 'biodiversity',
+  section: sections && sections[location?.topic || 'biodiversity'],
+  topicData: contents[location?.topic] || contents.biodiversity,
   links: sections
     ? Object.values(sections).map((r) => ({
         label: r.label,
         href: '/topics/[topic]',
         as: `/topics/${r.component}`,
-        activeShallow: !router?.query?.topic && r.component === 'biodiversity',
+        activeShallow: !location?.topic && r.component === 'biodiversity',
       }))
     : [],
 });
 
-export default withRouter(connect(mapStateToProps)(PageComponent));
+export default connect(mapStateToProps)(PageComponent);
