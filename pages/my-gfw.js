@@ -1,16 +1,8 @@
-import { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import Layout from 'layouts/page';
+import MyGfw from 'layouts/my-gfw';
 
-import MyGFW from 'layouts/my-gfw';
-
-class MyGFWPage extends PureComponent {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-  };
-
-  render() {
-    return <MyGFW {...this.props} />;
-  }
-}
-
-export default MyGFWPage;
+export default (props) => (
+  <Layout {...props}>
+    <MyGfw />
+  </Layout>
+);
