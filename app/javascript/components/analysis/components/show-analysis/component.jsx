@@ -266,9 +266,7 @@ class ShowAnalysis extends PureComponent {
                 <div className="content">
                   <h3>Interested in this particular area?</h3>
                   <p>
-                    Save this area to receive email alerts about forest cover
-                    change. We are currently developing the ability to create
-                    dashboards for custom areas.
+                    Save this area to create a dashboard with a more in-depth analysis and receive email alerts about forest cover change.
                   </p>
                 </div>
               )}
