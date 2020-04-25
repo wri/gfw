@@ -1,7 +1,7 @@
 import React, { Children, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import withRouter from 'utils/withRouter';
+import { withRouter } from 'next/router';
 import cx from 'classnames';
 
 class NavLink extends PureComponent {

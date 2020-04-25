@@ -1,5 +1,9 @@
-import withRouter from 'utils/withRouter';
+import { connect } from 'react-redux';
 
 import PageComponent from './component';
 
-export default withRouter(PageComponent);
+const mapStateToProps = ({ location }) => ({
+  section: location.section
+})
+
+export default connect(mapStateToProps)(PageComponent);

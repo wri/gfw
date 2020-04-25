@@ -3,10 +3,11 @@ import * as actions from './actions';
 export const initialState = {
   loading: false,
   error: false,
-  data: [],
+  data: {},
   categorySelected: 'All',
   customFilter: [],
   countries: [],
+  sgfModal: null
 };
 
 const setProjectsLoading = (state, { payload }) => ({
@@ -34,6 +35,11 @@ const setCustomFilter = (state, { payload }) => ({
   customFilter: payload,
 });
 
+const setSGFModal = (state, { payload }) => ({
+  ...state,
+  sgfModal: payload,
+});
+
 const setSearch = (state, { payload }) => ({
   ...state,
   search: payload,
@@ -43,6 +49,7 @@ const setSearch = (state, { payload }) => ({
 export default {
   [actions.setProjectsLoading]: setProjectsLoading,
   [actions.setProjectsData]: setProjectsData,
+  [actions.setSGFModal]: setSGFModal,
   [actions.setCategorySelected]: setCategorySelected,
   [actions.setSearch]: setSearch,
   [actions.setCustomFilter]: setCustomFilter,

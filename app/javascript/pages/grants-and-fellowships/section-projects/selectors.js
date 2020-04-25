@@ -10,12 +10,12 @@ export function deburrUpper(string) {
   return toUpper(deburr(string));
 }
 
-const getProjects = (state) => state.data || null;
-const getCategory = (state) => state.categorySelected || null;
-const getSearch = (state) => state.search || null;
-const getLatLngs = (state) => state.latLngs || null;
-const getImages = (state) => state.images || null;
-const getCustomFilter = (state) => state.customFilter || null;
+const getProjects = state => state.data;
+const getCategory = state => state.categorySelected;
+const getSearch = state => state.search;
+const getLatLngs = state => state.latLngs;
+const getImages = state => state.images;
+const getCustomFilter = state => state.customFilter;
 
 export const getProjectsWithImages = createSelector(
   [getProjects, getImages],

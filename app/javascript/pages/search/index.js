@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
-import withRouter from 'utils/withRouter';
 
 import * as actions from './actions';
 import getSearchProps from './selectors';
@@ -13,4 +12,4 @@ reducerRegistry.registerModule('search', {
   initialState,
 });
 
-export default withRouter(connect(getSearchProps, actions)(Component));
+export default connect(getSearchProps, actions)(Component);

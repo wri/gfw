@@ -27,8 +27,7 @@ export const fetchProjects = createThunkAction(
           }));
         dispatch(setProjectsData(dataParsed));
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
         dispatch(setProjectsLoading({ loading: false, error: true }));
       });
   }

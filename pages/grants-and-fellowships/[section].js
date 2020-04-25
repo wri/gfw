@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
 
 import Layout from 'layouts/page';
@@ -22,16 +21,10 @@ export const getStaticProps = async ({ params }) => ({
   }
 });
 
-const GrantsAndFellowshipsPage = (props) => {
-  return (
-    <Layout {...props}>
-      <GrantsAndFellowships />
-    </Layout>
-  );
-};
-
-GrantsAndFellowshipsPage.propTypes = {
-  titleParams: PropTypes.object.isRequired,
-};
+const GrantsAndFellowshipsPage = (props) => (
+  <Layout {...props}>
+    <GrantsAndFellowships />
+  </Layout>
+);
 
 export default GrantsAndFellowshipsPage;

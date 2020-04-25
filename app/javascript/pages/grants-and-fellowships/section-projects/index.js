@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { scroller } from 'react-scroll';
 import reducerRegistry from 'app/registry';
-import withRouter from 'utils/withRouter';
 
 import * as actions from './actions';
 
@@ -16,14 +15,14 @@ import {
 } from './selectors';
 
 const mapStateToProps = ({ sgfProjects }) => {
-  const filters = sgfProjects && sgfProjects.customFilter;
+  const filters = sgfProjects?.customFilter;
   const projectData = {
-    data: sgfProjects && sgfProjects.data && sgfProjects?.data.projects,
-    latLngs: sgfProjects && sgfProjects?.data?.latLngs,
-    images: sgfProjects && sgfProjects?.data?.images,
-    search: sgfProjects && sgfProjects.search,
-    categorySelected: sgfProjects && sgfProjects.categorySelected,
-    customFilter: filters,
+    data: sgfProjects?.data?.projects,
+    latLngs: sgfProjects?.data?.latLngs,
+    images: sgfProjects?.data?.images,
+    search: sgfProjects?.search,
+    categorySelected: sgfProjects?.categorySelected,
+    customFilter: filters
   };
 
   return {
@@ -49,7 +48,7 @@ class SectionProjectsContainer extends PureComponent {
     setCustomFilter: PropTypes.func,
     fetchProjects: PropTypes.func,
     fetchProjectsImages: PropTypes.func,
-    router: PropTypes.object,
+    setSGFModal: PropTypes.func,
   };
 
   componentDidMount() {
@@ -59,11 +58,7 @@ class SectionProjectsContainer extends PureComponent {
   }
 
   handleOpenModal = (slug) => {
-    const { pathname, query } = this.props.router;
-    this.props.router.pushDynamic({
-      pathname,
-      query: { ...query, sgfModal: slug },
-    });
+    this.props.setSGFModal(slug);
   };
 
   handleGlobeClick = (d) => {
@@ -96,6 +91,4 @@ reducerRegistry.registerModule('sgfProjects', {
   initialState,
 });
 
-export default withRouter(
-  connect(mapStateToProps, actions)(SectionProjectsContainer)
-);
+export default connect(mapStateToProps, actions)(SectionProjectsContainer)

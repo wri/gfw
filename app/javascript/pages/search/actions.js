@@ -3,6 +3,7 @@ import request from 'utils/request';
 
 export const setSearchData = createAction('setSearchData');
 export const setSearchLoading = createAction('setSearchLoading');
+export const setSearchQuery = createAction('setSearchQuery');
 
 export const getSearch = createThunkAction(
   'getSearch',
@@ -24,9 +25,8 @@ export const getSearch = createThunkAction(
           const { items } = response.data || {};
           dispatch(setSearchData(items || []));
         })
-        .catch((error) => {
+        .catch(() => {
           dispatch(setSearchLoading(false));
-          console.error(error);
         });
     }
   }

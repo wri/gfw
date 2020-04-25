@@ -9,7 +9,7 @@ import './styles.scss';
 class SectionProjectsModal extends PureComponent {
   static propTypes = {
     data: PropTypes.object,
-    router: PropTypes.object,
+    setSGFModal: PropTypes.func,
     slug: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   };
 
@@ -110,10 +110,7 @@ class SectionProjectsModal extends PureComponent {
   }
 
   handleClose = () => {
-    const { pathname, query } = this.props.router;
-
-    delete query.sgfModal;
-    this.props.router.pushDynamic({ pathname, query });
+    this.props.setSGFModal('');
   };
 
   render() {

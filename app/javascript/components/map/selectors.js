@@ -5,7 +5,6 @@ import moment from 'moment';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
-import { getRouter } from 'utils/withRouter';
 
 import { selectActiveLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
@@ -14,8 +13,8 @@ import { initialState } from './reducers';
 import basemaps from './basemaps';
 
 // map state
-const selectMapUrlState = (state) => state?.map?.settings;
-const selectLocation = () => getRouter()?.location;
+const selectMapSettings = (state) => state?.map?.settings;
+const selectLocation = state => state.location;
 const selectMapLoading = state => state?.map?.loading;
 const selectGeostoreLoading = state => state?.geostore?.loading;
 const selectLatestLoading = state => state?.latest?.loading;
@@ -30,7 +29,7 @@ export const selectGeostore = state => state?.geostore?.data;
 export const getBasemaps = () => basemaps;
 
 // SELECTORS
-export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
+export const getMapSettings = createSelector([selectMapSettings], urlState => ({
   ...initialState.settings,
   ...urlState
 }));

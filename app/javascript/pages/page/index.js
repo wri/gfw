@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { initGA, logPageView, logEvent } from 'app/analytics';
 import checkBrowser from 'utils/browser';
 import cx from 'classnames';
-import withRouter from 'utils/withRouter';
+import { withRouter } from 'next/router';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Meta from 'layouts/meta';
@@ -28,9 +28,7 @@ class Layout extends React.Component {
     hideFooter: PropTypes.bool,
     fullScreen: PropTypes.bool,
     loggedIn: PropTypes.bool,
-    loggingIn: PropTypes.bool,
-    titleParams: PropTypes.object,
-    descriptionParams: PropTypes.object,
+    loggingIn: PropTypes.bool
   };
 
   componentDidMount() {
@@ -58,9 +56,7 @@ class Layout extends React.Component {
       hideHeader,
       fullScreen,
       loggedIn,
-      loggingIn,
-      titleParams,
-      descriptionParams,
+      loggingIn
     } = this.props;
     const { pathname, query } = router;
 
@@ -70,8 +66,6 @@ class Layout extends React.Component {
           <Meta
             title={title}
             description={description}
-            titleParams={titleParams}
-            descriptionParams={descriptionParams}
             keywords={keywords}
           />
           {!hideHeader && (

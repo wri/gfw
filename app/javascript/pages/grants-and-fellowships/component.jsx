@@ -20,17 +20,17 @@ const sections = {
 
 class GrantsAndFellowshipsPage extends PureComponent {
   static propTypes = {
-    router: PropTypes.object,
+    section: PropTypes.string,
   };
 
   render() {
-    const { router } = this.props;
-    const SectionComponent = sections[router?.query?.section || 'projects'];
+    const { section } = this.props;
+    const SectionComponent = sections[section || 'projects'];
     const links = Object.keys(sections).map((key) => ({
       label: capitalize(key),
       href: '/grants-and-fellowships/[section]',
       as: `/grants-and-fellowships/${key}`,
-      activeShallow: !router?.query?.section && key === 'projects',
+      activeShallow: !section && key === 'projects',
     }));
 
     return (

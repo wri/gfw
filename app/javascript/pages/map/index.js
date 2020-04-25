@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import isEmpty from 'lodash/isEmpty';
 // import flatMap from 'lodash/flatMap';
 // import { logEvent } from 'app/analytics';
-import withRouter from 'utils/withRouter';
+import { withRouter } from 'next/router';
 import { getLocationFromData } from 'utils/format';
 import reducerRegistry from 'app/registry';
 

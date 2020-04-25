@@ -2,13 +2,15 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import reduxQuerySync from 'utils/stateToUrl';
+// import reduxQuerySync from 'utils/stateToUrl';
 
 import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
+import locationReduxModule from 'providers/location-provider';
 
 import reducerRegistry from './registry';
 
 reducerRegistry.registerModule('myGfw', myGfwReduxModule);
+reducerRegistry.registerModule('location', locationReduxModule);
 
 const initialReducers = combineReducers(reducerRegistry.getReducers());
 
@@ -33,29 +35,29 @@ export default (initialState) => {
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );
 
-  reduxQuerySync({
-    store,
-    params: {
-      map: {
-        key: 'map',
-        actionName: 'setMapSettings',
-        selector: state => state?.map?.settings,
-        action: payload => ({ type: 'setMapSettings', payload })
-      },
-      mainMap: {
-        key: 'mainMap',
-        actionName: 'setMainMapSettings',
-        selector: state => state?.mainMap,
-        action: payload => ({ type: 'setMainMapSettings', payload })
-      },
-      menu: {
-        key: 'menu',
-        actionName: 'setMenuSettings',
-        selector: state => state?.mapMenu,
-        action: payload => ({ type: 'setMenuSettings', payload })
-      },
-    }
-  })
+  // reduxQuerySync({
+  //   store,
+  //   params: {
+  //     map: {
+  //       key: 'map',
+  //       actionName: 'setMapSettings',
+  //       selector: state => state?.map?.settings,
+  //       action: payload => ({ type: 'setMapSettings', payload })
+  //     },
+  //     mainMap: {
+  //       key: 'mainMap',
+  //       actionName: 'setMainMapSettings',
+  //       selector: state => state?.mainMap,
+  //       action: payload => ({ type: 'setMainMapSettings', payload })
+  //     },
+  //     menu: {
+  //       key: 'menu',
+  //       actionName: 'setMenuSettings',
+  //       selector: state => state?.mapMenu,
+  //       action: payload => ({ type: 'setMenuSettings', payload })
+  //     },
+  //   }
+  // })
 
   return store;
 };

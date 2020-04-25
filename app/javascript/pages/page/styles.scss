@@ -32,6 +32,10 @@
       position: fixed;
       width: 100%;
       top: 0;
+
+      @media screen and (min-width: $screen-m) {
+        height: 100%;
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import withRouter from 'utils/withRouter';
+import { withRouter } from 'next/router';
 
 import { setUserToken } from 'services/user';
 

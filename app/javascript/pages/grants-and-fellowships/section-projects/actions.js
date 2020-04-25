@@ -9,6 +9,7 @@ import { getBucketObjects, getImageUrl } from 'services/aws';
 export const setProjectsLoading = createAction('setProjectsLoading');
 export const setProjectsData = createAction('setProjectsData');
 export const setCategorySelected = createAction('setCategorySelected');
+export const setSGFModal = createAction('setSGFModal');
 export const setCustomFilter = createAction('setCustomFilter');
 export const setSearch = createAction('setSearch');
 
@@ -57,8 +58,7 @@ export const fetchProjects = createThunkAction(
           );
         })
       )
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
         dispatch(setProjectsLoading({ loading: false, error: true }));
       });
   }
