@@ -4,7 +4,6 @@ import qs from 'query-string';
 // import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
 
 export default () => {
-  // get all query
   const { router } = Router;
   if (router) {
     if (router?.asPath.includes('?')) {
@@ -35,5 +34,5 @@ export default () => {
     // };
   }
 
-  return router || {};
+  return { ...Router, ...router };
 };

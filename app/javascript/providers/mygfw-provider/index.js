@@ -13,6 +13,7 @@ class MyGFWProvider extends PureComponent {
   componentDidMount() {
     // if user arriving from social login, clear token from url and save it to storage
     const { query, pathname, replace } = useRouter();
+
     if (query && query.token) {
       setUserToken(query.token);
       delete query.token;
