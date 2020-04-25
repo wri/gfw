@@ -6,8 +6,8 @@ import PageComponent from './component';
 import config from './config';
 
 const mapStateToProps = ({ news }) => ({
-  news: news && news.data,
-  newsLoading: news && news.loading,
+  news: news?.data,
+  newsLoading: news?.loading,
   ...config,
 });
 

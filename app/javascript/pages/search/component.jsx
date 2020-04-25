@@ -19,7 +19,7 @@ class SearchPage extends PureComponent {
     data: PropTypes.array,
     loading: PropTypes.bool,
     getSearch: PropTypes.func,
-    router: PropTypes.object,
+    setSearchQuery: PropTypes.func,
   };
 
   state = {
@@ -39,7 +39,7 @@ class SearchPage extends PureComponent {
   };
 
   fetchSearchResults = debounce((query) => {
-    this.props.router.push({ pathname: '/search', query: { query } });
+    this.props.setSearchQuery(query);
     this.props.getSearch({ query, page: 1 });
     logPageView();
   }, 300);
