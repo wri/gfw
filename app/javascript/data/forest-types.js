@@ -66,7 +66,7 @@ export default [
       {
         dataset: MANGROVE_FORESTS_DATASET,
         layers: [
-          MANGROVE_FORESTS_DATASET
+          MANGROVE_FORESTS
         ]
       }
     ],
