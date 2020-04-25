@@ -1,14 +1,3 @@
-import { createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'app/stateToUrl';
+import { createAction } from 'utils/redux';
 
-export const setProfileModalOpen = createThunkAction(
-  'setProfileModalOpen',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'profile',
-        change,
-        state
-      })
-    )
-);
+export const setProfileModalOpen = createAction('setProfileModalOpen')

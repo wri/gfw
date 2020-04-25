@@ -1,14 +1,9 @@
 import { createStructuredSelector } from 'reselect';
 
-const selectProfileUrlState = state =>
-  state.location && state.location.query && state.location.query.profile;
-
-const selectUsername = state =>
-  state.myGfw &&
-  state.myGfw.data &&
-  !!(state.myGfw.data.fullName || state.myGfw.data.lastName);
+const selectProfileModalOpen = state => state?.profileModal?.open;
+const selectUsername = state => state?.myGfw?.data && !!(state?.myGfw?.data?.fullName || state?.myGfw?.data?.lastName);
 
 export default createStructuredSelector({
-  open: selectProfileUrlState,
+  open: selectProfileModalOpen,
   filledProfile: selectUsername
 });

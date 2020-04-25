@@ -8,7 +8,7 @@ import './styles.scss';
 
 class ProfileModal extends PureComponent {
   static propTypes = {
-    open: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    open: PropTypes.bool,
     setProfileModalOpen: PropTypes.func,
     filledProfile: PropTypes.bool
   };

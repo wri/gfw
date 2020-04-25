@@ -4,12 +4,12 @@ import cx from 'classnames';
 
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
-// import ShareModal from 'components/modals/share';
-// import ProfileModal from 'components/modals/profile';
+import ShareModal from 'components/modals/share';
+import ProfileModal from 'components/modals/profile';
 import LoginForm from 'components/forms/login';
 
-// import AreasProvider from 'providers/areas-provider';
-// import CountryDataProvider from 'providers/country-data-provider';
+import AreasProvider from 'providers/areas-provider';
+import CountryDataProvider from 'providers/country-data-provider';
 import DashboardImage from 'assets/images/aois/aoi-dashboard-small.png?webp';
 import DashboardImageLarge from 'assets/images/aois/aoi-dashboard-small@2x.png?webp';
 
@@ -88,11 +88,11 @@ class MyGFWPage extends PureComponent {
                 )}
               </div>
             </div>
-            {/* <AreasProvider /> */}
+            <AreasProvider />
             {/* <AreaOfInterestModal canDelete /> */}
-            {/* <CountryDataProvider /> */}
-            {/* <ShareModal /> */}
-            {/* <ProfileModal /> */}
+            <CountryDataProvider />
+            <ShareModal />
+            <ProfileModal />
           </Fragment>
         )}
         {showLogin && (

@@ -48,6 +48,7 @@
     "react/no-access-state-in-setstate": "off",
     "react/no-array-index-key": "off",
     "no-restricted-globals": "off",
-    "react/sort-comp": "off"
+    "react/sort-comp": "off",
+    "import/prefer-default-export": "off"
   }
 }
