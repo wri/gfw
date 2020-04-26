@@ -7,28 +7,24 @@ import { translateText } from 'utils/transifex';
 import { getActiveDatasetsFromState } from 'components/map/selectors';
 import { selectActiveLang } from 'utils/lang';
 
-const selectSearch = state =>
-  state.location &&
-  state.location.query &&
-  state.location.query.menu &&
-  state.location.query.menu.search;
-const selectLocation = state => state.location && state.location.payload;
-const selectDatasets = state => state.datasets && state.datasets.data;
-const selectLocations = state => state.mapMenu && state.mapMenu.locations;
-const selectLoading = state => state.mapMenu && state.mapMenu.loading;
+const selectSearch = (state) => state.mapMenu?.search;
+const selectLocation = (state) => state.location;
+const selectDatasets = (state) => state.datasets?.data;
+const selectLocations = (state) => state.mapMenu?.locations;
+const selectLoading = (state) => state.mapMenu?.loading;
 
 const getDatasetWithUrlState = createSelector(
   [getActiveDatasetsFromState, selectDatasets, selectActiveLang],
   (datasetsState, datasets, lang) => {
-    const datasetIds = datasetsState.map(d => d.dataset);
+    const datasetIds = datasetsState.map((d) => d.dataset);
 
     return (
       datasets &&
       sortBy(
-        datasets.map(d => ({
+        datasets.map((d) => ({
           ...d,
           active: datasetIds.includes(d.id),
-          localeName: lang === 'en' ? d.name : translateText(d.name)
+          localeName: lang === 'en' ? d.name : translateText(d.name),
         })),
         ['name', 'localName']
       )
@@ -41,7 +37,7 @@ const getFilteredDatasets = createSelector(
   (datasets, search) =>
     search && datasets
       ? datasets.filter(
-          d =>
+          (d) =>
             deburrUpper(d.name).includes(deburrUpper(search)) ||
             deburrUpper(d.localeName).includes(deburrUpper(search)) ||
             deburrUpper(d.description).includes(deburrUpper(search))
@@ -57,9 +53,9 @@ const getLocations = createSelector(
     const gadmId = buildGadm36Id(adm0, adm1, adm2);
 
     return locations
-      .map(l => ({
+      .map((l) => ({
         ...l,
-        active: Object.values(l).includes(gadmId)
+        active: Object.values(l).includes(gadmId),
       }))
       .slice(0, 15);
   }
@@ -70,5 +66,5 @@ export default createStructuredSelector({
   search: selectSearch,
   locations: getLocations,
   loading: selectLoading,
-  lang: selectActiveLang
+  lang: selectActiveLang,
 });

@@ -1,15 +1,14 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { all, spread } from 'axios';
 import minBy from 'lodash/minBy';
-import { setComponentStateToUrl } from 'app/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 
-const serializeReponse = response =>
+const serializeReponse = (response) =>
   response &&
   !!response.length &&
-  response.map(r => ({
-    ...r.attributes
+  response.map((r) => ({
+    ...r.attributes,
   }));
 
 export const setRecentImageryData = createAction('setRecentImageryData');
@@ -17,31 +16,22 @@ export const setRecentImageryDataStatus = createAction(
   'setRecentImageryDataStatus'
 );
 export const resetRecentImageryData = createAction('resetRecentImageryData');
+export const setRecentImagerySettings = createAction(
+  'setRecentImagerySettings'
+);
 export const setRecentImageryLoading = createAction('setRecentImageryLoading');
 export const setRecentImageryLoadingMoreTiles = createAction(
   'setRecentImageryLoadingMoreTiles'
 );
 
-export const setRecentImagerySettings = createThunkAction(
-  'setRecentImagerySettings',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'recentImagery',
-        change,
-        state
-      })
-    )
-);
-
 export const getRecentImageryData = createThunkAction(
   'getRecentImageryData',
-  params => (dispatch, getState) => {
+  (params) => (dispatch, getState) => {
     const { recentImagery } = getState();
     if (recentImagery && !recentImagery.loading) {
       dispatch(setRecentImageryLoading({ loading: true, error: false }));
       getRecentTiles({ ...params })
-        .then(response => {
+        .then((response) => {
           const serializedResponse = serializeReponse(
             response.data && response.data.data && response.data.data.tiles
           );
@@ -55,15 +45,15 @@ export const getRecentImageryData = createThunkAction(
                 data: serializedResponse,
                 dataStatus: {
                   haveAllData: false,
-                  requestedTiles: 0
-                }
+                  requestedTiles: 0,
+                },
               })
             );
             dispatch(
               setRecentImagerySettings({
                 clouds: minCloudScore > clouds ? minCloudScore : clouds,
                 selected: null,
-                selectedIndex: 0
+                selectedIndex: 0,
               })
             );
             dispatch(setRecentImageryLoading({ loading: false, error: false }));
@@ -78,7 +68,7 @@ export const getRecentImageryData = createThunkAction(
 
 export const getMoreTiles = createThunkAction(
   'getMoreTiles',
-  params => (dispatch, getState) => {
+  (params) => (dispatch, getState) => {
     const { recentImagery } = getState();
     if (
       recentImagery &&
@@ -87,7 +77,7 @@ export const getMoreTiles = createThunkAction(
     ) {
       dispatch(
         setRecentImageryLoadingMoreTiles({
-          loadingMoreTiles: true
+          loadingMoreTiles: true,
         })
       );
       const { sources, dataStatus, bands } = params;
@@ -108,17 +98,17 @@ export const getMoreTiles = createThunkAction(
               const requestedTiles = dataStatus.requestedTiles + tiles.length;
               const haveAllData = requestedTiles >= data.length;
               const newData = data.map((d, i) => {
-                const tile = tiles.find(t => t.source_id === d.source);
-                const thumb = thumbs.find(t => t.source === d.source);
+                const tile = tiles.find((t) => t.source_id === d.source);
+                const thumb = thumbs.find((t) => t.source === d.source);
                 return {
                   ...d,
                   ...(tile &&
                     i > 0 && {
-                      tile_url: tile.tile_url
+                      tile_url: tile.tile_url,
                     }),
                   ...(thumb && {
-                    thumbnail_url: thumb.thumbnail_url
-                  })
+                    thumbnail_url: thumb.thumbnail_url,
+                  }),
                 };
               });
 
@@ -127,13 +117,13 @@ export const getMoreTiles = createThunkAction(
                   data: newData,
                   dataStatus: {
                     haveAllData,
-                    requestedTiles
-                  }
+                    requestedTiles,
+                  },
                 })
               );
               dispatch(
                 setRecentImageryLoadingMoreTiles({
-                  loadingMoreTiles: false
+                  loadingMoreTiles: false,
                 })
               );
             }
@@ -143,13 +133,13 @@ export const getMoreTiles = createThunkAction(
           dispatch(
             setRecentImageryData({
               dataStatus: {
-                requestFails: params.dataStatus.requestFails + 1
-              }
+                requestFails: params.dataStatus.requestFails + 1,
+              },
             })
           );
           dispatch(
             setRecentImageryLoadingMoreTiles({
-              loadingMoreTiles: false
+              loadingMoreTiles: false,
             })
           );
         });

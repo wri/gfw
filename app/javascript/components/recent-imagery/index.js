@@ -13,10 +13,8 @@ import { getRecentImageryProps } from './selectors';
 
 const actions = {
   ...ownActions,
-  setMapSettings
+  setMapSettings,
 };
-
-const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
   componentDidMount = () => {
@@ -25,7 +23,7 @@ class RecentImageryContainer extends PureComponent {
       position,
       dates,
       settings,
-      getRecentImageryData
+      getRecentImageryData,
     } = this.props;
     if (this.getDataSource) {
       this.getDataSource.cancel();
@@ -37,12 +35,12 @@ class RecentImageryContainer extends PureComponent {
         start: dates.start,
         end: dates.end,
         bands: settings.bands,
-        token: this.getDataSource.token
+        token: this.getDataSource.token,
       });
     }
   };
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     const {
       active,
       dataStatus,
@@ -56,7 +54,7 @@ class RecentImageryContainer extends PureComponent {
       position,
       loadingMoreTiles,
       resetRecentImageryData,
-      error
+      error,
     } = this.props;
 
     const isNewTile =
@@ -86,7 +84,7 @@ class RecentImageryContainer extends PureComponent {
         start: dates.start,
         end: dates.end,
         bands: settings.bands,
-        token: this.getDataSource.token
+        token: this.getDataSource.token,
       });
     }
 
@@ -101,7 +99,7 @@ class RecentImageryContainer extends PureComponent {
       getMoreTiles({
         sources,
         dataStatus,
-        bands: settings.bands
+        bands: settings.bands,
       });
     }
 
@@ -122,7 +120,7 @@ class RecentImageryContainer extends PureComponent {
       const activeDatasets =
         datasets &&
         !!datasets.length &&
-        datasets.filter(d => !d.isRecentImagery);
+        datasets.filter((d) => !d.isRecentImagery);
       const recentDataset = {
         dataset: recentImageryDataset.dataset,
         layers: [recentImageryDataset.layer],
@@ -130,13 +128,13 @@ class RecentImageryContainer extends PureComponent {
         opacity: 1,
         isRecentImagery: true,
         params: {
-          url: activeTile.url
-        }
+          url: activeTile.url,
+        },
       };
       this.props.setMapSettings({
         datasets: activeDatasets
           ? activeDatasets.concat(recentDataset)
-          : [recentDataset]
+          : [recentDataset],
       });
     }
   }, 200);
@@ -144,13 +142,15 @@ class RecentImageryContainer extends PureComponent {
   removeTile() {
     const { datasets, setRecentImagerySettings } = this.props;
     const activeDatasets =
-      datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
+      datasets &&
+      !!datasets.length &&
+      datasets.filter((d) => !d.isRecentImagery);
     this.props.setMapSettings({
-      datasets: activeDatasets || []
+      datasets: activeDatasets || [],
     });
     setRecentImagerySettings({
       selectedIndex: 0,
-      selected: null
+      selected: null,
     });
   }
 
@@ -176,13 +176,13 @@ RecentImageryContainer.propTypes = {
   recentImageryDataset: PropTypes.object,
   resetRecentImageryData: PropTypes.func,
   setRecentImagerySettings: PropTypes.func,
-  error: PropTypes.bool
+  error: PropTypes.bool,
 };
 
 reducerRegistry.registerModule('recentImagery', {
   actions: ownActions,
   reducers,
-  initialState
+  initialState,
 });
 
-export default connect(mapStateToProps, actions)(RecentImageryContainer);
+export default connect(getRecentImageryProps, actions)(RecentImageryContainer);

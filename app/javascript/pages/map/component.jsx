@@ -13,6 +13,7 @@ import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
 import PlanetBasemapsProvider from 'providers/planet-provider';
 
+import MapMenu from 'components/map-menu';
 import Map from 'components/map';
 import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
@@ -20,8 +21,8 @@ import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 // import MapPrompts from 'components/prompts/map-prompts';
-// import ModalWelcome from 'components/modals/welcome';
-// import RecentImagery from 'components/recent-imagery';
+import ModalWelcome from 'components/modals/welcome';
+import RecentImagery from 'components/recent-imagery';
 
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
@@ -40,10 +41,10 @@ class MainMapComponent extends PureComponent {
     recentActive: PropTypes.bool,
     tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     showTooltip: PropTypes.bool,
-    setMainMapAnalysisView: PropTypes.func
+    setMainMapAnalysisView: PropTypes.func,
   };
 
-  renderInfoTooltip = string => (
+  renderInfoTooltip = (string) => (
     <div>
       <p className="tooltip-info">{string}</p>
     </div>
@@ -61,11 +62,17 @@ class MainMapComponent extends PureComponent {
       recentActive,
       handleClickAnalysis,
       setMainMapAnalysisView,
-      onDrawComplete
+      onDrawComplete,
     } = this.props;
 
     return (
       <div className={cx('c-map-main', { embed })}>
+        <Media greaterThanOrEqual="md">
+          <MapMenu className="map-menu" embed={embed} isDesktop />
+        </Media>
+        <Media lessThan="md">
+          <MapMenu className="map-menu" embed={embed} />
+        </Media>
         <div
           className="main-map-container"
           role="button"
@@ -74,7 +81,8 @@ class MainMapComponent extends PureComponent {
           onMouseOver={() =>
             oneClickAnalysis &&
             handleShowTooltip(true, 'Click shape to analyze.')}
-          onFocus={() => oneClickAnalysis &&
+          onFocus={() =>
+            oneClickAnalysis &&
             handleShowTooltip(true, 'Click shape to analyze.')}
           onMouseOut={() => handleShowTooltip(false, '')}
           onBlur={() => handleShowTooltip(false, '')}
@@ -101,42 +109,34 @@ class MainMapComponent extends PureComponent {
               popupActions={[
                 {
                   label: 'Analyze',
-                  action: handleClickAnalysis
-                }
+                  action: handleClickAnalysis,
+                },
               ]}
             />
           </Tooltip>
+          {!hidePanels && (
+            <Media greaterThanOrEqual="md">
+              <DataAnalysisMenu className="data-analysis-menu" embed={embed} />
+            </Media>
+          )}
         </div>
-        {!hidePanels && (
-          <Media greaterThanOrEqual="md">
-            <DataAnalysisMenu
-              className="data-analysis-menu"
-              embed={embed}
-            />
-          </Media>
-        )}
         {!embed && (
           <>
             <Media greaterThanOrEqual="md">
-              <MapControlButtons
-                className="main-map-controls"
-                isDesktop
-              />
+              <MapControlButtons className="main-map-controls" isDesktop />
             </Media>
             <Media lessThan="md">
-              <MapControlButtons
-                className="main-map-controls"
-              />
+              <MapControlButtons className="main-map-controls" />
             </Media>
           </>
         )}
-        {/* <RecentImagery active={recentActive} /> */}
-        {/* {!embed && (
+        <RecentImagery active={recentActive} />
+        {!embed && (
           <Media greaterThanOrEqual="md">
-            {!embed && <MapPrompts />}
+            {/* {!embed && <MapPrompts />} */}
             <ModalWelcome />
           </Media>
-        )} */}
+        )}
         <Share />
         <ModalMeta />
         <ModalSource />

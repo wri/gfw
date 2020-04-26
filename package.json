@@ -95,7 +95,7 @@
     "react-modal": "^3.11.2",
     "react-outside-click-handler": "^1.3.0",
     "react-portal": "^4.2.1",
-    "react-pose": "^4.0.10",
+    "react-pose": "3.3.6",
     "react-redux": "^7.2.0",
     "react-scroll": "^1.7.16",
     "react-simple-maps": "^2.0.0",

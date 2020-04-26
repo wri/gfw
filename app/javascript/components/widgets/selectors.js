@@ -24,57 +24,47 @@ import {
   getOptionsSelected,
   getIndicator,
   getStatements,
-  getLocationPath
+  getLocationPath,
 } from './utils/config';
 import allWidgets from './manifest';
 
-const buildLocationDict = locations =>
+const buildLocationDict = (locations) =>
   (location &&
     !!locations.length &&
     locations.reduce(
       (dict, next) => ({
         ...dict,
         [next.value || next.id]: {
-          ...next
-        }
+          ...next,
+        },
       }),
       {}
     )) ||
   {};
 
-export const selectLocation = state => state.location && state.location.payload;
-export const selectRouteType = state => state.location && state.location.type;
-export const selectLocationQuery = state =>
-  state.location && state.location.query;
-export const selectLocationSearch = state =>
-  state.location && state.location.search;
-export const selectWidgetsData = state => state.widgets && state.widgets.data;
-export const selectGeostore = state => state.geostore && state.geostore.data;
-export const selectLoadingFilterData = state =>
-  state.countryData &&
-  state.whitelists &&
-  state.areas &&
-  (state.countryData.countriesLoading ||
-    state.countryData.regionsLoading ||
-    state.countryData.subRegionsLoading ||
-    state.areas.loading ||
-    state.whitelists.loading);
-export const selectLoadingMeta = state =>
-  state.geostore &&
-  state.geodescriber &&
-  (state.geostore.loading || state.geodescriber.loading);
-export const selectCountryData = state => state.countryData;
-export const selectPolynameWhitelist = state =>
-  state.whitelists && state.whitelists.data;
+export const selectLocation = (state) => state?.location;
+export const selectRouteType = (state) => state?.location?.type;
+export const selectLocationQuery = (state) => state?.location?.query;
+export const selectLocationSearch = (state) => state?.location?.search;
+export const selectWidgetsData = (state) => state?.widgets?.data;
+export const selectGeostore = (state) => state?.geostore?.data;
+export const selectLoadingFilterData = (state) =>
+  state.countryData?.countriesLoading ||
+  state.countryData?.regionsLoading ||
+  state.countryData?.subRegionsLoading ||
+  state.areas?.loading ||
+  state.whitelists?.loading;
+export const selectLoadingMeta = (state) =>
+  state.geostore?.loading || state.geodescriber?.loading;
+export const selectCountryData = (state) => state.countryData;
+export const selectPolynameWhitelist = (state) => state.whitelists?.data;
 export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
 export const selectAnalysis = (state, { analysis }) => analysis;
-export const selectCategory = state =>
-  state.location && state.location.query && state.location.query.category;
-export const selectModalClosing = state =>
-  state.modalMeta && state.modalMeta.closing;
-export const selectNonGlobalDatasets = state =>
-  state.widgets && state.widgets.data.nonGlobalDatasets;
+export const selectCategory = (state) => state.widgets?.category;
+export const selectModalClosing = (state) => state.modalMeta?.closing;
+export const selectNonGlobalDatasets = (state) =>
+  state.widgets?.data?.nonGlobalDatasets;
 
 export const getWidgetFromLocation = createSelector(
   [selectLocation, selectLocationQuery],
@@ -89,7 +79,7 @@ export const getLocationObj = createSelector(
     locationLabel: location.type === 'global' ? 'global' : title,
     adminLevel: locationLevelToStr(location),
     locationLabelFull: location.type === 'global' ? 'global' : title,
-    isTropical: location && tropicalIsos.includes(location.adm0)
+    isTropical: location && tropicalIsos.includes(location.adm0),
   })
 );
 
@@ -99,35 +89,38 @@ export const getAllLocationData = createSelector(
     selectCountryData,
     getAllAreas,
     selectRouteType,
-    selectLocationQuery
+    selectLocationQuery,
   ],
   (dataLocation, countryData, areas, routeType, query) => {
     if (isEmpty(areas) && isEmpty(countryData)) return null;
     const { type, adm0, adm1, areaId } = dataLocation;
 
     if (areaId && type !== 'country') {
-      return { adm0: areas.map(a => ({ ...a, value: a.geostore })) };
+      return { adm0: areas.map((a) => ({ ...a, value: a.geostore })) };
     }
 
     if (type === 'global' || type === 'country') {
       return {
-        adm0: countryData.countries.map(l => ({
+        adm0: countryData.countries.map((l) => ({
           ...l,
-          path: getLocationPath(routeType, type, query, { adm0: l.value })
+          path: getLocationPath(routeType, type, query, { adm0: l.value }),
         })),
-        adm1: countryData.regions.map(l => ({
+        adm1: countryData.regions.map((l) => ({
           ...l,
-          path: getLocationPath(routeType, type, query, { adm0, adm1: l.value })
+          path: getLocationPath(routeType, type, query, {
+            adm0,
+            adm1: l.value,
+          }),
         })),
-        adm2: countryData.subRegions.map(l => ({
+        adm2: countryData.subRegions.map((l) => ({
           ...l,
           path: getLocationPath(routeType, type, query, {
             adm0,
             adm1,
-            adm2: l.value
-          })
+            adm2: l.value,
+          }),
         })),
-        fao: countryData.faoCountries
+        fao: countryData.faoCountries,
       };
     }
 
@@ -149,11 +142,11 @@ export const getLocationData = createSelector(
       parent = { label: 'global', value: 'global' };
       children = adm1Data;
     } else if (adminLevel === 'adm1') {
-      parent = adm0Data && adm0Data.find(d => d.value === adm0);
+      parent = adm0Data && adm0Data.find((d) => d.value === adm0);
       parentData = adm0Data;
       children = adm2Data;
     } else if (adminLevel === 'adm2') {
-      parent = adm1Data && adm1Data.find(d => d.value === adm1);
+      parent = adm1Data && adm1Data.find((d) => d.value === adm1);
       parentData = adm1Data;
       children = [];
     }
@@ -162,7 +155,7 @@ export const getLocationData = createSelector(
     const currentLocation =
       locationData &&
       locationData.find(
-        d =>
+        (d) =>
           d.value === locationObj[adminLevel] ||
           (d.id && d.id === locationObj.areaId)
       );
@@ -183,7 +176,7 @@ export const getLocationData = createSelector(
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
       polynamesWhitelist,
-      status
+      status,
     };
   }
 );
@@ -196,7 +189,7 @@ export const filterWidgetsByLocation = createSelector(
     selectEmbed,
     getWidgetFromLocation,
     getActiveLayersWithDates,
-    selectAnalysis
+    selectAnalysis,
   ],
   (
     location,
@@ -209,17 +202,17 @@ export const filterWidgetsByLocation = createSelector(
   ) => {
     const { adminLevel, type } = location;
 
-    const widgets = Object.values(allWidgets).map(w => ({
+    const widgets = Object.values(allWidgets).map((w) => ({
       ...w,
       ...(w.colors && {
-        colors: colors[w.colors]
-      })
+        colors: colors[w.colors],
+      }),
     }));
 
-    if (embed && widget) return widgets.filter(w => w.widget === widget);
-    const layerIds = layers && layers.map(l => l.id);
+    if (embed && widget) return widgets.filter((w) => w.widget === widget);
+    const layerIds = layers && layers.map((l) => l.id);
 
-    return widgets.filter(w => {
+    return widgets.filter((w) => {
       const {
         types,
         admins,
@@ -227,9 +220,8 @@ export const filterWidgetsByLocation = createSelector(
         blacklists,
         source,
         datasets,
-        visible
-      } =
-        w || {};
+        visible,
+      } = w || {};
       const { fao, status } = locationData || {};
 
       const layerIntersection =
@@ -237,11 +229,13 @@ export const filterWidgetsByLocation = createSelector(
         intersection(
           compact(
             flatMap(
-              datasets.filter(d => !d.boundary).map(d => {
-                const layersArray = Array.isArray(d.layers) && d.layers;
+              datasets
+                .filter((d) => !d.boundary)
+                .map((d) => {
+                  const layersArray = Array.isArray(d.layers) && d.layers;
 
-                return layersArray;
-              })
+                  return layersArray;
+                })
             )
           ),
           layerIds
@@ -257,7 +251,7 @@ export const filterWidgetsByLocation = createSelector(
         !adminBlacklist || !adminBlacklist.includes(adminLevel);
 
       const isFAOCountry =
-        source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
+        source !== 'fao' || (fao && fao.find((f) => f.value === location.adm0));
       const matchesAdminWhitelist =
         !adminWhitelist || adminWhitelist.includes(location.adm0);
       const polynameIntersection =
@@ -299,7 +293,7 @@ export const filterWidgetsByLocation = createSelector(
 
 export const getWidgetCategories = createSelector(
   [filterWidgetsByLocation],
-  widgets => flatMap(widgets.map(w => w.categories))
+  (widgets) => flatMap(widgets.map((w) => w.categories))
 );
 
 export const getActiveCategory = createSelector(
@@ -320,19 +314,19 @@ export const filterWidgetsByCategory = createSelector(
     selectAnalysis,
     getLocationData,
     selectEmbed,
-    getWidgetFromLocation
+    getWidgetFromLocation,
   ],
   (widgets, category, showAnalysis, locationData, embed, widget) => {
     if (isEmpty(widgets)) return null;
 
-    if (embed && widget) return widgets.filter(w => w.widget === widget);
+    if (embed && widget) return widgets.filter((w) => w.widget === widget);
 
     if (showAnalysis) {
       return sortBy(widgets, 'sortOrder.summary');
     }
 
     return sortBy(
-      widgets.filter(w => w.categories.includes(category)),
+      widgets.filter((w) => w.categories.includes(category)),
       `sortOrder[${camelCase(category)}]`
     );
   }
@@ -348,7 +342,7 @@ export const getWidgets = createSelector(
     selectLocationSearch,
     selectNonGlobalDatasets,
     getActiveLayersWithDates,
-    selectAnalysis
+    selectAnalysis,
   ],
   (
     widgets,
@@ -368,16 +362,15 @@ export const getWidgets = createSelector(
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
 
-    return widgets.map(w => {
+    return widgets.map((w) => {
       const {
         settings: defaultSettings,
         widget,
         settingsConfig,
         pendingKeys,
         title: titleTemplate,
-        dataType
-      } =
-        w || {};
+        dataType,
+      } = w || {};
       const rawData = widgetsData && widgetsData[widget];
 
       const { settings: dataSettings } = rawData || {};
@@ -385,8 +378,9 @@ export const getWidgets = createSelector(
       const widgetLayer =
         layers &&
         layers.find(
-          l =>
-            w.datasets && flatMap(w.datasets.map(d => d.layers)).includes(l.id)
+          (l) =>
+            w.datasets &&
+            flatMap(w.datasets.map((d) => d.layers)).includes(l.id)
         );
 
       const { params: layerParams, decodeParams } = widgetLayer || {};
@@ -406,11 +400,11 @@ export const getWidgets = createSelector(
         ...layerParams,
         ...decodeParams,
         ...(startYear && {
-          startYear
+          startYear,
         }),
         ...(endYear && {
-          endYear
-        })
+          endYear,
+        }),
       };
 
       const mergedSettings = {
@@ -418,18 +412,18 @@ export const getWidgets = createSelector(
         ...dataSettings,
         ...widgetQuerySettings,
         ...(analysis && {
-          ...layerSettings
-        })
+          ...layerSettings,
+        }),
       };
 
       const settings = {
         ...mergedSettings,
         ...(mergedSettings.ifl === 2016 && {
-          extentYear: 2010
+          extentYear: 2010,
         }),
         ...(mergedSettings.forestType === 'primary_forest' && {
-          extentYear: 2000
-        })
+          extentYear: 2000,
+        }),
       };
 
       const dataOptions = rawData && rawData.options;
@@ -441,7 +435,7 @@ export const getWidgets = createSelector(
         polynamesWhitelist:
           polynamesWhitelist && polynamesWhitelist[w.whitelistType || 'annual'],
         status,
-        pendingKeys
+        pendingKeys,
       });
 
       const optionsSelected =
@@ -457,7 +451,7 @@ export const getWidgets = createSelector(
         settings,
         datasets,
         type,
-        dataType
+        dataType,
       });
 
       const { ifl } = settings || {};
@@ -465,7 +459,7 @@ export const getWidgets = createSelector(
       const settingsConfigFiltered =
         settingsConfigParsed &&
         settingsConfigParsed.filter(
-          o =>
+          (o) =>
             o.key !== 'extentYear' ||
             (ifl !== 2016 &&
               settings.forestType !== 'primary_forest' &&
@@ -483,7 +477,7 @@ export const getWidgets = createSelector(
         optionsSelected,
         indicator,
         // showAttributionLink: isTrase,
-        statements: footerStatements
+        statements: footerStatements,
       };
 
       const parsedProps = props.getWidgetProps && props.getWidgetProps(props);
@@ -499,18 +493,20 @@ export const getWidgets = createSelector(
       const shareUrl = `${window.location.origin}${window.location.pathname}?${
         searchObject
           ? qs.stringify({
-            ...searchObject,
-            widget,
-            showMap: false,
-            scrollTo: widget
-          })
+              ...searchObject,
+              widget,
+              showMap: false,
+              scrollTo: widget,
+            })
           : ''
       }`;
-      const embedUrl = `${window.location.origin}/embed/widget/${widget}/${
-        type
-      }${adm0 ? `/${adm0}` : ''}${adm1 ? `/${adm1}` : ''}${
-        adm2 ? `/${adm2}` : ''
-      }${widgetQuery ? `?${widget}=${widgetQuery}` : ''}`;
+      const embedUrl = `${
+        window.location.origin
+      }/embed/widget/${widget}/${type}${adm0 ? `/${adm0}` : ''}${
+        adm1 ? `/${adm1}` : ''
+      }${adm2 ? `/${adm2}` : ''}${
+        widgetQuery ? `?${widget}=${widgetQuery}` : ''
+      }`;
 
       return {
         ...props,
@@ -521,10 +517,10 @@ export const getWidgets = createSelector(
         rawData,
         title: title
           ? translateText(title).replace(
-            '{location}',
-            locationLabelFull || '...'
-          )
-          : ''
+              '{location}',
+              locationLabelFull || '...'
+            )
+          : '',
       };
     });
   }
@@ -535,7 +531,7 @@ export const getActiveWidget = createSelector(
   (widgets, activeWidgetKey, analysis) => {
     if (!widgets || analysis) return null;
     if (!activeWidgetKey) return widgets[0];
-    return widgets.find(w => w.widget === activeWidgetKey);
+    return widgets.find((w) => w.widget === activeWidgetKey);
   }
 );
 
@@ -559,5 +555,5 @@ export const getWidgetsProps = () =>
     simple: selectSimple,
     modalClosing: selectModalClosing,
     noDataMessage: getNoDataMessage,
-    geostore: selectGeostore
+    geostore: selectGeostore,
   });

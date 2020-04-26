@@ -2,6 +2,11 @@
 
 .c-map-menu {
   z-index: 2;
+  width: 100%;
+
+  @media screen and (min-width: $screen-m) {
+    width: 76px;
+  }
 
   .menu-tiles {
     z-index: 4;
