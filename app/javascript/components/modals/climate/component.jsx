@@ -8,18 +8,18 @@ import './styles.scss';
 class ModalGFWClimate extends PureComponent {
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    openContactUsModal: PropTypes.func.isRequired
-  }
+    setClimateModalOpen: PropTypes.func.isRequired,
+    setContactUsModalOpen: PropTypes.func.isRequired,
+  };
 
   render() {
-    const { open, onClose, openContactUsModal } = this.props;
+    const { open, setClimateModalOpen, setContactUsModalOpen } = this.props;
 
     return (
       <Modal
         isOpen={open}
         contentLabel="Global Forest Watch Climate"
-        onRequestClose={onClose}
+        onRequestClose={() => setClimateModalOpen(false)}
         title="Global Forest Watch Climate."
         className="c-gfw-climate-modal"
       >
@@ -31,8 +31,8 @@ class ModalGFWClimate extends PureComponent {
             <a
               href=""
               onClick={() => {
-                onClose();
-                openContactUsModal();
+                setClimateModalOpen();
+                setContactUsModalOpen(true);
               }}
             >
               contact us

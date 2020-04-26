@@ -1,4 +1,4 @@
-import * as actions from './share-actions';
+import * as actions from './actions';
 
 export const initialState = {
   loading: false,
@@ -11,8 +11,8 @@ export const initialState = {
     shareUrl: '',
     embedUrl: '',
     embedSettings: { width: 670, height: 490 },
-    socialText: ''
-  }
+    socialText: '',
+  },
 };
 
 const setShareData = (state, { payload }) => ({
@@ -21,24 +21,24 @@ const setShareData = (state, { payload }) => ({
   selected: 'link',
   loading: true,
   data: {
-    ...payload
-  }
+    ...payload,
+  },
 });
 
 const setShareSelected = (state, { payload }) => ({
   ...state,
   selected: payload,
-  copied: false
+  copied: false,
 });
 
 const setShareCopied = (state, { payload }) => ({
   ...state,
-  copied: payload
+  copied: payload,
 });
 
 const setShareLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload,
 });
 
 const setShareUrl = (state, { payload }) => ({
@@ -46,14 +46,14 @@ const setShareUrl = (state, { payload }) => ({
   loading: false,
   data: {
     ...state.data,
-    shareUrl: payload
-  }
+    shareUrl: payload,
+  },
 });
 
 const setShareOpen = (state, { payload }) => ({
   ...state,
   open: payload,
-  copied: false
+  copied: false,
 });
 
 export default {
@@ -62,5 +62,5 @@ export default {
   [actions.setShareOpen]: setShareOpen,
   [actions.setShareUrl]: setShareUrl,
   [actions.setShareCopied]: setShareCopied,
-  [actions.setShareLoading]: setShareLoading
+  [actions.setShareLoading]: setShareLoading,
 };

@@ -6,13 +6,13 @@ import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapStateToProps = ({ modalAttributions }) => ({
-  open: !!modalAttributions && !!modalAttributions.open
+  open: modalAttributions?.open,
 });
 
 reducerRegistry.registerModule('modalAttributions', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(Component);

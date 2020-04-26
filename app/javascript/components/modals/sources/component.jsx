@@ -7,30 +7,32 @@ import Modal from '../modal';
 import './styles.scss';
 
 class ModalSources extends PureComponent {
-  parseContent(html) {
+  parseContent = (html) => {
     return (
       <div>
         {ReactHtmlParser(html, {
-          transform: node =>
+          transform: (node) =>
             node.name === 'a' ? (
               <a
                 key={node.attribs.href}
                 href={node.attribs.href}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                 {node.children[0].data}
               </a>
             ) : (
               ''
-            )
+            ),
         })}
       </div>
     );
-  }
+  };
 
   getContent() {
-    const { data: { body } } = this.props;
+    const {
+      data: { body },
+    } = this.props;
 
     return (
       <div className="c-modal-sources">
@@ -57,7 +59,7 @@ class ModalSources extends PureComponent {
 ModalSources.propTypes = {
   open: PropTypes.bool,
   setModalSources: PropTypes.func,
-  data: PropTypes.object
+  data: PropTypes.object,
 };
 
 export default ModalSources;

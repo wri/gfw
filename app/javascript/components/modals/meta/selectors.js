@@ -11,7 +11,7 @@ const META_FIELDS = [
   'learn_more',
   'download_data',
   'map_service',
-  'amazon_link'
+  'amazon_link',
 ];
 const TABLE_FIELDS = [
   'function',
@@ -21,23 +21,21 @@ const TABLE_FIELDS = [
   'frequency_of_updates',
   'date_of_content',
   'cautions',
-  'license'
+  'license',
 ];
 
-const selectModalMetaData = state => state.modalMeta && state.modalMeta.data;
-const selectModalMetaLoading = state =>
-  state.modalMeta && state.modalMeta.loading;
-const selectMetakey = state =>
-  state.location && state.location.query && state.location.query.modalMeta;
+const selectModalMetaData = (state) => state?.modalMeta?.data;
+const selectModalMetaLoading = (state) => state?.modalMeta?.loading;
+const selectMetakey = (state) => state?.modalMeta?.settings?.metakey;
 
 export const getMetadata = createSelector(
   [selectModalMetaData],
-  data => data && pick(data, META_FIELDS)
+  (data) => data && pick(data, META_FIELDS)
 );
 
 export const getTableData = createSelector(
   [selectModalMetaData],
-  data => data && pick(data, TABLE_FIELDS)
+  (data) => data && pick(data, TABLE_FIELDS)
 );
 
 export const getMetaModalProps = createStructuredSelector({
@@ -45,5 +43,5 @@ export const getMetaModalProps = createStructuredSelector({
   metakey: selectMetakey,
   tableData: getTableData,
   loading: selectModalMetaLoading,
-  locationName: getGeodescriberTitleFull
+  locationName: getGeodescriberTitleFull,
 });
