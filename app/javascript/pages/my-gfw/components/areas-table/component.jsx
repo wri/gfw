@@ -227,30 +227,39 @@ class AreasTable extends PureComponent {
           areasTrimmed.map((area) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
-                <NavLink to={`/dashboards/aoi/${area.id}`}>
-                  <AoICard
-                    {...area}
-                    onFetchAlerts={(alertsResponse) =>
-                      this.setState({
-                        alerts: { ...allAlerts, [area.id]: alertsResponse },
-                      })}
-                  />
+                <NavLink
+                  href="/dashboards/[...location]"
+                  as={`/dashboards/aoi/${area.id}`}
+                >
+                  <a>
+                    <AoICard
+                      {...area}
+                      onFetchAlerts={(alertsResponse) =>
+                        this.setState({
+                          alerts: { ...allAlerts, [area.id]: alertsResponse },
+                        })}
+                    />
+                  </a>
                 </NavLink>
               </div>
               <div className="column small-12 medium-3">
                 <div className="area-links">
-                  <Button
-                    className="area-link"
-                    theme="theme-button-clear"
-                    onClick={() =>
-                      viewArea({
-                        areaId: area.id,
-                        locationType: 'location/MAP',
-                      })}
-                  >
-                    <Icon className="link-icon" icon={mapIcon} />
-                    view on map
-                  </Button>
+                  <NavLink href="/map/[...location]" as={`/map/aoi/${area.id}`}>
+                    <a>
+                      <Button
+                        className="area-link"
+                        theme="theme-button-clear"
+                        onClick={() =>
+                          viewArea({
+                            areaId: area.id,
+                            locationType: 'location/MAP',
+                          })}
+                      >
+                        <Icon className="link-icon" icon={mapIcon} />
+                        view on map
+                      </Button>
+                    </a>
+                  </NavLink>
                   <Button
                     className="area-link"
                     theme="theme-button-clear"

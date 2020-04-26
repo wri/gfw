@@ -13,7 +13,7 @@ export const getActiveArea = createSelector(
     if (isEmpty(areas)) return null;
 
     return areas.find(
-      (a) => a.id === location.adm0 || a.subscriptionId === location.adm0
+      (a) => a.id === location?.adm0 || a.subscriptionId === location?.adm0
     );
   }
 );
@@ -24,8 +24,8 @@ export const getDataLocation = createSelector(
     const newLocation = {
       ...location,
       ...(location?.type === 'aoi' && {
-          areaId: location?.adm0,
-        }),
+        areaId: location?.adm0,
+      }),
     };
 
     if (!area) return newLocation;

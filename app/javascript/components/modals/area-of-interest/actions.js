@@ -1,14 +1,5 @@
-import { createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'app/stateToUrl';
+import { createAction } from 'utils/redux';
 
-export const setAreaOfInterestModalSettings = createThunkAction(
-  'setAreaOfInterestModalSettings',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'areaOfInterestModal',
-        change,
-        state
-      })
-    )
+export const setAreaOfInterestModalSettings = createAction(
+  'setAreaOfInterestModalSettings'
 );

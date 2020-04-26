@@ -6,7 +6,7 @@ import {
   setArea,
   setAreas,
   viewArea,
-  clearArea
+  clearArea,
 } from 'providers/areas-provider/actions';
 
 export const saveAreaOfInterest = createThunkAction(
@@ -24,11 +24,11 @@ export const saveAreaOfInterest = createThunkAction(
     use,
     application,
     viewAfterSave,
-    geostore: geostoreId
+    geostore: geostoreId,
   }) => (dispatch, getState) => {
     const { location, geostore } = getState();
     const { data: geostoreData } = geostore || {};
-    const { payload: { type, adm0, adm1, adm2 } } = location || {};
+    const { type, adm0, adm1, adm2 } = location || {};
     const isCountry = type === 'country';
 
     const postData = {
@@ -43,52 +43,52 @@ export const saveAreaOfInterest = createThunkAction(
       monthlySummary: alerts.includes('monthlySummary'),
       fireAlerts: alerts.includes('fireAlerts'),
       ...(admin && {
-        admin
+        admin,
       }),
       ...(wdpaid && {
-        wdpaid
+        wdpaid,
       }),
       ...(use && {
-        use
+        use,
       }),
       ...(isCountry && {
         admin: {
           adm0,
           adm1,
-          adm2
-        }
+          adm2,
+        },
       }),
       ...(type === 'use' && {
         use: {
           id: adm1,
-          name: adm0
-        }
+          name: adm0,
+        },
       }),
       ...(type === 'wdpa' && {
-        wdpaid: parseInt(adm0, 10)
+        wdpaid: parseInt(adm0, 10),
       }),
       ...(webhookUrl && {
-        webhookUrl
+        webhookUrl,
       }),
       tags: tags || [],
       public: true,
       ...((isCountry || type === 'wdpa') && {
-        status: 'saved'
-      })
+        status: 'saved',
+      }),
     };
 
     return saveArea(postData)
-      .then(area => {
+      .then((area) => {
         dispatch(setArea({ ...area, userArea: true }));
         if (viewAfterSave) {
           dispatch(viewArea({ areaId: area.id }));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail
+          [FORM_ERROR]: errors[0].detail,
         };
       });
   }
@@ -101,7 +101,7 @@ export const deleteAreaOfInterest = createThunkAction(
 
     return deleteArea(id)
       .then(() => {
-        dispatch(setAreas(areas.filter(a => a.id !== id)));
+        dispatch(setAreas(areas.filter((a) => a.id !== id)));
         if (clearAfterDelete) {
           dispatch(clearArea());
         }
@@ -109,11 +109,11 @@ export const deleteAreaOfInterest = createThunkAction(
           callBack();
         }
       })
-      .catch(error => {
+      .catch((error) => {
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail
+          [FORM_ERROR]: errors[0].detail,
         };
       });
   }

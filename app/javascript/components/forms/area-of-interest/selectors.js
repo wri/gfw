@@ -5,29 +5,24 @@ import compact from 'lodash/compact';
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
-const selectAreaOfInterestModalState = state =>
-  state.location &&
-  state.location.query &&
-  state.location.query.areaOfInterestModal;
-const selectLoading = state => state.areas && state.areas.loading;
-const selectLoggedIn = state =>
-  state.myGfw && state.myGfw.data && state.myGfw.data.loggedIn;
-const selectLocation = state => state.location && state.location.payload;
-const selectUserData = state => state.myGfw && state.myGfw.data;
-const selectGeostoreId = state =>
-  state.geostore && state.geostore.data && state.geostore.data.id;
+const selectAreaId = (state) => state?.areaModal?.activeAreaId;
+const selectLoading = (state) => state?.areas?.loading;
+const selectLoggedIn = (state) => state?.myGfw?.data?.loggedIn;
+const selectLocation = (state) => state?.location;
+const selectUserData = (state) => state?.myGfw?.data;
+const selectGeostoreId = (state) => state?.geostore?.data?.id;
 
 export const getActiveArea = createSelector(
-  [selectLocation, selectAreaOfInterestModalState, getAllAreas],
-  (location, settings, areas) => {
+  [selectLocation, selectAreaId, getAllAreas],
+  (location, areaId, areas) => {
     if (isEmpty(areas)) return null;
     let activeAreaId = '';
-    if (location.type === 'aoi') {
-      activeAreaId = location.adm0;
+    if (location?.type === 'aoi') {
+      activeAreaId = location?.adm0;
     } else {
-      activeAreaId = settings && settings.activeAreaId;
+      activeAreaId = areaId;
     }
-    return areas.find(a => a.id === activeAreaId);
+    return areas.find((a) => a.id === activeAreaId);
   }
 );
 
@@ -46,27 +41,26 @@ export const getInitialValues = createSelector(
       id,
       location,
       ...rest
-    } =
-      area || {};
+    } = area || {};
 
     return {
       alerts: compact([
         fireAlerts ? 'fireAlerts' : false,
         deforestationAlerts ? 'deforestationAlerts' : false,
-        monthlySummary ? 'monthlySummary' : false
+        monthlySummary ? 'monthlySummary' : false,
       ]),
       geostore: geostoreId,
       location: {
         type: 'geostore',
         adm0: geostoreId,
-        ...location
+        ...location,
       },
       ...rest,
       id: userArea ? id : null,
       userArea,
       name: name || locationName,
       email: email || userEmail,
-      language: language || userLanguage
+      language: language || userLanguage,
     };
   }
 );
@@ -86,5 +80,5 @@ export const getAreaOfInterestProps = createStructuredSelector({
   loading: selectLoading,
   loggedIn: selectLoggedIn,
   initialValues: getInitialValues,
-  title: getFormTitle
+  title: getFormTitle,
 });
