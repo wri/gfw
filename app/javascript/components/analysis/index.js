@@ -6,7 +6,7 @@ import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
-import { setShareModal } from 'components/modals/share/share-actions';
+import { setShareModal } from 'components/modals/share/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';
@@ -19,7 +19,7 @@ class AnalysisContainer extends PureComponent {
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
     setAnalysisLoading: PropTypes.func,
-    analysisLocation: PropTypes.object
+    analysisLocation: PropTypes.object,
   };
 
   componentDidMount() {
@@ -60,7 +60,7 @@ class AnalysisContainer extends PureComponent {
     }
   }
 
-  handleFetchAnalysis = endpoints => {
+  handleFetchAnalysis = (endpoints) => {
     if (this.analysisFetch) {
       this.analysisFetch.cancel();
     }
@@ -68,7 +68,7 @@ class AnalysisContainer extends PureComponent {
     this.props.getAnalysis({
       endpoints,
       ...this.props.location,
-      token: this.analysisFetch.token
+      token: this.analysisFetch.token,
     });
   };
 
@@ -85,7 +85,7 @@ class AnalysisContainer extends PureComponent {
     return createElement(AnalysisComponent, {
       ...this.props,
       handleFetchAnalysis: this.handleFetchAnalysis,
-      handleCancelAnalysis: this.handleCancelAnalysis
+      handleCancelAnalysis: this.handleCancelAnalysis,
     });
   }
 }
@@ -93,11 +93,11 @@ class AnalysisContainer extends PureComponent {
 reducerRegistry.registerModule('analysis', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(getAnalysisProps, {
   ...actions,
   setAreaOfInterestModalSettings,
-  setShareModal
+  setShareModal,
 })(AnalysisContainer);

@@ -8,7 +8,7 @@ import compact from 'lodash/compact';
 import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
 } from 'data/layers';
 
 import reducerRegistry from 'app/registry';
@@ -16,7 +16,7 @@ import reducerRegistry from 'app/registry';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { setMapSettings as setMapState } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
-import { setShareModal } from 'components/modals/share/share-actions';
+import { setShareModal } from 'components/modals/share/actions';
 
 import { getWidgetDatasets, getPolynameDatasets } from './utils/config';
 import * as ownActions from './actions';
@@ -29,7 +29,7 @@ const actions = {
   setMapSettings: setMapState,
   setModalMetaSettings,
   setDashboardPromptsSettings,
-  setShareModal
+  setShareModal,
 };
 
 const mapSyncKeys = [
@@ -38,20 +38,20 @@ const mapSyncKeys = [
   'threshold',
   'extentYear',
   'forestType',
-  'landCategory'
+  'landCategory',
 ];
 
 const adminBoundaryLayer = {
   dataset: POLITICAL_BOUNDARIES_DATASET,
   layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
   opacity: 1,
-  visibility: true
+  visibility: true,
 };
 
 const makeMapStateToProps = () => {
   const getWidgetPropsObject = getWidgetsProps();
   const mapStateToProps = (state, props) => ({
-    ...getWidgetPropsObject(state, props)
+    ...getWidgetPropsObject(state, props),
   });
   return mapStateToProps;
 };
@@ -63,7 +63,8 @@ class WidgetsContainer extends PureComponent {
     activeWidget: PropTypes.object,
     setMapSettings: PropTypes.func,
     embed: PropTypes.bool,
-    setDashboardPromptsSettings: PropTypes.func
+    settings: PropTypes.object,
+    setDashboardPromptsSettings: PropTypes.func,
   };
 
   componentDidMount() {
@@ -115,23 +116,23 @@ class WidgetsContainer extends PureComponent {
     const allDatasets = [...compact(polynameDatasets), ...widgetDatasets];
 
     setMapSettings({
-      datasets: allDatasets
+      datasets: allDatasets,
     });
   };
 
   clearMap = () => {
     const { setMapSettings } = this.props;
     setMapSettings({
-      datasets: [adminBoundaryLayer]
+      datasets: [adminBoundaryLayer],
     });
   };
 
-  handleClickWidget = widget => {
+  handleClickWidget = (widget) => {
     if (widget.active && !this.props.embed) {
       this.props.setDashboardPromptsSettings({
         open: true,
         stepIndex: 0,
-        stepsKey: 'widgetSettings'
+        stepsKey: 'widgetSettings',
       });
     }
   };
@@ -139,7 +140,7 @@ class WidgetsContainer extends PureComponent {
   render() {
     return createElement(Component, {
       ...this.props,
-      handleClickWidget: this.handleClickWidget
+      handleClickWidget: this.handleClickWidget,
     });
   }
 }
@@ -147,7 +148,7 @@ class WidgetsContainer extends PureComponent {
 reducerRegistry.registerModule('widgets', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(makeMapStateToProps, actions)(WidgetsContainer);
