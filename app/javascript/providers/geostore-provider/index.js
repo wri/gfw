@@ -2,24 +2,26 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+
 import { cancelToken } from 'utils/request';
+import { getDataLocation } from 'utils/location';
 import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = ({ areas, location }) => ({
-  activeArea: areas?.data?.find(a => a.id === location?.adm0),
-  location
-})
+const mapStateToProps = (state) => ({
+  activeArea: state?.areas?.data?.find((a) => a.id === state?.location?.adm0),
+  location: getDataLocation(state),
+});
 
 class GeostoreProvider extends PureComponent {
   static propTypes = {
     getGeostore: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     clearGeostore: PropTypes.func.isRequired,
-    activeArea: PropTypes.object
-  }
+    activeArea: PropTypes.object,
+  };
 
   componentDidMount() {
     const { activeArea, location } = this.props;
@@ -30,10 +32,7 @@ class GeostoreProvider extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      activeArea,
-      clearGeostore
-    } = this.props;
+    const { activeArea, clearGeostore } = this.props;
     const { adm0, adm1, adm2 } = location || {};
     const hasAdm0Changed = adm0 && adm0 !== prevProps?.location?.adm0;
     const hasAdm1Changed = adm0 && adm1 !== prevProps?.location?.adm1;
@@ -56,7 +55,7 @@ class GeostoreProvider extends PureComponent {
     this.geostoreFetch = cancelToken();
     this.props.getGeostore({
       ...this.props?.location,
-      token: this.geostoreFetch.token
+      token: this.geostoreFetch.token,
     });
   };
 
@@ -74,7 +73,7 @@ class GeostoreProvider extends PureComponent {
 reducerRegistry.registerModule('geostore', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(GeostoreProvider);
