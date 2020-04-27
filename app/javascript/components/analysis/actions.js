@@ -225,7 +225,10 @@ export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch) => {
     const { pushDynamic, query } = useRouter();
-    pushDynamic({ pathname: '/map', query });
+    pushDynamic({
+      pathname: '/map/[...location]',
+      query: { ...query, location: 'global' },
+    });
     dispatch(clearAnalysisData());
   }
 );

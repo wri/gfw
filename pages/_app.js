@@ -22,34 +22,37 @@ const getLocationFromParams = (url, params) => {
       type: params?.location?.[0],
       adm0: params?.location?.[1],
       adm1: params?.location?.[2],
-      adm2: params?.location?.[3]
-    }
+      adm2: params?.location?.[3],
+    };
   }
 
-  const location = params && Object.keys(params).reduce((obj, key) => {
-    if (url?.includes(`[${key}]`)) {
-      return {
-        ...obj,
-        [key]: params[key]
+  const location =
+    params &&
+    Object.keys(params).reduce((obj, key) => {
+      if (url?.includes(`[${key}]`)) {
+        return {
+          ...obj,
+          [key]: params[key],
+        };
       }
-    }
 
-    return obj
-  }, {})
+      return obj;
+    }, {});
 
-  return location
-}
+  return location;
+};
 
 class MyApp extends App {
   store = makeStore();
 
   componentDidMount() {
     const { router } = this.props;
+
     this.handleRouteChange();
 
     router.events.on('routeChangeComplete', () => {
       this.handleRouteChange();
-    })
+    });
 
     this.store.replaceReducer(combineReducers(reducerRegistry.getReducers()));
   }
@@ -63,8 +66,11 @@ class MyApp extends App {
     const { dispatch } = this.store;
     const { query, pathname } = router;
     const location = getLocationFromParams(pathname, query);
-    dispatch({ type: 'setLocation', payload: { ...location, ...!isEmpty(query) && { query } } });
-  }
+    dispatch({
+      type: 'setLocation',
+      payload: { ...location, ...(!isEmpty(query) && { query }) },
+    });
+  };
 
   render() {
     const { Component, pageProps, router } = this.props;

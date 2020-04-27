@@ -25,6 +25,8 @@ class Layout extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
+    titleParams: PropTypes.object,
+    descriptionParams: PropTypes.object,
     keywords: PropTypes.string,
     children: PropTypes.node.isRequired,
     hideHeader: PropTypes.bool,
@@ -53,6 +55,8 @@ class Layout extends React.Component {
     const {
       title,
       description,
+      titleParams,
+      descriptionParams,
       keywords,
       hideFooter,
       hideHeader,
@@ -67,7 +71,13 @@ class Layout extends React.Component {
     return (
       <div className="l-page">
         <MediaContextProvider>
-          <Meta title={title} description={description} keywords={keywords} />
+          <Meta
+            title={title}
+            description={description}
+            keywords={keywords}
+            titleParams={titleParams}
+            descriptionParams={descriptionParams}
+          />
           {!hideHeader && (
             <Header
               className="header"
