@@ -48,13 +48,9 @@ class Basemaps extends React.PureComponent {
     planetPeriodSelected: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { showBasemaps: false };
-  }
-
   state = {
     planetTooltipOpen: false,
+    showBasemaps: false,
   };
 
   renderButtonBasemap(item) {

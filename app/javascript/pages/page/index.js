@@ -75,6 +75,7 @@ class Layout extends React.Component {
                 router.push('/search');
                 setSearch(query);
               }}
+              fullScreen={fullScreen}
               openContactUsModal={() => setContactUsOpen(true)}
               loggedIn={loggedIn}
               loggingIn={loggingIn}

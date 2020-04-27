@@ -14,7 +14,6 @@ export default {
     keywords:
       'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
     fullScreen: true,
-    hideHeader: true,
     priority: '0.8',
   },
   '/map/[...location]': {
@@ -24,7 +23,6 @@ export default {
     keywords:
       'GFW, map, forests, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation',
     fullScreen: true,
-    hideHeader: true
   },
   '/dashboards/global': {
     title: 'Global | Dashboards',

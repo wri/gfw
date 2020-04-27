@@ -237,14 +237,10 @@ class MapControlsButtons extends PureComponent {
         arrow
         animateFill={false}
         open={showBasemaps}
-        // onRequestClose={this.onBasemapsRequestClose}
-        html={(
-          <div
-            ref={this.setBasemapsRef}
-          >
-            ddsadd
-          </div>
-        )}
+        onRequestClose={this.onBasemapsRequestClose}
+        html={
+          <Basemaps onClose={this.toggleBasemaps} ref={this.setBasemapsRef} />
+        }
       >
         {this.renderBasemapsBtn()}
       </Tooltip>
@@ -365,7 +361,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon:
+          lat, lon: 
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
