@@ -135,17 +135,15 @@ class Header extends PureComponent {
             )}
           </Media>
           <Media lessThan="md" className="menu-section">
-            <div className="menu-section">
-              <h4>Select a language</h4>
-              <DropdownMenu
-                className="sub-menu -plain"
-                options={languages}
-                selected={activeLang}
-                handleSelect={(lang) => {
-                  handleLangSelect(lang);
-                }}
-              />
-            </div>
+            <h4>Select a language</h4>
+            <DropdownMenu
+              className="sub-menu -plain"
+              options={languages}
+              selected={activeLang}
+              handleSelect={(lang) => {
+                handleLangSelect(lang);
+              }}
+            />
           </Media>
           <div className="menu-section">
             <h4>Other applications</h4>
