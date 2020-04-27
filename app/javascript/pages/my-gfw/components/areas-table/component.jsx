@@ -4,7 +4,7 @@ import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
 import { deburrUpper } from 'utils/data';
-import NavLink from 'components/nav-link';
+import Link from 'next/link';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -227,7 +227,7 @@ class AreasTable extends PureComponent {
           areasTrimmed.map((area) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
-                <NavLink
+                <Link
                   href="/dashboards/[...location]"
                   as={`/dashboards/aoi/${area.id}`}
                 >
@@ -240,11 +240,11 @@ class AreasTable extends PureComponent {
                         })}
                     />
                   </a>
-                </NavLink>
+                </Link>
               </div>
               <div className="column small-12 medium-3">
                 <div className="area-links">
-                  <NavLink href="/map/[...location]" as={`/map/aoi/${area.id}`}>
+                  <Link href="/map/[...location]" as={`/map/aoi/${area.id}`}>
                     <a>
                       <Button
                         className="area-link"
@@ -259,7 +259,7 @@ class AreasTable extends PureComponent {
                         view on map
                       </Button>
                     </a>
-                  </NavLink>
+                  </Link>
                   <Button
                     className="area-link"
                     theme="theme-button-clear"

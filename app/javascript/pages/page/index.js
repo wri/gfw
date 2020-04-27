@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { initGA, logPageView, logEvent } from 'app/analytics';
 import checkBrowser from 'utils/browser';
 import cx from 'classnames';
+import Link from 'next/link';
 import useRouter from 'app/router';
 import { MediaContextProvider } from 'utils/responsive';
 
@@ -90,9 +91,9 @@ class Layout extends React.Component {
           {!hideFooter && !fullScreen && (
             <Footer
               NavLinkComponent={({ href, children, className }) => (
-                <NavLink href={href}>
+                <Link href={href}>
                   <a className={className}>{children}</a>
-                </NavLink>
+                </Link>
               )}
               openContactUsModal={() => setContactUsOpen(true)}
             />

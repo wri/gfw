@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
 
-import NavLink from 'components/nav-link';
+import Link from 'next/link';
 import Cover from 'components/cover';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -82,7 +82,7 @@ class HomePage extends PureComponent {
                 STOP VIDEO
               </Button>
             )}
-            <NavLink href="/subscribe">
+            <Link href="/subscribe">
               <a className="subscribe-btn">
                 <Button
                   theme="square"
@@ -93,7 +93,7 @@ class HomePage extends PureComponent {
                 </Button>
                 <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
               </a>
-            </NavLink>
+            </Link>
           </Fragment>
         </Cover>
         <div
@@ -269,13 +269,13 @@ class HomePage extends PureComponent {
                   <NoContent className="no-news" message="No news available" />
                 )}
               </div>
-              <NavLink href="/my-gfw">
+              <Link href="/my-gfw">
                 <a>
                   <Button className="my-gfw-btn" theme="theme-button-light">
                     My GFW
                   </Button>
                 </a>
-              </NavLink>
+              </Link>
             </div>
           </div>
         </div>
