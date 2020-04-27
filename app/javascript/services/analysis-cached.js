@@ -52,9 +52,9 @@ const SQL_QUERIES = {
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesAlertsCommodities:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} GROUP BY is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC ',
+    `SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} AND (is__gfw_logging = 'true' or is__gfw_mining = 'true' or is__gfw_oil_gas = 'true' or is__gfw_oil_palm = 'true' or is__gfw_wood_fiber  = 'true') GROUP BY is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC`,
   firesCommmoditiesArea:
-    'SELECT {location} area__ha, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE}',
+    `SELECT {location} area__ha, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} AND (is__gfw_logging = 'true' or is__gfw_mining = 'true' or is__gfw_oil_gas = 'true' or is__gfw_oil_palm = 'true' or is__gfw_wood_fiber  = 'true')`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -939,7 +939,8 @@ export const fetchFiresCommoditiesAlerts = ({
     };
   }
 
-  const testresponse = apiRequest.get(url).then(testresponse => ({
+  console.log('url', url);
+  return apiRequest.get(url).then(testresponse => ({
     data: {
       data: testresponse.data.data.map(d => ({
         ...d,
@@ -951,9 +952,6 @@ export const fetchFiresCommoditiesAlerts = ({
       }))
     }
   }));
-  console.log('url', url);
-  console.log('testresponse', testresponse);
-  return testresponse;
 };
 
 export const fetchVIIRSLatest = () => {

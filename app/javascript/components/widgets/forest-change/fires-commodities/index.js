@@ -44,6 +44,7 @@ export default {
     all([fetchFiresCommoditiesAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
+        console.log('data', data)
         return { alerts: data, latest: latest.attributes.updatedAt } || {};
       })
     ),
