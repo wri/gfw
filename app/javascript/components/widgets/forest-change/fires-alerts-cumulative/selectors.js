@@ -188,6 +188,7 @@ export const parseConfig = createSelector(
         labelFormat: value => moment(value).format('YYYY-MM-DD'),
         unit: ` ${dataset} alerts`,
         color: colors.main,
+        nullValue: 'No data available',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       }
@@ -206,6 +207,7 @@ export const parseConfig = createSelector(
         },
         unit: ` ${dataset} alerts`,
         color: '#49b5e3',
+        nullValue: 'No data available',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       });
