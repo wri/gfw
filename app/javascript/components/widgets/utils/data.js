@@ -90,8 +90,8 @@ const runningMeanWindowed = (data, windowSize) => {
     if (i < buffer) {
       slice = data.slice(0, i + increment);
       increment += 1;
-    } else if (i >= data.length - buffer) {
-      slice = data.slice(i - increment, data.length);
+    } else if (i >= data.length - buffer - 1) {
+      slice = data.slice(i - increment, data.length - 1);
       increment -= 1;
     } else {
       slice = data.slice(i - buffer, i + buffer);
