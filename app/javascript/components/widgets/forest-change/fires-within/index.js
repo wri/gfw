@@ -1,4 +1,4 @@
-import { fetchFiresWithin, fetchVIIRSLatest } from 'services/analysis-cached';
+import { fetchFiresWithin } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import {
@@ -89,22 +89,16 @@ export default {
   getData: params =>
     all([
       fetchFiresWithin(params),
-      fetchFiresWithin({ ...params, forestType: '', landCategory: '' }),
-      fetchVIIRSLatest(params)
+      fetchFiresWithin({ ...params, forestType: '', landCategory: '' })
     ]).then(
       spread((firesWithin, allFires) => {
         const fireIn = firesWithin.data && firesWithin.data.data;
-        const AllFire = allFires.data && allFires.data.data;
+        const allFire = allFires.data && allFires.data.data;
         let data = {};
-        if (fireIn.length && AllFire.length) {
-          const fireCountIn =
-            fireIn[0] && fireIn[0].count ? fireIn[0].count : 0;
-          const fireCountAll =
-            AllFire[0] && AllFire[0].count ? AllFire[0].count : 0;
-
+        if (Array.isArray(fireIn) && Array.isArray(allFire)) {
           data = {
-            fireCountIn,
-            fireCountAll
+            fireCountIn: fireIn,
+            fireCountAll: allFire
           };
         }
         return data;

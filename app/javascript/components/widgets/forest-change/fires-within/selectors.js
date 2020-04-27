@@ -10,13 +10,15 @@ const getIndicator = state => state.indicator;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
+const getSettings = state => state.settings;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getColors, getIndicator],
+  [getData, getColors, getIndicator, getSettings],
   (data, colors, indicator) => {
     if (isEmpty(data)) return null;
     const { fireCountIn, fireCountAll } = data;
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const fireCountOutside =
