@@ -7,7 +7,7 @@ import './styles.scss';
 
 class ModalGFWClimate extends PureComponent {
   static propTypes = {
-    open: PropTypes.bool.isRequired,
+    open: PropTypes.bool,
     setClimateModalOpen: PropTypes.func.isRequired,
     setContactUsModalOpen: PropTypes.func.isRequired,
   };

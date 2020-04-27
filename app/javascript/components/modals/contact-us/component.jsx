@@ -8,9 +8,9 @@ import './styles.scss';
 
 class ModalContactUs extends PureComponent {
   static propTypes = {
-    open: PropTypes.bool.isRequired,
+    open: PropTypes.bool,
     setContactUsModalOpen: PropTypes.func.isRequired,
-  }
+  };
 
   render() {
     const { open, setContactUsModalOpen } = this.props;
