@@ -47,7 +47,7 @@ export const saveProfile = createThunkAction(
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail
+          [FORM_ERROR]: errors?.[0]?.detail
         };
       });
   }

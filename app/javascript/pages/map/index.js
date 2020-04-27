@@ -14,6 +14,8 @@ import useRouter from 'app/router';
 // import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 // import { setMenuSettings } from 'components/map-menu/actions';
 
+import { setMapSettings } from 'components/map/actions';
+
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import getMapProps from './selectors';
@@ -24,6 +26,7 @@ const actions = {
   // setMenuSettings,
   // setMapPromptsSettings,
   // getGeostoreId,
+  setMapSettings,
   ...ownActions
 };
 
@@ -35,6 +38,7 @@ class MainMapContainer extends PureComponent {
     selectedInteraction: PropTypes.object,
     setMenuSettings: PropTypes.func,
     setMainMapSettings: PropTypes.func,
+    setMapSettings: PropTypes.func,
     setMapPromptsSettings: PropTypes.func,
     setDrawnGeostore: PropTypes.func,
     activeDatasets: PropTypes.array,
@@ -50,6 +54,7 @@ class MainMapContainer extends PureComponent {
   };
 
   setMainMapAnalysisView = ({ data, layer } = {}) => {
+    const { setMapSettings: setMap, setMainMapSettings } = this.props;
     const { cartodb_id: cartodbId, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
     const { query, pushDynamic } = useRouter() || {};
@@ -78,6 +83,8 @@ class MainMapContainer extends PureComponent {
     }
 
     if (payload && payload.adm0) {
+      setMap({ canBound: true });
+      setMainMapSettings({ showAnalysis: true });
       pushDynamic({
         pathname: '/map/[...location]',
         query: {
@@ -99,22 +106,22 @@ class MainMapContainer extends PureComponent {
   setDrawnGeostore = geostoreId => {
     const { query, pushDynamic } = useRouter();
     const { map, mainMap } = query || {};
-    pushDynamic({
-      pathname: '/map/[...location]',
-      query: {
-        ...query,
-        location: `geostore/${geostoreId}`,
-        map: {
-          ...map,
-          canBound: true,
-          drawing: false
-        },
-        mainMap: {
-          ...mainMap,
-          showAnalysis: true
-        }
-      }
-    })
+    // pushDynamic({
+    //   pathname: '/map/[...location]',
+    //   query: {
+    //     ...query,
+    //     location: `geostore/${geostoreId}`,
+    //     map: {
+    //       ...map,
+    //       canBound: true,
+    //       drawing: false
+    //     },
+    //     mainMap: {
+    //       ...mainMap,
+    //       showAnalysis: true
+    //     }
+    //   }
+    // })
   }
 
   // componentDidMount() {

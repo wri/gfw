@@ -38,7 +38,7 @@ class ContactForm extends PureComponent {
 
         return {
           [FORM_ERROR]:
-            (errors && error.length && errors[0].detail) ||
+            (errors?.[0]?.detail) ||
             'Service unavailable',
         };
       });

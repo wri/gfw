@@ -15,7 +15,7 @@ export const loginUser = createThunkAction('logUserIn', data => dispatch =>
       const { errors } = error.response.data;
 
       return {
-        [FORM_ERROR]: errors[0].detail
+        [FORM_ERROR]: errors?.[0]?.detail
       };
     })
 );
@@ -27,7 +27,7 @@ export const registerUser = createThunkAction('sendRegisterUser', data => () =>
       const { errors } = error.response.data;
 
       return {
-        [FORM_ERROR]: errors[0].detail
+        [FORM_ERROR]: errors?.[0]?.detail
       };
     })
 );
@@ -41,7 +41,7 @@ export const resetUserPassword = createThunkAction(
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail
+          [FORM_ERROR]: errors?.[0]?.detail
         };
       })
 );

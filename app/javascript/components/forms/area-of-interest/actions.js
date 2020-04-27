@@ -88,7 +88,7 @@ export const saveAreaOfInterest = createThunkAction(
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail,
+          [FORM_ERROR]: errors?.[0]?.detail,
         };
       });
   }
@@ -113,7 +113,7 @@ export const deleteAreaOfInterest = createThunkAction(
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail,
+          [FORM_ERROR]: errors?.[0]?.detail,
         };
       });
   }

@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-// import reduxQuerySync from 'app/stateToUrl';
+// import reduxQuerySync from 'app/redux-query-sync';
 
 import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
 import { reduxModule as searchReduxModule } from 'layouts/search';
