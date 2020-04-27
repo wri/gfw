@@ -5,11 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // import reduxQuerySync from 'app/stateToUrl';
 
 import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
+import { reduxModule as searchReduxModule } from 'layouts/search';
 import locationReduxModule from 'providers/location-provider';
 
 import reducerRegistry from './registry';
 
 reducerRegistry.registerModule('myGfw', myGfwReduxModule);
+reducerRegistry.registerModule('search', searchReduxModule);
 reducerRegistry.registerModule('location', locationReduxModule);
 
 const initialReducers = combineReducers(reducerRegistry.getReducers());

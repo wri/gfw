@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
+import Link from 'next/link';
 
 import { submitContactForm } from 'services/forms';
 
@@ -70,9 +71,11 @@ class ContactForm extends PureComponent {
                   </h3>
                   <p>Interested in getting news and updates from us?</p>
                   <div className="button-group">
-                    {/* <Link to="/subscribe">
-                      <Button>Subscribe</Button>
-                    </Link> */}
+                    <Link href="/subscribe">
+                      <a>
+                        <Button>Subscribe</Button>
+                      </a>
+                    </Link>
                     <Button
                       className="close-button"
                       onClick={resetForm || (() => reset())}

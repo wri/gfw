@@ -170,15 +170,14 @@ class MapMenuMyGFW extends PureComponent {
                     : 'Filter by tags'
                 }
                 options={unselectedTags}
-                onChange={tag => {
+                onChange={(tag) => {
                   if (tag.value) {
                     this.setState({
-                      activeTags: [...activeTags, tag.value]
+                      activeTags: [...activeTags, tag.value],
                     });
                     logEvent('userSelectsAoiTag', { label: tag.label });
                   }
-                }
-                }
+                }}
               />
             )}
           </div>
@@ -249,14 +248,16 @@ class MapMenuMyGFW extends PureComponent {
             : this.renderNoAreas()}
         </div>
         <div className="my-gfw-footer">
-          <Link to="/my-gfw" className="edit-button">
-            {fullName && <span className="name">{fullName}</span>}
-            {email && (
-              <span className="email">
-                <i>{email}</i>
-              </span>
-            )}
-            {!fullName && !email && <span>view profile</span>}
+          <Link href="/my-gfw">
+            <a className="edit-button">
+              {fullName && <span className="name">{fullName}</span>}
+              {email && (
+                <span className="email">
+                  <i>{email}</i>
+                </span>
+              )}
+              {!fullName && !email && <span>view profile</span>}
+            </a>
           </Link>
           <Button
             theme="theme-button-clear"

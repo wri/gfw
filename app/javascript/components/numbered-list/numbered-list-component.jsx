@@ -17,7 +17,7 @@ class NumberedList extends PureComponent {
       settings,
       handlePageChange,
       linksDisabled,
-      linksExt
+      linksExt,
     } = this.props;
     const { page, pageSize, unit } = settings;
     const pageData = pageSize
@@ -48,14 +48,14 @@ class NumberedList extends PureComponent {
                           className="item-bar -data"
                           style={{
                             width: `${item.value > 100 ? 100 : item.value}%`,
-                            backgroundColor: item.color
+                            backgroundColor: item.color,
                           }}
                         />
                       </div>
                       <div className="item-value">
                         {formatNumber({
                           num: item.value,
-                          unit: item.unit || unit
+                          unit: item.unit || unit,
                         })}
                       </div>
                     </div>
@@ -63,7 +63,7 @@ class NumberedList extends PureComponent {
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
-                        unit: item.unit || unit
+                        unit: item.unit || unit,
                       })}
                     </div>
                   )}
@@ -71,25 +71,22 @@ class NumberedList extends PureComponent {
               );
               return (
                 <li key={`${item.label}-${item.id}`}>
-                  {item.path &&
-                    linksExt && (
-                      <a
-                        href={`https://${window.location.host}${item.path}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                  {item.path && linksExt && (
+                    <a
+                      href={`https://${window.location.host}${item.path}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {linkContent}
+                    </a>
+                  )}
+                  {item.path && !linksExt && (
+                    <Link href={item.path}>
+                      <a className={`${linksDisabled ? 'disabled' : ''}`}>
                         {linkContent}
                       </a>
-                    )}
-                  {item.path &&
-                    !linksExt && (
-                      <Link
-                        className={`${linksDisabled ? 'disabled' : ''}`}
-                        to={item.path}
-                      >
-                        {linkContent}
-                      </Link>
-                    )}
+                    </Link>
+                  )}
                   {!item.path && (
                     <div className={`${linksDisabled ? 'disabled' : ''}`}>
                       {linkContent}
@@ -99,14 +96,13 @@ class NumberedList extends PureComponent {
               );
             })}
         </ul>
-        {handlePageChange &&
-          data.length > settings.pageSize && (
-            <Paginate
-              settings={settings}
-              count={data.length}
-              onClickChange={handlePageChange}
-            />
-          )}
+        {handlePageChange && data.length > settings.pageSize && (
+          <Paginate
+            settings={settings}
+            count={data.length}
+            onClickChange={handlePageChange}
+          />
+        )}
       </div>
     );
   }
@@ -118,7 +114,7 @@ NumberedList.propTypes = {
   handlePageChange: PropTypes.func,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,
-  linksExt: PropTypes.bool
+  linksExt: PropTypes.bool,
 };
 
 export default NumberedList;

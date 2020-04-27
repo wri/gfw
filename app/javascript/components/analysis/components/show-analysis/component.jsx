@@ -39,7 +39,7 @@ class ShowAnalysis extends PureComponent {
     downloadUrls: PropTypes.array,
     zoomLevel: PropTypes.number,
     showAnalysisDisclaimer: PropTypes.bool,
-    activeArea: PropTypes.object
+    activeArea: PropTypes.object,
   };
 
   renderStatItem = ({
@@ -51,7 +51,7 @@ class ShowAnalysis extends PureComponent {
     endDate,
     dateFormat,
     threshold,
-    thresh
+    thresh,
   }) => (
     <li className="draw-stat" key={label}>
       <div className="title">
@@ -68,11 +68,11 @@ class ShowAnalysis extends PureComponent {
       </div>
       <div className="value" style={{ color }}>
         {Array.isArray(value) && value.length ? (
-          value.map(v => (
+          value.map((v) => (
             <strong key={`${v.label}-${v.value}`} style={{ color: v.color }}>
               {formatNumber({
                 num: v.value,
-                unit: v.unit || unit
+                unit: v.unit || unit,
               })}
               <span>{v.label}</span>
             </strong>
@@ -81,7 +81,7 @@ class ShowAnalysis extends PureComponent {
           <strong>
             {formatNumber({
               num: Array.isArray(value) ? 0 : value,
-              unit: unit || 'ha'
+              unit: unit || 'ha',
             })}
           </strong>
         )}
@@ -107,77 +107,72 @@ class ShowAnalysis extends PureComponent {
       showAnalysisDisclaimer,
       activeArea,
       analysisTitle,
-      analysisDescription
+      analysisDescription,
     } = this.props;
     const hasWidgets = widgetLayers && !!widgetLayers.length;
 
     return (
       <div className="c-show-analysis">
         <div className="show-analysis-body">
-          {analysisTitle &&
-            !loading &&
-            !error && (
-              <div className="draw-title">
+          {analysisTitle && !loading && !error && (
+            <div className="draw-title">
+              <Button
+                className="title-btn left"
+                theme="theme-button-clear"
+                onClick={clearAnalysis}
+              >
+                <Icon icon={arrowDownIcon} className="icon-arrow" />
+                {analysisTitle && (
+                  <DynamicSentence
+                    className="analysis-title"
+                    sentence={analysisTitle}
+                  />
+                )}
+              </Button>
+              <div className="title-controls">
                 <Button
-                  className="title-btn left"
+                  className="title-btn title-action"
                   theme="theme-button-clear"
-                  onClick={clearAnalysis}
+                  onClick={() =>
+                    setShareModal({
+                      title: 'Share this view',
+                      shareUrl: window.location.href.includes('embed')
+                        ? window.location.href.replace('/embed', '')
+                        : window.location.href,
+                      embedUrl: window.location.href.includes('embed')
+                        ? window.location.href
+                        : window.location.href.replace('/map', '/embed/map'),
+                    })}
+                  tooltip={{ text: 'Share analysis' }}
                 >
-                  <Icon icon={arrowDownIcon} className="icon-arrow" />
-                  {analysisTitle && (
-                    <DynamicSentence
-                      className="analysis-title"
-                      sentence={analysisTitle}
-                    />
-                  )}
+                  <Icon icon={shareIcon} className="icon-share" />
                 </Button>
-                <div className="title-controls">
-                  <Button
-                    className="title-btn title-action"
-                    theme="theme-button-clear"
-                    onClick={() =>
-                      setShareModal({
-                        title: 'Share this view',
-                        shareUrl: window.location.href.includes('embed')
-                          ? window.location.href.replace('/embed', '')
-                          : window.location.href,
-                        embedUrl: window.location.href.includes('embed')
-                          ? window.location.href
-                          : window.location.href.replace('/map', '/embed/map')
-                      })
-                    }
-                    tooltip={{ text: 'Share analysis' }}
-                  >
-                    <Icon icon={shareIcon} className="icon-share" />
-                  </Button>
-                  <Button
-                    className="title-btn title-action"
-                    theme="theme-button-clear"
-                    disabled={!downloadUrls || !downloadUrls.length}
-                    onClick={() => {
-                      handleShowDownloads(true);
-                      logEvent('analysisDownload', {
-                        label:
-                          downloadUrls &&
-                          downloadUrls.length &&
-                          downloadUrls.map(d => d.label).join(', ')
-                      });
-                    }}
-                    tooltip={{ text: 'Download data' }}
-                  >
-                    <Icon icon={downloadIcon} className="icon-download" />
-                  </Button>
-                </div>
+                <Button
+                  className="title-btn title-action"
+                  theme="theme-button-clear"
+                  disabled={!downloadUrls || !downloadUrls.length}
+                  onClick={() => {
+                    handleShowDownloads(true);
+                    logEvent('analysisDownload', {
+                      label:
+                        downloadUrls &&
+                        downloadUrls.length &&
+                        downloadUrls.map((d) => d.label).join(', '),
+                    });
+                  }}
+                  tooltip={{ text: 'Download data' }}
+                >
+                  <Icon icon={downloadIcon} className="icon-download" />
+                </Button>
               </div>
-            )}
-          {analysisDescription &&
-            !loading &&
-            !error && (
-              <DynamicSentence
-                className="analysis-desc"
-                sentence={analysisDescription}
-              />
-            )}
+            </div>
+          )}
+          {analysisDescription && !loading && !error && (
+            <DynamicSentence
+              className="analysis-desc"
+              sentence={analysisDescription}
+            />
+          )}
           <div className="results">
             {hasLayers &&
               !hasWidgets &&
@@ -186,59 +181,58 @@ class ShowAnalysis extends PureComponent {
               isEmpty(data) && (
                 <NoContent message="No analysis data available" />
               )}
-            {!hasLayers &&
-              !hasWidgets &&
-              !loading && (
-                <NoContent>
-                  Select a{' '}
-                  <button
-                    onClick={() =>
-                      setMenuSettings({
-                        menuSection: 'datasets',
-                        datasetCategory: 'forestChange'
-                      })
-                    }
-                  >
-                    forest change
-                  </button>{' '}
-                  data layer to analyze.
-                </NoContent>
-              )}
-            {(hasLayers || hasWidgets) &&
-              !loading &&
-              !error && (
-                <Fragment>
-                  <ul className="draw-stats">
-                    {data && data.map(d => this.renderStatItem(d))}
-                  </ul>
-                  <Widgets simple analysis />
-                  <div className="disclaimers">
-                    {zoomLevel < 11 && (
-                      <p>
-                        This algorithm approximates the results by sampling the
-                        selected area. Results are more accurate at closer zoom
-                        levels.
-                      </p>
-                    )}
-                    {showAnalysisDisclaimer && (
-                      <p>
-                        <b>NOTE:</b> tree cover loss and gain statistics cannot
-                        be compared against each other.{' '}
-                        <button
-                          onClick={() =>
-                            setModalSources({
-                              open: true,
-                              source: 'lossDisclaimer'
-                            })
-                          }
-                        >
-                          Learn more.
-                        </button>
-                      </p>
-                    )}
-                  </div>
-                </Fragment>
-              )}
+            {!hasLayers && !hasWidgets && !loading && (
+              <NoContent>
+                Select a
+                {' '}
+                <button
+                  onClick={() =>
+                    setMenuSettings({
+                      menuSection: 'datasets',
+                      datasetCategory: 'forestChange',
+                    })}
+                >
+                  forest change
+                </button>
+                {' '}
+                data layer to analyze.
+              </NoContent>
+            )}
+            {(hasLayers || hasWidgets) && !loading && !error && (
+              <Fragment>
+                <ul className="draw-stats">
+                  {data && data.map((d) => this.renderStatItem(d))}
+                </ul>
+                <Widgets simple analysis />
+                <div className="disclaimers">
+                  {zoomLevel < 11 && (
+                    <p>
+                      This algorithm approximates the results by sampling the
+                      selected area. Results are more accurate at closer zoom
+                      levels.
+                    </p>
+                  )}
+                  {showAnalysisDisclaimer && (
+                    <p>
+                      <b>NOTE:</b>
+                      {' '}
+                      tree cover loss and gain statistics cannot be
+                      compared against each other.
+                      {' '}
+                      <button
+                        onClick={() =>
+                          setModalSources({
+                            open: true,
+                            source: 'lossDisclaimer',
+                          })}
+                      >
+                        Learn more.
+                      </button>
+                    </p>
+                  )}
+                </div>
+              </Fragment>
+            )}
           </div>
           {showDownloads && (
             <DownloadData
@@ -247,36 +241,35 @@ class ShowAnalysis extends PureComponent {
             />
           )}
         </div>
-        {(hasLayers || hasWidgets) &&
-          !loading &&
-          !error && (
-            <div className="save-aois-disclaimer">
-              {activeArea ? (
-                <div className="content">
-                  <p>
-                    To perform an in-depth analysis of this area please visit
-                    the{' '}
-                    <Link to={`/dashboards/aoi/${activeArea.id}`}>
-                      area dashboard
-                    </Link>
-                    .
-                  </p>
-                </div>
-              ) : (
-                <div className="content">
-                  <h3>Interested in this particular area?</h3>
-                  <p>
-                    Save this area to create a dashboard with a more in-depth analysis and receive email alerts about forest cover change.
-                  </p>
-                </div>
-              )}
-              <img
-                src={screensImg1x}
-                srcSet={`${screensImg1x} 1x, ${screensImg2x} 2x`}
-                alt="aoi screenshots"
-              />
-            </div>
-          )}
+        {(hasLayers || hasWidgets) && !loading && !error && (
+          <div className="save-aois-disclaimer">
+            {activeArea ? (
+              <div className="content">
+                <p>
+                  To perform an in-depth analysis of this area please visit the
+                  {' '}
+                  <Link href={`/dashboards/aoi/${activeArea.id}`}>
+                    <a>area dashboard</a>
+                  </Link>
+                  .
+                </p>
+              </div>
+            ) : (
+              <div className="content">
+                <h3>Interested in this particular area?</h3>
+                <p>
+                  Save this area to create a dashboard with a more in-depth
+                  analysis and receive email alerts about forest cover change.
+                </p>
+              </div>
+            )}
+            <img
+              src={screensImg1x}
+              srcSet={`${screensImg1x} 1x, ${screensImg2x} 2x`}
+              alt="aoi screenshots"
+            />
+          </div>
+        )}
       </div>
     );
   }

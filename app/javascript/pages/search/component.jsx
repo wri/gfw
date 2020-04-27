@@ -28,6 +28,7 @@ class SearchPage extends PureComponent {
 
   componentDidMount() {
     const { query, getSearch } = this.props;
+
     if (query) {
       getSearch({ query });
     }

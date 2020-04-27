@@ -22,15 +22,19 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
       <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
         {extLink ? (
           <a href={path} target="_blank" rel="noopener noreferrer">
-            {region} -
+            {region}
+            {' - '}
             {formatNumber({ num: total, unit: '%' })}
             {index === 0 ? ' are plantations' : ''}
           </a>
         ) : (
-          <Link to={path}>
-            {region} -
-            {formatNumber({ num: total, unit: '%' })}
-            {index === 0 ? ' are plantations' : ''}
+          <Link href={path}>
+            <a>
+              {region}
+              {' - '}
+              {formatNumber({ num: total, unit: '%' })}
+              {index === 0 ? ' are plantations' : ''}
+            </a>
           </Link>
         )}
       </text>
@@ -44,7 +48,7 @@ CustomTick.propTypes = {
   index: PropTypes.number,
   yAxisDotFill: PropTypes.string,
   data: PropTypes.array,
-  settings: PropTypes.object
+  settings: PropTypes.object,
 };
 
 export default CustomTick;

@@ -23,7 +23,7 @@ import './styles.scss';
 class Layout extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     keywords: PropTypes.string,
     children: PropTypes.node.isRequired,
     hideHeader: PropTypes.bool,
@@ -61,6 +61,7 @@ class Layout extends React.Component {
       setSearchQuery: setSearch,
       setContactUsModalOpen: setContactUsOpen,
     } = this.props;
+    const router = useRouter();
 
     return (
       <div className="l-page">
@@ -69,7 +70,10 @@ class Layout extends React.Component {
           {!hideHeader && (
             <Header
               className="header"
-              setQueryToUrl={setSearch}
+              setQueryToUrl={(query) => {
+                router.push('/search');
+                setSearch(query);
+              }}
               openContactUsModal={() => setContactUsOpen(true)}
               loggedIn={loggedIn}
               loggingIn={loggingIn}

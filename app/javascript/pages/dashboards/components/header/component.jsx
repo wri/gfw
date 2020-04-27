@@ -146,29 +146,33 @@ class Header extends PureComponent {
           <div className="columns small-12 medium-10">
             <div className="select-container">
               {isAreaDashboard && (
-                <Link
-                  className="breadcrumb-link"
-                  to="/dashboards/global"
-                  onClick={() =>
-                    logEvent('switchDashboardType', {
-                      label: 'changes to global',
-                    })}
-                >
-                  <Icon icon={arrowIcon} className="breadcrumb-icon" />
-                  Go to Global dashboard
+                <Link href="/dashboards/global">
+                  <a className="breadcrumb-link">
+                    <button
+                      onClick={() =>
+                        logEvent('switchDashboardType', {
+                          label: 'changes to global',
+                        })}
+                    >
+                      <Icon icon={arrowIcon} className="breadcrumb-icon" />
+                      Go to Global dashboard
+                    </button>
+                  </a>
                 </Link>
               )}
               {isCountryDashboard && !!firstArea && (
-                <Link
-                  className="breadcrumb-link"
-                  to={`/dashboards/aoi/${firstArea.id}`}
-                  onClick={() =>
-                    logEvent('switchDashboardType', {
-                      label: 'changes to areas',
-                    })}
-                >
-                  <Icon icon={arrowIcon} className="breadcrumb-icon" />
-                  Go to Areas dashboard
+                <Link href={`/dashboards/aoi/${firstArea.id}`}>
+                  <a className="breadcrumb-link">
+                    <button
+                      onClick={() =>
+                        logEvent('switchDashboardType', {
+                          label: 'changes to areas',
+                        })}
+                    >
+                      <Icon icon={arrowIcon} className="breadcrumb-icon" />
+                      Go to Areas dashboard
+                    </button>
+                  </a>
                 </Link>
               )}
               {title && (

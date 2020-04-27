@@ -21,9 +21,11 @@ class ThankyouPage extends PureComponent {
               <p>
                 You may wish to read our
                 {' '}
-                <Link href="/privacy-policy">privacy policy</Link>
-                , which
-                provides further information about how we use personal data.
+                <Link href="/privacy-policy">
+                  <a>privacy policy</a>
+                </Link>
+                , which provides further information about how we use personal
+                data.
               </p>
             </div>
           </div>
