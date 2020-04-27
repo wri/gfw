@@ -15,6 +15,9 @@ import ContactUsModal from 'components/modals/contact-us';
 import ClimateModal from 'components/modals/climate';
 import Cookies from 'components/cookies';
 
+import { setContactUsModalOpen } from 'components/modals/contact-us/actions';
+import { setSearchQuery } from 'layouts/search/actions';
+
 import './styles.scss';
 
 class Layout extends React.Component {
@@ -27,7 +30,9 @@ class Layout extends React.Component {
     hideFooter: PropTypes.bool,
     fullScreen: PropTypes.bool,
     loggedIn: PropTypes.bool,
-    loggingIn: PropTypes.bool
+    loggingIn: PropTypes.bool,
+    setSearchQuery: PropTypes.func.isRequired,
+    setContactUsModalOpen: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -52,35 +57,20 @@ class Layout extends React.Component {
       hideHeader,
       fullScreen,
       loggedIn,
-      loggingIn
+      loggingIn,
+      setSearchQuery: setSearch,
+      setContactUsModalOpen: setContactUsOpen,
     } = this.props;
-    const { pathname, query, pushDynamic } = useRouter();
 
     return (
       <div className="l-page">
         <MediaContextProvider>
-          <Meta
-            title={title}
-            description={description}
-            keywords={keywords}
-          />
+          <Meta title={title} description={description} keywords={keywords} />
           {!hideHeader && (
             <Header
               className="header"
-              setQueryToUrl={(searchQuery) => {
-                pushDynamic({
-                  pathname: '/search',
-                  query: { query: searchQuery },
-                });
-              }}
-              openContactUsModal={() => {
-                pushDynamic({
-                  pathname,
-                  query: { ...query, contactUs: true },
-                  hash:
-                    typeof window !== 'undefined' ? window.location.hash : null,
-                });
-              }}
+              setQueryToUrl={setSearch}
+              openContactUsModal={() => setContactUsOpen(true)}
               loggedIn={loggedIn}
               loggingIn={loggingIn}
               NavLinkComponent={({ children, className, ...props }) => (
@@ -100,56 +90,22 @@ class Layout extends React.Component {
                   <a className={className}>{children}</a>
                 </NavLink>
               )}
-              openContactUsModal={() => {
-                pushDynamic({
-                  pathname,
-                  query: { ...query, contactUs: true },
-                  hash:
-                    typeof window !== 'undefined' ? window.location.hash : null,
-                });
-              }}
+              openContactUsModal={() => setContactUsOpen(true)}
             />
           )}
           <Cookies onClose={() => logEvent('acceptCookies')} />
-          <ContactUsModal
-            open={!!query?.contactUs}
-            onClose={() => {
-              delete query.contactUs;
-              pushDynamic({
-                pathname,
-                query,
-                hash:
-                  typeof window !== 'undefined' ? window.location.hash : null,
-              });
-            }}
-          />
-          <ClimateModal
-            open={!!query?.gfwclimate}
-            onClose={() => {
-              delete query.gfwclimate;
-              pushDynamic({
-                pathname,
-                query,
-                hash:
-                  typeof window !== 'undefined' ? window.location.hash : null,
-              });
-            }}
-            openContactUsModal={() => {
-              pushDynamic({
-                pathname,
-                query: { ...query, contactUs: true },
-                hash:
-                  typeof window !== 'undefined' ? window.location.hash : null,
-              });
-            }}
-          />
+          <ContactUsModal />
+          <ClimateModal />
         </MediaContextProvider>
       </div>
     );
   }
 }
 
-export default connect(({ myGfw }) => ({
-  loggedIn: myGfw?.data?.loggedIn,
-  loggingIn: myGfw?.loading,
-}))(Layout)
+export default connect(
+  ({ myGfw }) => ({
+    loggedIn: myGfw?.data?.loggedIn,
+    loggingIn: myGfw?.loading,
+  }),
+  { setContactUsModalOpen, setSearchQuery }
+)(Layout);
