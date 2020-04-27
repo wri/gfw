@@ -51,6 +51,10 @@ const SQL_QUERIES = {
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  firesAlertsCommodities:
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} GROUP BY is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC ',
+  firesCommmoditiesArea:
+    'SELECT {location} area__ha, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE}',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -100,15 +104,21 @@ const getAnnualDataset = ({
 };
 
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST;
+  }
   if (type === 'geostore') return DATASETS_ENV.GLAD_GEOSTORE_WEEKLY;
 
   if (type === 'wdpa' && whitelist) return DATASETS_ENV.GLAD_WDPA_WHITELIST;
   if (type === 'wdpa') return DATASETS_ENV.GLAD_WDPA_WEEKLY;
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM2_WHITELIST; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM2_WHITELIST;
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV.GLAD_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM1_WHITELIST; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM1_WHITELIST;
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV.GLAD_ADM1_WEEKLY;
   if (whitelist) return DATASETS_ENV.GLAD_ADM0_WHITELIST;
 
@@ -124,15 +134,23 @@ const getFiresDatasetId = ({
   whitelist,
   dataset
 }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`]; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`];
+  }
   if (type === 'geostore') return DATASETS_ENV[`${dataset}_GEOSTORE_WEEKLY`];
 
-  if (type === 'wdpa' && whitelist) { return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`]; }
+  if (type === 'wdpa' && whitelist) {
+    return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`];
+  }
   if (type === 'wdpa') return DATASETS_ENV[`${dataset}_WDPA_WEEKLY`];
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`]; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`];
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV[`${dataset}_ADM2_WEEKLY`];
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`]; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`];
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV[`${dataset}_ADM1_WEEKLY`];
   if (whitelist) return DATASETS_ENV[`${dataset}_ADM0_WHITELIST`];
 
@@ -680,13 +698,12 @@ export const getAreaIntersectionGrouped = ({
         adm2,
         forestType,
         landCategory,
-        ifl,
         ...params
       })
     );
 
   if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
+    const indicator = getIndicator(forestType, landCategory);
     return {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
@@ -868,6 +885,78 @@ export const fetchVIIRSAlerts = ({
       }))
     }
   }));
+};
+
+export const fetchFiresCommoditiesAlerts = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  forestType,
+  landCategory,
+  confidence,
+  ifl,
+  grouped,
+  download,
+  ...params
+}) => {
+  const { firesAlertsCommodities } = SQL_QUERIES;
+  console.log('firesAlertsCommodities', firesAlertsCommodities);
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    confidence,
+    allowedParams: 'firesAlertsCommodities'
+  })}${firesAlertsCommodities}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
+        : getLocationSelect({ adm1, adm2, ...params })
+    )
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        confidence,
+        ifl,
+        ...params,
+        allowedParams: 'firesAlertsCommodities'
+      })
+    );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  const testresponse = apiRequest.get(url).then(testresponse => ({
+    data: {
+      data: testresponse.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+  console.log('url', url);
+  console.log('testresponse', testresponse);
+  return testresponse;
 };
 
 export const fetchVIIRSLatest = () => {
