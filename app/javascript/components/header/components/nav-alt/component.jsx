@@ -85,7 +85,7 @@ class NavAlt extends PureComponent {
 
     return (
       <ul className={cx('c-nav-alt', { 'full-screen': showSubmenu })}>
-        <Media greaterThanOrEqual="md">
+        <Media greaterThanOrEqual="md" className="desktop-menu">
           <Fragment>
             <li className="alt-link">
               <OutsideClickHandler
