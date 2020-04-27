@@ -1,6 +1,7 @@
 import { all, spread } from 'axios';
 import {
   fetchFiresCommoditiesAlerts,
+  fetchFiresCommoditiesArea,
   fetchVIIRSLatest
 } from 'services/analysis-cached';
 
@@ -8,7 +9,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesCommodities',
-  title: 'Regions with the most fire Alerts in {location}',
+  title: 'Density of fires alerts in {location} commodities concessions',
   categories: ['forest-change'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
@@ -28,7 +29,7 @@ export default {
     forestChange: -1
   },
   sentences: {
-    initial: 'In the last {timeframe} in {location}, this is a test.'
+    initial: 'In the last {timeframe}, the {location} commodities concessions with the highest fires alerts density within {} was {highest_com}, with {density_val}.'
   },
   settings: {
     unit: '%',
@@ -41,11 +42,12 @@ export default {
     layerEndDate: null
   },
   getData: params =>
-    all([fetchFiresCommoditiesAlerts(params), fetchVIIRSLatest(params)]).then(
-      spread((alerts, latest) => {
+    all([fetchFiresCommoditiesAlerts(params), fetchFiresCommoditiesArea(params), fetchVIIRSLatest(params)]).then(
+      spread((alerts, area, latest) => {
         const { data } = alerts.data;
-        console.log('data', data)
-        return { alerts: data, latest: latest.attributes.updatedAt } || {};
+        //console.log('data_alerts', data)
+        //console.log('data_are',area.data)
+        return { alerts: data, area: area.data, latest: latest.attributes.updatedAt } || {};
       })
     ),
   // getDataURL: params => [

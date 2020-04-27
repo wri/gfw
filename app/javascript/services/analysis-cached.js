@@ -53,8 +53,8 @@ const SQL_QUERIES = {
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesAlertsCommodities:
     `SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} AND (is__gfw_logging = 'true' or is__gfw_mining = 'true' or is__gfw_oil_gas = 'true' or is__gfw_oil_palm = 'true' or is__gfw_wood_fiber  = 'true') GROUP BY is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber, alert__year, alert__week ORDER BY alert__year DESC, alert__week DESC`,
-  firesCommmoditiesArea:
-    `SELECT {location} area__ha, is__gfw_logging, is__gfw_mining, is__gfw_oil_gas, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} AND (is__gfw_logging = 'true' or is__gfw_mining = 'true' or is__gfw_oil_gas = 'true' or is__gfw_oil_palm = 'true' or is__gfw_wood_fiber  = 'true')`,
+  firesCommmoditiesArea:// MISSING is__gfw_oil_gas ATTRIBUTE ON STAGING TABLE
+    `SELECT {location}, area__ha, is__gfw_logging, is__gfw_mining, is__gfw_oil_palm, is__gfw_wood_fiber FROM data {WHERE} AND (is__gfw_logging is 'true' or is__gfw_mining is 'true' or is__gfw_oil_palm is 'true' or is__gfw_wood_fiber is 'true')`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -939,7 +939,6 @@ export const fetchFiresCommoditiesAlerts = ({
     };
   }
 
-  console.log('url', url);
   return apiRequest.get(url).then(testresponse => ({
     data: {
       data: testresponse.data.data.map(d => ({
@@ -949,6 +948,66 @@ export const fetchFiresCommoditiesAlerts = ({
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchFiresCommoditiesArea = ({
+  adm0,
+  adm1,
+  adm2,
+  tsc,
+  forestType,
+  landCategory,
+  confidence,
+  grouped,
+  download,
+  ...params
+}) => {
+  const { firesCommmoditiesArea } = SQL_QUERIES;
+  const url = `${getRequestUrl({
+    ...params,
+    adm0,
+    adm1,
+    adm2,
+    grouped,
+    confidence,
+    summary: true 
+  })}${firesCommmoditiesArea}`
+    .replace(
+      /{location}/g,
+      grouped
+        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
+        : getLocationSelect({ adm1, adm2, ...params })
+    )
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({
+        adm0,
+        adm1,
+        adm2,
+        forestType,
+        landCategory,
+        confidence,
+        ...params,
+      })
+    );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(testresponse => ({
+    data: {
+      data: testresponse.data.data.map(d => ({
+        ...d,
       }))
     }
   }));
