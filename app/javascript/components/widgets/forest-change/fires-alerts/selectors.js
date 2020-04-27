@@ -130,12 +130,15 @@ export const parseData = createSelector(
       const week = d.week;
 
       if (compareYear) {
+        const parsedCompareYear = compareYear - yearDifference;
+
         const compareWeek = data.find(
-          dt => dt.year === compareYear - yearDifference && dt.week === week
+          dt => dt.year === parsedCompareYear && dt.week === week
         );
 
         return {
           ...d,
+          compareYear: parsedCompareYear,
           compareCount: compareWeek ? compareWeek.count : null
         };
       }
@@ -157,8 +160,46 @@ export const parseBrushedData = createSelector(
   }
 );
 
+export const getLegend = createSelector(
+  [parseBrushedData, getColors, getCompareYear],
+  (data, colors, compareYear) => {
+    if (!data) return {};
+
+    const first = data[0];
+    const end = data[data.length - 1];
+
+    return {
+      current: {
+        label: `${moment(first.date).format('MMM YYYY')} - ${moment(
+          end.date
+        ).format('MMM YYYY')}`,
+        color: colors.main
+      },
+      ...(compareYear && {
+        compare: {
+          label: `${moment(first.date)
+            .set('year', first.compareYear)
+            .format('MMM YYYY')} - ${moment(end.date)
+            .set('year', end.compareYear)
+            .format('MMM YYYY')}`,
+          color: '#49b5e3'
+        }
+      }),
+      average: {
+        label: 'Average',
+        color: 'rgba(85,85,85, 0.1)'
+      },
+      unusual: {
+        label: 'Unusual',
+        color: 'rgba(85,85,85, 0.2)'
+      }
+    };
+  }
+);
+
 export const parseConfig = createSelector(
   [
+    getLegend,
     getColors,
     getLatest,
     getMaxMinDates,
@@ -167,7 +208,16 @@ export const parseConfig = createSelector(
     getStartIndex,
     getEndIndex
   ],
-  (colors, latest, maxminYear, compareYear, dataset, startIndex, endIndex) => {
+  (
+    legend,
+    colors,
+    latest,
+    maxminYear,
+    compareYear,
+    dataset,
+    startIndex,
+    endIndex
+  ) => {
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -215,6 +265,7 @@ export const parseConfig = createSelector(
           tickFormatter: t => moment(t).format('MMM-DD')
         })
       },
+      legend,
       tooltip,
       brush: {
         width: '100%',

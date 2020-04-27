@@ -6,6 +6,7 @@ import omit from 'lodash/omit';
 
 import ComposedChart from 'components/charts/composed-chart';
 import Brush from 'components/charts/brush-chart';
+import Legend from 'components/charts/components/chart-legend';
 
 class WidgetComposedChart extends Component {
   static propTypes = {
@@ -79,10 +80,12 @@ class WidgetComposedChart extends Component {
       simple,
       barBackground
     } = this.props;
-    const { brush } = config;
+    const { brush, legend } = config;
 
     return (
       <div className="c-widget-composed-chart">
+        {legend && <Legend data={data} config={legend} simple={simple} />}
+
         <ComposedChart
           className="loss-chart"
           data={data}
