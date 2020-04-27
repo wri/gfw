@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
+import moment from 'moment';
 
 // get list data
 const getData = state => state.data;
@@ -15,9 +16,22 @@ const getSettings = state => state.settings;
 // get lists selected
 export const parseData = createSelector(
   [getData, getColors, getIndicator, getSettings],
-  (data, colors, indicator) => {
+  (data, colors, indicator, settings) => {
     if (isEmpty(data)) return null;
-    const { fireCountIn, fireCountAll } = data;
+
+    const { weeks } = settings;
+    const filterDate = moment().subtract(weeks, 'weeks');
+    const filterYear = filterDate.year();
+    const filterWeek = filterDate.isoWeek();
+
+    let { fireCountIn, fireCountAll } = data;
+    fireCountIn = fireCountIn
+      .filter(a => a.alert__year > filterYear || a.alert__week >= filterWeek)
+      .reduce((acc, n) => acc + n.count, 0);
+
+    fireCountAll = fireCountAll
+      .filter(a => a.alert__year > filterYear || a.alert__week >= filterWeek)
+      .reduce((acc, n) => acc + n.count, 0);
 
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;

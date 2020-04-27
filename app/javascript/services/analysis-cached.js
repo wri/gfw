@@ -52,7 +52,7 @@ const SQL_QUERIES = {
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesWithin:
-    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= {alert__week} GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
+    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -902,9 +902,9 @@ export const fetchFiresWithin = ({
   ...params
 }) => {
   const { firesWithin } = SQL_QUERIES;
-  const filterDate = moment().subtract(weeks, 'weeks');
-  const filterYear = filterDate.year();
-  const filterWeek = filterDate.isoWeek();
+  const filterYear = moment()
+    .subtract(weeks, 'weeks')
+    .year();
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -934,8 +934,9 @@ export const fetchFiresWithin = ({
         allowedParams: 'fires'
       })
     )
-    .replace('{alert__year}', filterYear || 2020)
-    .replace('{alert__week}', filterWeek || 1);
+    // TODO: we can remove this condition because filtering
+    // is applied in the selectors, but query would be slower
+    .replace('{alert__year}', filterYear || 2020);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
