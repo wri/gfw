@@ -934,9 +934,7 @@ export const fetchFiresWithin = ({
         allowedParams: 'fires'
       })
     )
-    // TODO: we can remove this condition because filtering
-    // is applied in the selectors, but query would be slower
-    .replace('{alert__year}', filterYear || 2020);
+    .replace('{alert__year}', filterYear);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);

@@ -40,7 +40,8 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All categories',
-      clearable: false,
+      // TODO: default option -> Primary Forests if available, IFL otherwise.
+      clearable: true,
       border: false
     },
     {

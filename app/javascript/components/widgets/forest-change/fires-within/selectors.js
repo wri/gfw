@@ -15,8 +15,8 @@ const getSettings = state => state.settings;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getColors, getIndicator, getSettings],
-  (data, colors, indicator, settings) => {
+  [getData, getColors, getIndicator, getLocationName, getSettings],
+  (data, colors, indicator, locationName, settings) => {
     if (isEmpty(data)) return null;
 
     const { weeks } = settings;
@@ -39,20 +39,22 @@ export const parseData = createSelector(
       fireCountAll - fireCountIn > 0 ? fireCountAll - fireCountIn : 0;
     const parsedData = [
       {
-        label: `Fire alerts in ${indicatorLabel}`,
+        label: `Fire alerts in ${indicatorLabel || locationName}`,
         value: fireCountIn,
         color: colors.main,
         unit: 'counts',
         percentage: fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 0
-      },
-      {
+      }
+    ];
+    if (indicator) {
+      parsedData.push({
         label: `Fire alerts outside ${indicatorLabel}`,
         value: fireCountOutside,
         color: colors.otherColor,
         unit: 'counts',
         percentage: fireCountAll > 0 ? fireCountOutside / fireCountAll * 100 : 0
-      }
-    ];
+      });
+    }
     return parsedData;
   }
 );
@@ -76,7 +78,9 @@ export const parseSentence = createSelector(
       indicator: indicatorLabel,
       perfireswithin: `${format('.2r')(fireswithinper)}%`
     };
-    const sentence = indicator ? withInd : '';
+    const sentence = indicator
+      ? withInd
+      : 'Please select a forest type or land category from the settings.';
     return {
       sentence,
       params
