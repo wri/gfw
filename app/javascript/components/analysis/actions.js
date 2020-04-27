@@ -224,8 +224,8 @@ export const uploadShape = createThunkAction(
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch) => {
-    const { push, query } = useRouter();
-    push(`/map?${query}`);
+    const { pushDynamic, query } = useRouter();
+    pushDynamic({ pathname: '/map', query });
     dispatch(clearAnalysisData());
   }
 );

@@ -7,7 +7,7 @@ const selectActiveAreaId = (state) => state?.areaModal?.activeAreaId;
 const selectAreaModalOpen = (state) => state?.areaModal?.open;
 const selectLoading = (state) => state?.areas?.loading;
 const selectUserData = (state) => state?.myGfw?.data;
-const selectLocation = (state) => state.location;
+const selectLocation = (state) => state?.location;
 
 export const getActiveArea = createSelector(
   [selectLocation, selectActiveAreaId, getAllAreas],
