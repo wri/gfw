@@ -895,13 +895,11 @@ export const fetchFiresCommoditiesAlerts = ({
   forestType,
   landCategory,
   confidence,
-  ifl,
   grouped,
   download,
   ...params
 }) => {
   const { firesAlertsCommodities } = SQL_QUERIES;
-  console.log('firesAlertsCommodities', firesAlertsCommodities);
   const url = `${getRequestUrl({
     ...params,
     adm0,
@@ -909,7 +907,7 @@ export const fetchFiresCommoditiesAlerts = ({
     adm2,
     grouped,
     confidence,
-    allowedParams: 'firesAlertsCommodities'
+    allowedParams: 'fires'
   })}${firesAlertsCommodities}`
     .replace(
       /{location}/g,
@@ -926,14 +924,13 @@ export const fetchFiresCommoditiesAlerts = ({
         forestType,
         landCategory,
         confidence,
-        ifl,
         ...params,
-        allowedParams: 'firesAlertsCommodities'
+        allowedParams: 'fires'
       })
     );
 
   if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
+    const indicator = getIndicator(forestType, landCategory);
     return {
       name: `viirs_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
