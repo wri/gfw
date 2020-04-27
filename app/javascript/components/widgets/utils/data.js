@@ -254,7 +254,7 @@ export const getCumulativeStatsData = data => {
   const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12);
   const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12);
 
-  const pastYear = data.filter(d => d.year === maxYear).slice(-52);
+  const pastYear = data.filter(d => d.year === maxYear).slice(0, 52);
   const parsedData = pastYear.map((d, i) => {
     const weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
     const stdDev = (smoothedStds && smoothedStds[i]) || 0;
