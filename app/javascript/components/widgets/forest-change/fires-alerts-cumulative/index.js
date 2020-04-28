@@ -4,21 +4,11 @@ import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
-import {
-  POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
-} from 'data/layers-datasets';
-import {
-  DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
-} from 'data/layers';
-
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'firesAlerts',
-  title: 'Fire Alerts in {location}',
+  widget: 'firesAlertsCumulative',
+  title: 'Cumulative Fire Alerts in {location}',
   large: true,
   categories: ['summary', 'forest-change'],
   settingsConfig: [
@@ -30,8 +20,8 @@ export default {
     {
       key: 'compareYear',
       label: 'Compare with the same period in',
-      type: 'compare-select',
       placeholder: 'None',
+      type: 'compare-select',
       clearable: true,
       border: true
     },
@@ -64,18 +54,6 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
-  datasets: [
-    {
-      dataset: POLITICAL_BOUNDARIES_DATASET,
-      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
-    },
-    // fires
-    {
-      dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
-  ],
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
@@ -89,7 +67,7 @@ export default {
     confidence: 'h'
   },
   sentence:
-    'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+    'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The worst year on record was {maxYear}, with {maxTotal} fires.',
   whitelists: {
     adm0: [
       'AFG',

@@ -6,12 +6,13 @@ import sortBy from 'lodash/sortBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
+import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
 
 import { getColorPalette } from 'utils/data';
 
 import {
-  getStatsData,
+  getCumulativeStatsData,
   getDatesData,
   getPeriodVariance,
   getChartConfig
@@ -69,9 +70,7 @@ export const getData = createSelector(
 
     const yearLengths = {};
     years.forEach(y => {
-      if (lastWeek.year === y) {
-        yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+      if (moment(`${y}-12-31`).isoWeek() === 1) {
         yearLengths[y] = moment(`${y}-12-31`)
           .subtract('week', 1)
           .isoWeek();
@@ -83,22 +82,33 @@ export const getData = createSelector(
     const zeroFilledData = [];
 
     years.forEach(d => {
+      let acc = 0;
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(
-          yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(d, 10) }
-        );
+        const weekData = yearDataByWeek[i]
+          ? yearDataByWeek[i][0]
+          : { count: 0, week: i, year: parseInt(d, 10) };
+        acc += weekData.count;
+        if (parseInt(d, 10) === lastWeek.year && i > lastWeek.isoWeek) {
+          zeroFilledData.push({
+            ...weekData,
+            count: null
+          });
+        } else {
+          zeroFilledData.push({
+            ...weekData,
+            count: acc
+          });
+        }
       }
     });
     return zeroFilledData;
   }
 );
 
-export const getStats = createSelector([getData, getLatest], (data, latest) => {
+export const getStats = createSelector([getData], data => {
   if (!data) return null;
-  return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
+  return getCumulativeStatsData(data);
 });
 
 export const getDates = createSelector([getStats], data => {
@@ -130,15 +140,12 @@ export const parseData = createSelector(
       const week = d.week;
 
       if (compareYear) {
-        const parsedCompareYear = compareYear - yearDifference;
-
         const compareWeek = data.find(
-          dt => dt.year === parsedCompareYear && dt.week === week
+          dt => dt.year === compareYear - yearDifference && dt.week === week
         );
 
         return {
           ...d,
-          compareYear: parsedCompareYear,
           compareCount: compareWeek ? compareWeek.count : null
         };
       }
@@ -165,23 +172,16 @@ export const getLegend = createSelector(
   (data, colors, compareYear) => {
     if (!data) return {};
 
-    const first = data[0];
     const end = data[data.length - 1];
 
     return {
       current: {
-        label: `${moment(first.date).format('MMM YYYY')} - ${moment(
-          end.date
-        ).format('MMM YYYY')}`,
+        label: `${moment(end.date).format('YYYY')}`,
         color: colors.main
       },
       ...(compareYear && {
         compare: {
-          label: `${moment(first.date)
-            .set('year', first.compareYear)
-            .format('MMM YYYY')} - ${moment(end.date)
-            .set('year', end.compareYear)
-            .format('MMM YYYY')}`,
+          label: `${compareYear}`,
           color: '#49b5e3'
         }
       }),
@@ -228,6 +228,7 @@ export const parseConfig = createSelector(
         labelFormat: value => moment(value).format('YYYY-MM-DD'),
         unit: ` ${dataset} alerts`,
         color: colors.main,
+        nullValue: 'No data available',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       }
@@ -246,6 +247,7 @@ export const parseConfig = createSelector(
         },
         unit: ` ${dataset} alerts`,
         color: '#49b5e3',
+        nullValue: 'No data available',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       });
@@ -333,15 +335,19 @@ export const parseSentence = createSelector(
     sentence,
     dataset,
     location,
-    startIndex,
-    endIndex
+    startIndex
+    // endIndex //broken?
   ) => {
     if (!data) return null;
 
     const start = startIndex;
-    const end = endIndex || data.length - 1;
 
-    const lastDate = data[end] || {};
+    const latestYear = maxBy(data, 'year').year;
+    const lastDate =
+      maxBy(
+        data.filter(d => d.year === latestYear && d.count !== null),
+        'date'
+      ) || {};
     const firstDate = data[start] || {};
 
     const slicedData = data.filter(
@@ -349,21 +355,9 @@ export const parseSentence = createSelector(
     );
     const variance = getPeriodVariance(slicedData, raw_data);
 
-    const maxMean = max(data.map(d => d.mean));
-    const minMean = min(data.map(d => d.mean));
-    const halfMax = (maxMean - minMean) * 0.5;
-
-    const peakWeeks = data.filter(d => d.mean > halfMax);
-    const seasonStartDate = peakWeeks.length && peakWeeks[0].date;
-    const seasonMonth = moment(seasonStartDate).format('MMMM');
-    const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
-
-    let seasonStatement = `late ${seasonMonth}`;
-    if (seasonDay <= 10) {
-      seasonStatement = `early ${seasonMonth}`;
-    } else if (seasonDay > 10 && seasonDay <= 20) {
-      seasonStatement = `mid-${seasonMonth}`;
-    }
+    const maxWeek = maxBy(raw_data, 'count');
+    const maxTotal = maxWeek.count;
+    const maxYear = maxWeek.year;
 
     const total = sumBy(slicedData, 'count');
     const colorRange = getColorPalette(colors.ramp, 5);
@@ -389,11 +383,13 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedData,
       location: location.label || '',
-      fires_season_start: seasonStatement,
-      fire_season_length: peakWeeks.length,
-      start_date: firstDate.date,
-      end_date: lastDate.date,
+      latestYear,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
+      maxYear,
+      maxTotal: {
+        value: maxTotal ? format(',')(maxTotal) : 0,
+        color: colors.main
+      },
       dataset,
       count: {
         value: total ? format(',')(total) : 0,
