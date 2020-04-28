@@ -858,7 +858,8 @@ export const fetchVIIRSAlerts = ({
         confidence,
         ifl,
         ...params,
-        allowedParams: 'fires'
+        allowedParams: 'fires',
+        glad: true
       })
     );
 
