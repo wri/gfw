@@ -268,8 +268,7 @@ export const getCumulativeStatsData = data => {
       const diff =
         (smoothedMeans && smoothedMeans[i - 1] - smoothedMeans[i - 2]) || 0;
       const step =
-        (smoothedMeans &&
-          mean([smoothedMeans[i - 1] - smoothedMeans[i - 2]])) ||
+        (smoothedMeans && mean([smoothedMeans[i - 1], smoothedMeans[i - 2]])) ||
         0;
       weekMean = diff + step;
       stdDev = (smoothedStds && smoothedStds[i - 1]) || 0;

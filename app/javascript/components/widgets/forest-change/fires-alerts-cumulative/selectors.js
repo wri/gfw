@@ -167,8 +167,39 @@ export const parseBrushedData = createSelector(
   }
 );
 
+export const getLegend = createSelector(
+  [parseBrushedData, getColors, getCompareYear],
+  (data, colors, compareYear) => {
+    if (!data) return {};
+
+    const end = data[data.length - 1];
+
+    return {
+      current: {
+        label: `${moment(end.date).format('YYYY')}`,
+        color: colors.main
+      },
+      ...(compareYear && {
+        compare: {
+          label: `${compareYear}`,
+          color: '#49b5e3'
+        }
+      }),
+      average: {
+        label: 'Average Band',
+        color: 'rgba(85,85,85, 0.15)'
+      },
+      unusual: {
+        label: 'Unusual Band',
+        color: 'rgba(85,85,85, 0.25)'
+      }
+    };
+  }
+);
+
 export const parseConfig = createSelector(
   [
+    getLegend,
     getColors,
     getLatest,
     getMaxMinDates,
@@ -177,7 +208,16 @@ export const parseConfig = createSelector(
     getStartIndex,
     getEndIndex
   ],
-  (colors, latest, maxminYear, compareYear, dataset, startIndex, endIndex) => {
+  (
+    legend,
+    colors,
+    latest,
+    maxminYear,
+    compareYear,
+    dataset,
+    startIndex,
+    endIndex
+  ) => {
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -227,6 +267,7 @@ export const parseConfig = createSelector(
           tickFormatter: t => moment(t).format('MMM-DD')
         })
       },
+      legend,
       tooltip,
       brush: {
         width: '100%',
