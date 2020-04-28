@@ -932,7 +932,8 @@ export const fetchFiresWithin = ({
         confidence,
         ifl,
         ...params,
-        allowedParams: 'fires'
+        allowedParams: 'fires',
+        glad: true
       })
     )
     .replace('{alert__year}', filterYear);
