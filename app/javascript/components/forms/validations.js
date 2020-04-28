@@ -7,7 +7,7 @@ export const number = value =>
   (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 export const email = value =>
-  (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+  (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,10}$/i.test(value)
     ? 'Invalid email address'
     : undefined);
 
@@ -22,9 +22,7 @@ export const phoneNumber = value =>
     : undefined);
 
 export const hasValidOption = (value, options) =>
-  (!options.find(o => o.value === value)
-    ? 'Please select an option'
-    : undefined);
+  (!options.find(o => o.value === value) ? 'Please select an option' : undefined);
 
 export const composeValidators = (req, vals) => value => {
   let validations = req ? [required] : [];

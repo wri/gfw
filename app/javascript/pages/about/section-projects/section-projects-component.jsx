@@ -78,7 +78,10 @@ class SectionProjects extends PureComponent {
                 onClick={setCategorySelected}
               />
             )}
-            <Button className="how-to-btn" link="/howto">
+            <Button
+              className="how-to-btn"
+              extLink="https://www.globalforestwatch.org/howto/"
+            >
               LEARN HOW TO USE GFW
             </Button>
           </div>
