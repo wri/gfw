@@ -46,7 +46,7 @@ class Card extends PureComponent {
     } =
       data || {};
     const { selectorValue } = this.state;
-
+    console.log(selector);
     return (
       <div className={cx('c-card', className, theme, { active })}>
         {tag &&
@@ -105,14 +105,14 @@ class Card extends PureComponent {
               <Dropdown
                 className="card-selector"
                 theme="theme-dropdown-native large"
-                options={selector.options}
+                options={selector && selector.options}
                 value={
                   selectorValue.value ||
                   (selector.options && selector.options[0])
                 }
                 onChange={value =>
                   this.setState({
-                    selectorValue: selector.options.find(o => o.value === value)
+                    selectorValue: selector.options && selector.options.find(o => o.value === value)
                   })
                 }
                 native

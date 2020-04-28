@@ -22,9 +22,6 @@ import scene2 from 'pages/topics/assets/fires/animations/scene2.json';
 import scene3 from 'pages/topics/assets/fires/animations/scene3.json';
 import sunHeat3 from 'pages/topics/assets/fires/animations/heat_sun3.json';
 import scene4 from 'pages/topics/assets/fires/animations/scene4.json';
-import nycWidgetConfig from 'components/widgets/climate/cumulative-emissions';
-
-const nycWidgetIsos = nycWidgetConfig.whitelists.adm0;
 
 export default {
   intro: {
@@ -120,7 +117,7 @@ export default {
       title: 'Fires',
       subtitle: 'Recovery state',
       text:
-        'Protecting forest habitats is key to maintaining biodiversity. With better data on where tree cover loss in important biodiversity areas is happening, governments can make more informed decisions related to concessions and conservation projects and civil society can call attention to areas at risk.',
+        'Prescribed burning, improved maintenance of infrastructure, awareness raising and education on fire prevention, and policy interventions such as fire bans can reduce the risk of forest fires. Protecting forests from deforestation and degradation also improve forest resilience to fire.',
       img1x: fires4,
       prompts: [
         {
@@ -150,7 +147,7 @@ export default {
         'Save an area and subscribe to receive emails when new fire alerts are detected',
       link:
         '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjFkM2NjZjliLTEwMmUtNGMwYi1iMmVhLTJhYmNjNzEyZTE5NCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI5M2UzMzkzMi0zOTU5LTQyMDEtYjhjOC02ZWMwYjMyNTk2ZTAiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6Im15LWdmdyJ9',
-      img1x: areas,
+      image: areas,
       btnText: 'view on map'
     },
     {
@@ -158,15 +155,9 @@ export default {
       title: 'Explore recent trends in fire alerts',
       summary:
         'See if current trends in fire alerts are normal, above or below average',
-      img1x: widgetStats,
+      image: widgetStats,
       selector: {
-        options: nycWidgetIsos.map(iso => ({
-          label: iso,
-          value: iso,
-          path: `/dashboards/country/${
-            iso
-          }?widget=cumulativeGlad&category=climate#cumulativeGlad`
-        }))
+        path: '/dashboards/country/{iso}?widget=fires&category=fires#fires'
       }
     },
     {
@@ -176,7 +167,7 @@ export default {
         'Compare cumulative fire alerts this year to past years.',
       link:
         '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXSwidGltZWxpbmVQYXJhbXMiOnsic3RhcnREYXRlIjoiMjAxNy0wMy0xMSIsImVuZERhdGUiOiIyMDE3LTEyLTMwIiwidHJpbUVuZERhdGUiOiIyMDE3LTEyLTMwIn19LHsiZGF0YXNldCI6ImM3Yzc2Y2MxLTUxNzgtNDc0YS04YjZhLTYwYjg5NWUwMjI2MCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0MjQyN2E1NS1jOGI1LTRmYWMtOGRiMy1hOWQ1OWUxYjI2ZjciXSwiaXNvIjoiIn0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NSwiY2VudGVyIjp7ImxhdCI6MTIuNzA0NjUwNTA4Mjg3ODkzLCJsbmciOjk2LjI4NDE3OTY4NzUwMDAxfSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
-      img1x: widgetCumulative,
+      image: widgetCumulative,
       btnText: 'view data'
     },
     {
@@ -186,7 +177,7 @@ export default {
         'View fire alerts - updated daily - on the map anywhere in the world.',
       link:
         '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjFkM2NjZjliLTEwMmUtNGMwYi1iMmVhLTJhYmNjNzEyZTE5NCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI5M2UzMzkzMi0zOTU5LTQyMDEtYjhjOC02ZWMwYjMyNTk2ZTAiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6Im15LWdmdyJ9',
-      img1x: mapLayer,
+      image: mapLayer,
       btnText: 'view on map'
     },
     {
@@ -196,7 +187,7 @@ export default {
         'Learn about the complex relationship between forests and fires on the GFW blog.',
       link:
         'https://blog.globalforestwatch.org/fires',
-      img1x: forestFire,
+      image: forestFire,
       btnText: 'read the blog'
     },
     {
@@ -206,7 +197,7 @@ export default {
         'Use the Forest Watcher mobile app to navigate to and report on fire alerts offline in the field.',
       link:
         'https://forestwatcher.globalforestwatch.org/',
-      img1x: forestWatcher,
+      image: forestWatcher,
       btnText: 'go to app'
     },
     {

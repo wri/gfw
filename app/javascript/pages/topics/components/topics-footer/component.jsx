@@ -24,7 +24,7 @@ class TopicsFooter extends PureComponent {
           <div className="column small-12">
             <Carousel>
               {cards &&
-                cards.map(c => (
+                cards.map(c => console.log(c.selector, countries) || (
                   <Card
                     key={c.title}
                     theme={c.theme}
@@ -50,15 +50,12 @@ class TopicsFooter extends PureComponent {
                       ...(c.selector && {
                         selector: {
                           ...c.selector,
-                          options: c.selector.options.map(o => {
-                            const country =
-                              countries &&
-                              countries.find(adm0 => adm0.value === o.value);
-                            return {
-                              ...o,
-                              label: country && country.label
-                            };
-                          })
+                          options: countries && !!countries.length && countries
+                            .filter(country => !c.selector.whitelist || c.selector.whitelist.includes(country.value))
+                            .map(country => ({
+                              ...country,
+                              path: c.selector.path && c.selector.path.replace('{iso}', country.value)
+                            }))
                         }
                       })
                     }}
