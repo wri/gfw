@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { NavLink } from 'redux-first-router-link';
+import moment from 'moment';
+import { getMomentLangCode } from 'utils/lang';
 
 import Icon from 'components/ui/icon';
 import DropdownMenu from 'components/header/components/dropdown-menu';
@@ -51,6 +53,7 @@ class NavAlt extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+    moment.locale(getMomentLangCode(this.state.lang));
   }
 
   componentWillUnmount() {
@@ -73,6 +76,7 @@ class NavAlt extends PureComponent {
     window.Transifex.live.onTranslatePage(newLang => {
       this.props.setLangToUrl(newLang);
     });
+    moment.locale(getMomentLangCode(lang));
   };
 
   handleCloseSubmenu = () => {

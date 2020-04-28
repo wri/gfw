@@ -169,13 +169,7 @@ class AreaOfInterestForm extends PureComponent {
                     <h1>{title}</h1>
                     <MapGeostore
                       className="aoi-map"
-                      location={
-                        initialValues &&
-                        initialValues.geostore && {
-                          type: 'geostore',
-                          adm0: initialValues.geostore
-                        }
-                      }
+                      location={initialValues && initialValues.location}
                       padding={50}
                       height={300}
                       width={600}
@@ -248,13 +242,6 @@ class AreaOfInterestForm extends PureComponent {
                         )}
                       </button>
                     </div>
-                    <Select
-                      name="language"
-                      label="language"
-                      options={getLanguages()}
-                      placeholder="Select a language"
-                      required
-                    />
                     <Checkbox
                       name="alerts"
                       label="Would you like to recieve alert notifications?"
@@ -266,12 +253,19 @@ class AreaOfInterestForm extends PureComponent {
                         {
                           label: 'As soon as forest change is detected',
                           value: 'deforestationAlerts'
-                        },
-                        {
-                          label: 'Monthly summary',
-                          value: 'monthlySummary'
                         }
+                        // {
+                        //   label: 'Monthly summary',
+                        //   value: 'monthlySummary'
+                        // }
                       ]}
+                    />
+                    <Select
+                      name="language"
+                      label="language"
+                      options={getLanguages()}
+                      placeholder="Select a language"
+                      required
                     />
                     <Error
                       valid={valid}

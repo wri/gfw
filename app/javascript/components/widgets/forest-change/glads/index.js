@@ -20,7 +20,7 @@ export default {
   title: 'Deforestation alerts for the last week in {location}',
   categories: ['forest-change', 'summary'],
   admins: ['adm0', 'adm1', 'adm2'],
-  types: ['geostore', 'wdpa', 'use'],
+  types: [],
   type: 'loss',
   colors: 'loss',
   sortOrder: {

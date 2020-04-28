@@ -20,6 +20,7 @@ const selectColors = state => state.colors;
 const selectInteraction = state => state.settings.interaction;
 const selectWeeks = state => state.settings && state.settings.weeks;
 const selectSentences = state => state.sentence;
+const selectLang = state => state.lang;
 const getIndicator = state => state.indicator || null;
 
 export const parsePayload = payload => {
@@ -147,7 +148,7 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, selectColors, selectInteraction, selectSentences, getIndicator],
+  [parseData, selectColors, selectInteraction, selectSentences, getIndicator, selectLang],
   (data, colors, interaction, sentences, indicator) => {
     if (!data) return null;
 

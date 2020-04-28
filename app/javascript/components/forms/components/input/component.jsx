@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import cx from 'classnames';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -19,7 +20,8 @@ class Input extends PureComponent {
     name: PropTypes.string,
     required: PropTypes.bool,
     collapse: PropTypes.bool,
-    infoClick: PropTypes.func
+    infoClick: PropTypes.func,
+    className: PropTypes.string
   };
 
   render() {
@@ -32,7 +34,8 @@ class Input extends PureComponent {
       hidden,
       required,
       infoClick,
-      collapse
+      collapse,
+      className
     } = this.props;
 
     return (
@@ -61,7 +64,7 @@ class Input extends PureComponent {
               />
             ) : (
               <input
-                className="c-form-input"
+                className={cx('c-form-input', className)}
                 {...input}
                 type={type}
                 placeholder={placeholder}

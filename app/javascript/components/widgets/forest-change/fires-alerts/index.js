@@ -4,10 +4,14 @@ import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FIRES_VIIRS_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  FIRES_ALERTS_VIIRS
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -68,8 +72,8 @@ export default {
     },
     // fires
     {
-      dataset: 'd8d93fbb-8304-424f-99fb-1e521b5df56a',
-      layers: ['d621ce0f-0872-41ef-b2ec-18faec3fd1d9']
+      dataset: FIRES_VIIRS_DATASET,
+      layers: [FIRES_ALERTS_VIIRS]
     }
   ],
   hideLayers: true,

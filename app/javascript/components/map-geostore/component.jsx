@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 import cx from 'classnames';
 import ContentLoader from 'react-content-loader';
 
@@ -12,7 +11,7 @@ import { getGeostoreProvider } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginMapboxGl, fetch } from 'layer-manager';
+import { PluginMapboxGl } from 'layer-manager';
 
 import { TRANSITION_EVENTS } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project';
@@ -90,7 +89,7 @@ class MapGeostore extends Component {
             const { data } = response.data || {};
             const geostore = buildGeostore(
               { id: data.id, ...data.attributes },
-              this.props
+              this.props.location
             );
             this.setState({ geostore });
           }
@@ -105,12 +104,17 @@ class MapGeostore extends Component {
   };
 
   onLoad = ({ map }) => {
-    map.on('render', () => {
-      if (map.areTilesLoaded() && this.mounted) {
-        this.setState({ loading: false });
-        map.off('render');
-      }
-    });
+    if (map) {
+      map.on('render', () => {
+        if (this.state.loading) {
+          if (map.areTilesLoaded() && this.mounted) {
+            this.setState({ loading: false });
+          }
+        } else {
+          map.off('render');
+        }
+      });
+    }
   };
 
   fitBounds = () => {
@@ -186,36 +190,6 @@ class MapGeostore extends Component {
               <LayerManager
                 map={map}
                 plugin={PluginMapboxGl}
-                providers={{
-                  stories: (layerModel, layer, resolve, reject) => {
-                    const { source } = layerModel;
-                    const { provider } = source;
-
-                    fetch('get', provider.url, provider.options, layerModel)
-                      .then(response =>
-                        resolve({
-                          ...layer,
-                          source: {
-                            ...omit(layer.source, 'provider'),
-                            data: {
-                              type: 'FeatureCollection',
-                              features: response.rows.map(r => ({
-                                type: 'Feature',
-                                properties: r,
-                                geometry: {
-                                  type: 'Point',
-                                  coordinates: [r.lon, r.lat]
-                                }
-                              }))
-                            }
-                          }
-                        })
-                      )
-                      .catch(e => {
-                        reject(e);
-                      });
-                  }
-                }}
               >
                 {geostore && (
                   <Layer

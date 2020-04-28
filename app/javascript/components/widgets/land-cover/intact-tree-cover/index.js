@@ -3,12 +3,15 @@ import { all, spread } from 'axios';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_EXTENT_DATASET
+  FOREST_EXTENT_DATASET,
+  INTACT_FOREST_LANDSCAPES_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_EXTENT
+  FOREST_EXTENT,
+  TREE_COVER,
+  INTACT_FOREST_LANDSCAPES
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -49,15 +52,15 @@ export default {
     },
     {
       // ifl
-      dataset: '13e28550-3fc9-45ec-bb00-5a48a82b77e1',
-      layers: ['fd44b976-62e6-4072-8218-8abf6e254ed8']
+      dataset: INTACT_FOREST_LANDSCAPES_DATASET,
+      layers: [INTACT_FOREST_LANDSCAPES]
     },
     // tree cover 2010
     {
       dataset: FOREST_EXTENT_DATASET,
       layers: {
         2010: FOREST_EXTENT,
-        2000: 'c05c32fd-289c-4b20-8d73-dc2458234e04'
+        2000: TREE_COVER
       }
     }
   ],
@@ -70,7 +73,7 @@ export default {
     extentYear: 2010,
     ifl: 2016
   },
-  refetchKeys: ['forestType', 'threshold', 'extentYear'],
+  refetchKeys: ['landCategory', 'threshold', 'extentYear'],
   sentences: {
     initial:
       'As of 2016, {percentage} of {location} tree cover was <b>intact forest</b>.',

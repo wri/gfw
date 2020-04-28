@@ -26,6 +26,7 @@ const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
+const getLang = state => state.lang || null;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -324,7 +325,8 @@ export const parseSentence = createSelector(
     getDataset,
     getLocationObject,
     getStartIndex,
-    getEndIndex
+    getEndIndex,
+    getLang
   ],
   (
     raw_data,

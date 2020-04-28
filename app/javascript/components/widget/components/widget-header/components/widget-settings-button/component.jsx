@@ -62,7 +62,7 @@ class WidgetSettingsButton extends PureComponent {
         onShow={() => {
           this.setState({ tooltipOpen: true });
           track('openWidgetSettings', {
-            label: `${widget}`
+            label: widget
           });
         }}
         arrow
