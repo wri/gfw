@@ -50,7 +50,7 @@ class TopicsFooter extends PureComponent {
                       ...(c.selector && {
                         selector: {
                           ...c.selector,
-                          options: countries && countries
+                          options: countries && [{ label: 'Select country', value: 'placeholder' }].concat(countries)
                             .filter(country => !c.selector.whitelist || c.selector.whitelist.includes(country.value))
                             .map(country => ({
                               ...country,

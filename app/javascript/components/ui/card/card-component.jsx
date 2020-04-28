@@ -117,16 +117,18 @@ class Card extends PureComponent {
                 }
                 native
               />
-              <Button
-                className="selector-btn-link"
-                theme="square"
-                extLink={
-                  selectorValue.path ||
-                  (selector.options && selector.options[0] && selector.options[0].path)
-                }
-              >
-                <Icon icon={arrowIcon} />
-              </Button>
+              {selectorValue.value && selectorValue.value !== 'placeholder' &&
+                <Button
+                  className="selector-btn-link"
+                  theme="square"
+                  extLink={
+                    selectorValue.path ||
+                    (selector.options && selector.options[0] && selector.options[0].path)
+                  }
+                >
+                  <Icon icon={arrowIcon} />
+                </Button>
+              }
             </div>
           )}
         </div>
