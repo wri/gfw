@@ -251,13 +251,29 @@ export const getCumulativeStatsData = data => {
   const allYears = getYearsObj(data, 0, data.length);
 
   const stats = statsData(allYears);
-  const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12);
-  const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12);
+  const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12).slice(
+    0,
+    52
+  );
+  const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12).slice(
+    0,
+    52
+  );
 
-  const pastYear = data.filter(d => d.year === maxYear).slice(0, 52);
+  const pastYear = data.filter(d => d.year === maxYear);
   const parsedData = pastYear.map((d, i) => {
-    const weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
-    const stdDev = (smoothedStds && smoothedStds[i]) || 0;
+    let weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
+    let stdDev = (smoothedStds && smoothedStds[i]) || 0;
+    if (i === pastYear.length - 1) {
+      const diff =
+        (smoothedMeans && smoothedMeans[i - 1] - smoothedMeans[i - 2]) || 0;
+      const step =
+        (smoothedMeans &&
+          mean([smoothedMeans[i - 1] - smoothedMeans[i - 2]])) ||
+        0;
+      weekMean = diff + step;
+      stdDev = (smoothedStds && smoothedStds[i - 1]) || 0;
+    }
 
     return {
       ...d,
