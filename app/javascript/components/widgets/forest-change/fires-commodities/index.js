@@ -15,6 +15,23 @@ export default {
   admins: ['adm0', 'adm1'],
   settingsConfig: [
     {
+      key: 'forestType',
+      label: 'Forest Type',
+      whitelist: ['ifl', 'primary_forest'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      whitelist: ['wdpa'],
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+    {
       key: 'weeks',
       label: 'weeks',
       type: 'select',
@@ -30,7 +47,9 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe}, the {location} commodities concessions with the highest fires alerts density was {highest_com}, with {density_val}.'
+      'In the last {timeframe}, the {location} commodities concessions with the highest fires alerts density was {highest_com}, with {density_val}.',
+    withInd:
+      'In the last {timeframe}, the {location} commodities concessions with the highest fires alerts density within {indicator} was {highest_com}, with {density_val}.'
   },
   settings: {
     unit: 'alerts/Ha',

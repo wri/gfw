@@ -12,6 +12,7 @@ const getData = state => state.data && state.data;
 const getLatestDates = state => state.data && state.data.latest;
 const getSettings = state => state.settings;
 const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
 const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
@@ -110,10 +111,10 @@ export const parseData = createSelector([parseList], data => {
 });
 
 export const parseSentence = createSelector(
-  [parseData, getOptionsSelected, getLocationName, getSentences],
-  (data, optionsSelected, locationName, sentences) => {
+  [parseData, getOptionsSelected, getIndicator,getLocationName, getSentences],
+  (data, optionsSelected, indicator, locationName, sentences) => {
     if (!data || !optionsSelected || !locationName) return null;
-    const { initial } = sentences;
+    const { initial,withInd } = sentences;
     const density_val = data[0].value;
     const highest_com = data[0].label;
     const timeFrame = optionsSelected.weeks;
@@ -121,9 +122,10 @@ export const parseSentence = createSelector(
       timeframe: timeFrame && timeFrame.label,
       density_val: `${format('.2r')(density_val)} alerts/Ha`,
       highest_com,
-      location: locationName
+      location: locationName,
+      indicator: `${indicator ? `${indicator.label}` : ''}`
     };
-    const sentence = initial;
+    const sentence = indicator ? withInd : initial;
     return { sentence, params };
   }
 );
