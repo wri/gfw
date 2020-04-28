@@ -70,6 +70,7 @@ class CustomComposedChart extends PureComponent {
       yKeys,
       xAxis,
       yAxis,
+      rightYAxis,
       gradients,
       tooltip,
       unit,
@@ -161,6 +162,39 @@ class CustomComposedChart extends PureComponent {
                   />
                 }
                 {...yAxis}
+              />
+            )}
+            {!simple &&
+              rightYAxis && (
+              <YAxis
+                orientation="right"
+                dataKey={yKey || ''}
+                tickLine={!isVertical}
+                axisLine={false}
+                {...(!isVertical
+                  ? {
+                    strokeDasharray: '3 4',
+                    tickSize: -42,
+                    mirror: true,
+                    tickMargin: 0
+                  }
+                  : {})}
+                tick={
+                  <CustomTick
+                    dataMax={maxYValue}
+                    unit={unit || ''}
+                    unitFormat={
+                      unitFormat ||
+                        (value =>
+                          (value < 1
+                            ? format('.2r')(value)
+                            : format('.2s')(value)))
+                    }
+                    fill="#555555"
+                    vertical={isVertical}
+                  />
+                }
+                {...rightYAxis}
               />
             )}
             {!simple && (
