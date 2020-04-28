@@ -46,7 +46,7 @@ class Card extends PureComponent {
     } =
       data || {};
     const { selectorValue } = this.state;
-    console.log(selector);
+
     return (
       <div className={cx('c-card', className, theme, { active })}>
         {tag &&
@@ -122,7 +122,7 @@ class Card extends PureComponent {
                 theme="square"
                 extLink={
                   selectorValue.path ||
-                  (selector.options && selector.options[0].path)
+                  (selector.options && selector.options[0] && selector.options[0].path)
                 }
               >
                 <Icon icon={arrowIcon} />

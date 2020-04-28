@@ -78,7 +78,7 @@ class SectionProjects extends PureComponent {
                 onClick={setCategorySelected}
               />
             )}
-            <Button className="how-to-btn" link="/howto">
+            <Button className="how-to-btn" extLink="/howto">
               LEARN HOW TO USE GFW
             </Button>
           </div>

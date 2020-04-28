@@ -24,7 +24,7 @@ class TopicsFooter extends PureComponent {
           <div className="column small-12">
             <Carousel>
               {cards &&
-                cards.map(c => console.log(c.selector, countries) || (
+                cards.map(c => (
                   <Card
                     key={c.title}
                     theme={c.theme}
@@ -50,7 +50,7 @@ class TopicsFooter extends PureComponent {
                       ...(c.selector && {
                         selector: {
                           ...c.selector,
-                          options: countries && !!countries.length && countries
+                          options: countries && countries
                             .filter(country => !c.selector.whitelist || c.selector.whitelist.includes(country.value))
                             .map(country => ({
                               ...country,
