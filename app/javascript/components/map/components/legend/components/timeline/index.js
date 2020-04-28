@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { track } from 'app/analytics';
 
 import TimelineComponent from './component';
-import { getTicks } from './selectors';
+import { getMarks } from './selectors';
 
 const mapStateToProps = (
   state,
@@ -18,7 +18,7 @@ const mapStateToProps = (
     trimEndDate
   };
   return {
-    marks: getTicks({ dates }),
+    marks: getMarks({ dates }),
     ...props
   };
 };
