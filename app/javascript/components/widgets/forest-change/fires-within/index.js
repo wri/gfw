@@ -102,7 +102,15 @@ export default {
             fireCountAll: allFire
           };
         }
-        return data;
+        return {
+          ...data,
+          options: {
+            confidence: [
+              { label: 'All', value: '' },
+              { label: 'High', value: 'h' }
+            ]
+          }
+        };
       })
     ),
   getDataURL: params => [
