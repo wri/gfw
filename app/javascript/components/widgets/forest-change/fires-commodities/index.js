@@ -29,10 +29,11 @@ export default {
     forestChange: -1
   },
   sentences: {
-    initial: 'In the last {timeframe}, the {location} commodities concessions with the highest fires alerts density within {} was {highest_com}, with {density_val}.'
+    initial:
+      'In the last {timeframe}, the {location} commodities concessions with the highest fires alerts density was {highest_com}, with {density_val}.'
   },
   settings: {
-    unit: '%',
+    unit: 'alerts/Ha',
     pageSize: 5,
     page: 0,
     period: 'week',
@@ -42,12 +43,22 @@ export default {
     layerEndDate: null
   },
   getData: params =>
-    all([fetchFiresCommoditiesAlerts(params), fetchFiresCommoditiesArea(params), fetchVIIRSLatest(params)]).then(
+    all([
+      fetchFiresCommoditiesAlerts(params),
+      fetchFiresCommoditiesArea(params),
+      fetchVIIRSLatest(params)
+    ]).then(
       spread((alerts, area, latest) => {
         const { data } = alerts.data;
-        //console.log('data_alerts', data)
-        //console.log('data_are',area.data)
-        return { alerts: data, area: area.data, latest: latest.attributes.updatedAt } || {};
+        // console.log('data_alerts', data)
+        // console.log('data_are',area.data)
+        return (
+          {
+            alerts: data,
+            area: area.data,
+            latest: latest.attributes.updatedAt
+          } || {}
+        );
       })
     ),
   // getDataURL: params => [
