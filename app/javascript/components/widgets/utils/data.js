@@ -58,11 +58,13 @@ const statsData = data => {
     });
   });
 
-  const stats = grouped_week.map(w => {
-    const week_mean = mean(w);
+  const stats = grouped_week.map((w, i) => {
+    const validWeeks = w.filter(el => el !== null);
+    const week_mean = mean(validWeeks);
     return {
+      week: i + 1,
       mean: week_mean,
-      std: stdDevData(w)
+      std: stdDevData(validWeeks)
     };
   });
   return stats;
@@ -75,6 +77,27 @@ const runningMean = (data, windowSize) => {
       const slice = data.slice(i, i + windowSize);
       smoothedMean.push(mean(slice));
     }
+  });
+  return smoothedMean;
+};
+
+const runningMeanWindowed = (data, windowSize) => {
+  const smoothedMean = [];
+  const buffer = Math.round(windowSize / 2);
+  let increment = 1;
+  data.forEach((d, i) => {
+    let slice = [];
+    if (i < buffer) {
+      slice = data.slice(0, i + increment);
+      increment += 1;
+    } else if (i >= data.length - buffer - 1) {
+      slice = data.slice(i - increment, data.length - 1);
+      increment -= 1;
+    } else {
+      slice = data.slice(i - buffer, i + buffer);
+      increment = 5;
+    }
+    smoothedMean.push(mean(slice));
   });
   return smoothedMean;
 };
@@ -220,6 +243,48 @@ export const getStdDevData = (data, rawData) => {
     twoPlusStdDev: [d.mean + stdDev, d.mean + stdDev * 2],
     twoMinusStdDev: [d.mean - stdDev * 2, d.mean - stdDev]
   }));
+};
+
+export const getCumulativeStatsData = data => {
+  const maxYear = maxBy(data, 'year').year;
+
+  const allYears = getYearsObj(data, 0, data.length);
+
+  const stats = statsData(allYears);
+  const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12).slice(
+    0,
+    52
+  );
+  const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12).slice(
+    0,
+    52
+  );
+
+  const pastYear = data.filter(d => d.year === maxYear);
+  const parsedData = pastYear.map((d, i) => {
+    let weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
+    let stdDev = (smoothedStds && smoothedStds[i]) || 0;
+    if (i === pastYear.length - 1) {
+      const diff =
+        (smoothedMeans && smoothedMeans[i - 1] - smoothedMeans[i - 2]) || 0;
+      const step =
+        (smoothedMeans && mean([smoothedMeans[i - 1], smoothedMeans[i - 2]])) ||
+        0;
+      weekMean = diff + step;
+      stdDev = (smoothedStds && smoothedStds[i - 1]) || 0;
+    }
+
+    return {
+      ...d,
+      stdDev,
+      mean: weekMean,
+      plusStdDev: [weekMean, weekMean + stdDev],
+      minusStdDev: [weekMean - stdDev, weekMean],
+      twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
+      twoMinusStdDev: [weekMean - stdDev * 2, weekMean - stdDev]
+    };
+  });
+  return parsedData;
 };
 
 export const getDatesData = data =>

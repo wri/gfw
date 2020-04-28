@@ -40,7 +40,9 @@ class ChartTooltip extends PureComponent {
                     </div>
                   )}
                   <div className="notranslate">
-                    {d.unit && d.unitFormat ? `${value}${d.unit}` : value}
+                    {value !== null && d.unit && d.unitFormat
+                      ? `${value}${d.unit}`
+                      : d.nullValue || value}
                   </div>
                 </div>
               );
