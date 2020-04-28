@@ -4,12 +4,6 @@ import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
-import {
-  DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
-} from 'data/layers';
-
 import getWidgetProps from './selectors';
 
 export default {
@@ -60,18 +54,6 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
-  datasets: [
-    {
-      dataset: POLITICAL_BOUNDARIES_DATASET,
-      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
-    },
-    // fires
-    {
-      dataset: 'd8d93fbb-8304-424f-99fb-1e521b5df56a',
-      layers: ['d621ce0f-0872-41ef-b2ec-18faec3fd1d9']
-    }
-  ],
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
