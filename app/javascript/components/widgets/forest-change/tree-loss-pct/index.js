@@ -60,7 +60,7 @@ export const getDataAPI = params =>
 
 export default {
   widget: 'treeLossPct',
-  title: 'Tree cover loss in Primary Forest in {location}',
+  title: 'Primary Forest loss in {location}',
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -114,11 +114,13 @@ export default {
   },
   sentence: {
     initial:
-      '[TEST WIDGET] From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {location} decreased by {extentDelta} in this time period.',
     withIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {location} in {indicator} decreased by {extentDelta} in this time period.',
     noLoss:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover'
+      'From {startYear} to {endYear}, {location} lost {loss} of tree cover.',
+    noLossWithIndicator:
+      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}.'
   },
   settings: {
     threshold: 30,

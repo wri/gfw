@@ -19,7 +19,9 @@ const getSentence = state => state && state.sentence;
 const parseData = createSelector(
   [getPrimaryLoss, getLoss, getExtent, getSettings],
   (data, allLoss, extent, settings) => {
-    if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) { return null; }
+    if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) {
+      return null;
+    }
     const { endYear } = settings;
     const initalLoss = data.filter(d => d.year === 2001)[0].area || 0;
     const totalLoss =
@@ -104,37 +106,39 @@ const parseSentence = createSelector(
   ],
   (data, extent, settings, tropical, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const {
-      initial,
-      withIndicator,
-      noLoss,
-      noLossWithIndicator,
-      co2Emissions
-    } = sentences;
-    const { startYear, endYear, extentYear } = settings;
+    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const { startYear, endYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
-    const totalEmissions =
-      (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
+
+    const initialExtent =
+      data.filter(d => d.year === startYear)[0].extentRemaining || 0;
+    const finalExtent =
+      data.filter(d => d.year === endYear)[0].extentRemaining || 0;
+
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
-    if (tropical && totalLoss > 0) {
-      sentence = `${sentence}, ${co2Emissions}`;
-    }
-    sentence = `${sentence}.`;
 
     const params = {
       indicator: indicator && indicator.label,
       location: locationLabel,
       startYear,
       endYear,
+      extentDelta: formatNumber({
+        num: initialExtent - finalExtent,
+        unit: '%'
+      }),
       loss: formatNumber({ num: totalLoss, unit: 'ha' }),
-      percent: `${format('.2r')(percentageLoss)}%`,
-      emissions: `${format('.3s')(totalEmissions)}t`,
-      extentYear
+      percent: formatNumber({ num: percentageLoss, unit: '%' }),
+      component: {
+        key: 'total tree cover loss',
+        tooltip: `i.e. tree cover loss inside primary forest represents a fraction of all deforestation in ${
+          locationLabel
+        }`
+      }
     };
 
     return {
