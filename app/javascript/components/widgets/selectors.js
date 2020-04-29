@@ -351,7 +351,8 @@ export const getWidgets = createSelector(
     selectNonGlobalDatasets,
     getIsTrase,
     getActiveLayersWithDates,
-    selectAnalysis
+    selectAnalysis,
+    getWidgetFromLocation
   ],
   (
     widgets,
@@ -363,7 +364,8 @@ export const getWidgets = createSelector(
     datasets,
     isTrase,
     layers,
-    analysis
+    analysis,
+    activeWidgetKey
   ) => {
     if (isEmpty(widgets) || !locationObj || !widgetsData) {
       return null;
@@ -372,7 +374,7 @@ export const getWidgets = createSelector(
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
 
-    return widgets.map(w => {
+    return widgets.map((w, index) => {
       const {
         settings: defaultSettings,
         widget,
@@ -382,6 +384,10 @@ export const getWidgets = createSelector(
         dataType
       } =
         w || {};
+
+      const active =
+        (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
+
       const rawData = widgetsData && widgetsData[widget];
 
       const { settings: dataSettings } = rawData || {};
@@ -480,6 +486,7 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
+        active,
         data: rawData,
         settings,
         title: titleTemplate,

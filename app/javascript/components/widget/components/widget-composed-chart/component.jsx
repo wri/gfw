@@ -84,21 +84,24 @@ class WidgetComposedChart extends Component {
 
     return (
       <div className="c-widget-composed-chart">
-        {legend && <Legend data={data} config={legend} simple={simple} />}
+        {!simple &&
+          legend && <Legend data={data} config={legend} simple={simple} />}
 
         <ComposedChart
           className="loss-chart"
           data={data}
           config={config}
-          handleMouseMove={this.handleMouseMove}
-          handleMouseLeave={this.handleMouseLeave}
-          handleBrush={this.handleBrush}
           backgroundColor={active ? '#fefedc' : ''}
           barBackground={barBackground}
           simple={simple}
+          active={active}
+          handleMouseMove={this.handleMouseMove}
+          handleMouseLeave={this.handleMouseLeave}
+          handleBrush={this.handleBrush}
         />
 
-        {brush && (
+        {!simple &&
+          brush && (
           <Brush
             {...brush}
             data={originalData}

@@ -17,6 +17,7 @@ import {
   getChartConfig
 } from 'components/widgets/utils/data';
 
+const getActive = state => state.active;
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
@@ -26,6 +27,9 @@ const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
+
+const MINGAP = 4;
+const MAXGAP = 12;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -120,6 +124,33 @@ export const getMaxMinDates = createSelector(
   }
 );
 
+export const getStartEndIndexes = createSelector(
+  [getStartIndex, getEndIndex, getActive, getDates],
+  (startIndex, endIndex, active, currentData) => {
+    if (!currentData) {
+      return {
+        startIndex,
+        endIndex
+      };
+    }
+
+    const start = startIndex;
+    const end = endIndex || currentData.length - 1;
+
+    if (active && end - start > MAXGAP) {
+      return {
+        startIndex: end - MAXGAP,
+        endIndex: end
+      };
+    }
+
+    return {
+      startIndex: start,
+      endIndex: end
+    };
+  }
+);
+
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYear],
   (data, currentData, maxminYear, compareYear) => {
@@ -149,9 +180,11 @@ export const parseData = createSelector(
 );
 
 export const parseBrushedData = createSelector(
-  [parseData, getStartIndex, getEndIndex],
-  (data, startIndex, endIndex) => {
+  [parseData, getStartEndIndexes],
+  (data, indexes) => {
     if (!data) return null;
+
+    const { startIndex, endIndex } = indexes;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -199,25 +232,27 @@ export const getLegend = createSelector(
 
 export const parseConfig = createSelector(
   [
+    getActive,
     getLegend,
     getColors,
     getLatest,
     getMaxMinDates,
     getCompareYear,
     getDataset,
-    getStartIndex,
-    getEndIndex
+    getStartEndIndexes
   ],
   (
+    active,
     legend,
     colors,
     latest,
     maxminYear,
     compareYear,
     dataset,
-    startIndex,
-    endIndex
+    indexes
   ) => {
+    const { startIndex, endIndex } = indexes;
+
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -259,7 +294,7 @@ export const parseConfig = createSelector(
         tickFormatter: t => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
-          endIndex - startIndex < 12 && {
+          endIndex - startIndex < 10 && {
           tickCount: 5,
           interval: 0,
           tickFormatter: t => moment(t).format('MMM-DD')
@@ -279,6 +314,8 @@ export const parseConfig = createSelector(
         dataKey: 'date',
         startIndex,
         endIndex,
+        minimumGap: MINGAP,
+        maximumGap: active ? MAXGAP : 0,
         config: {
           margin: {
             top: 5,
@@ -323,21 +360,11 @@ export const parseSentence = createSelector(
     getSentences,
     getDataset,
     getLocationObject,
-    getStartIndex,
-    getEndIndex
+    getStartEndIndexes
   ],
-  (
-    raw_data,
-    data,
-    colors,
-    sentence,
-    dataset,
-    location,
-    startIndex,
-    endIndex
-  ) => {
+  (raw_data, data, colors, sentence, dataset, location, indexes) => {
     if (!data) return null;
-
+    const { startIndex, endIndex } = indexes;
     const start = startIndex;
     const end = endIndex || data.length - 1;
 

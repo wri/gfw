@@ -100,15 +100,21 @@ const getAnnualDataset = ({
 };
 
 const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV.GLAD_GEOSTORE_WHITELIST;
+  }
   if (type === 'geostore') return DATASETS_ENV.GLAD_GEOSTORE_WEEKLY;
 
   if (type === 'wdpa' && whitelist) return DATASETS_ENV.GLAD_WDPA_WHITELIST;
   if (type === 'wdpa') return DATASETS_ENV.GLAD_WDPA_WEEKLY;
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM2_WHITELIST; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM2_WHITELIST;
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV.GLAD_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV.GLAD_ADM1_WHITELIST; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV.GLAD_ADM1_WHITELIST;
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV.GLAD_ADM1_WEEKLY;
   if (whitelist) return DATASETS_ENV.GLAD_ADM0_WHITELIST;
 
@@ -124,15 +130,23 @@ const getFiresDatasetId = ({
   whitelist,
   dataset
 }) => {
-  if (type === 'geostore' && whitelist) { return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`]; }
+  if (type === 'geostore' && whitelist) {
+    return DATASETS_ENV[`${dataset}_GEOSTORE_WHITELIST`];
+  }
   if (type === 'geostore') return DATASETS_ENV[`${dataset}_GEOSTORE_WEEKLY`];
 
-  if (type === 'wdpa' && whitelist) { return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`]; }
+  if (type === 'wdpa' && whitelist) {
+    return DATASETS_ENV[`${dataset}_WDPA_WHITELIST`];
+  }
   if (type === 'wdpa') return DATASETS_ENV[`${dataset}_WDPA_WEEKLY`];
 
-  if ((adm2 || (adm1 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`]; }
+  if ((adm2 || (adm1 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM2_WHITELIST`];
+  }
   if (adm2 || (adm1 && grouped)) return DATASETS_ENV[`${dataset}_ADM2_WEEKLY`];
-  if ((adm1 || (adm0 && grouped)) && whitelist) { return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`]; }
+  if ((adm1 || (adm0 && grouped)) && whitelist) {
+    return DATASETS_ENV[`${dataset}_ADM1_WHITELIST`];
+  }
   if (adm1 || (adm0 && grouped)) return DATASETS_ENV[`${dataset}_ADM1_WEEKLY`];
   if (whitelist) return DATASETS_ENV[`${dataset}_ADM0_WHITELIST`];
 
@@ -872,7 +886,7 @@ export const fetchVIIRSAlerts = ({
 
 export const fetchVIIRSLatest = () => {
   const url =
-    'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/latest/max_alert__date';
+    'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/v202003/max_alert__date';
 
   return axios
     .get(url)
