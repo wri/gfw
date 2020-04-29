@@ -301,6 +301,7 @@ export const parseConfig = createSelector(
           left: 48,
           bottom: 12
         },
+        minimumGap: 4,
         dataKey: 'date',
         startIndex,
         endIndex,
