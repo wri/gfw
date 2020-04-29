@@ -30,6 +30,7 @@ const selectError = state => (state.analysis && state.analysis.error) || (state.
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectGeostoreSize = state =>
   state.geostore && state.geostore.data && state.geostore.data.areaHa;
+const selectAreaError = state => state.areas && state.areas.error;
 
 export const getLoading = createSelector(
   [
@@ -197,5 +198,6 @@ export const getAnalysisProps = createStructuredSelector({
   analysisLocation: selectAnalysisLocation,
   activeArea: getActiveArea,
   search: selectSearch,
-  areaTooLarge: checkGeostoreSize
+  areaTooLarge: checkGeostoreSize,
+  areaError: selectAreaError
 });
