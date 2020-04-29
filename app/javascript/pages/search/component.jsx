@@ -24,15 +24,11 @@ class SearchPage extends PureComponent {
     }
   }
 
-  handleSearchChange = search => {
+  handleSubmit = search => {
     this.setState({ search });
-    this.fetchSearchResults(search);
+    this.props.getSearch({ query: search, page: 1 });
+    handlePageTrack();
   };
-
-  fetchSearchResults = debounce(query => {
-    this.props.getSearch({ query, page: 1 });
-    handlePageTrack(true);
-  }, 300);
 
   render() {
     const { data, isDesktop, loading } = this.props;
@@ -53,7 +49,7 @@ class SearchPage extends PureComponent {
                 className="search-input"
                 placeholder="Search"
                 input={this.state.search}
-                onChange={this.handleSearchChange}
+                onSubmit={this.handleSubmit}
               />
               <div className="search-results">
                 {loading && <Loader className="search-loader" />}
