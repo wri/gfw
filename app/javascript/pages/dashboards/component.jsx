@@ -42,7 +42,7 @@ class DashboardsPage extends PureComponent {
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     handleCategoryChange: PropTypes.func,
     locationType: PropTypes.string,
-    areaError: PropTypes.string,
+    areaError: PropTypes.number,
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool,
     embed: PropTypes.bool,

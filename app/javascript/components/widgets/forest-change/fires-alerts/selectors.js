@@ -395,7 +395,7 @@ export const parseSentence = createSelector(
       fire_season_length: peakWeeks.length,
       start_date: firstDate.date,
       end_date: lastDate.date,
-      dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
+      dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
       dataset,
       count: {
         value: total ? format(',')(total) : 0,

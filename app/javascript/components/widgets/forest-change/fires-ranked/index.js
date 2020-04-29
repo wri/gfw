@@ -37,7 +37,7 @@ export default {
     page: 0,
     period: 'week',
     weeks: 13,
-    dataset: 'VIIRS',
+    dataset: 'viirs',
     layerStartDate: null,
     layerEndDate: null
   },
