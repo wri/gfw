@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { LegendItemTimeStep } from 'vizzuality-components';
 
+import { track } from 'app/analytics';
+
 import Datepicker from 'components/ui/datepicker';
 
 import './styles.scss';
@@ -78,6 +80,11 @@ class Timeline extends Component {
                   border: '0px',
                   zIndex: 2
                 }
+              }
+            }}
+            handleOnPlay={p => {
+              if (p) {
+                track('legendTimelinePlay', { label: activeLayer.id });
               }
             }}
           />
