@@ -19,7 +19,9 @@ const getSentence = state => state && state.sentence;
 const parseData = createSelector(
   [getPrimaryLoss, getLoss, getExtent, getSettings],
   (data, allLoss, extent, settings) => {
-    if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) { return null; }
+    if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) {
+      return null;
+    }
     const { endYear } = settings;
     const initalLoss = data.filter(d => d.year === 2001)[0].area || 0;
     const totalLoss =
@@ -66,7 +68,8 @@ const parseConfig = createSelector([getColors], colors => ({
     yAxisId: 'area'
   },
   rightYAxis: {
-    yAxisId: 'extentRemaining'
+    yAxisId: 'extentRemaining',
+    unit: '%'
   },
   unit: 'ha',
   tooltip: [
@@ -78,11 +81,6 @@ const parseConfig = createSelector([getColors], colors => ({
       unit: 'ha',
       unitFormat: value =>
         (value < 1000 ? Math.round(value) : format('.3s')(value))
-    },
-    {
-      key: 'percentage',
-      unit: '%',
-      unitFormat: value => format('.2f')(value)
     },
     {
       key: 'extentRemaining',
