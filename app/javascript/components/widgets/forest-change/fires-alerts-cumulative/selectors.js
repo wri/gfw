@@ -8,6 +8,7 @@ import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
+import findLastIndex from 'lodash/findLastIndex';
 
 import { getColorPalette } from 'utils/data';
 
@@ -199,6 +200,7 @@ export const getLegend = createSelector(
 
 export const parseConfig = createSelector(
   [
+    getDates,
     getLegend,
     getColors,
     getLatest,
@@ -209,6 +211,7 @@ export const parseConfig = createSelector(
     getEndIndex
   ],
   (
+    currentData,
     legend,
     colors,
     latest,
@@ -218,6 +221,8 @@ export const parseConfig = createSelector(
     startIndex,
     endIndex
   ) => {
+    if (!currentData) return null;
+
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -253,6 +258,12 @@ export const parseConfig = createSelector(
       });
     }
 
+    const presentDayIndex = findLastIndex(
+      currentData,
+      d => typeof d.count === 'number'
+    );
+    const presentDay = currentData[presentDayIndex].date;
+
     return {
       ...getChartConfig(colors, moment(latest)),
       xAxis: {
@@ -269,6 +280,18 @@ export const parseConfig = createSelector(
       },
       legend,
       tooltip,
+      referenceLine: {
+        x: presentDay,
+        stroke: '#CCC',
+        strokeWidth: 2,
+        strokeDasharray: '20 5',
+        label: {
+          position: 'top',
+          value: 'Present day',
+          fill: '#333',
+          fontSize: 11
+        }
+      },
       brush: {
         width: '100%',
         height: 60,
