@@ -45,10 +45,10 @@ class PromptTooltip extends PureComponent {
           <div className={cx('step-btns', { 'align-left': learnHow })}>
             {actions &&
               actions.returnToTour && (
-                <button className="step-nav-btn" onClick={actions.returnToTour}>
+              <button className="step-nav-btn" onClick={actions.returnToTour}>
                   BACK
-                </button>
-              )}
+              </button>
+            )}
             {size > 1 && (
               <button
                 className="step-nav-btn"
@@ -62,16 +62,16 @@ class PromptTooltip extends PureComponent {
             )}
             {isLastStep &&
               size > 1 && (
-                <button className="step-nav-btn" {...closeProps}>
+              <button className="step-nav-btn" {...closeProps}>
                   CLOSE
-                </button>
-              )}
+              </button>
+            )}
             {size !== 1 &&
               !isLastStep && (
-                <button className="step-nav-btn" {...primaryProps}>
+              <button className="step-nav-btn" {...primaryProps}>
                   NEXT
-                </button>
-              )}
+              </button>
+            )}
             {size === 1 && (
               <button
                 className="show-prompts-btn"

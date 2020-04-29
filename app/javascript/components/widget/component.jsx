@@ -48,7 +48,8 @@ class Widget extends PureComponent {
     childData: PropTypes.object,
     location: PropTypes.object,
     preventRenderKeys: PropTypes.array,
-    adminLevel: PropTypes.string
+    adminLevel: PropTypes.string,
+    geostore: PropTypes.object
   };
 
   render() {
@@ -91,7 +92,8 @@ class Widget extends PureComponent {
       adminLevel,
       locationData,
       location,
-      preventRenderKeys
+      preventRenderKeys,
+      geostore
     } = this.props;
     const { main } = colors || {};
 
@@ -133,6 +135,7 @@ class Widget extends PureComponent {
           adminLevel={adminLevel}
           locationData={locationData}
           location={location}
+          geostore={geostore}
         />
         <WidgetBody
           chartType={chartType}

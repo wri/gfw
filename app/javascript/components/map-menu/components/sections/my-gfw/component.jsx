@@ -6,6 +6,8 @@ import { logout } from 'services/user';
 import Link from 'redux-first-router-link';
 import slice from 'lodash/slice';
 
+import { track } from 'app/analytics';
+
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
 import Button from 'components/ui/button/button-component';
@@ -177,11 +179,14 @@ class MapMenuMyGFW extends PureComponent {
                     : 'Filter by tags'
                 }
                 options={unselectedTags}
-                onChange={tag =>
-                  tag.value &&
+                onChange={tag => {
+                  if (tag.value) {
                     this.setState({
                       activeTags: [...activeTags, tag.value]
-                    })
+                    });
+                    track('userSelectsAoiTag', { label: tag.label });
+                  }
+                }
                 }
               />
             )}
@@ -198,7 +203,10 @@ class MapMenuMyGFW extends PureComponent {
                       '--active': active,
                       '--inactive': activeArea && !active
                     })}
-                    onClick={() => viewArea({ areaId: area.id })}
+                    onClick={() => {
+                      viewArea({ areaId: area.id });
+                      track('clickAreaOfInterest', { label: area.id });
+                    }}
                     role="button"
                     tabIndex={0}
                     key={area.id}
@@ -282,7 +290,8 @@ class MapMenuMyGFW extends PureComponent {
         {!loading && loggedIn && this.renderMyGFW()}
         {!loading && !loggedIn && this.renderLoginWindow()}
         {!loading &&
-          (!loggedIn || !(areas && areas.length > 0)) &&
+          loggedIn &&
+          !(areas && areas.length > 0) &&
           isDesktop && (
           <img
             className={cx('my-gfw-login-image', { '--login': !loggedIn })}

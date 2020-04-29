@@ -27,6 +27,7 @@ const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
+const getLang = state => state.lang || null;
 
 const MINGAP = 4;
 const MAXGAP = 12;
@@ -360,9 +361,10 @@ export const parseSentence = createSelector(
     getSentences,
     getDataset,
     getLocationObject,
-    getStartEndIndexes
+    getStartEndIndexes,
+    getLang
   ],
-  (raw_data, data, colors, sentence, dataset, location, indexes) => {
+  (raw_data, data, colors, sentence, dataset, location, indexes, lang) => {
     if (!data) return null;
     const { startIndex, endIndex } = indexes;
     const start = startIndex;
@@ -429,7 +431,8 @@ export const parseSentence = createSelector(
       status: {
         value: status,
         color: statusColor
-      }
+      },
+      lang
     };
     return { sentence, params };
   }

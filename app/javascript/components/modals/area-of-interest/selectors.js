@@ -8,8 +8,7 @@ const selectAreaOfInterestModalState = state =>
   state.location.query &&
   state.location.query.areaOfInterestModal;
 const selectLoading = state => state.areas && state.areas.loading;
-const selectLoggedIn = state =>
-  state.myGfw && state.myGfw.data && state.myGfw.data.loggedIn;
+const selectUserData = state => state.myGfw && state.myGfw.data;
 const selectLocation = state => state.location && state.location.payload;
 
 export const getAOIModalOpen = createSelector(
@@ -33,7 +32,7 @@ export const getActiveArea = createSelector(
 
 export const getAOIModalProps = createStructuredSelector({
   loading: selectLoading,
-  loggedIn: selectLoggedIn,
+  userData: selectUserData,
   activeArea: getActiveArea,
   open: getAOIModalOpen
 });

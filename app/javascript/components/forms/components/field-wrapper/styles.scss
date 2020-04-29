@@ -6,14 +6,6 @@
   display: flex;
   flex-direction: column;
 
-  details {
-    cursor: pointer;
-
-    input {
-      width: calc(100% - 26px);
-    }
-  }
-
   .label {
     text-transform: uppercase;
     font-size: rem(12px);
@@ -41,6 +33,10 @@
     .info-button {
       margin-right: rem(10px);
     }
+
+    &.sublabel {
+      font-size: rem(11px);
+    }
   }
 
   .input-field {
@@ -55,6 +51,14 @@
   select,
   textarea {
     transition: all 0.1s ease-in-out;
+  }
+
+  details {
+    cursor: pointer;
+
+    input {
+      width: calc(100% - 26px);
+    }
   }
 
   &.error {

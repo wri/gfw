@@ -15,7 +15,7 @@ import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/select
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation } from 'utils/location';
 
-import { getIsTrase } from 'app/layouts/root/selectors';
+import { getIsTrase, selectActiveLang } from 'app/layouts/root/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
@@ -352,7 +352,8 @@ export const getWidgets = createSelector(
     getIsTrase,
     getActiveLayersWithDates,
     selectAnalysis,
-    getWidgetFromLocation
+    getWidgetFromLocation,
+    selectActiveLang
   ],
   (
     widgets,
@@ -365,7 +366,8 @@ export const getWidgets = createSelector(
     isTrase,
     layers,
     analysis,
-    activeWidgetKey
+    activeWidgetKey,
+    lang
   ) => {
     if (isEmpty(widgets) || !locationObj || !widgetsData) {
       return null;
@@ -494,7 +496,8 @@ export const getWidgets = createSelector(
         optionsSelected,
         indicator,
         showAttributionLink: isTrase,
-        statements: footerStatements
+        statements: footerStatements,
+        lang
       };
 
       const parsedProps = props.getWidgetProps && props.getWidgetProps(props);

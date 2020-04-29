@@ -30,6 +30,7 @@ class AnalysisComponent extends PureComponent {
     setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func,
     checkingShape: PropTypes.bool,
+    areaTooLarge: PropTypes.bool,
     uploadingShape: PropTypes.bool
   };
 
@@ -51,7 +52,8 @@ class AnalysisComponent extends PureComponent {
       endpoints,
       widgetLayers,
       embed,
-      setShareModal
+      setShareModal,
+      areaTooLarge
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -162,6 +164,13 @@ class AnalysisComponent extends PureComponent {
               <Button
                 className="analysis-action-btn save-to-mygfw-btn"
                 onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                disabled={areaTooLarge}
+                {...areaTooLarge && {
+                  tooltip: {
+                    text:
+                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).'
+                  }
+                }}
               >
                   save in my gfw
               </Button>
