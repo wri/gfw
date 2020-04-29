@@ -10,7 +10,6 @@ const getLoss = state => state.data && state.data.loss;
 const getExtent = state => state.data && state.data.extent;
 const getPrimaryLoss = state => state.data && state.data.primaryLoss;
 const getSettings = state => state.settings;
-const getIsTropical = state => state.isTropical;
 const getLocationLabel = state => state.locationLabel;
 const getIndicator = state => state.indicator;
 const getColors = state => state.colors;
@@ -22,13 +21,13 @@ const parseData = createSelector(
     if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) {
       return null;
     }
-    const { endYear } = settings;
+    const { startYear, endYear } = settings;
     const initalLoss = data.filter(d => d.year === 2001)[0].area || 0;
     const totalLoss =
       sumBy(allLoss.filter(d => d.year >= 2002 && d.year <= endYear), 'area') ||
       0;
-    let initalExtent = extent - initalLoss;
-    return data.filter(d => d.year >= 2002 && d.year <= endYear).map(d => {
+    let initalExtent = extent - initalLoss || 0;
+    return data.filter(d => d.year >= startYear && d.year <= endYear).map(d => {
       const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
       const parsedData = {
         ...d,
@@ -96,12 +95,11 @@ const parseSentence = createSelector(
     parseData,
     getExtent,
     getSettings,
-    getIsTropical,
     getLocationLabel,
     getIndicator,
     getSentence
   ],
-  (data, extent, settings, tropical, locationLabel, indicator, sentences) => {
+  (data, extent, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
     const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
     const { startYear, endYear } = settings;
@@ -110,9 +108,11 @@ const parseSentence = createSelector(
       (totalLoss && extent && totalLoss / extent * 100) || 0;
 
     const initialExtent =
-      data.filter(d => d.year === startYear)[0].extentRemaining || 0;
+      data.filter(d => d.treecover_loss__year === startYear)[0]
+        .extentRemaining || 0;
     const finalExtent =
-      data.filter(d => d.year === endYear)[0].extentRemaining || 0;
+      data.filter(d => d.treecover_loss__year === endYear)[0].extentRemaining ||
+      0;
 
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
