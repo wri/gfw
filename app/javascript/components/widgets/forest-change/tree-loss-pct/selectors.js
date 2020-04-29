@@ -8,6 +8,7 @@ import { yearTicksFormatter } from 'components/widgets/utils/data';
 // get list data
 const getLoss = state => state.data && state.data.loss;
 const getExtent = state => state.data && state.data.extent;
+const getPrimaryLoss = state => state.data && state.data.primaryLoss;
 const getSettings = state => state.settings;
 const getIsTropical = state => state.isTropical;
 const getLocationLabel = state => state.locationLabel;
@@ -16,20 +17,26 @@ const getColors = state => state.colors;
 const getSentence = state => state && state.sentence;
 
 const parseData = createSelector(
-  [getLoss, getExtent, getSettings],
-  (data, extent, settings) => {
-    if (!data || isEmpty(data)) return null;
-    const { startYear, endYear } = settings;
-
-    return data.filter(d => d.year >= startYear && d.year <= endYear).map(d => {
-      const percentageLoss = (d.area && d.area && d.area / extent * 100) || 0;
-
-      return {
+  [getPrimaryLoss, getLoss, getExtent, getSettings],
+  (data, allLoss, extent, settings) => {
+    if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) { return null; }
+    const { endYear } = settings;
+    const initalLoss = data.filter(d => d.year === 2001)[0].area || 0;
+    const totalLoss =
+      sumBy(allLoss.filter(d => d.year >= 2002 && d.year <= endYear), 'area') ||
+      0;
+    let initalExtent = extent - initalLoss;
+    return data.filter(d => d.year >= 2002 && d.year <= endYear).map(d => {
+      const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
+      const parsedData = {
         ...d,
         area: d.area || 0,
         emissions: d.emissions || 0,
+        extentRemaining: 100 * initalExtent / extent,
         percentage: percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
       };
+      initalExtent -= d.area;
+      return parsedData;
     });
   }
 );
@@ -40,15 +47,15 @@ const parseConfig = createSelector([getColors], colors => ({
   yKeys: {
     bars: {
       area: {
-        fill: colors.main,
+        fill: colors.primaryForestLoss,
         background: false,
         yAxisId: 'area'
       }
     },
     lines: {
-      percentage: {
-        fill: colors.main,
-        yAxisId: 'percentage'
+      extentRemaining: {
+        fill: colors.primaryForestLoss,
+        yAxisId: 'extentRemaining'
       }
     }
   },
@@ -59,7 +66,7 @@ const parseConfig = createSelector([getColors], colors => ({
     yAxisId: 'area'
   },
   rightYAxis: {
-    yAxisId: 'percentage'
+    yAxisId: 'extentRemaining'
   },
   unit: 'ha',
   tooltip: [
@@ -75,8 +82,12 @@ const parseConfig = createSelector([getColors], colors => ({
     {
       key: 'percentage',
       unit: '%',
-      unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.2r')(value))
+      unitFormat: value => format('.2f')(value)
+    },
+    {
+      key: 'extentRemaining',
+      unit: '%',
+      unitFormat: value => format('.2f')(value)
     }
   ]
 }));
