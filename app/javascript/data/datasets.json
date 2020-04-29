@@ -6,7 +6,7 @@
   },
   {
     "label": "MODIS",
-    "value": "viirs",
+    "value": "modis",
     "metaKey": null
   }
 ]

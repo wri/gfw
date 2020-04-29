@@ -68,18 +68,16 @@ const typeByGrouped = {
 };
 
 // build the base query for the query with the correct dataset id
-const getRequestUrl = ({ type, adm0, adm1, adm2, dataset, datasetType, grouped }) => {
+const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   let typeByLevel = type;
   if (type === 'country' || type === 'global') {
-    if (adm2) typeByLevel = 'adm2';
+    if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
-    if (adm0) typeByLevel = 'adm0';
-    typeByLevel = 'global';
+    if (adm2) typeByLevel = 'adm2';
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
 
   const datasetId = DATASETS_ENV[`${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`];
-
   return `${process.env.GFW_API}/query/${datasetId}?sql=`;
 };
 
@@ -189,7 +187,7 @@ export const getLoss = params => {
 // disaggregated loss for child of location
 export const getLossGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'change' })}${SQL_QUERIES.lossGrouped}`
+  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'change', grouped: true })}${SQL_QUERIES.lossGrouped}`
     .replace(
       /{location}/g,
       getLocationSelect({ ...params, grouped: true })
@@ -313,7 +311,7 @@ export const getGain = params => {
 // disaggregated gain for child of location
 export const getGainGrouped = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary' })}${SQL_QUERIES.gainGrouped}`
+  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary', grouped: true })}${SQL_QUERIES.gainGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 

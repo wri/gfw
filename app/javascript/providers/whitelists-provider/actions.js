@@ -1,6 +1,7 @@
 import { all, spread } from 'axios';
 import { createAction, createThunkAction } from 'utils/redux';
 import uniq from 'lodash/uniq';
+import compact from 'lodash/compact';
 
 import { getLocationPolynameWhitelist } from 'services/analysis-cached';
 
@@ -22,7 +23,7 @@ export const getWhitelist = createThunkAction(
     dispatch(setWhitelistLoading(true));
     all([
       getLocationPolynameWhitelist({ ...params, dataset: 'annual' }),
-      getLocationPolynameWhitelist({ ...params, dataset: 'glad' }),
+      getLocationPolynameWhitelist({ ...params, dataset: 'viirs' }),
       getLocationPolynameWhitelist({ ...params, dataset: 'viirs' }),
       getLocationPolynameWhitelist({ ...params, dataset: 'modis' })
     ])
@@ -34,18 +35,22 @@ export const getWhitelist = createThunkAction(
             annualResponse.data.data[0];
           const glad =
             gladResponse && gladResponse.data && gladResponse.data.data[0];
-          const viirs =
+          const viirsList =
             viirsResponse && viirsResponse.data && viirsResponse.data.data[0];
-          const modis =
+          const modisList =
             modisResponse && modisResponse.data && modisResponse.data.data[0];
+
+          const viirs = parseWhitelist(viirsList);
+          const modis = parseWhitelist(modisList);
+          const fires = compact(uniq(viirs ? viirs.concat(modis) : modis));
 
           dispatch(
             setWhitelist({
               annual: parseWhitelist(annual),
               glad: parseWhitelist(glad),
-              viirs: parseWhitelist(viirs),
-              modis: parseWhitelist(modis),
-              fires: uniq(parseWhitelist(viirs).concact(parseWhitelist(modis)))
+              viirs,
+              modis,
+              fires
             })
           );
         })
