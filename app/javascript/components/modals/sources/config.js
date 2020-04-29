@@ -15,12 +15,13 @@ export default {
   {
     <span class="json-key">layerSlug</span>: <span class="json-string">"layer slug"</span>,
     <span class="json-key">alert_name</span>: <span class="json-string">"area of interest name"</span>,
-    <span class="json-key">selected_area</span>: <span class="json-string">"area in hectares"</span>,
-    <span class="json-key">unsubscribe_url</span>: <span class="json-string">"url"</span>,
-    <span class="json-key">area_url</span>: <span class="json-string">"url of the area dashboard"</span>,
-    <span class="json-key">area_map</span>: <span class="json-string">"url of the area on the map"</span>,
+    <span class="json-key">alerts</span>: <span class="json-string">"data for your area alert"</span>,
     <span class="json-key">alert_date_begin</span>: <span class="json-string">"begin date"</span>,
     <span class="json-key">alert_date_end</span>: <span class="json-string">"end date"</span>
+    <span class="json-key">alert_link</span>: <span class="json-string">"url of the area on the map"</span>,
+    <span class="json-key">dashboard_url</span>: <span class="json-string">"url of the area dashboard"</span>,
+    <span class="json-key">subscription_url</span>: <span class="json-string">"url to My GFW for managing the area"</span>,
+    <span class="json-key">unsubscribe_url</span>: <span class="json-string">"link to unsubscribe from alerts"</span>,
   }
 
 </code></pre></div>`

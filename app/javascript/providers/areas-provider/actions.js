@@ -40,7 +40,7 @@ export const getAreasProvider = createThunkAction(
                 dispatch(
                   setAreasLoading({
                     loading: false,
-                    error: true
+                    error: error.response.status
                   })
                 );
                 console.info(error);
@@ -52,8 +52,8 @@ export const getAreasProvider = createThunkAction(
           dispatch(setAreasLoading({ loading: false, error: false }));
         }
       })
-      .catch(() => {
-        dispatch(setAreasLoading({ loading: false, error: true }));
+      .catch(error => {
+        dispatch(setAreasLoading({ loading: false, error: error.response.status }));
       });
   }
 );

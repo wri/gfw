@@ -120,9 +120,12 @@ class MapControlsButtons extends PureComponent {
           'map-tour-recent-imagery'
         )}
         theme="theme-button-map-control wide"
-        onClick={() =>
-          setMainMapSettings({ showRecentImagery: !showRecentImagery })
-        }
+        onClick={() => {
+          setMainMapSettings({ showRecentImagery: !showRecentImagery });
+          if (!showRecentImagery) {
+            track('recentImageryOpen');
+          }
+        }}
         disabled={datasetsLoading}
         tooltip={{
           text: 'Recent Satellite Imagery'
