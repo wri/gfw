@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import minBy from 'lodash/minBy';
+import maxBy from 'lodash/maxBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
@@ -27,18 +29,25 @@ const parseData = createSelector(
       sumBy(allLoss.filter(d => d.year >= 2002 && d.year <= endYear), 'area') ||
       0;
     let initalExtent = extent - initalLoss || 0;
-    return data.filter(d => d.year >= startYear && d.year <= endYear).map(d => {
-      const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
-      const parsedData = {
-        ...d,
-        area: d.area || 0,
-        emissions: d.emissions || 0,
-        extentRemaining: 100 * initalExtent / extent,
-        percentage: percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
-      };
-      initalExtent -= d.area;
-      return parsedData;
-    });
+
+    const minYear = minBy(data, 'year').year;
+    const maxYear = maxBy(data, 'year').year;
+
+    const parsedData = data
+      .filter(d => d.year >= minYear && d.year <= maxYear)
+      .map(d => {
+        const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
+        const yearData = {
+          ...d,
+          area: d.area || 0,
+          emissions: d.emissions || 0,
+          extentRemaining: 100 * initalExtent / extent,
+          percentage: percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
+        };
+        initalExtent -= d.area;
+        return yearData;
+      });
+    return parsedData.filter(d => d.year >= startYear && d.year <= endYear);
   }
 );
 
