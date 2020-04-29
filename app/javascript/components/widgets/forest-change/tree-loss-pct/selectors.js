@@ -108,11 +108,9 @@ const parseSentence = createSelector(
       (totalLoss && extent && totalLoss / extent * 100) || 0;
 
     const initialExtent =
-      data.filter(d => d.treecover_loss__year === startYear)[0]
-        .extentRemaining || 0;
+      data.filter(d => d.year === startYear)[0].extentRemaining || 0;
     const finalExtent =
-      data.filter(d => d.treecover_loss__year === endYear)[0].extentRemaining ||
-      0;
+      data.filter(d => d.year === endYear)[0].extentRemaining || 0;
 
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
@@ -125,7 +123,7 @@ const parseSentence = createSelector(
       startYear,
       endYear,
       extentDelta: formatNumber({
-        num: initialExtent - finalExtent,
+        num: Math.abs(initialExtent - finalExtent),
         unit: '%'
       }),
       loss: formatNumber({ num: totalLoss, unit: 'ha' }),
