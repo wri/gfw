@@ -69,7 +69,8 @@ const parseConfig = createSelector([getColors], colors => ({
   },
   rightYAxis: {
     yAxisId: 'extentRemaining',
-    unit: '%'
+    unit: '%',
+    maxYValue: 100
   },
   unit: 'ha',
   tooltip: [
