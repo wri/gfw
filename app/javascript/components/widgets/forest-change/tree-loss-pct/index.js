@@ -162,7 +162,9 @@ export default {
             };
           }
 
-          const { startYear, endYear, range } = getYearsRange(data.loss);
+          const { startYear, endYear, range } = getYearsRange(
+            data.loss.filter(d => d.year > 2001)
+          );
           return {
             ...data,
             settings: {
