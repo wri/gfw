@@ -68,7 +68,9 @@ const parseConfig = createSelector([getColors], colors => ({
     yAxisId: 'area'
   },
   rightYAxis: {
-    yAxisId: 'extentRemaining'
+    yAxisId: 'extentRemaining',
+    unit: '%',
+    maxYValue: 100
   },
   unit: 'ha',
   tooltip: [
@@ -80,11 +82,6 @@ const parseConfig = createSelector([getColors], colors => ({
       unit: 'ha',
       unitFormat: value =>
         (value < 1000 ? Math.round(value) : format('.3s')(value))
-    },
-    {
-      key: 'percentage',
-      unit: '%',
-      unitFormat: value => format('.2f')(value)
     },
     {
       key: 'extentRemaining',

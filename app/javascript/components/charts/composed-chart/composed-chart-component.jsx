@@ -83,6 +83,9 @@ class CustomComposedChart extends PureComponent {
     const dataKeys = yKeys || xKeys;
     const { lines, bars, areas } = dataKeys;
     const maxYValue = this.findMaxValue(data, config);
+    let rightMargin = 0;
+    if (isVertical) rightMargin = 10;
+    if (rightYAxis) rightMargin = 70;
 
     return (
       <div
@@ -95,7 +98,7 @@ class CustomComposedChart extends PureComponent {
             margin={
               margin || {
                 top: !simple ? 15 : 0,
-                right: isVertical ? 10 : 0,
+                right: rightMargin,
                 left: simple || isVertical ? 0 : 42,
                 bottom: 0
               }
@@ -181,8 +184,8 @@ class CustomComposedChart extends PureComponent {
                   : {})}
                 tick={
                   <CustomTick
-                    dataMax={maxYValue}
-                    unit={unit || ''}
+                    dataMax={rightYAxis.maxYValue || maxYValue}
+                    unit={rightYAxis.unit || unit || ''}
                     unitFormat={
                       unitFormat ||
                         (value =>
