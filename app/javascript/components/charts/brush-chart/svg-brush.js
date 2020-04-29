@@ -116,6 +116,28 @@ class SVGBrush extends PureComponent {
 
     return (
       <React.Fragment>
+        {/* GRAY AREA */}
+        <rect
+          fill="#FFFFFF"
+          fillOpacity="0.75"
+          shapeRendering="crispEdges"
+          x={ex0}
+          y={ey0}
+          width={x0 - ex0}
+          height={h - 2}
+        />
+
+        {/* GRAY AREA */}
+        <rect
+          fill="#FFFFFF"
+          fillOpacity="0.75"
+          shapeRendering="crispEdges"
+          x={x1}
+          y={ey0}
+          width={ex1 - x1}
+          height={h - 2}
+        />
+
         <rect
           className="selection"
           cursor="move"
