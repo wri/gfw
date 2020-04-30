@@ -62,7 +62,7 @@ export default {
   widget: 'treeLossPct',
   title: 'Primary Forest loss in {location}',
   categories: ['summary', 'forest-change'],
-  types: ['country', 'geostore', 'wdpa', 'use'],
+  types: ['global', 'country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],

@@ -220,20 +220,6 @@ class CustomComposedChart extends PureComponent {
               }}
               content={<ChartToolTip settings={tooltip} />}
             />
-            {areas &&
-              Object.keys(areas).map(key => (
-                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
-              ))}
-            {lines &&
-              Object.keys(lines).map(key => (
-                <Line
-                  key={key}
-                  dataKey={key}
-                  dot={false}
-                  strokeWidth={2}
-                  {...lines[key]}
-                />
-              ))}
             {bars &&
               Object.keys(bars).map(key => (
                 <Bar
@@ -255,6 +241,20 @@ class CustomComposedChart extends PureComponent {
                       <Cell key={`c_${item.color}`} fill={item.color} />
                     ))}
                 </Bar>
+              ))}
+            {areas &&
+              Object.keys(areas).map(key => (
+                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
+              ))}
+            {lines &&
+              Object.keys(lines).map(key => (
+                <Line
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  strokeWidth={2}
+                  {...lines[key]}
+                />
               ))}
           </ComposedChart>
         </ResponsiveContainer>

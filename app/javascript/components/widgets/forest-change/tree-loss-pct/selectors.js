@@ -105,7 +105,8 @@ const parseConfig = createSelector([getColors], colors => ({
     {
       key: 'percentageLoss',
       unitFormat: value => formatNumber({ num: value, unit: '%' }),
-      label: 'Percentage of all loss'
+      label: 'Percentage of all loss',
+      color: 'transparent'
     }
   ]
 }));
