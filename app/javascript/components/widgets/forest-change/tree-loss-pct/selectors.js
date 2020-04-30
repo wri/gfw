@@ -26,8 +26,10 @@ const parseData = createSelector(
     const { startYear, endYear } = settings;
     const initalLoss = data.filter(d => d.year === 2001)[0].area || 0;
     const totalLoss =
-      sumBy(allLoss.filter(d => d.year >= 2002 && d.year <= endYear), 'area') ||
-      0;
+      sumBy(
+        allLoss.filter(d => d.year >= startYear && d.year <= endYear),
+        'area'
+      ) || 0;
     let initalExtent = extent - initalLoss || 0;
 
     const minYear = minBy(data, 'year').year;
@@ -39,6 +41,7 @@ const parseData = createSelector(
         const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
         const yearData = {
           ...d,
+          totalLoss,
           area: d.area || 0,
           emissions: d.emissions || 0,
           extentRemaining: 100 * initalExtent / extent,
@@ -118,9 +121,10 @@ const parseSentence = createSelector(
     if (!data) return null;
     const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
     const { startYear, endYear } = settings;
-    const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
+    const totalLossPrimary = (data && data.length && sumBy(data, 'area')) || 0;
+    const totalLoss = (data && data.length && data[0].totalLoss) || 0;
     const percentageLoss =
-      (totalLoss && extent && totalLoss / extent * 100) || 0;
+      (totalLoss && extent && totalLossPrimary / totalLoss * 100) || 0;
 
     const initialExtent =
       data.filter(d => d.year === startYear)[0].extentRemaining || 0;
@@ -141,7 +145,7 @@ const parseSentence = createSelector(
         num: Math.abs(initialExtent - finalExtent),
         unit: '%'
       }),
-      loss: formatNumber({ num: totalLoss, unit: 'ha' }),
+      loss: formatNumber({ num: totalLossPrimary, unit: 'ha' }),
       percent: formatNumber({ num: percentageLoss, unit: '%' }),
       component: {
         key: 'total tree cover loss',
