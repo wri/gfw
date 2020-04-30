@@ -64,8 +64,9 @@ const parseConfig = createSelector([getColors], colors => ({
     },
     lines: {
       extentRemaining: {
-        fill: colors.primaryForestLoss,
-        yAxisId: 'extentRemaining'
+        stroke: colors.primaryForestExtent,
+        yAxisId: 'extentRemaining',
+        strokeDasharray: '3 4'
       }
     }
   },
@@ -89,12 +90,17 @@ const parseConfig = createSelector([getColors], colors => ({
       key: 'area',
       unit: 'ha',
       unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.3s')(value))
+        (value < 1000 ? Math.round(value) : format('.3s')(value)),
+      label: 'Primary forest loss',
+      color: colors.primaryForestLoss
     },
     {
       key: 'extentRemaining',
       unit: '%',
-      unitFormat: value => format('.2f')(value)
+      unitFormat: value => format('.2f')(value),
+      label: 'Primary forest extent remaining',
+      color: colors.primaryForestExtent,
+      dashline: true
     }
   ]
 }));
