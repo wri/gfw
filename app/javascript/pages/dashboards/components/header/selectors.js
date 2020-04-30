@@ -112,9 +112,9 @@ export const getDownloadLink = createSelector(
 export const getAdminsSelected = createSelector(
   [getAdm0Data, getAdm1Data, getAdm2Data, selectLocation],
   (adm0s, adm1s, adm2s, location) => {
-    const adm0 = (adm0s && adm0s.find(i => i.value === location.adm0 || i.subscriptionId === location.adm0)) || null;
-    const adm1 = (adm1s && adm1s.find(i => i.value === location.adm1)) || null;
-    const adm2 = (adm2s && adm2s.find(i => i.value === location.adm2)) || null;
+    const adm0 = location && location.adm0 && (adm0s && adm0s.find(i => i.value === location.adm0 || i.subscriptionId === location.adm0)) || null;
+    const adm1 = location && location.adm1 && (adm1s && adm1s.find(i => i.value === location.adm1)) || null;
+    const adm2 = location && location.adm2 && (adm2s && adm2s.find(i => i.value === location.adm2)) || null;
     let current = adm0;
     if (location.adm2) {
       current = adm2;
