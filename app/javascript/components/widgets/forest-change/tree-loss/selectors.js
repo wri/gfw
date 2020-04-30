@@ -55,15 +55,14 @@ const parseConfig = createSelector([getColors], colors => ({
     },
     {
       key: 'area',
-      unit: 'ha',
-      unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.3s')(value))
+      label: 'Tree cover loss',
+      unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
+      color: colors.main
     },
     {
       key: 'percentage',
-      unit: '%',
-      unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.2r')(value))
+      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      label: 'Percentage of tree cover'
     }
   ]
 }));

@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import minBy from 'lodash/minBy';
 import maxBy from 'lodash/maxBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
@@ -45,7 +44,8 @@ const parseData = createSelector(
           area: d.area || 0,
           emissions: d.emissions || 0,
           extentRemaining: 100 * initalExtent / extent,
-          percentage: percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
+          percentageLoss:
+            percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
         };
         initalExtent -= d.area;
         return yearData;
@@ -90,20 +90,22 @@ const parseConfig = createSelector([getColors], colors => ({
       key: 'year'
     },
     {
+      key: 'extentRemaining',
+      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      label: 'Primary forest extent remaining',
+      color: colors.primaryForestExtent,
+      dashline: true
+    },
+    {
       key: 'area',
-      unit: 'ha',
-      unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.3s')(value)),
+      unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
       label: 'Primary forest loss',
       color: colors.primaryForestLoss
     },
     {
-      key: 'extentRemaining',
-      unit: '%',
-      unitFormat: value => format('.2f')(value),
-      label: 'Primary forest extent remaining',
-      color: colors.primaryForestExtent,
-      dashline: true
+      key: 'percentageLoss',
+      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      label: 'Percentage of all loss'
     }
   ]
 }));
