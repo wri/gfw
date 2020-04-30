@@ -71,7 +71,8 @@ class AnalysisComponent extends PureComponent {
         target: '_blank'
       })
     };
-    const isDeletedAoI = location.areaId && !activeArea;
+    const isDeletedAoI = location.areaId && (areaError || !activeArea);
+    const areaPrivate = areaError === 401 || (activeArea && !activeArea.public);
 
     return (
       <Fragment>
@@ -83,7 +84,7 @@ class AnalysisComponent extends PureComponent {
             isDeletedAoI && (
             <NoContent
               className="deleted-area-message"
-              message={areaError === 404 ? 'This area does not exist or has been deleted.' : 'This area is set to private'}
+              message={areaPrivate ? 'This area is set to private' : 'This area does not exist or has been deleted.'}
             />
           )}
           {location.type &&
