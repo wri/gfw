@@ -15,6 +15,7 @@ const getLocationLabel = state => state.locationLabel;
 const getIndicator = state => state.indicator;
 const getColors = state => state.colors;
 const getSentence = state => state && state.sentence;
+const getTitle = state => state.title;
 
 const parseData = createSelector(
   [getPrimaryLoss, getLoss, getExtent, getSettings],
@@ -91,7 +92,8 @@ const parseConfig = createSelector([getColors], colors => ({
     },
     {
       key: 'extentRemaining',
-      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      unitFormat: value =>
+        formatNumber({ num: value, unit: '%', precision: 3 }),
       label: 'Primary forest extent remaining',
       color: colors.primaryForestExtent,
       dashline: true
@@ -111,6 +113,17 @@ const parseConfig = createSelector([getColors], colors => ({
   ]
 }));
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationLabel],
+  (title, name) => {
+    let selectedTitle = title.default;
+    if (name === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
 const parseSentence = createSelector(
   [
     parseData,
@@ -122,7 +135,14 @@ const parseSentence = createSelector(
   ],
   (data, extent, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const {
+      initial,
+      withIndicator,
+      noLoss,
+      noLossWithIndicator,
+      globalInitial,
+      globalWithIndicator
+    } = sentences;
     const { startYear, endYear } = settings;
     const totalLossPrimary = (data && data.length && sumBy(data, 'area')) || 0;
     const totalLoss = (data && data.length && data[0].totalLoss) || 0;
@@ -138,10 +158,13 @@ const parseSentence = createSelector(
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
+    if (locationLabel === 'global') {
+      sentence = indicator ? globalWithIndicator : globalInitial;
+    }
 
     const params = {
       indicator: indicator && indicator.label,
-      location: locationLabel,
+      location: locationLabel === 'global' ? 'globally' : locationLabel,
       startYear,
       endYear,
       extentDelta: formatNumber({
@@ -168,5 +191,6 @@ const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
+  title: parseTitle
 });

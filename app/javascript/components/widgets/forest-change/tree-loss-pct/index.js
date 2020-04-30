@@ -60,10 +60,13 @@ export const getDataAPI = params =>
 
 export default {
   widget: 'treeLossPct',
-  title: 'Primary Forest loss in {location}',
+  title: {
+    default: 'Primary Forest loss in {location}',
+    global: 'Global Primary Forest loss'
+  },
   categories: ['summary', 'forest-change'],
   types: ['global', 'country', 'geostore', 'wdpa', 'use'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
@@ -117,10 +120,14 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {location} decreased by {extentDelta} in this time period.',
     withIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {location} in {indicator} decreased by {extentDelta} in this time period.',
+    globalInitial:
+      'From {startYear} to {endYear}, there was a total of {loss} of humid primary forest lost {location}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest decreased {location} by {extentDelta} in this time period.',
+    globalWithIndicator:
+      'From {startYear} to {endYear}, there was a total of {loss} of humid primary forest lost {location} within {indicator}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {indicator} decreased {location} by {extentDelta} in this time period.',
     noLoss:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover.',
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest.',
     noLossWithIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}.'
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}.'
   },
   settings: {
     threshold: 30,
