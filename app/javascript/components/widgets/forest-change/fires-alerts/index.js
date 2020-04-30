@@ -305,11 +305,12 @@ export default {
         const { data } = alerts.data;
         const years = uniq(data.map(d => d.year));
         const maxYear = Math.max(...years);
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
 
         return (
           {
             alerts: data,
-            latest,
+            latest: latestDate,
             options: {
               compareYear: years.filter(y => y !== maxYear).map(y => ({
                 label: y,
