@@ -10,8 +10,6 @@ import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
 import findLastIndex from 'lodash/findLastIndex';
 
-import { getColorPalette } from 'utils/data';
-
 import {
   getCumulativeStatsData,
   getDatesData,
@@ -287,7 +285,7 @@ export const parseConfig = createSelector(
         strokeDasharray: '20 5',
         label: {
           position: 'top',
-          value: 'Present day',
+          value: 'Latest data',
           fill: '#333',
           fontSize: 11
         }
@@ -384,8 +382,8 @@ export const parseSentence = createSelector(
     const maxYear = maxWeek.year;
 
     const total = sumBy(slicedData, 'count');
-    const colorRange = getColorPalette(colors.ramp, 5);
-    let statusColor = colorRange[4];
+    const colorRange = colors.ramp;
+    let statusColor = colorRange[8];
     const { date } = lastDate || {};
 
     let status = 'unusually low';
@@ -394,13 +392,13 @@ export const parseSentence = createSelector(
       statusColor = colorRange[0];
     } else if (variance <= 2 && variance > 1) {
       status = 'high';
-      statusColor = colorRange[1];
+      statusColor = colorRange[2];
     } else if (variance <= 1 && variance > -1) {
       status = 'average';
-      statusColor = colorRange[2];
+      statusColor = colorRange[4];
     } else if (variance <= -1 && variance > -2) {
       status = 'low';
-      statusColor = colorRange[3];
+      statusColor = colorRange[6];
     }
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
