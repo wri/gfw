@@ -64,10 +64,15 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
-  handleBrushEnd = values => {
-    const { handleChangeSettings } = this.props;
+  handleBrushEnd = ({ startIndex, endIndex }) => {
+    const { originalData, handleChangeSettings } = this.props;
     if (handleChangeSettings) {
-      handleChangeSettings(values);
+      handleChangeSettings({
+        startIndex,
+        endIndex,
+        startDateAbsolute: originalData[startIndex].date,
+        endDateAbsolute: originalData[endIndex].date
+      });
     }
   };
 
@@ -97,7 +102,6 @@ class WidgetComposedChart extends Component {
           active={active}
           handleMouseMove={this.handleMouseMove}
           handleMouseLeave={this.handleMouseLeave}
-          handleBrush={this.handleBrush}
         />
 
         {!simple &&

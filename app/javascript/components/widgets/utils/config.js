@@ -166,6 +166,8 @@ export const getWidgetDatasets = ({
   endYear,
   year,
   weeks,
+  startDateAbsolute,
+  endDateAbsolute,
   latestDate,
   threshold
 }) =>
@@ -199,6 +201,13 @@ export const getWidgetDatasets = ({
         params: {
           thresh: threshold,
           visibility: true
+        }
+      }),
+      ...(startDateAbsolute &&
+        endDateAbsolute && {
+        params: {
+          startDateAbsolute,
+          endDateAbsolute
         }
       })
     })

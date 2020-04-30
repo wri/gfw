@@ -33,13 +33,16 @@ export const OIL_PALM = 'aef0a3e5-729e-4f1a-9b1c-25a73c7ea4c1';
 export const LOGGING_CONCESSIONS = '08fd9f5d-51c4-4c01-8c37-d63e86a0de30';
 export const PLACES_TO_WATCH = '40816dac-d957-47bd-82e4-22f8840601eb';
 export const RECENT_SATELLITE_IMAGERY = '8130614b-3bca-4cc3-8c9f-30a69a9f60ac';
-export const FIRES_ALERTS_VIIRS = '93e33932-3959-4201-b8c8-6ec0b32596e0';
+export const FIRES_ALERTS_VIIRS = 'd621ce0f-0872-41ef-b2ec-18faec3fd1d9';
 export const LAND_COVER = 'e67f4276-c1d0-4970-b2d6-6dd17843f4c9';
 export const INTACT_FOREST_LANDSCAPES = 'af4e9e0b-cbf9-437b-80cb-9b0f795161ca';
 export const PROTECTED_AREAS_LAYER = 'f135d3cf-44d0-454e-8e82-87ce43b46a68';
-export const TIGER_CONSERVATION_LANDSCAPES = '9df142fb-d56d-4001-90fb-a0008117793e';
-export const ALLIANCE_FOR_ZERO_EXSTINCTION = '04118785-27f4-4fb0-8980-a786a44f5c6d';
-export const INDIGENOUS_AND_COMMUNITY_LANDS = 'caa9b9b7-5dec-4ad6-adbf-d7c2965c9371';
+export const TIGER_CONSERVATION_LANDSCAPES =
+  '9df142fb-d56d-4001-90fb-a0008117793e';
+export const ALLIANCE_FOR_ZERO_EXSTINCTION =
+  '04118785-27f4-4fb0-8980-a786a44f5c6d';
+export const INDIGENOUS_AND_COMMUNITY_LANDS =
+  'caa9b9b7-5dec-4ad6-adbf-d7c2965c9371';
 export const IND_PEAT_LANDS = '96d529a1-ade4-4cd1-bfe8-f94e6e3cdcae';
 export const IND_FOREST_MAMATORIUM = '4b269f12-2f1a-4d38-b3a1-01cc1a0453ac';
 export const PRIMARY_FOREST = '41086554-5ca5-456c-80dd-f6bee61bc45f';
