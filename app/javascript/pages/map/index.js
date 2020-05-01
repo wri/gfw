@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import { logEvent } from 'app/analytics';
 import { getLocationFromData } from 'utils/format';
+import { logEvent } from 'app/analytics';
 import reducerRegistry from 'app/registry';
 import useRouter from 'app/router';
 
@@ -44,6 +44,7 @@ class MainMapContainer extends PureComponent {
     analysisActive: PropTypes.bool,
     location: PropTypes.object,
     geostoreId: PropTypes.string,
+    basemap: PropTypes.bool,
   };
 
   state = {
@@ -52,11 +53,12 @@ class MainMapContainer extends PureComponent {
   };
 
   componentDidMount() {
-    const { activeDatasets } = this.props;
+    const { activeDatasets, basemap } = this.props;
     const layerIds = flatMap(activeDatasets.map((d) => d.layers));
     logEvent('mapInitialLayers', {
       label: layerIds && layerIds.join(', '),
     });
+    logEvent('basemapsInitial', { label: basemap && basemap.value });
   }
 
   componentDidUpdate(prevProps) {

@@ -5,6 +5,8 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { Media } from 'utils/responsive';
 import { APP_URL } from 'utils/constants';
+import moment from 'moment';
+import { getMomentLangCode } from 'utils/lang';
 
 import Icon from 'components/ui/icon';
 import DropdownMenu from 'components/header/components/dropdown-menu';
@@ -38,6 +40,7 @@ class NavAlt extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
+
     if (
       typeof window !== 'undefined' &&
       window.Transifex &&
@@ -50,6 +53,11 @@ class NavAlt extends PureComponent {
           languages && languages.map((l) => ({ label: l.name, value: l.code })),
       });
     }
+    moment.locale(getMomentLangCode(this.state.lang));
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,15 +69,12 @@ class NavAlt extends PureComponent {
     }
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
   handleLangSelect = (lang) => {
     if (window.Transifex) {
       window.Transifex.live.translateTo(lang);
       this.setState({ lang, showLang: false, showMore: false });
     }
+    moment.locale(getMomentLangCode(lang));
   };
 
   handleCloseSubmenu = () => {

@@ -14,20 +14,20 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: props.input
+      search: props.input,
     };
   }
 
-  handleChange = value => {
+  handleChange = (value) => {
     this.setState({ search: value });
     this.debouncedChange();
   };
 
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     e.preventDefault();
     const { onSubmit } = this.props;
     if (onSubmit && e.keyCode === 13) {
-      onSubmit(e);
+      onSubmit(e.target.value);
     }
   };
 
@@ -47,12 +47,12 @@ class Search extends Component {
           type="text"
           className="input text"
           placeholder={placeholder}
-          onChange={e => this.handleChange(e.target.value)}
+          onChange={(e) => this.handleChange(e.target.value)}
           value={search}
           onKeyUp={this.handleKeyUp}
           disabled={disabled}
         />
-        <button onClick={onSubmit}>
+        <button onClick={() => onSubmit(this.state.search)}>
           <Icon icon={searchIcon} className="icon-search" />
         </button>
         {search && (
@@ -76,11 +76,11 @@ Search.propTypes = {
   onSubmit: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 Search.defaultProps = {
-  input: ''
+  input: '',
 };
 
 export default Search;

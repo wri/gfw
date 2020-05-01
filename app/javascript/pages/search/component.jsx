@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
 import { logPageView } from 'app/analytics';
@@ -19,7 +18,6 @@ class SearchPage extends PureComponent {
     data: PropTypes.array,
     loading: PropTypes.bool,
     getSearch: PropTypes.func,
-    setSearchQuery: PropTypes.func,
   };
 
   state = {
@@ -34,16 +32,11 @@ class SearchPage extends PureComponent {
     }
   }
 
-  handleSearchChange = (search) => {
+  handleSubmit = (search) => {
     this.setState({ search });
-    this.fetchSearchResults(search);
-  };
-
-  fetchSearchResults = debounce((query) => {
-    this.props.setSearchQuery(query);
-    this.props.getSearch({ query, page: 1 });
+    this.props.getSearch({ query: search, page: 1 });
     logPageView();
-  }, 300);
+  };
 
   render() {
     const { data, loading } = this.props;
@@ -64,7 +57,7 @@ class SearchPage extends PureComponent {
                 className="search-input"
                 placeholder="Search"
                 input={this.state.search}
-                onChange={this.handleSearchChange}
+                onSubmit={this.handleSubmit}
               />
               <div className="search-results">
                 {loading && <Loader className="search-loader" />}

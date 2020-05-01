@@ -22,7 +22,9 @@ export const getActiveArea = createSelector(
     } else {
       activeAreaId = areaId;
     }
-    return areas.find((a) => a.id === activeAreaId);
+    return areas.find(
+      (a) => a.id === activeAreaId || a.subscriptionId === activeAreaId
+    );
   }
 );
 

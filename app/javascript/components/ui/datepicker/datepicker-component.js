@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
+import ReactDatePicker, {
+  CalendarContainer,
+  registerLocale,
+} from 'react-datepicker';
 import cx from 'classnames';
 import range from 'lodash/range';
 import { Portal } from 'react-portal';
@@ -13,7 +16,20 @@ import Input from 'components/ui/input';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+
+import es from 'date-fns/locale/es';
+import fr from 'date-fns/locale/fr';
+import zh from 'date-fns/locale/zh-CN';
+import ptBR from 'date-fns/locale/pt-BR';
+import id from 'date-fns/locale/id';
+
 import './datepicker-styles.scss';
+
+registerLocale('fr', fr);
+registerLocale('es_MX', es);
+registerLocale('zh', zh);
+registerLocale('pt_BR', ptBR);
+registerLocale('id', id);
 
 class Datepicker extends PureComponent {
   state = {
@@ -144,7 +160,7 @@ class Datepicker extends PureComponent {
   };
 
   render() {
-    const { className, handleOnDateChange, settings, theme } = this.props;
+    const { className, handleOnDateChange, settings, theme, lang } = this.props;
     const momentDate = this.props.date;
     const { minDate, maxDate } = settings;
     const { position } = this.state;
@@ -154,7 +170,7 @@ class Datepicker extends PureComponent {
         ref={(ref) => {
           this.ref = ref;
         }}
-        className={cx('c-datepicker', theme, className)}
+        className={cx('c-datepicker notranslate', theme, className)}
       >
         {position && (
           <ReactDatePicker
@@ -165,6 +181,7 @@ class Datepicker extends PureComponent {
             minDate={new Date(minDate)}
             maxDate={new Date(maxDate)}
             dateFormat="dd MMM yyyy"
+            locale={lang || 'en'}
             className="datepicker-input"
             onFocus={this.setPosition}
             calendarContainer={this.renderCalendarContainer}
@@ -183,6 +200,7 @@ Datepicker.propTypes = {
   date: PropTypes.object,
   handleOnDateChange: PropTypes.func.isRequired,
   settings: PropTypes.object,
+  lang: PropTypes.string,
 };
 
 export default Datepicker;

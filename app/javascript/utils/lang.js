@@ -4,7 +4,16 @@ const googleLangCode = {
   zh: 'zh-CH',
   pt_BR: 'pt',
   fr: 'fr',
-  id: 'id'
+  id: 'id',
+};
+
+const momentLangCode = {
+  es_MX: 'es',
+  en: 'en',
+  zh: 'zh-cn',
+  pt_BR: 'pt-br',
+  fr: 'fr',
+  id: 'id',
 };
 
 export const getLanguages = () => {
@@ -13,9 +22,9 @@ export const getLanguages = () => {
     return (
       txData &&
       txData.source &&
-      [txData.source].concat(txData.translation).map(l => ({
+      [txData.source].concat(txData.translation).map((l) => ({
         label: l.name,
-        value: l.code
+        value: l.code,
       }))
     );
   }
@@ -30,4 +39,5 @@ export const selectActiveLang = () => {
   return 'en';
 };
 
-export const getGoogleLangCode = lang => googleLangCode[lang || 'en'];
+export const getGoogleLangCode = (lang) => googleLangCode[lang || 'en'];
+export const getMomentLangCode = (lang) => momentLangCode[lang || 'en'];

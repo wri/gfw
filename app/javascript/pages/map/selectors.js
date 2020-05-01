@@ -5,6 +5,7 @@ import {
   getMapLoading,
   getActiveDatasetsFromState,
   getInteractionSelected,
+  getBasemapFromState,
 } from 'components/map/selectors';
 import { getShowDraw } from 'components/analysis/selectors';
 
@@ -65,4 +66,5 @@ export default createStructuredSelector({
   geostoreId: getDrawGeostoreId,
   selectedInteraction: getInteractionSelected,
   location: selectLocation,
+  basemap: getBasemapFromState,
 });

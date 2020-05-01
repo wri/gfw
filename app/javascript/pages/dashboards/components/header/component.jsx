@@ -99,7 +99,11 @@ class Header extends PureComponent {
               <Button
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
-                  text: `Edit ${locationNames.adm0.label}`,
+                  text: `Edit ${
+                    locationNames &&
+                    locationNames.adm0 &&
+                    locationNames.adm0.label
+                  }`,
                   position: 'bottom',
                 }}
                 onClick={() => setAreaOfInterestModalSettings({ open: true })}
@@ -125,14 +129,22 @@ class Header extends PureComponent {
                 extLink={downloadLink}
                 tooltip={{
                   text: `Download the data${
-                    locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
+                    locationNames.adm0
+                      ? ` for ${
+                          locationNames &&
+                          locationNames.adm0 &&
+                          locationNames.adm0.label
+                        }`
+                      : ''
                   }`,
                   position: 'bottom',
                 }}
                 onClick={() => {
                   logEvent('downloadDashboardPage', {
                     label:
-                      (locationNames.adm0 && locationNames.adm0.label) ||
+                      (locationNames &&
+                        locationNames.adm0 &&
+                        locationNames.adm0.label) ||
                       'Global',
                   });
                 }}

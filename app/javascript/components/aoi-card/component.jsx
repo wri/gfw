@@ -29,12 +29,12 @@ class AoICard extends PureComponent {
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
-    onFetchAlerts: PropTypes.func
+    onFetchAlerts: PropTypes.func,
   };
 
   state = {
     alerts: {},
-    loading: true
+    loading: true,
   };
 
   mounted = false;
@@ -58,18 +58,15 @@ class AoICard extends PureComponent {
     getLatestAlerts({
       location,
       params: {
-        startDate: moment
-          .utc()
-          .subtract(2, 'weeks')
-          .format('YYYY-MM-DD'),
-        endDate: moment.utc().format('YYYY-MM-DD')
-      }
+        startDate: moment.utc().subtract(2, 'weeks').format('YYYY-MM-DD'),
+        endDate: moment.utc().format('YYYY-MM-DD'),
+      },
     })
-      .then(alertsResponse => {
+      .then((alertsResponse) => {
         if (this.mounted) {
           this.setState({
             alerts: alertsResponse,
-            loading: false
+            loading: false,
           });
           if (onFetchAlerts) {
             onFetchAlerts(alertsResponse);
@@ -82,14 +79,14 @@ class AoICard extends PureComponent {
             alerts: {
               glads: 0,
               fires: 0,
-              error: true
+              error: true,
             },
-            loading: false
+            loading: false,
           });
           if (onFetchAlerts) {
             onFetchAlerts({
               glads: 0,
-              fires: 0
+              fires: 0,
             });
           }
         }
@@ -106,24 +103,27 @@ class AoICard extends PureComponent {
       deforestationAlerts,
       fireAlerts,
       monthlySummary,
-      location
+      location,
     } = this.props;
-    const { loading, alerts: { glads, fires, error: dataError } } = this.state;
+    const {
+      loading,
+      alerts: { glads, fires, error: dataError },
+    } = this.state;
 
     const subStatus = [
       {
         label: 'forest change alerts',
-        subscribed: deforestationAlerts
+        subscribed: deforestationAlerts,
       },
       {
         label: 'fire alerts',
-        subscribed: fireAlerts
+        subscribed: fireAlerts,
       },
       {
         label: 'mothly summary',
-        subscribed: monthlySummary
-      }
-    ].filter(s => s.subscribed);
+        subscribed: monthlySummary,
+      },
+    ].filter((s) => s.subscribed);
 
     const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
     const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
@@ -162,13 +162,12 @@ class AoICard extends PureComponent {
           </Dotdotdot>
           {!simple && <span className="created">{createdMetaTemplate}</span>}
           <div className="meta">
-            {tags &&
-              tags.length > 0 && (
-                <div className="tags">
-                  <Icon icon={tagIcon} className="tag-icon" />
-                  <p>{tags.join(', ')}</p>
-                </div>
-              )}
+            {tags && tags.length > 0 && (
+              <div className="tags">
+                <Icon icon={tagIcon} className="tag-icon" />
+                <p>{tags.join(', ')}</p>
+              </div>
+            )}
             {(deforestationAlerts || fireAlerts || monthlySummary) && (
               <div className="subscribed">
                 <Icon icon={subscribedIcon} className="subscribed-icon" />
@@ -178,13 +177,12 @@ class AoICard extends PureComponent {
           </div>
           {!simple && (
             <div className="activity">
-              <span className="activity-intro">Last weeks activity:</span>
-              {!loading &&
-                dataError && (
-                  <span className="data-error-msg">
-                    Sorry, we had trouble finding your alerts!
-                  </span>
-                )}
+              <span className="activity-intro">Last week&apos;s alerts:</span>
+              {!loading && dataError && (
+                <span className="data-error-msg">
+                  Sorry, we had trouble finding your alerts!
+                </span>
+              )}
               {!dataError && (
                 <Fragment>
                   <span className="glad">
@@ -193,9 +191,10 @@ class AoICard extends PureComponent {
                         <span className="activity-data notranslate">
                           {formatNumber({
                             num: glads || 0,
-                            unit: 'counts'
+                            unit: 'counts',
                           })}
-                        </span>{' '}
+                        </span>
+                        {' '}
                         GLAD alerts
                       </Fragment>
                     ) : (
@@ -217,9 +216,10 @@ class AoICard extends PureComponent {
                         <span className="activity-data notranslate">
                           {formatNumber({
                             num: fires || 0,
-                            unit: 'counts'
+                            unit: 'counts',
                           })}
-                        </span>{' '}
+                        </span>
+                        {' '}
                         VIIRS alerts
                       </Fragment>
                     ) : (

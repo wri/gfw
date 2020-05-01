@@ -17,12 +17,12 @@ class WidgetContainer extends Component {
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
     geostore: PropTypes.object,
-    status: PropTypes.string
+    status: PropTypes.string,
   };
 
   state = {
     loading: false,
-    error: false
+    error: false,
   };
 
   _mounted = false;
@@ -60,14 +60,14 @@ class WidgetContainer extends Component {
     this._mounted = false;
   }
 
-  handleGetWidgetData = params => {
+  handleGetWidgetData = (params) => {
     const { getData, setWidgetData, geostore } = this.props;
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
 
     this.setState({ loading: true, error: false });
     getData({ ...params, geostore, token: this.widgetDataFetch.token })
-      .then(data => {
+      .then((data) => {
         setWidgetData(data);
         setTimeout(() => {
           if (this._mounted) {
@@ -75,12 +75,11 @@ class WidgetContainer extends Component {
           }
         }, 200);
       })
-      .catch(error => {
-        console.info(error);
+      .catch((error) => {
         if (this._mounted) {
           this.setState({
             error: error.message !== `Cancelling ${this.props.widget} fetch`,
-            loading: false
+            loading: false,
           });
         }
       });
@@ -91,11 +90,11 @@ class WidgetContainer extends Component {
     const params = { ...location, ...settings };
     this.handleGetWidgetData(params);
     logEvent('refetchDataBtn', {
-      label: `Widget: ${widget}`
+      label: `Widget: ${widget}`,
     });
   };
 
-  handleDataHighlight = highlighted => {
+  handleDataHighlight = (highlighted) => {
     this.props.handleChangeSettings({ highlighted });
   };
 
@@ -110,7 +109,7 @@ class WidgetContainer extends Component {
       ...this.props,
       ...this.state,
       handleRefetchData: this.handleRefetchData,
-      handleDataHighlight: this.handleDataHighlight
+      handleDataHighlight: this.handleDataHighlight,
     });
   }
 }

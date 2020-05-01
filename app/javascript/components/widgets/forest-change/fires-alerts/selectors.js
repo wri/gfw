@@ -10,16 +10,17 @@ import {
   getMeansData,
   getStdDevData,
   getDatesData,
-  getChartConfig
+  getChartConfig,
 } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data && state.data.alerts;
-const getLatest = state => state.data && state.data.latest;
-const getColors = state => state.colors || null;
-const getInteraction = state => state.settings.interaction || null;
-const getWeeks = state => state.settings.weeks || null;
-const getDataset = state => state.settings.dataset || null;
-const getSentences = state => state.sentence || null;
+const getAlerts = (state) => state.data && state.data.alerts;
+const getLatest = (state) => state.data && state.data.latest;
+const getColors = (state) => state.colors || null;
+const getInteraction = (state) => state.settings.interaction || null;
+const getWeeks = (state) => state.settings.weeks || null;
+const getDataset = (state) => state.settings.dataset || null;
+const getSentences = (state) => state.sentence || null;
+const getLang = (state) => state.lang || null;
 
 export const getData = createSelector(
   [getAlerts, getDataset],
@@ -28,30 +29,22 @@ export const getData = createSelector(
     const dataMax = maxBy(data, 'year');
     const dataMaxYear = (dataMax && dataMax.year) || null;
     const dataMaxFiltered = maxBy(
-      data.filter(el => el && el.year === dataMaxYear),
+      data.filter((el) => el && el.year === dataMaxYear),
       'week'
     );
     const dataMaxWeek = (dataMaxFiltered && dataMaxFiltered.week) || null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
     const lastWeek = {
-      isoWeek:
-        dataMaxWeek ||
-        moment()
-          .subtract(2, 'w')
-          .isoWeek(),
-      year:
-        dataMaxYear ||
-        moment()
-          .subtract(2, 'w')
-          .year()
+      isoWeek: dataMaxWeek || moment().subtract(2, 'w').isoWeek(),
+      year: dataMaxYear || moment().subtract(2, 'w').year(),
     };
-    const min_year = dataset === 'MODIS' ? 2001 : 2016;
-    for (let i = min_year; i <= lastWeek.year; i += 1) {
+    const minYear = dataset === 'MODIS' ? 2001 : 2016;
+    for (let i = minYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
     const yearLengths = {};
-    years.forEach(y => {
+    years.forEach((y) => {
       if (lastWeek.year === parseInt(y, 10)) {
         yearLengths[y] = lastWeek.isoWeek;
       } else if (moment(`${y}-12-31`).weekday() === 1) {
@@ -61,7 +54,7 @@ export const getData = createSelector(
       }
     });
     const zeroFilledData = [];
-    years.forEach(d => {
+    years.forEach((d) => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
         zeroFilledData.push(
@@ -75,14 +68,9 @@ export const getData = createSelector(
   }
 );
 
-export const getMeans = createSelector([getData], data => {
+export const getMeans = createSelector([getData], (data) => {
   if (!data) return null;
-  return getMeansData(
-    data,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  );
+  return getMeansData(data, moment().subtract(2, 'w').format('YYYY-MM-DD'));
 });
 
 export const getStdDev = createSelector(
@@ -93,7 +81,7 @@ export const getStdDev = createSelector(
   }
 );
 
-export const getDates = createSelector([getStdDev], data => {
+export const getDates = createSelector([getStdDev], (data) => {
   if (!data) return null;
   return getDatesData(data);
 });
@@ -109,7 +97,7 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getInteraction, getSentences, getDataset],
+  [parseData, getColors, getInteraction, getSentences, getDataset, getLang],
   (data, colors, interaction, sentence, dataset) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
@@ -124,21 +112,20 @@ export const parseSentence = createSelector(
       plusStdDev,
       minusStdDev,
       twoMinusStdDev,
-      date
-    } =
-      lastDate || {};
+      date,
+    } = lastDate || {};
 
     let status = 'unusually low';
     if (twoPlusStdDev && count > twoPlusStdDev[1]) {
       status = 'unusually high';
-      statusColor = colorRange[0];
+      statusColor = colorRange?.[0];
     } else if (
       twoPlusStdDev &&
       count <= twoPlusStdDev[1] &&
       count > twoPlusStdDev[0]
     ) {
       status = 'high';
-      statusColor = colorRange[1];
+      statusColor = colorRange?.[1];
     } else if (
       plusStdDev &&
       minusStdDev &&
@@ -146,14 +133,14 @@ export const parseSentence = createSelector(
       count > minusStdDev[0]
     ) {
       status = 'average';
-      statusColor = colorRange[2];
+      statusColor = colorRange?.[2];
     } else if (
       twoMinusStdDev &&
       count >= twoMinusStdDev[0] &&
       count < twoMinusStdDev[1]
     ) {
       status = 'low';
-      statusColor = colorRange[3];
+      statusColor = colorRange?.[3];
     }
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
@@ -161,12 +148,12 @@ export const parseSentence = createSelector(
       dataset,
       count: {
         value: lastDate.count ? format(',')(lastDate.count) : 0,
-        color: colors.main
+        color: colors.main,
       },
       status: {
         value: status,
-        color: statusColor
-      }
+        color: statusColor,
+      },
     };
     return { sentence, params };
   }
@@ -175,5 +162,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });
