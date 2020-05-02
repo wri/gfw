@@ -44,7 +44,7 @@ class MainMapContainer extends PureComponent {
     analysisActive: PropTypes.bool,
     location: PropTypes.object,
     geostoreId: PropTypes.string,
-    basemap: PropTypes.bool,
+    basemap: PropTypes.object,
   };
 
   state = {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { selectActiveLang } from 'app/layouts/root/selectors';
+import { selectActiveLang } from 'utils/lang';
 
 import Component from './datepicker-component';
 

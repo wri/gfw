@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { LegendItemTimeStep } from 'vizzuality-components';
 
-import { track } from 'app/analytics';
+import { logEvent } from 'app/analytics';
 
 import Datepicker from 'components/ui/datepicker';
 
@@ -82,7 +82,7 @@ export const Timeline = (props) => {
           }}
           handleOnPlay={(p) => {
             if (p) {
-              track('legendTimelinePlay', { label: activeLayer.id });
+              logEvent('legendTimelinePlay', { label: activeLayer.id });
             }
           }}
         />
