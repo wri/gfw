@@ -95,7 +95,6 @@ export default {
     ]).then(
       spread((loss, extent) => {
         let data = {};
-
         if (loss && loss.data && extent && extent.data) {
           data = {
             loss: loss.data.data.filter(d => d.tcs_driver__type !== 'Unknown'),
@@ -103,13 +102,13 @@ export default {
           };
         }
 
-        const { startYear, range } = getYearsRange(data.loss);
+        const { startYear, endYear, range } = getYearsRange(data.loss);
 
         return {
           ...data,
           settings: {
             startYear,
-            endYear: 2018
+            endYear
           },
           options: {
             years: range.filter(y => y.value <= 2018)
