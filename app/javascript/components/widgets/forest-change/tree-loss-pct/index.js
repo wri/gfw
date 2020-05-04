@@ -129,6 +129,10 @@ export default {
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}.'
   },
+  whitelists: {
+    indicators: ['primary_forest'],
+    checkStatus: true
+  },
   settings: {
     threshold: 30,
     extentYear: 2000
@@ -175,7 +179,6 @@ export default {
           return {
             ...data,
             settings: {
-              forestType: 'primary_forest',
               startYear,
               endYear
             },
