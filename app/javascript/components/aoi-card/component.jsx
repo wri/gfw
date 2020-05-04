@@ -179,7 +179,7 @@ class AoICard extends PureComponent {
           </div>
           {!simple && (
             <div className="activity">
-              <span className="activity-intro">{"Last week's alerts:"}</span>
+              <span className="activity-intro">{"Lastest week's alerts:"}</span>
               {!loading &&
                 dataError && (
                 <span className="data-error-msg">
