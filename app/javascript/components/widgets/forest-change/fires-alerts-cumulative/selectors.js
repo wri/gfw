@@ -25,7 +25,7 @@ const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
-const getLocationObject = state => state.location;
+const getLocationName = state => state.locationLabel;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -346,7 +346,7 @@ export const parseSentence = createSelector(
     getColors,
     getSentences,
     getDataset,
-    getLocationObject,
+    getLocationName,
     getStartIndex,
     getEndIndex
   ],
@@ -363,7 +363,6 @@ export const parseSentence = createSelector(
     if (!data) return null;
 
     const start = startIndex;
-
     const latestYear = maxBy(data, 'year').year;
     const lastDate =
       maxBy(
@@ -403,8 +402,8 @@ export const parseSentence = createSelector(
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
+      location,
       date: formattedData,
-      location: location.label || '',
       latestYear,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
       maxYear,

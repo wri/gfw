@@ -24,7 +24,7 @@ const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
-const getLocationObject = state => state.location;
+const getLocationName = state => state.locationLabel;
 const getLang = state => state.lang || null;
 
 const MINGAP = 4;
@@ -358,7 +358,7 @@ export const parseSentence = createSelector(
     getColors,
     getSentences,
     getDataset,
-    getLocationObject,
+    getLocationName,
     getStartEndIndexes,
     getLang
   ],
@@ -414,8 +414,8 @@ export const parseSentence = createSelector(
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
+      location,
       date: formattedData,
-      location: location.label || '',
       fires_season_start: seasonStatement,
       fire_season_length: peakWeeks.length,
       start_date: firstDate.date,
