@@ -20,6 +20,7 @@ const getInteraction = state => state.settings.interaction || null;
 const getWeeks = state => state.settings.weeks || null;
 const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.sentence || null;
+const getLang = state => state.lang || null;
 
 export const getData = createSelector(
   [getAlerts, getDataset],
@@ -109,7 +110,7 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getInteraction, getSentences, getDataset],
+  [parseData, getColors, getInteraction, getSentences, getDataset, getLang],
   (data, colors, interaction, sentence, dataset) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
