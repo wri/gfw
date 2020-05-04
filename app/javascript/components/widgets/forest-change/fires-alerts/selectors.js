@@ -218,11 +218,11 @@ export const getLegend = createSelector(
         }
       }),
       average: {
-        label: 'Average Band',
+        label: 'Average Range',
         color: 'rgba(85,85,85, 0.15)'
       },
       unusual: {
-        label: 'Unusual Band',
+        label: 'Above/Below Average Range',
         color: 'rgba(85,85,85, 0.25)'
       }
     };
