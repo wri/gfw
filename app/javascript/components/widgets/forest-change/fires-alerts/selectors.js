@@ -280,6 +280,7 @@ export const parseConfig = createSelector(
         },
         unit: ` ${dataset} alerts`,
         color: '#49b5e3',
+        nullValue: 'No data available',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       });
