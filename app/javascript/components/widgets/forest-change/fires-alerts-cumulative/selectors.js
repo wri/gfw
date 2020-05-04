@@ -3,7 +3,6 @@ import moment from 'moment';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
-import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 import maxBy from 'lodash/maxBy';
@@ -379,8 +378,8 @@ export const parseSentence = createSelector(
     const maxWeek = maxBy(raw_data, 'count');
     const maxTotal = maxWeek.count;
     const maxYear = maxWeek.year;
+    const total = maxBy(slicedData, 'count').count || 0;
 
-    const total = sumBy(slicedData, 'count');
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
     const { date } = lastDate || {};
