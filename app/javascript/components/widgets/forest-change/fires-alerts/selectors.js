@@ -382,7 +382,9 @@ export const parseSentence = createSelector(
     const halfMax = (maxMean - minMean) * 0.5;
 
     const peakWeeks = data.filter(d => d.mean > halfMax);
-    const seasonStartDate = peakWeeks.length && peakWeeks[0].date;
+    const sortedPeakWeeks = sortBy(peakWeeks, 'week');
+
+    const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
 
@@ -418,7 +420,7 @@ export const parseSentence = createSelector(
       location,
       date: formattedData,
       fires_season_start: seasonStatement,
-      fire_season_length: peakWeeks.length,
+      fire_season_length: sortedPeakWeeks.length,
       start_date: firstDate.date,
       end_date: lastDate.date,
       dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
