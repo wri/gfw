@@ -47,6 +47,7 @@ export const getDataAPI = params =>
     return {
       loss,
       extent,
+      forestType: 'primary_forest',
       settings: {
         startYear,
         endYear
@@ -58,24 +59,19 @@ export const getDataAPI = params =>
   });
 
 export default {
-  widget: 'treeLoss',
-  title: 'Tree cover loss in {location}',
+  widget: 'treeLossPct',
+  title: {
+    default: 'Primary Forest loss in {location}',
+    global: 'Global Primary Forest loss'
+  },
   categories: ['summary', 'forest-change'],
-  types: ['country', 'geostore', 'wdpa', 'use'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['global', 'country', 'geostore', 'wdpa', 'use'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
   colors: 'loss',
   settingsConfig: [
-    {
-      key: 'forestType',
-      label: 'Forest Type',
-      whitelist: ['ifl', 'mangroves_2016'],
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
     {
       key: 'landCategory',
       label: 'Land Category',
@@ -83,11 +79,6 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true
-    },
-    {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch'
     },
     {
       key: 'years',
@@ -104,8 +95,8 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
-  pendingKeys: ['threshold', 'years', 'extentYear'],
-  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
+  pendingKeys: ['threshold', 'years'],
+  refetchKeys: ['landCategory', 'threshold'],
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',
   datasets: [
@@ -126,19 +117,25 @@ export default {
   },
   sentence: {
     initial:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {location} decreased by {extentDelta} in this time period.',
     withIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {location} in {indicator} decreased by {extentDelta} in this time period.',
+    globalInitial:
+      'From {startYear} to {endYear}, there was a total of {loss} of humid primary forest lost {location}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest decreased {location} by {extentDelta} in this time period.',
+    globalWithIndicator:
+      'From {startYear} to {endYear}, there was a total of {loss} of humid primary forest lost {location} within {indicator}, equivalent to a {percent} of {total tree cover loss} in the same time period. Total area of humid primary forest in {indicator} decreased {location} by {extentDelta} in this time period.',
     noLoss:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest.',
     noLossWithIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    co2Emissions: 'and {emissions} of CO\u2082 emissions'
+      'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}.'
+  },
+  whitelists: {
+    indicators: ['primary_forest'],
+    checkStatus: true
   },
   settings: {
     threshold: 30,
-    extentYear: 2000,
-    ifl: 2000
+    extentYear: 2000
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
@@ -149,29 +146,39 @@ export default {
         adm1: type === 'global' ? null : adm1,
         adm2: type === 'global' ? null : adm2
       };
-      const lossFetch =
-        type === 'global'
-          ? getLossGrouped({ ...params, ...globalLocation })
-          : getLoss({ ...params, ...globalLocation });
-      return all([lossFetch, getExtent({ ...params, ...globalLocation })]).then(
-        spread((loss, extent) => {
+
+      return all([
+        getLoss({ ...params, ...globalLocation }),
+        getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
+        getExtent({
+          ...params,
+          ...globalLocation,
+          forestType: 'primary_forest'
+        })
+      ]).then(
+        spread((loss, primaryLoss, extent) => {
           let data = {};
-          if (loss && loss.data && extent && extent.data) {
+          if (
+            primaryLoss &&
+            primaryLoss.data &&
+            loss &&
+            loss.data &&
+            extent &&
+            extent.data
+          ) {
             data = {
               loss: loss.data.data,
+              primaryLoss: primaryLoss.data.data,
               extent: (loss.data.data && extent.data.data[0].extent) || 0
             };
           }
 
-          const { startYear, endYear, range } = getYearsRange(data.loss);
-
+          const { startYear, endYear, range } = getYearsRange(
+            data.loss.filter(d => d.year > 2001)
+          );
           return {
             ...data,
             settings: {
-              forestType:
-                params && params.adm0 && params.adm0 === 'IDN'
-                  ? 'primary_forest'
-                  : null,
               startYear,
               endYear
             },
