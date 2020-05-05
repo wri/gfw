@@ -1,12 +1,14 @@
 // // forest change
 import gladAlerts from 'components/widgets/forest-change/glad-alerts';
 import treeLoss from 'components/widgets/forest-change/tree-loss';
+import firesWithin from 'components/widgets/forest-change/fires-within';
 import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
 import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 import faoDeforest from 'components/widgets/forest-change/fao-deforest';
 import faoReforest from 'components/widgets/forest-change/fao-reforest';
 import firesAlerts from 'components/widgets/forest-change/fires-alerts';
 import firesAlertsHistorical from 'components/widgets/forest-change/fires-alerts-historical';
+import firesAlertsCumulative from 'components/widgets/forest-change/fires-alerts-cumulative';
 import firesRanked from 'components/widgets/forest-change/fires-ranked';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import treeCoverGain from 'components/widgets/forest-change/tree-cover-gain';
@@ -52,10 +54,12 @@ export default {
   glads,
   gladAlerts,
   treeLoss,
+  firesWithin,
   treeLossGlobal,
   treeLossRanked,
   firesAlerts,
   firesAlertsHistorical,
+  firesAlertsCumulative,
   fires,
   firesRanked,
   faoDeforest,

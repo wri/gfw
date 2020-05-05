@@ -7,6 +7,15 @@ const googleLangCode = {
   id: 'id'
 };
 
+const momentLangCode = {
+  es_MX: 'es',
+  en: 'en',
+  zh: 'zh-cn',
+  pt_BR: 'pt-br',
+  fr: 'fr',
+  id: 'id'
+};
+
 export const getLanguages = () => {
   const txData = JSON.parse(localStorage.getItem('txlive:languages'));
   return (
@@ -20,3 +29,4 @@ export const getLanguages = () => {
 };
 
 export const getGoogleLangCode = lang => googleLangCode[lang || 'en'];
+export const getMomentLangCode = lang => momentLangCode[lang || 'en'];

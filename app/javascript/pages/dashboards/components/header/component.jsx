@@ -130,6 +130,9 @@ class Header extends PureComponent {
                   }`,
                   position: 'bottom'
                 }}
+                onClick={() => {
+                  track('downloadDashboardPage', { label: locationNames.adm0 && locationNames.adm0.label || 'Global' });
+                }}
               >
                 <Icon icon={downloadIcon} />
               </Button>

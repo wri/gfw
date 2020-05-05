@@ -1,0 +1,82 @@
+{
+  "substitution_data": {
+    "alert_name": "asdasddas",
+    "alerts": [
+      {
+        "alert_type": "GLAD",
+        "date": "09/12/2019 06:25 UTC",
+        "lat_long": "6,123 / 101.455",
+        "confidence": "13 (low)"
+      }, {
+        "alert_type": "GLAD",
+        "date": "09/12/2019 06:25 UTC",
+        "lat_long": "6,123 / 101.455",
+        "confidence": "13 (low)"
+      }, {
+        "alert_type": "GLAD",
+        "date": "09/12/2019 06:25 UTC",
+        "lat_long": "6,123 / 101.455",
+        "confidence": "13 (low)"
+      }, {
+        "alert_type": "GLAD",
+        "date": "09/12/2019 06:25 UTC",
+        "lat_long": "6,123 / 101.455",
+        "confidence": "13 (low)"
+      }, {
+        "alert_type": "GLAD",
+        "date": "09/12/2019 06:25 UTC",
+        "lat_long": "6,123 / 101.455",
+        "confidence": "13 (low)"
+      }
+    ],
+    "more_items": 123,
+    "glad_alerts": {
+      "confirmed": 4,
+      "unconfirmed": 0,
+      "intact_forest": 1,
+      "primary_forest": 1,
+      "peat": 0,
+      "protected_areas": 12
+    },
+    "viirs_alerts": {
+      "low": 1,
+      "medium": 1,
+      "high": 0,
+      "intact_forest": 1,
+      "primary_forest": 1,
+      "peat": 0,
+      "protected_areas": 12
+    },
+    "tags": "test tag here",
+    "image_url": "https://pbs.twimg.com/profile_images/846659478120366082/K-kZVvT8_400x400.jpg",
+    "image_url_big": "https://www.topchinatravel.com/pic/china-travel-seluppic/2011-2/201122215454292647.jpg",
+    "glad_image_url": "https://www.topchinatravel.com/pic/china-travel-seluppic/2011-2/201122215454292647.jpg",
+    "glad_chart_url": "https://a.c-dn.net/c/content/igcom/en_EN/ig-financial-markets/market-news-and-analysis/trading-strategies/2018/12/05/how-to-read-forex-charts/jcr%3Acontent/newspar3/panel_child/mp-parsys2/textimage/image.webimg.png/1551786153595.png",
+"viirs_image_url": "https://www.topchinatravel.com/pic/china-travel-seluppic/2011-2/201122215454292647.jpg",
+    "viirs_chart_url": "https://a.c-dn.net/c/content/igcom/en_EN/ig-financial-markets/market-news-and-analysis/trading-strategies/2018/12/05/how-to-read-forex-charts/jcr%3Acontent/newspar3/panel_child/mp-parsys2/textimage/image.webimg.png/1551786153595.png",
+     "location": "Merile and Koiya",
+    "subscriptions_url": "https://www.globalforestwatch.org/my-gfw/subscriptions",
+    "month": "December",
+    "year": 2019,
+    "week_of": "25th of December",
+    "week_start": "9/12/2019",
+    "week_end": "9/19/2019",
+    "glad_frequency": "unusually high",
+    "glad_count": 20,
+    "viirs_count": "13",
+    "viirs_days_count": 2,
+    "viirs_day_start": "9/12/2019",
+    "viirs_day_end": "9/14/2019",
+    "viirs_frequency": "low",
+    "priority_areas": {
+      "intact_forest": 1,
+      "primary_forest": 1,
+      "peat": 0,
+      "protected_areas": 12,
+      "plantations": 2,
+      "other": 1
+    }
+  },
+  "metadata": {},
+  "options": {}
+}

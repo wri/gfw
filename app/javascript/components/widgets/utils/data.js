@@ -38,6 +38,15 @@ const meanData = data => {
   return means.map(w => mean(w));
 };
 
+const stdDevData = data => {
+  const dataMean = mean(data);
+  const sumOfSquares = data.reduce(
+    (sum, value) => sum + (dataMean - value) ** 2,
+    0
+  );
+  return (sumOfSquares / data.length) ** 0.5;
+};
+
 const statsData = data => {
   const grouped_week = [];
 
@@ -49,16 +58,13 @@ const statsData = data => {
     });
   });
 
-  const stats = grouped_week.map(w => {
-    const week_mean = mean(w);
-    const sumOfSquares = w.reduce(
-      (sum, value) => sum + (week_mean - value) ** 2,
-      0
-    );
-
+  const stats = grouped_week.map((w, i) => {
+    const validWeeks = w.filter(el => el !== null);
+    const week_mean = mean(validWeeks);
     return {
+      week: i + 1,
       mean: week_mean,
-      std: (sumOfSquares / w.length) ** 0.5
+      std: stdDevData(validWeeks)
     };
   });
   return stats;
@@ -71,6 +77,27 @@ const runningMean = (data, windowSize) => {
       const slice = data.slice(i, i + windowSize);
       smoothedMean.push(mean(slice));
     }
+  });
+  return smoothedMean;
+};
+
+const runningMeanWindowed = (data, windowSize) => {
+  const smoothedMean = [];
+  const buffer = Math.round(windowSize / 2);
+  let increment = 1;
+  data.forEach((d, i) => {
+    let slice = [];
+    if (i < buffer) {
+      slice = data.slice(0, i + increment);
+      increment += 1;
+    } else if (i >= data.length - buffer - 1) {
+      slice = data.slice(i - increment, data.length - 1);
+      increment -= 1;
+    } else {
+      slice = data.slice(i - buffer, i + buffer);
+      increment = 5;
+    }
+    smoothedMean.push(mean(slice));
   });
   return smoothedMean;
 };
@@ -161,17 +188,35 @@ export const getStatsData = (data, latest) => {
   return parsedData;
 };
 
-export const getVariance = data => {
-  // const varianceByWeek = data.map(({mean, stdDev, count}) => {
-  //   return stdDev > 0 ? (count - mean) / stdDev : 0;
-  // });
-  // return mean(varianceByWeek)
-  const meanTotal = sumBy(data, 'mean');
-  const countTotal = sumBy(data, 'count');
-  const sumOfStdDevs = Math.sqrt(
-    data.reduce((sum, d) => sum + d.stdDev ** 2, 0)
-  );
-  return (countTotal - meanTotal) / sumOfStdDevs;
+export const getPeriodVariance = (data, raw_data) => {
+  const minYear = minBy(raw_data, 'year').year;
+  const maxYear = maxBy(raw_data, 'year').year;
+  const startWeek = data.length && data[0].week;
+  const endWeek = data.length && data[data.length - 1].week;
+
+  const yearlyPeriodSum = range(minYear, maxYear, 1).map(year => {
+    let slicedData = [];
+    if (endWeek > startWeek) {
+      slicedData = raw_data.filter(
+        d => d.year === year && d.week >= startWeek && d.week <= endWeek
+      );
+    } else {
+      const filteredDataStart = raw_data.filter(
+        d => d.year === year && d.week >= startWeek
+      );
+      const filteredDataEnd = raw_data.filter(
+        d => d.year === year + 1 && d.week <= endWeek
+      );
+      slicedData = concat(filteredDataStart, filteredDataEnd);
+    }
+    return slicedData.length ? sumBy(slicedData, 'count') : 0;
+  });
+  const meanPeriodTotal = mean(yearlyPeriodSum);
+  const stdPeriodTotal = stdDevData(yearlyPeriodSum);
+  const currentperiodTotal = sumBy(data, 'count');
+  return stdPeriodTotal > 0
+    ? (currentperiodTotal - meanPeriodTotal) / stdPeriodTotal
+    : 0;
 };
 
 export const getStdDevData = (data, rawData) => {
@@ -198,6 +243,48 @@ export const getStdDevData = (data, rawData) => {
     twoPlusStdDev: [d.mean + stdDev, d.mean + stdDev * 2],
     twoMinusStdDev: [d.mean - stdDev * 2, d.mean - stdDev]
   }));
+};
+
+export const getCumulativeStatsData = data => {
+  const maxYear = maxBy(data, 'year').year;
+
+  const allYears = getYearsObj(data, 0, data.length);
+
+  const stats = statsData(allYears);
+  const smoothedMeans = runningMeanWindowed(stats.map(el => el.mean), 12).slice(
+    0,
+    52
+  );
+  const smoothedStds = runningMeanWindowed(stats.map(el => el.std), 12).slice(
+    0,
+    52
+  );
+
+  const pastYear = data.filter(d => d.year === maxYear);
+  const parsedData = pastYear.map((d, i) => {
+    let weekMean = (smoothedMeans && smoothedMeans[i]) || 0;
+    let stdDev = (smoothedStds && smoothedStds[i]) || 0;
+    if (i === pastYear.length - 1) {
+      const diff =
+        (smoothedMeans && smoothedMeans[i - 1] - smoothedMeans[i - 2]) || 0;
+      const step =
+        (smoothedMeans && mean([smoothedMeans[i - 1], smoothedMeans[i - 2]])) ||
+        0;
+      weekMean = diff + step;
+      stdDev = (smoothedStds && smoothedStds[i - 1]) || 0;
+    }
+
+    return {
+      ...d,
+      stdDev,
+      mean: weekMean,
+      plusStdDev: [weekMean, weekMean + stdDev],
+      minusStdDev: [weekMean - stdDev, weekMean],
+      twoPlusStdDev: [weekMean + stdDev, weekMean + stdDev * 2],
+      twoMinusStdDev: [weekMean - stdDev * 2, weekMean - stdDev]
+    };
+  });
+  return parsedData;
 };
 
 export const getDatesData = data =>
@@ -235,15 +322,21 @@ export const getChartConfig = (colors, latest, unit = '') => {
     yKeys: {
       lines: {
         count: {
-          stroke: colors.main
+          stroke: colors.main,
+          isAnimationActive: false
         },
         compareCount: {
-          stroke: '#00F'
+          stroke: '#49b5e3',
+          isAnimationActive: false
         },
-        target: { stroke: 'grey' }
+        target: {
+          stroke: 'grey',
+          isAnimationActive: false
+        }
       },
       areas: {
         plusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.1,
@@ -252,6 +345,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         minusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.1,
@@ -260,6 +354,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         twoPlusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.2,
@@ -268,6 +363,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           activeDot: false
         },
         twoMinusStdDev: {
+          isAnimationActive: false,
           fill: '#555555',
           stroke: '#555555',
           opacity: 0.2,

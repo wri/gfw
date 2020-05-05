@@ -4,10 +4,14 @@ import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FIRES_VIIRS_DATASET
+} from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
+  POLITICAL_BOUNDARIES,
+  FIRES_ALERTS_VIIRS
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -27,6 +31,7 @@ export default {
       key: 'compareYear',
       label: 'Compare with the same period in',
       type: 'compare-select',
+      placeholder: 'None',
       clearable: true,
       border: true
     },
@@ -56,7 +61,7 @@ export default {
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   datasets: [
@@ -67,8 +72,8 @@ export default {
     },
     // fires
     {
-      dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',
-      layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
+      dataset: FIRES_VIIRS_DATASET,
+      layers: [FIRES_ALERTS_VIIRS]
     }
   ],
   hideLayers: true,
@@ -80,11 +85,12 @@ export default {
     forestChange: 100
   },
   settings: {
-    dataset: 'VIIRS',
+    dataset: 'viirs',
     confidence: 'h'
   },
   sentence:
-    'In {location} the peak fire season typically begins in {fires_season_month} and lasts {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+    'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+  whitelistType: 'fires',
   whitelists: {
     adm0: [
       'AFG',
@@ -300,11 +306,12 @@ export default {
         const { data } = alerts.data;
         const years = uniq(data.map(d => d.year));
         const maxYear = Math.max(...years);
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
 
         return (
           {
             alerts: data,
-            latest,
+            latest: latestDate,
             options: {
               compareYear: years.filter(y => y !== maxYear).map(y => ({
                 label: y,

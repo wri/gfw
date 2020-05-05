@@ -10,7 +10,8 @@ import {
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_EXTENT
+  FOREST_EXTENT,
+  TREE_COVER
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -76,7 +77,7 @@ export default {
       dataset: FOREST_EXTENT_DATASET,
       layers: {
         2010: FOREST_EXTENT,
-        2000: 'c05c32fd-289c-4b20-8d73-dc2458234e04'
+        2000: TREE_COVER
       }
     }
   ],

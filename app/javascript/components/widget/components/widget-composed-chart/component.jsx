@@ -5,9 +5,12 @@ import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 
 import ComposedChart from 'components/charts/composed-chart';
+import Brush from 'components/charts/brush-chart';
+import Legend from 'components/charts/components/chart-legend';
 
 class WidgetComposedChart extends Component {
   static propTypes = {
+    originalData: PropTypes.array,
     data: PropTypes.array,
     config: PropTypes.object,
     settings: PropTypes.object,
@@ -24,15 +27,17 @@ class WidgetComposedChart extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { data, settings } = this.props;
+    const { data, settings, config } = this.props;
     const {
       data: nextData,
       settings: nextSettings,
+      config: nextConfig,
       preventRenderKeys: nextPreventRenderKeys
     } = nextProps;
 
     return (
       !isEqual(data, nextData) ||
+      !isEqual(config, nextConfig) ||
       (!isEqual(
         omit(nextSettings, nextPreventRenderKeys),
         omit(settings, nextPreventRenderKeys)
@@ -59,29 +64,54 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
-  handleBrush = debounce(values => {
-    const { handleChangeSettings } = this.props;
+  handleBrushEnd = ({ startIndex, endIndex }) => {
+    const { originalData, handleChangeSettings } = this.props;
     if (handleChangeSettings) {
-      handleChangeSettings(values);
+      handleChangeSettings({
+        startIndex,
+        endIndex,
+        startDateAbsolute: originalData[startIndex].date,
+        endDateAbsolute: originalData[endIndex].date
+      });
     }
-  }, 100);
+  };
 
   render() {
-    const { data, config, active, simple, barBackground } = this.props;
+    const {
+      originalData,
+      data,
+      config,
+      active,
+      simple,
+      barBackground
+    } = this.props;
+    const { brush, legend } = config;
 
     return (
       <div className="c-widget-composed-chart">
+        {!simple &&
+          legend && <Legend data={data} config={legend} simple={simple} />}
+
         <ComposedChart
           className="loss-chart"
           data={data}
           config={config}
-          handleMouseMove={this.handleMouseMove}
-          handleMouseLeave={this.handleMouseLeave}
-          handleBrush={this.handleBrush}
           backgroundColor={active ? '#fefedc' : ''}
           barBackground={barBackground}
           simple={simple}
+          active={active}
+          handleMouseMove={this.handleMouseMove}
+          handleMouseLeave={this.handleMouseLeave}
         />
+
+        {!simple &&
+          brush && (
+          <Brush
+            {...brush}
+            data={originalData}
+            onBrushEnd={this.handleBrushEnd}
+          />
+        )}
       </div>
     );
   }

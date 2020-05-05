@@ -48,12 +48,11 @@ class WidgetHeader extends PureComponent {
       handleChangeSettings,
       handleShowShare,
       preventCloseSettings,
-      widget,
       getDataURL,
       status
     } = this.props;
 
-    const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
+    const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
@@ -69,12 +68,11 @@ class WidgetHeader extends PureComponent {
               handleShowMap={handleShowMap}
             />
           )}
-
           {showSettingsBtn && (
             <WidgetSettingsButton
               settingsConfig={settingsConfig}
               loading={loading}
-              widget={widget}
+              title={title}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}

@@ -1,0 +1,53 @@
+@import '~styles/settings.scss';
+
+.c-chart-legend {
+  display: flex;
+  width: 100%;
+  margin-bottom: 16px;
+
+  .legend-item {
+    margin-left: 20px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .legend-title {
+    font-size: rem(12px);
+    line-height: 1;
+    color: $slate;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    span {
+      display: inline-block;
+      width: rem(12px);
+      min-width: rem(12px);
+      min-height: rem(12px);
+      height: rem(12px);
+      margin-right: rem(7px);
+      border-radius: 100%;
+      align-self: flex-start;
+      margin-top: 1px;
+    }
+
+    p {
+      color: $slate;
+      font-size: rem(12px);
+      line-height: 1.4;
+    }
+  }
+
+  .legend-value {
+    padding: rem(5px) 0 0 rem(20px);
+    font-size: rem(28px);
+    font-weight: 500;
+    margin-bottom: rem(20px);
+  }
+
+  &.simple {
+    display: none;
+  }
+}

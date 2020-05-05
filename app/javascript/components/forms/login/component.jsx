@@ -149,9 +149,9 @@ class LoginForm extends PureComponent {
                           target="_self"
                           extLink={`${AUTH_URL}/${
                             s.value
-                          }?applications=gfw&token=true&callbackUrl=${
+                          }?applications=gfw&token=true&callbackUrl=${encodeURIComponent(
                             window.location.href
-                          }`}
+                          )}`}
                         >
                           Login with {s.label}
                         </Button>

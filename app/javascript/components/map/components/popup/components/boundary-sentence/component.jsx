@@ -18,7 +18,7 @@ class BoundarySentence extends Component {
 
   render() {
     const { data } = this.props;
-    let name = data[`name_${data.level}`];
+    let name = data[`name_${data.level || '0'}`];
     if (!data.gid_0) {
       name = data[Object.keys(data).find(k => k.includes('name'))];
     }

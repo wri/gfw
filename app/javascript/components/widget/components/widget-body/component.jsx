@@ -62,6 +62,7 @@ class WidgetBody extends PureComponent {
       handleRefetchData,
       handleDataHighlight
     } = this.props;
+
     const hasData = !isEmpty(data);
     const hasRawData = !isEmpty(rawData);
     const hasSentence = !isEmpty(sentence);

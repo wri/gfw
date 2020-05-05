@@ -11,8 +11,8 @@ import {
   Area,
   XAxis,
   YAxis,
+  ReferenceLine,
   CartesianGrid,
-  Brush,
   Tooltip,
   ResponsiveContainer,
   ComposedChart
@@ -61,7 +61,6 @@ class CustomComposedChart extends PureComponent {
       handleMouseMove,
       handleMouseLeave,
       handleClick,
-      handleBrush,
       barBackground
     } = this.props;
 
@@ -72,13 +71,14 @@ class CustomComposedChart extends PureComponent {
       yKeys,
       xAxis,
       yAxis,
+      cartesianGrid,
       gradients,
       tooltip,
       unit,
       unitFormat,
       height,
       margin,
-      brush
+      referenceLine
     } = config;
 
     const isVertical = !!xKeys;
@@ -171,6 +171,7 @@ class CustomComposedChart extends PureComponent {
                 vertical={isVertical}
                 horizontal={!isVertical}
                 strokeDasharray="3 4"
+                {...cartesianGrid}
               />
             )}
 
@@ -223,7 +224,7 @@ class CustomComposedChart extends PureComponent {
                 </Bar>
               ))}
 
-            {brush && <Brush {...brush} onChange={handleBrush} />}
+            {referenceLine && <ReferenceLine {...referenceLine} />}
           </ComposedChart>
         </ResponsiveContainer>
       </div>

@@ -26,7 +26,7 @@ const getDataFromAPI = params =>
     slug: ['wdpa', 'use', 'geostore'].includes(params.type)
       ? 'biomass-loss'
       : 'umd-loss-gain',
-    version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v1' : 'v3',
+    version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v2' : 'v3',
     aggregate: false
   }).then(response => {
     const { attributes: data } =

@@ -158,5 +158,15 @@ export default {
     category: 'Map landing',
     action: 'User interacts with popup',
     label: '[clicked]'
+  },
+  clickAreaOfInterest: {
+    category: 'Map menu',
+    action: 'Select saved area',
+    label: '[id]'
+  },
+  userSelectsAoiTag: {
+    category: 'User AOIs',
+    action: 'User filters areas by a tag',
+    label: '[tag]'
   }
 };

@@ -101,15 +101,6 @@ class WidgetsContainer extends PureComponent {
         this.clearMap();
       }
     }
-
-    // if widget is no longer activeWidget remove layers from map
-    if (
-      !embed &&
-      !activeWidget &&
-      !isEqual(activeWidget, prevProps.activeWidget)
-    ) {
-      this.clearMap();
-    }
   }
 
   syncWidgetWithMap = () => {
