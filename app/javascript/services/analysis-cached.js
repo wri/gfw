@@ -493,55 +493,15 @@ export const fetchVIIRSAlerts = (params) => {
   }));
 };
 
-export const fetchFiresWithin = ({
-  adm0,
-  adm1,
-  adm2,
-  tsc,
-  forestType,
-  landCategory,
-  confidence,
-  ifl,
-  // startDate,
-  grouped,
-  download,
-  weeks,
-  ...params
-}) => {
-  const { firesWithin } = SQL_QUERIES;
+export const fetchFiresWithin = params => {
+  const { forestType, landCategory, ifl, download, dataset, weeks } = params || {};
+  console.log(params);
   const filterYear = moment()
     .subtract(weeks, 'weeks')
     .year();
-  const url = `${getRequestUrl({
-    ...params,
-    adm0,
-    adm1,
-    adm2,
-    grouped,
-    confidence,
-    allowedParams: 'fires'
-  })}${firesWithin}`
-    .replace(
-      /{location}/g,
-      grouped
-        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
-        : getLocationSelect({ adm1, adm2, ...params })
-    )
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        confidence,
-        ifl,
-        ...params,
-        allowedParams: 'fires',
-        glad: true
-      })
-    )
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${SQL_QUERIES.firesWithin}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
     .replace('{alert__year}', filterYear);
 
   if (download) {

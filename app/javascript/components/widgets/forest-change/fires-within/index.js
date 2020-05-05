@@ -33,7 +33,11 @@ export default {
       label: 'Confidence level',
       type: 'select',
       clearable: false,
-      border: true
+      border: true,
+      options: [
+        { label: 'All', value: '' },
+        { label: 'High', value: 'h' }
+      ]
     },
     {
       key: 'forestType',
@@ -74,7 +78,7 @@ export default {
   settings: {
     period: 'week',
     weeks: 13,
-    dataset: 'VIIRS',
+    dataset: 'viirs',
     confidence: 'h',
     landCategory: '',
     forestType: 'ifl'
@@ -102,15 +106,7 @@ export default {
             fireCountAll: allFire
           };
         }
-        return {
-          ...data,
-          options: {
-            confidence: [
-              { label: 'All', value: '' },
-              { label: 'High', value: 'h' }
-            ]
-          }
-        };
+        return data
       })
     ),
   getDataURL: params => [
