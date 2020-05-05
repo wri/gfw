@@ -132,25 +132,22 @@ export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYear],
   (data, currentData, maxminYear, compareYears) => {
     if (!data || !currentData) return null;
-   
+
     return currentData.map(d => {
       const yearDifference = maxminYear.max - d.year;
       const week = d.week;
 
       if (compareYears) {
-
-        const compareYearData = compareYears.reduce((acc,year) => {
-          
+        const compareYearData = compareYears.reduce((acc, year) => {
           const compareWeek = data.find(
             dt => dt.year === year - yearDifference && dt.week === week
-            );
+          );
 
           return {
             ...acc,
             [year]: compareWeek ? compareWeek.count : null
-          }
-
-        },{});
+          };
+        }, {});
 
         return {
           ...d,
