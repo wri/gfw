@@ -51,7 +51,7 @@ export default {
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   hideLayers: true,
@@ -63,11 +63,12 @@ export default {
     forestChange: 100
   },
   settings: {
-    dataset: 'VIIRS',
+    dataset: 'viirs',
     confidence: 'h'
   },
   sentence:
     'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The worst year on record was {maxYear}, with {maxTotal} fires.',
+  whitelistType: 'fires',
   whitelists: {
     adm0: [
       'AFG',
@@ -283,11 +284,12 @@ export default {
         const { data } = alerts.data;
         const years = uniq(data.map(d => d.year));
         const maxYear = Math.max(...years);
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
 
         return (
           {
             alerts: data,
-            latest,
+            latest: latestDate,
             options: {
               compareYear: years.filter(y => y !== maxYear).map(y => ({
                 label: y,

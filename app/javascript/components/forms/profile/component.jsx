@@ -7,7 +7,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 
-import Checkbox from 'components/forms/components/checkbox';
+// import Checkbox from 'components/forms/components/checkbox';
 import Radio from 'components/forms/components/radio';
 
 import Submit from 'components/forms/components/submit';
@@ -15,9 +15,9 @@ import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
 import Error from 'components/forms/components/error';
 
-import { email as validateEmail } from 'components/forms/validations';
+import { email as validateEmail, hasValidOption } from 'components/forms/validations';
 
-import { sectors, howDoYouUse, interests, topics } from './config';
+import { sectors, howDoYouUse, interests } from './config';
 
 import './styles.scss';
 
@@ -31,6 +31,10 @@ class ProfileForm extends PureComponent {
 
   render() {
     const { initialValues, countries, saveProfile, source } = this.props;
+    const sectorsOptions = Object.keys(sectors).map(s => ({
+      label: s,
+      value: s
+    }));
 
     return (
       <Fragment>
@@ -93,11 +97,9 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="sector"
                         label="sector"
-                        options={Object.keys(sectors).map(s => ({
-                          label: s,
-                          value: s
-                        }))}
+                        options={sectorsOptions}
                         placeholder="Select a sector"
+                        validate={[value => hasValidOption(value, sectorsOptions)]}
                         required
                       />
                       {values.sector &&
@@ -167,7 +169,7 @@ class ProfileForm extends PureComponent {
                         multiple
                         required
                       />
-                      <Checkbox
+                      {/* <Checkbox
                         name="signUpToNewsletter"
                         options={[
                           {
@@ -177,7 +179,6 @@ class ProfileForm extends PureComponent {
                           }
                         ]}
                       />
-
                       {values.signUpToNewsletter && (
                         <Select
                           name="topics"
@@ -186,7 +187,7 @@ class ProfileForm extends PureComponent {
                           required
                           multiple
                         />
-                      )}
+                      )} */}
                       <Error
                         valid={valid}
                         submitFailed={submitFailed}

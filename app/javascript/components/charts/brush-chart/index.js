@@ -20,6 +20,7 @@ export default class Brush extends PureComponent {
     data: PropTypes.array,
     config: PropTypes.object,
     minimumGap: PropTypes.number,
+    maximumGap: PropTypes.number,
     onBrushEnd: PropTypes.func
   };
 
@@ -30,7 +31,8 @@ export default class Brush extends PureComponent {
       bottom: 0,
       right: 0
     },
-    minimumGap: 4
+    minimumGap: 0,
+    maximumGap: 0
   };
 
   state = {
@@ -58,6 +60,22 @@ export default class Brush extends PureComponent {
         [this.scale(end), height - margin.bottom]
       ]
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { margin, startIndex, endIndex } = this.props;
+    const { height } = this.svg.getBoundingClientRect();
+    const { startIndex: prevStartIndex, endIndex: prevEndIndex } = prevProps;
+
+    if (startIndex !== prevStartIndex || endIndex !== prevEndIndex) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        brushSelection: [
+          [this.scale(startIndex), margin.top],
+          [this.scale(endIndex), height - margin.bottom]
+        ]
+      });
+    }
   }
 
   _renderBackground() {
@@ -122,7 +140,7 @@ export default class Brush extends PureComponent {
 
   _renderBrush() {
     const { width, height } = this.svg.getBoundingClientRect();
-    const { margin, minimumGap, onBrushEnd } = this.props;
+    const { margin, maximumGap, minimumGap, onBrushEnd } = this.props;
     const { brushSelection, intermediateBrushSelection } = this.state;
     const fs = intermediateBrushSelection || brushSelection;
     const ts = brushSelection;
@@ -139,6 +157,7 @@ export default class Brush extends PureComponent {
           <SVGBrush
             scale={this.scale}
             minimumGap={minimumGap}
+            maximumGap={maximumGap}
             extent={[
               [margin.left, margin.top],
               [width - margin.right, height - margin.bottom]

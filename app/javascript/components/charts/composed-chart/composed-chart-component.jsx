@@ -11,6 +11,7 @@ import {
   Area,
   XAxis,
   YAxis,
+  ReferenceLine,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
@@ -76,7 +77,8 @@ class CustomComposedChart extends PureComponent {
       unit,
       unitFormat,
       height,
-      margin
+      margin,
+      referenceLine
     } = config;
 
     const isVertical = !!xKeys;
@@ -221,6 +223,8 @@ class CustomComposedChart extends PureComponent {
                     ))}
                 </Bar>
               ))}
+
+            {referenceLine && <ReferenceLine {...referenceLine} />}
           </ComposedChart>
         </ResponsiveContainer>
       </div>

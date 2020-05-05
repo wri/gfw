@@ -8,8 +8,6 @@ import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 import min from 'lodash/min';
 
-import { getColorPalette } from 'utils/data';
-
 import {
   getStatsData,
   getDatesData,
@@ -17,6 +15,7 @@ import {
   getChartConfig
 } from 'components/widgets/utils/data';
 
+const getActive = state => state.active;
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
@@ -25,7 +24,11 @@ const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
-const getLocationObject = state => state.location;
+const getLocationName = state => state.locationLabel;
+const getLang = state => state.lang || null;
+
+const MINGAP = 4;
+const MAXGAP = 12;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -120,6 +123,33 @@ export const getMaxMinDates = createSelector(
   }
 );
 
+export const getStartEndIndexes = createSelector(
+  [getStartIndex, getEndIndex, getActive, getDates],
+  (startIndex, endIndex, active, currentData) => {
+    if (!currentData) {
+      return {
+        startIndex,
+        endIndex
+      };
+    }
+
+    const start = startIndex;
+    const end = endIndex || currentData.length - 1;
+
+    if (active && end - start > MAXGAP) {
+      return {
+        startIndex: end - MAXGAP,
+        endIndex: end
+      };
+    }
+
+    return {
+      startIndex: start,
+      endIndex: end
+    };
+  }
+);
+
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYear],
   (data, currentData, maxminYear, compareYear) => {
@@ -149,9 +179,11 @@ export const parseData = createSelector(
 );
 
 export const parseBrushedData = createSelector(
-  [parseData, getStartIndex, getEndIndex],
-  (data, startIndex, endIndex) => {
+  [parseData, getStartEndIndexes],
+  (data, indexes) => {
     if (!data) return null;
+
+    const { startIndex, endIndex } = indexes;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -186,11 +218,11 @@ export const getLegend = createSelector(
         }
       }),
       average: {
-        label: 'Average Band',
+        label: 'Average Range',
         color: 'rgba(85,85,85, 0.15)'
       },
       unusual: {
-        label: 'Unusual Band',
+        label: 'Above/Below Average Range',
         color: 'rgba(85,85,85, 0.25)'
       }
     };
@@ -199,25 +231,27 @@ export const getLegend = createSelector(
 
 export const parseConfig = createSelector(
   [
+    getActive,
     getLegend,
     getColors,
     getLatest,
     getMaxMinDates,
     getCompareYear,
     getDataset,
-    getStartIndex,
-    getEndIndex
+    getStartEndIndexes
   ],
   (
+    active,
     legend,
     colors,
     latest,
     maxminYear,
     compareYear,
     dataset,
-    startIndex,
-    endIndex
+    indexes
   ) => {
+    const { startIndex, endIndex } = indexes;
+
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -246,6 +280,7 @@ export const parseConfig = createSelector(
         },
         unit: ` ${dataset} alerts`,
         color: '#49b5e3',
+        nullValue: 'No data available',
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
       });
@@ -259,7 +294,7 @@ export const parseConfig = createSelector(
         tickFormatter: t => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
-          endIndex - startIndex < 12 && {
+          endIndex - startIndex < 10 && {
           tickCount: 5,
           interval: 0,
           tickFormatter: t => moment(t).format('MMM-DD')
@@ -279,6 +314,8 @@ export const parseConfig = createSelector(
         dataKey: 'date',
         startIndex,
         endIndex,
+        minimumGap: MINGAP,
+        maximumGap: active ? MAXGAP : 0,
         config: {
           margin: {
             top: 5,
@@ -322,22 +359,13 @@ export const parseSentence = createSelector(
     getColors,
     getSentences,
     getDataset,
-    getLocationObject,
-    getStartIndex,
-    getEndIndex
+    getLocationName,
+    getStartEndIndexes,
+    getLang
   ],
-  (
-    raw_data,
-    data,
-    colors,
-    sentence,
-    dataset,
-    location,
-    startIndex,
-    endIndex
-  ) => {
+  (raw_data, data, colors, sentence, dataset, location, indexes, lang) => {
     if (!data) return null;
-
+    const { startIndex, endIndex } = indexes;
     const start = startIndex;
     const end = endIndex || data.length - 1;
 
@@ -354,7 +382,9 @@ export const parseSentence = createSelector(
     const halfMax = (maxMean - minMean) * 0.5;
 
     const peakWeeks = data.filter(d => d.mean > halfMax);
-    const seasonStartDate = peakWeeks.length && peakWeeks[0].date;
+    const sortedPeakWeeks = sortBy(peakWeeks, 'week');
+
+    const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
 
@@ -366,8 +396,8 @@ export const parseSentence = createSelector(
     }
 
     const total = sumBy(slicedData, 'count');
-    const colorRange = getColorPalette(colors.ramp, 5);
-    let statusColor = colorRange[4];
+    const colorRange = colors.ramp;
+    let statusColor = colorRange[8];
     const { date } = lastDate || {};
 
     let status = 'unusually low';
@@ -376,24 +406,24 @@ export const parseSentence = createSelector(
       statusColor = colorRange[0];
     } else if (variance <= 2 && variance > 1) {
       status = 'high';
-      statusColor = colorRange[1];
+      statusColor = colorRange[2];
     } else if (variance <= 1 && variance > -1) {
       status = 'average';
-      statusColor = colorRange[2];
+      statusColor = colorRange[4];
     } else if (variance <= -1 && variance > -2) {
       status = 'low';
-      statusColor = colorRange[3];
+      statusColor = colorRange[6];
     }
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
+      location,
       date: formattedData,
-      location: location.label || '',
       fires_season_start: seasonStatement,
-      fire_season_length: peakWeeks.length,
+      fire_season_length: sortedPeakWeeks.length,
       start_date: firstDate.date,
       end_date: lastDate.date,
-      dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
+      dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
       dataset,
       count: {
         value: total ? format(',')(total) : 0,
@@ -402,7 +432,8 @@ export const parseSentence = createSelector(
       status: {
         value: status,
         color: statusColor
-      }
+      },
+      lang
     };
     return { sentence, params };
   }

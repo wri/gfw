@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 class SVGBrush extends PureComponent {
   static defaultProps = {
     extent: [[0, 0], [1, 1]],
-    minimumGap: 4,
+    minimumGap: 0,
+    maximumGap: 0,
     onBrushStart: event => {},
     onBrush: event => {},
     onBrushEnd: event => {},
@@ -17,6 +18,7 @@ class SVGBrush extends PureComponent {
     selection: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
     extent: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
     minimumGap: PropTypes.number.isRequired,
+    maximumGap: PropTypes.number.isRequired,
     onBrushStart: PropTypes.func.isRequired,
     onBrush: PropTypes.func.isRequired,
     onBrushEnd: PropTypes.func.isRequired,
@@ -65,74 +67,11 @@ class SVGBrush extends PureComponent {
       <rect
         className="overlay"
         pointerEvents="all"
-        // cursor="crosshair"
         fill="none"
         x={x0}
         y={y0}
         width={x1 - x0}
         height={y1 - y0}
-        // onPointerDown={this._handleBrushStart}
-        // onPointerMove={event => {
-        //   if (this.move) {
-        //     const [x, y] = this.props.getEventMouse(event);
-        //     const [sx, sy] = this.move;
-        //     let selection = this.state.selection;
-        //     switch (brushType) {
-        //       case '2d':
-        //         selection = [
-        //           [
-        //             Math.max(Math.min(sx, x), x0),
-        //             Math.max(Math.min(sy, y), y0)
-        //           ],
-        //           [Math.min(Math.max(sx, x), x1), Math.min(Math.max(sy, y), y1)]
-        //         ];
-        //         break;
-        //       case 'x':
-        //         selection = [
-        //           [Math.min(sx, x), y0],
-        //           [Math.max(sx, x), y1]
-        //         ];
-        //         break;
-        //       case 'y':
-        //         selection = [
-        //           [x0, Math.min(sy, y)],
-        //           [x1, Math.max(sy, y)]
-        //         ];
-        //     }
-        //     this.setState({ selection });
-        //     this.props.onBrush({
-        //       target: this,
-        //       type: 'brush',
-        //       selection,
-        //       sourceEvent: event
-        //     });
-        //   }
-        // }}
-        // onPointerUp={event => {
-        //   const move = this.props.getEventMouse(event);
-        //   let selection = this.state.selection;
-        //   if (
-        //     this.move &&
-        //     this.move[0] === move[0] &&
-        //     this.move[1] === move[1]
-        //   ) {
-        //     selection = null;
-        //     this.props.onBrush({
-        //       target: this,
-        //       type: 'brush',
-        //       selection,
-        //       sourceEvent: event
-        //     });
-        //   }
-        //   this.move = null;
-        //   this.setState({ selection });
-        //   this.props.onBrushEnd({
-        //     target: this,
-        //     type: 'end',
-        //     selection,
-        //     sourceEvent: event
-        //   });
-        // }}
       />
     );
   }
@@ -141,6 +80,7 @@ class SVGBrush extends PureComponent {
     const {
       extent: [[ex0, ey0], [ex1, ey1]],
       scale,
+      maximumGap,
       minimumGap,
       brushType
     } = this.props;
@@ -176,6 +116,28 @@ class SVGBrush extends PureComponent {
 
     return (
       <React.Fragment>
+        {/* GRAY AREA */}
+        <rect
+          fill="#FFFFFF"
+          fillOpacity="0.75"
+          shapeRendering="crispEdges"
+          x={ex0}
+          y={ey0}
+          width={x0 - ex0}
+          height={h - 2}
+        />
+
+        {/* GRAY AREA */}
+        <rect
+          fill="#FFFFFF"
+          fillOpacity="0.75"
+          shapeRendering="crispEdges"
+          x={x1}
+          y={ey0}
+          width={ex1 - x1}
+          height={h - 2}
+        />
+
         <rect
           className="selection"
           cursor="move"
@@ -240,10 +202,23 @@ class SVGBrush extends PureComponent {
                 // minimum GAP
                 const scaleX0 = scale.invert(mx0);
                 const scaleX1 = scale.invert(mx1);
-                const [smx0, smx1] =
-                  scaleX1 - scaleX0 >= minimumGap
-                    ? [mx0, mx1]
-                    : [mx0, scale(scaleX0 + minimumGap)];
+                const scaleEX0 = scale.invert(ex0);
+                let [smx0, smx1] = [mx0, mx1];
+
+                // minimumGap
+                if (minimumGap && scaleX1 - scaleX0 <= minimumGap) {
+                  if (scaleX0 <= scaleEX0) {
+                    smx0 = ex0;
+                    smx1 = scale(scaleX0 + minimumGap);
+                  } else {
+                    smx0 = scale(scaleX1 - minimumGap);
+                  }
+                }
+
+                // maximumGAP
+                if (maximumGap && scaleX1 - scaleX0 > maximumGap) {
+                  smx0 = scale(scaleX1 - maximumGap);
+                }
 
                 let selection = this.state.selection;
                 switch (brushType) {
@@ -298,13 +273,26 @@ class SVGBrush extends PureComponent {
                 const mx = xbf(x0 + dx);
                 const [mx0, mx1] = mx < x1 ? [mx, x1] : [x1, x1];
 
-                // minimum GAP
+                // GAPs
                 const scaleX0 = scale.invert(mx0);
                 const scaleX1 = scale.invert(mx1);
-                const [smx0, smx1] =
-                  scaleX1 - scaleX0 >= minimumGap
-                    ? [mx0, mx1]
-                    : [scale(scaleX1 - minimumGap), mx1];
+                const scaleEX1 = scale.invert(ex1);
+                let [smx0, smx1] = [mx0, mx1];
+
+                // minimumGap
+                if (minimumGap && scaleX1 - scaleX0 <= minimumGap) {
+                  if (scaleX1 >= scaleEX1) {
+                    smx0 = scale(scaleEX1 - minimumGap);
+                    smx1 = ex1;
+                  } else {
+                    smx1 = scale(scaleX0 + minimumGap);
+                  }
+                }
+
+                // maximumGAP
+                if (maximumGap && scaleX1 - scaleX0 > maximumGap) {
+                  smx1 = scale(scaleX0 + maximumGap);
+                }
 
                 let selection = this.state.selection;
                 switch (brushType) {

@@ -61,7 +61,7 @@ export default {
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
-  types: ['country'],
+  types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   datasets: [
@@ -85,11 +85,12 @@ export default {
     forestChange: 100
   },
   settings: {
-    dataset: 'VIIRS',
+    dataset: 'viirs',
     confidence: 'h'
   },
   sentence:
     'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+  whitelistType: 'fires',
   whitelists: {
     adm0: [
       'AFG',
@@ -305,11 +306,12 @@ export default {
         const { data } = alerts.data;
         const years = uniq(data.map(d => d.year));
         const maxYear = Math.max(...years);
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
 
         return (
           {
             alerts: data,
-            latest,
+            latest: latestDate,
             options: {
               compareYear: years.filter(y => y !== maxYear).map(y => ({
                 label: y,

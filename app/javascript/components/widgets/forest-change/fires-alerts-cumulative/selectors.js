@@ -3,13 +3,11 @@ import moment from 'moment';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
-import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
-
-import { getColorPalette } from 'utils/data';
+import findLastIndex from 'lodash/findLastIndex';
 
 import {
   getCumulativeStatsData,
@@ -26,7 +24,7 @@ const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentence || null;
-const getLocationObject = state => state.location;
+const getLocationName = state => state.locationLabel;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -186,11 +184,11 @@ export const getLegend = createSelector(
         }
       }),
       average: {
-        label: 'Average Band',
+        label: 'Average Range',
         color: 'rgba(85,85,85, 0.15)'
       },
       unusual: {
-        label: 'Unusual Band',
+        label: 'Above/Below Average Range',
         color: 'rgba(85,85,85, 0.25)'
       }
     };
@@ -199,6 +197,7 @@ export const getLegend = createSelector(
 
 export const parseConfig = createSelector(
   [
+    getDates,
     getLegend,
     getColors,
     getLatest,
@@ -209,6 +208,7 @@ export const parseConfig = createSelector(
     getEndIndex
   ],
   (
+    currentData,
     legend,
     colors,
     latest,
@@ -218,6 +218,8 @@ export const parseConfig = createSelector(
     startIndex,
     endIndex
   ) => {
+    if (!currentData) return null;
+
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -253,6 +255,12 @@ export const parseConfig = createSelector(
       });
     }
 
+    const presentDayIndex = findLastIndex(
+      currentData,
+      d => typeof d.count === 'number'
+    );
+    const presentDay = currentData[presentDayIndex].date;
+
     return {
       ...getChartConfig(colors, moment(latest)),
       xAxis: {
@@ -269,6 +277,18 @@ export const parseConfig = createSelector(
       },
       legend,
       tooltip,
+      referenceLine: {
+        x: presentDay,
+        stroke: '#CCC',
+        strokeWidth: 2,
+        strokeDasharray: '20 5',
+        label: {
+          position: 'top',
+          value: 'Latest data',
+          fill: '#333',
+          fontSize: 11
+        }
+      },
       brush: {
         width: '100%',
         height: 60,
@@ -278,6 +298,7 @@ export const parseConfig = createSelector(
           left: 48,
           bottom: 12
         },
+        minimumGap: 4,
         dataKey: 'date',
         startIndex,
         endIndex,
@@ -324,7 +345,7 @@ export const parseSentence = createSelector(
     getColors,
     getSentences,
     getDataset,
-    getLocationObject,
+    getLocationName,
     getStartIndex,
     getEndIndex
   ],
@@ -341,7 +362,6 @@ export const parseSentence = createSelector(
     if (!data) return null;
 
     const start = startIndex;
-
     const latestYear = maxBy(data, 'year').year;
     const lastDate =
       maxBy(
@@ -358,10 +378,10 @@ export const parseSentence = createSelector(
     const maxWeek = maxBy(raw_data, 'count');
     const maxTotal = maxWeek.count;
     const maxYear = maxWeek.year;
+    const total = maxBy(slicedData, 'count').count || 0;
 
-    const total = sumBy(slicedData, 'count');
-    const colorRange = getColorPalette(colors.ramp, 5);
-    let statusColor = colorRange[4];
+    const colorRange = colors.ramp;
+    let statusColor = colorRange[8];
     const { date } = lastDate || {};
 
     let status = 'unusually low';
@@ -370,21 +390,21 @@ export const parseSentence = createSelector(
       statusColor = colorRange[0];
     } else if (variance <= 2 && variance > 1) {
       status = 'high';
-      statusColor = colorRange[1];
+      statusColor = colorRange[2];
     } else if (variance <= 1 && variance > -1) {
       status = 'average';
-      statusColor = colorRange[2];
+      statusColor = colorRange[4];
     } else if (variance <= -1 && variance > -2) {
       status = 'low';
-      statusColor = colorRange[3];
+      statusColor = colorRange[6];
     }
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
+      location,
       date: formattedData,
-      location: location.label || '',
       latestYear,
-      dataset_start_year: dataset === 'VIIRS' ? 2012 : 2001,
+      dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
       maxYear,
       maxTotal: {
         value: maxTotal ? format(',')(maxTotal) : 0,

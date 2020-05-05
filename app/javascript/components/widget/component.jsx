@@ -92,8 +92,8 @@ class Widget extends PureComponent {
       adminLevel,
       locationData,
       location,
-      geostore,
-      preventRenderKeys
+      preventRenderKeys,
+      geostore
     } = this.props;
     const { main } = colors || {};
 
@@ -144,6 +144,7 @@ class Widget extends PureComponent {
           error={error}
           simple={simple}
           locationName={locationLabelFull}
+          active={active}
           data={data}
           rawData={rawData}
           originalData={originalData}

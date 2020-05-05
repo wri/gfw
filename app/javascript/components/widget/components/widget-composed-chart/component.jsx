@@ -64,10 +64,15 @@ class WidgetComposedChart extends Component {
     }
   }, 100);
 
-  handleBrushEnd = values => {
-    const { handleChangeSettings } = this.props;
+  handleBrushEnd = ({ startIndex, endIndex }) => {
+    const { originalData, handleChangeSettings } = this.props;
     if (handleChangeSettings) {
-      handleChangeSettings(values);
+      handleChangeSettings({
+        startIndex,
+        endIndex,
+        startDateAbsolute: originalData[startIndex].date,
+        endDateAbsolute: originalData[endIndex].date
+      });
     }
   };
 
@@ -84,21 +89,23 @@ class WidgetComposedChart extends Component {
 
     return (
       <div className="c-widget-composed-chart">
-        {legend && <Legend data={data} config={legend} simple={simple} />}
+        {!simple &&
+          legend && <Legend data={data} config={legend} simple={simple} />}
 
         <ComposedChart
           className="loss-chart"
           data={data}
           config={config}
-          handleMouseMove={this.handleMouseMove}
-          handleMouseLeave={this.handleMouseLeave}
-          handleBrush={this.handleBrush}
           backgroundColor={active ? '#fefedc' : ''}
           barBackground={barBackground}
           simple={simple}
+          active={active}
+          handleMouseMove={this.handleMouseMove}
+          handleMouseLeave={this.handleMouseLeave}
         />
 
-        {brush && (
+        {!simple &&
+          brush && (
           <Brush
             {...brush}
             data={originalData}
