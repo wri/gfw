@@ -31,6 +31,8 @@ const SQL_QUERIES = {
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  firesWithin:
+    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -486,6 +488,38 @@ export const fetchVIIRSAlerts = (params) => {
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchFiresWithin = params => {
+  const { forestType, landCategory, ifl, download, dataset, weeks } = params || {};
+  console.log(params);
+  const filterYear = moment()
+    .subtract(weeks, 'weeks')
+    .year();
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${SQL_QUERIES.firesWithin}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
+    .replace('{alert__year}', filterYear);
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        count: d.alert__count,
+        alerts: d.alert__count
       }))
     }
   }));
