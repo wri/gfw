@@ -64,7 +64,8 @@ export default {
   settings: {
     confidence: '',
     startYear: 2001,
-    endYear: 2020
+    endYear: 2020,
+    dataset: 'modis'
   },
   sentence:
     'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} <b>MODIS</b> fire alerts.',
