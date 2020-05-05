@@ -323,8 +323,85 @@ export const getChartConfig = (colors, latest, unit = '') => {
           stroke: colors.main,
           isAnimationActive: false
         },
-        compareCount: {
-          stroke: '#49b5e3',
+        // compareCount: {
+        //   stroke: '#49b5e3',
+        //   isAnimationActive: false
+        // },
+        ///// name keys {year}ComparisonCount and loop over keys with 'comparisonCount' in the name
+        "2001": {
+          stroke: '#D0ECF8',
+          isAnimationActive: false
+        },
+        "2002": {
+          stroke: '#C9E9F7',
+          isAnimationActive: false
+        },
+        "2003": {
+          stroke: '#C1E6F5',
+          isAnimationActive: false
+        },
+        "2004": {
+          stroke: '#BAE3F4',
+          isAnimationActive: false
+        },
+        "2005": {
+          stroke: '#B2E0F3',
+          isAnimationActive: false
+        },
+        "2006": {
+          stroke: '#ABDDF2',
+          isAnimationActive: false
+        },
+        "2007": {
+          stroke: '#9CD7F0',
+          isAnimationActive: false
+        },
+        "2008": {
+          stroke: '#9CD7F0',
+          isAnimationActive: false
+        },
+        "2009": {
+          stroke: '#94D4EF',
+          isAnimationActive: false
+        },
+        "2010": {
+          stroke: '#8DD1EE',
+          isAnimationActive: false
+        },
+        "2011": {
+          stroke: '#85CEEC',
+          isAnimationActive: false
+        },
+        "2012": {
+          stroke: '#7ECBEB',
+          isAnimationActive: false
+        },
+        "2013": {
+          stroke: '#76C8EA',
+          isAnimationActive: false
+        },
+        "2014": {
+          stroke: '#6FC4E9',
+          isAnimationActive: false
+        },
+        "2015": {
+          stroke: '#67C1E8',
+          isAnimationActive: false
+        },
+        "2016": {
+          stroke: '#60BEE7',
+          isAnimationActive: false
+        },
+        "2017": {
+          stroke: '#58BBE5',
+          isAnimationActive: false
+        },
+        "2018": {
+          stroke: '#51B8E4',
+          isAnimationActive: false
+        },
+        "2019": {
+          stroke: '#49B5E3',
           isAnimationActive: false
         },
         target: {

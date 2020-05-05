@@ -130,21 +130,31 @@ export const getMaxMinDates = createSelector(
 
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYear],
-  (data, currentData, maxminYear, compareYear) => {
+  (data, currentData, maxminYear, compareYears) => {
     if (!data || !currentData) return null;
-
+   
     return currentData.map(d => {
       const yearDifference = maxminYear.max - d.year;
       const week = d.week;
 
-      if (compareYear) {
-        const compareWeek = data.find(
-          dt => dt.year === compareYear - yearDifference && dt.week === week
-        );
+      if (compareYears) {
+
+        const compareYearData = compareYears.reduce((acc,year) => {
+          
+          const compareWeek = data.find(
+            dt => dt.year === year - yearDifference && dt.week === week
+            );
+
+          return {
+            ...acc,
+            [year]: compareWeek ? compareWeek.count : null
+          }
+
+        },{});
 
         return {
           ...d,
-          compareCount: compareWeek ? compareWeek.count : null
+          ...compareYearData
         };
       }
 
@@ -177,12 +187,12 @@ export const getLegend = createSelector(
         label: `${moment(end.date).format('YYYY')}`,
         color: colors.main
       },
-      ...(compareYear && {
-        compare: {
-          label: `${compareYear}`,
-          color: '#49b5e3'
-        }
-      }),
+      // ...(compareYear && {
+      //   compare: {
+      //     label: `${compareYear}`,
+      //     color: '#49b5e3'
+      //   }
+      // }),
       average: {
         label: 'Average Range',
         color: 'rgba(85,85,85, 0.15)'
@@ -236,24 +246,24 @@ export const parseConfig = createSelector(
       }
     ];
 
-    if (compareYear) {
-      tooltip.push({
-        key: 'compareCount',
-        labelKey: 'date',
-        labelFormat: value => {
-          const date = moment(value);
-          const yearDifference = maxminYear.max - date.year();
-          date.set('year', compareYear - yearDifference);
+    // if (compareYear) {
+    //   tooltip.push({
+    //     key: 'compareCount',
+    //     labelKey: 'date',
+    //     labelFormat: value => {
+    //       const date = moment(value);
+    //       const yearDifference = maxminYear.max - date.year();
+    //       date.set('year', compareYear - yearDifference);
 
-          return date.format('YYYY-MM-DD');
-        },
-        unit: ` ${dataset} alerts`,
-        color: '#49b5e3',
-        nullValue: 'No data available',
-        unitFormat: value =>
-          (Number.isInteger(value) ? format(',')(value) : value)
-      });
-    }
+    //       return date.format('YYYY-MM-DD');
+    //     },
+    //     unit: ` ${dataset} alerts`,
+    //     color: '#49b5e3',
+    //     nullValue: 'No data available',
+    //     unitFormat: value =>
+    //       (Number.isInteger(value) ? format(',')(value) : value)
+    //   });
+    // }
 
     const presentDayIndex = findLastIndex(
       currentData,
