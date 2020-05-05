@@ -47,8 +47,8 @@ class Widget extends PureComponent {
     locationData: PropTypes.object,
     childData: PropTypes.object,
     location: PropTypes.object,
-    preventRenderKeys: PropTypes.array,
     adminLevel: PropTypes.string,
+    preventRenderKeys: PropTypes.array,
     geostore: PropTypes.object
   };
 
