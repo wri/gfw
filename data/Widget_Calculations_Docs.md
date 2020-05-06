@@ -188,6 +188,88 @@ If the isoweek of the current week is $w_n$, then we simply slice the array on $
 
 ## 2. Dynamic Sentence Maths
 
+Some widgets have custom logic and calculations in ordder to produce human-readable statements about the chart data.
+
 ### 2a. Peak Fire Season
 
-### 2b. Period's deviation from the mean
+The Seasonal Fires widget makes a statement about the peak fire season: noting, for a given location, the peak fire season's length ($l_{peak}$) in weeks, and a rough estimate of when the peak fire season begins ($w_{peak}$)
+
+#### 2a.i. Peak Fire Season Start Date
+
+We define the start of the peak fires season as the first week in which the mean alert counts crosses half of the historical datas mean-high alert counts (or, the maximum value of the smoothed values calculated above).
+
+> first week of peak fire season: $w_{peak} = w\Bigr\rvert_{\bar{c}_{w}\geq{c_{fwhm}}}$
+
+where the full-width half-maximum counts ($c_{fwhm}$ ) is:
+
+> $c_{fwhm} = \frac{\bar{c}_{max} - \bar{c}_{min}}2$
+
+Using the FWHM allows us to account for locations where there are fires in every week of the year (mostly larger location such as ISO-level countries etc).
+
+>> Note that FWHM was chosen rather arbitrarily; and we could, if we wished, define some other threshold to denote the bgining of the fire season (e.g. 30% of the peak). There is a danger that the lower the thresold, the more prone to mis-calculatioon this method becomes, since multi-modal data may cross the threshold more than once per year.
+
+This value is $w_{peak}$ is then used to generate the human-readable estimate of the start date such as:
+
+> "the peak fires season typically begins in _early July_"
+
+> "the peak fires season typically begins in _mid-August_"
+
+> "the peak fires season typically begins in _late November_"
+
+This is achieved by first converting $w_{peak}$ into a date in `DD-MMMM` format using `moment.js` (`MMMM` giving us a human-readable month name e.g. `March`).
+
+The day number is then used to generate the estimate:
+
+> "early": $day\leq10$
+
+> "mid-": $10<{day}\leq20$
+
+> "late": $day>20$
+
+#### 2a.ii. Peak Fire Season Start Date
+
+The length of the fire season, in weeks, is again calculated using the FWHM of the counts ($c_{fwhm}$).
+
+Here we simply count the number of weeks in the array with counts above the FWHM of the smoothed data i.e. the length of the array of weeks where the mean counts is greater than the FWHM:
+
+> $l_{peak} =  len\Bigr([...w_i]\Bigr)\Bigr\rvert_{\bar{c}_{w}\geq{c_{fwhm}}}$
+
+
+### 2b. A period's deviation from the mean
+
+All statistical widgets also comment on whether a given periods number off alert counts should be considered Normal/Average, High/Low, or Unusually High/Low.
+
+This is done by comparing the number of counts in that total to mean and standard deviation of values for the same period over all years.
+
+In the simple case (GLAD widget), where the period is a single week - we calculate the difference with that week's mean ($\bar{c}_w$) as a ratio of that weeks standard deviation ($\sigma_w$). We will call this distance from the mean $\delta_w$, where:
+
+
+> $\delta_w$ = $\frac{c_w-\bar{c}_w}{\sigma_w}$
+
+Now, if the distance from the mean is between $\pm1$, that week's value is within a single standard deviate and can be considered a 'normal' or 'average' nnumber of alerts for that particular week.
+
+Outside of this the number of counts can be considered statistically significantly different from the norm, and is categorised as follows:
+
+> Unusually High: $\delta_w > {+2}\sigma_w$
+
+> High: ${+1}\sigma_w < \delta_w \leq {+2}\sigma_w$
+
+> Normal/Average:  ${-1}\sigma_w\leq\delta_w \leq {+1}\sigma_w$
+
+> Low: ${-2}\sigma_w \leq \delta_w < {-1}\sigma_w$
+
+> Unusually Low: $\delta_w < {+2}\sigma_w$
+
+For the more complex case of extended periods of multiple weeks, we must first calculate the number of counts for that period in all years, before then calculating the periods mean and standard deviation. For any given year ($y$), the total counts {$C$} are between weeks $i$ and $n$ given by:
+
+>$C_{w,y} = \sum_{w=i}^{n}c_w$
+
+Then, calculating over all years were $N'$ is the total number of years:
+
+>Mean: $\bar{C}_w=\frac{1}{N'}\sum_{i=1}^{N'} C_{w,i}$
+
+where the mean count for a given week $\bar{c}_w$ is calculated over all years $y$ where week = $w$.
+
+>Std. dev: $\sigma_{C_w}=\sqrt{\frac{1}{N'}\sum_{i=1}^{N'} (C_{w,i} -\bar{C_w})^2}$
+
+Once this is done, the calculation and categorisation is the same as above.
