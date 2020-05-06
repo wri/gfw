@@ -424,7 +424,7 @@ export const parseSentence = createSelector(
       start_date: firstDate.date,
       end_date: lastDate.date,
       dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
-      dataset,
+      dataset: dataset.toUpperCase(),
       count: {
         value: total ? format(',')(total) : 0,
         color: colors.main

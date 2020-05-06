@@ -410,7 +410,7 @@ export const parseSentence = createSelector(
         value: maxTotal ? format(',')(maxTotal) : 0,
         color: colors.main
       },
-      dataset,
+      dataset: dataset.toUpperCase(),
       count: {
         value: total ? format(',')(total) : 0,
         color: colors.main
