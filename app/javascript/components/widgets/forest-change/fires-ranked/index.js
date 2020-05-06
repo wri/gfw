@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { fetchFiresAlertsGrouped, fetchFiresLatest } from 'services/alerts';
+import { fetchVIIRSAlertsGrouped, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -7,17 +7,46 @@ export default {
   widget: 'firesRanked',
   title: 'Regions with the most fire Alerts in {location}',
   categories: ['forest-change'],
-  types: ['country'],
+  types: ['global', 'country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [
     {
       key: 'weeks',
       label: 'weeks',
       type: 'select',
-      whitelist: [13, 26, 52],
+      whitelist: [1, 4, 52],
       noSort: true
+    },
+    {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      border: true
+    },
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+    {
+      key: 'unit',
+      label: 'Unit',
+      type: 'select',
+      placeholder: 'Unit',
     }
   ],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   chartType: 'rankedList',
   metaKey: 'widget_fire_ranking',
   colors: 'fires',
@@ -33,6 +62,7 @@ export default {
   },
   settings: {
     unit: '%',
+    confidence: 'h',
     pageSize: 5,
     page: 0,
     period: 'week',
@@ -42,7 +72,7 @@ export default {
     layerEndDate: null
   },
   getData: params =>
-    all([fetchFiresAlertsGrouped(params), fetchFiresLatest(params)]).then(
+    all([fetchVIIRSAlertsGrouped(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         return { alerts: data, latest: latest.attributes.updatedAt } || {};

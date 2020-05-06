@@ -30,7 +30,7 @@ const SQL_QUERIES = {
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   fires:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesWithin:
     'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
@@ -493,9 +493,41 @@ export const fetchVIIRSAlerts = (params) => {
   }));
 };
 
+export const fetchVIIRSAlertsGrouped = (params) => {
+  console.log('PARAMS', params);
+  const { forestType, landCategory, ifl, download, dataset } = params || {};
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly', grouped: true })}${SQL_QUERIES.fires}`
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true}))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset, grouped: true }));
+  
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data
+        .map(d => ({
+          ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+        }
+      ))
+    }
+  }));
+};
+
 export const fetchFiresWithin = params => {
   const { forestType, landCategory, ifl, download, dataset, weeks } = params || {};
-  console.log(params);
   const filterYear = moment()
     .subtract(weeks, 'weeks')
     .year();
