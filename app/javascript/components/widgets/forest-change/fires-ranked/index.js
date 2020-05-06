@@ -1,5 +1,8 @@
 import { all, spread } from 'axios';
-import { fetchVIIRSAlertsGrouped, fetchVIIRSLatest } from 'services/analysis-cached';
+import {
+  fetchVIIRSAlertsGrouped,
+  fetchVIIRSLatest
+} from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -43,7 +46,7 @@ export default {
       key: 'unit',
       label: 'Unit',
       type: 'select',
-      placeholder: 'Unit',
+      placeholder: 'Unit'
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],

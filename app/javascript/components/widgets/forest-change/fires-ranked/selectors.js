@@ -41,6 +41,9 @@ export const parseList = createSelector(
         )
     );
     const groupedAlerts = groupBy(alertsByDate, adm1 ? 'adm2' : 'adm1');
+    console.log('DATA', groupedAlerts)
+
+    // before sumBy we need to group by year and calculate stats
 
     const totalCounts = sumBy(alertsByDate, 'count');
     const mappedData = Object.keys(groupedAlerts).map(k => {
