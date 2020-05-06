@@ -19,12 +19,12 @@ During this stage and prior to doing any calculations we must first:
 Firstly, given the start- and end-dates of the dataset we must generate a sequential array of all unique isoweek-year combinations between the two dates, starting from the first isoweek of the first year and running through each following isoweek until the final isoweek of the final year:
 
 > e.g.$[y_0 w_1, y_0 w_2, ... y_N w_{51}, y_N w_{52}]$
-
 >> As an aside, please see the following notes on [isoweeks](https://en.wikipedia.org/wiki/ISO_week_date), it's complex - with some years having 53 isoweeks per year!
 
 This then should leave us with an array of $52*N$ objects (where $N$ is the number of years), with each object containing its isoweek and year values:
 
 $y_i w_j$ =
+
 ```json
 {
     year: y_i,
@@ -44,7 +44,7 @@ Once we have this we aggregate the number of alerts, summing over each isoweek g
 
 ```
 
-For weeks with no alerts we simply fill with `alert__count = 0`. 
+For weeks with no alerts we simply fill with `alert__count = 0`.
 
 ### 1c. Grouping Data
 
@@ -134,7 +134,7 @@ In the code, columns $w_{-6}$ to $w_{-1}$ are found in the `leftYears` variable 
 
 Now, starting at ${w_1}$ taking slices of length 12 centred on ${w_1}$, iterating in steps of size = 1, and calculating the average of the mean and standard deviation values in the slice. Iterating from $w=1$ to $w=52$:
 
-> Smoothed: $\bar{v}_w=\frac{1}{12}\sum_{k=w-6}^{w+5} v_{k} \Bigr\rvert_{w=1}^{w=52}$ 
+> Smoothed: $\bar{v}_w=\frac{1}{12}\sum_{k=w-6}^{w+5} v_{k} \Bigr\rvert_{w=1}^{w=52}$
 
 where $v_w$ is the smoothed value (mean, or std) for week $w$.
 
@@ -145,13 +145,11 @@ In the case of the cumulative Fires widget, we cannot exploit the cyclic nature 
 Here an average is taken at every isoweek, with the slice size ($b%) changing as we iterate over the array so that the smoothing is weakest towards both ends of the array.
 
 > start: $\bar{v}_w=\frac{1}{b}\sum_{k=0}^{w+\frac{b}{2}} v_{k} \Bigr\rvert_{w=1}^{w=6}$
- 
-> end: $\bar{v}_w=\frac{1}{b}\sum_{k=w-\frac{b}{2}}^{52} v_{k} \Bigr\rvert_{w=48}^{w=52}$ 
+> end: $\bar{v}_w=\frac{1}{b}\sum_{k=w-\frac{b}{2}}^{52} v_{k} \Bigr\rvert_{w=48}^{w=52}$
 
-where $b$ is the slices buffer (width), increasing with each iteration until the buffer equals the full window size of 12 at $w$=6. 
+where $b$ is the slices buffer (width), increasing with each iteration until the buffer equals the full window size of 12 at $w$=6.
 
 Note that in the middle of the array, smoothing works as outlined in the previous section `1d.i.`.
-
 
 ### 1e. Displaying on the chart
 
@@ -160,9 +158,7 @@ Note that in the middle of the array, smoothing works as outlined in the previou
 Our goal is to create three sets of bands using the smoothed data, where:
 
 > Average Band: $\bar{c}_w {-1}\sigma\leq{c_w}\leq\bar{c}_w {+1}\sigma$
-
 > High Band: $\bar{c}_w {+2}\sigma\leq{c_w}<\bar{c}_w {+1}\sigma$
-
 > Low Band:  $\bar{c}_w {-2}\sigma\leq{c_w}<\bar{c}_w {-1}\sigma$
 
 for any given week, w.
@@ -172,11 +168,8 @@ However must parse the data in a way that the chart can interpret, which involve
 Hence, for every week of smoothed data we calculate the following boundaries:
 
 > Mean + 1 std: $\bar{c}_w {+1}\sigma$
-
 > Mean - 1 std: $\bar{c}_w {-1}\sigma$
-
 > Mean + 2 std: $\bar{c}_w {+2}\sigma$
-
 > Mean - 2 std: $\bar{c}_w {-2}\sigma$
 
 #### 1e.ii. Centering data on current week (Fires, GLAD seasonal widgets)
@@ -184,7 +177,6 @@ Hence, for every week of smoothed data we calculate the following boundaries:
 Finally, since the data is ordered by week (from 1 to 52), we need to centre the array on the current date.
 
 If the isoweek of the current week is $w_n$, then we simply slice the array on $w=w'$, giving us two arrays: ${a_1} = [{w_1},{w_2}, ...{w_n}]$ and ${a_2} = [{w_{n+1}}, ...{w_{52}}]$, and append ${a_1}$ onto ${a_2}$, so that the weeks cross over the end of the previous year.
-
 
 ## 2. Dynamic Sentence Maths
 
@@ -211,9 +203,7 @@ Using the FWHM allows us to account for locations where there are fires in every
 This value is $w_{peak}$ is then used to generate the human-readable estimate of the start date such as:
 
 > "the peak fires season typically begins in _early July_"
-
 > "the peak fires season typically begins in _mid-August_"
-
 > "the peak fires season typically begins in _late November_"
 
 This is achieved by first converting $w_{peak}$ into a date in `DD-MMMM` format using `moment.js` (`MMMM` giving us a human-readable month name e.g. `March`).
@@ -221,9 +211,7 @@ This is achieved by first converting $w_{peak}$ into a date in `DD-MMMM` format 
 The day number is then used to generate the estimate:
 
 > "early": $day\leq10$
-
 > "mid-": $10<{day}\leq20$
-
 > "late": $day>20$
 
 #### 2a.ii. Peak Fire Season Start Date
@@ -234,7 +222,6 @@ Here we simply count the number of weeks in the array with counts above the FWHM
 
 > $l_{peak} =  len\Bigr([...w_i]\Bigr)\Bigr\rvert_{\bar{c}_{w}\geq{c_{fwhm}}}$
 
-
 ### 2b. A period's deviation from the mean
 
 All statistical widgets also comment on whether a given periods number off alert counts should be considered Normal/Average, High/Low, or Unusually High/Low.
@@ -243,7 +230,6 @@ This is done by comparing the number of counts in that total to mean and standar
 
 In the simple case (GLAD widget), where the period is a single week - we calculate the difference with that week's mean ($\bar{c}_w$) as a ratio of that weeks standard deviation ($\sigma_w$). We will call this distance from the mean $\delta_w$, where:
 
-
 > $\delta_w$ = $\frac{c_w-\bar{c}_w}{\sigma_w}$
 
 Now, if the distance from the mean is between $\pm1$, that week's value is within a single standard deviate and can be considered a 'normal' or 'average' nnumber of alerts for that particular week.
@@ -251,13 +237,9 @@ Now, if the distance from the mean is between $\pm1$, that week's value is withi
 Outside of this the number of counts can be considered statistically significantly different from the norm, and is categorised as follows:
 
 > Unusually High: $\delta_w > {+2}\sigma_w$
-
 > High: ${+1}\sigma_w < \delta_w \leq {+2}\sigma_w$
-
 > Normal/Average:  ${-1}\sigma_w\leq\delta_w \leq {+1}\sigma_w$
-
 > Low: ${-2}\sigma_w \leq \delta_w < {-1}\sigma_w$
-
 > Unusually Low: $\delta_w < {+2}\sigma_w$
 
 For the more complex case of extended periods of multiple weeks, we must first calculate the number of counts for that period in all years, before then calculating the periods mean and standard deviation. For any given year ($y$), the total counts {$C$} are between weeks $i$ and $n$ given by:
