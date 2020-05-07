@@ -38,7 +38,7 @@ const meanData = data => {
   return means.map(w => mean(w));
 };
 
-const stdDevData = data => {
+export const stdDevData = data => {
   const dataMean = mean(data);
   const sumOfSquares = data.reduce(
     (sum, value) => sum + (dataMean - value) ** 2,
