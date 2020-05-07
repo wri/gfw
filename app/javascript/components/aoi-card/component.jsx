@@ -43,9 +43,9 @@ class AoICard extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { simple } = this.props;
+    const { simple, status } = this.props;
 
-    if (!simple) {
+    if (!simple && status !== 'pending') {
       this.getAlerts();
     }
   }
