@@ -8,6 +8,18 @@
     "value": "%"
   },
   {
+    "label": "Alert Density",
+    "value": "alert_density"
+  },
+  {
+    "label": "Total Alerts",
+    "value": "counts"
+  },
+  {
+    "label": "Anomaly",
+    "value": "anomaly"
+  },
+  {
     "label": "Net contribution in USD",
     "value": "net_usd"
   },

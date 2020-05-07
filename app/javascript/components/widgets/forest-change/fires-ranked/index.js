@@ -1,7 +1,8 @@
 import { all, spread } from 'axios';
 import {
   fetchVIIRSAlertsGrouped,
-  fetchVIIRSLatest
+  fetchVIIRSLatest,
+  getAreaIntersectionGrouped
 } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
@@ -14,8 +15,24 @@ export default {
   admins: ['adm0', 'adm1'],
   settingsConfig: [
     {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      whitelist: ['mining', 'wdpa', 'landmark'],
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+    {
       key: 'weeks',
-      label: 'weeks',
+      label: 'show data for the last',
       type: 'select',
       whitelist: [1, 4, 52],
       noSort: true
@@ -28,25 +45,11 @@ export default {
       border: true
     },
     {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true
-    },
-    {
       key: 'unit',
-      label: 'Unit',
+      label: 'unit',
       type: 'select',
-      placeholder: 'Unit'
+      whitelist: ['counts', 'alert_density', 'anomaly'],
+      border: true
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
@@ -59,26 +62,41 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, the region with the most fires burning was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc} of total alerts detected.',
+      'In the last {timeframe} in {location}, the region with the most anomalous fires alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected and is {status} compared to the number of alerts in the same period going back to <b>2012</b>.',
     withInd:
-      'In the last {timeframe} in {location}, the region with the most fires burning within {indicator} was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc} of total alerts detected.'
+      'In the last {timeframe} in {location}, the region with the most anomalous fires alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected and is {status} compared to the number of alerts in the same period going back to <b>2012</b>.',
+    densityInitial:
+      'In the last {timeframe} in {location}, the region with the highest fire density was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in that period.',
+    densityWithInd:
+      'In the last {timeframe} in {location}, the region with the highest fire density within {indicator} was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in that period.',
+    countsInitial:
+      'In the last {timeframe} in {location}, the region with the most fire alerts was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in that period.',
+    countsWithInd:
+      'In the last {timeframe} in {location}, the region with the most fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detecte in that periodd.'
   },
   settings: {
-    unit: '%',
+    unit: 'anomaly',
     confidence: 'h',
     pageSize: 5,
     page: 0,
     period: 'week',
-    weeks: 13,
+    weeks: 1,
     dataset: 'viirs',
     layerStartDate: null,
     layerEndDate: null
   },
   getData: params =>
-    all([fetchVIIRSAlertsGrouped(params), fetchVIIRSLatest(params)]).then(
-      spread((alerts, latest) => {
+    all([
+      fetchVIIRSAlertsGrouped(params),
+      fetchVIIRSLatest(params),
+      getAreaIntersectionGrouped(params)
+    ]).then(
+      spread((alerts, latest, areas) => {
         const { data } = alerts.data;
-        return { alerts: data, latest: latest.attributes.updatedAt } || {};
+        const area = areas.data && areas.data.data;
+        return (
+          { alerts: data, latest: latest.attributes.updatedAt, area } || {}
+        );
       })
     ),
   // getDataURL: params => [
