@@ -16,6 +16,7 @@ const getData = state => state.data && state.data.alerts;
 const getAreas = state => state.data && state.data.area;
 const getLatestDates = state => state.data && state.data.latest;
 const getSettings = state => state.settings;
+const getUnit = state => state.settings && state.settings.unit;
 const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
 const getAdm1 = state => state.adm1;
@@ -24,9 +25,9 @@ const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 
-export const parseList = createSelector(
-  [getData, getAreas, getLatestDates, getSettings, getAdm1, getLocationsMeta],
-  (data, areas, latest, settings, adm1, meta) => {
+export const getYears = createSelector(
+  [getData, getAreas, getLatestDates, getLocationsMeta],
+  (data, areas, latest, meta) => {
     if (
       !data ||
       isEmpty(data) ||
@@ -34,20 +35,15 @@ export const parseList = createSelector(
       isEmpty(areas) ||
       !meta ||
       isEmpty(meta)
-    ) { return null; }
+    ) {
+      return null;
+    }
 
-    const latestWeek = moment(latest)
-      .subtract(1, 'weeks')
-      .week();
     const latestYear = moment(latest)
       .subtract(1, 'weeks')
       .year();
 
-    // most of the below is setting up for data filteriing
-    // i.e filtering away weeks outside the selected period
-    // this eeds to be done for each year
     const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
-
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
       (acc, next) => {
         const { year } = next[0];
@@ -70,45 +66,64 @@ export const parseList = createSelector(
     for (let i = startYear; i <= latestYear; i += 1) {
       years.push(i);
     }
+    return years;
+  }
+);
 
-    /* next, the mapping does the following
+export const getFilteredData = createSelector(
+  [getData, getSettings, getLatestDates, getYears],
+  (data, settings, latest, years) => {
+    if (!data || isEmpty(data) || !years || isEmpty(years)) {
+      return null;
+    }
 
-    - group data by admin (this data contains all years)
-    - for each year, filter away weeks of that year outside of the period
-    - for each adm: reduce that year data down to an list of objects with total counts by year
-    - for each admin: calcuculate, the current year counts, and variance of current year vs historical data
+    const latestWeek = moment(latest)
+      .subtract(1, 'weeks')
+      .week();
 
-    */
+    return years.reduce((acc, y) => {
+      const yearlyAlert = data.filter(d => {
+        const date = moment()
+          .week(d.week)
+          .year(d.year);
+        return (
+          date.isBefore(
+            moment()
+              .week(latestWeek + 1)
+              .year(y)
+          ) &&
+          date.isAfter(
+            moment()
+              .week(latestWeek)
+              .year(y)
+              .subtract(settings.weeks, 'weeks')
+          )
+        );
+      });
+      return [...acc, ...yearlyAlert];
+    }, []);
+  }
+);
+
+export const getStatsByAdmin = createSelector(
+  [getFilteredData, getYears, getAdm1],
+  (data, years, adm1) => {
+    if (!data || isEmpty(data) || !years || isEmpty(years)) {
+      return null;
+    }
+
     const matchKey = adm1 ? 'adm2' : 'adm1';
     const alertsByAdm = groupBy(data, matchKey);
+
     const filteredAlertsByAdmin = Object.entries(alertsByAdm).map(
       ([adm, adminAlerts]) => {
-        const reducedAlerts = years.map(y => {
-          const filteredAlerts = adminAlerts.filter(d => {
-            const date = moment()
-              .week(d.week)
-              .year(d.year);
-            return (
-              date.isBefore(
-                moment()
-                  .week(latestWeek + 1)
-                  .year(y)
-              ) &&
-              date.isAfter(
-                moment()
-                  .week(latestWeek)
-                  .year(y)
-                  .subtract(settings.weeks, 'weeks')
-              )
-            );
-          });
-          return { year: y, counts: sumBy(filteredAlerts, 'count') };
+        const countsArray = years.map(year => {
+          const filteredYear = adminAlerts.filter(el => el.year === year);
+          return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
         });
-        const countsArray = reducedAlerts.map(el => el.counts);
         const stdDevCounts = stdDevData(countsArray);
         const meanCounts = mean(countsArray);
-        const currentYearCounts =
-          reducedAlerts.find(o => o.year === latestYear).counts || 0;
+        const currentYearCounts = countsArray[countsArray.length - 1];
         const variance =
           stdDevCounts > 0
             ? (currentYearCounts - meanCounts) / stdDevCounts
@@ -117,9 +132,29 @@ export const parseList = createSelector(
       }
     );
 
+    return filteredAlertsByAdmin;
+  }
+);
+
+export const parseList = createSelector(
+  [getStatsByAdmin, getAreas, getLocationsMeta, getAdm1],
+  (data, areas, meta, adm1) => {
+    if (
+      !data ||
+      isEmpty(data) ||
+      !areas ||
+      isEmpty(areas) ||
+      !meta ||
+      isEmpty(meta)
+    ) {
+      return null;
+    }
+
     // Now we have partial data, we iterate through and calculate
     // derivateive data: alert density and labels etc
-    const mappedData = filteredAlertsByAdmin.map(adm => {
+    const matchKey = adm1 ? 'adm2' : 'adm1';
+
+    const mappedData = data.map(adm => {
       const locationId = parseInt(adm.id, 10);
       const region = meta[locationId];
 
@@ -143,20 +178,16 @@ export const parseList = createSelector(
 );
 
 export const parseData = createSelector(
-  [parseList, getOptionsSelected, getColors],
-  (data, options, colors) => {
+  [parseList, getUnit, getColors],
+  (data, unit, colors) => {
     if (isEmpty(data)) return null;
-    // I moved any user settings stuff here, i.e. reordering, colors etc.
-    const option = options.unit && options.unit.value;
+
     const value = {
       alert_density: 'density',
       anomaly: 'variance',
       counts: 'counts'
-    }[option];
+    }[unit];
 
-    // colour buckets are percentiles by default, for the stats we need to do it
-    // in the same way as the sentence +/-1,2 stDev etc
-    // if its not stdDev then rescale from min to max
     const buckets = colors && getColorBuckets(colors);
     const maxValue = maxBy(data, value)[value];
     const minValue = minBy(data, value)[value];
@@ -183,23 +214,15 @@ export const parseData = createSelector(
 export const parseSentence = createSelector(
   [
     parseData,
+    getUnit,
     getOptionsSelected,
     getIndicator,
     getLocationName,
     getSentences,
-    getOptionsSelected,
     getColors
   ],
-  (
-    data,
-    optionsSelected,
-    indicator,
-    locationName,
-    sentences,
-    options,
-    colors
-  ) => {
-    if (!data || !optionsSelected || !locationName) return null;
+  (data, unit, optionsSelected, indicator, locationName, sentences, colors) => {
+    if (!data || !unit || !locationName) return null;
 
     const {
       initial,
@@ -247,11 +270,10 @@ export const parseSentence = createSelector(
       location: locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`
     };
-    const option = options.unit && options.unit.value;
     let sentence = indicator ? withInd : initial;
-    if (option === 'alert_density') {
+    if (unit === 'alert_density') {
       sentence = indicator ? densityWithInd : densityInitial;
-    } else if (option === 'counts') {
+    } else if (unit === 'counts') {
       sentence = indicator ? countsWithInd : countsInitial;
     }
     return { sentence, params };
