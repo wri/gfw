@@ -28,14 +28,7 @@ const getSentences = state => state.sentences;
 export const getYears = createSelector(
   [getData, getAreas, getLatestDates, getLocationsMeta],
   (data, areas, latest, meta) => {
-    if (
-      !data ||
-      isEmpty(data) ||
-      !areas ||
-      isEmpty(areas) ||
-      !meta ||
-      isEmpty(meta)
-    ) {
+    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
       return null;
     }
 
@@ -73,7 +66,7 @@ export const getYears = createSelector(
 export const getFilteredData = createSelector(
   [getData, getSettings, getLatestDates, getYears],
   (data, settings, latest, years) => {
-    if (!data || isEmpty(data) || !years || isEmpty(years)) {
+    if (isEmpty(data) || isEmpty(years)) {
       return null;
     }
 
@@ -108,7 +101,7 @@ export const getFilteredData = createSelector(
 export const getStatsByAdmin = createSelector(
   [getFilteredData, getYears, getAdm1],
   (data, years, adm1) => {
-    if (!data || isEmpty(data) || !years || isEmpty(years)) {
+    if (isEmpty(data) || isEmpty(years)) {
       return null;
     }
 
@@ -139,14 +132,7 @@ export const getStatsByAdmin = createSelector(
 export const parseList = createSelector(
   [getStatsByAdmin, getAreas, getLocationsMeta, getAdm1],
   (data, areas, meta, adm1) => {
-    if (
-      !data ||
-      isEmpty(data) ||
-      !areas ||
-      isEmpty(areas) ||
-      !meta ||
-      isEmpty(meta)
-    ) {
+    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
       return null;
     }
 
