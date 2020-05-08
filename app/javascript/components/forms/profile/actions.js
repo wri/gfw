@@ -24,8 +24,11 @@ export const saveProfile = createThunkAction(
           : subsector,
       howDoYouUse:
         howDoYouUse && howDoYouUse.includes('Other')
-          ? `Other: ${howDoYouUse_otherInput || ''}`
-          : subsector,
+          ? [
+            ...howDoYouUse.filter(use => use !== 'Other'),
+            `Other: ${howDoYouUse_otherInput || ''}`
+          ]
+          : howDoYouUse,
       signUpForNewsletter:
         !!signUpForNewsletter &&
         signUpForNewsletter.length &&
