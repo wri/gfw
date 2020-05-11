@@ -25,86 +25,24 @@ const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 
-export const getYears = createSelector(
-  [getData, getAreas, getLatestDates, getLocationsMeta],
-  (data, areas, latest, meta) => {
-    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
-      return null;
-    }
+const VIIRS_START_YEAR = 2012;
 
-    const latestYear = moment(latest)
-      .subtract(1, 'weeks')
-      .year();
+export const getYears = createSelector([getLatestDates], (latest) => {
+    const latestYear = moment(latest).year();
 
-    const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
-    const hasAlertsByYears = Object.values(groupedByYear).reduce(
-      (acc, next) => {
-        const { year } = next[0];
-        return {
-          ...acc,
-          [year]: next.some(item => item.count > 0)
-        };
-      },
-      {}
-    );
-
-    const dataYears = Object.keys(hasAlertsByYears).filter(
-      key => hasAlertsByYears[key] === true
-    );
-
-    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
-    const startYear = minYear === latestYear ? latestYear - 1 : minYear;
-
-    const years = [];
-    for (let i = startYear; i <= latestYear; i += 1) {
+    let years = [];
+    for (var i = VIIRS_START_YEAR; i <= latestYear; i++) {
       years.push(i);
     }
-    return years;
-  }
-);
-
-export const getFilteredData = createSelector(
-  [getData, getSettings, getLatestDates, getYears],
-  (data, settings, latest, years) => {
-    if (isEmpty(data) || isEmpty(years)) {
-      return null;
-    }
-
-    const latestWeek = moment(latest)
-      .subtract(1, 'weeks')
-      .week();
-
-    return years.reduce((acc, y) => {
-      const yearlyAlert = data.filter(d => {
-        const date = moment()
-          .week(d.week)
-          .year(d.year);
-        return (
-          date.isBefore(
-            moment()
-              .week(latestWeek + 1)
-              .year(y)
-          ) &&
-          date.isAfter(
-            moment()
-              .week(latestWeek)
-              .year(y)
-              .subtract(settings.weeks, 'weeks')
-          )
-        );
-      });
-      return [...acc, ...yearlyAlert];
-    }, []);
-  }
-);
+    return years
+});
 
 export const getStatsByAdmin = createSelector(
-  [getFilteredData, getYears, getAdm1],
+  [getData, getYears, getAdm1],
   (data, years, adm1) => {
     if (isEmpty(data) || isEmpty(years)) {
       return null;
     }
-
     const matchKey = adm1 ? 'adm2' : 'adm1';
     const alertsByAdm = groupBy(data, matchKey);
 
@@ -114,6 +52,7 @@ export const getStatsByAdmin = createSelector(
           const filteredYear = adminAlerts.filter(el => el.year === year);
           return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
         });
+
         const stdDevCounts = stdDevData(countsArray);
         const meanCounts = mean(countsArray);
         const currentYearCounts = countsArray[countsArray.length - 1];
@@ -135,7 +74,6 @@ export const parseList = createSelector(
     if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
       return null;
     }
-
     // Now we have partial data, we iterate through and calculate
     // derivateive data: alert density and labels etc
     const matchKey = adm1 ? 'adm2' : 'adm1';
@@ -252,7 +190,7 @@ export const parseSentence = createSelector(
       topRegion,
       topRegionCount: format(',')(topRegionCount),
       topRegionPerc: `${format('.2r')(topRegionPerc)}%`,
-      topRegionDensity: `${format('.3r')(topRegionDensity)} fires per Mha`,
+      topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
       location: locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`
     };

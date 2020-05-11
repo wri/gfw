@@ -203,7 +203,7 @@ export const getDateFilter = ({ weeks }) => {
 
     acc += ` ${i === 0 ? '' : 'OR '}(alert__year = ${yi} AND alert__week >= ${
       wi
-    }) OR (alert__week = ${yf} AND alert__week <= ${wf})`;
+    }) OR (alert__year = ${yf} AND alert__week <= ${wf})`;
     return acc;
   }, '');
 };
