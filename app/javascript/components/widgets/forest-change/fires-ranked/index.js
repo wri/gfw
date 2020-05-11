@@ -52,7 +52,7 @@ export default {
       border: true
     }
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],
   chartType: 'rankedList',
   metaKey: 'widget_fire_ranking',
   colors: 'fires',
@@ -62,17 +62,17 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, the region with the most anomalous fires alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected and is {status} compared to the number of alerts in the same period going back to <b>2012</b>.',
+      'In the last {timeframe} in {location}, the region with the most <b>unusually high</b> number of fire alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     withInd:
-      'In the last {timeframe} in {location}, the region with the most anomalous fires alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected and is {status} compared to the number of alerts in the same period going back to <b>2012</b>.',
+      'In the last {timeframe} in {location}, the region with the most <b>unusually high</b> number of fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     densityInitial:
-      'In the last {timeframe} in {location}, the region with the highest fire density was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in that period.',
+      'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in that period.',
     densityWithInd:
-      'In the last {timeframe} in {location}, the region with the highest fire density within {indicator} was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in that period.',
+      'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires within {indicator} was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in that period.',
     countsInitial:
-      'In the last {timeframe} in {location}, the region with the most fire alerts was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in that period.',
+      'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in {location} in that period.',
     countsWithInd:
-      'In the last {timeframe} in {location}, the region with the most fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detecte in that periodd.'
+      'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detecte in that periodd.'
   },
   settings: {
     unit: 'anomaly',
@@ -80,7 +80,7 @@ export default {
     pageSize: 5,
     page: 0,
     period: 'week',
-    weeks: 1,
+    weeks: 4,
     dataset: 'viirs',
     layerStartDate: null,
     layerEndDate: null
