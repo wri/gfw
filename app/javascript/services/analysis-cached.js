@@ -160,27 +160,27 @@ export const getWHEREQuery = params => {
 // build complex WHERE filter for dates (VIIRS/GLAD)
 export const getDateFilter = ({ weeks }) => {
   const latestYear = moment()
-      .subtract(1, 'weeks')
-      .year();
+    .subtract(1, 'weeks')
+    .year();
 
   const latestWeek = moment()
-      .subtract(1, 'weeks')
-      .isoWeek();
-  
-  let years = [];
-  for (var i = VIIRS_START_YEAR; i <= latestYear; i++) {
+    .subtract(1, 'weeks')
+    .isoWeek();
+
+  const years = [];
+  for (let i = VIIRS_START_YEAR; i <= latestYear; i++) {
     years.push(i);
   }
 
   const weekFilters = years.map(year => {
     const endDate = moment()
-          .isoWeek(latestWeek)
-          .year(year);
+      .isoWeek(latestWeek)
+      .year(year);
 
     const startDate = moment()
-          .isoWeek(latestWeek)
-          .year(year)
-          .subtract(weeks, 'week');
+      .isoWeek(latestWeek)
+      .year(year)
+      .subtract(weeks, 'week');
 
     const startYear = startDate.year();
     const endYear = endDate.year();
@@ -192,7 +192,7 @@ export const getDateFilter = ({ weeks }) => {
       startWeek: startYear < VIIRS_START_YEAR ? 1 : startWeek,
       endYear,
       endWeek
-    }
+    };
   });
 
   return weekFilters.reduce((acc, d, i) => {
@@ -201,9 +201,11 @@ export const getDateFilter = ({ weeks }) => {
     const yf = d.endYear || '';
     const wf = d.endWeek || '';
 
-    acc += ` ${i === 0 ? '' : 'OR '}(alert__year = ${yi} AND alert__week >= ${wi}) OR (alert__week = ${yf} AND alert__week <= ${wf})`
-    return acc
-  }, '')
+    acc += ` ${i === 0 ? '' : 'OR '}(alert__year = ${yi} AND alert__week >= ${
+      wi
+    }) OR (alert__week = ${yf} AND alert__week <= ${wf})`;
+    return acc;
+  }, '');
 };
 
 //
@@ -617,7 +619,10 @@ export const fetchVIIRSAlertsGrouped = params => {
   })}${SQL_QUERIES.firesGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace(/{dateFilter}/g, encodeURIComponent(getDateFilter(params)))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs', grouped: true }));
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
+    );
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -635,7 +640,7 @@ export const fetchVIIRSAlertsGrouped = params => {
         ...d,
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
-        alerts: d.alert__count,
+        alerts: d.alert__count
       }))
     }
   }));
