@@ -9,6 +9,7 @@ import moment from 'moment';
 import { getIndicator } from 'utils/format';
 
 const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
+const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   loss:
@@ -31,6 +32,8 @@ const SQL_QUERIES = {
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  firesGrouped:
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year',
   firesWithin:
     'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
@@ -152,6 +155,55 @@ export const getWHEREQuery = params => {
     return paramString;
   }
   return '';
+};
+
+// build complex WHERE filter for dates (VIIRS/GLAD)
+export const getDateFilter = ({ weeks }) => {
+  const latestYear = moment()
+      .subtract(1, 'weeks')
+      .year();
+
+  const latestWeek = moment()
+      .subtract(1, 'weeks')
+      .isoWeek();
+  
+  let years = [];
+  for (var i = VIIRS_START_YEAR; i <= latestYear; i++) {
+    years.push(i);
+  }
+
+  const weekFilters = years.map(year => {
+    const endDate = moment()
+          .isoWeek(latestWeek)
+          .year(year);
+
+    const startDate = moment()
+          .isoWeek(latestWeek)
+          .year(year)
+          .subtract(weeks, 'week');
+
+    const startYear = startDate.year();
+    const endYear = endDate.year();
+    const startWeek = startDate.isoWeek();
+    const endWeek = endDate.isoWeek();
+
+    return {
+      startYear: startYear < VIIRS_START_YEAR ? VIIRS_START_YEAR : startYear,
+      startWeek: startYear < VIIRS_START_YEAR ? 1 : startWeek,
+      endYear,
+      endWeek
+    }
+  });
+
+  return weekFilters.reduce((acc, d, i) => {
+    const yi = d.startYear || '';
+    const wi = d.startWeek || '';
+    const yf = d.endYear || '';
+    const wf = d.endWeek || '';
+
+    acc += ` ${i === 0 ? '' : 'OR '}(alert__year = ${yi} AND alert__week >= ${wi}) OR (alert__week = ${yf} AND alert__week <= ${wf})`
+    return acc
+  }, '')
 };
 
 //
@@ -556,15 +608,16 @@ export const fetchVIIRSAlerts = params => {
 };
 
 export const fetchVIIRSAlertsGrouped = params => {
-  const { forestType, landCategory, ifl, download, dataset } = params || {};
+  const { forestType, landCategory, ifl, download } = params || {};
   const url = `${getRequestUrl({
     ...params,
-    dataset,
+    dataset: 'viirs',
     datasetType: 'weekly',
     grouped: true
-  })}${SQL_QUERIES.fires}`
+  })}${SQL_QUERIES.firesGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset, grouped: true }));
+    .replace(/{dateFilter}/g, encodeURIComponent(getDateFilter(params)))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs', grouped: true }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -580,11 +633,9 @@ export const fetchVIIRSAlertsGrouped = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
         alerts: d.alert__count,
-        area_ha: d.alert_area__ha
       }))
     }
   }));
