@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import Button from 'components/ui/button';
+
 import './chart-legend-styles.scss';
 
 class ChartLegend extends PureComponent {
@@ -26,6 +28,13 @@ class ChartLegend extends PureComponent {
             </li>
           );
         })}
+        <Button
+          theme="theme-button-small theme-button-light"
+          className="contextual-settings-btn"
+          onClick={() => {}}
+        >
+          + Add year to compare
+        </Button>
       </ul>
     );
   }
