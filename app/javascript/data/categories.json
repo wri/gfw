@@ -20,6 +20,10 @@
     "value": "land-use"
   },
   {
+    "label": "Fires",
+    "value": "fires"
+  },
+  {
     "label": "Climate",
     "value": "climate"
   }

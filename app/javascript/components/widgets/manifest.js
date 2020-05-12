@@ -1,25 +1,27 @@
-// // forest change
-import gladAlerts from 'components/widgets/forest-change/glad-alerts';
+// forest change
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import firesWithin from 'components/widgets/forest-change/fires-within';
 import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
 import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 import faoDeforest from 'components/widgets/forest-change/fao-deforest';
 import faoReforest from 'components/widgets/forest-change/fao-reforest';
-import firesAlerts from 'components/widgets/forest-change/fires-alerts';
-import firesAlertsCumulative from 'components/widgets/forest-change/fires-alerts-cumulative';
-import firesRanked from 'components/widgets/forest-change/fires-ranked';
-import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import treeCoverGain from 'components/widgets/forest-change/tree-cover-gain';
 import treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
 import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
-import fires from 'components/widgets/forest-change/fires';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
-import glads from 'components/widgets/forest-change/glads';
 
-// // land cover
+// fires
+import glads from 'components/widgets/forest-change/glads';
+import gladAlerts from 'components/widgets/forest-change/glad-alerts';
+import gladRanked from 'components/widgets/forest-change/glad-ranked';
+import firesWithin from 'components/widgets/forest-change/fires-within';
+import firesAlerts from 'components/widgets/forest-change/fires-alerts';
+import firesAlertsCumulative from 'components/widgets/forest-change/fires-alerts-cumulative';
+import firesRanked from 'components/widgets/forest-change/fires-ranked';
+import fires from 'components/widgets/forest-change/fires';
+
+// land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
 import treeCover2000 from 'components/widgets/land-cover/tree-cover-2000';
 import treeCover2010 from 'components/widgets/land-cover/tree-cover-2010';
@@ -33,7 +35,7 @@ import primaryForest from 'components/widgets/land-cover/primary-forest';
 import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
 import USLandCover from 'components/widgets/land-cover/us-land-cover';
 
-// // Climate
+// Climate
 import emissions from 'components/widgets/climate/emissions';
 import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
 import soilBiomass from 'components/widgets/climate/soil-organic';
@@ -43,32 +45,35 @@ import futureCarbonGains from 'components/widgets/climate/future-carbon-gains';
 import cumulativeEmissions from 'components/widgets/climate/cumulative-emissions';
 import carbonStock from 'components/widgets/climate/carbon-stock';
 
-// // Land Use
+// Land Use
 import economicImpact from 'components/widgets/land-use/economic-impact';
 import forestryEmployment from 'components/widgets/land-use/forestry-employment';
 import traseCommodities from 'components/widgets/land-use/trase-commodities';
 
 export default {
   // forest change
-  glads,
-  gladAlerts,
   treeLoss,
-  firesWithin,
   treeLossGlobal,
   treeLossRanked,
-  firesAlerts,
-  firesAlertsCumulative,
-  fires,
-  firesRanked,
   faoDeforest,
   faoReforest,
-  gladRanked,
   treeCoverGain,
   treeGainLocated,
   treeLossLocated,
   treeLossPlantations,
   treeLossTsc,
   treeCoverGainSimple,
+
+  // fires
+  glads,
+  gladAlerts,
+  gladRanked,
+  firesWithin,
+  firesAlerts,
+  firesAlertsCumulative,
+  firesRanked,
+  fires,
+
   // land cover
   treeCover,
   treeCover2000,

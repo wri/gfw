@@ -22,7 +22,7 @@ const Item = props => {
     activeValue,
     activeLabel
   } = props;
-  const { group, groupParent, label, metaKey } = item;
+  const { group, groupParent, label, metaKey, infoText } = item;
 
   const isActive =
     (!showGroup && !group) ||
@@ -66,6 +66,7 @@ const Item = props => {
         <Button
           className="theme-button-small square info-button"
           onClick={() => optionsAction(item[optionsActionKey])}
+          tooltip={infoText && { text: infoText }}
         >
           <Icon icon={infoIcon} className="info-icon" />
         </Button>

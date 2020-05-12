@@ -2,7 +2,8 @@
   {
     "label": "VIIRS",
     "value": "viirs",
-    "metaKey": "viirs_fires_alerts"
+    "metaKey": "viirs_fires_alerts",
+    "infoText": "Click to learn more about this dataset."
   },
   {
     "label": "MODIS",
