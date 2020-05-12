@@ -175,9 +175,8 @@ const parseSentence = createSelector(
       percent: formatNumber({ num: percentageLoss, unit: '%' }),
       component: {
         key: 'total tree cover loss',
-        tooltip: `i.e. tree cover loss inside primary forest represents a fraction of all deforestation in ${
-          locationLabel
-        }`
+        tooltip:
+          'Total tree cover loss includes loss in dry and non-tropical primary forests, secondary forests, and tree plantations in addition to humid primary forest loss.'
       }
     };
 
