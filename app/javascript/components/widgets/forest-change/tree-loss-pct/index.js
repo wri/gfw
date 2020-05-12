@@ -112,8 +112,8 @@ export default {
     }
   ],
   sortOrder: {
-    summary: 0,
-    forestChange: 0
+    summary: -1,
+    forestChange: -1
   },
   sentence: {
     initial:
@@ -129,10 +129,10 @@ export default {
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of humid primary forest in {indicator}.'
   },
-  whitelists: {
-    indicators: ['primary_forest'],
-    checkStatus: true
-  },
+  // whitelists: {
+  //   indicators: ['primary_forest'],
+  //   checkStatus: true
+  // },
   settings: {
     threshold: 30,
     extentYear: 2000
