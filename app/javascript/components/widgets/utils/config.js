@@ -287,8 +287,11 @@ export const getStatements = ({
     );
 
   const statements = compact([
-    extentYear
+    extentYear && dataType !== 'lossPrimary'
       ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    dataType === 'lossPrimary'
+      ? translateText('2001 primary forest extent remaining')
       : null,
     threshold || threshold === 0
       ? translateText('>{threshold}% tree canopy', { threshold })

@@ -94,7 +94,7 @@ const parseConfig = createSelector([getColors], colors => ({
       key: 'extentRemaining',
       unitFormat: value =>
         formatNumber({ num: value, unit: '%', precision: 3 }),
-      label: 'Primary forest extent remaining since 2001',
+      label: 'Primary forest extent remaining',
       color: colors.primaryForestExtent,
       dashline: true
     },

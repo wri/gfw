@@ -97,7 +97,7 @@ export default {
   ],
   pendingKeys: ['threshold', 'years'],
   refetchKeys: ['landCategory', 'threshold'],
-  dataType: 'loss',
+  dataType: 'lossPrimary',
   metaKey: 'widget_tree_cover_loss',
   datasets: [
     {
