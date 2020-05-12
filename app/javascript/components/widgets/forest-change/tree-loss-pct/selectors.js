@@ -94,7 +94,7 @@ const parseConfig = createSelector([getColors], colors => ({
       key: 'extentRemaining',
       unitFormat: value =>
         formatNumber({ num: value, unit: '%', precision: 3 }),
-      label: 'Primary forest extent remaining',
+      label: 'Primary forest extent remaining since 2001',
       color: colors.primaryForestExtent,
       dashline: true
     },
@@ -103,13 +103,13 @@ const parseConfig = createSelector([getColors], colors => ({
       unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
       label: 'Primary forest loss',
       color: colors.primaryForestLoss
-    },
-    {
-      key: 'percentageLoss',
-      unitFormat: value => formatNumber({ num: value, unit: '%' }),
-      label: 'Percentage of all loss',
-      color: 'transparent'
     }
+    // ,{
+    //   key: 'percentageLoss',
+    //   unitFormat: value => formatNumber({ num: value, unit: '%' }),
+    //   label: 'Percentage of all loss',
+    //   color: 'transparent'
+    // }
   ]
 }));
 
