@@ -62,10 +62,10 @@ const Item = props => {
       >
         {label}
       </div>
-      {metaKey && (
+      {(metaKey || infoText) && (
         <Button
           className="theme-button-small square info-button"
-          onClick={() => optionsAction(item[optionsActionKey])}
+          onClick={metaKey && (() => optionsAction(item[optionsActionKey]))}
           tooltip={infoText && { text: infoText }}
         >
           <Icon icon={infoIcon} className="info-icon" />

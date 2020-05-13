@@ -8,7 +8,7 @@ import './chart-legend-styles.scss';
 
 class ChartLegend extends PureComponent {
   render() {
-    const { config, className, simple } = this.props;
+    const { config, className, simple, toggleSettingsMenu } = this.props;
 
     return (
       <ul className={cx('c-chart-legend', className, { simple })}>
@@ -28,13 +28,15 @@ class ChartLegend extends PureComponent {
             </li>
           );
         })}
-        <Button
-          theme="theme-button-small theme-button-light"
-          className="contextual-settings-btn"
-          onClick={() => {}}
-        >
-          + Add year to compare
-        </Button>
+        {toggleSettingsMenu && (
+          <Button
+            theme="theme-button-small theme-button-light"
+            className="contextual-settings-btn"
+            onClick={() => toggleSettingsMenu()}
+          >
+            + Add year to compare
+          </Button>
+        )}
       </ul>
     );
   }
@@ -43,7 +45,8 @@ class ChartLegend extends PureComponent {
 ChartLegend.propTypes = {
   config: PropTypes.object,
   simple: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  toggleSettingsMenu: PropTypes.func
 };
 
 export default ChartLegend;
