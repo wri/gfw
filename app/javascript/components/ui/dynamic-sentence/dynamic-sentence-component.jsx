@@ -77,7 +77,7 @@ class DynamicSentence extends PureComponent {
           onHidden={handleMouseOut}
           duration={0}
         >
-          <span className="hover-text">
+          <span className={component.fine ? 'hover-text-fine' : 'hover-text'}>
             {translateText(mappedComponent.key)}
           </span>
         </Tooltip>
