@@ -18,7 +18,20 @@ export default [
     tableKey: 'gfw_plantation__type',
     metaKey: 'gfw_plantations',
     global: true,
-    categories: ['Unknown', 'Wood fiber / Timber', 'Oil Palm ', 'Fruit', 'Rubber', 'Other', 'Fruit Mix', 'Unknown Mix', 'Oil Palm Mix', 'Rubber Mix', 'Wood fiber / Timber Mix', 'Recently Cleared'],
+    categories: [
+      'Unknown',
+      'Wood fiber / Timber',
+      'Oil Palm ',
+      'Fruit',
+      'Rubber',
+      'Other',
+      'Fruit Mix',
+      'Unknown Mix',
+      'Oil Palm Mix',
+      'Rubber Mix',
+      'Wood fiber / Timber Mix',
+      'Recently Cleared'
+    ],
     datasets: [
       {
         dataset: TREE_PLANTATIONS_DATASET,
@@ -68,12 +81,10 @@ export default [
     datasets: [
       {
         dataset: MANGROVE_FORESTS_DATASET,
-        layers: [
-          MANGROVE_FORESTS
-        ]
+        layers: [MANGROVE_FORESTS]
       }
     ],
-    hidden: true
+    hidden: false
   },
   {
     label: 'Tree cover loss driver category',
