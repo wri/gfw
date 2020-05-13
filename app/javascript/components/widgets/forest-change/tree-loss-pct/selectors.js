@@ -103,13 +103,13 @@ const parseConfig = createSelector([getColors], colors => ({
       unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
       label: 'Primary forest loss',
       color: colors.primaryForestLoss
+    },
+    {
+      key: 'percentageLoss',
+      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      label: 'Percentage of all loss',
+      color: 'transparent'
     }
-    // ,{
-    //   key: 'percentageLoss',
-    //   unitFormat: value => formatNumber({ num: value, unit: '%' }),
-    //   label: 'Percentage of all loss',
-    //   color: 'transparent'
-    // }
   ]
 }));
 
