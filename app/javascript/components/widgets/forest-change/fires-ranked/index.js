@@ -6,7 +6,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'firesRanked',
   title: 'Regions with the most fire Alerts in {location}',
-  categories: ['forest-change'],
+  categories: ['fires'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [

@@ -16,7 +16,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'firesWithin',
   title: 'Fires alerts in {location} {indicator}',
-  categories: ['forest-change'],
+  categories: ['fires'],
   types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [

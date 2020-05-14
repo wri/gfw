@@ -10,7 +10,7 @@ export default {
   widget: 'firesAlertsCumulative',
   title: 'Cumulative Fire Alerts in {location}',
   large: true,
-  categories: ['summary', 'forest-change'],
+  categories: ['summary', 'fires'],
   settingsConfig: [
     {
       key: 'dataset',

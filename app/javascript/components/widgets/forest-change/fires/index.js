@@ -15,7 +15,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'fires',
   title: 'Fires in {location}',
-  categories: ['forest-change', 'summary'],
+  categories: ['fires', 'summary'],
   admins: ['adm0', 'adm1', 'adm2'],
   types: ['geostore', 'wdpa', 'use'],
   metaKey: 'widget_fire_alert_location',
