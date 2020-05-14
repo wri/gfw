@@ -291,10 +291,13 @@ export default {
             alerts: data,
             latest: latestDate,
             options: {
-              compareYear: years.filter(y => y !== maxYear).map(y => ({
-                label: y,
-                value: y
-              })),
+              compareYear: [
+                { label: 'All', value: years },
+                ...years.filter(y => y !== maxYear).map(y => ({
+                  label: y,
+                  value: [y]
+                }))
+              ],
               confidence: [
                 { label: 'All', value: '' },
                 { label: 'High', value: 'h' }

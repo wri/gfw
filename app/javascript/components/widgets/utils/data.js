@@ -303,7 +303,12 @@ export const getDatesData = data =>
     )
   }));
 
-export const getChartConfig = (colors, latest, unit = '') => {
+export const getChartConfig = (
+  colors,
+  latest,
+  compareYearsLines = {},
+  unit = ''
+) => {
   const ticks = [];
   while (ticks.length < 12) {
     ticks.push(
@@ -327,6 +332,7 @@ export const getChartConfig = (colors, latest, unit = '') => {
           stroke: '#49b5e3',
           isAnimationActive: false
         },
+        ...(Object.keys(compareYearsLines).length && compareYearsLines),
         target: {
           stroke: 'grey',
           isAnimationActive: false
