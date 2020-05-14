@@ -148,7 +148,14 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, selectColors, selectInteraction, selectSentences, getIndicator, selectLang],
+  [
+    parseData,
+    selectColors,
+    selectInteraction,
+    selectSentences,
+    getIndicator,
+    selectLang
+  ],
   (data, colors, interaction, sentences, indicator) => {
     if (!data) return null;
 

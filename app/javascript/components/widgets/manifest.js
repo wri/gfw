@@ -12,14 +12,14 @@ import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 
 // fires
-import glads from 'components/widgets/forest-change/glads';
-import gladAlerts from 'components/widgets/forest-change/glad-alerts';
-import gladRanked from 'components/widgets/forest-change/glad-ranked';
-import firesWithin from 'components/widgets/forest-change/fires-within';
-import firesAlerts from 'components/widgets/forest-change/fires-alerts';
-import firesAlertsCumulative from 'components/widgets/forest-change/fires-alerts-cumulative';
-import firesRanked from 'components/widgets/forest-change/fires-ranked';
-import fires from 'components/widgets/forest-change/fires';
+import glads from 'components/widgets/fires/glads';
+import gladAlerts from 'components/widgets/fires/glad-alerts';
+import gladRanked from 'components/widgets/fires/glad-ranked';
+import firesWithin from 'components/widgets/fires/fires-within';
+import firesAlerts from 'components/widgets/fires/fires-alerts';
+import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
+import firesRanked from 'components/widgets/fires/fires-ranked';
+import fires from 'components/widgets/fires/fires';
 
 // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
