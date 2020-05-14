@@ -247,12 +247,16 @@ export const parseConfig = createSelector(
           (Number.isInteger(value) ? format(',')(value) : value)
       }
     ];
-    if (compareYears && compareYears.length > 1) {
+    const compareYearsLines = {};
+    if (compareYears && compareYears.length > 0) {
       const colorRange = getColorPalette(
-        colors.compareYearsRamp,
+        colors.compareYearRamp,
         compareYears.length
       );
-      const yearsArray = compareYears.filter(y => y !== maxminYear.max);
+      const yearsArray = compareYears
+        .filter(y => y !== maxminYear.max)
+        .sort()
+        .reverse();
       yearsArray.forEach((year, i) => {
         tooltip.push({
           key: year,
@@ -265,23 +269,25 @@ export const parseConfig = createSelector(
             return date.format('YYYY-MM-DD');
           },
           unit: ` ${dataset} alerts`,
-          color:
-            compareYears.length === 1 ? colors.compareYears : colorRange[i],
+          color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
           unitFormat: value =>
             (Number.isInteger(value) ? format(',')(value) : value)
         });
+        compareYearsLines[year] = {
+          stroke:
+            compareYears.length === 1 ? colors.compareYear : colorRange[i],
+          isAnimationActive: false
+        };
       });
     }
-
     const presentDayIndex = findLastIndex(
       currentData,
       d => typeof d.count === 'number'
     );
     const presentDay = currentData[presentDayIndex].date;
-
     return {
-      ...getChartConfig(colors, moment(latest)),
+      ...getChartConfig(colors, moment(latest), compareYearsLines),
       xAxis: {
         tickCount: 12,
         interval: 4,
@@ -337,7 +343,8 @@ export const parseConfig = createSelector(
               compareCount: {
                 stroke: '#49b5e3',
                 isAnimationActive: false
-              }
+              },
+              ...(Object.keys(compareYearsLines).length, compareYearsLines)
             }
           },
           xAxis: {
