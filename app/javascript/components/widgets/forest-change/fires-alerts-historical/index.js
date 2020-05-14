@@ -1,30 +1,15 @@
-import { all, spread } from 'axios';
 import moment from 'moment';
-import uniq from 'lodash/uniq';
 
-import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import { fetchMODISHistorical } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'firesAlertsCumulative',
-  title: 'Cumulative Fire Alerts in {location}',
+  widget: 'firesAlertsHistorical',
+  title: 'Fire Alerts Count in {location}',
   large: true,
-  categories: ['summary', 'fires'],
+  categories: ['summary', 'forest-change'],
   settingsConfig: [
-    {
-      key: 'dataset',
-      label: 'fires dataset',
-      type: 'select'
-    },
-    {
-      key: 'compareYear',
-      label: 'Compare with the same period in',
-      placeholder: 'None',
-      type: 'compare-select',
-      clearable: true,
-      border: true
-    },
     {
       key: 'confidence',
       label: 'Confidence level',
@@ -46,29 +31,44 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true
+    },
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      type: 'range-select',
+      options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
+        .map(y => ({ label: `${y}`, value: y }))
     }
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
-  preventRenderKeys: ['startIndex', 'endIndex'],
+  refetchKeys: [
+    'forestType',
+    'landCategory',
+    'endYear',
+    'startYear',
+    'confidence'
+  ],
   visible: ['dashboard', 'analysis'],
-  types: ['country', 'geostore'],
+  types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_alert_location',
+  metaKey: 'widget_fire_historical_location',
   sortOrder: {
     summary: 100,
-    fires: 2
+    forestChange: 100
   },
   settings: {
-    dataset: 'viirs',
-    confidence: 'h'
+    confidence: '',
+    startYear: 2001,
+    endYear: 2020,
+    dataset: 'modis'
   },
   sentence:
-    'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
-  whitelistType: 'fires',
+    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} <b>MODIS</b> fire alerts.',
   whitelists: {
     adm0: [
       'AFG',
@@ -278,36 +278,26 @@ export default {
       'ZWE'
     ]
   },
-  getData: params =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
-      spread((alerts, latest) => {
-        const { data } = alerts.data;
-        const years = uniq(data.map(d => d.year));
-        const maxYear = Math.max(...years);
-        const latestDate = latest.attributes && latest.attributes.updatedAt;
-
-        return (
-          {
-            alerts: data,
-            latest: latestDate,
-            options: {
-              compareYear: [
-                { label: 'All', value: years },
-                ...years.filter(y => y !== maxYear).map(y => ({
-                  label: y,
-                  value: [y]
-                }))
-              ],
-              confidence: [
-                { label: 'All', value: '' },
-                { label: 'High', value: 'h' }
-              ]
-            }
-          } || {}
-        );
-      })
-    ),
-  getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
+  getData: params => {
+    const { startYear, endYear } = params;
+    const frequency = endYear - startYear <= 2 ? 'daily' : 'weekly';
+    return fetchMODISHistorical({ ...params, frequency }).then(alerts => {
+      const { data } = alerts.data;
+      return (
+        {
+          alerts: data,
+          frequency,
+          options: {
+            confidence: [
+              { label: 'All', value: '' },
+              { label: 'High', value: 'h' }
+            ]
+          }
+        } || {}
+      );
+    });
+  },
+  getDataURL: params => [fetchMODISHistorical({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

@@ -36,7 +36,11 @@ const SQL_QUERIES = {
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE}'
+    'SELECT {location}, {polynames} FROM data {WHERE}',
+  modisFiresWeekly:
+    'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
+  modisFiresDaily:
+    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -79,7 +83,10 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
 
-  const datasetId = DATASETS_ENV[`${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`];
+  const datasetId =
+    DATASETS_ENV[
+      `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
+    ];
   return `${process.env.GFW_API}/query/${datasetId}?sql=`;
 };
 
@@ -109,7 +116,9 @@ export const getWHEREQuery = params => {
       const polynameMeta = allPolynames.find(
         pname => pname.value === params[p]
       );
-      const tableKey = polynameMeta && (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
+      const tableKey =
+        polynameMeta &&
+        (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') paramKey = 'treecover_density__threshold';
@@ -158,8 +167,14 @@ export const getLoss = params => {
   const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'change' })}${query}`
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change'
+  })}${query}`.replace(
+    '{WHERE}',
+    getWHEREQuery({ ...params, dataset: 'annual' })
+  );
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -187,13 +202,15 @@ export const getLoss = params => {
 };
 
 // disaggregated loss for child of location
-export const getLossGrouped = (params) => {
+export const getLossGrouped = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'change', grouped: true })}${SQL_QUERIES.lossGrouped}`
-    .replace(
-      /{location}/g,
-      getLocationSelect({ ...params, grouped: true })
-    )
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    grouped: true
+  })}${SQL_QUERIES.lossGrouped}`
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
@@ -221,9 +238,13 @@ export const getLossGrouped = (params) => {
 };
 
 // summed extent for single location
-export const getExtent = (params) => {
+export const getExtent = params => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary' })}${SQL_QUERIES.extent}`
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary'
+  })}${SQL_QUERIES.extent}`
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
@@ -252,11 +273,13 @@ export const getExtent = (params) => {
 // disaggregated extent for child of location
 export const getExtentGrouped = params => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary', grouped: true })}${SQL_QUERIES.extentGrouped}`
-    .replace(
-      /{location}/g,
-      getLocationSelect({ ...params, grouped: true })
-    )
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true
+  })}${SQL_QUERIES.extentGrouped}`
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
@@ -285,8 +308,14 @@ export const getExtentGrouped = params => {
 // summed gain for single location
 export const getGain = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary' })}${SQL_QUERIES.gain}`
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary'
+  })}${SQL_QUERIES.gain}`.replace(
+    '{WHERE}',
+    getWHEREQuery({ ...params, dataset: 'annual' })
+  );
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -313,7 +342,12 @@ export const getGain = params => {
 // disaggregated gain for child of location
 export const getGainGrouped = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary', grouped: true })}${SQL_QUERIES.gainGrouped}`
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true
+  })}${SQL_QUERIES.gainGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
@@ -345,9 +379,16 @@ export const getAreaIntersection = params => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary' })}${SQL_QUERIES.areaIntersection}`
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary'
+  })}${SQL_QUERIES.areaIntersection}`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace(/{intersection}/g, intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual)
+    .replace(
+      /{intersection}/g,
+      intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
+    )
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
@@ -366,7 +407,9 @@ export const getAreaIntersection = params => {
       data: response.data.data.map(d => ({
         ...d,
         intersection_area: d.area__ha,
-        [forestType || landCategory]: d[intersectionPolyname.tableKey] || d[intersectionPolyname.tableKeys.annual]
+        [forestType || landCategory]:
+          d[intersectionPolyname.tableKey] ||
+          d[intersectionPolyname.tableKeys.annual]
       }))
     }
   }));
@@ -378,9 +421,17 @@ export const getAreaIntersectionGrouped = params => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
-  const url = `${getRequestUrl({ ...params, dataset: 'annual', datasetType: 'summary', grouped: true })}${SQL_QUERIES.areaIntersection}`
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true
+  })}${SQL_QUERIES.areaIntersection}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-    .replace(/{intersection}/g, intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual)
+    .replace(
+      /{intersection}/g,
+      intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
+    )
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
@@ -399,16 +450,22 @@ export const getAreaIntersectionGrouped = params => {
       data: response.data.data.map(d => ({
         ...d,
         intersection_area: d.area__ha,
-        [forestType || landCategory]: d[intersectionPolyname.tableKey] || d[intersectionPolyname.tableKeys.annual]
+        [forestType || landCategory]:
+          d[intersectionPolyname.tableKey] ||
+          d[intersectionPolyname.tableKeys.annual]
       }))
     }
   }));
 };
 
-export const fetchGladAlerts = (params) => {
+export const fetchGladAlerts = params => {
   const { forestType, landCategory, ifl, download } = params || {};
 
-  const url = `${getRequestUrl({ ...params, dataset: 'glad', datasetType: 'weekly' })}${SQL_QUERIES.glad}`
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'weekly'
+  })}${SQL_QUERIES.glad}`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }));
 
@@ -454,18 +511,23 @@ export const fetchGLADLatest = () => {
         type: 'glad-alerts'
       };
     })
-    .catch(() => new Promise(resolve =>
-      resolve({
-        attributes: { updatedAt: lastFriday },
-        id: null,
-        type: 'glad-alerts'
-      })
-    ));
+    .catch(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            attributes: { updatedAt: lastFriday },
+            id: null,
+            type: 'glad-alerts'
+          })
+        )
+    );
 };
 
-export const fetchVIIRSAlerts = (params) => {
+export const fetchVIIRSAlerts = params => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${SQL_QUERIES.fires}`
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+    SQL_QUERIES.fires
+  }`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset }));
 
@@ -494,12 +556,14 @@ export const fetchVIIRSAlerts = (params) => {
 };
 
 export const fetchFiresWithin = params => {
-  const { forestType, landCategory, ifl, download, dataset, weeks } = params || {};
-  console.log(params);
+  const { forestType, landCategory, ifl, download, dataset, weeks } =
+    params || {};
   const filterYear = moment()
     .subtract(weeks, 'weeks')
     .year();
-  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${SQL_QUERIES.firesWithin}`
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+    SQL_QUERIES.firesWithin
+  }`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
     .replace('{alert__year}', filterYear);
@@ -525,6 +589,38 @@ export const fetchFiresWithin = params => {
   }));
 };
 
+export const fetchMODISHistorical = (params) => {
+  const { forestType, landCategory, ifl, download, frequency } = params || {};
+  const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
+
+  const url = `${getRequestUrl({ ...params, dataset: 'modis', datasetType: 'weekly' })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'modis' }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10) || null,
+        year: parseInt(d.alert__year, 10) || null,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
 export const fetchVIIRSLatest = () => {
   const url =
     'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/v202003/max_alert__date';
@@ -540,15 +636,17 @@ export const fetchVIIRSLatest = () => {
         type: 'viirs-alerts'
       };
     })
-    .catch(() => new Promise(resolve =>
-      resolve({
-        attributes: { updatedAt: moment().format('YYYY-MM-DD') },
-        id: null,
-        type: 'viirs-alerts'
-      })
-    ));
+    .catch(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            attributes: { updatedAt: moment().format('YYYY-MM-DD') },
+            id: null,
+            type: 'viirs-alerts'
+          })
+        )
+    );
 };
-
 
 // Additional conditional fetches for providing context for queries.
 

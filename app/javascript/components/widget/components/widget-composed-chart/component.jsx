@@ -14,12 +14,14 @@ class WidgetComposedChart extends Component {
     data: PropTypes.array,
     config: PropTypes.object,
     settings: PropTypes.object,
+    settingsConfig: PropTypes.object,
     preventRenderKeys: PropTypes.array,
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
     active: PropTypes.bool,
     simple: PropTypes.bool,
-    barBackground: PropTypes.string
+    barBackground: PropTypes.string,
+    toggleSettingsMenu: PropTypes.func
   };
 
   static defaultProps = {
@@ -81,16 +83,28 @@ class WidgetComposedChart extends Component {
       originalData,
       data,
       config,
+      settingsConfig,
       active,
       simple,
-      barBackground
+      barBackground,
+      toggleSettingsMenu
     } = this.props;
     const { brush, legend } = config;
+    const showLegendSettingsBtn = settingsConfig.some(
+      conf => conf.key === 'compareYear'
+    );
 
     return (
       <div className="c-widget-composed-chart">
         {!simple &&
-          legend && <Legend data={data} config={legend} simple={simple} />}
+          legend && (
+          <Legend
+            data={data}
+            config={legend}
+            simple={simple}
+            toggleSettingsMenu={showLegendSettingsBtn && toggleSettingsMenu}
+          />
+        )}
 
         <ComposedChart
           className="loss-chart"

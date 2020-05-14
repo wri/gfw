@@ -18,7 +18,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'glads',
   title: 'Deforestation alerts for the last week in {location}',
-  categories: ['forest-change', 'summary'],
+  categories: ['summary', 'fires'],
   admins: ['adm0', 'adm1', 'adm2'],
   types: [],
   type: 'loss',

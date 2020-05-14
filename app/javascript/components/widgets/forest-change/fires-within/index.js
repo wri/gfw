@@ -34,10 +34,7 @@ export default {
       type: 'select',
       clearable: false,
       border: true,
-      options: [
-        { label: 'All', value: '' },
-        { label: 'High', value: 'h' }
-      ]
+      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
     },
     {
       key: 'forestType',
@@ -106,7 +103,7 @@ export default {
             fireCountAll: allFire
           };
         }
-        return data
+        return data;
       })
     ),
   getDataURL: params => [

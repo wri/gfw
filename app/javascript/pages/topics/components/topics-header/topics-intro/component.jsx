@@ -18,11 +18,16 @@ class Intro extends PureComponent {
       <div className={cx('c-topics-intro', className)}>
         <div className="row titleRow">
           <div className="column small-12 medium-6 titleCol">
-            {isDesktop && (
+            {isDesktop && img1x && (
               <div className="intro-img">
                 <img
-                  srcSet={`${img1x} 2x, ${img2x} 1x,`}
-                  src={`${img1x} 1x`}
+                  {...img2x && {
+                    srcSet: `${img2x} 2x, ${img1x} 1x,`,
+                    src: `${img1x} 1x`
+                  }}
+                  {...!img2x && {
+                    src: img1x
+                  }}
                   alt={title}
                 />
               </div>
@@ -35,6 +40,7 @@ class Intro extends PureComponent {
                 className="citation-link"
                 href={citation}
                 target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => {
                   track('topicsCitation', {
                     label: title
