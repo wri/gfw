@@ -15,6 +15,7 @@ class NumberedList extends PureComponent {
       className,
       data,
       settings,
+      settingsConfig,
       handlePageChange,
       linksDisabled,
       linksExt
@@ -23,6 +24,15 @@ class NumberedList extends PureComponent {
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
+
+    const unitsConfig = settingsConfig.find(conf => conf.key === 'unit');
+    const selectedUnitConfig =
+      unitsConfig.options &&
+      unitsConfig.options.find(opt => opt.value === unit);
+    const formatUnit =
+      selectedUnitConfig.unit !== undefined
+        ? selectedUnitConfig.unit
+        : selectedUnitConfig.value;
 
     return (
       <div className={`c-numbered-list ${className}`}>
@@ -55,7 +65,7 @@ class NumberedList extends PureComponent {
                       <div className="item-value">
                         {formatNumber({
                           num: item.value,
-                          unit: item.unit || unit
+                          unit: item.unit || formatUnit
                         })}
                       </div>
                     </div>
@@ -63,7 +73,7 @@ class NumberedList extends PureComponent {
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
-                        unit: item.unit || unit
+                        unit: item.unit || formatUnit
                       })}
                     </div>
                   )}
@@ -115,6 +125,7 @@ class NumberedList extends PureComponent {
 NumberedList.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
+  settingsConfig: PropTypes.object,
   handlePageChange: PropTypes.func,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,

@@ -149,6 +149,7 @@ class Widget extends PureComponent {
           rawData={rawData}
           originalData={originalData}
           settings={settings}
+          settingsConfig={settingsConfig}
           preventRenderKeys={preventRenderKeys}
           sentence={sentence}
           config={config}

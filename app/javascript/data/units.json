@@ -9,7 +9,8 @@
   },
   {
     "label": "Alert Density",
-    "value": "alert_density"
+    "value": "alert_density",
+    "unit": " alerts/Mha"
   },
   {
     "label": "Total Alerts",
@@ -17,7 +18,8 @@
   },
   {
     "label": "Anomaly",
-    "value": "anomaly"
+    "value": "anomaly",
+    "unit": ""
   },
   {
     "label": "Net contribution in USD",
