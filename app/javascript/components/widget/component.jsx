@@ -47,9 +47,13 @@ class Widget extends PureComponent {
     locationData: PropTypes.object,
     childData: PropTypes.object,
     location: PropTypes.object,
-    preventRenderKeys: PropTypes.array,
     adminLevel: PropTypes.string,
+    preventRenderKeys: PropTypes.array,
     geostore: PropTypes.object
+  };
+
+  state = {
+    shouldSettingsOpen: false
   };
 
   render() {
@@ -97,6 +101,9 @@ class Widget extends PureComponent {
     } = this.props;
     const { main } = colors || {};
 
+    const toggleSettingsMenu = () =>
+      this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
+
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
@@ -136,6 +143,8 @@ class Widget extends PureComponent {
           locationData={locationData}
           location={location}
           geostore={geostore}
+          shouldSettingsOpen={this.state.shouldSettingsOpen}
+          toggleSettingsMenu={toggleSettingsMenu}
         />
         <WidgetBody
           chartType={chartType}
@@ -149,6 +158,7 @@ class Widget extends PureComponent {
           rawData={rawData}
           originalData={originalData}
           settings={settings}
+          settingsConfig={settingsConfig}
           preventRenderKeys={preventRenderKeys}
           sentence={sentence}
           config={config}
@@ -156,6 +166,7 @@ class Widget extends PureComponent {
           handleDataHighlight={handleDataHighlight}
           handleChangeSettings={handleChangeSettings}
           parseInteraction={parseInteraction}
+          toggleSettingsMenu={toggleSettingsMenu}
         />
         {sentence &&
           data && (

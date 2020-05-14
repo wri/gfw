@@ -22,7 +22,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'gladRanked',
   title: 'Location of deforestation Alerts in {location}',
-  categories: ['forest-change'],
+  categories: ['fires'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [
