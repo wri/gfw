@@ -1,3 +1,4 @@
+import range from 'lodash/range';
 import { all, spread } from 'axios';
 import { getLoss } from 'services/analysis-cached';
 
@@ -15,6 +16,9 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2013;
+const MAX_YEAR = 2019;
+
 export default {
   widget: 'treeLossPlantations',
   title: 'Forest loss in natural forest in {location}',
@@ -28,7 +32,7 @@ export default {
       label: 'years',
       endKey: 'endYear',
       startKey: 'startYear',
-      options: [2013, 2014, 2015, 2016, 2017, 2018].map(y => ({
+      options: range(MIN_YEAR, MAX_YEAR, 1).map(y => ({
         label: y,
         value: y
       })),

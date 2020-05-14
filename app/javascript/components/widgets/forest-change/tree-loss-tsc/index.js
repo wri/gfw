@@ -17,6 +17,8 @@ import { getExtent, getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
+const MAX_YEAR = 2019;
+
 export default {
   ...treeLoss,
   widget: 'treeLossTsc',
@@ -113,7 +115,7 @@ export default {
             endYear
           },
           options: {
-            years: range.filter(y => y.value <= 2018)
+            years: range.filter(y => y.value <= MAX_YEAR)
           }
         };
       })
