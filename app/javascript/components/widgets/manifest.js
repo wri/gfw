@@ -10,11 +10,11 @@ import treeLossLocated from 'components/widgets/forest-change/tree-loss-located'
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
+import glads from 'components/widgets/forest-change/glads';
+import gladAlerts from 'components/widgets/forest-change/glad-alerts';
+import gladRanked from 'components/widgets/forest-change/glad-ranked';
 
 // fires
-import glads from 'components/widgets/fires/glads';
-import gladAlerts from 'components/widgets/fires/glad-alerts';
-import gladRanked from 'components/widgets/fires/glad-ranked';
 import firesWithin from 'components/widgets/fires/fires-within';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
@@ -63,11 +63,11 @@ export default {
   treeLossPlantations,
   treeLossTsc,
   treeCoverGainSimple,
-
-  // fires
   glads,
   gladAlerts,
   gladRanked,
+
+  // fires
   firesWithin,
   firesAlerts,
   firesAlertsCumulative,
