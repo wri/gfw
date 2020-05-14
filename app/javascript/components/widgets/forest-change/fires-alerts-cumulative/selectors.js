@@ -9,6 +9,7 @@ import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
 import findLastIndex from 'lodash/findLastIndex';
 
+import { getColorPalette } from 'utils/data';
 import {
   getCumulativeStatsData,
   getDatesData,
@@ -173,23 +174,27 @@ export const parseBrushedData = createSelector(
 );
 
 export const getLegend = createSelector(
-  [parseBrushedData, getColors, getCompareYear],
-  (data, colors, compareYear) => {
+  [parseBrushedData, getColors, getCompareYear, getMaxMinDates],
+  (data, colors, compareYears, maxminYear) => {
     if (!data) return {};
 
     const end = data[data.length - 1];
-
+    const yearsArray =
+      compareYears && compareYears.filter(y => y !== maxminYear.max).sort();
     return {
       current: {
         label: `${moment(end.date).format('YYYY')}`,
         color: colors.main
       },
-      // ...(compareYear && {
-      //   compare: {
-      //     label: `${compareYear}`,
-      //     color: '#49b5e3'
-      //   }
-      // }),
+      ...(yearsArray && {
+        compare: {
+          label:
+            yearsArray.length > 1
+              ? `${yearsArray[0]}-${yearsArray[yearsArray.length - 1]}`
+              : `${yearsArray}`,
+          color: '#49b5e3'
+        }
+      }),
       average: {
         label: 'Average Range',
         color: 'rgba(85,85,85, 0.15)'
@@ -220,7 +225,7 @@ export const parseConfig = createSelector(
     colors,
     latest,
     maxminYear,
-    compareYear,
+    compareYears,
     dataset,
     startIndex,
     endIndex
@@ -242,25 +247,32 @@ export const parseConfig = createSelector(
           (Number.isInteger(value) ? format(',')(value) : value)
       }
     ];
+    if (compareYears && compareYears.length > 1) {
+      const colorRange = getColorPalette(
+        colors.compareYearsRamp,
+        compareYears.length
+      );
+      const yearsArray = compareYears.filter(y => y !== maxminYear.max);
+      yearsArray.forEach((year, i) => {
+        tooltip.push({
+          key: year,
+          labelKey: 'date',
+          labelFormat: value => {
+            const date = moment(value);
+            const yearDifference = maxminYear.max - date.year();
+            date.set('year', year - yearDifference);
 
-    // if (compareYear) {
-    //   tooltip.push({
-    //     key: 'compareCount',
-    //     labelKey: 'date',
-    //     labelFormat: value => {
-    //       const date = moment(value);
-    //       const yearDifference = maxminYear.max - date.year();
-    //       date.set('year', compareYear - yearDifference);
-
-    //       return date.format('YYYY-MM-DD');
-    //     },
-    //     unit: ` ${dataset} alerts`,
-    //     color: '#49b5e3',
-    //     nullValue: 'No data available',
-    //     unitFormat: value =>
-    //       (Number.isInteger(value) ? format(',')(value) : value)
-    //   });
-    // }
+            return date.format('YYYY-MM-DD');
+          },
+          unit: ` ${dataset} alerts`,
+          color:
+            compareYears.length === 1 ? colors.compareYears : colorRange[i],
+          nullValue: 'No data available',
+          unitFormat: value =>
+            (Number.isInteger(value) ? format(',')(value) : value)
+        });
+      });
+    }
 
     const presentDayIndex = findLastIndex(
       currentData,
