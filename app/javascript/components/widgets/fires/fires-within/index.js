@@ -17,7 +17,7 @@ export default {
   widget: 'firesWithin',
   title: 'Fires alerts in {location} {indicator}',
   categories: ['fires'],
-  types: ['country', 'geostore'],
+  types: ['global', 'country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
@@ -54,6 +54,9 @@ export default {
       border: false
     }
   ],
+  sortOrder: {
+    fires: 3
+  },
   dataType: 'fires',
   chartType: 'pieChart',
   colors: 'fires',
@@ -69,9 +72,6 @@ export default {
       layers: [FIRES_ALERTS_VIIRS]
     }
   ],
-  sortOrder: {
-    forestChange: -1
-  },
   settings: {
     period: 'week',
     weeks: 13,

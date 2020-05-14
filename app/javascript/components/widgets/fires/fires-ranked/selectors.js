@@ -19,6 +19,7 @@ const getUnit = state => state.settings && state.settings.unit;
 const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
 const getAdm1 = state => state.adm1;
+const getLocation = state => state.location || null;
 const getLocationsMeta = state => state.childData;
 const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
@@ -37,12 +38,13 @@ export const getYears = createSelector([getLatestDates], latest => {
 });
 
 export const getStatsByAdmin = createSelector(
-  [getData, getYears, getAdm1],
-  (data, years, adm1) => {
+  [getData, getYears, getAdm1, getLocation],
+  (data, years, adm1, location) => {
     if (isEmpty(data) || isEmpty(years)) {
       return null;
     }
-    const matchKey = adm1 ? 'adm2' : 'adm1';
+    let matchKey = 'iso';
+    if (location.value !== 'global') matchKey = adm1 ? 'adm2' : 'adm1';
     const alertsByAdm = groupBy(data, matchKey);
 
     const filteredAlertsByAdmin = Object.entries(alertsByAdm).map(
@@ -68,23 +70,23 @@ export const getStatsByAdmin = createSelector(
 );
 
 export const parseList = createSelector(
-  [getStatsByAdmin, getAreas, getLocationsMeta, getAdm1],
-  (data, areas, meta, adm1) => {
+  [getStatsByAdmin, getAreas, getLocationsMeta, getLocation, getAdm1],
+  (data, areas, meta, location, adm1) => {
     if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
       return null;
     }
     // Now we have partial data, we iterate through and calculate
     // derivateive data: alert density and labels etc
-    const matchKey = adm1 ? 'adm2' : 'adm1';
-
+    let matchKey = 'iso';
+    if (location.value !== 'global') matchKey = adm1 ? 'adm2' : 'adm1';
     const mappedData = data.map(adm => {
-      const locationId = parseInt(adm.id, 10);
+      const locationId = matchKey === 'iso' ? adm.id : parseInt(adm.id, 10);
       const region = meta[locationId];
 
       const counts = adm.currentYearCounts;
-      const locationArea =
-        areas.find(el => el[matchKey] === adm.id).area__ha || null;
+      const locationAreaData = areas.find(el => el[matchKey] === adm.id) || {};
 
+      const locationArea = locationAreaData.area__ha || null;
       // Density in counts per Mha
       const density = locationArea ? 1e6 * counts / locationArea : 0;
       const { variance } = adm;
@@ -94,10 +96,13 @@ export const parseList = createSelector(
         counts,
         density,
         significance: 100 * format('.2r')(variance),
+        area: locationArea,
         label: (region && region.label) || ''
       };
     });
-    return mappedData;
+    return matchKey === 'iso'
+      ? mappedData.filter(d => d.area > 1e6)
+      : mappedData;
   }
 );
 
@@ -118,8 +123,8 @@ export const parseData = createSelector(
     const rescaledBuckets = buckets.map(b => ({
       ...b,
       limit:
-        value === 'variance'
-          ? b.stdDev
+        value === 'significance'
+          ? 100 * b.stdDev
           : minValue + b.limit * (maxValue - minValue) / 100
     }));
 

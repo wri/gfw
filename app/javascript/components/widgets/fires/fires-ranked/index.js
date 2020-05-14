@@ -12,7 +12,7 @@ export default {
   title: 'Regions with the most fire Alerts in {location}',
   categories: ['fires'],
   types: ['global', 'country'],
-  admins: ['adm0', 'adm1'],
+  admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -58,7 +58,8 @@ export default {
   colors: 'fires',
   sortOrder: {
     summary: 6,
-    forestChange: 10
+    fires: 4,
+    global: 100
   },
   sentences: {
     initial:
