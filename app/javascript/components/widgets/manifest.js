@@ -63,11 +63,11 @@ export default {
   treeLossPlantations,
   treeLossTsc,
   treeCoverGainSimple,
-
-  // fires
   glads,
   gladAlerts,
   gladRanked,
+
+  // fires
   firesWithin,
   firesAlerts,
   firesAlertsCumulative,

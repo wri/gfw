@@ -36,7 +36,11 @@ const SQL_QUERIES = {
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE}'
+    'SELECT {location}, {polynames} FROM data {WHERE}',
+  modisFiresWeekly:
+    'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
+  modisFiresDaily:
+    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -580,6 +584,38 @@ export const fetchFiresWithin = params => {
         ...d,
         count: d.alert__count,
         alerts: d.alert__count
+      }))
+    }
+  }));
+};
+
+export const fetchMODISHistorical = (params) => {
+  const { forestType, landCategory, ifl, download, frequency } = params || {};
+  const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
+
+  const url = `${getRequestUrl({ ...params, dataset: 'modis', datasetType: 'weekly' })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'modis' }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10) || null,
+        year: parseInt(d.alert__year, 10) || null,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
       }))
     }
   }));
