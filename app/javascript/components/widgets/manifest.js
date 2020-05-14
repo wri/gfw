@@ -7,7 +7,7 @@ import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 import faoDeforest from 'components/widgets/forest-change/fao-deforest';
 import faoReforest from 'components/widgets/forest-change/fao-reforest';
 import firesAlerts from 'components/widgets/forest-change/fires-alerts';
-import firesAlertsHistorical from 'components/widgets/forest-change/fires-alerts-historical';
+// import firesAlertsHistorical from 'components/widgets/forest-change/fires-alerts-historical';
 import firesAlertsCumulative from 'components/widgets/forest-change/fires-alerts-cumulative';
 import firesRanked from 'components/widgets/forest-change/fires-ranked';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
@@ -58,7 +58,7 @@ export default {
   treeLossGlobal,
   treeLossRanked,
   firesAlerts,
-  firesAlertsHistorical,
+  // firesAlertsHistorical,
   firesAlertsCumulative,
   fires,
   firesRanked,
