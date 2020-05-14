@@ -27,12 +27,16 @@ class NumberedList extends PureComponent {
 
     const unitsConfig = settingsConfig.find(conf => conf.key === 'unit');
     const selectedUnitConfig =
+      unitsConfig &&
       unitsConfig.options &&
       unitsConfig.options.find(opt => opt.value === unit);
-    const formatUnit =
-      selectedUnitConfig.unit !== undefined
-        ? selectedUnitConfig.unit
-        : selectedUnitConfig.value;
+    let formatUnit = unit;
+    if (selectedUnitConfig) {
+      formatUnit =
+        selectedUnitConfig.unit !== undefined
+          ? selectedUnitConfig.unit
+          : selectedUnitConfig.value;
+    }
 
     return (
       <div className={`c-numbered-list ${className}`}>
