@@ -75,7 +75,7 @@ export default {
   settings: {
     threshold: 30,
     startYear: 2013,
-    endYear: 2018,
+    endYear: 2019,
     extentYear: 2010
   },
   getData: params =>
