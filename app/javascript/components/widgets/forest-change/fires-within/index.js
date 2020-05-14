@@ -73,7 +73,7 @@ export default {
     }
   ],
   sortOrder: {
-    forestChange: -1
+    fires: 3
   },
   settings: {
     period: 'week',

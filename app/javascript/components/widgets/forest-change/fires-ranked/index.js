@@ -23,7 +23,7 @@ export default {
   colors: 'fires',
   sortOrder: {
     summary: 6,
-    forestChange: 10
+    fires: 4
   },
   sentences: {
     initial:

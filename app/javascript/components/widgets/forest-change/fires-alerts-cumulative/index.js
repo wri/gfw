@@ -60,7 +60,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    forestChange: 100
+    fires: 2
   },
   settings: {
     dataset: 'viirs',
