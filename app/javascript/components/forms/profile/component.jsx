@@ -15,7 +15,7 @@ import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
 import Error from 'components/forms/components/error';
 
-import { email as validateEmail } from 'components/forms/validations';
+import { email as validateEmail, hasValidOption } from 'components/forms/validations';
 
 import { sectors, howDoYouUse, interests } from './config';
 
@@ -31,6 +31,10 @@ class ProfileForm extends PureComponent {
 
   render() {
     const { initialValues, countries, saveProfile, source } = this.props;
+    const sectorsOptions = Object.keys(sectors).map(s => ({
+      label: s,
+      value: s
+    }));
 
     return (
       <Fragment>
@@ -93,11 +97,9 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="sector"
                         label="sector"
-                        options={Object.keys(sectors).map(s => ({
-                          label: s,
-                          value: s
-                        }))}
+                        options={sectorsOptions}
                         placeholder="Select a sector"
+                        validate={[value => hasValidOption(value, sectorsOptions)]}
                         required
                       />
                       {values.sector &&

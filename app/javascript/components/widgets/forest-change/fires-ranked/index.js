@@ -6,7 +6,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'firesRanked',
   title: 'Regions with the most fire Alerts in {location}',
-  categories: ['forest-change'],
+  categories: ['fires'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [
@@ -37,7 +37,7 @@ export default {
     page: 0,
     period: 'week',
     weeks: 13,
-    dataset: 'VIIRS',
+    dataset: 'viirs',
     layerStartDate: null,
     layerEndDate: null
   },

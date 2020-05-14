@@ -15,7 +15,7 @@ import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/select
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation } from 'utils/location';
 
-import { getIsTrase } from 'app/layouts/root/selectors';
+import { getIsTrase, selectActiveLang } from 'app/layouts/root/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
@@ -351,7 +351,9 @@ export const getWidgets = createSelector(
     selectNonGlobalDatasets,
     getIsTrase,
     getActiveLayersWithDates,
-    selectAnalysis
+    selectAnalysis,
+    getWidgetFromLocation,
+    selectActiveLang
   ],
   (
     widgets,
@@ -363,7 +365,9 @@ export const getWidgets = createSelector(
     datasets,
     isTrase,
     layers,
-    analysis
+    analysis,
+    activeWidgetKey,
+    lang
   ) => {
     if (isEmpty(widgets) || !locationObj || !widgetsData) {
       return null;
@@ -372,7 +376,7 @@ export const getWidgets = createSelector(
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
 
-    return widgets.map(w => {
+    return widgets.map((w, index) => {
       const {
         settings: defaultSettings,
         widget,
@@ -382,6 +386,10 @@ export const getWidgets = createSelector(
         dataType
       } =
         w || {};
+
+      const active =
+        (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
+
       const rawData = widgetsData && widgetsData[widget];
 
       const { settings: dataSettings } = rawData || {};
@@ -480,6 +488,7 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
+        active,
         data: rawData,
         settings,
         title: titleTemplate,
@@ -487,7 +496,8 @@ export const getWidgets = createSelector(
         optionsSelected,
         indicator,
         showAttributionLink: isTrase,
-        statements: footerStatements
+        statements: footerStatements,
+        lang
       };
 
       const parsedProps = props.getWidgetProps && props.getWidgetProps(props);

@@ -59,6 +59,7 @@ export const getSettingsConfig = ({
     .map(o => {
       const {
         key,
+        compareKey,
         startKey,
         endKey,
         options,
@@ -111,6 +112,14 @@ export const getSettingsConfig = ({
               opt => opt.value >= settings[startKey]
             ),
             endValue: parsedOptions.find(opt => opt.value === settings[endKey])
+          }),
+          ...(compareKey && {
+            compareOptions: parsedOptions.filter(
+              opt => opt.value !== settings[key]
+            ),
+            compareValue: parsedOptions.find(
+              opt => opt.value === settings[compareKey]
+            )
           })
         })
       };
@@ -157,6 +166,8 @@ export const getWidgetDatasets = ({
   endYear,
   year,
   weeks,
+  startDateAbsolute,
+  endDateAbsolute,
   latestDate,
   threshold
 }) =>
@@ -190,6 +201,13 @@ export const getWidgetDatasets = ({
         params: {
           thresh: threshold,
           visibility: true
+        }
+      }),
+      ...(startDateAbsolute &&
+        endDateAbsolute && {
+        params: {
+          startDateAbsolute,
+          endDateAbsolute
         }
       })
     })

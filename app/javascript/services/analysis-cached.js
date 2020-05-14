@@ -1,39 +1,14 @@
+import axios from 'axios';
 import { apiRequest, cartoRequest } from 'utils/request';
-import forestTypes from 'data/forest-types.json';
-import landCategories from 'data/land-categories.json';
+import forestTypes from 'data/forest-types';
+import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
 import { getIndicator } from 'utils/format';
 
-const {
-  ANNUAL_ADM0_SUMMARY,
-  ANNUAL_ADM1_SUMMARY,
-  ANNUAL_ADM2_SUMMARY,
-  ANNUAL_ADM0_CHANGE,
-  ANNUAL_ADM1_CHANGE,
-  ANNUAL_ADM2_CHANGE,
-  ANNUAL_ADM0_WHITELIST,
-  ANNUAL_ADM1_WHITELIST,
-  ANNUAL_ADM2_WHITELIST,
-  GLAD_ADM0_WEEKLY,
-  GLAD_ADM1_WEEKLY,
-  GLAD_ADM2_WEEKLY,
-  GLAD_ADM0_WHITELIST,
-  GLAD_ADM1_WHITELIST,
-  GLAD_ADM2_WHITELIST,
-  ANNUAL_WDPA_SUMMARY,
-  ANNUAL_WDPA_CHANGE,
-  ANNUAL_WDPA_WHITELIST,
-  GLAD_WDPA_WEEKLY,
-  GLAD_WDPA_WHITELIST,
-  ANNUAL_GEOSTORE_SUMMARY,
-  ANNUAL_GEOSTORE_CHANGE,
-  ANNUAL_GEOSTORE_WHITELIST,
-  GLAD_GEOSTORE_WEEKLY,
-  GLAD_GEOSTORE_WHITELIST
-} = DATASETS[process.env.FEATURE_ENV || 'production'];
+const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
 
 const SQL_QUERIES = {
   loss:
@@ -54,124 +29,84 @@ const SQL_QUERIES = {
     'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  fires:
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  firesWithin:
+    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE}'
+    'SELECT {location}, {polynames} FROM data {WHERE}',
+  modisFiresWeekly:
+    'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
+  modisFiresDaily:
+    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
-const ANNUAL_ALLOWED_PARAMS = [
-  'adm0',
-  'adm1',
-  'adm2',
-  'threshold',
-  'forestType',
-  'landCategory'
-];
-
-const GLAD_ALLOWED_PARAMS = [
-  'adm0',
-  'adm1',
-  'adm2',
-  'forestType',
-  'landCategory'
-];
-
-const getAnnualDataset = ({
-  adm0,
-  adm1,
-  adm2,
-  grouped,
-  summary,
-  type,
-  whitelist
-}) => {
-  if (type === 'geostore' && summary && whitelist) {
-    return ANNUAL_GEOSTORE_WHITELIST;
-  }
-  if (type === 'geostore' && summary) return ANNUAL_GEOSTORE_SUMMARY;
-  if (type === 'geostore') return ANNUAL_GEOSTORE_CHANGE;
-
-  if (type === 'wdpa' && summary && whitelist) return ANNUAL_WDPA_WHITELIST;
-  if (type === 'wdpa' && summary) return ANNUAL_WDPA_SUMMARY;
-  if (type === 'wdpa') return ANNUAL_WDPA_CHANGE;
-
-  if (summary && (adm2 || (adm1 && grouped)) && whitelist) {
-    return ANNUAL_ADM2_WHITELIST;
-  }
-  if (summary && (adm2 || (adm1 && grouped))) return ANNUAL_ADM2_SUMMARY;
-  if (summary && (adm1 || (adm0 && grouped)) && whitelist) {
-    return ANNUAL_ADM1_WHITELIST;
-  }
-  if (summary && (adm1 || (adm0 && grouped))) return ANNUAL_ADM1_SUMMARY;
-  if (summary && whitelist) return ANNUAL_ADM0_WHITELIST;
-  if (summary) return ANNUAL_ADM0_SUMMARY;
-
-  // else return change datasets
-  if (adm2 || (adm1 && grouped)) return ANNUAL_ADM2_CHANGE;
-  if (adm1 || (adm0 && grouped)) return ANNUAL_ADM1_CHANGE;
-  return ANNUAL_ADM0_CHANGE;
+const ALLOWED_PARAMS = {
+  annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
+  glad: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory'],
+  viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
+  modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence']
 };
 
-const getGladDatasetId = ({ adm0, adm1, adm2, grouped, type, whitelist }) => {
-  if (type === 'geostore' && whitelist) return GLAD_GEOSTORE_WHITELIST;
-  if (type === 'geostore') return GLAD_GEOSTORE_WEEKLY;
+//
+// function for building analysis table queries from params
+//
 
-  if (type === 'wdpa' && whitelist) return GLAD_WDPA_WHITELIST;
-  if (type === 'wdpa') return GLAD_WDPA_WEEKLY;
-
-  if ((adm2 || (adm1 && grouped)) && whitelist) return GLAD_ADM2_WHITELIST;
-  if (adm2 || (adm1 && grouped)) return GLAD_ADM2_WEEKLY;
-  if ((adm1 || (adm0 && grouped)) && whitelist) return GLAD_ADM1_WHITELIST;
-  if (adm1 || (adm0 && grouped)) return GLAD_ADM1_WEEKLY;
-  if (whitelist) return GLAD_ADM0_WHITELIST;
-
-  return GLAD_ADM0_WEEKLY;
+const typeByGrouped = {
+  global: {
+    default: 'adm0',
+    grouped: 'adm0'
+  },
+  adm0: {
+    default: 'adm0',
+    grouped: 'adm1'
+  },
+  adm1: {
+    default: 'adm1',
+    grouped: 'adm2'
+  },
+  adm2: {
+    default: 'adm2',
+    grouped: 'adm2'
+  }
 };
 
-const getLocationSelect = ({ type, adm1, adm2 }) => {
+// build the base query for the query with the correct dataset id
+const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
+  let typeByLevel = type;
+  if (type === 'country' || type === 'global') {
+    if (!adm1) typeByLevel = 'adm0';
+    if (adm1) typeByLevel = 'adm1';
+    if (adm2) typeByLevel = 'adm2';
+    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
+  }
+
+  const datasetId =
+    DATASETS_ENV[
+      `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
+    ];
+  return `${process.env.GFW_API}/query/${datasetId}?sql=`;
+};
+
+// build {select} from location params
+const getLocationSelect = ({ type, adm0, adm1, adm2, grouped }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
   if (['geostore', 'use'].includes(type)) return 'geostore__id';
+  if (grouped) return `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
   return `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
 };
 
-const getLocationSelectGrouped = ({ type, adm0, adm1 }) => {
-  if (type === 'wdpa') return 'wdpa_protected_area__id';
-  if (['geostore', 'use'].includes(type)) return 'geostore__id';
-  return `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
-};
-
-const buildPolynameSelects = nonTable => {
-  const allPolynames = forestTypes
-    .concat(landCategories)
-    .filter(p => !p.hidden);
-  let polyString = '';
-  allPolynames.forEach((p, i) => {
-    const isLast = i === allPolynames.length - 1;
-    polyString = polyString.concat(
-      `${!nonTable ? p.tableKey : p.value} as ${p.value}${isLast ? '' : ', '}`
-    );
-  });
-
-  return polyString;
-};
-
-const getRequestUrl = ({ glad, ...params }) => {
-  const dataset = glad ? getGladDatasetId(params) : getAnnualDataset(params);
-  const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
-  return REQUEST_URL.replace('{dataset}', dataset);
-};
-
+// build {where} statement for query
 export const getWHEREQuery = params => {
   const allPolynames = forestTypes.concat(landCategories);
   const paramKeys = params && Object.keys(params);
-  const ALLOWED_PARAMS = params.glad
-    ? GLAD_ALLOWED_PARAMS
-    : ANNUAL_ALLOWED_PARAMS;
+  const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
   const paramKeysFiltered = paramKeys.filter(
-    p => (params[p] || p === 'threshold') && ALLOWED_PARAMS.includes(p)
+    p => (params[p] || p === 'threshold') && allowedParams.includes(p)
   );
-  const { type, glad } = params || {};
+  const { type, dataset } = params || {};
   if (paramKeysFiltered && paramKeysFiltered.length) {
     let paramString = 'WHERE ';
     paramKeysFiltered.forEach((p, i) => {
@@ -183,10 +118,9 @@ export const getWHEREQuery = params => {
       );
       const tableKey =
         polynameMeta &&
-        (glad && polynameMeta.gladTableKey
-          ? polynameMeta.gladTableKey
-          : polynameMeta.tableKey);
+        (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
       let paramKey = p;
+      if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') paramKey = 'treecover_density__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
@@ -210,7 +144,9 @@ export const getWHEREQuery = params => {
 }${
   !isPolyname
     ? `${paramKey} = ${
-      typeof value === 'number' || p !== 'adm0' ? value : `'${value}'`
+      typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
+        ? value
+        : `'${value}'`
     }`
     : ''
 }${isLast ? '' : ' AND '}`;
@@ -222,32 +158,22 @@ export const getWHEREQuery = params => {
   return '';
 };
 
+//
+// data fetches
+//
+
 // summed loss for single location
-export const getLoss = ({
-  adm0,
-  adm1,
-  adm2,
-  tsc,
-  download,
-  forestType,
-  landCategory,
-  ifl,
-  ...params
-}) => {
+export const getLoss = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
-  const url = `${getRequestUrl({ adm0, adm1, adm2, ...params })}${
-    tsc ? lossTsc : loss
-  }`.replace(
+  const query = params.lossTsc ? lossTsc : loss;
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change'
+  })}${query}`.replace(
     '{WHERE}',
-    getWHEREQuery({
-      adm0,
-      adm1,
-      adm2,
-      forestType,
-      landCategory,
-      ifl,
-      ...params
-    })
+    getWHEREQuery({ ...params, dataset: 'annual' })
   );
 
   if (download) {
@@ -276,39 +202,16 @@ export const getLoss = ({
 };
 
 // disaggregated loss for child of location
-export const getLossGrouped = ({
-  adm0,
-  adm1,
-  adm2,
-  download,
-  forestType,
-  landCategory,
-  ifl,
-  ...params
-}) => {
+export const getLossGrouped = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
   const url = `${getRequestUrl({
-    adm0,
-    adm1,
-    adm2,
-    grouped: true,
-    ...params
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    grouped: true
   })}${SQL_QUERIES.lossGrouped}`
-    .replace(
-      /{location}/g,
-      getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
-    )
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params
-      })
-    );
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -335,37 +238,15 @@ export const getLossGrouped = ({
 };
 
 // summed extent for single location
-export const getExtent = ({
-  adm0,
-  adm1,
-  adm2,
-  extentYear,
-  download,
-  forestType,
-  landCategory,
-  ifl,
-  ...params
-}) => {
+export const getExtent = params => {
+  const { forestType, landCategory, ifl, download, extentYear } = params || {};
   const url = `${getRequestUrl({
-    adm0,
-    adm1,
-    adm2,
-    summary: true,
-    ...params
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary'
   })}${SQL_QUERIES.extent}`
     .replace(/{extentYear}/g, extentYear)
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params
-      })
-    );
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -390,42 +271,17 @@ export const getExtent = ({
 };
 
 // disaggregated extent for child of location
-export const getExtentGrouped = ({
-  adm0,
-  adm1,
-  adm2,
-  extentYear,
-  download,
-  forestType,
-  landCategory,
-  ifl,
-  ...params
-}) => {
+export const getExtentGrouped = params => {
+  const { forestType, landCategory, ifl, download, extentYear } = params || {};
   const url = `${getRequestUrl({
     ...params,
-    adm0,
-    adm1,
-    adm2,
-    grouped: true,
-    summary: true
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true
   })}${SQL_QUERIES.extentGrouped}`
-    .replace(
-      /{location}/g,
-      getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
-    )
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace(/{extentYear}/g, extentYear)
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params
-      })
-    );
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -450,33 +306,15 @@ export const getExtentGrouped = ({
 };
 
 // summed gain for single location
-export const getGain = ({
-  adm0,
-  adm1,
-  adm2,
-  download,
-  forestType,
-  landCategory,
-  ifl,
-  ...params
-}) => {
+export const getGain = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
   const url = `${getRequestUrl({
     ...params,
-    adm0,
-    adm1,
-    adm2,
-    summary: true
+    dataset: 'annual',
+    datasetType: 'summary'
   })}${SQL_QUERIES.gain}`.replace(
     '{WHERE}',
-    getWHEREQuery({
-      adm0,
-      adm1,
-      adm2,
-      forestType,
-      landCategory,
-      ifl,
-      ...params
-    })
+    getWHEREQuery({ ...params, dataset: 'annual' })
   );
 
   if (download) {
@@ -502,40 +340,16 @@ export const getGain = ({
 };
 
 // disaggregated gain for child of location
-export const getGainGrouped = ({
-  adm0,
-  adm1,
-  adm2,
-  download,
-  forestType,
-  landCategory,
-  ifl,
-  ...params
-}) => {
+export const getGainGrouped = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
   const url = `${getRequestUrl({
     ...params,
-    adm0,
-    adm1,
-    adm2,
-    grouped: true,
-    summary: true
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true
   })}${SQL_QUERIES.gainGrouped}`
-    .replace(
-      /{location}/g,
-      getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
-    )
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params
-      })
-    );
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -560,41 +374,22 @@ export const getGainGrouped = ({
 };
 
 // total area for a given of polyname in location
-export const getAreaIntersection = ({
-  adm0,
-  adm1,
-  adm2,
-  forestType,
-  landCategory,
-  download,
-  ifl,
-  ...params
-}) => {
+export const getAreaIntersection = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
-
   const url = `${getRequestUrl({
     ...params,
-    adm0,
-    adm1,
-    adm2,
-    summary: true
+    dataset: 'annual',
+    datasetType: 'summary'
   })}${SQL_QUERIES.areaIntersection}`
-    .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2, ...params }))
-    .replace(/{intersection}/g, intersectionPolyname.tableKey)
+    .replace(/{location}/g, getLocationSelect(params))
     .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params
-      })
-    );
+      /{intersection}/g,
+      intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
+    )
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -612,51 +407,32 @@ export const getAreaIntersection = ({
       data: response.data.data.map(d => ({
         ...d,
         intersection_area: d.area__ha,
-        [forestType || landCategory]: d[intersectionPolyname.tableKey]
+        [forestType || landCategory]:
+          d[intersectionPolyname.tableKey] ||
+          d[intersectionPolyname.tableKeys.annual]
       }))
     }
   }));
 };
 
 // total area for a given of polyname in location
-export const getAreaIntersectionGrouped = ({
-  adm0,
-  adm1,
-  adm2,
-  forestType,
-  landCategory,
-  ifl,
-  download,
-  ...params
-}) => {
+export const getAreaIntersectionGrouped = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
-
   const url = `${getRequestUrl({
     ...params,
-    adm0,
-    adm1,
-    adm2,
+    dataset: 'annual',
+    datasetType: 'summary',
     grouped: true
   })}${SQL_QUERIES.areaIntersection}`
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace(
-      /{location}/g,
-      getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
+      /{intersection}/g,
+      intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
     )
-    .replace(/{intersection}/g, intersectionPolyname.tableKey)
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params
-      })
-    );
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -674,52 +450,24 @@ export const getAreaIntersectionGrouped = ({
       data: response.data.data.map(d => ({
         ...d,
         intersection_area: d.area__ha,
-        [forestType || landCategory]: d[intersectionPolyname.tableKey]
+        [forestType || landCategory]:
+          d[intersectionPolyname.tableKey] ||
+          d[intersectionPolyname.tableKeys.annual]
       }))
     }
   }));
 };
 
-export const fetchGladAlerts = ({
-  adm0,
-  adm1,
-  adm2,
-  tsc,
-  forestType,
-  landCategory,
-  ifl,
-  grouped,
-  download,
-  ...params
-}) => {
-  const { glad } = SQL_QUERIES;
+export const fetchGladAlerts = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
   const url = `${getRequestUrl({
     ...params,
-    adm0,
-    adm1,
-    adm2,
-    grouped,
-    glad: true
-  })}${glad}`
-    .replace(
-      /{location}/g,
-      grouped
-        ? getLocationSelectGrouped({ adm0, adm1, adm2, ...params })
-        : getLocationSelect({ adm1, adm2, ...params })
-    )
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({
-        adm0,
-        adm1,
-        adm2,
-        forestType,
-        landCategory,
-        ifl,
-        ...params,
-        glad: true
-      })
-    );
+    dataset: 'glad',
+    datasetType: 'weekly'
+  })}${SQL_QUERIES.glad}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -763,18 +511,162 @@ export const fetchGLADLatest = () => {
         type: 'glad-alerts'
       };
     })
-    .catch(error => {
-      console.error('Error in gladRequest', error);
-      return new Promise(resolve =>
-        resolve({
-          attributes: { updatedAt: lastFriday },
-          id: null,
-          type: 'glad-alerts'
-        })
-      );
-    });
+    .catch(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            attributes: { updatedAt: lastFriday },
+            id: null,
+            type: 'glad-alerts'
+          })
+        )
+    );
 };
 
+export const fetchVIIRSAlerts = params => {
+  const { forestType, landCategory, ifl, download, dataset } = params || {};
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+    SQL_QUERIES.fires
+  }`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchFiresWithin = params => {
+  const { forestType, landCategory, ifl, download, dataset, weeks } =
+    params || {};
+  const filterYear = moment()
+    .subtract(weeks, 'weeks')
+    .year();
+  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+    SQL_QUERIES.firesWithin
+  }`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
+    .replace('{alert__year}', filterYear);
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        count: d.alert__count,
+        alerts: d.alert__count
+      }))
+    }
+  }));
+};
+
+export const fetchMODISHistorical = (params) => {
+  const { forestType, landCategory, ifl, download, frequency } = params || {};
+  const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
+
+  const url = `${getRequestUrl({ ...params, dataset: 'modis', datasetType: 'weekly' })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'modis' }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10) || null,
+        year: parseInt(d.alert__year, 10) || null,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchVIIRSLatest = () => {
+  const url =
+    'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/v202003/max_alert__date';
+
+  return axios
+    .get(url)
+    .then(({ data }) => {
+      const date = data.max_date;
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'viirs-alerts'
+      };
+    })
+    .catch(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            attributes: { updatedAt: moment().format('YYYY-MM-DD') },
+            id: null,
+            type: 'viirs-alerts'
+          })
+        )
+    );
+};
+
+// Additional conditional fetches for providing context for queries.
+
+// generate {select} query using all available forest types and land categories
+const buildPolynameSelects = nonTable => {
+  const allPolynames = forestTypes
+    .concat(landCategories)
+    .filter(p => !p.hidden);
+  let polyString = '';
+  allPolynames.forEach((p, i) => {
+    const isLast = i === allPolynames.length - 1;
+    polyString = polyString.concat(
+      `${!nonTable ? p.tableKey : p.value} as ${p.value}${isLast ? '' : ', '}`
+    );
+  });
+
+  return polyString;
+};
+
+// get counts of countries that each forest type and land category intersects with
 export const getNonGlobalDatasets = () => {
   const url = `/sql?q=${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
@@ -783,8 +675,9 @@ export const getNonGlobalDatasets = () => {
   return cartoRequest.get(url);
 };
 
+// get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = params => {
-  const url = `${getRequestUrl({ ...params, whitelist: true, summary: true })}${
+  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
