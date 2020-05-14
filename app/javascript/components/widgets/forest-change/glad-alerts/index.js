@@ -35,7 +35,7 @@ export default {
   chartType: 'composedChart',
   source: 'gadm',
   dataType: 'loss',
-  categories: ['summary', 'fires'],
+  categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
