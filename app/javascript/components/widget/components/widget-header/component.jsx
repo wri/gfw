@@ -29,7 +29,9 @@ class WidgetHeader extends PureComponent {
     handleShowShare: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
     getDataURL: PropTypes.func,
-    status: PropTypes.string
+    status: PropTypes.string,
+    shouldSettingsOpen: PropTypes.bool,
+    toggleSettingsMenu: PropTypes.func
   };
 
   render() {
@@ -49,7 +51,9 @@ class WidgetHeader extends PureComponent {
       handleShowShare,
       preventCloseSettings,
       getDataURL,
-      status
+      status,
+      shouldSettingsOpen,
+      toggleSettingsMenu
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
@@ -77,6 +81,8 @@ class WidgetHeader extends PureComponent {
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}
               active={active}
+              shouldSettingsOpen={shouldSettingsOpen}
+              toggleSettingsMenu={toggleSettingsMenu}
             />
           )}
           {showSeparator && <span className="separator" />}

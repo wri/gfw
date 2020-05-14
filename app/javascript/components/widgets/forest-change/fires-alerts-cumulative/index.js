@@ -10,7 +10,7 @@ export default {
   widget: 'firesAlertsCumulative',
   title: 'Cumulative Fire Alerts in {location}',
   large: true,
-  categories: ['summary', 'forest-change'],
+  categories: ['summary', 'fires'],
   settingsConfig: [
     {
       key: 'dataset',
@@ -67,7 +67,7 @@ export default {
     confidence: 'h'
   },
   sentence:
-    'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The worst year on record was {maxYear}, with {maxTotal} fires.',
+    'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
   whitelistType: 'fires',
   whitelists: {
     adm0: [
@@ -291,10 +291,13 @@ export default {
             alerts: data,
             latest: latestDate,
             options: {
-              compareYear: years.filter(y => y !== maxYear).map(y => ({
-                label: y,
-                value: y
-              })),
+              compareYear: [
+                { label: 'All', value: years },
+                ...years.filter(y => y !== maxYear).map(y => ({
+                  label: y,
+                  value: [y]
+                }))
+              ],
               confidence: [
                 { label: 'All', value: '' },
                 { label: 'High', value: 'h' }

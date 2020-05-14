@@ -16,7 +16,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'firesWithin',
   title: 'Fires alerts in {location} {indicator}',
-  categories: ['forest-change'],
+  categories: ['fires'],
   types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
@@ -34,10 +34,7 @@ export default {
       type: 'select',
       clearable: false,
       border: true,
-      options: [
-        { label: 'All', value: '' },
-        { label: 'High', value: 'h' }
-      ]
+      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
     },
     {
       key: 'forestType',
@@ -106,7 +103,7 @@ export default {
             fireCountAll: allFire
           };
         }
-        return data
+        return data;
       })
     ),
   getDataURL: params => [

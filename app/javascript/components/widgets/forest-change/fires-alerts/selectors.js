@@ -202,7 +202,7 @@ export const getLegend = createSelector(
 
     return {
       current: {
-        label: `${moment(first.date).format('MMM YYYY')} - ${moment(
+        label: `${moment(first.date).format('MMM YYYY')}–${moment(
           end.date
         ).format('MMM YYYY')}`,
         color: colors.main
@@ -211,7 +211,7 @@ export const getLegend = createSelector(
         compare: {
           label: `${moment(first.date)
             .set('year', first.compareYear)
-            .format('MMM YYYY')} - ${moment(end.date)
+            .format('MMM YYYY')}–${moment(end.date)
             .set('year', end.compareYear)
             .format('MMM YYYY')}`,
           color: '#49b5e3'
@@ -424,7 +424,7 @@ export const parseSentence = createSelector(
       start_date: firstDate.date,
       end_date: lastDate.date,
       dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
-      dataset,
+      dataset: dataset.toUpperCase(),
       count: {
         value: total ? format(',')(total) : 0,
         color: colors.main
