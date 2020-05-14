@@ -404,7 +404,8 @@ export const parseSentence = createSelector(
     const maxWeek = maxBy(raw_data, 'count');
     const maxTotal = maxWeek.count;
     const maxYear = maxWeek.year;
-    const total = maxBy(slicedData, 'count').count || 0;
+    const maxCount = maxBy(slicedData, 'count');
+    const total = maxCount ? maxCount.count : 0;
 
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
