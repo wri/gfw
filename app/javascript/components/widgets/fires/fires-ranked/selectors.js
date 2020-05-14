@@ -84,15 +84,16 @@ export const parseList = createSelector(
       const counts = adm.currentYearCounts;
       const locationArea =
         areas.find(el => el[matchKey] === adm.id).area__ha || null;
+
+      // Density in counts per Mha
       const density = locationArea ? 1e6 * counts / locationArea : 0;
       const { variance } = adm;
 
       return {
         id: locationId,
         counts,
-        // counts per Mha
         density,
-        variance,
+        significance: 100 * format('.2r')(variance),
         label: (region && region.label) || ''
       };
     });
@@ -107,8 +108,8 @@ export const parseData = createSelector(
 
     const value = {
       alert_density: 'density',
-      anomaly: 'variance',
-      counts: 'counts'
+      counts: 'counts',
+      significance: 'significance'
     }[unit];
 
     const buckets = colors && getColorBuckets(colors);
@@ -125,7 +126,7 @@ export const parseData = createSelector(
     return sortBy(
       data.map(d => ({
         ...d,
-        value: value === 'density' ? d[value] : d.counts,
+        value: d[value], // value === 'density' ? d[value] : d.counts,
         color:
           rescaledBuckets && getColorBucket(rescaledBuckets, d[value]).color
       })),

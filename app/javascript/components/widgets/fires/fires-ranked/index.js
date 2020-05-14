@@ -48,7 +48,7 @@ export default {
       key: 'unit',
       label: 'unit',
       type: 'select',
-      whitelist: ['counts', 'alert_density', 'anomaly'],
+      whitelist: ['counts', 'alert_density', 'significance'],
       border: true
     }
   ],
@@ -75,7 +75,7 @@ export default {
       'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detecte in that periodd.'
   },
   settings: {
-    unit: 'anomaly',
+    unit: 'significance',
     confidence: 'h',
     pageSize: 5,
     page: 0,

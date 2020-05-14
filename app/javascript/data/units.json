@@ -14,12 +14,13 @@
   },
   {
     "label": "Total Alerts",
-    "value": "counts"
+    "value": "counts",
+    "unit": " alerts"
   },
   {
-    "label": "Anomaly",
-    "value": "anomaly",
-    "unit": ""
+    "label": "Significance",
+    "value": "significance",
+    "unit": "%"
   },
   {
     "label": "Net contribution in USD",
