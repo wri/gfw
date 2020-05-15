@@ -15,8 +15,13 @@
     height: rem(100px);
     padding: 0;
 
+
     option {
-      padding: 5px 12px;
+      padding: 6px 12px;
+      height: auto;
+      overflow: hidden;
+      word-wrap: normal !important;
+      white-space: normal;
     }
   }
 }
