@@ -143,11 +143,12 @@ class AoICard extends PureComponent {
       });
     }
     const applicationName = applicationsMeta[application];
-    const createdMetaTemplate = `Created ${moment(createdAt).format(
-      'MMM DD YYYY'
-    )}${
+    const createdMetaTemplate = translateText(`Created {date} ${
       application !== 'gfw' && applicationName ? ` on ${applicationName}` : ''
-    }`;
+    }`);
+    const createdMeta = createdMetaTemplate.replace('{date}', moment(createdAt).format(
+      'MMM DD YYYY'
+    ));
 
     return (
       <div className={cx('c-aoi-card', { simple })}>
@@ -162,7 +163,7 @@ class AoICard extends PureComponent {
           <Dotdotdot clamp={2} className="title">
             {name}
           </Dotdotdot>
-          {!simple && <span className="created">{createdMetaTemplate}</span>}
+          {!simple && <span className="created notranslate">{createdMeta}</span>}
           <div className="meta">
             {tags &&
               tags.length > 0 && (
