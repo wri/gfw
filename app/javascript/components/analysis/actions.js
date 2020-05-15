@@ -148,6 +148,7 @@ export const uploadShape = createThunkAction(
                   'We cannot support an analysis for a file with more than 1000 features.'
               })
             );
+            track('analysisUploadShape', { label: 'Failed: too many features' });
           } else if (
             features &&
             featureCount === 1 &&
@@ -161,6 +162,8 @@ export const uploadShape = createThunkAction(
                   'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.'
               })
             );
+
+            track('analysisUploadShape', { label: 'Failed: non polygon data' });
           } else {
             getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
               .then(geostore => {
@@ -194,6 +197,7 @@ export const uploadShape = createThunkAction(
                       })
                     );
                   }, 300);
+                  track('analysisUploadShape', { label: 'Success' });
                 }
               })
               .catch(error => {
@@ -207,7 +211,8 @@ export const uploadShape = createThunkAction(
                     errorMessage: errorMessage.desc
                   })
                 );
-                console.info(error);
+
+                track('analysisUploadShape', { label: `Failed: ${errorMessage.title}` });
               });
           }
         } else {
@@ -218,6 +223,7 @@ export const uploadShape = createThunkAction(
               errorMessage: 'Please attach a file that contains geometric data.'
             })
           );
+          track('analysisUploadShape', { label: 'Failed: file is empty' });
         }
       })
       .catch(error => {
@@ -232,8 +238,8 @@ export const uploadShape = createThunkAction(
               errorMessage: errorMessage.desc
             })
           );
+          track('analysisUploadShape', { label: `Failed: ${errorMessage.title}` });
         }
-        console.info(error);
       });
   }
 );
