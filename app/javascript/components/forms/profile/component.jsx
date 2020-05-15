@@ -15,7 +15,10 @@ import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
 import Error from 'components/forms/components/error';
 
-import { email as validateEmail, hasValidOption } from 'components/forms/validations';
+import {
+  email as validateEmail,
+  hasValidOption
+} from 'components/forms/validations';
 
 import { sectors, howDoYouUse, interests } from './config';
 
@@ -99,7 +102,9 @@ class ProfileForm extends PureComponent {
                         label="sector"
                         options={sectorsOptions}
                         placeholder="Select a sector"
-                        validate={[value => hasValidOption(value, sectorsOptions)]}
+                        validate={[
+                          value => hasValidOption(value, sectorsOptions)
+                        ]}
                         required
                       />
                       {values.sector &&
@@ -159,13 +164,17 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="howDoYouUse"
                         label="how do you use global forest watch?"
-                        options={sortBy(
-                          howDoYouUse.map(r => ({
-                            label: r,
-                            value: r
-                          })),
-                          'label'
-                        )}
+                        options={[
+                          ...sortBy(
+                            howDoYouUse.map(r => ({
+                              label: r,
+                              value: r
+                            })),
+                            'label'
+                          ),
+                          { label: 'Other', value: 'Other' }
+                        ]}
+                        selectInput={values.howDoYouUse.includes('Other')}
                         multiple
                         required
                       />
