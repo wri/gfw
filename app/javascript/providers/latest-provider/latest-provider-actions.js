@@ -29,7 +29,7 @@ export const getLatest = createThunkAction(
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes
                     : latestResponse.attributes;
-                  date = data.date || data.latestResponse;
+                  date = data.date || data.latestResponse || data.latest;
                 }
                 return {
                   ...obj,

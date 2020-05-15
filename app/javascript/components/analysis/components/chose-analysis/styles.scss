@@ -175,13 +175,23 @@
       width: 100%;
     }
 
-    .terms p {
-      font-size: rem(12px);
+    .terms {
+      width: 100%;
       margin-top: rem(15px);
 
-      button {
-        display: inline;
-        margin-left: rem(5px);
+      .first-term {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      p {
+        font-size: rem(12px);
+
+        button {
+          display: inline;
+          margin-left: rem(5px);
+        }
       }
     }
 

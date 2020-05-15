@@ -142,9 +142,17 @@
 
   &.simple {
     align-items: center;
+    flex-direction: row;
+
+    .aoi-card-map {
+      margin-bottom: 0;
+      margin-right: 20px;
+    }
 
     .item-body {
-      max-width: rem(150px);
+      @media screen and (min-width: $screen-m) {
+        max-width: rem(150px);
+      }
     }
 
     .aoi-card-map {
