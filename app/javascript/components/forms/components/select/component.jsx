@@ -6,6 +6,7 @@ import cx from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
 import { composeValidators } from 'components/forms/validations';
+import Input from 'components/forms/components/input';
 
 import FieldWrapper from 'components/forms/components/field-wrapper';
 
@@ -21,7 +22,8 @@ class Select extends PureComponent {
     name: PropTypes.string,
     options: PropTypes.array,
     required: PropTypes.bool,
-    multiple: PropTypes.bool
+    multiple: PropTypes.bool,
+    selectInput: PropTypes.bool
   };
 
   render() {
@@ -33,7 +35,8 @@ class Select extends PureComponent {
       options,
       hidden,
       required,
-      multiple
+      multiple,
+      selectInput
     } = this.props;
 
     const parsedOptions =
@@ -78,6 +81,15 @@ class Select extends PureComponent {
                 </option>
               ))}
             </select>
+            {selectInput && (
+              <div className="select-input">
+                <Input
+                  name={`${input.name}_otherInput`}
+                  label="Other:"
+                  required={required}
+                />
+              </div>
+            )}
           </FieldWrapper>
         )}
       </Field>

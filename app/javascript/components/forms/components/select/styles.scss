@@ -20,3 +20,10 @@
     }
   }
 }
+
+.select-input {
+  margin-top: rem(5px);
+  margin-left: rem(25px);
+  width: calc(100% - #{rem(25px)});
+  max-width: rem(325px);
+}

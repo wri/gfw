@@ -532,13 +532,14 @@ export const getInteractionSelected = createSelector(
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
       selectedData = interactions
-        .reverse()
         .find(o => o.layer && layersWithoutBoundariesIds.includes(o.layer.id));
     }
+
     // if only one layer then get that
     if (!selectedData && interactions.length === 1) {
       selectedData = interactions[0];
     }
+
     // otherwise get based on selected
     if (!selectedData) {
       selectedData = interactions.find(o => o.layer && o.layer.id === selected);

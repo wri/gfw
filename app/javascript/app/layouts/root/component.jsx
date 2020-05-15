@@ -48,8 +48,7 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    const isSearch = window.location.pathname === '/search';
-    handlePageTrack(isSearch);
+    handlePageTrack();
   }
 
   render() {

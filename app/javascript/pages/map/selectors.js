@@ -4,7 +4,8 @@ import {
   getDrawing,
   getMapLoading,
   getActiveDatasetsFromState,
-  getInteractionSelected
+  getInteractionSelected,
+  getBasemapFromState
 } from 'components/map/selectors';
 import { getShowDraw } from 'components/analysis/selectors';
 
@@ -86,5 +87,6 @@ export const getMapProps = createStructuredSelector({
   embed: getEmbed,
   geostoreId: getDrawGeostoreId,
   selectedInteraction: getInteractionSelected,
-  location: selectLocationPayload
+  location: selectLocationPayload,
+  basemap: getBasemapFromState
 });

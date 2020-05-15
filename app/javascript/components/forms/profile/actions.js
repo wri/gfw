@@ -11,6 +11,8 @@ export const saveProfile = createThunkAction(
     signUpForNewsletter,
     subsector,
     subsector_otherInput,
+    howDoYouUse,
+    howDoYouUse_otherInput,
     ...rest
   }) => dispatch => {
     const postData = {
@@ -20,6 +22,13 @@ export const saveProfile = createThunkAction(
         subsector && subsector.includes('Other')
           ? `Other: ${subsector_otherInput || ''}`
           : subsector,
+      howDoYouUse:
+        howDoYouUse && howDoYouUse.includes('Other')
+          ? [
+            ...howDoYouUse.filter(use => use !== 'Other'),
+            `Other: ${howDoYouUse_otherInput || ''}`
+          ]
+          : howDoYouUse,
       signUpForNewsletter:
         !!signUpForNewsletter &&
         signUpForNewsletter.length &&
