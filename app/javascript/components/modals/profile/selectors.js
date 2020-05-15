@@ -1,7 +1,7 @@
 import { createStructuredSelector } from 'reselect';
 
 const selectProfileUrlState = state =>
-  state.location && state.location.query && state.location.query.profile;
+  state.location && state.location.query && !!state.location.query.profile;
 
 const selectUsername = state =>
   state.myGfw &&
