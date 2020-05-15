@@ -87,14 +87,19 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      font-size: rem(12px);
       height: rem(26px);
       color: $slate;
       margin-bottom: 15px;
+      font-size: rem(12px);
 
       @media screen and (min-width: $screen-m) {
         flex-wrap: nowrap;
         margin-bottom: 0;
+      }
+
+      p {
+        font-size: rem(12px);
+        display: inline-block;
       }
 
       > span {
@@ -111,11 +116,13 @@
         }
       }
 
-      .glad {
+      .glad,
+      .glad p {
         color: $loss;
       }
 
-      .viirs {
+      .viirs,
+      .viirs p {
         color: $fires;
       }
 

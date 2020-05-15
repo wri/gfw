@@ -5,6 +5,7 @@ import cx from 'classnames';
 import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
 import { getLatestAlerts } from 'services/alerts';
+import { translateText } from 'utils/transifex';
 
 import applicationsMeta from 'data/applications.json';
 
@@ -34,7 +35,7 @@ class AoICard extends PureComponent {
 
   state = {
     alerts: {},
-    loading: true,
+    loading: false,
     error: false
   };
 
@@ -45,7 +46,7 @@ class AoICard extends PureComponent {
     const { simple } = this.props;
 
     if (!simple) {
-      this.getAlerts();
+      // this.getAlerts();
     }
   }
 
@@ -190,15 +191,15 @@ class AoICard extends PureComponent {
                 <Fragment>
                   <span className="glad">
                     {!loading ? (
-                      <Fragment>
+                      <div>
                         <span className="activity-data notranslate">
                           {formatNumber({
                             num: glads || 0,
                             unit: 'counts'
                           })}
                         </span>{' '}
-                        GLAD alerts
-                      </Fragment>
+                        <p>GLAD alerts</p>
+                      </div>
                     ) : (
                       <ContentLoader width="100" height="15">
                         <rect
@@ -221,7 +222,7 @@ class AoICard extends PureComponent {
                             unit: 'counts'
                           })}
                         </span>{' '}
-                        VIIRS alerts
+                        <p>VIIRS alerts</p>
                       </Fragment>
                     ) : (
                       <ContentLoader width="100" height="15">
