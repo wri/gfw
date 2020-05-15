@@ -73,7 +73,7 @@ export const getMetadata = createSelector(
     } else {
       title = `${upperFirst(
         (metadataByType && metadataByType.title) || type
-      )} | ${metadata && metadata.title}`;
+      )}${metadata ? ` | ${metadata && metadata.title}` : ''}`;
     }
 
     return {

@@ -17,11 +17,11 @@ const contents = {
 };
 
 const mapStateToProps = ({ location }, { sections }) => ({
-  title: location.payload.tab || 'biodiversity',
+  title: location.payload.type || 'biodiversity',
   section:
-    location && sections && sections[location.payload.tab || 'biodiversity'],
+    location && sections && sections[location.payload.type || 'biodiversity'],
   topicData:
-    (location && contents[location.payload.tab]) || contents.biodiversity,
+    (location && contents[location.payload.type]) || contents.biodiversity,
   links: sections
     ? Object.values(sections)
       .filter(r => r.submenu)

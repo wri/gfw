@@ -169,7 +169,7 @@ export const routes = {
   },
   [TOPICS]: {
     controller: 'topics',
-    path: '/topics/:tab',
+    path: '/topics/:type',
     component: 'topics',
     hideFooter: true,
     sections: {
