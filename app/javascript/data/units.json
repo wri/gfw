@@ -8,6 +8,21 @@
     "value": "%"
   },
   {
+    "label": "Alert Density",
+    "value": "alert_density",
+    "unit": " alerts/Mha"
+  },
+  {
+    "label": "Total Alerts",
+    "value": "counts",
+    "unit": " alerts"
+  },
+  {
+    "label": "Significance",
+    "value": "significance",
+    "unit": "%"
+  },
+  {
     "label": "Net contribution in USD",
     "value": "net_usd"
   },

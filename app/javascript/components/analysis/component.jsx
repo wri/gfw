@@ -84,7 +84,11 @@ class AnalysisComponent extends PureComponent {
             isDeletedAoI && (
             <NoContent
               className="deleted-area-message"
-              message={areaPrivate ? 'This area is set to private' : 'This area does not exist or has been deleted.'}
+              message={
+                areaPrivate
+                  ? 'This area is set to private'
+                  : 'This area does not exist or has been deleted.'
+              }
             />
           )}
           {location.type &&

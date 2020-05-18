@@ -112,23 +112,28 @@ class Card extends PureComponent {
                 }
                 onChange={value =>
                   this.setState({
-                    selectorValue: selector.options && selector.options.find(o => o.value === value)
+                    selectorValue:
+                      selector.options &&
+                      selector.options.find(o => o.value === value)
                   })
                 }
                 native
               />
-              {selectorValue.value && selectorValue.value !== 'placeholder' &&
+              {selectorValue.value &&
+                selectorValue.value !== 'placeholder' && (
                 <Button
                   className="selector-btn-link"
                   theme="square"
                   extLink={
                     selectorValue.path ||
-                    (selector.options && selector.options[0] && selector.options[0].path)
+                      (selector.options &&
+                        selector.options[0] &&
+                        selector.options[0].path)
                   }
                 >
                   <Icon icon={arrowIcon} />
                 </Button>
-              }
+              )}
             </div>
           )}
         </div>

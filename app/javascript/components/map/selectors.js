@@ -497,12 +497,16 @@ export const getInteractions = createSelector(
       const data = interactions[i].data;
 
       return {
-        data: Object.keys(data).reduce((obj, d) => ({
-          ...obj,
-          ...data[d] && data[d] !== 'null' && {
-            [d]: data[d]
-          }
-        }), {}),
+        data: Object.keys(data).reduce(
+          (obj, d) => ({
+            ...obj,
+            ...(data[d] &&
+              data[d] !== 'null' && {
+              [d]: data[d]
+            })
+          }),
+          {}
+        ),
         geometry: interactions[i].geometry,
         layer,
         label: layer && layer.name,
@@ -531,8 +535,9 @@ export const getInteractionSelected = createSelector(
     selectedData = interactions.find(o => o.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
-      selectedData = interactions
-        .find(o => o.layer && layersWithoutBoundariesIds.includes(o.layer.id));
+      selectedData = interactions.find(
+        o => o.layer && layersWithoutBoundariesIds.includes(o.layer.id)
+      );
     }
 
     // if only one layer then get that

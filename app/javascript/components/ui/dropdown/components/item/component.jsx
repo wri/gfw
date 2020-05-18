@@ -6,6 +6,7 @@ import Button from 'components/ui/button';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import infoIcon from 'assets/icons/info.svg';
+import helpIcon from 'assets/icons/help.svg';
 
 import './styles.scss';
 
@@ -62,13 +63,22 @@ const Item = props => {
       >
         {label}
       </div>
-      {(metaKey || infoText) && (
+      {metaKey && (
         <Button
           className="theme-button-small square info-button"
           onClick={metaKey && (() => optionsAction(item[optionsActionKey]))}
           tooltip={infoText && { text: infoText }}
         >
           <Icon icon={infoIcon} className="info-icon" />
+        </Button>
+      )}
+      {!metaKey &&
+        infoText && (
+        <Button
+          className="theme-button-small square info-button"
+          tooltip={{ text: infoText }}
+        >
+          <Icon icon={helpIcon} className="info-icon" />
         </Button>
       )}
       {groupParent &&

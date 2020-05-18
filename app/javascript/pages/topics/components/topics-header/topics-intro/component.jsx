@@ -18,7 +18,8 @@ class Intro extends PureComponent {
       <div className={cx('c-topics-intro', className)}>
         <div className="row titleRow">
           <div className="column small-12 medium-6 titleCol">
-            {isDesktop && img1x && (
+            {isDesktop &&
+              img1x && (
               <div className="intro-img">
                 <img
                   {...img2x && {

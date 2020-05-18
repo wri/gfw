@@ -186,8 +186,7 @@ class MapMenuMyGFW extends PureComponent {
                     });
                     track('userSelectsAoiTag', { label: tag.label });
                   }
-                }
-                }
+                }}
               />
             )}
           </div>
@@ -196,7 +195,10 @@ class MapMenuMyGFW extends PureComponent {
           <Fragment>
             {areas &&
               areas.map((area, i) => {
-                const active = activeArea && (activeArea.id === area.id || activeArea.id === area.subscriptionId);
+                const active =
+                  activeArea &&
+                  (activeArea.id === area.id ||
+                    activeArea.id === area.subscriptionId);
                 return (
                   <div
                     className={cx('aoi-item', {

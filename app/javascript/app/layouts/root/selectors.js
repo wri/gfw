@@ -71,9 +71,9 @@ export const getMetadata = createSelector(
         adm2s
       })} | ${metadata && metadata.title}`;
     } else {
-      title = `${upperFirst(
-        (metadataByType && metadataByType.title) || type
-      )}${metadata ? ` | ${metadata && metadata.title}` : ''}`;
+      title = `${upperFirst((metadataByType && metadataByType.title) || type)}${
+        metadata ? ` | ${metadata && metadata.title}` : ''
+      }`;
     }
 
     return {

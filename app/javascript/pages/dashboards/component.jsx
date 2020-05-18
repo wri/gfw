@@ -153,7 +153,11 @@ class DashboardsPage extends PureComponent {
             {isAreaDashboard && (areaError || !activeArea) && !areaLoading ? (
               <ErrorPage
                 title={areaPrivate ? 'Area private' : 'Area not found'}
-                desc={areaPrivate ? "You don't have permissions to view this area." : 'This area has either been deleted or is no longer available.'}
+                desc={
+                  areaPrivate
+                    ? "You don't have permissions to view this area."
+                    : 'This area has either been deleted or is no longer available.'
+                }
               />
             ) : (
               <Fragment>

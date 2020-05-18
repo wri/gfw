@@ -30,7 +30,11 @@ export const getAreasProvider = createThunkAction(
         const { type, adm0 } = location.payload || {};
         if (areas && !!areas.length) {
           dispatch(setAreas(areas));
-          if (type === 'aoi' && adm0 && !areas.find(d => d.id === adm0 || d.subscriptionId === adm0)) {
+          if (
+            type === 'aoi' &&
+            adm0 &&
+            !areas.find(d => d.id === adm0 || d.subscriptionId === adm0)
+          ) {
             getArea(adm0)
               .then(area => {
                 dispatch(setArea(area));
@@ -53,7 +57,9 @@ export const getAreasProvider = createThunkAction(
         }
       })
       .catch(error => {
-        dispatch(setAreasLoading({ loading: false, error: error.response.status }));
+        dispatch(
+          setAreasLoading({ loading: false, error: error.response.status })
+        );
       });
   }
 );

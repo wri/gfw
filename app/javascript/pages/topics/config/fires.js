@@ -40,7 +40,8 @@ export default {
       prompts: [
         {
           id: 'fires-learn',
-          content: 'Learn about forest fires and climate change in boreal forests',
+          content:
+            'Learn about forest fires and climate change in boreal forests',
           btnText: 'Read the blog',
           link:
             'https://blog.globalforestwatch.org/fires/boreal-forest-fires-a-climate-concern',
@@ -68,8 +69,7 @@ export default {
       prompts: [
         {
           id: 'fires-learn',
-          content:
-            'Explore recent global trends in fire alerts',
+          content: 'Explore recent global trends in fire alerts',
           btnText: 'Explore the data',
           link:
             '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiNmExYWZlNzgtMDgxMy00NWM0LTgyMmYtYjUyZmUxMGY5M2YyIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjY0Nzk5OGMyLWNkZjYtNDNmZC1iYmZmLTE1MzU4ZjExMWZlOSJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyJmMTNmODZjYi0wOGI1LTRlNmMtYmI4ZC1iNDc4MjA1MmY5ZTUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZSwiYmJveCI6bnVsbCwiYmVhcmluZyI6MCwicGl0Y2giOjB9&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiYmlvZGl2ZXJzaXR5In0%3D',
@@ -163,8 +163,7 @@ export default {
     {
       id: 'cumulative',
       title: 'View cumulative fire alerts',
-      summary:
-        'Compare cumulative fire alerts this year to past years.',
+      summary: 'Compare cumulative fire alerts this year to past years.',
       link:
         '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXSwidGltZWxpbmVQYXJhbXMiOnsic3RhcnREYXRlIjoiMjAxNy0wMy0xMSIsImVuZERhdGUiOiIyMDE3LTEyLTMwIiwidHJpbUVuZERhdGUiOiIyMDE3LTEyLTMwIn19LHsiZGF0YXNldCI6ImM3Yzc2Y2MxLTUxNzgtNDc0YS04YjZhLTYwYjg5NWUwMjI2MCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0MjQyN2E1NS1jOGI1LTRmYWMtOGRiMy1hOWQ1OWUxYjI2ZjciXSwiaXNvIjoiIn0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NSwiY2VudGVyIjp7ImxhdCI6MTIuNzA0NjUwNTA4Mjg3ODkzLCJsbmciOjk2LjI4NDE3OTY4NzUwMDAxfSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
       image: widgetCumulative,
@@ -187,8 +186,7 @@ export default {
       title: 'The latest research and insights on fires from GFW',
       summary:
         'Learn about the complex relationship between forests and fires on the GFW blog.',
-      link:
-        'https://blog.globalforestwatch.org/fires',
+      link: 'https://blog.globalforestwatch.org/fires',
       image: forestFire,
       btnText: 'read the blog'
     },
@@ -197,15 +195,13 @@ export default {
       title: 'Navigate to and report on fire alerts in the field',
       summary:
         'Use the Forest Watcher mobile app to navigate to and report on fire alerts offline in the field.',
-      link:
-        'https://forestwatcher.globalforestwatch.org/',
+      link: 'https://forestwatcher.globalforestwatch.org/',
       image: forestWatcher,
       btnText: 'go to app'
     },
     {
       id: 'feedback',
-      title:
-        'What other fires data and analysis would you like to see on GFW?',
+      title: 'What other fires data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
       theme: 'theme-card-dark',
       btnText: 'feedback'

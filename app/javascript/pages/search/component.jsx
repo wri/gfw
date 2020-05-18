@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
 import { handlePageTrack } from 'app/analytics';

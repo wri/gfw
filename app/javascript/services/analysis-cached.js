@@ -9,6 +9,7 @@ import moment from 'moment';
 import { getIndicator } from 'utils/format';
 
 const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
+const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   loss:
@@ -26,11 +27,13 @@ const SQL_QUERIES = {
   gainGrouped:
     'SELECT {location}, SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
-    'SELECT {location}, {intersection}, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
+    'SELECT {location}, SUM(area__ha) as area__ha, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   fires:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  firesGrouped:
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year',
   firesWithin:
     'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
@@ -156,6 +159,58 @@ export const getWHEREQuery = params => {
     return paramString;
   }
   return '';
+};
+
+// build complex WHERE filter for dates (VIIRS/GLAD)
+export const getDateFilter = ({ weeks }) => {
+  const latestYear = moment()
+    .subtract(1, 'weeks')
+    .year();
+
+  const latestWeek = moment()
+    .subtract(1, 'weeks')
+    .isoWeek();
+
+  const years = [];
+  for (let i = VIIRS_START_YEAR; i <= latestYear; i++) {
+    years.push(i);
+  }
+
+  const weekFilters = years.map(year => {
+    const endDate = moment()
+      .isoWeek(latestWeek)
+      .year(year);
+
+    const startDate = moment()
+      .isoWeek(latestWeek)
+      .year(year)
+      .subtract(weeks, 'week');
+
+    const startYear = startDate.year();
+    const endYear = endDate.year();
+    const startWeek = startDate.isoWeek();
+    const endWeek = endDate.isoWeek();
+
+    return {
+      startYear: startYear < VIIRS_START_YEAR ? VIIRS_START_YEAR : startYear,
+      startWeek: startYear < VIIRS_START_YEAR ? 1 : startWeek,
+      endYear,
+      endWeek
+    };
+  });
+
+  return weekFilters.reduce((acc, d, i) => {
+    const yi = d.startYear || '';
+    const wi = d.startWeek || '';
+    const yf = d.endYear || '';
+    const wf = d.endWeek || '';
+
+    return `${acc} ${i === 0 ? '' : 'OR '}(alert__year = ${
+      yi
+    } AND alert__week >= ${wi}) OR (alert__year = ${yf} AND alert__week <= ${
+      wf
+    })`;
+  }, '');
 };
 
 //
@@ -430,7 +485,9 @@ export const getAreaIntersectionGrouped = params => {
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace(
       /{intersection}/g,
-      intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
+      intersectionPolyname
+        ? intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
+        : ''
     )
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
 
@@ -450,9 +507,11 @@ export const getAreaIntersectionGrouped = params => {
       data: response.data.data.map(d => ({
         ...d,
         intersection_area: d.area__ha,
-        [forestType || landCategory]:
-          d[intersectionPolyname.tableKey] ||
-          d[intersectionPolyname.tableKeys.annual]
+        ...(intersectionPolyname && {
+          [forestType || landCategory]:
+            d[intersectionPolyname.tableKey] ||
+            d[intersectionPolyname.tableKeys.annual]
+        })
       }))
     }
   }));
@@ -555,6 +614,43 @@ export const fetchVIIRSAlerts = params => {
   }));
 };
 
+export const fetchVIIRSAlertsGrouped = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'viirs',
+    datasetType: 'weekly',
+    grouped: true
+  })}${SQL_QUERIES.firesGrouped}`
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    .replace(/{dateFilter}/g, encodeURIComponent(getDateFilter(params)))
+    .replace(
+      '{WHERE}',
+      getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
+    );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count
+      }))
+    }
+  }));
+};
+
 export const fetchFiresWithin = params => {
   const { forestType, landCategory, ifl, download, dataset, weeks } =
     params || {};
@@ -589,11 +685,15 @@ export const fetchFiresWithin = params => {
   }));
 };
 
-export const fetchMODISHistorical = (params) => {
+export const fetchMODISHistorical = params => {
   const { forestType, landCategory, ifl, download, frequency } = params || {};
   const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
 
-  const url = `${getRequestUrl({ ...params, dataset: 'modis', datasetType: 'weekly' })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'modis',
+    datasetType: 'weekly'
+  })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'modis' }));
 
