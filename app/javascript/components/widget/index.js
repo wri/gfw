@@ -83,7 +83,6 @@ class WidgetContainer extends Component {
         }, 200);
       })
       .catch(error => {
-        console.info(error);
         if (this._mounted) {
           this.setState({
             error: error.message !== `Cancelling ${this.props.widget} fetch`,

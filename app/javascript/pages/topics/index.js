@@ -4,6 +4,7 @@ import Biodiversity from './config/biodiversity';
 import Commodities from './config/commodities';
 import Climate from './config/climate';
 import Water from './config/water';
+import Fires from './config/fires';
 
 import PageComponent from './component';
 
@@ -11,15 +12,16 @@ const contents = {
   biodiversity: Biodiversity,
   commodities: Commodities,
   climate: Climate,
-  water: Water
+  water: Water,
+  fires: Fires
 };
 
 const mapStateToProps = ({ location }, { sections }) => ({
-  title: location.payload.tab || 'biodiversity',
+  title: location.payload.type || 'biodiversity',
   section:
-    location && sections && sections[location.payload.tab || 'biodiversity'],
+    location && sections && sections[location.payload.type || 'biodiversity'],
   topicData:
-    (location && contents[location.payload.tab]) || contents.biodiversity,
+    (location && contents[location.payload.type]) || contents.biodiversity,
   links: sections
     ? Object.values(sections)
       .filter(r => r.submenu)

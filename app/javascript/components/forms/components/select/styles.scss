@@ -16,7 +16,18 @@
     padding: 0;
 
     option {
-      padding: 5px 12px;
+      padding: 6px 12px;
+      height: auto;
+      overflow: hidden;
+      word-wrap: normal !important;
+      white-space: normal;
     }
   }
+}
+
+.select-input {
+  margin-top: rem(5px);
+  margin-left: rem(25px);
+  width: calc(100% - #{rem(25px)});
+  max-width: rem(325px);
 }

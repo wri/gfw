@@ -40,6 +40,10 @@ export default {
         {
           label: 'Water',
           path: '/topics/water'
+        },
+        {
+          label: 'Fires',
+          path: '/topics/fires'
         }
       ]
     },

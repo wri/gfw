@@ -33,6 +33,22 @@ const mapStateToProps = ({ myGfw, countryData }) => ({
       subsector_otherInput:
           myGfw.data.subsector && myGfw.data.subsector.includes('Other')
             ? myGfw.data.subsector.split('Other:')[1].trim()
+            : null,
+      howDoYouUse:
+          myGfw.data.howDoYouUse &&
+          myGfw.data.howDoYouUse.some(el => el.includes('Other'))
+            ? [
+              ...myGfw.data.howDoYouUse.filter(use => !use.includes('Other')),
+              'Other'
+            ]
+            : myGfw.data.howDoYouUse,
+      howDoYouUse_otherInput:
+          myGfw.data.howDoYouUse &&
+          myGfw.data.howDoYouUse.some(el => el.includes('Other'))
+            ? myGfw.data.howDoYouUse
+              .find(el => el.includes('Other'))
+              .split('Other:')[1]
+              .trim()
             : null
     }
   })

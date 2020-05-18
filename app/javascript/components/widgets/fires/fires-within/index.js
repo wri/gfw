@@ -54,9 +54,6 @@ export default {
       border: false
     }
   ],
-  sortOrder: {
-    fires: 3
-  },
   dataType: 'fires',
   chartType: 'pieChart',
   colors: 'fires',
@@ -72,6 +69,9 @@ export default {
       layers: [FIRES_ALERTS_VIIRS]
     }
   ],
+  sortOrder: {
+    fires: 3
+  },
   settings: {
     period: 'week',
     weeks: 13,

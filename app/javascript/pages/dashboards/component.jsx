@@ -144,14 +144,20 @@ class DashboardsPage extends PureComponent {
       location &&
       !['country', 'wdpa'].includes(location.type);
 
+    const areaPrivate = areaError === 401 || (activeArea && !activeArea.public);
+
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className="l-dashboards-page">
-            {isAreaDashboard && !activeArea && !areaLoading ? (
+            {isAreaDashboard && (areaError || !activeArea) && !areaLoading ? (
               <ErrorPage
-                title={areaError === 401 ? 'Area private' : 'Area not found'}
-                desc={areaError === 401 ? "You don't have permissions to view this area." : 'This area has either been deleted or is no longer available.'}
+                title={areaPrivate ? 'Area private' : 'Area not found'}
+                desc={
+                  areaPrivate
+                    ? "You don't have permissions to view this area."
+                    : 'This area has either been deleted or is no longer available.'
+                }
               />
             ) : (
               <Fragment>

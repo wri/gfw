@@ -21,7 +21,7 @@ class AnalysisComponent extends PureComponent {
     location: PropTypes.object,
     activeArea: PropTypes.object,
     goToDashboard: PropTypes.func,
-    error: PropTypes.string,
+    error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     handleCancelAnalysis: PropTypes.func,
     handleFetchAnalysis: PropTypes.func,
     embed: PropTypes.bool,
@@ -31,7 +31,8 @@ class AnalysisComponent extends PureComponent {
     setShareModal: PropTypes.func,
     checkingShape: PropTypes.bool,
     areaTooLarge: PropTypes.bool,
-    uploadingShape: PropTypes.bool
+    uploadingShape: PropTypes.bool,
+    areaError: PropTypes.bool
   };
 
   render() {
@@ -53,7 +54,8 @@ class AnalysisComponent extends PureComponent {
       widgetLayers,
       embed,
       setShareModal,
-      areaTooLarge
+      areaTooLarge,
+      areaError
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -69,7 +71,8 @@ class AnalysisComponent extends PureComponent {
         target: '_blank'
       })
     };
-    const isDeletedAoI = location.areaId && !activeArea;
+    const isDeletedAoI = location.areaId && (areaError || !activeArea);
+    const areaPrivate = areaError === 401 || (activeArea && !activeArea.public);
 
     return (
       <Fragment>
@@ -81,7 +84,11 @@ class AnalysisComponent extends PureComponent {
             isDeletedAoI && (
             <NoContent
               className="deleted-area-message"
-              message="This area has been deleted."
+              message={
+                areaPrivate
+                  ? 'This area is set to private'
+                  : 'This area does not exist or has been deleted.'
+              }
             />
           )}
           {location.type &&

@@ -73,8 +73,13 @@ class TopicsImage extends PureComponent {
     return (
       <div className="c-topics-image">
         <img
-          srcSet={`${img1x} 2x, ${img2x} 1x`}
-          src={`${img1x} 1x`}
+          {...img2x && {
+            srcSet: `${img2x} 2x, ${img1x} 1x`,
+            src: `${img1x} 1x`
+          }}
+          {...!img2x && {
+            src: img1x
+          }}
           alt={description}
         />
         {animations &&
@@ -156,7 +161,7 @@ class TopicsImage extends PureComponent {
 
 TopicsImage.propTypes = {
   img1x: PropTypes.string.isRequired,
-  img2x: PropTypes.string.isRequired,
+  img2x: PropTypes.string,
   description: PropTypes.string,
   prompts: PropTypes.array,
   animations: PropTypes.array,

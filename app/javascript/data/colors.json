@@ -97,6 +97,8 @@
   "fires": {
     "main": "#f14600",
     "ramp": ["#940f07", "#b11509", "#cd2009", "#e73108", "#fe4605", "#ff7104", "#ff9203", "#ffb004", "#fecc05"],
+    "compareYear": "#49b5e3",
+    "compareYearRamp": ["#49b5e3", "#D0ECF8"],
     "otherColor": "#dcd9d9"
 
   },
