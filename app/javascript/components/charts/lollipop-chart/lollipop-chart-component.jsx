@@ -7,9 +7,9 @@ import { formatNumber } from 'utils/format';
 
 import Paginate from 'components/paginate';
 
-import './numbered-list-styles.scss';
+import './lollipop-chart-styles.scss';
 
-class NumberedList extends PureComponent {
+class LollipopChart extends PureComponent {
   render() {
     const {
       className,
@@ -40,6 +40,9 @@ class NumberedList extends PureComponent {
 
     return (
       <div className={`c-numbered-list ${className}`}>
+        <div className="unit-legend">{`${unit
+          .charAt(0)
+          .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
         <ul className="list">
           {data.length > 0 &&
             pageData.map((item, index) => {
@@ -55,32 +58,23 @@ class NumberedList extends PureComponent {
                     </div>
                     <div className="item-name">{item.label}</div>
                   </div>
-                  {showBar ? (
-                    <div className="item-bar-container">
-                      <div className="item-bar">
-                        <div
-                          className="item-bar -data"
-                          style={{
-                            width: `${item.value > 100 ? 100 : item.value}%`,
-                            backgroundColor: item.color
-                          }}
-                        />
-                      </div>
-                      <div className="item-value">
-                        {formatNumber({
-                          num: item.value,
-                          unit: item.unit || formatUnit
-                        })}
-                      </div>
+                  <div className="lollipop-container">
+                    <div className="item-bar">
+                      <div
+                        className="item-bar -data"
+                        style={{
+                          width: `${item.value > 100 ? 100 : item.value}%`,
+                          backgroundColor: item.color
+                        }}
+                      />
                     </div>
-                  ) : (
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
                         unit: item.unit || formatUnit
                       })}
                     </div>
-                  )}
+                  </div>
                 </div>
               );
               return (
@@ -126,7 +120,7 @@ class NumberedList extends PureComponent {
   }
 }
 
-NumberedList.propTypes = {
+LollipopChart.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
@@ -136,4 +130,4 @@ NumberedList.propTypes = {
   linksExt: PropTypes.bool
 };
 
-export default NumberedList;
+export default LollipopChart;

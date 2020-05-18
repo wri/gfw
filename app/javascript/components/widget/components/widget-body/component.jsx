@@ -16,6 +16,7 @@ import WidgetChartAndList from 'components/widget/components/widget-chart-and-li
 import WidgetListLegend from 'components/widget/components/widget-list-legend';
 import WidgetMapList from 'components/widget/components/widget-map-list';
 import WidgetSankey from 'components/widget/components/widget-sankey';
+import WidgetLollipop from 'components/widget/components/widget-lollipop';
 
 import './styles.scss';
 
@@ -28,7 +29,8 @@ const chartOptions = {
   chartAndList: WidgetChartAndList,
   mapList: WidgetMapList,
   sankey: WidgetSankey,
-  listLegend: WidgetListLegend
+  listLegend: WidgetListLegend,
+  lollipop: WidgetLollipop
 };
 
 class WidgetBody extends PureComponent {

@@ -56,7 +56,7 @@ export default {
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   metaKey: 'widget_fire_ranking',
   colors: 'fires',
   sortOrder: {
@@ -101,30 +101,33 @@ export default {
     layerStartDate: null,
     layerEndDate: null
   },
-  getData: params => fetchVIIRSLatest(params)
-    .then(
-      response =>
-        (response.attributes && response.attributes.updatedAt) || null
-    )
-    .then(latest => all([
-      fetchVIIRSAlertsGrouped({ ...params, latest }),
-      getAreaIntersectionGrouped(params)
-    ])
+  getData: params =>
+    fetchVIIRSLatest(params)
       .then(
-        spread((alerts, areas) => {
-          const { data } = alerts.data;
-          const area = areas.data && areas.data.data;
-          return { alerts: data, latest, area } || {};
-        })
+        response =>
+          (response.attributes && response.attributes.updatedAt) || null
+      )
+      .then(latest =>
+        all([
+          fetchVIIRSAlertsGrouped({ ...params, latest }),
+          getAreaIntersectionGrouped(params)
+        ])
+          .then(
+            spread((alerts, areas) => {
+              const { data } = alerts.data;
+              const area = areas.data && areas.data.data;
+              return { alerts: data, latest, area } || {};
+            })
+          )
+          .catch(error => {
+            console.info(error);
+            return null;
+          })
       )
       .catch(error => {
         console.info(error);
         return null;
-      }))
-    .catch(error => {
-      console.info(error);
-      return null;
-    }),
+      }),
   // getDataURL: params => [
   //   fetchFiresAlertsGrouped({ ...params, download: true })
   // ],
