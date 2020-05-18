@@ -162,14 +162,18 @@ export const getWHEREQuery = params => {
 };
 
 // build complex WHERE filter for dates (VIIRS/GLAD)
-export const getDateFilter = ({ weeks }) => {
-  const latestYear = moment()
-    .subtract(1, 'weeks')
-    .year();
+export const getDateFilter = ({ weeks, latest }) => {
+  const latestYear = latest
+    ? moment(latest).year()
+    : moment()
+      .subtract(1, 'weeks')
+      .year();
 
-  const latestWeek = moment()
-    .subtract(1, 'weeks')
-    .isoWeek();
+  const latestWeek = latest
+    ? moment(latest).isoWeek()
+    : moment()
+      .subtract(1, 'weeks')
+      .isoWeek();
 
   const years = [];
   for (let i = VIIRS_START_YEAR; i <= latestYear; i++) {

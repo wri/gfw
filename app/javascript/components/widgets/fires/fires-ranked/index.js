@@ -101,20 +101,30 @@ export default {
     layerStartDate: null,
     layerEndDate: null
   },
-  getData: params =>
-    all([
-      fetchVIIRSAlertsGrouped(params),
-      fetchVIIRSLatest(params),
+  getData: params => fetchVIIRSLatest(params)
+    .then(
+      response =>
+        (response.attributes && response.attributes.updatedAt) || null
+    )
+    .then(latest => all([
+      fetchVIIRSAlertsGrouped({ ...params, latest }),
       getAreaIntersectionGrouped(params)
-    ]).then(
-      spread((alerts, latest, areas) => {
-        const { data } = alerts.data;
-        const area = areas.data && areas.data.data;
-        return (
-          { alerts: data, latest: latest.attributes.updatedAt, area } || {}
-        );
-      })
-    ),
+    ])
+      .then(
+        spread((alerts, areas) => {
+          const { data } = alerts.data;
+          const area = areas.data && areas.data.data;
+          return { alerts: data, latest, area } || {};
+        })
+      )
+      .catch(error => {
+        console.info(error);
+        return null;
+      }))
+    .catch(error => {
+      console.info(error);
+      return null;
+    }),
   // getDataURL: params => [
   //   fetchFiresAlertsGrouped({ ...params, download: true })
   // ],

@@ -14,7 +14,7 @@ import { stdDevData } from 'components/widgets/utils/data';
 // get list data
 const getData = state => state.data && state.data.alerts;
 const getAreas = state => state.data && state.data.area;
-const getLatestDates = state => state.data && state.data.latest;
+const getLatestDate = state => state.data && state.data.latest;
 const getUnit = state => state.settings && state.settings.unit;
 const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
@@ -28,7 +28,7 @@ const getTitle = state => state.title;
 
 const VIIRS_START_YEAR = 2012;
 
-export const getYears = createSelector([getLatestDates], latest => {
+export const getYears = createSelector([getLatestDate], latest => {
   const latestYear = moment(latest).year();
 
   const years = [];
