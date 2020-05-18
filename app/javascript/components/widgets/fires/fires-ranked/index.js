@@ -9,7 +9,10 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesRanked',
-  title: 'Regions with the most fire Alerts in {location}',
+  title: {
+    default: 'Regions with the most fire Alerts in {location}',
+    global: 'Global regions with the most fire Alerts'
+  },
   categories: ['fires'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
@@ -67,13 +70,25 @@ export default {
     withInd:
       'In the last {timeframe} in {location}, the region with the most <b>unusually high</b> number of fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     densityInitial:
-      'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in that period.',
+      'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in the same period.',
     densityWithInd:
-      'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires within {indicator} was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in that period.',
+      'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires within {indicator} was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in the same period.',
     countsInitial:
-      'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in {location} in that period.',
+      'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in {location} in the same period.',
     countsWithInd:
-      'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detecte in that periodd.'
+      'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in {location} in the same period.',
+    initialGlobal:
+      'In the last {timeframe}, the region with the most <b>unusually high</b> number of fire alerts <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
+    withIndGlobal:
+      'In the last {timeframe}, the region with the most <b>unusually high</b> number of fire alerts within {indicator} <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected <b>globally</b> and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
+    densityInitialGlobal:
+      'In the last {timeframe}, the region with the <b>highest density</b> of fires <b>globally</b> was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected <b>globally</b> in the same period.',
+    densityWithIndGlobal:
+      'In the last {timeframe}, the region with the <b>highest density</b> of fires within {indicator} <b>globally</b> was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected <b>globally</b> in the same period.',
+    countsInitialGlobal:
+      'In the last {timeframe}, the region with the <b>most</b> fire alerts <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected <b>globally</b> in the same period.',
+    countsWithIndGlobal:
+      'In the last {timeframe}, the region with the <b>most</b> fire alerts within {indicator} <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected <b>globally</b> in the same periodd.'
   },
   settings: {
     unit: 'significance',

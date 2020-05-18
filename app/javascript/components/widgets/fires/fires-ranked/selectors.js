@@ -24,6 +24,7 @@ const getLocationsMeta = state => state.childData;
 const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 
 const VIIRS_START_YEAR = 2012;
 
@@ -159,11 +160,17 @@ export const parseSentence = createSelector(
       densityInitial,
       densityWithInd,
       countsInitial,
-      countsWithInd
+      countsWithInd,
+      initialGlobal,
+      withIndGlobal,
+      densityInitialGlobal,
+      densityWithIndGlobal,
+      countsInitialGlobal,
+      countsWithIndGlobal
     } = sentences;
     const topRegion = data[0].label;
     const topRegionCount = data[0].counts || 0;
-    const topRegionVariance = data[0].variance || 0;
+    const topRegionVariance = data[0].significance || 0;
     const topRegionDensity = data[0].density || 0;
     const topRegionPerc = 100 * topRegionCount / sumBy(data, 'counts');
     const timeFrame = optionsSelected.weeks;
@@ -205,11 +212,31 @@ export const parseSentence = createSelector(
     } else if (unit === 'counts') {
       sentence = indicator ? countsWithInd : countsInitial;
     }
+    if (locationName === 'global') {
+      sentence = indicator ? withIndGlobal : initialGlobal;
+      if (unit === 'alert_density') {
+        sentence = indicator ? densityWithIndGlobal : densityInitialGlobal;
+      } else if (unit === 'counts') {
+        sentence = indicator ? countsWithIndGlobal : countsInitialGlobal;
+      }
+    }
     return { sentence, params };
+  }
+);
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    let selectedTitle = title.default;
+    if (name === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
+  title: parseTitle
 });
