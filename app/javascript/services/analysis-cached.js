@@ -699,7 +699,9 @@ export const fetchLatestWeekGladAlerts = ({ adm0, adm1, adm2, type }) =>
           }'`;
         } else if (adm1) locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}'`;
         else locationQuery = `iso = '${adm0}'`;
-      } else if (type === 'geostore') { locationQuery = `geostore__id = '${adm0}'`; } else if (type === 'wdpa') { locationQuery = `wdpa_protected_area__id = '${adm0}'`; }
+      } else if (type === 'geostore') {
+        locationQuery = `geostore__id = '${adm0}'`;
+      } else if (type === 'wdpa') { locationQuery = `wdpa_protected_area__id = '${adm0}'`; }
       const sql = `SELECT alert__date as date, SUM(alert__count) as count FROM DATA WHERE ${
         locationQuery
       } AND alert__date > '${alertDate}' GROUP BY date`;

@@ -47,7 +47,7 @@ class AoICard extends PureComponent {
     const { simple, status } = this.props;
 
     if (!simple && status !== 'pending') {
-      // this.getAlerts();
+      this.getAlerts();
     }
   }
 
@@ -186,7 +186,7 @@ class AoICard extends PureComponent {
             !isPending && (
             <div className="activity">
               <span className="activity-intro">
-                {"Lastest week's alerts:"}
+                {"Latest week's alerts:"}
               </span>
               {!loading &&
                   dataError && (
