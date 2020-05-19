@@ -1,8 +1,8 @@
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 
-import forestTypes from 'data/forest-types.json';
-import landCategories from 'data/land-categories.json';
+import forestTypes from 'data/forest-types';
+import landCategories from 'data/land-categories';
 
 export const formatUSD = (value, minimize = true) =>
   format('.2s')(value)

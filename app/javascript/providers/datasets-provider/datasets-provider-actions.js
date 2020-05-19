@@ -25,6 +25,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
       const parsedDatasets = wriAPISerializer(allDatasets.data)
         .filter(
           d =>
+            d.published &&
             d.layer.length &&
             (d.env === 'production' || d.env === process.env.FEATURE_ENV)
         )
@@ -105,8 +106,9 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                 layer
                   .filter(
                     l =>
-                      l.env === 'production' ||
-                      l.env === process.env.FEATURE_ENV
+                      (l.env === 'production' ||
+                        l.env === process.env.FEATURE_ENV) &&
+                      l.published
                   )
                   .map((l, i) => {
                     const { layerConfig, legendConfig } = l;

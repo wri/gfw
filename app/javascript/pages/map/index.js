@@ -30,11 +30,12 @@ class MainMapContainer extends PureComponent {
   };
 
   componentDidMount() {
-    const { activeDatasets } = this.props;
+    const { activeDatasets, basemap } = this.props;
     const layerIds = flatMap(activeDatasets.map(d => d.layers));
     track('mapInitialLayers', {
       label: layerIds && layerIds.join(', ')
     });
+    track('basemapsInitial', { label: basemap && basemap.value });
   }
 
   componentDidUpdate(prevProps) {
@@ -131,7 +132,8 @@ MainMapContainer.propTypes = {
   menuSection: PropTypes.string,
   analysisActive: PropTypes.bool,
   location: PropTypes.object,
-  geostoreId: PropTypes.string
+  geostoreId: PropTypes.string,
+  basemap: PropTypes.object
 };
 
 export default connect(getMapProps, actions)(MainMapContainer);

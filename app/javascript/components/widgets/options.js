@@ -1,5 +1,5 @@
-import forestType from 'data/forest-types.json';
-import landCategory from 'data/land-categories.json';
+import forestType from 'data/forest-types';
+import landCategory from 'data/land-categories';
 import threshold from 'data/thresholds.json';
 import unit from 'data/units.json';
 import variable from 'data/variables.json';

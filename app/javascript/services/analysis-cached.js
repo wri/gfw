@@ -1,6 +1,6 @@
 import { apiRequest, cartoRequest } from 'utils/request';
-import forestTypes from 'data/forest-types.json';
-import landCategories from 'data/land-categories.json';
+import forestTypes from 'data/forest-types';
+import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';

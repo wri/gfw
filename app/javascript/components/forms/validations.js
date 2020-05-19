@@ -7,7 +7,7 @@ export const number = value =>
   (value && isNaN(Number(value)) ? 'Must be a number' : undefined);
 
 export const email = value =>
-  (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+  (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,10}$/i.test(value)
     ? 'Invalid email address'
     : undefined);
 
@@ -20,6 +20,9 @@ export const phoneNumber = value =>
   (value && !/^(0|[1-9][0-9]{9})$/i.test(value)
     ? 'Invalid phone number, must be 10 digits'
     : undefined);
+
+export const hasValidOption = (value, options) =>
+  (!options.find(o => o.value === value) ? 'Please select an option' : undefined);
 
 export const composeValidators = (req, vals) => value => {
   let validations = req ? [required] : [];
