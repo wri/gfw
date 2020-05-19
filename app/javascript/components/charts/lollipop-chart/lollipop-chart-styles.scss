@@ -11,6 +11,7 @@
   }
 
   .list {
+    padding: 10px;
     max-height: rem(340px);
     overflow-y: scroll;
     overflow-x: hidden;
@@ -58,8 +59,8 @@
     height: rem(16px);
     min-height: rem(16px);
     border-radius: 50%;
-    margin-right: rem(10px);
     background-color: $border;
+    position: relative;
   }
 
   .item-label {
@@ -77,6 +78,10 @@
     align-items: center;
     height: rem(18px);
 
+    .item-spacer {
+      height: 1px;
+    }
+
     .item-bar {
       height: rem(2px);
       position: relative;
@@ -89,7 +94,6 @@
 
   .item-value {
     min-width: rem(35px);
-    margin-right: 15px;
     text-align: right;
   }
 }

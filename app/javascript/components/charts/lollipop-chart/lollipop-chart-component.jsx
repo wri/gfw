@@ -32,10 +32,14 @@ class LollipopChart extends PureComponent {
           : selectedUnitConfig.value;
     }
 
-    const dataMax =
-      data &&
-      data.reduce((acc, item) => Math.max(acc, Math.abs(item.value)), 0);
-    const scale = num => (dataMax ? Math.abs(num) * 100 / dataMax : 0);
+    let dataMax =
+      data && data.reduce((acc, item) => Math.max(acc, item.value), 0);
+    let dataMin =
+      data && data.reduce((acc, item) => Math.min(acc, item.value), 0);
+    dataMax = dataMax && dataMax > 0 ? dataMax : 0;
+    dataMin = dataMin && dataMin < 0 ? dataMin : 0;
+    const interpolate = num =>
+      Math.abs(num) * 100 / (dataMax + Math.abs(dataMin) || 1);
 
     return (
       <div className={cx('c-lollipop-chart', className)}>
@@ -51,18 +55,38 @@ class LollipopChart extends PureComponent {
                     <div className="item-bubble">{item.rank || index + 1}</div>
                     <div className="item-name">{item.label}</div>
                   </div>
-                  <div className="item-lollipop-bar">
+                  <div
+                    className="item-lollipop-bar"
+                    style={
+                      item.value < 0 ? { flexDirection: 'row-reverse' } : {}
+                    }
+                  >
+                    <div
+                      className="item-spacer"
+                      style={{
+                        width: `${interpolate(
+                          Math.abs(item.value < 0 ? dataMax : dataMin)
+                        )}%`
+                      }}
+                    />
                     <div
                       className="item-bar"
                       style={{
-                        width: `calc(${scale(item.value)}% - 66px)`,
-                        // 100% max - 16 (bubble) - 35px (value text) - 15px margin right
+                        width: `calc(${interpolate(
+                          Math.abs(item.value)
+                        )}% - 43px)`,
+                        // 100% max - 8 (bubble) - 35px (value text)
                         backgroundColor: item.color
                       }}
                     />
                     <div
                       className="item-bubble"
-                      style={{ backgroundColor: item.color }}
+                      style={{
+                        backgroundColor: item.color,
+                        transform: `translateX(${
+                          item.value < 0 ? '8px' : '-8px'
+                        })`
+                      }}
                     />
                     <div className="item-value">
                       {formatNumber({
