@@ -5,8 +5,6 @@ import cx from 'classnames';
 
 import { formatNumber } from 'utils/format';
 
-import Paginate from 'components/paginate';
-
 import './lollipop-chart-styles.scss';
 
 class LollipopChart extends PureComponent {
@@ -16,14 +14,10 @@ class LollipopChart extends PureComponent {
       data,
       settings,
       settingsConfig,
-      handlePageChange,
       linksDisabled,
       linksExt
     } = this.props;
-    const { page, pageSize, unit } = settings;
-    const pageData = pageSize
-      ? data.slice(page * pageSize, (page + 1) * pageSize)
-      : data;
+    const { unit } = settings;
 
     const unitsConfig = settingsConfig.find(conf => conf.key === 'unit');
     const selectedUnitConfig =
@@ -38,36 +32,38 @@ class LollipopChart extends PureComponent {
           : selectedUnitConfig.value;
     }
 
+    const dataMax =
+      data &&
+      data.reduce((acc, item) => Math.max(acc, Math.abs(item.value)), 0);
+    const scale = num => (dataMax ? Math.abs(num) * 100 / dataMax : 0);
+
     return (
-      <div className={`c-numbered-list ${className}`}>
+      <div className={cx('c-lollipop-chart', className)}>
         <div className="unit-legend">{`${unit
           .charAt(0)
           .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
         <ul className="list">
           {data.length > 0 &&
-            pageData.map((item, index) => {
-              const showBar = item.unit === '%' || unit === '%';
+            data.map((item, index) => {
               const linkContent = (
-                <div className={cx('list-item', { '-bar': showBar })}>
+                <div className="list-item">
                   <div className="item-label">
+                    <div className="item-bubble">{item.rank || index + 1}</div>
+                    <div className="item-name">{item.label}</div>
+                  </div>
+                  <div className="item-lollipop-bar">
+                    <div
+                      className="item-bar"
+                      style={{
+                        width: `calc(${scale(item.value)}% - 66px)`,
+                        // 100% max - 16 (bubble) - 35px (value text) - 15px margin right
+                        backgroundColor: item.color
+                      }}
+                    />
                     <div
                       className="item-bubble"
                       style={{ backgroundColor: item.color }}
-                    >
-                      {item.rank || index + 1 + pageSize * page}
-                    </div>
-                    <div className="item-name">{item.label}</div>
-                  </div>
-                  <div className="lollipop-container">
-                    <div className="item-bar">
-                      <div
-                        className="item-bar -data"
-                        style={{
-                          width: `${item.value > 100 ? 100 : item.value}%`,
-                          backgroundColor: item.color
-                        }}
-                      />
-                    </div>
+                    />
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
@@ -107,14 +103,6 @@ class LollipopChart extends PureComponent {
               );
             })}
         </ul>
-        {handlePageChange &&
-          data.length > settings.pageSize && (
-          <Paginate
-            settings={settings}
-            count={data.length}
-            onClickChange={handlePageChange}
-          />
-        )}
       </div>
     );
   }
@@ -124,7 +112,6 @@ LollipopChart.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
-  handlePageChange: PropTypes.func,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,
   linksExt: PropTypes.bool

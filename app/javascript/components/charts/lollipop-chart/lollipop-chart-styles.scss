@@ -1,11 +1,19 @@
 @import '~styles/settings.scss';
 
-.c-numbered-list {
+.c-lollipop-chart {
   font-size: rem(12px);
   color: $slate;
+  max-width: 80%; // verified
+  margin: auto;
 
   .unit-legend {
     text-align: end;
+  }
+
+  .list {
+    max-height: rem(340px);
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .list-item {
@@ -41,50 +49,37 @@
     }
   }
 
+  .item-bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(16px);
+    min-width: rem(16px);
+    height: rem(16px);
+    min-height: rem(16px);
+    border-radius: 50%;
+    margin-right: rem(10px);
+    background-color: $border;
+  }
+
   .item-label {
     width: 40%;
+    padding-right: rem(35px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
 
-  .item-bubble {
+  .item-lollipop-bar {
+    width: 60%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: rem(24px);
-    min-width: rem(24px);
-    height: rem(24px);
-    min-height: rem(24px);
-    color: $white;
-    font-weight: 500;
-    border-radius: 50%;
-    margin-right: rem(10px);
-  }
+    height: rem(18px);
 
-  .item-value {
-    min-width: rem(35px);
-    text-align: right;
-  }
-
-  .item-bar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .item-bar {
-    width: calc(80% - 50px);
-    height: rem(12px);
-    background: $grey-dark;
-    margin-right: rem(10px);
-    margin-left: rem(35px);
-    position: relative;
-
-    &.-data {
-      position: absolute;
+    .item-bar {
+      height: rem(2px);
+      position: relative;
       top: 0;
       left: 0;
       margin-left: 0;
@@ -92,10 +87,9 @@
     }
   }
 
-  .lollipop-container {
-    display: flex;
-    align-items: center;
-    width: calc(100% - 50px);
-    height: rem(18px);
+  .item-value {
+    min-width: rem(35px);
+    margin-right: 15px;
+    text-align: right;
   }
 }
