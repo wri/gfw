@@ -49,6 +49,7 @@ class LollipopChart extends PureComponent {
         <ul className="list">
           {data.length > 0 &&
             data.map((item, index) => {
+              const isNegative = item.value < 0;
               const linkContent = (
                 <div className="list-item">
                   <div className="item-label">
@@ -57,37 +58,42 @@ class LollipopChart extends PureComponent {
                   </div>
                   <div
                     className="item-lollipop-bar"
-                    style={
-                      item.value < 0 ? { flexDirection: 'row-reverse' } : {}
-                    }
+                    style={isNegative ? { flexDirection: 'row-reverse' } : {}}
                   >
                     <div
                       className="item-spacer"
                       style={{
                         width: `${interpolate(
-                          Math.abs(item.value < 0 ? dataMax : dataMin)
+                          Math.abs(isNegative ? dataMax : dataMin)
                         )}%`
                       }}
                     />
                     <div
-                      className="item-bar"
+                      className="lollipop"
                       style={{
                         width: `calc(${interpolate(
                           Math.abs(item.value)
-                        )}% - 43px)`,
-                        // 100% max - 8 (bubble) - 35px (value text)
-                        backgroundColor: item.color
+                        )}% - 67px)`
+                        // 100% max - 35px (value text) - 32px text margin
                       }}
-                    />
-                    <div
-                      className="item-bubble"
-                      style={{
-                        backgroundColor: item.color,
-                        transform: `translateX(${
-                          item.value < 0 ? '8px' : '-8px'
-                        })`
-                      }}
-                    />
+                    >
+                      <div
+                        className="item-bar"
+                        style={{
+                          backgroundColor: item.color
+                        }}
+                      />
+                      <div
+                        className="item-bubble -lollipop"
+                        style={{
+                          backgroundColor: item.color,
+                          transform: `translateX(${
+                            isNegative ? '-8px' : '8px'
+                          })`,
+                          [isNegative ? 'left' : 'right']: 0
+                        }}
+                      />
+                    </div>
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
