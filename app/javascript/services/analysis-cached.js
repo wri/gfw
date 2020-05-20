@@ -211,7 +211,7 @@ export const getDateFilter = ({ weeks, latest }) => {
 
     return `${acc} ${i === 0 ? '' : 'OR '}(alert__year = ${
       yi
-    } AND alert__week >= ${wi}) OR (alert__year = ${yf} AND alert__week <= ${
+    } AND alert__week > ${wi}) AND (alert__year = ${yf} AND alert__week <= ${
       wf
     })`;
   }, '');
@@ -682,6 +682,8 @@ export const fetchFiresWithin = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
         count: d.alert__count,
         alerts: d.alert__count
       }))
