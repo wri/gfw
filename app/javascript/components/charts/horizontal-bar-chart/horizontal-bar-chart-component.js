@@ -80,13 +80,13 @@ class HorizontalBarChart extends PureComponent {
         {handlePageChange &&
           data &&
           data.length > settings.pageSize && (
-            <Paginate
-              className="horizontal-pagintation"
-              settings={settings}
-              count={data.length}
-              onClickChange={handlePageChange}
-            />
-          )}
+          <Paginate
+            className="horizontal-pagintation"
+            settings={settings}
+            count={data.length}
+            onClickChange={handlePageChange}
+          />
+        )}
       </div>
     );
   }

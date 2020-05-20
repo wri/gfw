@@ -3,20 +3,91 @@ import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import {
+  BarChart,
+  Bar,
+  Rectangle,
+  XAxis,
+  YAxis,
+  ResponsiveContainer
+} from 'recharts';
+
 import { formatNumber } from 'utils/format';
 
 import './lollipop-chart-styles.scss';
 
+const CustomTick = props => {
+  const { x, y, index, data } = props;
+  const { extLink, path, label } = data[index];
+
+  const number = index + 1;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <circle cx="-16" cy="-20" r="12" fill="#e5e5df" />
+      <text
+        x={number > 9 ? '-22' : '-19'}
+        y="-16"
+        textAnchor="start"
+        fontSize="12px"
+        fill="#555"
+      >
+        {number}
+      </text>
+      <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
+        {extLink ? (
+          <a href={path} target="_blank" rel="noopener nofollower">
+            {label}
+          </a>
+        ) : (
+          <Link to={path}>{label}</Link>
+        )}
+      </text>
+    </g>
+  );
+};
+
+CustomTick.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  index: PropTypes.number,
+  data: PropTypes.array
+};
+
+const LollipopBar = props => {
+  const { color, className, x, y, width, value, formatUnit } = props;
+  const textX = value < 0 ? x + width - 50 : x + width + 20;
+
+  return (
+    <g>
+      <Rectangle
+        className={cx('recharts-bar-rectangle', className)}
+        {...props}
+        fill={color}
+      />
+      <circle cx={x + width} cy={y} r="8" fill={color} />
+      <text x={textX} y={y} fill="#555">
+        {formatNumber({
+          num: value,
+          formatUnit
+        })}
+      </text>
+    </g>
+  );
+};
+
+LollipopBar.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string,
+  formatUnit: PropTypes.string,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  width: PropTypes.number,
+  value: PropTypes.number
+};
+
 class LollipopChart extends PureComponent {
   render() {
-    const {
-      className,
-      data,
-      settings,
-      settingsConfig,
-      linksDisabled,
-      linksExt
-    } = this.props;
+    const { className, data, settings, settingsConfig } = this.props;
     const { unit } = settings;
 
     const unitsConfig = settingsConfig.find(conf => conf.key === 'unit');
@@ -32,107 +103,40 @@ class LollipopChart extends PureComponent {
           : selectedUnitConfig.value;
     }
 
-    let dataMax =
-      data && data.reduce((acc, item) => Math.max(acc, item.value), 0);
-    let dataMin =
-      data && data.reduce((acc, item) => Math.min(acc, item.value), 0);
-    dataMax = dataMax && dataMax > 0 ? dataMax : 0;
-    dataMin = dataMin && dataMin < 0 ? dataMin : 0;
-    const interpolate = num =>
-      Math.abs(num) * 100 / (dataMax + Math.abs(dataMin) || 1);
-
     return (
       <div className={cx('c-lollipop-chart', className)}>
         <div className="unit-legend">{`${unit
           .charAt(0)
           .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
-        <ul className="list">
-          {data.length > 0 &&
-            data.map((item, index) => {
-              const isNegative = item.value < 0;
-              const linkContent = (
-                <div className="list-item">
-                  <div className="item-label">
-                    <div className="item-bubble">{item.rank || index + 1}</div>
-                    <div className="item-name">{item.label}</div>
-                  </div>
-                  <div
-                    className="item-lollipop-bar"
-                    style={isNegative ? { flexDirection: 'row-reverse' } : {}}
-                  >
-                    <div
-                      className="item-spacer"
-                      style={{
-                        width: `${interpolate(
-                          Math.abs(isNegative ? dataMax : dataMin)
-                        )}%`
-                      }}
-                    />
-                    <div
-                      className="lollipop"
-                      style={{
-                        width: `calc(${interpolate(
-                          Math.abs(item.value)
-                        )}% - 67px)`
-                        // 100% max - 35px (value text) - 32px text margin
-                      }}
-                    >
-                      <div
-                        className="item-bar"
-                        style={{
-                          backgroundColor: item.color
-                        }}
-                      />
-                      <div
-                        className="item-bubble -lollipop"
-                        style={{
-                          backgroundColor: item.color,
-                          transform: `translateX(${
-                            isNegative ? '-8px' : '8px'
-                          })`,
-                          [isNegative ? 'left' : 'right']: 0
-                        }}
-                      />
-                    </div>
-                    <div className="item-value">
-                      {formatNumber({
-                        num: item.value,
-                        unit: item.unit || formatUnit
-                      })}
-                    </div>
-                  </div>
-                </div>
-              );
-              return (
-                <li key={`${item.label}-${item.id}`}>
-                  {item.path &&
-                    linksExt && (
-                    <a
-                      href={`https://${window.location.host}${item.path}`}
-                      target="_blank"
-                      rel="noopener nofollower"
-                    >
-                      {linkContent}
-                    </a>
-                  )}
-                  {item.path &&
-                    !linksExt && (
-                    <Link
-                      className={`${linksDisabled ? 'disabled' : ''}`}
-                      to={item.path}
-                    >
-                      {linkContent}
-                    </Link>
-                  )}
-                  {!item.path && (
-                    <div className={`${linksDisabled ? 'disabled' : ''}`}>
-                      {linkContent}
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-        </ul>
+        <ResponsiveContainer width="99%">
+          <BarChart
+            data={data}
+            margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
+            layout="vertical"
+          >
+            <XAxis
+              orientation="top"
+              type="number"
+              domain={['dataMin', 'dataMax']}
+              tickCount={4}
+              padding={{ left: 220, right: 8 }}
+            />
+            <YAxis
+              type="category"
+              axisLine={false}
+              tickLine={false}
+              tick={<CustomTick data={data} yAxisDotFill settings={settings} />}
+              padding={{ top: 50 }}
+            />
+            <Bar
+              dataKey="value"
+              barSize={2}
+              shape={props => (
+                <LollipopBar {...props} formatUnit={formatUnit} />
+              )}
+            />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     );
   }
@@ -142,9 +146,7 @@ LollipopChart.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
-  className: PropTypes.string,
-  linksDisabled: PropTypes.bool,
-  linksExt: PropTypes.bool
+  className: PropTypes.string
 };
 
 export default LollipopChart;
