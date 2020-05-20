@@ -30,7 +30,8 @@ class AoICard extends PureComponent {
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
-    onFetchAlerts: PropTypes.func
+    onFetchAlerts: PropTypes.func,
+    status: PropTypes.string
   };
 
   state = {
@@ -43,10 +44,10 @@ class AoICard extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { simple } = this.props;
+    const { simple, status } = this.props;
 
-    if (!simple) {
-      // this.getAlerts();
+    if (!simple && status !== 'pending') {
+      this.getAlerts();
     }
   }
 
@@ -108,7 +109,8 @@ class AoICard extends PureComponent {
       deforestationAlerts,
       fireAlerts,
       monthlySummary,
-      location
+      location,
+      status
     } = this.props;
     const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
@@ -129,6 +131,7 @@ class AoICard extends PureComponent {
 
     const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
     const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
+    const isPending = status === 'pending';
 
     let subscriptionMessage = 'subscribed to';
     if (subscribedToAll) {
@@ -179,13 +182,16 @@ class AoICard extends PureComponent {
               </div>
             )}
           </div>
-          {!simple && (
+          {!simple &&
+            !isPending && (
             <div className="activity">
-              <span className="activity-intro">{"Last week's alerts:"}</span>
+              <span className="activity-intro">
+                {"Latest week's alerts:"}
+              </span>
               {!loading &&
-                dataError && (
+                  dataError && (
                 <span className="data-error-msg">
-                    Sorry, we had trouble finding your alerts!
+                      Sorry, we had trouble finding your alerts!
                 </span>
               )}
               {!dataError && (
