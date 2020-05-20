@@ -58,11 +58,11 @@ export const getStatsByAdmin = createSelector(
         const stdDevCounts = stdDevData(countsArray);
         const meanCounts = mean(countsArray);
         const currentYearCounts = countsArray[countsArray.length - 1];
-        const variance =
+        const significance =
           stdDevCounts > 0
             ? (currentYearCounts - meanCounts) / stdDevCounts
             : 0;
-        return { id: adm, variance, currentYearCounts };
+        return { id: adm, significance, currentYearCounts };
       }
     );
 
@@ -90,13 +90,13 @@ export const parseList = createSelector(
       const locationArea = locationAreaData.area__ha || null;
       // Density in counts per Mha
       const density = locationArea ? 1e6 * counts / locationArea : 0;
-      const { variance } = adm;
+      const { significance } = adm;
 
       return {
         id: locationId,
         counts,
         density,
-        significance: 100 * format('.2r')(variance),
+        significance: 100 * significance,
         area: locationArea,
         label: (region && region.label) || ''
       };
@@ -111,7 +111,6 @@ export const parseData = createSelector(
   [parseList, getUnit, getColors],
   (data, unit, colors) => {
     if (isEmpty(data)) return null;
-
     const value = {
       alert_density: 'density',
       counts: 'counts',

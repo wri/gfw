@@ -211,7 +211,7 @@ export const getDateFilter = ({ weeks, latest }) => {
 
     return `${acc} ${i === 0 ? '' : 'OR '}(alert__year = ${
       yi
-    } AND alert__week >= ${wi}) OR (alert__year = ${yf} AND alert__week <= ${
+    } AND alert__week > ${wi}) OR (alert__year = ${yf} AND alert__week <= ${
       wf
     })`;
   }, '');
@@ -521,9 +521,44 @@ export const getAreaIntersectionGrouped = params => {
   }));
 };
 
+export const fetchLatestWeekGladAlerts = params => {
+  const { adm0, adm1, adm2, type } = params;
+
+  return fetchGLADLatest()
+    .then(date => {
+      const lastestDate = date.attributes.updatedAt;
+      const alertDate = moment(lastestDate)
+        .subtract(7, 'days')
+        .format('YYYY-MM-DD');
+
+      let locationQuery = '';
+      if (type === 'country') {
+        if (adm2) {
+          locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}' AND adm2 = '${
+            adm2
+          }'`;
+        } else if (adm1) locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}'`;
+        else locationQuery = `iso = '${adm0}'`;
+      } else if (type === 'geostore') {
+        locationQuery = `geostore__id = '${adm0}'`;
+      } else if (type === 'wdpa') { locationQuery = `wdpa_protected_area__id = '${adm0}'`; }
+      const sql = `SELECT alert__date as date, SUM(alert__count) as count FROM DATA WHERE ${
+        locationQuery
+      } AND alert__date > '${alertDate}' GROUP BY date`;
+
+      const url = `${getRequestUrl({
+        ...params,
+        dataset: 'glad',
+        datasetType: 'daily'
+      })}${sql}`;
+
+      return apiRequest.get(url).catch(error => console.error(error));
+    })
+    .catch(error => console.error(error));
+};
+
 export const fetchGladAlerts = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-
   const url = `${getRequestUrl({
     ...params,
     dataset: 'glad',
@@ -682,6 +717,8 @@ export const fetchFiresWithin = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
         count: d.alert__count,
         alerts: d.alert__count
       }))

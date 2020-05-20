@@ -1,4 +1,4 @@
-import { fetchFiresWithin } from 'services/analysis-cached';
+import { fetchFiresWithin, fetchVIIRSLatest } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import {
@@ -15,7 +15,10 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesWithin',
-  title: 'Fires alerts in {location} {indicator}',
+  title: {
+    default: 'Fires alerts in {location} {indicator}',
+    global: 'Global Fires alerts in {indicator}'
+  },
   categories: ['fires'],
   types: ['global', 'country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -83,22 +86,26 @@ export default {
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
     withInd:
-      'In the last {timeframe}, {perfireswithin} of all fires alerts detected in {location} ocurred within {indicator}.'
+      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} ocurred within {indicator}.',
+    globalWithInd:
+      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}.'
   },
   whitelists: {
     checkStatus: true
   },
   getData: params =>
     all([
+      fetchVIIRSLatest(params),
       fetchFiresWithin(params),
       fetchFiresWithin({ ...params, forestType: '', landCategory: '' })
     ]).then(
-      spread((firesWithin, allFires) => {
+      spread((latest, firesWithin, allFires) => {
         const fireIn = firesWithin.data && firesWithin.data.data;
         const allFire = allFires.data && allFires.data.data;
         let data = {};
         if (Array.isArray(fireIn) && Array.isArray(allFire)) {
           data = {
+            latest,
             fireCountIn: fireIn,
             fireCountAll: allFire
           };
