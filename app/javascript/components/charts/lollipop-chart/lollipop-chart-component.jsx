@@ -118,7 +118,8 @@ class LollipopChart extends PureComponent {
               orientation="top"
               type="number"
               domain={['dataMin', 'dataMax']}
-              tickCount={4}
+              tickCount={5}
+              tickFormatter={num => formatNumber({ num })}
               padding={{ left: 220, right: 45 }}
             />
             <YAxis
