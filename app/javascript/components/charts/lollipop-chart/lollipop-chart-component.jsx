@@ -55,7 +55,7 @@ CustomTick.propTypes = {
 
 const LollipopBar = props => {
   const { color, className, x, y, width, value, formatUnit } = props;
-  const textX = value < 0 ? x + width - 50 : x + width + 20;
+  const textX = value < 0 ? x + width - 45 : x + width + 15;
 
   return (
     <g>
@@ -65,10 +65,10 @@ const LollipopBar = props => {
         fill={color}
       />
       <circle cx={x + width} cy={y} r="8" fill={color} />
-      <text x={textX} y={y} fill="#555">
+      <text x={textX} y={y + 4} fill="#555">
         {formatNumber({
           num: value,
-          formatUnit
+          unit: formatUnit
         })}
       </text>
     </g>
@@ -119,13 +119,14 @@ class LollipopChart extends PureComponent {
               type="number"
               domain={['dataMin', 'dataMax']}
               tickCount={4}
-              padding={{ left: 220, right: 8 }}
+              padding={{ left: 220, right: 45 }}
             />
             <YAxis
               type="category"
               axisLine={false}
               tickLine={false}
-              tick={<CustomTick data={data} yAxisDotFill settings={settings} />}
+              tick={<CustomTick data={data} settings={settings} />}
+              interval={0}
               padding={{ top: 50 }}
             />
             <Bar
