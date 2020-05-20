@@ -108,37 +108,39 @@ class LollipopChart extends PureComponent {
         <div className="unit-legend">{`${unit
           .charAt(0)
           .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
-        <ResponsiveContainer width="99%">
-          <BarChart
-            data={data}
-            margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
-            layout="vertical"
-          >
-            <XAxis
-              orientation="top"
-              type="number"
-              domain={['dataMin', 'dataMax']}
-              tickCount={5}
-              tickFormatter={num => formatNumber({ num })}
-              padding={{ left: 220, right: 45 }}
-            />
-            <YAxis
-              type="category"
-              axisLine={false}
-              tickLine={false}
-              tick={<CustomTick data={data} settings={settings} />}
-              interval={0}
-              padding={{ top: 50 }}
-            />
-            <Bar
-              dataKey="value"
-              barSize={2}
-              shape={props => (
-                <LollipopBar {...props} formatUnit={formatUnit} />
-              )}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        <div className="chart-wrapper">
+          <ResponsiveContainer width="99%" height={data.length * 30 + 60}>
+            <BarChart
+              data={data}
+              margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
+              layout="vertical"
+            >
+              <XAxis
+                orientation="top"
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                tickCount={5}
+                tickFormatter={num => formatNumber({ num })}
+                padding={{ left: 220, right: 45 }}
+              />
+              <YAxis
+                type="category"
+                axisLine={false}
+                tickLine={false}
+                tick={<CustomTick data={data} settings={settings} />}
+                interval={0}
+                padding={{ top: 50 }}
+              />
+              <Bar
+                dataKey="value"
+                barSize={2}
+                shape={props => (
+                  <LollipopBar {...props} formatUnit={formatUnit} />
+                )}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     );
   }

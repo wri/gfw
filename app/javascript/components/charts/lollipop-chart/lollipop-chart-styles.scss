@@ -4,8 +4,13 @@
   font-size: rem(12px);
   color: $slate;
   max-width: 80%;
-  height: 335px;
+  max-height: 335px;
   margin: auto;
+
+  .chart-wrapper {
+    height: 335px;
+    overflow-y: scroll;
+  }
 
   .unit-legend {
     text-align: end;
