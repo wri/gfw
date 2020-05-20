@@ -11,26 +11,33 @@ const getIndicator = state => state.indicator;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
-const getSettings = state => state.settings;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getColors, getIndicator, getLocationName, getSettings],
-  (data, colors, indicator, locationName, settings) => {
+  [getData, getColors, getIndicator, getLocationName, getOptionsSelected],
+  (data, colors, indicator, locationName, options) => {
     if (isEmpty(data)) return null;
-
-    const { weeks } = settings;
-    const filterDate = moment().subtract(weeks, 'weeks');
+    const { weeks } = options;
+    let { fireCountIn, fireCountAll } = data;
+    const { latest } = data;
+    const weekNumber = weeks && weeks.value;
+    const weekLabel = weeks && weeks.label;
+    const filterDate = moment(latest).subtract(weekNumber, 'weeks');
     const filterYear = filterDate.year();
     const filterWeek = filterDate.isoWeek();
 
-    let { fireCountIn, fireCountAll } = data;
     fireCountIn = fireCountIn
-      .filter(a => a.alert__year > filterYear || a.alert__week >= filterWeek)
+      .filter(
+        a =>
+          (a.year === filterYear && a.week >= filterWeek) || a.year > filterYear
+      )
       .reduce((acc, n) => acc + n.count, 0);
 
     fireCountAll = fireCountAll
-      .filter(a => a.alert__year > filterYear || a.alert__week >= filterWeek)
+      .filter(
+        a =>
+          (a.year === filterYear && a.week >= filterWeek) || a.year > filterYear
+      )
       .reduce((acc, n) => acc + n.count, 0);
 
     const indicatorLabel =
@@ -39,11 +46,14 @@ export const parseData = createSelector(
       fireCountAll - fireCountIn > 0 ? fireCountAll - fireCountIn : 0;
     const parsedData = [
       {
-        label: `Fire alerts in ${indicatorLabel || locationName}`,
-        value: fireCountIn,
+        label: indicator
+          ? `Fire alerts in ${indicatorLabel}`
+          : `Fire alerts in ${locationName} in the last ${weekLabel}`,
+        value: indicator ? fireCountIn : fireCountAll,
         color: colors.main,
         unit: 'counts',
-        percentage: fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 0
+        percentage:
+          indicator && fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 100
       }
     ];
     if (indicator) {
@@ -63,23 +73,24 @@ export const parseSentence = createSelector(
   [parseData, getOptionsSelected, getLocationName, getIndicator, getSentences],
   (parsedData, optionsSelected, locationName, indicator, sentences) => {
     if (!parsedData || !optionsSelected || !locationName) return null;
-    const { withInd } = sentences;
+    const { globalWithInd, withInd } = sentences;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const timeFrame = optionsSelected.weeks;
-    const fireswithinper = parsedData[0].percentage;
+    const firesWithinPerc = parsedData[0].percentage;
 
     const params = {
       timeframe: timeFrame && timeFrame.label,
       location:
         locationName !== 'global' && indicatorLabel !== null
           ? locationName
-          : '',
+          : 'globally',
       indicator: indicatorLabel,
-      perfireswithin: `${format('.2r')(fireswithinper)}%`
+      firesWithinPerc: `${format('.2r')(firesWithinPerc)}%`
     };
+    const initialSentence = locationName === 'global' ? globalWithInd : withInd;
     const sentence = indicator
-      ? withInd
+      ? initialSentence
       : 'Please select a forest type or land category from the settings.';
     return {
       sentence,
@@ -89,11 +100,11 @@ export const parseSentence = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getIndicator],
-  (title, indicator) => {
+  [getTitle, getLocationName, getIndicator],
+  (title, location, indicator) => {
     const indicatorLabel = indicator && indicator.label ? indicator.label : '';
-    const selectedTitle = title.replace('{indicator}', indicatorLabel);
-    return selectedTitle;
+    const selectedTitle = location === 'global' ? title.global : title.default;
+    return selectedTitle.replace('{indicator}', indicatorLabel);
   }
 );
 
