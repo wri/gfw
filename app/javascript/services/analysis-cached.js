@@ -211,7 +211,7 @@ export const getDateFilter = ({ weeks, latest }) => {
 
     return `${acc} ${i === 0 ? '' : 'OR '}(alert__year = ${
       yi
-    } AND alert__week > ${wi}) AND (alert__year = ${yf} AND alert__week <= ${
+    } AND alert__week > ${wi}) OR (alert__year = ${yf} AND alert__week <= ${
       wf
     })`;
   }, '');

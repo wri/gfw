@@ -96,7 +96,7 @@ export const parseList = createSelector(
         id: locationId,
         counts,
         density,
-        significance,
+        significance: 100 * significance,
         area: locationArea,
         label: (region && region.label) || ''
       };
@@ -111,7 +111,6 @@ export const parseData = createSelector(
   [parseList, getUnit, getColors],
   (data, unit, colors) => {
     if (isEmpty(data)) return null;
-
     const value = {
       alert_density: 'density',
       counts: 'counts',
