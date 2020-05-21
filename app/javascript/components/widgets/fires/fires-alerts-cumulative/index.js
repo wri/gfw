@@ -66,8 +66,12 @@ export default {
     dataset: 'viirs',
     confidence: 'h'
   },
-  sentence:
-    'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
+  sentences: {
+    allAlerts:
+      'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
+    highConfidence:
+      'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear} considering <b>high confidence alerts</b> only. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.'
+  },
   whitelistType: 'fires',
   whitelists: {
     adm0: [

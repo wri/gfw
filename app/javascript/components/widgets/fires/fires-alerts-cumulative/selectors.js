@@ -24,8 +24,9 @@ const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
-const getSentences = state => state.sentence || null;
+const getSentences = state => state.sentences || null;
 const getLocationName = state => state.locationLabel;
+const getOptionsSelected = state => state.optionsSelected;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -373,19 +374,25 @@ export const parseSentence = createSelector(
     getDataset,
     getLocationName,
     getStartIndex,
-    getEndIndex
+    // getEndIndex,
+    getOptionsSelected
   ],
   (
     raw_data,
     data,
     colors,
-    sentence,
+    sentences,
     dataset,
     location,
-    startIndex
+    startIndex,
+    options
     // endIndex //broken?
   ) => {
     if (!data) return null;
+    const { highConfidence, allAlerts } = sentences;
+    const { confidence } = options;
+    const sentence =
+      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
 
     const start = startIndex;
     const latestYear = maxBy(data, 'year').year;

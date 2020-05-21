@@ -23,9 +23,10 @@ const getCompareYear = state => state.settings.compareYear || null;
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
-const getSentences = state => state.sentence || null;
+const getSentences = state => state.sentences || null;
 const getLocationName = state => state.locationLabel;
 const getLang = state => state.lang || null;
+const getOptionsSelected = state => state.optionsSelected;
 
 const MINGAP = 4;
 const MAXGAP = 12;
@@ -361,10 +362,26 @@ export const parseSentence = createSelector(
     getDataset,
     getLocationName,
     getStartEndIndexes,
+    getOptionsSelected,
     getLang
   ],
-  (raw_data, data, colors, sentence, dataset, location, indexes, lang) => {
+  (
+    raw_data,
+    data,
+    colors,
+    sentences,
+    dataset,
+    location,
+    indexes,
+    options,
+    lang
+  ) => {
     if (!data) return null;
+    const { highConfidence, allAlerts } = sentences;
+    const { confidence } = options;
+    const sentence =
+      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
+
     const { startIndex, endIndex } = indexes;
     const start = startIndex;
     const end = endIndex || data.length - 1;
@@ -421,8 +438,8 @@ export const parseSentence = createSelector(
       date: formattedData,
       fires_season_start: seasonStatement,
       fire_season_length: sortedPeakWeeks.length,
-      start_date: firstDate.date,
-      end_date: lastDate.date,
+      start_date: moment(firstDate.date).format('Do of MMMM YYYY'),
+      end_date: moment(lastDate.date).format('Do of MMMM YYYY'),
       dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
       dataset: dataset.toUpperCase(),
       count: {
