@@ -8,7 +8,7 @@ export default {
   widget: 'firesAlertsHistorical',
   title: 'Fire Alerts Count in {location}',
   large: true,
-  categories: ['summary', 'forest-change'],
+  categories: ['summary', 'fires'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -65,9 +65,7 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_historical_location',
   sortOrder: {
-    summary: 100,
-    fires: 5,
-    forestChange: 100
+    fires: 100
   },
   settings: {
     confidence: '',
