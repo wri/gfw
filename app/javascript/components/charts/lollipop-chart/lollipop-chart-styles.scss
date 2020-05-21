@@ -4,11 +4,16 @@
   font-size: rem(12px);
   color: $slate;
   max-width: 80%;
-  max-height: 335px;
   margin: auto;
 
+  .recharts-cartesian-grid-vertical {
+    line:nth-last-child(-n+2) {
+      display: none;
+    }
+  }
+
   .chart-wrapper {
-    height: 335px;
+    max-height: 335px;
     overflow-y: scroll;
   }
 

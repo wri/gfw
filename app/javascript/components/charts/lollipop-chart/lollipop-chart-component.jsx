@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import MediaQuery from 'react-responsive';
 import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -9,31 +10,39 @@ import {
   Rectangle,
   XAxis,
   YAxis,
-  ResponsiveContainer
+  ResponsiveContainer,
+  CartesianGrid
 } from 'recharts';
 
 import { formatNumber } from 'utils/format';
+import { SCREEN_M } from 'utils/constants';
 
 import './lollipop-chart-styles.scss';
 
 const CustomTick = props => {
-  const { x, y, index, data } = props;
+  const { x, y, index, data, isDesktop } = props;
   const { extLink, path, label } = data[index];
 
   const number = index + 1;
   return (
     <g transform={`translate(${x},${y})`}>
-      <circle cx="-16" cy="-20" r="12" fill="#e5e5df" />
+      <circle cx="-16" cy={isDesktop ? -4 : -24} r="12" fill="#e5e5df" />
       <text
         x={number > 9 ? '-22' : '-19'}
-        y="-16"
+        y={isDesktop ? 0 : -20}
         textAnchor="start"
         fontSize="12px"
         fill="#555"
       >
         {number}
       </text>
-      <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
+      <text
+        x="8"
+        y={isDesktop ? 0 : -20}
+        textAnchor="start"
+        fontSize="12px"
+        fill="#555555"
+      >
         {extLink ? (
           <a href={path} target="_blank" rel="noopener nofollower">
             {label}
@@ -50,7 +59,8 @@ CustomTick.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   index: PropTypes.number,
-  data: PropTypes.array
+  data: PropTypes.array,
+  isDesktop: PropTypes.bool
 };
 
 const LollipopBar = props => {
@@ -104,44 +114,59 @@ class LollipopChart extends PureComponent {
     }
 
     return (
-      <div className={cx('c-lollipop-chart', className)}>
-        <div className="unit-legend">{`${unit
-          .charAt(0)
-          .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
-        <div className="chart-wrapper">
-          <ResponsiveContainer width="99%" height={data.length * 30 + 60}>
-            <BarChart
-              data={data}
-              margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
-              layout="vertical"
-            >
-              <XAxis
-                orientation="top"
-                type="number"
-                domain={['dataMin', 'dataMax']}
-                tickCount={5}
-                tickFormatter={num => formatNumber({ num })}
-                padding={{ left: 220, right: 45 }}
-              />
-              <YAxis
-                type="category"
-                axisLine={false}
-                tickLine={false}
-                tick={<CustomTick data={data} settings={settings} />}
-                interval={0}
-                padding={{ top: 50 }}
-              />
-              <Bar
-                dataKey="value"
-                barSize={2}
-                shape={props => (
-                  <LollipopBar {...props} formatUnit={formatUnit} />
-                )}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      <MediaQuery minWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className={cx('c-lollipop-chart', className)}>
+            <div className="unit-legend">{`${unit
+              .charAt(0)
+              .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
+            <div className="chart-wrapper">
+              <ResponsiveContainer
+                width="99%"
+                height={data.length * (isDesktop ? 35 : 70) + 60}
+              >
+                <BarChart
+                  data={data}
+                  margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
+                  layout="vertical"
+                >
+                  <CartesianGrid horizontal={false} vertical={isDesktop} />
+                  <XAxis
+                    orientation="top"
+                    type="number"
+                    domain={['dataMin', 'dataMax']}
+                    tickCount={5}
+                    tickFormatter={num => formatNumber({ num })}
+                    padding={{ left: isDesktop ? 220 : 20, right: 45 }}
+                  />
+                  <YAxis
+                    type="category"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={props => (
+                      <CustomTick
+                        {...props}
+                        data={data}
+                        settings={settings}
+                        isDesktop={isDesktop}
+                      />
+                    )}
+                    interval={0}
+                    padding={{ top: 50 }}
+                  />
+                  <Bar
+                    dataKey="value"
+                    barSize={2}
+                    shape={props => (
+                      <LollipopBar {...props} formatUnit={formatUnit} />
+                    )}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+      </MediaQuery>
     );
   }
 }
