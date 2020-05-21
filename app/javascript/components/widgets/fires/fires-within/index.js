@@ -27,7 +27,7 @@ export default {
       key: 'weeks',
       label: 'show data for the last',
       type: 'select',
-      whitelist: [1, 13, 26, 52],
+      whitelist: [1, 2, 4, 8, 13, 26, 52],
       noSort: true,
       border: true
     },
@@ -85,6 +85,10 @@ export default {
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
+    noIndicator:
+      'In the last {timeframe}, there were {totalFires} fires alerts detected in {location}.',
+    globalNoIndicator:
+      'In the last {timeframe}, there were {totalFires} fires alerts detected {location}.',
     withInd:
       'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} ocurred within {indicator}.',
     globalWithInd:

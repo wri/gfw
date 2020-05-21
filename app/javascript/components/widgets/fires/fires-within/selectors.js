@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 
@@ -21,7 +22,6 @@ export const parseData = createSelector(
     let { fireCountIn, fireCountAll } = data;
     const { latest } = data;
     const weekNumber = weeks && weeks.value;
-    const weekLabel = weeks && weeks.label;
     const filterDate = moment(latest).subtract(weekNumber, 'weeks');
     const filterYear = filterDate.year();
     const filterWeek = filterDate.isoWeek();
@@ -48,7 +48,7 @@ export const parseData = createSelector(
       {
         label: indicator
           ? `Fire alerts in ${indicatorLabel}`
-          : `Fire alerts in ${locationName} in the last ${weekLabel}`,
+          : `Fire alerts in ${locationName}`,
         value: indicator ? fireCountIn : fireCountAll,
         color: colors.main,
         unit: 'counts',
@@ -73,25 +73,26 @@ export const parseSentence = createSelector(
   [parseData, getOptionsSelected, getLocationName, getIndicator, getSentences],
   (parsedData, optionsSelected, locationName, indicator, sentences) => {
     if (!parsedData || !optionsSelected || !locationName) return null;
-    const { globalWithInd, withInd } = sentences;
+    const {
+      globalWithInd,
+      withInd,
+      noIndicator,
+      globalNoIndicator
+    } = sentences;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const timeFrame = optionsSelected.weeks;
     const firesWithinPerc = parsedData[0].percentage;
-
+    const totalFires = sumBy(parsedData, 'value');
     const params = {
       timeframe: timeFrame && timeFrame.label,
-      location:
-        locationName !== 'global' && indicatorLabel !== null
-          ? locationName
-          : 'globally',
+      location: locationName !== 'global' ? locationName : 'globally',
       indicator: indicatorLabel,
-      firesWithinPerc: `${format('.2r')(firesWithinPerc)}%`
+      firesWithinPerc: `${format('.2r')(firesWithinPerc)}%`,
+      totalFires: `${format(',')(totalFires)}`
     };
-    const initialSentence = locationName === 'global' ? globalWithInd : withInd;
-    const sentence = indicator
-      ? initialSentence
-      : 'Please select a forest type or land category from the settings.';
+    let sentence = indicator ? withInd : noIndicator;
+    if (locationName === 'global') { sentence = indicator ? globalWithInd : globalNoIndicator; }
     return {
       sentence,
       params
