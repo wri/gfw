@@ -27,6 +27,7 @@ const getSentences = state => state.sentences || null;
 const getLocationName = state => state.locationLabel;
 const getLang = state => state.lang || null;
 const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
 
 const MINGAP = 4;
 const MAXGAP = 12;
@@ -363,7 +364,8 @@ export const parseSentence = createSelector(
     getLocationName,
     getStartEndIndexes,
     getOptionsSelected,
-    getLang
+    getLang,
+    getIndicator
   ],
   (
     raw_data,
@@ -374,14 +376,19 @@ export const parseSentence = createSelector(
     location,
     indexes,
     options,
-    lang
+    lang,
+    indicator
   ) => {
     if (!data) return null;
-    const { highConfidence, allAlerts } = sentences;
+    const {
+      highConfidence,
+      allAlerts,
+      highConfidenceWithInd,
+      allAlertsWithInd
+    } = sentences;
     const { confidence } = options;
-    const sentence =
-      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
-
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label : null;
     const { startIndex, endIndex } = indexes;
     const start = startIndex;
     const end = endIndex || data.length - 1;
@@ -432,9 +439,19 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
+    let sentence =
+      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
+    if (indicator) {
+      sentence =
+        confidence && confidence.value === 'h'
+          ? highConfidenceWithInd
+          : allAlertsWithInd;
+    }
+
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       location,
+      indicator: indicatorLabel,
       date: formattedData,
       fires_season_start: seasonStatement,
       fire_season_length: sortedPeakWeeks.length,

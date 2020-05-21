@@ -27,6 +27,7 @@ const getEndIndex = state => state.settings.endIndex || null;
 const getSentences = state => state.sentences || null;
 const getLocationName = state => state.locationLabel;
 const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -375,7 +376,8 @@ export const parseSentence = createSelector(
     getLocationName,
     getStartIndex,
     // getEndIndex,
-    getOptionsSelected
+    getOptionsSelected,
+    getIndicator
   ],
   (
     raw_data,
@@ -385,15 +387,20 @@ export const parseSentence = createSelector(
     dataset,
     location,
     startIndex,
-    options
     // endIndex //broken?
+    options,
+    indicator
   ) => {
     if (!data) return null;
-    const { highConfidence, allAlerts } = sentences;
+    const {
+      highConfidence,
+      allAlerts,
+      highConfidenceWithInd,
+      allAlertsWithInd
+    } = sentences;
     const { confidence } = options;
-    const sentence =
-      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
-
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label : null;
     const start = startIndex;
     const latestYear = maxBy(data, 'year').year;
     const lastDate =
@@ -433,9 +440,19 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
+    let sentence =
+      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
+    if (indicator) {
+      sentence =
+        confidence && confidence.value === 'h'
+          ? highConfidenceWithInd
+          : allAlertsWithInd;
+    }
+
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       location,
+      indicator: indicatorLabel,
       date: formattedData,
       latestYear,
       dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
