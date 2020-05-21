@@ -26,7 +26,7 @@ const CustomTick = props => {
   const number = index + 1;
   return (
     <g transform={`translate(${x},${y})`}>
-      <circle cx="-16" cy={isDesktop ? -4 : -24} r="12" fill="#e5e5df" />
+      <circle cx="-16" cy={isDesktop ? -4 : -24} r="8" fill="#e5e5df" />
       <text
         x={number > 9 ? '-22' : '-19'}
         y={isDesktop ? 0 : -20}
@@ -74,7 +74,7 @@ const LollipopBar = props => {
         {...props}
         fill={color}
       />
-      <circle cx={x + width} cy={y} r="8" fill={color} />
+      <circle cx={x + width} cy={y + 1} r="8" fill={color} />
       <text x={textX} y={y + 4} fill="#555">
         {formatNumber({
           num: value,
@@ -120,10 +120,16 @@ class LollipopChart extends PureComponent {
             <div className="unit-legend">{`${unit
               .charAt(0)
               .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
-            <div className="chart-wrapper">
+            <div
+              className={cx(
+                isDesktop
+                  ? { 'chart-wrapper': data.length > 9 }
+                  : { 'chart-wrapper': data.length > 4 }
+              )}
+            >
               <ResponsiveContainer
                 width="99%"
-                height={data.length * (isDesktop ? 35 : 70) + 60}
+                height={data.length * (isDesktop ? 30 : 70) + 60}
               >
                 <BarChart
                   data={data}
