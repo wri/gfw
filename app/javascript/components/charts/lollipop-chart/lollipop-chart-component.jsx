@@ -88,6 +88,37 @@ class LollipopChart extends PureComponent {
             <div className="unit-legend">{`${unit
               .charAt(0)
               .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
+            <ResponsiveContainer width="99%" height={32}>
+              <BarChart
+                data={data}
+                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+                layout="vertical"
+              >
+                <XAxis
+                  axisLine={{ stroke: '#333', strokeWidth: '1px' }}
+                  orientation="top"
+                  type="number"
+                  domain={['dataMin', 'dataMax']}
+                  ticks={ticks}
+                  tickLine={false}
+                  tickCount={5}
+                  tickFormatter={num =>
+                    (num === 0 ? '0' : formatNumber({ num }))
+                  }
+                  padding={{
+                    left: isDesktop ? 220 : 20,
+                    right: allNegative ? 8 : 45
+                  }}
+                />
+                <YAxis
+                  type="category"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={false}
+                  interval={0}
+                />
+              </BarChart>
+            </ResponsiveContainer>
             <div
               className={cx(
                 isDesktop
@@ -97,25 +128,23 @@ class LollipopChart extends PureComponent {
             >
               <ResponsiveContainer
                 width="99%"
-                height={data.length * (isDesktop ? 30 : 70) + 60}
+                height={data.length * (isDesktop ? 40 : 70) + 60}
               >
                 <BarChart
                   data={data}
-                  margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+                  margin={{ top: -30, right: 0, left: 0, bottom: 0 }}
                   layout="vertical"
                 >
                   <CartesianGrid horizontal={false} vertical={isDesktop} />
                   <XAxis
-                    axisLine={{ stroke: '#333', strokeWidth: '1px' }}
+                    axisLine={false}
                     orientation="top"
                     type="number"
                     domain={['dataMin', 'dataMax']}
                     ticks={ticks}
                     tickLine={false}
                     tickCount={5}
-                    tickFormatter={num =>
-                      (num === 0 ? '0' : formatNumber({ num }))
-                    }
+                    tickFormatter={() => ''}
                     padding={{
                       left: isDesktop ? 220 : 20,
                       right: allNegative ? 8 : 45
@@ -134,7 +163,12 @@ class LollipopChart extends PureComponent {
                       />
                     )}
                     interval={0}
-                    padding={{ top: 15 }}
+                    padding={{
+                      right: 0,
+                      left: 0,
+                      top: 0,
+                      bottom: 0
+                    }}
                   />
                   <Bar
                     dataKey="value"

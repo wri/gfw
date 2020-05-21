@@ -91,7 +91,7 @@ const CustomTick = props => {
           <Link to={path}>
             {isDesktop && tickText.length > 1
               ? tickText.map((word, i) => (
-                <tspan x="175" dy={i === 0 ? -7 : 14}>
+                <tspan x="175" y={i === 0 ? -7 : 7 * i} key={word}>
                   {word}
                 </tspan>
               ))
