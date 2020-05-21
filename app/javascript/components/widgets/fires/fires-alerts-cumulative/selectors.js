@@ -242,7 +242,7 @@ export const parseConfig = createSelector(
         key: 'count',
         labelKey: 'date',
         labelFormat: value => moment(value).format('YYYY-MM-DD'),
-        unit: ` ${dataset} alerts`,
+        unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         nullValue: 'No data available',
         unitFormat: value =>
@@ -270,7 +270,7 @@ export const parseConfig = createSelector(
 
             return date.format('YYYY-MM-DD');
           },
-          unit: ` ${dataset} alerts`,
+          unit: ` ${dataset.toUpperCase()} alerts`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
           unitFormat: value =>

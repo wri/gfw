@@ -66,9 +66,9 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, the region with the most <b>unusually high</b> number of fire alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
+      'In the last {timeframe} in {location}, the region with the most <b>significant</b> number of fire alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     withInd:
-      'In the last {timeframe} in {location}, the region with the most <b>unusually high</b> number of fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
+      'In the last {timeframe} in {location}, the region with the most <b>significant</b> number of fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     densityInitial:
       'In the last {timeframe} in {location}, the region with the <b>highest density</b> of fires was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected in {location} in the same period.',
     densityWithInd:
@@ -78,9 +78,9 @@ export default {
     countsWithInd:
       'In the last {timeframe} in {location}, the region with the <b>most</b> fire alerts within {indicator} was {topRegion}, with {topRegionCount} fire alerts. This represents {topRegionPerc} of all alerts detected in {location} in the same period.',
     initialGlobal:
-      'In the last {timeframe}, the region with the most <b>unusually high</b> number of fire alerts <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
+      'In the last {timeframe}, the region with the most <b>significant</b> number of fire alerts <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     withIndGlobal:
-      'In the last {timeframe}, the region with the most <b>unusually high</b> number of fire alerts within {indicator} <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected <b>globally</b> and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
+      'In the last {timeframe}, the region with the most <b>significant</b> number of fire alerts within {indicator} <b>globally</b> was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected <b>globally</b> and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
     densityInitialGlobal:
       'In the last {timeframe}, the region with the <b>highest density</b> of fires <b>globally</b> was {topRegion}, with {topRegionDensity}. This represents {topRegionPerc} of all alerts detected <b>globally</b> in the same period.',
     densityWithIndGlobal:
@@ -101,30 +101,33 @@ export default {
     layerStartDate: null,
     layerEndDate: null
   },
-  getData: params => fetchVIIRSLatest(params)
-    .then(
-      response =>
-        (response.attributes && response.attributes.updatedAt) || null
-    )
-    .then(latest => all([
-      fetchVIIRSAlertsGrouped({ ...params, latest }),
-      getAreaIntersectionGrouped(params)
-    ])
+  getData: params =>
+    fetchVIIRSLatest(params)
       .then(
-        spread((alerts, areas) => {
-          const { data } = alerts.data;
-          const area = areas.data && areas.data.data;
-          return { alerts: data, latest, area } || {};
-        })
+        response =>
+          (response.attributes && response.attributes.updatedAt) || null
+      )
+      .then(latest =>
+        all([
+          fetchVIIRSAlertsGrouped({ ...params, latest }),
+          getAreaIntersectionGrouped(params)
+        ])
+          .then(
+            spread((alerts, areas) => {
+              const { data } = alerts.data;
+              const area = areas.data && areas.data.data;
+              return { alerts: data, latest, area } || {};
+            })
+          )
+          .catch(error => {
+            console.info(error);
+            return null;
+          })
       )
       .catch(error => {
         console.info(error);
         return null;
-      }))
-    .catch(error => {
-      console.info(error);
-      return null;
-    }),
+      }),
   // getDataURL: params => [
   //   fetchFiresAlertsGrouped({ ...params, download: true })
   // ],
