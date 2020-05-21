@@ -15,6 +15,7 @@ const getStartYear = state => state.settings.startYear;
 const getEndYear = state => state.settings.endYear;
 const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
+const getOptionsSelected = state => state.optionsSelected;
 
 export const getData = createSelector(
   [getAlerts, getFrequency, getStartYear, getEndYear],
@@ -147,10 +148,12 @@ export const parseSentence = createSelector(
     getSentences,
     getLocationObject,
     getStartYear,
-    getEndYear
+    getEndYear,
+    getOptionsSelected
   ],
-  (data, colors, sentence, location, startYear, endYear) => {
+  (data, colors, sentence, location, startYear, endYear, options) => {
     if (!data) return null;
+    const { dataset } = options;
     const lastDate = data[data.length - 1] || {};
     const firstDate = data[0] || {};
     const total = sumBy(
@@ -161,6 +164,7 @@ export const parseSentence = createSelector(
       location: location.label || '',
       start_year: startYear,
       end_year: endYear,
+      dataset: dataset && dataset.label,
       total_alerts: {
         value: total ? format(',')(total) : 0,
         color: colors.main

@@ -18,6 +18,7 @@ import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import firesWithin from 'components/widgets/fires/fires-within';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
+import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical';
 import firesRanked from 'components/widgets/fires/fires-ranked';
 import fires from 'components/widgets/fires/fires';
 
@@ -71,6 +72,7 @@ export default {
   firesWithin,
   firesAlerts,
   firesAlertsCumulative,
+  firesAlertsHistorical,
   firesRanked,
   fires,
 
