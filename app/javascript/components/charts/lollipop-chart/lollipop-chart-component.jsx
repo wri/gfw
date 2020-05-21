@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import MediaQuery from 'react-responsive';
-import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -11,58 +10,14 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  CartesianGrid,
-  ReferenceLine
+  CartesianGrid
 } from 'recharts';
 
 import { formatNumber } from 'utils/format';
 import { SCREEN_M } from 'utils/constants';
 
 import './lollipop-chart-styles.scss';
-
-const CustomTick = props => {
-  const { x, y, index, data, isDesktop } = props;
-  const { extLink, path, label } = data[index];
-
-  const number = index + 1;
-  return (
-    <g transform={`translate(${x},${y})`}>
-      <circle cx="16" cy={isDesktop ? -4 : -24} r="8" fill="#e5e5df" />
-      <text
-        x={number > 9 ? '10' : '13'}
-        y={isDesktop ? 0 : -20}
-        textAnchor="start"
-        fontSize="12px"
-        fill="#555"
-      >
-        {number}
-      </text>
-      <text
-        x="40"
-        y={isDesktop ? 0 : -20}
-        textAnchor="start"
-        fontSize="12px"
-        fill="#555555"
-      >
-        {extLink ? (
-          <a href={path} target="_blank" rel="noopener nofollower">
-            {label}
-          </a>
-        ) : (
-          <Link to={path}>{label}</Link>
-        )}
-      </text>
-    </g>
-  );
-};
-
-CustomTick.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  index: PropTypes.number,
-  data: PropTypes.array,
-  isDesktop: PropTypes.bool
-};
+import CustomTick from './custom-tick-component';
 
 const LollipopBar = props => {
   const { color, className, x, y, width, value, formatUnit } = props;
@@ -115,6 +70,16 @@ class LollipopChart extends PureComponent {
     }
 
     const allNegative = !data.some(item => item.value > 0);
+    let dataMax =
+      data && data.reduce((acc, item) => Math.max(acc, item.value), 0);
+    let dataMin =
+      data && data.reduce((acc, item) => Math.min(acc, item.value), 0);
+    dataMax = dataMax && dataMax > 0 ? dataMax : 0;
+    dataMin = dataMin && dataMin < 0 ? dataMin : 0;
+
+    let ticks = [dataMin, dataMin / 2, 0, dataMax / 2, dataMax];
+    if (dataMin === 0) ticks = [0, dataMax * 0.33, dataMax * 0.66, dataMax];
+    if (dataMax === 0) ticks = [dataMin, dataMin * 0.66, dataMin * 0.33, 0];
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -141,12 +106,16 @@ class LollipopChart extends PureComponent {
                 >
                   <CartesianGrid horizontal={false} vertical={isDesktop} />
                   <XAxis
+                    axisLine={{ stroke: '#333', strokeWidth: '1px' }}
                     orientation="top"
                     type="number"
                     domain={['dataMin', 'dataMax']}
-                    tickCount={5}
+                    ticks={ticks}
                     tickLine={false}
-                    tickFormatter={num => formatNumber({ num })}
+                    tickCount={5}
+                    tickFormatter={num =>
+                      (num === 0 ? '0' : formatNumber({ num }))
+                    }
                     padding={{
                       left: isDesktop ? 220 : 20,
                       right: allNegative ? 8 : 45
@@ -167,7 +136,6 @@ class LollipopChart extends PureComponent {
                     interval={0}
                     padding={{ top: 15 }}
                   />
-                  <ReferenceLine x={0} label="0" stroke="#333" />
                   <Bar
                     dataKey="value"
                     barSize={2}
