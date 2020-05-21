@@ -26,9 +26,9 @@ const CustomTick = props => {
   const number = index + 1;
   return (
     <g transform={`translate(${x},${y})`}>
-      <circle cx="-16" cy={isDesktop ? -4 : -24} r="8" fill="#e5e5df" />
+      <circle cx="16" cy={isDesktop ? -4 : -24} r="8" fill="#e5e5df" />
       <text
-        x={number > 9 ? '-22' : '-19'}
+        x={number > 9 ? '10' : '13'}
         y={isDesktop ? 0 : -20}
         textAnchor="start"
         fontSize="12px"
@@ -37,7 +37,7 @@ const CustomTick = props => {
         {number}
       </text>
       <text
-        x="8"
+        x="40"
         y={isDesktop ? 0 : -20}
         textAnchor="start"
         fontSize="12px"
@@ -113,6 +113,8 @@ class LollipopChart extends PureComponent {
           : selectedUnitConfig.value;
     }
 
+    const allNegative = !data.some(item => item.value > 0);
+
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
@@ -133,7 +135,7 @@ class LollipopChart extends PureComponent {
               >
                 <BarChart
                   data={data}
-                  margin={{ top: 15, right: 0, left: -24, bottom: 0 }}
+                  margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
                   layout="vertical"
                 >
                   <CartesianGrid horizontal={false} vertical={isDesktop} />
@@ -143,7 +145,10 @@ class LollipopChart extends PureComponent {
                     domain={['dataMin', 'dataMax']}
                     tickCount={5}
                     tickFormatter={num => formatNumber({ num })}
-                    padding={{ left: isDesktop ? 220 : 20, right: 45 }}
+                    padding={{
+                      left: isDesktop ? 220 : 20,
+                      right: allNegative ? 8 : 45
+                    }}
                   />
                   <YAxis
                     type="category"
@@ -158,7 +163,7 @@ class LollipopChart extends PureComponent {
                       />
                     )}
                     interval={0}
-                    padding={{ top: 50 }}
+                    padding={{ top: 15 }}
                   />
                   <Bar
                     dataKey="value"
