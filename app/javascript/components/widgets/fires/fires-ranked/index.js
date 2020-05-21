@@ -34,10 +34,17 @@ export default {
       border: true
     },
     {
+      key: 'unit',
+      label: 'unit',
+      type: 'select',
+      whitelist: ['counts', 'alert_density', 'significance']
+    },
+    {
       key: 'weeks',
       label: 'show data for the last',
       type: 'select',
-      whitelist: [1, 4, 52],
+      whitelist: [1, 2, 8, 4, 13, 26, 52],
+      border: true,
       noSort: true
     },
     {
@@ -45,14 +52,7 @@ export default {
       label: 'Confidence level',
       type: 'select',
       clearable: false,
-      border: true
-    },
-    {
-      key: 'unit',
-      label: 'unit',
-      type: 'select',
-      whitelist: ['counts', 'alert_density', 'significance'],
-      border: true
+      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],

@@ -24,22 +24,6 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
-      key: 'weeks',
-      label: 'show data for the last',
-      type: 'select',
-      whitelist: [1, 2, 4, 8, 13, 26, 52],
-      noSort: true,
-      border: true
-    },
-    {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
-      border: true,
-      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
-    },
-    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -54,7 +38,22 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: false
+      border: true
+    },
+    {
+      key: 'weeks',
+      label: 'show data for the last',
+      type: 'select',
+      whitelist: [1, 2, 4, 8, 13, 26, 52],
+      noSort: true,
+      border: true
+    },
+    {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
     }
   ],
   dataType: 'fires',
