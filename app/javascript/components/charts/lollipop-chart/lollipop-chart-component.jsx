@@ -11,7 +11,8 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  CartesianGrid
+  CartesianGrid,
+  ReferenceLine
 } from 'recharts';
 
 import { formatNumber } from 'utils/format';
@@ -135,7 +136,7 @@ class LollipopChart extends PureComponent {
               >
                 <BarChart
                   data={data}
-                  margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
+                  margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                   layout="vertical"
                 >
                   <CartesianGrid horizontal={false} vertical={isDesktop} />
@@ -144,6 +145,7 @@ class LollipopChart extends PureComponent {
                     type="number"
                     domain={['dataMin', 'dataMax']}
                     tickCount={5}
+                    tickLine={false}
                     tickFormatter={num => formatNumber({ num })}
                     padding={{
                       left: isDesktop ? 220 : 20,
@@ -165,6 +167,7 @@ class LollipopChart extends PureComponent {
                     interval={0}
                     padding={{ top: 15 }}
                   />
+                  <ReferenceLine x={0} label="0" stroke="#333" />
                   <Bar
                     dataKey="value"
                     barSize={2}
