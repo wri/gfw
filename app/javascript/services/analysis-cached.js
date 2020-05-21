@@ -82,7 +82,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   if (type === 'country' || type === 'global') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
-    if (adm2) typeByLevel = 'adm2';
+    if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
 
@@ -541,7 +541,9 @@ export const fetchLatestWeekGladAlerts = params => {
         else locationQuery = `iso = '${adm0}'`;
       } else if (type === 'geostore') {
         locationQuery = `geostore__id = '${adm0}'`;
-      } else if (type === 'wdpa') { locationQuery = `wdpa_protected_area__id = '${adm0}'`; }
+      } else if (type === 'wdpa') {
+        locationQuery = `wdpa_protected_area__id = '${adm0}'`;
+      }
       const sql = `SELECT alert__date as date, SUM(alert__count) as count FROM DATA WHERE ${
         locationQuery
       } AND alert__date > '${alertDate}' GROUP BY date`;
@@ -729,11 +731,10 @@ export const fetchFiresWithin = params => {
 export const fetchMODISHistorical = params => {
   const { forestType, landCategory, ifl, download, frequency } = params || {};
   const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
-
   const url = `${getRequestUrl({
     ...params,
     dataset: 'modis',
-    datasetType: 'weekly'
+    datasetType: frequency
   })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'modis' }));

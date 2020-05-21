@@ -11,13 +11,6 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
-      border: true
-    },
-    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -33,18 +26,32 @@ export default {
       border: true
     },
     {
+      key: 'dataset',
+      label: 'fires dataset',
+      type: 'select'
+    },
+    {
       key: 'years',
       label: 'years',
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
       options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
-        .map(y => ({ label: `${y}`, value: y }))
+        .map(y => ({ label: `${y}`, value: y })),
+      border: true
+    },
+    {
+      key: 'confidence',
+      label: 'Confidence level',
+      type: 'select',
+      clearable: false,
+      border: true
     }
   ],
   refetchKeys: [
     'forestType',
     'landCategory',
+    'dataset',
     'endYear',
     'startYear',
     'confidence'
@@ -59,6 +66,7 @@ export default {
   metaKey: 'widget_fire_historical_location',
   sortOrder: {
     summary: 100,
+    fires: 5,
     forestChange: 100
   },
   settings: {
@@ -68,7 +76,7 @@ export default {
     dataset: 'modis'
   },
   sentence:
-    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} <b>MODIS</b> fire alerts.',
+    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
   whitelists: {
     adm0: [
       'AFG',
