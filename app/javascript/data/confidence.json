@@ -1,0 +1,14 @@
+[
+  {
+    "label": "All",
+    "value": "",
+    "metaKey": null,
+    "infoText": "Includes all detected fire alerts"
+  },
+  {
+    "label": "High",
+    "value": "h",
+    "metaKey": null,
+    "infoText": "Includes only alerts with greater than 80% confidence that the alerts are not a false positive"
+  }
+]

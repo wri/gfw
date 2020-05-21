@@ -54,8 +54,7 @@ export default {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false,
-      border: true
+      clearable: false
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
@@ -324,11 +323,7 @@ export default {
               compareYear: years.filter(y => y !== maxYear).map(y => ({
                 label: y,
                 value: y
-              })),
-              confidence: [
-                { label: 'All', value: '' },
-                { label: 'High', value: 'h' }
-              ]
+              }))
             }
           } || {}
         );
