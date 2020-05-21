@@ -82,7 +82,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 1
+    fires: 3
   },
   settings: {
     dataset: 'viirs',

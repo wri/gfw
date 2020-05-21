@@ -72,7 +72,7 @@ export default {
     }
   ],
   sortOrder: {
-    fires: 3
+    fires: 1
   },
   settings: {
     period: 'week',
