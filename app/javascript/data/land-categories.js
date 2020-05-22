@@ -91,7 +91,7 @@ export default [
     label: 'Indigenous and Community Lands',
     value: 'landmark',
     metaKey: 'landmark_icls_2020',
-    tableKey: 'is__gfw_land_right',
+    tableKey: 'is__landmark_land_right',
     global: true,
     datasets: [
       {
