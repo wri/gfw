@@ -1,6 +1,6 @@
-import range from 'lodash/range';
 import { all, spread } from 'axios';
 import { getLoss } from 'services/analysis-cached';
+import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -32,10 +32,6 @@ export default {
       label: 'years',
       endKey: 'endYear',
       startKey: 'startYear',
-      options: range(MIN_YEAR, MAX_YEAR, 1).map(y => ({
-        label: y,
-        value: y
-      })),
       type: 'range-select',
       border: true
     },
@@ -78,8 +74,8 @@ export default {
   },
   settings: {
     threshold: 30,
-    startYear: 2013,
-    endYear: 2019,
+    startYear: MIN_YEAR,
+    endYear: MAX_YEAR,
     extentYear: 2010
   },
   getData: params =>
@@ -103,7 +99,21 @@ export default {
             totalLoss
           };
         }
-        return data;
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
+        return {
+          ...data,
+          settings: {
+            startYear,
+            endYear,
+            yearsRange: range
+          },
+          options: {
+            years: range
+          }
+        };
       })
     ),
   getDataURL: params => [

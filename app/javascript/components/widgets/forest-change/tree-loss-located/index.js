@@ -2,7 +2,7 @@ import { getExtentGrouped, getLossGrouped } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
 import { all, spread } from 'axios';
 
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -139,7 +139,9 @@ export default {
         }
 
         const { startYear, endYear, range } =
-          (lossMappedData[0] && getYearsRange(lossMappedData[0].loss)) || {};
+          (lossMappedData[0] &&
+            getYearsRangeFromData(lossMappedData[0].loss)) ||
+          {};
 
         return {
           lossByRegion: lossMappedData,

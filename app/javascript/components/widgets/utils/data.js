@@ -191,7 +191,7 @@ export const yearTicksFormatter = (tick, startYear, endYear) => {
   return `'${year.format('YY')}`;
 };
 
-export const getYearsRange = (data, interval) => {
+export const getYearsRangeFromData = (data, interval) => {
   const startYearObj = minBy(data, 'year');
   const endYearObj = maxBy(data, 'year');
   const startYear = startYearObj && startYearObj.year;
@@ -205,4 +205,22 @@ export const getYearsRange = (data, interval) => {
       value: y
     }))
   };
+};
+
+export const getYearsRangeFromMinMax = (yearMin, yearMax, interval) => ({
+  startYear: yearMin,
+  endYear: yearMax,
+  range: range(yearMin, yearMax + 1, interval || 1).map(y => ({
+    label: y,
+    value: y
+  }))
+});
+
+export const zeroFillYears = (data, startYear, endYear, years, fillObj) => {
+  const zeroFilledData = [];
+  years.filter(year => year >= startYear && year <= endYear).forEach(year => {
+    const yearData = data.find(o => o.year === year) || { ...fillObj, year };
+    zeroFilledData.push(yearData);
+  });
+  return zeroFilledData;
 };
