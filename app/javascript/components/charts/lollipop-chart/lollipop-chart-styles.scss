@@ -1,29 +1,38 @@
 @import '~styles/settings.scss';
 
 .c-lollipop-chart {
+  position: relative;
   font-size: rem(12px);
   color: $slate;
-  max-width: 80%; // verified
+  max-width: 80%;
   margin: auto;
 
   .unit-legend {
+    position: relative;
+    z-index: 2;
     text-align: end;
+    background-color: white;
   }
 
   .custom-xAxis {
+    position: relative;
+    z-index: 2;
     height: 20px;
     width: 100%;
     border-bottom: 1px solid black;
+    background-color: white;
 
     .custom-xAxis-ticks {
-      margin-right: 16px;
+      height: 10px;
       position: relative;
     }
   }
 
-  .list {
-    padding: 10px;
+  .list-wrapper {
+    position: relative;
+    padding: 10px 0;
     max-height: rem(340px);
+    overflow-y: hidden;
 
     &.-scrollable {
       overflow-y: scroll;
@@ -32,6 +41,8 @@
   }
 
   .list-item {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -88,6 +99,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    text-align: right;
   }
 
   .lollipop {
@@ -97,7 +109,16 @@
     align-items: center;
   }
 
+  .space-right {
+    padding-right: 67px;
+  }
+
+  .space-left {
+    padding-left: 67px;
+  }
+
   .item-lollipop-bar {
+    position: relative;
     width: 60%;
     display: flex;
     align-items: center;
@@ -119,8 +140,22 @@
   }
 
   .item-value {
-    min-width: rem(35px);
+    position: absolute;
+    width: rem(35px);
     text-align: right;
     margin: 0 16px;
+  }
+
+  .cartesian-grid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    .grid-line {
+      bottom: 0;
+      top: 0;
+      width: 1px;
+      background-color: $border;
+    }
   }
 }

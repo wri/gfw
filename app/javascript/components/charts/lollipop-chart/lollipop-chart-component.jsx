@@ -49,6 +49,8 @@ class LollipopChart extends PureComponent {
 
     const allNegative = !data.some(item => item.value > 0);
     const allPositive = !data.some(item => item.value < 0);
+    const isScrollable = isDesktop =>
+      (isDesktop ? data.length > 9 : data.length > 4);
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -59,131 +61,199 @@ class LollipopChart extends PureComponent {
               .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
             <div className="custom-xAxis">
               <div
-                className="custom-xAxis-ticks"
                 style={{
-                  marginLeft: allPositive ? '40%' : 'calc(40% + 67px)',
-                  marginRight: allNegative ? '' : '67px'
+                  marginLeft: '40%'
                 }}
               >
-                {ticks.map(tick => (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      right:
-                        tick < 0 &&
-                        (allNegative
-                          ? `calc(${interpolate(tick)}% - 15px)`
-                          : `calc(${interpolate(tick - dataMax)}% - 15px)`),
-                      left:
-                        tick === 0
-                          ? `calc(${interpolate(dataMin)}% - 4px)`
-                          : tick > 0 &&
-                            `calc(${interpolate(tick - dataMin)}% - 15px)`
-                    }}
-                  >
-                    {tick}
-                  </div>
-                ))}
+                <div
+                  className="custom-xAxis-ticks"
+                  style={{
+                    ...((allNegative || (!allPositive && !allNegative)) && {
+                      marginLeft: '67px',
+                      marginRight: isScrollable(isDesktop) ? '15px' : 0
+                    }),
+                    ...((allPositive || (!allPositive && !allNegative)) && {
+                      marginRight: isScrollable(isDesktop) ? '82px' : '67px'
+                    })
+                  }}
+                >
+                  {ticks.map(tick => (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right:
+                          tick < 0 &&
+                          (allNegative
+                            ? `calc(${interpolate(tick)}% - 12px)`
+                            : `calc(${interpolate(tick - dataMax)}% - 12px)`),
+                        left:
+                          tick === 0
+                            ? `calc(${interpolate(dataMin)}% - 3px)`
+                            : tick > 0 &&
+                              `calc(${interpolate(tick - dataMin)}% - 8px)`
+                      }}
+                    >
+                      {tick}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-            <ul
-              className={cx(
-                'list',
-                isDesktop
-                  ? { '-scrollable': data.length > 9 }
-                  : { '-scrollable': data.length > 4 }
-              )}
+            <div
+              className={cx('list-wrapper', {
+                '-scrollable': isScrollable(isDesktop)
+              })}
             >
-              {data.length > 0 &&
-                data.map((item, index) => {
-                  const isNegative = item.value < 0;
-                  const linkContent = (
-                    <div className="list-item">
-                      <div className="item-label">
-                        <div className="item-bubble">
-                          {item.rank || index + 1}
+              <ul>
+                {data.length > 0 &&
+                  data.map((item, index) => {
+                    const isNegative = item.value < 0;
+                    const linkContent = (
+                      <div className="list-item">
+                        <div className="item-label">
+                          <div className="item-bubble">
+                            {item.rank || index + 1}
+                          </div>
+                          <div className="item-name">{item.label}</div>
                         </div>
-                        <div className="item-name">{item.label}</div>
-                      </div>
-                      <div
-                        className="item-lollipop-bar"
-                        style={
-                          isNegative ? { flexDirection: 'row-reverse' } : {}
-                        }
-                      >
                         <div
-                          className="item-spacer"
-                          style={{
-                            width: `${interpolate(
-                              isNegative ? dataMax : dataMin
-                            )}%`
-                          }}
-                        />
-                        <div
-                          className="lollipop"
-                          style={{
-                            width: `calc(${interpolate(
-                              Math.abs(item.value)
-                            )}% - 67px)`
-                            // 100% max - 35px (value text) - 32px text margin
-                          }}
-                        >
-                          <div
-                            className="item-bar"
-                            style={{
-                              backgroundColor: item.color
-                            }}
-                          />
-                          <div
-                            className="item-bubble -lollipop"
-                            style={{
-                              backgroundColor: item.color,
-                              transform: `translateX(${
-                                isNegative ? '-8px' : '8px'
-                              })`,
-                              [isNegative ? 'left' : 'right']: 0
-                            }}
-                          />
-                        </div>
-                        <div className="item-value">
-                          {formatNumber({
-                            num: item.value,
-                            unit: item.unit || formatUnit
+                          className={cx('item-lollipop-bar', {
+                            'space-left':
+                              allNegative || (!allPositive && !allNegative),
+                            'space-right':
+                              allPositive || (!allPositive && !allNegative)
                           })}
+                          style={
+                            isNegative ? { flexDirection: 'row-reverse' } : {}
+                          }
+                        >
+                          <div
+                            className="item-spacer"
+                            style={{
+                              width: `${interpolate(
+                                isNegative ? dataMax : dataMin
+                              )}%`
+                            }}
+                          />
+                          <div
+                            className="lollipop"
+                            style={{
+                              width: `calc(${interpolate(item.value)}%)`
+                              // 100% max - 35px (value text) - 32px text margin
+                            }}
+                          >
+                            <div
+                              className="item-bar"
+                              style={{
+                                backgroundColor: item.color
+                              }}
+                            />
+                            <div
+                              className="item-bubble -lollipop"
+                              style={{
+                                backgroundColor: item.color,
+                                transform: `translateX(${
+                                  isNegative ? '-8px' : '8px'
+                                })`,
+                                [isNegative ? 'left' : 'right']: 0
+                              }}
+                            />
+                            <div
+                              className="item-value"
+                              style={
+                                isNegative
+                                  ? {
+                                    left: '0',
+                                    transform: 'translateX(-67px)'
+                                  }
+                                  : {
+                                    right: '0',
+                                    transform: 'translateX(67px)'
+                                  }
+                              }
+                            >
+                              {formatNumber({
+                                num: item.value,
+                                unit: item.unit || formatUnit
+                              })}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                  return (
-                    <li key={`${item.label}-${item.id}`}>
-                      {item.path &&
-                        linksExt && (
-                        <a
-                          href={`https://${window.location.host}${item.path}`}
-                          target="_blank"
-                          rel="noopener nofollower"
-                        >
-                          {linkContent}
-                        </a>
-                      )}
-                      {item.path &&
-                        !linksExt && (
-                        <Link
-                          className={`${linksDisabled ? 'disabled' : ''}`}
-                          to={item.path}
-                        >
-                          {linkContent}
-                        </Link>
-                      )}
-                      {!item.path && (
-                        <div className={`${linksDisabled ? 'disabled' : ''}`}>
-                          {linkContent}
-                        </div>
-                      )}
-                    </li>
-                  );
-                })}
-            </ul>
+                    );
+                    return (
+                      <li key={`${item.label}-${item.id}`}>
+                        {item.path &&
+                          linksExt && (
+                          <a
+                            href={`https://${window.location.host}${
+                              item.path
+                            }`}
+                            target="_blank"
+                            rel="noopener nofollower"
+                          >
+                            {linkContent}
+                          </a>
+                        )}
+                        {item.path &&
+                          !linksExt && (
+                          <Link
+                            className={`${linksDisabled ? 'disabled' : ''}`}
+                            to={item.path}
+                          >
+                            {linkContent}
+                          </Link>
+                        )}
+                        {!item.path && (
+                          <div className={`${linksDisabled ? 'disabled' : ''}`}>
+                            {linkContent}
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+            <div
+              className="cartesian-grid"
+              style={{
+                ...(allNegative && {
+                  right: isScrollable(isDesktop) ? '15px' : 0,
+                  width: isScrollable(isDesktop)
+                    ? 'calc(60% - 82px)'
+                    : 'calc(60% - 67px)'
+                }),
+                ...(allPositive && {
+                  right: isScrollable(isDesktop) ? '82px' : '67px',
+                  width: isScrollable(isDesktop) ? 'calc(60% - 15px)' : '60%'
+                }),
+                ...(!allPositive &&
+                  !allNegative && {
+                  right: isScrollable(isDesktop) ? '82px' : '67px',
+                  width: isScrollable(isDesktop)
+                    ? 'calc(60% - 142px)'
+                    : 'calc(60% - 134px)'
+                })
+              }}
+            >
+              {ticks.map(tick => (
+                <div
+                  className="grid-line"
+                  style={{
+                    position: 'absolute',
+                    right:
+                      tick < 0 &&
+                      (allNegative
+                        ? `${interpolate(tick)}%`
+                        : `${interpolate(tick - dataMax)}%`),
+                    left:
+                      tick === 0
+                        ? `${interpolate(dataMin)}%`
+                        : tick > 0 && `${interpolate(tick - dataMin)}%`
+                  }}
+                />
+              ))}
+            </div>
           </div>
         )}
       </MediaQuery>
