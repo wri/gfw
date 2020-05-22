@@ -215,3 +215,12 @@ export const getYearsRangeFromMinMax = (yearMin, yearMax, interval) => ({
     value: y
   }))
 });
+
+export const zeroFillYears = (data, startYear, endYear, years, fillObj) => {
+  const zeroFilledData = [];
+  years.filter(year => year >= startYear && year <= endYear).forEach(year => {
+    const yearData = data.find(o => o.year === year) || { ...fillObj, year };
+    zeroFilledData.push(yearData);
+  });
+  return zeroFilledData;
+};

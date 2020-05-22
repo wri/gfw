@@ -3,7 +3,10 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import {
+  yearTicksFormatter,
+  zeroFillYears
+} from 'components/widgets/utils/data';
 
 // get list data
 const getLoss = state => state.data && state.data.loss;
@@ -39,22 +42,15 @@ const zeroFillData = createSelector(
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear, yearsRange } = settings;
-    const zeroFilledData = [];
-    yearsRange
-      .filter(d => d.value >= startYear && d.value <= endYear)
-      .forEach(y => {
-        const year = y.value || null;
-        const yearData = data.find(o => o.year === year) || {
-          year,
-          area: 0,
-          biomassLoss: 0,
-          bound1: null,
-          emissions: 0,
-          percentage: 0
-        };
-        zeroFilledData.push(yearData);
-      });
-    return zeroFilledData;
+    const years = yearsRange.map(yearObj => yearObj.value);
+    const fillObj = {
+      area: 0,
+      biomassLoss: 0,
+      bound1: null,
+      emissions: 0,
+      percentage: 0
+    };
+    return zeroFillYears(data, startYear, endYear, years, fillObj);
   }
 );
 
