@@ -47,7 +47,8 @@ class LollipopChart extends PureComponent {
     if (dataMin === 0) ticks = [0, dataMax * 0.33, dataMax * 0.66, dataMax];
     if (dataMax === 0) ticks = [dataMin, dataMin * 0.66, dataMin * 0.33, 0];
 
-    // const allNegative = !data.some(item => item.value > 0);
+    const allNegative = !data.some(item => item.value > 0);
+    const allPositive = !data.some(item => item.value < 0);
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -57,12 +58,27 @@ class LollipopChart extends PureComponent {
               .charAt(0)
               .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
             <div className="custom-xAxis">
-              <div className="custom-xAxis-ticks">
+              <div
+                className="custom-xAxis-ticks"
+                style={{
+                  marginLeft: allPositive ? '40%' : 'calc(40% + 67px)',
+                  marginRight: allNegative ? '' : '67px'
+                }}
+              >
                 {ticks.map(tick => (
                   <div
                     style={{
                       position: 'absolute',
-                      right: `${interpolate(tick)}%`
+                      right:
+                        tick < 0 &&
+                        (allNegative
+                          ? `calc(${interpolate(tick)}% - 15px)`
+                          : `calc(${interpolate(tick - dataMax)}% - 15px)`),
+                      left:
+                        tick === 0
+                          ? `calc(${interpolate(dataMin)}% - 4px)`
+                          : tick > 0 &&
+                            `calc(${interpolate(tick - dataMin)}% - 15px)`
                     }}
                   >
                     {tick}
@@ -99,7 +115,7 @@ class LollipopChart extends PureComponent {
                           className="item-spacer"
                           style={{
                             width: `${interpolate(
-                              Math.abs(isNegative ? dataMax : dataMin)
+                              isNegative ? dataMax : dataMin
                             )}%`
                           }}
                         />

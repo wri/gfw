@@ -16,9 +16,8 @@
     border-bottom: 1px solid black;
 
     .custom-xAxis-ticks {
-      margin-left: calc(40% + #{rem(67px)});
+      margin-right: 16px;
       position: relative;
-      // display: flex;
     }
   }
 
