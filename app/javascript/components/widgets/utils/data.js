@@ -191,7 +191,7 @@ export const yearTicksFormatter = (tick, startYear, endYear) => {
   return `'${year.format('YY')}`;
 };
 
-export const getYearsRange = (data, interval) => {
+export const getYearsRangeFromData = (data, interval) => {
   const startYearObj = minBy(data, 'year');
   const endYearObj = maxBy(data, 'year');
   const startYear = startYearObj && startYearObj.year;
