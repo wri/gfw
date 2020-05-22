@@ -1,10 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import minBy from 'lodash/minBy';
-import maxBy from 'lodash/maxBy';
 import { formatNumber } from 'utils/format';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import {
+  yearTicksFormatter,
+  zeroFillYears
+} from 'components/widgets/utils/data';
 
 // get list data
 const getLoss = state => state.data && state.data.loss;
@@ -20,11 +21,21 @@ const getTitle = state => state.title;
 const parseData = createSelector(
   [getPrimaryLoss, getLoss, getExtent, getSettings],
   (data, allLoss, extent, settings) => {
-    if (!extent || !data || isEmpty(allLoss) || !allLoss || isEmpty(data)) {
+    if (!extent || !data || isEmpty(data) || isEmpty(allLoss) || !allLoss) {
       return null;
     }
-    const { startYear, endYear } = settings;
-    const initalLoss = data.filter(d => d.year === 2001)[0].area || 0;
+    const { startYear, endYear, yearsRange } = settings;
+    const years = yearsRange.map(yearObj => yearObj.value);
+    const fillObj = {
+      area: 0,
+      biomassLoss: 0,
+      bound1: null,
+      emissions: 0,
+      percentage: 0
+    };
+    const initalLossArr = data.find(d => d.year === 2001);
+    const initalLoss =
+      initalLossArr && initalLossArr.length > 0 ? initalLossArr[0].area : 0;
     const totalLoss =
       sumBy(
         allLoss.filter(d => d.year >= startYear && d.year <= endYear),
@@ -32,25 +43,26 @@ const parseData = createSelector(
       ) || 0;
     let initalExtent = extent - initalLoss || 0;
 
-    const minYear = minBy(data, 'year').year;
-    const maxYear = maxBy(data, 'year').year;
-
-    const parsedData = data
-      .filter(d => d.year >= minYear && d.year <= maxYear)
-      .map(d => {
-        const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
-        const yearData = {
-          ...d,
-          totalLoss,
-          area: d.area || 0,
-          emissions: d.emissions || 0,
-          extentRemaining: 100 * initalExtent / extent,
-          percentageLoss:
-            percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
-        };
-        initalExtent -= d.area;
-        return yearData;
-      });
+    const zeroFilledData = zeroFillYears(
+      data,
+      startYear,
+      endYear,
+      years,
+      fillObj
+    );
+    const parsedData = zeroFilledData.map(d => {
+      const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
+      const yearData = {
+        ...d,
+        totalLoss,
+        area: d.area || 0,
+        emissions: d.emissions || 0,
+        extentRemaining: 100 * initalExtent / extent,
+        percentageLoss: percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
+      };
+      initalExtent -= d.area;
+      return yearData;
+    });
     return parsedData.filter(d => d.year >= startYear && d.year <= endYear);
   }
 );
