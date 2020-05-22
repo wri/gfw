@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
-import { getYearsRangeFromData } from 'components/widgets/utils/data';
+import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -17,6 +17,7 @@ import { getExtent, getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2001;
 const MAX_YEAR = 2019;
 
 export default {
@@ -106,7 +107,10 @@ export default {
           };
         }
 
-        const { startYear, endYear, range } = getYearsRangeFromData(data.loss);
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
 
         return {
           ...data,
@@ -115,7 +119,7 @@ export default {
             endYear
           },
           options: {
-            years: range.filter(y => y.value <= MAX_YEAR)
+            years: range
           }
         };
       })
