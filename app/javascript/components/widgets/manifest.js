@@ -13,7 +13,7 @@ import treeCoverGain from 'components/widgets/forest-change/tree-cover-gain';
 import treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
 import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
-import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
+// import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import fires from 'components/widgets/forest-change/fires';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 import glads from 'components/widgets/forest-change/glads';
@@ -65,7 +65,7 @@ export default {
   treeGainLocated,
   treeLossLocated,
   treeLossPlantations,
-  treeLossTsc,
+  // treeLossTsc,
   treeCoverGainSimple,
   // land cover
   treeCover,
