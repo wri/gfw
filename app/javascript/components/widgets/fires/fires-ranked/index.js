@@ -14,6 +14,7 @@ export default {
     global: 'Global regions with the most fire Alerts'
   },
   categories: ['fires'],
+  large: true,
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [

@@ -10,11 +10,26 @@
     text-align: end;
   }
 
+  .custom-xAxis {
+    height: 20px;
+    width: 100%;
+    border-bottom: 1px solid black;
+
+    .custom-xAxis-ticks {
+      margin-left: calc(40% + #{rem(67px)});
+      position: relative;
+      // display: flex;
+    }
+  }
+
   .list {
     padding: 10px;
     max-height: rem(340px);
-    overflow-y: scroll;
-    overflow-x: hidden;
+
+    &.-scrollable {
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
   }
 
   .list-item {
@@ -69,7 +84,7 @@
 
   .item-label {
     width: 40%;
-    padding-right: rem(35px);
+    padding-right: rem(15px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
