@@ -56,7 +56,7 @@ export default [
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
     tableKey: 'is__key_biodiversity_area',
-    newTableKey: 'is__birdlife_key_biodiversity_area',
+    newTableKey: 'is__birdlife_alliance_for_zero_extinction_site',
     global: true
   },
   {
