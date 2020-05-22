@@ -34,6 +34,30 @@ const parseData = createSelector(
   }
 );
 
+const zeroFillData = createSelector(
+  [parseData, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
+    const { startYear, endYear, yearsRange } = settings;
+    const zeroFilledData = [];
+    yearsRange
+      .filter(d => d.value >= startYear && d.value <= endYear)
+      .forEach(y => {
+        const year = y.value || null;
+        const yearData = data.find(o => o.year === year) || {
+          year,
+          area: 0,
+          biomassLoss: 0,
+          bound1: null,
+          emissions: 0,
+          percentage: 0
+        };
+        zeroFilledData.push(yearData);
+      });
+    return zeroFilledData;
+  }
+);
+
 const parseConfig = createSelector([getColors], colors => ({
   height: 250,
   xKey: 'year',
@@ -70,7 +94,7 @@ const parseConfig = createSelector([getColors], colors => ({
 
 const parseSentence = createSelector(
   [
-    parseData,
+    zeroFillData,
     getExtent,
     getSettings,
     getIsTropical,
@@ -121,7 +145,7 @@ const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  data: zeroFillData,
   config: parseConfig,
   sentence: parseSentence
 });
