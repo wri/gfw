@@ -206,3 +206,12 @@ export const getYearsRange = (data, interval) => {
     }))
   };
 };
+
+export const getYearsRangeFromMinMax = (yearMin, yearMax, interval) => ({
+  startYear: yearMin,
+  endYear: yearMax,
+  range: range(yearMin, yearMax + 1, interval || 1).map(y => ({
+    label: y,
+    value: y
+  }))
+});

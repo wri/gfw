@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromData } from 'components/widgets/utils/data';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -42,7 +42,7 @@ export const getDataAPI = params =>
       }));
     const extent = data.attributes.treeExtent;
 
-    const { startYear, endYear, range } = getYearsRange(loss);
+    const { startYear, endYear, range } = getYearsRangeFromData(loss);
 
     return {
       loss,
@@ -173,7 +173,7 @@ export default {
             };
           }
 
-          const { startYear, endYear, range } = getYearsRange(
+          const { startYear, endYear, range } = getYearsRangeFromData(
             data.loss.filter(d => d.year > 2001)
           );
           return {

@@ -12,7 +12,7 @@ import {
   BIOMASS_LOSS
 } from 'data/layers';
 
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -45,7 +45,7 @@ const getDataFromAPI = params =>
       loss = data.years;
     }
 
-    const { startYear, endYear, range } = getYearsRange(loss);
+    const { startYear, endYear, range } = getYearsRangeFromData(loss);
 
     return {
       loss,
@@ -124,7 +124,7 @@ export default {
     if (shouldQueryPrecomputedTables(params)) {
       return getLoss(params).then(response => {
         const loss = response.data.data;
-        const { startYear, endYear, range } = getYearsRange(loss);
+        const { startYear, endYear, range } = getYearsRangeFromData(loss);
 
         return {
           loss,

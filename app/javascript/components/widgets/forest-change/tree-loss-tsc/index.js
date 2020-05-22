@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -106,7 +106,7 @@ export default {
           };
         }
 
-        const { startYear, endYear, range } = getYearsRange(data.loss);
+        const { startYear, endYear, range } = getYearsRangeFromData(data.loss);
 
         return {
           ...data,
