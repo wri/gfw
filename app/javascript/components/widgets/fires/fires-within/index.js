@@ -78,9 +78,7 @@ export default {
     period: 'week',
     weeks: 13,
     dataset: 'viirs',
-    confidence: 'h',
-    landCategory: '',
-    forestType: 'ifl'
+    confidence: 'h'
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
