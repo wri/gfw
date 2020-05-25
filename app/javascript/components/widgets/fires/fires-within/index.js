@@ -22,7 +22,6 @@ export default {
   categories: ['fires'],
   types: ['global', 'country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
-  potato: true,
   settingsConfig: [
     {
       key: 'forestType',
