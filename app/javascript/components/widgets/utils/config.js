@@ -303,9 +303,8 @@ export const getStatements = ({
           )
           : null)
     );
-
   const statements = compact([
-    extentYear
+    extentYear && dataType !== 'fires'
       ? translateText('{extentYear} tree cover extent', { extentYear })
       : null,
     threshold || threshold === 0
