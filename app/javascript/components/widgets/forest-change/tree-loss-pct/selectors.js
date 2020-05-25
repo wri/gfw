@@ -161,10 +161,11 @@ const parseSentence = createSelector(
     const percentageLoss =
       (totalLoss && extent && totalLossPrimary / totalLoss * 100) || 0;
 
-    const initialExtent =
-      data.filter(d => d.year === startYear)[0].extentRemaining || 0;
-    const finalExtent =
-      data.filter(d => d.year === endYear)[0].extentRemaining || 0;
+    const initialExtentData = data.filter(d => d.year === startYear);
+    const initialExtent = initialExtentData && initialExtentData[0] && initialExtentData[0].extentRemaining || 0;
+
+    const finalExtentData = data.filter(d => d.year === endYear);
+    const finalExtent = finalExtentData && finalExtentData[0] && finalExtentData[0].extentRemaining || 0;
 
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
