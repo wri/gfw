@@ -34,7 +34,7 @@ class TimelineContainer extends PureComponent {
     }
 
     const diffInterval = moment(newRange[2]).diff(moment(newRange[0]), rangeInterval);
-    if (diffInterval > maxRange || diffInterval < 0) {
+    if (!diffInterval || diffInterval > maxRange || diffInterval < 0) {
       if (position) {
         newRange[0] = date.subtract(maxRange, rangeInterval).format('YYYY-MM-DD');
       } else {
