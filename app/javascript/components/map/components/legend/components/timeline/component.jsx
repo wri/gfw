@@ -20,7 +20,8 @@ class Timeline extends Component {
       handleOnDateChange,
       dateFormat,
       interval,
-      activeLayer
+      activeLayer,
+      maxRange
     } = this.props;
 
     return (
@@ -37,9 +38,9 @@ class Timeline extends Component {
               settings={{
                 numberOfMonths: 1,
                 minDate,
-                maxDate: trimEndDate,
+                maxDate: maxRange ? maxDate : trimEndDate,
                 isOutsideRange: d =>
-                  d.isAfter(moment(trimEndDate)) ||
+                  d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
                     d.isBefore(moment(minDate)),
                 hideKeyboardShortcutsPanel: true,
                 noBorder: true,
@@ -54,10 +55,10 @@ class Timeline extends Component {
               handleOnDateChange={date => handleOnDateChange(date, 2)}
               settings={{
                 numberOfMonths: 1,
-                minDate: startDate,
+                minDate: maxRange ? minDate : startDate,
                 maxDate,
                 isOutsideRange: d =>
-                  d.isAfter(moment(maxDate)) || d.isBefore(moment(startDate)),
+                  d.isAfter(moment(maxDate)) || d.isBefore(moment(maxRange ? minDate : startDate)),
                 hideKeyboardShortcutsPanel: true,
                 noBorder: true,
                 readOnly: true
@@ -72,7 +73,13 @@ class Timeline extends Component {
               ...activeLayer,
               timelineParams: {
                 ...activeLayer.timelineParams,
-                marks: this.props.marks,
+                ...maxRange && {
+                  minDate: activeLayer.timelineParams.startDate,
+                  maxDate: activeLayer.timelineParams.endDate
+                },
+                ...!maxRange && {
+                  marks: this.props.marks
+                },
                 handleStyle: {
                   backgroundColor: 'white',
                   borderRadius: '2px',
@@ -117,7 +124,8 @@ Timeline.propTypes = {
   handleOnDateChange: PropTypes.func,
   dateFormat: PropTypes.string,
   interval: PropTypes.string,
-  activeLayer: PropTypes.object
+  activeLayer: PropTypes.object,
+  maxRange: PropTypes.number
 };
 
 export default Timeline;
