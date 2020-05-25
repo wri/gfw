@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -16,6 +16,9 @@ import {
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
+
+const MAX_YEAR = 2019;
+const MIN_YEAR = 2001;
 
 const getGlobalLocation = params => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -42,7 +45,10 @@ export const getDataAPI = params =>
       }));
     const extent = data.attributes.treeExtent;
 
-    const { startYear, endYear, range } = getYearsRange(loss);
+    const { startYear, endYear, range } = getYearsRangeFromMinMax(
+      MIN_YEAR,
+      MAX_YEAR
+    );
 
     return {
       loss,
@@ -163,17 +169,16 @@ export default {
             };
           }
 
-          const { startYear, endYear, range } = getYearsRange(data.loss);
-
+          const { startYear, endYear, range } = getYearsRangeFromMinMax(
+            MIN_YEAR,
+            MAX_YEAR
+          );
           return {
             ...data,
             settings: {
-              forestType:
-                params && params.adm0 && params.adm0 === 'IDN'
-                  ? 'primary_forest'
-                  : null,
               startYear,
-              endYear
+              endYear,
+              yearsRange: range
             },
             options: {
               years: range
