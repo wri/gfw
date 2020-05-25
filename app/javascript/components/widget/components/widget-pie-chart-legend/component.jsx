@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 
@@ -11,11 +11,14 @@ import './styles';
 class WidgetPieChart extends PureComponent {
   render() {
     const { data, settings, simple, toggleSettingsMenu } = this.props;
+    const noIntersectionSelected =
+      !settings.forestType && !settings.landCategory;
 
     return (
-      <Fragment>
+      <div className="c-pie-chart-legend-widget">
         {settings &&
-          settings.showLegendSettingsBtn &&
+          settings.showSettingsBtn &&
+          noIntersectionSelected &&
           toggleSettingsMenu && (
           <Button
             theme="theme-button-small theme-button-light"
@@ -25,7 +28,7 @@ class WidgetPieChart extends PureComponent {
               Select an intersection
           </Button>
         )}
-        <div className="c-pie-chart-legend-widget">
+        <div className="pie-and-legend">
           <PieChartLegend
             className="cover-legend"
             data={data}
@@ -52,7 +55,7 @@ class WidgetPieChart extends PureComponent {
             simple={simple}
           />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

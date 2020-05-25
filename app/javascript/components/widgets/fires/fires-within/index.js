@@ -82,7 +82,7 @@ export default {
     confidence: 'h',
     landCategory: '',
     forestType: 'ifl',
-    showLegendSettingsBtn: true
+    showSettingsBtn: true
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
