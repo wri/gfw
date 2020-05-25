@@ -85,7 +85,7 @@ class CustomComposedChart extends PureComponent {
     const maxYValue = this.findMaxValue(data, config);
     let rightMargin = 0;
     if (isVertical) rightMargin = 10;
-    if (rightYAxis) rightMargin = 70;
+    if (!simple && rightYAxis) rightMargin = 70;
 
     return (
       <div
