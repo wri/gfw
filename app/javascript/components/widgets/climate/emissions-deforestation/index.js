@@ -56,7 +56,8 @@ const getDataFromAPI = params =>
       loss,
       settings: {
         startYear,
-        endYear
+        endYear,
+        yearsRange: range
       },
       options: {
         years: range

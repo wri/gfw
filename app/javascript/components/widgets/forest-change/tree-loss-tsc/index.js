@@ -116,7 +116,8 @@ export default {
           ...data,
           settings: {
             startYear,
-            endYear
+            endYear,
+            yearsRange: range
           },
           options: {
             years: range

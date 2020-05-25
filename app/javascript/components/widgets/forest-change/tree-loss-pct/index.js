@@ -26,44 +26,6 @@ const getGlobalLocation = params => ({
   adm2: params.type === 'global' ? null : params.adm2
 });
 
-export const getDataAPI = params =>
-  fetchAnalysisEndpoint({
-    ...params,
-    name: 'umd',
-    params,
-    slug: 'umd-loss-gain',
-    version: 'v1',
-    aggregate: false
-  }).then(response => {
-    const { data } = (response && response.data) || {};
-    const lossData = data && data.attributes.loss;
-    const loss =
-      lossData &&
-      Object.keys(lossData).map(d => ({
-        area: lossData[d],
-        year: parseInt(d, 10)
-      }));
-    const extent = data.attributes.treeExtent;
-
-    const { startYear, endYear, range } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
-
-    return {
-      loss,
-      extent,
-      forestType: 'primary_forest',
-      settings: {
-        startYear,
-        endYear
-      },
-      options: {
-        years: range
-      }
-    };
-  });
-
 export default {
   widget: 'treeLossPct',
   title: {
@@ -135,69 +97,64 @@ export default {
     noLossWithIndicator:
       'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b> in {indicator}.'
   },
-  // whitelists: {
-  //   indicators: ['primary_forest'],
-  //   checkStatus: true
-  // },
+  whitelists: {
+    indicators: ['primary_forest'],
+    checkStatus: true
+  },
   settings: {
     threshold: 30,
     extentYear: 2000
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
+    const globalLocation = {
+      adm0: type === 'global' ? null : adm0,
+      adm1: type === 'global' ? null : adm1,
+      adm2: type === 'global' ? null : adm2
+    };
 
-    if (shouldQueryPrecomputedTables(params)) {
-      const globalLocation = {
-        adm0: type === 'global' ? null : adm0,
-        adm1: type === 'global' ? null : adm1,
-        adm2: type === 'global' ? null : adm2
-      };
-
-      return all([
-        getLoss({ ...params, ...globalLocation }),
-        getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
-        getExtent({
-          ...params,
-          ...globalLocation,
-          forestType: 'primary_forest'
-        })
-      ]).then(
-        spread((loss, primaryLoss, extent) => {
-          let data = {};
-          if (
-            primaryLoss &&
-            primaryLoss.data &&
-            loss &&
-            loss.data &&
-            extent &&
-            extent.data
-          ) {
-            data = {
-              loss: loss.data.data,
-              primaryLoss: primaryLoss.data.data,
-              extent: (loss.data.data && extent.data.data[0].extent) || 0
-            };
-          }
-          const { startYear, endYear, range } = getYearsRangeFromMinMax(
-            MIN_YEAR,
-            MAX_YEAR
-          );
-          return {
-            ...data,
-            settings: {
-              startYear,
-              endYear,
-              yearsRange: range
-            },
-            options: {
-              years: range
-            }
+    return all([
+      getLoss({ ...params, ...globalLocation }),
+      getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
+      getExtent({
+        ...params,
+        ...globalLocation,
+        forestType: 'primary_forest'
+      })
+    ]).then(
+      spread((loss, primaryLoss, extent) => {
+        let data = {};
+        if (
+          primaryLoss &&
+          primaryLoss.data &&
+          loss &&
+          loss.data &&
+          extent &&
+          extent.data
+        ) {
+          data = {
+            loss: loss.data.data,
+            primaryLoss: primaryLoss.data.data,
+            extent: (loss.data.data && extent.data.data[0].extent) || 0
           };
-        })
-      );
-    }
-
-    return getDataAPI(params);
+        }
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
+        return {
+          ...data,
+          settings: {
+            startYear,
+            endYear,
+            yearsRange: range
+          },
+          options: {
+            years: range
+          }
+        };
+      })
+    );
   },
   getDataURL: params => {
     const globalLocation = getGlobalLocation(params);

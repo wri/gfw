@@ -55,10 +55,11 @@ export const getDataAPI = params =>
       extent,
       settings: {
         startYear,
-        endYear
+        endYear,
+        yearsRange: range
       },
       options: {
-        years: range
+        yearsRange: range
       }
     };
   });

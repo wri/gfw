@@ -137,7 +137,8 @@ export default {
           extent: extentResponse.data.data,
           settings: {
             startYear,
-            endYear
+            endYear,
+            yearsRange: range
           },
           options: {
             years: range
