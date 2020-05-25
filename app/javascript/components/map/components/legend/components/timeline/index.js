@@ -37,9 +37,11 @@ class TimelineContainer extends PureComponent {
 
     if (diffInterval > maxRange) {
       if (position) {
-        newRange[0] = date.subtract(maxRange, interval);
+        newRange[0] = date.subtract(maxRange, interval).format('YYYY-MM-DD');
       } else {
-        newRange[2] = date.add(maxRange, interval);
+        const newDate = date.add(maxRange, interval).format('YYYY-MM-DD');
+        newRange[2] = newDate;
+        newRange[1] = newDate;
       }
     }
     handleChange(newRange, this.props.activeLayer);
