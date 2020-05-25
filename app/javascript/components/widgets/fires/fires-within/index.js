@@ -29,7 +29,6 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All categories',
-      // TODO: default option -> Primary Forests if available, IFL otherwise.
       clearable: true,
       border: false
     },
@@ -81,7 +80,7 @@ export default {
     dataset: 'viirs',
     confidence: 'h',
     landCategory: '',
-    forestType: 'ifl',
+    forestType: '',
     showSettingsBtn: true
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],

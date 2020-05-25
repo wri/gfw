@@ -25,7 +25,7 @@ class WidgetPieChart extends PureComponent {
             className="pie-contextual-settings-btn"
             onClick={() => toggleSettingsMenu()}
           >
-              Select an intersection
+              + Select an intersection
           </Button>
         )}
         <div className="pie-and-legend">
