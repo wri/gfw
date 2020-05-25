@@ -30,8 +30,9 @@ const events = {
 export const handlePageTrack = () => {
   initGA();
   if (gaInitialized) {
-    ReactGA.set({ page: window.location.pathname });
-    ReactGA.pageview(window.location.pathname);
+    const url = `${window.location.pathname}${window.location.search}`;
+    ReactGA.set({ page: url });
+    ReactGA.pageview(url);
   }
 };
 

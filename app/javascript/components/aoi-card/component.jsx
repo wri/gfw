@@ -5,6 +5,7 @@ import cx from 'classnames';
 import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
 import { getLatestAlerts } from 'services/alerts';
+import { translateText } from 'utils/transifex';
 
 import applicationsMeta from 'data/applications.json';
 
@@ -29,12 +30,13 @@ class AoICard extends PureComponent {
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
-    onFetchAlerts: PropTypes.func
+    onFetchAlerts: PropTypes.func,
+    status: PropTypes.string
   };
 
   state = {
     alerts: {},
-    loading: true,
+    loading: false,
     error: false
   };
 
@@ -42,9 +44,9 @@ class AoICard extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    const { simple } = this.props;
+    const { simple, status } = this.props;
 
-    if (!simple) {
+    if (!simple && status !== 'pending') {
       this.getAlerts();
     }
   }
@@ -107,7 +109,8 @@ class AoICard extends PureComponent {
       deforestationAlerts,
       fireAlerts,
       monthlySummary,
-      location
+      location,
+      status
     } = this.props;
     const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
@@ -128,6 +131,7 @@ class AoICard extends PureComponent {
 
     const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
     const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
+    const isPending = status === 'pending';
 
     let subscriptionMessage = 'subscribed to';
     if (subscribedToAll) {
@@ -142,11 +146,12 @@ class AoICard extends PureComponent {
       });
     }
     const applicationName = applicationsMeta[application];
-    const createdMetaTemplate = `Created ${moment(createdAt).format(
-      'MMM DD YYYY'
-    )}${
+    const createdMetaTemplate = translateText(`Created {date} ${
       application !== 'gfw' && applicationName ? ` on ${applicationName}` : ''
-    }`;
+    }`);
+    const createdMeta = createdMetaTemplate.replace('{date}', moment(createdAt).format(
+      'MMM DD YYYY'
+    ));
 
     return (
       <div className={cx('c-aoi-card', { simple })}>
@@ -161,7 +166,7 @@ class AoICard extends PureComponent {
           <Dotdotdot clamp={2} className="title">
             {name}
           </Dotdotdot>
-          {!simple && <span className="created">{createdMetaTemplate}</span>}
+          {!simple && <span className="created notranslate">{createdMeta}</span>}
           <div className="meta">
             {tags &&
               tags.length > 0 && (
@@ -177,28 +182,31 @@ class AoICard extends PureComponent {
               </div>
             )}
           </div>
-          {!simple && (
+          {!simple &&
+            !isPending && (
             <div className="activity">
-              <span className="activity-intro">Last weeks activity:</span>
+              <span className="activity-intro">
+                {"Latest week's alerts:"}
+              </span>
               {!loading &&
-                dataError && (
+                  dataError && (
                 <span className="data-error-msg">
-                    Sorry, we had trouble finding your alerts!
+                      Sorry, we had trouble finding your alerts!
                 </span>
               )}
               {!dataError && (
                 <Fragment>
                   <span className="glad">
                     {!loading ? (
-                      <Fragment>
+                      <div>
                         <span className="activity-data notranslate">
                           {formatNumber({
                             num: glads || 0,
                             unit: 'counts'
                           })}
                         </span>{' '}
-                        GLAD alerts
-                      </Fragment>
+                        <p>GLAD alerts</p>
+                      </div>
                     ) : (
                       <ContentLoader width="100" height="15">
                         <rect
@@ -221,7 +229,7 @@ class AoICard extends PureComponent {
                             unit: 'counts'
                           })}
                         </span>{' '}
-                        VIIRS alerts
+                        <p>VIIRS alerts</p>
                       </Fragment>
                     ) : (
                       <ContentLoader width="100" height="15">

@@ -27,7 +27,7 @@ class Search extends Component {
     e.preventDefault();
     const { onSubmit } = this.props;
     if (onSubmit && e.keyCode === 13) {
-      onSubmit(e);
+      onSubmit(e.target.value);
     }
   };
 
@@ -52,7 +52,7 @@ class Search extends Component {
           onKeyUp={this.handleKeyUp}
           disabled={disabled}
         />
-        <button onClick={onSubmit}>
+        <button onClick={() => onSubmit(this.state.search)}>
           <Icon icon={searchIcon} className="icon-search" />
         </button>
         {search && (
