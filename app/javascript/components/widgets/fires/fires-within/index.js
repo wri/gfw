@@ -22,6 +22,7 @@ export default {
   categories: ['fires'],
   types: ['global', 'country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
+  potato: true,
   settingsConfig: [
     {
       key: 'forestType',
@@ -80,7 +81,8 @@ export default {
     dataset: 'viirs',
     confidence: 'h',
     landCategory: '',
-    forestType: 'ifl'
+    forestType: 'ifl',
+    showLegendSettingsBtn: true
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {

@@ -14,7 +14,7 @@ class WidgetComposedChart extends Component {
     data: PropTypes.array,
     config: PropTypes.object,
     settings: PropTypes.object,
-    settingsConfig: PropTypes.object,
+    settingsConfig: PropTypes.array,
     preventRenderKeys: PropTypes.array,
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
