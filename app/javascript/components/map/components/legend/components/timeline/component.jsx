@@ -21,7 +21,9 @@ class Timeline extends Component {
       dateFormat,
       interval,
       activeLayer,
-      maxRange
+      maxRange,
+      startDateAbsolute,
+      endDateAbsolute
     } = this.props;
 
     return (
@@ -33,8 +35,8 @@ class Timeline extends Component {
             <Datepicker
               className="datepicker start-date"
               theme="datepicker-small"
-              date={moment(startDate)}
-              handleOnDateChange={date => handleOnDateChange(date, 0)}
+              date={moment(maxRange ? startDateAbsolute : startDate)}
+              handleOnDateChange={date => handleOnDateChange(date, 0, true)}
               settings={{
                 numberOfMonths: 1,
                 minDate,
@@ -51,8 +53,8 @@ class Timeline extends Component {
             <Datepicker
               className="datepicker"
               theme="datepicker-small"
-              date={moment(trimEndDate)}
-              handleOnDateChange={date => handleOnDateChange(date, 2)}
+              date={moment(maxRange ? endDateAbsolute : trimEndDate)}
+              handleOnDateChange={date => handleOnDateChange(date, 2, true)}
               settings={{
                 numberOfMonths: 1,
                 minDate: maxRange ? minDate : startDate,
@@ -74,8 +76,8 @@ class Timeline extends Component {
               timelineParams: {
                 ...activeLayer.timelineParams,
                 ...maxRange && {
-                  minDate: activeLayer.timelineParams.startDate,
-                  maxDate: activeLayer.timelineParams.endDate
+                  minDate: activeLayer.timelineParams.startDateAbsolute,
+                  maxDate: activeLayer.timelineParams.endDateAbsolute
                 },
                 ...!maxRange && {
                   marks: this.props.marks
@@ -121,6 +123,8 @@ Timeline.propTypes = {
   maxDate: PropTypes.string,
   startDate: PropTypes.string,
   trimEndDate: PropTypes.string,
+  startDateAbsolute: PropTypes.string,
+  endDateAbsolute: PropTypes.string,
   handleOnDateChange: PropTypes.func,
   dateFormat: PropTypes.string,
   interval: PropTypes.string,

@@ -25,26 +25,25 @@ const mapStateToProps = (
 };
 
 class TimelineContainer extends PureComponent {
-  handleOnDateChange = (date, position) => {
-    const { startDate, endDate, trimEndDate, handleChange, interval, maxRange } = this.props;
-    const newRange = [startDate, endDate, trimEndDate];
+  handleOnDateChange = (date, position, absolute) => {
+    const { startDate, endDate, trimEndDate, startDateAbsolute, endDateAbsolute, handleChange, rangeInterval, maxRange } = this.props;
+    const newRange = absolute ? [startDateAbsolute, endDateAbsolute, endDateAbsolute] : [startDate, endDate, trimEndDate];
     newRange[position] = date.format('YYYY-MM-DD');
     if (position) {
       newRange[position - 1] = date.format('YYYY-MM-DD');
     }
 
-    const diffInterval = Math.abs(moment(newRange[2]).diff(moment(newRange[0]), interval));
-
-    if (diffInterval > maxRange) {
+    const diffInterval = moment(newRange[2]).diff(moment(newRange[0]), rangeInterval);
+    if (diffInterval > maxRange || diffInterval < 0) {
       if (position) {
-        newRange[0] = date.subtract(maxRange, interval).format('YYYY-MM-DD');
+        newRange[0] = date.subtract(maxRange, rangeInterval).format('YYYY-MM-DD');
       } else {
-        const newDate = date.add(maxRange, interval).format('YYYY-MM-DD');
+        const newDate = date.add(maxRange, rangeInterval).format('YYYY-MM-DD');
         newRange[2] = newDate;
         newRange[1] = newDate;
       }
     }
-    handleChange(newRange, this.props.activeLayer);
+    handleChange(newRange, this.props.activeLayer, absolute);
 
     track('legendTimelineChange', {
       action: `User changes date range for ${this.props.activeLayer.id}`,
@@ -67,8 +66,10 @@ TimelineContainer.propTypes = {
   trimEndDate: PropTypes.string,
   handleChange: PropTypes.func,
   activeLayer: PropTypes.object,
-  interval: PropTypes.string,
-  maxRange: PropTypes.number
+  rangeInterval: PropTypes.string,
+  maxRange: PropTypes.number,
+  startDateAbsolute: PropTypes.string,
+  endDateAbsolute: PropTypes.string
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);
