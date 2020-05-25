@@ -25,7 +25,7 @@ const parseData = createSelector(
       return null;
     }
     const { startYear, endYear, yearsRange } = settings;
-    const years = yearsRange.map(yearObj => yearObj.value);
+    const years = yearsRange && yearsRange.map(yearObj => yearObj.value);
     const fillObj = {
       area: 0,
       biomassLoss: 0,
