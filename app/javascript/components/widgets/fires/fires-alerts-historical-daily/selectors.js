@@ -16,12 +16,11 @@ const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
 
 export const getData = createSelector(
-  [getAlerts, getStartDate, getEndDate],
-  (data, startDate, endDate) => {
+  [getAlerts],
+  (data) => {
     if (!data || isEmpty(data)) return null;
-    const filteredDataByDates = data.filter(d => moment(d.alert__date).isAfter(moment(startDate).subtract(1, 'day')) && moment(d.alert__date).isBefore(moment(endDate).add(1, 'day')));
 
-    return sortBy(filteredDataByDates.map(d => ({
+    return sortBy(data.map(d => ({
       ...d,
       date: d.alert__date
     })), 'date');

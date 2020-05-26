@@ -42,7 +42,7 @@ const SQL_QUERIES = {
     'SELECT {location}, {polynames} FROM data {WHERE}',
   firesWeekly:
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
-  firesDaily: 'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= \'{startDate}\' AND alert__date >= \'{endDate}\' GROUP BY alert__date ORDER BY alert__date DESC'
+  firesDaily: 'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= \'{startDate}\' AND alert__date <= \'{endDate}\' GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -762,7 +762,7 @@ export const fetchFiresHistorical = params => {
   const { firesDaily, firesWeekly } = SQL_QUERIES;
   const diff = moment(endDate).diff(moment(startDate), 'weeks');
   const frequency = diff <= 53 ? 'daily' : 'weekly';
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     datasetType: frequency
   })}${frequency === 'daily' ? firesDaily : firesWeekly}`
@@ -770,7 +770,7 @@ export const fetchFiresHistorical = params => {
     .replace('{WHERE}', getWHEREQuery(params))
     .replace(/{dateFilter}/g, encodeURIComponent(getDatesFilter(params)))
     .replace('{startDate}', startDate)
-    .replace('{endDate}', endDate);
+    .replace('{endDate}', endDate));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
