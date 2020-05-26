@@ -9,9 +9,13 @@
 
   .unit-legend {
     position: relative;
+    margin-left: 40%;
+    margin-bottom: 4px;
     z-index: 2;
-    text-align: end;
+    text-align: center;
     background-color: white;
+    color: $slate-light;
+    font-weight: 500;
   }
 
   .custom-xAxis {

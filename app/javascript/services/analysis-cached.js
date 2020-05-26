@@ -744,7 +744,7 @@ export const fetchVIIRSLatest = () => {
       () =>
         new Promise(resolve =>
           resolve({
-            attributes: { updatedAt: moment().format('YYYY-MM-DD') },
+            attributes: { updatedAt: '2020-04-01' },
             id: null,
             type: 'viirs-alerts'
           })
