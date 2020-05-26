@@ -98,7 +98,8 @@ export const parseList = createSelector(
         density,
         significance: 100 * significance,
         area: locationArea,
-        label: (region && region.label) || ''
+        label: (region && region.label) || '',
+        path: (region && region.path) || ''
       };
     });
     return matchKey === 'iso'

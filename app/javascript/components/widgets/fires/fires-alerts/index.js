@@ -59,7 +59,7 @@ export default {
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
-  visible: ['dashboard', 'analysis'],
+  visible: ['dashboard'],
   types: ['country', 'geostore'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',

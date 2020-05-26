@@ -14,6 +14,7 @@ export default {
     global: 'Global regions with the most fire Alerts'
   },
   categories: ['fires'],
+  large: true,
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [
@@ -56,7 +57,7 @@ export default {
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   metaKey: 'widget_fire_ranking',
   colors: 'fires',
   sortOrder: {

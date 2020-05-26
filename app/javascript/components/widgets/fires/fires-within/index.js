@@ -77,9 +77,7 @@ export default {
     period: 'week',
     weeks: 13,
     dataset: 'viirs',
-    confidence: 'h',
-    landCategory: '',
-    forestType: ''
+    confidence: 'h'
   },
   settingsBtnConfig: {
     text: '+ Select an intersection',
