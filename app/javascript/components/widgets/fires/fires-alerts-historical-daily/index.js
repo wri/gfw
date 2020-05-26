@@ -22,41 +22,9 @@ export default {
   ],
   settingsConfig: [
     {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true
-    },
-    {
       key: 'dataset',
       label: 'fires dataset',
       type: 'select'
-    },
-    {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      type: 'range-select',
-      options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
-        .map(y => ({ label: `${y}`, value: y })),
-      border: true
-    },
-    {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
-      border: true
     }
   ],
   visible: ['analysis'],
@@ -67,8 +35,6 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_historical_location',
   settings: {
-    startDate: '2019-10-01',
-    endDate: '2020-01-24',
     dataset: 'viirs'
   },
   datasets: [
