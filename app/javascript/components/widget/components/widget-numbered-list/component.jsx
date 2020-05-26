@@ -36,7 +36,7 @@ WidgetNumberedList.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  settingsConfig: PropTypes.object,
+  settingsConfig: PropTypes.array,
   handleChangeSettings: PropTypes.func.isRequired,
   embed: PropTypes.bool
 };

@@ -13,7 +13,7 @@ class ChartTooltip extends PureComponent {
         {settings &&
           settings.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
-            {settings.map((d, i) => {
+            {settings.map(d => {
               const label = d.labelFormat
                 ? d.labelFormat(d.label || values[d.labelKey])
                 : d.label || values[d.labelKey];
@@ -24,7 +24,7 @@ class ChartTooltip extends PureComponent {
 
               return hideZeros && (!values || !value) ? null : (
                 <div
-                  key={d.key ? d.key : `setting-${i}`}
+                  key={d.key || d.labelKey}
                   className={`data-line ${d.position || ''}`}
                 >
                   {label && (
