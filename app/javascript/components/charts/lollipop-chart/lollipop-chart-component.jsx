@@ -93,7 +93,7 @@ class LollipopChart extends PureComponent {
                               `calc(${interpolate(tick - dataMin)}% - 8px)`
                       }}
                     >
-                      {tick === 0 ? '0' : formatNumber({ num: tick })}
+                      {Math.round(tick)}
                     </div>
                   ))}
                 </div>
