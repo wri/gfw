@@ -1,10 +1,17 @@
 .c-pie-chart-legend-widget {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   padding-top: rem(30px);
 
-  .cover-legend {
-    min-width: 50%;
+  .pie-and-legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .cover-legend {
+      min-width: 50%;
+    }
+  }
+
+  .pie-contextual-settings-btn {
+    margin: 0 10px 20px auto;
   }
 }

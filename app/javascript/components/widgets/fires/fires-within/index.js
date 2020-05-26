@@ -28,7 +28,6 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All categories',
-      // TODO: default option -> Primary Forests if available, IFL otherwise.
       clearable: true,
       border: false
     },
@@ -79,6 +78,11 @@ export default {
     weeks: 13,
     dataset: 'viirs',
     confidence: 'h'
+  },
+  settingsBtnConfig: {
+    text: '+ Select an intersection',
+    shouldShowButton: props =>
+      !props.settings.forestType && !props.settings.landCategory
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {

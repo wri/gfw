@@ -23,7 +23,10 @@ class ChartTooltip extends PureComponent {
                 : values[d.key];
 
               return hideZeros && (!values || !value) ? null : (
-                <div key={d.key} className={`data-line ${d.position || ''}`}>
+                <div
+                  key={d.key || d.labelKey}
+                  className={`data-line ${d.position || ''}`}
+                >
                   {label && (
                     <div className="data-label">
                       {d.color && (

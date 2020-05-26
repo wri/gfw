@@ -49,7 +49,8 @@ class Widget extends PureComponent {
     location: PropTypes.object,
     adminLevel: PropTypes.string,
     preventRenderKeys: PropTypes.array,
-    geostore: PropTypes.object
+    geostore: PropTypes.object,
+    settingsBtnConfig: PropTypes.object
   };
 
   state = {
@@ -97,7 +98,8 @@ class Widget extends PureComponent {
       locationData,
       location,
       preventRenderKeys,
-      geostore
+      geostore,
+      settingsBtnConfig
     } = this.props;
     const { main } = colors || {};
 
@@ -167,6 +169,7 @@ class Widget extends PureComponent {
           handleChangeSettings={handleChangeSettings}
           parseInteraction={parseInteraction}
           toggleSettingsMenu={toggleSettingsMenu}
+          settingsBtnConfig={settingsBtnConfig}
         />
         {sentence &&
           data && (
