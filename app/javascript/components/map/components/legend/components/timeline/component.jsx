@@ -23,11 +23,13 @@ class Timeline extends Component {
       activeLayer,
       maxRange,
       startDateAbsolute,
-      endDateAbsolute
+      endDateAbsolute,
+      description
     } = this.props;
 
     return (
       <div className={`c-timeline ${className || ''}`}>
+        {description && <p className="description">{description}</p>}
         {dateFormat === 'YYYY-MM-DD' &&
           interval !== 'years' && (
           <div className="date-pickers">
@@ -105,6 +107,7 @@ class Timeline extends Component {
 
 Timeline.propTypes = {
   className: PropTypes.string,
+  description: PropTypes.string,
   isPlaying: PropTypes.bool,
   handleTogglePlay: PropTypes.func,
   min: PropTypes.number,
