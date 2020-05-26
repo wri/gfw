@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { apiRequest, cartoRequest } from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -725,9 +724,18 @@ export const fetchMODISHistorical = params => {
   }));
 };
 
-export const fetchVIIRSLatest = () => {
-  const url =
-    'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/v202003/max_alert__date';
+export const fetchVIIRSLatest = () =>
+// { const url = 'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/v202003/max_alert__date';
+
+  new Promise(resolve =>
+    resolve({
+      attributes: { updatedAt: '2020-04-01' },
+      id: null,
+      type: 'viirs-alerts'
+    })
+  );
+
+/* Commented until the issue with the API is fixed.
 
   return axios
     .get(url)
@@ -751,6 +759,7 @@ export const fetchVIIRSLatest = () => {
         )
     );
 };
+*/
 
 // Additional conditional fetches for providing context for queries.
 
