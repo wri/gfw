@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { fetchMODISHistorical } from 'services/analysis-cached';
+import { fetchFiresHistorical } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -30,16 +30,16 @@ export default {
       label: 'fires dataset',
       type: 'select'
     },
-    {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      type: 'range-select',
-      options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
-        .map(y => ({ label: `${y}`, value: y })),
-      border: true
-    },
+    // {
+    //   key: 'years',
+    //   label: 'years',
+    //   endKey: 'endYear',
+    //   startKey: 'startYear',
+    //   type: 'range-select',
+    //   options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
+    //     .map(y => ({ label: `${y}`, value: y })),
+    //   border: true
+    // },
     {
       key: 'confidence',
       label: 'Confidence level',
@@ -68,13 +68,15 @@ export default {
     fires: 100
   },
   settings: {
+    startDate: '2020-04-01',
+    endDate: '2020-01-01',
     confidence: '',
-    startYear: 2001,
-    endYear: 2020,
-    dataset: 'modis'
+    // startYear: 2019,
+    // endYear: 2020,
+    dataset: 'viirs'
   },
   sentence:
-    'Between {start_year} and {end_year} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+    'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts.',
   whitelists: {
     adm0: [
       'AFG',
@@ -284,26 +286,22 @@ export default {
       'ZWE'
     ]
   },
-  getData: params => {
-    const { startYear, endYear } = params;
-    const frequency = endYear - startYear <= 2 ? 'daily' : 'weekly';
-    return fetchMODISHistorical({ ...params, frequency }).then(alerts => {
-      const { data } = alerts.data;
-      return (
-        {
-          alerts: data,
-          frequency,
-          options: {
-            confidence: [
-              { label: 'All', value: '' },
-              { label: 'High', value: 'h' }
-            ]
-          }
-        } || {}
-      );
-    });
-  },
-  getDataURL: params => [fetchMODISHistorical({ ...params, download: true })],
+  getData: params => fetchFiresHistorical(params).then(alerts => {
+    const { data, frequency } = alerts.data;
+    return (
+      {
+        alerts: data,
+        frequency,
+        options: {
+          confidence: [
+            { label: 'All', value: '' },
+            { label: 'High', value: 'h' }
+          ]
+        }
+      } || {}
+    );
+  }),
+  getDataURL: params => [fetchFiresHistorical({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {
