@@ -13,15 +13,27 @@ const getFrequency = state => state.data && state.data.frequency;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
 const getEndDate = state => state.settings.endDate;
-const getSentences = state => state.sentence || null;
+const getSentences = state => state.sentences || null;
 const getDataset = state => state.settings.dataset || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
+
+const getDaysArray = (startDate, stopDate) => {
+  const dateArray = [];
+  let currentDate = moment(startDate);
+  const endDate = moment(stopDate);
+  while (currentDate <= endDate) {
+    dateArray.push(moment(currentDate).format('YYYY-MM-DD'));
+    currentDate = moment(currentDate).add(1, 'days');
+  }
+  return dateArray;
+};
 
 export const getData = createSelector(
   [getAlerts, getFrequency, getStartDate, getEndDate],
   (data, frequency, startDate, endDate) => {
-    if (!data || !frequency || isEmpty(data)) return null;
+    if (!data || isEmpty(data) || !frequency || !startDate || !endDate) { return null; }
 
     const startYear = moment(startDate).year();
     const endYear = moment(endDate).year();
@@ -42,21 +54,25 @@ export const getData = createSelector(
     });
 
     const zeroFilledData = [];
-    if (frequency === 'daily' && !!data[0].alert__date) {
+    if (frequency === 'daily') {
       // why check `alert__date`? Sometimes settings change before refetching,
       // and `data` is still the weekly data
 
       // If we are looking at daily resolution, add week and year and zero-fill
-      const dataWithYears = data
-        .map(d => ({
-          ...d,
-          year: moment(d.alert__date).year(),
-          week: moment(d.alert__date).isoWeek(),
-          date: d.alert__date,
-          dayOfYear: moment(d.alert__date).dayOfYear() // zero-filling
-        }))
-        // optional, lightens data:
-        .filter(d => d.year === startYear);
+      const datesArray = getDaysArray(startDate, endDate);
+      const dataWithYears = datesArray.map(d => {
+        const filteredDate = data.find(el => el.alert__date === d);
+        return {
+          date: d,
+          count:
+            filteredDate && filteredDate.alert__count > 0
+              ? filteredDate.alert__count
+              : 0,
+          year: moment(d).year(),
+          week: moment(d).isoWeek(),
+          dayOfYear: moment(d).dayOfYear() // zero-filling
+        };
+      });
 
       const groupedByYear = groupBy(
         sortBy(dataWithYears, ['year', 'dayOfYear']),
@@ -122,7 +138,7 @@ export const parseConfig = createSelector(
       {
         key: 'count',
         labelKey: 'date',
-        labelFormat: value => moment(value).format('DD-MM-YYYY'),
+        labelFormat: value => moment(value).format('YYYY-MM-DD'),
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         unitFormat: value =>
@@ -150,19 +166,37 @@ export const parseSentence = createSelector(
     getLocationObject,
     getStartDate,
     getEndDate,
-    getOptionsSelected
+    getOptionsSelected,
+    getIndicator
   ],
-  (data, colors, sentence, location, startDate, endDate, options) => {
+  (
+    data,
+    colors,
+    sentences,
+    location,
+    startDate,
+    endDate,
+    options,
+    indicator
+  ) => {
     if (!data) return null;
-    const { dataset } = options;
+    const { dataset, confidence } = options;
+    const { initial, withInd, conf } = sentences;
     const lastDate = data[data.length - 1] || {};
     const firstDate = data[0] || {};
     const total = sumBy(
       data.filter(el => el.date >= firstDate.date && el.date <= lastDate.date),
       'count'
     );
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label : null;
+    const initialSentence = indicator ? withInd : initial;
+    const sentence =
+      confidence.value === 'h' ? initialSentence + conf : `${initialSentence}.`;
     const params = {
+      confidence: confidence.value === 'h' ? 'high confidence' : '',
       location: location.label || '',
+      indicator: indicatorLabel,
       start_year: moment(startDate).format('Do of MMMM YYYY'),
       end_year: moment(endDate).format('Do of MMMM YYYY'),
       dataset: dataset && dataset.label,

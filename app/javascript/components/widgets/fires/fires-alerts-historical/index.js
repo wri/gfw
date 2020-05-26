@@ -68,15 +68,20 @@ export default {
     fires: 100
   },
   settings: {
-    startDate: '2020-04-01',
-    endDate: '2020-01-01',
+    startDate: '2020-01-01',
+    endDate: '2020-04-01',
     confidence: '',
     // startYear: 2019,
     // endYear: 2020,
     dataset: 'viirs'
   },
-  sentence:
-    'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+  sentences: {
+    initial:
+      'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts',
+    withInd:
+      'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
+    conf: ', considering {confidence} alerts only.'
+  },
   whitelists: {
     adm0: [
       'AFG',
@@ -286,21 +291,22 @@ export default {
       'ZWE'
     ]
   },
-  getData: params => fetchFiresHistorical(params).then(alerts => {
-    const { data, frequency } = alerts.data;
-    return (
-      {
-        alerts: data,
-        frequency,
-        options: {
-          confidence: [
-            { label: 'All', value: '' },
-            { label: 'High', value: 'h' }
-          ]
-        }
-      } || {}
-    );
-  }),
+  getData: params =>
+    fetchFiresHistorical(params).then(alerts => {
+      const { data, frequency } = alerts.data;
+      return (
+        {
+          alerts: data,
+          frequency,
+          options: {
+            confidence: [
+              { label: 'All', value: '' },
+              { label: 'High', value: 'h' }
+            ]
+          }
+        } || {}
+      );
+    }),
   getDataURL: params => [fetchFiresHistorical({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: payload => {
