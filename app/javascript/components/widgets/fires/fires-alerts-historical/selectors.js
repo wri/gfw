@@ -11,19 +11,21 @@ import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 const getAlerts = state => state.data && state.data.alerts;
 const getFrequency = state => state.data && state.data.frequency;
 const getColors = state => state.colors || null;
-const getStartYear = state => state.settings.startYear;
-const getEndYear = state => state.settings.endYear;
+const getStartDate = state => state.settings.startDate;
+const getEndDate = state => state.settings.endDate;
 const getSentences = state => state.sentence || null;
+const getDataset = state => state.settings.dataset || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
 
 export const getData = createSelector(
-  [getAlerts, getFrequency, getStartYear, getEndYear],
-  (data, frequency, startYear, endYear) => {
+  [getAlerts, getFrequency, getStartDate, getEndDate],
+  (data, frequency, startDate, endDate) => {
     if (!data || !frequency || isEmpty(data)) return null;
 
+    const startYear = moment(startDate).year();
+    const endYear = moment(endDate).year();
     const years = [];
-
     for (let i = startYear; i <= endYear; i += 1) {
       years.push(i);
     }
@@ -44,6 +46,7 @@ export const getData = createSelector(
       // why check `alert__date`? Sometimes settings change before refetching,
       // and `data` is still the weekly data
 
+      // If we are looking at daily resolution, add week and year and zero-fill
       const dataWithYears = data
         .map(d => ({
           ...d,
@@ -99,21 +102,19 @@ export const getData = createSelector(
         }
       });
     }
-
     return zeroFilledData;
   }
 );
 
 export const parseData = createSelector([getData], data => {
   if (!data) return null;
-  // TODO: group by month if yearsRange > 7
   // getDatesData: adds date and month info to data array
   return getDatesData(data);
 });
 
 export const parseConfig = createSelector(
-  [getColors, getFrequency],
-  (colors, frequency) => {
+  [getColors, getFrequency, getDataset],
+  (colors, frequency, dataset) => {
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -122,7 +123,7 @@ export const parseConfig = createSelector(
         key: 'count',
         labelKey: 'date',
         labelFormat: value => moment(value).format('DD-MM-YYYY'),
-        unit: ' MODIS alerts',
+        unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         unitFormat: value =>
           (Number.isInteger(value) ? format(',')(value) : value)
@@ -147,11 +148,11 @@ export const parseSentence = createSelector(
     getColors,
     getSentences,
     getLocationObject,
-    getStartYear,
-    getEndYear,
+    getStartDate,
+    getEndDate,
     getOptionsSelected
   ],
-  (data, colors, sentence, location, startYear, endYear, options) => {
+  (data, colors, sentence, location, startDate, endDate, options) => {
     if (!data) return null;
     const { dataset } = options;
     const lastDate = data[data.length - 1] || {};
@@ -162,8 +163,8 @@ export const parseSentence = createSelector(
     );
     const params = {
       location: location.label || '',
-      start_year: startYear,
-      end_year: endYear,
+      start_year: moment(startDate).format('Do of MMMM YYYY'),
+      end_year: moment(endDate).format('Do of MMMM YYYY'),
       dataset: dataset && dataset.label,
       total_alerts: {
         value: total ? format(',')(total) : 0,

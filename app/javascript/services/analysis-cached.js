@@ -40,10 +40,9 @@ const SQL_QUERIES = {
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM data {WHERE}',
-  modisFiresWeekly:
-    'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
-  modisFiresDaily:
-    'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY alert__date ORDER BY alert__date DESC'
+  firesWeekly:
+    'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
+  firesDaily: 'SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= \'{startDate}\' AND alert__date <= \'{endDate}\' GROUP BY alert__date ORDER BY alert__date DESC'
 };
 
 const ALLOWED_PARAMS = {
@@ -161,8 +160,37 @@ export const getWHEREQuery = params => {
   return '';
 };
 
+export const getDatesFilter = ({ startDate, endDate }) => {
+  const startYear = startDate
+    ? moment(startDate).year()
+    : moment()
+      .subtract(1, 'weeks')
+      .year();
+
+  const startWeek = startDate
+    ? moment(startDate).isoWeek()
+    : moment()
+      .subtract(1, 'weeks')
+      .isoWeek();
+
+  const endYear = moment(endDate).year();
+  const endWeek = moment(endDate).isoWeek();
+
+  let middleYears = startYear === endYear ? 'AND' : 'OR';
+  if (endYear - startYear > 1) {
+    middleYears = '';
+    for (let y = startYear + 1; y < endYear; y++) {
+      middleYears += `OR alert__year = ${y} `;
+    }
+    middleYears += 'OR';
+  }
+  return `(alert__year = ${startYear} AND alert__week >= ${startWeek}) ${
+    middleYears
+  } (alert__year <= ${endYear} AND alert__week <= ${endWeek})`;
+};
+
 // build complex WHERE filter for dates (VIIRS/GLAD)
-export const getDateFilter = ({ weeks, latest }) => {
+export const getWeeksFilter = ({ weeks, latest }) => {
   const latestYear = latest
     ? moment(latest).year()
     : moment()
@@ -664,7 +692,7 @@ export const fetchVIIRSAlertsGrouped = params => {
     grouped: true
   })}${SQL_QUERIES.firesGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-    .replace(/{dateFilter}/g, encodeURIComponent(getDateFilter(params)))
+    .replace(/{dateFilter}/g, encodeURIComponent(getWeeksFilter(params)))
     .replace(
       '{WHERE}',
       getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
@@ -728,16 +756,21 @@ export const fetchFiresWithin = params => {
   }));
 };
 
-export const fetchMODISHistorical = params => {
-  const { forestType, landCategory, ifl, download, frequency } = params || {};
-  const { modisFiresDaily, modisFiresWeekly } = SQL_QUERIES;
-  const url = `${getRequestUrl({
+export const fetchFiresHistorical = params => {
+  const { forestType, landCategory, ifl, download, startDate, endDate } =
+    params || {};
+  const { firesDaily, firesWeekly } = SQL_QUERIES;
+  const diff = moment(endDate).diff(moment(startDate), 'weeks');
+  const frequency = diff <= 53 ? 'daily' : 'weekly';
+  const url = encodeURI(`${getRequestUrl({
     ...params,
-    dataset: 'modis',
     datasetType: frequency
-  })}${frequency === 'daily' ? modisFiresDaily : modisFiresWeekly}`
+  })}${frequency === 'daily' ? firesDaily : firesWeekly}`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'modis' }));
+    .replace('{WHERE}', getWHEREQuery(params))
+    .replace(/{dateFilter}/g, encodeURIComponent(getDatesFilter(params)))
+    .replace('{startDate}', startDate)
+    .replace('{endDate}', endDate));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -748,9 +781,9 @@ export const fetchMODISHistorical = params => {
       url: url.replace('query', 'download')
     };
   }
-
   return apiRequest.get(url).then(response => ({
     data: {
+      frequency,
       data: response.data.data.map(d => ({
         ...d,
         week: parseInt(d.alert__week, 10) || null,

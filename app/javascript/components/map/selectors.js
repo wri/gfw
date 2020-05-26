@@ -211,7 +211,7 @@ export const getDatasetsWithConfig = createSelector(
           const {
             hasParamsTimeline,
             hasDecodeTimeline,
-            timelineConfig,
+            timelineConfig: timelineConfigInit,
             id
           } = l;
           const maxDate = latestDates[id];
@@ -220,6 +220,28 @@ export const getDatasetsWithConfig = createSelector(
             ? moment(maxDate).format(latestFormat)
             : maxDate;
 
+          const { min: minRange, max: maxRange, interval: rangeInterval } = timelineConfigInit && timelineConfigInit.dateRange || {};
+
+          const timelineConfig = {
+            ...timelineConfigInit,
+            ...maxRange && rangeInterval && timelineConfigInit && {
+              startDate: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              startDateAbsolute: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD')
+            },
+            maxRange,
+            minRange,
+            rangeInterval
+          };
+
+          const layerParams = {
+            ...l.params,
+            ...maxRange && rangeInterval && timelineConfigInit && {
+              startDate: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              startDateAbsolute: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              endDateAbsolute: l.params.endDate
+            }
+          };
+
           return {
             ...l,
             visibility,
@@ -227,9 +249,9 @@ export const getDatasetsWithConfig = createSelector(
             bbox,
             color: d.color,
             active: layers && layers.length && layers.includes(l.id),
-            ...(!isEmpty(l.params) && {
+            ...(!isEmpty(layerParams) && {
               params: {
-                ...l.params,
+                ...layerParams,
                 ...(maxDate && {
                   endDate: maxDate
                 }),
@@ -273,7 +295,7 @@ export const getDatasetsWithConfig = createSelector(
               timelineParams: {
                 ...timelineConfig,
                 ...(l.hasParamsTimeline && {
-                  ...l.params
+                  ...layerParams
                 }),
                 ...(l.hasDecodeTimeline && {
                   ...l.decodeParams
