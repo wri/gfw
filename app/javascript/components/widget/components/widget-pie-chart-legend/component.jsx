@@ -10,22 +10,29 @@ import './styles';
 
 class WidgetPieChart extends PureComponent {
   render() {
-    const { data, settings, simple, toggleSettingsMenu } = this.props;
-    const noIntersectionSelected =
-      !settings.forestType && !settings.landCategory;
+    const {
+      data,
+      settings,
+      simple,
+      toggleSettingsMenu,
+      settingsBtnConfig
+    } = this.props;
+    const showSettingsBtn =
+      settingsBtnConfig &&
+      settingsBtnConfig.shouldShowButton &&
+      settingsBtnConfig.shouldShowButton(this.props);
 
     return (
       <div className="c-pie-chart-legend-widget">
         {settings &&
-          settings.showSettingsBtn &&
-          noIntersectionSelected &&
+          showSettingsBtn &&
           toggleSettingsMenu && (
           <Button
             theme="theme-button-small theme-button-light"
             className="pie-contextual-settings-btn"
             onClick={() => toggleSettingsMenu()}
           >
-              + Select an intersection
+            {settingsBtnConfig.text}
           </Button>
         )}
         <div className="pie-and-legend">
@@ -64,7 +71,8 @@ WidgetPieChart.propTypes = {
   data: PropTypes.array,
   simple: PropTypes.bool,
   settings: PropTypes.object.isRequired,
-  toggleSettingsMenu: PropTypes.func
+  toggleSettingsMenu: PropTypes.func,
+  settingsBtnConfig: PropTypes.object
 };
 
 export default WidgetPieChart;

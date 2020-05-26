@@ -79,8 +79,12 @@ export default {
     dataset: 'viirs',
     confidence: 'h',
     landCategory: '',
-    forestType: '',
-    showSettingsBtn: true
+    forestType: ''
+  },
+  settingsBtnConfig: {
+    text: '+ Select an intersection',
+    shouldShowButton: props =>
+      !props.settings.forestType && !props.settings.landCategory
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
