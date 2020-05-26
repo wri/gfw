@@ -1,82 +1,56 @@
-import moment from 'moment';
+import { fetchMODISHistorical } from 'services/analysis-cached';
 
-import { fetchFiresHistorical } from 'services/analysis-cached';
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  FIRES_VIIRS_DATASET
+} from 'data/layers-datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  FIRES_ALERTS_VIIRS
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'firesAlertsHistorical',
+  widget: 'firesAlertsHistoricalDaily',
   title: 'Fire Alerts Count in {location}',
   large: true,
-  categories: ['summary', 'fires'],
+  refetchKeys: [
+    'startDate',
+    'endDate'
+  ],
   settingsConfig: [
-    {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true
-    },
     {
       key: 'dataset',
       label: 'fires dataset',
       type: 'select'
-    },
-    // {
-    //   key: 'years',
-    //   label: 'years',
-    //   endKey: 'endYear',
-    //   startKey: 'startYear',
-    //   type: 'range-select',
-    //   options: Array.from({ length: 20 }, (a, n) => n + 2001) // range 2001-2020
-    //     .map(y => ({ label: `${y}`, value: y })),
-    //   border: true
-    // },
-    {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
-      border: true
     }
   ],
-  refetchKeys: [
-    'forestType',
-    'landCategory',
-    'dataset',
-    'endYear',
-    'startYear',
-    'confidence'
-  ],
-  visible: ['dashboard'],
+  visible: ['analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
-  hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
   metaKey: 'widget_fire_historical_location',
-  sortOrder: {
-    fires: 100
-  },
   settings: {
-    startDate: '2020-04-01',
-    endDate: '2020-01-01',
-    confidence: '',
-    // startYear: 2019,
-    // endYear: 2020,
     dataset: 'viirs'
   },
+  datasets: [
+    {
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
+      boundary: true
+    },
+    // fires
+    {
+      dataset: FIRES_VIIRS_DATASET,
+      layers: [FIRES_ALERTS_VIIRS]
+    }
+  ],
   sentence:
-    'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+    'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
   whitelists: {
     adm0: [
       'AFG',
@@ -286,35 +260,10 @@ export default {
       'ZWE'
     ]
   },
-  getData: params => fetchFiresHistorical(params).then(alerts => {
-    const { data, frequency } = alerts.data;
-    return (
-      {
-        alerts: data,
-        frequency,
-        options: {
-          confidence: [
-            { label: 'All', value: '' },
-            { label: 'High', value: 'h' }
-          ]
-        }
-      } || {}
-    );
+  getData: params => fetchMODISHistorical({ ...params, frequency: 'daily' }).then(alerts => {
+    const { data } = alerts.data;
+    return data;
   }),
-  getDataURL: params => [fetchFiresHistorical({ ...params, download: true })],
-  getWidgetProps,
-  parseInteraction: payload => {
-    if (payload) {
-      const startDate = moment()
-        .year(payload.year)
-        .week(payload.week);
-
-      return {
-        startDate: startDate.format('YYYY-MM-DD'),
-        endDate: startDate.add(7, 'days'),
-        ...payload
-      };
-    }
-    return {};
-  }
+  getDataURL: params => [fetchMODISHistorical({ ...params, frequency: 'daily', download: true })],
+  getWidgetProps
 };
