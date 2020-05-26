@@ -1,4 +1,4 @@
-import { fetchMODISHistorical } from 'services/analysis-cached';
+import { fetchFiresHistorical } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -16,10 +16,7 @@ export default {
   widget: 'firesAlertsHistoricalDaily',
   title: 'Fire Alerts Count in {location}',
   large: true,
-  refetchKeys: [
-    'startDate',
-    'endDate'
-  ],
+  refetchKeys: ['startDate', 'endDate'],
   settingsConfig: [
     {
       key: 'dataset',
@@ -260,10 +257,13 @@ export default {
       'ZWE'
     ]
   },
-  getData: params => fetchMODISHistorical({ ...params, frequency: 'daily' }).then(alerts => {
-    const { data } = alerts.data;
-    return data;
-  }),
-  getDataURL: params => [fetchMODISHistorical({ ...params, frequency: 'daily', download: true })],
+  getData: params =>
+    fetchFiresHistorical({ ...params, frequency: 'daily' }).then(alerts => {
+      const { data } = alerts.data;
+      return data;
+    }),
+  getDataURL: params => [
+    fetchFiresHistorical({ ...params, frequency: 'daily', download: true })
+  ],
   getWidgetProps
 };
