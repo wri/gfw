@@ -15,15 +15,27 @@ const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
 
+const zeroFillDays = (startDate, endDate) => {
+  const start = moment(startDate);
+  const diffInDays = moment(endDate).diff(moment(startDate), 'days');
+  const dates = Array.from(Array(diffInDays).keys());
+
+  return [startDate, ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD'))];
+};
+
 export const getData = createSelector(
-  [getAlerts],
-  (data) => {
+  [getAlerts, getStartDate, getEndDate],
+  (data, startDate, endDate) => {
     if (!data || isEmpty(data)) return null;
 
-    return sortBy(data.map(d => ({
-      ...d,
-      date: d.alert__date
-    })), 'date');
+    const zeroFilledData = zeroFillDays(startDate, endDate).map(date => ({
+      date,
+      alert__count: 0,
+      count: 0,
+      ...(data.find(d => d.alert__date === date))
+    }));
+
+    return sortBy(zeroFilledData, 'date');
   }
 );
 
