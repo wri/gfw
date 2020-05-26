@@ -129,7 +129,7 @@ class NumberedList extends PureComponent {
 NumberedList.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  settingsConfig: PropTypes.object,
+  settingsConfig: PropTypes.array,
   handlePageChange: PropTypes.func,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,

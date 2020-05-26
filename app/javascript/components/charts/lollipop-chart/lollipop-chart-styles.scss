@@ -1,0 +1,165 @@
+@import '~styles/settings.scss';
+
+.c-lollipop-chart {
+  position: relative;
+  font-size: rem(12px);
+  color: $slate;
+  max-width: 80%;
+  margin: auto;
+
+  .unit-legend {
+    position: relative;
+    margin-left: 40%;
+    margin-bottom: 4px;
+    z-index: 2;
+    text-align: center;
+    background-color: white;
+    color: $slate-light;
+    font-weight: 500;
+  }
+
+  .custom-xAxis {
+    position: relative;
+    z-index: 2;
+    height: 20px;
+    width: 100%;
+    border-bottom: 1px solid black;
+    background-color: white;
+
+    .custom-xAxis-ticks {
+      height: 10px;
+      position: relative;
+    }
+  }
+
+  .list-wrapper {
+    position: relative;
+    padding: 10px 0;
+    max-height: rem(340px);
+    overflow-y: hidden;
+
+    &.-scrollable {
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
+
+  .list-item {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: rem(10px);
+
+    &.-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: rem(20px);
+    }
+  }
+
+  a {
+    color: $slate;
+
+    &:hover {
+      .item-name {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .item-bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(16px);
+    min-width: rem(16px);
+    height: rem(16px);
+    min-height: rem(16px);
+    border-radius: 50%;
+    background-color: $border;
+    position: relative;
+
+    &.-lollipop {
+      position: absolute;
+    }
+  }
+
+  .item-label {
+    width: 40%;
+    padding-right: rem(15px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+  }
+
+  .lollipop {
+    position: relative;
+    display: inherit;
+    flex-direction: inherit;
+    align-items: center;
+  }
+
+  .space-right {
+    padding-right: 67px;
+  }
+
+  .space-left {
+    padding-left: 67px;
+  }
+
+  .item-lollipop-bar {
+    position: relative;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    height: rem(18px);
+
+    .item-spacer {
+      height: 1px;
+    }
+
+    .item-bar {
+      position: absolute;
+      height: rem(2px);
+      width: 100%;
+      top: 0;
+      left: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .item-value {
+    position: absolute;
+    width: rem(35px);
+    text-align: right;
+    margin: 0 16px;
+  }
+
+  .cartesian-grid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    .grid-line {
+      bottom: 0;
+      top: 0;
+      width: 1px;
+      background-color: $border;
+    }
+  }
+}
