@@ -4,18 +4,19 @@
   position: relative;
   font-size: rem(12px);
   color: $slate;
-  max-width: 80%;
-  margin: auto;
 
   .unit-legend {
     position: relative;
-    margin-left: 40%;
     margin-bottom: 4px;
     z-index: 2;
-    text-align: center;
     background-color: white;
     color: $slate-light;
     font-weight: 500;
+
+    @media screen and (min-width: $screen-m) {
+      margin-left: 40%;
+      text-align: center;
+    }
   }
 
   .custom-xAxis {

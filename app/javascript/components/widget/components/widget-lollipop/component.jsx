@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 import Lollipop from 'components/charts/lollipop-chart';
 
+import './styles.scss';
+
 class WidgetLollipop extends PureComponent {
   render() {
     const {
-      className,
       data,
       settings,
       settingsConfig,
@@ -16,7 +17,7 @@ class WidgetLollipop extends PureComponent {
 
     return (
       <Lollipop
-        className={className}
+        className="c-widget-lollipop-chart"
         data={data}
         settings={{
           ...settings,
@@ -33,7 +34,6 @@ class WidgetLollipop extends PureComponent {
 }
 
 WidgetLollipop.propTypes = {
-  className: PropTypes.string,
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
