@@ -22,10 +22,10 @@ export const getWhitelist = createThunkAction(
   params => dispatch => {
     dispatch(setWhitelistLoading(true));
     all([
-      getLocationPolynameWhitelist({ ...params, dataset: 'annual' }),
-      getLocationPolynameWhitelist({ ...params, dataset: 'viirs' }),
-      getLocationPolynameWhitelist({ ...params, dataset: 'viirs' }),
-      getLocationPolynameWhitelist({ ...params, dataset: 'modis' })
+      getLocationPolynameWhitelist({ ...params, dataset: 'annual' }).catch(() => null),
+      getLocationPolynameWhitelist({ ...params, dataset: 'glad' }).catch(() => null),
+      getLocationPolynameWhitelist({ ...params, dataset: 'viirs' }).catch(() => null),
+      getLocationPolynameWhitelist({ ...params, dataset: 'modis' }).catch(() => null)
     ])
       .then(
         spread((annualResponse, gladResponse, viirsResponse, modisResponse) => {
