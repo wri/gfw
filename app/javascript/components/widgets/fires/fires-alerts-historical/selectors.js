@@ -129,17 +129,17 @@ export const parseConfig = createSelector(
 
 export const parseSentence = createSelector(
   [
-    getData,
+    parseBrushedData,
     getColors,
     getSentences,
     getLocationObject,
-    getStartDate,
-    getEndDate,
     getOptionsSelected
   ],
-  (data, colors, sentence, location, startDate, endDate, options) => {
+  (data, colors, sentence, location, options) => {
     if (!data) return null;
     const { dataset } = options;
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
     const total = sumBy(data, 'alert__count');
     const params = {
       location: location.label || '',
