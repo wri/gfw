@@ -652,17 +652,20 @@ export const fetchGLADLatest = () => {
 };
 
 export const fetchLatestWeekVIIRSAlerts = params => {
-  const { forestType, landCategory, ifl, download } = params || {};
-  const dataset = params.dataset ? params.dataset : 'viirs';
-
-  const url = `${getRequestUrl({
-    ...params,
-    dataset: dataset || 'viirs',
-    type: 'country',
-    datasetType: 'daily'
-  })}${SQL_QUERIES.fires}`
-    .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }));
+  const { forestType, landCategory, ifl, download, startDate, endDate } =
+    params || {};
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset: 'viirs',
+      datasetType: 'daily'
+    })}${SQL_QUERIES.firesDaily}`
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery(params))
+      .replace(/{dateFilter}/g, getDatesFilter(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+  );
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -674,7 +677,18 @@ export const fetchLatestWeekVIIRSAlerts = params => {
     };
   }
 
-  return apiRequest.get(url).catch(error => console.error(error));
+  return apiRequest
+    .get(url)
+    .then(response => ({
+      data: {
+        data: response.data.data.map(d => ({
+          ...d,
+          count: d.alert__count,
+          alerts: d.alert__count
+        }))
+      }
+    }))
+    .catch(error => console.error(error));
 };
 
 export const fetchVIIRSAlerts = params => {

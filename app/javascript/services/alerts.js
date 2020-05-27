@@ -50,11 +50,11 @@ export const getLatestAlerts = ({ location, params }) =>
         const glads =
           (gladsResponse && gladsResponse.data && gladsResponse.data.data) ||
           {};
-        const { value: fires } = firesResponse ? firesResponse.data.data : {};
+        const fires = firesResponse ? firesResponse.data.data : {};
 
         return {
           glads: sumBy(glads, 'count'),
-          fires
+          fires: sumBy(fires, 'count')
         };
       })
     )
