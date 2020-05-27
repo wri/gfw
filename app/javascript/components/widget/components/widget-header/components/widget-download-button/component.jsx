@@ -36,7 +36,7 @@ class WidgetDownloadButton extends PureComponent {
     areaTooLarge: PropTypes.bool
   };
 
-  generateZipFromURL = () => {
+  generateZipFromURL = async () => {
     const {
       title,
       settings,
@@ -50,7 +50,11 @@ class WidgetDownloadButton extends PureComponent {
     } = this.props;
 
     const params = { ...location, ...settings };
-    const files = getDataURL && getDataURL(params);
+    let files = [];
+
+    if (getDataURL) {
+      files = await getDataURL(params);
+    }
 
     const metadata = {
       title,

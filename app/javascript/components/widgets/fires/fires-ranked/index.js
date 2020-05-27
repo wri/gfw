@@ -130,8 +130,14 @@ export default {
         console.info(error);
         return null;
       }),
-  // getDataURL: params => [
-  //   fetchFiresAlertsGrouped({ ...params, download: true })
-  // ],
+  getDataURL: async params => {
+    const latestResponse = await fetchVIIRSLatest(params);
+    const latest = (latestResponse.attributes && latestResponse.attributes.updatedAt) || null;
+
+    return [
+      fetchVIIRSAlertsGrouped({ ...params, latest, download: true }),
+      getAreaIntersectionGrouped({ ...params, download: true })
+    ];
+  },
   getWidgetProps
 };
