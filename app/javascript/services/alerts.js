@@ -3,7 +3,10 @@ import moment from 'moment';
 import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 import { fetchAnalysisEndpoint } from 'services/analysis';
-import { fetchLatestWeekGladAlerts } from 'services/analysis-cached';
+import {
+  fetchLatestWeekGladAlerts,
+  fetchLatestWeekVIIRSAlerts
+} from 'services/analysis-cached';
 
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
 const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
@@ -34,26 +37,28 @@ export const getLatestAlerts = ({ location, params }) =>
       ...location,
       ...params
     }).catch(() => null),
-    fetchAnalysisEndpoint({
+    fetchLatestWeekVIIRSAlerts({
       ...location,
-      params,
+      ...params,
       name: 'viirs-alerts',
       slug: 'viirs-active-fires',
       version: 'v1'
     }).catch(() => null)
-  ]).then(
-    spread((gladsResponse, firesResponse) => {
-      const glads = gladsResponse.data.data || {};
-      const { value: fires } = firesResponse
-        ? firesResponse.data.data.attributes
-        : {};
+  ])
+    .then(
+      spread((gladsResponse, firesResponse) => {
+        const glads =
+          (gladsResponse && gladsResponse.data && gladsResponse.data.data) ||
+          {};
+        const { value: fires } = firesResponse ? firesResponse.data.data : {};
 
-      return {
-        glads: sumBy(glads, 'count'),
-        fires
-      };
-    })
-  );
+        return {
+          glads: sumBy(glads, 'count'),
+          fires
+        };
+      })
+    )
+    .catch(error => console.error(error));
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;

@@ -651,6 +651,32 @@ export const fetchGLADLatest = () => {
     );
 };
 
+export const fetchLatestWeekVIIRSAlerts = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const dataset = params.dataset ? params.dataset : 'viirs';
+
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: dataset || 'viirs',
+    type: 'country',
+    datasetType: 'daily'
+  })}${SQL_QUERIES.fires}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `viirs_fire_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).catch(error => console.error(error));
+};
+
 export const fetchVIIRSAlerts = params => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
   const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
@@ -757,18 +783,28 @@ export const fetchFiresWithin = params => {
 };
 
 export const fetchFiresHistorical = params => {
-  const { forestType, frequency, landCategory, ifl, download, startDate, endDate } =
+  const {
+    forestType,
+    frequency,
+    landCategory,
+    ifl,
+    download,
+    startDate,
+    endDate
+  } =
     params || {};
   const { firesDaily, firesWeekly } = SQL_QUERIES;
-  const url = encodeURI(`${getRequestUrl({
-    ...params,
-    datasetType: frequency
-  })}${frequency === 'daily' ? firesDaily : firesWeekly}`
-    .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery(params))
-    .replace(/{dateFilter}/g, getDatesFilter(params))
-    .replace('{startDate}', startDate)
-    .replace('{endDate}', endDate));
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      datasetType: frequency
+    })}${frequency === 'daily' ? firesDaily : firesWeekly}`
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery(params))
+      .replace(/{dateFilter}/g, getDatesFilter(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+  );
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
