@@ -72,7 +72,7 @@ export default {
           content: 'Explore recent global trends in fire alerts',
           btnText: 'Explore the data',
           link:
-            '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiNmExYWZlNzgtMDgxMy00NWM0LTgyMmYtYjUyZmUxMGY5M2YyIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjY0Nzk5OGMyLWNkZjYtNDNmZC1iYmZmLTE1MzU4ZjExMWZlOSJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyJmMTNmODZjYi0wOGI1LTRlNmMtYmI4ZC1iNDc4MjA1MmY5ZTUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZSwiYmJveCI6bnVsbCwiYmVhcmluZyI6MCwicGl0Y2giOjB9&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiYmlvZGl2ZXJzaXR5In0%3D',
+            '/dashboards/global?category=fires&map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjBiMDIwOGI2LWI0MjQtNGI1Ny05ODRmLWNhZGRmYTI1YmEyMiIsImxheWVycyI6WyJjYzM1NDMyZC0zOGQ3LTRhMDMtODcyZS0zYTcxYTJmNTU1ZmMiLCJiNDUzNTBlMy01YTc2LTQ0Y2QtYjBhOS01MDM4YTBkOGJmYWUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyfQ%3D%3D',
           position: [80, 60]
         }
       ],
@@ -94,9 +94,9 @@ export default {
           id: 'fires-status',
           content:
             'View fire alerts to see where the most fires are occurring now.',
-          btnText: 'Explore the data',
+          btnText: 'Explore the map',
           link:
-            'https://blog.globalforestwatch.org/data/worlds-last-intact-forests-are-becoming-increasingly-fragmented',
+            '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZDhkOTNmYmItODMwNC00MjRmLTk5ZmItMWU1MjFiNWRmNTZhIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImQ2MjFjZTBmLTA4NzItNDFlZi1iMmVjLTE4ZmFlYzNmZDFkOSJdfSx7ImRhdGFzZXQiOiIwYjAyMDhiNi1iNDI0LTRiNTctOTg0Zi1jYWRkZmEyNWJhMjIiLCJsYXllcnMiOlsiY2MzNTQzMmQtMzhkNy00YTAzLTg3MmUtM2E3MWEyZjU1NWZjIiwiYjQ1MzUwZTMtNWE3Ni00NGNkLWIwYTktNTAzOGEwZDhiZmFlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyJmMTNmODZjYi0wOGI1LTRlNmMtYmI4ZC1iNDc4MjA1MmY5ZTUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZSwiYmJveCI6bnVsbCwiYmVhcmluZyI6MCwicGl0Y2giOjB9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
           position: [38, 45]
         }
       ],
@@ -146,18 +146,18 @@ export default {
       summary:
         'Save an area and subscribe to receive emails when new fire alerts are detected',
       link:
-        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjFkM2NjZjliLTEwMmUtNGMwYi1iMmVhLTJhYmNjNzEyZTE5NCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI5M2UzMzkzMi0zOTU5LTQyMDEtYjhjOC02ZWMwYjMyNTk2ZTAiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6Im15LWdmdyJ9',
+        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZDhkOTNmYmItODMwNC00MjRmLTk5ZmItMWU1MjFiNWRmNTZhIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImQ2MjFjZTBmLTA4NzItNDFlZi1iMmVjLTE4ZmFlYzNmZDFkOSJdfSx7ImRhdGFzZXQiOiIwYjAyMDhiNi1iNDI0LTRiNTctOTg0Zi1jYWRkZmEyNWJhMjIiLCJsYXllcnMiOlsiY2MzNTQzMmQtMzhkNy00YTAzLTg3MmUtM2E3MWEyZjU1NWZjIiwiYjQ1MzUwZTMtNWE3Ni00NGNkLWIwYTktNTAzOGEwZDhiZmFlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyJmMTNmODZjYi0wOGI1LTRlNmMtYmI4ZC1iNDc4MjA1MmY5ZTUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZSwiYmJveCI6bnVsbCwiYmVhcmluZyI6MCwicGl0Y2giOjB9&menu=eyJtZW51U2VjdGlvbiI6Im15LWdmdyIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
       image: areas,
       btnText: 'view on map'
     },
     {
-      id: 'map',
+      id: 'global',
       title: 'Explore recent trends in fire alerts',
       summary:
         'See if current trends in fire alerts are normal, above or below average',
       image: widgetStats,
       selector: {
-        path: '/dashboards/country/{iso}?widget=fires&category=fires#fires'
+        path: '/dashboards/country/{iso}?widget=firesAlerts&category=fires#firesAlerts'
       }
     },
     {
@@ -168,21 +168,21 @@ export default {
         '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXSwidGltZWxpbmVQYXJhbXMiOnsic3RhcnREYXRlIjoiMjAxNy0wMy0xMSIsImVuZERhdGUiOiIyMDE3LTEyLTMwIiwidHJpbUVuZERhdGUiOiIyMDE3LTEyLTMwIn19LHsiZGF0YXNldCI6ImM3Yzc2Y2MxLTUxNzgtNDc0YS04YjZhLTYwYjg5NWUwMjI2MCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0MjQyN2E1NS1jOGI1LTRmYWMtOGRiMy1hOWQ1OWUxYjI2ZjciXSwiaXNvIjoiIn0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NSwiY2VudGVyIjp7ImxhdCI6MTIuNzA0NjUwNTA4Mjg3ODkzLCJsbmciOjk2LjI4NDE3OTY4NzUwMDAxfSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
       image: widgetCumulative,
       selector: {
-        path: '/dashboards/country/{iso}?widget=fires&category=fires#fires'
+        path: '/dashboards/country/{iso}?widget=firesAlertsCumulative&category=fires#firesAlertsCumulative'
       }
     },
     {
-      id: 'cumulative',
+      id: 'map',
       title: 'View fire alerts on the map',
       summary:
         'View fire alerts - updated daily - on the map anywhere in the world.',
       link:
-        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6IjFkM2NjZjliLTEwMmUtNGMwYi1iMmVhLTJhYmNjNzEyZTE5NCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI5M2UzMzkzMi0zOTU5LTQyMDEtYjhjOC02ZWMwYjMyNTk2ZTAiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6Im15LWdmdyJ9',
+        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZDhkOTNmYmItODMwNC00MjRmLTk5ZmItMWU1MjFiNWRmNTZhIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImQ2MjFjZTBmLTA4NzItNDFlZi1iMmVjLTE4ZmFlYzNmZDFkOSJdfSx7ImRhdGFzZXQiOiIwYjAyMDhiNi1iNDI0LTRiNTctOTg0Zi1jYWRkZmEyNWJhMjIiLCJsYXllcnMiOlsiY2MzNTQzMmQtMzhkNy00YTAzLTg3MmUtM2E3MWEyZjU1NWZjIiwiYjQ1MzUwZTMtNWE3Ni00NGNkLWIwYTktNTAzOGEwZDhiZmFlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyJmMTNmODZjYi0wOGI1LTRlNmMtYmI4ZC1iNDc4MjA1MmY5ZTUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZSwiYmJveCI6bnVsbCwiYmVhcmluZyI6MCwicGl0Y2giOjB9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
       image: mapLayer,
       btnText: 'view on map'
     },
     {
-      id: 'blog',
+      id: 'blog-research',
       title: 'The latest research and insights on fires from GFW',
       summary:
         'Learn about the complex relationship between forests and fires on the GFW blog.',
@@ -191,7 +191,7 @@ export default {
       btnText: 'read the blog'
     },
     {
-      id: 'blog',
+      id: 'blog-fw',
       title: 'Navigate to and report on fire alerts in the field',
       summary:
         'Use the Forest Watcher mobile app to navigate to and report on fire alerts offline in the field.',
