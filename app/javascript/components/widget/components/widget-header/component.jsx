@@ -56,7 +56,7 @@ class WidgetHeader extends PureComponent {
       toggleSettingsMenu
     } = this.props;
 
-    const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
+    const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
