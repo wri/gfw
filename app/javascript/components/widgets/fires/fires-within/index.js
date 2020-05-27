@@ -120,13 +120,9 @@ export default {
       })
     ),
   getDataURL: params => [
+    fetchVIIRSLatest({ ...params, download: true }),
     fetchFiresWithin({ ...params, download: true }),
-    fetchFiresWithin({
-      ...params,
-      forestType: '',
-      landCategory: '',
-      download: true
-    })
+    fetchFiresWithin({ ...params, forestType: '', landCategory: '', download: true })
   ],
   getWidgetProps
 };
