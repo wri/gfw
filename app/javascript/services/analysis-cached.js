@@ -757,22 +757,18 @@ export const fetchFiresWithin = params => {
 };
 
 export const fetchFiresHistorical = params => {
-  const { forestType, landCategory, ifl, download, startDate, endDate } =
+  const { forestType, frequency, landCategory, ifl, download, startDate, endDate } =
     params || {};
   const { firesDaily, firesWeekly } = SQL_QUERIES;
-  const diff = moment(endDate).diff(moment(startDate), 'weeks');
-  const frequency = diff <= 53 ? 'daily' : 'weekly';
-  const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      datasetType: frequency
-    })}${frequency === 'daily' ? firesDaily : firesWeekly}`
-      .replace(/{location}/g, getLocationSelect(params))
-      .replace('{WHERE}', getWHEREQuery(params))
-      .replace(/{dateFilter}/g, encodeURIComponent(getDatesFilter(params)))
-      .replace('{startDate}', startDate)
-      .replace('{endDate}', endDate)
-  );
+  const url = encodeURI(`${getRequestUrl({
+    ...params,
+    datasetType: frequency
+  })}${frequency === 'daily' ? firesDaily : firesWeekly}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery(params))
+    .replace(/{dateFilter}/g, getDatesFilter(params))
+    .replace('{startDate}', startDate)
+    .replace('{endDate}', endDate));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);

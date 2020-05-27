@@ -1,15 +1,4 @@
-import { fetchFiresHistorical, fetchVIIRSLatest } from 'services/analysis-cached';
-import { all, spread } from 'axios';
-
-import {
-  POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
-} from 'data/layers-datasets';
-import {
-  DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
-} from 'data/layers';
+import { fetchFiresHistorical } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -18,7 +7,6 @@ export default {
   title: 'Fire Alerts Count in {location}',
   large: true,
   categories: ['summary', 'fires'],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -48,35 +36,37 @@ export default {
       border: true
     }
   ],
-  sortOrder: {
-    fires: 100
-  },
+  refetchKeys: [
+    'forestType',
+    'landCategory',
+    'dataset',
+    'endYear',
+    'startYear',
+    'confidence'
+  ],
   visible: ['dashboard'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
+  hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
   metaKey: 'widget_fire_historical_location',
-  settings: {
-    dataset: 'viirs',
-    minDate: '2000-01-01',
-    confidence: 'h'
+  sortOrder: {
+    fires: 100
   },
-  datasets: [
-    {
-      dataset: POLITICAL_BOUNDARIES_DATASET,
-      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
-    },
-    // fires
-    {
-      dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
-  ],
-  sentence:
-    'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+  settings: {
+    startDate: '2020-01-01',
+    endDate: '2020-04-01',
+    dataset: 'viirs'
+  },
+  sentences: {
+    initial:
+      'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts',
+    withInd:
+      'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
+    conf: ', considering {confidence} alerts only.'
+  },
   whitelistType: 'fires',
   whitelists: {
     adm0: [
@@ -288,35 +278,10 @@ export default {
     ]
   },
   getData: params =>
-    fetchVIIRSLatest(params)
-      .then(
-        response =>
-          (response.attributes && response.attributes.updatedAt) || null
-      )
-      .then(latest => fetchFiresHistorical({ startDate: params.minDate, endDate: latest, ...params, frequency: 'daily' })
-        .then(response => {
-          const { data } = response.data || {};
-
-          return {
-            alerts: data,
-            settings: {
-              startDate: data && data[data.length - 1].alert__date,
-              endDate: latest,
-              startIndex: data && data.length - 365
-            }
-          };
-        })
-        .catch(error => {
-          console.info(error);
-          return null;
-        })
-      )
-      .catch(error => {
-        console.info(error);
-        return null;
-      }),
-  getDataURL: params => [
-    fetchFiresHistorical({ ...params, frequency: 'daily', download: true })
-  ],
+    fetchFiresHistorical(params).then(alerts => {
+      const { data } = alerts.data;
+      return data;
+    }),
+  getDataURL: params => [fetchFiresHistorical({ ...params, download: true })],
   getWidgetProps
 };
