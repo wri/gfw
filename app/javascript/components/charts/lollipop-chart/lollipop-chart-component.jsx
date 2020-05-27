@@ -60,20 +60,15 @@ class LollipopChart extends PureComponent {
               .charAt(0)
               .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
             <div className="custom-xAxis">
-              <div
-                style={{
-                  marginLeft: '40%'
-                }}
-              >
+              <div className="axis-wrapper">
                 <div
                   className="custom-xAxis-ticks"
                   style={{
                     ...((allNegative || (!allPositive && !allNegative)) && {
-                      marginLeft: '67px',
-                      marginRight: isScrollable(isDesktop) ? '15px' : 0
+                      marginLeft: isDesktop ? '67px' : '50px'
                     }),
                     ...((allPositive || (!allPositive && !allNegative)) && {
-                      marginRight: isScrollable(isDesktop) ? '82px' : '67px'
+                      marginRight: isDesktop ? '67px' : '50px'
                     })
                   }}
                 >
@@ -215,46 +210,48 @@ class LollipopChart extends PureComponent {
                   })}
               </ul>
             </div>
-            <div
-              className="cartesian-grid"
-              style={{
-                ...(allNegative && {
-                  left: 'calc(40% + 67px)',
-                  right: 0,
-                  width: 'calc(100% - 40% - 67px)'
-                }),
-                ...(allPositive && {
-                  left: '40%',
-                  right: 0,
-                  width: 'calc(100% - 40% - 67px)'
-                }),
-                ...(!allPositive &&
-                  !allNegative && {
-                  left: 'calc(40% + 67px)',
-                  right: 0,
-                  width: 'calc(100% - 40% - 67px - 67px)'
-                })
-              }}
-            >
-              {ticks.map(tick => (
-                <div
-                  className="grid-line"
-                  key={tick}
-                  style={{
-                    position: 'absolute',
-                    right:
-                      tick < 0 &&
-                      (allNegative
-                        ? `${interpolate(tick)}%`
-                        : `${interpolate(tick - dataMax)}%`),
-                    left:
-                      tick === 0
-                        ? `${interpolate(dataMin)}%`
-                        : tick > 0 && `${interpolate(tick - dataMin)}%`
-                  }}
-                />
-              ))}
-            </div>
+            {isDesktop &&
+              <div
+                className="cartesian-grid"
+                style={{
+                  ...(allNegative && {
+                    left: 'calc(40% + 67px)',
+                    right: 0,
+                    width: 'calc(100% - 40% - 67px)'
+                  }),
+                  ...(allPositive && {
+                    left: '40%',
+                    right: 0,
+                    width: 'calc(100% - 40% - 67px)'
+                  }),
+                  ...(!allPositive &&
+                    !allNegative && {
+                    left: 'calc(40% + 67px)',
+                    right: 0,
+                    width: 'calc(100% - 40% - 67px - 67px)'
+                  })
+                }}
+              >
+                {ticks.map(tick => (
+                  <div
+                    className="grid-line"
+                    key={tick}
+                    style={{
+                      position: 'absolute',
+                      right:
+                        tick < 0 &&
+                        (allNegative
+                          ? `${interpolate(tick)}%`
+                          : `${interpolate(tick - dataMax)}%`),
+                      left:
+                        tick === 0
+                          ? `${interpolate(dataMin)}%`
+                          : tick > 0 && `${interpolate(tick - dataMin)}%`
+                    }}
+                  />
+                ))}
+              </div>
+            }
           </div>
         )}
       </MediaQuery>

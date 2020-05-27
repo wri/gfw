@@ -27,6 +27,12 @@
     border-bottom: 1px solid black;
     background-color: white;
 
+    .axis-wrapper {
+      @media screen and (min-width: $screen-m) {
+        margin-left: 40%;
+      }
+    }
+
     .custom-xAxis-ticks {
       height: 10px;
       position: relative;
@@ -49,10 +55,14 @@
     position: relative;
     z-index: 2;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     margin-bottom: rem(10px);
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     &.-bar {
       flex-direction: column;
@@ -91,20 +101,26 @@
     border-radius: 50%;
     background-color: $border;
     position: relative;
+    margin-right: 10px;
 
     &.-lollipop {
       position: absolute;
+      margin-right: 0;
     }
   }
 
   .item-label {
-    width: 40%;
-    padding-right: rem(15px);
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     text-align: right;
+    margin-bottom: 10px;
+
+    @media screen and (min-width: $screen-m) {
+      width: 40%;
+      padding-right: rem(15px);
+      justify-content: space-between;
+    }
   }
 
   .lollipop {
@@ -115,19 +131,30 @@
   }
 
   .space-right {
-    padding-right: 67px;
+    padding-right: 50px;
+
+    @media screen and (min-width: $screen-m) {
+      padding-right: 67px;
+    }
   }
 
   .space-left {
-    padding-left: 67px;
+    padding-left: 50px;
+
+    @media screen and (min-width: $screen-m) {
+      padding-left: 67px;
+    }
   }
 
   .item-lollipop-bar {
     position: relative;
-    width: 60%;
     display: flex;
     align-items: center;
     height: rem(18px);
+
+    @media screen and (min-width: $screen-m) {
+      width: 60%;
+    }
 
     .item-spacer {
       height: 1px;
@@ -137,7 +164,7 @@
       position: absolute;
       height: rem(2px);
       width: 100%;
-      top: 0;
+      top: -1px;
       left: 0;
       margin-left: 0;
       margin-right: 0;
