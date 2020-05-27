@@ -9,10 +9,10 @@ import Component from './component';
 
 const mapStateToProps = ({ location }) => ({
   open: location && location.query && !!location.query.gfwfires,
-  path: location && location.pathname
+  location
 });
 
-reducerRegistry.registerModule('modalGFWClimate', {
+reducerRegistry.registerModule('modalGFWFires', {
   actions,
   reducers,
   initialState

@@ -3,14 +3,14 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 $mobile-margin: rem(10px);
 
-.c-gfw-climate-modal {
+.c-gfw-fires-modal {
   margin-top: $mobile-margin !important;
 
   @media screen and (min-width: $screen-m) {
     margin-top: auto !important;
   }
 
-  .climate-content {
+  .fires-modal-content {
     display: flex;
     justify-content: center;
     align-items: flex-start;

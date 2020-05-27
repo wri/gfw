@@ -9,14 +9,16 @@ class ModalGFWFires extends PureComponent {
   render() {
     const {
       open,
-      path,
+      location,
       setModalGFWFiresOpen,
       setModalContactUsOpen
     } = this.props;
 
-    let modalText;
-    switch (path) {
-      case '/topics/fires':
+    const { query, pathname } = location || {};
+
+    let modalText = '';
+    if (pathname) {
+      if (pathname === '/topics/fires') {
         modalText = [
           'Welcome to the new home for Global Forest Watch Fires data and insights! ',
           <a
@@ -30,8 +32,7 @@ class ModalGFWFires extends PureComponent {
           </a>,
           " if you don't find what you're looking for."
         ];
-        break;
-      case '/map':
+      } else if (pathname === '/map') {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           If you're looking for the Fire Report, `,
@@ -45,9 +46,26 @@ class ModalGFWFires extends PureComponent {
           </a>,
           '.'
         ];
-        break;
-      default:
-        modalText = '';
+      } else if (
+        pathname.includes('dashboards') &&
+        query &&
+        query.category === 'fires'
+      ) {
+        modalText = [
+          `Welcome to the new home for Global Forest Watch Fires data and insights!
+          Explore the links to fire data and analyses below. `,
+          <a
+            href=""
+            onClick={() => {
+              setModalGFWFiresOpen(false);
+              setModalContactUsOpen(true);
+            }}
+          >
+            Contact us
+          </a>,
+          " if you don't find what you're looking for."
+        ];
+      }
     }
 
     return (
@@ -58,9 +76,9 @@ class ModalGFWFires extends PureComponent {
           setModalGFWFiresOpen(false);
         }}
         title={'Global Forest Watch Fires.'}
-        className="c-gfw-climate-modal"
+        className="c-gfw-fires-modal"
       >
-        <div className="climate-content">
+        <div className="fires-modal-content">
           <p>{modalText}</p>
         </div>
       </Modal>
@@ -70,7 +88,7 @@ class ModalGFWFires extends PureComponent {
 
 ModalGFWFires.propTypes = {
   open: PropTypes.bool,
-  path: PropTypes.string,
+  location: PropTypes.object,
   setModalGFWFiresOpen: PropTypes.func,
   setModalContactUsOpen: PropTypes.func
 };
