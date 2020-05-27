@@ -54,7 +54,7 @@ export const getStartEndIndexes = createSelector(
       };
     }
 
-    const start = startIndex;
+    const start = startIndex || currentData.length - 365;
     const end = endIndex || currentData.length - 1;
 
     if (active && end - start > MAXGAP) {

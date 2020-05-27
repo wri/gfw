@@ -301,8 +301,7 @@ export default {
             alerts: data,
             settings: {
               startDate: data && data[data.length - 1].alert__date,
-              endDate: latest,
-              startIndex: data && data.length - 365
+              endDate: latest
             }
           };
         })
