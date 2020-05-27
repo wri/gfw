@@ -341,7 +341,7 @@ export const topics = {
   fires: {
     slug: 'fires',
     title: 'Fires',
-    summary: 'View fire alerts within an area of interest.',
+    summary: 'Explore fire alerts in near real time.',
     image: fires,
     buttons: [
       {
@@ -373,9 +373,6 @@ export const topics = {
           value: 'default'
         },
         label: 'default'
-      },
-      menu: {
-        menuSection: 'my-gfw'
       }
     }
   }
