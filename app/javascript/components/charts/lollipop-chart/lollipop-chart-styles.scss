@@ -26,6 +26,7 @@
     width: 100%;
     border-bottom: 1px solid black;
     background-color: white;
+    padding: 0 10px;
 
     .axis-wrapper {
       @media screen and (min-width: $screen-m) {
@@ -41,7 +42,6 @@
 
   .list-wrapper {
     position: relative;
-    padding: 10px 0;
     max-height: rem(340px);
     overflow-y: hidden;
 
@@ -56,12 +56,21 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    margin-bottom: rem(10px);
+    padding: rem(10px) 0;
 
     @media screen and (min-width: $screen-m) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+    }
+
+    &:hover {
+      background-color: rgba($border, 0.5);
+
+      .item-bubble {
+        background-color: $slate-light;
+        color: $white;
+      }
     }
 
     &.-bar {
@@ -118,7 +127,8 @@
 
     @media screen and (min-width: $screen-m) {
       width: 40%;
-      padding-right: rem(15px);
+      margin-bottom: 0;
+      padding: 0 rem(15px) 0 10px;
       justify-content: space-between;
     }
   }
