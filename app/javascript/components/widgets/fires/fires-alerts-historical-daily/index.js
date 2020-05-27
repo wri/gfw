@@ -48,6 +48,7 @@ export default {
   ],
   sentence:
     'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+  whitelistType: 'fires',
   whitelists: {
     adm0: [
       'AFG',

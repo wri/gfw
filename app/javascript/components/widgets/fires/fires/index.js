@@ -30,6 +30,7 @@ export default {
   sentences: {
     initial: '{count} active fires detected in {location} in the last 7 days.'
   },
+  whitelistType: 'fires',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,

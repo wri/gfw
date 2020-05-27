@@ -71,7 +71,7 @@ export default {
     }
   ],
   sortOrder: {
-    fires: 1
+    fires: 4
   },
   settings: {
     period: 'week',
@@ -95,6 +95,7 @@ export default {
     globalWithInd:
       'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}.'
   },
+  whitelistType: 'fires',
   whitelists: {
     checkStatus: true
   },

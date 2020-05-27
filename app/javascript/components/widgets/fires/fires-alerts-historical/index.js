@@ -82,6 +82,7 @@ export default {
       'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
     conf: ', considering {confidence} alerts only.'
   },
+  whitelistType: 'fires',
   whitelists: {
     adm0: [
       'AFG',
