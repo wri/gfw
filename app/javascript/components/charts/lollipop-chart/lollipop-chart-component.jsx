@@ -79,6 +79,7 @@ class LollipopChart extends PureComponent {
                 >
                   {ticks.map(tick => (
                     <div
+                      key={tick}
                       style={{
                         position: 'absolute',
                         right:
@@ -109,7 +110,7 @@ class LollipopChart extends PureComponent {
                   data.map((item, index) => {
                     const isNegative = item.value < 0;
                     const linkContent = (
-                      <div className="list-item">
+                      <div className="list-item" key={item.label}>
                         <div className="item-label">
                           <div className="item-bubble">
                             {item.rank || index + 1}
@@ -218,27 +219,27 @@ class LollipopChart extends PureComponent {
               className="cartesian-grid"
               style={{
                 ...(allNegative && {
-                  right: isScrollable(isDesktop) ? '15px' : 0,
-                  width: isScrollable(isDesktop)
-                    ? 'calc(60% - 82px)'
-                    : 'calc(60% - 67px)'
+                  left: 'calc(40% + 67px)',
+                  right: 0,
+                  width: 'calc(100% - 40% - 67px)'
                 }),
                 ...(allPositive && {
-                  right: isScrollable(isDesktop) ? '82px' : '67px',
-                  width: isScrollable(isDesktop) ? 'calc(60% - 15px)' : '60%'
+                  left: '40%',
+                  right: 0,
+                  width: 'calc(100% - 40% - 67px)'
                 }),
                 ...(!allPositive &&
                   !allNegative && {
-                  right: isScrollable(isDesktop) ? '82px' : '67px',
-                  width: isScrollable(isDesktop)
-                    ? 'calc(60% - 142px)'
-                    : 'calc(60% - 134px)'
+                  left: 'calc(40% + 67px)',
+                  right: 0,
+                  width: 'calc(100% - 40% - 67px - 67px)'
                 })
               }}
             >
               {ticks.map(tick => (
                 <div
                   className="grid-line"
+                  key={tick}
                   style={{
                     position: 'absolute',
                     right:
