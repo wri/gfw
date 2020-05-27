@@ -469,7 +469,8 @@ export const getWidgets = createSelector(
         settings,
         datasets,
         type,
-        dataType
+        dataType,
+        active
       });
 
       const { ifl } = settings || {};
