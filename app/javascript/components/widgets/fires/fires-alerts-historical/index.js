@@ -15,7 +15,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesAlertsHistorical',
-  title: 'Fire Alerts Count in {location}',
+  title: 'Historical Fire Alerts in {location}',
   large: true,
   categories: ['summary', 'fires'],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],

@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 
 import { getChartConfig } from 'components/widgets/utils/data';
 
+const getActive = state => state.active;
 const getAlerts = state => state.data && state.data.alerts;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
@@ -16,6 +17,8 @@ const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
 const getStartIndex = state => state.settings.startIndex;
 const getEndIndex = state => state.settings.endIndex || null;
+
+const MAXGAP = 90;
 
 const zeroFillDays = (startDate, endDate) => {
   const start = moment(startDate);
@@ -41,10 +44,38 @@ export const getData = createSelector(
   }
 );
 
+export const getStartEndIndexes = createSelector(
+  [getStartIndex, getEndIndex, getActive, getData],
+  (startIndex, endIndex, active, currentData) => {
+    if (!currentData) {
+      return {
+        startIndex,
+        endIndex
+      };
+    }
+
+    const start = startIndex;
+    const end = endIndex || currentData.length - 1;
+
+    if (active && end - start > MAXGAP) {
+      return {
+        startIndex: end - MAXGAP,
+        endIndex: end
+      };
+    }
+
+    return {
+      startIndex: start,
+      endIndex: end
+    };
+  }
+);
+
 export const parseBrushedData = createSelector(
-  [getData, getStartIndex, getEndIndex],
-  (data, startIndex, endIndex) => {
+  [getData, getStartEndIndexes],
+  (data, indexes) => {
     if (!data) return null;
+    const { startIndex, endIndex } = indexes;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -54,8 +85,10 @@ export const parseBrushedData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [getData, getColors, getStartDate, getEndDate, getStartIndex, getEndIndex],
-  (data, colors, startDate, endDate, startIndex, endIndex) => {
+  [getColors, getStartEndIndexes, getActive],
+  (colors, indexes, active) => {
+    const { startIndex, endIndex } = indexes;
+
     const tooltip = [
       {
         label: 'Fire alerts'
@@ -86,8 +119,8 @@ export const parseConfig = createSelector(
           left: 48,
           bottom: 12
         },
-        minimumGap: 90,
-        maximumGap: 365,
+        minimumGap: MAXGAP,
+        maximumGap: active ? MAXGAP : 365,
         dataKey: 'date',
         startIndex: startIndex || 0,
         endIndex,
