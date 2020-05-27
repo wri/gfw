@@ -374,7 +374,7 @@ export const topics = {
         },
         label: 'default'
       },
-      mainMap: {
+      menu: {
         menuSection: 'my-gfw'
       }
     }
