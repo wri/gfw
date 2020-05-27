@@ -3,12 +3,13 @@
 .c-chart-legend {
   display: flex;
   width: 100%;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
 
   .legend-item {
-    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
 
-    &:first-child {
+    &:last-child {
       margin-left: 0;
     }
   }
@@ -52,7 +53,11 @@
   }
 
   .contextual-settings-btn {
-    margin-left: auto;
-    margin-right: 10px;
+    margin-bottom: 10px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-left: auto;
+      margin-right: 10px;
+    }
   }
 }
