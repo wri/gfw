@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import startCase from 'lodash/startCase';
+import { motion } from 'framer-motion';
 
 import { Media } from 'utils/responsive';
 
@@ -10,37 +11,8 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-import posed, { PoseGroup } from 'react-pose';
 
 import './styles.scss';
-
-const PanelMobile = posed.div({
-  enter: {
-    y: 0,
-    opacity: 1,
-    delay: 200,
-    transition: { duration: 200 },
-  },
-  exit: {
-    y: 50,
-    opacity: 0,
-    delay: 200,
-    transition: { duration: 200 },
-  },
-});
-
-const PanelDesktop = posed.div({
-  enter: {
-    x: 66,
-    opacity: 1,
-    delay: 300,
-  },
-  exit: {
-    x: 0,
-    opacity: 0,
-    transition: { duration: 200 },
-  },
-});
 
 class MenuPanel extends PureComponent {
   render() {
@@ -59,11 +31,18 @@ class MenuPanel extends PureComponent {
     } = this.props;
 
     return (
-      <PoseGroup>
+      <>
         {active && (
           <Fragment>
             <Media greaterThanOrEqual="md">
-              <PanelDesktop
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: { opacity: 1, x: 66 },
+                  hidden: { opacity: 0, x: 0 },
+                  transition: { ease: 'easeInOut', duration: 0.4 },
+                }}
                 key="menu-container"
                 className={cx(
                   'c-menu-panel',
@@ -77,10 +56,17 @@ class MenuPanel extends PureComponent {
                 </button>
                 {!loading && <div className="panel-body">{children}</div>}
                 {loading && <Loader className="map-menu-loader" />}
-              </PanelDesktop>
+              </motion.div>
             </Media>
             <Media lessThan="md">
-              <PanelMobile
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 50 },
+                  transition: { ease: 'easeInOut', duration: 0.3 },
+                }}
                 key="menu-container"
                 className={cx(
                   'c-menu-panel',
@@ -115,11 +101,11 @@ class MenuPanel extends PureComponent {
                 </div>
                 {!loading && <div className="panel-body">{children}</div>}
                 {loading && <Loader className="map-menu-loader" />}
-              </PanelMobile>
+              </motion.div>
             </Media>
           </Fragment>
         )}
-      </PoseGroup>
+      </>
     );
   }
 }
