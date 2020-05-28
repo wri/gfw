@@ -1,6 +1,4 @@
 @import '~styles/settings.scss';
-$mobile-padding: rem(20px);
-$desktop-padding: rem(40px);
 $mobile-margin: rem(10px);
 
 .c-gfw-fires-modal {
@@ -25,6 +23,16 @@ $mobile-margin: rem(10px);
       line-height: 30px;
       margin-bottom: 1.25rem;
     }
+
+    button,
+    a {
+      color: $green-gfw;
+      cursor: pointer;
+
+      &:hover {
+        color: $dark-green;
+        text-decoration: underline;
+      }
+    }
   }
 }
-

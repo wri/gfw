@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
 
 import Modal from '../modal';
 
@@ -21,29 +22,28 @@ class ModalGFWFires extends PureComponent {
       if (pathname === '/topics/fires') {
         modalText = [
           'Welcome to the new home for Global Forest Watch Fires data and insights! ',
-          <a
-            href=""
+          <button
             onClick={() => {
               setModalGFWFiresOpen(false);
               setModalContactUsOpen(true);
             }}
           >
             Contact us
-          </a>,
+          </button>,
           " if you don't find what you're looking for."
         ];
       } else if (pathname === '/map') {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           If you're looking for the Fire Report, `,
-          <a
+          <Link
             href="/dashboards/global?category=fires"
             onClick={() => {
               setModalGFWFiresOpen(false);
             }}
           >
             click here
-          </a>,
+          </Link>,
           '.'
         ];
       } else if (
@@ -54,15 +54,14 @@ class ModalGFWFires extends PureComponent {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           Explore the links to fire data and analyses below. `,
-          <a
-            href=""
+          <button
             onClick={() => {
               setModalGFWFiresOpen(false);
               setModalContactUsOpen(true);
             }}
           >
             Contact us
-          </a>,
+          </button>,
           " if you don't find what you're looking for."
         ];
       }
@@ -70,7 +69,7 @@ class ModalGFWFires extends PureComponent {
 
     return (
       <Modal
-        isOpen={open}
+        isOpen={open && !!modalText}
         contentLabel="Global Forest Watch Fires"
         onRequestClose={() => {
           setModalGFWFiresOpen(false);
