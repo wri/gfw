@@ -1,4 +1,4 @@
-import { fetchFiresHistorical } from 'services/analysis-cached';
+import { fetchHistoricalAlerts } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -278,10 +278,10 @@ export default {
     ]
   },
   getData: params =>
-    fetchFiresHistorical(params).then(alerts => {
+    fetchHistoricalAlerts(params).then(alerts => {
       const { data } = alerts.data;
       return data;
     }),
-  getDataURL: params => [fetchFiresHistorical({ ...params, download: true })],
+  getDataURL: params => [fetchHistoricalAlerts({ ...params, download: true })],
   getWidgetProps
 };

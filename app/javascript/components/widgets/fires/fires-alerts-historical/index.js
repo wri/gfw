@@ -1,5 +1,4 @@
-import { fetchFiresHistorical, fetchVIIRSLatest } from 'services/analysis-cached';
-import { all, spread } from 'axios';
+import { fetchHistoricalAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -293,7 +292,7 @@ export default {
         response =>
           (response.attributes && response.attributes.updatedAt) || null
       )
-      .then(latest => fetchFiresHistorical({ startDate: params.minDate, endDate: latest, ...params, frequency: 'daily' })
+      .then(latest => fetchHistoricalAlerts({ startDate: params.minDate, endDate: latest, ...params, frequency: 'daily' })
         .then(response => {
           const { data } = response.data || {};
 
@@ -315,7 +314,7 @@ export default {
         return null;
       }),
   getDataURL: params => [
-    fetchFiresHistorical({ ...params, frequency: 'daily', download: true })
+    fetchHistoricalAlerts({ ...params, frequency: 'daily', download: true })
   ],
   getWidgetProps
 };
