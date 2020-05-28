@@ -16,7 +16,7 @@ const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
 const getStartIndex = state => state.settings.startIndex;
-const getEndIndex = state => state.settings.endIndex || null;
+const getEndIndex = state => console.log(state) || state.settings.endIndex || null;
 
 const MAXGAP = 90;
 
@@ -54,7 +54,7 @@ export const getStartEndIndexes = createSelector(
       };
     }
 
-    const start = startIndex || currentData.length - 365;
+    const start = startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
     const end = endIndex || currentData.length - 1;
 
     if (active && end - start > MAXGAP) {
@@ -79,6 +79,7 @@ export const parseBrushedData = createSelector(
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
+    console.log('data', data, start, end);
 
     return data.slice(start, end + 1);
   }
@@ -171,8 +172,8 @@ export const parseSentence = createSelector(
   (data, colors, sentence, location, options) => {
     if (!data) return null;
     const { dataset } = options;
-    const startDate = data[0].date;
-    const endDate = data[data.length - 1].date;
+    const startDate = !!data.length && data[0].date;
+    const endDate = !!data.length && data[data.length - 1].date;
     const total = sumBy(data, 'alert__count');
     const params = {
       location: location.label || '',
