@@ -185,8 +185,10 @@ class ChoseAnalysis extends PureComponent {
           )}
         </Dropzone>
         <div className="terms">
-          <p>
-            Learn more about supported file formats
+          <div className="first-term">
+            <p>
+              Learn more about supported file formats
+            </p>
             <Button
               className="info-button"
               theme="theme-button-tiny square"
@@ -198,7 +200,7 @@ class ChoseAnalysis extends PureComponent {
             >
               <Icon icon={infoIcon} className="info-icon" />
             </Button>
-          </p>
+          </div>
           <p>
             By uploading data you agree to the
             {' '}

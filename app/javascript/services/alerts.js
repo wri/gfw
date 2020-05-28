@@ -1,7 +1,9 @@
 import { apiRequest } from 'utils/request';
 import moment from 'moment';
 import { all, spread } from 'axios';
+import sumBy from 'lodash/sumBy';
 import { fetchAnalysisEndpoint } from 'services/analysis';
+import { fetchLatestWeekGladAlerts } from 'services/analysis-cached';
 
 import { GFW_API } from 'utils/constants';
 
@@ -30,27 +32,26 @@ const getLocation = (adm0, adm1, adm2) =>
 
 export const getLatestAlerts = ({ location, params }) =>
   all([
-    fetchAnalysisEndpoint({
+    fetchLatestWeekGladAlerts({
       ...location,
-      params,
-      name: 'glad-alerts',
-      slug: 'glad-alerts',
-      version: 'v1'
-    }),
+      ...params
+    }).catch(() => null),
     fetchAnalysisEndpoint({
       ...location,
       params,
       name: 'viirs-alerts',
       slug: 'viirs-active-fires',
       version: 'v1'
-    })
+    }).catch(() => null)
   ]).then(
     spread((gladsResponse, firesResponse) => {
-      const { value: glads } = gladsResponse.data.data.attributes || {};
-      const { value: fires } = firesResponse.data.data.attributes || {};
+      const glads = gladsResponse.data.data || {};
+      const { value: fires } = firesResponse
+        ? firesResponse.data.data.attributes
+        : {};
 
       return {
-        glads,
+        glads: sumBy(glads, 'count'),
         fires
       };
     })

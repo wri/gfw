@@ -29,11 +29,17 @@ export const getLatest = createThunkAction(
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes
                     : latestResponse.attributes;
-                  date = data.date || data.latestResponse;
+                  date = data.date || data.latestResponse || data.latest;
                 }
+
+                let latestDate = moment.utc(date);
+                if (newEndpoints[index].resolution) {
+                  latestDate = latestDate.endOf(newEndpoints[index].resolution);
+                }
+
                 return {
                   ...obj,
-                  [newEndpoints[index].id]: moment(date).format('YYYY-MM-DD'),
+                  [newEndpoints[index].id]: latestDate.format('YYYY-MM-DD')
                 };
               }, {});
             dispatch(setLatestDates(latestDates));

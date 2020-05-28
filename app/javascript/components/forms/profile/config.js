@@ -102,8 +102,7 @@ export const howDoYouUse = [
   'Learn about forests/my country',
   'Inform purchasing/procurement/investment decisions',
   'Educational support materials',
-  'Not sure; new to GFW',
-  'Other'
+  'Not sure; new to GFW'
 ];
 
 export const topics = [

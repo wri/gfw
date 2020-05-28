@@ -127,6 +127,11 @@ export default {
     action: 'User drawn shape',
     label: 'Cancel'
   },
+  analysisUploadShape: {
+    category: 'Map analysis',
+    action: 'Upload custom shape',
+    label: '[status]'
+  },
   analysisViewDashboards: {
     category: 'Map analysis',
     action: 'User goes to dashboards',

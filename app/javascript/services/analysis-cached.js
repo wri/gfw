@@ -21,6 +21,9 @@ const {
   GLAD_ADM0_WEEKLY,
   GLAD_ADM1_WEEKLY,
   GLAD_ADM2_WEEKLY,
+  GLAD_ADM2_DAILY,
+  GLAD_WDPA_DAILY,
+  GLAD_GEOSTORE_DAILY,
   GLAD_ADM0_WHITELIST,
   GLAD_ADM1_WHITELIST,
   GLAD_ADM2_WHITELIST,
@@ -681,6 +684,69 @@ export const getAreaIntersectionGrouped = ({
   }));
 };
 
+// Latest Dates for Alerts
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
+export const fetchGLADLatest = () => {
+  const url = '/glad-alerts/latest';
+  return apiRequest
+    .get(url)
+    .then(response => {
+      const { date } = response.data.data[0].attributes;
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'glad-alerts'
+      };
+    })
+    .catch(() => {
+      return new Promise(resolve =>
+        resolve({
+          attributes: { updatedAt: lastFriday },
+          id: null,
+          type: 'glad-alerts'
+        })
+      );
+    });
+};
+
+export const fetchLatestWeekGladAlerts = ({ adm0, adm1, adm2, type }) =>
+  fetchGLADLatest()
+    .then(date => {
+      const lastestDate = date.attributes.updatedAt;
+      const alertDate = moment(lastestDate)
+        .subtract(7, 'days')
+        .format('YYYY-MM-DD');
+
+      let locationQuery = '';
+      if (type === 'country') {
+        if (adm2) {
+          locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}' AND adm2 = '${
+            adm2
+          }'`;
+        } else if (adm1) locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}'`;
+        else locationQuery = `iso = '${adm0}'`;
+      } else if (type === 'geostore') {
+        locationQuery = `geostore__id = '${adm0}'`;
+      } else if (type === 'wdpa') { locationQuery = `wdpa_protected_area__id = '${adm0}'`; }
+      const sql = `SELECT alert__date as date, SUM(alert__count) as count FROM DATA WHERE ${
+        locationQuery
+      } AND alert__date > '${alertDate}' GROUP BY date`;
+
+      let dataset = '';
+      if (type === 'country') dataset = GLAD_ADM2_DAILY;
+      else if (type === 'geostore') dataset = GLAD_GEOSTORE_DAILY;
+      else if (type === 'wdpa') dataset = GLAD_WDPA_DAILY;
+
+      const url = `${process.env.GFW_API}/query/${dataset}?sql=${sql}`;
+
+      return apiRequest.get(url).catch(() => null);
+    })
+    .catch(() => null);
+
 export const fetchGladAlerts = ({
   adm0,
   adm1,
@@ -744,36 +810,6 @@ export const fetchGladAlerts = ({
       }))
     }
   }));
-};
-
-// Latest Dates for Alerts
-const lastFriday = moment()
-  .day(-2)
-  .format('YYYY-MM-DD');
-
-export const fetchGLADLatest = () => {
-  const url = '/glad-alerts/latest';
-  return apiRequest
-    .get(url)
-    .then(response => {
-      const { date } = response.data.data[0].attributes;
-
-      return {
-        attributes: { updatedAt: date },
-        id: null,
-        type: 'glad-alerts'
-      };
-    })
-    .catch(error => {
-      console.error('Error in gladRequest', error);
-      return new Promise(resolve =>
-        resolve({
-          attributes: { updatedAt: lastFriday },
-          id: null,
-          type: 'glad-alerts'
-        })
-      );
-    });
 };
 
 export const getNonGlobalDatasets = () => {
