@@ -39,15 +39,15 @@ const SQL_QUERIES = {
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM data {WHERE}',
-  firesWeekly:
+  alertsWeekly:
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
-  firesDaily:
+  alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC"
 };
 
 const ALLOWED_PARAMS = {
   annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
-  glad: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory'],
+  glad: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'is__confirmed_alert'],
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence']
 };
@@ -549,42 +549,53 @@ export const getAreaIntersectionGrouped = params => {
   }));
 };
 
-export const fetchLatestWeekGladAlerts = params => {
-  const { adm0, adm1, adm2, type } = params;
+export const fetchHistoricalAlerts = params => {
+  const {
+    forestType,
+    frequency,
+    landCategory,
+    ifl,
+    download,
+    startDate,
+    endDate,
+    dataset
+  } =
+    params || {};
+  const { alertsDaily, alertsWeekly } = SQL_QUERIES;
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      datasetType: frequency
+    })}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery(params))
+      .replace(/{dateFilter}/g, getDatesFilter(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+  );
 
-  return fetchGLADLatest()
-    .then(date => {
-      const lastestDate = date.attributes.updatedAt;
-      const alertDate = moment(lastestDate)
-        .subtract(7, 'days')
-        .format('YYYY-MM-DD');
-
-      let locationQuery = '';
-      if (type === 'country') {
-        if (adm2) {
-          locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}' AND adm2 = '${
-            adm2
-          }'`;
-        } else if (adm1) locationQuery = `iso = '${adm0}' AND adm1 = '${adm1}'`;
-        else locationQuery = `iso = '${adm0}'`;
-      } else if (type === 'geostore') {
-        locationQuery = `geostore__id = '${adm0}'`;
-      } else if (type === 'wdpa') {
-        locationQuery = `wdpa_protected_area__id = '${adm0}'`;
-      }
-      const sql = `SELECT alert__date as date, SUM(alert__count) as count FROM DATA WHERE ${
-        locationQuery
-      } AND alert__date > '${alertDate}' GROUP BY date`;
-
-      const url = `${getRequestUrl({
-        ...params,
-        dataset: 'glad',
-        datasetType: 'daily'
-      })}${sql}`;
-
-      return apiRequest.get(url).catch(error => console.error(error));
-    })
-    .catch(error => console.error(error));
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `${dataset}_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+  return apiRequest.get(url).then(response => ({
+    data: {
+      frequency,
+      data: response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10) || null,
+        year: parseInt(d.alert__year, 10) || null,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
 };
 
 export const fetchGladAlerts = params => {
@@ -649,46 +660,6 @@ export const fetchGLADLatest = () => {
           })
         )
     );
-};
-
-export const fetchLatestWeekVIIRSAlerts = params => {
-  const { forestType, landCategory, ifl, download, startDate, endDate } =
-    params || {};
-  const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'viirs',
-      datasetType: 'daily'
-    })}${SQL_QUERIES.firesDaily}`
-      .replace(/{location}/g, getLocationSelect(params))
-      .replace('{WHERE}', getWHEREQuery(params))
-      .replace(/{dateFilter}/g, getDatesFilter(params))
-      .replace('{startDate}', startDate)
-      .replace('{endDate}', endDate)
-  );
-
-  if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
-    return {
-      name: `viirs_fire_alerts${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__count`,
-      url: url.replace('query', 'download')
-    };
-  }
-
-  return apiRequest
-    .get(url)
-    .then(response => ({
-      data: {
-        data: response.data.data.map(d => ({
-          ...d,
-          count: d.alert__count,
-          alerts: d.alert__count
-        }))
-      }
-    }))
-    .catch(error => console.error(error));
 };
 
 export const fetchVIIRSAlerts = params => {
@@ -791,54 +762,6 @@ export const fetchFiresWithin = params => {
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
         alerts: d.alert__count
-      }))
-    }
-  }));
-};
-
-export const fetchFiresHistorical = params => {
-  const {
-    forestType,
-    frequency,
-    landCategory,
-    ifl,
-    download,
-    startDate,
-    endDate
-  } =
-    params || {};
-  const { firesDaily, firesWeekly } = SQL_QUERIES;
-  const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      datasetType: frequency
-    })}${frequency === 'daily' ? firesDaily : firesWeekly}`
-      .replace(/{location}/g, getLocationSelect(params))
-      .replace('{WHERE}', getWHEREQuery(params))
-      .replace(/{dateFilter}/g, getDatesFilter(params))
-      .replace('{startDate}', startDate)
-      .replace('{endDate}', endDate)
-  );
-
-  if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
-    return {
-      name: `viirs_fire_alerts${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__count`,
-      url: url.replace('query', 'download')
-    };
-  }
-  return apiRequest.get(url).then(response => ({
-    data: {
-      frequency,
-      data: response.data.data.map(d => ({
-        ...d,
-        week: parseInt(d.alert__week, 10) || null,
-        year: parseInt(d.alert__year, 10) || null,
-        count: d.alert__count,
-        alerts: d.alert__count,
-        area_ha: d.alert_area__ha
       }))
     }
   }));

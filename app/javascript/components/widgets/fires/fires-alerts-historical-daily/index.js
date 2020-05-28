@@ -1,4 +1,4 @@
-import { fetchFiresHistorical } from 'services/analysis-cached';
+import { fetchHistoricalAlerts } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -259,12 +259,12 @@ export default {
     ]
   },
   getData: params =>
-    fetchFiresHistorical({ ...params, frequency: 'daily' }).then(alerts => {
+    fetchHistoricalAlerts({ ...params, frequency: 'daily' }).then(alerts => {
       const { data } = alerts.data;
       return data;
     }),
   getDataURL: params => [
-    fetchFiresHistorical({ ...params, frequency: 'daily', download: true })
+    fetchHistoricalAlerts({ ...params, frequency: 'daily', download: true })
   ],
   getWidgetProps
 };
