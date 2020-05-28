@@ -31,9 +31,15 @@ export const getLatest = createThunkAction(
                     : latestResponse.attributes;
                   date = data.date || data.latestResponse || data.latest;
                 }
+
+                let latestDate = moment.utc(date);
+                if (newEndpoints[index].resolution) {
+                  latestDate = latestDate.endOf(newEndpoints[index].resolution);
+                }
+
                 return {
                   ...obj,
-                  [newEndpoints[index].id]: moment.utc(date).format('YYYY-MM-DD')
+                  [newEndpoints[index].id]: latestDate.format('YYYY-MM-DD')
                 };
               }, {});
             dispatch(setLatestDates(latestDates));
