@@ -73,7 +73,7 @@ class TopicsImage extends PureComponent {
     return (
       <div className="c-topics-image">
         <img
-          srcSet={`${img1x} 2x, ${img2x} 1x`}
+          srcSet={`${img1x} 1x, ${img2x} 2x`}
           src={`${img1x} 1x`}
           alt={description}
         />
