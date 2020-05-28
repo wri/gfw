@@ -6,6 +6,7 @@ import checkBrowser from 'utils/browser';
 import cx from 'classnames';
 import Link from 'next/link';
 import useRouter from 'app/router';
+import Head from 'next/head';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Meta from 'layouts/meta';
@@ -70,6 +71,15 @@ class Layout extends React.Component {
 
     return (
       <div className="l-page">
+        <Head>
+          {process.env.NODE_ENV !== 'production' && (
+            <link
+              rel="stylesheet"
+              type="text/css"
+              href={`/_next/static/css/styles.chunk.css?v=${Date.now()}`}
+            />
+          )}
+        </Head>
         <MediaContextProvider>
           <Meta
             title={title}
