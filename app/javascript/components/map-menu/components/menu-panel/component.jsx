@@ -38,12 +38,11 @@ class MenuPanel extends PureComponent {
               <motion.div
                 initial="hidden"
                 animate="visible"
+                transition={{ ease: 'easeInOut', duration: 0.3 }}
                 variants={{
                   visible: { opacity: 1, x: 66 },
                   hidden: { opacity: 0, x: 0 },
-                  transition: { ease: 'easeInOut', duration: 0.4 },
                 }}
-                key="menu-container"
                 className={cx(
                   'c-menu-panel',
                   'map-tour-menu-panel',
@@ -58,22 +57,23 @@ class MenuPanel extends PureComponent {
                 {loading && <Loader className="map-menu-loader" />}
               </motion.div>
             </Media>
-            <Media lessThan="md">
+            <Media
+              lessThan="md"
+              className={cx(
+                'c-menu-panel',
+                'map-tour-menu-panel',
+                { large },
+                className
+              )}
+            >
               <motion.div
                 initial="hidden"
                 animate="visible"
+                transition={{ ease: 'easeInOut', duration: 0.3 }}
                 variants={{
                   visible: { opacity: 1, y: 0 },
                   hidden: { opacity: 0, y: 50 },
-                  transition: { ease: 'easeInOut', duration: 0.3 },
                 }}
-                key="menu-container"
-                className={cx(
-                  'c-menu-panel',
-                  'map-tour-menu-panel',
-                  { large },
-                  className
-                )}
               >
                 <div className="panel-header">
                   <div className="panel-label">

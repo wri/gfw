@@ -9,7 +9,7 @@
   }
 
   .menu-tiles {
-    z-index: 4;
+    z-index: 11;
     background-color: $white-tree;
     border-top: solid 1px $border;
     position: absolute;
@@ -34,7 +34,7 @@
 
   .menu-panel {
     padding-bottom: rem(50px);
-    z-index: 3;
+    z-index: 10;
 
     @media screen and (min-width: $screen-m) {
       padding-bottom: 0;
