@@ -98,10 +98,10 @@ export const config = {
 
 export default async ({ params }) => {
   const location = {
-    type: params.location?.[0],
-    adm0: params.location?.[1],
-    adm1: params.location?.[2],
-    adm2: params.location?.[3],
+    type: params?.location?.[0],
+    adm0: params?.location?.[1],
+    adm1: params?.location?.[2],
+    adm2: params?.location?.[3],
   };
 
   let getLocationData = null;

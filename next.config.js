@@ -53,10 +53,24 @@ const nextConfig = {
     );
 
     config.node = {
-      fs: "empty"
-    }
+      fs: 'empty',
+    };
 
     return config;
+  },
+  experimental: {
+    async rewrites() {
+      return [
+        {
+          source: '/map',
+          destination: `/map/global`,
+        },
+        {
+          source: '/dashboards',
+          destination: `/dashboards/global`,
+        },
+      ];
+    },
   },
 };
 
