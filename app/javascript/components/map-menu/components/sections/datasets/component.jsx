@@ -2,8 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import { Media } from 'utils/responsive';
-
 import NoContent from 'components/ui/no-content';
 import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import Pill from 'components/ui/pill';
@@ -39,13 +37,13 @@ class Datasets extends PureComponent {
           !datasetCategory &&
           datasetCategories &&
           datasetCategories.length && (
-            <Media greaterThanOrEqual="md">
-              <Basemaps isDesktop />
+            <>
+              <Basemaps />
               <CategoriesMenu
                 categories={datasetCategories}
                 onSelectCategory={setMenuSettings}
               />
-            </Media>
+            </>
           )}
         {menuSection && datasetCategory && (
           <Fragment>
@@ -96,7 +94,7 @@ class Datasets extends PureComponent {
                         </Fragment>
                       );
                     })}
-                    for
+                    for 
                     {' '}
                     {datasetCategory && datasetCategory.toLowerCase()}
                     .

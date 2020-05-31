@@ -13496,10 +13496,10 @@ react-tagsinput@^3.19.0:
   resolved "https://registry.yarnpkg.com/react-tagsinput/-/react-tagsinput-3.19.0.tgz#6e3b45595f2d295d4657bf194491988f948caabf"
   integrity sha512-ni+/qnZrYrvLg83LtTFHErKy1KQHL0fi0Y6C5jgC1dNUePE9cS/OlQ4XH6JRSjv9GGoeVE0R/ujSBaS1uzCRYQ==
 
-react-tippy@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/react-tippy/-/react-tippy-1.3.4.tgz#9db14375ef696017d33aaf24b444b3dbb0168b2a"
-  integrity sha512-56eLAtcNoRBOmMessnm3U6PF//OqbqKp1oxwjoOwi/JKqo/y132zNcIl8QQCMnS6ITa3c6ZVaRAq4K1FGhloJQ==
+react-tippy@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-tippy/-/react-tippy-1.4.0.tgz#e8a8b4085ec985e5c94fe128918b733b588a1465"
+  integrity sha512-r/hM5XK9Ztr2ZY7IWKuRmISTlUPS/R6ddz6PO2EuxCgW+4JBcGZRPU06XcVPRDCOIiio8ryBQFrXMhFMhsuaHA==
   dependencies:
     popper.js "^1.11.1"
 

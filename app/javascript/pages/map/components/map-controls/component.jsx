@@ -241,12 +241,17 @@ class MapControlsButtons extends PureComponent {
         arrow
         animateFill={false}
         open={showBasemaps}
+        trigger="click"
         onRequestClose={this.onBasemapsRequestClose}
-        html={
-          <Basemaps onClose={this.toggleBasemaps} ref={this.setBasemapsRef} />
-        }
+        html={(
+          <Basemaps
+            onClose={this.toggleBasemaps}
+            ref={this.setBasemapsRef}
+            isDesktop
+          />
+        )}
       >
-        {this.renderBasemapsBtn()}
+        <div>{this.renderBasemapsBtn()}</div>
       </Tooltip>
     );
   };
