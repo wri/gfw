@@ -23,7 +23,7 @@ class Explore extends PureComponent {
       mapState,
       loading,
       ptwType,
-      setMapPromptsSettings
+      setMapPromptsSettings,
     } = this.props;
     const links = [
       {
@@ -32,7 +32,7 @@ class Explore extends PureComponent {
         onClick: () => {
           setMenuSettings({ exploreType: 'topics' });
           logEvent('mapMenuExploreCategory', { label: 'Topics' });
-        }
+        },
       },
       {
         label: 'Places to Watch',
@@ -40,7 +40,7 @@ class Explore extends PureComponent {
         onClick: () => {
           setMenuSettings({ exploreType: 'placesToWatch' });
           logEvent('mapMenuExploreCategory', { label: 'Places to watch' });
-        }
+        },
       },
       {
         label: 'Stories',
@@ -48,8 +48,8 @@ class Explore extends PureComponent {
         onClick: () => {
           setMenuSettings({ exploreType: 'stories' });
           logEvent('mapMenuExploreCategory', { label: 'Stories' });
-        }
-      }
+        },
+      },
     ];
 
     return (
@@ -74,22 +74,22 @@ class Explore extends PureComponent {
                       options={[
                         {
                           label: 'All Places to Watch',
-                          value: 'all'
+                          value: 'all',
                         },
                         {
                           label: 'Mongabay reporting',
-                          value: 'mongabay'
+                          value: 'mongabay',
                         },
                         {
                           label: 'Soy',
-                          value: 'soy'
+                          value: 'soy',
                         },
                         {
                           label: 'Oil palm',
-                          value: 'palm'
-                        }
+                          value: 'palm',
+                        },
                       ]}
-                      onChange={value => setMenuSettings({ ptwType: value })}
+                      onChange={(value) => setMenuSettings({ ptwType: value })}
                       native
                     />
                     <PTWProvider />
@@ -101,7 +101,7 @@ class Explore extends PureComponent {
             </div>
             {!loading &&
               data &&
-              data.map(item => (
+              data.map((item) => (
                 <div
                   key={item.slug || item.id}
                   className="column small-12 medium-6"
@@ -112,20 +112,20 @@ class Explore extends PureComponent {
                     clamp={5}
                     data={{
                       ...item,
-                      buttons: item.buttons.map(b => ({
+                      buttons: item.buttons.map((b) => ({
                         ...b,
                         ...(b.text === 'VIEW ON MAP' && {
                           onClick: () => {
-                            handleViewOnMap({ ...item.payload });
+                            handleViewOnMap(item.payload);
                             setMapPromptsSettings({
                               open: true,
                               stepIndex: 0,
-                              stepsKey: `topics${item.title}`
+                              stepsKey: `topics${item.title}`,
                             });
                             logEvent('mapMenuAddTopic', { label: item.title });
-                          }
-                        })
-                      }))
+                          },
+                        }),
+                      })),
                     }}
                     active={isEqual(item.payload.map, mapState)}
                   />
@@ -148,7 +148,7 @@ Explore.propTypes = {
   loading: PropTypes.bool,
   handleViewOnMap: PropTypes.func,
   ptwType: PropTypes.string,
-  setMapPromptsSettings: PropTypes.func
+  setMapPromptsSettings: PropTypes.func,
 };
 
 export default Explore;

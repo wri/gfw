@@ -18,7 +18,7 @@ import {
   RSPO_OIL_PALM_CONCESSIONS_DATASET,
   WOOD_FIBER_DATASET,
   OIL_PALM_DATASET,
-  LOGGING_CONCESSIONS_DATASET
+  LOGGING_CONCESSIONS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -35,13 +35,13 @@ import {
   RSPO_OIL_PALM_CONCESSIONS_2017,
   WOOD_FIBER,
   OIL_PALM,
-  LOGGING_CONCESSIONS
+  LOGGING_CONCESSIONS,
 } from 'data/layers';
 
 export const descriptions = {
   topics: 'Explore data related to the drivers and impacts of forest change.',
   placesToWatch:
-    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated monthly. Sign up <a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank" rel="noopener nofollower">here</a> to receive an email when new Places to Watch are identified.'
+    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated monthly. Sign up <a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank" rel="noopener nofollower">here</a> to receive an email when new Places to Watch are identified.',
 };
 
 export const stories = {
@@ -55,19 +55,19 @@ export const stories = {
       {
         text: 'READ MORE',
         theme: 'theme-button-light theme-button-small',
-        link: '/stories'
+        extLink: 'https://news.mongabay.com/',
       },
       {
         text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
+        theme: 'theme-button-small',
+      },
     ],
     payload: {
       mergeQuery: true,
       map: {
         center: {
           lat: 27,
-          lng: 12
+          lng: 12,
         },
         zoom: 2,
         datasets: [
@@ -76,18 +76,18 @@ export const stories = {
             dataset: POLITICAL_BOUNDARIES_DATASET,
             layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           {
             dataset: GFW_STORIES_DATASET,
             layers: [MONGABAY_STORIES],
             opacity: 1,
-            visibility: true
-          }
-        ]
-      }
-    }
-  }
+            visibility: true,
+          },
+        ],
+      },
+    },
+  },
 };
 
 export const topics = {
@@ -100,18 +100,18 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        link: '/topics/biodiversity'
+        link: '/topics/biodiversity',
       },
       {
         text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
+        theme: 'theme-button-small',
+      },
     ],
     payload: {
       map: {
         center: {
           lat: 27,
-          lng: 12
+          lng: 12,
         },
         zoom: 2,
         datasets: [
@@ -120,29 +120,29 @@ export const topics = {
             dataset: POLITICAL_BOUNDARIES_DATASET,
             layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // biodiversity hotspots
           {
             dataset: BIODIVERSITY_HOTSPOTS_2016_DATASET,
             layers: [BIODIVERSITY_HOTSPOTS_2016],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // biodiversity intactness
           {
             dataset: BIODIVERSITY_INTACTNESS_2016_DATASET,
             layers: [BIODIVERSITY_INTACTNESS],
             opacity: 1,
-            visibility: true
-          }
+            visibility: true,
+          },
         ],
         basemap: {
-          value: 'default'
+          value: 'default',
         },
-        label: 'default'
-      }
-    }
+        label: 'default',
+      },
+    },
   },
   climate: {
     slug: 'climate',
@@ -153,18 +153,18 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        link: '/topics/climate'
+        link: '/topics/climate',
       },
       {
         text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
+        theme: 'theme-button-small',
+      },
     ],
     payload: {
       map: {
         center: {
           lat: 27,
-          lng: 12
+          lng: 12,
         },
         zoom: 2,
         datasets: [
@@ -173,25 +173,25 @@ export const topics = {
             dataset: POLITICAL_BOUNDARIES_DATASET,
             layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // biomass loss
           {
             dataset: BIOMASS_LOSS_DATASET,
             layers: [BIOMASS_LOSS],
             opacity: 1,
-            visibility: true
-          }
+            visibility: true,
+          },
         ],
         basemap: {
-          value: 'dark'
+          value: 'dark',
         },
-        label: 'lightLabels'
+        label: 'lightLabels',
       },
       mainMap: {
-        showAnalysis: true
-      }
-    }
+        showAnalysis: true,
+      },
+    },
   },
   commodities: {
     slug: 'commodities',
@@ -203,18 +203,18 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        link: '/topics/commodities'
+        link: '/topics/commodities',
       },
       {
         text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
+        theme: 'theme-button-small',
+      },
     ],
     payload: {
       map: {
         center: {
           lat: 27,
-          lng: 12
+          lng: 12,
         },
         zoom: 2,
         datasets: [
@@ -223,57 +223,57 @@ export const topics = {
             dataset: POLITICAL_BOUNDARIES_DATASET,
             layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // mining
           {
             dataset: MINING_CONCESSIONS_DATASET,
             layers: [MINING_CONCESSIONS],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // managed forests
           {
             dataset: LOGGING_CONCESSIONS_DATASET,
             layers: [LOGGING_CONCESSIONS],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // oil palm
           {
             dataset: OIL_PALM_DATASET,
             layers: [OIL_PALM],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // wood fiber
           {
             dataset: WOOD_FIBER_DATASET,
             layers: [WOOD_FIBER],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // loss
           {
             dataset: FOREST_LOSS_DATASET,
             layers: [FOREST_LOSS],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // rspo oil palm concessions
           {
             dataset: RSPO_OIL_PALM_CONCESSIONS_DATASET,
             layers: [RSPO_OIL_PALM_CONCESSIONS_2017],
             opacity: 1,
-            visibility: true
-          }
+            visibility: true,
+          },
         ],
         basemap: {
-          value: 'default'
+          value: 'default',
         },
-        label: 'default'
-      }
-    }
+        label: 'default',
+      },
+    },
   },
   water: {
     slug: 'water',
@@ -284,18 +284,18 @@ export const topics = {
       {
         text: 'view topic',
         theme: 'theme-button-small theme-button-light',
-        link: '/topics/water'
+        link: '/topics/water',
       },
       {
         text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
+        theme: 'theme-button-small',
+      },
     ],
     payload: {
       map: {
         center: {
           lat: 27,
-          lng: 12
+          lng: 12,
         },
         zoom: 2,
         datasets: [
@@ -304,35 +304,35 @@ export const topics = {
             dataset: RIVER_BASINS_BOUNDARIES_DATASET,
             layers: [RIVER_BASINS_BOUNDARIES],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // gain
           {
             dataset: FOREST_GAIN_DATASET,
             layers: [FOREST_GAIN],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // loss
           {
             dataset: FOREST_LOSS_DATASET,
             layers: [FOREST_LOSS],
             opacity: 1,
-            visibility: true
+            visibility: true,
           },
           // extent
           {
             dataset: FOREST_EXTENT_DATASET,
             layers: [FOREST_EXTENT],
             opacity: 1,
-            visibility: true
-          }
+            visibility: true,
+          },
         ],
         basemap: {
-          value: 'default'
+          value: 'default',
         },
-        label: 'default'
-      }
-    }
-  }
+        label: 'default',
+      },
+    },
+  },
 };

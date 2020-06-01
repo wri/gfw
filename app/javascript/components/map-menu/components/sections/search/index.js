@@ -25,22 +25,22 @@ class SearchMenu extends PureComponent {
     }
   }
 
-  handleGetLocations = debounce(search => {
+  handleGetLocations = debounce((search) => {
     if (this.searchFetch) {
       this.searchFetch.cancel('Cancelling search location fetch');
     }
     this.searchFetch = cancelToken();
     this.props.getLocationFromSearch({
       search,
-      lang: this.props.lang,
-      token: this.searchFetch.token
+      lang: this.props.lang || 'en',
+      token: this.searchFetch.token,
     });
     logEvent('mapMenuSarch', {
-      label: search
+      label: search,
     });
   }, 500);
 
-  handleSearchChange = value => {
+  handleSearchChange = (value) => {
     const { setMenuSettings, setMenuLoading } = this.props;
     setMenuSettings({ search: value });
     if (value) {
@@ -52,7 +52,7 @@ class SearchMenu extends PureComponent {
   render() {
     return createElement(Component, {
       ...this.props,
-      handleSearchChange: this.handleSearchChange
+      handleSearchChange: this.handleSearchChange,
     });
   }
 }
@@ -63,7 +63,7 @@ SearchMenu.propTypes = {
   setMenuLoading: PropTypes.func,
   search: PropTypes.string,
   locations: PropTypes.array,
-  lang: PropTypes.string
+  lang: PropTypes.string,
 };
 
 export default connect(mapStateToProps, { onInfoClick: setModalMetaSettings })(
