@@ -187,7 +187,7 @@
     "ua-parser-js": "^0.7.21",
     "util": "^0.12.1",
     "viewport-mercator-project": "6.1.1",
-    "vizzuality-components": "^3.0.0",
+    "vizzuality-components": "^3.0.2",
     "wri-json-api-serializer": "^1.0.1"
   },
   "resolutions": {

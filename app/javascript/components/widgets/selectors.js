@@ -274,6 +274,7 @@ export const filterWidgetsByLocation = createSelector(
         !whitelists.indicators ||
         (polynameIntersection && polynameIntersection.length);
       const isWidgetDataPending =
+        // for geostore shapes sometimes the data is not ready (no cached tables)
         !whitelists ||
         (status && status !== 'pending') ||
         !whitelists.checkStatus;

@@ -10,8 +10,10 @@ export const formatUSD = (value, minimize = true) =>
     .replace('M', minimize ? 'M' : ' million')
     .replace('K', minimize ? 'K' : ' thousand');
 
-export const formatNumber = ({ num, unit }) => {
-  let numFormat = unit === '%' ? '.2r' : '.3s';
+export const formatNumber = ({ num, unit, precision }) => {
+  let p = unit === '%' ? '2' : '3';
+  if (precision && Number.isInteger(precision)) p = Math.abs(precision);
+  let numFormat = unit === '%' ? `.${p}r` : `.${p}s`;
   if (unit === 'counts') numFormat = ',.0f';
   const thres = unit === '%' ? 0.1 : 1;
   let formattedNum =

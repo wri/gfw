@@ -12,19 +12,19 @@ const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   loss:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY treecover_loss__year ORDER BY treecover_loss__year',
+    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
-    'SELECT tcs_driver__type, treecover_loss__year, SUM(treecover_loss__ha) AS treecover_loss__ha, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY tcs_driver__type, treecover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   lossGrouped:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} AND treecover_loss__year > 0 GROUP BY treecover_loss__year, {location} ORDER BY treecover_loss__year, {location}',
+    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
-    'SELECT SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
+    'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
-    'SELECT {location}, SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM(umd_tree_cover_gain_2000-2012__ha) as umd_tree_cover_gain_2000-2012__ha, SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   gainGrouped:
-    'SELECT {location}, SUM(treecover_gain_2000-2012__ha) as treecover_gain_2000-2012__ha, SUM(treecover_extent_2000__ha) as treecover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM(umd_tree_cover_gain_2000-2012__ha) as umd_tree_cover_gain_2000-2012__ha, SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {location}, SUM(area__ha) as area__ha, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
@@ -123,7 +123,7 @@ export const getWHEREQuery = params => {
         (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
-      if (p === 'threshold') paramKey = 'treecover_density__threshold';
+      if (p === 'threshold') paramKey = 'umd_tree_cover_density__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
@@ -278,11 +278,11 @@ export const getLoss = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        bound1: d.tcs_driver__type,
-        year: d.treecover_loss__year,
-        area: d.treecover_loss__ha,
-        emissions: d.aboveground_co2_emissions__Mg,
-        biomassLoss: d.aboveground_biomass_loss__Mg
+        bound1: d.tsc_tree_cover_loss_drivers__type,
+        year: d.umd_tree_cover_loss__year,
+        area: d.umd_tree_cover_loss__ha,
+        emissions: d.whrc_aboveground_co2_emissions__Mg,
+        biomassLoss: d.whrc_aboveground_biomass_loss__Mg
       }))
     }
   }));
@@ -315,10 +315,10 @@ export const getLossGrouped = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        year: d.treecover_loss__year,
-        area: d.treecover_loss__ha,
-        emissions: d.aboveground_co2_emissions__Mg,
-        biomassLoss: d.aboveground_biomass_loss__Mg
+        year: d.umd_tree_cover_loss__year,
+        area: d.umd_tree_cover_loss__ha,
+        emissions: d.whrc_aboveground_co2_emissions__Mg,
+        biomassLoss: d.whrc_aboveground_biomass_loss__Mg
       }))
     }
   }));
@@ -350,7 +350,7 @@ export const getExtent = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        extent: d[`treecover_extent_${extentYear}__ha`],
+        extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
         total_area: d.area__ha
       }))
     }
@@ -385,7 +385,7 @@ export const getExtentGrouped = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        extent: d[`treecover_extent_${extentYear}__ha`],
+        extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
         total_area: d.area__ha
       }))
     }
@@ -419,8 +419,8 @@ export const getGain = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        extent: d.treecover_extent_2000__ha,
-        gain: d['treecover_gain_2000-2012__ha']
+        extent: d.umd_tree_cover_extent_2000__ha,
+        gain: d['umd_tree_cover_gain_2000-2012__ha']
       }))
     }
   }));
@@ -453,8 +453,8 @@ export const getGainGrouped = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        extent: d.treecover_extent_2000__ha,
-        gain: d['treecover_gain_2000-2012__ha']
+        extent: d.umd_tree_cover_extent_2000__ha,
+        gain: d['umd_tree_cover_gain_2000-2012__ha']
       }))
     }
   }));

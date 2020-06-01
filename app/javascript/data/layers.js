@@ -2,7 +2,7 @@ export const DISPUTED_POLITICAL_BOUNDARIES =
   'cc35432d-38d7-4a03-872e-3a71a2f555fc';
 export const POLITICAL_BOUNDARIES = 'b45350e3-5a76-44cd-b0a9-5038a0d8bfae';
 export const FOREST_GAIN = '0abe4aea-cc86-4c75-8c16-2f16bf78d8be';
-export const FOREST_LOSS = 'dce8004f-4d0f-4c2d-ae4b-dcf55e14035f';
+export const FOREST_LOSS = '49a80e70-ec52-4ef8-bcc6-fb2771d95b2c';
 export const FOREST_EXTENT = '2351399c-ef2c-48da-9485-20698190acb0';
 export const TREE_COVER = '0cba3c4f-2d3b-4fb1-8c93-c951dc1da84b';
 export const TREE_COVER_LOSS_BY_DOMINANT_DRIVER =

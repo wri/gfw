@@ -1,5 +1,6 @@
 // forest change
 import treeLoss from 'components/widgets/forest-change/tree-loss';
+import treeLossPct from 'components/widgets/forest-change/tree-loss-pct';
 import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
 import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 import faoDeforest from 'components/widgets/forest-change/fao-deforest';
@@ -8,7 +9,7 @@ import treeCoverGain from 'components/widgets/forest-change/tree-cover-gain';
 import treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
 import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
-import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
+// import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 import glads from 'components/widgets/forest-change/glads';
 import gladAlerts from 'components/widgets/forest-change/glad-alerts';
@@ -55,6 +56,7 @@ import traseCommodities from 'components/widgets/land-use/trase-commodities';
 export default {
   // forest change
   treeLoss,
+  treeLossPct,
   treeLossGlobal,
   treeLossRanked,
   faoDeforest,
@@ -63,7 +65,7 @@ export default {
   treeGainLocated,
   treeLossLocated,
   treeLossPlantations,
-  treeLossTsc,
+  // treeLossTsc,
   treeCoverGainSimple,
   glads,
   gladAlerts,

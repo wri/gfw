@@ -1,5 +1,6 @@
 import { all, spread } from 'axios';
 import { getLoss } from 'services/analysis-cached';
+import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -15,6 +16,9 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2013;
+const MAX_YEAR = 2019;
+
 export default {
   widget: 'treeLossPlantations',
   title: 'Forest loss in natural forest in {location}',
@@ -28,10 +32,6 @@ export default {
       label: 'years',
       endKey: 'endYear',
       startKey: 'startYear',
-      options: [2013, 2014, 2015, 2016, 2017, 2018].map(y => ({
-        label: y,
-        value: y
-      })),
       type: 'range-select',
       border: true
     },
@@ -74,8 +74,8 @@ export default {
   },
   settings: {
     threshold: 30,
-    startYear: 2013,
-    endYear: 2018,
+    startYear: MIN_YEAR,
+    endYear: MAX_YEAR,
     extentYear: 2010
   },
   getData: params =>
@@ -99,7 +99,21 @@ export default {
             totalLoss
           };
         }
-        return data;
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
+        return {
+          ...data,
+          settings: {
+            startYear,
+            endYear,
+            yearsRange: range
+          },
+          options: {
+            years: range
+          }
+        };
       })
     ),
   getDataURL: params => [

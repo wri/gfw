@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 import moment from 'moment';
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -16,6 +16,9 @@ import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
+
+const MIN_YEAR = 2001;
+const MAX_YEAR = 2019;
 
 export default {
   ...treeLoss,
@@ -95,24 +98,29 @@ export default {
     ]).then(
       spread((loss, extent) => {
         let data = {};
-
         if (loss && loss.data && extent && extent.data) {
           data = {
-            loss: loss.data.data.filter(d => d.tcs_driver__type !== 'Unknown'),
+            loss: loss.data.data.filter(
+              d => d.tsc_tree_cover_loss_drivers__type !== 'Unknown'
+            ),
             extent: (loss.data.data && extent.data.data[0].value) || 0
           };
         }
 
-        const { startYear, range } = getYearsRange(data.loss);
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
 
         return {
           ...data,
           settings: {
             startYear,
-            endYear: 2018
+            endYear,
+            yearsRange: range
           },
           options: {
-            years: range.filter(y => y.value <= 2018)
+            years: range
           }
         };
       })

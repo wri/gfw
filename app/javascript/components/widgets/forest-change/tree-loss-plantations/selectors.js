@@ -5,6 +5,7 @@ import uniqBy from 'lodash/uniqBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
+import { zeroFillYears } from 'components/widgets/utils/data';
 
 // get list data
 const getLossPlantations = state => state.data && state.data.lossPlantations;
@@ -19,10 +20,25 @@ export const parseData = createSelector(
   [getLossPlantations, getTotalLoss, getSettings],
   (lossPlantations, totalLoss, settings) => {
     if (!lossPlantations || !totalLoss) return null;
-    const { startYear, endYear } = settings;
+    const { startYear, endYear, yearsRange } = settings;
+    const years = yearsRange && yearsRange.map(yearObj => yearObj.value);
+    const fillObj = {
+      area: 0,
+      biomassLoss: 0,
+      bound1: null,
+      emissions: 0,
+      percentage: 0
+    };
+    const zeroFilledData = zeroFillYears(
+      lossPlantations,
+      startYear,
+      endYear,
+      years,
+      fillObj
+    );
     const totalLossByYear = groupBy(totalLoss, 'year');
-    return uniqBy(
-      lossPlantations
+    const parsedData = uniqBy(
+      zeroFilledData
         .filter(d => d.year >= startYear && d.year <= endYear)
         .map(d => {
           const groupedPlantations = groupBy(lossPlantations, 'year')[d.year];
@@ -46,6 +62,7 @@ export const parseData = createSelector(
         }),
       'year'
     );
+    return parsedData;
   }
 );
 
