@@ -48,6 +48,15 @@
     margin-top: rem(5px);
   }
 
+  .data-dash {
+    height: rem(2px);
+    border-radius: 0;
+    border: none;
+    border-top: 2px dotted;
+    align-self: center;
+    transform: translateY(2px);
+  }
+
   &.simple {
     font-size: rem(12px);
 

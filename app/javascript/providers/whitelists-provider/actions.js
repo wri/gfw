@@ -20,29 +20,24 @@ export const getWhitelist = createThunkAction(
   params => dispatch => {
     dispatch(setWhitelistLoading(true));
     all([
-      getLocationPolynameWhitelist(params),
-      getLocationPolynameWhitelist({ ...params, glad: true })
-    ])
-      .then(
-        spread((annualResponse, gladResponse) => {
-          const annual =
-            annualResponse &&
-            annualResponse.data &&
-            annualResponse.data.data[0];
-          const glad =
-            gladResponse && gladResponse.data && gladResponse.data.data[0];
+      getLocationPolynameWhitelist(params).catch(() => null),
+      getLocationPolynameWhitelist({ ...params, glad: true }).catch(() => null)
+      // adding a .catch that returns null after each request allows us to work with nulls in the `then`
+      // instead of going to the catch when a single fetch fails
+    ]).then(
+      spread((annualResponse, gladResponse) => {
+        const annual =
+          annualResponse && annualResponse.data && annualResponse.data.data[0];
+        const glad =
+          gladResponse && gladResponse.data && gladResponse.data.data[0];
 
-          dispatch(
-            setWhitelist({
-              annual: parseWhitelist(annual),
-              glad: parseWhitelist(glad)
-            })
-          );
-        })
-      )
-      .catch(error => {
-        dispatch(setWhitelistLoading(false));
-        console.info(error);
-      });
+        dispatch(
+          setWhitelist({
+            annual: parseWhitelist(annual),
+            glad: parseWhitelist(glad)
+          })
+        );
+      })
+    );
   }
 );

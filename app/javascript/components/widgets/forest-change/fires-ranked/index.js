@@ -32,7 +32,7 @@ export default {
       'In the last {timeframe} in {location}, the region with the most fires burning within {indicator} was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc} of total alerts detected.'
   },
   settings: {
-    unit: '%',
+    unit: 'ha',
     pageSize: 5,
     page: 0,
     period: 'week',

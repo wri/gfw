@@ -12,11 +12,13 @@ import {
   BIOMASS_LOSS
 } from 'data/layers';
 
-import { getYearsRange } from 'components/widgets/utils/data';
-
+import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
+
+const MIN_YEAR = 2001;
+const MAX_YEAR = 2019;
 
 const getDataFromAPI = params =>
   fetchAnalysisEndpoint({
@@ -45,13 +47,17 @@ const getDataFromAPI = params =>
       loss = data.years;
     }
 
-    const { startYear, endYear, range } = getYearsRange(loss);
+    const { startYear, endYear, range } = getYearsRangeFromMinMax(
+      MIN_YEAR,
+      MAX_YEAR
+    );
 
     return {
       loss,
       settings: {
         startYear,
-        endYear
+        endYear,
+        yearsRange: range
       },
       options: {
         years: range
@@ -124,13 +130,17 @@ export default {
     if (shouldQueryPrecomputedTables(params)) {
       return getLoss(params).then(response => {
         const loss = response.data.data;
-        const { startYear, endYear, range } = getYearsRange(loss);
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
 
         return {
           loss,
           settings: {
             startYear,
-            endYear
+            endYear,
+            yearsRange: range
           },
           options: {
             years: range

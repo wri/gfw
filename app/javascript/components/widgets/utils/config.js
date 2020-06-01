@@ -17,7 +17,8 @@ export const getForestTypes = ({
       const isGlobal = !polynamesWhitelist && o.global;
       const hasPolyname =
         isGlobal ||
-        (polynamesWhitelist && polynamesWhitelist.includes(o.tableKey));
+        (polynamesWhitelist &&
+          polynamesWhitelist.includes(o.newTableKey || o.tableKey));
       return isGlobal || hasPolyname;
     })
     .map(f => ({
@@ -36,7 +37,8 @@ export const getLandCategories = ({ landCategories, polynamesWhitelist }) =>
     const isGlobal = !polynamesWhitelist && o.global;
     const hasPolyname =
       isGlobal ||
-      (polynamesWhitelist && polynamesWhitelist.includes(o.tableKey));
+      (polynamesWhitelist &&
+        polynamesWhitelist.includes(o.newTableKey || o.tableKey));
     return isGlobal || hasPolyname;
   });
 
@@ -287,8 +289,11 @@ export const getStatements = ({
     );
 
   const statements = compact([
-    extentYear
+    extentYear && dataType !== 'lossPrimary'
       ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    dataType === 'lossPrimary'
+      ? translateText('2001 primary forest extent remaining')
       : null,
     threshold || threshold === 0
       ? translateText('>{threshold}% tree canopy', { threshold })

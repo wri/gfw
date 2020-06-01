@@ -3,7 +3,10 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import {
+  yearTicksFormatter,
+  zeroFillYears
+} from 'components/widgets/utils/data';
 
 // get list data
 const getLoss = state => state.data && state.data.loss;
@@ -34,6 +37,23 @@ const parseData = createSelector(
   }
 );
 
+const zeroFillData = createSelector(
+  [parseData, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
+    const { startYear, endYear, yearsRange } = settings;
+    const years = yearsRange && yearsRange.map(yearObj => yearObj.value);
+    const fillObj = {
+      area: 0,
+      biomassLoss: 0,
+      bound1: null,
+      emissions: 0,
+      percentage: 0
+    };
+    return zeroFillYears(data, startYear, endYear, years, fillObj);
+  }
+);
+
 const parseConfig = createSelector([getColors], colors => ({
   height: 250,
   xKey: 'year',
@@ -55,22 +75,22 @@ const parseConfig = createSelector([getColors], colors => ({
     },
     {
       key: 'area',
-      unit: 'ha',
-      unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.3s')(value))
+      label: 'Tree cover loss',
+      unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
+      color: colors.main
     },
     {
       key: 'percentage',
-      unit: '%',
-      unitFormat: value =>
-        (value < 1000 ? Math.round(value) : format('.2r')(value))
+      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      label: 'Percentage of tree cover',
+      color: 'transparent'
     }
   ]
 }));
 
 const parseSentence = createSelector(
   [
-    parseData,
+    zeroFillData,
     getExtent,
     getSettings,
     getIsTropical,
@@ -121,7 +141,7 @@ const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  data: zeroFillData,
   config: parseConfig,
   sentence: parseSentence
 });
