@@ -17,7 +17,10 @@ class MyGFWProvider extends PureComponent {
     if (query && query.token) {
       setUserToken(query.token);
       delete query.token;
-      pushDynamic({ pathname, query });
+      pushDynamic({
+        pathname,
+        query: { ...query, location: query.location.join('/') },
+      });
     }
 
     const { getUserProfile } = this.props;
