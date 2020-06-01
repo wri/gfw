@@ -270,6 +270,7 @@ export const filterWidgetsByLocation = createSelector(
           whitelists.indicators
         );
       const matchesPolynameWhitelist =
+        type === 'global' ||
         !whitelists ||
         !whitelists.indicators ||
         (polynameIntersection && polynameIntersection.length);
