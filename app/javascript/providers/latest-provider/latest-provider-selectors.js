@@ -4,6 +4,7 @@ import { getActiveLayers } from 'components/map/selectors';
 
 const getLatestEndpoints = createSelector(getActiveLayers, layers => {
   if (!layers || !layers.length) return [];
+
   return (
     layers &&
     !!layers.length &&
@@ -11,12 +12,15 @@ const getLatestEndpoints = createSelector(getActiveLayers, layers => {
       const latestUrl =
         (next.params && next.params.latestUrl) ||
         (next.decodeParams && next.decodeParams.latestUrl);
+      const resolution = next.timelineConfig && next.timelineConfig.interval;
+
       return latestUrl
         ? [
           ...arr,
           {
             latestUrl,
-            id: next.id
+            id: next.id,
+            resolution
           }
         ]
         : arr;
