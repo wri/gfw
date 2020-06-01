@@ -51,7 +51,7 @@ export default {
     fires: 100
   },
   visible: ['dashboard'],
-  types: ['country'],
+  types: ['country', 'wdpa', 'geostore', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   dataType: 'fires',

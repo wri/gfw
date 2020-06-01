@@ -25,7 +25,7 @@ export default {
     }
   ],
   visible: ['analysis'],
-  types: ['country'],
+  types: ['country', 'wdpa', 'geostore', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   dataType: 'fires',

@@ -22,7 +22,6 @@ import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulat
 import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical';
 import firesAlertsHistoricalDaily from 'components/widgets/fires/fires-alerts-historical-daily';
 import firesRanked from 'components/widgets/fires/fires-ranked';
-import fires from 'components/widgets/fires/fires';
 
 // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -77,7 +76,6 @@ export default {
   firesAlertsCumulative,
   firesAlertsHistorical,
   firesRanked,
-  fires,
   firesAlertsHistoricalDaily,
 
   // land cover

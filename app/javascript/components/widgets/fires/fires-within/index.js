@@ -20,7 +20,7 @@ export default {
     global: 'Global Fires alerts in {indicator}'
   },
   categories: ['fires'],
-  types: ['global', 'country', 'geostore'],
+  types: ['global', 'country', 'wdpa', 'geostore', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {

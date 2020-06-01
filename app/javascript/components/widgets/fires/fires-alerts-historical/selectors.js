@@ -16,7 +16,7 @@ const getSentences = state => state.sentence || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
 const getStartIndex = state => state.settings.startIndex;
-const getEndIndex = state => console.log(state) || state.settings.endIndex || null;
+const getEndIndex = state => state.settings.endIndex || null;
 
 const MAXGAP = 90;
 
@@ -79,7 +79,6 @@ export const parseBrushedData = createSelector(
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
-    console.log('data', data, start, end);
 
     return data.slice(start, end + 1);
   }
