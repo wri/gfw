@@ -12,12 +12,12 @@ import getMyGfwProps from './selectors';
 class MyGFWProvider extends PureComponent {
   componentDidMount() {
     // if user arriving from social login, clear token from url and save it to storage
-    const { query, pathname, replace } = useRouter();
+    const { query, pathname, pushDynamic } = useRouter();
 
     if (query && query.token) {
       setUserToken(query.token);
       delete query.token;
-      replace({ pathname, query });
+      pushDynamic({ pathname, query });
     }
 
     const { getUserProfile } = this.props;
