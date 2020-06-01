@@ -165,7 +165,7 @@ class LoginForm extends PureComponent {
                   >
                     {showForm === 'reset' && (
                       <p>
-                        To reset your password introduce your email and follow
+                        To reset your password, enter your email and follow
                         the instructions.
                       </p>
                     )}
