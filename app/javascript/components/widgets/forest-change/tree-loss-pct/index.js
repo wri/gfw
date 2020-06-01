@@ -2,9 +2,7 @@ import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
-import { fetchAnalysisEndpoint } from 'services/analysis';
 
-import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_LOSS_DATASET
@@ -66,7 +64,7 @@ export default {
   pendingKeys: ['threshold', 'years'],
   refetchKeys: ['landCategory', 'threshold'],
   dataType: 'lossPrimary',
-  metaKey: 'widget_tree_cover_loss',
+  metaKey: 'widget_primary_forest_loss',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -162,7 +160,7 @@ export default {
       params.type === 'global'
         ? getLossGrouped({ ...params, ...globalLocation, download: true })
         : getLoss({ ...params, ...globalLocation, download: true }),
-      getExtent({ ...params, download: true })
+      getExtent({ ...params, forestType: 'primary_forest', download: true })
     ];
   },
   getWidgetProps,
