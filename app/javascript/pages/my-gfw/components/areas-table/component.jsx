@@ -105,13 +105,9 @@ class AreasTable extends PureComponent {
         : filteredAreas;
 
     // sort areas by given parameter
-    const sortedAreas = sortBy(
-      filterAreasBySearch.map(area => ({
-        ...area,
-        lowercaseName: area.name && area.name.toLowerCase()
-      })),
-      this.state.sortBy || 'lowercaseName'
-    );
+    const sortedAreas = this.state.sortBy
+      ? sortBy(filterAreasBySearch, this.state.sortBy)
+      : filterAreasBySearch;
 
     // finally order again by date
     const orderedAreas =

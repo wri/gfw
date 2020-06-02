@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
 import slice from 'lodash/slice';
-import sortBy from 'lodash/sortBy';
 import { logout } from 'services/user';
 import Link from 'redux-first-router-link';
 
@@ -58,15 +57,10 @@ class MapMenuMyGFW extends PureComponent {
     const unselectedTags =
       tags && tags.filter(t => !activeTags.includes(t.value));
 
-    const lowercaseAreas = areas.map(area => ({
-      ...area,
-      lowercaseName: area.name && area.name.toLowerCase()
-    }));
-    const sortedAreas = sortBy(lowercaseAreas, 'lowercaseName');
     const filteredAreas =
-      selectedTags && selectedTags.length && sortedAreas && sortedAreas.length
-        ? sortedAreas.filter(a => !!intersection(a.tags, activeTags).length)
-        : sortedAreas;
+      selectedTags && selectedTags.length && areas && areas.length
+        ? areas.filter(a => !!intersection(a.tags, activeTags).length)
+        : areas;
 
     const areasTrimmed = slice(
       filteredAreas,
