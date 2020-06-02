@@ -1,5 +1,14 @@
+import * as actions from './actions';
+
 export const initialState = {
-  open: false
+  open: false,
 };
 
-export default {};
+const setFiresModalOpen = (state, { payload }) => ({
+  ...state,
+  open: payload,
+});
+
+export default {
+  [actions.setFiresModalOpen]: setFiresModalOpen,
+};
