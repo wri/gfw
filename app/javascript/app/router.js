@@ -197,11 +197,13 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       },
-      fires: {
-        label: 'Fires',
-        submenu: true,
-        component: 'fires',
-        path: '/topics/fires'
+      ...process.env.FEATURE_ENV === 'staging' && {
+        fires: {
+          label: 'Fires',
+          submenu: true,
+          component: 'fires',
+          path: '/topics/fires'
+        }
       }
     }
   },

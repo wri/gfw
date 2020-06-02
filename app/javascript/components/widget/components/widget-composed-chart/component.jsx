@@ -90,7 +90,7 @@ class WidgetComposedChart extends Component {
       toggleSettingsMenu
     } = this.props;
     const { brush, legend } = config;
-    const showLegendSettingsBtn = settingsConfig.some(
+    const showLegendSettingsBtn = settingsConfig && settingsConfig.some(
       conf => conf.key === 'compareYear'
     );
 
