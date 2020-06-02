@@ -68,7 +68,7 @@ Gfw::Application.routes.draw do
 
   # topics
   get '/topics' => redirect('/topics/biodiversity')
-  get '/topics/:tab' => 'topics#index'
+  get '/topics/:type' => 'topics#index'
 
   # thank you
   get '/thank-you' => 'thankyou#index'

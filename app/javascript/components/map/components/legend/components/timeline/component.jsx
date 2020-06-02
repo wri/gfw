@@ -20,11 +20,16 @@ class Timeline extends Component {
       handleOnDateChange,
       dateFormat,
       interval,
-      activeLayer
+      activeLayer,
+      maxRange,
+      startDateAbsolute,
+      endDateAbsolute,
+      description
     } = this.props;
 
     return (
       <div className={`c-timeline ${className || ''}`}>
+        {description && <p className="description">{description}</p>}
         {dateFormat === 'YYYY-MM-DD' &&
           interval !== 'years' && (
           <div className="date-pickers">
@@ -32,14 +37,14 @@ class Timeline extends Component {
             <Datepicker
               className="datepicker start-date"
               theme="datepicker-small"
-              date={moment(startDate)}
-              handleOnDateChange={date => handleOnDateChange(date, 0)}
+              date={moment(maxRange ? startDateAbsolute : startDate)}
+              handleOnDateChange={date => handleOnDateChange(date, 0, true)}
               settings={{
                 numberOfMonths: 1,
                 minDate,
-                maxDate: trimEndDate,
+                maxDate: maxRange ? maxDate : trimEndDate,
                 isOutsideRange: d =>
-                  d.isAfter(moment(trimEndDate)) ||
+                  d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
                     d.isBefore(moment(minDate)),
                 hideKeyboardShortcutsPanel: true,
                 noBorder: true,
@@ -50,14 +55,14 @@ class Timeline extends Component {
             <Datepicker
               className="datepicker"
               theme="datepicker-small"
-              date={moment(trimEndDate)}
-              handleOnDateChange={date => handleOnDateChange(date, 2)}
+              date={moment(maxRange ? endDateAbsolute : trimEndDate)}
+              handleOnDateChange={date => handleOnDateChange(date, 2, true)}
               settings={{
                 numberOfMonths: 1,
-                minDate: startDate,
+                minDate: maxRange ? minDate : startDate,
                 maxDate,
                 isOutsideRange: d =>
-                  d.isAfter(moment(maxDate)) || d.isBefore(moment(startDate)),
+                  d.isAfter(moment(maxDate)) || d.isBefore(moment(maxRange ? minDate : startDate)),
                 hideKeyboardShortcutsPanel: true,
                 noBorder: true,
                 readOnly: true
@@ -72,7 +77,13 @@ class Timeline extends Component {
               ...activeLayer,
               timelineParams: {
                 ...activeLayer.timelineParams,
-                marks: this.props.marks,
+                ...maxRange && {
+                  minDate: activeLayer.timelineParams.startDateAbsolute,
+                  maxDate: activeLayer.timelineParams.endDateAbsolute
+                },
+                ...!maxRange && {
+                  marks: this.props.marks
+                },
                 handleStyle: {
                   backgroundColor: 'white',
                   borderRadius: '2px',
@@ -96,6 +107,7 @@ class Timeline extends Component {
 
 Timeline.propTypes = {
   className: PropTypes.string,
+  description: PropTypes.string,
   isPlaying: PropTypes.bool,
   handleTogglePlay: PropTypes.func,
   min: PropTypes.number,
@@ -114,10 +126,13 @@ Timeline.propTypes = {
   maxDate: PropTypes.string,
   startDate: PropTypes.string,
   trimEndDate: PropTypes.string,
+  startDateAbsolute: PropTypes.string,
+  endDateAbsolute: PropTypes.string,
   handleOnDateChange: PropTypes.func,
   dateFormat: PropTypes.string,
   interval: PropTypes.string,
-  activeLayer: PropTypes.object
+  activeLayer: PropTypes.object,
+  maxRange: PropTypes.number
 };
 
 export default Timeline;

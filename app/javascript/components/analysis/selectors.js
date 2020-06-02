@@ -26,7 +26,9 @@ const selectEmbed = state =>
   state.location &&
   state.location.pathname &&
   state.location.pathname.includes('/embed');
-const selectError = state => (state.analysis && state.analysis.error) || (state.geostore && state.geostore.error);
+const selectError = state =>
+  (state.analysis && state.analysis.error) ||
+  (state.geostore && state.geostore.error);
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectGeostoreSize = state =>
   state.geostore && state.geostore.data && state.geostore.data.areaHa;

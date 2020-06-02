@@ -42,9 +42,12 @@ export default [
   {
     label: 'Intact Forest Landscapes ({iflYear})',
     value: 'ifl',
-    tableKey: 'intact_forest_landscape__year',
-    newTableKey: 'ifl_intact_forest_landscape__year',
-    gladTableKey: 'is__intact_forest_landscapes_2016',
+    tableKeys: {
+      annual: 'intact_forest_landscape__year',
+      glad: 'is__intact_forest_landscapes_2016',
+      viirs: 'is__intact_forest_landscapes_2016',
+      modis: 'is__intact_forest_landscapes_2016'
+    },
     metaKey: 'intact_forest_landscapes_change',
     global: true,
     default: 2016,
@@ -60,8 +63,7 @@ export default [
   {
     label: 'Primary Forests (2001, tropics only)',
     value: 'primary_forest',
-    tableKey: 'is__regional_primary_forest',
-    newTableKey: 'is__umd_regional_primary_forest_2001',
+    tableKey: 'is__umd_regional_primary_forest_2001',
     metaKey: 'regional_primary_forests',
     global: true,
     datasets: [
@@ -74,8 +76,7 @@ export default [
   {
     label: 'Mangrove forests',
     value: 'mangroves_2016',
-    tableKey: 'is__mangroves_2016',
-    newTableKey: 'is__gmw_mangroves_2016',
+    tableKey: 'is__gmw_mangroves_2016',
     metaKey: 'mangrove_2010_gmw',
     global: true,
     datasets: [
@@ -89,8 +90,7 @@ export default [
   {
     label: 'Tree cover loss driver category',
     value: 'tsc',
-    tableKey: 'tcs_driver__type',
-    newTableKey: 'tsc_tree_cover_loss_drivers__type',
+    tableKey: 'tsc_tree_cover_loss_drivers__type',
     hidden: true
   }
 ];

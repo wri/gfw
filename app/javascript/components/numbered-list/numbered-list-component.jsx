@@ -15,6 +15,7 @@ class NumberedList extends PureComponent {
       className,
       data,
       settings,
+      settingsConfig,
       handlePageChange,
       linksDisabled,
       linksExt
@@ -23,6 +24,20 @@ class NumberedList extends PureComponent {
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
+
+    const unitsConfig = settingsConfig && settingsConfig.find(conf => conf.key === 'unit');
+    const selectedUnitConfig =
+      unitsConfig &&
+      unitsConfig.options &&
+      !!unitsConfig.options.length &&
+      unitsConfig.options.find(opt => opt.value === unit);
+    let formatUnit = unit;
+    if (selectedUnitConfig) {
+      formatUnit =
+        selectedUnitConfig.unit !== undefined
+          ? selectedUnitConfig.unit
+          : selectedUnitConfig.value;
+    }
 
     return (
       <div className={`c-numbered-list ${className}`}>
@@ -55,7 +70,7 @@ class NumberedList extends PureComponent {
                       <div className="item-value">
                         {formatNumber({
                           num: item.value,
-                          unit: item.unit || unit
+                          unit: item.unit || formatUnit
                         })}
                       </div>
                     </div>
@@ -63,7 +78,7 @@ class NumberedList extends PureComponent {
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
-                        unit: item.unit || unit
+                        unit: item.unit || formatUnit
                       })}
                     </div>
                   )}
@@ -76,7 +91,7 @@ class NumberedList extends PureComponent {
                     <a
                       href={`https://${window.location.host}${item.path}`}
                       target="_blank"
-                      rel="noopener nofollower"
+                      rel="noopener noreferrer"
                     >
                       {linkContent}
                     </a>
@@ -115,6 +130,7 @@ class NumberedList extends PureComponent {
 NumberedList.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
+  settingsConfig: PropTypes.array,
   handlePageChange: PropTypes.func,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,

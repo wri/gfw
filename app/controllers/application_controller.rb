@@ -36,8 +36,28 @@ class ApplicationController < ActionController::Base
         desc: 'Analyze and investigate global data trends in forest change, cover and use with just a few clicks.',
         keywords: 'GFW, forests, dashboard, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, investigate, tree, cover, loss, country, deforestation, land use, forest change.'
       },
-      topics: {
-        title: 'Topics',
+      biodiversity: {
+        title: 'Biodiversity | Topics',
+        desc: 'Explore the relationship between forests and several key themes critical to sustainability and the health of our future ecosystems.',
+        keywords: 'biodiversity, commodities, water, climate, forests, sustainability, ecosystems, health, deforestation, conservation, forest loss'
+      },
+      climate: {
+        title: 'Climate | Topics',
+        desc: 'Explore the relationship between forests and several key themes critical to sustainability and the health of our future ecosystems.',
+        keywords: 'biodiversity, commodities, water, climate, forests, sustainability, ecosystems, health, deforestation, conservation, forest loss'
+      },
+      commodities: {
+        title: 'Commodities | Topics',
+        desc: 'Explore the relationship between forests and several key themes critical to sustainability and the health of our future ecosystems.',
+        keywords: 'biodiversity, commodities, water, climate, forests, sustainability, ecosystems, health, deforestation, conservation, forest loss'
+      },
+      water: {
+        title: 'Water | Topics',
+        desc: 'Explore the relationship between forests and several key themes critical to sustainability and the health of our future ecosystems.',
+        keywords: 'biodiversity, commodities, water, climate, forests, sustainability, ecosystems, health, deforestation, conservation, forest loss'
+      },
+      fires: {
+        title: 'Fires | Topics',
         desc: 'Explore the relationship between forests and several key themes critical to sustainability and the health of our future ecosystems.',
         keywords: 'biodiversity, commodities, water, climate, forests, sustainability, ecosystems, health, deforestation, conservation, forest loss'
       },

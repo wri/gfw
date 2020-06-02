@@ -1,0 +1,8 @@
+@import '~styles/settings.scss';
+
+.c-widget-lollipop-chart {
+  @media screen and (min-width: $screen-m) {
+    max-width: 80%;
+    margin: auto;
+  }
+}

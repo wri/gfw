@@ -211,7 +211,7 @@ export const getDatasetsWithConfig = createSelector(
           const {
             hasParamsTimeline,
             hasDecodeTimeline,
-            timelineConfig,
+            timelineConfig: timelineConfigInit,
             id
           } = l;
           const maxDate = latestDates[id];
@@ -220,6 +220,28 @@ export const getDatasetsWithConfig = createSelector(
             ? moment(maxDate).format(latestFormat)
             : maxDate;
 
+          const { min: minRange, max: maxRange, interval: rangeInterval } = timelineConfigInit && timelineConfigInit.dateRange || {};
+
+          const timelineConfig = {
+            ...timelineConfigInit,
+            ...maxRange && rangeInterval && timelineConfigInit && {
+              startDate: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              startDateAbsolute: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD')
+            },
+            maxRange,
+            minRange,
+            rangeInterval
+          };
+
+          const layerParams = {
+            ...l.params,
+            ...maxRange && rangeInterval && timelineConfigInit && {
+              startDate: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              startDateAbsolute: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              endDateAbsolute: l.params.endDate
+            }
+          };
+
           return {
             ...l,
             visibility,
@@ -227,9 +249,9 @@ export const getDatasetsWithConfig = createSelector(
             bbox,
             color: d.color,
             active: layers && layers.length && layers.includes(l.id),
-            ...(!isEmpty(l.params) && {
+            ...(!isEmpty(layerParams) && {
               params: {
-                ...l.params,
+                ...layerParams,
                 ...(maxDate && {
                   endDate: maxDate
                 }),
@@ -273,7 +295,7 @@ export const getDatasetsWithConfig = createSelector(
               timelineParams: {
                 ...timelineConfig,
                 ...(l.hasParamsTimeline && {
-                  ...l.params
+                  ...layerParams
                 }),
                 ...(l.hasDecodeTimeline && {
                   ...l.decodeParams
@@ -497,12 +519,16 @@ export const getInteractions = createSelector(
       const data = interactions[i].data;
 
       return {
-        data: Object.keys(data).reduce((obj, d) => ({
-          ...obj,
-          ...data[d] && data[d] !== 'null' && {
-            [d]: data[d]
-          }
-        }), {}),
+        data: Object.keys(data).reduce(
+          (obj, d) => ({
+            ...obj,
+            ...(data[d] &&
+              data[d] !== 'null' && {
+              [d]: data[d]
+            })
+          }),
+          {}
+        ),
         geometry: interactions[i].geometry,
         layer,
         label: layer && layer.name,
@@ -531,8 +557,9 @@ export const getInteractionSelected = createSelector(
     selectedData = interactions.find(o => o.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
-      selectedData = interactions
-        .find(o => o.layer && layersWithoutBoundariesIds.includes(o.layer.id));
+      selectedData = interactions.find(
+        o => o.layer && layersWithoutBoundariesIds.includes(o.layer.id)
+      );
     }
 
     // if only one layer then get that

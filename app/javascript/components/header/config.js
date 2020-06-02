@@ -40,6 +40,10 @@ export default {
         {
           label: 'Water',
           path: '/topics/water'
+        },
+        process.env.FEATURE_ENV === 'staging' && {
+          label: 'Fires',
+          path: '/topics/fires'
         }
       ]
     },

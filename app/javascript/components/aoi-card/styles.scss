@@ -151,11 +151,6 @@
     align-items: center;
     flex-direction: row;
 
-    .aoi-card-map {
-      margin-bottom: 0;
-      margin-right: 20px;
-    }
-
     .item-body {
       @media screen and (min-width: $screen-m) {
         max-width: rem(150px);
@@ -166,6 +161,8 @@
       width: rem(76px);
       height: rem(76px);
       min-width: rem(76px);
+      margin-bottom: 0;
+      margin-right: 20px;
 
       @media screen and (min-width: $screen-m) {
         width: rem(76px);

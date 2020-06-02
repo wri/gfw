@@ -1,9 +1,6 @@
 import { apiRequest } from 'utils/request';
 import moment from 'moment';
-import { all, spread } from 'axios';
-import sumBy from 'lodash/sumBy';
 import { fetchAnalysisEndpoint } from 'services/analysis';
-import { fetchLatestWeekGladAlerts } from 'services/analysis-cached';
 
 const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
 const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
@@ -27,33 +24,6 @@ const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
-
-export const getLatestAlerts = ({ location, params }) =>
-  all([
-    fetchLatestWeekGladAlerts({
-      ...location,
-      ...params
-    }).catch(() => null),
-    fetchAnalysisEndpoint({
-      ...location,
-      params,
-      name: 'viirs-alerts',
-      slug: 'viirs-active-fires',
-      version: 'v1'
-    }).catch(() => null)
-  ]).then(
-    spread((gladsResponse, firesResponse) => {
-      const glads = gladsResponse.data.data || {};
-      const { value: fires } = firesResponse
-        ? firesResponse.data.data.attributes
-        : {};
-
-      return {
-        glads: sumBy(glads, 'count'),
-        fires
-      };
-    })
-  );
 
 export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
   let fires_summary_table = FIRES_ISO_DATASET;

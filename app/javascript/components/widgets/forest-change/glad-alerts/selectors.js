@@ -43,7 +43,13 @@ export const getData = createSelector(
   [selectAlerts, selectLatestDates],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const groupedByYear = groupBy(sortBy(data, ['year', 'week']), 'year');
+    const parsedData = data.map(d => ({
+      ...d,
+      count: d.alert__count,
+      week: parseInt(d.alert__week, 10),
+      year: parseInt(d.alert__year, 10)
+    }));
+    const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
       (acc, next) => {
         const { year } = next[0];
@@ -142,7 +148,14 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, selectColors, selectInteraction, selectSentences, getIndicator, selectLang],
+  [
+    parseData,
+    selectColors,
+    selectInteraction,
+    selectSentences,
+    getIndicator,
+    selectLang
+  ],
   (data, colors, interaction, sentences, indicator) => {
     if (!data) return null;
 

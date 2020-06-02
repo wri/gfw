@@ -193,9 +193,7 @@ class ChoseAnalysis extends PureComponent {
         </Dropzone>
         <div className="terms">
           <div className="first-term">
-            <p>
-              Learn more about supported file formats
-            </p>
+            <p>Learn more about supported file formats</p>
             <Button
               className="info-button"
               theme="theme-button-tiny square"

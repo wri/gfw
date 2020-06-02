@@ -169,7 +169,7 @@ export const routes = {
   },
   [TOPICS]: {
     controller: 'topics',
-    path: '/topics/:tab',
+    path: '/topics/:type',
     component: 'topics',
     hideFooter: true,
     sections: {
@@ -196,6 +196,14 @@ export const routes = {
         submenu: true,
         component: 'water',
         path: '/topics/water'
+      },
+      ...process.env.FEATURE_ENV === 'staging' && {
+        fires: {
+          label: 'Fires',
+          submenu: true,
+          component: 'fires',
+          path: '/topics/fires'
+        }
       }
     }
   },

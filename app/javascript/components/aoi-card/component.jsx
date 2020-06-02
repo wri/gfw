@@ -4,8 +4,12 @@ import moment from 'moment';
 import cx from 'classnames';
 import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
-import { getLatestAlerts } from 'services/alerts';
 import { translateText } from 'utils/transifex';
+import { all, spread } from 'axios';
+import sumBy from 'lodash/sumBy';
+
+import { fetchHistoricalAlerts } from 'services/analysis-cached';
+import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import applicationsMeta from 'data/applications.json';
 
@@ -18,6 +22,45 @@ import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 
 import './styles.scss';
+
+const getLatestAlerts = ({ location, params }) =>
+  all([
+    fetchHistoricalAlerts({
+      ...location,
+      ...params,
+      dataset: 'glad',
+      frequency: 'daily'
+    }).catch(() => null),
+    ...process.env.FEATURE_ENV === 'staging' ?
+      fetchHistoricalAlerts({
+        ...location,
+        ...params,
+        dataset: 'viirs',
+        frequency: 'daily'
+      }).catch(() => null)
+      :
+      fetchAnalysisEndpoint({
+        ...location,
+        params,
+        name: 'viirs-alerts',
+        slug: 'viirs-active-fires',
+        version: 'v1'
+      }).catch(() => null)
+  ])
+    .then(
+      spread((gladsResponse, firesResponse) => {
+        const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
+        const firesData = firesResponse ? firesResponse.data.data : {};
+        const fires = firesData && process.env.FEATURE_ENV === 'staging' ? sumBy(firesData, 'count') : firesData && firesData.attributes && firesData.attributes.value;
+
+        return {
+          glads: sumBy(glads, 'count'),
+          fires: sumBy(fires, 'count')
+        };
+      })
+    )
+    .catch(error => console.error(error));
+
 
 class AoICard extends PureComponent {
   static propTypes = {

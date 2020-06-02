@@ -55,16 +55,14 @@ export default [
     label: 'Key Biodiversity Areas',
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
-    tableKey: 'is__key_biodiversity_area',
-    newTableKey: 'is__birdlife_alliance_for_zero_extinction_site',
+    tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
     global: true
   },
   {
     label: 'Tiger Conservation Landscapes',
     value: 'tiger_cl',
     metaKey: 'tiger_conservation_landscapes',
-    tableKey: 'is__tiger_conservation_landscape',
-    newTableKey: 'is__gfw_tiger_landscape',
+    tableKey: 'is__gfw_tiger_landscape',
     global: true,
     datasets: [
       {
@@ -77,8 +75,7 @@ export default [
     label: 'Alliance for Zero Extinction',
     value: 'aze',
     metaKey: 'alliance_for_zero_extinction_sites',
-    tableKey: 'is__alliance_for_zero_extinction_site',
-    newTableKey: 'is__birdlife_alliance_for_zero_extinction_site',
+    tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
     global: true,
     datasets: [
       {
@@ -104,8 +101,7 @@ export default [
     label: 'Indonesia peat lands',
     value: 'idn_mys_peatlands',
     metaKey: 'idn_peat_lands',
-    tableKey: 'is__peat_land',
-    newTableKey: 'is__peatland',
+    tableKey: 'is__peatland',
     global: false,
     datasets: [
       {
@@ -158,8 +154,7 @@ export default [
     label: 'Managed forests',
     value: 'managed_forests',
     metaKey: 'gfw_logging',
-    tableKey: 'is__gfw_logging',
-    newTableKey: 'is__gfw_managed_forest',
+    tableKey: 'is__gfw_managed_forest',
     global: true,
     datasets: [
       {

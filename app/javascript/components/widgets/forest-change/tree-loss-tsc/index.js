@@ -93,7 +93,7 @@ export default {
   },
   getData: params =>
     all([
-      getLoss({ ...params, landCategory: 'tsc', tsc: true }),
+      getLoss({ ...params, landCategory: 'tsc', lossTsc: true }),
       getExtent({ ...params })
     ]).then(
       spread((loss, extent) => {

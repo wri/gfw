@@ -42,7 +42,7 @@ class DashboardsPage extends PureComponent {
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     handleCategoryChange: PropTypes.func,
     locationType: PropTypes.string,
-    areaError: PropTypes.bool,
+    areaError: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool,
     embed: PropTypes.bool,
@@ -153,7 +153,11 @@ class DashboardsPage extends PureComponent {
             {isAreaDashboard && (areaError || !activeArea) && !areaLoading ? (
               <ErrorPage
                 title={areaPrivate ? 'Area private' : 'Area not found'}
-                desc={areaPrivate ? "You don't have permissions to view this area." : 'This area has either been deleted or is no longer available.'}
+                desc={
+                  areaPrivate
+                    ? "You don't have permissions to view this area."
+                    : 'This area has either been deleted or is no longer available.'
+                }
               />
             ) : (
               <Fragment>
