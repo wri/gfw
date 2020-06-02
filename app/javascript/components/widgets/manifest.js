@@ -14,6 +14,9 @@ import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gai
 import glads from 'components/widgets/forest-change/glads';
 import gladAlerts from 'components/widgets/forest-change/glad-alerts';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
+import fires from 'components/widgets/forest-change/fires';
+import firesAlertsOld from 'components/widgets/forest-change/fires-alerts';
+import firesRankedOld from 'components/widgets/forest-change/fires-ranked';
 
 // fires
 import firesWithin from 'components/widgets/fires/fires-within';
@@ -69,14 +72,19 @@ export default {
   glads,
   gladAlerts,
   gladRanked,
+  fires,
+  firesAlertsOld,
+  firesRankedOld,
 
-  // fires
-  firesWithin,
-  firesAlerts,
-  firesAlertsCumulative,
-  firesAlertsHistorical,
-  firesRanked,
-  firesAlertsHistoricalDaily,
+  ...process.env.FEATURE_ENV === 'staging' && {
+    // fires
+    firesWithin,
+    firesAlerts,
+    firesAlertsCumulative,
+    firesAlertsHistorical,
+    firesRanked,
+    firesAlertsHistoricalDaily
+  },
 
   // land cover
   treeCover,
