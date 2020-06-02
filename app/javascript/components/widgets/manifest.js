@@ -72,9 +72,11 @@ export default {
   glads,
   gladAlerts,
   gladRanked,
-  fires,
-  firesAlertsOld,
-  firesRankedOld,
+  ...process.env.FEATURE_ENV !== 'staging' && {
+    fires,
+    firesAlertsOld,
+    firesRankedOld
+  },
 
   ...process.env.FEATURE_ENV === 'staging' && {
     // fires
@@ -99,6 +101,7 @@ export default {
   intactTreeCover,
   primaryForest,
   treeCoverLocated,
+
   // climate
   emissions,
   emissionsDeforestation,
@@ -108,6 +111,7 @@ export default {
   futureCarbonGains,
   cumulativeEmissions,
   carbonStock,
+
   // land use
   economicImpact,
   forestryEmployment,
