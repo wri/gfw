@@ -51,6 +51,11 @@ export default {
           as: '/topics/water',
           href: '/topics/[topic]',
         },
+        process.env.FEATURE_ENV === 'staging' && {
+          label: 'Fires',
+          as: '/topics/fires',
+          href: '/topics/[topic]'
+        }
       ],
     },
     {

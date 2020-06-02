@@ -22,11 +22,20 @@ class WidgetSettingsButton extends PureComponent {
     preventCloseSettings: PropTypes.bool,
     handleChangeSettings: PropTypes.func.isRequired,
     handleShowInfo: PropTypes.func.isRequired,
+    shouldSettingsOpen: PropTypes.bool,
+    toggleSettingsMenu: PropTypes.func
   };
 
   state = {
     tooltipOpen: false,
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.shouldSettingsOpen !== this.props.shouldSettingsOpen) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ tooltipOpen: this.props.shouldSettingsOpen });
+    }
+  }
 
   render() {
     const {
@@ -37,6 +46,8 @@ class WidgetSettingsButton extends PureComponent {
       handleShowInfo,
       widget,
       active,
+      shouldSettingsOpen,
+      toggleSettingsMenu
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
@@ -56,7 +67,9 @@ class WidgetSettingsButton extends PureComponent {
           );
           this.widgetSettingsRef.clearEvt();
           if (!preventCloseSettings && !isTargetOnTooltip) {
-            this.setState({ tooltipOpen: false });
+            if (toggleSettingsMenu) {
+              toggleSettingsMenu();
+            } else this.setState({ tooltipOpen: false });
           }
         }}
         onShow={() => {
@@ -77,6 +90,7 @@ class WidgetSettingsButton extends PureComponent {
             loading={loading}
             handleChangeSettings={handleChangeSettings}
             handleShowInfo={handleShowInfo}
+            showYears={shouldSettingsOpen}
           />
         )}
       >

@@ -58,17 +58,26 @@ class TopicsFooter extends PureComponent {
                       ...(c.selector && {
                         selector: {
                           ...c.selector,
-                          options: c.selector.options.map((o) => {
-                            const country =
-                              countries &&
-                              countries.find((adm0) => adm0.value === o.value);
-                            return {
-                              ...o,
-                              label: country && country.label,
-                            };
-                          }),
-                        },
-                      }),
+                          options:
+                            countries &&
+                            [{ label: 'Select country', value: 'placeholder' }]
+                              .concat(countries)
+                              .filter(
+                                country =>
+                                  !c.selector.whitelist ||
+                                  c.selector.whitelist.includes(country.value)
+                              )
+                              .map(country => ({
+                                ...country,
+                                path:
+                                  c.selector.path &&
+                                  c.selector.path.replace(
+                                    '{iso}',
+                                    country.value
+                                  )
+                              }))
+                        }
+                      })
                     }}
                   />
                 ))}

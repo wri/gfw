@@ -25,24 +25,29 @@ export const getColorPalette = (colorRange, quantity) => {
 export const getColorBuckets = (colors) => [
   {
     limit: 20,
-    color: colors.ramp[8],
+    stdDev: -2,
+    color: colors.ramp[8]
   },
   {
     limit: 40,
-    color: colors.ramp[6],
+    stdDev: -1,
+    color: colors.ramp[6]
   },
   {
     limit: 60,
-    color: colors.ramp[4],
+    stdDev: 1,
+    color: colors.ramp[4]
   },
   {
     limit: 80,
-    color: colors.ramp[2],
+    stdDev: 2,
+    color: colors.ramp[2]
   },
   {
     limit: 100,
-    color: colors.ramp[0],
-  },
+    stdDev: 100,
+    color: colors.ramp[0]
+  }
 ];
 
 export const getColorBucket = (buckets, value) =>

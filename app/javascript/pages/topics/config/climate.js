@@ -299,12 +299,10 @@ export default {
       img1x: monitor,
       img2x: monitorLarge,
       selector: {
-        options: nycWidgetIsos.map((iso) => ({
-          label: iso,
-          value: iso,
-          path: `/dashboards/country/${iso}?widget=cumulativeGlad&category=climate#cumulativeGlad`,
-        })),
-      },
+        whitelist: nycWidgetIsos,
+        path:
+          '/dashboards/country/{iso}?widget=cumulativeGlad&category=climate#cumulativeGlad'
+      }
     },
     {
       id: 'explore',

@@ -4,6 +4,7 @@ import Biodiversity from './config/biodiversity';
 import Commodities from './config/commodities';
 import Climate from './config/climate';
 import Water from './config/water';
+import Fires from './config/fires';
 
 import PageComponent from './component';
 
@@ -12,6 +13,7 @@ const contents = {
   commodities: Commodities,
   climate: Climate,
   water: Water,
+  fires: Fires
 };
 
 const sections = {
@@ -33,6 +35,11 @@ const sections = {
   water: {
     label: 'Water',
     component: 'water',
+    path: '/topics/water',
+  },
+  fires: {
+    label: 'Fires',
+    component: 'fires',
     path: '/topics/water',
   },
 };

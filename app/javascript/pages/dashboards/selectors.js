@@ -53,7 +53,9 @@ export const getLinks = createSelector(
       return null;
     }
 
-    return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
+    const allCats = process.env.FEATURE_ENV === 'staging' ? CATEGORIES : CATEGORIES.filter(cat => cat.value !== 'fires');
+
+    return allCats.filter(c => widgetCats.includes(c.value)).map(
       category => ({
         label: category.label,
         category: category.value,

@@ -1,6 +1,7 @@
 import climate from 'assets/images/climate.jpg';
 import biodiversity from 'assets/images/biodiversity.jpg';
 import water from 'assets/images/water.jpg';
+import fires from 'assets/images/fires.jpg';
 import commodities from 'assets/images/commodities.jpg';
 import mongabay from 'assets/images/mongabay.jpg';
 
@@ -19,6 +20,7 @@ import {
   WOOD_FIBER_DATASET,
   OIL_PALM_DATASET,
   LOGGING_CONCESSIONS_DATASET,
+  FIRES_VIIRS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -36,6 +38,7 @@ import {
   WOOD_FIBER,
   OIL_PALM,
   LOGGING_CONCESSIONS,
+  FIRES_ALERTS_VIIRS
 } from 'data/layers';
 
 export const descriptions = {
@@ -331,8 +334,46 @@ export const topics = {
         basemap: {
           value: 'default',
         },
-        label: 'default',
-      },
-    },
+        label: 'default'
+      }
+    }
   },
+  fires: {
+    slug: 'fires',
+    title: 'Fires',
+    summary: 'Explore fire alerts in near real time.',
+    image: fires,
+    buttons: [
+      {
+        text: 'view topic',
+        theme: 'theme-button-small theme-button-light',
+        link: '/topics/fires'
+      },
+      {
+        text: 'VIEW ON MAP',
+        theme: 'theme-button-small'
+      }
+    ],
+    payload: {
+      map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 2,
+        datasets: [
+          {
+            dataset: FIRES_VIIRS_DATASET,
+            layers: [FIRES_ALERTS_VIIRS],
+            opacity: 1,
+            visibility: true
+          }
+        ],
+        basemap: {
+          value: 'default'
+        },
+        label: 'default'
+      }
+    }
+  }
 };

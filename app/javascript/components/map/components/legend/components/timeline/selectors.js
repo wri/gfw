@@ -9,6 +9,9 @@ export default createSelector(getDates, dates => {
   const { minDate, maxDate } = dates;
   const numOfYears = moment(maxDate).diff(minDate, 'years');
   const maxDays = moment(maxDate).diff(minDate, 'days');
+
+  if (!numOfYears || maxDays <= 365) return null;
+
   const ticks = range(
     0,
     maxDays + 1,

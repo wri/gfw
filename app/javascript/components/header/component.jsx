@@ -6,6 +6,9 @@ import { Media } from 'utils/responsive';
 import { APP_URL } from 'utils/constants';
 
 import gfwLogo from 'assets/logos/gfw.png?webp';
+import ContactUs from 'components/modals/contact-us';
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
 
 import NavMenu from './components/nav-menu';
 import NavAlt from './components/nav-alt';
@@ -139,6 +142,11 @@ class Header extends PureComponent {
                   NavLinkComponent={NavLinkComponent}
                 />
               </div>
+            )}
+            <ContactUs />
+            <ClimateModal />
+            {process.env.FEATURE_ENV === 'staging' && (
+              <FiresModal />
             )}
           </div>
         </div>

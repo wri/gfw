@@ -263,10 +263,12 @@ export const filterWidgetsByLocation = createSelector(
           whitelists.indicators
         );
       const matchesPolynameWhitelist =
+        type === 'global' ||
         !whitelists ||
         !whitelists.indicators ||
         (polynameIntersection && polynameIntersection.length);
       const isWidgetDataPending =
+        // for geostore shapes sometimes the data is not ready (no cached tables)
         !whitelists ||
         (status && status !== 'pending') ||
         !whitelists.checkStatus;
@@ -345,6 +347,8 @@ export const getWidgets = createSelector(
     getActiveLayersWithDates,
     selectAnalysis,
     selectActiveLang,
+    getWidgetFromLocation,
+    selectActiveLang
   ],
   (
     widgets,
@@ -356,6 +360,7 @@ export const getWidgets = createSelector(
     datasets,
     layers,
     analysis,
+    activeWidgetKey,
     lang
   ) => {
     if (isEmpty(widgets) || !locationObj || !widgetsData) {
@@ -365,15 +370,20 @@ export const getWidgets = createSelector(
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
 
-    return widgets.map((w) => {
+    return widgets.map((w, index) => {
       const {
         settings: defaultSettings,
         widget,
         settingsConfig,
         pendingKeys,
         title: titleTemplate,
-        dataType,
-      } = w || {};
+        dataType
+      } =
+        w || {};
+
+      const active =
+        (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
+
       const rawData = widgetsData && widgetsData[widget];
 
       const { settings: dataSettings } = rawData || {};
@@ -455,6 +465,7 @@ export const getWidgets = createSelector(
         datasets,
         type,
         dataType,
+        active
       });
 
       const { ifl } = settings || {};
@@ -473,6 +484,7 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
+        active,
         data: rawData,
         settings,
         title: titleTemplate,

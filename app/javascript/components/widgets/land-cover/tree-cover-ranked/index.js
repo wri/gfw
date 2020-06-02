@@ -81,7 +81,7 @@ export default {
   refetchKeys: ['threshold', 'extentYear', 'forestType', 'landCategory'],
   settings: {
     threshold: 30,
-    unit: '%',
+    unit: 'ha',
     extentYear: 2000,
     ifl: 2000
   },

@@ -136,28 +136,34 @@ class Card extends PureComponent {
               <Dropdown
                 className="card-selector"
                 theme="theme-dropdown-native large"
-                options={selector.options}
+                options={selector && selector.options}
                 value={
                   selectorValue.value ||
                   (selector.options && selector.options[0])
                 }
                 onChange={(value) =>
                   this.setState({
-                    selectorValue: selector.options.find(
-                      (o) => o.value === value
-                    ),
+                    selectorValue:
+                      selector.options &&
+                      selector.options.find(o => o.value === value)
                   })}
                 native
               />
-              <a
-                href={selectorValue.path || selector?.options?.[0]?.path}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="selector-btn-link" theme="square">
+              {selectorValue.value &&
+                selectorValue.value !== 'placeholder' && (
+                <Button
+                  className="selector-btn-link"
+                  theme="square"
+                  extLink={
+                    selectorValue.path ||
+                      (selector.options &&
+                        selector.options[0] &&
+                        selector.options[0].path)
+                  }
+                >
                   <Icon icon={arrowIcon} />
                 </Button>
-              </a>
+              )}
             </div>
           )}
         </div>

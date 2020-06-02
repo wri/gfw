@@ -40,10 +40,11 @@ export const getAreasOptions = createSelector(
     if (
       !areas ||
       !areas.find(
-        (a) => a.id === location.adm0 || a.subscriptionId === location.adm0
+        a => a.id === location.adm0 || a.subscriptionId === location.adm0
       )
-    )
+    ) {
       return null;
+    }
 
     return {
       adm0: areas.map((a) => ({
@@ -121,22 +122,20 @@ export const getAdminsSelected = createSelector(
     const adm0 =
       (location &&
         location.adm0 &&
-        adm0s &&
-        adm0s.find(
-          (i) => i.value === location.adm0 || i.subscriptionId === location.adm0
-        )) ||
+        (adm0s &&
+          adm0s.find(
+            i => i.value === location.adm0 || i.subscriptionId === location.adm0
+          ))) ||
       null;
     const adm1 =
       (location &&
         location.adm1 &&
-        adm1s &&
-        adm1s.find((i) => i.value === location.adm1)) ||
+        (adm1s && adm1s.find(i => i.value === location.adm1))) ||
       null;
     const adm2 =
       (location &&
         location.adm2 &&
-        adm2s &&
-        adm2s.find((i) => i.value === location.adm2)) ||
+        (adm2s && adm2s.find(i => i.value === location.adm2))) ||
       null;
     let current = adm0;
     if (location.adm2) {

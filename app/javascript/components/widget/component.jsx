@@ -27,6 +27,7 @@ class Widget extends PureComponent {
     error: PropTypes.bool,
     locationLabelFull: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    originalData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
     sentence: PropTypes.object,
@@ -47,7 +48,14 @@ class Widget extends PureComponent {
     childData: PropTypes.object,
     location: PropTypes.object,
     adminLevel: PropTypes.string,
-    geostore: PropTypes.object
+    preventRenderKeys: PropTypes.array,
+    geostore: PropTypes.object,
+    settingsBtnConfig: PropTypes.object,
+    status: PropTypes.string
+  };
+
+  state = {
+    shouldSettingsOpen: false
   };
 
   render() {
@@ -69,6 +77,7 @@ class Widget extends PureComponent {
       locationLabelFull,
       data,
       rawData,
+      originalData,
       config,
       sentence,
       metaKey,
@@ -89,9 +98,15 @@ class Widget extends PureComponent {
       adminLevel,
       locationData,
       location,
-      geostore
+      preventRenderKeys,
+      geostore,
+      settingsBtnConfig,
+      status
     } = this.props;
     const { main } = colors || {};
+
+    const toggleSettingsMenu = () =>
+      this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
 
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -132,6 +147,8 @@ class Widget extends PureComponent {
           locationData={locationData}
           location={location}
           geostore={geostore}
+          shouldSettingsOpen={this.state.shouldSettingsOpen}
+          toggleSettingsMenu={toggleSettingsMenu}
         />
         <WidgetBody
           chartType={chartType}
@@ -140,15 +157,21 @@ class Widget extends PureComponent {
           error={error}
           simple={simple}
           locationName={locationLabelFull}
+          active={active}
           data={data}
           rawData={rawData}
+          originalData={originalData}
           settings={settings}
+          settingsConfig={settingsConfig}
+          preventRenderKeys={preventRenderKeys}
           sentence={sentence}
           config={config}
           handleRefetchData={handleRefetchData}
           handleDataHighlight={handleDataHighlight}
           handleChangeSettings={handleChangeSettings}
           parseInteraction={parseInteraction}
+          toggleSettingsMenu={toggleSettingsMenu}
+          settingsBtnConfig={settingsBtnConfig}
         />
         {sentence &&
           data && (

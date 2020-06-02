@@ -4,8 +4,16 @@
     "value": 1
   },
   {
+    "label": "2 weeks",
+    "value": 2
+  },
+  {
     "label": "4 weeks",
     "value": 4
+  },
+  {
+    "label": "2 months",
+    "value": 8
   },
   {
     "label": "3 months",

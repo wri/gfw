@@ -13,6 +13,8 @@
     "main": "#fe6598",
     "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
     "noLoss": "#e7e5a4",
+    "primaryForestLoss": "#bed65c",
+    "primaryForestExtent": "#658434",
     "lossDrivers": {
       "Commodity driven deforestation": "#F41D36",
       "Shifting agriculture": "#efd31a",
@@ -96,7 +98,11 @@
   },
   "fires": {
     "main": "#f14600",
-    "ramp": ["#940f07", "#b11509", "#cd2009", "#e73108", "#fe4605", "#ff7104", "#ff9203", "#ffb004", "#fecc05"]
+    "ramp": ["#940f07", "#b11509", "#cd2009", "#e73108", "#fe4605", "#ff7104", "#ff9203", "#ffb004", "#fecc05"],
+    "compareYear": "#49b5e3",
+    "compareYearRamp": ["#49b5e3", "#D0ECF8"],
+    "otherColor": "#dcd9d9"
+
   },
   "employment": {
     "main": "#A878F3",

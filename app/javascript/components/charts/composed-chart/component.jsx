@@ -11,6 +11,7 @@ import {
   Area,
   XAxis,
   YAxis,
+  ReferenceLine,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
@@ -70,18 +71,24 @@ class CustomComposedChart extends PureComponent {
       yKeys,
       xAxis,
       yAxis,
+      cartesianGrid,
+      rightYAxis,
       gradients,
       tooltip,
       unit,
       unitFormat,
       height,
-      margin
+      margin,
+      referenceLine
     } = config;
 
     const isVertical = !!xKeys;
     const dataKeys = yKeys || xKeys;
     const { lines, bars, areas } = dataKeys;
     const maxYValue = this.findMaxValue(data, config);
+    let rightMargin = 0;
+    if (isVertical) rightMargin = 10;
+    if (!simple && rightYAxis) rightMargin = 70;
 
     return (
       <div
@@ -94,7 +101,7 @@ class CustomComposedChart extends PureComponent {
             margin={
               margin || {
                 top: !simple ? 15 : 0,
-                right: isVertical ? 10 : 0,
+                right: rightMargin,
                 left: simple || isVertical ? 0 : 42,
                 bottom: 0
               }
@@ -163,11 +170,45 @@ class CustomComposedChart extends PureComponent {
                 {...yAxis}
               />
             )}
+            {!simple &&
+              rightYAxis && (
+              <YAxis
+                orientation="right"
+                dataKey={yKey || ''}
+                tickLine={!isVertical}
+                axisLine={false}
+                {...(!isVertical
+                  ? {
+                    strokeDasharray: '3 4',
+                    tickSize: -42,
+                    mirror: true,
+                    tickMargin: 0
+                  }
+                  : {})}
+                tick={
+                  <CustomTick
+                    dataMax={rightYAxis.maxYValue || maxYValue}
+                    unit={rightYAxis.unit || unit || ''}
+                    unitFormat={
+                      unitFormat ||
+                        (value =>
+                          (value < 1
+                            ? format('.2r')(value)
+                            : format('.2s')(value)))
+                    }
+                    fill="#555555"
+                    vertical={isVertical}
+                  />
+                }
+                {...rightYAxis}
+              />
+            )}
             {!simple && (
               <CartesianGrid
                 vertical={isVertical}
                 horizontal={!isVertical}
                 strokeDasharray="3 4"
+                {...cartesianGrid}
               />
             )}
 
@@ -183,20 +224,6 @@ class CustomComposedChart extends PureComponent {
               }}
               content={<ChartToolTip settings={tooltip} />}
             />
-            {areas &&
-              Object.keys(areas).map(key => (
-                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
-              ))}
-            {lines &&
-              Object.keys(lines).map(key => (
-                <Line
-                  key={key}
-                  dataKey={key}
-                  dot={false}
-                  strokeWidth={2}
-                  {...lines[key]}
-                />
-              ))}
             {bars &&
               Object.keys(bars).map(key => (
                 <Bar
@@ -219,6 +246,21 @@ class CustomComposedChart extends PureComponent {
                     ))}
                 </Bar>
               ))}
+            {referenceLine && <ReferenceLine {...referenceLine} />}
+            {areas &&
+              Object.keys(areas).map(key => (
+                <Area key={key} dataKey={key} dot={false} {...areas[key]} />
+              ))}
+            {lines &&
+              Object.keys(lines).map(key => (
+                <Line
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  strokeWidth={2}
+                  {...lines[key]}
+                />
+              ))}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
@@ -234,6 +276,7 @@ CustomComposedChart.propTypes = {
   handleMouseMove: PropTypes.func,
   handleMouseLeave: PropTypes.func,
   handleClick: PropTypes.func,
+  handleBrush: PropTypes.func,
   backgroundColor: PropTypes.string,
   barBackground: PropTypes.object
 };

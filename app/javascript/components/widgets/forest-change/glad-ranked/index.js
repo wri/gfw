@@ -93,7 +93,7 @@ export default {
   settings: {
     threshold: 30,
     extentYear: 2010,
-    unit: '%',
+    unit: 'ha',
     weeks: 4,
     pageSize: 5,
     page: 0,

@@ -23,8 +23,13 @@ class Intro extends PureComponent {
             <Media greaterThanOrEqual="md">
               <div className="intro-img">
                 <img
-                  srcSet={`${img1x} 2x, ${img2x} 1x,`}
-                  src={`${img1x} 1x`}
+                  {...img2x && {
+                    srcSet: `${img2x} 2x, ${img1x} 1x,`,
+                    src: `${img1x} 1x`
+                  }}
+                  {...!img2x && {
+                    src: img1x
+                  }}
                   alt={title}
                 />
               </div>

@@ -29,7 +29,9 @@ class WidgetHeader extends PureComponent {
     handleShowShare: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
     getDataURL: PropTypes.func,
-    status: PropTypes.string
+    status: PropTypes.string,
+    shouldSettingsOpen: PropTypes.bool,
+    toggleSettingsMenu: PropTypes.func
   };
 
   render() {
@@ -49,10 +51,12 @@ class WidgetHeader extends PureComponent {
       handleShowShare,
       preventCloseSettings,
       getDataURL,
-      status
+      status,
+      shouldSettingsOpen,
+      toggleSettingsMenu
     } = this.props;
 
-    const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
+    const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
@@ -68,7 +72,6 @@ class WidgetHeader extends PureComponent {
               handleShowMap={handleShowMap}
             />
           )}
-
           {showSettingsBtn && (
             <WidgetSettingsButton
               settingsConfig={settingsConfig}
@@ -78,6 +81,8 @@ class WidgetHeader extends PureComponent {
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}
               active={active}
+              shouldSettingsOpen={shouldSettingsOpen}
+              toggleSettingsMenu={toggleSettingsMenu}
             />
           )}
           {showSeparator && <span className="separator" />}

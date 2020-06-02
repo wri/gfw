@@ -17,7 +17,8 @@ export const getForestTypes = ({
       const isGlobal = !polynamesWhitelist && o.global;
       const hasPolyname =
         isGlobal ||
-        (polynamesWhitelist && polynamesWhitelist.includes(o.tableKey));
+        (polynamesWhitelist &&
+          polynamesWhitelist.includes(o.newTableKey || o.tableKey));
       return isGlobal || hasPolyname;
     })
     .map(f => ({
@@ -36,7 +37,8 @@ export const getLandCategories = ({ landCategories, polynamesWhitelist }) =>
     const isGlobal = !polynamesWhitelist && o.global;
     const hasPolyname =
       isGlobal ||
-      (polynamesWhitelist && polynamesWhitelist.includes(o.tableKey));
+      (polynamesWhitelist &&
+        polynamesWhitelist.includes(o.newTableKey || o.tableKey));
     return isGlobal || hasPolyname;
   });
 
@@ -59,6 +61,7 @@ export const getSettingsConfig = ({
     .map(o => {
       const {
         key,
+        compareKey,
         startKey,
         endKey,
         options,
@@ -111,6 +114,14 @@ export const getSettingsConfig = ({
               opt => opt.value >= settings[startKey]
             ),
             endValue: parsedOptions.find(opt => opt.value === settings[endKey])
+          }),
+          ...(compareKey && {
+            compareOptions: parsedOptions.filter(
+              opt => opt.value !== settings[key]
+            ),
+            compareValue: parsedOptions.find(
+              opt => opt.value === settings[compareKey]
+            )
           })
         })
       };
@@ -140,7 +151,7 @@ export const getIndicator = (forestType, landCategory) => {
     label = forestType.label;
     value = forestType.value;
   }
-  if (value !== 'kba') {
+  if (value !== 'kba' && value !== 'idn_forest_moratorium') {
     label = label.toLowerCase();
   }
 
@@ -157,6 +168,8 @@ export const getWidgetDatasets = ({
   endYear,
   year,
   weeks,
+  startDateAbsolute,
+  endDateAbsolute,
   latestDate,
   threshold
 }) =>
@@ -190,6 +203,13 @@ export const getWidgetDatasets = ({
         params: {
           thresh: threshold,
           visibility: true
+        }
+      }),
+      ...(startDateAbsolute &&
+        endDateAbsolute && {
+        params: {
+          startDateAbsolute,
+          endDateAbsolute
         }
       })
     })
@@ -259,7 +279,8 @@ export const getStatements = ({
   dataType,
   landCategory,
   forestType,
-  datasets
+  datasets,
+  active
 }) => {
   if (!settings) return null;
   const { extentYear, threshold } = settings;
@@ -285,14 +306,17 @@ export const getStatements = ({
           )
           : null)
     );
-
   const statements = compact([
-    extentYear
+    extentYear && (dataType !== 'lossPrimary' || dataType !== 'fires')
       ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    dataType === 'lossPrimary'
+      ? translateText('2001 primary forest extent remaining')
       : null,
     threshold || threshold === 0
       ? translateText('>{threshold}% tree canopy', { threshold })
       : null,
+    dataType === 'fires' && active && '*when on the map you can show up to 3 months of fires data',
     dataType === 'loss'
       ? translateText(
         'these estimates do not take tree cover gain into account'

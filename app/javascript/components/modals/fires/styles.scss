@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+$mobile-margin: rem(10px);
+
+.c-gfw-fires-modal {
+  margin-top: $mobile-margin !important;
+
+  @media screen and (min-width: $screen-m) {
+    margin-top: auto !important;
+  }
+
+  .fires-modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: #fff;
+    max-width: 70rem;
+    width: 600px;
+    margin: auto;
+
+    p {
+      font-size: rem(18px);
+      line-height: 30px;
+      margin-bottom: 1.25rem;
+    }
+
+    button,
+    a {
+      color: $green-gfw;
+      cursor: pointer;
+
+      &:hover {
+        color: $dark-green;
+        text-decoration: underline;
+      }
+    }
+  }
+}

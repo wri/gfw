@@ -41,7 +41,7 @@ class DashboardsPage extends PureComponent {
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     handleCategoryChange: PropTypes.func,
     locationType: PropTypes.string,
-    areaError: PropTypes.string,
+    areaError: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool,
     embed: PropTypes.bool,
@@ -160,18 +160,19 @@ class DashboardsPage extends PureComponent {
           <Fragment>
             <div className="content-panel">
               <Header className="header" />
-              {links && !!links.length && (
+              {links &&
+                !!links.length && (
                 <SubNavMenu
                   className="nav"
                   theme="theme-subnav-dark"
-                  links={links.map((l) => ({
+                  links={links.map(l => ({
                     ...l,
                     onClick: () => {
                       handleCategoryChange(l.category);
                       logEvent('selectDashboardCategory', {
-                        label: l.category,
+                        label: l.category
                       });
-                    },
+                    }
                   }))}
                   checkActive
                 />
@@ -185,13 +186,17 @@ class DashboardsPage extends PureComponent {
               )}
               <Widgets className="dashboard-widgets" />
             </div>
-            <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
+            <div
+              className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}
+            >
               <Media greaterThanOrEqual="md">
                 <Sticky bottomBoundary=".l-dashboards-page">
                   {this.renderMap()}
                 </Sticky>
               </Media>
-              <Media lessThan="md">{this.renderMap()}</Media>
+              <Media lessThan="md">
+                {this.renderMap()}
+              </Media>
             </div>
             <MapControls className="map-controls" />
             <Share />
