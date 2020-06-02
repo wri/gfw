@@ -100,7 +100,9 @@ class Header extends PureComponent {
               <Button
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
-                  text: `Edit ${locationNames && locationNames.adm0 && locationNames.adm0.label}`,
+                  text: `Edit ${locationNames &&
+                      locationNames.adm0 &&
+                      locationNames.adm0.label}`,
                   position: 'bottom'
                 }}
                 onClick={() => setAreaOfInterestModalSettings({ open: true })}
@@ -126,12 +128,22 @@ class Header extends PureComponent {
                 extLink={downloadLink}
                 tooltip={{
                   text: `Download the data${
-                    locationNames.adm0 ? ` for ${locationNames && locationNames.adm0 && locationNames.adm0.label}` : ''
+                    locationNames.adm0
+                      ? ` for ${locationNames &&
+                          locationNames.adm0 &&
+                          locationNames.adm0.label}`
+                      : ''
                   }`,
                   position: 'bottom'
                 }}
                 onClick={() => {
-                  track('downloadDashboardPage', { label: locationNames && locationNames.adm0 && locationNames.adm0.label || 'Global' });
+                  track('downloadDashboardPage', {
+                    label:
+                      (locationNames &&
+                        locationNames.adm0 &&
+                        locationNames.adm0.label) ||
+                      'Global'
+                  });
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -292,12 +304,6 @@ class Header extends PureComponent {
                           *Primary forest is defined as mature natural humid
                           tropical forest that has not been completely cleared
                           and regrown in recent history.
-                      </p>
-                      <p className="disclaimer">
-                          **Natural forest is defined as all tree cover (all
-                          vegetation taller than 5 meters in height) with 30%
-                          minimum tree cover density excluding tree cover within
-                          mapped tree plantations.
                       </p>
                     </Fragment>
                   )}
