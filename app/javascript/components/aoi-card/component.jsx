@@ -9,6 +9,7 @@ import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 
 import { fetchHistoricalAlerts } from 'services/analysis-cached';
+import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import applicationsMeta from 'data/applications.json';
 
@@ -30,17 +31,27 @@ const getLatestAlerts = ({ location, params }) =>
       dataset: 'glad',
       frequency: 'daily'
     }).catch(() => null),
-    fetchHistoricalAlerts({
-      ...location,
-      ...params,
-      dataset: 'viirs',
-      frequency: 'daily'
-    }).catch(() => null)
+    ...process.env.FEATURE_ENV === 'staging' ?
+      fetchHistoricalAlerts({
+        ...location,
+        ...params,
+        dataset: 'viirs',
+        frequency: 'daily'
+      }).catch(() => null)
+      :
+      fetchAnalysisEndpoint({
+        ...location,
+        params,
+        name: 'viirs-alerts',
+        slug: 'viirs-active-fires',
+        version: 'v1'
+      }).catch(() => null)
   ])
     .then(
       spread((gladsResponse, firesResponse) => {
         const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
-        const fires = firesResponse ? firesResponse.data.data : {};
+        const firesData = firesResponse ? firesResponse.data.data : {};
+        const fires = firesData && process.env.FEATURE_ENV === 'staging' ? sumBy(firesData, 'count') : firesData.attributes.value;
 
         return {
           glads: sumBy(glads, 'count'),
