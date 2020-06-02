@@ -1,27 +1,27 @@
 // intro
-import intro1x from 'pages/topics/assets/fires/intro/intro-fires.png';
+import intro1x from 'layouts/topics/assets/fires/intro/intro-fires.png';
 
 // slides
-import fires1 from 'pages/topics/assets/fires/slides/fires1.png';
-import fires2 from 'pages/topics/assets/fires/slides/fires2.png';
-import fires3 from 'pages/topics/assets/fires/slides/fires3.png';
-import fires4 from 'pages/topics/assets/fires/slides/fires4.png';
+import fires1 from 'layouts/topics/assets/fires/slides/fires1.png';
+import fires2 from 'layouts/topics/assets/fires/slides/fires2.png';
+import fires3 from 'layouts/topics/assets/fires/slides/fires3.png';
+import fires4 from 'layouts/topics/assets/fires/slides/fires4.png';
 
 // cards
-import areas from 'pages/topics/assets/fires/cards/areas.png';
-import widgetStats from 'pages/topics/assets/fires/cards/widget-stats.png';
-import widgetCumulative from 'pages/topics/assets/fires/cards/widget-cumulative.png';
-import mapLayer from 'pages/topics/assets/fires/cards/map-layer.png';
-import forestFire from 'pages/topics/assets/fires/cards/forest-fire.png';
-import forestWatcher from 'pages/topics/assets/fires/cards/forest-watcher.png';
+import areas from 'layouts/topics/assets/fires/cards/areas.png';
+import widgetStats from 'layouts/topics/assets/fires/cards/widget-stats.png';
+import widgetCumulative from 'layouts/topics/assets/fires/cards/widget-cumulative.png';
+import mapLayer from 'layouts/topics/assets/fires/cards/map-layer.png';
+import forestFire from 'layouts/topics/assets/fires/cards/forest-fire.png';
+import forestWatcher from 'layouts/topics/assets/fires/cards/forest-watcher.png';
 
 // animations
-import scene1 from 'pages/topics/assets/fires/animations/scene1.json';
-import birds1 from 'pages/topics/assets/fires/animations/birds1.json';
-import scene2 from 'pages/topics/assets/fires/animations/scene2.json';
-import scene3 from 'pages/topics/assets/fires/animations/scene3.json';
-import sunHeat3 from 'pages/topics/assets/fires/animations/heat_sun3.json';
-import scene4 from 'pages/topics/assets/fires/animations/scene4.json';
+import scene1 from 'layouts/topics/assets/fires/animations/scene1.json';
+import birds1 from 'layouts/topics/assets/fires/animations/birds1.json';
+import scene2 from 'layouts/topics/assets/fires/animations/scene2.json';
+import scene3 from 'layouts/topics/assets/fires/animations/scene3.json';
+import sunHeat3 from 'layouts/topics/assets/fires/animations/heat_sun3.json';
+import scene4 from 'layouts/topics/assets/fires/animations/scene4.json';
 
 export default {
   intro: {

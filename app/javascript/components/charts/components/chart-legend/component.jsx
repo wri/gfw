@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import Button from 'components/ui/button';
 
-import './chart-legend-styles.scss';
+import './styles.scss';
 
 class ChartLegend extends PureComponent {
   render() {

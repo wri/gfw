@@ -31,7 +31,7 @@ const getLatestAlerts = ({ location, params }) =>
       dataset: 'glad',
       frequency: 'daily'
     }).catch(() => null),
-    ...process.env.FEATURE_ENV === 'staging' ?
+    process.env.FEATURE_ENV === 'staging' ?
       fetchHistoricalAlerts({
         ...location,
         ...params,

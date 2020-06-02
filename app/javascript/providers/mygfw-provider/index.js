@@ -19,7 +19,7 @@ class MyGFWProvider extends PureComponent {
       delete query.token;
       pushDynamic({
         pathname,
-        query: { ...query, location: query.location.join('/') },
+        query: { ...query, location: query.location && query.location.join('/') },
       });
     }
 

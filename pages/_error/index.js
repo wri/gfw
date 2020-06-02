@@ -30,8 +30,10 @@ const Error = ({ statusCode }) => (
   </Layout>
 );
 
-Error.getServerSideProps = ({ res, err }) => ({
-  statusCode: (res && res.statusCode) || (err && err.statusCode) || 404,
+export const getServerSideProps = ({ res, err }) => ({
+  props: {
+    statusCode: (res && res.statusCode) || (err && err.statusCode) || 404,
+  }
 });
 
 Error.propTypes = {

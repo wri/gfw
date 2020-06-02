@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { scaleLinear } from 'd3-scale';
 
-import { Spring } from 'react-spring/renderprops';
+import { Spring } from 'react-spring';
 
 import ComposedChart from 'components/charts/composed-chart';
 import SVGBrush from './svg-brush';
