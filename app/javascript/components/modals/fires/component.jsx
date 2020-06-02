@@ -23,6 +23,7 @@ class ModalGFWFires extends PureComponent {
         modalText = [
           'Welcome to the new home for Global Forest Watch Fires data and insights! ',
           <button
+            key="button"
             onClick={() => {
               setModalGFWFiresOpen(false);
               setModalContactUsOpen(true);
@@ -37,6 +38,7 @@ class ModalGFWFires extends PureComponent {
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           If you're looking for the Fire Report, `,
           <Link
+            key="link"
             href="/dashboards/global?category=fires"
             onClick={() => {
               setModalGFWFiresOpen(false);
@@ -55,6 +57,7 @@ class ModalGFWFires extends PureComponent {
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           Explore the links to fire data and analyses below. `,
           <button
+            key="button"
             onClick={() => {
               setModalGFWFiresOpen(false);
               setModalContactUsOpen(true);

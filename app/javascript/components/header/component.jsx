@@ -127,7 +127,9 @@ class Header extends PureComponent {
             </div>
             <ContactUs />
             <ClimateModal />
-            <FiresModal />
+            {process.env.FEATURE_ENV === 'staging' && (
+              <FiresModal />
+            )}
           </div>
         )}
       </MediaQuery>

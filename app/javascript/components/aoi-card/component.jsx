@@ -51,7 +51,7 @@ const getLatestAlerts = ({ location, params }) =>
       spread((gladsResponse, firesResponse) => {
         const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
         const firesData = firesResponse ? firesResponse.data.data : {};
-        const fires = firesData && process.env.FEATURE_ENV === 'staging' ? sumBy(firesData, 'count') : firesData.attributes.value;
+        const fires = firesData && process.env.FEATURE_ENV === 'staging' ? sumBy(firesData, 'count') : firesData && firesData.attributes && firesData.attributes.value;
 
         return {
           glads: sumBy(glads, 'count'),
