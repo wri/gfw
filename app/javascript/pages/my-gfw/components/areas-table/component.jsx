@@ -252,7 +252,7 @@ class AreasTable extends PureComponent {
                         onClick={() =>
                           viewArea({
                             areaId: area.id,
-                            locationType: 'location/MAP',
+                            pathname: '/map/[...location]',
                           })}
                       >
                         <Icon className="link-icon" icon={mapIcon} />

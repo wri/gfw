@@ -1,4 +1,5 @@
 import { createAction, createThunkAction } from 'utils/redux';
+import useRouter from 'app/router';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -89,22 +90,17 @@ export const getAreaProvider = createThunkAction(
 
 export const viewArea = createThunkAction(
   'viewArea',
-  ({ areaId, locationType }) => (dispatch, getState) => {
-    const { location } = getState();
+  ({ areaId, route }) => () => {
+    const { query, pushDynamic, pathname } = useRouter();
+    const { mainMap, map } = query || {};
 
-    if (areaId && location) {
-      const { query, type } = location;
-      const { mainMap, map } = query || {};
-
-      dispatch({
-        type: locationType || type,
-        payload: {
-          type: 'aoi',
-          adm0: areaId,
-        },
+    if (areaId) {
+      pushDynamic({
+        pathname: route || pathname,
         query: {
           ...query,
-          ...((type === 'location/MAP' || locationType === 'location/MAP') && {
+          location: `aoi/${areaId}`,
+          ...(pathname.includes('map') && {
             mainMap: {
               ...mainMap,
               showAnalysis: true,
@@ -156,15 +152,14 @@ export const viewArea = createThunkAction(
   }
 );
 
-export const clearArea = createThunkAction(
-  'clearArea',
-  () => (dispatch, getState) => {
-    const { location } = getState();
-    const { query, type } = location;
-    dispatch({
-      type,
-      payload: {},
-      query,
-    });
-  }
-);
+export const clearArea = createThunkAction('clearArea', () => () => {
+  const { query, pathname, pushDynamic } = useRouter();
+
+  pushDynamic({
+    pathname,
+    query: {
+      ...query,
+      location: ['global'],
+    },
+  });
+});
