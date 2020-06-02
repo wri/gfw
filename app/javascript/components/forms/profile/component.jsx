@@ -52,7 +52,7 @@ class ProfileForm extends PureComponent {
             submitError,
             submitSucceeded,
             form: { reset },
-            values
+            values = {}
           }) => (
             <form className="c-profile-form" onSubmit={handleSubmit}>
               <div className="row">
@@ -174,7 +174,7 @@ class ProfileForm extends PureComponent {
                           ),
                           { label: 'Other', value: 'Other' }
                         ]}
-                        selectInput={values.howDoYouUse.includes('Other')}
+                        selectInput={values.howDoYouUse && values.howDoYouUse.includes('Other')}
                         multiple
                         required
                       />
