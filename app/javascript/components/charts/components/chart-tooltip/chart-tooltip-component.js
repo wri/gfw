@@ -22,12 +22,18 @@ class ChartTooltip extends PureComponent {
                 <div key={d.key} className={`data-line ${d.position || ''}`}>
                   {(d.label || d.labelKey) && (
                     <div className="data-label">
-                      {d.color && (
-                        <div
-                          className="data-color"
-                          style={{ backgroundColor: d.color }}
-                        />
-                      )}
+                      {d.color &&
+                          (d.dashline ? (
+                            <div
+                              className="data-color data-dash"
+                              style={{ borderColor: d.color }}
+                            />
+                          ) : (
+                            <div
+                              className="data-color"
+                              style={{ backgroundColor: d.color }}
+                            />
+                          ))}
                       {d.key === 'break' ? (
                         <span className="break-label">{d.label}</span>
                       ) : (

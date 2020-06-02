@@ -33,7 +33,8 @@ class WidgetDownloadButton extends PureComponent {
     metaKey: PropTypes.string,
     simple: PropTypes.bool,
     widget: PropTypes.string,
-    areaTooLarge: PropTypes.bool
+    areaTooLarge: PropTypes.bool,
+    status: PropTypes.string
   };
 
   generateZipFromURL = () => {
@@ -187,8 +188,8 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   isCustomShape = () => {
-    const { location } = this.props;
-    return location && location.type === 'geostore';
+    const { location, status } = this.props;
+    return location && location.type === 'geostore' && status !== 'saved';
   };
 
   onClickDownloadBtn = () => {

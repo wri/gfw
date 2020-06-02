@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 
 import { getLossGrouped, getExtentGrouped } from 'services/analysis-cached';
-import { getYearsRange } from 'components/widgets/utils/data';
+import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -101,7 +101,7 @@ export default {
   },
   settings: {
     threshold: 30,
-    unit: '%',
+    unit: 'ha',
     extentYear: 2000,
     pageSize: 5,
     page: 0,
@@ -131,13 +131,14 @@ export default {
           });
         }
 
-        const { startYear, endYear, range } = getYearsRange(mappedData);
+        const { startYear, endYear, range } = getYearsRangeFromData(mappedData);
         return {
           loss: mappedData,
           extent: extentResponse.data.data,
           settings: {
             startYear,
-            endYear
+            endYear,
+            yearsRange: range
           },
           options: {
             years: range
