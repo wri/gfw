@@ -25,10 +25,11 @@ class NumberedList extends PureComponent {
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
 
-    const unitsConfig = settingsConfig.find(conf => conf.key === 'unit');
+    const unitsConfig = settingsConfig && settingsConfig.find(conf => conf.key === 'unit');
     const selectedUnitConfig =
       unitsConfig &&
       unitsConfig.options &&
+      !!unitsConfig.options.length &&
       unitsConfig.options.find(opt => opt.value === unit);
     let formatUnit = unit;
     if (selectedUnitConfig) {
@@ -90,7 +91,7 @@ class NumberedList extends PureComponent {
                     <a
                       href={`https://${window.location.host}${item.path}`}
                       target="_blank"
-                      rel="noopener nofollower"
+                      rel="noopener noreferrer"
                     >
                       {linkContent}
                     </a>
