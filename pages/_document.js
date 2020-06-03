@@ -72,11 +72,6 @@ export default class MyDocument extends Document {
             />
           </noscript>
           <script
-            src="https://cdn.optimizely.com/js/7988050790.js"
-            async
-            rel="preconnect"
-          />
-          <script
             type="text/javascript"
             src="//script.crazyegg.com/pages/scripts/0027/6897.js"
             async

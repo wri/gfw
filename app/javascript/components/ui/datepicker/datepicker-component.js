@@ -9,8 +9,6 @@ import range from 'lodash/range';
 import { Portal } from 'react-portal';
 import moment from 'moment';
 
-import { Media } from 'utils/responsive';
-
 import Dropdown from 'components/ui/dropdown';
 import Input from 'components/ui/input';
 import Icon from 'components/ui/icon';
@@ -32,23 +30,6 @@ registerLocale('pt_BR', ptBR);
 registerLocale('id', id);
 
 class Datepicker extends PureComponent {
-  state = {
-    position: {},
-  };
-
-  componentDidMount() {
-    this.setPosition();
-  }
-
-  setPosition = () => {
-    const coords = this.ref.getBoundingClientRect();
-
-    if (coords.x + 290 > window.innerWidth) {
-      coords.x -= 195;
-    }
-    this.setState({ position: coords });
-  };
-
   renderCalendarHeader = ({
     date,
     changeYear,
@@ -115,55 +96,18 @@ class Datepicker extends PureComponent {
     );
   };
 
-  renderCalendarContainer = ({ className, children }) => {
-    const { position } = this.state;
-
-    return (
-      <Portal>
-        <Media greaterThanOrEqual="md">
-          <div
-            className="react-datepicker-portal"
-            style={{
-              transform: `translate(${position.x}px, calc(${position.y}px + 1.75rem))`,
-            }}
-          >
-            <CalendarContainer className={className}>
-              {children}
-            </CalendarContainer>
-          </div>
-        </Media>
-        <Media lessThan="md">
-          <div
-            className="react-datepicker-portal react-datepicker-modal"
-            style={{
-              transform: `translate(${position.x}px, calc(${position.y}px + 1.75rem))`,
-            }}
-          >
-            <CalendarContainer className={className}>
-              {children}
-            </CalendarContainer>
-            <div
-              className="clickable-modal"
-              style={{
-                width: '100vw',
-                height: '100vh',
-                position: 'absolute',
-              }}
-              role="button"
-              tabIndex={-1}
-              aria-label="open modal"
-            />
-          </div>
-        </Media>
-      </Portal>
-    );
-  };
+  renderCalendarContainer = ({ className, children }) => (
+    <Portal>
+      <div className="react-datepicker-portal">
+        <CalendarContainer className={className}>{children}</CalendarContainer>
+      </div>
+    </Portal>
+  );
 
   render() {
     const { className, handleOnDateChange, settings, theme, lang } = this.props;
     const momentDate = this.props.date;
     const { minDate, maxDate } = settings;
-    const { position } = this.state;
 
     return (
       <div
@@ -172,23 +116,21 @@ class Datepicker extends PureComponent {
         }}
         className={cx('c-datepicker notranslate', theme, className)}
       >
-        {position && (
-          <ReactDatePicker
-            selected={momentDate.toDate()}
-            onSelect={(d) => {
-              handleOnDateChange(moment(d), 0);
-            }}
-            minDate={new Date(minDate)}
-            maxDate={new Date(maxDate)}
-            dateFormat="dd MMM yyyy"
-            locale={lang || 'en'}
-            className="datepicker-input"
-            onFocus={this.setPosition}
-            calendarContainer={this.renderCalendarContainer}
-            renderCustomHeader={this.renderCalendarHeader}
-            customInput={<Input />}
-          />
-        )}
+        <ReactDatePicker
+          selected={momentDate.toDate()}
+          onChange={(d) => {
+            handleOnDateChange(moment(d), 0);
+          }}
+          minDate={new Date(minDate)}
+          maxDate={new Date(maxDate)}
+          dateFormat="dd MMM yyyy"
+          locale={lang || 'en'}
+          className="datepicker-input"
+          onFocus={this.setPosition}
+          popperContainer={this.renderCalendarContainer}
+          renderCustomHeader={this.renderCalendarHeader}
+          customInput={<Input />}
+        />
       </div>
     );
   }
