@@ -24,6 +24,9 @@
 }
 
 .react-datepicker-portal {
+  position: relative;
+  z-index: 10000;
+
   @media screen and (max-width: $screen-m) {
     transform: none;
     pointer-events: none;

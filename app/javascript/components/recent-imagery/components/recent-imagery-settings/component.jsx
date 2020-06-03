@@ -28,10 +28,10 @@ import './styles.scss';
 class RecentImagerySettings extends PureComponent {
   state = {
     selected: null,
-    clouds: this.props.settings.clouds
+    clouds: this.props.settings.clouds,
   };
 
-  handleCloundsChange = clouds => {
+  handleCloundsChange = (clouds) => {
     this.setState({ clouds });
   };
 
@@ -46,7 +46,7 @@ class RecentImagerySettings extends PureComponent {
       resetRecentImageryData,
       setModalMetaSettings,
       onClickClose,
-      error
+      error,
     } = this.props;
     const selected = this.state.selected || activeTile || {};
 
@@ -75,7 +75,7 @@ class RecentImagerySettings extends PureComponent {
                 theme="theme-dropdown-button"
                 value={weeks}
                 options={WEEKS}
-                onChange={option => {
+                onChange={(option) => {
                   setRecentImagerySettings({ weeks: option });
                   logEvent('recentImageryDateRange');
                 }}
@@ -84,7 +84,7 @@ class RecentImagerySettings extends PureComponent {
               <div className="before">before</div>
               <Datepicker
                 date={date ? moment(date) : moment()}
-                handleOnDateChange={d => {
+                handleOnDateChange={(d) => {
                   setRecentImagerySettings({ date: d.format('YYYY-MM-DD') });
                   logEvent('recentImageryDate');
                 }}
@@ -95,9 +95,10 @@ class RecentImagerySettings extends PureComponent {
                   noBorder: true,
                   readOnly: true,
                   displayFormat: 'D MMM YYYY',
-                  isOutsideRange: d =>
+                  isOutsideRange: (d) =>
                     d.isAfter(moment()) || d.isBefore(moment('2000-01-01')),
-                  block: true
+                  block: true,
+                  placement: 'left',
                 }}
               />
             </div>
@@ -112,13 +113,13 @@ class RecentImagerySettings extends PureComponent {
                 25: '25%',
                 50: '50%',
                 75: '75%',
-                100: '100%'
+                100: '100%',
               }}
               marksOnTop
               step={5}
               dots
               onChange={this.handleCloundsChange}
-              onAfterChange={d => {
+              onAfterChange={(d) => {
                 setRecentImagerySettings({ clouds: d });
                 logEvent('recentImageryClouds');
               }}
@@ -127,96 +128,93 @@ class RecentImagerySettings extends PureComponent {
                 borderRadius: '2px',
                 boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
                 border: '0px',
-                zIndex: 2
+                zIndex: 2,
               }}
               trackStyle={{ backgroundColor: '#97be32' }}
             />
           </div>
         </div>
         <div className="thumbnails">
-          {tiles &&
-            !!tiles.length && (
-              <Fragment>
-                <div key="thumbnails-header" className="header">
-                  <div className="description">
-                    <p>
-                      {moment(selected.dateTime)
-                        .format('DD MMM YYYY')
-                        .toUpperCase()}
-                    </p>
-                    <p>
-                      {format('.0f')(selected.cloudScore)}
-                      % cloud coverage
-                    </p>
-                    <p>{startCase(selected.instrument)}</p>
-                  </div>
-                  <Dropdown
-                    className="band-selector"
-                    theme="theme-dropdown-button"
-                    value={bands}
-                    options={BANDS}
-                    onChange={option => {
-                      resetRecentImageryData();
-                      setRecentImagerySettings({
-                        bands: option === '0' ? 0 : option,
-                        selected: null,
-                        selectedIndex: 0
-                      });
-                      logEvent('recentImageryImageType');
-                    }}
-                    native
-                  />
+          {tiles && !!tiles.length && (
+            <Fragment>
+              <div key="thumbnails-header" className="header">
+                <div className="description">
+                  <p>
+                    {moment(selected.dateTime)
+                      .format('DD MMM YYYY')
+                      .toUpperCase()}
+                  </p>
+                  <p>
+                    {format('.0f')(selected.cloudScore)}
+                    % cloud coverage
+                  </p>
+                  <p>{startCase(selected.instrument)}</p>
                 </div>
-                <div className="thumbnail-grid">
-                  {tiles &&
-                    !error &&
-                    !!tiles.length &&
-                    tiles.map((tile, i) => (
-                      <RecentImageryThumbnail
-                        key={tile.id}
-                        id={i}
-                        tile={tile}
-                        selected={!!activeTile && activeTile.id === tile.id}
-                        handleClick={() => {
-                          setRecentImagerySettings({
-                            selected: tile.id,
-                            selectedIndex: i
-                          });
-                        }}
-                        handleMouseEnter={() => {
-                          this.setState({
-                            selected: tile
-                          });
-                        }}
-                        handleMouseLeave={() => {
-                          this.setState({ selected: null });
-                        }}
-                      />
-                    ))}
-                </div>
-              </Fragment>
-            )}
+                <Dropdown
+                  className="band-selector"
+                  theme="theme-dropdown-button"
+                  value={bands}
+                  options={BANDS}
+                  onChange={(option) => {
+                    resetRecentImageryData();
+                    setRecentImagerySettings({
+                      bands: option === '0' ? 0 : option,
+                      selected: null,
+                      selectedIndex: 0,
+                    });
+                    logEvent('recentImageryImageType');
+                  }}
+                  native
+                />
+              </div>
+              <div className="thumbnail-grid">
+                {tiles &&
+                  !error &&
+                  !!tiles.length &&
+                  tiles.map((tile, i) => (
+                    <RecentImageryThumbnail
+                      key={tile.id}
+                      id={i}
+                      tile={tile}
+                      selected={!!activeTile && activeTile.id === tile.id}
+                      handleClick={() => {
+                        setRecentImagerySettings({
+                          selected: tile.id,
+                          selectedIndex: i,
+                        });
+                      }}
+                      handleMouseEnter={() => {
+                        this.setState({
+                          selected: tile,
+                        });
+                      }}
+                      handleMouseLeave={() => {
+                        this.setState({ selected: null });
+                      }}
+                    />
+                  ))}
+              </div>
+            </Fragment>
+          )}
           {error && (
             <RefreshButton
               refetchFn={() => {
                 setRecentImageryLoading({ loading: false, error: false });
                 logEvent('refetchDataBtn', {
-                  label: 'Recent imagery'
+                  label: 'Recent imagery',
                 });
               }}
             />
           )}
-          {!error &&
-            (!tiles || !tiles.length) &&
-            !loading && (
-              <NoContent
-                className="placeholder"
-                message="We can't find additional images for the selection"
-              />
-            )}
-          {loading &&
-            !error &&
-            (!tiles || !tiles.length) && <Loader className="placeholder" />}
+          {!error && (!tiles || !tiles.length) && !loading && (
+            <NoContent
+              className="placeholder"
+              message="We can't find additional images for the selection"
+            />
+          )}
+          {loading && !error && (!tiles || !tiles.length) && (
+            <Loader className="placeholder" />
+          )}
         </div>
       </div>
     );
@@ -233,7 +231,7 @@ RecentImagerySettings.propTypes = {
   resetRecentImageryData: PropTypes.func,
   loading: PropTypes.bool,
   onClickClose: PropTypes.func,
-  error: PropTypes.bool
+  error: PropTypes.bool,
 };
 
 export default RecentImagerySettings;

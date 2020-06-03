@@ -1,36 +1,38 @@
 @import '~styles/settings.scss';
 
 /* legend tooltip styles */
-.c-rc-tooltip {
-  font-family: $font-family-1;
+div {
+  .c-rc-tooltip {
+    font-family: $font-family-1;
 
-  &.-default {
-    .rc-tooltip-inner {
-      padding: rem(10px);
-      background-color: $tip;
-      font-size: 12px;
-      color: $slate;
-      border: 0;
-      border-radius: 2px;
-      box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
-    }
+    &.-default {
+      .rc-tooltip-inner {
+        padding: rem(10px);
+        background-color: $tip;
+        font-size: 12px;
+        color: $slate;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+      }
 
-    &.rc-tooltip-placement-top {
-      .rc-tooltip-arrow {
-        border-top-color: $tip;
+      &.rc-tooltip-placement-top {
+        .rc-tooltip-arrow {
+          border-top-color: $tip;
+        }
       }
     }
-  }
 
-  &.-plain {
-    .rc-tooltip-inner {
-      background-color: $white;
-      padding: rem(15px);
-    }
+    &.-plain {
+      .rc-tooltip-inner {
+        background-color: $white;
+        padding: rem(15px);
+      }
 
-    &.rc-tooltip-placement-top {
-      .rc-tooltip-arrow {
-        border-top-color: $white;
+      &.rc-tooltip-placement-top {
+        .rc-tooltip-arrow {
+          border-top-color: $white;
+        }
       }
     }
   }

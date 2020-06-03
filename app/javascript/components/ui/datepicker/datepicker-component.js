@@ -107,7 +107,7 @@ class Datepicker extends PureComponent {
   render() {
     const { className, handleOnDateChange, settings, theme, lang } = this.props;
     const momentDate = this.props.date;
-    const { minDate, maxDate } = settings;
+    const { minDate, maxDate, placement } = settings;
 
     return (
       <div
@@ -128,6 +128,7 @@ class Datepicker extends PureComponent {
           className="datepicker-input"
           onFocus={this.setPosition}
           popperContainer={this.renderCalendarContainer}
+          popperPlacement={placement}
           renderCustomHeader={this.renderCalendarHeader}
           customInput={<Input />}
         />
