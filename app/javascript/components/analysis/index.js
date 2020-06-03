@@ -6,7 +6,7 @@ import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
-import { setShareModal } from 'components/modals/share/share-actions';
+import { setShareModal } from 'components/modals/share/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';

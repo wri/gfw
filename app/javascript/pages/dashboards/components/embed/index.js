@@ -1,3 +1,3 @@
-import EmbedComponent from './embed-component';
+import EmbedComponent from './component';
 
 export default EmbedComponent;

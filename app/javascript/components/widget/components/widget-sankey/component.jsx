@@ -5,7 +5,7 @@ import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
 import isEmpty from 'lodash/isEmpty';
 
-import SankeyChart from 'components/charts/sankey-chart/sankey';
+import SankeyChart from 'components/charts/sankey-chart';
 
 import './styles';
 

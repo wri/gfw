@@ -5,8 +5,8 @@ import isEqual from 'lodash/isEqual';
 import bbox from 'turf-bbox';
 import { Popup as MapPopup } from 'react-map-gl';
 
-import Button from 'components/ui/button/button-component';
-import Dropdown from 'components/ui/dropdown/dropdown-component';
+import Button from 'components/ui/button';
+import Dropdown from 'components/ui/dropdown';
 import Card from 'components/ui/card';
 
 import DataTable from './components/data-table';

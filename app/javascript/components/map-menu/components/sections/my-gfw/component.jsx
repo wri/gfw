@@ -10,9 +10,9 @@ import { track } from 'app/analytics';
 
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
-import Button from 'components/ui/button/button-component';
+import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
-import Icon from 'components/ui/icon/icon-component';
+import Icon from 'components/ui/icon';
 import Pill from 'components/ui/pill';
 import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';

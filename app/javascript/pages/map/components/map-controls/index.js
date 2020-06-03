@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setShareModal } from 'components/modals/share/share-actions';
+import { setShareModal } from 'components/modals/share/actions';
 import { setModalWelcomeOpen } from 'components/modals/welcome/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setMapSettings } from 'components/map/actions';
