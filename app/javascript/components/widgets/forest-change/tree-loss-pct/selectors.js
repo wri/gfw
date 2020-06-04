@@ -11,6 +11,7 @@ import {
 const getLoss = state => state.data && state.data.loss;
 const getExtent = state => state.data && state.data.extent;
 const getPrimaryLoss = state => state.data && state.data.primaryLoss;
+const getAdminLoss = state => state.data && state.data.adminLoss;
 const getSettings = state => state.settings;
 const getLocationLabel = state => state.locationLabel;
 const getIndicator = state => state.indicator;
@@ -19,9 +20,17 @@ const getSentence = state => state && state.sentence;
 const getTitle = state => state.title;
 
 const parseData = createSelector(
-  [getPrimaryLoss, getLoss, getExtent, getSettings],
-  (data, allLoss, extent, settings) => {
-    if (!extent || !data || isEmpty(data) || isEmpty(allLoss) || !allLoss) {
+  [getAdminLoss, getPrimaryLoss, getLoss, getExtent, getSettings],
+  (adminLoss, primaryLoss, allLoss, extent, settings) => {
+    if (
+      !extent ||
+      !adminLoss ||
+      isEmpty(adminLoss) ||
+      !primaryLoss ||
+      isEmpty(primaryLoss) ||
+      isEmpty(allLoss) ||
+      !allLoss
+    ) {
       return null;
     }
     const { startYear, endYear, yearsRange } = settings;
@@ -33,32 +42,31 @@ const parseData = createSelector(
       emissions: 0,
       percentage: 0
     };
-    const initalLossArr = data.find(d => d.year === 2001);
+    const initalLossArr = primaryLoss.find(d => d.year === 2001);
     const initalLoss =
       initalLossArr && initalLossArr.length > 0 ? initalLossArr[0].area : 0;
-    const totalLoss =
+    const totalAdminLoss =
       sumBy(
-        allLoss.filter(d => d.year >= startYear && d.year <= endYear),
+        adminLoss.filter(d => d.year >= startYear && d.year <= endYear),
         'area'
       ) || 0;
+
     let initalExtent = extent - initalLoss || 0;
 
     const zeroFilledData = zeroFillYears(
-      data,
+      primaryLoss,
       startYear,
       endYear,
       years,
       fillObj
     );
     const parsedData = zeroFilledData.map(d => {
-      const percentageLoss = d.area && totalLoss ? d.area / totalLoss : 0;
       const yearData = {
         ...d,
-        totalLoss,
+        totalLoss: totalAdminLoss,
         area: d.area || 0,
         emissions: d.emissions || 0,
-        extentRemaining: 100 * initalExtent / extent,
-        percentageLoss: percentageLoss * 100 > 100 ? 100 : percentageLoss * 100
+        extentRemaining: 100 * initalExtent / extent
       };
       initalExtent -= d.area;
       return yearData;
@@ -162,10 +170,18 @@ const parseSentence = createSelector(
       (totalLoss && extent && totalLossPrimary / totalLoss * 100) || 0;
 
     const initialExtentData = data.filter(d => d.year === startYear);
-    const initialExtent = initialExtentData && initialExtentData[0] && initialExtentData[0].extentRemaining || 0;
+    const initialExtent =
+      (initialExtentData &&
+        initialExtentData[0] &&
+        initialExtentData[0].extentRemaining) ||
+      0;
 
     const finalExtentData = data.filter(d => d.year === endYear);
-    const finalExtent = finalExtentData && finalExtentData[0] && finalExtentData[0].extentRemaining || 0;
+    const finalExtent =
+      (finalExtentData &&
+        finalExtentData[0] &&
+        finalExtentData[0].extentRemaining) ||
+      0;
 
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {

@@ -112,6 +112,12 @@ export default {
     };
 
     return all([
+      getLoss({
+        ...params,
+        forestType: null,
+        landCategory: null,
+        ...globalLocation
+      }),
       getLoss({ ...params, ...globalLocation }),
       getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
       getExtent({
@@ -120,9 +126,11 @@ export default {
         forestType: 'primary_forest'
       })
     ]).then(
-      spread((loss, primaryLoss, extent) => {
+      spread((adminLoss, loss, primaryLoss, extent) => {
         let data = {};
         if (
+          adminLoss &&
+          adminLoss.data &&
           primaryLoss &&
           primaryLoss.data &&
           loss &&
@@ -131,6 +139,7 @@ export default {
           extent.data
         ) {
           data = {
+            adminLoss: adminLoss.data.data,
             loss: loss.data.data,
             primaryLoss: primaryLoss.data.data,
             extent: (loss.data.data && extent.data.data[0].extent) || 0
