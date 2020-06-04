@@ -42,9 +42,10 @@ const parseData = createSelector(
       emissions: 0,
       percentage: 0
     };
-    const initalLossArr = primaryLoss.find(d => d.year === 2001);
-    const initalLoss =
-      initalLossArr && initalLossArr.length > 0 ? initalLossArr[0].area : 0;
+    const initalLossArr = primaryLoss.find(d => d.year === 2002);
+    const initalLoss = initalLossArr
+      ? initalLossArr.umd_tree_cover_loss__ha
+      : 0;
     const totalAdminLoss =
       sumBy(
         adminLoss.filter(d => d.year >= startYear && d.year <= endYear),
@@ -52,25 +53,40 @@ const parseData = createSelector(
       ) || 0;
 
     let initalExtent = extent - initalLoss || 0;
+    const initalExtent2001 = extent - initalLoss || 0;
 
     const zeroFilledData = zeroFillYears(
       primaryLoss,
-      startYear,
+      2001,
       endYear,
-      years,
+      [2001, ...years],
       fillObj
     );
+
     const parsedData = zeroFilledData.map(d => {
+      if (d.year !== 2001) initalExtent -= d.area;
       const yearData = {
         ...d,
+        initalExtent2001,
         totalLoss: totalAdminLoss,
         area: d.area || 0,
         emissions: d.emissions || 0,
-        extentRemaining: 100 * initalExtent / extent
+        extentRemainingHa: initalExtent,
+        extentRemaining: 100 * initalExtent / initalExtent2001
       };
-      initalExtent -= d.area;
       return yearData;
     });
+    return parsedData;
+  }
+);
+
+const filterData = createSelector(
+  [parseData, getSettings],
+  (parsedData, settings) => {
+    if (!parsedData || isEmpty(parsedData)) {
+      return null;
+    }
+    const { startYear, endYear } = settings;
     return parsedData.filter(d => d.year >= startYear && d.year <= endYear);
   }
 );
@@ -124,12 +140,6 @@ const parseConfig = createSelector([getColors], colors => ({
       label: 'Primary forest loss',
       color: colors.primaryForestLoss
     }
-    // ,{
-    //   key: 'percentageLoss',
-    //   unitFormat: value => formatNumber({ num: value, unit: '%' }),
-    //   label: 'Percentage of all loss',
-    //   color: 'transparent'
-    // }
   ]
 }));
 
@@ -169,19 +179,13 @@ const parseSentence = createSelector(
     const percentageLoss =
       (totalLoss && extent && totalLossPrimary / totalLoss * 100) || 0;
 
-    const initialExtentData = data.filter(d => d.year === startYear);
+    const initialExtentData = data.find(d => d.year === startYear - 1);
     const initialExtent =
-      (initialExtentData &&
-        initialExtentData[0] &&
-        initialExtentData[0].extentRemaining) ||
-      0;
+      (initialExtentData && initialExtentData.extentRemaining) || 0;
 
-    const finalExtentData = data.filter(d => d.year === endYear);
+    const finalExtentData = data.find(d => d.year === endYear);
     const finalExtent =
-      (finalExtentData &&
-        finalExtentData[0] &&
-        finalExtentData[0].extentRemaining) ||
-      0;
+      (finalExtentData && finalExtentData.extentRemaining) || 0;
 
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
@@ -190,7 +194,6 @@ const parseSentence = createSelector(
     if (locationLabel === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
-
     const params = {
       indicator: indicator && indicator.label,
       location: locationLabel === 'global' ? 'globally' : locationLabel,
@@ -218,7 +221,7 @@ const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  data: filterData,
   config: parseConfig,
   sentence: parseSentence,
   title: parseTitle
