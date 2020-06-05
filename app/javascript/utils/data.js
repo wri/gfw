@@ -56,6 +56,26 @@ export const getColorBuckets = colors => [
 export const getColorBucket = (buckets, value) =>
   buckets.find(c => value <= c.limit) || buckets[4];
 
+export const hslShift = (
+  colorHex,
+  hueShift,
+  saturationShift,
+  lightnessShift
+) => {
+  const [h, s, l] = chroma(colorHex).hsl();
+
+  // Hue 0-360, any value accepted
+  const new_h = h + hueShift;
+
+  // Lightness 0-1, cannot exceed 1
+  const new_s = s + saturationShift <= 1 ? s + saturationShift : 1;
+
+  // Lightness 0-1, cannot exceed 1
+  const new_l = l + lightnessShift <= 1 ? l + lightnessShift : 1;
+
+  return chroma.hsl(new_h, new_s, new_l).hex();
+};
+
 export const flattenObj = (target, opts = {}) => {
   const delimiter = opts.delimiter || '.';
   const maxDepth = opts.maxDepth;

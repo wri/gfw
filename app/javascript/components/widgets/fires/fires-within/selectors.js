@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
+import { hslShift } from 'utils/data';
 
 // get list data
 const getData = state => state.data;
@@ -40,6 +41,8 @@ export const parseData = createSelector(
       )
       .reduce((acc, n) => acc + n.count, 0);
 
+    const otherColour = hslShift(colors.main, 0, -0.3, 0.3);
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const fireCountOutside =
@@ -60,7 +63,7 @@ export const parseData = createSelector(
       parsedData.push({
         label: `Fire alerts outside ${indicatorLabel}`,
         value: fireCountOutside,
-        color: colors.otherColor,
+        color: otherColour,
         unit: 'counts',
         percentage: fireCountAll > 0 ? fireCountOutside / fireCountAll * 100 : 0
       });
@@ -92,7 +95,9 @@ export const parseSentence = createSelector(
       totalFires: `${format(',')(totalFires)}`
     };
     let sentence = indicator ? withInd : noIndicator;
-    if (locationName === 'global') { sentence = indicator ? globalWithInd : globalNoIndicator; }
+    if (locationName === 'global') {
+      sentence = indicator ? globalWithInd : globalNoIndicator;
+    }
     return {
       sentence,
       params
