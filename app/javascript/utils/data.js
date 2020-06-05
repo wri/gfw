@@ -56,21 +56,23 @@ export const getColorBuckets = colors => [
 export const getColorBucket = (buckets, value) =>
   buckets.find(c => value <= c.limit) || buckets[4];
 
-export const hslShift = (
-  colorHex,
-  hueShift,
-  saturationShift,
-  lightnessShift
-) => {
+export const hslShift = colorHex => {
   const [h, s, l] = chroma(colorHex).hsl();
 
-  // Hue 0-360, any value accepted
+  const hueShift = 0;
+  let saturationShift = -0.3;
+  let lightnessShift = 0.3;
+
+  if (s < 0.5) {
+    saturationShift = 0.3;
+    lightnessShift = 0.5;
+  } else if (s < 0.75) {
+    saturationShift = 0.1;
+    lightnessShift = 0.2;
+  }
+
   const new_h = h + hueShift;
-
-  // Lightness 0-1, cannot exceed 1
   const new_s = s + saturationShift <= 1 ? s + saturationShift : 1;
-
-  // Lightness 0-1, cannot exceed 1
   const new_l = l + lightnessShift <= 1 ? l + lightnessShift : 1;
 
   return chroma.hsl(new_h, new_s, new_l).hex();

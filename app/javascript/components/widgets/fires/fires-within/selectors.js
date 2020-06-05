@@ -41,7 +41,8 @@ export const parseData = createSelector(
       )
       .reduce((acc, n) => acc + n.count, 0);
 
-    const otherColour = hslShift(colors.main, 0, -0.3, 0.3);
+    const mainColour = colors.main;
+    const otherColour = hslShift(mainColour);
 
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
@@ -53,7 +54,7 @@ export const parseData = createSelector(
           ? `Fire alerts in ${indicatorLabel}`
           : `Fire alerts in ${locationName}`,
         value: indicator ? fireCountIn : fireCountAll,
-        color: colors.main,
+        color: mainColour,
         unit: 'counts',
         percentage:
           indicator && fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 100
