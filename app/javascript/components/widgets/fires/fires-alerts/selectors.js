@@ -256,7 +256,7 @@ export const parseConfig = createSelector(
 
     const tooltip = [
       {
-        label: 'Fire alerts'
+        label: 'Fire alerts in the week of:'
       },
       {
         key: 'count',
