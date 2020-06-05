@@ -87,13 +87,14 @@ export default {
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
     noIndicator:
-      'In the last {timeframe}, there were {totalFires} fires alerts detected in {location}.',
+      'In the last {timeframe}, there were {totalFires} fires alerts detected in {location}',
     globalNoIndicator:
-      'In the last {timeframe}, there were {totalFires} fires alerts detected {location}.',
+      'In the last {timeframe}, there were {totalFires} fires alerts detected {location}',
     withInd:
-      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} ocurred within {indicator}.',
+      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} ocurred within {indicator}',
     globalWithInd:
-      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}.'
+      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}',
+    highConfidence: ', considering <b>high confidence</b> alerts only.'
   },
   whitelistType: 'fires',
   whitelists: {
@@ -122,7 +123,12 @@ export default {
   getDataURL: params => [
     fetchVIIRSLatest({ ...params, download: true }),
     fetchFiresWithin({ ...params, download: true }),
-    fetchFiresWithin({ ...params, forestType: '', landCategory: '', download: true })
+    fetchFiresWithin({
+      ...params,
+      forestType: '',
+      landCategory: '',
+      download: true
+    })
   ],
   getWidgetProps
 };

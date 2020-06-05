@@ -81,8 +81,10 @@ export const parseSentence = createSelector(
       globalWithInd,
       withInd,
       noIndicator,
-      globalNoIndicator
+      globalNoIndicator,
+      highConfidence
     } = sentences;
+    const { confidence } = optionsSelected;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const timeFrame = optionsSelected.weeks;
@@ -99,6 +101,10 @@ export const parseSentence = createSelector(
     if (locationName === 'global') {
       sentence = indicator ? globalWithInd : globalNoIndicator;
     }
+    sentence =
+      confidence && confidence.value === 'h'
+        ? sentence + highConfidence
+        : `${sentence}.`;
     return {
       sentence,
       params
