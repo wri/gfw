@@ -279,8 +279,8 @@ export const getStatements = ({
   dataType,
   landCategory,
   forestType,
-  datasets,
-  active
+  datasets
+  // active
 }) => {
   if (!settings) return null;
   const { extentYear, threshold } = settings;
@@ -316,7 +316,7 @@ export const getStatements = ({
     threshold || threshold === 0
       ? translateText('>{threshold}% tree canopy', { threshold })
       : null,
-    dataType === 'fires' && active && '*when on the map you can show up to 3 months of fires data',
+    // dataType === 'fires' && active && '*when on the map you can show up to 3 months of fires data',
     dataType === 'loss'
       ? translateText(
         'these estimates do not take tree cover gain into account'
