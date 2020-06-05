@@ -208,7 +208,8 @@ export const parseSentence = createSelector(
       component: {
         key: 'significant',
         fine: false,
-        tooltip: 'Over a given period of time, \'significance\' is a measure of how much the number of recorded fire alerts varies from the expected value given all available historic data. Positiive values indicate higher than expected, whereas negative values indate lower than expected. A value between ±100% may be considered \'average\'.'
+        tooltip: `'Significance' is a measure of how much the number of recorded fire alerts in the last ${timeFrame &&
+          timeFrame.label} varies from the expected value when considering the same period over all available historic data. Positive values indicate higher than expected, whereas negative values indate lower than expected. A value between ±100% may be considered 'average'.`
       }
     };
     let sentence = indicator ? withInd : initial;
