@@ -303,7 +303,7 @@ export const parseConfig = createSelector(
         })
       },
       legend,
-      tooltip,
+      tooltip: [...tooltip, { sortBy: 'value' }],
       referenceLine: {
         x: presentDay,
         stroke: '#CCC',
