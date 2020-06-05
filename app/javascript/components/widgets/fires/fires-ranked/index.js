@@ -29,7 +29,6 @@ export default {
       key: 'landCategory',
       label: 'Land Category',
       type: 'select',
-      whitelist: ['mining', 'wdpa', 'landmark'],
       placeholder: 'All categories',
       clearable: true,
       border: true
