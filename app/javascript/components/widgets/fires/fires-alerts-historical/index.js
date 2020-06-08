@@ -77,8 +77,13 @@ export default {
       layers: [FIRES_ALERTS_VIIRS]
     }
   ],
-  sentence:
-    'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+  sentences: {
+    initial:
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts',
+    withInd:
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
+    highConfidence: ', considering <b>high confidence</b> alerts only.'
+  },
   whitelistType: 'fires',
   whitelists: {
     adm0: [

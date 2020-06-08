@@ -12,9 +12,10 @@ const getAlerts = state => state.data && state.data.alerts;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
 const getEndDate = state => state.settings.endDate;
-const getSentences = state => state.sentence || null;
+const getSentences = state => state.sentences || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
 const getStartIndex = state => state.settings.startIndex;
 const getEndIndex = state => state.settings.endIndex || null;
 
@@ -25,7 +26,10 @@ const zeroFillDays = (startDate, endDate) => {
   const diffInDays = moment(endDate).diff(moment(startDate), 'days');
   const dates = Array.from(Array(diffInDays).keys());
 
-  return [startDate, ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD'))];
+  return [
+    startDate,
+    ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD'))
+  ];
 };
 
 export const getData = createSelector(
@@ -37,7 +41,7 @@ export const getData = createSelector(
       date,
       alert__count: 0,
       count: 0,
-      ...(data.find(d => d.alert__date === date))
+      ...data.find(d => d.alert__date === date)
     }));
 
     return sortBy(zeroFilledData, 'date');
@@ -54,7 +58,8 @@ export const getStartEndIndexes = createSelector(
       };
     }
 
-    const start = startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
+    const start =
+      startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
     const end = endIndex || currentData.length - 1;
 
     if (active && end - start > MAXGAP) {
@@ -166,16 +171,29 @@ export const parseSentence = createSelector(
     getColors,
     getSentences,
     getLocationObject,
-    getOptionsSelected
+    getOptionsSelected,
+    getIndicator
   ],
-  (data, colors, sentence, location, options) => {
+  (data, colors, sentences, location, options, indicator) => {
     if (!data) return null;
-    const { dataset } = options;
+    const { initial, withInd, highConfidence } = sentences;
+    const { confidence, dataset } = options;
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label : null;
+
     const startDate = !!data.length && data[0].date;
     const endDate = !!data.length && data[data.length - 1].date;
     const total = sumBy(data, 'alert__count');
+
+    let sentence = indicator ? withInd : initial;
+    sentence =
+      confidence && confidence.value === 'h'
+        ? sentence + highConfidence
+        : `${sentence}.`;
+
     const params = {
       location: location.label || '',
+      indicator: indicatorLabel,
       start_date: moment(startDate).format('Do of MMMM YYYY'),
       end_date: moment(endDate).format('Do of MMMM YYYY'),
       dataset: dataset && dataset.label,
