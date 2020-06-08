@@ -11,16 +11,20 @@ const getAlerts = state => state.data;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
 const getEndDate = state => state.settings.endDate;
-const getSentences = state => state.sentence || null;
+const getSentences = state => state.sentences || null;
 const getLocationObject = state => state.location;
 const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
 
 const zeroFillDays = (startDate, endDate) => {
   const start = moment(startDate);
   const diffInDays = moment(endDate).diff(moment(startDate), 'days');
   const dates = Array.from(Array(diffInDays).keys());
 
-  return [startDate, ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD'))];
+  return [
+    startDate,
+    ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD'))
+  ];
 };
 
 export const getData = createSelector(
@@ -32,7 +36,7 @@ export const getData = createSelector(
       date,
       alert__count: 0,
       count: 0,
-      ...(data.find(d => d.alert__date === date))
+      ...data.find(d => d.alert__date === date)
     }));
 
     return sortBy(zeroFilledData, 'date');
@@ -78,14 +82,34 @@ export const parseSentence = createSelector(
     getLocationObject,
     getStartDate,
     getEndDate,
-    getOptionsSelected
+    getOptionsSelected,
+    getIndicator
   ],
-  (data, colors, sentence, location, startDate, endDate, options) => {
+  (
+    data,
+    colors,
+    sentences,
+    location,
+    startDate,
+    endDate,
+    options,
+    indicator
+  ) => {
     if (!data) return null;
-    const { dataset } = options;
+    const { initial, withInd, highConfidence } = sentences;
+    const { confidence, dataset } = options;
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label : null;
     const total = sumBy(data, 'alert__count');
+    let sentence = indicator ? withInd : initial;
+    sentence =
+      confidence && confidence.value === 'h'
+        ? sentence + highConfidence
+        : `${sentence}.`;
+
     const params = {
       location: location.label || '',
+      indicator: indicatorLabel,
       start_date: moment(startDate).format('Do of MMMM YYYY'),
       end_date: moment(endDate).format('Do of MMMM YYYY'),
       dataset: dataset && dataset.label,
