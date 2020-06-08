@@ -11,7 +11,15 @@ export const selectLoggedIn = state =>
   state && !!state.myGfw && !isEmpty(state.myGfw.data);
 
 export const getAllAreas = state =>
-  state && state.areas && sortBy(state.areas.data, 'name');
+  state &&
+  state.areas &&
+  sortBy(
+    state.areas.data.map(a => ({
+      ...a,
+      lowercaseName: a.name && a.name.toLowerCase()
+    })),
+    'lowercaseName'
+  );
 
 export const getUserAreas = createSelector(
   [getAllAreas],

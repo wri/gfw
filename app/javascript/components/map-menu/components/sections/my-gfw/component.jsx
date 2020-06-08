@@ -2,9 +2,9 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
+import slice from 'lodash/slice';
 import { logout } from 'services/user';
 import Link from 'redux-first-router-link';
-import slice from 'lodash/slice';
 
 import { track } from 'app/analytics';
 
@@ -56,6 +56,7 @@ class MapMenuMyGFW extends PureComponent {
     const selectedTags = tags && tags.filter(t => activeTags.includes(t.value));
     const unselectedTags =
       tags && tags.filter(t => !activeTags.includes(t.value));
+
     const filteredAreas =
       selectedTags && selectedTags.length && areas && areas.length
         ? areas.filter(a => !!intersection(a.tags, activeTags).length)
