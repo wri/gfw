@@ -63,7 +63,7 @@ class LollipopChart extends PureComponent {
             {!simple && legend && <Legend config={legend} simple={simple} />}
             <div className="unit-legend">{`${unit
               .charAt(0)
-              .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
+              .toUpperCase()}${unit.slice(1)} (${formatUnit.trim()})`}</div>
             <div className="custom-xAxis">
               <div className="axis-wrapper">
                 <div

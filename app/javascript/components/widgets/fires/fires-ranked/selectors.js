@@ -192,7 +192,6 @@ export const parseSentence = createSelector(
       status = 'low';
       statusColor = colorRange[6];
     }
-
     const params = {
       timeframe: timeFrame && timeFrame.label,
       status: {
@@ -205,12 +204,15 @@ export const parseSentence = createSelector(
       topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
       location: locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`,
-      component: {
-        key: 'significant',
-        fine: false,
-        tooltip: `'Significance' is a measure of how much the number of recorded fire alerts in the last ${timeFrame &&
-          timeFrame.label} varies from the expected value when considering the same period over all available historic data. Positive values indicate higher than expected, negative values indicate lower than expected, and values between ±100% are considered to be within the 'normal' range.`
-      }
+      component:
+        unit === 'significance'
+          ? {
+            key: 'significant',
+            fine: false,
+            tooltip: `'Significance' is a measure of how much the number of recorded fire alerts in the last ${timeFrame &&
+                timeFrame.label} varies from the expected value when considering the same period over all available historic data. Positive values indicate higher than expected, negative values indicate lower than expected, and values between ±100% are considered to be within the 'normal' range.`
+          }
+          : {}
     };
     let sentence = indicator ? withInd : initial;
     if (unit === 'alert_density') {
@@ -230,34 +232,37 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getColors], colors => {
-  const colorRange = colors.ramp;
-
-  return {
-    legend: {
-      uhigh: {
-        label: 'Unusually high',
-        color: colorRange[0]
-      },
-      high: {
-        label: 'High',
-        color: colorRange[2]
-      },
-      average: {
-        label: 'Average',
-        color: colorRange[4]
-      },
-      low: {
-        label: 'Low',
-        color: colorRange[6]
-      },
-      ulow: {
-        label: 'Unusually low',
-        color: colorRange[8]
+export const parseConfig = createSelector(
+  [getColors, getUnit],
+  (colors, unit) => {
+    const colorRange = colors.ramp;
+    if (unit !== 'significance') return {};
+    return {
+      legend: {
+        uhigh: {
+          label: 'Unusually high',
+          color: colorRange[0]
+        },
+        high: {
+          label: 'High',
+          color: colorRange[2]
+        },
+        average: {
+          label: 'Normal',
+          color: colorRange[4]
+        },
+        low: {
+          label: 'Low',
+          color: colorRange[6]
+        },
+        ulow: {
+          label: 'Unusually low',
+          color: colorRange[8]
+        }
       }
-    }
-  };
-});
+    };
+  }
+);
 
 export const parseTitle = createSelector(
   [getTitle, getLocationName],
