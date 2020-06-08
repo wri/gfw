@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import { formatNumber } from 'utils/format';
 import { SCREEN_M } from 'utils/constants';
+import Legend from 'components/charts/components/chart-legend';
 
 import './styles.scss';
 
@@ -16,10 +17,13 @@ class LollipopChart extends PureComponent {
       data,
       settings,
       settingsConfig,
+      config,
       linksDisabled,
-      linksExt
+      linksExt,
+      simple
     } = this.props;
     const { unit } = settings;
+    const { legend } = config || {};
 
     const unitsConfig = settingsConfig.find(conf => conf.key === 'unit');
     const selectedUnitConfig =
@@ -56,6 +60,7 @@ class LollipopChart extends PureComponent {
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className={cx('c-lollipop-chart', className)}>
+            {!simple && legend && <Legend config={legend} simple={simple} />}
             <div className="unit-legend">{`${unit
               .charAt(0)
               .toUpperCase()}${unit.slice(1)} (${formatUnit})`}</div>
@@ -210,7 +215,7 @@ class LollipopChart extends PureComponent {
                   })}
               </ul>
             </div>
-            {isDesktop &&
+            {isDesktop && (
               <div
                 className="cartesian-grid"
                 style={{
@@ -251,7 +256,7 @@ class LollipopChart extends PureComponent {
                   />
                 ))}
               </div>
-            }
+            )}
           </div>
         )}
       </MediaQuery>
@@ -263,9 +268,11 @@ LollipopChart.propTypes = {
   data: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
+  config: PropTypes.object,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,
-  linksExt: PropTypes.bool
+  linksExt: PropTypes.bool,
+  simple: PropTypes.bool
 };
 
 export default LollipopChart;

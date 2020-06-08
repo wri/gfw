@@ -224,6 +224,35 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseConfig = createSelector([getColors], colors => {
+  const colorRange = colors.ramp;
+
+  return {
+    legend: {
+      uhigh: {
+        label: 'Unusually high',
+        color: colorRange[0]
+      },
+      high: {
+        label: 'High',
+        color: colorRange[2]
+      },
+      average: {
+        label: 'Average',
+        color: colorRange[4]
+      },
+      low: {
+        label: 'Low',
+        color: colorRange[6]
+      },
+      ulow: {
+        label: 'Unusually low',
+        color: colorRange[8]
+      }
+    }
+  };
+});
+
 export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
@@ -237,6 +266,7 @@ export const parseTitle = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
+  config: parseConfig,
   sentence: parseSentence,
   title: parseTitle
 });
