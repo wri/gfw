@@ -47,7 +47,14 @@ const SQL_QUERIES = {
 
 const ALLOWED_PARAMS = {
   annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
-  glad: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'is__confirmed_alert'],
+  glad: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'is__confirmed_alert'
+  ],
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence']
 };
@@ -807,7 +814,7 @@ export const fetchVIIRSLatest = () =>
 // Additional conditional fetches for providing context for queries.
 
 // generate {select} query using all available forest types and land categories
-const buildPolynameSelects = nonTable => {
+const buildPolynameSelects = (nonTable, dataset) => {
   const allPolynames = forestTypes
     .concat(landCategories)
     .filter(p => !p.hidden);
@@ -815,10 +822,11 @@ const buildPolynameSelects = nonTable => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? p.tableKey : p.value} as ${p.value}${isLast ? '' : ', '}`
+      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value} as ${
+        p.value
+      }${isLast ? '' : ', '}`
     );
   });
-
   return polyString;
 };
 
@@ -833,11 +841,12 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = params => {
+  const { dataset } = params;
   const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{polynames}', buildPolynameSelects())
+    .replace('{polynames}', buildPolynameSelects(false, dataset))
     .replace('{WHERE}', getWHEREQuery(params));
   return apiRequest.get(url);
 };
