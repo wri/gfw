@@ -236,9 +236,6 @@ export const parseConfig = createSelector(
 
     const tooltip = [
       {
-        label: 'Fire alerts'
-      },
-      {
         key: 'count',
         labelKey: 'date',
         labelFormat: value => moment(value).format('YYYY-MM-DD'),
@@ -303,7 +300,19 @@ export const parseConfig = createSelector(
         })
       },
       legend,
-      tooltip: [...tooltip, { sortBy: 'value' }],
+      tooltip: [...tooltip],
+      tooltipParseData: ({ settings, values }) => {
+        const sorted =
+          settings &&
+          values &&
+          settings.sort((a, b) => values[a.key] - values[b.key]).reverse();
+        return [
+          {
+            label: 'Fire alerts'
+          },
+          ...sorted
+        ];
+      },
       referenceLine: {
         x: presentDay,
         stroke: '#CCC',
