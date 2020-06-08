@@ -60,7 +60,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 4
+    fires: 3
   },
   settings: {
     dataset: 'viirs',
@@ -305,10 +305,6 @@ export default {
                   label: y,
                   value: [y]
                 }))
-              ],
-              confidence: [
-                { label: 'All', value: '' },
-                { label: 'High', value: 'h' }
               ]
             }
           } || {}

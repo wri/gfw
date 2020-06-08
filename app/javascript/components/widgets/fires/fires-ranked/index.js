@@ -61,7 +61,7 @@ export default {
   colors: 'fires',
   sortOrder: {
     summary: 6,
-    fires: 1,
+    fires: 4,
     global: 100
   },
   whitelistType: 'fires',
