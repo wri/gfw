@@ -21,6 +21,7 @@ const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getCompareYear = state => state.settings.compareYear || null;
+const getAllYears = state => state.data && state.data.options && state.data.options.compareYear.map(y => y.value);
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
@@ -28,6 +29,16 @@ const getSentences = state => state.sentences || null;
 const getLocationName = state => state.locationLabel;
 const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
+
+export const getCompareYears = createSelector(
+  [getCompareYear, getAllYears],
+  (compareYear, allYears) => {
+    if (!compareYear || !allYears) return null;
+    if (compareYear === 'all') return allYears;
+
+    return allYears.filter(y => y === compareYear);
+  }
+);
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -132,7 +143,7 @@ export const getMaxMinDates = createSelector(
 );
 
 export const parseData = createSelector(
-  [getData, getDates, getMaxMinDates, getCompareYear],
+  [getData, getDates, getMaxMinDates, getCompareYears],
   (data, currentData, maxminYear, compareYears) => {
     if (!data || !currentData) return null;
 
@@ -176,10 +187,9 @@ export const parseBrushedData = createSelector(
 );
 
 export const getLegend = createSelector(
-  [parseBrushedData, getColors, getCompareYear, getMaxMinDates],
+  [parseBrushedData, getColors, getCompareYears, getMaxMinDates],
   (data, colors, compareYears, maxminYear) => {
     if (!data) return {};
-
     const end = data[data.length - 1];
     const yearsArray =
       compareYears && compareYears.filter(y => y !== maxminYear.max).sort();
@@ -216,7 +226,7 @@ export const parseConfig = createSelector(
     getColors,
     getLatest,
     getMaxMinDates,
-    getCompareYear,
+    getCompareYears,
     getDataset,
     getStartIndex,
     getEndIndex

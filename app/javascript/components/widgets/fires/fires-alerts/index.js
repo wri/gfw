@@ -330,19 +330,5 @@ export default {
       })
     ),
   getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
-  getWidgetProps,
-  parseInteraction: payload => {
-    if (payload) {
-      const startDate = moment()
-        .year(payload.year)
-        .week(payload.week);
-
-      return {
-        startDate: startDate.format('YYYY-MM-DD'),
-        endDate: startDate.add(7, 'days'),
-        ...payload
-      };
-    }
-    return {};
-  }
+  getWidgetProps
 };
