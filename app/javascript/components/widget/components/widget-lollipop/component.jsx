@@ -11,6 +11,7 @@ class WidgetLollipop extends PureComponent {
       data,
       settings,
       settingsConfig,
+      config,
       handleChangeSettings,
       embed
     } = this.props;
@@ -19,6 +20,7 @@ class WidgetLollipop extends PureComponent {
       <Lollipop
         className="c-widget-lollipop-chart"
         data={data}
+        config={config}
         settings={{
           ...settings,
           format: settings.unit === '%' ? '.2r' : '.3s'
@@ -37,6 +39,7 @@ WidgetLollipop.propTypes = {
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
+  config: PropTypes.object,
   handleChangeSettings: PropTypes.func.isRequired,
   embed: PropTypes.bool
 };
