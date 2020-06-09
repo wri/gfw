@@ -6,14 +6,17 @@ import './styles.scss';
 
 class ChartTooltip extends PureComponent {
   render() {
-    const { payload, settings, hideZeros, simple } = this.props;
+    const { payload, settings, parseData, hideZeros, simple } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
+
+    const data = parseData ? parseData({ settings, values }) : settings;
+
     return (
       <div>
-        {settings &&
-          settings.length && (
+        {data &&
+          data.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
-            {settings.map(d => {
+            {data.map(d => {
               const label = d.labelFormat
                 ? d.labelFormat(d.label || values[d.labelKey])
                 : d.label || values[d.labelKey];
@@ -24,7 +27,7 @@ class ChartTooltip extends PureComponent {
 
               return hideZeros && (!values || !value) ? null : (
                 <div
-                  key={d.key || d.labelKey}
+                  key={d.key || d.labelKey || d.label}
                   className={`data-line ${d.position || ''}`}
                 >
                   {label && (
@@ -66,6 +69,7 @@ class ChartTooltip extends PureComponent {
 ChartTooltip.propTypes = {
   payload: PropTypes.array,
   settings: PropTypes.array,
+  parseData: PropTypes.func,
   hideZeros: PropTypes.bool,
   simple: PropTypes.bool
 };

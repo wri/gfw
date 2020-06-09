@@ -18,7 +18,7 @@ export const getForestTypes = ({
       const hasPolyname =
         isGlobal ||
         (polynamesWhitelist &&
-          polynamesWhitelist.includes(o.newTableKey || o.tableKey));
+          polynamesWhitelist.includes(o.tableKey || o.tableKeys[settings.dataset || 'annual']));
       return isGlobal || hasPolyname;
     })
     .map(f => ({
@@ -32,13 +32,13 @@ export const getForestTypes = ({
           : f.metaKey
     }));
 
-export const getLandCategories = ({ landCategories, polynamesWhitelist }) =>
+export const getLandCategories = ({ landCategories, polynamesWhitelist, settings }) =>
   landCategories.filter(o => {
     const isGlobal = !polynamesWhitelist && o.global;
     const hasPolyname =
       isGlobal ||
       (polynamesWhitelist &&
-        polynamesWhitelist.includes(o.newTableKey || o.tableKey));
+        polynamesWhitelist.includes(o.tableKey || o.tableKeys[settings.dataset || 'annual']));
     return isGlobal || hasPolyname;
   });
 
@@ -141,18 +141,27 @@ export const getIndicator = (forestType, landCategory) => {
   if (!forestType && !landCategory) return null;
   let label = '';
   let value = '';
+  let forestTypeLabel = (forestType && forestType.label) || '';
+  let landCatLabel = (landCategory && landCategory.label) || '';
+
+  forestTypeLabel =
+    forestType && forestType.preserveString === true
+      ? forestTypeLabel
+      : forestTypeLabel.toLowerCase();
+  landCatLabel =
+    landCategory && landCategory.preserveString === true
+      ? landCatLabel
+      : landCatLabel.toLowerCase();
+
   if (forestType && landCategory) {
-    label = `${forestType.label} in ${landCategory.label}`;
+    label = `${forestTypeLabel} in ${landCatLabel}`;
     value = `${forestType.value}__${landCategory.value}`;
   } else if (landCategory) {
-    label = landCategory.label;
+    label = landCatLabel;
     value = landCategory.value;
   } else {
-    label = forestType.label;
+    label = forestTypeLabel;
     value = forestType.value;
-  }
-  if (value !== 'kba' && value !== 'idn_forest_moratorium') {
-    label = label.toLowerCase();
   }
 
   return {

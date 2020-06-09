@@ -97,7 +97,8 @@ export default {
     weeks: 4,
     pageSize: 5,
     page: 0,
-    ifl: 2016
+    ifl: 2016,
+    dataset: 'glad'
   },
   whitelistType: 'glad',
   whitelists: {

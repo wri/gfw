@@ -807,7 +807,7 @@ export const fetchVIIRSLatest = () =>
 // Additional conditional fetches for providing context for queries.
 
 // generate {select} query using all available forest types and land categories
-const buildPolynameSelects = nonTable => {
+const buildPolynameSelects = (nonTable, dataset) => {
   const allPolynames = forestTypes
     .concat(landCategories)
     .filter(p => !p.hidden);
@@ -815,7 +815,7 @@ const buildPolynameSelects = nonTable => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? p.tableKey : p.value} as ${p.value}${isLast ? '' : ', '}`
+      `${!nonTable ? (p.tableKey || p.tableKeys[dataset]) : p.value} as ${p.value}${isLast ? '' : ', '}`
     );
   });
 
@@ -826,7 +826,7 @@ const buildPolynameSelects = nonTable => {
 export const getNonGlobalDatasets = () => {
   const url = `/sql?q=${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
-    buildPolynameSelects(true)
+    buildPolynameSelects(true, 'annual')
   );
   return cartoRequest.get(url);
 };
@@ -837,7 +837,8 @@ export const getLocationPolynameWhitelist = params => {
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{polynames}', buildPolynameSelects())
+    .replace('{polynames}', buildPolynameSelects(false, params.dataset || 'annual'))
     .replace('{WHERE}', getWHEREQuery(params));
+
   return apiRequest.get(url);
 };

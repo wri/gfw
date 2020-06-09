@@ -44,7 +44,8 @@ export default {
   ],
   settings: {
     period: 'week',
-    weeks: 1
+    weeks: 1,
+    dataset: 'glad'
   },
   getData: params =>
     fetchGLADLatest(params).then(latest => {

@@ -34,7 +34,7 @@ export default {
   colors: 'loss',
   chartType: 'composedChart',
   source: 'gadm',
-  dataType: 'loss',
+  dataType: 'glad',
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -85,7 +85,8 @@ export default {
   },
   settings: {
     period: 'week',
-    weeks: 13
+    weeks: 13,
+    dataset: 'glad'
   },
   getData: params => {
     if (shouldQueryPrecomputedTables(params)) {
