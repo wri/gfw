@@ -112,7 +112,7 @@ export default [
     hidden: true
   },
   {
-    label: 'Indonesia forest moratorium',
+    label: 'Indonesia forest moratorium areas',
     value: 'idn_forest_moratorium',
     metaKey: 'idn_forest_moratorium',
     tableKey: 'is__idn_forest_moratorium',
