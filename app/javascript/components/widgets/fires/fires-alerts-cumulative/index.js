@@ -1,5 +1,4 @@
 import { all, spread } from 'axios';
-import moment from 'moment';
 import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
@@ -45,7 +44,11 @@ export default {
       label: 'Confidence level',
       type: 'select',
       clearable: false,
-      border: true
+      border: true,
+      options: [
+        { label: 'All', value: '' },
+        { label: 'High', value: 'h' }
+      ]
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
@@ -293,6 +296,7 @@ export default {
         const years = uniq(data.map(d => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest.attributes && latest.attributes.updatedAt;
+        const allYears = years.filter(y => y !== maxYear);
 
         return (
           {
@@ -300,15 +304,11 @@ export default {
             latest: latestDate,
             options: {
               compareYear: [
-                { label: 'All', value: years },
-                ...years.filter(y => y !== maxYear).map(y => ({
+                { label: 'All', value: 'all' },
+                ...allYears.map(y => ({
                   label: y,
-                  value: [y]
+                  value: y
                 }))
-              ],
-              confidence: [
-                { label: 'All', value: '' },
-                { label: 'High', value: 'h' }
               ]
             }
           } || {}
@@ -316,19 +316,5 @@ export default {
       })
     ),
   getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
-  getWidgetProps,
-  parseInteraction: payload => {
-    if (payload) {
-      const startDate = moment()
-        .year(payload.year)
-        .week(payload.week);
-
-      return {
-        startDate: startDate.format('YYYY-MM-DD'),
-        endDate: startDate.add(7, 'days'),
-        ...payload
-      };
-    }
-    return {};
-  }
+  getWidgetProps
 };
