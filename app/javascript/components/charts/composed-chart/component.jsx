@@ -75,6 +75,7 @@ class CustomComposedChart extends PureComponent {
       rightYAxis,
       gradients,
       tooltip,
+      tooltipParseData,
       unit,
       unitFormat,
       height,
@@ -222,7 +223,9 @@ class CustomComposedChart extends PureComponent {
                     ((isVertical ? 45 : 100) / data.length)}%`
                 })
               }}
-              content={<ChartToolTip settings={tooltip} />}
+              content={
+                <ChartToolTip settings={tooltip} parseData={tooltipParseData} />
+              }
             />
             {bars &&
               Object.keys(bars).map(key => (
