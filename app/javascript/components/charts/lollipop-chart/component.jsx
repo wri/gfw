@@ -3,6 +3,7 @@ import MediaQuery from 'react-responsive';
 import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { format } from 'd3-format';
 
 import { formatNumber } from 'utils/format';
 import { SCREEN_M } from 'utils/constants';
@@ -20,7 +21,8 @@ class LollipopChart extends PureComponent {
       config,
       linksDisabled,
       linksExt,
-      simple
+      simple,
+      large
     } = this.props;
     const { unit } = settings;
     const { legend } = config || {};
@@ -47,9 +49,16 @@ class LollipopChart extends PureComponent {
     const interpolate = num =>
       Math.abs(num) * 100 / (dataMax + Math.abs(dataMin) || 1);
 
-    let ticks = [dataMin, dataMin / 2, 0, dataMax / 2, dataMax];
-    if (dataMin === 0) ticks = [0, dataMax * 0.33, dataMax * 0.66, dataMax];
-    if (dataMax === 0) ticks = [dataMin, dataMin * 0.66, dataMin * 0.33, 0];
+    let ticks;
+    if (large) {
+      if (dataMin === 0) ticks = [0, dataMax * 0.33, dataMax * 0.66, dataMax];
+      if (dataMax === 0) ticks = [dataMin, dataMin * 0.66, dataMin * 0.33, 0];
+      else ticks = [dataMin, dataMin / 2, 0, dataMax / 2, dataMax];
+    } else {
+      if (dataMin === 0) ticks = [0, dataMax / 2, dataMax];
+      if (dataMax === 0) ticks = [dataMin, dataMin / 2, 0];
+      else ticks = [dataMin, 0, dataMax];
+    }
 
     const allNegative = !data.some(item => item.value > 0);
     const allPositive = !data.some(item => item.value < 0);
@@ -94,7 +103,7 @@ class LollipopChart extends PureComponent {
                               `calc(${interpolate(tick - dataMin)}% - 8px)`
                       }}
                     >
-                      {Math.round(tick)}
+                      {tick > 999 ? format('.2s')(tick) : Math.round(tick)}
                     </div>
                   ))}
                 </div>
@@ -272,7 +281,8 @@ LollipopChart.propTypes = {
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,
   linksExt: PropTypes.bool,
-  simple: PropTypes.bool
+  simple: PropTypes.bool,
+  large: PropTypes.bool
 };
 
 export default LollipopChart;

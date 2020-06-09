@@ -37,7 +37,7 @@ export default {
     }
   ],
   refetchKeys: ['variable', 'threshold'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,

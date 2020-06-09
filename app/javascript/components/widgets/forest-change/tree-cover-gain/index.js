@@ -47,7 +47,7 @@ export default {
     }
   ],
   refetchKeys: ['forestType', 'landCategory', 'threshold'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   colors: 'gain',
   metaKey: 'widget_tree_cover_gain',
   datasets: [

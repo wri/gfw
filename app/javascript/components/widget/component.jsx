@@ -152,6 +152,7 @@ class Widget extends PureComponent {
         />
         <WidgetBody
           chartType={chartType}
+          large={large}
           loading={loading}
           metaLoading={metaLoading}
           error={error}

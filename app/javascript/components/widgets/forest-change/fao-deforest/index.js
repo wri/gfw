@@ -20,7 +20,7 @@ export default {
       type: 'select'
     }
   ],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   dataType: 'fao',
   colors: 'loss',
   metaKey: 'widget_deforestation_fao',

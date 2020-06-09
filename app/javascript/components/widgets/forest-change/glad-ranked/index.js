@@ -65,7 +65,7 @@ export default {
   ],
   pendingKeys: ['extentYear', 'threshold'],
   refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   metaKey: 'widget_deforestation_alert_location',
   colors: 'loss',
   datasets: [

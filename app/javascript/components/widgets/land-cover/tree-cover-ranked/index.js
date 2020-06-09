@@ -21,7 +21,7 @@ export default {
   admins: ['adm0'],
   colors: 'extent',
   dataType: 'extent',
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   metaKey: 'widget_forest_cover_ranking',
   settingsConfig: [
     {

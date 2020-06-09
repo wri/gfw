@@ -20,7 +20,7 @@ export default {
     period: 'week',
     weeks: 13
   },
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,

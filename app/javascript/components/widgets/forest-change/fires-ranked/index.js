@@ -18,7 +18,7 @@ export default {
       noSort: true
     }
   ],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   metaKey: 'widget_fire_ranking',
   colors: 'fires',
   sortOrder: {

@@ -18,7 +18,7 @@ export default {
       type: 'select'
     }
   ],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   dataType: 'fao',
   metaKey: 'widget_rate_of_restoration_fao',
   sortOrder: {

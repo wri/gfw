@@ -67,7 +67,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   colors: 'loss',
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss_ranking',

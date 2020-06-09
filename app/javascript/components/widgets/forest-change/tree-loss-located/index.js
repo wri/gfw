@@ -67,7 +67,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   colors: 'loss',
   layers: ['loss'],
   refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],

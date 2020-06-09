@@ -42,7 +42,7 @@ export default {
     }
   ],
   refetchKeys: ['variable'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   visible: ['dashboard', 'analysis'],
   colors: 'climate',
   metaKey: 'soil_organic_carbon',

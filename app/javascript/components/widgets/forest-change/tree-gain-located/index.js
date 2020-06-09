@@ -38,7 +38,7 @@ export default {
     }
   ],
   refetchKeys: ['forestType', 'landCategory'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   colors: 'gain',
   datasets: [
     {

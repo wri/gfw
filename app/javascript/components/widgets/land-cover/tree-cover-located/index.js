@@ -58,7 +58,7 @@ export default {
     }
   ],
   refetchKeys: ['extentYear', 'forestType', 'landCategory', 'threshold'],
-  chartType: 'rankedList',
+  chartType: 'lollipop',
   colors: 'extent',
   metaKey: 'widget_forest_location',
   datasets: [
