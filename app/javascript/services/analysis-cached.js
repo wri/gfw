@@ -822,9 +822,7 @@ const buildPolynameSelects = (nonTable, dataset) => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value} as ${
-        p.value
-      }${isLast ? '' : ', '}`
+      `${!nonTable ? (p.tableKey || p.tableKeys[dataset]) : p.value} as ${p.value}${isLast ? '' : ', '}`
     );
   });
   return polyString;
@@ -834,22 +832,19 @@ const buildPolynameSelects = (nonTable, dataset) => {
 export const getNonGlobalDatasets = () => {
   const url = `/sql?q=${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{polynames}',
-    buildPolynameSelects(true)
+    buildPolynameSelects(true, 'annual')
   );
   return cartoRequest.get(url);
 };
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = params => {
-  const { dataset } = params;
   const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace(
-      '{polynames}',
-      buildPolynameSelects(false, dataset || 'annual')
-    )
+    .replace('{polynames}', buildPolynameSelects(false, params.dataset || 'annual'))
     .replace('{WHERE}', getWHEREQuery(params));
+
   return apiRequest.get(url);
 };
