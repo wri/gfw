@@ -134,18 +134,21 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
   if (!forestType && !landCategory) return null;
   let label = '';
   let value = '';
+  const forestTypeLabel = landCategory.upperCase
+    ? landCategory.label
+    : landCategory.label.toLowerCase();
+  const landCatLabel = forestType.upperCase
+    ? forestType.label
+    : forestType.label.toLowerCase();
   if (forestType && landCategory) {
-    label = `${forestType.label} in ${landCategory.label}`;
+    label = `${forestTypeLabel} in ${landCatLabel}`;
     value = `${forestType.value}__${landCategory.value}`;
   } else if (landCategory) {
-    label = landCategory.label;
+    label = landCatLabel;
     value = landCategory.value;
   } else {
-    label = forestType.label;
+    label = forestTypeLabel;
     value = forestType.value;
-  }
-  if (value !== 'kba') {
-    label = label.toLowerCase();
   }
 
   return {

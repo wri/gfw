@@ -141,18 +141,21 @@ export const getIndicator = (forestType, landCategory) => {
   if (!forestType && !landCategory) return null;
   let label = '';
   let value = '';
+  const forestTypeLabel = landCategory.upperCase
+    ? landCategory.label
+    : landCategory.label.toLowerCase();
+  const landCatLabel = forestType.upperCase
+    ? forestType.label
+    : forestType.label.toLowerCase();
   if (forestType && landCategory) {
-    label = `${forestType.label} in ${landCategory.label}`;
+    label = `${forestTypeLabel} in ${landCatLabel}`;
     value = `${forestType.value}__${landCategory.value}`;
   } else if (landCategory) {
-    label = landCategory.label;
+    label = landCatLabel;
     value = landCategory.value;
   } else {
-    label = forestType.label;
+    label = forestTypeLabel;
     value = forestType.value;
-  }
-  if (value !== 'kba' && value !== 'idn_forest_moratorium') {
-    label = label.toLowerCase();
   }
 
   return {
@@ -316,7 +319,9 @@ export const getStatements = ({
     threshold || threshold === 0
       ? translateText('>{threshold}% tree canopy', { threshold })
       : null,
-    dataType === 'fires' && active && '*when on the map you can show up to 3 months of fires data',
+    dataType === 'fires' &&
+      active &&
+      '*when on the map you can show up to 3 months of fires data',
     dataType === 'loss'
       ? translateText(
         'these estimates do not take tree cover gain into account'
