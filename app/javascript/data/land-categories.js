@@ -53,6 +53,7 @@ export default [
   },
   {
     label: 'Key Biodiversity Areas',
+    preserveString: true,
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
     tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
@@ -99,6 +100,7 @@ export default [
   },
   {
     label: 'Indonesia peat lands',
+    preserveString: true,
     value: 'idn_mys_peatlands',
     metaKey: 'idn_peat_lands',
     tableKey: 'is__peatland',
@@ -113,6 +115,7 @@ export default [
   },
   {
     label: 'Indonesia forest moratorium areas',
+    preserveString: true,
     value: 'idn_forest_moratorium',
     metaKey: 'idn_forest_moratorium',
     tableKey: 'is__idn_forest_moratorium',
