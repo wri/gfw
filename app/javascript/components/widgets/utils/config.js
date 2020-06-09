@@ -288,8 +288,8 @@ export const getStatements = ({
   dataType,
   landCategory,
   forestType,
-  datasets
-  // active
+  datasets,
+  active
 }) => {
   if (!settings) return null;
   const { extentYear, threshold } = settings;
