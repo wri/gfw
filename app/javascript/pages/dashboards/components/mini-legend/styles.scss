@@ -27,6 +27,11 @@
         border-radius: 50%;
         margin-right: rem(10px);
       }
+
+      p {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 

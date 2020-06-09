@@ -16,15 +16,30 @@ class MiniLegend extends PureComponent {
   render() {
     const { layers, activeDatasets, setMainMapView, className } = this.props;
     const isDeviceTouch = isTouch();
+
     return layers && layers.length ? (
       <div className={cx('c-mini-legend', className)}>
         <ul>
-          {layers.map(l => (
-            <li key={l.name}>
-              <span style={{ backgroundColor: l.color }} />
-              {l.name}
-            </li>
-          ))}
+          {layers.map(l => {
+            const { params } = l || {};
+            const { startDateAbsolute, endDateAbsolute } = params || {};
+
+            return (
+              <li key={l.name}>
+                <span style={{ backgroundColor: l.color }} />
+                <div>
+                  <p>
+                    {l.name}
+                  </p>
+                  <p>
+                    {startDateAbsolute && endDateAbsolute && (
+                      `${startDateAbsolute} to ${endDateAbsolute}`
+                    )}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
         </ul>
         <div className="link-to-map">
           <Button
