@@ -141,12 +141,18 @@ export const getIndicator = (forestType, landCategory) => {
   if (!forestType && !landCategory) return null;
   let label = '';
   let value = '';
-  const forestTypeLabel = landCategory.upperCase
-    ? landCategory.label
-    : landCategory.label.toLowerCase();
-  const landCatLabel = forestType.upperCase
-    ? forestType.label
-    : forestType.label.toLowerCase();
+  let forestTypeLabel = (forestType && forestType.label) || '';
+  let landCatLabel = (landCategory && landCategory.label) || '';
+
+  forestTypeLabel =
+    forestType && forestType.preserveString === true
+      ? forestTypeLabel
+      : forestTypeLabel.toLowerCase();
+  landCatLabel =
+    landCategory && landCategory.preserveString === true
+      ? landCatLabel
+      : landCatLabel.toLowerCase();
+
   if (forestType && landCategory) {
     label = `${forestTypeLabel} in ${landCatLabel}`;
     value = `${forestType.value}__${landCategory.value}`;
