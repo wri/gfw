@@ -846,7 +846,10 @@ export const getLocationPolynameWhitelist = params => {
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{polynames}', buildPolynameSelects(false, dataset))
+    .replace(
+      '{polynames}',
+      buildPolynameSelects(false, dataset || 'annual')
+    )
     .replace('{WHERE}', getWHEREQuery(params));
   return apiRequest.get(url);
 };

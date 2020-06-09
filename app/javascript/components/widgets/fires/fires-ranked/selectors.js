@@ -96,7 +96,7 @@ export const parseList = createSelector(
         id: locationId,
         counts,
         density,
-        significance: 100 * significance,
+        significance,
         area: locationArea,
         label: (region && region.label) || '',
         path: (region && region.path) || ''
@@ -125,7 +125,7 @@ export const parseData = createSelector(
       ...b,
       limit:
         value === 'significance'
-          ? 100 * b.stdDev
+          ? b.stdDev
           : minValue + b.limit * (maxValue - minValue) / 100
     }));
 
@@ -170,7 +170,7 @@ export const parseSentence = createSelector(
     } = sentences;
     const topRegion = data[0].label;
     const topRegionCount = data[0].counts || 0;
-    const topRegionVariance = data[0].significance / 100 || 0;
+    const topRegionVariance = data[0].significance || 0;
     const topRegionDensity = data[0].density || 0;
     const topRegionPerc = 100 * topRegionCount / sumBy(data, 'counts');
     const timeFrame = optionsSelected.weeks;
@@ -210,7 +210,7 @@ export const parseSentence = createSelector(
             key: 'significant',
             fine: false,
             tooltip: `'Significance' is a measure of how much the number of recorded fire alerts in the last ${timeFrame &&
-                timeFrame.label} varies from the expected value when considering the same period over all available historic data. Positive values indicate higher than expected, negative values indicate lower than expected, and values between ±100% are considered to be within the 'normal' range.`
+                timeFrame.label} varies from the expected value when considering the same period over all available historic data. Positive values indicate higher than expected, negative values indicate lower than expected, and values between ±1.0 are considered to be within the 'normal' range.`
           }
           : {}
     };

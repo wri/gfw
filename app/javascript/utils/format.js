@@ -11,6 +11,7 @@ export const formatUSD = (value, minimize = true) =>
     .replace('K', minimize ? 'K' : ' thousand');
 
 export const formatNumber = ({ num, unit, precision }) => {
+  if (unit === '') return format('.2f')(num);
   let p = unit === '%' ? '2' : '3';
   if (precision && Number.isInteger(precision)) p = Math.abs(precision);
   let numFormat = unit === '%' ? `.${p}r` : `.${p}s`;
