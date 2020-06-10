@@ -134,7 +134,7 @@ class SVGBrush extends PureComponent {
           shapeRendering="crispEdges"
           x={x1}
           y={ey0}
-          width={ex1 - x1}
+          width={ex1 - x1 < 0 ? Math.abs(ex1 - x1) : ex1 - x1}
           height={h - 2}
         />
 
