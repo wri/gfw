@@ -41,7 +41,7 @@ class LollipopChart extends PureComponent {
     // TODO: pass as prop ?
     const customFormat = ({ num, roundTo }) => {
       if (num === 0) return '0';
-      let number = format(`.${roundTo || 2}r`)(num);
+      let number = format(`.${roundTo || 2}f`)(num);
       if (number.charAt(number.length - 1) === '0') {
         number = number.substring(0, number.length - 1);
       }
