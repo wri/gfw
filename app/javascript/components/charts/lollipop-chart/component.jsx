@@ -3,8 +3,8 @@ import MediaQuery from 'react-responsive';
 import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { format } from 'd3-format';
 
-import { formatNumber } from 'utils/format';
 import { SCREEN_M } from 'utils/constants';
 import Legend from 'components/charts/components/chart-legend';
 
@@ -37,6 +37,16 @@ class LollipopChart extends PureComponent {
           ? selectedUnitConfig.unit
           : selectedUnitConfig.value;
     }
+
+    // TODO: pass as prop ?
+    const customFormat = ({ num, roundTo }) => {
+      if (num === 0) return '0';
+      let number = format(`.${roundTo || 2}r`)(num);
+      if (number.charAt(number.length - 1) === '0') {
+        number = number.substring(0, number.length - 1);
+      }
+      return number;
+    };
 
     let dataMax =
       data && data.reduce((acc, item) => Math.max(acc, item.value), 0);
@@ -96,7 +106,7 @@ class LollipopChart extends PureComponent {
                               `calc(${interpolate(tick - dataMin)}% - 8px)`
                       }}
                     >
-                      {Math.round(tick)}
+                      {customFormat({ num: tick, roundTo: 1 })}
                     </div>
                   ))}
                 </div>
@@ -175,10 +185,7 @@ class LollipopChart extends PureComponent {
                                   }
                               }
                             >
-                              {formatNumber({
-                                num: item.value,
-                                unit: item.unit || formatUnit
-                              })}
+                              {customFormat({ num: item.value, roundTo: 2 })}
                             </div>
                           </div>
                         </div>
