@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
+import { hslShift } from 'utils/data';
 
 // get list data
 const getData = state => state.data;
@@ -40,6 +41,9 @@ export const parseData = createSelector(
       )
       .reduce((acc, n) => acc + n.count, 0);
 
+    const mainColour = colors.main;
+    const otherColour = hslShift(mainColour);
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const fireCountOutside =
@@ -50,7 +54,7 @@ export const parseData = createSelector(
           ? `Fire alerts in ${indicatorLabel}`
           : `Fire alerts in ${locationName}`,
         value: indicator ? fireCountIn : fireCountAll,
-        color: colors.main,
+        color: mainColour,
         unit: 'counts',
         percentage:
           indicator && fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 100
@@ -60,7 +64,7 @@ export const parseData = createSelector(
       parsedData.push({
         label: `Fire alerts outside ${indicatorLabel}`,
         value: fireCountOutside,
-        color: colors.otherColor,
+        color: otherColour,
         unit: 'counts',
         percentage: fireCountAll > 0 ? fireCountOutside / fireCountAll * 100 : 0
       });
@@ -77,8 +81,10 @@ export const parseSentence = createSelector(
       globalWithInd,
       withInd,
       noIndicator,
-      globalNoIndicator
+      globalNoIndicator,
+      highConfidence
     } = sentences;
+    const { confidence } = optionsSelected;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const timeFrame = optionsSelected.weeks;
@@ -92,7 +98,13 @@ export const parseSentence = createSelector(
       totalFires: `${format(',')(totalFires)}`
     };
     let sentence = indicator ? withInd : noIndicator;
-    if (locationName === 'global') { sentence = indicator ? globalWithInd : globalNoIndicator; }
+    if (locationName === 'global') {
+      sentence = indicator ? globalWithInd : globalNoIndicator;
+    }
+    sentence =
+      confidence && confidence.value === 'h'
+        ? sentence + highConfidence
+        : `${sentence}.`;
     return {
       sentence,
       params

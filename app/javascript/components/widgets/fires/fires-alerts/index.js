@@ -18,7 +18,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesAlerts',
-  title: 'Fire Alerts in {location}',
+  title: 'Weekly Fire Alerts in {location}',
   large: true,
   categories: ['summary', 'fires'],
   settingsConfig: [
@@ -81,7 +81,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 3
+    fires: 2
   },
   settings: {
     dataset: 'viirs',

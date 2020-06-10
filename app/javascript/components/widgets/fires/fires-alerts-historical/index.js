@@ -1,4 +1,7 @@
-import { fetchHistoricalAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import {
+  fetchHistoricalAlerts,
+  fetchVIIRSLatest
+} from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -48,7 +51,7 @@ export default {
     }
   ],
   sortOrder: {
-    fires: 100
+    fires: 1
   },
   visible: ['dashboard'],
   types: ['country', 'wdpa', 'geostore', 'use'],
@@ -74,8 +77,13 @@ export default {
       layers: [FIRES_ALERTS_VIIRS]
     }
   ],
-  sentence:
-    'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts.',
+  sentences: {
+    initial:
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts',
+    withInd:
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
+    highConfidence: ', considering <b>high confidence</b> alerts only.'
+  },
   whitelistType: 'fires',
   whitelists: {
     adm0: [
@@ -292,22 +300,28 @@ export default {
         response =>
           (response.attributes && response.attributes.updatedAt) || null
       )
-      .then(latest => fetchHistoricalAlerts({ startDate: params.minDate, endDate: latest, ...params, frequency: 'daily' })
-        .then(response => {
-          const { data } = response.data || {};
+      .then(latest =>
+        fetchHistoricalAlerts({
+          startDate: params.minDate,
+          endDate: latest,
+          ...params,
+          frequency: 'daily'
+        })
+          .then(response => {
+            const { data } = response.data || {};
 
-          return {
-            alerts: data,
-            settings: {
-              startDate: data && data[data.length - 1].alert__date,
-              endDate: latest
-            }
-          };
-        })
-        .catch(error => {
-          console.info(error);
-          return null;
-        })
+            return {
+              alerts: data,
+              settings: {
+                startDate: data && data[data.length - 1].alert__date,
+                endDate: latest
+              }
+            };
+          })
+          .catch(error => {
+            console.info(error);
+            return null;
+          })
       )
       .catch(error => {
         console.info(error);

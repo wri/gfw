@@ -47,7 +47,14 @@ const SQL_QUERIES = {
 
 const ALLOWED_PARAMS = {
   annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
-  glad: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'is__confirmed_alert'],
+  glad: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'is__confirmed_alert'
+  ],
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence']
 };
@@ -818,7 +825,6 @@ const buildPolynameSelects = (nonTable, dataset) => {
       `${!nonTable ? (p.tableKey || p.tableKeys[dataset]) : p.value} as ${p.value}${isLast ? '' : ', '}`
     );
   });
-
   return polyString;
 };
 

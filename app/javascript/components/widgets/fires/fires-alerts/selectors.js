@@ -220,11 +220,11 @@ export const getLegend = createSelector(
         }
       }),
       average: {
-        label: 'Average Range',
+        label: 'Normal Range',
         color: 'rgba(85,85,85, 0.15)'
       },
       unusual: {
-        label: 'Above/Below Average Range',
+        label: 'Above/Below Normal Range',
         color: 'rgba(85,85,85, 0.25)'
       }
     };
@@ -256,7 +256,7 @@ export const parseConfig = createSelector(
 
     const tooltip = [
       {
-        label: 'Fire alerts'
+        label: 'Fire alerts in the week of:'
       },
       {
         key: 'count',
@@ -433,7 +433,7 @@ export const parseSentence = createSelector(
       status = 'high';
       statusColor = colorRange[2];
     } else if (variance <= 1 && variance > -1) {
-      status = 'average';
+      status = 'normal';
       statusColor = colorRange[4];
     } else if (variance <= -1 && variance > -2) {
       status = 'low';
