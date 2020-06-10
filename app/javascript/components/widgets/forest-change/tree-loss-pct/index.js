@@ -83,13 +83,13 @@ export default {
   },
   sentence: {
     initial:
-      'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b>, making up {percent} of its {total tree cover loss} in the same time period. Total area of humid primary forest in {location} <b>decreased by</b> {extentDelta} in this time period.',
+      'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b>, making up {percent} of its {total tree cover loss} in the same time period. <b>Total area of humid primary forest in {location} decreased by</b> {extentDelta} in this time period.',
     withIndicator:
-      'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b> in {indicator}, making up {percent} of its {total tree cover loss} in the same time period. Total area of humid primary forest in {location} in {indicator} <b>decreased by</b> {extentDelta} in this time period.',
+      'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b> in {indicator}, making up {percent} of its {total tree cover loss} in the same time period. <b>Total area of humid primary forest in {location} in {indicator} decreased by</b> {extentDelta} in this time period.',
     globalInitial:
-      'From {startYear} to {endYear}, there was a total of {loss} <b>humid primary forest lost</b> {location}, making up {percent} of its {total tree cover loss} in the same time period. Total area of humid primary forest <b>decreased {location} by</b> {extentDelta} in this time period.',
+      'From {startYear} to {endYear}, there was a total of {loss} <b>humid primary forest lost</b> {location}, making up {percent} of its {total tree cover loss} in the same time period. Total area of humid primary forest decreased {location} by</b> {extentDelta} in this time period.',
     globalWithIndicator:
-      'From {startYear} to {endYear}, there was a total of {loss} <b>humid primary forest lost</b> {location} within {indicator}, making up {percent} of its {total tree cover loss} in the same time period. Total area of humid primary forest in {indicator} <b>decreased {location} by</b> {extentDelta} in this time period.',
+      'From {startYear} to {endYear}, there was a total of {loss} <b>humid primary forest lost</b> {location} within {indicator}, making up {percent} of its {total tree cover loss} in the same time period. <b>Total area of humid primary forest in {indicator} decreased {location} by</b> {extentDelta} in this time period.',
     noLoss:
       'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b>.',
     noLossWithIndicator:
@@ -112,6 +112,12 @@ export default {
     };
 
     return all([
+      getLoss({
+        ...params,
+        forestType: null,
+        landCategory: null,
+        ...globalLocation
+      }),
       getLoss({ ...params, ...globalLocation }),
       getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
       getExtent({
@@ -120,9 +126,11 @@ export default {
         forestType: 'primary_forest'
       })
     ]).then(
-      spread((loss, primaryLoss, extent) => {
+      spread((adminLoss, loss, primaryLoss, extent) => {
         let data = {};
         if (
+          adminLoss &&
+          adminLoss.data &&
           primaryLoss &&
           primaryLoss.data &&
           loss &&
@@ -131,6 +139,7 @@ export default {
           extent.data
         ) {
           data = {
+            adminLoss: adminLoss.data.data,
             loss: loss.data.data,
             primaryLoss: primaryLoss.data.data,
             extent: (loss.data.data && extent.data.data[0].extent) || 0
