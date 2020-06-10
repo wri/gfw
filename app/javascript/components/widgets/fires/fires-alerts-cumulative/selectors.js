@@ -248,7 +248,7 @@ export const parseConfig = createSelector(
       {
         key: 'count',
         labelKey: 'date',
-        labelFormat: value => moment(value).format('YYYY-MM-DD'),
+        labelFormat: value => moment(value).format('MMM DD YYYY'),
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         nullValue: 'No data available',
@@ -300,6 +300,7 @@ export const parseConfig = createSelector(
       xAxis: {
         tickCount: 12,
         interval: 4,
+        scale: 'point',
         tickFormatter: t => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&

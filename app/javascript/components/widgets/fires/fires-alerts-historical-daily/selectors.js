@@ -49,7 +49,7 @@ export const parseConfig = createSelector(
       {
         key: 'count',
         labelKey: 'alert__date',
-        labelFormat: value => moment(value).format('YYYY-MM-DD'),
+        labelFormat: value => moment(value).format('MMM DD YYYY'),
         unit: ' VIIRS alerts',
         color: colors.main,
         unitFormat: value =>
@@ -61,6 +61,7 @@ export const parseConfig = createSelector(
       ...getChartConfig(colors),
       tooltip,
       xAxis: {
+        scale: 'point',
         ticks: [startDate, endDate],
         interval: 0,
         padding: { left: 20, right: 20 },

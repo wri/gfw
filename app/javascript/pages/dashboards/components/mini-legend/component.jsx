@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isTouch } from 'utils/browser';
 import cx from 'classnames';
 import { track } from 'app/analytics';
+import moment from 'moment';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -21,7 +22,8 @@ class MiniLegend extends PureComponent {
       <div className={cx('c-mini-legend', className)}>
         <ul>
           {layers.map(l => {
-            const { params } = l || {};
+            const { layers: subLayers, params: stateParams } = l || {};
+            const params = stateParams || (subLayers && subLayers[0] && subLayers[0].timelineParams);
             const { startDateAbsolute, endDateAbsolute } = params || {};
 
             return (
@@ -31,9 +33,9 @@ class MiniLegend extends PureComponent {
                   <p>
                     {l.name}
                   </p>
-                  <p>
+                  <p className="time-range">
                     {startDateAbsolute && endDateAbsolute && (
-                      `${startDateAbsolute} to ${endDateAbsolute}`
+                      `${moment(startDateAbsolute).format('MMM DD YYYY')} - ${moment(endDateAbsolute).format('MMM DD YYYY')}`
                     )}
                   </p>
                 </div>

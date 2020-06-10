@@ -138,7 +138,7 @@ export const parseConfig = createSelector(
       {
         key: 'count',
         labelKey: 'date',
-        labelFormat: value => moment(value).format('YYYY-MM-DD'),
+        labelFormat: value => moment(value).format('MMM DD YYYY'),
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         unitFormat: value =>
@@ -150,6 +150,7 @@ export const parseConfig = createSelector(
       ...getChartConfig(colors),
       tooltip,
       xAxis: {
+        scale: 'point',
         tickCount: 12,
         interval: frequency === 'daily' ? 31 : undefined,
         tickFormatter: t => moment(t).format('MMM-YY')
