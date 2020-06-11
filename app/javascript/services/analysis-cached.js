@@ -44,7 +44,7 @@ const SQL_QUERIES = {
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC",
   biomassStockGrouped:
-    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS biomass, SUM(whrc_aboveground_co2_stock_2000__Mg) AS carbon, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} AND umd_tree_cover_extent_2000__ha > 0 GROUP BY {location} ORDER BY {location}'
+    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} AND umd_tree_cover_extent_2000__ha > 0 GROUP BY {location} ORDER BY {location}'
 };
 
 const ALLOWED_PARAMS = {
@@ -884,8 +884,8 @@ export const getBiomassStockGrouped = params => {
       data: response.data.data.map(d => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        biomass: d.biomass,
-        carbon: d.carbon
+        biomass: d.whrc_aboveground_biomass_stock_2000__Mg,
+        carbon: d.whrc_aboveground_co2_stock_2000__Mg
       }))
     }
   }));
