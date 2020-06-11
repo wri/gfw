@@ -1,4 +1,4 @@
-import { getBiomassRanking } from 'services/climate';
+import { getBiomassStockGrouped } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -23,10 +23,10 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
-      key: 'variable',
-      label: 'variable',
+      key: 'unit',
+      label: 'unit',
       type: 'switch',
-      whitelist: ['totalbiomass', 'biomassdensity'],
+      whitelist: ['totalBiomass', 'biomassDensity'],
       border: true
     },
     {
@@ -36,7 +36,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
-  refetchKeys: ['variable', 'threshold'],
+  refetchKeys: ['unit', 'threshold'],
   chartType: 'rankedList',
   datasets: [
     {
@@ -60,9 +60,9 @@ export default {
   sentences: {
     initial:
       'In 2000, {location} had an aboveground live woody biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.',
-    totalbiomass:
+    totalBiomass:
       'Around {value} of the world’s {label} is contained in the top 5 countries.',
-    biomassdensity:
+    biomassDensity:
       'The average {label} of the world’s top 5 countries is {value}.'
   },
   settings: {
@@ -73,10 +73,33 @@ export default {
     layers: ['loss'],
     pageSize: 5,
     page: 0,
-    variable: 'totalbiomass'
+    unit: 'totalBiomass'
   },
-  getData: params =>
-    getBiomassRanking(params).then(res => res.data && res.data.rows),
-  getDataURL: params => [getBiomassRanking({ ...params, download: true })],
+  getData: ({ adm0, adm1, adm2, ...rest } = {}) => {
+    const parentLocation = {
+      adm0: adm0 && !adm1 ? null : adm0,
+      adm1: adm1 && !adm2 ? null : adm1,
+      adm2: null
+    };
+
+    return getBiomassStockGrouped({ ...rest, ...parentLocation }).then(
+      biomassResponse => {
+        const { data } = biomassResponse.data;
+        let mappedData = [];
+        if (data && data.length) {
+          mappedData = data.map(item => {
+            const { extent, biomass } = item;
+            const biomassDensity = biomass && extent > 0 ? biomass / extent : 0;
+            return {
+              ...item,
+              biomassDensity
+            };
+          });
+        }
+        return mappedData;
+      }
+    );
+  },
+  getDataURL: params => [getBiomassStockGrouped({ ...params, download: true })],
   getWidgetProps
 };
