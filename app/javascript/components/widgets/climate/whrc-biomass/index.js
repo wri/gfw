@@ -19,7 +19,7 @@ export default {
     global: 'Global aboveground live woody biomass'
   },
   categories: ['climate'],
-  types: ['global', 'country'],
+  types: ['global', 'country', 'wdpa', 'use', 'geostore'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
@@ -50,7 +50,7 @@ export default {
       layers: [TREE_BIOMASS_DENSITY]
     }
   ],
-  visible: ['dashboard', 'analysis'],
+  visible: ['dashboard', 'analysis', 'geostore'],
   colors: 'climate',
   metaKey: 'aboveground_biomass',
   sortOrder: {
