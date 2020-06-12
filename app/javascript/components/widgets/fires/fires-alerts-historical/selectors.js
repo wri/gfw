@@ -113,7 +113,7 @@ export const parseConfig = createSelector(
       ...getChartConfig(colors),
       tooltip,
       xAxis: {
-        tickFormatter: t => moment(t).format('MMM YY')
+        tickFormatter: t => moment(t).format('MMM DD, YY')
       },
       brush: {
         width: '100%',
