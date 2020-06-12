@@ -40,7 +40,8 @@ export const parseData = createSelector(
   [calculateData, getColors, getSettings],
   (data, colors, settings) => {
     if (isEmpty(data)) return null;
-    const { soil, aboveGround, belowGround, total } = data || {};
+    const { soil, aboveGround, total } = data || {};
+    const belowGround = aboveGround * 0.26;
     const { variable } = settings;
     const unit = variable === 'totalbiomass' ? 't' : 't/Ha';
     return [
