@@ -407,7 +407,7 @@ export const parseSentence = createSelector(
     const halfMax = (maxMean - minMean) * 0.5;
 
     const peakWeeks = data.filter(d => d.mean > halfMax);
-    const sortedPeakWeeks = sortBy(peakWeeks, 'week');
+    const sortedPeakWeeks = sortBy(peakWeeks, ['year', 'week']);
 
     const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
     const seasonMonth = moment(seasonStartDate).format('MMMM');
