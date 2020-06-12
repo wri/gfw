@@ -7,14 +7,14 @@ const getData = state => state.data;
 const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
-const getVariables = state => state.options && state.options.variables;
 const getTitle = state => state.title;
 const getSettings = state => state.settings;
 
 export const calculateData = createSelector(
-  [getData, getSettings, getVariables],
-  (data, settings, variables) => {
+  [getData, getSettings],
+  (data, settings) => {
     if (isEmpty(data)) return null;
+    const { variables } = settings;
     const soil =
       (data && data.soilCarbon && data.soilCarbon[settings.variable]) || 0;
     const aboveGround =
@@ -37,11 +37,12 @@ export const calculateData = createSelector(
 );
 
 export const parseData = createSelector(
-  [calculateData, getColors],
-  (data, colors) => {
+  [calculateData, getColors, getSettings],
+  (data, colors, settings) => {
     if (isEmpty(data)) return null;
-    const { soil, aboveGround, belowGround, total, unit } = data || {};
-
+    const { soil, aboveGround, belowGround, total } = data || {};
+    const { variable } = settings;
+    const unit = variable === 'totalbiomass' ? 't' : 't/Ha';
     return [
       {
         label: 'Soil carbon',
@@ -69,13 +70,13 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [calculateData, getLocationName, getSentences],
-  (data, locationName, sentence) => {
+  [calculateData, getLocationName, getSentences, getSettings],
+  (data, locationName, sentence, settings) => {
     if (!data) return null;
-    const { soil, aboveGround, belowGround, total, unit } = data || {};
-
+    const { variable } = settings;
+    const { soil, aboveGround, belowGround, total } = data || {};
     const allGround = aboveGround + belowGround;
-
+    const unit = variable === 'totalbiomass' ? 't' : 't/Ha';
     const params = {
       location: locationName,
       carbonStored: allGround > soil ? 'biomass' : 'soil',
