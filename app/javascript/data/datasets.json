@@ -2,7 +2,7 @@
   {
     "label": "VIIRS",
     "value": "viirs",
-    "metaKey": "viirs_fires_alerts",
+    "metaKey": null,
     "infoText": "VIIRS alerts have a higher resolution, but are less performant in cloudy areas than MODIS alerts"
   },
   {
