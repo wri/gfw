@@ -77,11 +77,6 @@ export default {
     {
       dataset: FOREST_LOSS_DATASET,
       layers: [FOREST_LOSS]
-    },
-    // primary forest
-    {
-      dataset: PRIMARY_FOREST_DATASET,
-      layers: [PRIMARY_FOREST]
     }
   ],
   sortOrder: {
