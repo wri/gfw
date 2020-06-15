@@ -14,7 +14,7 @@ const SQL_QUERIES = {
   loss:
     'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) AS whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   lossGrouped:
     'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
@@ -258,10 +258,11 @@ export const getWeeksFilter = ({ weeks, latest }) => {
 
 // summed loss for single location
 export const getLoss = params => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, excludeEmissions } =
+    params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
-  const url = `${getRequestUrl({
+  const baseUrl = `${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'change'
@@ -269,6 +270,13 @@ export const getLoss = params => {
     '{WHERE}',
     getWHEREQuery({ ...params, dataset: 'annual' })
   );
+
+  const url = excludeEmissions
+    ? baseUrl.replace(
+      ', SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg',
+      ''
+    )
+    : baseUrl;
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -297,8 +305,9 @@ export const getLoss = params => {
 
 // disaggregated loss for child of location
 export const getLossGrouped = params => {
-  const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const { forestType, landCategory, ifl, download, excludeEmissions } =
+    params || {};
+  const baseUrl = `${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'change',
@@ -306,6 +315,13 @@ export const getLossGrouped = params => {
   })}${SQL_QUERIES.lossGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+
+  const url = excludeEmissions
+    ? baseUrl.replace(
+      ', SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg',
+      ''
+    )
+    : baseUrl;
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -822,7 +838,9 @@ const buildPolynameSelects = (nonTable, dataset) => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? (p.tableKey || p.tableKeys[dataset]) : p.value} as ${p.value}${isLast ? '' : ', '}`
+      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value} as ${
+        p.value
+      }${isLast ? '' : ', '}`
     );
   });
   return polyString;
@@ -843,7 +861,10 @@ export const getLocationPolynameWhitelist = params => {
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{polynames}', buildPolynameSelects(false, params.dataset || 'annual'))
+    .replace(
+      '{polynames}',
+      buildPolynameSelects(false, params.dataset || 'annual')
+    )
     .replace('{WHERE}', getWHEREQuery(params));
 
   return apiRequest.get(url);

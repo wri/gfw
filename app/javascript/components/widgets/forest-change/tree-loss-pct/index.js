@@ -108,8 +108,7 @@ export default {
   },
   settings: {
     threshold: 30,
-    extentYear: 2000,
-    forestType: 'primary_forest'
+    extentYear: 2000
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
@@ -124,10 +123,16 @@ export default {
         ...params,
         forestType: null,
         landCategory: null,
+        excludeEmissions: true,
         ...globalLocation
       }),
-      getLoss({ ...params, ...globalLocation }),
-      getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
+      getLoss({ ...params, ...globalLocation, excludeEmissions: true }),
+      getLoss({
+        ...params,
+        ...globalLocation,
+        excludeEmissions: true,
+        forestType: 'primary_forest'
+      }),
       getExtent({
         ...params,
         ...globalLocation,
@@ -178,12 +183,14 @@ export default {
         ? getLossGrouped({
           ...params,
           ...globalLocation,
+          excludeEmissions: true,
           forestType: 'primary_forest',
           download: true
         })
         : getLoss({
           ...params,
           ...globalLocation,
+          excludeEmissions: true,
           forestType: 'primary_forest',
           download: true
         }),
