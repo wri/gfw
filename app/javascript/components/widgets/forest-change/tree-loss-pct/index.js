@@ -108,8 +108,7 @@ export default {
   },
   settings: {
     threshold: 30,
-    extentYear: 2000,
-    forestType: 'primary_forest'
+    extentYear: 2000
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
