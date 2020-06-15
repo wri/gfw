@@ -7,7 +7,6 @@ import sortBy from 'lodash/sortBy';
 
 import { getChartConfig } from 'components/widgets/utils/data';
 
-const getActive = state => state.active;
 const getAlerts = state => state.data && state.data.alerts;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
@@ -18,8 +17,6 @@ const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
 const getStartIndex = state => state.settings.startIndex;
 const getEndIndex = state => state.settings.endIndex || null;
-
-const MAXGAP = 90;
 
 const zeroFillDays = (startDate, endDate) => {
   const start = moment(startDate);
@@ -49,8 +46,8 @@ export const getData = createSelector(
 );
 
 export const getStartEndIndexes = createSelector(
-  [getStartIndex, getEndIndex, getActive, getData],
-  (startIndex, endIndex, active, currentData) => {
+  [getStartIndex, getEndIndex, getData],
+  (startIndex, endIndex, currentData) => {
     if (!currentData) {
       return {
         startIndex,
@@ -61,13 +58,6 @@ export const getStartEndIndexes = createSelector(
     const start =
       startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
     const end = endIndex || currentData.length - 1;
-
-    if (active && end - start > MAXGAP) {
-      return {
-        startIndex: end - MAXGAP,
-        endIndex: end
-      };
-    }
 
     return {
       startIndex: start,
@@ -90,8 +80,8 @@ export const parseBrushedData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [getColors, getStartEndIndexes, getActive],
-  (colors, indexes, active) => {
+  [getColors, getStartEndIndexes],
+  (colors, indexes) => {
     const { startIndex, endIndex } = indexes;
 
     const tooltip = [
@@ -124,8 +114,8 @@ export const parseConfig = createSelector(
           left: 48,
           bottom: 12
         },
-        minimumGap: MAXGAP,
-        maximumGap: active ? MAXGAP : 365,
+        minimumGap: 30,
+        maximumGap: 365,
         dataKey: 'date',
         startIndex: startIndex || 0,
         endIndex,

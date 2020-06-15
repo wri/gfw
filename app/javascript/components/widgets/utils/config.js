@@ -180,7 +180,8 @@ export const getWidgetDatasets = ({
   startDateAbsolute,
   endDateAbsolute,
   latestDate,
-  threshold
+  threshold,
+  dataset
 }) =>
   datasets &&
   datasets.map(d => ({
@@ -217,7 +218,7 @@ export const getWidgetDatasets = ({
       ...(startDateAbsolute &&
         endDateAbsolute && {
         params: {
-          startDateAbsolute,
+          startDateAbsolute: dataset === 'viirs' && moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') > 90 ? moment(endDateAbsolute).subtract(90, 'days').format('YYYY-MM-DD') : startDateAbsolute,
           endDateAbsolute
         }
       })
