@@ -1,4 +1,5 @@
 import { all, spread } from 'axios';
+import compact from 'lodash/compact';
 
 import { getExtent, getLoss } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
@@ -119,20 +120,16 @@ export default {
         excludeEmissions: true,
         ...globalLocation
       }),
-      getLoss({ ...params, ...globalLocation, excludeEmissions: true }),
-      getLoss({
-        ...params,
-        ...globalLocation,
-        excludeEmissions: true,
-        forestType: 'primary_forest'
-      }),
+      getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
       getExtent({
         ...params,
-        ...globalLocation,
-        forestType: 'primary_forest'
-      })
+        forestType: 'primary_forest',
+        excludeEmissions: true,
+        ...globalLocation
+      }),
+      getLoss({ ...params, excludeEmissions: true, ...globalLocation })
     ]).then(
-      spread((adminLoss, loss, primaryLoss, extent) => {
+      spread((adminLoss, primaryLoss, extent, loss) => {
         let data = {};
         if (
           adminLoss &&
@@ -171,27 +168,31 @@ export default {
   },
   getDataURL: params => {
     const globalLocation = getGlobalLocation(params);
-    return [
+    return compact([
       getLoss({
         ...params,
         ...globalLocation,
         forestType: null,
         landCategory: null,
-        download: true
-      }),
-      getLoss({
-        ...params,
-        ...globalLocation,
+        excludeEmissions: true,
         download: true
       }),
       getLoss({
         ...params,
         ...globalLocation,
         forestType: 'primary_forest',
+        excludeEmissions: true,
         download: true
       }),
-      getExtent({ ...params, forestType: 'primary_forest', download: true })
-    ];
+      getExtent({ ...params, forestType: 'primary_forest', download: true }),
+      params.landCategory &&
+        getLoss({
+          ...params,
+          ...globalLocation,
+          excludeEmissions: true,
+          download: true
+        })
+    ]);
   },
   getWidgetProps,
   parseInteraction: (payload = {}) => {
