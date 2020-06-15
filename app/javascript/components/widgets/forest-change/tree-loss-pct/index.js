@@ -1,4 +1,5 @@
 import { all, spread } from 'axios';
+import compact from 'lodash/compact';
 
 import { getExtent, getLoss } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
@@ -118,15 +119,15 @@ export default {
         landCategory: null,
         ...globalLocation
       }),
-      getLoss({ ...params, ...globalLocation }),
       getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
       getExtent({
         ...params,
         ...globalLocation,
         forestType: 'primary_forest'
-      })
+      }),
+      getLoss({ ...params, ...globalLocation })
     ]).then(
-      spread((adminLoss, loss, primaryLoss, extent) => {
+      spread((adminLoss, primaryLoss, extent, loss) => {
         let data = {};
         if (
           adminLoss &&
@@ -165,7 +166,7 @@ export default {
   },
   getDataURL: params => {
     const globalLocation = getGlobalLocation(params);
-    return [
+    return compact([
       getLoss({
         ...params,
         ...globalLocation,
@@ -176,16 +177,17 @@ export default {
       getLoss({
         ...params,
         ...globalLocation,
-        download: true
-      }),
-      getLoss({
-        ...params,
-        ...globalLocation,
         forestType: 'primary_forest',
         download: true
       }),
-      getExtent({ ...params, forestType: 'primary_forest', download: true })
-    ];
+      getExtent({ ...params, forestType: 'primary_forest', download: true }),
+      params.landCategory &&
+        getLoss({
+          ...params,
+          ...globalLocation,
+          download: true
+        })
+    ]);
   },
   getWidgetProps,
   parseInteraction: (payload = {}) => {
