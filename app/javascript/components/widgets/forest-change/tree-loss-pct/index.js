@@ -169,14 +169,19 @@ export default {
       getLoss({
         ...params,
         ...globalLocation,
-        forestType: 'primary_forest',
+        forestType: null,
+        landCategory: null,
         download: true
       }),
       getLoss({
         ...params,
         ...globalLocation,
-        forestType: null,
-        landCategory: null,
+        download: true
+      }),
+      getLoss({
+        ...params,
+        ...globalLocation,
+        forestType: 'primary_forest',
         download: true
       }),
       getExtent({ ...params, forestType: 'primary_forest', download: true })
