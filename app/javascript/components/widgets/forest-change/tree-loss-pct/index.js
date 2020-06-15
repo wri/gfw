@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 
-import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
+import { getExtent, getLoss } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
@@ -173,19 +173,19 @@ export default {
   getDataURL: params => {
     const globalLocation = getGlobalLocation(params);
     return [
-      params.type === 'global'
-        ? getLossGrouped({
-          ...params,
-          ...globalLocation,
-          forestType: 'primary_forest',
-          download: true
-        })
-        : getLoss({
-          ...params,
-          ...globalLocation,
-          forestType: 'primary_forest',
-          download: true
-        }),
+      getLoss({
+        ...params,
+        ...globalLocation,
+        forestType: 'primary_forest',
+        download: true
+      }),
+      getLoss({
+        ...params,
+        ...globalLocation,
+        forestType: null,
+        landCategory: null,
+        download: true
+      }),
       getExtent({ ...params, forestType: 'primary_forest', download: true })
     ];
   },
