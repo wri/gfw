@@ -1,18 +1,16 @@
 import { all, spread } from 'axios';
 
-import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
+import { getExtent, getLoss } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_DATASET,
-  PRIMARY_FOREST_DATASET
+  FOREST_LOSS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_LOSS,
-  PRIMARY_FOREST
+  FOREST_LOSS
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -77,11 +75,6 @@ export default {
     {
       dataset: FOREST_LOSS_DATASET,
       layers: [FOREST_LOSS]
-    },
-    // primary forest
-    {
-      dataset: PRIMARY_FOREST_DATASET,
-      layers: [PRIMARY_FOREST]
     }
   ],
   sortOrder: {
@@ -179,21 +172,21 @@ export default {
   getDataURL: params => {
     const globalLocation = getGlobalLocation(params);
     return [
-      params.type === 'global'
-        ? getLossGrouped({
-          ...params,
-          ...globalLocation,
-          excludeEmissions: true,
-          forestType: 'primary_forest',
-          download: true
-        })
-        : getLoss({
-          ...params,
-          ...globalLocation,
-          excludeEmissions: true,
-          forestType: 'primary_forest',
-          download: true
-        }),
+      getLoss({
+        ...params,
+        ...globalLocation,
+        forestType: 'primary_forest',
+        excludeEmissions: true,
+        download: true
+      }),
+      getLoss({
+        ...params,
+        ...globalLocation,
+        forestType: null,
+        landCategory: null,
+        excludeEmissions: true,
+        download: true
+      }),
       getExtent({ ...params, forestType: 'primary_forest', download: true })
     ];
   },
