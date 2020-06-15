@@ -5,12 +5,14 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_DATASET
+  FOREST_LOSS_DATASET,
+  PRIMARY_FOREST_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_LOSS
+  FOREST_LOSS,
+  PRIMARY_FOREST
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -75,6 +77,11 @@ export default {
     {
       dataset: FOREST_LOSS_DATASET,
       layers: [FOREST_LOSS]
+    },
+    // primary forest
+    {
+      dataset: PRIMARY_FOREST_DATASET,
+      layers: [PRIMARY_FOREST]
     }
   ],
   sortOrder: {
@@ -101,7 +108,8 @@ export default {
   },
   settings: {
     threshold: 30,
-    extentYear: 2000
+    extentYear: 2000,
+    foreestType: 'primary_forest'
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
