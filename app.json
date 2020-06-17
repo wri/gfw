@@ -119,6 +119,9 @@
     "RESOURCE_WATCH_API": {
       "required": true
     },
+    "SENTRY_URL": {
+      "required": true
+    },
     "SMTP_PASSWORD": {
       "required": true
     },
