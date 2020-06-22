@@ -6,13 +6,11 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  PRIMARY_FOREST_DATASET,
   FOREST_LOSS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  PRIMARY_FOREST,
   FOREST_LOSS
 } from 'data/layers';
 
@@ -78,10 +76,6 @@ export default {
     {
       dataset: FOREST_LOSS_DATASET,
       layers: [FOREST_LOSS]
-    },
-    {
-      dataset: PRIMARY_FOREST_DATASET,
-      layers: [PRIMARY_FOREST]
     }
   ],
   sortOrder: {
@@ -108,7 +102,8 @@ export default {
   },
   settings: {
     threshold: 30,
-    extentYear: 2000
+    extentYear: 2000,
+    forestType: 'primary_forest'
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
@@ -125,13 +120,12 @@ export default {
         landCategory: null,
         ...globalLocation
       }),
-      getLoss({ ...params, ...globalLocation, forestType: 'primary_forest' }),
+      getLoss({ ...params, ...globalLocation }),
       getExtent({
         ...params,
-        ...globalLocation,
-        forestType: 'primary_forest'
+        ...globalLocation
       }),
-      getLoss({ ...params, ...globalLocation })
+      getLoss({ ...params, forestType: null, ...globalLocation })
     ]).then(
       spread((adminLoss, primaryLoss, extent, loss) => {
         let data = {};
@@ -183,13 +177,13 @@ export default {
       getLoss({
         ...params,
         ...globalLocation,
-        forestType: 'primary_forest',
         download: true
       }),
-      getExtent({ ...params, forestType: 'primary_forest', download: true }),
+      getExtent({ ...params, download: true }),
       params.landCategory &&
         getLoss({
           ...params,
+          forestType: null,
           ...globalLocation,
           download: true
         })
