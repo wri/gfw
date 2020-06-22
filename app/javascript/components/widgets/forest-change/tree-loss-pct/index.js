@@ -6,11 +6,13 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
+  PRIMARY_FOREST_DATASET,
   FOREST_LOSS_DATASET
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
+  PRIMARY_FOREST,
   FOREST_LOSS
 } from 'data/layers';
 
@@ -76,6 +78,10 @@ export default {
     {
       dataset: FOREST_LOSS_DATASET,
       layers: [FOREST_LOSS]
+    },
+    {
+      dataset: PRIMARY_FOREST_DATASET,
+      layers: [PRIMARY_FOREST]
     }
   ],
   sortOrder: {
