@@ -51,7 +51,7 @@ export default {
     }
   ],
   sortOrder: {
-    fires: 1
+    fires: 5
   },
   visible: ['dashboard'],
   types: ['country', 'wdpa', 'geostore', 'use'],

@@ -45,10 +45,7 @@ export default {
       type: 'select',
       clearable: false,
       border: true,
-      options: [
-        { label: 'All', value: '' },
-        { label: 'High', value: 'h' }
-      ]
+      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
@@ -63,7 +60,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 3
+    fires: 1
   },
   settings: {
     dataset: 'viirs',
