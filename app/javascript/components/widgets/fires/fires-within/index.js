@@ -51,8 +51,7 @@ export default {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false,
-      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
+      clearable: false
     }
   ],
   dataType: 'fires',
