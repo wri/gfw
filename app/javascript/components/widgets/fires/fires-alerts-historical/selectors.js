@@ -115,7 +115,7 @@ export const parseConfig = createSelector(
           bottom: 12
         },
         minimumGap: 30,
-        maximumGap: 365,
+        maximumGap: 0,
         dataKey: 'date',
         startIndex: startIndex || 0,
         endIndex,
