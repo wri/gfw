@@ -53,7 +53,7 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_historical_location',
   sortOrder: {
-    fires: 100
+    fires: 5
   },
   settings: {
     startDate: '2020-01-01',
