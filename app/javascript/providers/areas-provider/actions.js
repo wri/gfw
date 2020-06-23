@@ -44,7 +44,7 @@ export const getAreasProvider = createThunkAction(
                 dispatch(
                   setAreasLoading({
                     loading: false,
-                    error: error.response.status
+                    error: error.response && error.response.status
                   })
                 );
                 console.info(error);
@@ -58,7 +58,7 @@ export const getAreasProvider = createThunkAction(
       })
       .catch(error => {
         dispatch(
-          setAreasLoading({ loading: false, error: error.response.status })
+          setAreasLoading({ loading: false, error: error.response && error.response.status })
         );
       });
   }
@@ -82,7 +82,7 @@ export const getAreaProvider = createThunkAction(
       })
       .catch(error => {
         dispatch(
-          setAreasLoading({ loading: false, error: error.response.status })
+          setAreasLoading({ loading: false, error: error.response && error.response.status })
         );
       });
   }

@@ -52,7 +52,7 @@ class Search extends Component {
           onKeyUp={this.handleKeyUp}
           disabled={disabled}
         />
-        <button onClick={() => onSubmit(this.state.search)}>
+        <button onClick={() => onSubmit && onSubmit(this.state.search)}>
           <Icon icon={searchIcon} className="icon-search" />
         </button>
         {search && (

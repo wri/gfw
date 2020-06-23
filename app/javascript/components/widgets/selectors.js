@@ -163,6 +163,7 @@ export const getLocationData = createSelector(
     const locationData = allLocationData[adminLevel] || adm0Data;
     const currentLocation =
       locationData &&
+      locationObj &&
       locationData.find(
         d =>
           d.value === locationObj[adminLevel] ||
