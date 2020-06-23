@@ -1,5 +1,4 @@
 import { all, spread } from 'axios';
-import moment from 'moment';
 import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
@@ -81,7 +80,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 2
+    fires: 1
   },
   settings: {
     dataset: 'viirs',
