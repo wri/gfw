@@ -43,9 +43,7 @@ export default {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false,
-      border: true,
-      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
+      clearable: false
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
