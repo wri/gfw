@@ -90,7 +90,7 @@ export const parseConfig = createSelector(
       },
       {
         key: 'count',
-        labelKey: 'alert__date',
+        labelKey: 'date',
         labelFormat: value => moment(value).format('MMM DD YYYY'),
         unit: ' VIIRS alerts',
         color: colors.main,
@@ -166,14 +166,14 @@ export const parseSentence = createSelector(
     getIndicator
   ],
   (data, colors, sentences, location, options, indicator) => {
-    if (!data) return null;
+    if (!data || !data.length) return null;
     const { initial, withInd, highConfidence } = sentences;
     const { confidence, dataset } = options;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
 
-    const startDate = !!data.length && data[0].date;
-    const endDate = !!data.length && data[data.length - 1].date;
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
     const total = sumBy(data, 'alert__count');
 
     let sentence = indicator ? withInd : initial;
