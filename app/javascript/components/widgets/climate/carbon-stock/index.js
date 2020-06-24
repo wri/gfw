@@ -1,6 +1,7 @@
 import { all, spread } from 'axios';
 
-import { getSoilOrganicCarbon, getBiomassRanking } from 'services/climate';
+import { getSoilOrganicCarbon } from 'services/climate';
+import { getBiomassStock } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -39,30 +40,28 @@ export default {
   sentences:
     '{location} has a total carbon store of {carbonValue}, with most of the carbon stored in {carbonStored}.',
   getData: params =>
-    all([getSoilOrganicCarbon(params), getBiomassRanking(params)]).then(
-      spread((soilOrganicCarbon, aboveGroundBiomass) => {
-        let level = 'iso';
-        let paramLevel = 'adm0';
-        if (params.adm1) {
-          level = 'admin_1';
-          paramLevel = 'adm1';
-        } else if (params.adm2) {
-          paramLevel = 'adm2';
+    all([getSoilOrganicCarbon(params), getBiomassStock(params)]).then(
+      spread((soilOrganicCarbon, biomassResponse) => {
+        const { adm0, adm1, adm2 } = params;
+        const { data } = biomassResponse.data;
+        const { rows } = soilOrganicCarbon.data;
+        const soilCarbonData = rows.find(
+          el => el.iso === adm0 && el.admin_1 === adm1 && el.admin_2 === adm2
+        );
+        let parsedData = {};
+        if (data && data.length === 1) {
+          parsedData = {
+            ...data[0],
+            soilCarbon: soilCarbonData.soil_carbon__t || 0,
+            soilCarbonDensity: soilCarbonData.soil_carbon_density__t_ha || 0
+          };
         }
-
-        return {
-          soilCarbon: soilOrganicCarbon.data.rows.find(
-            r => r[level] === params[paramLevel]
-          ),
-          aboveGround: aboveGroundBiomass.data.rows.find(
-            r => r[level] === params[paramLevel]
-          )
-        };
+        return parsedData;
       })
     ),
   getDataURL: params => [
     getSoilOrganicCarbon({ ...params, download: true }),
-    getBiomassRanking({ ...params, download: true })
+    getBiomassStock({ ...params, download: true })
   ],
   getWidgetProps
 };
