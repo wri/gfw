@@ -22,7 +22,7 @@ export const getActiveArea = createSelector(
   (location, settings, areas) => {
     if (isEmpty(areas)) return null;
     let activeAreaId = '';
-    if (location.type === 'aoi') {
+    if (location && location.type === 'aoi') {
       activeAreaId = location.adm0;
     } else {
       activeAreaId = settings && settings.activeAreaId;

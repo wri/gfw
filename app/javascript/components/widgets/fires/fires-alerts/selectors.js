@@ -15,7 +15,6 @@ import {
   getChartConfig
 } from 'components/widgets/utils/data';
 
-const getActive = state => state.active;
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
@@ -126,8 +125,8 @@ export const getMaxMinDates = createSelector(
 );
 
 export const getStartEndIndexes = createSelector(
-  [getStartIndex, getEndIndex, getActive, getDates],
-  (startIndex, endIndex, active, currentData) => {
+  [getStartIndex, getEndIndex, getDates],
+  (startIndex, endIndex, currentData) => {
     if (!currentData) {
       return {
         startIndex,
@@ -137,13 +136,6 @@ export const getStartEndIndexes = createSelector(
 
     const start = startIndex;
     const end = endIndex || currentData.length - 1;
-
-    if (active && end - start > MAXGAP) {
-      return {
-        startIndex: end - MAXGAP,
-        endIndex: end
-      };
-    }
 
     return {
       startIndex: start,
@@ -233,7 +225,6 @@ export const getLegend = createSelector(
 
 export const parseConfig = createSelector(
   [
-    getActive,
     getLegend,
     getColors,
     getLatest,
@@ -243,7 +234,6 @@ export const parseConfig = createSelector(
     getStartEndIndexes
   ],
   (
-    active,
     legend,
     colors,
     latest,
@@ -318,7 +308,7 @@ export const parseConfig = createSelector(
         startIndex,
         endIndex,
         minimumGap: MINGAP,
-        maximumGap: active ? MAXGAP : 0,
+        maximumGap: 0,
         config: {
           margin: {
             top: 5,
@@ -407,7 +397,7 @@ export const parseSentence = createSelector(
     const halfMax = (maxMean - minMean) * 0.5;
 
     const peakWeeks = data.filter(d => d.mean > halfMax);
-    const sortedPeakWeeks = sortBy(peakWeeks, 'week');
+    const sortedPeakWeeks = sortBy(peakWeeks, ['year', 'week']);
 
     const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
     const seasonMonth = moment(seasonStartDate).format('MMMM');

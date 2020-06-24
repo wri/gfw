@@ -51,7 +51,7 @@ export default {
     }
   ],
   sortOrder: {
-    fires: 1
+    fires: 5
   },
   visible: ['dashboard'],
   types: ['country', 'wdpa', 'geostore', 'use'],
@@ -313,7 +313,7 @@ export default {
             return {
               alerts: data,
               settings: {
-                startDate: data && data[data.length - 1].alert__date,
+                startDate: data && data.length > 0 && data[data.length - 1].alert__date,
                 endDate: latest
               }
             };

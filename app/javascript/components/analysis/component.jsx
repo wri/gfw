@@ -138,6 +138,7 @@ class AnalysisComponent extends PureComponent {
         </div>
         {!loading &&
           !error &&
+          location &&
           location.type &&
           !isDeletedAoI &&
           location.adm0 && (

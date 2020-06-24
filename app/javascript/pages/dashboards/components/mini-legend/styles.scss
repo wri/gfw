@@ -34,7 +34,14 @@
       }
 
       .time-range {
+        margin-top: 5px;
         font-size: 12px;
+        color: rgba($slate, 0.8);
+      }
+
+      .time-range-disclaimer {
+        margin-top: 5px;
+        font-size: 10px;
         color: rgba($slate, 0.8);
       }
     }

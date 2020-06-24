@@ -51,8 +51,7 @@ export default {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false,
-      options: [{ label: 'All', value: '' }, { label: 'High', value: 'h' }]
+      clearable: false
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],
@@ -61,7 +60,7 @@ export default {
   colors: 'fires',
   sortOrder: {
     summary: 6,
-    fires: 4,
+    fires: 3,
     global: 100
   },
   whitelistType: 'fires',

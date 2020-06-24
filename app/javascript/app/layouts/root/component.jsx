@@ -13,7 +13,10 @@ import Footer from 'components/footer';
 import Cookies from 'components/cookies';
 import Button from 'components/ui/button';
 import MapMenu from 'components/map-menu';
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
 import ErrorPage from 'pages/error';
+
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
 
@@ -117,6 +120,12 @@ class App extends PureComponent {
             <Meta {...metadata} />
             <Cookies />
             {!route.hideFooter && !embed && <Footer />}
+            {process.env.FEATURE_ENV === 'staging' && !embed && (
+              <FiresModal />
+            )}
+            {!embed &&
+              <ClimateModal />
+            }
           </div>
         )}
       </MediaQuery>

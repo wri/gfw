@@ -45,9 +45,11 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map(d => ({
       ...d,
-      count: d.alert__count,
-      week: parseInt(d.alert__week, 10),
-      year: parseInt(d.alert__year, 10)
+      ...d.alert__count && {
+        count: d.alert__count,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10)
+      }
     }));
     const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(

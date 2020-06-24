@@ -43,12 +43,7 @@ export default {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false,
-      border: true,
-      options: [
-        { label: 'All', value: '' },
-        { label: 'High', value: 'h' }
-      ]
+      clearable: false
     }
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
@@ -63,7 +58,7 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 3
+    fires: 2
   },
   settings: {
     dataset: 'viirs',

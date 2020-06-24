@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 
 import { scaleLinear } from 'd3-scale';
 
@@ -63,9 +64,15 @@ export default class Brush extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { margin, startIndex, endIndex } = this.props;
-    const { height } = this.svg.getBoundingClientRect();
-    const { startIndex: prevStartIndex, endIndex: prevEndIndex } = prevProps;
+    const { margin, startIndex, endIndex, data } = this.props;
+    const { height, width } = this.svg.getBoundingClientRect();
+    const { startIndex: prevStartIndex, endIndex: prevEndIndex, data: prevData } = prevProps;
+
+    if (isEqual(data, prevData)) {
+      this.scale = scaleLinear()
+        .domain([0, data.length - 1])
+        .rangeRound([margin.left, width - margin.right]);
+    }
 
     if (startIndex !== prevStartIndex || endIndex !== prevEndIndex) {
       // eslint-disable-next-line react/no-did-update-set-state

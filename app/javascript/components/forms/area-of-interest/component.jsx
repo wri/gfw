@@ -277,6 +277,7 @@ class AreaOfInterestForm extends PureComponent {
                         save
                       </Submit>
                       {canDelete &&
+                        initialValues &&
                         initialValues.id && (
                         <Button
                           className="delete-area"
