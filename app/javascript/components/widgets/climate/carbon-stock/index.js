@@ -39,6 +39,9 @@ export default {
   refetchKeys: ['threshold'],
   sentences:
     '{location} has a total carbon store of {carbonValue}, with most of the carbon stored in {carbonStored}.',
+  whitelists: {
+    checkStatus: true
+  },
   getData: params =>
     all([getSoilOrganicCarbon(params), getBiomassStock(params)]).then(
       spread((soilOrganicCarbon, biomassResponse) => {

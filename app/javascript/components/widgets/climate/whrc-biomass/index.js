@@ -75,6 +75,9 @@ export default {
     page: 0,
     unit: 'totalBiomass'
   },
+  whitelists: {
+    checkStatus: true
+  },
   getData: ({ adm0, adm1, adm2, ...rest } = {}) => {
     const parentLocation = {
       adm0: adm0 && !adm1 ? null : adm0,
