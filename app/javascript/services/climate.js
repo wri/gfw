@@ -13,14 +13,6 @@ const INDICATORS = [
 ];
 
 const SQL_QUERIES = {
-  aboveground_biomass: {
-    globalAndCountry:
-      'SELECT iso, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE threshold = {threshold} GROUP BY iso',
-    adm1:
-      "SELECT iso, admin_1, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND threshold = {threshold} GROUP BY iso, admin_1",
-    adm2:
-      "SELECT iso, admin_1, admin_2, SUM(biomass) as biomass__t, SUM(biomassdensity) as biomass_density__t_ha FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2"
-  },
   soil_organic_carbon: {
     globalAndCountry:
       'SELECT iso, SUM(total_soil_carbon) as soil_carbon__t, SUM(soil_carbon_density) as soil_carbon_density__t_ha FROM soil_carbon_gadm36 GROUP BY iso',
@@ -83,51 +75,6 @@ export const getCumulative = ({ download, ...params }) =>
       }
     }));
   });
-
-export const getBiomassRanking = ({
-  adm0,
-  adm1,
-  adm2,
-  threshold,
-  download
-}) => {
-  let query;
-
-  if (!adm1) {
-    query = SQL_QUERIES.aboveground_biomass.globalAndCountry.replace(
-      '{threshold}',
-      threshold
-    );
-  } else if (adm1 && !adm2) {
-    query = SQL_QUERIES.aboveground_biomass.adm1
-      .replace('{adm0}', adm0)
-      .replace('{threshold}', threshold);
-  } else if (adm1 && adm2) {
-    query = SQL_QUERIES.aboveground_biomass.adm2
-      .replace('{adm0}', adm0)
-      .replace('{adm1}', adm1)
-      .replace('{threshold}', threshold);
-  }
-  const url = `${process.env.CARTO_API}/sql?q=${query}`;
-
-  if (download) {
-    return {
-      name: 'biomass_loss_by_region',
-      url: url.concat('&format=csv')
-    };
-  }
-
-  return request.get(url).then(response => ({
-    ...response,
-    data: {
-      rows: response.data.rows.map(o => ({
-        ...o,
-        totalbiomass: o.biomass__t,
-        biomassdensity: o.biomass_density__t_ha
-      }))
-    }
-  }));
-};
 
 export const getSoilOrganicCarbon = ({ adm0, adm1, adm2, download }) => {
   let query;
