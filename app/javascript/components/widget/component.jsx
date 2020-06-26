@@ -27,6 +27,7 @@ class Widget extends PureComponent {
     error: PropTypes.bool,
     locationLabelFull: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    legendData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     originalData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
@@ -76,6 +77,7 @@ class Widget extends PureComponent {
       error,
       locationLabelFull,
       data,
+      legendData,
       rawData,
       originalData,
       config,
@@ -159,6 +161,7 @@ class Widget extends PureComponent {
           locationName={locationLabelFull}
           active={active}
           data={data}
+          legendData={legendData}
           rawData={rawData}
           originalData={originalData}
           settings={settings}

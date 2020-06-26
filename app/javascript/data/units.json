@@ -61,5 +61,14 @@
   {
     "label": "Carbon",
     "value": "cGain"
+  },
+  {
+    "label": "Total",
+    "value": "totalBiomass",
+    "unit": "tC"
+  },{
+    "label": "Density",
+    "value": "biomassDensity",
+    "unit": "tC/ha"
   }
 ]

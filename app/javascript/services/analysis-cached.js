@@ -42,7 +42,11 @@ const SQL_QUERIES = {
   alertsWeekly:
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
   alertsDaily:
-    "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC"
+    "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC",
+  biomassStock:
+    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
+  biomassStockGrouped:
+    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}'
 };
 
 const ALLOWED_PARAMS = {
@@ -811,6 +815,77 @@ export const fetchVIIRSLatest = () =>
 };
 */
 
+// Climate fetched
+
+// whrc biomass grouped by location
+export const getBiomassStockGrouped = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true
+  })}${SQL_QUERIES.biomassStockGrouped}`
+    .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `whrc_biomass_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    ...response,
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        extent: d.umd_tree_cover_extent_2000__ha,
+        biomass: d.whrc_aboveground_biomass_stock_2000__Mg,
+        carbon: d.whrc_aboveground_co2_stock_2000__Mg
+      }))
+    }
+  }));
+};
+
+// whrc biomass
+export const getBiomassStock = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary'
+  })}${SQL_QUERIES.biomassStock}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `whrc_biomass_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: url.replace('query', 'download')
+    };
+  }
+
+  return apiRequest.get(url).then(response => ({
+    ...response,
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        extent: d.umd_tree_cover_extent_2000__ha,
+        biomass: d.whrc_aboveground_biomass_stock_2000__Mg,
+        carbon: d.whrc_aboveground_co2_stock_2000__Mg
+      }))
+    }
+  }));
+};
+
 // Additional conditional fetches for providing context for queries.
 
 // generate {select} query using all available forest types and land categories
@@ -822,7 +897,9 @@ const buildPolynameSelects = (nonTable, dataset) => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? (p.tableKey || p.tableKeys[dataset]) : p.value} as ${p.value}${isLast ? '' : ', '}`
+      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value} as ${
+        p.value
+      }${isLast ? '' : ', '}`
     );
   });
   return polyString;
@@ -843,7 +920,10 @@ export const getLocationPolynameWhitelist = params => {
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{polynames}', buildPolynameSelects(false, params.dataset || 'annual'))
+    .replace(
+      '{polynames}',
+      buildPolynameSelects(false, params.dataset || 'annual')
+    )
     .replace('{WHERE}', getWHEREQuery(params));
 
   return apiRequest.get(url);
