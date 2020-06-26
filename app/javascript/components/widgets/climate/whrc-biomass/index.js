@@ -79,7 +79,7 @@ export default {
     checkStatus: true
   },
   getData: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
-    const parentLocation = type === 'country' ? {
+    const location = type === 'country' ? {
       type,
       adm0: adm0 && !adm1 ? null : adm0,
       adm1: adm1 && !adm2 ? null : adm1,
@@ -91,7 +91,7 @@ export default {
       adm2
     };
 
-    return getBiomassStockGrouped({ ...rest, ...parentLocation }).then(
+    return getBiomassStockGrouped({ ...rest, ...location }).then(
       biomassResponse => {
         const { data } = biomassResponse.data;
         let mappedData = [];
@@ -109,6 +109,20 @@ export default {
       }
     );
   },
-  getDataURL: params => [getBiomassStockGrouped({ ...params, download: true })],
+  getDataURL: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
+    const location = type === 'country' ? {
+      type,
+      adm0: adm0 && !adm1 ? null : adm0,
+      adm1: adm1 && !adm2 ? null : adm1,
+      adm2: null
+    } : {
+      type,
+      adm0,
+      adm1,
+      adm2
+    };
+
+    return [getBiomassStockGrouped({ ...rest, ...location, download: true })]
+  },
   getWidgetProps
 };
