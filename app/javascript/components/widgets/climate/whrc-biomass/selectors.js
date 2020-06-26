@@ -116,7 +116,7 @@ export const parseSentence = createSelector(
       const avgBiomDensity = densTop5 / 5;
 
       const value =
-        settings.unit === 'biomass'
+        settings.unit === 'totalBiomass'
           ? formatNumber({ num: percent, unit: '%' })
           : formatNumber({ num: avgBiomDensity, unit: 't/ha' });
 
@@ -132,14 +132,9 @@ export const parseSentence = createSelector(
         }
       };
     }
-    const iso = location && location.value;
-    const region =
-      data &&
-      data.find(item => {
-        if (item.admin_2) return item.admin_2 === iso;
-        else if (item.admin_1) return item.admin_1 === iso;
-        return item.iso === iso;
-      });
+    const location_id = location && location.value;
+    const region = data && data.find(item => item.id === location_id);
+
     if (!region) return null;
 
     const { biomassDensity, biomass } = region;
