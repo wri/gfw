@@ -78,11 +78,17 @@ export default {
   whitelists: {
     checkStatus: true
   },
-  getData: ({ adm0, adm1, adm2, ...rest } = {}) => {
-    const parentLocation = {
+  getData: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
+    const parentLocation = type === 'country' ? {
+      type,
       adm0: adm0 && !adm1 ? null : adm0,
       adm1: adm1 && !adm2 ? null : adm1,
       adm2: null
+    } : {
+      type,
+      adm0,
+      adm1,
+      adm2
     };
 
     return getBiomassStockGrouped({ ...rest, ...parentLocation }).then(
