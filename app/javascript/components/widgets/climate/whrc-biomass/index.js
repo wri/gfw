@@ -19,7 +19,7 @@ export default {
     global: 'Global aboveground live woody biomass'
   },
   categories: ['climate'],
-  types: ['global', 'country', 'wdpa', 'use', 'geostore'],
+  types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
