@@ -4,9 +4,15 @@ export const biomassToCO2 = value => 1.489 * value ** 0.89 * 0.47;
 
 export const carbonToCO2 = value => value * 12 / 44;
 
-export const aboveGroundBiomassToC = value => 1.489 * value ** 0.89;
+export const agBiomass2agCarbon = agb => 0.5 * agb;
 
-export const aboveGroundToBelowGround = value => 0.26 * value;
+export const agBiomass2bgBiomass = agb => 0.489 * (agb ** 0.89);
+
+export const agBiomass2TotalBiomass = agb => agb + (0.489 * (agb ** 0.89));
+
+export const agBiomass2bgCarbon = agb => 0.5 * 0.489 * (agb ** 0.89);
+
+export const agBiomass2TotalCarbon = agb => (0.5 * agb) + (0.5 * (0.489 * (agb ** 0.89)));
 
 export function ordinalSuffixOf(i) {
   const j = i % 10;
