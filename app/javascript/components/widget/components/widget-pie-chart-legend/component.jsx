@@ -12,6 +12,7 @@ class WidgetPieChart extends PureComponent {
   render() {
     const {
       data,
+      legendData,
       settings,
       simple,
       toggleSettingsMenu,
@@ -21,7 +22,6 @@ class WidgetPieChart extends PureComponent {
       settingsBtnConfig &&
       settingsBtnConfig.shouldShowButton &&
       settingsBtnConfig.shouldShowButton(this.props);
-
     return (
       <div className="c-pie-chart-legend-widget">
         {settings &&
@@ -38,7 +38,7 @@ class WidgetPieChart extends PureComponent {
         <div className="pie-and-legend">
           <PieChartLegend
             className="cover-legend"
-            data={data}
+            data={legendData || data}
             config={{
               format: '.3s',
               unit: 'ha',
@@ -69,6 +69,7 @@ class WidgetPieChart extends PureComponent {
 
 WidgetPieChart.propTypes = {
   data: PropTypes.array,
+  legendData: PropTypes.array,
   simple: PropTypes.bool,
   settings: PropTypes.object.isRequired,
   toggleSettingsMenu: PropTypes.func,

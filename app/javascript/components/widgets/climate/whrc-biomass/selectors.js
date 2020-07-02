@@ -1,138 +1,149 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
+import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
-import { formatNumber } from 'utils/format';
+import isEmpty from 'lodash/isEmpty';
 import { sortByKey } from 'utils/data';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = state => state.data;
-const getLocationName = state => state.locationLabel;
-const getAdm0 = state => state.adm0;
-const getLocationDict = state => state.locationData;
-const getLocationObject = state => state.location;
-const getTitle = state => state.title;
-const getSentences = state => state.sentences;
-const getColors = state => state.colors;
 const getSettings = state => state.settings;
+const getLocationData = state => state.locationData;
+const getLocation = state => state.location;
+const getColors = state => state.colors;
+const getAdm0 = state => state.adm0;
+const getAdm1 = state => state.adm1;
+const getAdm2 = state => state.adm2;
+const getSentences = state => state && state.sentences;
+const getTitle = state => state.title;
+const getLocationName = state => state.locationLabel;
 
-const getSortedData = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
+export const getSortedData = createSelector(
+  [getData, getSettings, getAdm1, getAdm2],
+  (data, settings, adm1, adm2) => {
     if (isEmpty(data)) return null;
-    return sortByKey(data, settings.variable).reverse();
+    let regionKey = 'iso';
+    if (adm1) regionKey = 'adm1';
+    if (adm2) regionKey = 'adm2';
+    const mappedData = data.map(d => ({
+      id: adm1 ? parseInt(d[regionKey], 10) : d[regionKey],
+      ...d
+    }));
+    return sortByKey(
+      uniqBy(mappedData, 'id'),
+      settings.unit === 'totalBiomass' ? 'biomass' : 'biomassDensity',
+      true
+    ).map((d, i) => ({
+      ...d,
+      rank: i + 1
+    }));
   }
 );
 
 export const parseData = createSelector(
   [
     getSortedData,
-    getColors,
+    getSettings,
     getAdm0,
-    getLocationDict,
-    getLocationObject,
-    getSettings
+    getLocation,
+    getLocationData,
+    getColors
   ],
-  (data, colors, adm0, locationsDict, locationObj, settings) => {
-    if (isEmpty(data) || !locationsDict) return null;
+  (data, settings, adm0, location, parentData, colors) => {
+    if (isEmpty(data)) return null;
+    let dataTrimmed = [];
+    data.forEach(d => {
+      const locationMeta = parentData && parentData[d.id];
 
-    let dataTrimmed = data.map((d, i) => ({
+      if (locationMeta) {
+        dataTrimmed.push({
+          ...d,
+          label: locationMeta.label,
+          path: locationMeta.path
+        });
+      }
+    });
+    dataTrimmed = dataTrimmed.map((d, i) => ({
       ...d,
       rank: i + 1
     }));
-
-    let key;
-    if (data[0].admin_2) key = 'admin_2';
-    else if (data[0].admin_1) key = 'admin_1';
-    else key = 'iso';
-
     if (adm0) {
-      const locationIndex = locationObj
-        ? findIndex(data, d => d[key] === locationObj.value)
-        : -1;
-      if (locationIndex === -1) return null;
-
+      const locationIndex = findIndex(
+        dataTrimmed,
+        d => d.id === (location && location.value)
+      );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
       if (locationIndex < 2) {
         trimStart = 0;
         trimEnd = 5;
       }
-      if (locationIndex > data.length - 3) {
-        trimStart = data.length - 5;
-        trimEnd = data.length;
+      if (locationIndex > dataTrimmed.length - 3) {
+        trimStart = dataTrimmed.length - 5;
+        trimEnd = dataTrimmed.length;
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-
-    return dataTrimmed.map((d, i) => ({
+    return dataTrimmed.map(d => ({
       ...d,
-      label: locationsDict[d[key]] && locationsDict[d[key]].label,
       color: colors.carbon[0],
-      path: locationsDict[d[key]] && locationsDict[d[key]].path,
-      id: `${d.iso}-${i}`,
-      value: d[settings.variable],
-      unit: settings.variable === 'totalbiomass' ? 't' : 't/ha'
+      unit: settings.unit === 'totalBiomass' ? 't' : 't/ha',
+      value: settings.unit === 'totalBiomass' ? d.biomass : d.biomassDensity
     }));
   }
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocationName, getSentences, getLocationObject, getSettings],
-  (data, location, sentences, locationObj, settings) => {
+  [getSortedData, getSettings, getLocation, getSentences],
+  (data, settings, location, sentences) => {
     if (!sentences || isEmpty(data)) return null;
-
-    if (location === 'global') {
-      const sorted = sortByKey(data, [settings.variable]).reverse();
+    if (location && location.label === 'global') {
+      const sortKey =
+        settings.unit === 'totalBiomass' ? 'biomass' : 'biomassDensity';
+      const sorted = sortByKey(data, [sortKey]).reverse();
 
       let biomTop5 = 0;
       let densTop5 = 0;
       const biomTotal = sorted.reduce((acc, next, i) => {
         if (i < 5) {
-          biomTop5 += next.totalbiomass;
-          densTop5 += next.biomassdensity;
+          biomTop5 += next.biomass;
+          densTop5 += next.biomassDensity;
         }
-        return acc + next.totalbiomass;
+        return acc + next.biomass;
       }, 0);
 
       const percent = biomTop5 / biomTotal * 100;
       const avgBiomDensity = densTop5 / 5;
 
       const value =
-        settings.variable === 'totalbiomass'
+        settings.unit === 'totalBiomass'
           ? formatNumber({ num: percent, unit: '%' })
           : formatNumber({ num: avgBiomDensity, unit: 't/ha' });
 
       const labels = {
-        biomassdensity: 'biomass density',
-        totalbiomass: 'total biomass'
+        biomassDensity: 'biomass density',
+        totalBiomass: 'total biomass'
       };
-
       return {
-        sentence: sentences[settings.variable],
+        sentence: sentences[settings.unit],
         params: {
-          label: labels[settings.variable],
+          label: labels[settings.unit],
           value
         }
       };
     }
+    const location_id = location && location.value;
+    const region = data && data.find(item => item.id === location_id);
 
-    const iso = locationObj && locationObj.value;
-    const region =
-      data &&
-      data.find(item => {
-        if (item.admin_2) return item.admin_2 === iso;
-        else if (item.admin_1) return item.admin_1 === iso;
-        return item.iso === iso;
-      });
     if (!region) return null;
 
-    const { biomassdensity, totalbiomass } = region;
+    const { biomassDensity, biomass } = region;
     return {
       sentence: sentences.initial,
       params: {
-        location,
-        biomassDensity: formatNumber({ num: biomassdensity, unit: 't/ha' }),
-        totalBiomass: formatNumber({ num: totalbiomass, unit: 't' })
+        location: location && location.label,
+        biomassDensity: formatNumber({ num: biomassDensity, unit: 't/ha' }),
+        totalBiomass: formatNumber({ num: biomass, unit: 't' })
       }
     };
   }
