@@ -24,6 +24,10 @@
       margin-left: 10px;
       font-style: italic;
     }
+
+    .error {
+      color: $error;
+    }
   }
 
   .resend-btn {

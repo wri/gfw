@@ -38,4 +38,4 @@ export const deleteSubscription = id =>
   apiAuthRequest.delete(`/subscriptions/${id}`);
 
 export const resendSubscriptionConfirmation = id =>
-  apiAuthRequest.get(`/subscriptions/${id}/send_confirmation`);
+  apiAuthRequest.get(`/subscriptions/${id}/send_confirmation?redirect=false`);

@@ -20,7 +20,8 @@ class ConfirmSubscriptionModal extends PureComponent {
 
   state = {
     sendingConfirmation: false,
-    sent: false
+    sent: false,
+    failed: false
   }
 
   handleCloseModal = () => {
@@ -37,13 +38,13 @@ class ConfirmSubscriptionModal extends PureComponent {
     const { activeArea } = this.props;
 
     if (activeArea && activeArea.subscriptionId) {
-      this.setState({ sendingConfirmation: true });
+      this.setState({ sendingConfirmation: true, sent: false, faliled: false });
       resendSubscriptionConfirmation(activeArea.subscriptionId)
         .then(() => {
           this.handleSuccessfulResend();
         })
         .catch(() => {
-          this.handleSuccessfulResend();
+          this.setState({ failed: true, sendingConfirmation: false });
         });
     }
   }
@@ -72,6 +73,7 @@ class ConfirmSubscriptionModal extends PureComponent {
             {this.state.sendingConfirmation && <Loader className="resend-loader" />}
           </Button>
           {this.state.sent && <span>confirmation resent</span>}
+          {this.state.failed && <span className="error">there was an issue resending your confirmation</span>}
         </div>
       </Modal>
     );

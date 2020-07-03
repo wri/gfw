@@ -157,7 +157,8 @@ class AoICard extends PureComponent {
       location,
       status,
       setConfirmSubscriptionModalSettings,
-      id
+      id,
+      confirmed
     } = this.props;
     const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
@@ -179,7 +180,6 @@ class AoICard extends PureComponent {
     const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
     const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
     const isPending = status === 'pending';
-    const confirmed = false;
 
     let subscriptionMessage = 'subscribed to';
     if (subscribedToAll) {
