@@ -1,6 +1,5 @@
 import { logout } from 'services/user';
 
-import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
