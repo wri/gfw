@@ -76,11 +76,6 @@ export default {
   ],
   apps: [
     {
-      label: 'GFW Fires',
-      extLink: 'http://fires.globalforestwatch.org',
-      image: gfwFires
-    },
-    {
       label: 'GFW Pro',
       extLink: 'https://pro.globalforestwatch.org',
       image: gfwPro
