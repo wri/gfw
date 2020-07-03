@@ -75,7 +75,8 @@ class AoICard extends PureComponent {
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
     onFetchAlerts: PropTypes.func,
-    status: PropTypes.string
+    status: PropTypes.string,
+    setConfirmSubscriptionModalSettings: PropTypes.func
   };
 
   state = {
@@ -154,7 +155,9 @@ class AoICard extends PureComponent {
       fireAlerts,
       monthlySummary,
       location,
-      status
+      status,
+      setConfirmSubscriptionModalSettings,
+      id
     } = this.props;
     const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
@@ -234,6 +237,7 @@ class AoICard extends PureComponent {
                       onClick={e => {
                         e.stopPropagation();
                         e.preventDefault();
+                        setConfirmSubscriptionModalSettings({ open: true, activeAreaId: id });
                       }}
                     >
                       Subscription not confirmed

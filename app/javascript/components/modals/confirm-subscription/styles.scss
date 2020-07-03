@@ -1,0 +1,28 @@
+@import '~styles/settings.scss';
+
+.c-confirm-subscription-modal {
+  min-height: rem(100px);
+
+  p {
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 30px;
+  }
+
+  i {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .resend-btn {
+    position: relative;
+
+    .resend-loader {
+      > div {
+        width: rem(20px);
+        height: rem(20px);
+        border-width: 2px;
+      }
+    }
+  }
+}
