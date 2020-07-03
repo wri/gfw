@@ -20,6 +20,7 @@ import MapGeostore from 'components/map-geostore';
 
 import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
+import warningIcon from 'assets/icons/warning.svg';
 
 import './styles.scss';
 
@@ -175,6 +176,7 @@ class AoICard extends PureComponent {
     const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
     const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
     const isPending = status === 'pending';
+    const confirmed = false;
 
     let subscriptionMessage = 'subscribed to';
     if (subscribedToAll) {
@@ -218,10 +220,26 @@ class AoICard extends PureComponent {
                 <p>{tags.join(', ')}</p>
               </div>
             )}
-            {(deforestationAlerts || fireAlerts || monthlySummary) && (
+            {isSubscribed && (
               <div className="subscribed">
-                <Icon icon={subscribedIcon} className="subscribed-icon" />
-                <p>{simple ? subscriptionMessage : 'subscribed'}</p>
+                {confirmed ? (
+                  <Fragment>
+                    <Icon icon={subscribedIcon} className="subscribed-icon" />
+                    <p>{simple ? subscriptionMessage : 'subscribed'}</p>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <Icon icon={warningIcon} className="warning-icon" />
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                      }}
+                    >
+                      Subscription not confirmed
+                    </button>
+                  </Fragment>
+                )}
               </div>
             )}
           </div>

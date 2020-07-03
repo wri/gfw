@@ -62,7 +62,8 @@
         display: flex;
         align-items: center;
 
-        p {
+        p,
+        button {
           font-size: rem(12px);
           color: $grey;
           line-height: rem(16px);
@@ -73,11 +74,18 @@
           text-overflow: ellipsis;
         }
 
+        button:hover {
+          color: $slate;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
         svg {
           margin-right: rem(4px);
         }
 
-        .subscribed-icon {
+        .subscribed-icon,
+        .warning-icon {
           min-width: rem(15px);
         }
       }
