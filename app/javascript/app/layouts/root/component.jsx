@@ -120,7 +120,7 @@ class App extends PureComponent {
             <Meta {...metadata} />
             <Cookies />
             {!route.hideFooter && !embed && <Footer />}
-            {process.env.FEATURE_ENV === 'staging' && !embed && (
+            {['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && !embed && (
               <FiresModal />
             )}
             {!embed &&

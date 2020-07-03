@@ -197,7 +197,7 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       },
-      ...process.env.FEATURE_ENV === 'staging' && {
+      ...['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && {
         fires: {
           label: 'Fires',
           submenu: true,

@@ -31,7 +31,7 @@ const getLatestAlerts = ({ location, params }) =>
       dataset: 'glad',
       frequency: 'daily'
     }).catch(() => null),
-    process.env.FEATURE_ENV === 'staging' ?
+    ['staging', 'preproduction'].includes(process.env.FEATURE_ENV) ?
       fetchHistoricalAlerts({
         ...location,
         ...params,
@@ -51,7 +51,7 @@ const getLatestAlerts = ({ location, params }) =>
       spread((gladsResponse, firesResponse) => {
         const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
         const firesData = firesResponse ? firesResponse.data.data : {};
-        const fires = firesData && process.env.FEATURE_ENV === 'staging' ? sumBy(firesData, 'count') : firesData && firesData.attributes && firesData.attributes.value;
+        const fires = firesData && ['staging', 'preproduction'].includes(process.env.FEATURE_ENV) ? sumBy(firesData, 'count') : firesData && firesData.attributes && firesData.attributes.value;
 
         return {
           glads: sumBy(glads, 'count'),

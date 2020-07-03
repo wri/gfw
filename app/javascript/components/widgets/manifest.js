@@ -72,13 +72,13 @@ export default {
   glads,
   gladAlerts,
   gladRanked,
-  ...process.env.FEATURE_ENV !== 'staging' && {
+  ...['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && {
     fires,
     firesAlertsOld,
     firesRankedOld
   },
 
-  ...process.env.FEATURE_ENV === 'staging' && {
+  ...['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && {
     // fires
     firesWithin,
     firesAlerts,
