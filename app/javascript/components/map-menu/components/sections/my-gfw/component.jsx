@@ -16,6 +16,7 @@ import Icon from 'components/ui/icon';
 import Pill from 'components/ui/pill';
 import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';
+import ConfirmSubscriptionModal from 'components/modals/confirm-subscription';
 
 import editIcon from 'assets/icons/edit.svg';
 import logoutIcon from 'assets/icons/logout.svg';
@@ -303,6 +304,7 @@ class MapMenuMyGFW extends PureComponent {
             alt="aoi screenshot"
           />
         )}
+        <ConfirmSubscriptionModal />
       </div>
     );
   }
