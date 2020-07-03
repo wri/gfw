@@ -28,17 +28,22 @@ class ConfirmSubscriptionModal extends PureComponent {
     setConfirmSubscriptionModalSettings({ open: false, activeAreaId: null });
   };
 
+  handleSuccessfulResend = () => {
+    this.setState({ sendingConfirmation: false, sent: true });
+    setTimeout(() => this.setState({ sent: false }), 4000);
+  }
+
   handleResendConfirmation = () => {
     const { activeArea } = this.props;
 
     if (activeArea && activeArea.subscriptionId) {
       this.setState({ sendingConfirmation: true });
       resendSubscriptionConfirmation(activeArea.subscriptionId)
-        .then(response => {
-          this.setState({ sendingConfirmation: false, sent: true });
+        .then(() => {
+          this.handleSuccessfulResend();
         })
-        .catch(err => {
-          this.setState({ sendingConfirmation: false });
+        .catch(() => {
+          this.handleSuccessfulResend();
         });
     }
   }
@@ -61,10 +66,13 @@ class ConfirmSubscriptionModal extends PureComponent {
       >
         <p>{ReactHtmlParser(`We have sent an email to <i>${email}</i> with a link to verify the alerts subscription for <i>${name}</i>`)}</p>
         <p>Please check your inbox and click the confirmation link. If you don't see this email, try checking your spam folder.</p>
-        <Button className="resend-btn" theme="theme-button-light" onClick={this.handleResendConfirmation}>
-          {this.state.sent ? 'sent!' : 'resend email'}
-          {this.state.sendingConfirmation && <Loader className="resend-loader" />}
-        </Button>
+        <div className="resend-footer">
+          <Button className="resend-btn" theme="theme-button-light" onClick={this.handleResendConfirmation}>
+            resend email
+            {this.state.sendingConfirmation && <Loader className="resend-loader" />}
+          </Button>
+          {this.state.sent && <span>confirmation resent</span>}
+        </div>
       </Modal>
     );
   }
