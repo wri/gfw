@@ -29,10 +29,10 @@ export const parseList = createSelector(
     const latestYear = moment(latest)
       .subtract(1, 'weeks')
       .year();
-    const alertsByDate = data.filter(d =>
+    const alertsByDate = data.filter(d => d.year && d.week &&
       moment()
-        .week(d.week)
         .year(d.year)
+        .week(d.week)
         .isAfter(
           moment()
             .week(latestWeek)

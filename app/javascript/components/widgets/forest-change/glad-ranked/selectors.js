@@ -33,10 +33,10 @@ export const parseList = createSelector(
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const latestWeek = moment(latest).isoWeek();
     const latestYear = moment(latest).year();
-    const alertsByDate = data.filter(d =>
+    const alertsByDate = data.filter(d => d.year && d.week &&
       moment()
-        .isoWeek(d.week)
         .year(d.year)
+        .isoWeek(d.week)
         .isAfter(
           moment()
             .isoWeek(latestWeek)
