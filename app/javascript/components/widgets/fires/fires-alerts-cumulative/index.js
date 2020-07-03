@@ -74,7 +74,7 @@ export default {
     highConfidenceWithInd:
       'In {location} there have been {count} {dataset} fire alerts reported within {indicator} so far in {latestYear} considering <b>high confidence alerts</b> only. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
