@@ -1,0 +1,10 @@
+@import '~styles/settings.scss';
+$mobile-margin: rem(10px);
+
+.c-planet-notice-modal {
+  max-width: 500px;
+
+  .modal-content {
+    padding: 40px 60px;
+  }
+}
