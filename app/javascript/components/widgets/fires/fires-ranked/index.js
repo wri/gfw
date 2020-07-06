@@ -63,7 +63,7 @@ export default {
     fires: 3,
     global: 100
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   sentences: {
     initial:
       'In the last {timeframe} in {location}, the region with the most {significant} number of fire alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',

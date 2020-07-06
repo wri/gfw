@@ -100,7 +100,7 @@ export default {
     ifl: 2016,
     dataset: 'glad'
   },
-  whitelistType: 'glad',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: tropicalIsos
   },

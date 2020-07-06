@@ -95,7 +95,7 @@ export default {
       'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     checkStatus: true
   },

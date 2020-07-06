@@ -96,7 +96,7 @@ export default {
     highConfidenceWithInd:
       'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
