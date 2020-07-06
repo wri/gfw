@@ -79,7 +79,7 @@ export default {
       noSort: true
     }
   ],
-  whitelistType: 'glad',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: tropicalIsos
   },
