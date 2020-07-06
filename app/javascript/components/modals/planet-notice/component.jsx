@@ -21,7 +21,7 @@ class ModalPlanetNotice extends PureComponent {
         }}
         className="c-planet-notice-modal"
       >
-        <p>High-resolution satellite imagery may no longer be available for this view, so we have added Landsat imagery as a substitute. To access another basemap or imagery for a specific date, view our discussion forum post here for instructions.</p>
+        <p>High-resolution satellite imagery may no longer be available for this view, so we have added Landsat imagery as a substitute. To access another basemap or imagery for a specific date, view our discussion forum post <a href="https://groups.google.com/g/globalforestwatch/c/eWlyW-4aTxU/m/amKevTAgAwAJ" target="_blank" rel="noopener noreferrer">here for instructions</a>.</p>
       </Modal>
     );
   }
