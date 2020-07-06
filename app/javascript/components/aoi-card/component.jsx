@@ -76,7 +76,9 @@ class AoICard extends PureComponent {
     location: PropTypes.object,
     onFetchAlerts: PropTypes.func,
     status: PropTypes.string,
-    setConfirmSubscriptionModalSettings: PropTypes.func
+    setConfirmSubscriptionModalSettings: PropTypes.func,
+    confirmed: PropTypes.bool,
+    id: PropTypes.string
   };
 
   state = {
@@ -176,9 +178,8 @@ class AoICard extends PureComponent {
         subscribed: monthlySummary
       }
     ].filter(s => s.subscribed);
-
-    const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
-    const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
+    const isSubscribed = deforestationAlerts || fireAlerts;
+    const subscribedToAll = deforestationAlerts && fireAlerts;
     const isPending = status === 'pending';
 
     let subscriptionMessage = 'subscribed to';
@@ -228,7 +229,7 @@ class AoICard extends PureComponent {
                 {confirmed ? (
                   <Fragment>
                     <Icon icon={subscribedIcon} className="subscribed-icon" />
-                    <p>{simple ? subscriptionMessage : 'subscribed'}</p>
+                    <p>{subscriptionMessage || 'subscribed'}</p>
                   </Fragment>
                 ) : (
                   <Fragment>
