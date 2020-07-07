@@ -4,6 +4,7 @@ import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
+import { get } from 'axios';
 
 import { getIndicator } from 'utils/format';
 
@@ -779,43 +780,19 @@ export const fetchFiresWithin = params => {
 };
 
 export const fetchVIIRSLatest = () =>
-// { const url = 'https://d20lgxzbmjgu8w.cloudfront.net/nasa_viirs_fire_alerts/v202003/max_alert__date';
-
-  new Promise(resolve =>
-    resolve({
-      attributes: { updatedAt: '2020-04-01' },
-      id: null,
-      type: 'viirs-alerts'
-    })
-  );
-
-/* Commented until the issue with the API is fixed.
-
-  return axios
-    .get(url)
+  get('https://staging-tiles.globalforestwatch.org/nasa_viirs_fire_alerts/v202007.1/max_alert__date')
     .then(({ data }) => {
-      const date = data.max_date;
+      const date = data && data.data && data.data.max_date;
 
       return {
         attributes: { updatedAt: date },
         id: null,
         type: 'viirs-alerts'
       };
-    })
-    .catch(
-      () =>
-        new Promise(resolve =>
-          resolve({
-            attributes: { updatedAt: '2020-04-01' },
-            id: null,
-            type: 'viirs-alerts'
-          })
-        )
-    );
-};
-*/
+    });
 
-// Climate fetched
+
+// Climate fetches
 
 // whrc biomass grouped by location
 export const getBiomassStockGrouped = params => {
