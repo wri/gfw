@@ -24,7 +24,7 @@ export const decodeUrlForState = url => {
     }
   });
 
-  if (paramsParsed.map.basemap && paramsParsed.map.basemap.value === 'planet') {
+  if (paramsParsed.map && paramsParsed.map.basemap && paramsParsed.map.basemap.value === 'planet') {
     paramsParsed.planetNotice = true;
   }
 
