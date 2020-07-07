@@ -29,7 +29,6 @@ const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;
 
 const MINGAP = 4;
-const MAXGAP = 12;
 
 export const getData = createSelector(
   [getAlerts, getLatest],

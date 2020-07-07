@@ -56,7 +56,7 @@ export default {
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],
   chartType: 'lollipop',
-  metaKey: 'widget_fire_ranking',
+  metaKey: 'widget_fire_alert_location',
   colors: 'fires',
   sortOrder: {
     summary: 6,

@@ -59,7 +59,7 @@ export default {
   chartType: 'composedChart',
   dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_historical_location',
+  metaKey: 'widget_fire_alert_location',
   settings: {
     dataset: 'viirs',
     minDate: '2000-01-01',

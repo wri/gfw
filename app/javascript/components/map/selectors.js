@@ -225,8 +225,8 @@ export const getDatasetsWithConfig = createSelector(
           const timelineConfig = {
             ...timelineConfigInit,
             ...maxRange && rangeInterval && timelineConfigInit && {
-              startDate: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
-              startDateAbsolute: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD')
+              startDate: moment(maxDate || timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              startDateAbsolute: moment(maxDate || timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD')
             },
             maxRange,
             minRange,
@@ -236,9 +236,9 @@ export const getDatasetsWithConfig = createSelector(
           const layerParams = {
             ...l.params,
             ...maxRange && rangeInterval && timelineConfigInit && {
-              startDate: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
-              startDateAbsolute: moment(timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
-              endDateAbsolute: l.params.endDate
+              startDate: moment(maxDate || timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              startDateAbsolute: moment(maxDate || timelineConfigInit.maxDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+              endDateAbsolute: maxDate || l.params.endDate
             }
           };
 

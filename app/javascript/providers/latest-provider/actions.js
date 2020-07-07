@@ -24,14 +24,13 @@ export const getLatest = createThunkAction(
               responses &&
               responses.reduce((obj, response, index) => {
                 const latestResponse = response.data.data || response.data;
-                let date = latestResponse.date;
+                let date = latestResponse.date || latestResponse.max_date;
                 if (!date) {
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes
                     : latestResponse.attributes;
                   date = data.date || data.latestResponse || data.latest;
                 }
-
                 let latestDate = moment.utc(date);
                 if (newEndpoints[index].resolution) {
                   latestDate = latestDate.endOf(newEndpoints[index].resolution);
