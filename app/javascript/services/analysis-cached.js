@@ -785,15 +785,11 @@ export const fetchVIIRSLatest = () =>
       const date = data && data.data && data.data.max_date;
 
       return {
-        attributes: { updatedAt: date },
-        id: null,
-        type: 'viirs-alerts'
+        date
       };
     })
     .catch(() => ({
-      attributes: { updatedAt: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD') },
-      id: null,
-      type: 'viirs-alerts'
+      date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD')
     }));
 
 

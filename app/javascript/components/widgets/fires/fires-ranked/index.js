@@ -104,8 +104,7 @@ export default {
   getData: params =>
     fetchVIIRSLatest(params)
       .then(
-        response =>
-          (response.attributes && response.attributes.updatedAt) || null
+        response => response && response.date || null
       )
       .then(latest =>
         all([
@@ -130,8 +129,7 @@ export default {
       }),
   getDataURL: async params => {
     const latestResponse = await fetchVIIRSLatest(params);
-    const latest =
-      (latestResponse.attributes && latestResponse.attributes.updatedAt) ||
+    const latest = latestResponse && latestResponse.date ||
       null;
 
     return [
