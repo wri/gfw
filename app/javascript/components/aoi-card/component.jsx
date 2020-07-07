@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import cx from 'classnames';
-import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
 import { translateText } from 'utils/transifex';
 import { all, spread } from 'axios';
@@ -212,42 +211,40 @@ class AoICard extends PureComponent {
           small={simple}
         />
         <div className="item-body">
-          <Dotdotdot clamp={2} className="title">
+          <h5 className="title">
             {name}
-          </Dotdotdot>
+          </h5>
           {!simple && <span className="created notranslate">{createdMeta}</span>}
-          <div className="meta">
-            {tags &&
-              tags.length > 0 && (
-              <div className="tags">
-                <Icon icon={tagIcon} className="tag-icon" />
-                <p>{tags.join(', ')}</p>
-              </div>
-            )}
-            {isSubscribed && (
-              <div className="subscribed">
-                {confirmed ? (
-                  <Fragment>
-                    <Icon icon={subscribedIcon} className="subscribed-icon" />
-                    <p>{subscriptionMessage || 'subscribed'}</p>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <Icon icon={warningIcon} className="warning-icon" />
-                    <button
-                      onClick={e => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        setConfirmSubscriptionModalSettings({ open: true, activeAreaId: id });
-                      }}
-                    >
-                      Subscription not confirmed
-                    </button>
-                  </Fragment>
-                )}
-              </div>
-            )}
-          </div>
+          {tags &&
+            tags.length > 0 && (
+            <div className="tags">
+              <Icon icon={tagIcon} className="tag-icon" />
+              <p>{tags.join(', ')}</p>
+            </div>
+          )}
+          {isSubscribed && (
+            <div className="subscribed">
+              {confirmed ? (
+                <Fragment>
+                  <Icon icon={subscribedIcon} className="subscribed-icon" />
+                  <p>{subscriptionMessage || 'subscribed'}</p>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Icon icon={warningIcon} className="warning-icon" />
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setConfirmSubscriptionModalSettings({ open: true, activeAreaId: id });
+                    }}
+                  >
+                    Subscription not confirmed
+                  </button>
+                </Fragment>
+              )}
+            </div>
+          )}
           {!simple &&
             !isPending && (
             <div className="activity">
@@ -257,7 +254,7 @@ class AoICard extends PureComponent {
               {!loading &&
                   dataError && (
                 <span className="data-error-msg">
-                      Sorry, we had trouble finding your alerts!
+                  Sorry, we had trouble finding your alerts!
                 </span>
               )}
               {!dataError && (
