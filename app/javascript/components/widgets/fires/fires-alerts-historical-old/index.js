@@ -3,7 +3,7 @@ import { fetchHistoricalAlerts } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'firesAlertsHistorical',
+  widget: 'firesAlertsHistoricalOld',
   title: 'Fire Alerts Count in {location}',
   large: true,
   categories: ['summary', 'fires'],

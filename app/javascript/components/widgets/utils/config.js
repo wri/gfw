@@ -207,6 +207,13 @@ export const getWidgetDatasets = ({
             .format('YYYY-MM-DD'),
           endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
           trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD')
+        },
+        params: {
+          startDateAbsolute: dataset === 'viirs' && moment(latestDate).diff(moment(latestDate || undefined)
+            .subtract(weeks, 'weeks'), 'days') > 90 ? moment(latestDate).subtract(90, 'days').format('YYYY-MM-DD') : moment(latestDate || undefined)
+              .subtract(weeks, 'weeks')
+              .format('YYYY-MM-DD'),
+          endDateAbsolute: latestDate
         }
       }),
       ...(threshold && {

@@ -111,16 +111,20 @@ export default {
         let data = {};
         if (Array.isArray(fireIn) && Array.isArray(allFire)) {
           data = {
-            latest,
+            latest: latest.date,
             fireCountIn: fireIn,
             fireCountAll: allFire
           };
         }
-        return data;
+        return {
+          data,
+          settings: {
+            latestDate: latest.date
+          }
+        };
       })
     ),
   getDataURL: params => [
-    fetchVIIRSLatest({ ...params, download: true }),
     fetchFiresWithin({ ...params, download: true }),
     fetchFiresWithin({
       ...params,

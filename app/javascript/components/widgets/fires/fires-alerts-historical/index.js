@@ -297,8 +297,7 @@ export default {
   getData: params =>
     fetchVIIRSLatest(params)
       .then(
-        response =>
-          (response.attributes && response.attributes.updatedAt) || null
+        response => response && response.date || null
       )
       .then(latest =>
         fetchHistoricalAlerts({

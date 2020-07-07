@@ -290,7 +290,7 @@ export default {
         const { data } = alerts.data;
         const years = uniq(data.map(d => d.year));
         const maxYear = Math.max(...years);
-        const latestDate = latest.attributes && latest.attributes.updatedAt;
+        const latestDate = latest && latest.date;
         const allYears = years.filter(y => y !== maxYear);
 
         return (
