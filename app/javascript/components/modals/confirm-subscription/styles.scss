@@ -1,0 +1,44 @@
+@import '~styles/settings.scss';
+
+.c-confirm-subscription-modal {
+  min-height: rem(100px);
+  max-width: 800px;
+
+  p {
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 30px;
+  }
+
+  i {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .resend-footer {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: 12px;
+      margin-left: 10px;
+      font-style: italic;
+    }
+
+    .error {
+      color: $error;
+    }
+  }
+
+  .resend-btn {
+    position: relative;
+
+    .resend-loader {
+      > div {
+        width: rem(20px);
+        height: rem(20px);
+        border-width: 2px;
+      }
+    }
+  }
+}

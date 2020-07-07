@@ -14,6 +14,7 @@ import NoContent from 'components/ui/no-content';
 import Dropdown from 'components/ui/dropdown';
 import Search from 'components/ui/search';
 import Paginate from 'components/paginate';
+import ConfirmSubscriptionModal from 'components/modals/confirm-subscription';
 
 import mapIcon from 'assets/icons/view-map.svg';
 import editIcon from 'assets/icons/edit.svg';
@@ -306,6 +307,7 @@ class AreasTable extends PureComponent {
             }
           />
         )}
+        <ConfirmSubscriptionModal />
       </div>
     );
   }
