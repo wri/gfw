@@ -789,7 +789,12 @@ export const fetchVIIRSLatest = () =>
         id: null,
         type: 'viirs-alerts'
       };
-    });
+    })
+    .catch(() => ({
+      attributes: { updatedAt: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD') },
+      id: null,
+      type: 'viirs-alerts'
+    }));
 
 
 // Climate fetches
