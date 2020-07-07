@@ -57,7 +57,7 @@ export default {
   dataType: 'fires',
   chartType: 'pieChart',
   colors: 'fires',
-  metaKey: '',
+  metaKey: 'widget_fire_alert_location',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,

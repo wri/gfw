@@ -51,7 +51,7 @@ export default {
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_historical_location',
+  metaKey: 'widget_fire_alert_location',
   sortOrder: {
     fires: 5
   },
