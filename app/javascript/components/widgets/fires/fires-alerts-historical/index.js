@@ -63,7 +63,7 @@ export default {
   settings: {
     dataset: 'viirs',
     minDate: '2000-01-01',
-    confidence: 'h'
+    confidence: ''
   },
   datasets: [
     {
