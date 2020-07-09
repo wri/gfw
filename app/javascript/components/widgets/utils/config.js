@@ -184,7 +184,7 @@ export const getWidgetDatasets = ({
   dataset
 }) =>
   datasets &&
-  datasets.map(d => ({
+  datasets.filter(d => dataset !== 'modis' || d.boundary).map(d => ({
     ...d,
     opacity: 1,
     visibility: true,
@@ -297,8 +297,7 @@ export const getStatements = ({
   dataType,
   landCategory,
   forestType,
-  datasets,
-  active
+  datasets
 }) => {
   if (!settings) return null;
   const { extentYear, threshold } = settings;
