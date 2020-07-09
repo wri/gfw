@@ -301,9 +301,9 @@ export default {
       )
       .then(latest =>
         fetchHistoricalAlerts({
+          ...params,
           startDate: params.minDate,
           endDate: latest,
-          ...params,
           frequency: 'daily'
         })
           .then(response => {
