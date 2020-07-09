@@ -12,7 +12,7 @@ import './styles.scss';
 class Intro extends PureComponent {
   render() {
     const { intro, className, handleSkipToTools, isDesktop } = this.props;
-    const { img1x, img2x, title, text, citation } = intro;
+    const { img1x, img2x, title, text, citation, button } = intro;
 
     return (
       <div className={cx('c-topics-intro', className)}>
@@ -57,14 +57,24 @@ class Intro extends PureComponent {
           <div className="column small-12 medium-6" />
           <div className="column small-12 medium-6">
             <p className="intro-text">{text}</p>
-            {isDesktop && (
-              <Button
-                theme="theme-button-light skip-to-tools"
-                onClick={handleSkipToTools}
-              >
-                Related tools
-              </Button>
-            )}
+            <div className="intro-buttons">
+              {button && (
+                <Button
+                  theme="intro-btn"
+                  link={button.link}
+                >
+                  {button.text}
+                </Button>
+              )}
+              {isDesktop && (
+                <Button
+                  theme="theme-button-light skip-to-tools"
+                  onClick={handleSkipToTools}
+                >
+                  Related tools
+                </Button>
+              )}
+            </div>
           </div>
         </div>
         {!isDesktop && (
