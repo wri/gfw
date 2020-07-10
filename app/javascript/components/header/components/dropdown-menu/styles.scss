@@ -13,18 +13,36 @@
 
   > li {
     > button,
+    > a {
+      padding: rem(15px) 0;
+
+      @media screen and (min-width: $screen-m) {
+        padding: rem(15px) rem(20px);
+      }
+
+      &.nested {
+        padding: 0;
+      }
+    }
+
+    button,
     a {
       display: block;
       text-transform: uppercase;
       font-size: rem(14px);
-      padding: rem(15px) 0;
       width: 100%;
       color: $slate;
       cursor: pointer;
       text-align: left;
 
-      @media screen and (min-width: $screen-m) {
-        padding: rem(15px) rem(20px);
+      > button {
+        color: inherit;
+        text-transform: inherit;
+        padding: rem(15px) 0;
+
+        @media screen and (min-width: $screen-m) {
+          padding: rem(15px) rem(20px);
+        }
       }
 
       &:hover {
@@ -37,7 +55,7 @@
     }
 
     &.active {
-      > button,
+      button,
       a {
         color: $green-gfw;
 

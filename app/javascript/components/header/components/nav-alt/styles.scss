@@ -20,10 +20,14 @@
     padding-left: rem(10px);
   }
 
-  > li {
+  .desktop-menu {
+    display: flex;
+    height: 100%;
+  }
+
+  .alt-link {
     margin-left: rem(20px);
     position: relative;
-    font-size: rem(12px);
 
     @media screen and (min-width: 850px) {
       margin-left: rem(30px);
@@ -33,9 +37,7 @@
       margin-top: -1px;
       margin-left: rem(5px);
     }
-  }
 
-  .alt-link {
     > div {
       height: 100%;
     }
@@ -58,6 +60,10 @@
     right: -5px;
     top: rem(55px);
     z-index: 1;
+  }
+
+  .submenu-link {
+    min-width: 60px;
   }
 
   .submenu-panel {
@@ -120,4 +126,14 @@
       top: rem(75px);
     }
   }
+
+  .animate-user-icon {
+    animation: user-icon 2s ease-in-out infinite;
+  }
+}
+
+@keyframes user-icon {
+  from,
+  to { opacity: 1; }
+  50% { opacity: 0.5; }
 }
