@@ -10,12 +10,12 @@ export const clearMapInteractions = createAction('clearMapInteractions');
 
 export const setMapSettings = createThunkAction(
   'setMapSettings',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'map',
-        change,
-        state
-      })
-    )
+  change => (dispatch, state) => {}
+    // dispatch(
+    //   setComponentStateToUrl({
+    //     key: 'map',
+    //     change,
+    //     state
+    //   })
+    // )
 );

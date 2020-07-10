@@ -1,5 +1,4 @@
 import { createThunkAction } from 'utils/redux';
-import { MAP } from 'app/router';
 
 export const setMainMapView = createThunkAction(
   'setMainMapView',
@@ -8,7 +7,7 @@ export const setMainMapView = createThunkAction(
     const { map, mainMap } = query || {};
 
     dispatch({
-      type: MAP,
+      type: 'map',
       payload: {
         ...payload,
         type: payload.type === 'global' ? undefined : payload.type

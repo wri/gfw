@@ -47,7 +47,7 @@ const buildLocationDict = locations =>
   {};
 
 export const selectLocation = state => state.location && state.location.payload;
-export const selectRouteType = state => state.location && state.location.type;
+export const selectRouteType = state => state.location && state.location.pathname;
 export const selectLocationQuery = state =>
   state.location && state.location.query;
 export const selectLocationSearch = state =>
@@ -162,7 +162,7 @@ export const getLocationData = createSelector(
       children = [];
     }
 
-    const locationData = allLocationData[adminLevel] || adm0Data;
+    const locationData = allLocationData?.[adminLevel] || adm0Data;
     const currentLocation =
       locationData &&
       locationObj &&
@@ -269,7 +269,7 @@ export const filterWidgetsByLocation = createSelector(
         whitelists &&
         whitelists.indicators &&
         intersection(
-          polynameWhitelist[w.whitelistType || 'annual'],
+          polynameWhitelist?.[w.whitelistType || 'annual'],
           whitelists.indicators
         );
       const matchesPolynameWhitelist =

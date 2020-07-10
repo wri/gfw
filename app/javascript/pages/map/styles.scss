@@ -6,6 +6,13 @@
   .main-map-container {
     width: 100%;
     height: 100%;
+    z-index: 1;
+    position: relative;
+
+    @media screen and (min-width: $screen-m) {
+      width: calc(100% - 76px);
+      margin-left: 76px;
+    }
 
     .main-map {
       height: 100%;
@@ -50,7 +57,7 @@
 
   .data-analysis-menu {
     position: absolute;
-    left: rem(15px);
+    left: rem(91px);
     top: rem(15px);
     z-index: 6;
 
@@ -68,6 +75,15 @@
 
   &.embed {
     min-height: calc(100vh - 60px);
+
+    .main-map-container {
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
 
     .leaflet-control-container {
       .leaflet-bottom {
