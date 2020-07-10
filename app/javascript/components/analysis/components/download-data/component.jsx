@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
 
 class DownloadData extends PureComponent {
-  renderDownloadLinks = downloads => (
+  renderDownloadLinks = (downloads) => (
     <Fragment key={downloads.label}>
       <span>{downloads.label}</span>
       <ul className="download-list">
-        {downloads.urls.map(l => (
+        {downloads.urls.map((l) => (
           <li key={l.url}>
-            <a href={l.url} target="_blank">
+            <a href={l.url} target="_blank" rel="noopener noreferrer">
               {l.label}
             </a>
           </li>
@@ -34,9 +34,10 @@ class DownloadData extends PureComponent {
         </button>
         {downloadUrls &&
           !!downloadUrls.length &&
-          downloadUrls.map(d => this.renderDownloadLinks(d))}
+          downloadUrls.map((d) => this.renderDownloadLinks(d))}
         <p className="terms">
-          By downloading data you agree to the{' '}
+          By downloading data you agree to the
+          {' '}
           <a href="/terms" target="_blank">
             GFW Terms of Service
           </a>
@@ -48,7 +49,7 @@ class DownloadData extends PureComponent {
 
 DownloadData.propTypes = {
   onClose: PropTypes.func,
-  downloadUrls: PropTypes.array
+  downloadUrls: PropTypes.array,
 };
 
 export default DownloadData;

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 
 import Modal from '../modal';
 
@@ -12,7 +12,7 @@ class ModalGFWFires extends PureComponent {
       open,
       location,
       setModalGFWFiresOpen,
-      setModalContactUsOpen
+      setModalContactUsOpen,
     } = this.props;
 
     const { query, pathname } = location || {};
@@ -31,7 +31,7 @@ class ModalGFWFires extends PureComponent {
           >
             Contact us
           </button>,
-          " if you don't find what you're looking for."
+          " if you don't find what you're looking for.",
         ];
       } else if (pathname === '/map') {
         modalText = [
@@ -44,9 +44,9 @@ class ModalGFWFires extends PureComponent {
               setModalGFWFiresOpen(false);
             }}
           >
-            click here
+            <a>click here</a>
           </Link>,
-          '.'
+          '.',
         ];
       } else if (
         pathname.includes('dashboards') &&
@@ -65,7 +65,7 @@ class ModalGFWFires extends PureComponent {
           >
             Contact us
           </button>,
-          " if you don't find what you're looking for."
+          " if you don't find what you're looking for.",
         ];
       }
     }
@@ -77,7 +77,7 @@ class ModalGFWFires extends PureComponent {
         onRequestClose={() => {
           setModalGFWFiresOpen(false);
         }}
-        title={'Global Forest Watch Fires.'}
+        title="Global Forest Watch Fires."
         className="c-gfw-fires-modal"
       >
         <div className="fires-modal-content">
@@ -92,7 +92,7 @@ ModalGFWFires.propTypes = {
   open: PropTypes.bool,
   location: PropTypes.object,
   setModalGFWFiresOpen: PropTypes.func,
-  setModalContactUsOpen: PropTypes.func
+  setModalContactUsOpen: PropTypes.func,
 };
 
 export default ModalGFWFires;

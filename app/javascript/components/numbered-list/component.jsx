@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -20,19 +20,20 @@ class NumberedList extends PureComponent {
       settingsConfig,
       handlePageChange,
       linksDisabled,
-      linksExt
+      linksExt,
     } = this.props;
     const { page, pageSize, unit } = settings;
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
 
-    const unitsConfig = settingsConfig && settingsConfig.find(conf => conf.key === 'unit');
+    const unitsConfig =
+      settingsConfig && settingsConfig.find((conf) => conf.key === 'unit');
     const selectedUnitConfig =
       unitsConfig &&
       unitsConfig.options &&
       !!unitsConfig.options.length &&
-      unitsConfig.options.find(opt => opt.value === unit);
+      unitsConfig.options.find((opt) => opt.value === unit);
     let formatUnit = unit;
     if (selectedUnitConfig) {
       formatUnit =
@@ -65,14 +66,14 @@ class NumberedList extends PureComponent {
                           className="item-bar -data"
                           style={{
                             width: `${item.value > 100 ? 100 : item.value}%`,
-                            backgroundColor: item.color
+                            backgroundColor: item.color,
                           }}
                         />
                       </div>
                       <div className="item-value">
                         {formatNumber({
                           num: item.value,
-                          unit: item.unit || formatUnit
+                          unit: item.unit || formatUnit,
                         })}
                       </div>
                     </div>
@@ -80,7 +81,7 @@ class NumberedList extends PureComponent {
                     <div className="item-value">
                       {formatNumber({
                         num: item.value,
-                        unit: item.unit || formatUnit
+                        unit: item.unit || formatUnit,
                       })}
                     </div>
                   )}
@@ -88,23 +89,22 @@ class NumberedList extends PureComponent {
               );
               return (
                 <li key={`${item.label}-${item.id}`}>
-                  {item.path &&
-                    linksExt && (
+                  {item.path && linksExt && (
                     <a
-                      href={`https://${!isServer && window.location.host}${item.path}`}
+                      href={`https://${!isServer && window.location.host}${
+                        item.path
+                      }`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       {linkContent}
                     </a>
                   )}
-                  {item.path &&
-                    !linksExt && (
-                    <Link
-                      className={`${linksDisabled ? 'disabled' : ''}`}
-                      to={item.path}
-                    >
-                      {linkContent}
+                  {item.path && !linksExt && (
+                    <Link href={item.path}>
+                      <a className={`${linksDisabled ? 'disabled' : ''}`}>
+                        {linkContent}
+                      </a>
                     </Link>
                   )}
                   {!item.path && (
@@ -116,8 +116,7 @@ class NumberedList extends PureComponent {
               );
             })}
         </ul>
-        {handlePageChange &&
-          data.length > settings.pageSize && (
+        {handlePageChange && data.length > settings.pageSize && (
           <Paginate
             settings={settings}
             count={data.length}
@@ -136,7 +135,7 @@ NumberedList.propTypes = {
   handlePageChange: PropTypes.func,
   className: PropTypes.string,
   linksDisabled: PropTypes.bool,
-  linksExt: PropTypes.bool
+  linksExt: PropTypes.bool,
 };
 
 export default NumberedList;

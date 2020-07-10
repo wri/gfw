@@ -10,10 +10,10 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Dropdown from 'components/ui/dropdown';
 
-import infoIcon from 'assets/icons/info.svg';
-import closeIcon from 'assets/icons/close.svg';
-import squarePointIcon from 'assets/icons/square-point.svg';
-import polygonIcon from 'assets/icons/polygon.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import squarePointIcon from 'assets/icons/square-point.svg?sprite';
+import polygonIcon from 'assets/icons/polygon.svg?sprite';
 
 import './styles.scss';
 
@@ -168,9 +168,7 @@ class ChoseAnalysis extends PureComponent {
             <div className="uploading-shape">
               <p className="file-name">{file && file.name}</p>
               <p className="file-size">
-                {`Uploading ${
-                (file && format('.2s')(file.size)) || 0
-              }B`}
+                {`Uploading ${(file && format('.2s')(file.size)) || 0}B`}
               </p>
               <div className="upload-bar">
                 <div className="loading-bar">

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
@@ -17,7 +17,7 @@ import How from 'pages/about/section-how';
 import Contact from 'pages/about/section-contact';
 
 import mailIcon from 'assets/icons/mail.svg';
-import bgImage from './header-bg';
+import bgImage from './header-bg.jpg';
 import './styles.scss';
 
 const sectionComponents = {
@@ -25,13 +25,13 @@ const sectionComponents = {
   impacts: Impacts,
   partners: Partners,
   how: How,
-  contact: Contact
+  contact: Contact,
 };
 
 class AboutPage extends PureComponent {
   static propTypes = {
     sections: PropTypes.object,
-    setModalVideoData: PropTypes.func.isRequired
+    setModalVideoData: PropTypes.func.isRequired,
   };
 
   render() {
@@ -43,9 +43,9 @@ class AboutPage extends PureComponent {
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         >
-          <Link className="subscribe-btn" to="/subscribe">
-            <Button theme="square" className="subscribe-icon">
-              <Icon icon={mailIcon} />
+          <Link href="/subscribe">
+            <Button theme="square" className="subscribe-btn">
+              <Icon icon={mailIcon} className="subscribe-icon" />
             </Button>
             <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
           </Link>
@@ -56,7 +56,7 @@ class AboutPage extends PureComponent {
         />
         <Projects setModalVideoData={setModalVideoData} />
         {sections &&
-          Object.keys(sections).map(s => {
+          Object.keys(sections).map((s) => {
             const section = sections[s];
             const PageComponent = sectionComponents[section.component];
             return PageComponent ? (

@@ -4,7 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import { track } from 'app/analytics';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
@@ -41,7 +41,7 @@ class ShowAnalysis extends PureComponent {
     downloadUrls: PropTypes.array,
     zoomLevel: PropTypes.number,
     showAnalysisDisclaimer: PropTypes.bool,
-    activeArea: PropTypes.object
+    activeArea: PropTypes.object,
   };
 
   renderStatItem = ({
@@ -53,7 +53,7 @@ class ShowAnalysis extends PureComponent {
     endDate,
     dateFormat,
     threshold,
-    thresh
+    thresh,
   }) => (
     <li className="draw-stat" key={label}>
       <div className="title">
@@ -70,11 +70,11 @@ class ShowAnalysis extends PureComponent {
       </div>
       <div className="value" style={{ color }}>
         {Array.isArray(value) && value.length ? (
-          value.map(v => (
+          value.map((v) => (
             <strong key={`${v.label}-${v.value}`} style={{ color: v.color }}>
               {formatNumber({
                 num: v.value,
-                unit: v.unit || unit
+                unit: v.unit || unit,
               })}
               <span>{v.label}</span>
             </strong>
@@ -83,7 +83,7 @@ class ShowAnalysis extends PureComponent {
           <strong>
             {formatNumber({
               num: Array.isArray(value) ? 0 : value,
-              unit: unit || 'ha'
+              unit: unit || 'ha',
             })}
           </strong>
         )}
@@ -109,16 +109,14 @@ class ShowAnalysis extends PureComponent {
       showAnalysisDisclaimer,
       activeArea,
       analysisTitle,
-      analysisDescription
+      analysisDescription,
     } = this.props;
     const hasWidgets = widgetLayers && !!widgetLayers.length;
 
     return (
       <div className="c-show-analysis">
         <div className="show-analysis-body">
-          {analysisTitle &&
-            !loading &&
-            !error && (
+          {analysisTitle && !loading && !error && (
             <div className="draw-title">
               <Button
                 className="title-btn left"
@@ -140,12 +138,16 @@ class ShowAnalysis extends PureComponent {
                   onClick={() =>
                     setShareModal({
                       title: 'Share this view',
-                      shareUrl: !isServer && (window.location.href.includes('embed')
-                        ? window.location.href.replace('/embed', '')
-                        : window.location.href),
-                      embedUrl: !isServer && (window.location.href.includes('embed')
-                        ? window.location.href
-                        : window.location.href.replace('/map', '/embed/map'))
+                      shareUrl:
+                        !isServer &&
+                        (window.location.href.includes('embed')
+                          ? window.location.href.replace('/embed', '')
+                          : window.location.href),
+                      embedUrl:
+                        !isServer &&
+                        (window.location.href.includes('embed')
+                          ? window.location.href
+                          : window.location.href.replace('/map', '/embed/map')),
                     })}
                   tooltip={{ text: 'Share analysis' }}
                 >
@@ -159,9 +161,9 @@ class ShowAnalysis extends PureComponent {
                     handleShowDownloads(true);
                     track('analysisDownload', {
                       label:
-                          downloadUrls &&
-                          downloadUrls.length &&
-                          downloadUrls.map(d => d.label).join(', ')
+                        downloadUrls &&
+                        downloadUrls.length &&
+                        downloadUrls.map((d) => d.label).join(', '),
                     });
                   }}
                   tooltip={{ text: 'Download data' }}
@@ -171,9 +173,7 @@ class ShowAnalysis extends PureComponent {
               </div>
             </div>
           )}
-          {analysisDescription &&
-            !loading &&
-            !error && (
+          {analysisDescription && !loading && !error && (
             <DynamicSentence
               className="analysis-desc"
               sentence={analysisDescription}
@@ -185,55 +185,54 @@ class ShowAnalysis extends PureComponent {
               !loading &&
               !error &&
               isEmpty(data) && (
-              <NoContent message="No analysis data available" />
-            )}
-            {!hasLayers &&
-              !hasWidgets &&
-              !loading && (
+                <NoContent message="No analysis data available" />
+              )}
+            {!hasLayers && !hasWidgets && !loading && (
               <NoContent>
-                  Select a{' '}
+                Select a
+                {' '}
                 <button
                   onClick={() =>
                     setMenuSettings({
                       menuSection: 'datasets',
-                      datasetCategory: 'forestChange'
-                    })
-                  }
+                      datasetCategory: 'forestChange',
+                    })}
                 >
-                    forest change
-                </button>{' '}
-                  data layer to analyze.
+                  forest change
+                </button>
+                {' '}
+                data layer to analyze.
               </NoContent>
             )}
-            {(hasLayers || hasWidgets) &&
-              !loading &&
-              !error && (
+            {(hasLayers || hasWidgets) && !loading && !error && (
               <Fragment>
                 <ul className="draw-stats">
-                  {data && data.map(d => this.renderStatItem(d))}
+                  {data && data.map((d) => this.renderStatItem(d))}
                 </ul>
                 <Widgets simple analysis />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
-                        This algorithm approximates the results by sampling the
-                        selected area. Results are more accurate at closer zoom
-                        levels.
+                      This algorithm approximates the results by sampling the
+                      selected area. Results are more accurate at closer zoom
+                      levels.
                     </p>
                   )}
                   {showAnalysisDisclaimer && (
                     <p>
-                      <b>NOTE:</b> tree cover loss and gain statistics cannot
-                        be compared against each other.{' '}
+                      <b>NOTE:</b>
+                      {' '}
+                      tree cover loss and gain statistics cannot be
+                      compared against each other.
+                      {' '}
                       <button
                         onClick={() =>
                           setModalSources({
                             open: true,
-                            source: 'lossDisclaimer'
-                          })
-                        }
+                            source: 'lossDisclaimer',
+                          })}
                       >
-                          Learn more.
+                        Learn more.
                       </button>
                     </p>
                   )}
@@ -248,25 +247,28 @@ class ShowAnalysis extends PureComponent {
             />
           )}
         </div>
-        {(hasLayers || hasWidgets) &&
-          !loading &&
-          !error && (
+        {(hasLayers || hasWidgets) && !loading && !error && (
           <div className="save-aois-disclaimer">
             {activeArea ? (
               <div className="content">
                 <p>
-                    To perform an in-depth analysis of this area please visit
-                    the{' '}
-                  <Link to={`/dashboards/aoi/${activeArea.id}`}>
-                      area dashboard
-                  </Link>.
+                  To perform an in-depth analysis of this area please visit the
+                  {' '}
+                  <Link
+                    href="/dashboards/[...location]"
+                    as={`/dashboards/aoi/${activeArea.id}`}
+                  >
+                    <a>area dashboard</a>
+                  </Link>
+                  .
                 </p>
               </div>
             ) : (
               <div className="content">
                 <h3>Interested in this particular area?</h3>
                 <p>
-                    Save this area to create a dashboard with a more in-depth analysis and receive email alerts about forest cover change.
+                  Save this area to create a dashboard with a more in-depth
+                  analysis and receive email alerts about forest cover change.
                 </p>
               </div>
             )}

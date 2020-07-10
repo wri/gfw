@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 import { isTouch } from 'utils/browser';
 import cx from 'classnames';
 
@@ -21,7 +21,7 @@ import './themes/button-map-control.scss'; // eslint-disable-line
 import './themes/button-dashed.scss'; // eslint-disable-line
 import './themes/button-dark-round.scss'; // eslint-disable-line
 
-const Button = props => {
+const Button = (props) => {
   const {
     extLink,
     link,
@@ -34,10 +34,10 @@ const Button = props => {
     tooltip,
     background,
     trackingData,
-    target
+    target,
   } = props;
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (onClick) {
       onClick(e);
     }
@@ -70,19 +70,18 @@ const Button = props => {
     );
   } else if (link) {
     button = (
-      <Link
-        className={cx(
-          'c-button',
-          theme,
-          className,
-          { disabled },
-          { '--active': active }
-        )}
-        to={link}
-        disabled={disabled}
-        onClick={handleClick}
-      >
-        {children}
+      <Link href={link} disabled={disabled} onClick={handleClick}>
+        <a
+          className={cx(
+            'c-button',
+            theme,
+            className,
+            { disabled },
+            { '--active': active }
+          )}
+        >
+          {children}
+        </a>
       </Link>
     );
   } else {
@@ -135,7 +134,7 @@ Button.propTypes = {
   trackingData: PropTypes.object,
   buttonClicked: PropTypes.func,
   background: PropTypes.string,
-  target: PropTypes.string
+  target: PropTypes.string,
 };
 
 export default Button;

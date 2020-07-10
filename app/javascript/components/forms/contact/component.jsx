@@ -5,7 +5,7 @@ import { FORM_ERROR } from 'final-form';
 
 import { submitContactForm } from 'services/forms';
 
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 import Button from 'components/ui/button';
 
 import Error from 'components/forms/components/error';
@@ -25,23 +25,24 @@ class ContactForm extends PureComponent {
   static propTypes = {
     // sendContactForm: PropTypes.func.isRequired,
     resetForm: PropTypes.func,
-    initialValues: PropTypes.object
+    initialValues: PropTypes.object,
   };
 
-  sendContactForm = values => {
-    const language = !isServer && window.Transifex
-      ? window.Transifex.live.getSelectedLanguageCode()
-      : 'en';
+  sendContactForm = (values) => {
+    const language =
+      !isServer && window.Transifex
+        ? window.Transifex.live.getSelectedLanguageCode()
+        : 'en';
 
     return submitContactForm({ ...values, language })
       .then(() => {})
-      .catch(error => {
+      .catch((error) => {
         const { errors } = error.response && error.response.data;
 
         return {
           [FORM_ERROR]:
             (errors && error.length && errors[0].detail) ||
-            'Service unavailable'
+            'Service unavailable',
         };
       });
   };
@@ -59,9 +60,9 @@ class ContactForm extends PureComponent {
           submitSucceeded,
           submitError,
           values,
-          form: { reset }
+          form: { reset },
         }) => {
-          const activeTopic = topics.find(t => t.value === values.topic);
+          const activeTopic = topics.find((t) => t.value === values.topic);
 
           return (
             <div className="c-contact-form">
@@ -73,8 +74,10 @@ class ContactForm extends PureComponent {
                   </h3>
                   <p>Interested in getting news and updates from us?</p>
                   <div className="button-group">
-                    <Link to="/subscribe">
-                      <Button>Subscribe</Button>
+                    <Link href="/subscribe">
+                      <a>
+                        <Button>Subscribe</Button>
+                      </a>
                     </Link>
                     <Button
                       className="close-button"
@@ -87,7 +90,8 @@ class ContactForm extends PureComponent {
               ) : (
                 <Fragment>
                   <p className="subtitle">
-                    For media inquiries, email{' '}
+                    For media inquiries, email
+                    {' '}
                     <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
                   </p>
                   <form onSubmit={handleSubmit}>
