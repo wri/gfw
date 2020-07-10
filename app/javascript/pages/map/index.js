@@ -31,7 +31,7 @@ class MainMapContainer extends PureComponent {
 
   componentDidMount() {
     const { activeDatasets, basemap } = this.props;
-    const layerIds = flatMap(activeDatasets.map(d => d.layers));
+    const layerIds = flatMap(activeDatasets?.map(d => d.layers));
     track('mapInitialLayers', {
       label: layerIds && layerIds.join(', ')
     });
