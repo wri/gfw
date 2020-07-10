@@ -2,400 +2,402 @@ import { connect } from 'react-redux';
 
 import Component from './component';
 
+const images = require.context('assets/logos', true);
+
 const foundingPartners = [
   {
-    img: '/assets/logos/bobolinkfundation.png',
+    img: images(`./bobolinkfundation.png`),
     link: 'http://bobolinkfoundation.org',
-    title: 'Bobo link Fundation'
+    title: 'Bobo link Fundation',
   },
   {
-    img: '/assets/logos/bluerasterhover.png',
+    img: images('./bluerasterhover.png'),
     link: 'https://www.blueraster.com/',
-    title: 'Blueraster'
+    title: 'Blueraster',
   },
   {
-    img: '/assets/logos/cartodbhover.png',
+    img: images('./cartodbhover.png'),
     link: 'https://carto.com/',
-    title: 'Carto'
+    title: 'Carto',
   },
   {
-    img: '/assets/logos/centerforglobaldevelopmenthover.png',
+    img: images('./centerforglobaldevelopmenthover.png'),
     link: 'https://www.cgdev.org/',
-    title: 'Center for Global Development'
+    title: 'Center for Global Development',
   },
   {
-    img: '/assets/logos/danidahover.png',
+    img: images('./danidahover.png'),
     link: 'http://um.dk/en/danida-en/',
-    title: 'Danida'
+    title: 'Danida',
   },
   {
-    img: '/assets/logos/esrihover.png',
+    img: images('./esrihover.png'),
     link:
       'http://www.esri.com/landing-pages/fight-against-deforestation/global-forest-watch',
-    title: 'ESRI'
+    title: 'ESRI',
   },
   {
-    img: '/assets/logos/gefhover.png',
+    img: images('./gefhover.png'),
     link: 'http://www.thegef.org/',
-    title: 'gef'
+    title: 'gef',
   },
   {
-    img: '/assets/logos/globalforestwatchcanadahover.png',
+    img: images('./globalforestwatchcanadahover.png'),
     link: 'http://globalforestwatch.ca/',
-    title: 'Global Forest Watch Canada'
+    title: 'Global Forest Watch Canada',
   },
   {
-    img: '/assets/logos/googlehover.png',
+    img: images('./googlehover.png'),
     link: 'https://earthengine.google.com/',
-    title: 'Google'
+    title: 'Google',
   },
   {
-    img: '/assets/logos/imazonhover.png',
+    img: images('./imazonhover.png'),
     link: 'http://imazon.org.br/pagina-inicial-en?set_language=en&cl=en',
-    title: 'Imazon'
+    title: 'Imazon',
   },
   {
-    img: '/assets/logos/ministryofforeignaffairshover.png',
+    img: images('./ministryofforeignaffairshover.png'),
     link: 'https://www.government.nl/ministries/ministry-of-foreign-affairs',
-    title: 'Ministry of Foreign Affairs'
+    title: 'Ministry of Foreign Affairs',
   },
   {
-    img: '/assets/logos/norwegianministrihover.png',
+    img: images('./norwegianministrihover.png'),
     link:
       'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
-    title: 'Norwegian Ministry'
+    title: 'Norwegian Ministry',
   },
   {
-    img: '/assets/logos/osfachover.png',
+    img: images('./osfachover.png'),
     link: 'https://osfac.net/index.php?lang=en',
-    title: 'OSFA'
+    title: 'OSFA',
   },
   {
-    img: '/assets/logos/scannexhover.png',
+    img: images('./scannexhover.png'),
     link: 'http://www.scanex.ru/en/',
-    title: 'Scannex'
+    title: 'Scannex',
   },
   {
-    img: '/assets/logos/sidahover.png',
+    img: images('./sidahover.png'),
     link: 'http://www.sida.se/english/',
-    title: 'SIDA'
+    title: 'SIDA',
   },
   {
-    img: '/assets/logos/thejanegoodallinstitutehover.png',
+    img: images('./thejanegoodallinstitutehover.png'),
     link: 'http://www.janegoodall.org/',
-    title: 'The Jane Good all Institute'
+    title: 'The Jane Good all Institute',
   },
   {
-    img: '/assets/logos/thetiliafundhover.png',
+    img: images('./thetiliafundhover.png'),
     link: 'http://www.tiliafund.org/',
-    title: 'The Tila Fundation'
+    title: 'The Tila Fundation',
   },
   {
-    img: '/assets/logos/tiposhover.png',
+    img: images('./tiposhover.png'),
     link: 'http://www.transparentworld.ru/',
-    title: 'TIPOS'
+    title: 'TIPOS',
   },
   {
-    img: '/assets/logos/unephover.png',
+    img: images('./unephover.png'),
     link: 'http://www.unep.org/',
-    title: 'UNEP'
+    title: 'UNEP',
   },
   {
-    img: '/assets/logos/universityofmarylandhover.png',
+    img: images('./universityofmarylandhover.png'),
     link: 'https://geog.umd.edu/',
-    title: 'University of Maryland'
+    title: 'University of Maryland',
   },
   {
-    img: '/assets/logos/ukaidhover.png',
+    img: images('./ukaidhover.png'),
     link:
       'https://www.gov.uk/government/organisations/department-for-international-development',
-    title: 'UKAID'
+    title: 'UKAID',
   },
   {
-    img: '/assets/logos/usaidhover.png',
+    img: images('./usaidhover.png'),
     link: 'https://www.usaid.gov/',
-    title: 'USAID'
+    title: 'USAID',
   },
   {
-    img: '/assets/logos/vizzualityhover.png',
+    img: images('./vizzualityhover.png'),
     link: 'http://www.vizzuality.com/',
-    title: 'Vizzuality'
+    title: 'Vizzuality',
   },
   {
-    img: '/assets/logos/wrihover.png',
+    img: images('./wrihover.png'),
     link: 'http://www.wri.org/',
-    title: 'World Resources Institute'
-  }
+    title: 'World Resources Institute',
+  },
 ];
 
 const partnersCollaborators = [
   {
-    img: '/assets/logos/afchover.png',
+    img: images('./afchover.png'),
     link: 'http://www.afd.fr/home',
-    title: 'Agence Française Développement'
+    title: 'Agence Française Développement',
   },
   {
-    img: '/assets/logos/agrosatelitehover.png',
+    img: images('./agrosatelitehover.png'),
     link: 'http://agrosatelite.com.br/',
-    title: 'agrosatelite'
+    title: 'agrosatelite',
   },
   {
-    img: '/assets/logos/airbushover.png',
+    img: images('./airbushover.png'),
     link: 'http://www.airbus.com/',
-    title: 'Airbus'
+    title: 'Airbus',
   },
   {
-    img: '/assets/logos/astrodigitalhover.png',
+    img: images('./astrodigitalhover.png'),
     link: 'https://astrodigital.com/',
-    title: 'Astro Digital'
+    title: 'Astro Digital',
   },
   {
-    img: '/assets/logos/bnpbhover.png',
+    img: images('./bnpbhover.png'),
     link: 'https://bnpb.go.id/',
-    title: 'Badan Nasional Penanggulangan Bencana'
+    title: 'Badan Nasional Penanggulangan Bencana',
   },
   {
-    img: '/assets/logos/beihover.png',
+    img: images('./beihover.png'),
     link:
       'http://www.cisl.cam.ac.uk/business-action/sustainable-finance/banking-environment-initiative',
-    title: 'Banking Environment Initiative'
+    title: 'Banking Environment Initiative',
   },
   {
-    img: '/assets/logos/cambridgehover.png',
+    img: images('./cambridgehover.png'),
     link: 'http://www.cisl.cam.ac.uk/',
-    title: 'University of Cambridge'
+    title: 'University of Cambridge',
   },
   {
-    img: '/assets/logos/cargillhover.png',
+    img: images('./cargillhover.png'),
     link: 'https://www.cargill.com/',
-    title: 'Cargill'
+    title: 'Cargill',
   },
   {
-    img: '/assets/logos/cgiarhover.png',
+    img: images('./cgiarhover.png'),
     link: 'http://foreststreesagroforestry.org/',
-    title: 'Forest, Trees and Agroforestry'
+    title: 'Forest, Trees and Agroforestry',
   },
   {
-    img: '/assets/logos/ciathover.png',
+    img: images('./ciathover.png'),
     link: 'http://ciat.cgiar.org/',
-    title: 'CIAT'
+    title: 'CIAT',
   },
   {
-    img: '/assets/logos/cluahover.png',
+    img: images('./cluahover.png'),
     link: 'http://www.climateandlandusealliance.org/',
-    title: 'Climate and Land Use Alliance'
+    title: 'Climate and Land Use Alliance',
   },
   {
-    img: '/assets/logos/conaforhover.png',
+    img: images('./conaforhover.png'),
     link: 'http://www.conafor.gob.mx/',
-    title: 'Conafor'
+    title: 'Conafor',
   },
   {
-    img: '/assets/logos/conservationinternationalhover.png',
+    img: images('./conservationinternationalhover.png'),
     link: 'http://www.conservation.org/Pages/default.aspx',
-    title: 'Conservation International'
+    title: 'Conservation International',
   },
   {
-    img: '/assets/logos/digitalglobehover.png',
+    img: images('./digitalglobehover.png'),
     link: 'https://www.digitalglobe.com/',
-    title: 'DigitalGlobe'
+    title: 'DigitalGlobe',
   },
   {
-    img: '/assets/logos/ejnhover.png',
+    img: images('./ejnhover.png'),
     link: 'http://earthjournalism.net/',
-    title: 'Earth Journalism Network'
+    title: 'Earth Journalism Network',
   },
   {
-    img: '/assets/logos/ewmihover.png',
+    img: images('./ewmihover.png'),
     link: 'http://www.ewmi.org/',
-    title: 'East West Management Institute'
+    title: 'East West Management Institute',
   },
   {
-    img: '/assets/logos/evidensiahover.png',
+    img: images('./evidensiahover.png'),
     link: 'https://www.evidensia.eco/',
-    title: 'Evidensia'
+    title: 'Evidensia',
   },
   {
-    img: '/assets/logos/hakahover.png',
+    img: images('./hakahover.png'),
     link: 'http://www.haka.or.id/',
-    title: 'Haka'
+    title: 'Haka',
   },
   {
-    img: '/assets/logos/icfhover.png',
+    img: images('./icfhover.png'),
     link: 'http://www.icf.gob.hn/',
-    title: 'ICF'
+    title: 'ICF',
   },
   {
-    img: '/assets/logos/inabhover.png',
+    img: images('./inabhover.png'),
     link: 'http://www.inab.gob.gt/',
-    title: 'inab'
+    title: 'inab',
   },
   {
-    img: '/assets/logos/ioihover.png',
+    img: images('./ioihover.png'),
     link: 'http://europe.ioiloders.com/taking-responsibility',
-    title: 'IOI Loders Croklaan'
+    title: 'IOI Loders Croklaan',
   },
   {
-    img: '/assets/logos/jjfasthover.png',
+    img: images('./jjfasthover.png'),
     link: 'http://www.eorc.jaxa.jp/jjfast/',
-    title: 'JICA-JAXA Forest Early Warning System in the Tropics'
+    title: 'JICA-JAXA Forest Early Warning System in the Tropics',
   },
   {
-    img: '/assets/logos/lapighover.png',
+    img: images('./lapighover.png'),
     link: 'https://www.lapig.iesa.ufg.br/lapig/',
-    title: 'LAPIG'
+    title: 'LAPIG',
   },
   {
-    img: '/assets/logos/minepathover.png',
+    img: images('./minepathover.png'),
     link: 'http://www.minepat.gov.cm/index.php/en/?lang=en',
-    title: 'Minepat'
+    title: 'Minepat',
   },
   {
-    img: '/assets/logos/ministierehover.png',
+    img: images('./ministierehover.png'),
     link: '#',
-    title: 'minfof'
+    title: 'minfof',
   },
   {
-    img: '/assets/logos/moiseshover.png',
+    img: images('./moiseshover.png'),
     link: 'http://aidev.in/fmb/',
-    title: 'Fundation Moises Bertoni'
+    title: 'Fundation Moises Bertoni',
   },
   {
-    img: '/assets/logos/mongabayhover.png',
+    img: images('./mongabayhover.png'),
     link: 'https://www.mongabay.com/',
-    title: 'Mongabay'
+    title: 'Mongabay',
   },
   {
-    img: '/assets/logos/muyissihover.png',
+    img: images('./muyissihover.png'),
     link: '#',
-    title: 'Muyissi'
+    title: 'Muyissi',
   },
   {
-    img: '/assets/logos/opendevcamhover.png',
+    img: images('./opendevcamhover.png'),
     link: 'https://opendevelopmentcambodia.net/',
-    title: 'Open Development Cambodia'
+    title: 'Open Development Cambodia',
   },
   {
-    img: '/assets/logos/orbitalhover.png',
+    img: images('./orbitalhover.png'),
     link: 'https://orbitalinsight.com/',
-    title: 'Orbital Insight'
+    title: 'Orbital Insight',
   },
   {
-    img: '/assets/logos/osinforhover.png',
+    img: images('./osinforhover.png'),
     link: 'http://www.osinfor.gob.pe/',
-    title: 'Osinfor'
+    title: 'Osinfor',
   },
   {
-    img: '/assets/logos/planet.png',
+    img: images('./planet.png'),
     link: 'https://www.planet.com/',
-    title: 'Planet'
+    title: 'Planet',
   },
   {
-    img: '/assets/logos/rfukhover.png',
+    img: images('./rfukhover.png'),
     link: 'http://www.rainforestfoundationuk.org/',
-    title: 'Rainforest Foundation UK'
+    title: 'Rainforest Foundation UK',
   },
   {
-    img: '/assets/logos/raisghover.png',
+    img: images('./raisghover.png'),
     link: 'https://raisg.socioambiental.org/',
-    title: 'RAISG'
+    title: 'RAISG',
   },
   {
-    img: '/assets/logos/reddhover.png',
+    img: images('./reddhover.png'),
     link: 'http://www.redd-indonesia.org/',
-    title: 'REDD Indonesia'
+    title: 'REDD Indonesia',
   },
   {
-    img: '/assets/logos/rmhover.png',
+    img: images('./rmhover.png'),
     link: 'http://www.reforestamosmexico.org/',
-    title: 'Refores@amos Mexico'
+    title: 'Refores@amos Mexico',
   },
   {
-    img: '/assets/logos/resolvehover.png',
+    img: images('./resolvehover.png'),
     link: 'http://www.resolv.org/site-BiodiversityWildlifeSolutions/',
-    title: 'Resolve'
+    title: 'Resolve',
   },
   {
-    img: '/assets/logos/rspohover.png',
+    img: images('./rspohover.png'),
     link: 'http://www.rspo.org/',
-    title: 'RSPO'
+    title: 'RSPO',
   },
   {
-    img: '/assets/logos/rtrshover.png',
+    img: images('./rtrshover.png'),
     link: 'http://www.responsiblesoy.org/?lang=en',
-    title: 'RTRS'
+    title: 'RTRS',
   },
   {
-    img: '/assets/logos/unepwcmchover.png',
+    img: images('./unepwcmchover.png'),
     link: 'http://www.unep-wcmc.org/',
-    title: 'UNEP & WCMC'
+    title: 'UNEP & WCMC',
   },
   {
-    img: '/assets/logos/unileverhover.png',
+    img: images('./unileverhover.png'),
     link: 'https://www.unilever.com/',
-    title: 'Unilever'
+    title: 'Unilever',
   },
   {
-    img: '/assets/logos/whrchover.png',
+    img: images('./whrchover.png'),
     link: 'http://whrc.org/',
-    title: 'Woods Hole Research Center'
-  }
+    title: 'Woods Hole Research Center',
+  },
 ];
 
 const funders = [
   {
-    img: '/assets/logos/cargillhover.png',
+    img: images('./cargillhover.png'),
     link: 'https://www.cargill.com/',
-    title: 'Cargill'
+    title: 'Cargill',
   },
   {
-    img: '/assets/logos/gefhover.png',
+    img: images('./gefhover.png'),
     link: 'http://www.thegef.org/',
-    title: 'gef'
+    title: 'gef',
   },
   {
-    img: '/assets/logos/generationhover.png',
+    img: images('./generationhover.png'),
     link: 'https://www.genfound.org/',
-    title: 'Generation Foundation'
+    title: 'Generation Foundation',
   },
   {
-    img: '/assets/logos/idbhover.png',
+    img: images('./idbhover.png'),
     link: 'http://www.iadb.org/en/inter-american-development-bank,2837.html',
-    title: 'IDB'
+    title: 'IDB',
   },
   {
-    img: '/assets/logos/idbinvesthover.png',
+    img: images('./idbinvesthover.png'),
     link: 'http://www.idbinvest.org/',
-    title: 'IDB | Invest'
+    title: 'IDB | Invest',
   },
   {
-    img: '/assets/logos/macarthurhover.png',
+    img: images('./macarthurhover.png'),
     link: 'https://www.macfound.org/',
-    title: 'MacArthur Foundation'
+    title: 'MacArthur Foundation',
   },
   {
-    img: '/assets/logos/norwegianministrihover.png',
+    img: images('./norwegianministrihover.png'),
     link:
       'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
-    title: 'Norwegian Ministry'
+    title: 'Norwegian Ministry',
   },
   {
-    img: '/assets/logos/ukaidhover.png',
+    img: images('./ukaidhover.png'),
     link:
       'https://www.gov.uk/government/organisations/department-for-international-development',
-    title: 'UKAID'
+    title: 'UKAID',
   },
   {
-    img: '/assets/logos/usaidhover.png',
+    img: images('./usaidhover.png'),
     link: 'https://www.usaid.gov/',
-    title: 'USAID'
-  }
+    title: 'USAID',
+  },
 ];
 
 const mapStateToProps = () => ({
   foundingPartners,
   partnersCollaborators,
-  funders
+  funders,
 });
 
 export default connect(mapStateToProps, null)(Component);

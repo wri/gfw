@@ -4,26 +4,26 @@ export const initialState = {
   loading: false,
   error: false,
   data: [],
-  categorySelected: 'All'
+  categorySelected: 'All',
 };
 
 const setProjectsLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
 const setProjectsData = (state, { payload }) => ({
   ...state,
-  data: payload
+  data: payload,
 });
 
 const setCategorySelected = (state, { payload }) => ({
   ...state,
-  categorySelected: payload
+  categorySelected: payload,
 });
 
 export default {
   [actions.setProjectsLoading]: setProjectsLoading,
   [actions.setProjectsData]: setProjectsData,
-  [actions.setCategorySelected]: setCategorySelected
+  [actions.setCategorySelected]: setCategorySelected,
 };

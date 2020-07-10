@@ -10,19 +10,22 @@ export function deburrUpper(string) {
 
 export const allProjectsCategory = 'All';
 
-const getProjects = state => state.data || null;
-const getCategory = state => state.categorySelected || null;
-const getSearch = state => state.search || null;
+const getProjects = (state) => state.data;
+const getCategory = (state) => state.categorySelected;
+const getSearch = (state) => state.search;
 
-export const getProjectList = createSelector(getProjects, projects => projects);
-export const getCategoriesList = createSelector(getProjectList, projects => {
-  const categoriesList = uniq(projects.map(c => c.category));
+export const getProjectList = createSelector(
+  getProjects,
+  (projects) => projects
+);
+export const getCategoriesList = createSelector(getProjectList, (projects) => {
+  const categoriesList = uniq(projects.map((c) => c.category));
   return [allProjectsCategory, ...categoriesList];
 });
 
 export const getProjectsByCategory = createSelector(
   getProjectList,
-  projects => {
+  (projects) => {
     if (!projects) return null;
     const grouped = groupBy(projects, 'category');
     grouped[allProjectsCategory] = projects;
@@ -32,7 +35,7 @@ export const getProjectsByCategory = createSelector(
 
 export const getCategorySelected = createSelector(
   getCategory,
-  category => category || allProjectsCategory
+  (category) => category || allProjectsCategory
 );
 
 export const getProjectsSelected = createSelector(
@@ -41,7 +44,7 @@ export const getProjectsSelected = createSelector(
     if (!projects || !category) return null;
     if (!search) return projects[category];
     return projects[category].filter(
-      p => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
+      (p) => deburrUpper(p.title).indexOf(deburrUpper(search)) > -1
     );
   }
 );
@@ -49,5 +52,5 @@ export const getProjectsSelected = createSelector(
 export default {
   getProjectList,
   getProjectsByCategory,
-  getSearch
+  getSearch,
 };

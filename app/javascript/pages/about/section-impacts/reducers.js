@@ -4,20 +4,20 @@ export const initialState = {
   loading: false,
   error: false,
   search: '',
-  data: []
+  data: [],
 };
 
 const setImpactsProjectsLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
 const setImpactsProjectsData = (state, { payload }) => ({
   ...state,
-  data: payload
+  data: payload,
 });
 
 export default {
   [actions.setImpactsProjectsLoading]: setImpactsProjectsLoading,
-  [actions.setImpactsProjectsData]: setImpactsProjectsData
+  [actions.setImpactsProjectsData]: setImpactsProjectsData,
 };
