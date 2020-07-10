@@ -780,7 +780,7 @@ export const fetchFiresWithin = params => {
 };
 
 export const fetchVIIRSLatest = () =>
-  get('https://staging-tiles.globalforestwatch.org/nasa_viirs_fire_alerts/v202007.1/max_alert__date')
+  get(`https://${process.env.FEATURE_ENV === 'staging' ? 'staging-' : ''}tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date`)
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 
