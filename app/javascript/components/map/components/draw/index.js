@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { track } from 'app/analytics';
 
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import './styles.scss';
 
 import drawConfig from './config';
 
@@ -39,7 +39,7 @@ class Draw extends PureComponent {
       this.draw.changeMode('draw_polygon');
     }
 
-    map.on('draw.create', e => {
+    map.on('draw.create', (e) => {
       const geoJSON = e.features && e.features[0];
       if (geoJSON) {
         onDrawComplete(geoJSON);
@@ -62,7 +62,7 @@ class Draw extends PureComponent {
 Draw.propTypes = {
   map: PropTypes.object,
   drawing: PropTypes.bool,
-  onDrawComplete: PropTypes.func
+  onDrawComplete: PropTypes.func,
 };
 
 export default Draw;

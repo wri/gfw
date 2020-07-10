@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 
 import { scaleLinear } from 'd3-scale';
 
-import { Spring } from 'react-spring/renderprops';
+import { Spring } from 'react-spring/renderprops.cjs';
 
 import ComposedChart from 'components/charts/composed-chart';
 import SVGBrush from './svg-brush';
@@ -22,7 +22,7 @@ export default class Brush extends PureComponent {
     config: PropTypes.object,
     minimumGap: PropTypes.number,
     maximumGap: PropTypes.number,
-    onBrushEnd: PropTypes.func
+    onBrushEnd: PropTypes.func,
   };
 
   static defaultProps = {
@@ -30,16 +30,16 @@ export default class Brush extends PureComponent {
       top: 0,
       left: 0,
       bottom: 0,
-      right: 0
+      right: 0,
     },
     minimumGap: 0,
-    maximumGap: 0
+    maximumGap: 0,
   };
 
   state = {
     ready: false,
     brushSelection: null,
-    intermediateBrushSelection: null
+    intermediateBrushSelection: null,
   };
 
   componentDidMount() {
@@ -58,15 +58,19 @@ export default class Brush extends PureComponent {
       ready: true,
       brushSelection: [
         [this.scale(start), margin.top],
-        [this.scale(end), height - margin.bottom]
-      ]
+        [this.scale(end), height - margin.bottom],
+      ],
     });
   }
 
   componentDidUpdate(prevProps) {
     const { margin, startIndex, endIndex, data } = this.props;
     const { height, width } = this.svg.getBoundingClientRect();
-    const { startIndex: prevStartIndex, endIndex: prevEndIndex, data: prevData } = prevProps;
+    const {
+      startIndex: prevStartIndex,
+      endIndex: prevEndIndex,
+      data: prevData,
+    } = prevProps;
 
     if (isEqual(data, prevData)) {
       this.scale = scaleLinear()
@@ -79,8 +83,8 @@ export default class Brush extends PureComponent {
       this.setState({
         brushSelection: [
           [this.scale(startIndex), margin.top],
-          [this.scale(endIndex), height - margin.bottom]
-        ]
+          [this.scale(endIndex), height - margin.bottom],
+        ],
       });
     }
   }
@@ -112,19 +116,19 @@ export default class Brush extends PureComponent {
       x: this.scale(0),
       y: height - margin.bottom + 4,
       value: data[0].date,
-      textAnchor: 'start'
+      textAnchor: 'start',
     };
     const max = {
       id: 'max',
       x: this.scale(data.length - 1),
       y: height - margin.bottom + 4,
       value: data[data.length - 1].date,
-      textAnchor: 'end'
+      textAnchor: 'end',
     };
 
     return (
       <React.Fragment>
-        {[max, min].map(t => {
+        {[max, min].map((t) => {
           const { id, x, y, value, textAnchor } = t;
           return (
             <React.Fragment key={id}>
@@ -151,8 +155,14 @@ export default class Brush extends PureComponent {
     const { brushSelection, intermediateBrushSelection } = this.state;
     const fs = intermediateBrushSelection || brushSelection;
     const ts = brushSelection;
-    const [[fx0, fy0], [fx1, fy1]] = fs || [[0, 0], [0, 0]];
-    const [[tx0, ty0], [tx1, ty1]] = ts || [[0, 0], [0, 0]];
+    const [[fx0, fy0], [fx1, fy1]] = fs || [
+      [0, 0],
+      [0, 0],
+    ];
+    const [[tx0, ty0], [tx1, ty1]] = ts || [
+      [0, 0],
+      [0, 0],
+    ];
 
     return (
       <Spring
@@ -160,53 +170,62 @@ export default class Brush extends PureComponent {
         to={{ x0: tx0, y0: ty0, x1: tx1, y1: ty1 }}
         immediate={!intermediateBrushSelection}
       >
-        {props => (
+        {(props) => (
           <SVGBrush
             scale={this.scale}
             minimumGap={minimumGap}
             maximumGap={maximumGap}
             extent={[
               [margin.left, margin.top],
-              [width - margin.right, height - margin.bottom]
+              [width - margin.right, height - margin.bottom],
             ]}
-            getEventMouse={event => {
+            getEventMouse={(event) => {
               const { clientX, clientY } = event;
               const { left, top } = this.svg.getBoundingClientRect();
               return [clientX - left, clientY - top];
             }}
             brushType="x"
             selection={
-              brushSelection && [[props.x0, props.y0], [props.x1, props.y1]]
+              brushSelection && [
+                [props.x0, props.y0],
+                [props.x1, props.y1],
+              ]
             }
             onBrush={({ selection }) => {
               this.setState({
                 brushSelection: selection,
-                intermediateBrushSelection: null
+                intermediateBrushSelection: null,
               });
             }}
             onBrushEnd={({ selection }) => {
               if (!selection) {
                 this.setState({
                   brushSelection: null,
-                  intermediateBrushSelection: null
+                  intermediateBrushSelection: null,
                 });
                 return;
               }
 
               const [[x0, y0], [x1, y1]] = selection;
-              const [rx0, rx1] = [x0, x1].map(d =>
+              const [rx0, rx1] = [x0, x1].map((d) =>
                 Math.round(this.scale.invert(d))
               );
 
               this.setState({
-                brushSelection: [[x0, y0], [x1, y1]],
-                intermediateBrushSelection: [[x0, y0], [x1, y1]]
+                brushSelection: [
+                  [x0, y0],
+                  [x1, y1],
+                ],
+                intermediateBrushSelection: [
+                  [x0, y0],
+                  [x1, y1],
+                ],
               });
 
               if (onBrushEnd) {
                 onBrushEnd({
                   startIndex: rx0,
-                  endIndex: rx1
+                  endIndex: rx1,
                 });
               }
             }}
@@ -215,6 +234,7 @@ export default class Brush extends PureComponent {
       </Spring>
     );
   }
+
   render() {
     const { data, config, width, height } = this.props;
     const { ready } = this.state;
@@ -227,7 +247,7 @@ export default class Brush extends PureComponent {
           className="brush--svg"
           width={width}
           height={height}
-          ref={input => {
+          ref={(input) => {
             this.svg = input;
           }}
         >
