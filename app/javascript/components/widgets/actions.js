@@ -22,9 +22,8 @@ export const getWidgetsData = createThunkAction(
           })
         );
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(setWidgetsLoading({ error: true, loading: false }));
-        console.info(error);
       });
   }
 );

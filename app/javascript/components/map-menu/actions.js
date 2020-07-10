@@ -1,5 +1,4 @@
 import { createAction, createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 import request from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
@@ -7,19 +6,7 @@ import uniqBy from 'lodash/uniqBy';
 
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
-
-export const setMenuSettings = createThunkAction(
-  'setMenuSettings',
-  change => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'menu',
-        change,
-        state
-      })
-    );
-  }
-);
+export const setMenuSettings = createAction('setMenuSettings');
 
 const getSearchSQL = (string, nameString, nameStringSimple) => {
   const words = string && string.split(/,| |, /);

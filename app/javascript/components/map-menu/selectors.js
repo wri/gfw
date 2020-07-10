@@ -10,11 +10,9 @@ import {
 } from 'components/map/selectors';
 import { getEmbed, getShowRecentImagery } from 'pages/map/selectors';
 
-import { initialState } from './reducers';
 import { datasetsSections, searchSections, mobileSections } from './sections';
 
-const getMenuUrlState = state =>
-  state.location && state.location.query && state.location.query.menu;
+const getMenuSettings = state => state.mapMenu?.settings || {};
 const getCountries = state => state.countryData && state.countryData.countries;
 const getLoading = state =>
   (state.datasets && state.datasets.loading) ||
@@ -22,12 +20,6 @@ const getLoading = state =>
 const getAnalysisLoading = state => state.analysis && state.analysis.loading;
 const getDatasets = state => state.datasets && state.datasets.data;
 const getLocation = state => state.location && state.location.payload;
-
-// setting from state
-export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
-  ...initialState,
-  ...urlState
-}));
 
 export const getMenuSection = createSelector(
   [getMenuSettings],
@@ -78,7 +70,7 @@ export const getUnselectedCountries = createSelector(
   [getAvailableCountries, getSelectedCountries],
   (countries, selectedCountries) => {
     if (!countries) return null;
-    return countries.filter(c => !selectedCountries.includes(c.value));
+    return countries.filter(c => !selectedCountries?.includes(c.value));
   }
 );
 
@@ -86,7 +78,7 @@ export const getActiveCountries = createSelector(
   [getCountries, getSelectedCountries],
   (countries, selectedCountries) => {
     if (!countries) return null;
-    return countries.filter(c => selectedCountries.includes(c.value));
+    return countries.filter(c => selectedCountries?.includes(c.value));
   }
 );
 

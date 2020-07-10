@@ -1,7 +1,6 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { all, spread } from 'axios';
 import minBy from 'lodash/minBy';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 
@@ -17,21 +16,10 @@ export const setRecentImageryDataStatus = createAction(
   'setRecentImageryDataStatus'
 );
 export const resetRecentImageryData = createAction('resetRecentImageryData');
+export const setRecentImagerySettings = createAction('setRecentImagerySettings');
 export const setRecentImageryLoading = createAction('setRecentImageryLoading');
 export const setRecentImageryLoadingMoreTiles = createAction(
   'setRecentImageryLoadingMoreTiles'
-);
-
-export const setRecentImagerySettings = createThunkAction(
-  'setRecentImagerySettings',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'recentImagery',
-        change,
-        state
-      })
-    )
 );
 
 export const getRecentImageryData = createThunkAction(
@@ -69,9 +57,8 @@ export const getRecentImageryData = createThunkAction(
             dispatch(setRecentImageryLoading({ loading: false, error: false }));
           }
         })
-        .catch(error => {
+        .catch(() => {
           dispatch(setRecentImageryLoading({ loading: false, error: true }));
-          console.info(error);
         });
     }
   }
