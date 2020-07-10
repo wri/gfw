@@ -2,28 +2,28 @@ import { createAction, createThunkAction } from 'utils/redux';
 
 import { checkLoggedIn, getProfile } from 'services/user';
 
+const isServer = typeof window === 'undefined';
+
 export const setMyGFWLoading = createAction('setMyGFWLoading');
 export const setMyGFW = createAction('setMyGFW');
 
-const isServer = typeof window === 'undefined';
-
 export const getUserProfile = createThunkAction(
   'getUserProfile',
-  () => dispatch => {
-    const token = !isServer && localStorage.getItem('userToken');
+  (urlToken) => (dispatch) => {
+    const token = !isServer && (urlToken || localStorage.getItem('userToken'));
     if (token) {
       dispatch(setMyGFWLoading({ loading: true, error: false }));
-      checkLoggedIn()
-        .then(authResponse => {
+      checkLoggedIn(token)
+        .then((authResponse) => {
           getProfile(authResponse.data.id)
-            .then(response => {
+            .then((response) => {
               if (response.status < 400 && response.data) {
                 const { data } = response.data;
                 dispatch(
                   setMyGFW({
                     loggedIn: true,
                     id: authResponse.data.id,
-                    ...(data && data.attributes)
+                    ...(data && data.attributes),
                   })
                 );
               }
@@ -32,7 +32,7 @@ export const getUserProfile = createThunkAction(
               dispatch(
                 setMyGFW({
                   loggedIn: true,
-                  ...authResponse.data
+                  ...authResponse.data,
                 })
               );
             });
