@@ -1,9 +1,23 @@
 import { createThunkAction, createAction } from 'utils/redux';
 import request from 'utils/request';
-import { SEARCH } from 'router';
 
 export const setSearchData = createAction('setSearchData');
 export const setSearchLoading = createAction('setSearchLoading');
+
+export const setQueryToUrl = createThunkAction(
+  'setQueryToUrl',
+  ({ query }) => (dispatch, getState) => {
+    const { location } = getState();
+    const { query: oldQuery } = location || {};
+    dispatch({
+      type: 'search',
+      query: {
+        ...oldQuery,
+        query,
+      },
+    });
+  }
+);
 
 export const getSearch = createThunkAction(
   'getSearch',
@@ -19,32 +33,16 @@ export const getSearch = createThunkAction(
             cx: process.env.GOOGLE_CUSTOM_SEARCH_CX,
             q: query,
             start: page || 1,
-            filter: 0
-          }
+            filter: 0,
+          },
         })
-        .then(response => {
+        .then((response) => {
           const { items } = response.data || {};
           dispatch(setSearchData(items || []));
         })
-        .catch(error => {
+        .catch(() => {
           dispatch(setSearchLoading(false));
-          console.error(error);
         });
     }
-  }
-);
-
-export const setQueryToUrl = createThunkAction(
-  'setQueryToUrl',
-  ({ query }) => (dispatch, getState) => {
-    const { location } = getState();
-    const { query: oldQuery } = location || {};
-    dispatch({
-      type: SEARCH,
-      query: {
-        ...oldQuery,
-        query
-      }
-    });
   }
 );

@@ -78,11 +78,11 @@ class SearchPage extends PureComponent {
                         <div
                           className="item-image"
                           style={{
-                            backgroundImage: `url(${
+                            backgroundImage: `url('${
                               item.pagemap &&
                               item.pagemap.cse_image &&
                               item.pagemap.cse_image[0].src
-                            })`,
+                            }')`,
                           }}
                         />
                       )}
