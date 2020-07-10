@@ -7,17 +7,9 @@ import dashboardsEvents from 'analytics/dashboards';
 import topicsEvents from 'analytics/topics';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
-let gaInitialized = false;
 
 export const initGA = () => {
-  if (ANALYTICS_PROPERTY_ID) {
-    if (!gaInitialized) {
-      ReactGA.initialize(ANALYTICS_PROPERTY_ID, {
-        debug: false
-      });
-      gaInitialized = true;
-    }
-  }
+  ReactGA.initialize(ANALYTICS_PROPERTY_ID);
 };
 
 const events = {
@@ -28,29 +20,23 @@ const events = {
 };
 
 export const handlePageTrack = () => {
-  initGA();
-  if (gaInitialized) {
-    const url = `${window.location.pathname}${window.location.search}`;
-    ReactGA.set({ page: url });
-    ReactGA.pageview(url);
-  }
+  const url = `${window.location.pathname}${window.location.search}`;
+  ReactGA.set({ page: url });
+  ReactGA.pageview(url);
 };
 
 export const handleMapLatLonTrack = location => {
-  if (gaInitialized) {
-    const { query } = location || {};
-    const { map } = query || {};
-    const position =
-      map && `/location/${map.center.lat}/${map.center.lng}/${map.zoom}`;
-    if (position) {
-      ReactGA.pageview(
-        `${position}${window.location.pathname}?${JSON.stringify(
-          decodeUrlForState(window.location.search)
-        )}`
-      );
-    }
+  const { query } = location || {};
+  const { map } = query || {};
+  const position =
+    map && `/location/${map.center.lat}/${map.center.lng}/${map.zoom}`;
+  if (position) {
+    ReactGA.pageview(
+      `${position}${window.location.pathname}?${JSON.stringify(
+        decodeUrlForState(window.location.search)
+      )}`
+    );
   }
 };
 
-export const track = (key, data) =>
-  ReactGA && events[key] && ReactGA.event({ ...events[key], ...data });
+export const track = (key, data) => events[key] && ReactGA.event({ ...events[key], ...data });

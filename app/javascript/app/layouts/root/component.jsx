@@ -1,134 +1,110 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
-import { SCREEN_M } from 'utils/constants';
-import universal from 'react-universal-component';
 import cx from 'classnames';
-import { handlePageTrack } from 'app/analytics';
+import { initGA, handlePageTrack } from 'app/analytics';
+import checkBrowser from 'utils/browser';
+import { MediaContextProvider } from 'utils/responsive';
 
-import Loader from 'components/ui/loader';
-import Meta from 'components/meta';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import Cookies from 'components/cookies';
-import Button from 'components/ui/button';
-import MapMenu from 'components/map-menu';
+import ContactUsModal from 'components/modals/contact-us';
+import NavLink from 'components/nav-link';
 import ClimateModal from 'components/modals/climate';
 import FiresModal from 'components/modals/fires';
-import ErrorPage from 'pages/error';
 
-import MyGFWProvider from 'providers/mygfw-provider';
-import gfwLogo from 'assets/logos/gfw.png';
+import Head from 'app/head';
 
 import 'styles/styles.scss';
 import './styles.scss';
 
-const universalOptions = {
-  loading: <Loader className="page-loader" />,
-  minDelay: 200,
-  error: (
-    <ErrorPage
-      title="Sorry, something went wrong."
-      desc="Try refreshing the page or check your connection."
-    />
-  )
-};
-
-const PageComponent = universal(
-  ({ path } /* webpackChunkName: "[request]" */) =>
-    import(`../../../pages/${path}/index.js`),
-  universalOptions
-);
-
 class App extends PureComponent {
   static propTypes = {
-    route: PropTypes.object.isRequired,
     loggedIn: PropTypes.bool,
-    isGFW: PropTypes.bool,
-    isTrase: PropTypes.bool,
-    metadata: PropTypes.object,
-    authenticating: PropTypes.bool
+    children: PropTypes.node,
+    router: PropTypes.object,
+    fullScreen: PropTypes.bool,
+    showHeader: PropTypes.bool,
+    showFooter: PropTypes.bool,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    keywords: PropTypes.string,
+    noIndex: PropTypes.bool,
+    embed: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    showHeader: true,
+    showFooter: true,
   };
 
   componentDidMount() {
+    const { router } = this.props;
+
+    if (!window.GA_INITIALIZED) {
+      initGA();
+      window.GA_INITIALIZED = true;
+    }
     handlePageTrack();
+
+    const isValidBrowser = checkBrowser();
+    if (!isValidBrowser) {
+      router.push('/browser-support');
+    }
   }
 
   render() {
     const {
-      route,
       loggedIn,
-      metadata,
-      isGFW,
-      isTrase,
-      authenticating
+      children,
+      fullScreen,
+      showHeader,
+      showFooter,
+      embed,
+      title,
+      description,
+      keywords,
+      noIndex,
     } = this.props;
-    const { component, embed, fullScreen } = route;
-    const isMapPage = component === 'map';
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div
-            className={cx('l-root', {
-              '-full-screen': fullScreen,
-              '-embed': embed,
-              '-trase': isTrase
-            })}
-          >
-            {!embed && <Header loggedIn={loggedIn} fullScreen={fullScreen} />}
-            {embed && (
-              <a className="page-logo" href="/" target="_blank">
-                <img src={gfwLogo} alt="Global Forest Watch" />
-              </a>
-            )}
-            {isMapPage && (
-              <MapMenu
-                className="map-menu"
-                isDesktop={isDesktop}
-                embed={embed}
+      <>
+        <Head
+          title={title}
+          description={description}
+          keywords={keywords}
+          noIndex={noIndex}
+        />
+        <MediaContextProvider>
+          <div className={cx('l-root', { '-full-screen': fullScreen })}>
+            {showHeader && (
+              <Header
+                loggedIn={loggedIn}
+                fullScreen={fullScreen}
+                NavLinkComponent={({
+                  children: headerChildren,
+                  className,
+                  ...props
+                }) => (
+                  <NavLink {...props}>
+                    <a className={className}>{headerChildren}</a>
+                  </NavLink>
+                )}
               />
             )}
-            <div className={cx('page', { mobile: !isDesktop && !isMapPage })}>
-              {authenticating ? (
-                <Loader className="page-loader" />
-              ) : (
-                <PageComponent
-                  path={route.component}
-                  sections={route.sections}
-                  isTrase={isTrase}
-                  isDesktop={isDesktop}
-                  metadata={metadata}
-                  loggedIn={loggedIn}
-                />
-              )}
-            </div>
-            {!embed && <MyGFWProvider />}
-            {embed &&
-              !isGFW &&
-              !isTrase && (
-              <div className="embed-footer">
-                <p>For more info</p>
-                <Button
-                  className="embed-btn"
-                  extLink={window.location.href.replace('/embed', '')}
-                >
-                    EXPLORE ON GFW
-                </Button>
-              </div>
-            )}
-            <Meta {...metadata} />
+            <div className="page">{children}</div>
             <Cookies />
-            {!route.hideFooter && !embed && <Footer />}
             {['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && !embed && (
               <FiresModal />
             )}
-            {!embed &&
+            {!embed && (
               <ClimateModal />
-            }
+            )}
+            <ContactUsModal />
+            {showFooter && <Footer />}
           </div>
-        )}
-      </MediaQuery>
+        </MediaContextProvider>
+      </>
     );
   }
 }

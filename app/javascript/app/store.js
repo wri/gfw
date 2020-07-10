@@ -1,17 +1,19 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
 import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
-import reducerRegistry from './registry';
-import router from './router';
+import locationReduxModule from 'providers/location-provider';
 
-// register fixed reducers
-reducerRegistry.register('location', router.reducer);
+import reducerRegistry from './registry';
+
+const isServer = typeof window === 'undefined';
+
 reducerRegistry.registerModule('myGfw', myGfwReduxModule);
+reducerRegistry.registerModule('location', locationReduxModule);
 
 const initialReducers = combineReducers(reducerRegistry.getReducers());
 
-const reduxDevTools =
+const reduxDevTools = !isServer &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
     maxAge: 10,
@@ -36,12 +38,12 @@ const reduxDevTools =
 
 const composeEnhancers =
   (process.env.NODE_ENV === 'development' && reduxDevTools) || compose;
-const middlewares = [thunk, router.middleware];
 
-export default () => {
+export default (initialState) => {
   const store = createStore(
     initialReducers,
-    composeEnhancers(router.enhancer, applyMiddleware(...middlewares))
+    initialState,
+    composeEnhancers(applyMiddleware(thunkMiddleware))
   );
   reducerRegistry.setChangeListener(asyncReducers =>
     store.replaceReducer(combineReducers(asyncReducers))

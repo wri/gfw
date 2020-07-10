@@ -8,7 +8,6 @@ import {
   POLITICAL_BOUNDARIES,
   RECENT_SATELLITE_IMAGERY
 } from 'data/layers';
-import { MAP, MAP_EMBED } from './router';
 
 const paramKeys = [
   'map',
