@@ -64,7 +64,7 @@ class MyApp extends App {
       type: 'setLocation',
       payload: {
         pathname,
-        params: location,
+        payload: location,
         search,
         ...(!isEmpty(decodedQuery) && { query: decodedQuery }),
       },
