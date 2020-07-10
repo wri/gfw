@@ -1,8 +1,0 @@
-{
-  "plugins": {
-    "postcss-cssnext": {
-      "warnForDuplicates": false,
-      "browsers": ["> 1%", "last 2 versions", "Firefox ESR", "Safari >= 8", "IE >= 11"]
-    }
-  }
-}

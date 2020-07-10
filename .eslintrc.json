@@ -1,0 +1,54 @@
+{
+  "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "mocha": true
+  },
+  "extends": [
+      "plugin:react/recommended",
+      "plugin:cypress/recommended",
+      "airbnb",
+      "prettier"
+  ],
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "react",
+      "prettier",
+      "react-hooks"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/static-property-placement": "off",
+    "react/jsx-filename-extension": "off",
+    "react/forbid-prop-types": "off",
+    "no-param-reassign": "off",
+    "no-underscore-dangle": "off",
+    "import/no-unresolved": "off",
+    "react/state-in-constructor": "off",
+    "react/jsx-fragments": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    // to be removed once ready
+    "react/require-default-props": "off",
+    "react/button-has-type": "off",
+    "react/destructuring-assignment": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "react/no-access-state-in-setstate": "off",
+    "react/no-array-index-key": "off",
+    "no-restricted-globals": "off",
+    "react/sort-comp": "off",
+    "import/prefer-default-export": "off"
+  }
+}

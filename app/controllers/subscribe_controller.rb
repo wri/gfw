@@ -1,2 +1,0 @@
-class SubscribeController < ApplicationController
-end

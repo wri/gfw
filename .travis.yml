@@ -1,19 +1,19 @@
-language: ruby
-
+language: node_js
 node_js:
-  - 10.15.2
-
-rvm:
-  - 2.4.0
-
+  - 10
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
 cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
   yarn: true
-  bundler: true
   directories:
-    - node_modules
-
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
 install:
-  - bundle install
-
+  - yarn
 script:
-  - yarn ci
+  - yarn test:ci
