@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { handlePageTrack } from 'app/analytics';
 
-import treeImage from 'assets/icons/error.svg';
+import treeImage from 'assets/icons/error.svg?sprite';
 import Search from 'components/ui/search';
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
@@ -13,7 +13,7 @@ import './styles.scss';
 
 class SearchPage extends PureComponent {
   state = {
-    search: this.props.query || ''
+    search: this.props.query || '',
   };
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class SearchPage extends PureComponent {
     }
   }
 
-  handleSubmit = search => {
+  handleSubmit = (search) => {
     this.setState({ search });
     this.props.getSearch({ query: search, page: 1 });
     handlePageTrack();
@@ -55,7 +55,7 @@ class SearchPage extends PureComponent {
                 {!loading &&
                   data &&
                   !!data.length &&
-                  data.map(item => (
+                  data.map((item) => (
                     <div
                       key={`${item.title}-${item.cacheId}`}
                       className="search-item"
@@ -64,7 +64,7 @@ class SearchPage extends PureComponent {
                         <a
                           href={item.link}
                           target="_blank"
-                          rel="noopener nofollower"
+                          rel="noopener noreferrer"
                           className="notranslate"
                         >
                           <h3>{item.title}</h3>
@@ -78,16 +78,17 @@ class SearchPage extends PureComponent {
                         <div
                           className="item-image"
                           style={{
-                            backgroundImage: `url(${item.pagemap &&
+                            backgroundImage: `url(${
+                              item.pagemap &&
                               item.pagemap.cse_image &&
-                              item.pagemap.cse_image[0].src})`
+                              item.pagemap.cse_image[0].src
+                            })`,
                           }}
                         />
                       )}
                     </div>
                   ))}
-                {!loading &&
-                  (!data || data.length === 0) && (
+                {!loading && (!data || data.length === 0) && (
                   <div className="no-results">
                     {this.state.search && (
                       <Icon icon={treeImage} className="error-tree" />
@@ -113,7 +114,7 @@ SearchPage.propTypes = {
   data: PropTypes.array,
   isDesktop: PropTypes.bool,
   loading: PropTypes.bool,
-  getSearch: PropTypes.func
+  getSearch: PropTypes.func,
 };
 
 export default SearchPage;

@@ -6,7 +6,7 @@ import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import infoIcon from 'assets/icons/info.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
 import { Tooltip } from 'react-tippy';
 
 import './styles.scss';
@@ -37,23 +37,23 @@ class TopicsImage extends PureComponent {
     lottie.destroy();
   }
 
-  destroyAnimations = animations => {
+  destroyAnimations = (animations) => {
     animations.forEach(
-      a =>
+      (a) =>
         this.animations &&
         this.animations[a.id] &&
         this.animations[a.id].destroy()
     );
   };
 
-  renderAnimations = animations => {
-    animations.forEach(a => {
+  renderAnimations = (animations) => {
+    animations.forEach((a) => {
       if (a.type !== 'svg') {
         this.animations[a.id] = lottie.loadAnimation({
           wrapper: this.svgWrappers[a.id],
           animType: 'svg',
           loop: true,
-          animationData: a.data
+          animationData: a.data,
         });
       }
     });
@@ -67,61 +67,60 @@ class TopicsImage extends PureComponent {
       prompts,
       animations,
       leaving,
-      topic
+      topic,
     } = this.props;
 
     return (
       <div className="c-topics-image">
         <img
-          {...img2x && {
+          {...(img2x && {
             srcSet: `${img2x} 2x, ${img1x} 1x`,
-            src: `${img1x} 1x`
-          }}
-          {...!img2x && {
-            src: img1x
-          }}
+            src: `${img1x} 1x`,
+          })}
+          {...(!img2x && {
+            src: img1x,
+          })}
           alt={description}
         />
         {animations &&
-          animations.map(
-            a =>
-              (a.type === 'svg' ? (
-                <svg
-                  key={a.id}
-                  className={a.className || ''}
-                  viewBox={a.viewBox || '0 0 32 32'}
-                  style={{
-                    left: `${a.position[0]}%`,
-                    top: `${a.position[1]}%`
-                  }}
-                >
-                  <use xlinkHref={`#${a.data.id || a.data}`} />
-                </svg>
-              ) : (
-                <div
-                  key={a.id}
-                  className="svg-animation"
-                  id={a.id}
-                  style={{
-                    zIndex: a.behind ? 0 : 2
-                  }}
-                  ref={ref => {
-                    this.svgWrappers = {
-                      ...this.svgWrappers,
-                      [a.id]: ref
-                    };
-                  }}
-                />
-              ))
+          animations.map((a) =>
+            a.type === 'svg' ? (
+              <svg
+                key={a.id}
+                className={a.className || ''}
+                viewBox={a.viewBox || '0 0 32 32'}
+                style={{
+                  left: `${a.position[0]}%`,
+                  top: `${a.position[1]}%`,
+                }}
+              >
+                <use xlinkHref={`#${a.data.id || a.data}`} />
+              </svg>
+            ) : (
+              <div
+                key={a.id}
+                className="svg-animation"
+                id={a.id}
+                style={{
+                  zIndex: a.behind ? 0 : 2,
+                }}
+                ref={(ref) => {
+                  this.svgWrappers = {
+                    ...this.svgWrappers,
+                    [a.id]: ref,
+                  };
+                }}
+              />
+            )
           )}
         {prompts &&
-          prompts.map(p => (
+          prompts.map((p) => (
             <Fragment key={p.id}>
               <Tooltip
                 className="image-info"
                 style={{
                   left: `${p.position[0]}%`,
-                  top: `${p.position[1]}%`
+                  top: `${p.position[1]}%`,
                 }}
                 theme="light"
                 interactive
@@ -129,7 +128,7 @@ class TopicsImage extends PureComponent {
                 disabled={leaving}
                 sticky
                 stickyDuration={0}
-                html={
+                html={(
                   <div className="c-topics-info-tooltip">
                     <p>{p.content}</p>
                     {p.link && (
@@ -138,7 +137,7 @@ class TopicsImage extends PureComponent {
                         extLink={p.link}
                         onClick={() => {
                           track('topicsImageBubble', {
-                            label: `${topic}: ${p.content}`
+                            label: `${topic}: ${p.content}`,
                           });
                         }}
                       >
@@ -146,7 +145,7 @@ class TopicsImage extends PureComponent {
                       </Button>
                     )}
                   </div>
-                }
+                )}
               >
                 <Button className="info-btn" theme="theme-button-small square">
                   <Icon icon={infoIcon} />
@@ -166,7 +165,7 @@ TopicsImage.propTypes = {
   prompts: PropTypes.array,
   animations: PropTypes.array,
   leaving: PropTypes.bool,
-  topic: PropTypes.string
+  topic: PropTypes.string,
 };
 
 export default TopicsImage;

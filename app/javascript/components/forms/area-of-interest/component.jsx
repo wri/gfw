@@ -19,11 +19,11 @@ import Icon from 'components/ui/icon';
 
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
-import deleteIcon from 'assets/icons/delete.svg';
+import deleteIcon from 'assets/icons/delete.svg?sprite';
 
 import {
   email as validateEmail,
-  validateURL
+  validateURL,
 } from 'components/forms/validations';
 
 import './styles.scss';
@@ -31,17 +31,17 @@ import './styles.scss';
 const confirmations = {
   saved: {
     title: 'Your area has been saved',
-    description: 'You can view all your areas in My GFW'
+    description: 'You can view all your areas in My GFW',
   },
   savedWithSub: {
     title: 'Your area has been saved',
     description:
-      "<b>Check your email and click on the link to confirm your subscription.</b> If you don't see an email, check your junk or spam email folder."
+      "<b>Check your email and click on the link to confirm your subscription.</b> If you don't see an email, check your junk or spam email folder.",
   },
   deleted: {
     title: 'This area has been deleted from your My GFW.',
-    error: true
-  }
+    error: true,
+  },
 };
 
 class AreaOfInterestForm extends PureComponent {
@@ -54,39 +54,39 @@ class AreaOfInterestForm extends PureComponent {
     clearAfterDelete: PropTypes.bool,
     deleteAreaOfInterest: PropTypes.func,
     viewAfterSave: PropTypes.bool,
-    closeForm: PropTypes.func
+    closeForm: PropTypes.func,
   };
 
   state = {
     webhookError: false,
     webhookSuccess: false,
     testingWebhook: false,
-    deleted: false
+    deleted: false,
   };
 
-  testWebhook = url => {
+  testWebhook = (url) => {
     this.setState({
       webhookError: false,
       webhookSuccess: false,
-      testingWebhook: true
+      testingWebhook: true,
     });
     request({
       method: 'POST',
-      url
+      url,
     })
       .then(() => {
         setTimeout(() => {
           this.setState({
             webhookError: false,
             webhookSuccess: true,
-            testingWebhook: false
+            testingWebhook: false,
           });
         }, 300);
         setTimeout(() => {
           this.setState({
             webhookError: false,
             webhookSuccess: false,
-            testingWebhook: false
+            testingWebhook: false,
           });
         }, 2500);
       })
@@ -95,14 +95,14 @@ class AreaOfInterestForm extends PureComponent {
           this.setState({
             webhookError: true,
             webhookSuccess: false,
-            testingWebhook: false
+            testingWebhook: false,
           });
         }, 300);
         setTimeout(() => {
           this.setState({
             webhookError: false,
             webhookSuccess: false,
-            testingWebhook: false
+            testingWebhook: false,
           });
         }, 2500);
       });
@@ -118,21 +118,20 @@ class AreaOfInterestForm extends PureComponent {
       canDelete,
       viewAfterSave,
       title,
-      closeForm
+      closeForm,
     } = this.props;
     const {
       webhookError,
       webhookSuccess,
       testingWebhook,
-      deleted
+      deleted,
     } = this.state;
 
     return (
       <Fragment>
         <Form
-          onSubmit={values =>
-            saveAreaOfInterest({ ...initialValues, ...values, viewAfterSave })
-          }
+          onSubmit={(values) =>
+            saveAreaOfInterest({ ...initialValues, ...values, viewAfterSave })}
           initialValues={initialValues}
           render={({
             handleSubmit,
@@ -141,11 +140,11 @@ class AreaOfInterestForm extends PureComponent {
             submitFailed,
             submitError,
             submitSucceeded,
-            values: { webhookUrl, alerts }
+            values: { webhookUrl, alerts },
           }) => {
             let metaKey = 'saved';
             if (alerts && !!alerts.length) metaKey = 'savedWithSub';
-            if (deleted && (initialValues && !initialValues.id)) {
+            if (deleted && initialValues && !initialValues.id) {
               metaKey = 'deleted';
             }
             const confirmationMeta = confirmations[metaKey];
@@ -212,32 +211,30 @@ class AreaOfInterestForm extends PureComponent {
                       infoClick={() =>
                         setModalSources({
                           open: true,
-                          source: 'webhookPreview'
-                        })
-                      }
+                          source: 'webhookPreview',
+                        })}
                       collapse
                     />
                     <div className="webhook-actions">
                       <button
                         className="test-webhook"
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
                           this.testWebhook(webhookUrl);
                         }}
                       >
-                        {!webhookError &&
-                          !webhookSuccess && <span>Test webhook</span>}
+                        {!webhookError && !webhookSuccess && (
+                          <span>Test webhook</span>
+                        )}
                         {testingWebhook && (
                           <Loader className="webhook-loader" />
                         )}
-                        {!testingWebhook &&
-                          webhookError && (
+                        {!testingWebhook && webhookError && (
                           <span className="wh-error">
-                              POST error. Check the URL or CORS policy.
+                            POST error. Check the URL or CORS policy.
                           </span>
                         )}
-                        {!testingWebhook &&
-                          webhookSuccess && (
+                        {!testingWebhook && webhookSuccess && (
                           <span className="wh-success">Success!</span>
                         )}
                       </button>
@@ -248,12 +245,12 @@ class AreaOfInterestForm extends PureComponent {
                       options={[
                         {
                           label: 'As soon as fires are detected',
-                          value: 'fireAlerts'
+                          value: 'fireAlerts',
                         },
                         {
                           label: 'As soon as forest change is detected',
-                          value: 'deforestationAlerts'
-                        }
+                          value: 'deforestationAlerts',
+                        },
                         // {
                         //   label: 'Monthly summary',
                         //   value: 'monthlySummary'
@@ -276,23 +273,21 @@ class AreaOfInterestForm extends PureComponent {
                       <Submit className="area-submit" submitting={submitting}>
                         save
                       </Submit>
-                      {canDelete &&
-                        initialValues &&
-                        initialValues.id && (
+                      {canDelete && initialValues && initialValues.id && (
                         <Button
                           className="delete-area"
                           theme="theme-button-clear"
-                          onClick={e => {
+                          onClick={(e) => {
                             e.preventDefault();
                             deleteAreaOfInterest({
                               id: initialValues.id,
                               clearAfterDelete,
-                              callBack: () => this.setState({ deleted: true })
+                              callBack: () => this.setState({ deleted: true }),
                             });
                           }}
                         >
                           <Icon icon={deleteIcon} className="delete-icon" />
-                            Delete Area
+                          Delete Area
                         </Button>
                       )}
                     </div>

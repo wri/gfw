@@ -11,12 +11,12 @@ import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 
-import tagIcon from 'assets/icons/tag.svg';
-import downloadIcon from 'assets/icons/download.svg';
-import saveUserIcon from 'assets/icons/save-user.svg';
-import subscribedIcon from 'assets/icons/subscribed.svg';
-import pencilIcon from 'assets/icons/pencil.svg';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import tagIcon from 'assets/icons/tag.svg?sprite';
+import downloadIcon from 'assets/icons/download.svg?sprite';
+import saveUserIcon from 'assets/icons/save-user.svg?sprite';
+import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
+import pencilIcon from 'assets/icons/pencil.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
 
 class Header extends PureComponent {

@@ -5,17 +5,17 @@ import WidgetComposedChart from 'components/widget/components/widget-composed-ch
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import NoContent from 'components/ui/no-content';
 
-import './styles';
+import './styles.scss';
 
 class WidgetChartAndList extends PureComponent {
-  handleClick = payload => {
+  handleClick = (payload) => {
     const { setWidgetSettings, widget, parsePayload } = this.props;
     if (parsePayload) {
       const settings = parsePayload(payload);
       if (settings) {
         setWidgetSettings({
           value: { ...parsePayload(payload), page: 0 },
-          widget
+          widget,
         });
       }
     }
@@ -31,7 +31,7 @@ class WidgetChartAndList extends PureComponent {
       embed,
       settings,
       setWidgetSettings,
-      setWidgetsSettings
+      setWidgetsSettings,
     } = this.props;
     const { percentiles, list, barBackground } = data;
 
@@ -59,10 +59,12 @@ class WidgetChartAndList extends PureComponent {
         ) : (
           <div className="widget-combined-list">
             <NoContent>
-              No data in the{' '}
+              No data in the
+              {' '}
               {settings && settings.percentile
                 ? settings.percentile
-                : 'selected'}{' '}
+                : 'selected'}
+              {' '}
               category
             </NoContent>
           </div>
@@ -82,7 +84,7 @@ WidgetChartAndList.propTypes = {
   simple: PropTypes.bool,
   embed: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
-  parsePayload: PropTypes.func
+  parsePayload: PropTypes.func,
 };
 
 export default WidgetChartAndList;

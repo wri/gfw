@@ -8,8 +8,8 @@ import Icon from 'components/ui/icon';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
-import infoIcon from 'assets/icons/info.svg';
-import helpIcon from 'assets/icons/help.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import helpIcon from 'assets/icons/help.svg?sprite';
 
 import './styles.scss';
 
@@ -23,7 +23,7 @@ class LayerToggle extends PureComponent {
       small,
       tabIndex,
       showSubtitle,
-      category
+      category,
     } = this.props;
     const {
       name,
@@ -34,7 +34,7 @@ class LayerToggle extends PureComponent {
       active,
       color,
       citation,
-      description
+      description,
     } = data;
 
     return (
@@ -44,7 +44,8 @@ class LayerToggle extends PureComponent {
         <Toggle
           theme={!small ? 'toggle-large' : ''}
           value={active}
-          onToggle={value => onToggle({ dataset, layer, iso, category }, value)}
+          onToggle={(value) =>
+            onToggle({ dataset, layer, iso, category }, value)}
           color={color}
         />
         <div className="content">
@@ -59,41 +60,39 @@ class LayerToggle extends PureComponent {
             </div>
             {((!metadata && description) ||
               (metadata && typeof metadata === 'string')) && (
-                <Tooltip
-                  theme="tip"
-                  arrow
-                  hideOnClick
-                  position="top"
-                  disabled={!description}
-                  html={<Tip text={description} />}
-                  onShow={() =>
-                    track('hoverModalBtn', {
-                      label: `${layer}: ${metadata || description}`
-                    })
-                  }
-                >
-                  <Button
-                    className={`theme-button-tiny theme-button-grey-filled square info-button ${
-                      !metadata ? '-help' : ''
-                    }`}
-                    onClick={metadata && (() => onInfoClick(metadata))}
-                  >
-                    <Icon icon={metadata ? infoIcon : helpIcon} />
-                  </Button>
-                </Tooltip>
-              )}
-          </div>
-          {citation &&
-            showSubtitle && (
-              <div
-                className="subtitle"
-                onClick={() => onToggle({ dataset, layer, iso }, !active)}
-                role="button"
-                tabIndex={tabIndex}
+              <Tooltip
+                theme="tip"
+                arrow
+                hideOnClick
+                position="top"
+                disabled={!description}
+                html={<Tip text={description} />}
+                onShow={() =>
+                  track('hoverModalBtn', {
+                    label: `${layer}: ${metadata || description}`,
+                  })}
               >
-                {`${citation}`}
-              </div>
+                <Button
+                  className={`theme-button-tiny theme-button-grey-filled square info-button ${
+                    !metadata ? '-help' : ''
+                  }`}
+                  onClick={metadata && (() => onInfoClick(metadata))}
+                >
+                  <Icon icon={metadata ? infoIcon : helpIcon} />
+                </Button>
+              </Tooltip>
             )}
+          </div>
+          {citation && showSubtitle && (
+            <div
+              className="subtitle"
+              onClick={() => onToggle({ dataset, layer, iso }, !active)}
+              role="button"
+              tabIndex={tabIndex}
+            >
+              {`${citation}`}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -108,7 +107,7 @@ LayerToggle.propTypes = {
   onToggle: PropTypes.func,
   small: PropTypes.bool,
   tabIndex: PropTypes.number,
-  category: PropTypes.string
+  category: PropTypes.string,
 };
 
 export default LayerToggle;

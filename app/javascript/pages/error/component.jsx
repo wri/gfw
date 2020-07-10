@@ -2,14 +2,14 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
-import treeImage from 'assets/icons/error.svg';
+import treeImage from 'assets/icons/error.svg?sprite';
 
 import './styles.scss';
 
 class ErrorPage extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
-    desc: PropTypes.string
+    desc: PropTypes.string,
   };
 
   render() {

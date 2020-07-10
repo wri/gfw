@@ -16,7 +16,7 @@ import Partners from 'pages/about/section-partners';
 import How from 'pages/about/section-how';
 import Contact from 'pages/about/section-contact';
 
-import mailIcon from 'assets/icons/mail.svg';
+import mailIcon from 'assets/icons/mail.svg?sprite';
 import bgImage from './header-bg.jpg';
 import './styles.scss';
 

@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
-import infoIcon from 'assets/icons/info.svg';
-import helpIcon from 'assets/icons/help.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import helpIcon from 'assets/icons/help.svg?sprite';
 
 import './styles.scss';
 
-const Item = props => {
+const Item = (props) => {
   const {
     index,
     item,
@@ -21,13 +21,12 @@ const Item = props => {
     optionsAction,
     optionsActionKey,
     activeValue,
-    activeLabel
+    activeLabel,
   } = props;
   const { group, groupParent, label, metaKey, infoText } = item;
 
   const isActive =
-    (!showGroup && !group) ||
-    (group === showGroup || groupParent === showGroup);
+    (!showGroup && !group) || group === showGroup || groupParent === showGroup;
   const isGroupParentActive = groupParent && showGroup === groupParent;
   const isHighlighted =
     highlightedIndex === index ||
@@ -55,11 +54,11 @@ const Item = props => {
         {...getItemProps({
           item,
           index,
-          className: `c-selector-item ${isHighlighted ? 'highlight' : ''}`
+          className: `c-selector-item ${isHighlighted ? 'highlight' : ''}`,
         })}
-        {...!!groupParent && {
-          onClick: () => handleSelectGroup(item)
-        }}
+        {...(!!groupParent && {
+          onClick: () => handleSelectGroup(item),
+        })}
       >
         {label}
       </div>
@@ -72,8 +71,7 @@ const Item = props => {
           <Icon icon={infoIcon} className="info-icon" />
         </Button>
       )}
-      {!metaKey &&
-        infoText && (
+      {!metaKey && infoText && (
         <Button
           className="theme-button-small square info-button"
           tooltip={{ text: infoText }}
@@ -81,8 +79,7 @@ const Item = props => {
           <Icon icon={helpIcon} className="info-icon" />
         </Button>
       )}
-      {groupParent &&
-        showGroup !== groupParent && (
+      {groupParent && showGroup !== groupParent && (
         <Icon
           icon={arrowDownIcon}
           className={`group-icon ${
@@ -106,9 +103,9 @@ Item.propTypes = {
   activeValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.number
+    PropTypes.number,
   ]),
-  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Item;

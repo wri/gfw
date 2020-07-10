@@ -4,7 +4,7 @@ import Modal from 'components/modals/modal';
 import Button from 'components/ui/button';
 import Tip from 'components/ui/tip';
 
-// import dollarIcon from 'assets/icons/info.svg';
+// import dollarIcon from 'assets/icons/info.svg?sprite';
 import './styles.scss';
 
 class SectionProjectsModal extends PureComponent {
@@ -25,7 +25,7 @@ class SectionProjectsModal extends PureComponent {
                 theme: 'tip',
                 position: 'top',
                 arrow: true,
-                html: <Tip text="SMALL GRANTS FUND" />
+                html: <Tip text="SMALL GRANTS FUND" />,
               }}
             >
               $
@@ -54,7 +54,7 @@ class SectionProjectsModal extends PureComponent {
 SectionProjectsModal.propTypes = {
   data: PropTypes.object,
   isOpen: PropTypes.bool,
-  setSectionProjectsModal: PropTypes.func.isRequired
+  setSectionProjectsModal: PropTypes.func.isRequired,
 };
 
 export default SectionProjectsModal;

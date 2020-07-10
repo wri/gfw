@@ -6,10 +6,10 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import ModalAttributions from 'components/modals/attributions';
 
-import mapboxLogo from 'assets/logos/mapbox.svg';
+import mapboxLogo from 'assets/logos/mapbox.svg?sprite';
 import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
-import infoIcon from 'assets/icons/info.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
 
 import './styles.scss';
 
@@ -73,7 +73,7 @@ class MapAttributions extends PureComponent {
 MapAttributions.propTypes = {
   className: PropTypes.string,
   smallView: PropTypes.bool,
-  setModalAttributions: PropTypes.func
+  setModalAttributions: PropTypes.func,
 };
 
 export default MapAttributions;

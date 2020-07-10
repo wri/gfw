@@ -14,9 +14,9 @@ import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import profileIcon from 'assets/icons/profile.svg';
-import mailIcon from 'assets/icons/mail.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import profileIcon from 'assets/icons/profile.svg?sprite';
+import mailIcon from 'assets/icons/mail.svg?sprite';
 
 import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';

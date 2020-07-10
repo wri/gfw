@@ -7,14 +7,14 @@ import cx from 'classnames';
 import { isParent } from 'utils/dom';
 import { track } from 'app/analytics';
 
-import plusIcon from 'assets/icons/plus.svg';
-import minusIcon from 'assets/icons/minus.svg';
-import shareIcon from 'assets/icons/share.svg';
-import fullscreenIcon from 'assets/icons/fit-zoom.svg';
-import printIcon from 'assets/icons/print.svg';
-import helpIocn from 'assets/icons/help.svg';
-import globeIcon from 'assets/icons/globe.svg';
-import satelliteIcon from 'assets/icons/satellite.svg';
+import plusIcon from 'assets/icons/plus.svg?sprite';
+import minusIcon from 'assets/icons/minus.svg?sprite';
+import shareIcon from 'assets/icons/share.svg?sprite';
+import fullscreenIcon from 'assets/icons/fit-zoom.svg?sprite';
+import printIcon from 'assets/icons/print.svg?sprite';
+import helpIocn from 'assets/icons/help.svg?sprite';
+import globeIcon from 'assets/icons/globe.svg?sprite';
+import satelliteIcon from 'assets/icons/satellite.svg?sprite';
 
 import Basemaps from 'components/basemaps';
 import RecentImagerySettings from 'components/recent-imagery/components/recent-imagery-settings';
@@ -27,7 +27,7 @@ const isServer = typeof window === 'undefined';
 
 class MapControlsButtons extends PureComponent {
   state = {
-    pulseTourBtn: false
+    pulseTourBtn: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -45,7 +45,7 @@ class MapControlsButtons extends PureComponent {
     }
   }
 
-  setPulseTourBtn = pulseTourBtn => this.setState({ pulseTourBtn });
+  setPulseTourBtn = (pulseTourBtn) => this.setState({ pulseTourBtn });
 
   handleHidePanels = () => {
     const { setMainMapSettings, setMenuSettings, hidePanels } = this.props;
@@ -78,31 +78,31 @@ class MapControlsButtons extends PureComponent {
       recentImageryDataset,
       showRecentImagery,
       datasets,
-      viewport: { zoom }
+      viewport: { zoom },
     } = this.props;
     const newDatasets = showRecentImagery
-      ? datasets.filter(d => !d.isRecentImagery)
+      ? datasets.filter((d) => !d.isRecentImagery)
       : datasets.concat({
-        dataset: recentImageryDataset.dataset,
-        layers: [recentImageryDataset.layer],
-        visibility: true,
-        opacity: 1,
-        isRecentImagery: true
-      });
+          dataset: recentImageryDataset.dataset,
+          layers: [recentImageryDataset.layer],
+          visibility: true,
+          opacity: 1,
+          isRecentImagery: true,
+        });
     setMapSettings({
       datasets: newDatasets,
-      zoom: showRecentImagery && zoom < 9 ? 9 : zoom
+      zoom: showRecentImagery && zoom < 9 ? 9 : zoom,
     });
     if (showRecentImagery) {
       track('recentImageryEnable');
     }
   };
 
-  setBasemapsRef = ref => {
+  setBasemapsRef = (ref) => {
     this.basemapsRef = ref;
   };
 
-  setRecentImageryRef = ref => {
+  setRecentImageryRef = (ref) => {
     this.recentImageryRef = ref;
   };
 
@@ -110,7 +110,7 @@ class MapControlsButtons extends PureComponent {
     const {
       showRecentImagery,
       datasetsLoading,
-      setMainMapSettings
+      setMainMapSettings,
     } = this.props;
 
     return (
@@ -129,13 +129,13 @@ class MapControlsButtons extends PureComponent {
         }}
         disabled={datasetsLoading}
         tooltip={{
-          text: 'Recent Satellite Imagery'
+          text: 'Recent Satellite Imagery',
         }}
       >
         <Icon
           icon={satelliteIcon}
           className={cx('satellite-icon', {
-            '-active': showRecentImagery
+            '-active': showRecentImagery,
           })}
         />
       </Button>
@@ -167,21 +167,21 @@ class MapControlsButtons extends PureComponent {
               <span className="basemaps-btn-label">{activeBasemap.label}</span>
               {(activeBasemap.year || // satellite
                 activeBasemap.planetYear) && ( // planet imagery
-                  <span className="basemaps-btn-label-small">
-                    {activeBasemap.year ||
-                      (activeBasemap.period // YYYY
-                        ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
-                        : activeBasemap.planetYear)}
-                  </span>
-                )}
+                <span className="basemaps-btn-label-small">
+                  {activeBasemap.year ||
+                    (activeBasemap.period // YYYY
+                      ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
+                      : activeBasemap.planetYear)}
+                </span>
+              )}
             </div>
           </div>
         ) : (
-            <Icon
-              icon={globeIcon}
-              className={cx('globe-icon', { '-active': showBasemaps })}
-            />
-          )}
+          <Icon
+            icon={globeIcon}
+            className={cx('globe-icon', { '-active': showBasemaps })}
+          />
+        )}
       </Button>
     );
   };
@@ -224,13 +224,13 @@ class MapControlsButtons extends PureComponent {
         animateFill={false}
         open={showBasemaps}
         onRequestClose={this.onBasemapsRequestClose}
-        html={
+        html={(
           <Basemaps
             onClose={this.toggleBasemaps}
             ref={this.setBasemapsRef}
             isDesktop={this.props.isDesktop}
           />
-        }
+        )}
       >
         {this.renderBasemapsBtn()}
       </Tooltip>
@@ -238,7 +238,12 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderZoomButtons = () => {
-    const { viewport: { zoom }, setMapSettings, maxZoom, minZoom } = this.props;
+    const {
+      viewport: { zoom },
+      setMapSettings,
+      maxZoom,
+      minZoom,
+    } = this.props;
 
     return (
       <Fragment>
@@ -294,14 +299,17 @@ class MapControlsButtons extends PureComponent {
         onClick={() =>
           setShareModal({
             title: 'Share this view',
-            shareUrl: !isServer && (window.location.href.includes('embed')
-              ? window.location.href.replace('/embed', '')
-              : window.location.href),
-            embedUrl: !isServer && (window.location.href.includes('embed')
-              ? window.location.href
-              : window.location.href.replace('/map', '/embed/map'))
-          })
-        }
+            shareUrl:
+              !isServer &&
+              (window.location.href.includes('embed')
+                ? window.location.href.replace('/embed', '')
+                : window.location.href),
+            embedUrl:
+              !isServer &&
+              (window.location.href.includes('embed')
+                ? window.location.href
+                : window.location.href.replace('/map', '/embed/map')),
+          })}
         tooltip={{ text: 'Share or embed this view' }}
       >
         <Icon icon={shareIcon} />
@@ -329,20 +337,27 @@ class MapControlsButtons extends PureComponent {
       <Icon
         icon={helpIocn}
         className={cx('map-tour-icon', {
-          'pulse-tour-btn': this.state.pulseTourBtn
+          'pulse-tour-btn': this.state.pulseTourBtn,
         })}
       />
     </Button>
   );
 
   renderMapPosition = () => {
-    const { viewport: { zoom, latitude, longitude } } = this.props;
+    const {
+      viewport: { zoom, latitude, longitude },
+    } = this.props;
 
     return (
       <div className="map-position">
-        <span className="notranslate">zoom: {format('.2f')(zoom)}</span>
         <span className="notranslate">
-          lat, lon: {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
+          zoom:
+          {format('.2f')(zoom)}
+        </span>
+        <span className="notranslate">
+          lat, lon: 
+          {' '}
+          {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
       </div>
     );
@@ -377,7 +392,7 @@ class MapControlsButtons extends PureComponent {
             {this.renderShareButton()}
             {this.renderRecentImageryBtn()}
           </div>
-          )}
+        )}
       </div>
     );
   }
@@ -401,7 +416,7 @@ MapControlsButtons.propTypes = {
   datasets: PropTypes.array,
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
-  activeBasemap: PropTypes.object
+  activeBasemap: PropTypes.object,
 };
 
 export default connect()(MapControlsButtons);

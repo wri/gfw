@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
@@ -22,7 +22,7 @@ class TopicsHeader extends PureComponent {
       fullpageApi,
       title,
       handleSkipToTools,
-      isDesktop
+      isDesktop,
     } = this.props;
     return (
       <div className="c-topics-header">
@@ -69,7 +69,7 @@ TopicsHeader.propTypes = {
   fullpageApi: PropTypes.object,
   title: PropTypes.string,
   handleSkipToTools: PropTypes.func,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
 };
 
 export default TopicsHeader;

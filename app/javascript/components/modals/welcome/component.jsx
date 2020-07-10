@@ -6,8 +6,8 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import Checkbox from 'components/ui/checkbox';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import helpGreenIcon from 'assets/icons/help-green.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import helpGreenIcon from 'assets/icons/help-green.svg?sprite';
 
 import Modal from '../modal';
 
@@ -21,7 +21,7 @@ class ModalWelcome extends PureComponent {
       setModalWelcome,
       description,
       mapTourSteps,
-      showPrompts
+      showPrompts,
     } = this.props;
     return (
       <div className="modal-welcome-content">
@@ -34,7 +34,7 @@ class ModalWelcome extends PureComponent {
             setMapPromptsSettings({
               open: true,
               stepsKey: 'mapTour',
-              force: true
+              force: true,
             });
             track('welcomeModal', { label: 'Tour' });
           }}
@@ -52,11 +52,11 @@ class ModalWelcome extends PureComponent {
             onClick={() => setShowMapPrompts(!showPrompts)}
           >
             <Checkbox className="prompts-checkbox" value={showPrompts} />
-            {'Show me tips'}
+            Show me tips
           </button>
         </p>
         {mapTourSteps &&
-          mapTourSteps.map(step => (
+          mapTourSteps.map((step) => (
             <Button
               key={step.label}
               className="guide-btn"
@@ -67,7 +67,7 @@ class ModalWelcome extends PureComponent {
                   open: true,
                   stepsKey: step.promptKey,
                   stepIndex: 0,
-                  force: true
+                  force: true,
                 });
               }}
             >
@@ -105,7 +105,7 @@ ModalWelcome.propTypes = {
   setModalWelcome: PropTypes.func,
   mapTourSteps: PropTypes.array,
   setMapPromptsSettings: PropTypes.func,
-  setShowMapPrompts: PropTypes.func
+  setShowMapPrompts: PropTypes.func,
 };
 
 export default ModalWelcome;

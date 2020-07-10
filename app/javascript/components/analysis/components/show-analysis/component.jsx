@@ -15,9 +15,9 @@ import DownloadData from 'components/analysis/components/download-data';
 
 import screensImg1x from 'assets/images/aois/email-dashboard.png';
 import screensImg2x from 'assets/images/aois/email-dashboard@2x.png';
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
-import shareIcon from 'assets/icons/share.svg';
-import downloadIcon from 'assets/icons/download.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
+import shareIcon from 'assets/icons/share.svg?sprite';
+import downloadIcon from 'assets/icons/download.svg?sprite';
 
 import './styles.scss';
 

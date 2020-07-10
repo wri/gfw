@@ -4,7 +4,7 @@ import SlickSlider from 'react-slick';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import { SCREEN_M } from 'utils/constants';
 
 import './styles.scss';
@@ -15,7 +15,7 @@ const defaultSettings = {
   infinite: false,
   slidesToShow: 2,
   slidesToScroll: 1,
-  customPaging: () => <button />,
+  customPaging: () => <button aria-label="next page" />,
   nextArrow: (
     <Button theme="square">
       <Icon icon={arrowIcon} />
@@ -30,10 +30,10 @@ const defaultSettings = {
     {
       breakpoint: SCREEN_M,
       settings: {
-        slidesToShow: 1
-      }
-    }
-  ]
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 
 class Carousel extends PureComponent {
@@ -42,7 +42,7 @@ class Carousel extends PureComponent {
     const { className, children, settings } = this.props;
     const sliderSettings = {
       ...defaultSettings,
-      ...settings
+      ...settings,
     };
 
     return (
@@ -56,7 +56,7 @@ class Carousel extends PureComponent {
 Carousel.propTypes = {
   children: PropTypes.node.isRequired,
   settings: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Carousel;
