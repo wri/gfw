@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { initGA, handlePageTrack } from 'app/analytics';
-import checkBrowser from 'utils/browser';
+import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Header from 'components/header';
@@ -94,12 +94,9 @@ class App extends PureComponent {
             )}
             <div className="page">{children}</div>
             <Cookies />
-            {['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && !embed && (
-              <FiresModal />
-            )}
-            {!embed && (
-              <ClimateModal />
-            )}
+            {['staging', 'preproduction'].includes(process.env.FEATURE_ENV) &&
+              !embed && <FiresModal />}
+            {!embed && <ClimateModal />}
             <ContactUsModal />
             {showFooter && <Footer />}
           </div>
