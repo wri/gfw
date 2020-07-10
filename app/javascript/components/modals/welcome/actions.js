@@ -2,10 +2,14 @@ import { createAction, createThunkAction } from 'utils/redux';
 
 export const setModalWelcomeOpen = createAction('setModalWelcomeOpen');
 
+const isServer = typeof window === 'undefined';
+
 export const setModalWelcome = createThunkAction(
   'setModalWelcome',
   () => dispatch => {
-    localStorage.setItem('welcomeModalHidden', true);
+    if (!isServer) {
+      localStorage.setItem('welcomeModalHidden', true);
+    }
     dispatch(setModalWelcomeOpen(false));
   }
 );

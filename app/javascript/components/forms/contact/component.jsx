@@ -19,6 +19,8 @@ import { topics, tools } from './config';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class ContactForm extends PureComponent {
   static propTypes = {
     // sendContactForm: PropTypes.func.isRequired,
@@ -27,7 +29,7 @@ class ContactForm extends PureComponent {
   };
 
   sendContactForm = values => {
-    const language = window.Transifex
+    const language = !isServer && window.Transifex
       ? window.Transifex.live.getSelectedLanguageCode()
       : 'en';
 

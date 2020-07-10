@@ -11,6 +11,8 @@ import {
   getActiveArea
 } from 'providers/areas-provider/selectors';
 
+const isServer = typeof window === 'undefined';
+
 // get list data
 export const selectLocation = state => state.location && state.location.payload;
 export const selectLoading = state =>
@@ -157,7 +159,7 @@ export const getShareData = createSelector(
   [getAdminsSelected, selectLocation],
   (adminsSelected, location) => ({
     title: location.type === 'aoi' ? 'Share this area' : 'Share this Dashboard',
-    shareUrl: `${window.location.href}`,
+    shareUrl: !isServer && `${window.location.href}`,
     socialText: `${(adminsSelected &&
       adminsSelected.adm0 &&
       `${adminsSelected.adm0.label}'s`) ||

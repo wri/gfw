@@ -14,6 +14,8 @@ import { email } from 'components/forms/validations';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 const AUTH_URL = `${process.env.GFW_API}/auth`;
 
 const socialButtons = [
@@ -43,10 +45,6 @@ class LoginForm extends PureComponent {
 
   state = {
     showForm: 'login'
-  };
-
-  onSuccess = message => {
-    this.setState({ successMessage: message });
   };
 
   render() {
@@ -150,7 +148,7 @@ class LoginForm extends PureComponent {
                           extLink={`${AUTH_URL}/${
                             s.value
                           }?applications=gfw&token=true&callbackUrl=${encodeURIComponent(
-                            window.location.href
+                            !isServer && window.location.href
                           )}`}
                         >
                           Login with {s.label}

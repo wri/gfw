@@ -19,6 +19,8 @@ import './styles.scss';
 const { GFW_API } = process.env;
 const GLAD_ALERTS_WIDGET = 'gladAlerts';
 
+const isServer = typeof window === 'undefined';
+
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     getDataURL: PropTypes.func,
@@ -80,7 +82,7 @@ class WidgetDownloadButton extends PureComponent {
       metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${
         metaKey
       }`,
-      link: window.location.href
+      link: !isServer && window.location.href
     };
 
     const metadataFile = Object.entries(metadata)

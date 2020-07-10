@@ -9,11 +9,13 @@ import techLogo from './img/GFW_TECH_logo.png';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class SectionAbout extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { results, sgfBenefits, fellowshipBenefits } = this.props;
-    const anchorId = window.location.hash;
+    const anchorId = !isServer && window.location.hash;
     const anchor =
       anchorId && document.getElementById(anchorId.replace('#', ''));
 

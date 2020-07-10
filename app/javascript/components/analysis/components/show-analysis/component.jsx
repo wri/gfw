@@ -21,6 +21,8 @@ import downloadIcon from 'assets/icons/download.svg';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class ShowAnalysis extends PureComponent {
   static propTypes = {
     data: PropTypes.array,
@@ -138,14 +140,13 @@ class ShowAnalysis extends PureComponent {
                   onClick={() =>
                     setShareModal({
                       title: 'Share this view',
-                      shareUrl: window.location.href.includes('embed')
+                      shareUrl: !isServer && (window.location.href.includes('embed')
                         ? window.location.href.replace('/embed', '')
-                        : window.location.href,
-                      embedUrl: window.location.href.includes('embed')
+                        : window.location.href),
+                      embedUrl: !isServer && (window.location.href.includes('embed')
                         ? window.location.href
-                        : window.location.href.replace('/map', '/embed/map')
-                    })
-                  }
+                        : window.location.href.replace('/map', '/embed/map'))
+                    })}
                   tooltip={{ text: 'Share analysis' }}
                 >
                   <Icon icon={shareIcon} className="icon-share" />

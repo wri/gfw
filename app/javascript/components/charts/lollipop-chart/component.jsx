@@ -10,6 +10,8 @@ import Legend from 'components/charts/components/chart-legend';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class LollipopChart extends PureComponent {
   render() {
     const {
@@ -196,11 +198,11 @@ class LollipopChart extends PureComponent {
                         {item.path &&
                           linksExt && (
                           <a
-                            href={`https://${window.location.host}${
+                            href={`https://${!isServer && window.location.host}${
                               item.path
                             }`}
                             target="_blank"
-                            rel="noopener nofollower"
+                            rel="noopener noreferrer"
                           >
                             {linkContent}
                           </a>

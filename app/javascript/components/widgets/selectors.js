@@ -30,6 +30,8 @@ import {
 } from './utils/config';
 import allWidgets from './manifest';
 
+const isServer = typeof window === 'undefined';
+
 const buildLocationDict = locations =>
   (location &&
     !!locations.length &&
@@ -514,7 +516,7 @@ export const getWidgets = createSelector(
 
       const searchObject = qs.parse(search);
       const widgetQuery = searchObject && searchObject[widget];
-      const shareUrl = `${window.location.origin}${window.location.pathname}?${
+      const shareUrl = !isServer && `${window.location.origin}${window.location.pathname}?${
         searchObject
           ? qs.stringify({
             ...searchObject,
@@ -524,7 +526,7 @@ export const getWidgets = createSelector(
           })
           : ''
       }`;
-      const embedUrl = `${window.location.origin}/embed/widget/${widget}/${
+      const embedUrl = !isServer && `${window.location.origin}/embed/widget/${widget}/${
         type
       }${adm0 ? `/${adm0}` : ''}${adm1 ? `/${adm1}` : ''}${
         adm2 ? `/${adm2}` : ''

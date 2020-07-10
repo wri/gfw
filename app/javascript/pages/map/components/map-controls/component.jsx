@@ -23,6 +23,8 @@ import Icon from 'components/ui/icon';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class MapControlsButtons extends PureComponent {
   state = {
     pulseTourBtn: false
@@ -49,7 +51,6 @@ class MapControlsButtons extends PureComponent {
     const { setMainMapSettings, setMenuSettings, hidePanels } = this.props;
     setMainMapSettings({ hidePanels: !hidePanels });
     setMenuSettings({ menuSection: '' });
-    this.setState({ showBasemaps: false });
     if (!hidePanels) {
       track('hidePanels');
     }
@@ -166,21 +167,21 @@ class MapControlsButtons extends PureComponent {
               <span className="basemaps-btn-label">{activeBasemap.label}</span>
               {(activeBasemap.year || // satellite
                 activeBasemap.planetYear) && ( // planet imagery
-                <span className="basemaps-btn-label-small">
-                  {activeBasemap.year ||
-                    (activeBasemap.period // YYYY
-                      ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
-                      : activeBasemap.planetYear)}
-                </span>
-              )}
+                  <span className="basemaps-btn-label-small">
+                    {activeBasemap.year ||
+                      (activeBasemap.period // YYYY
+                        ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
+                        : activeBasemap.planetYear)}
+                  </span>
+                )}
             </div>
           </div>
         ) : (
-          <Icon
-            icon={globeIcon}
-            className={cx('globe-icon', { '-active': showBasemaps })}
-          />
-        )}
+            <Icon
+              icon={globeIcon}
+              className={cx('globe-icon', { '-active': showBasemaps })}
+            />
+          )}
       </Button>
     );
   };
@@ -197,13 +198,12 @@ class MapControlsButtons extends PureComponent {
         animateFill={false}
         arrow
         open={showRecentImagery}
-        html={
+        html={(
           <RecentImagerySettings
             onClickClose={() =>
-              setMainMapSettings({ showRecentImagery: false })
-            }
+              setMainMapSettings({ showRecentImagery: false })}
           />
-        }
+        )}
         offset={120}
       >
         {this.renderRecentImageryBtn()}
@@ -294,12 +294,12 @@ class MapControlsButtons extends PureComponent {
         onClick={() =>
           setShareModal({
             title: 'Share this view',
-            shareUrl: window.location.href.includes('embed')
+            shareUrl: !isServer && (window.location.href.includes('embed')
               ? window.location.href.replace('/embed', '')
-              : window.location.href,
-            embedUrl: window.location.href.includes('embed')
+              : window.location.href),
+            embedUrl: !isServer && (window.location.href.includes('embed')
               ? window.location.href
-              : window.location.href.replace('/map', '/embed/map')
+              : window.location.href.replace('/map', '/embed/map'))
           })
         }
         tooltip={{ text: 'Share or embed this view' }}
@@ -377,7 +377,7 @@ class MapControlsButtons extends PureComponent {
             {this.renderShareButton()}
             {this.renderRecentImageryBtn()}
           </div>
-        )}
+          )}
       </div>
     );
   }

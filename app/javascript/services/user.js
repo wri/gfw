@@ -1,10 +1,14 @@
 import { apiRequest, apiAuthRequest } from 'utils/request';
 
+const isServer = typeof window === 'undefined';
+
 export const setUserToken = token => {
-  localStorage.setItem('userToken', token);
-  apiAuthRequest.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    'userToken'
-  )}`;
+  if (!isServer) {
+    localStorage.setItem('userToken', token);
+    apiAuthRequest.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+      'userToken'
+    )}`;
+  }
 };
 
 export const login = formData =>
@@ -40,10 +44,8 @@ export const getProfile = id => apiAuthRequest.get(`/user/${id}`);
 
 export const logout = () =>
   apiAuthRequest.get('/auth/logout').then(response => {
-    if (response.status < 400) {
+    if (response.status < 400 && !isServer) {
       localStorage.removeItem('userToken');
       window.location.reload();
-    } else {
-      console.warn('Failed to logout');
     }
   });

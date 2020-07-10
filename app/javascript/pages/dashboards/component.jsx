@@ -34,6 +34,8 @@ import PendingDashboard from './components/pending-dashboard';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class DashboardsPage extends PureComponent {
   static propTypes = {
     showMapMobile: PropTypes.bool,
@@ -64,7 +66,9 @@ class DashboardsPage extends PureComponent {
       });
     }
 
-    window.addEventListener('scroll', this.listenToScroll);
+    if (!isServer) {
+      window.addEventListener('scroll', this.listenToScroll);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {

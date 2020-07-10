@@ -9,6 +9,8 @@ import satelliteDetailed from 'assets/icons/satellite-detailed.svg';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class PendingDashboardMessage extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
@@ -18,7 +20,7 @@ class PendingDashboardMessage extends PureComponent {
 
   state = {
     visible: true,
-    hiddenAreas: JSON.parse(localStorage.getItem('hiddenPendingAreas')) || []
+    hiddenAreas: !isServer && JSON.parse(localStorage.getItem('hiddenPendingAreas')) || []
   };
 
   handleHidePanel = () => {
@@ -26,12 +28,14 @@ class PendingDashboardMessage extends PureComponent {
 
     this.setState({ visible: false });
 
-    const hiddenAreaIds =
-      JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
-    localStorage.setItem(
-      'hiddenPendingAreas',
-      JSON.stringify([...hiddenAreaIds, areaId])
-    );
+    if (!isServer) {
+      const hiddenAreaIds =
+        JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
+      localStorage.setItem(
+        'hiddenPendingAreas',
+        JSON.stringify([...hiddenAreaIds, areaId])
+      );
+    }
   };
 
   render() {

@@ -22,6 +22,8 @@ import shareIcon from 'assets/icons/share.svg';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class AreasTable extends PureComponent {
   static propTypes = {
     areas: PropTypes.array,
@@ -33,9 +35,9 @@ class AreasTable extends PureComponent {
 
   state = {
     activeTags: [],
-    areas: [],
-    selectedTags: [],
-    unselectedTags: [],
+    // areas: [],
+    // selectedTags: [],
+    // unselectedTags: [],
     sortBy: '',
     search: '',
     alerts: {},
@@ -272,7 +274,7 @@ class AreasTable extends PureComponent {
                     onClick={() =>
                       setShareModal({
                         title: 'Share your area',
-                        shareUrl: `${window.location.host}/dashboards/aoi/${
+                        shareUrl: !isServer && `${window.location.host}/dashboards/aoi/${
                           area.id
                         }`
                       })

@@ -20,12 +20,14 @@ const pluginWrapper = () => ({
   scrollOverflow
 });
 
+const isServer = typeof window === 'undefined';
+
 class TopicsPage extends PureComponent {
   state = {
     skip: false,
     slideLeaving: 0,
     leaving: false,
-    showRelated: window.location.hash.includes('slides')
+    showRelated: !isServer && window.location.hash.includes('slides')
   };
 
   componentDidUpdate(prevProps) {
@@ -41,7 +43,7 @@ class TopicsPage extends PureComponent {
   };
 
   handleLeave = (origin, destination, direction) => {
-    const location = window.location.hash && window.location.hash.split('/');
+    const location = !isServer && window.location.hash && window.location.hash.split('/');
     const slide =
       (location && location.length > 1 && parseInt(location[1], 10)) || 0;
 

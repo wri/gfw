@@ -8,6 +8,8 @@ import tropicalIsos from 'data/tropical-isos.json';
 import { getDataLocation } from 'utils/location';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
+const isServer = typeof window === 'undefined';
+
 const adminSentences = {
   default:
     'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
@@ -38,13 +40,13 @@ export const selectCountryData = state =>
     adm2: state.countryData.subRegions
   };
 
-export const selectActiveLang = state =>
+export const selectActiveLang = state => !isServer && (
   (state.location &&
     state.location &&
     state.location.query &&
     state.location.query.lang) ||
   JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
-  'en';
+  'en');
 
 export const getAdm0Data = createSelector(
   [selectCountryData],

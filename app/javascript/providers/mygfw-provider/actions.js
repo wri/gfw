@@ -5,10 +5,12 @@ import { checkLoggedIn, getProfile } from 'services/user';
 export const setMyGFWLoading = createAction('setMyGFWLoading');
 export const setMyGFW = createAction('setMyGFW');
 
+const isServer = typeof window === 'undefined';
+
 export const getUserProfile = createThunkAction(
   'getUserProfile',
   () => dispatch => {
-    const token = localStorage.getItem('userToken');
+    const token = !isServer && localStorage.getItem('userToken');
     if (token) {
       dispatch(setMyGFWLoading({ loading: true, error: false }));
       checkLoggedIn()

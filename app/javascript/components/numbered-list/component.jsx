@@ -9,6 +9,8 @@ import Paginate from 'components/paginate';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class NumberedList extends PureComponent {
   render() {
     const {
@@ -89,7 +91,7 @@ class NumberedList extends PureComponent {
                   {item.path &&
                     linksExt && (
                     <a
-                      href={`https://${window.location.host}${item.path}`}
+                      href={`https://${!isServer && window.location.host}${item.path}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

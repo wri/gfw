@@ -1,6 +1,8 @@
 import * as actions from './actions';
 
-const hideCookies = JSON.parse(localStorage.getItem('agreeCookies'));
+const isServer = typeof window === 'undefined';
+
+const hideCookies = !isServer && JSON.parse(localStorage.getItem('agreeCookies'));
 
 export const initialState = {
   open: !hideCookies

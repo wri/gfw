@@ -18,6 +18,8 @@ import menuIcon from 'assets/icons/menu.svg';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class NavAlt extends PureComponent {
   static propTypes = {
     isDesktop: PropTypes.bool,
@@ -30,8 +32,8 @@ class NavAlt extends PureComponent {
   constructor(props) {
     super(props);
 
-    const txData = JSON.parse(localStorage.getItem('txlive:languages'));
-    const txLang = JSON.parse(localStorage.getItem('txlive:selectedlang'));
+    const txData = !isServer && JSON.parse(localStorage.getItem('txlive:languages'));
+    const txLang = !isServer && JSON.parse(localStorage.getItem('txlive:selectedlang'));
     const languages =
       txData &&
       txData.source &&
@@ -41,7 +43,6 @@ class NavAlt extends PureComponent {
       }));
 
     this.state = {
-      showHeader: false,
       languages,
       lang: txLang || 'en',
       showLang: false,
@@ -70,13 +71,15 @@ class NavAlt extends PureComponent {
   }
 
   handleLangSelect = lang => {
-    localStorage.setItem('txlive:selectedlang', `"${lang}"`);
-    window.Transifex.live.translateTo(lang);
-    this.setState({ lang, showLang: false, showMore: false });
-    window.Transifex.live.onTranslatePage(newLang => {
-      this.props.setLangToUrl(newLang);
-    });
-    moment.locale(getMomentLangCode(lang));
+    if (!isServer) {
+      localStorage.setItem('txlive:selectedlang', `"${lang}"`);
+      window.Transifex.live.translateTo(lang);
+      this.setState({ lang, showLang: false, showMore: false });
+      window.Transifex.live.onTranslatePage(newLang => {
+        this.props.setLangToUrl(newLang);
+      });
+      moment.locale(getMomentLangCode(lang));
+    }
   };
 
   handleCloseSubmenu = () => {

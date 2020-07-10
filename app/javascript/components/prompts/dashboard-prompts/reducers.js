@@ -1,8 +1,10 @@
 import { track } from 'app/analytics';
 import * as actions from './actions';
 
-const showDashboardPrompts = JSON.parse(localStorage.getItem('showPrompts'));
-const dashboardPromptsViewed = JSON.parse(
+const isServer = typeof window === 'undefined';
+
+const showDashboardPrompts = !isServer && JSON.parse(localStorage.getItem('showPrompts'));
+const dashboardPromptsViewed = !isServer && JSON.parse(
   localStorage.getItem('dashboardPromptsViewed')
 );
 
@@ -17,7 +19,9 @@ export const initialState = {
 };
 
 const setShowDashboardPrompts = (state, { payload }) => {
-  localStorage.setItem('showPrompts', payload);
+  if (!isServer) {
+    localStorage.setItem('showPrompts', payload);
+  }
   track('userPromptShowHide', {
     label: payload ? 'User enables prompts' : 'User hides prompts'
   });
@@ -34,10 +38,12 @@ const setShowPromptsViewed = (state, { payload }) => {
     promptsViewed && promptsViewed.length && promptsViewed.includes(payload)
       ? promptsViewed
       : promptsViewed.concat([payload]);
-  localStorage.setItem(
-    'dashboardPromptsViewed',
-    JSON.stringify(newPromptsViewed)
-  );
+  if (!isServer) {
+    localStorage.setItem(
+      'dashboardPromptsViewed',
+      JSON.stringify(newPromptsViewed)
+    );
+  }
 
   return {
     ...state,

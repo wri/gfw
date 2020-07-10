@@ -13,6 +13,8 @@ import Icon from 'components/ui/icon';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class MapControlsButtons extends PureComponent {
   renderZoomButtons = () => {
     const { viewport: { zoom }, setMapSettings, maxZoom, minZoom } = this.props;
@@ -50,7 +52,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <div className={`c-dashboard-map-controls ${className || ''}`}>
-        <Sticky top={window.innerWidth >= SCREEN_M ? 15 : 73}>
+        <Sticky top={!isServer && window.innerWidth >= SCREEN_M ? 15 : 73}>
           {this.renderZoomButtons()}
         </Sticky>
       </div>
