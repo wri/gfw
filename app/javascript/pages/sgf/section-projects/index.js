@@ -5,27 +5,25 @@ import { scroller } from 'react-scroll';
 import reducerRegistry from 'app/registry';
 
 import * as modalActions from 'pages/sgf/section-projects/section-projects-modal/actions';
-import * as sectionActions from './actions';
+import * as actions from './actions';
 
 import reducers, { initialState } from './reducers';
 import SectionProjectsComponent from './component';
 import {
   getCategoriesList,
   getProjectsList,
-  getGlobeClusters
+  getGlobeClusters,
 } from './selectors';
 
-const actions = { ...sectionActions, ...modalActions };
-
 const mapStateToProps = ({ sgfProjects }) => {
-  const filters = sgfProjects && sgfProjects.customFilter;
+  const filters = sgfProjects?.customFilter;
   const projectData = {
-    data: sgfProjects && sgfProjects.data && sgfProjects.data.projects,
-    latLngs: sgfProjects && sgfProjects.data.latLngs,
-    images: sgfProjects && sgfProjects.data.images,
-    search: sgfProjects && sgfProjects.search,
-    categorySelected: sgfProjects && sgfProjects.categorySelected,
-    customFilter: filters
+    data: sgfProjects?.data?.projects,
+    latLngs: sgfProjects?.data?.latLngs,
+    images: sgfProjects?.data?.images,
+    search: sgfProjects?.search,
+    categorySelected: sgfProjects?.categorySelected,
+    customFilter: filters,
   };
 
   return {
@@ -40,30 +38,41 @@ const mapStateToProps = ({ sgfProjects }) => {
     loading:
       !sgfProjects ||
       sgfProjects.loading ||
-      (sgfProjects.data.projects && !sgfProjects.data.projects.length) ||
-      !sgfProjects.data.images,
-    customFilter: sgfProjects && sgfProjects.customFilter
+      (sgfProjects?.data?.projects && !sgfProjects?.data?.projects?.length) ||
+      !sgfProjects?.data?.images,
+    customFilter: sgfProjects && sgfProjects.customFilter,
   };
 };
 
 class SectionProjectsContainer extends PureComponent {
+  static propTypes = {
+    setCustomFilter: PropTypes.func,
+    fetchProjects: PropTypes.func,
+    fetchProjectsImages: PropTypes.func,
+    setSectionProjectsModalSlug: PropTypes.func,
+  };
+
   componentDidMount() {
     const { fetchProjects, fetchProjectsImages } = this.props;
     fetchProjects();
     fetchProjectsImages();
   }
 
-  handleGlobeClick = d => {
-    const { setSectionProjectsModalSlug, setCustomFilter } = this.props;
-    if (!d.cluster || d.cluster.length === 1) {
-      setSectionProjectsModalSlug(d.id || (d.cluster && d.cluster[0].id));
+  handleOpenModal = (slug) => {
+    this.props.setSectionProjectsModalSlug(slug);
+  };
+
+  handleGlobeClick = (d) => {
+    const { setCustomFilter } = this.props;
+    if (!d?.cluster || d?.cluster?.length === 1) {
+      this.handleOpenModal(d.id || (d?.cluster && d?.cluster?.[0].id));
     } else {
-      const projectIds = d.cluster.map(p => p.id);
+      const projectIds = d.cluster.map((p) => p.id);
       setCustomFilter(projectIds);
       scroller.scrollTo('project-cards', {
         duration: 800,
         smooth: true,
-        offset: -50
+        offset: -50,
       });
     }
   };
@@ -71,22 +80,18 @@ class SectionProjectsContainer extends PureComponent {
   render() {
     return createElement(SectionProjectsComponent, {
       ...this.props,
-      handleGlobeClick: this.handleGlobeClick
+      handleGlobeClick: this.handleGlobeClick,
+      handleOpenModal: this.handleOpenModal,
     });
   }
 }
 
-SectionProjectsContainer.propTypes = {
-  setSectionProjectsModalSlug: PropTypes.func,
-  setCustomFilter: PropTypes.func,
-  fetchProjects: PropTypes.func,
-  fetchProjectsImages: PropTypes.func
-};
-
 reducerRegistry.registerModule('sgfProjects', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
-export default connect(mapStateToProps, actions)(SectionProjectsContainer);
+export default connect(mapStateToProps, { ...actions, ...modalActions })(
+  SectionProjectsContainer
+);

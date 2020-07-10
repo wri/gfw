@@ -3,41 +3,42 @@ import * as actions from './actions';
 export const initialState = {
   loading: false,
   error: false,
-  data: [],
+  data: {},
   categorySelected: 'All',
   customFilter: [],
-  countries: []
+  countries: [],
+  sgfModal: null,
 };
 
 const setProjectsLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
 const setProjectsData = (state, { payload }) => ({
   ...state,
   data: {
     ...state.data,
-    ...payload
+    ...payload,
   },
-  loading: false
+  loading: false,
 });
 
 const setCategorySelected = (state, { payload }) => ({
   ...state,
   categorySelected: payload,
-  customFilter: []
+  customFilter: [],
 });
 
 const setCustomFilter = (state, { payload }) => ({
   ...state,
-  customFilter: payload
+  customFilter: payload,
 });
 
 const setSearch = (state, { payload }) => ({
   ...state,
   search: payload,
-  customFilter: []
+  customFilter: [],
 });
 
 export default {
@@ -45,5 +46,5 @@ export default {
   [actions.setProjectsData]: setProjectsData,
   [actions.setCategorySelected]: setCategorySelected,
   [actions.setSearch]: setSearch,
-  [actions.setCustomFilter]: setCustomFilter
+  [actions.setCustomFilter]: setCustomFilter,
 };

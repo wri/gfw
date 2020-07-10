@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-import sgfLogo from './img/GFW_SGF_logo.png';
-import techLogo from './img/GFW_TECH_logo.png';
+import sgfLogo from './img/GFW_SGF_logo.png?webp';
+import techLogo from './img/GFW_TECH_logo.png?webp';
 
 class SectionAbout extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <section className="l-section-apply">
@@ -144,7 +142,8 @@ class SectionAbout extends PureComponent {
                 rel="noopener noreferrer"
               >
                 gfwfund@wri.org
-              </a>.
+              </a>
+              .
             </p>
           </div>
         </div>

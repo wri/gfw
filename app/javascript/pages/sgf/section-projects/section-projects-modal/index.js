@@ -12,7 +12,7 @@ const mapStateToProps = ({ location, sgfProjects }) => {
 
   return {
     slug,
-    data: allProjects && allProjects.find(p => p.id === parseInt(slug, 10))
+    data: allProjects && allProjects.find((p) => p.id === parseInt(slug, 10)),
   };
 };
 

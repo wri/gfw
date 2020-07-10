@@ -5,6 +5,7 @@ import Dropdown from 'components/ui/dropdown';
 import Dotdotdot from 'react-dotdotdot';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
+import Link from 'next/link';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
@@ -54,7 +55,10 @@ class Card extends PureComponent {
           </span>
         )}
         {image && (
-          <div className="image" style={{ backgroundImage: `url(${image})` }} />
+          <div
+            className="image"
+            style={{ backgroundImage: `url('${image}')` }}
+          />
         )}
         {(img1x || img2x) && (
           <img
@@ -87,15 +91,44 @@ class Card extends PureComponent {
           </div>
           {buttons && (
             <div className="buttons">
-              {buttons.map((button, i) => (
-                <Button
-                  key={`card-button-${i}`}
-                  theme="theme-button-light"
-                  {...button}
-                >
-                  {button.text}
-                </Button>
-              ))}
+              {buttons.map((button, i) => {
+                if (button.link) {
+                  return (
+                    <Link href={button.link} key={button.link}>
+                      <a>
+                        <Button theme="theme-button-light" {...button}>
+                          {button.text}
+                        </Button>
+                      </a>
+                    </Link>
+                  );
+                }
+
+                if (button.extLink) {
+                  return (
+                    <a
+                      key={button.extLink}
+                      href={button.extLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button theme="theme-button-light" {...button}>
+                        {button.text}
+                      </Button>
+                    </a>
+                  );
+                }
+
+                return (
+                  <Button
+                    key={`${button.text}-${i}`}
+                    theme="theme-button-light"
+                    {...button}
+                  >
+                    {button.text}
+                  </Button>
+                );
+              })}
             </div>
           )}
           {selector && (
@@ -117,18 +150,20 @@ class Card extends PureComponent {
                 native
               />
               {selectorValue.value && selectorValue.value !== 'placeholder' && (
-                <Button
-                  className="selector-btn-link"
-                  theme="square"
-                  extLink={
+                <a
+                  href={
                     selectorValue.path ||
                     (selector.options &&
                       selector.options[0] &&
                       selector.options[0].path)
                   }
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Icon icon={arrowIcon} />
-                </Button>
+                  <Button className="selector-btn-link" theme="square">
+                    <Icon icon={arrowIcon} />
+                  </Button>
+                </a>
               )}
             </div>
           )}

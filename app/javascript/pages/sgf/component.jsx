@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import capitalize from 'lodash/capitalize';
 
 import Projects from 'pages/sgf/section-projects';
 import About from 'pages/sgf/section-about';
@@ -8,25 +9,30 @@ import Apply from 'pages/sgf/section-apply';
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 
-import bgImage from './header-bg';
+import bgImage from './header-bg.jpg?webp';
 import './styles.scss';
 
-const sectionComponents = {
+const sections = {
   projects: Projects,
   about: About,
-  apply: Apply
+  apply: Apply,
 };
 
 class GrantsAndFellowshipsPage extends PureComponent {
   static propTypes = {
-    section: PropTypes.object,
-    links: PropTypes.array
+    section: PropTypes.string,
   };
 
   render() {
     const { section } = this.props;
-    const SectionComponent =
-      sectionComponents[(section && section.component) || 'projects'];
+    const SectionComponent = sections[section || 'projects'];
+    const links = Object.keys(sections).map((key) => ({
+      label: capitalize(key),
+      href: '/grants-and-fellowships/[section]',
+      as: `/grants-and-fellowships/${key}`,
+      activeShallow: !section && key === 'projects',
+    }));
+
     return (
       <div>
         <Cover
@@ -36,9 +42,9 @@ class GrantsAndFellowshipsPage extends PureComponent {
             research, and feld work."
           bgImage={bgImage}
         />
-        <SubnavMenu links={this.props.links} />
+        <SubnavMenu links={links} />
         <div className="l-sgf-page">
-          <SectionComponent />
+          {SectionComponent && <SectionComponent />}
         </div>
       </div>
     );
