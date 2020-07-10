@@ -128,7 +128,7 @@ class AnalysisComponent extends PureComponent {
                 analysis
               />
             )}
-          {!location.type &&
+          {location.type === 'global' &&
             !location.adm0 &&
             !isDeletedAoI && (
               <ChoseAnalysis

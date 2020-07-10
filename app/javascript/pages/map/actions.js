@@ -1,18 +1,7 @@
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-export const setMainMapSettings = createThunkAction(
-  'setMainMapSettings',
-  change => (dispatch, state) =>
-    dispatch(
-      setComponentStateToUrl({
-        key: 'mainMap',
-        change,
-        state
-      })
-    )
-);
+export const setMainMapSettings = createAction('setMainMapSettings');
 
 export const setMainMapAnalysisView = createThunkAction(
   'setMainMapAnalysisView',

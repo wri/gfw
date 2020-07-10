@@ -1,12 +1,12 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { track } from 'app/analytics';
 
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/analysis-cached';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');
+export const setWidgetSettingsByKey = createAction('setWidgetSettingsByKey');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
 
 export const getWidgetsData = createThunkAction(
@@ -30,13 +30,11 @@ export const getWidgetsData = createThunkAction(
 
 export const setWidgetSettings = createThunkAction(
   'setWidgetSettings',
-  ({ change, widget }) => (dispatch, state) => {
+  ({ change, widget }) => (dispatch) => {
     dispatch(
-      setComponentStateToUrl({
-        key: 'widget',
-        subKey: widget,
-        change,
-        state
+      setWidgetSettingsByKey({
+        key: widget,
+        change
       })
     );
     track('changeWidgetSettings', {

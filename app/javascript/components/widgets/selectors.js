@@ -50,6 +50,7 @@ export const selectLocation = state => state.location && state.location.payload;
 export const selectRouteType = state => state.location && state.location.pathname;
 export const selectLocationQuery = state =>
   state.location && state.location.query;
+export const selectWidgetSettings = state => state.widgets?.settings || {};
 export const selectLocationSearch = state =>
   state.location && state.location.search;
 export const selectWidgetsData = state => state.widgets && state.widgets.data;
@@ -352,6 +353,7 @@ export const getWidgets = createSelector(
     getLocationData,
     selectWidgetsData,
     selectLocationQuery,
+    selectWidgetSettings,
     selectLocationSearch,
     selectNonGlobalDatasets,
     getIsTrase,
@@ -366,6 +368,7 @@ export const getWidgets = createSelector(
     locationData,
     widgetsData,
     query,
+    widgetSettings,
     search,
     datasets,
     isTrase,
@@ -417,7 +420,7 @@ export const getWidgets = createSelector(
         (decodeParams && decodeParams.endDate);
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
-      const widgetQuerySettings = query && query[widget];
+      const widgetQuerySettings = widgetSettings && widgetSettings[widget];
 
       const layerSettings = {
         ...layerParams,

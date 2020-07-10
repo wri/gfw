@@ -85,22 +85,22 @@ class WidgetsContainer extends PureComponent {
     }
 
     // if widget is active and layers or params change push to map
-    if (!embed && activeWidget) {
-      const { settings, datasets } = activeWidget || {};
-      const mapSettingsChanged =
-        settings &&
-        intersection(mapSyncKeys, Object.keys(settings)).length &&
-        !isEqual(settings, prevProps.settings);
-      const activeWidgetChanged = !isEqual(
-        activeWidget,
-        prevProps.activeWidget
-      );
-      if (datasets && (mapSettingsChanged || activeWidgetChanged)) {
-        this.syncWidgetWithMap();
-      } else if (!datasets && activeWidgetChanged) {
-        this.clearMap();
-      }
-    }
+    // if (!embed && activeWidget) {
+    //   const { settings, datasets } = activeWidget || {};
+    //   const mapSettingsChanged =
+    //     settings &&
+    //     intersection(mapSyncKeys, Object.keys(settings)).length &&
+    //     !isEqual(settings, prevProps.settings);
+    //   const activeWidgetChanged = !isEqual(
+    //     activeWidget,
+    //     prevProps.activeWidget
+    //   );
+    //   if (datasets && (mapSettingsChanged || activeWidgetChanged)) {
+    //     this.syncWidgetWithMap();
+    //   } else if (!datasets && activeWidgetChanged) {
+    //     this.clearMap();
+    //   }
+    // }
   }
 
   syncWidgetWithMap = () => {

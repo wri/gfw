@@ -12,7 +12,7 @@ import { getEmbed, getShowRecentImagery } from 'pages/map/selectors';
 
 import { datasetsSections, searchSections, mobileSections } from './sections';
 
-const getMenuSettings = state => state.mapMenu?.settings || {};
+const getMenuSettings = state => state.mapMenu || {};
 const getCountries = state => state.countryData && state.countryData.countries;
 const getLoading = state =>
   (state.datasets && state.datasets.loading) ||

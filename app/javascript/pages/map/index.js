@@ -5,12 +5,14 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
+import reducerRegistry from 'app/registry';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 
+import reducers, { initialState } from './reducers';
 import * as ownActions from './actions';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
@@ -135,5 +137,12 @@ MainMapContainer.propTypes = {
   geostoreId: PropTypes.string,
   basemap: PropTypes.object
 };
+
+reducerRegistry.registerModule('mainMap', {
+  actions,
+  reducers,
+  initialState
+});
+
 
 export default connect(getMapProps, actions)(MainMapContainer);

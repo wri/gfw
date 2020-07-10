@@ -9,11 +9,7 @@ import {
 } from 'components/map/selectors';
 import { getShowDraw } from 'components/analysis/selectors';
 
-import initialState from './initial-state';
-
-// state from url
-const selectMainMapUrlState = (state) =>
-  state.location && state.location.query && state.location.query.mainMap;
+const getMainMapSettings = (state) => state.mainMap || {};
 const selectLocation = (state) => state.location && state.location;
 const selectLocationPayload = (state) =>
   state.location && state.location.payload;
@@ -28,14 +24,6 @@ const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
 export const getEmbed = createSelector(
   [selectLocation],
   (location) => location && location.pathname.includes('/embed')
-);
-
-export const getMainMapSettings = createSelector(
-  [selectMainMapUrlState],
-  (urlState) => ({
-    ...initialState,
-    ...urlState,
-  })
 );
 
 export const getHidePanels = createSelector(

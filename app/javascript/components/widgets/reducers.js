@@ -3,7 +3,8 @@ import * as actions from './actions';
 export const initialState = {
   loading: true,
   error: false,
-  data: {}
+  data: {},
+  settings: {}
 };
 
 // reducers for all widgets parent wrapper component
@@ -17,6 +18,17 @@ const setWidgetsData = (state, { payload }) => ({
   error: false
 });
 
+const setWidgetSettingsByKey = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    [payload.key]: {
+      ...state.settings?.[payload.key],
+      ...payload.change
+    }
+  },
+});
+
 const setWidgetsLoading = (state, { payload }) => ({
   ...state,
   loading: payload.loading,
@@ -25,5 +37,6 @@ const setWidgetsLoading = (state, { payload }) => ({
 
 export default {
   [actions.setWidgetsData]: setWidgetsData,
+  [actions.setWidgetSettingsByKey]: setWidgetSettingsByKey,
   [actions.setWidgetsLoading]: setWidgetsLoading
 };
