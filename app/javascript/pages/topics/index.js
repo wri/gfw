@@ -13,21 +13,50 @@ const contents = {
   commodities: Commodities,
   climate: Climate,
   water: Water,
-  fires: Fires
+  fires: Fires,
 };
 
-const mapStateToProps = ({ location }, { sections }) => ({
-  title: location.payload.type || 'biodiversity',
-  section:
-    location && sections && sections[location.payload.type || 'biodiversity'],
-  topicData:
-    (location && contents[location.payload.type]) || contents.biodiversity,
+const sections = {
+  biodiversity: {
+    label: 'Biodiversity',
+    component: 'biodiversity',
+    path: '/topics/biodiversity',
+  },
+  climate: {
+    label: 'Climate',
+    component: 'climate',
+    path: '/topics/climate',
+  },
+  commodities: {
+    label: 'Commodities',
+    component: 'commodities',
+    path: '/topics/commodities',
+  },
+  water: {
+    label: 'Water',
+    component: 'water',
+    path: '/topics/water',
+  },
+  fires: {
+    label: 'Fires',
+    component: 'fires',
+    path: '/topics/water',
+  },
+};
+
+const mapStateToProps = ({ location }) => ({
+  title: location?.payload?.topic || 'biodiversity',
+  section: sections && sections[location?.payload?.topic || 'biodiversity'],
+  topicData: contents[location?.payload?.topic || 'biodiversity'],
   links: sections
-    ? Object.values(sections)
-      .filter(r => r.submenu)
-      .map(r => ({ label: r.label, path: r.path }))
+    ? Object.values(sections).map((r) => ({
+        label: r.label,
+        href: '/topics/[topic]',
+        as: `/topics/${r.component}`,
+        activeShallow:
+          !location?.payload?.topic && r.component === 'biodiversity',
+      }))
     : [],
-  location
 });
 
 export default connect(mapStateToProps)(PageComponent);

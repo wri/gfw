@@ -132,17 +132,22 @@ class TopicsImage extends PureComponent {
                   <div className="c-topics-info-tooltip">
                     <p>{p.content}</p>
                     {p.link && (
-                      <Button
-                        theme="theme-button-small"
-                        extLink={p.link}
-                        onClick={() => {
-                          track('topicsImageBubble', {
-                            label: `${topic}: ${p.content}`,
-                          });
-                        }}
+                      <a
+                        href={p.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        {p.btnText}
-                      </Button>
+                        <Button
+                          theme="theme-button-small"
+                          onClick={() => {
+                            track('topicsImageBubble', {
+                              label: `${topic}: ${p.content}`,
+                            });
+                          }}
+                        >
+                          {p.btnText}
+                        </Button>
+                      </a>
                     )}
                   </div>
                 )}

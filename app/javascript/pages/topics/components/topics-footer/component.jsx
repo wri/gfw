@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
+import Link from 'next/link';
 
 import Footer from 'components/footer';
 import Carousel from 'components/ui/carousel';
@@ -10,8 +11,15 @@ import CountryDataProvider from 'providers/country-data-provider';
 import './styles.scss';
 
 class TopicsFooter extends PureComponent {
+  static propTypes = {
+    cards: PropTypes.array,
+    topic: PropTypes.string,
+    countries: PropTypes.array,
+    setModalContactUsOpen: PropTypes.func,
+  };
+
   render() {
-    const { cards, topic, setModalContactUsOpen, countries } = this.props;
+    const { cards, topic, countries, setModalContactUsOpen } = this.props;
 
     return (
       <div className="c-topics-footer">
@@ -24,7 +32,7 @@ class TopicsFooter extends PureComponent {
           <div className="column small-12">
             <Carousel>
               {cards &&
-                cards.map(c => (
+                cards.map((c) => (
                   <Card
                     key={c.title}
                     theme={c.theme}
@@ -41,11 +49,11 @@ class TopicsFooter extends PureComponent {
                                 setModalContactUsOpen(true);
                               }
                               track('topicsCardClicked', {
-                                label: `${topic}: ${c.title}`
+                                label: `${topic}: ${c.title}`,
                               });
-                            }
-                          }
-                        ]
+                            },
+                          },
+                        ],
                       }),
                       ...(c.selector && {
                         selector: {
@@ -55,39 +63,39 @@ class TopicsFooter extends PureComponent {
                             [{ label: 'Select country', value: 'placeholder' }]
                               .concat(countries)
                               .filter(
-                                country =>
+                                (country) =>
                                   !c.selector.whitelist ||
                                   c.selector.whitelist.includes(country.value)
                               )
-                              .map(country => ({
+                              .map((country) => ({
                                 ...country,
                                 path:
                                   c.selector.path &&
                                   c.selector.path.replace(
                                     '{iso}',
                                     country.value
-                                  )
-                              }))
-                        }
-                      })
+                                  ),
+                              })),
+                        },
+                      }),
                     }}
                   />
                 ))}
             </Carousel>
           </div>
         </div>
-        <Footer />
+        <Footer
+          NavLinkComponent={({ href, children, className }) => (
+            <Link href={href}>
+              <a className={className}>{children}</a>
+            </Link>
+          )}
+          openContactUsModal={() => setModalContactUsOpen(true)}
+        />
         <CountryDataProvider />
       </div>
     );
   }
 }
-
-TopicsFooter.propTypes = {
-  cards: PropTypes.array,
-  topic: PropTypes.string,
-  setModalContactUsOpen: PropTypes.func,
-  countries: PropTypes.array
-};
 
 export default TopicsFooter;
