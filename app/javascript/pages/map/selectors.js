@@ -7,7 +7,6 @@ import {
   getInteractionSelected,
   getBasemapFromState,
 } from 'components/map/selectors';
-import { getShowDraw } from 'components/analysis/selectors';
 
 const getMainMapSettings = (state) => state.mainMap || {};
 const selectLocation = (state) => state.location && state.location;
@@ -19,6 +18,7 @@ const selectMenuSection = (state) =>
   state.location.query.menu &&
   state.location.query.menu.menuSection;
 const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
+const getShowDraw = (state) => state.analysis?.showDraw;
 
 // SELECTORS
 export const getEmbed = createSelector(

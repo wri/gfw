@@ -10,7 +10,6 @@ import { getDataLocation } from 'utils/location';
 import { locationLevelToStr } from 'utils/format';
 import { getWidgets } from 'components/widgets/selectors';
 
-const getAnalysisSettings = (state) => state.analysis?.settings || {};
 const selectAnalysisLoading = (state) =>
   state.analysis && state.analysis.loading;
 const selectDatasetsLoading = (state) =>
@@ -43,11 +42,6 @@ export const getLoading = createSelector(
   ],
   (analysisLoading, datasetsLoading, geostoreLoading, geodescriberLoading) =>
     analysisLoading || datasetsLoading || geostoreLoading || geodescriberLoading
-);
-
-export const getShowDraw = createSelector(
-  getAnalysisSettings,
-  (settings) => settings.showDraw
 );
 
 export const getBoundaryDatasets = createSelector(

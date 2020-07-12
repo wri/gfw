@@ -2,6 +2,7 @@ import { createAction, createThunkAction } from 'utils/redux';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
 import { track } from 'app/analytics';
+import useRouter from 'utils/router';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
@@ -101,7 +102,7 @@ export const uploadShape = createThunkAction(
     onGeostoreUpload,
     onGeostoreDownload,
     token,
-  }) => (dispatch, getState) => {
+  }) => (dispatch) => {
     dispatch(
       setAnalysisLoading({
         uploading: true,
@@ -157,25 +158,18 @@ export const uploadShape = createThunkAction(
               .then((geostore) => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
-                  const { query, type } = getState().location || {};
+                  const { pathname, query, pushQuery } = useRouter();
                   setTimeout(() => {
-                    dispatch({
-                      type,
-                      payload: {
-                        type: 'geostore',
-                        adm0: id,
-                      },
-                      ...(query && {
-                        query: {
-                          ...query,
-                          ...(query.map && {
-                            map: {
-                              ...query.map,
-                              canBound: true,
-                            },
-                          }),
+                    pushQuery({
+                      pathname,
+                      query: {
+                        ...query,
+                        location: ['geostore', id],
+                        map: {
+                          ...query?.map,
+                          canBound: true,
                         },
-                      }),
+                      },
                     });
                     dispatch(
                       setAnalysisLoading({
@@ -239,29 +233,23 @@ export const uploadShape = createThunkAction(
 
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
-  () => (dispatch, getState) => {
-    const { query, type } = getState().location || {};
-    dispatch({
-      type,
-      ...(query && {
-        query,
-      }),
+  () => (dispatch) => {
+    const { query, pathname, pushQuery } = useRouter();
+    pushQuery({
+      pathname,
+      query: {
+        ...query,
+        location: ['global'],
+      },
     });
     dispatch(clearAnalysisData());
   }
 );
 
-export const goToDashboard = createThunkAction(
-  'goToDashboard',
-  () => (dispatch, getState) => {
-    const { location } = getState() || {};
-    const { payload, query } = location || {};
-    dispatch({
-      type: 'dashboards',
-      payload,
-      ...(query && {
-        query,
-      }),
-    });
-  }
-);
+export const goToDashboard = createThunkAction('goToDashboard', () => () => {
+  const { query, pushQuery } = useRouter();
+  pushQuery({
+    pathname: '/dashboards/[...location]',
+    query,
+  });
+});
