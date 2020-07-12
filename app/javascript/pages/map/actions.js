@@ -1,14 +1,15 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
+import useRouter from 'utils/router';
 
 export const setMainMapSettings = createAction('setMainMapSettings');
 
 export const setMainMapAnalysisView = createThunkAction(
   'setMainMapAnalysisView',
-  ({ data, layer }) => (dispatch, getState) => {
+  ({ data, layer }) => () => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
-    const { query, type } = getState().location || {};
+    const { query, pushQuery, pathname } = useRouter();
     const { map, mainMap } = query || {};
 
     // get location payload based on layer type
@@ -17,37 +18,37 @@ export const setMainMapAnalysisView = createThunkAction(
       if (analysisEndpoint === 'admin') {
         payload = {
           type: 'country',
-          ...getLocationFromData(data)
+          ...getLocationFromData(data),
         };
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         payload = {
           type: analysisEndpoint,
-          adm0: wdpaid || cartodb_id
+          adm0: wdpaid || cartodb_id,
         };
       } else if (cartodb_id && tableName) {
         payload = {
           type: 'use',
           adm0: tableName,
-          adm1: cartodb_id
+          adm1: cartodb_id,
         };
       }
     }
 
     if (payload && payload.adm0) {
-      dispatch({
-        type,
-        payload,
+      pushQuery({
+        pathname,
         query: {
           ...query,
+          location: Object.values(payload),
           map: {
             ...map,
-            canBound: true
+            canBound: true,
           },
           mainMap: {
             ...mainMap,
-            showAnalysis: true
-          }
-        }
+            showAnalysis: true,
+          },
+        },
       });
     }
   }
@@ -55,27 +56,25 @@ export const setMainMapAnalysisView = createThunkAction(
 
 export const setDrawnGeostore = createThunkAction(
   'setDrawnGeostore',
-  geostoreId => (dispatch, getState) => {
-    const { query, type } = getState().location || {};
+  (geostoreId) => () => {
+    const { pushQuery, query, pathname } = useRouter();
+
     const { map, mainMap } = query || {};
-    dispatch({
-      type,
-      payload: {
-        type: 'geostore',
-        adm0: geostoreId
-      },
+    pushQuery({
+      pathname,
       query: {
         ...query,
+        location: ['geostore', geostoreId],
         map: {
           ...map,
           canBound: true,
-          drawing: false
+          drawing: false,
         },
         mainMap: {
           ...mainMap,
-          showAnalysis: true
-        }
-      }
+          showAnalysis: true,
+        },
+      },
     });
   }
 );
