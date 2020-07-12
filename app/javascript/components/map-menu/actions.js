@@ -3,6 +3,10 @@ import request from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
 import uniqBy from 'lodash/uniqBy';
+import useRouter from 'utils/router';
+
+import { setMapSettings } from 'components/map/actions';
+import { setAnalysisSettings } from 'components/analysis/actions';
 
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
@@ -11,14 +15,10 @@ export const setMenuSettings = createAction('setMenuSettings');
 const getSearchSQL = (string, nameString, nameStringSimple) => {
   const words = string && string.split(/,| |, /);
   if (words && words.length) {
-    const mappedWords = compact(words.map(w => (w ? `%25${w}%25` : '')));
+    const mappedWords = compact(words.map((w) => (w ? `%25${w}%25` : '')));
     const whereQueries = mappedWords.map(
-      w =>
-        `LOWER(${nameString}) LIKE '${w}' OR LOWER(${nameStringSimple}) LIKE '${
-          w
-        }' OR LOWER(name_1) LIKE '${w}' OR LOWER(simple_name_1) LIKE '${
-          w
-        }' OR LOWER(name_2) LIKE '${w}' OR LOWER(simple_name_2) LIKE '${w}'`
+      (w) =>
+        `LOWER(${nameString}) LIKE '${w}' OR LOWER(${nameStringSimple}) LIKE '${w}' OR LOWER(name_1) LIKE '${w}' OR LOWER(simple_name_1) LIKE '${w}' OR LOWER(name_2) LIKE '${w}' OR LOWER(simple_name_2) LIKE '${w}'`
     );
     return whereQueries.join(' OR ');
   }
@@ -27,7 +27,7 @@ const getSearchSQL = (string, nameString, nameStringSimple) => {
 
 export const getLocationFromSearch = createThunkAction(
   'getLocationFromSearch',
-  ({ search, token, lang }) => dispatch => {
+  ({ search, token, lang }) => (dispatch) => {
     dispatch(setMenuLoading(true));
     if (search) {
       const searchLower = search && search.toLowerCase();
@@ -44,22 +44,12 @@ export const getLocationFromSearch = createThunkAction(
       if (whereStatement) {
         request
           .get(
-            `${
-              process.env.CARTO_API
-            }/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${
-              nameString
-            }) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${
-              nameString
-            }) WHEN gid_0 is not null THEN ${
-              nameString
-            } END AS label FROM gadm36_political_boundaries WHERE ${
-              whereStatement
-            } AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`,
+            `${process.env.CARTO_API}/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${nameString}) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${nameString}) WHEN gid_0 is not null THEN ${nameString} END AS label FROM gadm36_political_boundaries WHERE ${whereStatement} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`,
             {
-              cancelToken: token
+              cancelToken: token,
             }
           )
-          .then(response => {
+          .then((response) => {
             if (response.data.rows && response.data.rows.length) {
               dispatch(setLocationsData(response.data.rows));
             } else {
@@ -77,34 +67,30 @@ export const getLocationFromSearch = createThunkAction(
 
 export const handleClickLocation = createThunkAction(
   'handleClickLocation',
-  ({ gid_0, gid_1, gid_2 }) => (dispatch, getState) => {
-    const { location } = getState();
-    const query = (location && location.query) || {};
+  ({ gid_0, gid_1, gid_2 }) => () => {
+    const { pathname, query, pushQuery } = useRouter();
     const newLocation = parseGadm36Id(gid_2 || gid_1 || gid_0);
     const { map, menu, mainMap } = query || {};
 
     if (newLocation) {
-      dispatch({
-        type: 'map',
-        payload: {
-          type: 'country',
-          ...newLocation
-        },
+      pushQuery({
+        pathname,
         query: {
           ...query,
+          location: ['country', ...Object.values(newLocation)],
           map: {
             ...map,
-            canBound: true
+            canBound: true,
           },
           menu: {
             ...menu,
-            menuSection: ''
+            menuSection: '',
           },
           mainMap: {
             ...mainMap,
-            showAnalysis: true
-          }
-        }
+            showAnalysis: true,
+          },
+        },
       });
     }
   }
@@ -113,60 +99,39 @@ export const handleClickLocation = createThunkAction(
 export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
   ({ analysis, menu, map, mergeQuery }) => (dispatch, getState) => {
-    const { payload, query } = getState().location || {};
+    const { map: mapState } = getState();
     const { datasets } = map || {};
 
-    dispatch({
-      type: 'map',
-      payload,
-      query: {
-        ...(map && {
-          map: {
-            ...(mergeQuery && query && query.map),
-            ...map,
-            ...(mergeQuery &&
-              query &&
-              query.map &&
-              query.map.datasets && {
-              datasets: uniqBy(
-                [...datasets, ...query.map.datasets],
-                'dataset'
-              )
-            }),
-            canBound: true
-          }
+    dispatch(
+      setMapSettings({
+        ...(mergeQuery && {
+          datasets: uniqBy([...datasets, ...mapState.datasets], 'dataset'),
         }),
-        menu: {
-          ...(mergeQuery && query && query.menu),
-          menu,
-          menuSection: ''
-        },
-        ...(analysis && {
-          analysis: {
-            ...(mergeQuery && query && query.analysis),
-            analysis
-          }
-        })
-      }
-    });
+        canBound: true,
+      })
+    );
+    dispatch(
+      setMenuSettings({
+        ...menu,
+        menuSection: '',
+      })
+    );
+    dispatch(
+      setAnalysisSettings({
+        ...analysis,
+        menuSection: '',
+      })
+    );
   }
 );
 
 export const showAnalysis = createThunkAction(
   'showAnalysis',
-  () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
-    const { menu } = query || {};
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        menu: {
-          ...menu,
-          menuSection: 'analysis'
-        }
-      }
-    });
+  () => (dispatch) => {
+    dispatch(
+      setMenuSettings({
+        menuSection: 'analysis',
+      })
+    );
   }
 );
