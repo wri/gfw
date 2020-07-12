@@ -49,6 +49,7 @@
     "react/no-array-index-key": "off",
     "no-restricted-globals": "off",
     "react/sort-comp": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "camelcase": "off"
   }
 }
