@@ -200,7 +200,7 @@ export const parseSentence = createSelector(
       },
       topRegion,
       topRegionCount: format(',')(topRegionCount),
-      topRegionPerc: `${format('.2r')(topRegionPerc)}%`,
+      topRegionPerc: topRegionPerc ? `${format('.2r')(topRegionPerc)}%` : '0%',
       topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
       location: locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`,
