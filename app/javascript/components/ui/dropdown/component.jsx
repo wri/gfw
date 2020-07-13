@@ -78,7 +78,7 @@ class Dropdown extends PureComponent {
     native: PropTypes.bool,
     multiple: PropTypes.bool,
     onChange: PropTypes.func,
-    selectorIcon: PropTypes.object,
+    selectorIcon: PropTypes.func,
   };
 
   stateReducer = (state, changes) => {

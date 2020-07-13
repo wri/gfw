@@ -70,17 +70,21 @@ const Button = (props) => {
     );
   } else if (link) {
     button = (
-      <Link href={link} disabled={disabled} onClick={handleClick}>
-        <a
-          className={cx(
-            'c-button',
-            theme,
-            className,
-            { disabled },
-            { '--active': active }
-          )}
-        >
-          {children}
+      <Link href={link}>
+        <a>
+          <button
+            className={cx(
+              'c-button',
+              theme,
+              className,
+              { disabled },
+              { '--active': active }
+            )}
+            disabled={disabled}
+            onClick={handleClick}
+          >
+            {children}
+          </button>
         </a>
       </Link>
     );

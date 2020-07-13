@@ -19,7 +19,7 @@ class ModalGFWFires extends PureComponent {
 
     let modalText = '';
     if (pathname) {
-      if (pathname === '/topics/fires') {
+      if (pathname === '/topics/[...topic]' && query.topic === 'fires') {
         modalText = [
           'Welcome to the new home for Global Forest Watch Fires data and insights! ',
           <button
@@ -33,25 +33,29 @@ class ModalGFWFires extends PureComponent {
           </button>,
           " if you don't find what you're looking for.",
         ];
-      } else if (pathname === '/map') {
+      } else if (pathname === '/map/[...location]') {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           If you're looking for the Fire Report, `,
           <Link
             key="link"
-            href="/dashboards/global?category=fires"
-            onClick={() => {
-              setModalGFWFiresOpen(false);
-            }}
+            href="/dashboards/[...location]"
+            as="/dashboards/global?category=fires"
           >
-            <a>click here</a>
+            <button
+              onClick={() => {
+                setModalGFWFiresOpen(false);
+              }}
+            >
+              <a>click here</a>
+            </button>
           </Link>,
           '.',
         ];
       } else if (
         pathname.includes('dashboards') &&
         query &&
-        query.category === 'fires'
+        query.topic === 'fires'
       ) {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!

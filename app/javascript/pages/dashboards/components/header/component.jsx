@@ -158,15 +158,17 @@ class Header extends PureComponent {
           <div className="columns small-12 medium-10">
             <div className="select-container">
               {isAreaDashboard && (
-                <Link
-                  href="/dashboards/[...location]"
-                  as="/dashboards/global"
-                  onClick={() =>
-                    track('switchDashboardType', { label: 'changes to global' })}
-                >
+                <Link href="/dashboards/[...location]" as="/dashboards/global">
                   <a className="breadcrumb-link">
-                    <Icon icon={arrowIcon} className="breadcrumb-icon" />
-                    Go to Global dashboard
+                    <button
+                      onClick={() =>
+                        track('switchDashboardType', {
+                          label: 'changes to global',
+                        })}
+                    >
+                      <Icon icon={arrowIcon} className="breadcrumb-icon" />
+                      Go to Global dashboard
+                    </button>
                   </a>
                 </Link>
               )}
@@ -174,14 +176,17 @@ class Header extends PureComponent {
                 <Link
                   href="/dashboards/[...location]"
                   as={`/dashboards/aoi/${firstArea.id}`}
-                  onClick={() =>
-                    track('switchDashboardType', {
-                      label: 'changes to areas',
-                    })}
                 >
                   <a className="breadcrumb-link">
-                    <Icon icon={arrowIcon} className="breadcrumb-icon" />
-                    Go to Areas dashboard
+                    <button
+                      onClick={() =>
+                        track('switchDashboardType', {
+                          label: 'changes to areas',
+                        })}
+                    >
+                      <Icon icon={arrowIcon} className="breadcrumb-icon" />
+                      Go to Areas dashboard
+                    </button>
                   </a>
                 </Link>
               )}

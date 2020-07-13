@@ -5,7 +5,6 @@ import Dropdown from 'components/ui/dropdown';
 import Dotdotdot from 'react-dotdotdot';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
-import Link from 'next/link';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
@@ -94,13 +93,9 @@ class Card extends PureComponent {
               {buttons.map((button, i) => {
                 if (button.link) {
                   return (
-                    <Link href={button.link} key={button.link}>
-                      <a>
-                        <Button theme="theme-button-light" {...button}>
-                          {button.text}
-                        </Button>
-                      </a>
-                    </Link>
+                    <Button theme="theme-button-light" {...button}>
+                      {button.text}
+                    </Button>
                   );
                 }
 
