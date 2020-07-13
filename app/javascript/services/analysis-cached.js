@@ -251,7 +251,7 @@ export const getWeeksFilter = ({ weeks, latest }) => {
 
     return `${acc} ${i === 0 ? '' : 'OR '}(alert__year = ${
       yi
-    } AND alert__week > ${wi}) OR (alert__year = ${yf} AND alert__week <= ${
+    } AND alert__week > ${wi}) AND (alert__year = ${yf} AND alert__week <= ${
       wf
     })`;
   }, '');
@@ -780,7 +780,11 @@ export const fetchFiresWithin = params => {
 };
 
 export const fetchVIIRSLatest = () =>
-  get(`https://${process.env.FEATURE_ENV === 'staging' ? 'staging-' : ''}tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date`)
+  get(
+    `https://${
+      process.env.FEATURE_ENV === 'staging' ? 'staging-' : ''
+    }tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date`
+  )
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 
@@ -789,9 +793,11 @@ export const fetchVIIRSLatest = () =>
       };
     })
     .catch(() => ({
-      date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD')
+      date: moment()
+        .utc()
+        .subtract('weeks', 2)
+        .format('YYYY-MM-DD')
     }));
-
 
 // Climate fetches
 
