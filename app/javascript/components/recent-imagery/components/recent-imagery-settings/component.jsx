@@ -98,6 +98,7 @@ class RecentImagerySettings extends PureComponent {
                   isOutsideRange: (d) =>
                     d.isAfter(moment()) || d.isBefore(moment('2000-01-01')),
                   block: true,
+                  placement: 'left',
                 }}
               />
             </div>
