@@ -8,6 +8,7 @@ import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompt
 export const setWidgetsData = createAction('setWidgetsData');
 export const setWidgetSettingsByKey = createAction('setWidgetSettingsByKey');
 export const setActiveWidget = createAction('setActiveWidget');
+export const setShowMap = createAction('setShowMap');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
 
 export const getWidgetsData = createThunkAction(
