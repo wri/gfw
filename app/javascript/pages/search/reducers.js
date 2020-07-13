@@ -3,22 +3,29 @@ import * as actions from './actions';
 export const initialState = {
   loading: false,
   error: false,
-  data: []
+  data: [],
+  query: '',
 };
 
 const setSearchLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload,
+});
+
+const setSearchQuery = (state, { payload }) => ({
+  ...state,
+  query: payload,
 });
 
 const setSearchData = (state, { payload }) => ({
   ...state,
   data: payload,
   loading: false,
-  error: false
+  error: false,
 });
 
 export default {
   [actions.setSearchLoading]: setSearchLoading,
-  [actions.setSearchData]: setSearchData
+  [actions.setSearchQuery]: setSearchQuery,
+  [actions.setSearchData]: setSearchData,
 };

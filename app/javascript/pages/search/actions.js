@@ -2,28 +2,14 @@ import { createThunkAction, createAction } from 'utils/redux';
 import request from 'utils/request';
 
 export const setSearchData = createAction('setSearchData');
+export const setSearchQuery = createAction('setSearchQuery');
 export const setSearchLoading = createAction('setSearchLoading');
-
-export const setQueryToUrl = createThunkAction(
-  'setQueryToUrl',
-  ({ query }) => (dispatch, getState) => {
-    const { location } = getState();
-    const { query: oldQuery } = location || {};
-    dispatch({
-      type: 'search',
-      query: {
-        ...oldQuery,
-        query,
-      },
-    });
-  }
-);
 
 export const getSearch = createThunkAction(
   'getSearch',
   ({ query, page }) => (dispatch, getState) => {
     const { search } = getState() || {};
-    dispatch(setQueryToUrl({ query }));
+    dispatch(setSearchQuery(query));
     if (query && search && !search.loading) {
       dispatch(setSearchLoading(true));
       request
