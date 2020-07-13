@@ -26,6 +26,11 @@ const setActiveWidget = (state, { payload }) => ({
   showMap: true,
 });
 
+const setShowMap = (state, { payload }) => ({
+  ...state,
+  showMap: payload,
+});
+
 const setWidgetSettingsByKey = (state, { payload }) => ({
   ...state,
   settings: {
@@ -45,6 +50,7 @@ const setWidgetsLoading = (state, { payload }) => ({
 
 export default {
   [actions.setWidgetsData]: setWidgetsData,
+  [actions.setShowMap]: setShowMap,
   [actions.setActiveWidget]: setActiveWidget,
   [actions.setWidgetSettingsByKey]: setWidgetSettingsByKey,
   [actions.setWidgetsLoading]: setWidgetsLoading,
