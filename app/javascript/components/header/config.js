@@ -41,7 +41,7 @@ export default {
           label: 'Water',
           path: '/topics/water'
         },
-        ['staging', 'preproduction'].includes(process.env.FEATURE_ENV) && {
+        {
           label: 'Fires',
           path: '/topics/fires'
         }
