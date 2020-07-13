@@ -7,7 +7,7 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 
-const mapStateToProps = ({ modalGFWFires }) => ({
+const mapStateToProps = ({ modalGFWFires, location }) => ({
   open: modalGFWFires?.open,
   location,
 });
