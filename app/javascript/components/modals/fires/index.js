@@ -7,15 +7,15 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 
-const mapStateToProps = ({ location }) => ({
-  open: location && location.query && !!location.query.gfwfires,
-  location
+const mapStateToProps = ({ modalGFWFires }) => ({
+  open: modalGFWFires?.open,
+  location,
 });
 
 reducerRegistry.registerModule('modalGFWFires', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, { ...actions, setModalContactUsOpen })(
