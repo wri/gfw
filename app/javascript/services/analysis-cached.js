@@ -204,17 +204,13 @@ export const getDatesFilter = ({ startDate, endDate }) => {
 // build complex WHERE filter for dates (VIIRS/GLAD)
 export const getWeeksFilter = ({ weeks, latest }) => {
   const latestYear = latest
-    ? moment(latest)
-      .subtract(1, 'weeks')
-      .year()
+    ? moment(latest).year()
     : moment()
       .subtract(1, 'weeks')
       .year();
 
   const latestWeek = latest
-    ? moment(latest)
-      .subtract(1, 'weeks')
-      .isoWeek()
+    ? moment(latest).isoWeek()
     : moment()
       .subtract(1, 'weeks')
       .isoWeek();
@@ -793,7 +789,9 @@ export const fetchVIIRSLatest = () =>
       const date = data && data.data && data.data.max_date;
 
       return {
-        date
+        date: moment(date)
+          .subtract(1, 'weeks')
+          .format('YYYY-MM-DD')
       };
     })
     .catch(() => ({
