@@ -6,7 +6,6 @@ const getCategory = (state) => state.categorySelected;
 
 export const getProjectsByCategory = createSelector(getProjects, (projects) => {
   if (!projects) return null;
-  console.log(projects);
   return groupBy(projects, 'category');
 });
 
