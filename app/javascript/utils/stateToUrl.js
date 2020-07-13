@@ -1,5 +1,4 @@
 import queryString from 'query-string';
-import omit from 'lodash/omit';
 import oldLayers from 'data/v2-v3-datasets-layers.json';
 import basemaps from 'components/map/basemaps';
 
@@ -128,33 +127,4 @@ export const encodeStateForUrl = (params) => {
     }
   });
   return queryString.stringify(paramsParsed);
-};
-
-export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
-  const {
-    location: { query, payload, type },
-  } = state();
-  let params = change;
-  if (query && query[subKey || key] && !!change && typeof change === 'object') {
-    params = {
-      ...query[subKey || key],
-      ...change,
-    };
-  }
-
-  // if a false value is sent we should remove the key from the url
-  const cleanLocationQuery =
-    !change && query ? omit(query, [subKey || key]) : query;
-
-  return {
-    key,
-    type,
-    payload,
-    query: {
-      ...cleanLocationQuery,
-      ...(params && {
-        [subKey || key]: params,
-      }),
-    },
-  };
 };

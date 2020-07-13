@@ -3,8 +3,10 @@ import * as actions from './actions';
 
 const isServer = typeof window === 'undefined';
 
-const showMapPrompts = !isServer && JSON.parse(localStorage.getItem('showPrompts'));
-const mapPromptsViewed = !isServer && JSON.parse(localStorage.getItem('mapPromptsViewed'));
+const showMapPrompts =
+  !isServer && JSON.parse(localStorage.getItem('showPrompts'));
+const mapPromptsViewed =
+  !isServer && JSON.parse(localStorage.getItem('mapPromptsViewed'));
 
 export const initialState = {
   showPrompts: showMapPrompts === null || showMapPrompts,
@@ -12,8 +14,8 @@ export const initialState = {
   settings: {
     open: false,
     stepIndex: 0,
-    stepsKey: ''
-  }
+    stepsKey: '',
+  },
 };
 
 const setShowMapPrompts = (state, { payload }) => {
@@ -21,12 +23,12 @@ const setShowMapPrompts = (state, { payload }) => {
     localStorage.setItem('showPrompts', payload);
   }
   track('userPromptShowHide', {
-    label: payload ? 'User enables prompts' : 'User hides prompts'
+    label: payload ? 'User enables prompts' : 'User hides prompts',
   });
 
   return {
     ...state,
-    showPrompts: payload
+    showPrompts: payload,
   };
 };
 
@@ -42,11 +44,20 @@ const setShowPromptsViewed = (state, { payload }) => {
 
   return {
     ...state,
-    promptsViewed: newPromptsViewed
+    promptsViewed: newPromptsViewed,
   };
 };
 
+const setMapPrompts = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state,
+    ...payload,
+  },
+});
+
 export default {
   [actions.setShowMapPrompts]: setShowMapPrompts,
-  [actions.setShowPromptsViewed]: setShowPromptsViewed
+  [actions.setMapPrompts]: setMapPrompts,
+  [actions.setShowPromptsViewed]: setShowPromptsViewed,
 };

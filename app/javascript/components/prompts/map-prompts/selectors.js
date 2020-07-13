@@ -5,44 +5,33 @@ import uniq from 'lodash/uniq';
 import { getMapZoom, getActiveDatasets } from 'components/map/selectors';
 import { getShowRecentImagery } from 'pages/map/selectors';
 
-import { initialState } from './reducers';
-
-const getMapPromptsState = state =>
-  state.location && state.location.query && state.location.query.mapPrompts;
-export const selectShowMapPrompts = state =>
+const getMapPromptsSettings = (state) => state.mapPrompts?.settings;
+export const selectShowMapPrompts = (state) =>
   state.mapPrompts && state.mapPrompts.showPrompts;
-
-export const getMapPromptsSettings = createSelector(
-  [getMapPromptsState],
-  urlState => ({
-    ...initialState.settings,
-    ...urlState
-  })
-);
 
 export const getMapPromptsOpen = createSelector(
   getMapPromptsSettings,
-  settings => settings.open
+  (settings) => settings.open
 );
 
 export const getMapPromptsStepIndex = createSelector(
   getMapPromptsSettings,
-  settings => settings.stepIndex
+  (settings) => settings.stepIndex
 );
 
 export const getMapPromptsStepsKey = createSelector(
   getMapPromptsSettings,
-  settings => settings.stepsKey
+  (settings) => settings.stepsKey
 );
 
 export const getDatasetCategories = createSelector(
   [getActiveDatasets],
-  datasets => datasets && uniq(flatMap(datasets.map(d => d.tags)))
+  (datasets) => datasets && uniq(flatMap(datasets.map((d) => d.tags)))
 );
 
 export const getDatasetIds = createSelector(
   [getActiveDatasets],
-  datasets => datasets && datasets.map(d => d.id)
+  (datasets) => datasets && datasets.map((d) => d.id)
 );
 
 export const getMapPromptsProps = createStructuredSelector({
@@ -53,5 +42,5 @@ export const getMapPromptsProps = createStructuredSelector({
   recentActive: getShowRecentImagery,
   showPrompts: selectShowMapPrompts,
   activeCategories: getDatasetCategories,
-  datasetIds: getDatasetIds
+  datasetIds: getDatasetIds,
 });

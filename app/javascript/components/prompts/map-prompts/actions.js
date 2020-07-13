@@ -1,5 +1,4 @@
 import { createThunkAction, createAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { track } from 'app/analytics';
 import useRouter from 'utils/router';
 
@@ -8,6 +7,7 @@ import { setMainMapSettings } from 'pages/map/actions';
 
 export const setShowMapPrompts = createAction('setShowMapPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
+export const setMapPrompts = createAction('setMapPrompts');
 
 export const setMapPromptsSettings = createThunkAction(
   'setMapPromptsSettings',
@@ -20,13 +20,7 @@ export const setMapPromptsSettings = createThunkAction(
       force ||
       (showPrompts && (!promptsViewed || !promptsViewed.includes(stepsKey)))
     ) {
-      dispatch(
-        setComponentStateToUrl({
-          key: 'mapPrompts',
-          change,
-          state,
-        })
-      );
+      dispatch(setMapPrompts(change));
       if (stepsKey) {
         track('userPrompt', {
           label: `${stepsKey}: ${(stepIndex || 0) + 1}`,
