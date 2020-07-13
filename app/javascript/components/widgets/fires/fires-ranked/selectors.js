@@ -103,7 +103,7 @@ export const parseList = createSelector(
       };
     });
     return matchKey === 'iso'
-      ? mappedData.filter(d => d.area > 1e6)
+      ? mappedData.filter(d => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
       : mappedData;
   }
 );
@@ -174,7 +174,6 @@ export const parseSentence = createSelector(
     const topRegionDensity = data[0].density || 0;
     const topRegionPerc = 100 * topRegionCount / sumBy(data, 'counts');
     const timeFrame = optionsSelected.weeks;
-
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
 
