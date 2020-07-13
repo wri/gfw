@@ -72,7 +72,7 @@ export default class Brush extends PureComponent {
       data: prevData,
     } = prevProps;
 
-    if (isEqual(data, prevData)) {
+    if (!isEqual(data, prevData)) {
       this.scale = scaleLinear()
         .domain([0, data.length - 1])
         .rangeRound([margin.left, width - margin.right]);

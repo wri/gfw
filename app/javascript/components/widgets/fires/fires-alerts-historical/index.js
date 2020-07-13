@@ -1,16 +1,16 @@
 import {
   fetchHistoricalAlerts,
-  fetchVIIRSLatest
+  fetchVIIRSLatest,
 } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
+  FIRES_VIIRS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
+  FIRES_ALERTS_VIIRS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -27,7 +27,7 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -35,23 +35,23 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'dataset',
       label: 'fires dataset',
-      type: 'select'
+      type: 'select',
     },
     {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
       clearable: false,
-      border: true
-    }
+      border: true,
+    },
   ],
   sortOrder: {
-    fires: 5
+    fires: 5,
   },
   visible: ['dashboard'],
   types: ['country', 'wdpa', 'geostore', 'use'],
@@ -63,26 +63,26 @@ export default {
   settings: {
     dataset: 'viirs',
     minDate: '2000-01-01',
-    confidence: ''
+    confidence: '',
   },
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // fires
     {
       dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
+      layers: [FIRES_ALERTS_VIIRS],
+    },
   ],
   sentences: {
     initial:
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts',
     withInd:
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
-    highConfidence: ', considering <b>high confidence</b> alerts only.'
+    highConfidence: ', considering <b>high confidence</b> alerts only.',
   },
   whitelistType: 'alerts',
   whitelists: {
@@ -291,43 +291,40 @@ export default {
       'YEM',
       'ZAF',
       'ZMB',
-      'ZWE'
-    ]
+      'ZWE',
+    ],
   },
-  getData: params =>
+  getData: (params) =>
     fetchVIIRSLatest(params)
-      .then(
-        response => response && response.date || null
-      )
-      .then(latest =>
+      .then((response) => (response && response.date) || null)
+      .then((latest) =>
         fetchHistoricalAlerts({
           ...params,
           startDate: params.minDate,
           endDate: latest,
-          frequency: 'daily'
+          frequency: 'daily',
         })
-          .then(response => {
+          .then((response) => {
             const { data } = response.data || {};
 
             return {
               alerts: data,
               settings: {
-                startDate: data && data.length > 0 && data[data.length - 1].alert__date,
-                endDate: latest
-              }
+                startDate:
+                  data && data.length > 0 && data[data.length - 1].alert__date,
+                endDate: latest,
+              },
             };
           })
-          .catch(error => {
-            console.info(error);
+          .catch(() => {
             return null;
           })
       )
-      .catch(error => {
-        console.info(error);
+      .catch(() => {
         return null;
       }),
-  getDataURL: params => [
-    fetchHistoricalAlerts({ ...params, frequency: 'daily', download: true })
+  getDataURL: (params) => [
+    fetchHistoricalAlerts({ ...params, frequency: 'daily', download: true }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };
