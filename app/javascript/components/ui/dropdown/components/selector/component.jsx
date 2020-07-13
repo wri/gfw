@@ -83,7 +83,7 @@ Selector.propTypes = {
   handleClearSelection: PropTypes.func,
   innerRef: PropTypes.func,
   className: PropTypes.string,
-  selectorIcon: PropTypes.object,
+  selectorIcon: PropTypes.func,
 };
 
 export default Selector;
