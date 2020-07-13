@@ -24,7 +24,7 @@ export const fetchProjects = createThunkAction(
               latitude: d.latitude_average,
               longitude: d.longitude_average,
               link: d.link,
-              category: d.use_case_type_how_to_portal,
+              category: d.use_case_type_how_to_portal_,
               sgf: d.sgf
             }));
           dispatch(setProjectsData(dataParsed));
