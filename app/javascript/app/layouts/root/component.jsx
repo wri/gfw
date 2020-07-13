@@ -94,9 +94,12 @@ class App extends PureComponent {
             )}
             <div className="page">{children}</div>
             <Cookies />
-            {['staging', 'preproduction'].includes(process.env.FEATURE_ENV) &&
-              !embed && <FiresModal />}
-            {!embed && <ClimateModal />}
+            {!embed && (
+              <>
+                <FiresModal />
+                <ClimateModal />
+              </>
+            )}
             <ContactUsModal />
             {showFooter && <Footer />}
           </div>

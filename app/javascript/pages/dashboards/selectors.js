@@ -53,19 +53,13 @@ export const getLinks = createSelector(
       return null;
     }
 
-    const allCats = ['staging', 'preproduction'].includes(
-      process.env.FEATURE_ENV
-    )
-      ? CATEGORIES
-      : CATEGORIES.filter((cat) => cat.value !== 'fires');
-
-    return allCats
-      .filter((c) => widgetCats.includes(c.value))
-      .map((category) => ({
+    return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
+      (category) => ({
         label: category.label,
         category: category.value,
         active: activeCategory === category.value,
-      }));
+      })
+    );
   }
 );
 
