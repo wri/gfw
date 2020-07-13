@@ -789,9 +789,7 @@ export const fetchVIIRSLatest = () =>
       const date = data && data.data && data.data.max_date;
 
       return {
-        date: moment(date)
-          .subtract(1, 'weeks')
-          .format('YYYY-MM-DD')
+        date
       };
     })
     .catch(() => ({
