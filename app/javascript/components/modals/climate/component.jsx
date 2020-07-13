@@ -16,7 +16,7 @@ class ModalGFWClimate extends PureComponent {
         onRequestClose={() => {
           setModalGFWClimateOpen(false);
         }}
-        title={'Global Forest Watch Climate.'}
+        title="Global Forest Watch Climate."
         className="c-gfw-climate-modal"
       >
         <div className="climate-content">
@@ -44,7 +44,7 @@ class ModalGFWClimate extends PureComponent {
 ModalGFWClimate.propTypes = {
   open: PropTypes.bool,
   setModalGFWClimateOpen: PropTypes.func,
-  setModalContactUsOpen: PropTypes.func
+  setModalContactUsOpen: PropTypes.func,
 };
 
 export default ModalGFWClimate;

@@ -1,9 +1,16 @@
 import { connect } from 'react-redux';
 
+import reducerRegistry from 'app/registry';
+
 import Component from './component';
+import reducers, { initialState } from './reducers';
 import * as actions from './actions';
 import { getConfirmSubscriptionModalProps } from './selectors';
 
-export default connect(getConfirmSubscriptionModalProps, actions)(
-  Component
-);
+reducerRegistry.registerModule('confirmSubscription', {
+  actions,
+  reducers,
+  initialState,
+});
+
+export default connect(getConfirmSubscriptionModalProps, actions)(Component);
