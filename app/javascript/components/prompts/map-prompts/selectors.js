@@ -5,7 +5,7 @@ import uniq from 'lodash/uniq';
 import { getMapZoom, getActiveDatasets } from 'components/map/selectors';
 import { getShowRecentImagery } from 'pages/map/selectors';
 
-const getMapPromptsSettings = (state) => state.mapPrompts?.settings;
+const getMapPromptsSettings = (state) => state.mapPrompts?.settings || {};
 export const selectShowMapPrompts = (state) =>
   state.mapPrompts && state.mapPrompts.showPrompts;
 

@@ -2,7 +2,7 @@ import { createStructuredSelector, createSelector } from 'reselect';
 
 import { getShowRecentImagery } from 'pages/map/selectors';
 
-const getDashboardPromptsSettings = (state) => state.dashboardPrompts?.settings;
+const getDashboardPromptsSettings = (state) => state.dashboardPrompts?.settings || {};
 export const selectShowDashboardPrompts = (state) =>
   state.dashboardPrompts && state.dashboardPrompts.showPrompts;
 
