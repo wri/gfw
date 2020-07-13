@@ -7,18 +7,19 @@ import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompt
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');
 export const setWidgetSettingsByKey = createAction('setWidgetSettingsByKey');
+export const setActiveWidget = createAction('setActiveWidget');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
 
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
-  () => dispatch => {
+  () => (dispatch) => {
     dispatch(setWidgetsLoading({ loading: true, error: false }));
     getNonGlobalDatasets()
-      .then(response => {
+      .then((response) => {
         const { rows } = response.data;
         dispatch(
           setWidgetsData({
-            nonGlobalDatasets: rows && rows[0]
+            nonGlobalDatasets: rows && rows[0],
           })
         );
       })
@@ -34,57 +35,20 @@ export const setWidgetSettings = createThunkAction(
     dispatch(
       setWidgetSettingsByKey({
         key: widget,
-        change
+        change,
       })
     );
     track('changeWidgetSettings', {
-      label: `${widget}`
+      label: `${widget}`,
     });
     if (!change.interaction) {
       dispatch(
         setDashboardPromptsSettings({
           open: true,
           stepIndex: 0,
-          stepsKey: 'shareWidget'
+          stepsKey: 'shareWidget',
         })
       );
     }
-  }
-);
-
-export const setActiveWidget = createThunkAction(
-  'setActiveWidget',
-  widget => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        widget,
-        showMap: true
-      }
-    });
-  }
-);
-
-export const goToWidgetLocation = createThunkAction(
-  'goToWidgetLocation',
-  params => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
-    dispatch({
-      type,
-      payload: {
-        type: payload.type === 'global' ? 'country' : payload.type,
-        ...params
-      },
-      query: {
-        ...query,
-        map: {
-          ...(query && query.map),
-          canBound: true
-        }
-      }
-    });
   }
 );

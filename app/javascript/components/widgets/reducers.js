@@ -4,7 +4,9 @@ export const initialState = {
   loading: true,
   error: false,
   data: {},
-  settings: {}
+  settings: {},
+  activeWidget: '',
+  showMap: false,
 };
 
 // reducers for all widgets parent wrapper component
@@ -12,10 +14,16 @@ const setWidgetsData = (state, { payload }) => ({
   ...state,
   data: {
     ...state.data,
-    ...payload
+    ...payload,
   },
   loading: false,
-  error: false
+  error: false,
+});
+
+const setActiveWidget = (state, { payload }) => ({
+  ...state,
+  activeWidget: payload,
+  showMap: true,
 });
 
 const setWidgetSettingsByKey = (state, { payload }) => ({
@@ -24,19 +32,20 @@ const setWidgetSettingsByKey = (state, { payload }) => ({
     ...state.settings,
     [payload.key]: {
       ...state.settings?.[payload.key],
-      ...payload.change
-    }
+      ...payload.change,
+    },
   },
 });
 
 const setWidgetsLoading = (state, { payload }) => ({
   ...state,
   loading: payload.loading,
-  error: payload.error
+  error: payload.error,
 });
 
 export default {
   [actions.setWidgetsData]: setWidgetsData,
+  [actions.setActiveWidget]: setActiveWidget,
   [actions.setWidgetSettingsByKey]: setWidgetSettingsByKey,
-  [actions.setWidgetsLoading]: setWidgetsLoading
+  [actions.setWidgetsLoading]: setWidgetsLoading,
 };

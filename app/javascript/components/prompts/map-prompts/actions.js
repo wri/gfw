@@ -1,13 +1,17 @@
 import { createThunkAction, createAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { track } from 'app/analytics';
+import useRouter from 'utils/router';
+
+import { setMenuSettings } from 'components/map-menu/actions';
+import { setMainMapSettings } from 'pages/map/actions';
 
 export const setShowMapPrompts = createAction('setShowMapPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
 
 export const setMapPromptsSettings = createThunkAction(
   'setMapPromptsSettings',
-  change => (dispatch, state) => {
+  (change) => (dispatch, state) => {
     const { mapPrompts } = state() || {};
     const { promptsViewed, showPrompts } = mapPrompts || {};
     const { stepsKey, force, stepIndex } = change || {};
@@ -20,12 +24,12 @@ export const setMapPromptsSettings = createThunkAction(
         setComponentStateToUrl({
           key: 'mapPrompts',
           change,
-          state
+          state,
         })
       );
       if (stepsKey) {
         track('userPrompt', {
-          label: `${stepsKey}: ${(stepIndex || 0) + 1}`
+          label: `${stepsKey}: ${(stepIndex || 0) + 1}`,
         });
       }
     }
@@ -38,53 +42,39 @@ export const setMapPromptsSettings = createThunkAction(
 
 export const setExploreView = createThunkAction(
   'setExploreView',
-  () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        menu: {
-          menuSection: 'explore'
-        }
-      }
-    });
+  () => (dispatch) => {
+    dispatch(
+      setMenuSettings({
+        menuSection: 'explore',
+      })
+    );
   }
 );
 
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
-  params => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
-    dispatch({
-      type,
-      payload: {
-        ...payload,
-        ...params
-      },
+  (params) => () => {
+    const { pathname, query, pushQuery } = useRouter();
+    pushQuery({
+      pathname,
       query: {
         ...query,
+        location: Object.values(params),
         mainMap: {
-          showAnalysis: true
-        }
-      }
+          showAnalysis: true,
+        },
+      },
     });
   }
 );
 
 export const clearAnalysisView = createThunkAction(
   'clearAnalysisView',
-  () => (dispatch, getState) => {
-    const { query, type } = getState().location || {};
-    dispatch({
-      type,
-      query: {
-        ...query,
-        mainMap: {
-          showAnalysis: true
-        }
-      }
-    });
+  () => (dispatch) => {
+    dispatch(
+      setMainMapSettings({
+        showAnalysis: true,
+      })
+    );
   }
 );
