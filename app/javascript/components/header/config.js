@@ -21,11 +21,13 @@ export default {
   navMain: [
     {
       label: 'Map',
-      href: '/map',
+      href: '/map/[...location]',
+      as: '/map/global',
     },
     {
       label: 'Dashboard',
-      href: '/dashboards/global',
+      href: '/dashboards/[...location]',
+      as: '/dashboards/global',
     },
     {
       label: 'Topics',
