@@ -11,18 +11,11 @@ const URL = ({
     arrayFormat: 'comma',
   },
 }) => {
-  const { pathname, replace, query } = useRouter();
+  const { pathname, asPath, replace } = useRouter();
 
   useDeepCompareEffect(() => {
-    const queryParamsSerialized = encodeStateForUrl(
-      { ...queryParams, location: '' },
-      options
-    );
-
-    const fullPathname = pathname.replace(
-      '[...location]',
-      query?.location?.join('/')
-    );
+    const queryParamsSerialized = encodeStateForUrl(queryParams, options);
+    const fullPathname = asPath?.split('?')?.[0];
 
     replace(
       `${pathname}`,

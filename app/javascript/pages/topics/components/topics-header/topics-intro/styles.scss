@@ -67,4 +67,14 @@
     max-width: 400px;
     margin-bottom: 30px;
   }
+
+  .intro-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .intro-btn {
+    margin-bottom: 15px;
+    margin-right: 15px;
+  }
 }
