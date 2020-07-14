@@ -18,14 +18,21 @@ const URL = ({
       { ...queryParams, location: '' },
       options
     );
+
     const fullPathname = pathname.replace(
       '[...location]',
-      query.location.join('/')
+      query?.location?.join('/')
     );
 
-    replace(`${pathname}`, `${fullPathname}?${queryParamsSerialized}`, {
-      shallow: true,
-    });
+    replace(
+      `${pathname}`,
+      `${fullPathname}${
+        queryParamsSerialized ? `?${queryParamsSerialized}` : ''
+      }`,
+      {
+        shallow: true,
+      }
+    );
   }, [queryParams]);
 
   return null;
