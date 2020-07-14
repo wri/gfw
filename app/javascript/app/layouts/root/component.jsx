@@ -5,8 +5,9 @@ import { initGA, handlePageTrack } from 'app/analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
+import { Footer } from 'gfw-components';
+
 import Header from 'components/header';
-import Footer from 'components/footer';
 import Cookies from 'components/cookies';
 import ContactUsModal from 'components/modals/contact-us';
 import NavLink from 'components/nav-link';
@@ -60,7 +61,6 @@ class App extends PureComponent {
       fullScreen,
       showHeader,
       showFooter,
-      embed,
       title,
       description,
       keywords,
@@ -93,15 +93,11 @@ class App extends PureComponent {
               />
             )}
             <div className="page">{children}</div>
-            <Cookies />
-            {!embed && (
-              <>
-                <FiresModal />
-                <ClimateModal />
-              </>
-            )}
+            <FiresModal />
+            <ClimateModal />
             <ContactUsModal />
             {showFooter && <Footer />}
+            <Cookies />
           </div>
         </MediaContextProvider>
       </>
