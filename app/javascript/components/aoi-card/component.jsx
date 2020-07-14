@@ -243,7 +243,7 @@ class AoICard extends PureComponent {
           {!simple && !isPending && (
             <div className="activity">
               <span className="activity-intro">
-                {'Latest week&lsquo;s alerts:'}
+                Latest week&lsquo;s alerts:
               </span>
               {!loading && dataError && (
                 <span className="data-error-msg">

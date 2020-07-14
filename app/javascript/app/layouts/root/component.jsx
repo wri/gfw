@@ -32,6 +32,7 @@ class App extends PureComponent {
     keywords: PropTypes.string,
     noIndex: PropTypes.bool,
     embed: PropTypes.bool,
+    setModalContactUsOpen: PropTypes.func,
   };
 
   static defaultProps = {
@@ -65,6 +66,7 @@ class App extends PureComponent {
       description,
       keywords,
       noIndex,
+      setModalContactUsOpen,
     } = this.props;
 
     return (
@@ -96,7 +98,9 @@ class App extends PureComponent {
             <FiresModal />
             <ClimateModal />
             <ContactUsModal />
-            {showFooter && <Footer />}
+            {showFooter && (
+              <Footer openContactUsModal={() => setModalContactUsOpen(true)} />
+            )}
             <Cookies />
           </div>
         </MediaContextProvider>

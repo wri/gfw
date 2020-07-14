@@ -14,12 +14,11 @@ export const getActiveArea = createSelector(
   [selectLocation, selectAreaOfInterestModal, getAllAreas],
   (location, areaId, areas) => {
     if (isEmpty(areas)) return null;
-    let activeAreaId = '';
+    let activeAreaId = areaId;
     if (location.type === 'aoi') {
       activeAreaId = location.adm0;
-    } else {
-      activeAreaId = areaId;
     }
+
     return areas.find((a) => a.id === activeAreaId);
   }
 );
