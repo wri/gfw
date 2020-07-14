@@ -33,7 +33,7 @@ import allWidgets from './manifest';
 const isServer = typeof window === 'undefined';
 
 const buildLocationDict = (locations) =>
-  (location &&
+  (locations &&
     !!locations.length &&
     locations.reduce(
       (dict, next) => ({
@@ -551,7 +551,7 @@ export const getWidgets = createSelector(
         downloadLink,
         rawData,
         title: title
-          ? translateText(title).replace(
+          ? translateText(title)?.replace(
               '{location}',
               locationLabelFull || '...'
             )

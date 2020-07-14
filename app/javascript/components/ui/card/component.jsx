@@ -93,7 +93,11 @@ class Card extends PureComponent {
               {buttons.map((button, i) => {
                 if (button.link) {
                   return (
-                    <Button theme="theme-button-light" {...button}>
+                    <Button
+                      key={button.link}
+                      theme="theme-button-light"
+                      {...button}
+                    >
                       {button.text}
                     </Button>
                   );

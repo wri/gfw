@@ -19,7 +19,9 @@ export const decodeParamsForState = (params) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
     try {
-      paramsParsed[key] = JSON.parse(atob(params[key]));
+      paramsParsed[key] = JSON.parse(
+        Buffer.from(params[key], 'base64').toString('binary')
+      );
     } catch (err) {
       paramsParsed[key] = params[key];
     }
@@ -117,7 +119,7 @@ export const decodeUrlForState = (url) => {
   return paramsParsed;
 };
 
-export const encodeStateForUrl = (params) => {
+export const encodeStateForUrl = (params, options) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
     if (typeof params[key] === 'object') {
@@ -126,5 +128,5 @@ export const encodeStateForUrl = (params) => {
       paramsParsed[key] = params[key];
     }
   });
-  return queryString.stringify(paramsParsed);
+  return queryString.stringify(paramsParsed, options);
 };
