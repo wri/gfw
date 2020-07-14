@@ -17,7 +17,7 @@ export default () => {
     router.query = router.query ? decodeParamsForState(router.query) : {};
   }
 
-  router.pushQuery = ({ pathname, query, hash }) => {
+  router.pushQuery = ({ pathname, query, hash, options }) => {
     let asPath = pathname;
     if (query) {
       Object.keys(query).forEach((key) => {
@@ -31,9 +31,11 @@ export default () => {
       });
     }
     const queryString = encodeStateForUrl(query);
+
     router.push(
-      `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,
-      `${asPath}${queryString ? `?${queryString}` : ''}${hash || ''}`
+      pathname,
+      `${asPath}${queryString ? `?${queryString}` : ''}${hash || ''}`,
+      options
     );
   };
 
