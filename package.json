@@ -108,6 +108,7 @@
     "next": "^9.4.4",
     "next-compose-plugins": "^2.2.0",
     "next-optimized-images": "^2.5.5",
+    "next-redux-wrapper": "^6.0.2",
     "node-sass": "^4.13.1",
     "postcss-flexbugs-fixes": "^4.2.0",
     "proj4": "^2.5.0",

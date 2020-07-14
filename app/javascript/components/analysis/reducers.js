@@ -7,7 +7,9 @@ export const initialState = {
   errorMessage: '',
   data: {},
   location: {},
-  showDraw: false,
+  settings: {
+    showDraw: false,
+  },
 };
 
 const setAnalysisData = (state, { payload }) => ({
@@ -19,7 +21,10 @@ const setAnalysisData = (state, { payload }) => ({
 
 const setAnalysisSettings = (state, { payload }) => ({
   ...state,
-  ...payload,
+  settings: {
+    ...state.settings,
+    ...payload,
+  },
 });
 
 const setAnalysisLoading = (state, { payload }) => ({

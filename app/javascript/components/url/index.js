@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useRouter } from 'next/router';
-import qs from 'query-string';
+
+import { encodeStateForUrl } from 'utils/stateToUrl';
 
 const URL = ({
   queryParams,
@@ -10,17 +11,21 @@ const URL = ({
     arrayFormat: 'comma',
   },
 }) => {
-  const router = useRouter();
-  const { pathname } = router;
+  const { pathname, replace, query } = useRouter();
 
-  useEffect(() => {
-    const queryParamsSerialized = qs.stringify(queryParams, options);
-
-    router.replace(
-      `${pathname}?${queryParamsSerialized}`,
-      `${pathname}?${queryParamsSerialized}`,
-      { shallow: true }
+  useDeepCompareEffect(() => {
+    const queryParamsSerialized = encodeStateForUrl(
+      { ...queryParams, location: '' },
+      options
     );
+    const fullPathname = pathname.replace(
+      '[...location]',
+      query.location.join('/')
+    );
+
+    replace(`${pathname}`, `${fullPathname}?${queryParamsSerialized}`, {
+      shallow: true,
+    });
   }, [queryParams]);
 
   return null;

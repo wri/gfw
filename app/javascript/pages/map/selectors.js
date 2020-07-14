@@ -18,7 +18,7 @@ const selectMenuSection = (state) =>
   state.location.query.menu &&
   state.location.query.menu.menuSection;
 const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
-const getShowDraw = (state) => state.analysis?.showDraw;
+const getShowDraw = (state) => state.analysis?.settings?.showDraw;
 
 // SELECTORS
 export const getEmbed = createSelector(

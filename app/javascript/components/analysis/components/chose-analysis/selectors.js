@@ -13,7 +13,7 @@ export const selectError = (state) => state.analysis && state.analysis.error;
 export const selectErrorMessage = (state) =>
   state.analysis && state.analysis.errorMessage;
 const selectUploading = (state) => state.analysis && state.analysis.uploading;
-const getShowDraw = (state) => state.analysis?.showDraw;
+const getShowDraw = (state) => state.analysis?.settings?.showDraw;
 
 export const getChooseAnalysisProps = createStructuredSelector({
   showDraw: getShowDraw,
