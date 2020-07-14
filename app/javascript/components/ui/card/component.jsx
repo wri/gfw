@@ -105,16 +105,13 @@ class Card extends PureComponent {
 
                 if (button.extLink) {
                   return (
-                    <a
+                    <Button
+                      theme="theme-button-light"
                       key={button.extLink}
-                      href={button.extLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      {...button}
                     >
-                      <Button theme="theme-button-light" {...button}>
-                        {button.text}
-                      </Button>
-                    </a>
+                      {button.text}
+                    </Button>
                   );
                 }
 

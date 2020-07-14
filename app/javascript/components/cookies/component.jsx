@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import { track } from 'app/analytics';
 import Button from 'components/ui/button';
@@ -7,8 +6,22 @@ import Button from 'components/ui/button';
 import './styles.scss';
 
 class Cookies extends PureComponent {
+  state = {
+    open: false,
+  };
+
+  componentDidMount() {
+    this.setState({ open: !JSON.parse(localStorage.getItem('agreeCookies')) });
+  }
+
+  agreeCookies = () => {
+    this.setState({ open: false });
+    localStorage.setItem('agreeCookies', true);
+  };
+
   render() {
-    const { agreeCookies, open } = this.props;
+    const { open } = this.state;
+
     return open ? (
       <div className="c-cookies">
         <div className="row">
@@ -23,8 +36,10 @@ class Cookies extends PureComponent {
                 rel="noopener noreferrer"
               >
                 {' '}
-                privacy policy{' '}
-              </a>{' '}
+                privacy policy
+                {' '}
+              </a>
+              {' '}
               for further details.
             </p>
           </div>
@@ -33,7 +48,7 @@ class Cookies extends PureComponent {
               className="cookies-btn"
               theme="theme-button-grey theme-button-small"
               onClick={() => {
-                agreeCookies();
+                this.agreeCookies();
                 track('acceptCookies');
               }}
             >
@@ -45,10 +60,5 @@ class Cookies extends PureComponent {
     ) : null;
   }
 }
-
-Cookies.propTypes = {
-  open: PropTypes.bool,
-  agreeCookies: PropTypes.func
-};
 
 export default Cookies;
