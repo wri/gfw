@@ -10,7 +10,11 @@ class SectionProjectsModal extends PureComponent {
   static propTypes = {
     data: PropTypes.object,
     setSectionProjectsModalSlug: PropTypes.func,
-    slug: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    slug: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+    ]),
   };
 
   parseContent = (html, className) => {
