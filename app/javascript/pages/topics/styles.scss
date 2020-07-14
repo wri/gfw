@@ -1,6 +1,12 @@
 @import '~styles/settings.scss';
 
 .l-topics-page {
+  margin-top: 56px;
+
+  @media screen and (min-width: $screen-m) {
+    margin-top: 0;
+  }
+
   .last {
     margin-bottom: rem(150px);
 
