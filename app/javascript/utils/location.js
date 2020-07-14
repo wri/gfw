@@ -13,7 +13,9 @@ export const getActiveArea = createSelector(
     if (isEmpty(areas)) return null;
 
     return areas.find(
-      (a) => a.id === location?.payload?.adm0 || a.subscriptionId === location?.payload?.adm0
+      (a) =>
+        a.id === location?.payload?.adm0 ||
+        a.subscriptionId === location?.payload?.adm0
     );
   }
 );
@@ -21,13 +23,13 @@ export const getActiveArea = createSelector(
 export const getDataLocation = createSelector(
   [getActiveArea, selectLocation],
   (area, location) => {
-    const { payload, pathname } = location;
+    const { payload, pathname } = location || {};
     const newLocation = {
       ...payload,
       pathname,
       ...(payload?.type === 'aoi' && {
-        areaId: payload?.adm0
-      })
+        areaId: payload?.adm0,
+      }),
     };
 
     if (!area) return newLocation;
@@ -35,7 +37,7 @@ export const getDataLocation = createSelector(
 
     return {
       ...newLocation,
-      ...areaLocation
+      ...areaLocation,
     };
   }
 );

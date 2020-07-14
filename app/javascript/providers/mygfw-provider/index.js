@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
 import { withRouter } from 'next/router';
 import isEmpty from 'lodash/isEmpty';
+import reducerRegistry from 'app/registry';
 
 import { setUserToken } from 'services/user';
 
@@ -44,5 +45,11 @@ export const reduxModule = {
   reducers,
   initialState,
 };
+
+reducerRegistry.registerModule('myGfw', {
+  actions,
+  reducers,
+  initialState,
+});
 
 export default withRouter(connect(null, actions)(MyGFWProvider));

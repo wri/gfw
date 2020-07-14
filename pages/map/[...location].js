@@ -1,5 +1,6 @@
 import Layout from 'app/layouts/root';
 import Map from 'pages/map';
+import LocationProvider from 'providers/location-provider';
 
 import { getLocationData } from 'services/location';
 
@@ -28,6 +29,7 @@ export const getServerSideProps = async (ctx) => {
 
 const MapPage = (props) => (
   <Layout {...props} fullScreen showFooter={false}>
+    <LocationProvider />
     <Map />
   </Layout>
 );
