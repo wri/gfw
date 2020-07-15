@@ -7,13 +7,13 @@ const selectLoggedIn = (state) =>
 const selectLoggingIn = (state) => state.myGfw && state.myGfw.loading;
 const selectQuery = (state) => state.location && state.location.query;
 export const selectActiveLang = (state) =>
-  !isServer &&
-  ((state.location &&
-    state.location &&
-    state.location.query &&
-    state.location.query.lang) ||
-    JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
-    'en');
+  (!isServer &&
+    ((state.location &&
+      state.location &&
+      state.location.query &&
+      state.location.query.lang) ||
+      JSON.parse(localStorage.getItem('txlive:selectedlang')))) ||
+  'en';
 
 export const getIsGFW = createSelector(
   selectQuery,

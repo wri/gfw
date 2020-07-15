@@ -3,7 +3,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 export const selectLocation = (state) => state.location?.query?.location;
 export const selectMapSettings = (state) => state.map?.settings;
 export const selectMainMapSettings = (state) => state.mainMap;
-export const selectMapMenuSettings = (state) => state.mapMenu;
+export const selectMapMenuSettings = (state) => state.mapMenu?.settings;
 export const selectAnalysisSettings = (state) => state.analysis?.settings;
 
 export const getUrlParams = createSelector(

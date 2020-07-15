@@ -4,7 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 
 import Icon from 'components/ui/icon';
 
-import treeImage from 'assets/icons/tree-success.png';
+import treeImage from 'assets/icons/tree-success.png?webp';
 import treeImageError from 'assets/icons/error.svg?sprite';
 
 import './styles.scss';

@@ -28,24 +28,23 @@ class Popup extends Component {
     onSelectBoundary: PropTypes.func,
     setMapSettings: PropTypes.func,
     zoomToShape: PropTypes.bool,
-    buttons: PropTypes.array
+    buttons: PropTypes.array,
   };
 
   componentDidUpdate(prevProps) {
     const { interactions, activeDatasets } = this.props;
     if (
       isEmpty(interactions) &&
-      !isEqual(activeDatasets.length, prevProps.activeDatasets.length)
+      !isEqual(activeDatasets?.length, prevProps.activeDatasets.length)
     ) {
       this.handleClose();
     }
   }
 
-  handleClickZoom = selected => {
+  handleClickZoom = (selected) => {
     const { setMapSettings } = this.props;
     const newBbox = bbox(selected.geometry);
     setMapSettings({ canBound: true, bbox: newBbox });
-    this.setState({ open: false });
     this.handleClose();
   };
 
@@ -64,7 +63,7 @@ class Popup extends Component {
       geometry,
       isUse,
       isAdmin,
-      isWdpa
+      isWdpa,
     });
 
     this.handleClose();
@@ -90,7 +89,7 @@ class Popup extends Component {
       isBoundary,
       isArea,
       zoomToShape,
-      buttons
+      buttons,
     } = this.props;
 
     return latlng && latlng.lat && selected && !selected.data.cluster ? (
@@ -108,25 +107,23 @@ class Popup extends Component {
               clamp={5}
               data={{
                 ...cardData,
-                buttons: cardData.buttons.map(
-                  b =>
-                    (b.text === 'ZOOM'
-                      ? {
+                buttons: cardData.buttons.map((b) =>
+                  b.text === 'ZOOM'
+                    ? {
                         ...b,
                         onClick: () =>
                           setMapSettings({
                             canBound: true,
-                            bbox: cardData.bbox
-                          })
+                            bbox: cardData.bbox,
+                          }),
                       }
-                      : b)
-                )
+                    : b
+                ),
               }}
             />
           ) : (
             <div className="popup-table">
-              {interactions &&
-                interactions.length > 1 && (
+              {interactions && interactions.length > 1 && (
                 <Dropdown
                   className="layer-selector"
                   theme="theme-dropdown-native"
@@ -136,8 +133,7 @@ class Popup extends Component {
                   native
                 />
               )}
-              {selected &&
-                interactions.length === 1 && (
+              {selected && interactions.length === 1 && (
                 <div className="popup-title">{selected.label}</div>
               )}
               {isBoundary && (
@@ -163,17 +159,17 @@ class Popup extends Component {
                 )}
                 {!zoomToShape &&
                   !selected.aoi &&
-                  (buttons &&
-                    buttons.map(p => (
-                      <Button
-                        key={p.label}
-                        onClick={() => {
-                          this.handleClickAction(selected, p.action);
-                        }}
-                      >
-                        {p.label}
-                      </Button>
-                    )))}
+                  buttons &&
+                  buttons.map((p) => (
+                    <Button
+                      key={p.label}
+                      onClick={() => {
+                        this.handleClickAction(selected, p.action);
+                      }}
+                    >
+                      {p.label}
+                    </Button>
+                  ))}
               </div>
             </div>
           )}

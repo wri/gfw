@@ -7,7 +7,7 @@ import { translateText } from 'utils/transifex';
 import { getActiveDatasetsFromState } from 'components/map/selectors';
 import { selectActiveLang } from 'app/layouts/root/selectors';
 
-const selectSearch = (state) => state.mapMenu.search;
+const selectSearch = (state) => state.mapMenu?.settings?.search;
 const selectLocation = (state) => state.location && state.location.payload;
 const selectDatasets = (state) => state.datasets && state.datasets.data;
 const selectLocations = (state) => state.mapMenu && state.mapMenu.locations;
