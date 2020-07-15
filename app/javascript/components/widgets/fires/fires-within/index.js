@@ -57,7 +57,7 @@ export default {
   dataType: 'fires',
   chartType: 'pieChart',
   colors: 'fires',
-  metaKey: '',
+  metaKey: 'widget_fire_alert_location',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -95,7 +95,7 @@ export default {
       'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     checkStatus: true
   },
@@ -111,16 +111,20 @@ export default {
         let data = {};
         if (Array.isArray(fireIn) && Array.isArray(allFire)) {
           data = {
-            latest,
+            latest: latest.date,
             fireCountIn: fireIn,
             fireCountAll: allFire
           };
         }
-        return data;
+        return {
+          data,
+          settings: {
+            latestDate: latest.date
+          }
+        };
       })
     ),
   getDataURL: params => [
-    fetchVIIRSLatest({ ...params, download: true }),
     fetchFiresWithin({ ...params, download: true }),
     fetchFiresWithin({
       ...params,

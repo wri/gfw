@@ -28,7 +28,11 @@ export default {
     title: 'Fires',
     text:
       'Although wildfires are a natural occurrence within some forest ecosystems, fire seasons are becoming more extreme and widespread, even in tropical rainforests where fires are atypical and particularly damaging. Hotter, drier weather caused by climate change and poor land management create conditions favorable for more frequent, larger and higher-intensity wildfires.',
-    img1x: intro1x
+    img1x: intro1x,
+    button: {
+      text: 'explore fire alerts on the map',
+      link: '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImJlYXJpbmciOjAsInBpdGNoIjowLCJ6b29tIjoyLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImQ4ZDkzZmJiLTgzMDQtNDI0Zi05OWZiLTFlNTIxYjVkZjU2YSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkNjIxY2UwZi0wODcyLTQxZWYtYjJlYy0xOGZhZWMzZmQxZDkiXX0seyJkYXRhc2V0IjoiMGIwMjA4YjYtYjQyNC00YjU3LTk4NGYtY2FkZGZhMjViYTIyIiwibGF5ZXJzIjpbImNjMzU0MzJkLTM4ZDctNGEwMy04NzJlLTNhNzFhMmY1NTVmYyIsImI0NTM1MGUzLTVhNzYtNDRjZC1iMGE5LTUwMzhhMGQ4YmZhZSJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6IiJ9'
+    }
   },
   slides: [
     {

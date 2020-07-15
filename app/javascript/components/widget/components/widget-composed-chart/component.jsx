@@ -69,11 +69,13 @@ class WidgetComposedChart extends Component {
   handleBrushEnd = ({ startIndex, endIndex }) => {
     const { originalData, handleChangeSettings } = this.props;
     if (handleChangeSettings) {
+      const dataEnd = originalData[endIndex] || originalData[originalData.length - 1];
+
       handleChangeSettings({
         startIndex,
         endIndex,
         startDateAbsolute: originalData[startIndex].date,
-        endDateAbsolute: originalData[endIndex].date
+        endDateAbsolute: dataEnd.date
       });
     }
   };

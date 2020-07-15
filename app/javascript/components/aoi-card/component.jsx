@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import cx from 'classnames';
-import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
 import { translateText } from 'utils/transifex';
 import { all, spread } from 'axios';
@@ -20,6 +19,7 @@ import MapGeostore from 'components/map-geostore';
 
 import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
+import warningIcon from 'assets/icons/warning.svg';
 
 import './styles.scss';
 
@@ -31,27 +31,18 @@ const getLatestAlerts = ({ location, params }) =>
       dataset: 'glad',
       frequency: 'daily'
     }).catch(() => null),
-    process.env.FEATURE_ENV === 'staging' ?
-      fetchHistoricalAlerts({
-        ...location,
-        ...params,
-        dataset: 'viirs',
-        frequency: 'daily'
-      }).catch(() => null)
-      :
-      fetchAnalysisEndpoint({
-        ...location,
-        params,
-        name: 'viirs-alerts',
-        slug: 'viirs-active-fires',
-        version: 'v1'
-      }).catch(() => null)
+    fetchHistoricalAlerts({
+      ...location,
+      ...params,
+      dataset: 'viirs',
+      frequency: 'daily'
+    }).catch(() => null)
   ])
     .then(
       spread((gladsResponse, firesResponse) => {
         const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
         const firesData = firesResponse ? firesResponse.data.data : {};
-        const fires = firesData && process.env.FEATURE_ENV === 'staging' ? sumBy(firesData, 'count') : firesData && firesData.attributes && firesData.attributes.value;
+        const fires = firesData && sumBy(firesData, 'count');
 
         return {
           glads: sumBy(glads, 'count'),
@@ -74,7 +65,10 @@ class AoICard extends PureComponent {
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
     onFetchAlerts: PropTypes.func,
-    status: PropTypes.string
+    status: PropTypes.string,
+    setConfirmSubscriptionModalSettings: PropTypes.func,
+    confirmed: PropTypes.bool,
+    id: PropTypes.string
   };
 
   state = {
@@ -153,7 +147,10 @@ class AoICard extends PureComponent {
       fireAlerts,
       monthlySummary,
       location,
-      status
+      status,
+      setConfirmSubscriptionModalSettings,
+      id,
+      confirmed
     } = this.props;
     const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
@@ -171,9 +168,8 @@ class AoICard extends PureComponent {
         subscribed: monthlySummary
       }
     ].filter(s => s.subscribed);
-
-    const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
-    const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
+    const isSubscribed = deforestationAlerts || fireAlerts;
+    const subscribedToAll = deforestationAlerts && fireAlerts;
     const isPending = status === 'pending';
 
     let subscriptionMessage = 'subscribed to';
@@ -206,25 +202,40 @@ class AoICard extends PureComponent {
           small={simple}
         />
         <div className="item-body">
-          <Dotdotdot clamp={2} className="title">
+          <h5 className="title">
             {name}
-          </Dotdotdot>
+          </h5>
           {!simple && <span className="created notranslate">{createdMeta}</span>}
-          <div className="meta">
-            {tags &&
-              tags.length > 0 && (
-              <div className="tags">
-                <Icon icon={tagIcon} className="tag-icon" />
-                <p>{tags.join(', ')}</p>
-              </div>
-            )}
-            {(deforestationAlerts || fireAlerts || monthlySummary) && (
-              <div className="subscribed">
-                <Icon icon={subscribedIcon} className="subscribed-icon" />
-                <p>{simple ? subscriptionMessage : 'subscribed'}</p>
-              </div>
-            )}
-          </div>
+          {tags &&
+            tags.length > 0 && (
+            <div className="tags">
+              <Icon icon={tagIcon} className="tag-icon" />
+              <p>{tags.join(', ')}</p>
+            </div>
+          )}
+          {isSubscribed && (
+            <div className="subscribed">
+              {confirmed ? (
+                <Fragment>
+                  <Icon icon={subscribedIcon} className="subscribed-icon" />
+                  <p>{subscriptionMessage || 'subscribed'}</p>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Icon icon={warningIcon} className="warning-icon" />
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setConfirmSubscriptionModalSettings({ open: true, activeAreaId: id });
+                    }}
+                  >
+                    Subscription not confirmed
+                  </button>
+                </Fragment>
+              )}
+            </div>
+          )}
           {!simple &&
             !isPending && (
             <div className="activity">
@@ -234,7 +245,7 @@ class AoICard extends PureComponent {
               {!loading &&
                   dataError && (
                 <span className="data-error-msg">
-                      Sorry, we had trouble finding your alerts!
+                  Sorry, we had trouble finding your alerts!
                 </span>
               )}
               {!dataError && (

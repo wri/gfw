@@ -30,7 +30,7 @@ export default {
   chartType: 'composedChart',
   dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_historical_location',
+  metaKey: 'widget_fire_alert_location',
   settings: {
     dataset: 'viirs'
   },
@@ -53,7 +53,7 @@ export default {
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',

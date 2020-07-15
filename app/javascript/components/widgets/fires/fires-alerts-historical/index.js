@@ -59,11 +59,11 @@ export default {
   chartType: 'composedChart',
   dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_historical_location',
+  metaKey: 'widget_fire_alert_location',
   settings: {
     dataset: 'viirs',
     minDate: '2000-01-01',
-    confidence: 'h'
+    confidence: ''
   },
   datasets: [
     {
@@ -84,7 +84,7 @@ export default {
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
@@ -297,14 +297,13 @@ export default {
   getData: params =>
     fetchVIIRSLatest(params)
       .then(
-        response =>
-          (response.attributes && response.attributes.updatedAt) || null
+        response => response && response.date || null
       )
       .then(latest =>
         fetchHistoricalAlerts({
+          ...params,
           startDate: params.minDate,
           endDate: latest,
-          ...params,
           frequency: 'daily'
         })
           .then(response => {

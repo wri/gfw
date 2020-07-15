@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
@@ -120,12 +120,12 @@ class App extends PureComponent {
             <Meta {...metadata} />
             <Cookies />
             {!route.hideFooter && !embed && <Footer />}
-            {process.env.FEATURE_ENV === 'staging' && !embed && (
-              <FiresModal />
+            {!embed && (
+              <Fragment>
+                <FiresModal />
+                <ClimateModal />
+              </Fragment>
             )}
-            {!embed &&
-              <ClimateModal />
-            }
           </div>
         )}
       </MediaQuery>

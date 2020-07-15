@@ -3,7 +3,7 @@ import { fetchHistoricalAlerts } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'firesAlertsHistorical',
+  widget: 'firesAlertsHistoricalOld',
   title: 'Fire Alerts Count in {location}',
   large: true,
   categories: ['summary', 'fires'],
@@ -51,7 +51,7 @@ export default {
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_historical_location',
+  metaKey: 'widget_fire_alert_location',
   sortOrder: {
     fires: 5
   },
@@ -67,7 +67,7 @@ export default {
       'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
     conf: ', considering {confidence} alerts only.'
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',

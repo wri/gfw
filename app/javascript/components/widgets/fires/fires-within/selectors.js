@@ -6,7 +6,7 @@ import moment from 'moment';
 import { hslShift } from 'utils/data';
 
 // get list data
-const getData = state => state.data;
+const getData = state => state.data && state.data.data;
 const getLocationName = state => state.locationLabel;
 const getOptionsSelected = state => state.optionsSelected;
 const getIndicator = state => state.indicator;

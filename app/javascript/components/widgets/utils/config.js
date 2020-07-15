@@ -184,7 +184,7 @@ export const getWidgetDatasets = ({
   dataset
 }) =>
   datasets &&
-  datasets.map(d => ({
+  datasets.filter(d => dataset !== 'modis' || d.boundary).map(d => ({
     ...d,
     opacity: 1,
     visibility: true,
@@ -206,7 +206,12 @@ export const getWidgetDatasets = ({
             .subtract(weeks, 'weeks')
             .format('YYYY-MM-DD'),
           endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
-          trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD')
+          trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
+          startDateAbsolute: dataset === 'viirs' && moment(latestDate).diff(moment(latestDate || undefined)
+            .subtract(weeks, 'weeks'), 'days') > 90 ? moment(latestDate).subtract(90, 'days').format('YYYY-MM-DD') : moment(latestDate || undefined)
+              .subtract(weeks, 'weeks')
+              .format('YYYY-MM-DD'),
+          endDateAbsolute: latestDate
         }
       }),
       ...(threshold && {
@@ -217,9 +222,12 @@ export const getWidgetDatasets = ({
       }),
       ...(startDateAbsolute &&
         endDateAbsolute && {
-        params: {
+        timelineParams: {
           startDateAbsolute: dataset === 'viirs' && moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') > 90 ? moment(endDateAbsolute).subtract(90, 'days').format('YYYY-MM-DD') : startDateAbsolute,
-          endDateAbsolute
+          endDateAbsolute,
+          startDate: dataset === 'viirs' && moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') > 90 ? moment(endDateAbsolute).subtract(90, 'days').format('YYYY-MM-DD') : startDateAbsolute,
+          endDate: endDateAbsolute,
+          trimEndDate: endDateAbsolute
         }
       })
     })
@@ -289,8 +297,7 @@ export const getStatements = ({
   dataType,
   landCategory,
   forestType,
-  datasets,
-  active
+  datasets
 }) => {
   if (!settings) return null;
   const { extentYear, threshold } = settings;

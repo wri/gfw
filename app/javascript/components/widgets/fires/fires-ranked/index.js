@@ -56,14 +56,14 @@ export default {
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence', 'weeks'],
   chartType: 'lollipop',
-  metaKey: 'widget_fire_ranking',
+  metaKey: 'widget_fire_alert_location',
   colors: 'fires',
   sortOrder: {
     summary: 6,
     fires: 3,
     global: 100
   },
-  whitelistType: 'fires',
+  whitelistType: 'alerts',
   sentences: {
     initial:
       'In the last {timeframe} in {location}, the region with the most {significant} number of fire alerts was {topRegion}, with {topRegionCount} fire alerts.  This represents {topRegionPerc} of all alerts detected in {location} and is {status} compared to the number of fires in the same period going back to <b>2012</b>.',
@@ -104,8 +104,7 @@ export default {
   getData: params =>
     fetchVIIRSLatest(params)
       .then(
-        response =>
-          (response.attributes && response.attributes.updatedAt) || null
+        response => response && response.date || null
       )
       .then(latest =>
         all([
@@ -130,8 +129,7 @@ export default {
       }),
   getDataURL: async params => {
     const latestResponse = await fetchVIIRSLatest(params);
-    const latest =
-      (latestResponse.attributes && latestResponse.attributes.updatedAt) ||
+    const latest = latestResponse && latestResponse.date ||
       null;
 
     return [
