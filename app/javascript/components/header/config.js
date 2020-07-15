@@ -1,6 +1,5 @@
 import { logout } from 'services/user';
 
-import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
@@ -75,11 +74,6 @@ export default {
     }
   ],
   apps: [
-    {
-      label: 'GFW Fires',
-      extLink: 'http://fires.globalforestwatch.org',
-      image: gfwFires
-    },
     {
       label: 'GFW Pro',
       extLink: 'https://pro.globalforestwatch.org',
