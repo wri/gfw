@@ -21,10 +21,7 @@ const selectGeodecriberLoading = (state) =>
 const selectSearch = (state) => state.location && state.location.search;
 const selectAnalysisLocation = (state) =>
   state.analysis && state.analysis.location;
-const selectEmbed = (state) =>
-  state.location &&
-  state.location.pathname &&
-  state.location.pathname.includes('/embed');
+const selectEmbed = (state) => state.location?.pathname?.includes('/embed');
 const selectError = (state) =>
   (state.analysis && state.analysis.error) ||
   (state.geostore && state.geostore.error);

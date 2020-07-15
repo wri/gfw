@@ -35,7 +35,7 @@ class Popup extends Component {
     const { interactions, activeDatasets } = this.props;
     if (
       isEmpty(interactions) &&
-      !isEqual(activeDatasets?.length, prevProps.activeDatasets.length)
+      !isEqual(activeDatasets?.length, prevProps.activeDatasets?.length)
     ) {
       this.handleClose();
     }
