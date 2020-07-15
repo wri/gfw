@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
-import { aboveGroundToBelowGround } from 'utils/calculations';
+import { agBiomass2agCarbon, agBiomass2bgCarbon } from 'utils/calculations';
 
 const getData = state => state.data;
 const getLocationName = state => state.locationLabel;
@@ -18,12 +18,12 @@ export const calculateData = createSelector(
 
     const extent = (data && data.extent) || 0;
     const aboveGroundBiomass = (data && data.biomass) || 0;
-    const belowGroundBiomass = aboveGroundToBelowGround(aboveGroundBiomass);
     const soil = (data && data.soilCarbon) || 0;
     const soilDensity = (data && data.soilCarbonDensity) || 0;
 
-    const aboveGroundCarbon = aboveGroundBiomass * 0.5;
-    const belowGroundCarbon = belowGroundBiomass * 0.5;
+    const aboveGroundCarbon = agBiomass2agCarbon(aboveGroundBiomass);
+    const belowGroundCarbon = agBiomass2bgCarbon(aboveGroundBiomass);
+
     const aboveGroundCarbonDensity =
       extent > 0 ? aboveGroundCarbon / extent : 0;
     const belowGroundCarbonDensity =
