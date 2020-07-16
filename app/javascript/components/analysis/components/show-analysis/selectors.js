@@ -48,7 +48,7 @@ export const getDataFromLayers = createSelector(
         const selectedValue = subKey
           ? dataByService[key] && dataByService[key][subKey]
           : dataByService[key];
-        const value = sumByKey && Array.isArray(selectedValue) ? sumBy(sumByKey) : selectedValue;
+        const value = sumByKey && Array.isArray(selectedValue) ? sumBy(selectedValue, sumByKey) : selectedValue;
         const { params, decodeParams } = l;
         const keysValue =
           keys &&
