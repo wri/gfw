@@ -8,7 +8,6 @@ import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 
 import { fetchHistoricalAlerts } from 'services/analysis-cached';
-import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import applicationsMeta from 'data/applications.json';
 
@@ -41,8 +40,7 @@ const getLatestAlerts = ({ location, params }) =>
     .then(
       spread((gladsResponse, firesResponse) => {
         const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
-        const firesData = firesResponse ? firesResponse.data.data : {};
-        const fires = firesData && sumBy(firesData, 'count');
+        const fires = firesResponse ? firesResponse.data.data : {};
 
         return {
           glads: sumBy(glads, 'count'),
