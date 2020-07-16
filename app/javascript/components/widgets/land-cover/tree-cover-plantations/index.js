@@ -17,7 +17,7 @@ export default {
   widget: 'treeCoverPlantations',
   title: 'Plantations in {location}',
   categories: ['land-cover'],
-  types: ['country', 'geostore'],
+  types: ['country', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   colors: 'plantations',
   chartType: 'pieChart',

@@ -23,7 +23,7 @@ export default {
     initial: 'Biomass loss emissions in natural forest vs. plantations'
   },
   categories: ['climate'],
-  types: ['country', 'geostore'],
+  types: ['country', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {

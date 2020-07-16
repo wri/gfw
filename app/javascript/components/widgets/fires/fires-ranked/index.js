@@ -15,7 +15,7 @@ export default {
   },
   categories: ['fires'],
   large: true,
-  types: ['global', 'country', 'wdpa', 'geostore', 'use'],
+  types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [
     {
