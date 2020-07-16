@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import sumBy from 'lodash/sumBy';
 
 import { locationLevelToStr } from 'utils/format';
 
@@ -41,14 +42,14 @@ export const getDataFromLayers = createSelector(
         if (!analysisConfig) {
           analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
         }
-        const { subKey, key, keys, service, unit, dateFormat } =
+        const { subKey, key, keys, service, unit, dateFormat, sumByKey } =
           analysisConfig || {};
         const dataByService = data[service] || {};
-        const value = subKey
+        const selectedValue = subKey
           ? dataByService[key] && dataByService[key][subKey]
           : dataByService[key];
+        const value = sumByKey && Array.isArray(selectedValue) ? sumBy(sumByKey) : selectedValue;
         const { params, decodeParams } = l;
-
         const keysValue =
           keys &&
           keys.map((k, i) => ({
