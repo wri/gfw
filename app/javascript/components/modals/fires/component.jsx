@@ -19,7 +19,7 @@ class ModalGFWFires extends PureComponent {
 
     let modalText = '';
     if (pathname) {
-      if (pathname === '/topics/fires') {
+      if (pathname.includes('/topics/fires')) {
         modalText = [
           'Welcome to the new home for Global Forest Watch Fires data and insights! ',
           <button
@@ -33,7 +33,7 @@ class ModalGFWFires extends PureComponent {
           </button>,
           " if you don't find what you're looking for."
         ];
-      } else if (pathname === '/map') {
+      } else if (pathname.includes('/map')) {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           If you're looking for the Fire Report, `,
