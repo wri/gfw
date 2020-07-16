@@ -166,8 +166,8 @@ class AoICard extends PureComponent {
         subscribed: monthlySummary
       }
     ].filter(s => s.subscribed);
-    const isSubscribed = deforestationAlerts || fireAlerts;
-    const subscribedToAll = deforestationAlerts && fireAlerts;
+    const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
+    const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
     const isPending = status === 'pending';
 
     let subscriptionMessage = 'subscribed to';
