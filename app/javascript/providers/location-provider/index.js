@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
@@ -7,15 +7,8 @@ import reducerRegistry from 'app/registry';
 
 import { decodeParamsForState, encodeStateForUrl } from 'utils/stateToUrl';
 
-import { setMapSettings } from 'components/map/actions';
-import { setMainMapSettings } from 'pages/map/actions';
-import { setMenuSettings } from 'components/map-menu/actions';
-import { setAnalysisSettings } from 'components/analysis/actions';
-import Url from 'components/url';
-
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
-import selectMapParams from './selectors';
 
 const getLocationFromParams = (url, params) => {
   if (url?.includes('[...location]')) {
@@ -63,17 +56,8 @@ const buildNewLocation = () => {
   };
 };
 
-const LocationProvider = ({
-  urlParams,
-  setLocation,
-  setMapSettings: setMap,
-  setMainMapSettings: setMainMap,
-  setMenuSettings: setMenu,
-  setAnalysisSettings: setAnalysis,
-}) => {
-  const { query, events, asPath } = useRouter();
-  const { map = {}, mainMap = {}, analysis = {}, mapMenu = {} } = query || {};
-  const fullPathname = asPath?.split('?')?.[0];
+const LocationProvider = ({ setLocation }) => {
+  const { events } = useRouter();
 
   const handleRouteChange = () => {
     const newLocation = buildNewLocation();
@@ -94,25 +78,7 @@ const LocationProvider = ({
     return null;
   }, []);
 
-  useMemo(() => {
-    if (map) {
-      setMap(map);
-    }
-
-    if (mainMap) {
-      setMainMap(mainMap);
-    }
-
-    if (mapMenu) {
-      setMenu(mapMenu);
-    }
-
-    if (analysis) {
-      setAnalysis(analysis);
-    }
-  }, [fullPathname]);
-
-  return <Url queryParams={urlParams} />;
+  return null;
 };
 
 LocationProvider.propTypes = {
@@ -136,10 +102,4 @@ reducerRegistry.registerModule('location', {
   initialState,
 });
 
-export default connect(selectMapParams, {
-  ...actions,
-  setMapSettings,
-  setMainMapSettings,
-  setMenuSettings,
-  setAnalysisSettings,
-})(LocationProvider);
+export default connect(null, actions)(LocationProvider);

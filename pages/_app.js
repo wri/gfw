@@ -4,7 +4,6 @@ import finallyShim from 'promise.prototype.finally';
 import { wrapper } from 'app/store';
 
 import MyGfwProvider from 'providers/mygfw-provider';
-import LocationProvider from 'providers/location-provider';
 
 import 'styles/styles.scss';
 
@@ -14,7 +13,6 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <MyGfwProvider />
-      <LocationProvider />
       <Component {...pageProps} />
     </>
   );

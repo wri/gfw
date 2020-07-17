@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { encodeStateForUrl } from 'utils/stateToUrl';
 
 const URL = ({
-  queryParams,
+  queryParams = {},
   options = {
     skipNull: true,
     skipEmptyString: true,
