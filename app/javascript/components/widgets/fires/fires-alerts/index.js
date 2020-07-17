@@ -60,7 +60,7 @@ export default {
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard'],
-  types: ['country', 'wdpa', 'geostore', 'use'],
+  types: ['country', 'wdpa', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   datasets: [

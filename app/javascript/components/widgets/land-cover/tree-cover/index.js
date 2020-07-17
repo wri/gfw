@@ -64,7 +64,7 @@ export default {
   source: 'gadm',
   dataType: 'extent',
   categories: ['summary', 'land-cover'],
-  types: ['global', 'country', 'geostore', 'wdpa', 'use'],
+  types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   visible: ['dashboard'],
   datasets: [

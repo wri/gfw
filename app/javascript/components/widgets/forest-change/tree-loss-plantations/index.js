@@ -24,7 +24,7 @@ export default {
   title: 'Forest loss in natural forest in {location}',
   large: true,
   categories: ['forest-change'],
-  types: ['country', 'geostore'],
+  types: ['country', 'aoi', 'wdpa'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {

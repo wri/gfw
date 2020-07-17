@@ -232,15 +232,7 @@ export const parseConfig = createSelector(
     getDataset,
     getStartEndIndexes
   ],
-  (
-    legend,
-    colors,
-    latest,
-    maxminYear,
-    compareYear,
-    dataset,
-    indexes
-  ) => {
+  (legend, colors, latest, maxminYear, compareYear, dataset, indexes) => {
     const { startIndex, endIndex } = indexes;
 
     const tooltip = [
@@ -267,7 +259,7 @@ export const parseConfig = createSelector(
           const yearDifference = maxminYear.max - date.year();
           date.set('year', compareYear - yearDifference);
 
-          return date.format('YYYY-MM-DD');
+          return date.format('MMM DD YYYY');
         },
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: '#49b5e3',

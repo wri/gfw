@@ -21,7 +21,10 @@ const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getCompareYear = state => state.settings.compareYear || null;
-const getAllYears = state => state.data && state.data.options && state.data.options.compareYear.map(y => y.value);
+const getAllYears = state =>
+  state.data &&
+  state.data.options &&
+  state.data.options.compareYear.map(y => y.value);
 const getDataset = state => state.settings.dataset || null;
 const getStartIndex = state => state.settings.startIndex || 0;
 const getEndIndex = state => state.settings.endIndex || null;
@@ -275,7 +278,7 @@ export const parseConfig = createSelector(
             const yearDifference = maxminYear.max - date.year();
             date.set('year', year - yearDifference);
 
-            return date.format('YYYY-MM-DD');
+            return date.format('MMM DD YYYY');
           },
           unit: ` ${dataset.toUpperCase()} alerts`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],

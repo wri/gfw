@@ -23,7 +23,7 @@ export default {
     initial: 'Intact forest in {location}'
   },
   categories: ['land-cover'],
-  types: ['global', 'country', 'geostore'],
+  types: ['global', 'country', 'aoi', 'wdpa'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {

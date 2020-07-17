@@ -36,7 +36,7 @@ export default {
   source: 'gadm',
   dataType: 'glad',
   categories: ['summary', 'forest-change'],
-  types: ['country', 'geostore', 'wdpa', 'use'],
+  types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {

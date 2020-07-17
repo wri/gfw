@@ -36,7 +36,7 @@ export const RECENT_SATELLITE_IMAGERY = '8130614b-3bca-4cc3-8c9f-30a69a9f60ac';
 export const FIRES_ALERTS_VIIRS = 'd621ce0f-0872-41ef-b2ec-18faec3fd1d9';
 export const LAND_COVER = 'e67f4276-c1d0-4970-b2d6-6dd17843f4c9';
 export const INTACT_FOREST_LANDSCAPES = 'af4e9e0b-cbf9-437b-80cb-9b0f795161ca';
-export const PROTECTED_AREAS_LAYER = 'f135d3cf-44d0-454e-8e82-87ce43b46a68';
+export const PROTECTED_AREAS_LAYER = 'cd31fdff-3aa6-45fd-a36d-5a2079c20d5b';
 export const TIGER_CONSERVATION_LANDSCAPES =
   '9df142fb-d56d-4001-90fb-a0008117793e';
 export const ALLIANCE_FOR_ZERO_EXSTINCTION =

@@ -288,12 +288,7 @@ const partnersCollaborators = [
     title: 'Osinfor',
   },
   {
-    img: images('./planet.png'),
-    link: 'https://www.planet.com/',
-    title: 'Planet',
-  },
-  {
-    img: images('./rfukhover.png'),
+    img: '/assets/logos/rfukhover.png',
     link: 'http://www.rainforestfoundationuk.org/',
     title: 'Rainforest Foundation UK',
   },

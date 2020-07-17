@@ -165,15 +165,6 @@ class MapControlsButtons extends PureComponent {
             />
             <div className="basemaps-btn-label-wrapper">
               <span className="basemaps-btn-label">{activeBasemap.label}</span>
-              {(activeBasemap.year || // satellite
-                activeBasemap.planetYear) && ( // planet imagery
-                <span className="basemaps-btn-label-small">
-                  {activeBasemap.year ||
-                    (activeBasemap.period // YYYY
-                      ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
-                      : activeBasemap.planetYear)}
-                </span>
-              )}
             </div>
           </div>
         ) : (

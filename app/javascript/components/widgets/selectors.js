@@ -218,7 +218,7 @@ export const filterWidgetsByLocation = createSelector(
     layers,
     showAnalysis
   ) => {
-    const { adminLevel, type } = location;
+    const { adminLevel, type, areaId } = location;
 
     const widgets = Object.values(allWidgets).map((w) => ({
       ...w,
@@ -258,8 +258,9 @@ export const filterWidgetsByLocation = createSelector(
           ),
           layerIds
         );
+
       const hasLocation =
-        types && types.includes(type) && admins && admins.includes(adminLevel);
+        types && types.includes(areaId && status === 'saved' ? 'aoi' : type) && admins && admins.includes(adminLevel);
       const adminWhitelist =
         type === 'country' && whitelists && whitelists.adm0;
 

@@ -39,11 +39,8 @@ const getLatestAlerts = ({ location, params }) =>
   ])
     .then(
       spread((gladsResponse, firesResponse) => {
-        const glads =
-          (gladsResponse && gladsResponse.data && gladsResponse.data.data) ||
-          {};
-        const firesData = firesResponse ? firesResponse.data.data : {};
-        const fires = firesData && sumBy(firesData, 'count');
+        const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
+        const fires = firesResponse ? firesResponse.data.data : {};
 
         return {
           glads: sumBy(glads, 'count'),
@@ -164,11 +161,11 @@ class AoICard extends PureComponent {
       },
       {
         label: 'mothly summary',
-        subscribed: monthlySummary,
-      },
-    ].filter((s) => s.subscribed);
-    const isSubscribed = deforestationAlerts || fireAlerts;
-    const subscribedToAll = deforestationAlerts && fireAlerts;
+        subscribed: monthlySummary
+      }
+    ].filter(s => s.subscribed);
+    const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
+    const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
     const isPending = status === 'pending';
 
     let subscriptionMessage = 'subscribed to';

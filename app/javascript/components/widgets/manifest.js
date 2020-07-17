@@ -16,6 +16,7 @@ import gladAlerts from 'components/widgets/forest-change/glad-alerts';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
 
 // fires
+import firesOTF from 'components/widgets/fires/fires';
 import firesWithin from 'components/widgets/fires/fires-within';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
@@ -77,6 +78,7 @@ export default {
   firesAlertsHistorical,
   firesRanked,
   firesAlertsHistoricalDaily,
+  firesOTF,
 
   // land cover
   treeCover,

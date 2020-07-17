@@ -1,6 +1,5 @@
-import forestWatcherIcon from 'assets/icons/forest-watcher.svg?sprite';
-import firesIcon from 'assets/icons/fires-flame.svg?sprite';
-import proIcon from 'assets/icons/gfw-pro.svg?sprite';
+import forestWatcherIcon from 'assets/icons/forest-watcher.svg';
+import proIcon from 'assets/icons/gfw-pro.svg';
 
 import conservationOrgs from './assets/conservation-orgs.jpg';
 import policyMakers from './assets/policy-makers.jpg';
@@ -14,7 +13,6 @@ import card4 from './assets/card-3.png';
 import card5 from './assets/card-4.png';
 
 import forestWatcherImage from './assets/forestwatcher@2x.jpg';
-import firesImage from './assets/fires@2x.jpg';
 import proImage from './assets/pro-bg@2x.png';
 
 export default {
@@ -133,15 +131,6 @@ export default {
       extLink: 'https://forestwatcher.globalforestwatch.org/',
       color: '#97be32',
       icon: forestWatcherIcon,
-    },
-    {
-      title: 'Fires',
-      description:
-        'Track fires and haze, view the latest data on fire locations and air quality, and do your own analysis',
-      background: firesImage,
-      extLink: 'https://fires.globalforestwatch.org',
-      color: '#F71949',
-      icon: firesIcon,
     },
     {
       title: 'GFW Pro',
