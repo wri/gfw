@@ -76,6 +76,8 @@ const MapPage = ({
     }
   }, [fullPathname]);
 
+  // when setting the query params from the URL we need to make sure we don't render the map
+  // on the server otherwise the DOM will be out of sync
   useEffect(() => {
     if (!ready) {
       setReady(true);

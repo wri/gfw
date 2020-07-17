@@ -7397,10 +7397,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gfw-components@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.3.1.tgz#70de0378eb26c9084e94f24a322287c8c49ae4a9"
-  integrity sha512-DDeF8WCL3WUD3nuG4zHEuMjQz6SLYdHqzp3JCoM2mHAVpAVg75IHryPaT6jMmjoM+KqKOjx896vEnPfw5OyAlQ==
+gfw-components@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.3.2.tgz#0ab711b5aee26f0ab07c867bc3384b3eb8c29130"
+  integrity sha512-0Oy5J8OgRBHfMs64HguBTOiBbSbKLtB+CuJZoQRBu1tSk0Dbl0upEcLBQ/lu1m3Mqn0WgfDdTHjiVlqYIwY1MA==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
