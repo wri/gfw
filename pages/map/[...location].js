@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import useRouter from 'utils/router';
@@ -50,6 +50,7 @@ const MapPage = ({
   urlParams,
   ...props
 }) => {
+  const dispatch = useDispatch();
   const { query, asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
@@ -58,19 +59,19 @@ const MapPage = ({
       decodeParamsForState(query) || {};
 
     if (map) {
-      setMap(map);
+      dispatch(setMapSettings(map));
     }
 
     if (mainMap) {
-      setMainMap(mainMap);
+      dispatch(setMainMapSettings(mainMap));
     }
 
     if (mapMenu) {
-      setMenu(mapMenu);
+      dispatch(setMenuSettings(mapMenu));
     }
 
     if (analysis) {
-      setAnalysis(analysis);
+      dispatch(setAnalysisSettings(analysis));
     }
   }, [fullPathname]);
 
@@ -91,9 +92,4 @@ MapPage.propTypes = {
   setAnalysisSettings: PropTypes.func,
 };
 
-export default connect(null, {
-  setMapSettings,
-  setMainMapSettings,
-  setMenuSettings,
-  setAnalysisSettings,
-})(MapPage);
+export default MapPage;
