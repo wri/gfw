@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -51,6 +51,7 @@ const MapPage = ({
   ...props
 }) => {
   const dispatch = useDispatch();
+  const [ready, setReady] = useState(false);
   const { query, asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
@@ -75,11 +76,17 @@ const MapPage = ({
     }
   }, [fullPathname]);
 
+  useEffect(() => {
+    if (!ready) {
+      setReady(true);
+    }
+  });
+
   return (
     <Layout {...props} fullScreen showFooter={false}>
       <LocationProvider />
       <MapUrlProvider />
-      <Map />
+      {ready && <Map />}
     </Layout>
   );
 };
