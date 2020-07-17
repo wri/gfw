@@ -163,7 +163,7 @@ class ShowAnalysis extends PureComponent {
                       label:
                         downloadUrls &&
                         downloadUrls.length &&
-                        downloadUrls.map((d) => d.label).join(', '),
+                        downloadUrls.map((d) => d?.label).join(', '),
                     });
                   }}
                   tooltip={{ text: 'Download data' }}
