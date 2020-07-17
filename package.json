@@ -115,7 +115,7 @@
     "jszip": "^3.2.1",
     "jszip-utils": "^0.0.2",
     "layer-manager": "^3.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash-math": "0.0.7",
     "lottie-web": "^5.5.0",
     "luma.gl": "7.3.2",
