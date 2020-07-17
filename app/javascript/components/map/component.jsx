@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
@@ -59,6 +60,10 @@ class MapComponent extends Component {
     drawClicks: 0,
   };
 
+  // static defaultProps = {
+  //   bounds: {}
+  // };
+
   componentDidUpdate(prevProps, prevState) {
     const {
       mapLabels,
@@ -100,13 +105,13 @@ class MapComponent extends Component {
     }
 
     // if bbox is change by action fit bounds
-    if (canBound && stateBbox !== prevStateBbox) {
+    if (canBound && stateBbox?.length && stateBbox !== prevStateBbox) {
       // eslint-disable-next-line
       this.setState({ bounds: { bbox: stateBbox, options: { padding: 50 } } });
     }
 
     // if geostore changes
-    if (canBound && geostoreBbox && geostoreBbox !== prevGeostoreBbox) {
+    if (canBound && geostoreBbox?.length && geostoreBbox !== prevGeostoreBbox) {
       // eslint-disable-next-line
       this.setState({
         bounds: { bbox: geostoreBbox, options: { padding: 50 } },
@@ -116,7 +121,7 @@ class MapComponent extends Component {
     // reset canBound after fitting bounds
     if (
       canBound &&
-      this.state.bounds &&
+      !isEmpty(this.state.bounds) &&
       !isEqual(this.state.bounds, prevState.bounds)
     ) {
       setMapSettings({ canBound: false, bbox: [] });
