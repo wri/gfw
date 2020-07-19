@@ -1,6 +1,8 @@
 import Layout from 'app/layouts/root';
 import Topics from 'pages/topics';
 
+import LocationProvider from 'providers/location-provider';
+
 const topics = ['biodiversity', 'climate', 'commodities', 'water', 'fires'];
 
 const topicsMeta = {
@@ -61,6 +63,7 @@ const TopicPage = (props) => {
   return (
     <Layout {...props} showFooter={false}>
       <Topics />
+      <LocationProvider />
     </Layout>
   );
 };
