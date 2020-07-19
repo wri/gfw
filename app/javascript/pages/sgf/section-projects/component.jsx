@@ -99,7 +99,7 @@ class SectionProjects extends PureComponent {
           <ScrollEl name="project-cards" className="row project-cards">
             {hasData &&
               !loading &&
-              data.map((d) => {
+              data?.map((d) => {
                 const isFellow =
                   d.categories && d.categories.indexOf('Fellow') !== -1;
                 return (

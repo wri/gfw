@@ -30,7 +30,6 @@ class GrantsAndFellowshipsPage extends PureComponent {
       label: capitalize(key),
       href: '/grants-and-fellowships/[section]',
       as: `/grants-and-fellowships/${key}`,
-      activeShallow: !section && key === 'projects',
     }));
 
     return (

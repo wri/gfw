@@ -75,7 +75,7 @@ class SectionProjectsModal extends PureComponent {
                 <div key={c} className="image">
                   <div
                     style={{
-                      backgroundImage: `url("${c}")`,
+                      backgroundImage: `url('${c}')`,
                     }}
                   />
                 </div>
@@ -85,9 +85,7 @@ class SectionProjectsModal extends PureComponent {
         {data.image && data.images.length === 1 && (
           <div
             className="image element-fullwidth"
-            style={{
-              backgroundImage: `url(${data.image})`,
-            }}
+            style={{ backgroundImage: `url('${data.image}')` }}
           />
         )}
         <div className="content">
