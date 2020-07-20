@@ -2,11 +2,7 @@ import { createAction, createThunkAction } from 'utils/redux';
 import request from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
-import uniqBy from 'lodash/uniqBy';
 import useRouter from 'utils/router';
-
-import { setMapSettings } from 'components/map/actions';
-import { setAnalysisSettings } from 'components/analysis/actions';
 
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
@@ -68,13 +64,13 @@ export const getLocationFromSearch = createThunkAction(
 export const handleClickLocation = createThunkAction(
   'handleClickLocation',
   ({ gid_0, gid_1, gid_2 }) => () => {
-    const { pathname, query, pushQuery } = useRouter();
+    const { query, pushQuery } = useRouter();
     const newLocation = parseGadm36Id(gid_2 || gid_1 || gid_0);
     const { map, menu, mainMap } = query || {};
 
     if (newLocation) {
       pushQuery({
-        pathname,
+        pathname: '/map/[...location]',
         query: {
           ...query,
           location: ['country', ...Object.values(newLocation)],
@@ -98,30 +94,34 @@ export const handleClickLocation = createThunkAction(
 
 export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
-  ({ analysis, menu, map, mergeQuery }) => (dispatch, getState) => {
-    const { map: mapState } = getState();
-    const { datasets } = map || {};
-
-    dispatch(
-      setMapSettings({
-        ...(mergeQuery && {
-          datasets: uniqBy([...datasets, ...mapState.datasets], 'dataset'),
+  ({ analysis, mapMenu, map, mergeQuery }) => () => {
+    const { query, pushQuery } = useRouter();
+    console.log(map);
+    pushQuery({
+      pathname: '/map/[...location]',
+      query: {
+        ...query,
+        location: ['global'],
+        ...(map && {
+          map: {
+            ...(mergeQuery && query?.map),
+            ...map,
+            canBound: true,
+          },
         }),
-        canBound: true,
-      })
-    );
-    dispatch(
-      setMenuSettings({
-        ...menu,
-        menuSection: '',
-      })
-    );
-    dispatch(
-      setAnalysisSettings({
-        ...analysis,
-        menuSection: '',
-      })
-    );
+        mapMenu: {
+          ...(mergeQuery && query?.mapMenu),
+          ...mapMenu,
+          menuSection: '',
+        },
+        ...(analysis && {
+          analysis: {
+            ...(mergeQuery && query?.analysis),
+            ...analysis,
+          },
+        }),
+      },
+    });
   }
 );
 
