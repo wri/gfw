@@ -60,10 +60,6 @@ class MapComponent extends Component {
     drawClicks: 0,
   };
 
-  // static defaultProps = {
-  //   bounds: {}
-  // };
-
   componentDidUpdate(prevProps, prevState) {
     const {
       mapLabels,
