@@ -51,7 +51,7 @@ const setShowPromptsViewed = (state, { payload }) => {
 const setMapPrompts = (state, { payload }) => ({
   ...state,
   settings: {
-    ...state,
+    ...state.settings,
     ...payload,
   },
 });
