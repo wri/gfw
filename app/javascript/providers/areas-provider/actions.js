@@ -48,7 +48,6 @@ export const getAreasProvider = createThunkAction(
                     error: error.response && error.response.status,
                   })
                 );
-                console.info(error);
               });
           } else {
             dispatch(setAreasLoading({ loading: false, error: false }));

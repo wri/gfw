@@ -1,6 +1,8 @@
 import Layout from 'app/layouts/root';
 import MyGfw from 'pages/my-gfw';
 
+import LocationProvider from 'providers/location-provider';
+
 export default () => (
   <Layout
     title="My GFW | Global Forest Watch"
@@ -8,5 +10,6 @@ export default () => (
     keywords="GFW, forests, map, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation, subscribe"
   >
     <MyGfw />
+    <LocationProvider />
   </Layout>
 );
