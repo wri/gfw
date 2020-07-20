@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import { Media } from 'utils/responsive';
 import { APP_URL } from 'utils/constants';
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import gfwLogo from 'assets/logos/gfw.png?webp';
 import ContactUs from 'components/modals/contact-us';
@@ -28,7 +29,6 @@ class Header extends PureComponent {
     setQueryToUrl: PropTypes.func,
     myGfwLinks: PropTypes.array.isRequired,
     NavLinkComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    openContactUsModal: PropTypes.func,
   };
 
   static defaultProps = {
@@ -61,7 +61,6 @@ class Header extends PureComponent {
       moreLinks,
       myGfwLinks,
       apps,
-      openContactUsModal,
       loggedIn,
       fullScreen,
       setQueryToUrl,
@@ -135,7 +134,7 @@ class Header extends PureComponent {
                   myGfwLinks={myGfwLinks}
                   navMain={navMain}
                   apps={apps}
-                  openContactUsModal={openContactUsModal}
+                  openContactUsModal={setModalContactUsOpen}
                   loggedIn={loggedIn}
                   loggingIn={loggingIn}
                   setQueryToUrl={setQueryToUrl}

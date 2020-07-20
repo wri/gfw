@@ -7,6 +7,7 @@ import Footer from 'components/footer';
 import Carousel from 'components/ui/carousel';
 import Card from 'components/ui/card';
 import CountryDataProvider from 'providers/country-data-provider';
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import './styles.scss';
 
@@ -15,11 +16,10 @@ class TopicsFooter extends PureComponent {
     cards: PropTypes.array,
     topic: PropTypes.string,
     countries: PropTypes.array,
-    setModalContactUsOpen: PropTypes.func,
   };
 
   render() {
-    const { cards, topic, countries, setModalContactUsOpen } = this.props;
+    const { cards, topic, countries } = this.props;
 
     return (
       <div className="c-topics-footer">

@@ -2,18 +2,15 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
+
 import Modal from '../modal';
 
 import './styles.scss';
 
 class ModalGFWFires extends PureComponent {
   render() {
-    const {
-      open,
-      location,
-      setModalGFWFiresOpen,
-      setModalContactUsOpen,
-    } = this.props;
+    const { open, location, setModalGFWFiresOpen } = this.props;
 
     const { query, pathname } = location || {};
 
@@ -96,7 +93,6 @@ ModalGFWFires.propTypes = {
   open: PropTypes.bool,
   location: PropTypes.object,
   setModalGFWFiresOpen: PropTypes.func,
-  setModalContactUsOpen: PropTypes.func,
 };
 
 export default ModalGFWFires;

@@ -31,7 +31,12 @@ export default () => {
         }
       });
     }
-    const queryString = encodeStateForUrl(query);
+
+    const queryString = encodeStateForUrl(query, {
+      skipNull: true,
+      skipEmptyString: true,
+      arrayFormat: 'comma',
+    });
 
     router.push(
       `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,

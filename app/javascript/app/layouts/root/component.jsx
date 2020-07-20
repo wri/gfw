@@ -6,6 +6,7 @@ import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
 import { Footer } from 'gfw-components';
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import Header from 'components/header';
 import Cookies from 'components/cookies';
@@ -32,7 +33,6 @@ class App extends PureComponent {
     keywords: PropTypes.string,
     noIndex: PropTypes.bool,
     embed: PropTypes.bool,
-    setModalContactUsOpen: PropTypes.func,
   };
 
   static defaultProps = {
@@ -66,7 +66,6 @@ class App extends PureComponent {
       description,
       keywords,
       noIndex,
-      setModalContactUsOpen,
     } = this.props;
 
     return (

@@ -122,11 +122,12 @@ export const decodeUrlForState = (url) => {
 export const encodeStateForUrl = (params, options) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
-    if (typeof params[key] === 'object') {
+    if (params[key] && typeof params[key] === 'object') {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
     } else {
       paramsParsed[key] = params[key];
     }
   });
+
   return queryString.stringify(paramsParsed, options);
 };

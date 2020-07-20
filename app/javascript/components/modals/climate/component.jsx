@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 import Modal from '../modal';
 
 import './styles.scss';
 
 class ModalGFWClimate extends PureComponent {
   render() {
-    const { open, setModalGFWClimateOpen, setModalContactUsOpen } = this.props;
+    const { open, setModalGFWClimateOpen } = this.props;
 
     return (
       <Modal
@@ -44,7 +45,6 @@ class ModalGFWClimate extends PureComponent {
 ModalGFWClimate.propTypes = {
   open: PropTypes.bool,
   setModalGFWClimateOpen: PropTypes.func,
-  setModalContactUsOpen: PropTypes.func,
 };
 
 export default ModalGFWClimate;

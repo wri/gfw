@@ -7,6 +7,7 @@ import { HOWTO_URL, BLOG_URL } from 'utils/constants';
 import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import wri from 'assets/logos/wri.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
@@ -25,7 +26,6 @@ const images = require.context('assets/logos', true);
 class Footer extends PureComponent {
   static propTypes = {
     NavLinkComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    setModalContactUsOpen: PropTypes.func,
   };
 
   renderCarousel = (slidesToShow) => (
@@ -79,7 +79,7 @@ class Footer extends PureComponent {
   );
 
   render() {
-    const { NavLinkComponent, setModalContactUsOpen } = this.props;
+    const { NavLinkComponent } = this.props;
 
     return (
       <div className="c-footer">

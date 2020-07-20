@@ -1,34 +1,28 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useRouter } from 'next/router';
 
 import ContactForm from 'components/forms/contact';
 import Modal from '../modal';
 
+import { setModalContactUsOpen } from './actions';
+
 import './styles.scss';
 
-class ModalContactUs extends PureComponent {
-  render() {
-    const { open, setModalContactUsOpen } = this.props;
+const ModalContactUs = () => {
+  const { query } = useRouter();
+  const { contactUs } = query || {};
 
-    return (
-      <Modal
-        isOpen={!!open}
-        contentLabel="Contact Us"
-        onRequestClose={() => {
-          setModalContactUsOpen(false);
-        }}
-        title="Contact Us"
-        className="c-contact-us-modal"
-      >
-        <ContactForm resetForm={() => setModalContactUsOpen(false)} />
-      </Modal>
-    );
-  }
-}
-
-ModalContactUs.propTypes = {
-  open: PropTypes.bool,
-  setModalContactUsOpen: PropTypes.func
+  return (
+    <Modal
+      isOpen={!!contactUs}
+      contentLabel="Contact Us"
+      onRequestClose={() => setModalContactUsOpen(false)}
+      title="Contact Us"
+      className="c-contact-us-modal"
+    >
+      <ContactForm resetForm={() => setModalContactUsOpen(false)} />
+    </Modal>
+  );
 };
 
 export default ModalContactUs;
