@@ -1,11 +1,15 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
+import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
+
 import reducerRegistry from './registry';
 
 const isServer = typeof window === 'undefined';
 
-const initialReducers = combineReducers({ ...reducerRegistry.getReducers() });
+reducerRegistry.registerModule('myGfw', myGfwReduxModule);
+
+const initialReducers = combineReducers(reducerRegistry.getReducers());
 
 const reduxDevTools =
   !isServer &&
