@@ -32,11 +32,14 @@ export default () => {
       });
     }
 
-    const queryString = encodeStateForUrl(query, {
-      skipNull: true,
-      skipEmptyString: true,
-      arrayFormat: 'comma',
-    });
+    const queryString = encodeStateForUrl(
+      { ...query, pushed: true },
+      {
+        skipNull: true,
+        skipEmptyString: true,
+        arrayFormat: 'comma',
+      }
+    );
 
     router.push(
       `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,

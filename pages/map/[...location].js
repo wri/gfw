@@ -1,6 +1,7 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import useRouter from 'utils/router';
 
@@ -50,7 +51,7 @@ const MapPage = ({ urlParams, ...props }) => {
   const { query, asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
+  useDeepCompareEffect(() => {
     const {
       map,
       mainMap,
@@ -88,7 +89,7 @@ const MapPage = ({ urlParams, ...props }) => {
     if (mapPrompts) {
       dispatch(setMapPrompts(mapPrompts));
     }
-  }, [fullPathname]);
+  }, [{ fullPathname, queryPushed: query.pushed }]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync
