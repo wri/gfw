@@ -6,6 +6,7 @@ import { decodeParamsForState, encodeStateForUrl } from './stateToUrl';
 
 export default () => {
   const router = Router.router || {};
+
   if (router) {
     if (router?.asPath?.includes('?')) {
       router.query = {
@@ -33,7 +34,7 @@ export default () => {
     const queryString = encodeStateForUrl(query);
 
     router.push(
-      pathname,
+      `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,
       `${asPath}${queryString ? `?${queryString}` : ''}${hash || ''}`,
       options
     );

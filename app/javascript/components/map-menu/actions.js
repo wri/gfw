@@ -96,7 +96,7 @@ export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
   ({ analysis, mapMenu, map, mergeQuery }) => () => {
     const { query, pushQuery } = useRouter();
-    console.log(map);
+
     pushQuery({
       pathname: '/map/[...location]',
       query: {

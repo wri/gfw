@@ -11,14 +11,17 @@ const URL = ({
     arrayFormat: 'comma',
   },
 }) => {
-  const { pathname, asPath, replace } = useRouter();
+  const { pathname, asPath, replace, query } = useRouter();
 
   useDeepCompareEffect(() => {
-    const queryParamsSerialized = encodeStateForUrl(queryParams, options);
+    const queryParamsSerialized = encodeStateForUrl(
+      { ...query, ...queryParams },
+      options
+    );
     const fullPathname = asPath?.split('?')?.[0];
 
     replace(
-      `${pathname}`,
+      `${pathname}${queryParamsSerialized ? `?${queryParamsSerialized}` : ''}`,
       `${fullPathname}${
         queryParamsSerialized ? `?${queryParamsSerialized}` : ''
       }`,
