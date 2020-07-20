@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { track } from 'app/analytics';
 
+import { setAreaOfInterestModalOpen } from 'components/modals/area-of-interest/actions';
+
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
@@ -29,12 +31,11 @@ class AnalysisComponent extends PureComponent {
     embed: PropTypes.bool,
     search: PropTypes.string,
     setSubscribeSettings: PropTypes.func,
-    setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func,
     checkingShape: PropTypes.bool,
     areaTooLarge: PropTypes.bool,
     uploadingShape: PropTypes.bool,
-    areaError: PropTypes.bool
+    areaError: PropTypes.bool,
   };
 
   render() {
@@ -51,13 +52,12 @@ class AnalysisComponent extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
-      setAreaOfInterestModalSettings,
       endpoints,
       widgetLayers,
       embed,
       setShareModal,
       areaTooLarge,
-      areaError
+      areaError,
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -65,13 +65,14 @@ class AnalysisComponent extends PureComponent {
     const linkProps = {
       link: `/dashboards/${location.type}${
         location.adm0 ? `/${location.adm0}` : ''
-        }${location.adm1 ? `/${location.adm1}` : ''}${
+      }${location.adm1 ? `/${location.adm1}` : ''}${
         location.adm2 ? `/${location.adm2}` : ''
-        }${search ? `?${search}` : ''}`,
+      }${search ? `?${search}` : ''}`,
       ...(embed && {
-        extLink: !isServer && window.location.href.replace('embed/map', 'dashboards'),
-        target: '_blank'
-      })
+        extLink:
+          !isServer && window.location.href.replace('embed/map', 'dashboards'),
+        target: '_blank',
+      }),
     };
     const isDeletedAoI = location.areaId && (areaError || !activeArea);
     const areaPrivate = areaError === 401 || (activeArea && !activeArea.public);
@@ -82,31 +83,29 @@ class AnalysisComponent extends PureComponent {
           {loading && (
             <Loader className={cx('analysis-loader', { fetching: loading })} />
           )}
-          {!loading &&
-            isDeletedAoI && (
-              <NoContent
-                className="deleted-area-message"
-                message={
-                  areaPrivate
-                    ? 'This area is set to private'
-                    : 'This area does not exist or has been deleted.'
-                }
-              />
-            )}
+          {!loading && isDeletedAoI && (
+            <NoContent
+              className="deleted-area-message"
+              message={
+                areaPrivate
+                  ? 'This area is set to private'
+                  : 'This area does not exist or has been deleted.'
+              }
+            />
+          )}
           {location.type &&
             location.adm0 &&
             !isDeletedAoI &&
             (loading || (!loading && error)) && (
               <div className={cx('cancel-analysis', { fetching: loading })}>
-                {!loading &&
-                  error && (
-                    <Button
-                      className="refresh-analysis-btn"
-                      onClick={() => handleFetchAnalysis(endpoints)}
-                    >
-                      REFRESH ANALYSIS
-                    </Button>
-                  )}
+                {!loading && error && (
+                  <Button
+                    className="refresh-analysis-btn"
+                    onClick={() => handleFetchAnalysis(endpoints)}
+                  >
+                    REFRESH ANALYSIS
+                  </Button>
+                )}
                 <Button
                   className="cancel-analysis-btn"
                   onClick={handleCancelAnalysis}
@@ -116,27 +115,23 @@ class AnalysisComponent extends PureComponent {
                 {!loading && error && <p className="error-message">{error}</p>}
               </div>
             )}
-          {location.type &&
-            location.adm0 &&
-            !isDeletedAoI && (
-              <ShowAnalysis
-                clearAnalysis={clearAnalysis}
-                goToDashboard={goToDashboard}
-                hasLayers={hasLayers}
-                activeArea={activeArea}
-                hasWidgetLayers={hasWidgetLayers}
-                analysis
-              />
-            )}
-          {location.type === 'global' &&
-            !location.adm0 &&
-            !isDeletedAoI && (
-              <ChoseAnalysis
-                checkingShape={checkingShape}
-                uploadingShape={uploadingShape}
-                handleCancelAnalysis={handleCancelAnalysis}
-              />
-            )}
+          {location.type && location.adm0 && !isDeletedAoI && (
+            <ShowAnalysis
+              clearAnalysis={clearAnalysis}
+              goToDashboard={goToDashboard}
+              hasLayers={hasLayers}
+              activeArea={activeArea}
+              hasWidgetLayers={hasWidgetLayers}
+              analysis
+            />
+          )}
+          {location.type === 'global' && !location.adm0 && !isDeletedAoI && (
+            <ChoseAnalysis
+              checkingShape={checkingShape}
+              uploadingShape={uploadingShape}
+              handleCancelAnalysis={handleCancelAnalysis}
+            />
+          )}
         </div>
         {!loading &&
           !error &&
@@ -145,21 +140,19 @@ class AnalysisComponent extends PureComponent {
           !isDeletedAoI &&
           location.adm0 && (
             <div className="analysis-actions">
-              {location.type === 'country' &&
-                !location.areaId && (
-                  <Button
-                    className="analysis-action-btn"
-                    theme="theme-button-light"
-                    {...linkProps}
-                    onClick={() =>
-                      track('analysisViewDashboards', {
-                        label: location.adm0
-                      })
-                    }
-                  >
-                    DASHBOARD
-                  </Button>
-                )}
+              {location.type === 'country' && !location.areaId && (
+                <Button
+                  className="analysis-action-btn"
+                  theme="theme-button-light"
+                  {...linkProps}
+                  onClick={() =>
+                    track('analysisViewDashboards', {
+                      label: location.adm0,
+                    })}
+                >
+                  DASHBOARD
+                </Button>
+              )}
               {activeArea && (
                 <Button
                   className="analysis-action-btn"
@@ -173,37 +166,41 @@ class AnalysisComponent extends PureComponent {
               {(!activeArea || (activeArea && !activeArea.userArea)) && (
                 <Button
                   className="analysis-action-btn save-to-mygfw-btn"
-                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                  onClick={() =>
+                    setAreaOfInterestModalOpen(activeArea?.id || true)}
                   disabled={areaTooLarge}
-                  {...areaTooLarge && {
+                  {...(areaTooLarge && {
                     tooltip: {
                       text:
-                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).'
-                    }
-                  }}
+                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).',
+                    },
+                  })}
                 >
                   save in my gfw
                 </Button>
               )}
-              {activeArea &&
-                activeArea.userArea && (
-                  <Button
-                    className="analysis-action-btn"
-                    onClick={() =>
-                      setShareModal({
-                        title: 'Share this view',
-                        shareUrl: !isServer && (window.location.href.includes('embed')
+              {activeArea && activeArea.userArea && (
+                <Button
+                  className="analysis-action-btn"
+                  onClick={() =>
+                    setShareModal({
+                      title: 'Share this view',
+                      shareUrl:
+                        !isServer &&
+                        (window.location.href.includes('embed')
                           ? window.location.href.replace('/embed', '')
                           : window.location.href),
-                        embedUrl: !isServer && (window.location.href.includes('embed')
+                      embedUrl:
+                        !isServer &&
+                        (window.location.href.includes('embed')
                           ? window.location.href
-                          : window.location.href.replace('/map', '/embed/map'))
-                      })}
-                    tooltip={{ text: 'Share or embed this area' }}
-                  >
-                    Share area
-                  </Button>
-                )}
+                          : window.location.href.replace('/map', '/embed/map')),
+                    })}
+                  tooltip={{ text: 'Share or embed this area' }}
+                >
+                  Share area
+                </Button>
+              )}
             </div>
           )}
       </Fragment>

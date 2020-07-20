@@ -8,6 +8,8 @@ import Link from 'next/link';
 
 import { track } from 'app/analytics';
 
+import { setAreaOfInterestModalOpen } from 'components/modals/area-of-interest/actions';
+
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
 import Button from 'components/ui/button';
@@ -32,7 +34,6 @@ class MapMenuMyGFW extends PureComponent {
     areas: PropTypes.array,
     activeArea: PropTypes.object,
     viewArea: PropTypes.func,
-    onEditClick: PropTypes.func,
     clearArea: PropTypes.func,
     location: PropTypes.object,
     tags: PropTypes.array,
@@ -127,13 +128,7 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderAreas() {
-    const {
-      isDesktop,
-      activeArea,
-      viewArea,
-      onEditClick,
-      areas: allAreas,
-    } = this.props;
+    const { isDesktop, activeArea, viewArea, areas: allAreas } = this.props;
     const {
       activeTags,
       areas,
@@ -221,7 +216,7 @@ class MapMenuMyGFW extends PureComponent {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          onEditClick({ open: true });
+                          setAreaOfInterestModalOpen(true);
                         }}
                       >
                         <Icon icon={editIcon} className="info-icon" />

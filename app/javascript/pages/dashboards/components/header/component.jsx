@@ -4,6 +4,8 @@ import cx from 'classnames';
 import Link from 'next/link';
 import { track } from 'app/analytics';
 
+import { setAreaOfInterestModalOpen } from 'components/modals/area-of-interest/actions';
+
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -36,7 +38,6 @@ class Header extends PureComponent {
     downloadLink: PropTypes.string,
     selectorMeta: PropTypes.object,
     shareMeta: PropTypes.string,
-    setAreaOfInterestModalSettings: PropTypes.func,
     title: PropTypes.string,
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
@@ -60,7 +61,6 @@ class Header extends PureComponent {
       downloadLink,
       selectorMeta,
       shareMeta,
-      setAreaOfInterestModalSettings,
       title,
       activeArea,
       firstArea,
@@ -87,7 +87,7 @@ class Header extends PureComponent {
               className="theme-button-small"
               onClick={() => {
                 if (activeArea && !activeArea.userArea) {
-                  setAreaOfInterestModalSettings({ open: true });
+                  setAreaOfInterestModalOpen(true);
                 } else {
                   setShareModal(shareData);
                 }
@@ -106,7 +106,7 @@ class Header extends PureComponent {
                   }`,
                   position: 'bottom',
                 }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                onClick={() => setAreaOfInterestModalOpen(true)}
               >
                 <Icon icon={pencilIcon} />
               </Button>
@@ -118,7 +118,7 @@ class Header extends PureComponent {
                   text: 'Save as an area of interest',
                   position: 'bottom',
                 }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                onClick={() => setAreaOfInterestModalOpen(true)}
               >
                 <Icon icon={saveUserIcon} />
               </Button>

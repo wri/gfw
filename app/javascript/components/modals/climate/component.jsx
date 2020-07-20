@@ -2,20 +2,21 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
+import { setModalClimateOpen } from './actions';
 import Modal from '../modal';
 
 import './styles.scss';
 
 class ModalGFWClimate extends PureComponent {
   render() {
-    const { open, setModalGFWClimateOpen } = this.props;
+    const { open } = this.props;
 
     return (
       <Modal
         isOpen={open}
         contentLabel="Global Forest Watch Climate"
         onRequestClose={() => {
-          setModalGFWClimateOpen(false);
+          setModalClimateOpen(false);
         }}
         title="Global Forest Watch Climate."
         className="c-gfw-climate-modal"
@@ -28,7 +29,7 @@ class ModalGFWClimate extends PureComponent {
             <a
               href=""
               onClick={() => {
-                setModalGFWClimateOpen(false);
+                setModalClimateOpen(false);
                 setModalContactUsOpen(true);
               }}
             >
@@ -44,7 +45,6 @@ class ModalGFWClimate extends PureComponent {
 
 ModalGFWClimate.propTypes = {
   open: PropTypes.bool,
-  setModalGFWClimateOpen: PropTypes.func,
 };
 
 export default ModalGFWClimate;

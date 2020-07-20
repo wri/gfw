@@ -8,6 +8,7 @@ import makeStore from 'app/store';
 
 import reducerRegistry from 'app/registry';
 import MyGFWProvider from 'providers/mygfw-provider';
+import LocationProvider from 'providers/location-provider';
 
 import 'styles/styles.scss';
 
@@ -30,6 +31,7 @@ class MyApp extends App {
     return (
       <Provider store={this.store}>
         <MyGFWProvider />
+        <LocationProvider />
         <Component {...pageProps} />
       </Provider>
     );

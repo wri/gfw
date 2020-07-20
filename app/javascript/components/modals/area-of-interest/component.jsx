@@ -6,6 +6,8 @@ import LoginForm from 'components/forms/login';
 import ProfileForm from 'components/forms/profile';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
 
+import { setAreaOfInterestModalOpen } from './actions';
+
 import Modal from '../modal';
 
 import './styles.scss';
@@ -16,15 +18,14 @@ class AreaOfInterestModal extends PureComponent {
     userData: PropTypes.object,
     loading: PropTypes.bool,
     canDelete: PropTypes.bool,
-    setAreaOfInterestModalSettings: PropTypes.func,
     setMenuSettings: PropTypes.func,
     viewAfterSave: PropTypes.bool,
-    activeArea: PropTypes.object
+    activeArea: PropTypes.object,
   };
 
   handleCloseModal = () => {
-    const { setAreaOfInterestModalSettings, setMenuSettings } = this.props;
-    setAreaOfInterestModalSettings({ open: false, activeAreaId: null });
+    const { setMenuSettings } = this.props;
+    setAreaOfInterestModalOpen(null);
     setMenuSettings({ menuSection: 'my-gfw' });
   };
 
@@ -35,7 +36,7 @@ class AreaOfInterestModal extends PureComponent {
       userData,
       canDelete,
       viewAfterSave,
-      activeArea
+      activeArea,
     } = this.props;
     const { email, fullName, lastName, loggedIn, sector, subsector } =
       userData || {};
@@ -46,9 +47,9 @@ class AreaOfInterestModal extends PureComponent {
       subsector &&
       (subsector.includes('Other')
         ? // if it's 'Other: <input>', we make sure that the input is not empty
-        !!subsector.split('Other:')[1].trim()
+          !!subsector.split('Other:')[1].trim()
         : // otherwise we just check the subsector
-        !!subsector);
+          !!subsector);
 
     return (
       <Modal
@@ -60,14 +61,10 @@ class AreaOfInterestModal extends PureComponent {
         <div className="save-aoi-body">
           {loading && <Loader />}
           {!loading && !loggedIn && <LoginForm />}
-          {!loading &&
-            loggedIn &&
-            !isProfileFormFilled && (
+          {!loading && loggedIn && !isProfileFormFilled && (
             <ProfileForm source="AreaOfInterestModal" />
           )}
-          {!loading &&
-            loggedIn &&
-            isProfileFormFilled && (
+          {!loading && loggedIn && isProfileFormFilled && (
             <AreaOfInterestForm
               canDelete={canDelete}
               closeForm={this.handleCloseModal}

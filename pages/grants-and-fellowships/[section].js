@@ -3,8 +3,6 @@ import capitalize from 'lodash/capitalize';
 import Layout from 'app/layouts/root';
 import GrantsAndFellowships from 'pages/sgf';
 
-import LocationProvider from 'providers/location-provider';
-
 const pageProps = {
   description:
     'The Small Grants Fund & Tech Fellowship support civil society organizations and individuals around the world to use GFW in their advocacy, research and field work.',
@@ -33,7 +31,6 @@ export const getStaticProps = async ({ params }) => ({
 const GrantsAndFellowshipsPage = (props) => (
   <Layout {...props} {...pageProps}>
     <GrantsAndFellowships />
-    <LocationProvider />
   </Layout>
 );
 

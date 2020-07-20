@@ -16,7 +16,6 @@ import { getLocationData } from 'services/location';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-import LocationProvider from 'providers/location-provider';
 import MapUrlProvider from 'providers/map-url-provider';
 
 export const getServerSideProps = async ({ params }) => {
@@ -86,7 +85,6 @@ const MapPage = ({
 
   return (
     <Layout {...props} fullScreen showFooter={false}>
-      <LocationProvider />
       <MapUrlProvider />
       {ready && <Map />}
     </Layout>
