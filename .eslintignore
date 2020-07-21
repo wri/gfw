@@ -1,8 +1,5 @@
 /node_modules
-/public/assets
-/public/packs
-/vendor
-/node_modules
+/public
 /cypress/support
 /cypress/plugins
 /pages/api/__coverage__.js
