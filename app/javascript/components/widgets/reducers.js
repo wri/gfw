@@ -5,6 +5,7 @@ export const initialState = {
   error: false,
   data: {},
   settings: {},
+  category: 'summary',
   activeWidget: '',
   showMap: false,
 };
@@ -29,6 +30,11 @@ const setActiveWidget = (state, { payload }) => ({
 const setShowMap = (state, { payload }) => ({
   ...state,
   showMap: payload,
+});
+
+const setWidgetsCategory = (state, { payload }) => ({
+  ...state,
+  category: payload,
 });
 
 const setWidgetsSettings = (state, { payload }) => ({
@@ -59,6 +65,7 @@ const setWidgetsLoading = (state, { payload }) => ({
 export default {
   [actions.setWidgetsData]: setWidgetsData,
   [actions.setShowMap]: setShowMap,
+  [actions.setWidgetsCategory]: setWidgetsCategory,
   [actions.setActiveWidget]: setActiveWidget,
   [actions.setWidgetsSettings]: setWidgetsSettings,
   [actions.setWidgetSettingsByKey]: setWidgetSettingsByKey,

@@ -12,8 +12,11 @@ const URL = ({
   },
 }) => {
   const { pathname, asPath, replace, query } = useRouter();
-
   useDeepCompareEffect(() => {
+    if (query.pushed) {
+      delete query.pushed;
+    }
+
     const queryParamsSerialized = encodeStateForUrl(
       { ...query, ...queryParams },
       options

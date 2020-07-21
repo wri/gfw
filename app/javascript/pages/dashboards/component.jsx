@@ -42,7 +42,7 @@ class DashboardsPage extends PureComponent {
     closeMobileMap: PropTypes.func.isRequired,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    handleCategoryChange: PropTypes.func,
+    setWidgetsCategory: PropTypes.func,
     locationType: PropTypes.string,
     areaError: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     activeArea: PropTypes.object,
@@ -131,7 +131,7 @@ class DashboardsPage extends PureComponent {
       showMapMobile,
       links,
       widgetAnchor,
-      handleCategoryChange,
+      setWidgetsCategory,
       locationType,
       activeArea,
       areaLoading,
@@ -172,7 +172,7 @@ class DashboardsPage extends PureComponent {
                   links={links.map((l) => ({
                     ...l,
                     onClick: () => {
-                      handleCategoryChange(l.category);
+                      setWidgetsCategory(l.category);
                       track('selectDashboardCategory', {
                         label: l.category,
                       });

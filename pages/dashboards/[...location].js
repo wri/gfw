@@ -8,7 +8,10 @@ import useRouter from 'utils/router';
 import { setMapSettings } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setDashboardPrompts } from 'components/prompts/dashboard-prompts/actions';
-import { setWidgetsSettings } from 'components/widgets/actions';
+import {
+  setWidgetsSettings,
+  setWidgetsCategory,
+} from 'components/widgets/actions';
 
 import { getLocationData } from 'services/location';
 
@@ -57,7 +60,7 @@ const DashboardsPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useDeepCompareEffect(() => {
-    const { map, modalMeta, dashboardPrompts, ...widgets } =
+    const { map, modalMeta, dashboardPrompts, category, ...widgets } =
       decodeParamsForState(query) || {};
 
     if (map) {
@@ -74,6 +77,10 @@ const DashboardsPage = (props) => {
 
     if (widgets) {
       dispatch(setWidgetsSettings(widgets));
+    }
+
+    if (category) {
+      dispatch(setWidgetsCategory(category));
     }
   }, [{ fullPathname, queryPushed: query.pushed }]);
 

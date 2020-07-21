@@ -96,7 +96,7 @@ export const getAdm2Data = createSelector(
 
 export const getExternalLinks = createSelector(
   [selectCountryData, selectLocation],
-  (data, location) => data && data.links[location.adm0]
+  (data, location) => data && data.links?.[location?.adm0]
 );
 
 export const getForestAtlasLink = createSelector(
@@ -192,7 +192,8 @@ export const getShareMeta = createSelector(
   (location, activeArea) => {
     if (location?.type === 'aoi' && activeArea && activeArea.userArea) {
       return 'share area';
-    } if (location?.type === 'aoi') {
+    }
+    if (location?.type === 'aoi') {
       return 'save to my gfw';
     }
 

@@ -5,6 +5,7 @@ export const selectMetaModalKey = (state) => state.modalMeta?.metakey;
 export const selectDashboardPrompts = (state) =>
   state.dashboardPrompts?.settings;
 export const selectWidgetSettings = (state) => state.widgets?.settings;
+export const selectWidgetsCategory = (state) => state.widgets?.category;
 
 export const getUrlParams = createSelector(
   [
@@ -12,13 +13,15 @@ export const getUrlParams = createSelector(
     selectMetaModalKey,
     selectDashboardPrompts,
     selectWidgetSettings,
+    selectWidgetsCategory,
   ],
-  (map, modalMeta, dashboardPrompts, widgetsSettings) => {
+  (map, modalMeta, dashboardPrompts, widgetsSettings, category) => {
     return {
       map,
       modalMeta,
       dashboardPrompts,
       ...widgetsSettings,
+      category,
     };
   }
 );
