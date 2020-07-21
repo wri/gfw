@@ -60,6 +60,10 @@ const nextConfig = {
           source: '/map',
           destination: '/map/global',
         },
+        {
+          source: '/embed/map',
+          destination: '/embed/map/global',
+        },
       ];
     },
   },

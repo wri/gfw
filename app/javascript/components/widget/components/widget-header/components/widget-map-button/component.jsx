@@ -12,21 +12,20 @@ import './styles.scss';
 class WidgetMapButton extends PureComponent {
   static propTypes = {
     active: PropTypes.bool,
-    large: PropTypes.bool,
     handleShowMap: PropTypes.func.isRequired,
   };
 
   render() {
-    const { active, large, handleShowMap } = this.props;
+    const { active, handleShowMap } = this.props;
 
     return (
       <Button
         className={cx('c-widget-map-button', { '-active': active })}
-        theme={cx('theme-button-small', { small: !large }, { square: !large })}
+        theme={cx('theme-button-small small square')}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
         onClick={handleShowMap}
       >
-        {large ? 'SHOW ON MAP' : <Icon icon={mapIcon} className="map-icon" />}
+        <Icon icon={mapIcon} className="map-icon" />
       </Button>
     );
   }

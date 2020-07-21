@@ -62,28 +62,32 @@
       margin-bottom: 0;
     }
 
-    .breadcrumb-link button {
-      display: flex;
-      align-items: center;
-      color: $green-gfw;
-      font-size: rem(12px);
+    .breadcrumb-link {
       width: fit-content;
       margin-bottom: rem(30px);
-      font-weight: 400;
 
-      .breadcrumb-icon {
-        fill: $green-gfw;
-        transform: rotate(90deg);
-        margin-right: rem(5px);
-        width: rem(12px);
-        height: rem(12px);
-      }
-
-      &:hover {
-        color: darken($green-gfw, 10%);
+      button {
+        display: flex;
+        align-items: center;
+        color: $green-gfw;
+        font-size: rem(12px);
+        font-weight: 400;
+        cursor: pointer;
 
         .breadcrumb-icon {
-          fill: darken($green-gfw, 10%);
+          fill: $green-gfw;
+          transform: rotate(90deg);
+          margin-right: rem(5px);
+          width: rem(12px);
+          height: rem(12px);
+        }
+
+        &:hover {
+          color: darken($green-gfw, 10%);
+
+          .breadcrumb-icon {
+            fill: darken($green-gfw, 10%);
+          }
         }
       }
     }

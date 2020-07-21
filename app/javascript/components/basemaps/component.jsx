@@ -7,8 +7,8 @@ import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import infoIcon from 'assets/icons/info.svg';
-import closeIcon from 'assets/icons/close.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import boundariesIcon from 'assets/icons/boundaries.svg?sprite';
 import labelsIcon from 'assets/icons/labels.svg?sprite';
@@ -40,7 +40,7 @@ class Basemaps extends React.PureComponent {
     roadsSelected: PropTypes.object.isRequired,
     selectRoads: PropTypes.func.isRequired,
     roads: PropTypes.array.isRequired,
-    setMapSettings: PropTypes.func
+    setMapSettings: PropTypes.func,
   };
 
   renderButtonBasemap(item) {

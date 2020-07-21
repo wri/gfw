@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
 import Link from 'next/link';
 
-import Footer from 'components/footer';
+import { Footer } from 'gfw-components';
 import Carousel from 'components/ui/carousel';
 import Card from 'components/ui/card';
 import CountryDataProvider from 'providers/country-data-provider';

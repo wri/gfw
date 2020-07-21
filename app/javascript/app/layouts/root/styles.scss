@@ -14,19 +14,17 @@
     position: relative;
     min-height: calc(100vh - 56px - 583px);
     z-index: 0;
+    margin-top: rem(56px);
 
     @media screen and (min-width: $screen-m) {
       min-height: calc(100vh - 56px - 384px);
+      margin-top: 0;
     }
 
     .page-loader {
       position: relative;
       z-index: 1;
       min-height: 60vh;
-    }
-
-    &.mobile {
-      margin-top: rem(56px);
     }
   }
 
