@@ -67,8 +67,8 @@ class Header extends PureComponent {
       errorMsg,
     } = this.props;
     const isCountryDashboard =
-      location.type === 'country' || location.type === 'global';
-    const isAreaDashboard = location.type === 'aoi';
+      location?.type === 'country' || location?.type === 'global';
+    const isAreaDashboard = location?.type === 'aoi';
     const isAreaAndCountryDashboard =
       !isCountryDashboard &&
       activeArea &&
@@ -111,7 +111,7 @@ class Header extends PureComponent {
                 <Icon icon={pencilIcon} />
               </Button>
             )}
-            {location.type === 'country' && (
+            {location?.type === 'country' && (
               <Button
                 className="theme-button-medium theme-button-clear square"
                 tooltip={{
