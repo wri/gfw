@@ -181,7 +181,7 @@ class MapComponent extends Component {
 
     // Listeners
     if (this.map) {
-      this.map.on('style.load', this.onStyleLoad);
+      this.map.once('styledata', this.onStyleLoad);
     }
   };
 

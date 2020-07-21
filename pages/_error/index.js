@@ -9,7 +9,7 @@ import './styles.scss';
 const Error = ({ statusCode }) => (
   <Layout
     title={
-      `An error ${statusCode} occurred` ||
+      `An error ${statusCode ? `${statusCode} ` : ''}occurred` ||
       "We're sorry, something went wrong | Global Forest Watch"
     }
     description="Try refreshing the page or check your connection."
