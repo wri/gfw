@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import useRouter from 'utils/router';
 
@@ -29,7 +28,7 @@ const MapEmbedPage = (props) => {
   const { query, asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useDeepCompareEffect(() => {
+  useMemo(() => {
     const {
       map,
       mainMap,
@@ -67,7 +66,7 @@ const MapEmbedPage = (props) => {
     if (planetNotice) {
       dispatch(setModalPlanetNoticeOpen(planetNotice));
     }
-  }, [{ fullPathname, queryPushed: query.pushed }]);
+  }, [fullPathname]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync

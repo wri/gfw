@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import useRouter from 'utils/router';
 
@@ -19,7 +18,7 @@ export default () => {
   const { query, asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useDeepCompareEffect(() => {
+  useMemo(() => {
     const { areaOfInterestModal, profile } = decodeParamsForState(query) || {};
     if (areaOfInterestModal) {
       dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
@@ -28,7 +27,7 @@ export default () => {
     if (profile) {
       dispatch(setProfileModalOpen(profile));
     }
-  }, [{ fullPathname, queryPushed: query.pushed }]);
+  }, [fullPathname]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync

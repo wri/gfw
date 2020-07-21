@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import useRouter from 'utils/router';
 
@@ -60,7 +59,7 @@ const DashboardsPage = (props) => {
   const { query, asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useDeepCompareEffect(() => {
+  useMemo(() => {
     const {
       map,
       modalMeta,
@@ -93,7 +92,7 @@ const DashboardsPage = (props) => {
     if (areaOfInterestModal) {
       dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
     }
-  }, [{ fullPathname, queryPushed: query.pushed }]);
+  }, [fullPathname]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync
