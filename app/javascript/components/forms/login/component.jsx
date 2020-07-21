@@ -12,11 +12,13 @@ import Error from 'components/forms/components/error';
 
 import { email } from 'components/forms/validations';
 
+import { GFW_API } from 'utils/constants';
+
 import './styles.scss';
 
 const isServer = typeof window === 'undefined';
 
-const AUTH_URL = `${process.env.GFW_API}/auth`;
+const AUTH_URL = `${GFW_API}/auth`;
 
 const socialButtons = [
   {
@@ -156,7 +158,7 @@ class LoginForm extends PureComponent {
                           target="_self"
                         >
                           <Button className={`social-btn -${s.value}`}>
-                            Login with 
+                            Login with
                             {' '}
                             {s.label}
                           </Button>

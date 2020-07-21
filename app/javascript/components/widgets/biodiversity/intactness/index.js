@@ -1,4 +1,4 @@
-import request from 'utils/request';
+import { cartoRequest } from 'utils/request';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -12,7 +12,7 @@ import {
   BIODIVERSITY_SIGNIFICANCE
 } from 'data/layers';
 
-import { getWidgetProps } from './selectors';
+// import { getWidgetProps } from './selectors';
 
 export default {
   widget: 'intactness',
@@ -117,9 +117,9 @@ export default {
   GROUP BY iso, adm1, adm2`;
     }
 
-    return request
-      .get(`${process.env.CARTO_API}/sql`, { params: { q: sql } })
+    return cartoRequest
+      .get(`/sql`, { params: { q: sql } })
       .then(response => response.data.rows);
   },
-  getWidgetProps
+  // getWidgetProps
 };

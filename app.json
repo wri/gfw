@@ -20,19 +20,10 @@
     "BITLY_TOKEN": {
       "required": true
     },
-    "CARTO_API": {
-      "required": true
-    },
-    "CLIMATE_WATCH_API": {
-      "required": true
-    },
     "FEATURE_ENV": {
       "required": true
     },
     "FULLPAGE_LICENSE": {
-      "required": true
-    },
-    "GFW_API": {
       "required": true
     },
     "GOOGLE_CUSTOM_SEARCH_CX": {
@@ -42,12 +33,6 @@
       "required": true
     },
     "MapboxAccessToken": {
-      "required": true
-    },
-    "RESOURCE_WATCH_API": {
-      "required": true
-    },
-    "TRASE_API": {
       "required": true
     }
   },

@@ -6,6 +6,7 @@ import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 import { get } from 'axios';
 
+import { GFW_API } from 'utils/constants';
 import { getIndicator } from 'utils/format';
 
 const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
@@ -101,7 +102,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     DATASETS_ENV[
       `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
     ];
-  return `${process.env.GFW_API}/query/${datasetId}?sql=`;
+  return `${GFW_API}/query/${datasetId}?sql=`;
 };
 
 // build {select} from location params

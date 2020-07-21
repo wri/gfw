@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 
+import { GFW_API } from 'utils/constants';
+
 import { locationLevelToStr } from 'utils/format';
 
 import { getActiveLayers, getMapZoom } from 'components/map/selectors';
@@ -102,7 +104,7 @@ export const getDownloadLinks = createSelector(
               downloads = downloads.concat({
                 url:
                   downloadUrlsFirstKey === '/'
-                    ? `${process.env.GFW_API}${downloadUrls[key]}`
+                    ? `${GFW_API}${downloadUrls[key]}`
                     : downloadUrls[key],
                 label: key
               });

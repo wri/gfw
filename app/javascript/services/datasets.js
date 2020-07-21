@@ -1,6 +1,8 @@
 import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.RESOURCE_WATCH_API}`;
+import { RESOURCE_WATCH_API } from 'utils/constants';
+
+const REQUEST_URL = `${RESOURCE_WATCH_API}`;
 const featureEnv = process.env.FEATURE_ENV;
 
 export const getDatasetsProvider = () =>

@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'utils/redux';
-import request from 'utils/request';
+import { cartoRequest } from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
 import useRouter from 'utils/router';
@@ -41,9 +41,9 @@ export const getLocationFromSearch = createThunkAction(
       );
 
       if (whereStatement) {
-        request
+        cartoRequest
           .get(
-            `${process.env.CARTO_API}/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${nameString}) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${nameString}) WHEN gid_0 is not null THEN ${nameString} END AS label FROM gadm36_political_boundaries WHERE ${whereStatement} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`,
+            `/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${nameString}) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${nameString}) WHEN gid_0 is not null THEN ${nameString} END AS label FROM gadm36_political_boundaries WHERE ${whereStatement} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`,
             {
               cancelToken: token,
             }

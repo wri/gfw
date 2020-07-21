@@ -13,10 +13,10 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import downloadIcon from 'assets/icons/download.svg?sprite';
+import { GFW_API } from 'utils/constants';
 
 import './styles.scss';
 
-const { GFW_API } = process.env;
 const GLAD_ALERTS_WIDGET = 'gladAlerts';
 
 const isServer = typeof window === 'undefined';
