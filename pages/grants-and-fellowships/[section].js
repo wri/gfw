@@ -1,7 +1,15 @@
+import { useState, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import capitalize from 'lodash/capitalize';
+
+import useRouter from 'utils/router';
+import { decodeParamsForState } from 'utils/stateToUrl';
 
 import Layout from 'app/layouts/root';
 import GrantsAndFellowships from 'pages/sgf';
+import SgfUrlProvider from 'providers/sgf-url-provider';
+
+import { setSectionProjectsModalSlug } from 'pages/sgf/section-projects/section-projects-modal/actions';
 
 const pageProps = {
   description:
@@ -28,10 +36,34 @@ export const getStaticProps = async ({ params }) => ({
   },
 });
 
-const GrantsAndFellowshipsPage = (props) => (
-  <Layout {...props} {...pageProps}>
-    <GrantsAndFellowships />
-  </Layout>
-);
+const GrantsAndFellowshipsPage = (props) => {
+  const dispatch = useDispatch();
+  const [ready, setReady] = useState(false);
+  const { query, asPath } = useRouter();
+  const fullPathname = asPath?.split('?')?.[0];
+
+  useMemo(() => {
+    const { sgfModal } = decodeParamsForState(query) || {};
+
+    if (sgfModal) {
+      dispatch(setSectionProjectsModalSlug(sgfModal));
+    }
+  }, [fullPathname]);
+
+  // when setting the query params from the URL we need to make sure we don't render the map
+  // on the server otherwise the DOM will be out of sync
+  useEffect(() => {
+    if (!ready) {
+      setReady(true);
+    }
+  });
+
+  return (
+    <Layout {...props} {...pageProps}>
+      <SgfUrlProvider />
+      {ready && <GrantsAndFellowships />}
+    </Layout>
+  );
+};
 
 export default GrantsAndFellowshipsPage;
