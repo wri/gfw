@@ -35,7 +35,7 @@
 .idea/
 .grunt
 node_modules
-public/assets
+public
 vendor/assets/bower_components
 jstest/SpecRunner.html
 package-lock.json
