@@ -9,6 +9,7 @@ export const selectRecentImagerySettings = (state) =>
   state.recentImagery?.settings;
 export const selectMapPromptsSettings = (state) => state.mapPrompts?.settings;
 export const selectAOIModalSettings = (state) => state.areaOfInterestModal;
+export const selectPlanetNoticeModalOpen = (state) => state.planetNotice?.open;
 
 export const getUrlParams = createSelector(
   [
@@ -20,6 +21,7 @@ export const getUrlParams = createSelector(
     selectRecentImagerySettings,
     selectMapPromptsSettings,
     selectAOIModalSettings,
+    selectPlanetNoticeModalOpen,
   ],
   (
     map,
@@ -29,7 +31,8 @@ export const getUrlParams = createSelector(
     modalMeta,
     recentImagery,
     mapPrompts,
-    areaOfInterestModal
+    areaOfInterestModal,
+    planetNotice
   ) => ({
     map,
     mainMap,
@@ -39,6 +42,7 @@ export const getUrlParams = createSelector(
     recentImagery,
     mapPrompts,
     areaOfInterestModal,
+    planetNotice,
   })
 );
 

@@ -17,6 +17,7 @@ import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
+import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
 import { getServerSideProps as getProps } from '../../map/[...location]';
 
@@ -29,8 +30,15 @@ const MapEmbedPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useDeepCompareEffect(() => {
-    const { map, mainMap, mapMenu, analysis, modalMeta, recentImagery } =
-      decodeParamsForState(query) || {};
+    const {
+      map,
+      mainMap,
+      mapMenu,
+      analysis,
+      modalMeta,
+      recentImagery,
+      planetNotice,
+    } = decodeParamsForState(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
@@ -54,6 +62,10 @@ const MapEmbedPage = (props) => {
 
     if (recentImagery) {
       dispatch(setRecentImagerySettings(recentImagery));
+    }
+
+    if (planetNotice) {
+      dispatch(setModalPlanetNoticeOpen(planetNotice));
     }
   }, [{ fullPathname, queryPushed: query.pushed }]);
 

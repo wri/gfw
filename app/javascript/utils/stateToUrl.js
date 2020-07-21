@@ -23,7 +23,11 @@ export const decodeParamsForState = (params) => {
         Buffer.from(params[key], 'base64').toString('binary')
       );
     } catch (err) {
-      paramsParsed[key] = params[key];
+      try {
+        paramsParsed[key] = JSON.parse(params[key]);
+      } catch (error) {
+        paramsParsed[key] = params[key];
+      }
     }
   });
 
