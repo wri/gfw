@@ -134,6 +134,7 @@ class NavAlt extends PureComponent {
                     'animate-user-icon': !loggedIn && loggingIn,
                   })}
                   activeClassName="active"
+                  activeShallow
                 >
                   My GFW
                   <Icon
