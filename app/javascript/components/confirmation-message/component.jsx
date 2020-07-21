@@ -4,8 +4,8 @@ import ReactHtmlParser from 'react-html-parser';
 
 import Icon from 'components/ui/icon';
 
-import treeImage from 'assets/icons/tree-success.png';
-import treeImageError from 'assets/icons/error.svg';
+import treeImage from 'assets/icons/tree-success.png?webp';
+import treeImageError from 'assets/icons/error.svg?sprite';
 
 import './styles.scss';
 
@@ -13,7 +13,7 @@ class Thankyou extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    error: PropTypes.bool
+    error: PropTypes.bool,
   };
 
   render() {

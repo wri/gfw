@@ -1,40 +1,4 @@
 {
-  "env": {
-    "production": {
-      "plugins": [
-        ["transform-react-remove-prop-types", {
-          "mode": "remove",
-          "removeImport": true,
-          "ignoreFilenames": ["node_modules"]
-        }],
-        "react-hot-loader/babel"
-      ]
-    }
-  },
-  "presets": [
-    [
-      "env",
-      {
-        "modules": false,
-        "targets": {
-          "browsers": ["> 1%", "last 2 versions", "Firefox ESR", "Safari >= 8", "IE >= 11"],
-          "uglify": true
-        },
-        "useBuiltIns": true
-      }
-    ],
-    "react",
-    "stage-3"
-  ],
-  "plugins": [
-    "syntax-dynamic-import",
-    "transform-decorators-legacy",
-    [
-      "transform-class-properties",
-      {
-        "spec": true
-      }
-    ],
-    "universal-import"
-  ]
+  "presets": ["next/babel"],
+  "plugins": ["istanbul"]
 }

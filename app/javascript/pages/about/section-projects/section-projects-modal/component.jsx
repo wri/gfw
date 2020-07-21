@@ -4,10 +4,15 @@ import Modal from 'components/modals/modal';
 import Button from 'components/ui/button';
 import Tip from 'components/ui/tip';
 
-// import dollarIcon from 'assets/icons/info.svg';
 import './styles.scss';
 
 class SectionProjectsModal extends PureComponent {
+  static propTypes = {
+    data: PropTypes.object,
+    isOpen: PropTypes.bool,
+    setSectionProjectsModal: PropTypes.func.isRequired,
+  };
+
   getContent() {
     const { data } = this.props;
     if (!data) return null;
@@ -18,20 +23,29 @@ class SectionProjectsModal extends PureComponent {
         <p>{data.description}</p>
         <div className="links">
           {data.sgf && (
-            <Button
-              theme="theme-button-light square"
-              extLink="/small-grants-fund"
-              tooltip={{
-                theme: 'tip',
-                position: 'top',
-                arrow: true,
-                html: <Tip text="SMALL GRANTS FUND" />
-              }}
+            <a
+              href="/grants-and-fellowships"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              $
-            </Button>
+              <Button
+                theme="theme-button-light square"
+                tooltip={{
+                  theme: 'tip',
+                  position: 'top',
+                  arrow: true,
+                  html: <Tip text="SMALL GRANTS FUND" />,
+                }}
+              >
+                $
+              </Button>
+            </a>
           )}
-          {data.link && <Button extLink={data.link}>LEARN MORE</Button>}
+          {data.link && (
+            <a href={data.link} target="_blank" rel="noopener noreferrer">
+              <Button>LEARN MORE</Button>
+            </a>
+          )}
         </div>
       </div>
     );
@@ -44,17 +58,11 @@ class SectionProjectsModal extends PureComponent {
   render() {
     const { isOpen } = this.props;
     return (
-      <Modal isOpen={isOpen} onRequestClose={this.handleClose}>
+      <Modal isOpen={!!isOpen} onRequestClose={this.handleClose}>
         {this.getContent()}
       </Modal>
     );
   }
 }
-
-SectionProjectsModal.propTypes = {
-  data: PropTypes.object,
-  isOpen: PropTypes.bool,
-  setSectionProjectsModal: PropTypes.func.isRequired
-};
 
 export default SectionProjectsModal;

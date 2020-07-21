@@ -1,52 +1,35 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ReactDatePicker, { CalendarContainer, registerLocale } from 'react-datepicker';
-import { SCREEN_M } from 'utils/constants';
-import MediaQuery from 'react-responsive';
+import ReactDatePicker, {
+  CalendarContainer,
+  registerLocale,
+} from 'react-datepicker';
 import cx from 'classnames';
 import range from 'lodash/range';
 import { Portal } from 'react-portal';
-
 import moment from 'moment';
-import Dropdown from 'components/ui/dropdown';
 
+import Dropdown from 'components/ui/dropdown';
 import Input from 'components/ui/input';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
-import es_MX from 'date-fns/locale/es';
+import es from 'date-fns/locale/es';
 import fr from 'date-fns/locale/fr';
 import zh from 'date-fns/locale/zh-CN';
-import pt_BR from 'date-fns/locale/pt-BR';
+import ptBR from 'date-fns/locale/pt-BR';
 import id from 'date-fns/locale/id';
 
 import './styles.scss';
 
 registerLocale('fr', fr);
-registerLocale('es_MX', es_MX);
+registerLocale('es_MX', es);
 registerLocale('zh', zh);
-registerLocale('pt_BR', pt_BR);
+registerLocale('pt_BR', ptBR);
 registerLocale('id', id);
 
 class Datepicker extends PureComponent {
-  state = {
-    position: {}
-  };
-
-  componentDidMount() {
-    this.setPosition();
-  }
-
-  setPosition = () => {
-    const coords = this.ref.getBoundingClientRect();
-
-    if (coords.x + 290 > window.innerWidth) {
-      coords.x -= 195;
-    }
-    this.setState({ position: coords });
-  };
-
   renderCalendarHeader = ({
     date,
     changeYear,
@@ -54,7 +37,7 @@ class Datepicker extends PureComponent {
     decreaseMonth,
     increaseMonth,
     prevMonthButtonDisabled,
-    nextMonthButtonDisabled
+    nextMonthButtonDisabled,
   }) => {
     const { settings } = this.props;
     const { minDate, maxDate } = settings;
@@ -80,7 +63,8 @@ class Datepicker extends PureComponent {
             .filter((m, i) => {
               if (date.getFullYear() === minMoment.year()) {
                 return i >= minMoment.month();
-              } else if (date.getFullYear() === maxMoment.year()) {
+              }
+              if (date.getFullYear() === maxMoment.year()) {
                 return i <= maxMoment.month();
               }
               return true;
@@ -95,7 +79,7 @@ class Datepicker extends PureComponent {
           options={range(
             parseInt(minMoment.year(), 10),
             parseInt(maxMoment.year(), 10) + 1
-          ).map(i => ({ value: i, label: i }))}
+          ).map((i) => ({ value: i, label: i }))}
           onChange={changeYear}
           value={date.getFullYear()}
           native
@@ -112,75 +96,42 @@ class Datepicker extends PureComponent {
     );
   };
 
-  renderCalendarContainer = ({ className, children }) => {
-    const { position } = this.state;
-
-    return (
-      <Portal>
-        <MediaQuery minWidth={SCREEN_M}>
-          {isDesktop => (
-            <div
-              className={`react-datepicker-portal ${
-                !isDesktop ? 'react-datepicker-modal' : ''
-              }`}
-              style={{
-                transform: `translate(${position.x}px, calc(${
-                  position.y
-                }px + 1.75rem))`
-              }}
-            >
-              <CalendarContainer className={className}>
-                {children}
-              </CalendarContainer>
-              {!isDesktop && (
-                <div
-                  className="clickable-modal"
-                  style={{
-                    width: '100vw',
-                    height: '100vh',
-                    position: 'absolute'
-                  }}
-                  role="button"
-                  tabIndex={-1}
-                />
-              )}
-            </div>
-          )}
-        </MediaQuery>
-      </Portal>
-    );
-  };
+  renderCalendarContainer = ({ className, children }) => (
+    <Portal>
+      <div className="react-datepicker-portal">
+        <CalendarContainer className={className}>{children}</CalendarContainer>
+      </div>
+    </Portal>
+  );
 
   render() {
     const { className, handleOnDateChange, settings, theme, lang } = this.props;
     const momentDate = this.props.date;
-    const { minDate, maxDate } = settings;
-    const { position } = this.state;
+    const { minDate, maxDate, placement } = settings;
 
     return (
       <div
-        ref={ref => {
+        ref={(ref) => {
           this.ref = ref;
         }}
         className={cx('c-datepicker notranslate', theme, className)}
       >
-        {position && (
-          <ReactDatePicker
-            selected={momentDate.toDate()}
-            onSelect={d => {
-              handleOnDateChange(moment(d), 0);
-            }}
-            minDate={new Date(minDate)}
-            maxDate={new Date(maxDate)}
-            dateFormat="dd MMM yyyy"
-            locale={lang || 'en'}
-            className="datepicker-input"
-            onFocus={this.setPosition}
-            calendarContainer={this.renderCalendarContainer}
-            renderCustomHeader={this.renderCalendarHeader}
-            customInput={<Input />}
-          />
-        )}
+        <ReactDatePicker
+          selected={momentDate.toDate()}
+          onChange={(d) => {
+            handleOnDateChange(moment(d), 0);
+          }}
+          minDate={new Date(minDate)}
+          maxDate={new Date(maxDate)}
+          dateFormat="dd MMM yyyy"
+          locale={lang || 'en'}
+          className="datepicker-input"
+          onFocus={this.setPosition}
+          popperContainer={this.renderCalendarContainer}
+          popperPlacement={placement}
+          renderCustomHeader={this.renderCalendarHeader}
+          customInput={<Input />}
+        />
       </div>
     );
   }
@@ -192,7 +143,7 @@ Datepicker.propTypes = {
   date: PropTypes.object,
   handleOnDateChange: PropTypes.func.isRequired,
   settings: PropTypes.object,
-  lang: PropTypes.string
+  lang: PropTypes.string,
 };
 
 export default Datepicker;

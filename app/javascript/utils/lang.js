@@ -16,8 +16,10 @@ const momentLangCode = {
   id: 'id'
 };
 
+const isServer = typeof window === 'undefined';
+
 export const getLanguages = () => {
-  const txData = JSON.parse(localStorage.getItem('txlive:languages'));
+  const txData = !isServer && JSON.parse(localStorage.getItem('txlive:languages'));
   return (
     txData &&
     txData.source &&

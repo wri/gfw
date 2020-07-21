@@ -5,7 +5,7 @@ import { formatUSD } from 'utils/format';
 import ComposedChart from 'components/charts/composed-chart';
 import NumberedList from 'components/numbered-list';
 
-import './styles';
+import './styles.scss';
 
 class WidgetChartList extends PureComponent {
   render() {
@@ -25,7 +25,9 @@ class WidgetChartList extends PureComponent {
               ...settings,
               unit: settings.unit === 'net_perc' ? '%' : ' $',
               unitFormat:
-                settings.unit !== 'net_perc' ? value => formatUSD(value) : null
+                settings.unit !== 'net_perc'
+                  ? (value) => formatUSD(value)
+                  : null,
             }}
             linkExt={embed}
           />
@@ -39,6 +41,6 @@ WidgetChartList.propTypes = {
   data: PropTypes.object,
   config: PropTypes.object,
   settings: PropTypes.object,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
 };
 export default WidgetChartList;

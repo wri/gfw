@@ -319,11 +319,15 @@ export const parseConfig = createSelector(
           settings &&
           values &&
           settings.sort((a, b) => values[a.key] - values[b.key]).reverse();
-        return [
+        return Array.isArray(sorted) ? [
           {
             label: 'Fire alerts'
           },
           ...sorted
+        ] : [
+          {
+            label: 'Fire alerts'
+          }
         ];
       },
       referenceLine: {

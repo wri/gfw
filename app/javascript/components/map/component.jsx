@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
@@ -13,7 +14,7 @@ import Icon from 'components/ui/icon';
 import Map from 'components/ui/map';
 import PlanetNoticeModal from 'components/modals/planet-notice';
 
-import iconCrosshair from 'assets/icons/crosshair.svg';
+import iconCrosshair from 'assets/icons/crosshair.svg?sprite';
 
 import Scale from './components/scale';
 import Popup from './components/popup';
@@ -30,7 +31,6 @@ class MapComponent extends Component {
   static propTypes = {
     className: PropTypes.string,
     viewport: PropTypes.shape().isRequired,
-    bounds: PropTypes.shape(),
     mapStyle: PropTypes.string.isRequired,
     setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
@@ -52,16 +52,12 @@ class MapComponent extends Component {
     popupActions: PropTypes.array,
     onSelectBoundary: PropTypes.func,
     onDrawComplete: PropTypes.func,
-    lang: PropTypes.string
-  };
-
-  static defaultProps = {
-    bounds: {}
+    lang: PropTypes.string,
   };
 
   state = {
     bounds: {},
-    drawClicks: 0
+    drawClicks: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -76,7 +72,7 @@ class MapComponent extends Component {
       viewport,
       lang,
       drawing,
-      clearMapInteractions
+      clearMapInteractions,
     } = this.props;
     const {
       mapLabels: prevMapLabels,
@@ -85,7 +81,7 @@ class MapComponent extends Component {
       geostoreBbox: prevGeostoreBbox,
       interaction: prevInteraction,
       lang: prevLang,
-      drawing: prevDrawing
+      drawing: prevDrawing,
     } = prevProps;
 
     if (!drawing && prevDrawing) {
@@ -105,23 +101,23 @@ class MapComponent extends Component {
     }
 
     // if bbox is change by action fit bounds
-    if (canBound && stateBbox !== prevStateBbox) {
+    if (canBound && stateBbox?.length && stateBbox !== prevStateBbox) {
       // eslint-disable-next-line
       this.setState({ bounds: { bbox: stateBbox, options: { padding: 50 } } });
     }
 
     // if geostore changes
-    if (canBound && geostoreBbox && geostoreBbox !== prevGeostoreBbox) {
+    if (canBound && geostoreBbox?.length && geostoreBbox !== prevGeostoreBbox) {
       // eslint-disable-next-line
       this.setState({
-        bounds: { bbox: geostoreBbox, options: { padding: 50 } }
+        bounds: { bbox: geostoreBbox, options: { padding: 50 } },
       });
     }
 
     // reset canBound after fitting bounds
     if (
       canBound &&
-      this.state.bounds &&
+      !isEmpty(this.state.bounds) &&
       !isEqual(this.state.bounds, prevState.bounds)
     ) {
       setMapSettings({ canBound: false, bbox: [] });
@@ -132,7 +128,7 @@ class MapComponent extends Component {
     // fit bounds on cluster if clicked
     if (interaction && !isEqual(interaction, prevInteraction)) {
       track('mapInteraction', {
-        label: interaction.label
+        label: interaction.label,
       });
 
       if (interaction.data.cluster) {
@@ -146,27 +142,27 @@ class MapComponent extends Component {
             setMapSettings({
               center: {
                 lat: coordinates[1],
-                lng: coordinates[0]
+                lng: coordinates[0],
               },
               zoom: newZoom,
-              transitionDuration: 400 + difference * 100
+              transitionDuration: 400 + difference * 100,
             });
           });
       }
     }
   }
 
-  onViewportChange = debounce(viewport => {
+  onViewportChange = debounce((viewport) => {
     const { setMapSettings, location } = this.props;
     const { latitude, longitude, bearing, pitch, zoom } = viewport;
     setMapSettings({
       center: {
         lat: latitude,
-        lng: longitude
+        lng: longitude,
       },
       bearing,
       pitch,
-      zoom
+      zoom,
     });
     handleMapLatLonTrack(location);
   }, 250);
@@ -185,11 +181,11 @@ class MapComponent extends Component {
 
     // Listeners
     if (this.map) {
-      this.map.on('style.load', this.onStyleLoad);
+      this.map.once('styledata', this.onStyleLoad);
     }
   };
 
-  onClick = e => {
+  onClick = (e) => {
     const { drawing, clearMapInteractions } = this.props;
     if (!drawing && e.features && e.features.length) {
       const { features, lngLat } = e;
@@ -212,16 +208,16 @@ class MapComponent extends Component {
 
       const groups =
         mapboxGroups &&
-        Object.keys(mapboxGroups).filter(k => {
+        Object.keys(mapboxGroups).filter((k) => {
           const { name } = (mapboxGroups && mapboxGroups[k]) || {};
-          const roadGroups = LABELS_GROUP.map(rgr =>
+          const roadGroups = LABELS_GROUP.map((rgr) =>
             name.toLowerCase().includes(rgr)
           );
 
-          return roadGroups.some(bool => bool);
+          return roadGroups.some((bool) => bool);
         });
 
-      const labelLayers = layers.filter(l => {
+      const labelLayers = layers.filter((l) => {
         const labelMetadata = l.metadata;
         if (!labelMetadata) return false;
 
@@ -229,7 +225,7 @@ class MapComponent extends Component {
         return groups.includes(gr);
       });
 
-      labelLayers.forEach(l => {
+      labelLayers.forEach((l) => {
         const visibility = mapLabels ? 'visible' : 'none';
         this.map.setLayoutProperty(l.id, 'visibility', visibility);
         this.map.setLayoutProperty(l.id, 'text-field', ['get', `name_${lang}`]);
@@ -245,16 +241,16 @@ class MapComponent extends Component {
 
       const groups =
         metadata &&
-        Object.keys(metadata['mapbox:groups']).filter(k => {
+        Object.keys(metadata['mapbox:groups']).filter((k) => {
           const { name } = metadata['mapbox:groups'][k];
-          const roadGroups = ROADS_GROUP.map(rgr =>
+          const roadGroups = ROADS_GROUP.map((rgr) =>
             name.toLowerCase().includes(rgr)
           );
 
-          return roadGroups.some(bool => bool);
+          return roadGroups.some((bool) => bool);
         });
 
-      const roadLayers = layers.filter(l => {
+      const roadLayers = layers.filter((l) => {
         const roadMetadata = l.metadata;
         if (!roadMetadata) return false;
 
@@ -262,7 +258,7 @@ class MapComponent extends Component {
         return groups.includes(gr);
       });
 
-      roadLayers.forEach(l => {
+      roadLayers.forEach((l) => {
         const visibility = mapRoads ? 'visible' : 'none';
         this.map.setLayoutProperty(l.id, 'visibility', visibility);
       });
@@ -287,7 +283,7 @@ class MapComponent extends Component {
       basemap,
       popupActions,
       onSelectBoundary,
-      onDrawComplete
+      onDrawComplete,
     } = this.props;
 
     let tipText;
@@ -327,12 +323,12 @@ class MapComponent extends Component {
             maxZoom={maxZoom}
             getCursor={({ isHovering, isDragging }) => {
               if (drawing) return 'crosshair';
-              else if (isDragging) return 'grabbing';
-              else if (isHovering) return 'pointer';
+              if (isDragging) return 'grabbing';
+              if (isHovering) return 'pointer';
               return 'grab';
             }}
           >
-            {map => (
+            {(map) => (
               <Fragment>
                 {/* POPUP */}
                 <Popup

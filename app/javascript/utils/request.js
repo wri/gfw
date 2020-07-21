@@ -1,5 +1,7 @@
 import { CancelToken, create } from 'axios';
 
+const isServer = typeof window === 'undefined';
+
 export const apiRequest = create({
   timeout: 30 * 1000,
   baseURL: process.env.GFW_API
@@ -10,7 +12,7 @@ export const apiAuthRequest = create({
   baseURL: process.env.GFW_API,
   headers: {
     'content-type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('userToken')}`
+    Authorization: `Bearer ${!isServer && localStorage.getItem('userToken')}`
   }
 });
 

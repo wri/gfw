@@ -4,30 +4,30 @@ import upperFirst from 'lodash/upperFirst';
 import {
   filterWidgetsByLocation,
   getWidgetCategories,
-  getActiveCategory
+  getActiveCategory,
 } from 'components/widgets/selectors';
 import {
   getActiveArea,
-  selectAreaLoading
+  selectAreaLoading,
 } from 'providers/areas-provider/selectors';
 
 import CATEGORIES from 'data/categories.json';
 
 // get list data
-const selectShowMap = state =>
+const selectShowMap = (state) =>
   state.location && state.location.query && !!state.location.query.showMap;
-const selectLocation = state => state.location;
-const selectAreaError = state => state.areas && state.areas.error;
-const selectLocationType = state =>
+const selectLocation = (state) => state.location;
+const selectAreaError = (state) => state.areas && state.areas.error;
+const selectLocationType = (state) =>
   state.location && state.location.payload && state.location.payload.type;
-const selectCategory = state =>
+const selectCategory = (state) =>
   (state.location && state.location.query && state.location.query.category) ||
   'summary';
-export const selectQuery = state => state.location && state.location.query;
+export const selectQuery = (state) => state.location && state.location.query;
 
 export const getEmbed = createSelector(
   [selectLocation],
-  location => location && location.routesMap[location.type].embed
+  (location) => location && location.pathname.includes('/embed')
 );
 
 export const getWidgetAnchor = createSelector(
@@ -35,7 +35,7 @@ export const getWidgetAnchor = createSelector(
   (query, widgets) => {
     const { scrollTo } = query || {};
     const hasWidget =
-      widgets && widgets.length && widgets.find(w => w.widget === scrollTo);
+      widgets && widgets.length && widgets.find((w) => w.widget === scrollTo);
 
     return hasWidget ? document.getElementById(scrollTo) : null;
   }
@@ -43,7 +43,7 @@ export const getWidgetAnchor = createSelector(
 
 export const getNoWidgetsMessage = createSelector(
   [selectCategory],
-  category => `${upperFirst(category)} data for {location} coming soon`
+  (category) => `${upperFirst(category)} data for {location} coming soon`
 );
 
 export const getLinks = createSelector(
@@ -53,11 +53,11 @@ export const getLinks = createSelector(
       return null;
     }
 
-    return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
-      category => ({
+    return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
+      (category) => ({
         label: category.label,
         category: category.value,
-        active: activeCategory === category.value
+        active: activeCategory === category.value,
       })
     );
   }
@@ -73,5 +73,5 @@ export const getDashboardsProps = createStructuredSelector({
   activeArea: getActiveArea,
   areaLoading: selectAreaLoading,
   widgets: filterWidgetsByLocation,
-  areaError: selectAreaError
+  areaError: selectAreaError,
 });

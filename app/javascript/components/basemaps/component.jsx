@@ -7,12 +7,12 @@ import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import infoIcon from 'assets/icons/info.svg';
-import closeIcon from 'assets/icons/close.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
-import boundariesIcon from 'assets/icons/boundaries.svg';
-import labelsIcon from 'assets/icons/labels.svg';
-import roadsIcon from 'assets/icons/roads.svg';
+import boundariesIcon from 'assets/icons/boundaries.svg?sprite';
+import labelsIcon from 'assets/icons/labels.svg?sprite';
+import roadsIcon from 'assets/icons/roads.svg?sprite';
 
 import './styles.scss';
 
@@ -40,7 +40,7 @@ class Basemaps extends React.PureComponent {
     roadsSelected: PropTypes.object.isRequired,
     selectRoads: PropTypes.func.isRequired,
     roads: PropTypes.array.isRequired,
-    setMapSettings: PropTypes.func
+    setMapSettings: PropTypes.func,
   };
 
   renderButtonBasemap(item) {
@@ -59,7 +59,7 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(${item.image})`
+            backgroundImage: `url(${item.image})`,
           }}
         />
         <p className="basemaps-list-item-name">{item.label}</p>
@@ -73,7 +73,7 @@ class Basemaps extends React.PureComponent {
       activeBasemap,
       landsatYears,
       basemaps,
-      isDesktop
+      isDesktop,
     } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
     const basemap = basemaps[item.value]
@@ -86,7 +86,7 @@ class Basemaps extends React.PureComponent {
         onClick={() => {
           selectBasemap({
             value: 'landsat',
-            year: basemap.defaultYear
+            year: basemap.defaultYear,
           });
           if (!isDesktop) {
             this.setState({ showBasemaps: !this.state.showBasemaps });
@@ -96,12 +96,12 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(${item.image})`
+            backgroundImage: `url(${item.image})`,
           }}
         />
         <span
           className="basemaps-list-item-name"
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           {item.label}
           <div className="basemaps-list-item-selectors">
@@ -110,11 +110,11 @@ class Basemaps extends React.PureComponent {
               theme="theme-dropdown-native-inline"
               value={year}
               options={landsatYears}
-              onChange={value => {
+              onChange={(value) => {
                 const selectedYear = parseInt(value, 10);
                 selectBasemap({
                   value: 'landsat',
-                  year: selectedYear
+                  year: selectedYear,
                 });
                 if (!isDesktop) {
                   this.setState({ showBasemaps: !this.state.showBasemaps });
@@ -141,7 +141,7 @@ class Basemaps extends React.PureComponent {
         )}
         <div className="basemap-list-scroll-wrapper">
           <ul className="basemaps-list">
-            {Object.values(basemaps).map(item => {
+            {Object.values(basemaps).map((item) => {
               let basemapButton = this.renderButtonBasemap(item);
               if (item.value === 'landsat') {
                 basemapButton = this.renderLandsatBasemap(item);
@@ -151,7 +151,7 @@ class Basemaps extends React.PureComponent {
                 <li
                   key={item.value}
                   className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.value === item.value
+                    '-active': activeBasemap.value === item.value,
                   })}
                 >
                   {basemapButton}
@@ -179,7 +179,7 @@ class Basemaps extends React.PureComponent {
       setModalMetaSettings,
       roadsSelected,
       selectRoads,
-      roads
+      roads,
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -215,8 +215,7 @@ class Basemaps extends React.PureComponent {
                   theme="theme-button-dark-round"
                   background={`url(${activeBasemap.image})`}
                   onClick={() =>
-                    this.setState({ showBasemaps: !this.state.showBasemaps })
-                  }
+                    this.setState({ showBasemaps: !this.state.showBasemaps })}
                 >
                   <span className="value">
                     {activeBasemap.label}
@@ -229,7 +228,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
+                  'theme-dropdown-dark-squared': isDesktop,
                 })}
                 value={selectedBoundaries}
                 options={boundaries}
@@ -241,7 +240,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
+                  'theme-dropdown-dark-squared': isDesktop,
                 })}
                 value={labelSelected}
                 options={labels}
@@ -253,7 +252,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
+                  'theme-dropdown-dark-squared': isDesktop,
                 })}
                 className="basemaps-roads"
                 value={roadsSelected}

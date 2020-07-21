@@ -1,15 +1,26 @@
-import { createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import useRouter from 'utils/router';
 
-export const setModalGFWFiresOpen = createThunkAction(
-  'setModalGFWFiresOpen',
-  isOpen => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'gfwfires',
-        change: isOpen,
-        state
-      })
-    );
-  }
-);
+export const setModalFiresOpen = (open) => {
+  const { query, pathname, pushQuery } = useRouter();
+
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      gfwfires: open || null,
+    },
+  });
+};
+
+export const setContactUsOpen = () => {
+  const { query, pathname, pushQuery } = useRouter();
+
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      gfwfires: null,
+      contactUs: true,
+    },
+  });
+};

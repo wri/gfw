@@ -9,8 +9,8 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Tip from 'components/ui/tip';
 
-import infoIcon from 'assets/icons/info.svg';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
 import Selector from './components/selector';
 import Menu from './components/menu';
@@ -43,7 +43,7 @@ class Dropdown extends PureComponent {
       PropTypes.object,
       PropTypes.string,
       PropTypes.number,
-      PropTypes.array
+      PropTypes.array,
     ]),
     placeholder: PropTypes.string,
     searchable: PropTypes.bool,
@@ -71,14 +71,14 @@ class Dropdown extends PureComponent {
       PropTypes.string,
       PropTypes.object,
       PropTypes.array,
-      PropTypes.number
+      PropTypes.number,
     ]),
     activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     highlightedIndex: PropTypes.number,
     native: PropTypes.bool,
     multiple: PropTypes.bool,
     onChange: PropTypes.func,
-    selectorIcon: PropTypes.object
+    selectorIcon: PropTypes.func,
   };
 
   stateReducer = (state, changes) => {
@@ -88,7 +88,7 @@ class Dropdown extends PureComponent {
           ...changes,
           highlightedIndex: null,
           isOpen: false,
-          selectedItem: { ...changes.selectedItem }
+          selectedItem: { ...changes.selectedItem },
         };
       }
       default:
@@ -127,29 +127,29 @@ class Dropdown extends PureComponent {
       value,
       onChange,
       options,
-      selectorIcon
+      selectorIcon,
     } = this.props;
 
     const dropdown = (
       <Downshift
-        itemToString={i => i && i.label}
+        itemToString={(i) => i && i.label}
         onStateChange={handleStateChange}
         onOuterClick={checkModalClosing}
         stateReducer={this.stateReducer}
         {...this.props}
       >
         {({ getInputProps, getItemProps, getRootProps }) =>
-          (native ? (
+          native ? (
             <div className={cx('select-wrapper', { multiple })}>
               <select
                 value={(value && (value.value || value)) || ''}
-                onChange={e => onChange(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
                 multiple={multiple}
               >
                 {options &&
                   !!options.length &&
                   options.map(
-                    o =>
+                    (o) =>
                       o && (
                         <option key={`${o.value}-${o.label}`} value={o.value}>
                           {o.label}
@@ -187,8 +187,7 @@ class Dropdown extends PureComponent {
                 handleSelectGroup={handleSelectGroup}
               />
             </Selector>
-          ))
-        }
+          )}
       </Downshift>
     );
 

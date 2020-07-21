@@ -14,19 +14,17 @@
     position: relative;
     min-height: calc(100vh - 56px - 583px);
     z-index: 0;
+    margin-top: rem(56px);
 
     @media screen and (min-width: $screen-m) {
       min-height: calc(100vh - 56px - 384px);
+      margin-top: 0;
     }
 
     .page-loader {
       position: relative;
       z-index: 1;
       min-height: 60vh;
-    }
-
-    &.mobile {
-      margin-top: rem(56px);
     }
   }
 
@@ -41,7 +39,6 @@
       top: 0;
 
       @media screen and (min-width: $screen-m) {
-        width: calc(100% - 76px);
         right: 0;
         min-height: 100%;
       }
@@ -57,59 +54,6 @@
 
     .page-logo {
       display: block;
-    }
-  }
-
-  &.-embed {
-    .page {
-      position: relative;
-      width: 100%;
-      min-height: rem(400px);
-
-      &.mobile {
-        margin-top: 0;
-      }
-    }
-
-    .embed-footer {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      height: rem(60px);
-      background: $white;
-      border-top: solid 1px $border;
-      z-index: 3;
-      position: relative;
-
-      p {
-        opacity: 0.7;
-      }
-    }
-
-    .embed-btn {
-      width: rem(160px);
-      margin-left: rem(10px);
-      margin-right: rem(10px);
-    }
-
-    &.-full-screen {
-      .page {
-        position: fixed;
-        min-height: calc(100% - 60px);
-      }
-
-      .embed-footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
-    }
-
-    &.-trase {
-      .c-loader {
-        display: none;
-      }
     }
   }
 }

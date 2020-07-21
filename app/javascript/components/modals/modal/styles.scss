@@ -4,6 +4,14 @@
   overflow: hidden;
 }
 
+.ReactModal__Overlay {
+  padding: 10px;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 40px 10px;
+  }
+}
+
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   /* IE10+ CSS */
   .ReactModal__Overlay {

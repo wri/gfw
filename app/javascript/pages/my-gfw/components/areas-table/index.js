@@ -10,5 +10,5 @@ import Component from './component';
 export default connect(getAreasTableProps, {
   setAreaOfInterestModalSettings,
   viewArea,
-  setShareModal
+  setShareModal,
 })(Component);

@@ -19,13 +19,12 @@ function latLongToVector3(lat, lon, radius, height) {
 
 const Control = orbitControl(THREE);
 
+const isServer = typeof window === 'undefined';
+
 class GlobeComponent extends React.Component {
   constructor() {
     super();
     this.markers = [];
-    this.state = {
-      globeSize: 0
-    };
   }
 
   componentDidMount() {
@@ -43,7 +42,7 @@ class GlobeComponent extends React.Component {
     }
   }
 
-  buildGlobe() {
+  buildGlobe = () => {
     const width = this.container.clientWidth;
     const height = this.container.clientWidth;
 
@@ -59,7 +58,7 @@ class GlobeComponent extends React.Component {
     this.camera.position.z = far / (2 * 0.9);
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(
-      window.devicePixelRatio ? window.devicePixelRatio : 1
+      !isServer && window.devicePixelRatio ? window.devicePixelRatio : 1
     );
 
     this.el.appendChild(this.renderer.domElement);
@@ -116,7 +115,7 @@ class GlobeComponent extends React.Component {
     );
   }
 
-  addControls() {
+  addControls = () => {
     this.control = new Control(this.camera, this.renderer.domElement);
     this.control.enableDamping = false;
     this.control.dampingFactor = 0;
@@ -129,7 +128,7 @@ class GlobeComponent extends React.Component {
     this.control.maxPolarAngle = Math.PI / 2;
   }
 
-  addLights() {
+  addLights = () => {
     const ambientLight = new THREE.AmbientLight(0xaaaaaa);
     this.directionalLight = new THREE.DirectionalLight(0x9aaab8, 1);
     this.directionalLight.position.set(this.props.width, this.props.height, 0);
@@ -137,7 +136,7 @@ class GlobeComponent extends React.Component {
     this.camera.add(this.directionalLight);
   }
 
-  addGlobe() {
+  addGlobe = () => {
     const material = new THREE.MeshPhongMaterial({
       map: this.imageLoader.load(this.props.earthImage),
       bumpScale: 4
@@ -149,11 +148,11 @@ class GlobeComponent extends React.Component {
     this.scene.add(earth);
   }
 
-  handleClick(data) {
+  handleClick = (data) => {
     this.props.onClick(data);
   }
 
-  getUserIcon(isFellow) {
+  getUserIcon = (isFellow) => {
     const texture = new THREE.TextureLoader().load(
       isFellow ? markerFellow : markerGrantee
     );
@@ -165,7 +164,7 @@ class GlobeComponent extends React.Component {
     });
   }
 
-  getTextLabel(text) {
+  getTextLabel = (text) => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     const centerX = canvas.width / 2;
@@ -281,7 +280,7 @@ class GlobeComponent extends React.Component {
 }
 
 GlobeComponent.defaultProps = {
-  width: window.innerWidth,
+  width: !isServer && window.innerWidth,
   height: 500,
   radius: 205,
   autorotate: true,

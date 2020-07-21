@@ -18,7 +18,7 @@ class DataAnalysisMenu extends PureComponent {
     setMainMapSettings: PropTypes.func,
     setMapSettings: PropTypes.func,
     clearAnalysisError: PropTypes.func,
-    embed: PropTypes.bool
+    embed: PropTypes.bool,
   };
 
   getLinks = () => {
@@ -28,21 +28,21 @@ class DataAnalysisMenu extends PureComponent {
       setMainMapSettings,
       setMapSettings,
       showAnalysis,
-      hidden
+      hidden,
     } = this.props;
 
-    return links.map(l => ({
+    return links.map((l) => ({
       ...l,
       onClick: () => {
         setMainMapSettings({
           showAnalysis: l.showAnalysis,
           hideLegend:
             (showAnalysis && l.active && !hidden) ||
-            (!showAnalysis && l.active && !hidden)
+            (!showAnalysis && l.active && !hidden),
         });
         setMapSettings({ drawing: false });
         clearAnalysisError();
-      }
+      },
     }));
   };
 
@@ -72,9 +72,5 @@ class DataAnalysisMenu extends PureComponent {
     );
   }
 }
-
-DataAnalysisMenu.defaultProps = {
-  tab: 'data'
-};
 
 export default DataAnalysisMenu;

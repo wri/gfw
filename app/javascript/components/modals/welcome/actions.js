@@ -1,47 +1,42 @@
 import { createAction, createThunkAction } from 'utils/redux';
 
+import { setMenuSettings } from 'components/map-menu/actions';
+import { setAnalysisSettings } from 'components/analysis/actions';
+
 export const setModalWelcomeOpen = createAction('setModalWelcomeOpen');
+
+const isServer = typeof window === 'undefined';
 
 export const setModalWelcome = createThunkAction(
   'setModalWelcome',
-  () => dispatch => {
-    localStorage.setItem('welcomeModalHidden', true);
+  () => (dispatch) => {
+    if (!isServer) {
+      localStorage.setItem('welcomeModalHidden', true);
+    }
     dispatch(setModalWelcomeOpen(false));
   }
 );
 
 export const setExploreView = createThunkAction(
   'setExploreView',
-  () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
+  () => (dispatch) => {
     dispatch(setModalWelcome(false));
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        menu: {
-          menuSection: 'explore'
-        }
-      }
-    });
+    dispatch(
+      setMenuSettings({
+        menuSection: 'explore',
+      })
+    );
   }
 );
 
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
-  () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
+  () => (dispatch) => {
     dispatch(setModalWelcome(false));
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        analysis: {
-          showAnalysis: true
-        }
-      }
-    });
+    dispatch(
+      setAnalysisSettings({
+        showAnalysis: true,
+      })
+    );
   }
 );

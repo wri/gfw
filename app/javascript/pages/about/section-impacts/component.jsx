@@ -7,7 +7,12 @@ import Card from 'components/ui/card';
 import './styles.scss';
 
 class SectionImpacts extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    data: PropTypes.array,
+    awards: PropTypes.array.isRequired,
+    fetchImpactProjects: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     const { fetchImpactProjects } = this.props;
     fetchImpactProjects();
@@ -26,7 +31,7 @@ class SectionImpacts extends PureComponent {
           <div className="column small-12">
             {data && (
               <Carousel>
-                {data.map(c => (
+                {data.map((c) => (
                   <div key={c.id}>
                     <Card
                       key={c.title}
@@ -36,9 +41,9 @@ class SectionImpacts extends PureComponent {
                           {
                             className: 'read-more',
                             text: 'READ MORE',
-                            extLink: c.extLink
-                          }
-                        ]
+                            extLink: c.extLink,
+                          },
+                        ],
                       }}
                     />
                   </div>
@@ -51,12 +56,13 @@ class SectionImpacts extends PureComponent {
           <div className="column small-12">
             <h3>Awards</h3>
           </div>
-          {awards.map(l => (
+          {awards.map((l) => (
             <a
               key={l.title}
               className="columns small-6 medium-4 large-3"
               href={l.link}
               target="_blank"
+              rel="noopener noreferrer"
             >
               <img alt={l.title} src={l.img} />
             </a>
@@ -66,11 +72,5 @@ class SectionImpacts extends PureComponent {
     );
   }
 }
-
-SectionImpacts.propTypes = {
-  data: PropTypes.array,
-  awards: PropTypes.array.isRequired,
-  fetchImpactProjects: PropTypes.func.isRequired
-};
 
 export default SectionImpacts;

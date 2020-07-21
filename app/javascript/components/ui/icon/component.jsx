@@ -10,12 +10,16 @@ const Icon = ({ icon, className }) => (
 );
 
 Icon.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  className: PropTypes.string
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  className: PropTypes.string,
 };
 
 Icon.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default Icon;

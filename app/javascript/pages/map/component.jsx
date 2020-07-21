@@ -1,8 +1,7 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
-import MediaQuery from 'react-responsive';
+import { Media } from 'utils/responsive';
 import { Tooltip } from 'react-tippy';
 
 import CountryDataProvider from 'providers/country-data-provider';
@@ -23,6 +22,7 @@ import MapPrompts from 'components/prompts/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
 
+import MapMenu from 'components/map-menu';
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
 
@@ -40,10 +40,10 @@ class MainMapComponent extends PureComponent {
     recentActive: PropTypes.bool,
     tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     showTooltip: PropTypes.bool,
-    setMainMapAnalysisView: PropTypes.func
+    setMainMapAnalysisView: PropTypes.func,
   };
 
-  renderInfoTooltip = string => (
+  renderInfoTooltip = (string) => (
     <div>
       <p className="tooltip-info">{string}</p>
     </div>
@@ -61,88 +61,96 @@ class MainMapComponent extends PureComponent {
       recentActive,
       handleClickAnalysis,
       setMainMapAnalysisView,
-      onDrawComplete
+      onDrawComplete,
     } = this.props;
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div className={cx('c-map-main', { embed })}>
-            <div
-              className="main-map-container"
-              role="button"
-              tabIndex={0}
-              onClick={handleClickMap}
-              onMouseOver={() =>
-                oneClickAnalysis &&
-                handleShowTooltip(true, 'Click shape to analyze.')
-              }
-              onMouseOut={() => handleShowTooltip(false, '')}
-            >
-              <Tooltip
-                className="map-tooltip"
-                theme="tip"
-                html={
-                  <Tip
-                    className="map-hover-tooltip"
-                    text={this.renderInfoTooltip(tooltipData)}
-                  />
-                }
-                position="top"
-                followCursor
-                hideOnClick
-                animateFill={false}
-                open={showTooltip}
-                disabled={!isDesktop}
-              >
-                <Map
-                  className="main-map"
-                  onSelectBoundary={setMainMapAnalysisView}
-                  onDrawComplete={onDrawComplete}
-                  popupActions={[
-                    {
-                      label: 'Analyze',
-                      action: handleClickAnalysis
-                    }
-                  ]}
-                />
-              </Tooltip>
-            </div>
-            {isDesktop &&
-              !hidePanels && (
-              <DataAnalysisMenu
-                className="data-analysis-menu"
-                embed={embed}
+      <div className={cx('c-map-main', { embed })}>
+        <Media greaterThanOrEqual="md">
+          <MapMenu className="map-menu" embed={embed} isDesktop />
+        </Media>
+        <Media lessThan="md">
+          <MapMenu className="map-menu" embed={embed} />
+        </Media>
+        <div
+          className="main-map-container"
+          role="button"
+          tabIndex={0}
+          onClick={handleClickMap}
+          onMouseOver={() =>
+            oneClickAnalysis &&
+            handleShowTooltip(true, 'Click shape to analyze.')}
+          onFocus={() =>
+            oneClickAnalysis &&
+            handleShowTooltip(true, 'Click shape to analyze.')}
+          onMouseOut={() => handleShowTooltip(false, '')}
+          onBlur={() => handleShowTooltip(false, '')}
+        >
+          <Tooltip
+            className="map-tooltip"
+            theme="tip"
+            html={(
+              <Tip
+                className="map-hover-tooltip"
+                text={this.renderInfoTooltip(tooltipData)}
               />
             )}
-            {!embed && (
-              <MapControlButtons
-                className="main-map-controls"
-                isDesktop={isDesktop}
-              />
-            )}
-            <RecentImagery active={recentActive} />
-            {!embed &&
-              isDesktop && (
-              <Fragment>
+            position="top"
+            followCursor
+            hideOnClick
+            animateFill={false}
+            open={showTooltip}
+          >
+            <Map
+              className="main-map"
+              onSelectBoundary={setMainMapAnalysisView}
+              onDrawComplete={onDrawComplete}
+              popupActions={[
+                {
+                  label: 'Analyze',
+                  action: handleClickAnalysis,
+                },
+              ]}
+            />
+          </Tooltip>
+        </div>
+        {!hidePanels && (
+          <Media greaterThanOrEqual="md">
+            <DataAnalysisMenu className="data-analysis-menu" embed={embed} />
+          </Media>
+        )}
+        <RecentImagery active={recentActive} />
+        {!embed && (
+          <>
+            <Media greaterThanOrEqual="md">
+              <>
                 {!embed && <MapPrompts />}
                 <ModalWelcome />
-              </Fragment>
-            )}
-            <Share />
-            <ModalMeta />
-            <ModalSource />
-            <CountryDataProvider />
-            <WhitelistsProvider />
-            <DatasetsProvider />
-            <LatestProvider />
-            <GeostoreProvider />
-            <GeodescriberProvider />
-            <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
-            <AreasProvider />
-          </div>
+                <MapControlButtons className="main-map-controls" isDesktop />
+              </>
+            </Media>
+            <Media lessThan="md">
+              <>
+                <MapControlButtons
+                  className="main-map-controls"
+                  isDesktop={false}
+                />
+              </>
+            </Media>
+          </>
         )}
-      </MediaQuery>
+        <Share />
+        <ModalMeta />
+        <ModalSource />
+        <CountryDataProvider />
+        <WhitelistsProvider />
+        <DatasetsProvider />
+        <LatestProvider />
+        <GeostoreProvider />
+        <GeodescriberProvider />
+        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+        <AreasProvider />
+      </div>
     );
   }
 }

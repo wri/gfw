@@ -5,29 +5,33 @@ export const initialState = {
   error: false,
   closing: false,
   data: {},
-  settings: {
-    metakey: ''
-  }
+  metakey: '',
 };
 
 const setModalMetaLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
+});
+
+const setModalMetaSettings = (state, { payload }) => ({
+  ...state,
+  metakey: payload,
 });
 
 const setModalMetaData = (state, { payload }) => ({
   ...state,
   data: payload,
-  loading: false
+  loading: false,
 });
 
 const setModalMetaClosing = (state, { payload }) => ({
   ...initialState,
-  closing: payload
+  closing: payload,
 });
 
 export default {
+  [actions.setModalMetaSettings]: setModalMetaSettings,
   [actions.setModalMetaData]: setModalMetaData,
   [actions.setModalMetaClosing]: setModalMetaClosing,
-  [actions.setModalMetaLoading]: setModalMetaLoading
+  [actions.setModalMetaLoading]: setModalMetaLoading,
 };

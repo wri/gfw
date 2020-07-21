@@ -19,10 +19,24 @@
   }
 
   .my-gfw-link {
-    margin-top: rem(10px);
-
     &.active {
       color: $green-gfw;
+
+      &::after {
+        background-color: transparent !important;
+      }
+    }
+
+    button {
+      text-transform: uppercase;
+      width: 100%;
+      padding: rem(15px) 0;
+      display: flex;
+      color: inherit;
+
+      @media screen and (min-width: $screen-m) {
+        padding: rem(15px) rem(20px);
+      }
     }
   }
 
@@ -99,7 +113,8 @@
       > li {
         margin-bottom: rem(20px);
 
-        a {
+        a,
+        button {
           display: flex;
           align-items: center;
           font-size: rem(12px);
@@ -114,6 +129,7 @@
 
           &:hover {
             color: darken($slate, 30%);
+            cursor: pointer;
           }
         }
       }

@@ -1,8 +1,12 @@
 import { track } from 'app/analytics';
 import * as actions from './actions';
 
-const showMapPrompts = JSON.parse(localStorage.getItem('showPrompts'));
-const mapPromptsViewed = JSON.parse(localStorage.getItem('mapPromptsViewed'));
+const isServer = typeof window === 'undefined';
+
+const showMapPrompts =
+  !isServer && JSON.parse(localStorage.getItem('showPrompts'));
+const mapPromptsViewed =
+  !isServer && JSON.parse(localStorage.getItem('mapPromptsViewed'));
 
 export const initialState = {
   showPrompts: showMapPrompts === null || showMapPrompts,
@@ -10,19 +14,21 @@ export const initialState = {
   settings: {
     open: false,
     stepIndex: 0,
-    stepsKey: ''
-  }
+    stepsKey: '',
+  },
 };
 
 const setShowMapPrompts = (state, { payload }) => {
-  localStorage.setItem('showPrompts', payload);
+  if (!isServer) {
+    localStorage.setItem('showPrompts', payload);
+  }
   track('userPromptShowHide', {
-    label: payload ? 'User enables prompts' : 'User hides prompts'
+    label: payload ? 'User enables prompts' : 'User hides prompts',
   });
 
   return {
     ...state,
-    showPrompts: payload
+    showPrompts: payload,
   };
 };
 
@@ -32,15 +38,26 @@ const setShowPromptsViewed = (state, { payload }) => {
     promptsViewed && promptsViewed.length && promptsViewed.includes(payload)
       ? promptsViewed
       : promptsViewed.concat([payload]);
-  localStorage.setItem('mapPromptsViewed', JSON.stringify(newPromptsViewed));
+  if (!isServer) {
+    localStorage.setItem('mapPromptsViewed', JSON.stringify(newPromptsViewed));
+  }
 
   return {
     ...state,
-    promptsViewed: newPromptsViewed
+    promptsViewed: newPromptsViewed,
   };
 };
 
+const setMapPrompts = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload,
+  },
+});
+
 export default {
   [actions.setShowMapPrompts]: setShowMapPrompts,
-  [actions.setShowPromptsViewed]: setShowPromptsViewed
+  [actions.setMapPrompts]: setMapPrompts,
+  [actions.setShowPromptsViewed]: setShowPromptsViewed,
 };

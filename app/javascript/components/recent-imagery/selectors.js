@@ -9,9 +9,8 @@ import {
   getActiveDatasetsFromState
 } from 'components/map/selectors';
 
-import { initialState } from './reducers';
-
 const getData = state => state.recentImagery && state.recentImagery.data;
+export const getRecentImagerySettings = state => state.recentImagery?.settings || {};
 export const getRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
 export const getLoadingMoreTiles = state =>
@@ -21,20 +20,8 @@ const getLocation = state => state.location && state.location.query;
 const getDataStatus = state =>
   state.recentImagery && state.recentImagery.dataStatus;
 const getDatasets = state => state.datasets && state.datasets.data;
-const getRecentUrlState = state =>
-  state.location && state.location.query && state.location.query.recentImagery;
 
 export const getActive = (state, { active }) => active;
-
-export const getRecentImagerySettings = createSelector(
-  [getRecentUrlState],
-  urlState => ({
-    ...(initialState && {
-      ...initialState.settings
-    }),
-    ...urlState
-  })
-);
 
 export const getPosition = createSelector([getMapViewport], viewport => ({
   lat: viewport.latitude,

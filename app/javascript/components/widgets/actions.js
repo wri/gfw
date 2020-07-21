@@ -1,93 +1,57 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import { track } from 'app/analytics';
 
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/analysis-cached';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');
+export const setWidgetsCategory = createAction('setWidgetsCategory');
+export const setWidgetSettingsByKey = createAction('setWidgetSettingsByKey');
+export const setWidgetsSettings = createAction('setWidgetsSettings');
+export const setActiveWidget = createAction('setActiveWidget');
+export const setShowMap = createAction('setShowMap');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
 
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
-  () => dispatch => {
+  () => (dispatch) => {
     dispatch(setWidgetsLoading({ loading: true, error: false }));
     getNonGlobalDatasets()
-      .then(response => {
+      .then((response) => {
         const { rows } = response.data;
         dispatch(
           setWidgetsData({
-            nonGlobalDatasets: rows && rows[0]
+            nonGlobalDatasets: rows && rows[0],
           })
         );
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(setWidgetsLoading({ error: true, loading: false }));
-        console.info(error);
       });
   }
 );
 
 export const setWidgetSettings = createThunkAction(
   'setWidgetSettings',
-  ({ change, widget }) => (dispatch, state) => {
+  ({ change, widget }) => (dispatch) => {
     dispatch(
-      setComponentStateToUrl({
-        key: 'widget',
-        subKey: widget,
+      setWidgetSettingsByKey({
+        key: widget,
         change,
-        state
       })
     );
     track('changeWidgetSettings', {
-      label: `${widget}`
+      label: `${widget}`,
     });
     if (!change.interaction) {
       dispatch(
         setDashboardPromptsSettings({
           open: true,
           stepIndex: 0,
-          stepsKey: 'shareWidget'
+          stepsKey: 'shareWidget',
         })
       );
     }
-  }
-);
-
-export const setActiveWidget = createThunkAction(
-  'setActiveWidget',
-  widget => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        widget,
-        showMap: true
-      }
-    });
-  }
-);
-
-export const goToWidgetLocation = createThunkAction(
-  'goToWidgetLocation',
-  params => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
-    dispatch({
-      type,
-      payload: {
-        type: payload.type === 'global' ? 'country' : payload.type,
-        ...params
-      },
-      query: {
-        ...query,
-        map: {
-          ...(query && query.map),
-          canBound: true
-        }
-      }
-    });
   }
 );

@@ -1,2 +1,0 @@
-class BrowserSupportController < ApplicationController
-end

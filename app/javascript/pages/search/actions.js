@@ -1,15 +1,15 @@
 import { createThunkAction, createAction } from 'utils/redux';
 import request from 'utils/request';
-import { SEARCH } from 'router';
 
 export const setSearchData = createAction('setSearchData');
+export const setSearchQuery = createAction('setSearchQuery');
 export const setSearchLoading = createAction('setSearchLoading');
 
 export const getSearch = createThunkAction(
   'getSearch',
   ({ query, page }) => (dispatch, getState) => {
     const { search } = getState() || {};
-    dispatch(setQueryToUrl({ query }));
+    dispatch(setSearchQuery(query));
     if (query && search && !search.loading) {
       dispatch(setSearchLoading(true));
       request
@@ -19,32 +19,16 @@ export const getSearch = createThunkAction(
             cx: process.env.GOOGLE_CUSTOM_SEARCH_CX,
             q: query,
             start: page || 1,
-            filter: 0
-          }
+            filter: 0,
+          },
         })
-        .then(response => {
+        .then((response) => {
           const { items } = response.data || {};
           dispatch(setSearchData(items || []));
         })
-        .catch(error => {
+        .catch(() => {
           dispatch(setSearchLoading(false));
-          console.error(error);
         });
     }
-  }
-);
-
-export const setQueryToUrl = createThunkAction(
-  'setQueryToUrl',
-  ({ query }) => (dispatch, getState) => {
-    const { location } = getState();
-    const { query: oldQuery } = location || {};
-    dispatch({
-      type: SEARCH,
-      query: {
-        ...oldQuery,
-        query
-      }
-    });
   }
 );

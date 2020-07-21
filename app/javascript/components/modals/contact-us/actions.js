@@ -1,15 +1,13 @@
-import { createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import useRouter from 'utils/router';
 
-export const setModalContactUsOpen = createThunkAction(
-  'setModalContactUsOpen',
-  isOpen => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'contactUs',
-        change: isOpen,
-        state
-      })
-    );
-  }
-);
+export const setModalContactUsOpen = (open) => {
+  const { query, pathname, pushQuery } = useRouter();
+
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      contactUs: open || null,
+    },
+  });
+};

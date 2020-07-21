@@ -1,22 +1,71 @@
 import queryString from 'query-string';
-import omit from 'lodash/omit';
 import oldLayers from 'data/v2-v3-datasets-layers.json';
 import basemaps from 'components/map/basemaps';
 
-const oldLayersAndDatasets = oldLayers.reduce((obj, item) => ({
-  ...obj,
-  ...item.v2_dataset_id && {
-    [item.v2_dataset_id]: item.v3_dataset_id
-  },
-  ...item.v2_layer_id && {
-    [item.v2_layer_id]: item.v3_layer_id
-  }
-}), {});
+const oldLayersAndDatasets = oldLayers.reduce(
+  (obj, item) => ({
+    ...obj,
+    ...(item.v2_dataset_id && {
+      [item.v2_dataset_id]: item.v3_dataset_id,
+    }),
+    ...(item.v2_layer_id && {
+      [item.v2_layer_id]: item.v3_layer_id,
+    }),
+  }),
+  {}
+);
 
-export const decodeUrlForState = url => {
+export const decodeParamsForState = (params) => {
+  const paramsParsed = {};
+  Object.keys(params).forEach((key) => {
+    try {
+      paramsParsed[key] = JSON.parse(
+        Buffer.from(params[key], 'base64').toString('binary')
+      );
+    } catch (err) {
+      try {
+        paramsParsed[key] = JSON.parse(params[key]);
+      } catch (error) {
+        paramsParsed[key] = params[key];
+      }
+    }
+  });
+
+  if (paramsParsed.map) {
+    paramsParsed.map = {
+      ...paramsParsed.map,
+      ...(paramsParsed.map.datasets && {
+        datasets:
+          paramsParsed.map &&
+          paramsParsed.map.datasets.reduce(
+            (arr, dataset) => [
+              ...arr,
+              {
+                ...dataset,
+                dataset:
+                  oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
+                layers: dataset.layers.reduce(
+                  (lArr, layerId) => [
+                    ...lArr,
+                    oldLayersAndDatasets[layerId] || layerId,
+                  ],
+                  []
+                ),
+              },
+            ],
+            []
+          ),
+      }),
+    };
+  }
+
+  return paramsParsed;
+};
+
+export const decodeUrlForState = (url) => {
   const paramsParsed = {};
   const params = queryString.parse(url);
-  Object.keys(params).forEach(key => {
+  Object.keys(params).forEach((key) => {
     try {
       paramsParsed[key] = JSON.parse(atob(params[key]));
     } catch (err) {
@@ -24,67 +73,65 @@ export const decodeUrlForState = url => {
     }
   });
 
-  if (paramsParsed.map && paramsParsed.map.basemap && paramsParsed.map.basemap.value === 'planet') {
+  if (
+    paramsParsed.map &&
+    paramsParsed.map.basemap &&
+    paramsParsed.map.basemap.value === 'planet'
+  ) {
     paramsParsed.planetNotice = true;
   }
 
   if (paramsParsed.map) {
     paramsParsed.map = {
       ...paramsParsed.map,
-      ...paramsParsed.map.datasets && {
-        datasets: paramsParsed.map && paramsParsed.map.datasets.reduce((arr, dataset) => [...arr, {
-          ...dataset,
-          dataset: oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
-          layers: dataset.layers.reduce((lArr, layerId) => [...lArr, oldLayersAndDatasets[layerId] || layerId], [])
-        }], [])
-      },
-      ...paramsParsed.map.basemap && paramsParsed.map.basemap.value === 'planet' && {
-        basemap: {
-          value: 'landsat',
-          year: basemaps.landsat.availableYears.includes(paramsParsed.map.basemap.planetYear) ? paramsParsed.map.basemap.planetYear : basemaps.landsat.defaultYear
-        }
-      }
+      ...(paramsParsed.map.datasets && {
+        datasets:
+          paramsParsed.map &&
+          paramsParsed.map.datasets.reduce(
+            (arr, dataset) => [
+              ...arr,
+              {
+                ...dataset,
+                dataset:
+                  oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
+                layers: dataset.layers.reduce(
+                  (lArr, layerId) => [
+                    ...lArr,
+                    oldLayersAndDatasets[layerId] || layerId,
+                  ],
+                  []
+                ),
+              },
+            ],
+            []
+          ),
+      }),
+      ...(paramsParsed.map.basemap &&
+        paramsParsed.map.basemap.value === 'planet' && {
+          basemap: {
+            value: 'landsat',
+            year: basemaps.landsat.availableYears.includes(
+              paramsParsed.map.basemap.planetYear
+            )
+              ? paramsParsed.map.basemap.planetYear
+              : basemaps.landsat.defaultYear,
+          },
+        }),
     };
   }
 
   return paramsParsed;
 };
 
-export const encodeStateForUrl = params => {
+export const encodeStateForUrl = (params, options) => {
   const paramsParsed = {};
-  Object.keys(params).forEach(key => {
-    if (typeof params[key] === 'object') {
+  Object.keys(params).forEach((key) => {
+    if (params[key] && typeof params[key] === 'object') {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
     } else {
       paramsParsed[key] = params[key];
     }
   });
-  return queryString.stringify(paramsParsed);
-};
 
-export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
-  const { location: { query, payload, type } } = state();
-  let params = change;
-  if (query && query[subKey || key] && !!change && typeof change === 'object') {
-    params = {
-      ...query[subKey || key],
-      ...change
-    };
-  }
-
-  // if a false value is sent we should remove the key from the url
-  const cleanLocationQuery =
-    !change && query ? omit(query, [subKey || key]) : query;
-
-  return {
-    key,
-    type,
-    payload,
-    query: {
-      ...cleanLocationQuery,
-      ...(params && {
-        [subKey || key]: params
-      })
-    }
-  };
+  return queryString.stringify(paramsParsed, options);
 };

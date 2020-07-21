@@ -8,37 +8,46 @@ export const initialState = {
   data: {},
   location: {},
   settings: {
-    showDraw: false
-  }
+    showDraw: false,
+  },
 };
 
 const setAnalysisData = (state, { payload }) => ({
   ...state,
   data: payload.responses,
   location: payload.location,
-  loading: false
+  loading: false,
+});
+
+const setAnalysisSettings = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload,
+  },
 });
 
 const setAnalysisLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
-const clearAnalysisError = state => ({
+const clearAnalysisError = (state) => ({
   ...state,
   error: '',
-  errorMessage: ''
+  errorMessage: '',
 });
 
-const clearAnalysisData = state => ({
+const clearAnalysisData = (state) => ({
   ...state,
   data: {},
-  location: {}
+  location: {},
 });
 
 export default {
   [actions.setAnalysisData]: setAnalysisData,
+  [actions.setAnalysisSettings]: setAnalysisSettings,
   [actions.setAnalysisLoading]: setAnalysisLoading,
   [actions.clearAnalysisError]: clearAnalysisError,
-  [actions.clearAnalysisData]: clearAnalysisData
+  [actions.clearAnalysisData]: clearAnalysisData,
 };

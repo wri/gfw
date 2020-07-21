@@ -5,20 +5,24 @@ import cx from 'classnames';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import satelliteDetailed from 'assets/icons/satellite-detailed.svg';
+import satelliteDetailed from 'assets/icons/satellite-detailed.svg?sprite';
 
 import './styles.scss';
+
+const isServer = typeof window === 'undefined';
 
 class PendingDashboardMessage extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     areaId: PropTypes.string,
-    isUserDashboard: PropTypes.bool
+    isUserDashboard: PropTypes.bool,
   };
 
   state = {
     visible: true,
-    hiddenAreas: JSON.parse(localStorage.getItem('hiddenPendingAreas')) || []
+    hiddenAreas:
+      (!isServer && JSON.parse(localStorage.getItem('hiddenPendingAreas'))) ||
+      [],
   };
 
   handleHidePanel = () => {
@@ -26,12 +30,14 @@ class PendingDashboardMessage extends PureComponent {
 
     this.setState({ visible: false });
 
-    const hiddenAreaIds =
-      JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
-    localStorage.setItem(
-      'hiddenPendingAreas',
-      JSON.stringify([...hiddenAreaIds, areaId])
-    );
+    if (!isServer) {
+      const hiddenAreaIds =
+        JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
+      localStorage.setItem(
+        'hiddenPendingAreas',
+        JSON.stringify([...hiddenAreaIds, areaId])
+      );
+    }
   };
 
   render() {
@@ -55,7 +61,9 @@ class PendingDashboardMessage extends PureComponent {
                   after).
                 </p>
                 <p>
-                  <span>We will send you an email</span> once your dashboard is
+                  <span>We will send you an email</span>
+                  {' '}
+                  once your dashboard is
                   complete.
                 </p>
               </Fragment>

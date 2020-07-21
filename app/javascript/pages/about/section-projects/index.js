@@ -9,23 +9,20 @@ import * as sectionActions from './actions';
 import reducers, { initialState } from './reducers';
 import SectionProjectsComponent from './component';
 
-import {
-  getCategoriesList,
-  getProjectsSelected
-} from './selectors';
+import { getCategoriesList, getProjectsSelected } from './selectors';
 
 const actions = { ...sectionActions, ...modalActions };
 
 const mapStateToProps = ({ aboutProjects }) => {
   const projectData = {
     data: aboutProjects && aboutProjects.data,
-    categorySelected: aboutProjects && aboutProjects.categorySelected
+    categorySelected: aboutProjects && aboutProjects.categorySelected,
   };
 
   return {
     projects: getProjectsSelected(projectData),
     categories: getCategoriesList(projectData),
-    categorySelected: aboutProjects && aboutProjects.categorySelected
+    categorySelected: aboutProjects && aboutProjects.categorySelected,
   };
 };
 class SectionProjectsContainer extends PureComponent {
@@ -34,31 +31,31 @@ class SectionProjectsContainer extends PureComponent {
     fetchProjects();
   }
 
-  handleGlobeClick = d => {
+  handleGlobeClick = (d) => {
     const { setSectionProjectsModal } = this.props;
     setSectionProjectsModal({
       isOpen: true,
-      data: d
+      data: d,
     });
   };
 
   render() {
     return createElement(SectionProjectsComponent, {
       ...this.props,
-      handleGlobeClick: this.handleGlobeClick
+      handleGlobeClick: this.handleGlobeClick,
     });
   }
 }
 
 SectionProjectsContainer.propTypes = {
   setSectionProjectsModal: PropTypes.func,
-  fetchProjects: PropTypes.func
+  fetchProjects: PropTypes.func,
 };
 
 reducerRegistry.registerModule('aboutProjects', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

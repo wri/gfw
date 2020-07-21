@@ -5,61 +5,46 @@ import {
   getMapLoading,
   getActiveDatasetsFromState,
   getInteractionSelected,
-  getBasemapFromState
+  getBasemapFromState,
 } from 'components/map/selectors';
-import { getShowDraw } from 'components/analysis/selectors';
 
-import initialState from './initial-state';
-
-// state from url
-const selectMainMapUrlState = state =>
-  state.location && state.location.query && state.location.query.mainMap;
-const selectLocation = state => state.location && state.location;
-const selectLocationPayload = state => state.location && state.location.payload;
-const selectMenuSection = state =>
-  state.location &&
-  state.location.query &&
-  state.location.query.menu &&
-  state.location.query.menu.menuSection;
-const getDrawGeostoreId = state => state.draw && state.draw.geostoreId;
+const getMainMapSettings = (state) => state.mainMap || {};
+const selectLocation = (state) => state.location && state.location;
+const selectLocationPayload = (state) =>
+  state.location && state.location.payload;
+const selectMenuSection = (state) => state.mapMenu?.settings?.menuSection;
+const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
+const getShowDraw = (state) => state.analysis?.settings?.showDraw;
 
 // SELECTORS
 export const getEmbed = createSelector(
   [selectLocation],
-  location => location && location.routesMap[location.type].embed
-);
-
-export const getMainMapSettings = createSelector(
-  [selectMainMapUrlState],
-  urlState => ({
-    ...initialState,
-    ...urlState
-  })
+  (location) => location && location.pathname.includes('/embed')
 );
 
 export const getHidePanels = createSelector(
   getMainMapSettings,
-  settings => settings.hidePanels
+  (settings) => settings.hidePanels
 );
 
 export const getShowBasemaps = createSelector(
   getMainMapSettings,
-  settings => settings.showBasemaps
+  (settings) => settings.showBasemaps
 );
 
 export const getShowRecentImagery = createSelector(
   getMainMapSettings,
-  settings => settings.showRecentImagery
+  (settings) => settings.showRecentImagery
 );
 
 export const getHideLegend = createSelector(
   getMainMapSettings,
-  settings => settings.hideLegend
+  (settings) => settings.hideLegend
 );
 
 export const getShowAnalysis = createSelector(
   getMainMapSettings,
-  settings => settings.showAnalysis
+  (settings) => settings.showAnalysis
 );
 
 export const getOneClickAnalysis = createSelector(
@@ -68,10 +53,10 @@ export const getOneClickAnalysis = createSelector(
     selectLocationPayload,
     getDrawing,
     getMapLoading,
-    getShowAnalysis
+    getShowAnalysis,
   ],
   (showDraw, location, draw, loading, showAnalysis) => {
-    const hasLocation = !!location.adm0;
+    const hasLocation = !!location?.adm0;
     const isDrawing = draw || showDraw;
     return !hasLocation && !isDrawing && !loading && showAnalysis;
   }
@@ -88,5 +73,5 @@ export const getMapProps = createStructuredSelector({
   geostoreId: getDrawGeostoreId,
   selectedInteraction: getInteractionSelected,
   location: selectLocationPayload,
-  basemap: getBasemapFromState
+  basemap: getBasemapFromState,
 });

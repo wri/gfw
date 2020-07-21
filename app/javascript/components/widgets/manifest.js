@@ -107,5 +107,5 @@ export default {
   // land use
   economicImpact,
   forestryEmployment,
-  traseCommodities
+  traseCommodities,
 };

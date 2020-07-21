@@ -42,6 +42,14 @@ const setRecentImageryDataStatus = (state, { payload }) => ({
   }
 });
 
+const setRecentImagerySettings = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload
+  }
+});
+
 const resetRecentImageryData = () => ({
   ...initialState
 });
@@ -59,6 +67,7 @@ const setRecentImageryLoadingMoreTiles = (state, { payload }) => ({
 
 export default {
   [actions.setRecentImageryData]: setRecentImageryData,
+  [actions.setRecentImagerySettings]: setRecentImagerySettings,
   [actions.setRecentImageryDataStatus]: setRecentImageryDataStatus,
   [actions.resetRecentImageryData]: resetRecentImageryData,
   [actions.setRecentImageryLoading]: setRecentImageryLoading,

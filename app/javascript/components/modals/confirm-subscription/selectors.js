@@ -3,32 +3,25 @@ import isEmpty from 'lodash/isEmpty';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 
-const selectConfirmSubscriptionModalState = state =>
-  state.location &&
-  state.location.query &&
-  state.location.query.confirmSubscription;
-const selectLocation = state => state.location && state.location.payload;
-
-export const getAOIModalOpen = createSelector(
-  [selectConfirmSubscriptionModalState],
-  urlState => urlState && urlState.open
-);
+const selectModalOpen = (state) => state.confirmSubscription?.open;
+const selectAreaOfInterest = (state) => state.confirmSubscription?.activeAreaId;
+const selectLocation = (state) => state.location && state.location.payload;
 
 export const getActiveArea = createSelector(
-  [selectLocation, selectConfirmSubscriptionModalState, getAllAreas],
-  (location, settings, areas) => {
+  [selectLocation, selectAreaOfInterest, getAllAreas],
+  (location, areaId, areas) => {
     if (isEmpty(areas)) return null;
     let activeAreaId = '';
     if (location.type === 'aoi') {
       activeAreaId = location.adm0;
     } else {
-      activeAreaId = settings && settings.activeAreaId;
+      activeAreaId = areaId;
     }
-    return areas.find(a => a.id === activeAreaId);
+    return areas.find((a) => a.id === activeAreaId);
   }
 );
 
 export const getConfirmSubscriptionModalProps = createStructuredSelector({
   activeArea: getActiveArea,
-  open: getAOIModalOpen
+  open: selectModalOpen,
 });

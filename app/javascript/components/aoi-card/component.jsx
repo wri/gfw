@@ -16,9 +16,9 @@ import { formatNumber } from 'utils/format';
 import Icon from 'components/ui/icon';
 import MapGeostore from 'components/map-geostore';
 
-import tagIcon from 'assets/icons/tag.svg';
-import subscribedIcon from 'assets/icons/subscribed.svg';
-import warningIcon from 'assets/icons/warning.svg';
+import tagIcon from 'assets/icons/tag.svg?sprite';
+import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
+import warningIcon from 'assets/icons/warning.svg?sprite';
 
 import './styles.scss';
 
@@ -28,14 +28,14 @@ const getLatestAlerts = ({ location, params }) =>
       ...location,
       ...params,
       dataset: 'glad',
-      frequency: 'daily'
+      frequency: 'daily',
     }).catch(() => null),
     fetchHistoricalAlerts({
       ...location,
       ...params,
       dataset: 'viirs',
-      frequency: 'daily'
-    }).catch(() => null)
+      frequency: 'daily',
+    }).catch(() => null),
   ])
     .then(
       spread((gladsResponse, firesResponse) => {
@@ -44,12 +44,11 @@ const getLatestAlerts = ({ location, params }) =>
 
         return {
           glads: sumBy(glads, 'count'),
-          fires: sumBy(fires, 'count')
+          fires: sumBy(fires, 'count'),
         };
       })
     )
-    .catch(error => console.error(error));
-
+    .catch(() => {});
 
 class AoICard extends PureComponent {
   static propTypes = {
@@ -66,13 +65,12 @@ class AoICard extends PureComponent {
     status: PropTypes.string,
     setConfirmSubscriptionModalSettings: PropTypes.func,
     confirmed: PropTypes.bool,
-    id: PropTypes.string
+    id: PropTypes.string,
   };
 
   state = {
     alerts: {},
     loading: false,
-    error: false
   };
 
   mounted = false;
@@ -96,18 +94,15 @@ class AoICard extends PureComponent {
     getLatestAlerts({
       location,
       params: {
-        startDate: moment
-          .utc()
-          .subtract(2, 'weeks')
-          .format('YYYY-MM-DD'),
-        endDate: moment.utc().format('YYYY-MM-DD')
-      }
+        startDate: moment.utc().subtract(2, 'weeks').format('YYYY-MM-DD'),
+        endDate: moment.utc().format('YYYY-MM-DD'),
+      },
     })
-      .then(alertsResponse => {
+      .then((alertsResponse) => {
         if (this.mounted) {
           this.setState({
             alerts: alertsResponse,
-            loading: false
+            loading: false,
           });
           if (onFetchAlerts) {
             onFetchAlerts(alertsResponse);
@@ -120,14 +115,14 @@ class AoICard extends PureComponent {
             alerts: {
               glads: 0,
               fires: 0,
-              error: true
+              error: true,
             },
-            loading: false
+            loading: false,
           });
           if (onFetchAlerts) {
             onFetchAlerts({
               glads: 0,
-              fires: 0
+              fires: 0,
             });
           }
         }
@@ -148,18 +143,21 @@ class AoICard extends PureComponent {
       status,
       setConfirmSubscriptionModalSettings,
       id,
-      confirmed
+      confirmed,
     } = this.props;
-    const { loading, alerts: { glads, fires, error: dataError } } = this.state;
+    const {
+      loading,
+      alerts: { glads, fires, error: dataError },
+    } = this.state;
 
     const subStatus = [
       {
         label: 'forest change alerts',
-        subscribed: deforestationAlerts
+        subscribed: deforestationAlerts,
       },
       {
         label: 'fire alerts',
-        subscribed: fireAlerts
+        subscribed: fireAlerts,
       },
       {
         label: 'mothly summary',
@@ -183,12 +181,15 @@ class AoICard extends PureComponent {
       });
     }
     const applicationName = applicationsMeta[application];
-    const createdMetaTemplate = translateText(`Created {date} ${
-      application !== 'gfw' && applicationName ? ` on ${applicationName}` : ''
-    }`);
-    const createdMeta = createdMetaTemplate.replace('{date}', moment(createdAt).format(
-      'MMM DD YYYY'
-    ));
+    const createdMetaTemplate = translateText(
+      `Created {date} ${
+        application !== 'gfw' && applicationName ? ` on ${applicationName}` : ''
+      }`
+    );
+    const createdMeta = createdMetaTemplate.replace(
+      '{date}',
+      moment(createdAt).format('MMM DD YYYY')
+    );
 
     return (
       <div className={cx('c-aoi-card', { simple })}>
@@ -200,12 +201,11 @@ class AoICard extends PureComponent {
           small={simple}
         />
         <div className="item-body">
-          <h5 className="title">
-            {name}
-          </h5>
-          {!simple && <span className="created notranslate">{createdMeta}</span>}
-          {tags &&
-            tags.length > 0 && (
+          <h5 className="title">{name}</h5>
+          {!simple && (
+            <span className="created notranslate">{createdMeta}</span>
+          )}
+          {tags && tags.length > 0 && (
             <div className="tags">
               <Icon icon={tagIcon} className="tag-icon" />
               <p>{tags.join(', ')}</p>
@@ -222,10 +222,13 @@ class AoICard extends PureComponent {
                 <Fragment>
                   <Icon icon={warningIcon} className="warning-icon" />
                   <button
-                    onClick={e => {
+                    onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      setConfirmSubscriptionModalSettings({ open: true, activeAreaId: id });
+                      setConfirmSubscriptionModalSettings({
+                        open: true,
+                        activeAreaId: id,
+                      });
                     }}
                   >
                     Subscription not confirmed
@@ -234,14 +237,12 @@ class AoICard extends PureComponent {
               )}
             </div>
           )}
-          {!simple &&
-            !isPending && (
+          {!simple && !isPending && (
             <div className="activity">
               <span className="activity-intro">
-                {"Latest week's alerts:"}
+                Latest week&lsquo;s alerts:
               </span>
-              {!loading &&
-                  dataError && (
+              {!loading && dataError && (
                 <span className="data-error-msg">
                   Sorry, we had trouble finding your alerts!
                 </span>
@@ -254,9 +255,10 @@ class AoICard extends PureComponent {
                         <span className="activity-data notranslate">
                           {formatNumber({
                             num: glads || 0,
-                            unit: 'counts'
+                            unit: 'counts',
                           })}
-                        </span>{' '}
+                        </span>
+                        {' '}
                         <p>GLAD alerts</p>
                       </div>
                     ) : (
@@ -278,9 +280,10 @@ class AoICard extends PureComponent {
                         <span className="activity-data notranslate">
                           {formatNumber({
                             num: fires || 0,
-                            unit: 'counts'
+                            unit: 'counts',
                           })}
-                        </span>{' '}
+                        </span>
+                        {' '}
                         <p>VIIRS alerts</p>
                       </Fragment>
                     ) : (

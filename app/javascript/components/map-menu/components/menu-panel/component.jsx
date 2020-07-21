@@ -6,8 +6,8 @@ import startCase from 'lodash/startCase';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import closeIcon from 'assets/icons/close.svg';
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import posed, { PoseGroup } from 'react-pose';
 
 import './styles.scss';
@@ -17,27 +17,27 @@ const PanelMobile = posed.div({
     y: 0,
     opacity: 1,
     delay: 200,
-    transition: { duration: 200 }
+    transition: { duration: 200 },
   },
   exit: {
     y: 50,
     opacity: 0,
     delay: 200,
-    transition: { duration: 200 }
-  }
+    transition: { duration: 200 },
+  },
 });
 
 const PanelDesktop = posed.div({
   enter: {
     x: 66,
     opacity: 1,
-    delay: 300
+    delay: 300,
   },
   exit: {
     x: 0,
     opacity: 0,
-    transition: { duration: 200 }
-  }
+    transition: { duration: 200 },
+  },
 });
 
 class MenuPanel extends PureComponent {
@@ -54,7 +54,7 @@ class MenuPanel extends PureComponent {
       children,
       loading,
       setMenuSettings,
-      collapsed
+      collapsed,
     } = this.props;
     const Panel = isDesktop ? PanelDesktop : PanelMobile;
 
@@ -121,7 +121,7 @@ MenuPanel.propTypes = {
   active: PropTypes.bool,
   loading: PropTypes.bool,
   collapsed: PropTypes.bool,
-  onOpen: PropTypes.func
+  onOpen: PropTypes.func,
 };
 
 export default MenuPanel;

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import infoIcon from 'assets/icons/info.svg';
+import infoIcon from 'assets/icons/info.svg?sprite';
 
 import './styles.scss';
 
@@ -22,7 +22,7 @@ class FieldWrapper extends PureComponent {
     infoClick: PropTypes.func,
     collapse: PropTypes.bool,
     name: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.string,
   };
 
   renderLabel = () => {
@@ -36,7 +36,7 @@ class FieldWrapper extends PureComponent {
           <Button
             className="info-button"
             theme="theme-button-tiny theme-button-grey-filled square"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               infoClick();
             }}
@@ -57,7 +57,7 @@ class FieldWrapper extends PureComponent {
       active,
       children,
       collapse,
-      value
+      value,
     } = this.props;
 
     return (

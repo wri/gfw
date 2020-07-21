@@ -5,8 +5,8 @@ import Button from 'components/ui/button';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import searchIcon from 'assets/icons/search.svg';
-import closeIcon from 'assets/icons/close.svg';
+import searchIcon from 'assets/icons/search.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
 import './styles.scss';
 import './themes/search-small.scss'; // eslint-disable-line
 
@@ -14,16 +14,16 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: props.input
+      search: props.input,
     };
   }
 
-  handleChange = value => {
+  handleChange = (value) => {
     this.setState({ search: value });
     this.debouncedChange();
   };
 
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     e.preventDefault();
     const { onSubmit } = this.props;
     if (onSubmit && e.keyCode === 13) {
@@ -47,7 +47,7 @@ class Search extends Component {
           type="text"
           className="input text"
           placeholder={placeholder}
-          onChange={e => this.handleChange(e.target.value)}
+          onChange={(e) => this.handleChange(e.target.value)}
           value={search}
           onKeyUp={this.handleKeyUp}
           disabled={disabled}
@@ -76,11 +76,11 @@ Search.propTypes = {
   onSubmit: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 Search.defaultProps = {
-  input: ''
+  input: '',
 };
 
 export default Search;

@@ -34,10 +34,18 @@ $full-screen-height: rem(76px);
   }
 
   .nav-menu {
-    padding-left: rem(80px);
+    padding-left: 0;
+
+    @media screen and (min-width: $screen-m) {
+      padding-left: rem(80px);
+    }
 
     @media screen and (min-width: 850px) {
       padding-left: rem(100px);
+    }
+
+    &.mobile {
+      padding-left: 0;
     }
   }
 
@@ -57,7 +65,7 @@ $full-screen-height: rem(76px);
         background-color: transparent;
       }
 
-      &.-active {
+      &.active {
         &::after {
           background-color: $green-gfw;
         }

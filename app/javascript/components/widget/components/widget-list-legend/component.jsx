@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 
-import './styles';
+import './styles.scss';
 
 class WidgetListLegend extends PureComponent {
   render() {
@@ -18,7 +18,7 @@ class WidgetListLegend extends PureComponent {
             format: '.3s',
             unit: 'ha',
             key: 'value',
-            ...settings
+            ...settings,
           }}
           simple={simple}
         />
@@ -30,7 +30,7 @@ class WidgetListLegend extends PureComponent {
 WidgetListLegend.propTypes = {
   data: PropTypes.array,
   simple: PropTypes.bool,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
 };
 
 export default WidgetListLegend;

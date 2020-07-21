@@ -1,22 +1,16 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
-import ScrollTo from 'components/scroll-to';
 
-import sgfLogo from './img/GFW_SGF_logo.png';
-import techLogo from './img/GFW_TECH_logo.png';
+import sgfLogo from './img/GFW_SGF_logo.png?webp';
+import techLogo from './img/GFW_TECH_logo.png?webp';
+
+import { sgfBenefits, fellowshipBenefits, results } from './config';
 
 import './styles.scss';
 
 class SectionAbout extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { results, sgfBenefits, fellowshipBenefits } = this.props;
-    const anchorId = window.location.hash;
-    const anchor =
-      anchorId && document.getElementById(anchorId.replace('#', ''));
-
     return (
       <div className="l-section-about">
         <section className="intro">
@@ -53,7 +47,12 @@ class SectionAbout extends PureComponent {
               <h3 className="section-subtitle">Program Benefits</h3>
               <ul className="list">
                 {sgfBenefits &&
-                  sgfBenefits.map(item => <li key={item}>- {item}</li>)}
+                  sgfBenefits.map((item) => (
+                    <li key={item}>
+                      -
+                      {item}
+                    </li>
+))}
               </ul>
             </div>
           </div>
@@ -78,7 +77,7 @@ class SectionAbout extends PureComponent {
               <h2 className="section-subtitle">Results</h2>
               <div className="row icon-list">
                 {results &&
-                  results.map(item => (
+                  results.map((item) => (
                     <div key={item.label} className="column small-12 medium-4">
                       <Icon icon={item.icon} />
                       <p dangerouslySetInnerHTML={{ __html: item.label }} />
@@ -128,7 +127,12 @@ class SectionAbout extends PureComponent {
               <h3 className="section-subtitle">Program Benefits</h3>
               <ul className="list">
                 {fellowshipBenefits &&
-                  fellowshipBenefits.map(item => <li key={item}>- {item}</li>)}
+                  fellowshipBenefits.map((item) => (
+                    <li key={item}>
+                      -
+                      {item}
+                    </li>
+))}
               </ul>
             </div>
           </div>
@@ -142,7 +146,8 @@ class SectionAbout extends PureComponent {
               <p className="text -paragraph -color-2 -light -spaced">
                 If you would like to contribute to supporting communities, civil
                 society, organizations, and individuals in using GFW to protect
-                and sustainably manage the world’s forests, please contact us at{' '}
+                and sustainably manage the world’s forests, please contact us at
+                {' '}
                 <a
                   className="text -paragraph -color-4 -light"
                   href="mailto:gfwfund@wri.org"
@@ -153,16 +158,9 @@ class SectionAbout extends PureComponent {
             </div>
           </div>
         </section>
-        {anchor && <ScrollTo target={anchor} delay={500} />}
       </div>
     );
   }
 }
-
-SectionAbout.propTypes = {
-  results: PropTypes.array.isRequired,
-  sgfBenefits: PropTypes.array.isRequired,
-  fellowshipBenefits: PropTypes.array.isRequired
-};
 
 export default SectionAbout;

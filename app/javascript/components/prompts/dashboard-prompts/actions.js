@@ -1,13 +1,13 @@
 import { createThunkAction, createAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { track } from 'app/analytics';
 
 export const setShowDashboardPrompts = createAction('setShowDashboardPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
+export const setDashboardPrompts = createAction('setDashboardPrompts');
 
 export const setDashboardPromptsSettings = createThunkAction(
   'setDashboardPromptsSettings',
-  change => (dispatch, state) => {
+  (change) => (dispatch, state) => {
     const { dashboardPrompts } = state() || {};
     const { promptsViewed, showPrompts } = dashboardPrompts || {};
     const { stepsKey, force, stepIndex } = change || {};
@@ -16,16 +16,10 @@ export const setDashboardPromptsSettings = createThunkAction(
       force ||
       (showPrompts && (!promptsViewed || !promptsViewed.includes(stepsKey)))
     ) {
-      dispatch(
-        setComponentStateToUrl({
-          key: 'dashboardPrompts',
-          change,
-          state
-        })
-      );
+      dispatch(setDashboardPrompts(change));
       if (stepsKey) {
         track('userPrompt', {
-          label: `${stepsKey}: ${stepIndex + 1}`
+          label: `${stepsKey}: ${stepIndex + 1}`,
         });
       }
     }

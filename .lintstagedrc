@@ -1,4 +1,0 @@
-{
-  "*.{js,jsx}": ["prettier --parser flow --write --single-quote", "eslint --ext .js --ext .jsx --fix", "git add"],
-  "*.scss": "stylelint --syntax=scss ./src/**/*.scss"
-}

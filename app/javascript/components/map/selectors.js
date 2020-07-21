@@ -9,12 +9,10 @@ import { getDayRange } from 'utils/dates';
 import { selectActiveLang } from 'app/layouts/root/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
-import { initialState } from './reducers';
 import basemaps from './basemaps';
 
 // map state
-const selectMapUrlState = state =>
-  state.location && state.location.query && state.location.query.map;
+const getMapSettings = state => state.map?.settings || {};
 const selectMapLoading = state => state.map && state.map.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectLatestLoading = state => state.latest && state.latest.loading;
@@ -31,19 +29,14 @@ const selectLocation = state => state.location && state.location.payload;
 export const getBasemaps = () => basemaps;
 
 // SELECTORS
-export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
-  ...initialState.settings,
-  ...urlState
-}));
-
 export const getMapViewport = createSelector([getMapSettings], settings => {
   const { zoom, bearing, pitch, center } = settings;
   return {
     zoom,
     bearing,
     pitch,
-    latitude: center.lat,
-    longitude: center.lng,
+    latitude: center?.lat,
+    longitude: center?.lng,
     transitionDuration: 500
   };
 });
@@ -72,7 +65,7 @@ export const getBasemap = createSelector(
   [getBasemapFromState],
   basemapState => {
     const basemap = {
-      ...basemaps[basemapState.value],
+      ...basemaps[basemapState?.value],
       ...basemapState
     };
     let url = basemap && basemap.url;
@@ -163,7 +156,7 @@ export const getActiveDatasetIds = createSelector(
   [getActiveDatasetsFromState],
   activeDatasetsState => {
     if (!activeDatasetsState || !activeDatasetsState.length) return null;
-    return activeDatasetsState.map(l => l.dataset);
+    return activeDatasetsState?.map(l => l.dataset);
   }
 );
 

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
-import closeIcon from 'assets/icons/close.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
 
-const Selector = props => {
+const Selector = (props) => {
   const {
     isOpen,
     className,
@@ -22,7 +22,7 @@ const Selector = props => {
     handleClearSelection,
     children,
     innerRef,
-    selectorIcon
+    selectorIcon,
   } = props;
 
   return (
@@ -53,8 +53,7 @@ const Selector = props => {
           </button>
         )}
         <input {...inputProps()} />
-        {clearable &&
-          activeValue && (
+        {clearable && activeValue && (
           <button className="clear-btn" onClick={handleClearSelection}>
             <Icon icon={closeIcon} className="clear-icon" />
           </button>
@@ -84,7 +83,7 @@ Selector.propTypes = {
   handleClearSelection: PropTypes.func,
   innerRef: PropTypes.func,
   className: PropTypes.string,
-  selectorIcon: PropTypes.object
+  selectorIcon: PropTypes.func,
 };
 
 export default Selector;

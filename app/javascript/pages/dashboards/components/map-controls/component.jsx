@@ -5,17 +5,24 @@ import { track } from 'app/analytics';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 
-import plusIcon from 'assets/icons/plus.svg';
-import minusIcon from 'assets/icons/minus.svg';
+import plusIcon from 'assets/icons/plus.svg?sprite';
+import minusIcon from 'assets/icons/minus.svg?sprite';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import './styles.scss';
 
+const isServer = typeof window === 'undefined';
+
 class MapControlsButtons extends PureComponent {
   renderZoomButtons = () => {
-    const { viewport: { zoom }, setMapSettings, maxZoom, minZoom } = this.props;
+    const {
+      viewport: { zoom },
+      setMapSettings,
+      maxZoom,
+      minZoom,
+    } = this.props;
 
     return (
       <Fragment>
@@ -50,7 +57,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <div className={`c-dashboard-map-controls ${className || ''}`}>
-        <Sticky top={window.innerWidth >= SCREEN_M ? 15 : 73}>
+        <Sticky top={!isServer && window.innerWidth >= SCREEN_M ? 15 : 73}>
           {this.renderZoomButtons()}
         </Sticky>
       </div>
@@ -63,7 +70,7 @@ MapControlsButtons.propTypes = {
   setMapSettings: PropTypes.func,
   viewport: PropTypes.object,
   minZoom: PropTypes.number,
-  maxZoom: PropTypes.number
+  maxZoom: PropTypes.number,
 };
 
 export default connect()(MapControlsButtons);

@@ -25,10 +25,10 @@ export default {
         {
           text: 'EXPLORE OUR DATA',
           link:
-            '/map?menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D'
-        }
+            '/map?menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D',
+        },
       ],
-      image: card1
+      image: card1,
     },
     {
       title: 'Be the first to see new tropical deforestation',
@@ -38,10 +38,10 @@ export default {
         {
           text: 'VIEW GLAD ALERTS',
           link:
-            '/map?analysis=eyJzaG93QW5hbHlzaXMiOnRydWUsImhpZGRlbiI6ZmFsc2V9&map=eyJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjotNC4yMTQ5NDMxNDEzOTA2MzksImxuZyI6LTUuODAwNzgxMjUwMDAwMDAxfSwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9'
-        }
+            '/map?analysis=eyJzaG93QW5hbHlzaXMiOnRydWUsImhpZGRlbiI6ZmFsc2V9&map=eyJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjotNC4yMTQ5NDMxNDEzOTA2MzksImxuZyI6LTUuODAwNzgxMjUwMDAwMDAxfSwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
+        },
       ],
-      image: card2
+      image: card2,
     },
     {
       title: 'Quick global and country stats',
@@ -50,10 +50,10 @@ export default {
       buttons: [
         {
           text: 'EXPLORE THE DASHBOARDS',
-          link: '/dashboards/global'
-        }
+          link: '/dashboards/global',
+        },
       ],
-      image: card3
+      image: card3,
     },
     {
       title: 'Forest insights',
@@ -62,10 +62,10 @@ export default {
       buttons: [
         {
           text: 'START LEARNING',
-          extLink: 'https://blog.globalforestwatch.org/'
-        }
+          extLink: 'https://blog.globalforestwatch.org/',
+        },
       ],
-      image: card4
+      image: card4,
     },
     {
       title: 'A suite of tools',
@@ -74,11 +74,11 @@ export default {
       buttons: [
         {
           text: 'BROWSE OUR APPS',
-          extLink: 'https://developers.globalforestwatch.org'
-        }
+          extLink: 'https://developers.globalforestwatch.org',
+        },
       ],
-      image: card5
-    }
+      image: card5,
+    },
   ],
   uses: [
     {
@@ -87,9 +87,9 @@ export default {
         "The Amazon Conservation Association (ACA) works to protect biodiversity in the Amazon. With GLAD deforestation alerts on Global Forest Watch, we can detect illegal gold mining and logging in protected areas within days. By getting timely and precise information into the hands of policymakers, we've seen government authorities on the ground taking action within 24-48 hours of receiving an alert.",
       credit: {
         name: 'MINAMPERÚ',
-        extLink: 'https://www.flickr.com/photos/minamperu/9966829933'
+        extLink: 'https://www.flickr.com/photos/minamperu/9966829933',
       },
-      img: conservationOrgs
+      img: conservationOrgs,
     },
     {
       profile: 'Policymaker',
@@ -97,9 +97,9 @@ export default {
         'At the Forest Development Authority in Liberia, we saw a need to improve science-based decision making in forest resource management. We developed a Forest Atlas with Global Forest Watch that allows us to manage and share information about forest cover and land use. The Forest Atlas revolutionized how we communicate about the forest sector in Liberia.',
       credit: {
         name: 'Greenpeace International',
-        extLink: 'http://www.greenpeace.org/'
+        extLink: 'http://www.greenpeace.org/',
       },
-      img: policyMakers
+      img: policyMakers,
     },
     {
       profile: 'Journalist',
@@ -107,9 +107,9 @@ export default {
         "Mongabay is a science-based environmental news platform aiming to inspire, educate, and inform the public. The deforestation and fire alerts on GFW allow us to identify stories as they're happening on the ground. In Peru, we were able to track fires as they invaded protected areas and mobilize our Latin America team to get coverage. It added a really timely dimension to our reporting and led Peruvian officials to go out immediately and address the situation.",
       credit: {
         name: 'CIFOR',
-        extLink: 'https://www.flickr.com/photos/cifor/16425898585'
+        extLink: 'https://www.flickr.com/photos/cifor/16425898585',
       },
-      img: journalists
+      img: journalists,
     },
     {
       profile: 'Company',
@@ -117,10 +117,10 @@ export default {
         'At Mars, deforestation poses a risk to our business – we don’t want our supply chains to be associated with serious environmental issues. We used the PALM risk tool on GFW Commodities to evaluate our palm oil suppliers and help us make decisions about where to source from. With GFW, we were able to turn concerns about deforestation into an actionable method for engaging our suppliers.',
       credit: {
         name: 'Marufish',
-        extLink: 'https://www.flickr.com/photos/marufish/4074823996'
+        extLink: 'https://www.flickr.com/photos/marufish/4074823996',
       },
-      img: company
-    }
+      img: company,
+    },
   ],
   apps: [
     {
@@ -130,7 +130,7 @@ export default {
       background: forestWatcherImage,
       extLink: 'https://forestwatcher.globalforestwatch.org/',
       color: '#97be32',
-      icon: forestWatcherIcon
+      icon: forestWatcherIcon,
     },
     {
       title: 'GFW Pro',
@@ -140,7 +140,7 @@ export default {
       extLink: 'https://pro.globalforestwatch.org',
       color: '#404042',
       icon: proIcon,
-      className: 'pro'
-    }
-  ]
+      className: 'pro',
+    },
+  ],
 };

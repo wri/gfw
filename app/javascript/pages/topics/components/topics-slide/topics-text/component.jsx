@@ -21,7 +21,7 @@ TopicsText.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   className: PropTypes.string,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 };
 
 export default TopicsText;

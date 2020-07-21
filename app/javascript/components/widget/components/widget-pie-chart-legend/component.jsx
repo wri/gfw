@@ -6,7 +6,7 @@ import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 import Button from 'components/ui/button';
 
-import './styles';
+import './styles.scss';
 
 class WidgetPieChart extends PureComponent {
   render() {
@@ -16,7 +16,7 @@ class WidgetPieChart extends PureComponent {
       settings,
       simple,
       toggleSettingsMenu,
-      settingsBtnConfig
+      settingsBtnConfig,
     } = this.props;
     const showSettingsBtn =
       settingsBtnConfig &&
@@ -24,9 +24,7 @@ class WidgetPieChart extends PureComponent {
       settingsBtnConfig.shouldShowButton(this.props);
     return (
       <div className="c-pie-chart-legend-widget">
-        {settings &&
-          showSettingsBtn &&
-          toggleSettingsMenu && (
+        {settings && showSettingsBtn && toggleSettingsMenu && (
           <Button
             theme="theme-button-small theme-button-light"
             className="pie-contextual-settings-btn"
@@ -43,7 +41,7 @@ class WidgetPieChart extends PureComponent {
               format: '.3s',
               unit: 'ha',
               key: 'value',
-              ...settings
+              ...settings,
             }}
             simple={simple}
           />
@@ -56,8 +54,8 @@ class WidgetPieChart extends PureComponent {
                 key: 'percentage',
                 unit: '%',
                 labelKey: 'label',
-                unitFormat: value => format('.1f')(value)
-              }
+                unitFormat: (value) => format('.1f')(value),
+              },
             ]}
             simple={simple}
           />
@@ -73,7 +71,7 @@ WidgetPieChart.propTypes = {
   simple: PropTypes.bool,
   settings: PropTypes.object.isRequired,
   toggleSettingsMenu: PropTypes.func,
-  settingsBtnConfig: PropTypes.object
+  settingsBtnConfig: PropTypes.object,
 };
 
 export default WidgetPieChart;

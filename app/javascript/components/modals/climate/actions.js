@@ -1,15 +1,26 @@
-import { createThunkAction } from 'utils/redux';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
+import useRouter from 'utils/router';
 
-export const setModalGFWClimateOpen = createThunkAction(
-  'setModalGFWClimateOpen',
-  isOpen => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'gfwclimate',
-        change: isOpen,
-        state
-      })
-    );
-  }
-);
+export const setModalClimateOpen = (open) => {
+  const { query, pathname, pushQuery } = useRouter();
+
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      gfwclimate: open || null,
+    },
+  });
+};
+
+export const setContactUsOpen = () => {
+  const { query, pathname, pushQuery } = useRouter();
+
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      gfwfires: null,
+      contactUs: true,
+    },
+  });
+};

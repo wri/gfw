@@ -1,18 +1,18 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
-import { DASHBOARDS } from 'router';
 import { track } from 'app/analytics';
+import useRouter from 'utils/router';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
 import { getGeostoreKey } from 'services/geostore';
-import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import uploadFileConfig from './upload-config.json';
 
 // store actions
 export const setAnalysisData = createAction('setAnalysisData');
+export const setAnalysisSettings = createAction('setAnalysisSettings');
 export const setAnalysisLoading = createAction('setAnalysisLoading');
 export const clearAnalysisError = createAction('clearAnalysisError');
 export const clearAnalysisData = createAction('clearAnalysisData');
@@ -35,36 +35,24 @@ const getErrorMessage = (error, file) => {
 
   return {
     title,
-    desc
+    desc,
   };
 };
 
-// url action
-export const setAnalysisSettings = createThunkAction(
-  'setAnalysisSettings',
-  change => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'analysis',
-        change,
-        state
-      })
-    );
-  }
-);
-
 export const getAnalysis = createThunkAction(
   'getAnalysis',
-  location => dispatch => {
+  (location) => (dispatch) => {
     const { type, adm0, adm1, adm2, endpoints } = location;
     track('analysis', {
       action: compact([type, adm0, adm1, adm2]).join(', '),
       label:
-        endpoints && endpoints.length && endpoints.map(e => e.slug).join(', ')
+        endpoints &&
+        endpoints.length &&
+        endpoints.map((e) => e.slug).join(', '),
     });
     dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     fetchUmdLossGain(location)
-      .then(responses =>
+      .then((responses) =>
         dispatch(
           setAnalysisData({
             responses,
@@ -73,15 +61,15 @@ export const getAnalysis = createThunkAction(
               type,
               adm0,
               adm1,
-              adm2
-            }
+              adm2,
+            },
           })
         )
       )
-      .catch(error => {
+      .catch((error) => {
         const slugUrl = error.config.url.split('/')[4];
         const slug = slugUrl.split('?')[0];
-        const layerName = endpoints.find(e => e.slug === slug).name;
+        const layerName = endpoints.find((e) => e.slug === slug).name;
         const { response } = error;
         const errors =
           response &&
@@ -98,10 +86,9 @@ export const getAnalysis = createThunkAction(
             data: {},
             location: {},
             loading: false,
-            error: errorMessage
+            error: errorMessage,
           })
         );
-        console.info(error);
       });
   }
 );
@@ -114,19 +101,19 @@ export const uploadShape = createThunkAction(
     onCheckDownload,
     onGeostoreUpload,
     onGeostoreDownload,
-    token
-  }) => (dispatch, getState) => {
+    token,
+  }) => (dispatch) => {
     dispatch(
       setAnalysisLoading({
         uploading: true,
         loading: false,
         error: '',
-        data: {}
+        data: {},
       })
     );
 
     uploadShapeFile(shape, onCheckUpload, onCheckDownload, token)
-      .then(response => {
+      .then((response) => {
         if (response && response.data && response.data.data) {
           const { attributes: geojsonShape } = response.data.data;
 
@@ -145,10 +132,12 @@ export const uploadShape = createThunkAction(
                 uploading: false,
                 error: 'Too many features',
                 errorMessage:
-                  'We cannot support an analysis for a file with more than 1000 features.'
+                  'We cannot support an analysis for a file with more than 1000 features.',
               })
             );
-            track('analysisUploadShape', { label: 'Failed: too many features' });
+            track('analysisUploadShape', {
+              label: 'Failed: too many features',
+            });
           } else if (
             features &&
             featureCount === 1 &&
@@ -159,48 +148,41 @@ export const uploadShape = createThunkAction(
                 uploading: false,
                 error: 'Please upload polygon data',
                 errorMessage:
-                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.'
+                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.',
               })
             );
 
             track('analysisUploadShape', { label: 'Failed: non polygon data' });
           } else {
             getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
-              .then(geostore => {
+              .then((geostore) => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
-                  const { query, type } = getState().location || {};
+                  const { pathname, query, pushQuery } = useRouter();
                   setTimeout(() => {
-                    dispatch({
-                      type,
-                      payload: {
-                        type: 'geostore',
-                        adm0: id
+                    pushQuery({
+                      pathname,
+                      query: {
+                        ...query,
+                        location: ['geostore', id],
+                        map: {
+                          ...query?.map,
+                          canBound: true,
+                        },
                       },
-                      ...(query && {
-                        query: {
-                          ...query,
-                          ...(query.map && {
-                            map: {
-                              ...query.map,
-                              canBound: true
-                            }
-                          })
-                        }
-                      })
                     });
                     dispatch(
                       setAnalysisLoading({
                         uploading: false,
                         error: '',
-                        errorMessage: ''
+                        errorMessage: '',
                       })
                     );
                   }, 300);
                   track('analysisUploadShape', { label: 'Success' });
                 }
               })
-              .catch(error => {
+              .catch((error) => {
                 const errorMessage = getErrorMessage(error, shape);
 
                 dispatch(
@@ -208,11 +190,13 @@ export const uploadShape = createThunkAction(
                     loading: false,
                     uploading: false,
                     error: errorMessage.title,
-                    errorMessage: errorMessage.desc
+                    errorMessage: errorMessage.desc,
                   })
                 );
 
-                track('analysisUploadShape', { label: `Failed: ${errorMessage.title}` });
+                track('analysisUploadShape', {
+                  label: `Failed: ${errorMessage.title}`,
+                });
               });
           }
         } else {
@@ -220,13 +204,14 @@ export const uploadShape = createThunkAction(
             setAnalysisLoading({
               uploading: false,
               error: 'File is empty',
-              errorMessage: 'Please attach a file that contains geometric data.'
+              errorMessage:
+                'Please attach a file that contains geometric data.',
             })
           );
           track('analysisUploadShape', { label: 'Failed: file is empty' });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMessage = getErrorMessage(error, shape);
 
         if (errorMessage.title !== 'cancel upload shape') {
@@ -235,10 +220,12 @@ export const uploadShape = createThunkAction(
               loading: false,
               uploading: false,
               error: errorMessage.title,
-              errorMessage: errorMessage.desc
+              errorMessage: errorMessage.desc,
             })
           );
-          track('analysisUploadShape', { label: `Failed: ${errorMessage.title}` });
+          track('analysisUploadShape', {
+            label: `Failed: ${errorMessage.title}`,
+          });
         }
       });
   }
@@ -246,29 +233,23 @@ export const uploadShape = createThunkAction(
 
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
-  () => (dispatch, getState) => {
-    const { query, type } = getState().location || {};
-    dispatch({
-      type,
-      ...(query && {
-        query
-      })
+  () => (dispatch) => {
+    const { query, pathname, pushQuery } = useRouter();
+    pushQuery({
+      pathname,
+      query: {
+        ...query,
+        location: ['global'],
+      },
     });
     dispatch(clearAnalysisData());
   }
 );
 
-export const goToDashboard = createThunkAction(
-  'goToDashboard',
-  () => (dispatch, getState) => {
-    const { location } = getState() || {};
-    const { payload, query } = location || {};
-    dispatch({
-      type: DASHBOARDS,
-      payload,
-      ...(query && {
-        query
-      })
-    });
-  }
-);
+export const goToDashboard = createThunkAction('goToDashboard', () => () => {
+  const { query, pushQuery } = useRouter();
+  pushQuery({
+    pathname: '/dashboards/[...location]',
+    query,
+  });
+});

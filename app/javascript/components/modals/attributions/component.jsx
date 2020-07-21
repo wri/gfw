@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 
-import mapboxLogo from 'assets/logos/mapbox.svg';
+import mapboxLogo from 'assets/logos/mapbox.svg?sprite';
 import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
 import Modal from '../modal';
@@ -92,7 +92,7 @@ class ModalAttributions extends PureComponent {
 
 ModalAttributions.propTypes = {
   open: PropTypes.bool,
-  setModalAttributions: PropTypes.func
+  setModalAttributions: PropTypes.func,
 };
 
 export default ModalAttributions;

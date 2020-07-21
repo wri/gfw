@@ -10,7 +10,7 @@ import { getDataLocation } from 'utils/location';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { location, areas } = state;
 
   return {
@@ -18,13 +18,16 @@ const mapStateToProps = state => {
     activeArea:
       areas &&
       areas.data &&
-      areas.data.find(a => a.id === (location && location.payload.adm0))
+      areas.data.find((a) => a.id === (location && location.payload.adm0)),
   };
 };
 
 class GeostoreProvider extends PureComponent {
   componentDidMount() {
-    const { location: { adm0, type }, activeArea } = this.props;
+    const {
+      location: { adm0, type },
+      activeArea,
+    } = this.props;
 
     if ((adm0 && type !== 'aoi') || (type === 'aoi' && activeArea)) {
       this.handleGetGeostore();
@@ -35,7 +38,7 @@ class GeostoreProvider extends PureComponent {
     const {
       location: { adm0, adm1, adm2 },
       activeArea,
-      clearGeostore
+      clearGeostore,
     } = this.props;
     const hasAdm0Changed = adm0 && adm0 !== prevProps.location.adm0;
     const hasAdm1Changed = adm0 && adm1 !== prevProps.location.adm1;
@@ -58,7 +61,7 @@ class GeostoreProvider extends PureComponent {
     this.geostoreFetch = cancelToken();
     this.props.getGeostore({
       ...this.props.location,
-      token: this.geostoreFetch.token
+      token: this.geostoreFetch.token,
     });
   };
 
@@ -77,12 +80,13 @@ GeostoreProvider.propTypes = {
   location: PropTypes.object.isRequired,
   getGeostore: PropTypes.func.isRequired,
   clearGeostore: PropTypes.func.isRequired,
-  activeArea: PropTypes.object
+  activeArea: PropTypes.object,
 };
 
 reducerRegistry.registerModule('geostore', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
+
 export default connect(mapStateToProps, actions)(GeostoreProvider);

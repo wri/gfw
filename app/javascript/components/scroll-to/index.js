@@ -1,6 +1,8 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+const isServer = typeof window === 'undefined';
+
 class ScrollTo extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
@@ -20,7 +22,7 @@ class ScrollTo extends PureComponent {
 
   handleScroll = () => {
     const { target, afterScroll } = this.props;
-    if (target) {
+    if (target && !isServer) {
       const targetBox = target.getBoundingClientRect();
       window.scrollTo({
         behavior: 'smooth',

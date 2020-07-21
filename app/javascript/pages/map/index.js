@@ -5,12 +5,14 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
+import reducerRegistry from 'app/registry';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 
+import reducers, { initialState } from './reducers';
 import * as ownActions from './actions';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
@@ -20,20 +22,20 @@ const actions = {
   setMenuSettings,
   setMapPromptsSettings,
   getGeostoreId,
-  ...ownActions
+  ...ownActions,
 };
 
 class MainMapContainer extends PureComponent {
   state = {
     showTooltip: false,
-    tooltipData: {}
+    tooltipData: {},
   };
 
   componentDidMount() {
     const { activeDatasets, basemap } = this.props;
-    const layerIds = flatMap(activeDatasets.map(d => d.layers));
+    const layerIds = flatMap(activeDatasets?.map((d) => d.layers));
     track('mapInitialLayers', {
-      label: layerIds && layerIds.join(', ')
+      label: layerIds && layerIds.join(', '),
     });
     track('basemapsInitial', { label: basemap && basemap.value });
   }
@@ -46,7 +48,7 @@ class MainMapContainer extends PureComponent {
       oneClickAnalysis,
       analysisActive,
       geostoreId,
-      location
+      location,
     } = this.props;
 
     // set analysis view if interaction changes
@@ -63,7 +65,10 @@ class MainMapContainer extends PureComponent {
       setMainMapSettings({ showAnalysis: true });
     }
 
-    if (location.type === 'aoi' && location.type !== prevProps.location.type) {
+    if (
+      location?.type === 'aoi' &&
+      location?.type !== prevProps.location.type
+    ) {
       this.props.setMenuSettings({ menuSection: 'my-gfw' });
     }
   }
@@ -76,16 +81,16 @@ class MainMapContainer extends PureComponent {
     if (this.props.menuSection) {
       this.props.setMenuSettings({ menuSection: '' });
     }
-    if (this.props.location.type) {
+    if (this.props.location?.type) {
       this.props.setMapPromptsSettings({
         open: true,
         stepsKey: 'subscribeToArea',
-        stepIndex: 0
+        stepIndex: 0,
       });
     }
   };
 
-  handleClickAnalysis = selected => {
+  handleClickAnalysis = (selected) => {
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
@@ -102,7 +107,7 @@ class MainMapContainer extends PureComponent {
     }
   };
 
-  onDrawComplete = geojson => {
+  onDrawComplete = (geojson) => {
     const { setDrawnGeostore } = this.props;
     this.props.getGeostoreId({ geojson, callback: setDrawnGeostore });
   };
@@ -114,7 +119,7 @@ class MainMapContainer extends PureComponent {
       handleShowTooltip: this.handleShowTooltip,
       handleClickAnalysis: this.handleClickAnalysis,
       handleClickMap: this.handleClickMap,
-      onDrawComplete: this.onDrawComplete
+      onDrawComplete: this.onDrawComplete,
     });
   }
 }
@@ -133,7 +138,13 @@ MainMapContainer.propTypes = {
   analysisActive: PropTypes.bool,
   location: PropTypes.object,
   geostoreId: PropTypes.string,
-  basemap: PropTypes.object
+  basemap: PropTypes.object,
 };
+
+reducerRegistry.registerModule('mainMap', {
+  actions,
+  reducers,
+  initialState,
+});
 
 export default connect(getMapProps, actions)(MainMapContainer);

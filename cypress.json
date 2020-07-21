@@ -1,0 +1,15 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "codeCoverage": {
+      "url": "/api/__coverage__"
+    }
+  },
+  "lighthouse": {
+    "performance": 0,
+    "accessibility": 50,
+    "best-practices": 85,
+    "seo": 85,
+    "pwa": 0
+  }
+}

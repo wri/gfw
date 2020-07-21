@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "app/*": ["app/javascript/app/*"],
+      "analytics/*": ["app/javascript/analytics/*"],
+      "assets/*": ["app/javascript/assets/*"],
+      "components/*": ["app/javascript/components/*"],
+      "data/*": ["app/javascript/data/*"],
+      "pages/*": ["app/javascript/pages/*"],
+      "providers/*": ["app/javascript/providers/*"],
+      "services/*": ["app/javascript/services/*"],
+      "styles/*": ["app/javascript/styles/*"],
+      "utils/*": ["app/javascript/utils/*"],
+    }
+  }
+}

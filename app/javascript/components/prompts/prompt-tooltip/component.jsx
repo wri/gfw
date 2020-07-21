@@ -6,7 +6,7 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Checkbox from 'components/ui/checkbox';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
 
@@ -23,7 +23,7 @@ class PromptTooltip extends PureComponent {
       size,
       title,
       showPrompts,
-      handleShowPrompts
+      handleShowPrompts,
     } = this.props;
     const { content, actions } = step;
     const { learnHow } = actions || {};
@@ -35,18 +35,19 @@ class PromptTooltip extends PureComponent {
         <button className="step-close" {...closeProps}>
           <Icon className="step-close-btn" icon={closeIcon} />
         </button>
-        <div className="step-title">{`${title}${
+        <div className="step-title">
+          {`${title}${
           size > 1 ? ` · ${index + 1}/${size}` : ''
-        }`}</div>
+        }`}
+        </div>
         <div className="step-content">
           {typeof content === 'string' ? content : content}
         </div>
         <div className="step-actions">
           <div className={cx('step-btns', { 'align-left': learnHow })}>
-            {actions &&
-              actions.returnToTour && (
+            {actions && actions.returnToTour && (
               <button className="step-nav-btn" onClick={actions.returnToTour}>
-                  BACK
+                BACK
               </button>
             )}
             {size > 1 && (
@@ -54,22 +55,20 @@ class PromptTooltip extends PureComponent {
                 className="step-nav-btn"
                 {...backProps}
                 style={{
-                  opacity: index !== 0 ? 1 : 0
+                  opacity: index !== 0 ? 1 : 0,
                 }}
               >
                 BACK
               </button>
             )}
-            {isLastStep &&
-              size > 1 && (
+            {isLastStep && size > 1 && (
               <button className="step-nav-btn" {...closeProps}>
-                  CLOSE
+                CLOSE
               </button>
             )}
-            {size !== 1 &&
-              !isLastStep && (
+            {size !== 1 && !isLastStep && (
               <button className="step-nav-btn" {...primaryProps}>
-                  NEXT
+                NEXT
               </button>
             )}
             {size === 1 && (
@@ -78,7 +77,7 @@ class PromptTooltip extends PureComponent {
                 onClick={() => handleShowPrompts(!showPrompts)}
               >
                 <Checkbox className="prompts-checkbox" value={showPrompts} />
-                {'Show me tips'}
+                Show me tips
               </button>
             )}
           </div>
@@ -105,7 +104,7 @@ PromptTooltip.propTypes = {
   size: PropTypes.number,
   title: PropTypes.string,
   showPrompts: PropTypes.bool,
-  handleShowPrompts: PropTypes.func
+  handleShowPrompts: PropTypes.func,
 };
 
 export default PromptTooltip;

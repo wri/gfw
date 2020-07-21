@@ -1,12 +1,19 @@
 import { connect } from 'react-redux';
 
+import reducerRegistry from 'app/registry';
+
+import reducers, { initialState } from './reducers';
 import * as actions from './actions';
 import Component from './component';
 
-const mapStateToProps = ({ location }) => ({
-  open: location && location.query && !!location.query.planetNotice
+const mapStateToProps = ({ planetNotice }) => ({
+  open: planetNotice?.open,
 });
 
-export default connect(mapStateToProps, actions)(
-  Component
-);
+reducerRegistry.registerModule('planetNotice', {
+  actions,
+  reducers,
+  initialState,
+});
+
+export default connect(mapStateToProps, actions)(Component);

@@ -1,28 +1,39 @@
 import * as actions from './actions';
 
 export const initialState = {
-  selectedCountries: [],
-  menuSection: '',
-  datasetCategory: '',
-  exploreType: 'topics',
-  searchType: 'dataset',
-  ptwType: 'all',
-  search: '',
   locations: [],
-  loading: false
+  loading: false,
+  settings: {
+    menuSection: '',
+    datasetCategory: '',
+    exploreType: 'topics',
+    searchType: 'dataset',
+    ptwType: 'all',
+    search: '',
+    selectedCountries: [],
+  },
 };
 
 const setLocationsData = (state, { payload }) => ({
   ...state,
-  locations: payload
+  locations: payload,
+});
+
+const setMenuSettings = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload,
+  },
 });
 
 const setMenuLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload,
 });
 
 export default {
   [actions.setLocationsData]: setLocationsData,
-  [actions.setMenuLoading]: setMenuLoading
+  [actions.setMenuSettings]: setMenuSettings,
+  [actions.setMenuLoading]: setMenuLoading,
 };

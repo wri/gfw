@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Globe from 'components/globe';
 import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
@@ -8,12 +8,25 @@ import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
 import Loader from 'components/ui/loader';
 import { Element as ScrollEl } from 'react-scroll';
-import { SCREEN_L } from 'utils/constants';
-import MediaQuery from 'react-responsive';
+
+import { Media } from 'utils/responsive';
 
 import './styles.scss';
 
 class SectionProjects extends PureComponent {
+  static propTypes = {
+    data: PropTypes.array,
+    globeData: PropTypes.array,
+    categories: PropTypes.array,
+    categorySelected: PropTypes.string,
+    setCategorySelected: PropTypes.func,
+    search: PropTypes.string,
+    setSearch: PropTypes.func.isRequired,
+    handleGlobeClick: PropTypes.func,
+    handleOpenModal: PropTypes.func,
+    loading: PropTypes.bool,
+  };
+
   render() {
     const {
       data,
@@ -24,36 +37,37 @@ class SectionProjects extends PureComponent {
       search,
       setSearch,
       handleGlobeClick,
-      setSectionProjectsModalSlug,
-      loading
+      handleOpenModal,
+      loading,
     } = this.props;
     const hasData = data && data.length > 0;
     const hasCategories = categories && !!categories.length;
+
     return (
-      <div>
+      <Fragment>
         <div className="l-section-projects-sgf">
           <div className="row">
-            <MediaQuery minWidth={SCREEN_L}>
-              {isDesktop =>
-                isDesktop && (
-                  <div className="column small-12 large-7 project-globe">
-                    <ul className="tags">
-                      <li>
-                        <span id="grants" /> <p>Grantees</p>
-                      </li>
-                      <li>
-                        <span id="fellows" /> <p>Fellows</p>
-                      </li>
-                    </ul>
-                    <Globe
-                      autorotate={false}
-                      data={globeData}
-                      onClick={handleGlobeClick}
-                    />
-                  </div>
-                )
-              }
-            </MediaQuery>
+            <div className="column small-12 large-7 project-globe">
+              <Media greaterThanOrEqual="lg">
+                <ul className="tags">
+                  <li>
+                    <span id="grants" /> 
+                    {' '}
+                    <p>Grantees</p>
+                  </li>
+                  <li>
+                    <span id="fellows" /> 
+                    {' '}
+                    <p>Fellows</p>
+                  </li>
+                </ul>
+                <Globe
+                  autorotate={false}
+                  data={globeData}
+                  onClick={handleGlobeClick}
+                />
+              </Media>
+            </div>
             <div className="column small-12 large-5 side">
               <h3>MEET THE GRANTEES AND FELLOWS</h3>
               <p className="text -paragraph -color-2 -light -spaced">
@@ -85,7 +99,7 @@ class SectionProjects extends PureComponent {
           <ScrollEl name="project-cards" className="row project-cards">
             {hasData &&
               !loading &&
-              data.map(d => {
+              data?.map((d) => {
                 const isFellow =
                   d.categories && d.categories.indexOf('Fellow') !== -1;
                 return (
@@ -103,16 +117,15 @@ class SectionProjects extends PureComponent {
                           {
                             className: 'read-more',
                             text: 'READ MORE',
-                            onClick: () => setSectionProjectsModalSlug(d.id)
-                          }
-                        ]
+                            onClick: () => handleOpenModal(d.id),
+                          },
+                        ],
                       }}
                     />
                   </div>
                 );
               })}
-            {!loading &&
-              !hasData && (
+            {!loading && !hasData && (
               <NoContent
                 className="no-projects"
                 message="No projects for that search"
@@ -122,22 +135,9 @@ class SectionProjects extends PureComponent {
           </ScrollEl>
         </div>
         <ProjectsModal />
-      </div>
+      </Fragment>
     );
   }
 }
-
-SectionProjects.propTypes = {
-  data: PropTypes.array,
-  globeData: PropTypes.array,
-  categories: PropTypes.array,
-  categorySelected: PropTypes.string.isRequired,
-  setCategorySelected: PropTypes.func.isRequired,
-  search: PropTypes.string,
-  setSearch: PropTypes.func.isRequired,
-  handleGlobeClick: PropTypes.func,
-  setSectionProjectsModalSlug: PropTypes.func,
-  loading: PropTypes.bool
-};
 
 export default SectionProjects;

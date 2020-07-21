@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
+import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 
 import './styles.scss';
 
@@ -39,7 +39,7 @@ Paginate.propTypes = {
   settings: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
   onClickChange: PropTypes.func.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Paginate;

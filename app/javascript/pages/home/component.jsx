@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
-import Link from 'redux-first-router-link';
+import Link from 'next/link';
 import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
@@ -14,9 +14,9 @@ import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import profileIcon from 'assets/icons/profile.svg';
-import mailIcon from 'assets/icons/mail.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import profileIcon from 'assets/icons/profile.svg?sprite';
+import mailIcon from 'assets/icons/mail.svg?sprite';
 
 import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
@@ -29,11 +29,11 @@ class HomePage extends PureComponent {
     news: PropTypes.array,
     newsLoading: PropTypes.bool,
     uses: PropTypes.array.isRequired,
-    isDesktop: PropTypes.bool
+    isDesktop: PropTypes.bool,
   };
 
   state = {
-    showVideo: false
+    showVideo: false,
   };
 
   render() {
@@ -66,12 +66,11 @@ class HomePage extends PureComponent {
                       controls: 0,
                       disablekb: 1,
                       enablejsapi: 0,
-                      iv_load_policy: 3
-                    }
+                      iv_load_policy: 3,
+                    },
                   }}
                   onPlay={() =>
-                    setTimeout(() => this.setState({ showVideo: true }), 300)
-                  }
+                    setTimeout(() => this.setState({ showVideo: true }), 300)}
                   onEnd={() => this.setState({ showVideo: false })}
                 />
               </div>
@@ -85,18 +84,22 @@ class HomePage extends PureComponent {
                   STOP VIDEO
                 </Button>
               )}
-              <Link className="subscribe-btn" to="/subscribe">
-                <Button theme="square" className="subscribe-icon">
-                  <Icon icon={mailIcon} />
-                </Button>
-                <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+              <Link href="/subscribe">
+                <a className="subscribe-btn">
+                  <Button theme="square" className="subscribe-icon">
+                    <Icon icon={mailIcon} />
+                  </Button>
+                  <p className="subscribe-msg">
+                    SUBSCRIBE TO THE GFW NEWSLETTER
+                  </p>
+                </a>
               </Link>
             </Fragment>
           )}
         </Cover>
         <div
           className="row"
-          ref={ref => {
+          ref={(ref) => {
             this.uses = ref;
           }}
         >
@@ -109,7 +112,7 @@ class HomePage extends PureComponent {
                   window.scrollTo({
                     behavior: 'smooth',
                     left: 0,
-                    top: this.uses.offsetTop
+                    top: this.uses.offsetTop,
                   });
                 }}
               >
@@ -117,7 +120,7 @@ class HomePage extends PureComponent {
               </Button>
               {summary && (
                 <Carousel settings={{ dots: true }}>
-                  {summary.map(c => (
+                  {summary.map((c) => (
                     <Card
                       className="summary-card"
                       key={c.title}
@@ -141,15 +144,15 @@ class HomePage extends PureComponent {
                 dots: true,
                 arrows: false,
                 speed: 0,
-                customPaging: i => (
+                customPaging: (i) => (
                   <div className="use-user">
                     <Icon className="icon-user" icon={profileIcon} />
                     {uses[i].profile}
                   </div>
-                )
+                ),
               }}
             >
-              {uses.map(c => (
+              {uses.map((c) => (
                 <div className="row expanded uses" key={c.example}>
                   <div className="column small-12 medium-6">
                     <p className="use-example">
@@ -169,7 +172,7 @@ class HomePage extends PureComponent {
                         className="use-credit"
                         href={c.credit.extLink}
                         target="_blank"
-                        rel="noopener nofollower"
+                        rel="noopener noreferrer"
                       >
                         {c.credit.name}
                       </a>
@@ -187,20 +190,20 @@ class HomePage extends PureComponent {
               className="apps-carousel"
               settings={{
                 slidesToShow: 1,
-                infinite: true
+                infinite: true,
               }}
             >
-              {apps.map(app => (
+              {apps.map((app) => (
                 <a
                   key={app.title}
                   href={app.extLink}
                   target="_blank"
-                  rel="noopener nofollower"
+                  rel="noopener noreferrer"
                 >
                   <div
                     className="app-slide"
                     style={{
-                      backgroundColor: app.color
+                      backgroundColor: app.color,
                     }}
                   >
                     <div className="row apps">
@@ -215,7 +218,7 @@ class HomePage extends PureComponent {
                           <div
                             className="app-image"
                             style={{
-                              backgroundImage: `url(${app.background})`
+                              backgroundImage: `url(${app.background})`,
                             }}
                           />
                         </div>
@@ -230,7 +233,7 @@ class HomePage extends PureComponent {
         <div
           className="section-news"
           style={{
-            backgroundImage: `url(${newsImage})`
+            backgroundImage: `url(${newsImage})`,
           }}
         >
           <div className="row">
@@ -241,21 +244,21 @@ class HomePage extends PureComponent {
                 {!newsLoading && news ? (
                   <Carousel
                     settings={{
-                      slidesToShow: 3
+                      slidesToShow: 3,
                     }}
                   >
-                    {news.map(item => (
+                    {news.map((item) => (
                       <a
                         key={item.name}
                         href={item.link}
                         target="_blank"
                         className="news-card"
-                        rel="noopener nofollower"
+                        rel="noopener noreferrer"
                       >
                         <Card
                           data={{
                             title: item.name,
-                            summary: item.description
+                            summary: item.description,
                           }}
                         />
                       </a>

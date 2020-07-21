@@ -1,0 +1,13 @@
+@import '~styles/settings.scss';
+
+.l-404-page {
+  padding: rem(60px) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(160px) 0;
+  }
+}

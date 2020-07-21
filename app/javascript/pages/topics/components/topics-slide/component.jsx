@@ -23,7 +23,7 @@ class TopicsSlide extends PureComponent {
       animations,
       isDesktop,
       handleSkipToTools,
-      leaving
+      leaving,
     } = this.props;
 
     return (
@@ -40,7 +40,7 @@ class TopicsSlide extends PureComponent {
             <div className="topic-content">
               <TopicsText
                 className={cx('topic-text', {
-                  leaving: isLeaving
+                  leaving: isLeaving,
                 })}
                 text={text}
                 title={title}
@@ -88,7 +88,7 @@ TopicsSlide.propTypes = {
   isLeaving: PropTypes.bool,
   leaving: PropTypes.bool,
   isDesktop: PropTypes.bool,
-  handleSkipToTools: PropTypes.func
+  handleSkipToTools: PropTypes.func,
 };
 
 export default TopicsSlide;

@@ -14,7 +14,7 @@ class AreasProvider extends PureComponent {
     getAreaProvider: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
-    location: PropTypes.object
+    location: PropTypes.object,
   };
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class AreasProvider extends PureComponent {
       this.handleGetAreas();
     }
 
-    if (!loading && location.type === 'aoi' && !loggedIn) {
+    if (!loading && location?.type === 'aoi' && !loggedIn) {
       getAreaProvider(location.adm0);
     }
   }
@@ -59,7 +59,7 @@ class AreasProvider extends PureComponent {
 reducerRegistry.registerModule('areas', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(getAreasProps, actions)(AreasProvider);

@@ -4,10 +4,10 @@ import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 
-import closeIcon from 'assets/icons/close.svg';
+import closeIcon from 'assets/icons/close.svg?sprite';
 import './styles.scss';
 
-const Button = props => {
+const Button = (props) => {
   const { active, className, label, onRemove, onClick } = props;
 
   return (
@@ -16,7 +16,7 @@ const Button = props => {
         '-removable': onRemove,
         '-active': active,
         '-clickable': onClick,
-        [className]: className
+        [className]: className,
       })}
       onClick={onClick}
       role="button"
@@ -37,7 +37,7 @@ Button.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   onRemove: PropTypes.func,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default Button;

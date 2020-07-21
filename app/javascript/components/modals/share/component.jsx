@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
 
-import twitterIcon from 'assets/icons/twitter.svg';
-import facebookIcon from 'assets/icons/facebook.svg';
+import twitterIcon from 'assets/icons/twitter.svg?sprite';
+import facebookIcon from 'assets/icons/facebook.svg?sprite';
 
 import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
@@ -23,7 +23,7 @@ class Share extends PureComponent {
     setShareOpen: PropTypes.func,
     setShareSelected: PropTypes.func,
     handleFocus: PropTypes.func,
-    handleCopyToClipboard: PropTypes.func
+    handleCopyToClipboard: PropTypes.func,
   };
 
   getContent() {
@@ -34,15 +34,16 @@ class Share extends PureComponent {
       data,
       handleFocus,
       setShareSelected,
-      handleCopyToClipboard
+      handleCopyToClipboard,
     } = this.props;
     const { title, shareUrl, embedUrl, embedSettings } = data || {};
     const { width, height } = embedSettings || {};
 
     const inputValue =
       selected === 'embed'
-        ? `<iframe width="${width || 670}" height="${height ||
-            490}" frameborder="0" src="${embedUrl}"></iframe>`
+        ? `<iframe width="${width || 670}" height="${
+            height || 490
+          }" frameborder="0" src="${embedUrl}"></iframe>`
         : shareUrl;
 
     return (
@@ -55,7 +56,7 @@ class Share extends PureComponent {
               value={selected}
               options={[
                 { label: 'LINK', value: 'link' },
-                { label: 'EMBED', value: 'embed' }
+                { label: 'EMBED', value: 'embed' },
               ]}
               onChange={
                 selected === 'embed'
@@ -71,10 +72,11 @@ class Share extends PureComponent {
           </p>
           <div className="input-container">
             <div className="input">
-              {loading &&
-                selected !== 'embed' && <Loader className="input-loader" />}
+              {loading && selected !== 'embed' && (
+                <Loader className="input-loader" />
+              )}
               <input
-                ref={input => {
+                ref={(input) => {
                   this.textInput = input;
                 }}
                 type="text"
@@ -95,16 +97,13 @@ class Share extends PureComponent {
         </div>
         <div className="social-container">
           <Button
-            extLink={`https://twitter.com/intent/tweet?text=${
-              title
-            }&via=globalforests&url=${shareUrl}`}
+            extLink={`https://twitter.com/intent/tweet?text=${title}&via=globalforests&url=${shareUrl}`}
             className="social-button"
             theme="theme-button-light theme-button-grey  square"
             onClick={() =>
               track('shareSocial', {
-                label: shareUrl
-              })
-            }
+                label: shareUrl,
+              })}
           >
             <Icon icon={twitterIcon} className="twitter-icon" />
           </Button>
@@ -114,9 +113,8 @@ class Share extends PureComponent {
             className="social-button"
             onClick={() =>
               track('shareSocial', {
-                label: shareUrl
-              })
-            }
+                label: shareUrl,
+              })}
           >
             <Icon icon={facebookIcon} className="facebook-icon" />
           </Button>

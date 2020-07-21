@@ -6,7 +6,7 @@ import Dotdotdot from 'react-dotdotdot';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
 
-import arrowIcon from 'assets/icons/arrow-down.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
 import './themes/card-small.scss';
 import './themes/card-dark.scss';
@@ -20,11 +20,11 @@ class Card extends PureComponent {
     active: PropTypes.bool,
     tag: PropTypes.string,
     tagColor: PropTypes.string,
-    clamp: PropTypes.number
+    clamp: PropTypes.number,
   };
 
   state = {
-    selectorValue: {}
+    selectorValue: {},
   };
 
   // eslint-disable-line react/prefer-stateless-function
@@ -42,21 +42,22 @@ class Card extends PureComponent {
       buttons,
       tag,
       tagColor,
-      selector
-    } =
-      data || {};
+      selector,
+    } = data || {};
     const { selectorValue } = this.state;
 
     return (
       <div className={cx('c-card', className, theme, { active })}>
-        {tag &&
-          tagColor && (
+        {tag && tagColor && (
           <span className="tag" style={{ backgroundColor: tagColor }}>
             <p>{tag}</p>
           </span>
         )}
         {image && (
-          <div className="image" style={{ backgroundImage: `url(${image})` }} />
+          <div
+            className="image"
+            style={{ backgroundImage: `url('${image}')` }}
+          />
         )}
         {(img1x || img2x) && (
           <img
@@ -89,15 +90,41 @@ class Card extends PureComponent {
           </div>
           {buttons && (
             <div className="buttons">
-              {buttons.map((button, i) => (
-                <Button
-                  key={`card-button-${i}`}
-                  theme="theme-button-light"
-                  {...button}
-                >
-                  {button.text}
-                </Button>
-              ))}
+              {buttons.map((button, i) => {
+                if (button.link) {
+                  return (
+                    <Button
+                      key={button.link}
+                      theme="theme-button-light"
+                      {...button}
+                    >
+                      {button.text}
+                    </Button>
+                  );
+                }
+
+                if (button.extLink) {
+                  return (
+                    <Button
+                      theme="theme-button-light"
+                      key={button.extLink}
+                      {...button}
+                    >
+                      {button.text}
+                    </Button>
+                  );
+                }
+
+                return (
+                  <Button
+                    key={`${button.text}-${i}`}
+                    theme="theme-button-light"
+                    {...button}
+                  >
+                    {button.text}
+                  </Button>
+                );
+              })}
             </div>
           )}
           {selector && (
@@ -110,29 +137,29 @@ class Card extends PureComponent {
                   selectorValue.value ||
                   (selector.options && selector.options[0])
                 }
-                onChange={value =>
+                onChange={(value) =>
                   this.setState({
                     selectorValue:
                       selector.options &&
-                      selector.options.find(o => o.value === value)
-                  })
-                }
+                      selector.options.find((o) => o.value === value),
+                  })}
                 native
               />
-              {selectorValue.value &&
-                selectorValue.value !== 'placeholder' && (
-                <Button
-                  className="selector-btn-link"
-                  theme="square"
-                  extLink={
+              {selectorValue.value && selectorValue.value !== 'placeholder' && (
+                <a
+                  href={
                     selectorValue.path ||
-                      (selector.options &&
-                        selector.options[0] &&
-                        selector.options[0].path)
+                    (selector.options &&
+                      selector.options[0] &&
+                      selector.options[0].path)
                   }
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Icon icon={arrowIcon} />
-                </Button>
+                  <Button className="selector-btn-link" theme="square">
+                    <Icon icon={arrowIcon} />
+                  </Button>
+                </a>
               )}
             </div>
           )}

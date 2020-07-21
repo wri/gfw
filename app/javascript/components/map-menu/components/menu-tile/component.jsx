@@ -17,7 +17,7 @@ class MenuTile extends PureComponent {
       icon,
       layerCount,
       highlight,
-      className
+      className,
     } = this.props;
 
     return (
@@ -45,9 +45,13 @@ MenuTile.propTypes = {
   small: PropTypes.bool,
   highlight: PropTypes.bool,
   label: PropTypes.string,
-  icon: PropTypes.object,
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
   layerCount: PropTypes.number,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default MenuTile;

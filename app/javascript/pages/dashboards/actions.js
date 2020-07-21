@@ -1,47 +1,53 @@
 import { createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
+import useRouter from 'utils/router';
+
 import { track } from 'app/analytics';
+
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
+import { setShowMap } from 'components/widgets/actions';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
-  category => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
-    dispatch({
-      type,
-      payload,
+  (category) => () => {
+    const { query, pathname, pushQuery } = useRouter();
+
+    pushQuery({
+      pathname,
       query: {
         ...query,
         category,
-        widget: undefined
-      }
+        widget: undefined,
+      },
     });
   }
 );
 
 export const handleLocationChange = createThunkAction(
   'handleLocationChange',
-  location => (dispatch, getState) => {
-    const { query, type, payload } = getState().location || {};
+  (location) => (dispatch, getState) => {
+    const { type, payload, query } = getState().location || {};
+    const { pathname, pushQuery } = useRouter();
+
     const { data, layer } = location || {};
     const newQuery = {};
 
     if (query) {
-      Object.keys(query).forEach(key => {
+      Object.keys(query).forEach((key) => {
         const queryObj = query[key] || {};
         if (typeof queryObj === 'object') {
           const { forestType, landCategory, page } = queryObj;
           newQuery[key] = {
             ...queryObj,
             ...(forestType && {
-              forestType: ''
+              forestType: '',
             }),
             ...(landCategory && {
-              landCategory: ''
+              landCategory: '',
             }),
             ...(page && {
-              page: 0
-            })
+              page: 0,
+            }),
           };
         } else {
           newQuery[key] = queryObj;
@@ -56,18 +62,18 @@ export const handleLocationChange = createThunkAction(
       if (analysisEndpoint === 'admin') {
         newPayload = {
           type: payload.type === 'global' ? 'country' : payload.type,
-          ...getLocationFromData(data)
+          ...getLocationFromData(data),
         };
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         newPayload = {
           type: analysisEndpoint,
-          adm0: wdpaid || cartodb_id
+          adm0: wdpaid || cartodb_id,
         };
       } else if (cartodb_id && tableName) {
         newPayload = {
           type: 'use',
           adm0: tableName,
-          adm1: cartodb_id
+          adm1: cartodb_id,
         };
       }
     } else {
@@ -77,61 +83,52 @@ export const handleLocationChange = createThunkAction(
           payload.type === 'global' || !location.adm0
             ? newAdminType
             : payload.type,
-        ...location
+        ...location,
       };
     }
 
-    dispatch({
-      type,
-      payload: newPayload,
+    pushQuery({
+      pathname,
       query: {
         ...newQuery,
+        location: Object.values(newPayload),
         widget: undefined,
         map: {
           ...(query && query.map),
-          canBound: true
-        }
-      }
+          canBound: true,
+        },
+      },
     });
 
-    track('changeDashboardLocation', { label: `${type === 'global' ? type : ''}${newPayload.adm0 ? ` ${newPayload.adm0}` : ''}${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${newPayload.adm2 ? `.${newPayload.adm2}` : ''}` });
+    track('changeDashboardLocation', {
+      label: `${type === 'global' ? type : ''}${
+        newPayload.adm0 ? ` ${newPayload.adm0}` : ''
+      }${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${
+        newPayload.adm2 ? `.${newPayload.adm2}` : ''
+      }`,
+    });
 
     dispatch(
       setDashboardPromptsSettings({
         open: true,
         stepIndex: 0,
-        stepsKey: 'dashboardAnalyses'
+        stepsKey: 'dashboardAnalyses',
       })
     );
   }
 );
 
-export const closeMobileMap = createThunkAction(
-  'setActiveWidget',
-  () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        showMap: undefined
-      }
-    });
-  }
-);
+export const closeMobileMap = createThunkAction('closeMobileMap', () => () => {
+  setShowMap(false);
+});
 
-export const clearScrollTo = createThunkAction(
-  'clearScrollTo',
-  () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
-    dispatch({
-      type,
-      payload,
-      query: {
-        ...query,
-        scrollTo: false
-      }
-    });
-  }
-);
+export const clearScrollTo = createThunkAction('clearScrollTo', () => () => {
+  const { query, pathname, pushQuery } = useRouter();
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      scrollTo: false,
+    },
+  });
+});
