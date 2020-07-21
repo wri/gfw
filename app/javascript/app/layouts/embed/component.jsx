@@ -23,6 +23,7 @@ class App extends PureComponent {
     title: PropTypes.string,
     description: PropTypes.string,
     keywords: PropTypes.string,
+    exploreLink: PropTypes.string,
   };
 
   componentDidMount() {
@@ -48,6 +49,7 @@ class App extends PureComponent {
       description,
       keywords,
       router,
+      exploreLink,
     } = this.props;
 
     const isGFW = router?.query?.gfw;
@@ -78,7 +80,10 @@ class App extends PureComponent {
                 <Button
                   className="embed-btn"
                   extLink={
-                    !isServer && window.location.href.replace('/embed', '')
+                    exploreLink ||
+                    (!isServer
+                      ? window.location.href.replace('/embed', '')
+                      : '')
                   }
                 >
                   EXPLORE ON GFW

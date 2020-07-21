@@ -22,6 +22,9 @@ const getLocationFromParams = (url, params) => {
       adm0: isNaN(adm0) ? adm0 : parseInt(adm0, 10),
       adm1: isNaN(adm1) ? adm1 : parseInt(adm1, 10),
       adm2: isNaN(adm2) ? adm2 : parseInt(adm2, 10),
+      ...(params.widget && {
+        widget: params.widget,
+      }),
     };
   }
 
