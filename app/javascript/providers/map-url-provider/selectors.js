@@ -8,6 +8,7 @@ export const selectMetaModalKey = (state) => state.modalMeta?.metakey;
 export const selectRecentImagerySettings = (state) =>
   state.recentImagery?.settings;
 export const selectMapPromptsSettings = (state) => state.mapPrompts?.settings;
+export const selectAOIModalSettings = (state) => state.areaOfInterestModal;
 
 export const getUrlParams = createSelector(
   [
@@ -18,8 +19,9 @@ export const getUrlParams = createSelector(
     selectMetaModalKey,
     selectRecentImagerySettings,
     selectMapPromptsSettings,
+    selectAOIModalSettings,
   ],
-  (map, mainMap, mapMenu, analysis, modalMeta, recentImagery, mapPrompts) => ({
+  (
     map,
     mainMap,
     mapMenu,
@@ -27,6 +29,16 @@ export const getUrlParams = createSelector(
     modalMeta,
     recentImagery,
     mapPrompts,
+    areaOfInterestModal
+  ) => ({
+    map,
+    mainMap,
+    mapMenu,
+    analysis,
+    modalMeta,
+    recentImagery,
+    mapPrompts,
+    areaOfInterestModal,
   })
 );
 

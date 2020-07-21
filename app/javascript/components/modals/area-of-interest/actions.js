@@ -1,13 +1,5 @@
-import useRouter from 'utils/router';
+import { createAction } from 'utils/redux';
 
-export const setAreaOfInterestModalOpen = (areaId) => {
-  const { query, pathname, pushQuery } = useRouter();
-
-  pushQuery({
-    pathname,
-    query: {
-      ...query,
-      areaId: areaId || null,
-    },
-  });
-};
+export const setAreaOfInterestModalSettings = createAction(
+  'setAreaOfInterestModalSettings'
+);

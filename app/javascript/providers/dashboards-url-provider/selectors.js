@@ -6,6 +6,7 @@ export const selectDashboardPrompts = (state) =>
   state.dashboardPrompts?.settings;
 export const selectWidgetSettings = (state) => state.widgets?.settings;
 export const selectWidgetsCategory = (state) => state.widgets?.category;
+export const selectAOIModalSettings = (state) => state.areaOfInterestModal;
 
 export const getUrlParams = createSelector(
   [
@@ -14,14 +15,23 @@ export const getUrlParams = createSelector(
     selectDashboardPrompts,
     selectWidgetSettings,
     selectWidgetsCategory,
+    selectAOIModalSettings,
   ],
-  (map, modalMeta, dashboardPrompts, widgetsSettings, category) => {
+  (
+    map,
+    modalMeta,
+    dashboardPrompts,
+    widgetsSettings,
+    category,
+    areaOfInterestModal
+  ) => {
     return {
       map,
       modalMeta,
       dashboardPrompts,
       ...widgetsSettings,
       category,
+      areaOfInterestModal,
     };
   }
 );

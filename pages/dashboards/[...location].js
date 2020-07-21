@@ -12,6 +12,7 @@ import {
   setWidgetsSettings,
   setWidgetsCategory,
 } from 'components/widgets/actions';
+import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 
 import { getLocationData } from 'services/location';
 
@@ -60,8 +61,14 @@ const DashboardsPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useDeepCompareEffect(() => {
-    const { map, modalMeta, dashboardPrompts, category, ...widgets } =
-      decodeParamsForState(query) || {};
+    const {
+      map,
+      modalMeta,
+      dashboardPrompts,
+      category,
+      areaOfInterestModal,
+      ...widgets
+    } = decodeParamsForState(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
@@ -81,6 +88,10 @@ const DashboardsPage = (props) => {
 
     if (category) {
       dispatch(setWidgetsCategory(category));
+    }
+
+    if (areaOfInterestModal) {
+      dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
     }
   }, [{ fullPathname, queryPushed: query.pushed }]);
 

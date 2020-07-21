@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { track } from 'app/analytics';
 
-import { setAreaOfInterestModalOpen } from 'components/modals/area-of-interest/actions';
-
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
@@ -31,6 +29,7 @@ class AnalysisComponent extends PureComponent {
     embed: PropTypes.bool,
     search: PropTypes.string,
     setSubscribeSettings: PropTypes.func,
+    setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func,
     checkingShape: PropTypes.bool,
     areaTooLarge: PropTypes.bool,
@@ -52,6 +51,7 @@ class AnalysisComponent extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
+      setAreaOfInterestModalSettings,
       endpoints,
       widgetLayers,
       embed,
@@ -166,8 +166,7 @@ class AnalysisComponent extends PureComponent {
               {(!activeArea || (activeArea && !activeArea.userArea)) && (
                 <Button
                   className="analysis-action-btn save-to-mygfw-btn"
-                  onClick={() =>
-                    setAreaOfInterestModalOpen(activeArea?.id || true)}
+                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
                   disabled={areaTooLarge}
                   {...(areaTooLarge && {
                     tooltip: {

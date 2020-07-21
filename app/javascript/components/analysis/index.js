@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual';
 import { cancelToken } from 'utils/request';
 import reducerRegistry from 'app/registry';
 
+import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 import { setShareModal } from 'components/modals/share/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -95,6 +96,8 @@ reducerRegistry.registerModule('analysis', {
   initialState,
 });
 
-export default connect(getAnalysisProps, { ...actions, setShareModal })(
-  AnalysisContainer
-);
+export default connect(getAnalysisProps, {
+  ...actions,
+  setAreaOfInterestModalSettings,
+  setShareModal,
+})(AnalysisContainer);

@@ -6,8 +6,6 @@ import LoginForm from 'components/forms/login';
 import ProfileForm from 'components/forms/profile';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
 
-import { setAreaOfInterestModalOpen } from './actions';
-
 import Modal from '../modal';
 
 import './styles.scss';
@@ -21,11 +19,12 @@ class AreaOfInterestModal extends PureComponent {
     setMenuSettings: PropTypes.func,
     viewAfterSave: PropTypes.bool,
     activeArea: PropTypes.object,
+    setAreaOfInterestModalSettings: PropTypes.func,
   };
 
   handleCloseModal = () => {
-    const { setMenuSettings } = this.props;
-    setAreaOfInterestModalOpen(null);
+    const { setMenuSettings, setAreaOfInterestModalSettings } = this.props;
+    setAreaOfInterestModalSettings({ open: false, activeAreaId: null });
     setMenuSettings({ menuSection: 'my-gfw' });
   };
 

@@ -6,8 +6,6 @@ import slice from 'lodash/slice';
 import { deburrUpper } from 'utils/data';
 import Link from 'next/link';
 
-import { setAreaOfInterestModalOpen } from 'components/modals/area-of-interest/actions';
-
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import AoICard from 'components/aoi-card';
@@ -31,6 +29,7 @@ class AreasTable extends PureComponent {
     areas: PropTypes.array,
     tags: PropTypes.array,
     viewArea: PropTypes.func,
+    setAreaOfInterestModalSettings: PropTypes.func,
     setShareModal: PropTypes.func,
   };
 
@@ -60,7 +59,13 @@ class AreasTable extends PureComponent {
   };
 
   render() {
-    const { viewArea, setShareModal, areas, tags } = this.props;
+    const {
+      viewArea,
+      setAreaOfInterestModalSettings,
+      setShareModal,
+      areas,
+      tags,
+    } = this.props;
     const {
       activeTags,
       search,
@@ -256,7 +261,11 @@ class AreasTable extends PureComponent {
                   <Button
                     className="area-link"
                     theme="theme-button-clear"
-                    onClick={() => setAreaOfInterestModalOpen(area?.id || true)}
+                    onClick={() =>
+                      setAreaOfInterestModalSettings({
+                        open: true,
+                        activeAreaId: area.id,
+                      })}
                   >
                     <Icon className="link-icon" icon={editIcon} />
                     edit

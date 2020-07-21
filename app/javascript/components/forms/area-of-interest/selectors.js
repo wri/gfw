@@ -5,7 +5,8 @@ import compact from 'lodash/compact';
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
-const selectAreaOfInterestId = (state) => state.location?.query?.areaId;
+const selectAreaOfInterestModalState = (state) =>
+  state.areaOfInterestModal?.activeAreaId;
 const selectLoading = (state) => state.areas && state.areas.loading;
 const selectLoggedIn = (state) =>
   state.myGfw && state.myGfw.data && state.myGfw.data.loggedIn;
@@ -15,7 +16,7 @@ const selectGeostoreId = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.id;
 
 export const getActiveArea = createSelector(
-  [selectLocation, selectAreaOfInterestId, getAllAreas],
+  [selectLocation, selectAreaOfInterestModalState, getAllAreas],
   (location, areaId, areas) => {
     if (isEmpty(areas)) return null;
     let activeAreaId = areaId;
