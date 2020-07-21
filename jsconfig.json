@@ -3,16 +3,16 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
-      "app/*": ["app/javascript/app/*"],
-      "analytics/*": ["app/javascript/analytics/*"],
-      "assets/*": ["app/javascript/assets/*"],
-      "components/*": ["app/javascript/components/*"],
-      "data/*": ["app/javascript/data/*"],
-      "pages/*": ["app/javascript/pages/*"],
-      "providers/*": ["app/javascript/providers/*"],
-      "services/*": ["app/javascript/services/*"],
-      "styles/*": ["app/javascript/styles/*"],
-      "utils/*": ["app/javascript/utils/*"],
+      "app/*": ["app/*"],
+      "analytics/*": ["analytics/*"],
+      "assets/*": ["assets/*"],
+      "components/*": ["components/*"],
+      "data/*": ["static/*"],
+      "pages/*": ["layouts/*"],
+      "providers/*": ["providers/*"],
+      "services/*": ["services/*"],
+      "styles/*": ["styles/*"],
+      "utils/*": ["utils/*"],
     }
   }
 }
