@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import reducers, { initialState } from './reducers';
 import * as actions from './actions';

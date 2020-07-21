@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { handlePageTrack } from 'app/analytics';
+import { handlePageTrack } from 'analytics';
 
 import treeImage from 'assets/icons/error.svg?sprite';
 import Search from 'components/ui/search';

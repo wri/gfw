@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import { Media } from 'utils/responsive';
 

@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import moment from 'moment';
 
 import TimelineComponent from './component';

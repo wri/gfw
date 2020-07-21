@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { initGA, handlePageTrack } from 'app/analytics';
+import { initGA, handlePageTrack } from 'analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
@@ -15,7 +15,7 @@ import NavLink from 'components/nav-link';
 import ClimateModal from 'components/modals/climate';
 import FiresModal from 'components/modals/fires';
 
-import Head from 'app/head';
+import Head from 'layouts/head';
 
 import 'styles/styles.scss';
 import './styles.scss';

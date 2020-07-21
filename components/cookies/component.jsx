@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import Button from 'components/ui/button';
 
 import './styles.scss';

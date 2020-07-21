@@ -1,4 +1,4 @@
-import Layout from 'app/layouts/root';
+import Layout from 'layouts/page';
 import Subscribe from 'pages/subscribe';
 
 export default () => (

@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'utils/redux';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import { getNonGlobalDatasets } from 'services/analysis-cached';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';

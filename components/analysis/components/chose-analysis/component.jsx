@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import cx from 'classnames';
 import { Media } from 'utils/responsive';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import { format } from 'd3-format';
 
 import Button from 'components/ui/button';
@@ -154,7 +154,7 @@ class ChoseAnalysis extends PureComponent {
           {!hasError && !uploading && (
             <Fragment>
               <p>
-                Drag and drop your 
+                Drag and drop your
                 {' '}
                 <b>polygon data file</b>
                 {' '}

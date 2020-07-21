@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { LegendItemTimeStep } from 'vizzuality-components';
 
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import Datepicker from 'components/ui/datepicker';
 

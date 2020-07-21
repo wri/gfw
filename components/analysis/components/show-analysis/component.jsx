@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import Link from 'next/link';
 
 import Icon from 'components/ui/icon';

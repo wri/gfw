@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import WidgetComponent from './component';
 

@@ -1,7 +1,7 @@
 import { createAction, createThunkAction } from 'utils/redux';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import useRouter from 'utils/router';
 
 import { fetchUmdLossGain } from 'services/analysis';

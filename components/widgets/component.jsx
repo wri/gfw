@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';

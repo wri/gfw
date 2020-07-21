@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';

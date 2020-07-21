@@ -4,7 +4,7 @@ import Sticky from 'react-stickynode';
 import isEqual from 'lodash/isEqual';
 
 import { Media } from 'utils/responsive';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';

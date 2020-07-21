@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import cx from 'classnames';
 
 import Button from 'components/ui/button';

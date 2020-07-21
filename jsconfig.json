@@ -3,16 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
-      "app/*": ["app/*"],
-      "analytics/*": ["analytics/*"],
-      "assets/*": ["assets/*"],
-      "components/*": ["components/*"],
       "data/*": ["static/*"],
       "pages/*": ["layouts/*"],
-      "providers/*": ["providers/*"],
-      "services/*": ["services/*"],
-      "styles/*": ["styles/*"],
-      "utils/*": ["utils/*"],
     }
   }
 }

@@ -11,7 +11,7 @@ import {
   POLITICAL_BOUNDARIES,
 } from 'data/layers';
 
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { setMapSettings as setMapState } from 'components/map/actions';

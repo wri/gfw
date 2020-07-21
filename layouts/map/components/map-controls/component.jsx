@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import plusIcon from 'assets/icons/plus.svg?sprite';
 import minusIcon from 'assets/icons/minus.svg?sprite';
@@ -346,7 +346,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon: 
+          lat, lon:
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>

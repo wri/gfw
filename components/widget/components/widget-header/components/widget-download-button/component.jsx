@@ -8,7 +8,7 @@ import moment from 'moment';
 import { saveAs } from 'file-saver';
 import cx from 'classnames';
 
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 

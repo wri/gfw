@@ -1,4 +1,4 @@
-import Layout from 'app/layouts/root';
+import Layout from 'layouts/page';
 import ThankYou from 'pages/thank-you';
 
 export default () => (

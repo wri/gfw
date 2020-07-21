@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import { track } from 'app/analytics';
-import reducerRegistry from 'app/registry';
+import { track } from 'analytics';
+import reducerRegistry from 'store/registry';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';

@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import * as modalActions from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';

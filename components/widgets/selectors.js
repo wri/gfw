@@ -15,7 +15,7 @@ import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/select
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation } from 'utils/location';
 
-import { getIsTrase, selectActiveLang } from 'app/layouts/root/selectors';
+import { getIsTrase, selectActiveLang } from 'layouts/page/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';

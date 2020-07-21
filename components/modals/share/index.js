@@ -1,8 +1,8 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'app/analytics';
-import reducerRegistry from 'app/registry';
+import { track } from 'analytics';
+import reducerRegistry from 'store/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';

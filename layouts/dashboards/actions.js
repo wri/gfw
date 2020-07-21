@@ -2,7 +2,7 @@ import { createThunkAction } from 'utils/redux';
 import { getLocationFromData } from 'utils/format';
 import useRouter from 'utils/router';
 
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { setShowMap } from 'components/widgets/actions';

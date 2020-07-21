@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import { BIOMASS_LOSS_DATASET } from 'data/layers-datasets';
 

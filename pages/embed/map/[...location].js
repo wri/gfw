@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
 
-import LayoutEmbed from 'app/layouts/embed';
+import LayoutEmbed from 'layouts/embed';
 import Map from 'pages/map';
 
 import { decodeParamsForState } from 'utils/stateToUrl';

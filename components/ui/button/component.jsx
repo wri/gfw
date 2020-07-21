@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import './styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line

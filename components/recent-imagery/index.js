@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import { cancelToken } from 'utils/request';
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import { setMapSettings } from 'components/map/actions';
 import * as ownActions from './actions';

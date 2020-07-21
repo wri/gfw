@@ -1,4 +1,4 @@
-import Layout from 'app/layouts/root';
+import Layout from 'layouts/page';
 import Terms from 'pages/terms';
 
 export default () => (

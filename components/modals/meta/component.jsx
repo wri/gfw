@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';

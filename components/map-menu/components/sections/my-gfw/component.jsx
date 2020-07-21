@@ -6,7 +6,7 @@ import slice from 'lodash/slice';
 import { logout } from 'services/user';
 import Link from 'next/link';
 
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';

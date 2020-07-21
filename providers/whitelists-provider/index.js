@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 import { CancelToken } from 'axios';
 
 import { getDataLocation } from 'utils/location';

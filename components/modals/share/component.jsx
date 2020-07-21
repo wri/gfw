@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import twitterIcon from 'assets/icons/twitter.svg?sprite';
 import facebookIcon from 'assets/icons/facebook.svg?sprite';

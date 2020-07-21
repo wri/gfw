@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Layout from 'app/layouts/root';
+import Layout from 'layouts/page';
 import ConfirmationMessage from 'components/confirmation-message';
 
 import './styles.scss';

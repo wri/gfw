@@ -1,5 +1,5 @@
 import { createThunkAction, createAction } from 'utils/redux';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 export const setShowDashboardPrompts = createAction('setShowDashboardPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');

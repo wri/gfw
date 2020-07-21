@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import lottie from 'lottie-web';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';

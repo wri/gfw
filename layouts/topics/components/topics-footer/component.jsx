@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import Link from 'next/link';
 
 import { Footer } from 'gfw-components';

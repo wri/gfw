@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { isTouch } from 'utils/browser';
 import cx from 'classnames';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import moment from 'moment';
 import lowerCase from 'lodash/lowerCase';
 

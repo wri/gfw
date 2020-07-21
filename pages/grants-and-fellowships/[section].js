@@ -5,7 +5,7 @@ import capitalize from 'lodash/capitalize';
 import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-import Layout from 'app/layouts/root';
+import Layout from 'layouts/page';
 import GrantsAndFellowships from 'pages/sgf';
 import SgfUrlProvider from 'providers/sgf-url-provider';
 

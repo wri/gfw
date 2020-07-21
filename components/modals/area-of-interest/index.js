@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { setMenuSettings } from 'components/map-menu/actions';
 
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import Component from './component';
 import reducers, { initialState } from './reducers';

@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import { handleMapLatLonTrack, track } from 'app/analytics';
+import { handleMapLatLonTrack, track } from 'analytics';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';

@@ -1,5 +1,5 @@
 import { apiAuthRequest, apiRequest } from 'utils/request';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 const REQUEST_URL = '/v2/area';
 

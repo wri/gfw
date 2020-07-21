@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';

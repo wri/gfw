@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';

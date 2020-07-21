@@ -1,5 +1,5 @@
 import { createThunkAction, createAction } from 'utils/redux';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import useRouter from 'utils/router';
 
 import { setMenuSettings } from 'components/map-menu/actions';

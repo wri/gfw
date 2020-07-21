@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 

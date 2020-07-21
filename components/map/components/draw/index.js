@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 
 import './styles.scss';
 

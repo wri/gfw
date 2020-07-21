@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { initGA, handlePageTrack } from 'app/analytics';
+import { initGA, handlePageTrack } from 'analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Button from 'components/ui/button';
 import gfwLogo from 'assets/logos/gfw.png';
 
-import Head from 'app/head';
+import Head from 'layouts/head';
 
 import 'styles/styles.scss';
 import './styles.scss';

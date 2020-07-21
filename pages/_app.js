@@ -4,9 +4,9 @@ import App from 'next/app';
 import finallyShim from 'promise.prototype.finally';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import makeStore from 'app/store';
+import makeStore from 'store';
 
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 import MyGFWProvider from 'providers/mygfw-provider';
 import LocationProvider from 'providers/location-provider';
 

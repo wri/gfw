@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { selectActiveLang } from 'app/layouts/root/selectors';
+import { selectActiveLang } from 'layouts/page/selectors';
 
 import Component from './component';
 

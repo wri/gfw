@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'app/registry';
+import reducerRegistry from 'store/registry';
 
 import {
   setMapPromptsSettings,

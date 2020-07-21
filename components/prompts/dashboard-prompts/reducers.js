@@ -1,4 +1,4 @@
-import { track } from 'app/analytics';
+import { track } from 'analytics';
 import * as actions from './actions';
 
 const isServer = typeof window === 'undefined';

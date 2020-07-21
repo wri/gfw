@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-import LayoutEmbed from 'app/layouts/embed';
+import LayoutEmbed from 'layouts/embed';
 import WidgetEmbed from 'pages/dashboards/components/embed';
 import ConfirmationMessage from 'components/confirmation-message';
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';
