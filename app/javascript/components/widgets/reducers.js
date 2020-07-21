@@ -35,6 +35,7 @@ const setShowMap = (state, { payload }) => ({
 const setWidgetsCategory = (state, { payload }) => ({
   ...state,
   category: payload,
+  activeWidget: '',
 });
 
 const setWidgetsSettings = (state, { payload }) => ({
