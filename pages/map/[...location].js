@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import useRouter from 'utils/router';
@@ -45,7 +44,7 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-const MapPage = ({ urlParams, ...props }) => {
+const MapPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
   const { query, asPath } = useRouter();
@@ -105,10 +104,6 @@ const MapPage = ({ urlParams, ...props }) => {
       {ready && <Map />}
     </Layout>
   );
-};
-
-MapPage.propTypes = {
-  urlParams: PropTypes.object,
 };
 
 export default MapPage;
