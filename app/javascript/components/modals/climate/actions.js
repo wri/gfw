@@ -11,3 +11,16 @@ export const setModalClimateOpen = (open) => {
     },
   });
 };
+
+export const setContactUsOpen = () => {
+  const { query, pathname, pushQuery } = useRouter();
+
+  pushQuery({
+    pathname,
+    query: {
+      ...query,
+      gfwfires: null,
+      contactUs: true,
+    },
+  });
+};

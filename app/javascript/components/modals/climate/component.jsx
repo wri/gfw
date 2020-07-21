@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
-import { setModalClimateOpen } from './actions';
+import { setModalClimateOpen, setContactUsOpen } from './actions';
 import Modal from '../modal';
 
 import './styles.scss';
@@ -29,8 +28,7 @@ class ModalGFWClimate extends PureComponent {
             <a
               href=""
               onClick={() => {
-                setModalClimateOpen(false);
-                setModalContactUsOpen(true);
+                setContactUsOpen();
               }}
             >
               contact us

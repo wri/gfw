@@ -63,6 +63,7 @@ const nextConfig = {
       ];
     },
   },
+  exportTrailingSlash: true,
 };
 
 module.exports = withPlugins(
