@@ -4,6 +4,9 @@ import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
 import useRouter from 'utils/router';
 
+import { setMapSettings } from 'components/map/actions';
+import { setAnalysisSettings } from 'components/analysis/actions';
+
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
 export const setMenuSettings = createAction('setMenuSettings');
@@ -94,34 +97,21 @@ export const handleClickLocation = createThunkAction(
 
 export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
-  ({ analysis, mapMenu, map, mergeQuery }) => () => {
-    const { query, pushQuery } = useRouter();
+  ({ analysis, mapMenu, map }) => (dispatch) => {
+    if (map) {
+      dispatch(setMapSettings({ ...map, canBound: true }));
+    }
 
-    pushQuery({
-      pathname: '/map/[...location]',
-      query: {
-        ...query,
-        location: ['global'],
-        ...(map && {
-          map: {
-            ...(mergeQuery && query?.map),
-            ...map,
-            canBound: true,
-          },
-        }),
-        mapMenu: {
-          ...(mergeQuery && query?.mapMenu),
-          ...mapMenu,
-          menuSection: '',
-        },
-        ...(analysis && {
-          analysis: {
-            ...(mergeQuery && query?.analysis),
-            ...analysis,
-          },
-        }),
-      },
-    });
+    dispatch(
+      setMenuSettings({
+        ...mapMenu,
+        menuSection: '',
+      })
+    );
+
+    if (analysis) {
+      dispatch(setAnalysisSettings(analysis));
+    }
   }
 );
 
