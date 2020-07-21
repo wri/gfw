@@ -1,10 +1,21 @@
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
-import Layout from 'app/layouts/root';
-import ConfirmationMessage from 'components/confirmation-message';
-import Dashboards from 'pages/dashboards';
+import useRouter from 'utils/router';
+
+import { setMapSettings } from 'components/map/actions';
+import { setModalMetaSettings } from 'components/modals/meta/actions';
 
 import { getLocationData } from 'services/location';
+
+import { decodeParamsForState } from 'utils/stateToUrl';
+
+import Layout from 'app/layouts/root';
+import Dashboards from 'pages/dashboards';
+import ConfirmationMessage from 'components/confirmation-message';
+import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
 export const getServerSideProps = async (ctx) => {
   const isGlobal = ctx?.params?.location?.[0] === 'global';
@@ -37,15 +48,45 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-const DashboardsPage = (props) => (
-  <Layout {...props}>
-    {props?.title === 'Dashboard not found' ? (
-      <ConfirmationMessage title="Dashboard not found" error large />
-    ) : (
-      <Dashboards />
-    )}
-  </Layout>
-);
+const DashboardsPage = (props) => {
+  const dispatch = useDispatch();
+  const [ready, setReady] = useState(false);
+  const { query, asPath } = useRouter();
+  const fullPathname = asPath?.split('?')?.[0];
+
+  useDeepCompareEffect(() => {
+    const { map, modalMeta } = decodeParamsForState(query) || {};
+
+    if (map) {
+      dispatch(setMapSettings(map));
+    }
+
+    if (modalMeta) {
+      dispatch(setModalMetaSettings(modalMeta));
+    }
+  }, [{ fullPathname, queryPushed: query.pushed }]);
+
+  // when setting the query params from the URL we need to make sure we don't render the map
+  // on the server otherwise the DOM will be out of sync
+  useEffect(() => {
+    if (!ready) {
+      setReady(true);
+    }
+  });
+
+  return (
+    <Layout {...props}>
+      {props?.title === 'Dashboard not found' ? (
+        <ConfirmationMessage title="Dashboard not found" error large />
+      ) : (
+        <>
+          <Dashboards />
+          <DashboardsUrlProvider />
+        </>
+      )}
+    </Layout>
+  );
+};
 
 DashboardsPage.propTypes = {
   title: PropTypes.string,
