@@ -4,7 +4,7 @@
 dynamic online forest monitoring and alert system that empowers people
 everywhere to better manage forests. This repository contains the GFW web app.
 
-![Global forest watch map](/public/preview.png?raw=true "Global Forest Watch")
+![Global forest watch map](/public/preview.jpg?raw=true "Global Forest Watch")
 
 # Getting started
 
