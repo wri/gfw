@@ -4,9 +4,9 @@
 dynamic online forest monitoring and alert system that empowers people
 everywhere to better manage forests. This repository contains the GFW web app.
 
-![Global forest watch map](public/preview.png?raw=true "Global Forest Watch")
+![Global forest watch map](/public/preview.png?raw=true "Global Forest Watch")
 
-# Developing
+# Getting started
 
 The GFW web app is built with [Nextjs](https://nextjs.org/), [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
 
@@ -32,7 +32,7 @@ $ yarn dev
 
 The app should now be accessible on [http://0.0.0.0:3000](http://0.0.0.0:3000).
 
-## Deployment
+## Developing
 
 We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the staging site. Additionally you can deploy `develop` or feature branches to staging if desired.
 
@@ -56,12 +56,6 @@ So how do you make a release on GFW?
 5. Enter your title and include any extra info you want.
 6. Publish!
 
-### BrowserStack
-
-We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
-
-<a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" /></a>
-
 # RW API Documentation for GFW
 
 Map layers and relevent datasets are stored in the [RW-API](http://api.resourcewatch.org/) and the `globalforestwatch.org/map` utilises the [layer-manager](https://github.com/Vizzuality/layer-manager) to render them.
@@ -73,3 +67,9 @@ When creating or modifying layers/datasets for GFW, follow the schema and syntax
 To view GFW-specific layers and datasets use the following endpoint:
 
 https://api.resourcewatch.org/v1/dataset?app=gfw&includes=layer,vocabulary,metadata&page[size]=200
+
+### BrowserStack
+
+We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browser issues.
+
+<a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" /></a>
