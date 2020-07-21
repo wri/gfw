@@ -13,7 +13,6 @@ import { getColorPalette } from 'utils/data';
 import {
   getCumulativeStatsData,
   getDatesData,
-  getPeriodVariance,
   getChartConfig
 } from 'components/widgets/utils/data';
 
@@ -436,29 +435,49 @@ export const parseSentence = createSelector(
     const slicedData = data.filter(
       el => el.date >= firstDate.date && el.date <= lastDate.date
     );
-    const variance = getPeriodVariance(slicedData, raw_data);
 
     const maxWeek = maxBy(raw_data, 'count');
     const maxTotal = maxWeek.count;
     const maxYear = maxWeek.year;
-    const maxCount = maxBy(slicedData, 'count');
-    const total = maxCount && maxCount.count ? maxCount.count : 0;
+    const maxCountCurrentYear =
+      slicedData.length > 0 ? slicedData[slicedData.length - 1] : [];
+    const totalCurrentYear =
+      maxCountCurrentYear && maxCountCurrentYear.count
+        ? maxCountCurrentYear.count
+        : 0;
+    const mean =
+      maxCountCurrentYear && maxCountCurrentYear.mean
+        ? maxCountCurrentYear.mean
+        : 0;
+    const stdDev =
+      maxCountCurrentYear && maxCountCurrentYear.stdDev
+        ? maxCountCurrentYear.stdDev
+        : 0;
 
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
     const { date } = lastDate || {};
 
     let status = 'unusually low';
-    if (variance > 2) {
+    if (totalCurrentYear > 2 * stdDev + mean) {
       status = 'unusually high';
       statusColor = colorRange[0];
-    } else if (variance <= 2 && variance > 1) {
+    } else if (
+      totalCurrentYear <= 2 * stdDev + mean &&
+      totalCurrentYear > 1 * stdDev + mean
+    ) {
       status = 'high';
       statusColor = colorRange[2];
-    } else if (variance <= 1 && variance > -1) {
+    } else if (
+      totalCurrentYear <= 1 * stdDev + mean &&
+      totalCurrentYear > -1 * stdDev + mean
+    ) {
       status = 'normal';
       statusColor = colorRange[4];
-    } else if (variance <= -1 && variance > -2) {
+    } else if (
+      totalCurrentYear <= -1 * stdDev + mean &&
+      totalCurrentYear > -2 * stdDev + mean
+    ) {
       status = 'low';
       statusColor = colorRange[6];
     }
@@ -486,7 +505,7 @@ export const parseSentence = createSelector(
       },
       dataset: dataset.toUpperCase(),
       count: {
-        value: total ? format(',')(total) : 0,
+        value: totalCurrentYear ? format(',')(totalCurrentYear) : 0,
         color: colors.main
       },
       status: {
