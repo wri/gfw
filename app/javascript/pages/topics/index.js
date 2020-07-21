@@ -53,8 +53,7 @@ const mapStateToProps = ({ location }) => ({
         label: r.label,
         href: '/topics/[topic]',
         as: `/topics/${r.component}`,
-        activeShallow:
-          !location?.payload?.topic && r.component === 'biodiversity',
+        activeShallow: location?.payload?.topic === r.component,
       }))
     : [],
 });
