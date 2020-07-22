@@ -14,8 +14,7 @@ import {
 import CATEGORIES from 'data/categories.json';
 
 // get list data
-const selectShowMap = (state) =>
-  state.location && state.location.query && !!state.location.query.showMap;
+const selectShowMap = (state) => state.widgets?.showMap;
 const selectLocation = (state) => state.location;
 const selectAreaError = (state) => state.areas && state.areas.error;
 const selectLocationType = (state) =>

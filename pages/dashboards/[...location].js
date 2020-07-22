@@ -10,6 +10,7 @@ import { setDashboardPrompts } from 'components/prompts/dashboard-prompts/action
 import {
   setWidgetsSettings,
   setWidgetsCategory,
+  setShowMap,
 } from 'components/widgets/actions';
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 
@@ -66,6 +67,7 @@ const DashboardsPage = (props) => {
       dashboardPrompts,
       category,
       areaOfInterestModal,
+      showMap,
       ...widgets
     } = decodeParamsForState(query) || {};
 
@@ -91,6 +93,10 @@ const DashboardsPage = (props) => {
 
     if (areaOfInterestModal) {
       dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
+    }
+
+    if (showMap) {
+      dispatch(setShowMap(showMap));
     }
   }, [fullPathname]);
 

@@ -5,7 +5,6 @@ import useRouter from 'utils/router';
 import { track } from 'analytics';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
-import { setShowMap } from 'components/widgets/actions';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
@@ -117,10 +116,6 @@ export const handleLocationChange = createThunkAction(
     );
   }
 );
-
-export const closeMobileMap = createThunkAction('closeMobileMap', () => () => {
-  setShowMap(false);
-});
 
 export const clearScrollTo = createThunkAction('clearScrollTo', () => () => {
   const { query, pathname, pushQuery } = useRouter();

@@ -39,7 +39,7 @@ const isServer = typeof window === 'undefined';
 class DashboardsPage extends PureComponent {
   static propTypes = {
     showMapMobile: PropTypes.bool,
-    closeMobileMap: PropTypes.func.isRequired,
+    setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     setWidgetsCategory: PropTypes.func,
@@ -108,7 +108,7 @@ class DashboardsPage extends PureComponent {
   };
 
   renderMap = () => {
-    const { showMapMobile, closeMobileMap } = this.props;
+    const { showMapMobile, setShowMap } = this.props;
 
     return (
       <div className="map-container">
@@ -116,7 +116,7 @@ class DashboardsPage extends PureComponent {
           <Button
             theme="square theme-button-light"
             className="close-map-button"
-            onClick={closeMobileMap}
+            onClick={() => setShowMap(false)}
           >
             <Icon icon={closeIcon} />
           </Button>
@@ -196,7 +196,9 @@ class DashboardsPage extends PureComponent {
                   {this.renderMap()}
                 </Sticky>
               </Media>
-              <Media lessThan="md">{this.renderMap()}</Media>
+              <Media lessThan="md" className="mobile-map">
+                {this.renderMap()}
+              </Media>
             </div>
             <MapControls className="map-controls" />
             <Share />

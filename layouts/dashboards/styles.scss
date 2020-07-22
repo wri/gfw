@@ -30,6 +30,10 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     }
   }
 
+  .mobile-map {
+    height: 100%;
+  }
+
   .map-panel {
     height: calc(100% - 56px);
     position: fixed;
