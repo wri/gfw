@@ -31,8 +31,8 @@
   &.-full-screen {
     .page {
       margin-top: 0;
-      height: calc(100% - 50px);
-      min-height: calc(100% - 50px);
+      height: 100%;
+      min-height: 100%;
       position: fixed;
       width: 100%;
       background-color: $ocean;
