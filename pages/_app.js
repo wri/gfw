@@ -6,8 +6,6 @@ import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import makeStore from 'store';
 
-import { GlobalStyles } from 'gfw-components';
-
 import reducerRegistry from 'store/registry';
 import MyGFWProvider from 'providers/mygfw-provider';
 import LocationProvider from 'providers/location-provider';
@@ -32,7 +30,6 @@ class MyApp extends App {
 
     return (
       <Provider store={this.store}>
-        <GlobalStyles />
         <MyGFWProvider />
         <LocationProvider />
         <Component {...pageProps} />
