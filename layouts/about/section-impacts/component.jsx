@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Carousel from 'components/ui/carousel';
+import { Carousel } from 'gfw-components';
+
 import Card from 'components/ui/card';
 
 import './styles.scss';

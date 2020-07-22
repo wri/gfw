@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modals/modal';
 import ReactHtmlParser from 'react-html-parser';
-import Carousel from 'components/ui/carousel';
+
+import { Carousel } from 'gfw-components';
 
 import './styles.scss';
 

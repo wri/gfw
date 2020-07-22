@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 
-import Carousel from 'components/ui/carousel';
+import { Carousel } from 'gfw-components';
+
 import img1997 from 'pages/about/section-history/images/1997.jpg?webp';
 import img2002 from 'pages/about/section-history/images/2002.jpg?webp';
 import img2004 from 'pages/about/section-history/images/2004.jpg?webp';

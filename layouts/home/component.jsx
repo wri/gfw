@@ -6,10 +6,11 @@ import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
 
+import { Carousel } from 'gfw-components';
+
 import Cover from 'components/cover';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import Carousel from 'components/ui/carousel';
 import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
