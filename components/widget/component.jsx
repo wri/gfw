@@ -40,7 +40,7 @@ class Widget extends PureComponent {
     parseInteraction: PropTypes.func,
     handleRefetchData: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
-    showAttribution: PropTypes.bool,
+    showAttributionLink: PropTypes.bool,
     statements: PropTypes.array,
     getDataURL: PropTypes.func,
     onClickWidget: PropTypes.func,
@@ -52,11 +52,11 @@ class Widget extends PureComponent {
     preventRenderKeys: PropTypes.array,
     geostore: PropTypes.object,
     settingsBtnConfig: PropTypes.object,
-    status: PropTypes.string
+    status: PropTypes.string,
   };
 
   state = {
-    shouldSettingsOpen: false
+    shouldSettingsOpen: false,
   };
 
   render() {
@@ -91,7 +91,7 @@ class Widget extends PureComponent {
       handleDataHighlight,
       parseInteraction,
       preventCloseSettings,
-      showAttribution,
+      showAttributionLink,
       statements,
       getDataURL,
       onClickWidget,
@@ -103,7 +103,7 @@ class Widget extends PureComponent {
       preventRenderKeys,
       geostore,
       settingsBtnConfig,
-      status
+      status,
     } = this.props;
     const { main } = colors || {};
 
@@ -119,9 +119,9 @@ class Widget extends PureComponent {
           ...(active &&
             !simple &&
             !embed && {
-            borderColor: main,
-            boxShadow: `0 0px 0px 1px ${main}`
-          })
+              borderColor: main,
+              boxShadow: `0 0px 0px 1px ${main}`,
+            }),
         }}
         onClick={() => onClickWidget(this.props)}
       >
@@ -176,10 +176,9 @@ class Widget extends PureComponent {
           toggleSettingsMenu={toggleSettingsMenu}
           settingsBtnConfig={settingsBtnConfig}
         />
-        {sentence &&
-          data && (
+        {sentence && data && (
           <WidgetFooter
-            showAttribution={showAttribution}
+            showAttributionLink={showAttributionLink}
             statements={statements}
             simple={simple}
           />

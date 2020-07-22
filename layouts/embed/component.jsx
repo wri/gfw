@@ -13,8 +13,6 @@ import Head from 'layouts/head';
 import 'styles/styles.scss';
 import './styles.scss';
 
-const isServer = typeof window === 'undefined';
-
 class App extends PureComponent {
   static propTypes = {
     fullScreen: PropTypes.bool,
@@ -24,6 +22,8 @@ class App extends PureComponent {
     description: PropTypes.string,
     keywords: PropTypes.string,
     exploreLink: PropTypes.string,
+    isGFW: PropTypes.bool,
+    isTrase: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -48,12 +48,10 @@ class App extends PureComponent {
       title,
       description,
       keywords,
-      router,
       exploreLink,
+      isGFW,
+      isTrase,
     } = this.props;
-
-    const isGFW = router?.query?.gfw;
-    const isTrase = router?.query?.trase;
 
     return (
       <>
@@ -77,15 +75,7 @@ class App extends PureComponent {
             {!isGFW && !isTrase && (
               <div className="embed-footer">
                 <p>For more info</p>
-                <Button
-                  className="embed-btn"
-                  extLink={
-                    exploreLink ||
-                    (!isServer
-                      ? window.location.href.replace('/embed', '')
-                      : '')
-                  }
-                >
+                <Button className="embed-btn" extLink={exploreLink}>
                   EXPLORE ON GFW
                 </Button>
               </div>

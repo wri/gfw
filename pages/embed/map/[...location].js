@@ -76,12 +76,16 @@ const MapEmbedPage = (props) => {
     }
   });
 
-  return (
-    <LayoutEmbed {...props} fullScreen>
+  return ready ? (
+    <LayoutEmbed
+      {...props}
+      fullScreen
+      exploreLink={asPath?.replace('/embed', '')}
+    >
       <MapUrlProvider />
-      {ready && <Map embed />}
+      <Map embed />
     </LayoutEmbed>
-  );
+  ) : null;
 };
 
 export default MapEmbedPage;

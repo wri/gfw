@@ -1,3 +1,7 @@
+import { connect } from 'react-redux';
+
 import Component from './component';
 
-export default Component;
+import { getPageProps } from './selectors';
+
+export default connect(getPageProps)(Component);

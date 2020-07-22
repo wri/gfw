@@ -48,7 +48,7 @@ $trase-font-family-2: 'Merriweather';
 
 // Custom class for TRASE/GFW integration
 // READ COMMENT FROM TOP
-.c-embed.-trase {
+.l-embed.-trase {
   .c-widget-header {
     .options {
       display: none;
@@ -61,7 +61,7 @@ $trase-font-family-2: 'Merriweather';
     }
   }
 
-  .container .sentence {
+  .c-dynamic-sentence {
     font-family: $trase-font-family-2;
     color: $charcoal-grey;
   }

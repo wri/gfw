@@ -38,7 +38,7 @@ const WidgetEmbedPage = (props) => {
     }
   });
 
-  return (
+  return ready ? (
     <LayoutEmbed
       {...props}
       exploreLink={`/dashboards/${query?.location?.join('/')}`}
@@ -48,11 +48,11 @@ const WidgetEmbedPage = (props) => {
       ) : (
         <>
           <WidgetsEmbedUrlProvider />
-          {ready && <WidgetEmbed embed />}
+          <WidgetEmbed embed />
         </>
       )}
     </LayoutEmbed>
-  );
+  ) : null;
 };
 
 WidgetEmbedPage.propTypes = {
