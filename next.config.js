@@ -70,7 +70,7 @@ const nextConfig = {
         },
         {
           source: '/howto/:path*',
-          destination: 'http://vizzuality.github.io/gfw-howto/:path*',
+          destination: 'https://vizzuality.github.io/gfw-howto/:path*',
         },
       ];
     },
