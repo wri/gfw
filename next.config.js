@@ -64,6 +64,10 @@ const nextConfig = {
           source: '/embed/map',
           destination: '/embed/map/global',
         },
+        {
+          source: '/howto',
+          destination: 'https://www.globalforestwatch.org/howto',
+        },
       ];
     },
   },
