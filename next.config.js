@@ -68,6 +68,10 @@ const nextConfig = {
           source: '/howto',
           destination: 'https://www.globalforestwatch.org/howto',
         },
+        {
+          source: '/howto/:path*',
+          destination: 'https://www.globalforestwatch.org/howto/:path*',
+        },
       ];
     },
   },
