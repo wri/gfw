@@ -49,6 +49,10 @@ http {
 			proxy_redirect off;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_set_header Host $http_host;
-		}
+    }
+
+    location /howto/ {
+      proxy_pass https://vizzuality.github.io/gfw-howto/;
+    }
 	}
 }
