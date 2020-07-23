@@ -44,15 +44,15 @@ http {
 
     root /app/src/public;
 
+    location /howto/ {
+      proxy_pass https://vizzuality.github.io/gfw-howto/;
+    }
+
 		location / {
 			proxy_pass http://127.0.0.1:3000;
 			proxy_redirect off;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_set_header Host $http_host;
-    }
-
-    location /howto/ {
-      proxy_pass https://vizzuality.github.io/gfw-howto/;
     }
 	}
 }
