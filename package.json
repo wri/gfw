@@ -76,7 +76,7 @@
     "@artsy/fresnel": "^1.1.0",
     "@fullpage/react-fullpage": "^0.1.17",
     "@mapbox/mapbox-gl-draw": "^1.1.2",
-    "@next/bundle-analyzer": "^9.3.1",
+    "@next/bundle-analyzer": "^9.4.4",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "aws-sdk": "^2.291.0",
