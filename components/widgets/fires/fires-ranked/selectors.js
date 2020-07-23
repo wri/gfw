@@ -38,23 +38,40 @@ export const getYears = createSelector([getLatestDate], latest => {
   return years;
 });
 
+export const getFilterWeeks = createSelector([getLatestDate, getOptionsSelected], (latest, options) => {
+  const period = options.weeks && options.weeks.value || 4;
+  const endWeek = moment(latest).isoWeek();
+  const startWeek = moment(latest).subtract(period, 'weeks').isoWeek();
+  return {startWeek, endWeek};
+});
+
 export const getStatsByAdmin = createSelector(
-  [getData, getYears, getAdm1, getLocation],
-  (data, years, adm1, location) => {
+  [getData, getYears, getAdm1, getLocation, getFilterWeeks],
+  (data, years, adm1, location, filterWeeks) => {
     if (isEmpty(data) || isEmpty(years)) {
       return null;
     }
     let matchKey = 'iso';
     if (location.value !== 'global') matchKey = adm1 ? 'adm2' : 'adm1';
     const alertsByAdm = groupBy(data, matchKey);
-
+    const {startWeek, endWeek} = filterWeeks;
     const filteredAlertsByAdmin = Object.entries(alertsByAdm).map(
       ([adm, adminAlerts]) => {
-        const countsArray = years.map(year => {
-          const filteredYear = adminAlerts.filter(el => el.year === year);
-          return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
-        });
-
+        let countsArray = [];
+        if (startWeek < endWeek) {
+          countsArray = years.map(year => {
+            const filteredYear = adminAlerts.filter(el => el.year === year);
+            return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
+          });
+        }
+        else {
+          // i.e. the period goes into previous year
+          countsArray = years.map(year => {
+            // in the case that the period goes over the year line we need to filter differently.
+            const filteredYear = adminAlerts.filter(el => (el.year === year && el.week <= endWeek) || (el.year === year-1 && el.week > startWeek));
+            return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
+          });
+        }
         const stdDevCounts = stdDevData(countsArray);
         const meanCounts = mean(countsArray);
         const currentYearCounts = countsArray[countsArray.length - 1];
@@ -65,7 +82,6 @@ export const getStatsByAdmin = createSelector(
         return { id: adm, significance, currentYearCounts };
       }
     );
-
     return filteredAlertsByAdmin;
   }
 );
