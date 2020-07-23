@@ -68,10 +68,6 @@ const nextConfig = {
           source: '/embed/map',
           destination: '/embed/map/global',
         },
-        {
-          source: '/howto/:path*',
-          destination: 'https://vizzuality.github.io/gfw-howto/:path*',
-        },
       ];
     },
   },

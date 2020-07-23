@@ -1,6 +1,9 @@
 {
   "buildpacks": [
     {
+      "url": "heroku/nginx"
+    },
+    {
       "url": "heroku/nodejs"
     }
   ],
