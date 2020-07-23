@@ -57,16 +57,16 @@ const nextConfig = {
     async rewrites() {
       return [
         {
+          source: '/:path*',
+          destination: '/:path*',
+        },
+        {
           source: '/map',
           destination: '/map/global',
         },
         {
           source: '/embed/map',
           destination: '/embed/map/global',
-        },
-        {
-          source: '/howto',
-          destination: 'http://vizzuality.github.io/gfw-howto/',
         },
         {
           source: '/howto/:path*',
