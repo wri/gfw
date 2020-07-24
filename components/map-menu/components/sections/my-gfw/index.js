@@ -10,5 +10,5 @@ import { mapStateToProps } from './selectors';
 export default connect(mapStateToProps, {
   viewArea,
   setMapPromptsSettings,
-  setAreaOfInterestModalSettings,
+  onEditClick: setAreaOfInterestModalSettings,
 })(Component);
