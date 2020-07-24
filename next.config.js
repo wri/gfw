@@ -53,19 +53,27 @@ const nextConfig = {
   ],
   rewrites: async () => [
     {
-      source: '/map',
-      destination: '/map/global',
+      source: '/howto/',
+      destination: `https://vizzuality.github.io/gfw-howto/`,
     },
     {
-      source: '/embed/map',
-      destination: '/embed/map/global',
+      source: '/howto/:path*/',
+      destination: `https://vizzuality.github.io/gfw-howto/:path*/`,
     },
     {
       source: '/howto/:path*',
-      destination: 'https://vizzuality.github.io/gfw-howto/:path*',
+      destination: `https://vizzuality.github.io/gfw-howto/:path*`,
+    },
+    {
+      source: '/map/',
+      destination: '/map/global/',
+    },
+    {
+      source: '/embed/map/',
+      destination: '/embed/map/global/',
     },
   ],
-  exportTrailingSlash: true,
+  trailingSlash: true,
 };
 
 module.exports = withPlugins(
