@@ -280,7 +280,7 @@ class GlobeComponent extends React.Component {
 }
 
 GlobeComponent.defaultProps = {
-  width: !isServer && window.innerWidth,
+  width: !isServer ? window.innerWidth: 0,
   height: 500,
   radius: 205,
   autorotate: true,

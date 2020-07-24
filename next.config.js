@@ -34,47 +34,38 @@ const nextConfig = {
 
     return config;
   },
-  experimental: {
-    async redirects() {
-      return [
-        {
-          source: '/dashboards',
-          destination: `/dashboards/global`,
-          permanent: true,
-        },
-        {
-          source: '/topics',
-          destination: `/topics/biodiversity`,
-          permanent: true,
-        },
-        {
-          source: '/grants-and-fellowships',
-          destination: `/grants-and-fellowships/projects`,
-          permanent: true,
-        },
-      ];
+  redirects: async () => [
+    {
+      source: '/dashboards',
+      destination: `/dashboards/global`,
+      permanent: true,
     },
-    async rewrites() {
-      return [
-        {
-          source: '/:path*',
-          destination: '/:path*',
-        },
-        {
-          source: '/map',
-          destination: '/map/global',
-        },
-        {
-          source: '/embed/map',
-          destination: '/embed/map/global',
-        },
-        {
-          source: '/howto/:path*',
-          destination: 'http://vizzuality.github.io/gfw-howto/:path*',
-        },
-      ];
+    {
+      source: '/topics',
+      destination: `/topics/biodiversity`,
+      permanent: true,
     },
-  },
+    {
+      source: '/grants-and-fellowships',
+      destination: `/grants-and-fellowships/projects`,
+      permanent: true,
+    },
+  ],
+  rewrites: async () => [
+    {
+      source: '/map',
+      destination: '/map/global',
+    },
+    {
+      source: '/embed/map',
+      destination: '/embed/map/global',
+    },
+    {
+      source: '/howto/:path*',
+      destination: 'https://vizzuality.github.io/gfw-howto/:path*',
+    },
+  ],
+  exportTrailingSlash: true,
 };
 
 module.exports = withPlugins(

@@ -36,6 +36,10 @@ class AppHead extends PureComponent {
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/preview.jpg" />
         {noIndex && <meta name="robots" content="noindex" />}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
       </Head>
     );
   }
