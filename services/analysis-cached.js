@@ -34,7 +34,7 @@ const SQL_QUERIES = {
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week',
+    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year',
   firesWithin:
     'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
@@ -250,11 +250,11 @@ export const getWeeksFilter = ({ weeks, latest }) => {
     const yf = d.endYear || '';
     const wf = d.endWeek || '';
 
-    return `${acc} ${i === 0 ? '' : 'OR '}((alert__year = ${
+    return `${acc} ${i === 0 ? '' : 'OR '}(alert__year = ${
       yi
-    } AND alert__week > ${wi}) ${wi < wf ? 'AND' : 'OR'} (alert__year = ${yf} AND alert__week <= ${
+    } AND alert__week > ${wi}) AND (alert__year = ${yf} AND alert__week <= ${
       wf
-    }))`;
+    })`;
   }, '');
 };
 
@@ -736,7 +736,6 @@ export const fetchVIIRSAlertsGrouped = params => {
     data: {
       data: response.data.data.map(d => ({
         ...d,
-        week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
         alerts: d.alert__count
