@@ -3,11 +3,13 @@ import landCoverIcon from 'assets/icons/land-cover.svg?sprite';
 import landUseIcon from 'assets/icons/land-use.svg?sprite';
 import climateIcon from 'assets/icons/climate.svg?sprite';
 import biodiversityIcon from 'assets/icons/biodiversity.svg?sprite';
+import testIcon from 'assets/icons/crosshair.svg?sprite';
 import exploreIcon from 'assets/icons/explore.svg?sprite';
 import layersIcon from 'assets/icons/layers.svg?sprite';
 import globeIcon from 'assets/icons/globe.svg?sprite';
 import analysisIcon from 'assets/icons/analysis.svg?sprite';
 import searchIcon from 'assets/icons/search.svg?sprite';
+import compact from 'lodash/compact';
 
 // TODO: leave only one, refactor icon styles
 import userIcon from 'assets/icons/user.svg?sprite';
@@ -21,6 +23,8 @@ import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 import Search from './components/sections/search';
 import MyGFW from './components/sections/my-gfw';
+
+const ENVIRONMENT = process.env.FEATURE_ENV;
 
 export const mobileSections = [
   {
@@ -92,7 +96,7 @@ export const searchSections = [
   },
 ];
 
-export const datasetsSections = [
+export const datasetsSections = compact([
   {
     label: 'layers',
     slug: 'datasets',
@@ -186,4 +190,17 @@ export const datasetsSections = [
       },
     ],
   },
-];
+  ENVIRONMENT === 'staging' && {
+    label: 'layers',
+    slug: 'datasets',
+    category: 'test',
+    icon: testIcon,
+    Component: Datasets,
+    subCategories: [
+      {
+        slug: 'test',
+        title: 'Test',
+      },
+    ],
+  },
+]);
