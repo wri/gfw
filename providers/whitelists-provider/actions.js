@@ -7,40 +7,56 @@ export const setWhitelistLoading = createAction('setWhitelistLoading');
 
 export const setWhitelist = createAction('setWhitelist');
 
-const parseWhitelist = whitelist =>
-  (whitelist
+const parseWhitelist = (whitelist) =>
+  whitelist
     ? Object.keys(whitelist).reduce(
-      (arr, item) => (whitelist[item] ? arr.concat(item) : arr),
-      []
-    )
-    : []);
+        (arr, item) => (whitelist[item] ? arr.concat(item) : arr),
+        []
+      )
+    : [];
 
 export const getWhitelist = createThunkAction(
   'getWhitelist',
-  params => dispatch => {
+  (params) => (dispatch) => {
     dispatch(setWhitelistLoading(true));
     all([
-      getLocationPolynameWhitelist({ ...params, dataset: 'annual' }).catch(() => null),
-      getLocationPolynameWhitelist({ ...params, dataset: 'glad' }).catch(() => null)
+      getLocationPolynameWhitelist({ ...params, dataset: 'annual' }).catch(
+        () => null
+      ),
+      getLocationPolynameWhitelist({ ...params, dataset: 'glad' }).catch(
+        () => null
+      ),
+      getLocationPolynameWhitelist({ ...params, dataset: 'viirs' }).catch(
+        () => null
+      ),
+      getLocationPolynameWhitelist({ ...params, dataset: 'modis' }).catch(
+        () => null
+      ),
     ])
       .then(
-        spread((annualResponse, alertsResponse) => {
+        spread((annualResponse, gladResponse, viirsResponse, modisResponse) => {
           const annual =
             annualResponse &&
             annualResponse.data &&
             annualResponse.data.data[0];
-          const alerts =
-            alertsResponse && alertsResponse.data && alertsResponse.data.data[0];
+          const glad =
+            gladResponse && gladResponse.data && gladResponse.data.data[0];
+          const viirs =
+            viirsResponse && viirsResponse.data && viirsResponse.data.data[0];
+          const modis =
+            modisResponse && modisResponse.data && modisResponse.data.data[0];
 
           dispatch(
             setWhitelist({
               annual: parseWhitelist(annual),
-              alerts: parseWhitelist(alerts)
+              glad: parseWhitelist(glad),
+              viirs: parseWhitelist(viirs),
+              modis: parseWhitelist(modis),
             })
           );
         })
       )
-      .catch(error => {
+      .catch((error) => {
         dispatch(setWhitelistLoading(false));
         console.info(error);
       });
