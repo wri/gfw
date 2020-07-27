@@ -16,7 +16,7 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -24,12 +24,12 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'dataset',
       label: 'fires dataset',
-      type: 'select'
+      type: 'select',
     },
     {
       key: 'compareYear',
@@ -37,14 +37,14 @@ export default {
       placeholder: 'None',
       type: 'compare-select',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false
-    }
+      clearable: false,
+    },
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
@@ -58,11 +58,11 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 2
+    fires: 2,
   },
   settings: {
     dataset: 'viirs',
-    confidence: 'h'
+    confidence: 'h',
   },
   sentences: {
     allAlerts:
@@ -72,9 +72,8 @@ export default {
     allAlertsWithInd:
       'In {location} there have been {count} {dataset} fire alerts reported within {indicator} so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
     highConfidenceWithInd:
-      'In {location} there have been {count} {dataset} fire alerts reported within {indicator} so far in {latestYear} considering <b>high confidence alerts</b> only. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.'
+      'In {location} there have been {count} {dataset} fire alerts reported within {indicator} so far in {latestYear} considering <b>high confidence alerts</b> only. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
   },
-  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
@@ -281,17 +280,17 @@ export default {
       'YEM',
       'ZAF',
       'ZMB',
-      'ZWE'
-    ]
+      'ZWE',
+    ],
   },
-  getData: params =>
+  getData: (params) =>
     all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
-        const years = uniq(data.map(d => d.year));
+        const years = uniq(data.map((d) => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
-        const allYears = years.filter(y => y !== maxYear);
+        const allYears = years.filter((y) => y !== maxYear);
 
         return (
           {
@@ -300,16 +299,16 @@ export default {
             options: {
               compareYear: [
                 { label: 'All', value: 'all' },
-                ...allYears.map(y => ({
+                ...allYears.map((y) => ({
                   label: y,
-                  value: y
-                }))
-              ]
-            }
+                  value: y,
+                })),
+              ],
+            },
           } || {}
         );
       })
     ),
-  getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
-  getWidgetProps
+  getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
+  getWidgetProps,
 };

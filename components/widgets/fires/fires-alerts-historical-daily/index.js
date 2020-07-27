@@ -2,12 +2,12 @@ import { fetchHistoricalAlerts } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
+  FIRES_VIIRS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
+  FIRES_ALERTS_VIIRS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -21,8 +21,8 @@ export default {
     {
       key: 'dataset',
       label: 'fires dataset',
-      type: 'select'
-    }
+      type: 'select',
+    },
   ],
   visible: ['analysis'],
   types: ['country', 'wdpa', 'aoi'],
@@ -32,28 +32,27 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_alert_location',
   settings: {
-    dataset: 'viirs'
+    dataset: 'viirs',
   },
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // fires
     {
       dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
+      layers: [FIRES_ALERTS_VIIRS],
+    },
   ],
   sentences: {
     initial:
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts',
     withInd:
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
-    highConfidence: ', considering <b>high confidence</b> alerts only.'
+    highConfidence: ', considering <b>high confidence</b> alerts only.',
   },
-  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
@@ -260,16 +259,16 @@ export default {
       'YEM',
       'ZAF',
       'ZMB',
-      'ZWE'
-    ]
+      'ZWE',
+    ],
   },
-  getData: params =>
-    fetchHistoricalAlerts({ ...params, frequency: 'daily' }).then(alerts => {
+  getData: (params) =>
+    fetchHistoricalAlerts({ ...params, frequency: 'daily' }).then((alerts) => {
       const { data } = alerts.data;
       return data;
     }),
-  getDataURL: params => [
-    fetchHistoricalAlerts({ ...params, frequency: 'daily', download: true })
+  getDataURL: (params) => [
+    fetchHistoricalAlerts({ ...params, frequency: 'daily', download: true }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

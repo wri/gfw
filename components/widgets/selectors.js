@@ -260,7 +260,10 @@ export const filterWidgetsByLocation = createSelector(
         );
 
       const hasLocation =
-        types && types.includes(areaId && status === 'saved' ? 'aoi' : type) && admins && admins.includes(adminLevel);
+        types &&
+        types.includes(areaId && status === 'saved' ? 'aoi' : type) &&
+        admins &&
+        admins.includes(adminLevel);
       const adminWhitelist =
         type === 'country' && whitelists && whitelists.adm0;
 
@@ -277,7 +280,9 @@ export const filterWidgetsByLocation = createSelector(
         whitelists &&
         whitelists.indicators &&
         intersection(
-          polynameWhitelist?.[w.whitelistType || 'annual'],
+          polynameWhitelist?.[
+            w.whitelistType || w?.settings?.dataset || 'annual'
+          ],
           whitelists.indicators
         );
       const matchesPolynameWhitelist =
@@ -458,13 +463,13 @@ export const getWidgets = createSelector(
       };
 
       const dataOptions = rawData && rawData.options;
-
       const settingsConfigParsed = getSettingsConfig({
         settingsConfig,
         dataOptions,
         settings,
         polynamesWhitelist:
-          polynamesWhitelist && polynamesWhitelist[w.whitelistType || 'annual'],
+          polynamesWhitelist &&
+          polynamesWhitelist[w.whitelistType || settings.dataset || 'annual'],
         status,
         pendingKeys,
       });
