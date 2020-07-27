@@ -12,7 +12,7 @@ import { setProfileModalOpen } from 'components/modals/profile/actions';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-export default () => {
+const MyGfwPage = () => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
   const { query, asPath } = useRouter();
@@ -48,3 +48,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default MyGfwPage;

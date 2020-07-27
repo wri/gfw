@@ -36,18 +36,18 @@ const nextConfig = {
   },
   redirects: async () => [
     {
-      source: '/dashboards',
-      destination: `/dashboards/global`,
+      source: '/dashboards/',
+      destination: `/dashboards/global/`,
       permanent: true,
     },
     {
-      source: '/topics',
-      destination: `/topics/biodiversity`,
+      source: '/topics/',
+      destination: `/topics/biodiversity/`,
       permanent: true,
     },
     {
-      source: '/grants-and-fellowships',
-      destination: `/grants-and-fellowships/projects`,
+      source: '/grants-and-fellowships/',
+      destination: `/grants-and-fellowships/projects/`,
       permanent: true,
     },
   ],
