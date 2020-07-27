@@ -13,7 +13,7 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -21,20 +21,20 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'dataset',
       label: 'fires dataset',
-      type: 'select'
+      type: 'select',
     },
     {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
       clearable: false,
-      border: true
-    }
+      border: true,
+    },
   ],
   refetchKeys: [
     'forestType',
@@ -42,7 +42,7 @@ export default {
     'dataset',
     'endYear',
     'startYear',
-    'confidence'
+    'confidence',
   ],
   visible: ['dashboard'],
   types: ['country'],
@@ -53,21 +53,20 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
-    fires: 5
+    fires: 5,
   },
   settings: {
     startDate: '2020-01-01',
     endDate: '2020-04-01',
-    dataset: 'viirs'
+    dataset: 'viirs',
   },
   sentences: {
     initial:
       'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts',
     withInd:
       'Between {start_year} and {end_year}, {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
-    conf: ', considering {confidence} alerts only.'
+    conf: ', considering {confidence} alerts only.',
   },
-  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
@@ -274,14 +273,16 @@ export default {
       'YEM',
       'ZAF',
       'ZMB',
-      'ZWE'
-    ]
+      'ZWE',
+    ],
   },
-  getData: params =>
-    fetchHistoricalAlerts(params).then(alerts => {
+  getData: (params) =>
+    fetchHistoricalAlerts(params).then((alerts) => {
       const { data } = alerts.data;
       return data;
     }),
-  getDataURL: params => [fetchHistoricalAlerts({ ...params, download: true })],
-  getWidgetProps
+  getDataURL: (params) => [
+    fetchHistoricalAlerts({ ...params, download: true }),
+  ],
+  getWidgetProps,
 };

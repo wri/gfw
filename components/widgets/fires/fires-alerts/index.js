@@ -6,12 +6,12 @@ import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
+  FIRES_VIIRS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
+  FIRES_ALERTS_VIIRS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -27,7 +27,7 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -35,12 +35,12 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'dataset',
       label: 'fires dataset',
-      type: 'select'
+      type: 'select',
     },
     {
       key: 'compareYear',
@@ -48,14 +48,14 @@ export default {
       type: 'compare-select',
       placeholder: 'None',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false
-    }
+      clearable: false,
+    },
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   preventRenderKeys: ['startIndex', 'endIndex'],
@@ -67,13 +67,13 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // fires
     {
       dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
+      layers: [FIRES_ALERTS_VIIRS],
+    },
   ],
   hideLayers: true,
   dataType: 'fires',
@@ -81,11 +81,11 @@ export default {
   metaKey: 'widget_fire_alert_location',
   sortOrder: {
     summary: 100,
-    fires: 1
+    fires: 1,
   },
   settings: {
     dataset: 'viirs',
-    confidence: 'h'
+    confidence: 'h',
   },
   sentences: {
     allAlerts:
@@ -95,9 +95,8 @@ export default {
     allAlertsWithInd:
       'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidenceWithInd:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.'
+      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
   },
-  whitelistType: 'alerts',
   whitelists: {
     adm0: [
       'AFG',
@@ -304,14 +303,14 @@ export default {
       'YEM',
       'ZAF',
       'ZMB',
-      'ZWE'
-    ]
+      'ZWE',
+    ],
   },
-  getData: params =>
+  getData: (params) =>
     all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
-        const years = uniq(data.map(d => d.year));
+        const years = uniq(data.map((d) => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
 
@@ -320,19 +319,23 @@ export default {
             alerts: data,
             latest: latestDate,
             options: {
-              compareYear: years.filter(y => y !== maxYear).map(y => ({
-                label: y,
-                value: y
-              }))
+              compareYear: years
+                .filter((y) => y !== maxYear)
+                .map((y) => ({
+                  label: y,
+                  value: y,
+                })),
             },
             settings: {
-              startDateAbsolute: params.startDateAbsolute || moment(latestDate).subtract(1, 'year').format('YYYY-MM-DD'),
-              endDateAbsolute: params.endDateAbsolute || latestDate
-            }
+              startDateAbsolute:
+                params.startDateAbsolute ||
+                moment(latestDate).subtract(1, 'year').format('YYYY-MM-DD'),
+              endDateAbsolute: params.endDateAbsolute || latestDate,
+            },
           } || {}
         );
       })
     ),
-  getDataURL: params => [fetchVIIRSAlerts({ ...params, download: true })],
-  getWidgetProps
+  getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
+  getWidgetProps,
 };

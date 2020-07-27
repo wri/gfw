@@ -3,12 +3,12 @@ import { all, spread } from 'axios';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
+  FIRES_VIIRS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
+  FIRES_ALERTS_VIIRS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -17,7 +17,7 @@ export default {
   widget: 'firesWithin',
   title: {
     default: 'Fires alerts in {location} {indicator}',
-    global: 'Global Fires alerts in {indicator}'
+    global: 'Global Fires alerts in {indicator}',
   },
   categories: ['fires'],
   types: ['global', 'country', 'wdpa', 'aoi'],
@@ -29,7 +29,7 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: false
+      border: false,
     },
     {
       key: 'landCategory',
@@ -37,7 +37,7 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'weeks',
@@ -45,14 +45,14 @@ export default {
       type: 'select',
       whitelist: [1, 2, 4, 8, 13, 26, 52],
       noSort: true,
-      border: true
+      border: true,
     },
     {
       key: 'confidence',
       label: 'Confidence level',
       type: 'select',
-      clearable: false
-    }
+      clearable: false,
+    },
   ],
   dataType: 'fires',
   chartType: 'pieChart',
@@ -62,26 +62,26 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
+      layers: [FIRES_ALERTS_VIIRS],
+    },
   ],
   sortOrder: {
-    fires: 4
+    fires: 4,
   },
   settings: {
     period: 'week',
     weeks: 13,
     dataset: 'viirs',
-    confidence: 'h'
+    confidence: 'h',
   },
   settingsBtnConfig: {
     text: '+ Select an intersection',
-    shouldShowButton: props =>
-      !props.settings.forestType && !props.settings.landCategory
+    shouldShowButton: (props) =>
+      !props.settings.forestType && !props.settings.landCategory,
   },
   refetchKeys: ['weeks', 'confidence', 'landCategory', 'forestType'],
   sentences: {
@@ -93,17 +93,16 @@ export default {
       'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} ocurred within {indicator}',
     globalWithInd:
       'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}',
-    highConfidence: ', considering <b>high confidence</b> alerts only.'
+    highConfidence: ', considering <b>high confidence</b> alerts only.',
   },
-  whitelistType: 'alerts',
   whitelists: {
-    checkStatus: true
+    checkStatus: true,
   },
-  getData: params =>
+  getData: (params) =>
     all([
       fetchVIIRSLatest(params),
       fetchFiresWithin(params),
-      fetchFiresWithin({ ...params, forestType: '', landCategory: '' })
+      fetchFiresWithin({ ...params, forestType: '', landCategory: '' }),
     ]).then(
       spread((latest, firesWithin, allFires) => {
         const fireIn = firesWithin.data && firesWithin.data.data;
@@ -113,25 +112,25 @@ export default {
           data = {
             latest: latest.date,
             fireCountIn: fireIn,
-            fireCountAll: allFire
+            fireCountAll: allFire,
           };
         }
         return {
           data,
           settings: {
-            latestDate: latest.date
-          }
+            latestDate: latest.date,
+          },
         };
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     fetchFiresWithin({ ...params, download: true }),
     fetchFiresWithin({
       ...params,
       forestType: '',
       landCategory: '',
-      download: true
-    })
+      download: true,
+    }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

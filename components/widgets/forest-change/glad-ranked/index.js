@@ -3,18 +3,18 @@ import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET
+  GLAD_DEFORESTATION_ALERTS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  GLAD_ALERTS
+  GLAD_ALERTS,
 } from 'data/layers';
 
 import {
   getExtentGrouped,
   fetchGladAlerts,
-  fetchGLADLatest
+  fetchGLADLatest,
 } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
@@ -31,7 +31,7 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -40,28 +40,28 @@ export default {
       whitelist: ['mining', 'wdpa', 'landmark'],
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'weeks',
       label: 'show data for the last',
       type: 'select',
       whitelist: [4, 13, 26, 52],
-      noSort: true
+      noSort: true,
     },
     {
       key: 'unit',
       label: 'unit',
       type: 'switch',
       whitelist: ['%', 'ha'],
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   pendingKeys: ['extentYear', 'threshold'],
   refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
@@ -72,23 +72,23 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // GLAD
     {
       dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: [GLAD_ALERTS]
-    }
+      layers: [GLAD_ALERTS],
+    },
   ],
   sortOrder: {
     summary: 6,
-    forestChange: 10
+    forestChange: 10,
   },
   sentences: {
     initial:
       'In the last {timeframe} in {location}, {count} GLAD alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.',
     withInd:
-      'In the last {timeframe} in {location}, {count} GLAD alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.'
+      'In the last {timeframe} in {location}, {count} GLAD alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.',
   },
   settings: {
     threshold: 30,
@@ -98,17 +98,16 @@ export default {
     pageSize: 5,
     page: 0,
     ifl: 2016,
-    dataset: 'glad'
+    dataset: 'glad',
   },
-  whitelistType: 'alerts',
   whitelists: {
-    adm0: tropicalIsos
+    adm0: tropicalIsos,
   },
-  getData: params =>
+  getData: (params) =>
     all([
       fetchGladAlerts({ ...params, grouped: true }),
       fetchGLADLatest(params),
-      getExtentGrouped(params)
+      getExtentGrouped(params),
     ]).then(
       spread((alerts, latest, extent) => {
         const { data } = alerts.data;
@@ -117,17 +116,17 @@ export default {
 
         return data && extent && latest
           ? {
-            alerts: data,
-            extent: areas,
-            latest: latestDate,
-            settings: { latestDate }
-          }
+              alerts: data,
+              extent: areas,
+              latest: latestDate,
+              settings: { latestDate },
+            }
           : {};
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     fetchGladAlerts({ ...params, download: true }),
-    getExtentGrouped({ ...params, download: true })
+    getExtentGrouped({ ...params, download: true }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };
