@@ -84,11 +84,6 @@ export const selectModalClosing = (state) =>
 export const selectNonGlobalDatasets = (state) =>
   state.widgets && state.widgets.data.nonGlobalDatasets;
 
-export const getWidgetFromLocation = createSelector(
-  [selectLocation, selectActiveWidget],
-  (location, activeWidget) => location?.widget || activeWidget
-);
-
 export const getLocationObj = createSelector(
   [getDataLocation, getGeodescriberTitleFull],
   (location, title) => ({
@@ -205,7 +200,7 @@ export const filterWidgetsByLocation = createSelector(
     getLocationData,
     selectPolynameWhitelist,
     selectEmbed,
-    getWidgetFromLocation,
+    selectActiveWidget,
     getActiveLayersWithDates,
     selectAnalysis,
   ],
@@ -340,7 +335,7 @@ export const filterWidgetsByCategory = createSelector(
     selectAnalysis,
     getLocationData,
     selectEmbed,
-    getWidgetFromLocation,
+    selectActiveWidget,
   ],
   (widgets, category, showAnalysis, locationData, embed, widget) => {
     if (isEmpty(widgets)) return null;
@@ -370,7 +365,7 @@ export const getWidgets = createSelector(
     getIsTrase,
     getActiveLayersWithDates,
     selectAnalysis,
-    getWidgetFromLocation,
+    selectActiveWidget,
     selectActiveLang,
   ],
   (
@@ -568,7 +563,7 @@ export const getWidgets = createSelector(
 );
 
 export const getActiveWidget = createSelector(
-  [getWidgets, getWidgetFromLocation, selectAnalysis],
+  [getWidgets, selectActiveWidget, selectAnalysis],
   (widgets, activeWidgetKey, analysis) => {
     if (!widgets || analysis) return null;
     if (!activeWidgetKey) return widgets[0];

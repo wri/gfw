@@ -11,6 +11,7 @@ import {
   setWidgetsSettings,
   setWidgetsCategory,
   setShowMap,
+  setActiveWidget,
 } from 'components/widgets/actions';
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 
@@ -70,6 +71,7 @@ const DashboardsPage = (props) => {
       category,
       areaOfInterestModal,
       showMap,
+      widget,
       ...widgets
     } = decodeParamsForState(query) || {};
 
@@ -99,6 +101,10 @@ const DashboardsPage = (props) => {
 
     if (showMap) {
       dispatch(setShowMap(showMap));
+    }
+
+    if (widget) {
+      dispatch(setActiveWidget(widget));
     }
   }, [fullPathname]);
 
