@@ -111,8 +111,12 @@ const MapPage = (props) => {
 
   return (
     <Layout {...props} fullScreen showFooter={false}>
-      <MapUrlProvider />
-      {ready && <Map />}
+      {ready && (
+        <>
+          <MapUrlProvider />
+          <Map />
+        </>
+      )}
     </Layout>
   );
 };

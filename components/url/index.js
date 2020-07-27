@@ -1,5 +1,5 @@
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { useRouter } from 'next/router';
+import useRouter from 'utils/router';
 
 import { encodeStateForUrl } from 'utils/stateToUrl';
 

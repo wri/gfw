@@ -60,8 +60,12 @@ const GrantsAndFellowshipsPage = (props) => {
 
   return (
     <Layout {...props} {...pageProps}>
-      <SgfUrlProvider />
-      {ready && <GrantsAndFellowships />}
+      {ready && (
+        <>
+          <SgfUrlProvider />
+          <GrantsAndFellowships />
+        </>
+      )}
     </Layout>
   );
 };

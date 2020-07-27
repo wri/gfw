@@ -108,11 +108,14 @@ const DashboardsPage = (props) => {
     }
   });
 
+  const hasDashboard = props?.title === 'Dashboard not found';
+
   return (
     <Layout {...props}>
-      {props?.title === 'Dashboard not found' ? (
+      {!hasDashboard && (
         <ConfirmationMessage title="Dashboard not found" error large />
-      ) : (
+      )}
+      {hasDashboard && ready && (
         <>
           <Dashboards />
           <DashboardsUrlProvider />
