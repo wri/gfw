@@ -1,7 +1,7 @@
 import Layout from 'layouts/page';
 import About from 'pages/about';
 
-export default () => (
+const AboutPage = () => (
   <Layout
     title="About GFW | Global Forest Watch"
     description="Global Forest Watch is an online platform that provides data and tools for monitoring forests."
@@ -10,3 +10,5 @@ export default () => (
     <About />
   </Layout>
 );
+
+export default AboutPage;
