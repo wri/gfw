@@ -23,6 +23,8 @@ import Dashboards from 'pages/dashboards';
 import ConfirmationMessage from 'components/confirmation-message';
 import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
+import './styles.scss';
+
 export const getServerSideProps = async (ctx) => {
   const isGlobal = ctx?.params?.location?.[0] === 'global';
   let locationData = {};
@@ -111,9 +113,11 @@ const DashboardsPage = (props) => {
   const hasDashboard = props?.title === 'Dashboard not found';
 
   return (
-    <Layout {...props}>
+    <Layout {...props} className="l-dashboards-page">
       {!hasDashboard && (
-        <ConfirmationMessage title="Dashboard not found" error large />
+        <div className="no-dashboard-message">
+          <ConfirmationMessage title="Dashboard not found" error large />
+        </div>
       )}
       {hasDashboard && ready && (
         <>
