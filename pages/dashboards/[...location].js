@@ -110,7 +110,7 @@ const DashboardsPage = (props) => {
     }
   });
 
-  const hasDashboard = props?.title === 'Dashboard not found';
+  const hasDashboard = props?.title !== 'Dashboard not found';
 
   return (
     <Layout {...props} className="l-dashboards-page">
