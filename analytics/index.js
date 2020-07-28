@@ -6,17 +6,15 @@ import sharedEvents from 'analytics/shared';
 import dashboardsEvents from 'analytics/dashboards';
 import topicsEvents from 'analytics/topics';
 
-const { ANALYTICS_PROPERTY_ID } = process.env;
-
 export const initGA = () => {
-  ReactGA.initialize(ANALYTICS_PROPERTY_ID);
+  ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
 };
 
 const events = {
   ...mapEvents,
   ...dashboardsEvents,
   ...sharedEvents,
-  ...topicsEvents
+  ...topicsEvents,
 };
 
 export const handlePageTrack = () => {
@@ -25,7 +23,7 @@ export const handlePageTrack = () => {
   ReactGA.pageview(url);
 };
 
-export const handleMapLatLonTrack = location => {
+export const handleMapLatLonTrack = (location) => {
   const { query } = location || {};
   const { map } = query || {};
   const position =
@@ -39,4 +37,5 @@ export const handleMapLatLonTrack = location => {
   }
 };
 
-export const track = (key, data) => events[key] && ReactGA.event({ ...events[key], ...data });
+export const track = (key, data) =>
+  events[key] && ReactGA.event({ ...events[key], ...data });
