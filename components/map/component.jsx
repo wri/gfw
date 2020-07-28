@@ -73,6 +73,7 @@ class MapComponent extends Component {
       lang,
       drawing,
       clearMapInteractions,
+      basemap,
     } = this.props;
     const {
       mapLabels: prevMapLabels,
@@ -82,6 +83,7 @@ class MapComponent extends Component {
       interaction: prevInteraction,
       lang: prevLang,
       drawing: prevDrawing,
+      basemap: prevBasemap,
     } = prevProps;
 
     if (!drawing && prevDrawing) {
@@ -90,6 +92,10 @@ class MapComponent extends Component {
 
     if (drawing && !prevDrawing) {
       clearMapInteractions();
+    }
+
+    if (basemap?.basemapGroup !== prevBasemap.basemapGroup) {
+      this.setBasemap();
     }
 
     if (mapLabels !== prevMapLabels || lang !== prevLang) {
@@ -168,6 +174,7 @@ class MapComponent extends Component {
   }, 250);
 
   onStyleLoad = () => {
+    this.setBasemap();
     this.setLabels();
     this.setRoads();
   };
@@ -176,6 +183,7 @@ class MapComponent extends Component {
     this.map = map;
 
     // Labels
+    this.setBasemap();
     this.setLabels();
     this.setRoads();
 
@@ -196,6 +204,56 @@ class MapComponent extends Component {
     } else {
       clearMapInteractions();
     }
+  };
+
+  setBasemap = () => {
+    const { basemap } = this.props;
+    const BASEMAP_GROUPS = ['basemap'];
+
+    if (this.map) {
+      const { layers, metadata } = this.map.getStyle();
+
+      const basemapGroups = Object.keys(metadata['mapbox:groups']).filter(
+        (k) => {
+          const { name } = metadata['mapbox:groups'][k];
+
+          const matchedGroups = BASEMAP_GROUPS.map((rgr) =>
+            name.toLowerCase().includes(rgr)
+          );
+
+          return matchedGroups.some((bool) => bool);
+        }
+      );
+
+      const basemapsWithMeta = basemapGroups.map((_groupId) => ({
+        ...metadata['mapbox:groups'][_groupId],
+        id: _groupId,
+      }));
+      const basemapToDisplay = basemapsWithMeta.find((_basemap) =>
+        _basemap.name.includes(basemap.basemapGroup)
+      );
+
+      const basemapLayers = layers.filter((l) => {
+        const { metadata: layerMetadata } = l;
+        if (!layerMetadata) return false;
+
+        const gr = layerMetadata['mapbox:group'];
+        return basemapGroups.includes(gr);
+      });
+
+      if (!basemapToDisplay) return false;
+
+      basemapLayers.forEach((_layer) => {
+        const match = _layer.metadata['mapbox:group'] === basemapToDisplay.id;
+        if (!match) {
+          this.map.setLayoutProperty(_layer.id, 'visibility', 'none');
+        } else {
+          this.map.setLayoutProperty(_layer.id, 'visibility', 'visible');
+        }
+      });
+    }
+
+    return true;
   };
 
   setLabels = () => {
@@ -234,7 +292,7 @@ class MapComponent extends Component {
   };
 
   setRoads = () => {
-    const ROADS_GROUP = ['roads', 'bridges', 'tunnels'];
+    const ROADS_GROUP = ['roads'];
     if (this.map) {
       const { mapRoads } = this.props;
       const { layers, metadata } = this.map.getStyle();
