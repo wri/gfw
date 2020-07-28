@@ -21,7 +21,12 @@ class MyGFWProvider extends PureComponent {
     const { getUserProfile, router } = this.props;
     const { push, pathname, asPath } = router;
     const query = parse(asPath.split('?')[1]);
-    const urlToken = query?.token;
+
+    // facebook now append these charachter onto the token. We need to remove them.
+    let urlToken = query?.token;
+    if (urlToken?.includes('#_=_')) {
+      urlToken = urlToken.replace('#_=_', '');
+    }
 
     if (urlToken) {
       setUserToken(urlToken);
