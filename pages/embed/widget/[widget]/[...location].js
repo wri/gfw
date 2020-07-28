@@ -10,7 +10,10 @@ import WidgetEmbed from 'pages/dashboards/components/embed';
 import ConfirmationMessage from 'components/confirmation-message';
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';
 
-import { setWidgetsSettings } from 'components/widgets/actions';
+import {
+  setWidgetsSettings,
+  setActiveWidget,
+} from 'components/widgets/actions';
 
 import { getServerSideProps as getProps } from '../../../dashboards/[...location]';
 
@@ -23,10 +26,14 @@ const WidgetEmbedPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useMemo(() => {
-    const widgets = decodeParamsForState(query) || {};
+    const { widget, widgets } = decodeParamsForState(query) || {};
 
     if (widgets) {
       dispatch(setWidgetsSettings(widgets));
+    }
+
+    if (widget) {
+      dispatch(setActiveWidget(widget));
     }
   }, [fullPathname]);
 
