@@ -101,7 +101,7 @@ class NumberedList extends PureComponent {
                     </a>
                   )}
                   {item.path && !linksExt && (
-                    <Link href={item.path}>
+                    <Link {...item?.path}>
                       <a className={`${linksDisabled ? 'disabled' : ''}`}>
                         {linkContent}
                       </a>

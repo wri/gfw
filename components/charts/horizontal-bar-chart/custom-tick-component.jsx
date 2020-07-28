@@ -21,7 +21,7 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
       </text>
       <text x="8" y="-16" textAnchor="start" fontSize="12px" fill="#555555">
         {extLink ? (
-          <a href={path} target="_blank" rel="noopener noreferrer">
+          <a href={path.href} target="_blank" rel="noopener noreferrer">
             {region}
             {' '}
             -
@@ -29,7 +29,7 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
             {index === 0 ? ' are plantations' : ''}
           </a>
         ) : (
-          <Link href={path} as={path}>
+          <Link {...path}>
             <a>
               {region}
               {' '}

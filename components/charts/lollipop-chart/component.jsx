@@ -220,7 +220,7 @@ class LollipopChart extends PureComponent {
                   <li key={`${item.label}-${item.id}`}>
                     {item.path && linksExt && (
                       <a
-                        href={`https://${window.location.host}${item.path}`}
+                        href={`https://${window.location.host}${item.path.href}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -228,7 +228,7 @@ class LollipopChart extends PureComponent {
                       </a>
                     )}
                     {item.path && !linksExt && (
-                      <Link as={item.path} href={item.path}>
+                      <Link {...item.path}>
                         <a className={`${linksDisabled ? 'disabled' : ''}`}>
                           {linkContent}
                         </a>

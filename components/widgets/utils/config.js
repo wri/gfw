@@ -3,6 +3,7 @@ import sortBy from 'lodash/sortBy';
 import compact from 'lodash/compact';
 import moment from 'moment';
 import { translateText } from 'utils/transifex';
+import { encodeStateForUrl } from 'utils/stateToUrl';
 
 import allOptions from '../options';
 
@@ -10,18 +11,20 @@ export const getForestTypes = ({
   forestTypes,
   settings,
   polynamesWhitelist,
-  adm0
+  adm0,
 }) =>
   forestTypes
-    .filter(o => {
+    .filter((o) => {
       const isGlobal = !polynamesWhitelist && o.global;
       const hasPolyname =
         isGlobal ||
         (polynamesWhitelist &&
-          polynamesWhitelist.includes(o.tableKey || o.tableKeys[settings.dataset || 'annual']));
+          polynamesWhitelist.includes(
+            o.tableKey || o.tableKeys[settings.dataset || 'annual']
+          ));
       return isGlobal || hasPolyname;
     })
-    .map(f => ({
+    .map((f) => ({
       ...f,
       label: f.label.includes('{iflYear}')
         ? f.label.replace('{iflYear}', settings.ifl || 2016)
@@ -29,16 +32,22 @@ export const getForestTypes = ({
       metaKey:
         f.metaKey === 'primary_forest'
           ? `${lowerCase(adm0)}_${f.metaKey}${adm0 === 'IDN' ? 's' : ''}`
-          : f.metaKey
+          : f.metaKey,
     }));
 
-export const getLandCategories = ({ landCategories, polynamesWhitelist, settings }) =>
-  landCategories.filter(o => {
+export const getLandCategories = ({
+  landCategories,
+  polynamesWhitelist,
+  settings,
+}) =>
+  landCategories.filter((o) => {
     const isGlobal = !polynamesWhitelist && o.global;
     const hasPolyname =
       isGlobal ||
       (polynamesWhitelist &&
-        polynamesWhitelist.includes(o.tableKey || o.tableKeys[settings.dataset || 'annual']));
+        polynamesWhitelist.includes(
+          o.tableKey || o.tableKeys[settings.dataset || 'annual']
+        ));
     return isGlobal || hasPolyname;
   });
 
@@ -48,17 +57,17 @@ export const getSettingsConfig = ({
   dataOptions,
   polynamesWhitelist,
   pendingKeys,
-  status
+  status,
 }) =>
   settingsConfig &&
   settingsConfig
     .filter(
-      s =>
+      (s) =>
         status !== 'pending' ||
         !pendingKeys ||
         (pendingKeys && pendingKeys.includes(s.key))
     )
-    .map(o => {
+    .map((o) => {
       const {
         key,
         compareKey,
@@ -67,9 +76,8 @@ export const getSettingsConfig = ({
         options,
         whitelist,
         locationType,
-        noSort
-      } =
-        o || {};
+        noSort,
+      } = o || {};
       let mergedOptions =
         (dataOptions && dataOptions[key]) || options || allOptions[key];
       if (key === 'forestType') {
@@ -79,7 +87,7 @@ export const getSettingsConfig = ({
             forestTypes: mergedOptions,
             settings,
             polynamesWhitelist,
-            locationType
+            locationType,
           });
       } else if (key === 'landCategory') {
         mergedOptions =
@@ -87,7 +95,7 @@ export const getSettingsConfig = ({
           getLandCategories({
             landCategories: mergedOptions,
             polynamesWhitelist,
-            locationType
+            locationType,
           });
       }
       const parsedOptions = noSort
@@ -98,41 +106,43 @@ export const getSettingsConfig = ({
         ...o,
         ...(parsedOptions && {
           options: parsedOptions.filter(
-            opt => !whitelist || whitelist.includes(opt.value)
+            (opt) => !whitelist || whitelist.includes(opt.value)
           ),
-          value: parsedOptions.find(opt => opt.value === settings[key]),
+          value: parsedOptions.find((opt) => opt.value === settings[key]),
           ...(startKey && {
             startOptions: parsedOptions.filter(
-              opt => opt.value <= settings[endKey]
+              (opt) => opt.value <= settings[endKey]
             ),
             startValue: parsedOptions.find(
-              opt => opt.value === settings[startKey]
-            )
+              (opt) => opt.value === settings[startKey]
+            ),
           }),
           ...(endKey && {
             endOptions: parsedOptions.filter(
-              opt => opt.value >= settings[startKey]
+              (opt) => opt.value >= settings[startKey]
             ),
-            endValue: parsedOptions.find(opt => opt.value === settings[endKey])
+            endValue: parsedOptions.find(
+              (opt) => opt.value === settings[endKey]
+            ),
           }),
           ...(compareKey && {
             compareOptions: parsedOptions.filter(
-              opt => opt.value !== settings[key]
+              (opt) => opt.value !== settings[key]
             ),
             compareValue: parsedOptions.find(
-              opt => opt.value === settings[compareKey]
-            )
-          })
-        })
+              (opt) => opt.value === settings[compareKey]
+            ),
+          }),
+        }),
       };
     });
 
-export const getOptionsSelected = options =>
+export const getOptionsSelected = (options) =>
   options &&
   options.reduce(
     (obj, option) => ({
       ...obj,
-      [option.key]: option.options.find(o => o === option.value)
+      [option.key]: option.options.find((o) => o === option.value),
     }),
     {}
   );
@@ -166,7 +176,7 @@ export const getIndicator = (forestType, landCategory) => {
 
   return {
     label,
-    value
+    value,
   };
 };
 
@@ -181,83 +191,109 @@ export const getWidgetDatasets = ({
   endDateAbsolute,
   latestDate,
   threshold,
-  dataset
+  dataset,
 }) =>
   datasets &&
-  datasets.filter(d => dataset !== 'modis' || d.boundary).map(d => ({
-    ...d,
-    opacity: 1,
-    visibility: true,
-    ...(!d.boundary && {
-      layers:
-        extentYear && !Array.isArray(d.layers)
-          ? [d.layers[extentYear]]
-          : d.layers,
-      ...(((startYear && endYear) || year) && {
-        timelineParams: {
-          startDate: `${startYear || year}-01-01`,
-          endDate: `${endYear || year}-12-31`,
-          trimEndDate: `${endYear || year}-12-31`
-        }
-      }),
-      ...(weeks && {
-        timelineParams: {
-          startDate: moment(latestDate || undefined)
-            .subtract(weeks, 'weeks')
-            .format('YYYY-MM-DD'),
-          endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
-          trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
-          startDateAbsolute: dataset === 'viirs' && moment(latestDate).diff(moment(latestDate || undefined)
-            .subtract(weeks, 'weeks'), 'days') > 90 ? moment(latestDate).subtract(90, 'days').format('YYYY-MM-DD') : moment(latestDate || undefined)
+  datasets
+    .filter((d) => dataset !== 'modis' || d.boundary)
+    .map((d) => ({
+      ...d,
+      opacity: 1,
+      visibility: true,
+      ...(!d.boundary && {
+        layers:
+          extentYear && !Array.isArray(d.layers)
+            ? [d.layers[extentYear]]
+            : d.layers,
+        ...(((startYear && endYear) || year) && {
+          timelineParams: {
+            startDate: `${startYear || year}-01-01`,
+            endDate: `${endYear || year}-12-31`,
+            trimEndDate: `${endYear || year}-12-31`,
+          },
+        }),
+        ...(weeks && {
+          timelineParams: {
+            startDate: moment(latestDate || undefined)
               .subtract(weeks, 'weeks')
               .format('YYYY-MM-DD'),
-          endDateAbsolute: latestDate
-        }
+            endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
+            trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
+            startDateAbsolute:
+              dataset === 'viirs' &&
+              moment(latestDate).diff(
+                moment(latestDate || undefined).subtract(weeks, 'weeks'),
+                'days'
+              ) > 90
+                ? moment(latestDate).subtract(90, 'days').format('YYYY-MM-DD')
+                : moment(latestDate || undefined)
+                    .subtract(weeks, 'weeks')
+                    .format('YYYY-MM-DD'),
+            endDateAbsolute: latestDate,
+          },
+        }),
+        ...(threshold && {
+          params: {
+            thresh: threshold,
+            visibility: true,
+          },
+        }),
+        ...(startDateAbsolute &&
+          endDateAbsolute && {
+            timelineParams: {
+              startDateAbsolute:
+                dataset === 'viirs' &&
+                moment(endDateAbsolute).diff(
+                  moment(startDateAbsolute),
+                  'days'
+                ) > 90
+                  ? moment(endDateAbsolute)
+                      .subtract(90, 'days')
+                      .format('YYYY-MM-DD')
+                  : startDateAbsolute,
+              endDateAbsolute,
+              startDate:
+                dataset === 'viirs' &&
+                moment(endDateAbsolute).diff(
+                  moment(startDateAbsolute),
+                  'days'
+                ) > 90
+                  ? moment(endDateAbsolute)
+                      .subtract(90, 'days')
+                      .format('YYYY-MM-DD')
+                  : startDateAbsolute,
+              endDate: endDateAbsolute,
+              trimEndDate: endDateAbsolute,
+            },
+          }),
       }),
-      ...(threshold && {
-        params: {
-          thresh: threshold,
-          visibility: true
-        }
-      }),
-      ...(startDateAbsolute &&
-        endDateAbsolute && {
-        timelineParams: {
-          startDateAbsolute: dataset === 'viirs' && moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') > 90 ? moment(endDateAbsolute).subtract(90, 'days').format('YYYY-MM-DD') : startDateAbsolute,
-          endDateAbsolute,
-          startDate: dataset === 'viirs' && moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') > 90 ? moment(endDateAbsolute).subtract(90, 'days').format('YYYY-MM-DD') : startDateAbsolute,
-          endDate: endDateAbsolute,
-          trimEndDate: endDateAbsolute
-        }
-      })
-    })
-  }));
+    }));
 
 export const getPolynameDatasets = ({ optionsSelected, settings }) => {
   const { ifl, forestType, landCategory } = settings;
   const polynames = [
     ...allOptions.forestType,
-    ...allOptions.landCategory
-  ].filter(p => [forestType, landCategory].includes(p.value));
+    ...allOptions.landCategory,
+  ].filter((p) => [forestType, landCategory].includes(p.value));
   const iflYear =
     optionsSelected &&
     optionsSelected.ifl &&
-    optionsSelected.ifl.find(opt => opt.value === ifl);
+    optionsSelected.ifl.find((opt) => opt.value === ifl);
 
   return (
     polynames &&
     polynames.flatMap(
-      polyname =>
+      (polyname) =>
         polyname.datasets &&
-        polyname.datasets.map(d => ({
+        polyname.datasets.map((d) => ({
           opacity: 0.7,
           visibility: true,
           ...d,
           sqlParams: iflYear && {
             where: {
-              class: iflYear.layerValue
-            }
-          }
+              class: iflYear.layerValue,
+            },
+          },
         }))
     )
   );
@@ -267,7 +303,7 @@ export const getNonGlobalIndicator = ({
   forestType,
   landCategory,
   type,
-  datasets
+  datasets,
 }) => {
   if (!datasets || type !== 'global') return null;
 
@@ -278,13 +314,13 @@ export const getNonGlobalIndicator = ({
   if (forestTypeCount) {
     indicators.push({
       label: forestType.label,
-      count: forestTypeCount
+      count: forestTypeCount,
     });
   }
   if (landCategoryCount) {
     indicators.push({
       label: landCategory.label,
-      count: landCategoryCount
+      count: landCategoryCount,
     });
   }
 
@@ -297,7 +333,7 @@ export const getStatements = ({
   dataType,
   landCategory,
   forestType,
-  datasets
+  datasets,
 }) => {
   if (!settings) return null;
   const { extentYear, threshold } = settings;
@@ -306,25 +342,24 @@ export const getStatements = ({
     forestType,
     landCategory,
     type,
-    datasets
+    datasets,
   });
 
   const indicatorStatements =
     indicators &&
-    indicators.map(
-      i =>
-        (i
-          ? translateText(
+    indicators.map((i) =>
+      i
+        ? translateText(
             '*{indicator} are available in {datasetsCount} countries only',
             {
               indicator: i.label.toLowerCase(),
-              datasetsCount: i.count
+              datasetsCount: i.count,
             }
           )
-          : null)
+        : null
     );
   const statements = compact([
-    extentYear && (dataType !== 'lossPrimary' && dataType !== 'fires')
+    extentYear && dataType !== 'lossPrimary' && dataType !== 'fires'
       ? translateText('{extentYear} tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'
@@ -335,31 +370,44 @@ export const getStatements = ({
       : null,
     dataType === 'loss'
       ? translateText(
-        'these estimates do not take tree cover gain into account'
-      )
+          'these estimates do not take tree cover gain into account'
+        )
       : null,
     dataType === 'nlcd_landcover'
       ? translateText(
-        '*raw NLCD categories have been re-classed to match IPCC categories'
-      )
+          '*raw NLCD categories have been re-classed to match IPCC categories'
+        )
       : null,
-    ...(indicatorStatements || [])
+    ...(indicatorStatements || []),
   ]);
 
   return statements;
 };
 
-export const getLocationPath = (pathname, type, query, params) => ({
-  type: pathname,
-  payload: {
-    type: type === 'global' ? 'country' : type,
-    ...params
-  },
-  query: {
-    ...query,
-    map: {
-      ...(query && query.map),
-      canBound: true
-    }
+export const getLocationPath = (pathname, type, query, params) => {
+  const pathObj = {
+    payload: {
+      type: type === 'global' ? 'country' : type,
+      ...params,
+    },
+    query: {
+      ...query,
+      map: {
+        ...(query && query.map),
+        canBound: true,
+      },
+    },
+  };
+
+  if (pathObj.query.location) {
+    delete pathObj.query.location;
   }
-});
+
+  return {
+    href: pathname,
+    as: `${pathname.replace(
+      '[...location]',
+      Object.values(pathObj.payload).join('/')
+    )}?${encodeStateForUrl(pathObj.query)}`,
+  };
+};

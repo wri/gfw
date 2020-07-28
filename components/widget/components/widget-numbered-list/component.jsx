@@ -11,7 +11,7 @@ class WidgetNumberedList extends PureComponent {
       settings,
       settingsConfig,
       handleChangeSettings,
-      embed
+      embed,
     } = this.props;
 
     return (
@@ -20,12 +20,11 @@ class WidgetNumberedList extends PureComponent {
         data={data}
         settings={{
           ...settings,
-          format: settings.unit === '%' ? '.2r' : '.3s'
+          format: settings.unit === '%' ? '.2r' : '.3s',
         }}
         settingsConfig={settingsConfig}
-        handlePageChange={change =>
-          handleChangeSettings({ page: settings.page + change })
-        }
+        handlePageChange={(change) =>
+          handleChangeSettings({ page: settings.page + change })}
         linksExt={embed}
       />
     );
@@ -38,7 +37,7 @@ WidgetNumberedList.propTypes = {
   settings: PropTypes.object.isRequired,
   settingsConfig: PropTypes.array,
   handleChangeSettings: PropTypes.func.isRequired,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
 };
 
 export default WidgetNumberedList;

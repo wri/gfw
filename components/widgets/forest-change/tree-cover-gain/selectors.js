@@ -6,22 +6,24 @@ import { sortByKey } from 'utils/data';
 import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getAdm0 = state => state.adm0;
-const getLocationsMeta = state =>
-  (state.adm0 ? state.locationData : state.childData);
-const getColors = state => state.colors;
-const getIndicator = state => state.indicator;
-const getLocationObject = state => state.location;
-const getParentLabel = state => state.parentLabel;
-const getLocationName = state => state.locationLabel;
-const getSentences = state => state.sentences;
-const getAdminLevel = state => state.adminLevel;
-const getTitle = state => state.title;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getAdm0 = (state) => state.adm0;
+const getLocationsMeta = (state) =>
+  state.adm0 ? state.locationData : state.childData;
+const getColors = (state) => state.colors;
+const getIndicator = (state) => state.indicator;
+const getLocationObject = (state) => state.location;
+const getParentLabel = (state) => state.parentLabel;
+const getLocationName = (state) => state.locationLabel;
+const getSentences = (state) => state.sentences;
+const getAdminLevel = (state) => state.adminLevel;
+const getTitle = (state) => state.title;
 
 const haveData = (data, locationObject) =>
-  locationObject && data && data.find(item => item.id === locationObject.value);
+  locationObject &&
+  data &&
+  data.find((item) => item.id === locationObject.value);
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -33,7 +35,7 @@ export const getSortedData = createSelector(
       true
     ).map((d, i) => ({
       ...d,
-      rank: i + 1
+      rank: i + 1,
     }));
   }
 );
@@ -46,7 +48,7 @@ export const parseData = createSelector(
     getLocationObject,
     getLocationName,
     getLocationsMeta,
-    getColors
+    getColors,
   ],
   (data, settings, adm0, locationObject, currentLabel, meta, colors) => {
     if (
@@ -60,23 +62,24 @@ export const parseData = createSelector(
     }
 
     let dataTrimmed = [];
-    data.forEach(d => {
+    data.forEach((d) => {
       const locationMeta = meta && meta[d.id];
       if (locationMeta) {
         dataTrimmed.push({
           ...d,
-          label: locationMeta.label
+          label: locationMeta.label,
+          path: locationMeta.path,
         });
       }
     });
     dataTrimmed = dataTrimmed.map((d, i) => ({
       ...d,
-      rank: i + 1
+      rank: i + 1,
     }));
     if (adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
-        d => d.id === locationObject && locationObject.value
+        (d) => d.id === locationObject && locationObject.value
       );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
@@ -91,10 +94,10 @@ export const parseData = createSelector(
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
 
-    return dataTrimmed.map(d => ({
+    return dataTrimmed.map((d) => ({
       ...d,
       color: colors.main,
-      value: settings.unit === 'ha' ? d.gain : d.percentage
+      value: settings.unit === 'ha' ? d.gain : d.percentage,
     }));
   }
 );
@@ -107,7 +110,7 @@ export const parseSentence = createSelector(
     getLocationName,
     getSentences,
     getAdminLevel,
-    getParentLabel
+    getParentLabel,
   ],
   (
     data,
@@ -131,12 +134,12 @@ export const parseSentence = createSelector(
       regionInitial,
       regionWithIndicator,
       globalInitial,
-      globalWithIndicator
+      globalWithIndicator,
     } = sentences;
     const locationData =
-      locationObject && data.find(l => l.id === locationObject.value);
+      locationObject && data.find((l) => l.id === locationObject.value);
     const gain = locationData ? locationData.gain : sumBy(data, 'gain') || 0;
-    const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') || 0 : 0;
+    const gainPercent = gain ? (100 * gain) / sumBy(data, 'gain') || 0 : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
     const params = {
@@ -145,7 +148,7 @@ export const parseSentence = createSelector(
       indicator: (indicator && indicator.label) || 'region-wide',
       percent: formatNumber({ num: areaPercent, unit: '%' }),
       gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
-      parent: parentLabel || null
+      parent: parentLabel || null,
     };
 
     let sentence = indicator ? withIndicator : initial;
@@ -157,7 +160,7 @@ export const parseSentence = createSelector(
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -176,5 +179,5 @@ export const parseTitle = createSelector(
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });
