@@ -26,7 +26,7 @@ const WidgetEmbedPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useMemo(() => {
-    const { widget, widgets } = decodeParamsForState(query) || {};
+    const { widget, ...widgets } = decodeParamsForState(query) || {};
 
     if (widgets) {
       dispatch(setWidgetsSettings(widgets));
