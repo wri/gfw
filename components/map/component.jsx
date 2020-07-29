@@ -96,6 +96,7 @@ class MapComponent extends Component {
 
     if (basemap?.basemapGroup !== prevBasemap.basemapGroup) {
       this.setBasemap();
+      this.setLabels();
     }
 
     if (mapLabels !== prevMapLabels || lang !== prevLang) {
@@ -212,13 +213,12 @@ class MapComponent extends Component {
 
     if (this.map) {
       const { layers, metadata } = this.map.getStyle();
-
       const basemapGroups = Object.keys(metadata['mapbox:groups']).filter(
         (k) => {
           const { name } = metadata['mapbox:groups'][k];
 
           const matchedGroups = BASEMAP_GROUPS.map((rgr) =>
-            name.toLowerCase().includes(rgr)
+            name?.toLowerCase()?.includes(rgr)
           );
 
           return matchedGroups.some((bool) => bool);
@@ -257,38 +257,52 @@ class MapComponent extends Component {
   };
 
   setLabels = () => {
-    const { lang } = this.props;
+    const { basemap, lang } = this.props;
+
     const LABELS_GROUP = ['labels'];
-    if (this.map) {
-      const { mapLabels } = this.props;
-      const { layers, metadata } = this.map.getStyle();
-      const mapboxGroups = metadata && metadata['mapbox:groups'];
+    const { layers, metadata } = this.map.getStyle();
 
-      const groups =
-        mapboxGroups &&
-        Object.keys(mapboxGroups).filter((k) => {
-          const { name } = (mapboxGroups && mapboxGroups[k]) || {};
-          const roadGroups = LABELS_GROUP.map((rgr) =>
-            name.toLowerCase().includes(rgr)
-          );
+    const labelGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
+      const { name } = metadata['mapbox:groups'][k];
 
-          return roadGroups.some((bool) => bool);
-        });
+      const matchedGroups = LABELS_GROUP.filter((rgr) =>
+        name.toLowerCase().includes(rgr)
+      );
 
-      const labelLayers = layers.filter((l) => {
-        const labelMetadata = l.metadata;
-        if (!labelMetadata) return false;
+      return matchedGroups.some((bool) => bool);
+    });
 
-        const gr = labelMetadata['mapbox:group'];
-        return groups.includes(gr);
-      });
+    const labelsWithMeta = labelGroups.map((_groupId) => ({
+      ...metadata['mapbox:groups'][_groupId],
+      id: _groupId,
+    }));
+    const labelsToDisplay =
+      labelsWithMeta.find((_basemap) =>
+        _basemap.name.includes(basemap?.labelsGroup)
+      ) || {};
 
-      labelLayers.forEach((l) => {
-        const visibility = mapLabels ? 'visible' : 'none';
-        this.map.setLayoutProperty(l.id, 'visibility', visibility);
-        this.map.setLayoutProperty(l.id, 'text-field', ['get', `name_${lang}`]);
-      });
-    }
+    const labelLayers = layers.filter((l) => {
+      const { metadata: layerMetadata } = l;
+      if (!layerMetadata) return false;
+
+      const gr = layerMetadata['mapbox:group'];
+      return labelGroups.includes(gr);
+    });
+
+    labelLayers.forEach((_layer) => {
+      const match = _layer.metadata['mapbox:group'] === labelsToDisplay.id;
+      this.map.setLayoutProperty(
+        _layer.id,
+        'visibility',
+        match ? 'visible' : 'none'
+      );
+      this.map.setLayoutProperty(_layer.id, 'text-field', [
+        'get',
+        `name_${lang}`,
+      ]);
+    });
+
+    return true;
   };
 
   setRoads = () => {
@@ -302,7 +316,7 @@ class MapComponent extends Component {
         Object.keys(metadata['mapbox:groups']).filter((k) => {
           const { name } = metadata['mapbox:groups'][k];
           const roadGroups = ROADS_GROUP.map((rgr) =>
-            name.toLowerCase().includes(rgr)
+            name?.toLowerCase()?.includes(rgr)
           );
 
           return roadGroups.some((bool) => bool);

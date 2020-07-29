@@ -10,8 +10,8 @@ export default {
     backgroundColor: '#A2DFFF',
     image: defaultImage,
     basemapGroup: 'basemap-light',
-    mapStyle:
-      'mapbox://styles/resourcewatch/ckd5ybsjy12mi1ir32vv23q0k?fresh=true',
+    labelsGroup: 'labels-light',
+    mapStyle: 'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv',
   },
   dark: {
     label: 'dark matter',
@@ -19,8 +19,8 @@ export default {
     color: '#31312F',
     image: darkImage,
     basemapGroup: 'basemap-dark',
-    mapStyle:
-      'mapbox://styles/resourcewatch/ckd5ybsjy12mi1ir32vv23q0k?fresh=true',
+    labelsGroup: 'labels-dark',
+    mapStyle: 'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv',
   },
   satellite: {
     label: 'Satellite',
@@ -28,8 +28,8 @@ export default {
     color: '#131620',
     image: satelliteImage,
     basemapGroup: 'basemap-satellite',
-    mapStyle:
-      'mapbox://styles/resourcewatch/ckd5ybsjy12mi1ir32vv23q0k?fresh=true',
+    labelsGroup: 'labels-dark',
+    mapStyle: 'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv',
     url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
   },
   landsat: {
@@ -38,8 +38,8 @@ export default {
     color: '#0C0045',
     image: landsatImage,
     basemapGroup: 'basemap-landsat',
-    mapStyle:
-      'mapbox://styles/resourcewatch/ckd5ybsjy12mi1ir32vv23q0k?fresh=true',
+    labelsGroup: 'labels-dark',
+    mapStyle: 'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv',
     url:
       'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
     availableYears: [2017, 2016, 2015, 2014, 2013],
