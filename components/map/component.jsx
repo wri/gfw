@@ -257,7 +257,7 @@ class MapComponent extends Component {
   };
 
   setLabels = () => {
-    const { basemap, lang } = this.props;
+    const { basemap, lang, mapLabels } = this.props;
 
     const LABELS_GROUP = ['labels'];
     const { layers, metadata } = this.map.getStyle();
@@ -294,7 +294,7 @@ class MapComponent extends Component {
       this.map.setLayoutProperty(
         _layer.id,
         'visibility',
-        match ? 'visible' : 'none'
+        match && mapLabels ? 'visible' : 'none'
       );
       this.map.setLayoutProperty(_layer.id, 'text-field', [
         'get',
