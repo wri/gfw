@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import App from 'next/app';
+import React, { useMemo } from 'react';
 import finallyShim from 'promise.prototype.finally';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import makeStore from 'store';
+import useStore from 'store';
 
 import reducerRegistry from 'store/registry';
 import MyGFWProvider from 'providers/mygfw-provider';
@@ -14,28 +13,20 @@ import 'styles/styles.scss';
 
 finallyShim.shim();
 
-class MyApp extends App {
-  store = makeStore();
+const App = ({ Component, pageProps }) => {
+  const store = useStore(pageProps.initialReduxState);
 
-  componentDidMount() {
-    this.store.replaceReducer(combineReducers(reducerRegistry.getReducers()));
-  }
+  useMemo(() => {
+    store.replaceReducer(combineReducers(reducerRegistry.getReducers()));
+  });
 
-  componentDidUpdate() {
-    this.store.replaceReducer(combineReducers(reducerRegistry.getReducers()));
-  }
+  return (
+    <Provider store={store}>
+      <MyGFWProvider />
+      <LocationProvider />
+      <Component {...pageProps} />
+    </Provider>
+  );
+};
 
-  render() {
-    const { Component, pageProps } = this.props;
-
-    return (
-      <Provider store={this.store}>
-        <MyGFWProvider />
-        <LocationProvider />
-        <Component {...pageProps} />
-      </Provider>
-    );
-  }
-}
-
-export default MyApp;
+export default App;
