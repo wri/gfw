@@ -2,12 +2,12 @@ import { getBiomassStockGrouped } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  TREE_BIOMASS_DENSITY_DATASET
+  TREE_BIOMASS_DENSITY_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  TREE_BIOMASS_DENSITY
+  TREE_BIOMASS_DENSITY,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -16,7 +16,7 @@ export default {
   widget: 'whrc-biomass',
   title: {
     default: 'Aboveground live woody biomass in {location}',
-    global: 'Global aboveground live woody biomass'
+    global: 'Global aboveground live woody biomass',
   },
   categories: ['climate'],
   types: ['global', 'country'],
@@ -27,14 +27,14 @@ export default {
       label: 'unit',
       type: 'switch',
       whitelist: ['totalBiomass', 'biomassDensity'],
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   refetchKeys: ['unit', 'threshold'],
   chartType: 'rankedList',
@@ -42,28 +42,28 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // above ground woody biomass
     {
       dataset: TREE_BIOMASS_DENSITY_DATASET,
-      layers: [TREE_BIOMASS_DENSITY]
-    }
+      layers: [TREE_BIOMASS_DENSITY],
+    },
   ],
   visible: ['dashboard', 'analysis', 'geostore'],
   colors: 'climate',
   metaKey: 'aboveground_biomass',
   sortOrder: {
     summary: 0,
-    forestChange: 0
+    forestChange: 0,
   },
   sentences: {
     initial:
-      'In 2000, {location} had an aboveground live woody biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.',
+      'In 2000, {location} had an aboveground live woody biomass density of {biomassDensity}, and a total aboveground biomass of {totalBiomass}.',
     totalBiomass:
       'Around {value} of the world’s {label} is contained in the top 5 countries.',
     biomassDensity:
-      'The average {label} of the world’s top 5 countries is {value}.'
+      'The average {label} of the world’s top 5 countries is {value}.',
   },
   settings: {
     threshold: 30,
@@ -73,35 +73,38 @@ export default {
     layers: ['loss'],
     pageSize: 5,
     page: 0,
-    unit: 'totalBiomass'
+    unit: 'totalBiomass',
   },
   whitelists: {
-    checkStatus: true
+    checkStatus: true,
   },
   getData: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
-    const location = type === 'country' ? {
-      type,
-      adm0: adm0 && !adm1 ? null : adm0,
-      adm1: adm1 && !adm2 ? null : adm1,
-      adm2: null
-    } : {
-      type,
-      adm0,
-      adm1,
-      adm2
-    };
+    const location =
+      type === 'country'
+        ? {
+            type,
+            adm0: adm0 && !adm1 ? null : adm0,
+            adm1: adm1 && !adm2 ? null : adm1,
+            adm2: null,
+          }
+        : {
+            type,
+            adm0,
+            adm1,
+            adm2,
+          };
 
     return getBiomassStockGrouped({ ...rest, ...location }).then(
-      biomassResponse => {
+      (biomassResponse) => {
         const { data } = biomassResponse.data;
         let mappedData = [];
         if (data && data.length) {
-          mappedData = data.map(item => {
+          mappedData = data.map((item) => {
             const { extent, biomass } = item;
             const biomassDensity = biomass && extent > 0 ? biomass / extent : 0;
             return {
               ...item,
-              biomassDensity
+              biomassDensity,
             };
           });
         }
@@ -110,19 +113,22 @@ export default {
     );
   },
   getDataURL: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
-    const location = type === 'country' ? {
-      type,
-      adm0: adm0 && !adm1 ? null : adm0,
-      adm1: adm1 && !adm2 ? null : adm1,
-      adm2: null
-    } : {
-      type,
-      adm0,
-      adm1,
-      adm2
-    };
+    const location =
+      type === 'country'
+        ? {
+            type,
+            adm0: adm0 && !adm1 ? null : adm0,
+            adm1: adm1 && !adm2 ? null : adm1,
+            adm2: null,
+          }
+        : {
+            type,
+            adm0,
+            adm1,
+            adm2,
+          };
 
-    return [getBiomassStockGrouped({ ...rest, ...location, download: true })]
+    return [getBiomassStockGrouped({ ...rest, ...location, download: true })];
   },
-  getWidgetProps
+  getWidgetProps,
 };
