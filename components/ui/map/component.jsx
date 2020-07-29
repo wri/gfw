@@ -193,7 +193,7 @@ class Map extends Component {
     try {
       const { longitude, latitude, zoom } = new WebMercatorViewport(
         v
-      ).fitBounds(
+      )?.fitBounds(
         [
           [bbox[0], bbox[1]],
           [bbox[2], bbox[3]],

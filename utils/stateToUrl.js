@@ -128,7 +128,7 @@ export const encodeStateForUrl = (params, options) => {
   Object.keys(params).forEach((key) => {
     if (params[key] && typeof params[key] === 'object') {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
-    } else {
+    } else if (params[key]) {
       paramsParsed[key] = params[key];
     }
   });

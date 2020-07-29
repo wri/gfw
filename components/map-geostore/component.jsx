@@ -21,7 +21,7 @@ import './styles.scss';
 const DEFAULT_VIEWPORT = {
   zoom: 2,
   lat: 0,
-  lng: 0
+  lng: 0,
 };
 
 class MapGeostore extends Component {
@@ -33,21 +33,21 @@ class MapGeostore extends Component {
     height: PropTypes.number,
     cursor: PropTypes.string,
     small: PropTypes.bool,
-    location: PropTypes.object
+    location: PropTypes.object,
   };
 
   static defaultProps = {
     padding: 25,
     height: 140,
     width: 140,
-    cursor: 'default'
+    cursor: 'default',
   };
 
   state = {
     loading: true,
     error: false,
     viewport: DEFAULT_VIEWPORT,
-    geostore: null
+    geostore: null,
   };
 
   mounted = false;
@@ -84,7 +84,7 @@ class MapGeostore extends Component {
     if (this.mounted) {
       this.setState({ error: false });
       getGeostoreProvider(this.props.location)
-        .then(response => {
+        .then((response) => {
           if (this.mounted) {
             const { data } = response.data || {};
             const geostore = buildGeostore(
@@ -94,7 +94,7 @@ class MapGeostore extends Component {
             this.setState({ geostore });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           if (this.mounted) {
             this.setState({ error: true });
@@ -124,13 +124,17 @@ class MapGeostore extends Component {
     const v = {
       width: this.mapContainer.offsetWidth,
       height: this.mapContainer.offsetHeight,
-      ...viewport
+      ...viewport,
     };
 
-    const { longitude, latitude, zoom } = new WebMercatorViewport(v).fitBounds(
-      [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
-      { padding: this.props.padding }
-    );
+    const { longitude, latitude, zoom } =
+      new WebMercatorViewport(v)?.fitBounds(
+        [
+          [bbox[0], bbox[1]],
+          [bbox[2], bbox[3]],
+        ],
+        { padding: this.props.padding }
+      ) || {};
 
     if (this.mounted) {
       this.setState({
@@ -140,8 +144,8 @@ class MapGeostore extends Component {
           latitude,
           zoom,
           transitionDuration: 0,
-          transitionInterruption: TRANSITION_EVENTS.UPDATE
-        }
+          transitionInterruption: TRANSITION_EVENTS.UPDATE,
+        },
       });
     }
   };
@@ -154,7 +158,7 @@ class MapGeostore extends Component {
       <div
         id="recent-image-map"
         className={cx('c-recent-image-map', className, { small })}
-        ref={r => {
+        ref={(r) => {
           this.mapContainer = r;
         }}
       >
@@ -167,8 +171,7 @@ class MapGeostore extends Component {
             <rect x="0" y="0" width={width} height="100%" />
           </ContentLoader>
         )}
-        {error &&
-          !loading && (
+        {error && !loading && (
           <p className="error-msg">we had trouble finding a recent image</p>
         )}
         {basemap && (
@@ -186,11 +189,8 @@ class MapGeostore extends Component {
             keyboard={false}
             getCursor={() => cursor}
           >
-            {map => (
-              <LayerManager
-                map={map}
-                plugin={PluginMapboxGl}
-              >
+            {(map) => (
+              <LayerManager map={map} plugin={PluginMapboxGl}>
                 {geostore && (
                   <Layer
                     id={geostore.id}
@@ -198,32 +198,32 @@ class MapGeostore extends Component {
                     type="geojson"
                     source={{
                       data: geostore.geojson,
-                      type: 'geojson'
+                      type: 'geojson',
                     }}
                     render={{
                       layers: [
                         {
                           type: 'fill',
                           paint: {
-                            'fill-color': 'transparent'
-                          }
+                            'fill-color': 'transparent',
+                          },
                         },
                         {
                           type: 'line',
                           paint: {
                             'line-color': '#C0FF24',
                             'line-width': 3,
-                            'line-offset': 2
-                          }
+                            'line-offset': 2,
+                          },
                         },
                         {
                           type: 'line',
                           paint: {
                             'line-color': '#000',
-                            'line-width': 2
-                          }
-                        }
-                      ]
+                            'line-width': 2,
+                          },
+                        },
+                      ],
                     }}
                     zIndex={1060}
                   />
@@ -235,7 +235,7 @@ class MapGeostore extends Component {
                   type="raster"
                   source={{
                     type: 'raster',
-                    tiles: [basemap.url]
+                    tiles: [basemap.url],
                   }}
                   zIndex={100}
                 />
