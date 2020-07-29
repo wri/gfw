@@ -14,8 +14,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
-    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
-    "heroku-postbuild": "yarn build"
+    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100"
   },
   "repository": {
     "type": "git",
@@ -171,5 +170,6 @@
     "webp-loader": "^0.6.0",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "wri-json-api-serializer": "^1.0.1"
-  }
+  },
+  "cacheDirectories": [".next/cache"]
 }
