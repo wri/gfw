@@ -1,0 +1,17 @@
+# Ignore all logfiles and tempfiles.
+/log/*.log
+.env
+node_modules
+package-lock.json
+/cypress/videos
+/cypress/screenshots
+.DS_Store
+.next
+
+# testing
+/coverage
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

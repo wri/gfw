@@ -1,0 +1,17 @@
+{
+  "id": "doc2",
+  "title": "Document Number 2",
+  "description": "This is a link to [another document.](doc3.md) This is a link to an [external page.](http://www.example.com)",
+  "source": "@site/docs/doc2.md",
+  "permalink": "/docs/doc2",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/doc2.md",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "Style Guide",
+    "permalink": "/docs/doc1"
+  },
+  "next": {
+    "title": "This is Document Number 3",
+    "permalink": "/docs/doc3"
+  }
+}

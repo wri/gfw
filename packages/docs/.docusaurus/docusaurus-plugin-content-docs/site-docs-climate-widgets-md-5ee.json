@@ -1,0 +1,8 @@
+{
+  "id": "climate_widgets",
+  "title": "Climate Widget Calculations",
+  "description": "## Calculating Below Ground Biomass",
+  "source": "@site/docs/ClimateWidgets.md",
+  "permalink": "/docs/climate_widgets",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/ClimateWidgets.md"
+}
