@@ -20,6 +20,9 @@
     "BITLY_TOKEN": {
       "required": true
     },
+    "FACEBOOK_PIXEL_ID": {
+      "required": true
+    },
     "FEATURE_ENV": {
       "required": true
     },
@@ -33,6 +36,9 @@
       "required": true
     },
     "MapboxAccessToken": {
+      "required": true
+    },
+    "TWITTER_CONVERSION_ID": {
       "required": true
     }
   },

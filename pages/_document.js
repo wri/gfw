@@ -55,20 +55,6 @@ export default class MyDocument extends Document {
           />
           <script
             type="text/javascript"
-            src="/facebook.js"
-            async
-            rel="preconnect"
-          />
-          <noscript>
-            <img
-              height="1"
-              width="1"
-              src="https://www.facebook.com/tr?id=895929814105571&ev=PageView&noscript=1"
-              alt="facebook-pixel"
-            />
-          </noscript>
-          <script
-            type="text/javascript"
             src="//script.crazyegg.com/pages/scripts/0027/6897.js"
             async
             rel="preconnect"

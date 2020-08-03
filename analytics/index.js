@@ -1,4 +1,6 @@
 import ReactGA from 'react-ga';
+import ReactPixel from 'utils/facebook-pixel';
+import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
 import { decodeUrlForState } from 'utils/stateToUrl';
 import mapEvents from 'analytics/map';
@@ -6,8 +8,14 @@ import sharedEvents from 'analytics/shared';
 import dashboardsEvents from 'analytics/dashboards';
 import topicsEvents from 'analytics/topics';
 
-export const initGA = () => {
-  ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
+const IS_BROWSER = typeof window !== 'undefined';
+
+export const initAnalytics = () => {
+  if (IS_BROWSER) {
+    ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
+    ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
+    TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
+  }
 };
 
 const events = {
@@ -21,6 +29,8 @@ export const handlePageTrack = () => {
   const url = `${window.location.pathname}${window.location.search}`;
   ReactGA.set({ page: url });
   ReactGA.pageview(url);
+  ReactPixel.pageView();
+  TwitterConvTrkr.pageView();
 };
 
 export const handleMapLatLonTrack = (location) => {
