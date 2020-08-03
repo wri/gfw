@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import awards0 from 'pages/about/section-impacts/images/awards.png?webp';
 import awards1 from 'pages/about/section-impacts/images/awards1.png?webp';

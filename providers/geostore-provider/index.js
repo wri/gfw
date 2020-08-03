@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { cancelToken } from 'utils/request';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import { getDataLocation } from 'utils/location';
 

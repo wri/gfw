@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -9,7 +9,7 @@ import { getMetaModalProps } from './selectors';
 reducerRegistry.registerModule('modalMeta', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(getMetaModalProps, actions)(ModalMetaComponent);

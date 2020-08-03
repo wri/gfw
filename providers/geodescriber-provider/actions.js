@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import { all, spread } from 'axios';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
@@ -16,48 +16,32 @@ export const clearGeodescriber = createAction('clearGeodescriber');
 
 export const getGeodescriber = createThunkAction(
   'getGeodescriber',
-  params => dispatch => {
+  (params) => (dispatch) => {
     if (!isEmpty(params)) {
       dispatch(setGeodescriberLoading({ loading: true, error: false }));
       getGeodescriberService(params)
-        .then(response => {
+        .then((response) => {
           dispatch(setGeodescriber(response.data.data));
         })
-        .catch(error => {
+        .catch(() => {
           dispatch(setGeodescriberLoading({ loading: false, error: true }));
-          console.info(error);
         });
     }
   }
 );
 
-export const getAdminGeodescriber = createThunkAction(
-  'getAdminGeodescriber',
-  location => dispatch => {
-    dispatch(setGeodescriberLoading({ loading: true, error: false }));
-    getAdminStats({ ...location, threshold: 30, extentYear: 2010 })
-      .then(response => {
-        dispatch(setGeodescriber(response));
-      })
-      .catch(error => {
-        dispatch(setGeodescriberLoading({ loading: false, error: true }));
-        console.info(error);
-      });
-  }
-);
-
-export const getAdminStats = params =>
+export const getAdminStats = (params) =>
   all([
     getExtent(params),
     getExtent({ ...params, forestType: 'plantations' }),
     getExtent({
       ...params,
       forestType: 'primary_forest',
-      extentYear: 2000
+      extentYear: 2000,
     }),
     getLoss(params),
     getLoss({ ...params, forestType: 'plantations' }),
-    getLoss({ ...params, forestType: 'primary_forest' })
+    getLoss({ ...params, forestType: 'primary_forest' }),
   ]).then(
     spread(
       (
@@ -119,19 +103,33 @@ export const getAdminStats = params =>
           totalLoss: {
             area: summedLoss || 0,
             year: latestYear || 0,
-            emissions: summedEmissions || 0
+            emissions: summedEmissions || 0,
           },
           plantationsLoss: {
             area: summedPlantationsLoss || 0,
-            emissions: summedPlantationsEmissions || 0
+            emissions: summedPlantationsEmissions || 0,
           },
           primaryLoss:
             primaryLoss && primaryLoss.length
               ? reverse(sortBy(primaryLoss, 'year'))[0]
-              : {}
+              : {},
         };
 
         return data;
       }
     )
   );
+
+export const getAdminGeodescriber = createThunkAction(
+  'getAdminGeodescriber',
+  (location) => (dispatch) => {
+    dispatch(setGeodescriberLoading({ loading: true, error: false }));
+    getAdminStats({ ...location, threshold: 30, extentYear: 2010 })
+      .then((response) => {
+        dispatch(setGeodescriber(response));
+      })
+      .catch(() => {
+        dispatch(setGeodescriberLoading({ loading: false, error: true }));
+      });
+  }
+);

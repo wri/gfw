@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import { getMeta } from 'services/meta';
 
 export const setModalMetaData = createAction('setModalMetaData');

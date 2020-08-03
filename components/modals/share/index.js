@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'analytics';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -10,12 +10,16 @@ import ShareComponent from './component';
 
 const mapStateToProps = ({ share, location }) => ({
   ...share,
-  location
+  location,
 });
 
 class ShareContainer extends PureComponent {
-  handleCopyToClipboard = input => {
-    const { setShareCopied, selected, data: { shareUrl } } = this.props;
+  handleCopyToClipboard = (input) => {
+    const {
+      setShareCopied,
+      selected,
+      data: { shareUrl },
+    } = this.props;
     input.select();
 
     try {
@@ -27,11 +31,11 @@ class ShareContainer extends PureComponent {
     }
 
     track(selected === 'link' ? 'shareCopyLink' : 'shareCopyEmbed', {
-      label: shareUrl
+      label: shareUrl,
     });
   };
 
-  handleFocus = event => {
+  handleFocus = (event) => {
     event.target.select();
   };
 
@@ -39,7 +43,7 @@ class ShareContainer extends PureComponent {
     return createElement(ShareComponent, {
       ...this.props,
       handleCopyToClipboard: this.handleCopyToClipboard,
-      handleFocus: this.handleFocus
+      handleFocus: this.handleFocus,
     });
   }
 }
@@ -47,13 +51,13 @@ class ShareContainer extends PureComponent {
 ShareContainer.propTypes = {
   setShareCopied: PropTypes.func.isRequired,
   selected: PropTypes.string,
-  data: PropTypes.object
+  data: PropTypes.object,
 };
 
 reducerRegistry.registerModule('share', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(ShareContainer);

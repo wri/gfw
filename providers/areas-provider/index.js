@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 import { CancelToken } from 'axios';
 
 import * as actions from './actions';

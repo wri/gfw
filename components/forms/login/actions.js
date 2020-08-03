@@ -1,47 +1,49 @@
-import { createThunkAction } from 'utils/redux';
+import { createThunkAction } from 'redux/actions';
 import { FORM_ERROR } from 'final-form';
 
 import { login, register, resetPassword } from 'services/user';
 import { getUserProfile } from 'providers/mygfw-provider/actions';
 
-export const loginUser = createThunkAction('logUserIn', data => dispatch =>
+export const loginUser = createThunkAction('logUserIn', (data) => (dispatch) =>
   login(data)
-    .then(response => {
+    .then((response) => {
       if (response.status < 400 && response.data) {
         dispatch(getUserProfile());
       }
     })
-    .catch(error => {
+    .catch((error) => {
       const { errors } = error.response.data;
 
       return {
-        [FORM_ERROR]: errors[0].detail
+        [FORM_ERROR]: errors[0].detail,
       };
     })
 );
 
-export const registerUser = createThunkAction('sendRegisterUser', data => () =>
-  register(data)
-    .then(() => {})
-    .catch(error => {
-      const { errors } = error.response.data;
+export const registerUser = createThunkAction(
+  'sendRegisterUser',
+  (data) => () =>
+    register(data)
+      .then(() => {})
+      .catch((error) => {
+        const { errors } = error.response.data;
 
-      return {
-        [FORM_ERROR]: errors[0].detail
-      };
-    })
+        return {
+          [FORM_ERROR]: errors[0].detail,
+        };
+      })
 );
 
 export const resetUserPassword = createThunkAction(
   'sendResetPassword',
-  data => () =>
+  (data) => () =>
     resetPassword(data)
       .then(() => {})
-      .catch(error => {
+      .catch((error) => {
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail
+          [FORM_ERROR]: errors[0].detail,
         };
       })
 );

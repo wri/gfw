@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';

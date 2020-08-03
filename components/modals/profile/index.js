@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import ModalProfileComponent from './component';
 import reducers, { initialState } from './reducers';

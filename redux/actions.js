@@ -6,7 +6,7 @@ const handleModule = ({ reducers, initialState }) =>
 const createThunkAction = (name, thunkAction, metaCreator) => {
   const action = createAction(name, null, metaCreator);
   if (!thunkAction) return action;
-  const returnAction = payload => (dispatch, getState) => {
+  const returnAction = (payload) => (dispatch, getState) => {
     dispatch(action());
     return thunkAction(payload)(dispatch, getState);
   };

@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import { getGeostoreProvider, getGeostoreKey } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 

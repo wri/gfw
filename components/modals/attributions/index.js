@@ -1,18 +1,18 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapStateToProps = ({ modalAttributions }) => ({
-  open: !!modalAttributions && !!modalAttributions.open
+  open: !!modalAttributions && !!modalAttributions.open,
 });
 
 reducerRegistry.registerModule('modalAttributions', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(Component);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -15,7 +15,7 @@ class GeodescriberProvider extends PureComponent {
     getAdminGeodescriber: PropTypes.func,
     geojson: PropTypes.object,
     location: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -34,7 +34,12 @@ class GeodescriberProvider extends PureComponent {
     const { loading, geojson, location } = this.props;
     const { geojson: prevGeojosn, location: prevLocation } = prevProps;
 
-    if (!loading && !['global', 'country'].includes(location.type) && geojson && !isEqual(geojson, prevGeojosn)) {
+    if (
+      !loading &&
+      !['global', 'country'].includes(location.type) &&
+      geojson &&
+      !isEqual(geojson, prevGeojosn)
+    ) {
       this.handleGetGeodescriber();
     }
 
@@ -56,7 +61,7 @@ class GeodescriberProvider extends PureComponent {
       getGeodescriber({
         geojson,
         token: this.geodescriberFetch.token,
-        lang: 'en'
+        lang: 'en',
       });
     }
   };
@@ -68,7 +73,7 @@ class GeodescriberProvider extends PureComponent {
 
     getAdminGeodescriber({
       ...location,
-      token: this.adminGeodescriberFetch.token
+      token: this.adminGeodescriberFetch.token,
     });
   };
 
@@ -94,7 +99,7 @@ class GeodescriberProvider extends PureComponent {
 reducerRegistry.registerModule('geodescriber', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(getGeodescriberProps, actions)(GeodescriberProvider);

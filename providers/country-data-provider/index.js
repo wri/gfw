@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 import { CancelToken } from 'axios';
 
 import { getDataLocation } from 'utils/location';
@@ -9,13 +9,16 @@ import { getDataLocation } from 'utils/location';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = state => ({
-  location: getDataLocation(state)
+const mapStateToProps = (state) => ({
+  location: getDataLocation(state),
 });
 
 class CountryDataProvider extends PureComponent {
   componentDidMount() {
-    const { location: { adm0, adm1 }, getCountries } = this.props;
+    const {
+      location: { adm0, adm1 },
+      getCountries,
+    } = this.props;
     getCountries();
 
     if (adm0) {
@@ -28,7 +31,9 @@ class CountryDataProvider extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { location: { adm0, adm1 } } = this.props;
+    const {
+      location: { adm0, adm1 },
+    } = this.props;
     const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
     const hasRegionChanged = adm0 && adm1 && adm1 !== prevProps.location.adm1;
 
@@ -45,14 +50,14 @@ class CountryDataProvider extends PureComponent {
     }
   }
 
-  handleRegionFetch = adm0 => {
+  handleRegionFetch = (adm0) => {
     const { getRegions } = this.props;
     this.cancelRegionsFetch();
     this.regionsFetch = CancelToken.source();
     getRegions({ adm0, token: this.regionsFetch.token });
   };
 
-  handleSubRegionFetch = params => {
+  handleSubRegionFetch = (params) => {
     const { getSubRegions } = this.props;
     this.cancelSubRegionsFetch();
     this.subRegionsFetch = CancelToken.source();
@@ -94,13 +99,13 @@ CountryDataProvider.propTypes = {
   getCountries: PropTypes.func.isRequired,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
-  getCountryLinks: PropTypes.func.isRequired
+  getCountryLinks: PropTypes.func.isRequired,
 };
 
 reducerRegistry.registerModule('countryData', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(CountryDataProvider);
