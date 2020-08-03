@@ -14,6 +14,10 @@ const URL = ({
   const { pathname, asPath, replace, query } = useRouter();
 
   useDeepCompareEffect(() => {
+    if (query.location) {
+      delete query.location;
+    }
+
     const queryParamsSerialized = encodeStateForUrl(
       { ...query, ...queryParams },
       options

@@ -1,6 +1,7 @@
 import queryString from 'query-string';
 import oldLayers from 'data/v2-v3-datasets-layers.json';
 import basemaps from 'components/map/basemaps';
+import isEmpty from 'lodash/isEmpty';
 
 const oldLayersAndDatasets = oldLayers.reduce(
   (obj, item) => ({
@@ -126,9 +127,13 @@ export const decodeUrlForState = (url) => {
 export const encodeStateForUrl = (params, options) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
-    if (params[key] && typeof params[key] === 'object') {
+    if (
+      params[key] &&
+      typeof params[key] === 'object' &&
+      !isEmpty(params[key])
+    ) {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
-    } else if (params[key]) {
+    } else if (params[key] && !isEmpty(params[key])) {
       paramsParsed[key] = params[key];
     }
   });
