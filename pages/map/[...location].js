@@ -30,6 +30,9 @@ export const getServerSideProps = async ({ params }) => {
     locationData = {};
   }
 
+  const locationType = params?.location[0];
+  const noIndex = !['global', 'country', 'wdpa'].includes(locationType);
+
   const { locationName } = locationData || {};
 
   return {
@@ -41,6 +44,7 @@ export const getServerSideProps = async ({ params }) => {
         locationName ? `in ${locationName}` : 'worldwide'
       } by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`,
       keywords: `${locationName}, Interactive world forest map, tree cover map, tree cover change, data, global forest cover change, satellite monitoring, deforestation, land use, forest communities, biodiversity`,
+      noIndex,
     },
   };
 };

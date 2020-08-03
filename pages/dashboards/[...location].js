@@ -37,6 +37,9 @@ export const getServerSideProps = async (ctx) => {
     locationData = {};
   }
 
+  const locationType = ctx?.params?.location[0];
+  const noIndex = !['global', 'country'].includes(locationType);
+
   const locationName = isGlobal ? 'Global' : locationData.locationName;
 
   return {
@@ -50,6 +53,7 @@ export const getServerSideProps = async (ctx) => {
               ? 'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.'
               : `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
           keywords: `${locationName}, deforestation rates, statistics, interactive, data, forest trends, land use, forest cover by country, global tree cover loss`,
+          noIndex,
         }
       : {
           title: 'Dashboard not found',
