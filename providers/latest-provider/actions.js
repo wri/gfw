@@ -9,15 +9,15 @@ export const setLatestDates = createAction('setLatestDates');
 
 export const getLatest = createThunkAction(
   'getLatest',
-  latestEndpoints => (dispatch, getState) => {
+  (latestEndpoints) => (dispatch, getState) => {
     const { latest } = getState();
     const currentLatestDates = latest && Object.keys(latest.data);
     const newEndpoints = latestEndpoints.filter(
-      l => !currentLatestDates.includes(l.id)
+      (l) => !currentLatestDates.includes(l.id)
     );
     if (newEndpoints && newEndpoints.length) {
       dispatch(setLatestLoading({ loading: true, error: false }));
-      all(newEndpoints.map(n => fetchLatestDate(n.latestUrl)))
+      all(newEndpoints.map((n) => fetchLatestDate(n.latestUrl)))
         .then(
           spread((...responses) => {
             const latestDates =
@@ -29,22 +29,23 @@ export const getLatest = createThunkAction(
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes
                     : latestResponse.attributes;
-                  date = data && (data.date || data.latestResponse || data.latest);
+                  date =
+                    data && (data.date || data.latestResponse || data.latest);
                 }
-                let latestDate = moment.utc(date);
+                let latestDate = moment(date).utc();
                 if (newEndpoints[index].resolution) {
                   latestDate = latestDate.endOf(newEndpoints[index].resolution);
                 }
 
                 return {
                   ...obj,
-                  [newEndpoints[index].id]: latestDate.format('YYYY-MM-DD')
+                  [newEndpoints[index].id]: latestDate.format('YYYY-MM-DD'),
                 };
               }, {});
             dispatch(setLatestDates(latestDates));
           })
         )
-        .catch(error => {
+        .catch((error) => {
           console.error('Error in latest request:', error);
         });
     }
