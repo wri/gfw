@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Media } from 'utils/responsive';
-import { Tooltip } from 'react-tippy';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -16,7 +15,6 @@ import Map from 'components/map';
 import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
-import Tip from 'components/ui/tip';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 import MapPrompts from 'components/prompts/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
@@ -30,15 +28,12 @@ import './styles.scss';
 
 class MainMapComponent extends PureComponent {
   static propTypes = {
-    handleShowTooltip: PropTypes.func,
     onDrawComplete: PropTypes.func,
     handleClickAnalysis: PropTypes.func,
     handleClickMap: PropTypes.func,
     hidePanels: PropTypes.bool,
     embed: PropTypes.bool,
     recentActive: PropTypes.bool,
-    tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    showTooltip: PropTypes.bool,
     setMainMapAnalysisView: PropTypes.func,
   };
 
@@ -52,10 +47,7 @@ class MainMapComponent extends PureComponent {
     const {
       embed,
       hidePanels,
-      showTooltip,
-      tooltipData,
       handleClickMap,
-      handleShowTooltip,
       recentActive,
       handleClickAnalysis,
       setMainMapAnalysisView,
@@ -75,38 +67,18 @@ class MainMapComponent extends PureComponent {
           role="button"
           tabIndex={0}
           onClick={handleClickMap}
-          onMouseOver={() => handleShowTooltip(true, 'Click shape to analyze.')}
-          onFocus={() => handleShowTooltip(true, 'Click shape to analyze.')}
-          onMouseOut={() => handleShowTooltip(false, '')}
-          onBlur={() => handleShowTooltip(false, '')}
         >
-          <Tooltip
-            className="map-tooltip"
-            theme="tip"
-            html={(
-              <Tip
-                className="map-hover-tooltip"
-                text={this.renderInfoTooltip(tooltipData)}
-              />
-            )}
-            position="top"
-            followCursor
-            hideOnClick
-            animateFill={false}
-            open={showTooltip}
-          >
-            <Map
-              className="main-map"
-              onSelectBoundary={setMainMapAnalysisView}
-              onDrawComplete={onDrawComplete}
-              popupActions={[
-                {
-                  label: 'Analyze',
-                  action: handleClickAnalysis,
-                },
-              ]}
-            />
-          </Tooltip>
+          <Map
+            className="main-map"
+            onSelectBoundary={setMainMapAnalysisView}
+            onDrawComplete={onDrawComplete}
+            popupActions={[
+              {
+                label: 'Analyze',
+                action: handleClickAnalysis,
+              },
+            ]}
+          />
         </div>
         {!hidePanels && (
           <Media greaterThanOrEqual="md">

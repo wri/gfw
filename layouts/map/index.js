@@ -24,11 +24,6 @@ const actions = {
 };
 
 class MainMapContainer extends PureComponent {
-  state = {
-    showTooltip: false,
-    tooltipData: {},
-  };
-
   componentDidMount() {
     const { activeDatasets, basemap } = this.props;
     const layerIds = flatMap(activeDatasets?.map((d) => d.layers));
@@ -57,10 +52,6 @@ class MainMapContainer extends PureComponent {
       this.props.setMenuSettings({ menuSection: 'my-gfw' });
     }
   }
-
-  handleShowTooltip = (show, data) => {
-    this.setState({ showTooltip: show, tooltipData: data });
-  };
 
   handleClickMap = () => {
     if (this.props.menuSection) {
@@ -101,7 +92,6 @@ class MainMapContainer extends PureComponent {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
-      handleShowTooltip: this.handleShowTooltip,
       handleClickAnalysis: this.handleClickAnalysis,
       handleClickMap: this.handleClickMap,
       onDrawComplete: this.onDrawComplete,
