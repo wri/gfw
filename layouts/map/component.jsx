@@ -34,7 +34,6 @@ class MainMapComponent extends PureComponent {
     onDrawComplete: PropTypes.func,
     handleClickAnalysis: PropTypes.func,
     handleClickMap: PropTypes.func,
-    oneClickAnalysis: PropTypes.bool,
     hidePanels: PropTypes.bool,
     embed: PropTypes.bool,
     recentActive: PropTypes.bool,
@@ -53,7 +52,6 @@ class MainMapComponent extends PureComponent {
     const {
       embed,
       hidePanels,
-      oneClickAnalysis,
       showTooltip,
       tooltipData,
       handleClickMap,
@@ -77,12 +75,8 @@ class MainMapComponent extends PureComponent {
           role="button"
           tabIndex={0}
           onClick={handleClickMap}
-          onMouseOver={() =>
-            oneClickAnalysis &&
-            handleShowTooltip(true, 'Click shape to analyze.')}
-          onFocus={() =>
-            oneClickAnalysis &&
-            handleShowTooltip(true, 'Click shape to analyze.')}
+          onMouseOver={() => handleShowTooltip(true, 'Click shape to analyze.')}
+          onFocus={() => handleShowTooltip(true, 'Click shape to analyze.')}
           onMouseOut={() => handleShowTooltip(false, '')}
           onBlur={() => handleShowTooltip(false, '')}
         >
