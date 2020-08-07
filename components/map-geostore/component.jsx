@@ -94,8 +94,7 @@ class MapGeostore extends Component {
             this.setState({ geostore });
           }
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
           if (this.mounted) {
             this.setState({ error: true });
           }
