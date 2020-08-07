@@ -47,12 +47,12 @@ export const getServerSideProps = async (ctx) => {
       ? {
           title: `${
             locationName || 'Global'
-          } Deforestation Rates & Statistics by Country | GFW`,
-          description:
-            ctx?.params?.location?.length > 1
-              ? 'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.'
-              : `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
-          keywords: `${locationName}, deforestation rates, statistics, interactive, data, forest trends, land use, forest cover by country, global tree cover loss`,
+          } Deforestation Rates & Statistics ${
+            isGlobal ? 'by Country' : ''
+          } | GFW`,
+          description: isGlobal
+            ? 'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.'
+            : `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
           noIndex,
         }
       : {

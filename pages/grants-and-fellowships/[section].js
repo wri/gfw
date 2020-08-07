@@ -14,8 +14,6 @@ import { setSectionProjectsModalSlug } from 'pages/sgf/section-projects/section-
 const pageProps = {
   description:
     'The Small Grants Fund & Tech Fellowship support civil society organizations and individuals around the world to use GFW in their advocacy, research and field work.',
-  keywords:
-    'forests, forest data, data, technology, forest monitoring, forest policy, advocacy, education, fellow, fellowship, grants, civil society, land rights, conservation, field work, local, deforestation, community, research',
 };
 
 const sections = ['projects', 'about', 'apply'];
