@@ -77,7 +77,7 @@ export const getData = createSelector(
         yearLengths[y] = lastWeek.isoWeek;
       } else if (moment(`${y}-12-31`).isoWeek() === 1) {
         yearLengths[y] = moment(`${y}-12-31`)
-          .subtract('week', 1)
+          .subtract(1, 'week')
           .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
@@ -391,7 +391,7 @@ export const parseSentence = createSelector(
     const peakWeeks = data.filter(d => d.mean > halfMax);
     const sortedPeakWeeks = orderBy(peakWeeks, ['year', 'week'], ['desc', 'asc']);
     const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
-    
+
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
 

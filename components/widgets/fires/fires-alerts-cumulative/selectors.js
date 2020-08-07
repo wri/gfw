@@ -86,7 +86,7 @@ export const getData = createSelector(
     years.forEach(y => {
       if (moment(`${y}-12-31`).isoWeek() === 1) {
         yearLengths[y] = moment(`${y}-12-31`)
-          .subtract('week', 1)
+          .subtract(1, 'week')
           .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
