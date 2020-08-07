@@ -133,7 +133,7 @@ export const encodeStateForUrl = (params, options) => {
       !isEmpty(params[key])
     ) {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
-    } else if (params[key] && !isEmpty(params[key])) {
+    } else if (typeof params[key] !== 'object' && params[key]) {
       paramsParsed[key] = params[key];
     }
   });

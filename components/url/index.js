@@ -18,6 +18,10 @@ const URL = ({
       delete query.location;
     }
 
+    if (query.token) {
+      delete query.token;
+    }
+
     const queryParamsSerialized = encodeStateForUrl(
       { ...query, ...queryParams },
       options
