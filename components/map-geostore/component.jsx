@@ -94,8 +94,7 @@ class MapGeostore extends Component {
             this.setState({ geostore });
           }
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
           if (this.mounted) {
             this.setState({ error: true });
           }
@@ -152,8 +151,8 @@ class MapGeostore extends Component {
 
   render() {
     const { basemap, className, width, height, cursor, small } = this.props;
-    const { loading, viewport, geostore, error } = this.state;
-
+    const { viewport, geostore, error } = this.state;
+    const loading = true;
     return (
       <div
         id="recent-image-map"
