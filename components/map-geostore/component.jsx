@@ -151,8 +151,8 @@ class MapGeostore extends Component {
 
   render() {
     const { basemap, className, width, height, cursor, small } = this.props;
-    const { viewport, geostore, error } = this.state;
-    const loading = true;
+    const { loading, viewport, geostore, error } = this.state;
+
     return (
       <div
         id="recent-image-map"
