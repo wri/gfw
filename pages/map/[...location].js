@@ -38,8 +38,10 @@ export const getServerSideProps = async ({ params }) => {
   return {
     props: {
       title: `${locationName ? `${locationName} ` : ''}Interactive ${
-        locationName ? '' : 'World'
-      } Forest Map & Tree Cover Change Data | GFW`,
+        locationName ? '' : 'World '
+      }Forest Map${
+        params?.location[2] ? '' : ' & Tree Cover Change Data'
+      } | GFW`,
       description: `Explore the state of forests ${
         locationName ? `in ${locationName}` : 'worldwide'
       } by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`,
