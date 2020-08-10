@@ -17,6 +17,14 @@
       border-bottom: solid 1px $border;
     }
 
+    .area-button {
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
     .area-links {
       display: flex;
       height: 100%;

@@ -4,7 +4,6 @@ import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
 import { deburrUpper } from 'utils/data';
-import Link from 'next/link';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -229,20 +228,26 @@ class AreasTable extends PureComponent {
           areasTrimmed.map((area) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
-                <Link
-                  href="/dashboards/[...location]"
-                  as={`/dashboards/aoi/${area.id}`}
+                <div
+                  className="area-button"
+                  onClick={() => {
+                    viewArea({
+                      areaId: area.id,
+                      pathname: '/dashboards/[...location]',
+                    });
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  alt="view area"
                 >
-                  <a>
-                    <AoICard
-                      {...area}
-                      onFetchAlerts={(alertsResponse) =>
-                        this.setState({
-                          alerts: { ...allAlerts, [area.id]: alertsResponse },
-                        })}
-                    />
-                  </a>
-                </Link>
+                  <AoICard
+                    {...area}
+                    onFetchAlerts={(alertsResponse) =>
+                      this.setState({
+                        alerts: { ...allAlerts, [area.id]: alertsResponse },
+                      })}
+                  />
+                </div>
               </div>
               <div className="column small-12 medium-3">
                 <div className="area-links">
