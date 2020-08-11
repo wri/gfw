@@ -155,7 +155,7 @@ export default [
     ],
   },
   {
-    label: 'Managed forests',
+    label: 'Logging concessions',
     value: 'managed_forests',
     metaKey: 'gfw_logging',
     tableKey: 'is__gfw_managed_forest',
