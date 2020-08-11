@@ -18,7 +18,6 @@ import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';
 import ConfirmSubscriptionModal from 'components/modals/confirm-subscription';
 
-import boundariesIcon from 'assets/icons/boundaries.svg?sprite';
 import editIcon from 'assets/icons/edit.svg?sprite';
 import shareIcon from 'assets/icons/share.svg?sprite';
 import dashboardIcon from 'assets/icons/dashboard.svg?sprite';
@@ -44,7 +43,7 @@ class MapMenuMyGFW extends PureComponent {
     loading: PropTypes.bool,
     userData: PropTypes.object,
     setMapPromptsSettings: PropTypes.func,
-    setShareModal: PropTypes.func
+    setShareModal: PropTypes.func,
   };
 
   state = {
@@ -133,11 +132,7 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderAoiActions() {
-    const {
-      setShareModal,
-      activeArea,
-      onEditClick,
-    } = this.props;
+    const { setShareModal, activeArea, onEditClick } = this.props;
 
     const btnTheme = cx(
       'theme-button-clear theme-button-clear-underline theme-button-small'
@@ -148,9 +143,7 @@ class MapMenuMyGFW extends PureComponent {
         layout="overflow-menu"
         className="edit-button"
         onChange={this.handleAreaActions}
-        theme={cx(
-          'theme-button-medium theme-dropdown-no-border small square'
-        )}
+        theme={cx('theme-button-medium theme-dropdown-no-border small square')}
         options={[
           {
             value: 'open_dashboard',
@@ -169,7 +162,7 @@ class MapMenuMyGFW extends PureComponent {
             component: (
               <Button
                 theme={btnTheme}
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   onEditClick({ open: true });
@@ -207,16 +200,11 @@ class MapMenuMyGFW extends PureComponent {
           },
         ]}
       />
-    )
+    );
   }
 
   renderAreas() {
-    const {
-      isDesktop,
-      activeArea,
-      viewArea,
-      areas: allAreas,
-    } = this.props;
+    const { isDesktop, activeArea, viewArea, areas: allAreas } = this.props;
     const {
       activeTags,
       areas,
