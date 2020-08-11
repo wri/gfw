@@ -23,7 +23,7 @@ const Item = (props) => {
     activeValue,
     activeLabel,
   } = props;
-  const { group, groupParent, label, icon = null, metaKey, infoText } = item;
+  const { group, groupParent, label, component = null, metaKey, infoText } = item;
   const isActive =
     (!showGroup && !group) || group === showGroup || groupParent === showGroup;
   const isGroupParentActive = groupParent && showGroup === groupParent;
@@ -59,8 +59,8 @@ const Item = (props) => {
           onClick: () => handleSelectGroup(item),
         })}
       >
-        {icon && <Icon icon={icon} /> }
-        {label}
+        {component && component}
+        {!component && label}
       </div>
       {metaKey && (
         <Button
