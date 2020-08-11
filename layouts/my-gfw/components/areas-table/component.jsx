@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
+import { Tooltip } from 'react-tippy';
 import { deburrUpper } from 'utils/data';
 
+import Tip from 'components/ui/tip';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import AoICard from 'components/aoi-card';
@@ -228,26 +230,32 @@ class AreasTable extends PureComponent {
           areasTrimmed.map((area) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
-                <div
-                  className="area-button"
-                  onClick={() => {
-                    viewArea({
-                      areaId: area.id,
-                      pathname: '/dashboards/[...location]',
-                    });
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  alt="view area"
+                <Tooltip
+                  theme="light"
+                  followCursor
+                  html={<Tip text="Open dashboard" />}
                 >
-                  <AoICard
-                    {...area}
-                    onFetchAlerts={(alertsResponse) =>
-                      this.setState({
-                        alerts: { ...allAlerts, [area.id]: alertsResponse },
-                      })}
-                  />
-                </div>
+                  <div
+                    className="area-button"
+                    onClick={() => {
+                      viewArea({
+                        areaId: area.id,
+                        pathname: '/dashboards/[...location]',
+                      });
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    alt="view area"
+                  >
+                    <AoICard
+                      {...area}
+                      onFetchAlerts={(alertsResponse) =>
+                        this.setState({
+                          alerts: { ...allAlerts, [area.id]: alertsResponse },
+                        })}
+                    />
+                  </div>
+                </Tooltip>
               </div>
               <div className="column small-12 medium-3">
                 <div className="area-links">

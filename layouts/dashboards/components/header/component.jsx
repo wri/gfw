@@ -11,6 +11,9 @@ import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 
+import editIcon from 'assets/icons/edit.svg?sprite';
+import shareIcon from 'assets/icons/share.svg?sprite';
+import dashboardIcon from 'assets/icons/dashboard.svg?sprite';
 import tagIcon from 'assets/icons/tag.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
@@ -43,21 +46,128 @@ class Header extends PureComponent {
     errorMsg: PropTypes.string,
   };
 
+  renderAreaActions({
+    isCountryDashboard,
+    isAreaAndCountryDashboard
+  }) {
+    const {
+      downloadLink,
+      locationNames,
+      setAreaOfInterestModalSettings,
+      activeArea
+    } = this.props;
+
+    const btnTheme = cx(
+      'theme-button-clear theme-button-clear-underline theme-button-small'
+    );
+
+    return (
+      <Dropdown
+        layout="overflow-menu"
+        className="edit-button"
+        onChange={this.handleAreaActions}
+        theme={cx('theme-button-medium theme-dropdown-no-border small square')}
+        options={[
+          {
+            value: 'open_map',
+            component: (
+              <Button
+                theme={btnTheme}
+                link={activeArea && `/map/aoi/${activeArea.id}`}
+              >
+                <Icon icon={dashboardIcon} />
+                Open Map
+              </Button>
+            ),
+          },
+          (activeArea && activeArea.userArea && {
+            value: 'edit_area',
+            component: (
+              <Button
+                theme={btnTheme}
+                tooltip={{
+                  text: `Edit ${
+                    locationNames &&
+                    locationNames.adm0 &&
+                    locationNames.adm0.label
+                  }`,
+                  position: 'bottom',
+                }}
+                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+              >
+                <Icon icon={editIcon} />
+                Edit area
+              </Button>
+            ),
+          }),
+          (location?.type === 'country' && {
+            value: 'save_area',
+            component: (
+              <Button
+                theme={btnTheme}
+                tooltip={{
+                  text: 'Save as an area of interest',
+                  position: 'bottom',
+                }}
+                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+              >
+                <Icon icon={saveUserIcon} />
+                Save area
+              </Button>
+            )
+          }),
+          ((isCountryDashboard || isAreaAndCountryDashboard) && {
+            value: 'download_data',
+            component: (
+              <Button
+                theme={btnTheme}
+                extLink={downloadLink}
+                tooltip={{
+                  text: `Download the data${
+                    locationNames.adm0
+                      ? ` for ${
+                          locationNames &&
+                          locationNames.adm0 &&
+                          locationNames.adm0.label
+                        }`
+                      : ''
+                  }`,
+                  position: 'bottom',
+                }}
+                onClick={() => {
+                  track('downloadDashboardPage', {
+                    label:
+                      (locationNames &&
+                        locationNames.adm0 &&
+                        locationNames.adm0.label) ||
+                      'Global',
+                  });
+                }}
+              >
+                <Icon icon={downloadIcon} />
+                Download data
+              </Button>
+            ),
+          })
+        ]}
+      />
+    );
+  }
+
   render() {
     const {
       className,
       adm0s,
       adm1s,
       adm2s,
-      locationNames,
       handleLocationChange,
       loading,
       setShareModal,
+      locationNames,
       shareData,
       location,
       forestAtlasLink,
       sentence,
-      downloadLink,
       selectorMeta,
       shareMeta,
       setAreaOfInterestModalSettings,
@@ -84,7 +194,7 @@ class Header extends PureComponent {
         {showMetaControls && (
           <div className="share-buttons">
             <Button
-              className="theme-button-small"
+              className="area-share theme-button-small"
               onClick={() => {
                 if (activeArea && !activeArea.userArea) {
                   setAreaOfInterestModalSettings({ open: true });
@@ -95,63 +205,10 @@ class Header extends PureComponent {
             >
               {shareMeta}
             </Button>
-            {activeArea && activeArea.userArea && (
-              <Button
-                className="theme-button-medium theme-button-clear square"
-                tooltip={{
-                  text: `Edit ${
-                    locationNames &&
-                    locationNames.adm0 &&
-                    locationNames.adm0.label
-                  }`,
-                  position: 'bottom',
-                }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
-              >
-                <Icon icon={pencilIcon} />
-              </Button>
-            )}
-            {location?.type === 'country' && (
-              <Button
-                className="theme-button-medium theme-button-clear square"
-                tooltip={{
-                  text: 'Save as an area of interest',
-                  position: 'bottom',
-                }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
-              >
-                <Icon icon={saveUserIcon} />
-              </Button>
-            )}
-            {(isCountryDashboard || isAreaAndCountryDashboard) && (
-              <Button
-                className="c-dashboard-download-btn theme-button-medium theme-button-clear square"
-                extLink={downloadLink}
-                tooltip={{
-                  text: `Download the data${
-                    locationNames.adm0
-                      ? ` for ${
-                          locationNames &&
-                          locationNames.adm0 &&
-                          locationNames.adm0.label
-                        }`
-                      : ''
-                  }`,
-                  position: 'bottom',
-                }}
-                onClick={() => {
-                  track('downloadDashboardPage', {
-                    label:
-                      (locationNames &&
-                        locationNames.adm0 &&
-                        locationNames.adm0.label) ||
-                      'Global',
-                  });
-                }}
-              >
-                <Icon icon={downloadIcon} />
-              </Button>
-            )}
+            {this.renderAreaActions({
+              isCountryDashboard,
+              isAreaAndCountryDashboard
+            })}
           </div>
         )}
         <div className="row">
