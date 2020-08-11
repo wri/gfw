@@ -12,13 +12,11 @@ import DynamicSentence from 'components/ui/dynamic-sentence';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 
 import editIcon from 'assets/icons/edit.svg?sprite';
-import shareIcon from 'assets/icons/share.svg?sprite';
 import dashboardIcon from 'assets/icons/dashboard.svg?sprite';
 import tagIcon from 'assets/icons/tag.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
-import pencilIcon from 'assets/icons/pencil.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
 
@@ -46,15 +44,12 @@ class Header extends PureComponent {
     errorMsg: PropTypes.string,
   };
 
-  renderAreaActions({
-    isCountryDashboard,
-    isAreaAndCountryDashboard
-  }) {
+  renderAreaActions({ isCountryDashboard, isAreaAndCountryDashboard }) {
     const {
       downloadLink,
       locationNames,
       setAreaOfInterestModalSettings,
-      activeArea
+      activeArea,
     } = this.props;
 
     const btnTheme = cx(
@@ -80,27 +75,28 @@ class Header extends PureComponent {
               </Button>
             ),
           },
-          (activeArea && activeArea.userArea && {
-            value: 'edit_area',
-            component: (
-              <Button
-                theme={btnTheme}
-                tooltip={{
-                  text: `Edit ${
-                    locationNames &&
-                    locationNames.adm0 &&
-                    locationNames.adm0.label
-                  }`,
-                  position: 'bottom',
-                }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
-              >
-                <Icon icon={editIcon} />
-                Edit area
-              </Button>
-            ),
-          }),
-          (location?.type === 'country' && {
+          activeArea &&
+            activeArea.userArea && {
+              value: 'edit_area',
+              component: (
+                <Button
+                  theme={btnTheme}
+                  tooltip={{
+                    text: `Edit ${
+                      locationNames &&
+                      locationNames.adm0 &&
+                      locationNames.adm0.label
+                    }`,
+                    position: 'bottom',
+                  }}
+                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                >
+                  <Icon icon={editIcon} />
+                  Edit area
+                </Button>
+              ),
+            },
+          location?.type === 'country' && {
             value: 'save_area',
             component: (
               <Button
@@ -114,9 +110,9 @@ class Header extends PureComponent {
                 <Icon icon={saveUserIcon} />
                 Save area
               </Button>
-            )
-          }),
-          ((isCountryDashboard || isAreaAndCountryDashboard) && {
+            ),
+          },
+          (isCountryDashboard || isAreaAndCountryDashboard) && {
             value: 'download_data',
             component: (
               <Button
@@ -148,7 +144,7 @@ class Header extends PureComponent {
                 Download data
               </Button>
             ),
-          })
+          },
         ]}
       />
     );
@@ -207,7 +203,7 @@ class Header extends PureComponent {
             </Button>
             {this.renderAreaActions({
               isCountryDashboard,
-              isAreaAndCountryDashboard
+              isAreaAndCountryDashboard,
             })}
           </div>
         )}
