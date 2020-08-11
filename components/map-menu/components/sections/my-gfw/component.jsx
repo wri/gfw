@@ -133,7 +133,7 @@ class MapMenuMyGFW extends PureComponent {
       isDesktop,
       activeArea,
       viewArea,
-      onEditClick,
+      onEditClick, // eslint-disable-line
       areas: allAreas,
     } = this.props;
     const {
@@ -221,14 +221,23 @@ class MapMenuMyGFW extends PureComponent {
                       <Dropdown
                         layout="overflow-menu"
                         className="edit-button"
-                        theme={cx('theme-button-medium theme-dropdown-no-border small square')}
+                        theme={cx(
+                          'theme-button-medium theme-dropdown-no-border small square'
+                        )}
                         options={[
-                          { value: 'open_dashboard', label: "Open Dashboard"},
-                          { value: 'edit_area', icon: editIcon, label: "Edit area"},
-                          { value: 'share_area', icon: shareIcon, label: "Share area"},
+                          { value: 'open_dashboard', label: 'Open Dashboard' },
+                          {
+                            value: 'edit_area',
+                            icon: editIcon,
+                            label: 'Edit area',
+                          },
+                          {
+                            value: 'share_area',
+                            icon: shareIcon,
+                            label: 'Share area',
+                          },
                         ]}
                         customIcon={boundariesIcon}
-
                       />
                       // <Button
                       //   className="edit-button"
