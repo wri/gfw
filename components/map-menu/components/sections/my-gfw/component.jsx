@@ -18,7 +18,9 @@ import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';
 import ConfirmSubscriptionModal from 'components/modals/confirm-subscription';
 
+import boundariesIcon from 'assets/icons/boundaries.svg?sprite';
 import editIcon from 'assets/icons/edit.svg?sprite';
+import shareIcon from 'assets/icons/share.svg?sprite';
 import logoutIcon from 'assets/icons/logout.svg?sprite';
 import screenImg1x from 'assets/images/aois/aoi-dashboard.png';
 import screenImg2x from 'assets/images/aois/aoi-dashboard@2x.png';
@@ -165,6 +167,7 @@ class MapMenuMyGFW extends PureComponent {
               ))}
             {unselectedTags && !!unselectedTags.length && (
               <Dropdown
+                alignMenuRight
                 className="aoi-tags-dropdown"
                 theme="theme-dropdown-button theme-dropdown-button-small"
                 placeholder={
@@ -215,17 +218,29 @@ class MapMenuMyGFW extends PureComponent {
                   >
                     <AoICard index={i} {...area} simple />
                     {active && (
-                      <Button
+                      <Dropdown
+                        layout="overflow-menu"
                         className="edit-button"
-                        theme="square theme-button-clear"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          onEditClick({ open: true });
-                        }}
-                      >
-                        <Icon icon={editIcon} className="info-icon" />
-                      </Button>
+                        theme={cx('theme-button-medium theme-dropdown-no-border small square')}
+                        options={[
+                          { value: 'open_dashboard', label: "Open Dashboard"},
+                          { value: 'edit_area', icon: editIcon, label: "Edit area"},
+                          { value: 'share_area', icon: shareIcon, label: "Share area"},
+                        ]}
+                        customIcon={boundariesIcon}
+
+                      />
+                      // <Button
+                      //   className="edit-button"
+                      //   theme="square theme-button-clear"
+                      //   onClick={(e) => {
+                      //     e.preventDefault();
+                      //     e.stopPropagation();
+                      //     onEditClick({ open: true });
+                      //   }}
+                      // >
+                      //   <Icon icon={editIcon} className="info-icon" />
+                      // </Button>
                     )}
                   </div>
                 );

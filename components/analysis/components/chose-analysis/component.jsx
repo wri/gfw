@@ -148,7 +148,7 @@ class ChoseAnalysis extends PureComponent {
           {!hasError && !uploading && (
             <Fragment>
               <p>
-                Drag and drop your 
+                Drag and drop your
                 {' '}
                 <b>polygon data file</b>
                 {' '}

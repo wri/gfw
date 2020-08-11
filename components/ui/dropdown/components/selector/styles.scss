@@ -83,6 +83,19 @@ $dd-font-size: rem(13px);
     }
   }
 
+  .toggle-btn {
+    z-index: 3;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    right: rem(8px);
+    .toggle {
+      max-width: rem(12px);
+      height: 100%;
+      fill: $slate;
+    }
+  }
+
   .clear-btn {
     z-index: 3;
     cursor: pointer;
