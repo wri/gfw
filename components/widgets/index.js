@@ -104,7 +104,11 @@ class WidgetsContainer extends PureComponent {
         (mapSettingsChanged || activeWidgetChanged)
       ) {
         this.syncWidgetWithMap();
-      } else if (!datasets && activeWidgetChanged) {
+      } else if (
+        !datasets &&
+        activeWidgetChanged &&
+        !isEqual(settings, prevSettings)
+      ) {
         this.clearMap();
       }
     }
