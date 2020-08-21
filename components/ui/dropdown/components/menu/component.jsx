@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Item from '../item';
 
@@ -8,6 +9,7 @@ import './styles.scss';
 const Menu = props => {
   const {
     className,
+    layout,
     isOpen,
     activeValue,
     activeLabel,
@@ -22,7 +24,12 @@ const Menu = props => {
   } = props;
 
   return !isOpen ? null : (
-    <div className={`c-selector-menu ${className || ''}`}>
+    <div className={cx({
+      'c-selector-menu': true,
+      'selector-overflow-menu': layout === 'overflow-menu',
+      [className]: !!className
+    })}
+    >
       {items && items.length ? (
         items.map(
           (item, index) =>
@@ -52,6 +59,7 @@ const Menu = props => {
 };
 
 Menu.propTypes = {
+  layout: PropTypes.string,
   isOpen: PropTypes.bool,
   activeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

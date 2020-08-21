@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
+import overflowMenuIcon from 'assets/icons/overflow-menu.svg?sprite';
 import closeIcon from 'assets/icons/close.svg?sprite';
 
 import './styles.scss';
@@ -11,6 +13,7 @@ import './styles.scss';
 const Selector = (props) => {
   const {
     isOpen,
+    layout,
     className,
     arrowPosition,
     onSelectorClick,
@@ -31,9 +34,12 @@ const Selector = (props) => {
       className={`container ${isOpen ? 'is-open' : ''} ${className || ''}`}
     >
       <div
-        className={`c-selector ${arrowPosition ? 'align-left' : ''} ${
-          clearable && activeValue ? 'clearable' : ''
-        }`}
+        className={cx({
+          'c-selector': true,
+          [layout]: true,
+          'align-left': arrowPosition && layout !== 'overflow-menu',
+          'clearable': clearable && activeValue
+        })}
       >
         {arrowPosition === 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
@@ -58,19 +64,25 @@ const Selector = (props) => {
             <Icon icon={closeIcon} className="clear-icon" />
           </button>
         )}
-        {arrowPosition !== 'left' && (
+        {layout === 'overflow-menu' && (
+          <button className="toggle-btn" onClick={onSelectorClick}>
+            <Icon className="overflow-menu" icon={overflowMenuIcon} />
+          </button>
+        )}
+        {arrowPosition !== 'left' && layout !== 'overflow-menu' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
             <Icon className="arrow" icon={arrowDownIcon} />
           </button>
         )}
       </div>
-      <div className="menu-arrow" />
+      {layout !== 'overflow-menu' && <div className="menu-arrow" />}
       {children}
     </div>
   );
 };
 
 Selector.propTypes = {
+  layout: PropTypes.string,
   children: PropTypes.node,
   isOpen: PropTypes.bool,
   arrowPosition: PropTypes.string,

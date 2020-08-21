@@ -31,6 +31,7 @@ import './themes/dropdown-no-border.scss';
 
 class Dropdown extends PureComponent {
   static propTypes = {
+    layout: PropTypes.oneOf(['overflow-menu', 'actions-menu']),
     className: PropTypes.string,
     label: PropTypes.string,
     theme: PropTypes.string,
@@ -128,6 +129,7 @@ class Dropdown extends PureComponent {
       onChange,
       options,
       selectorIcon,
+      layout
     } = this.props;
 
     const dropdown = (
@@ -161,6 +163,7 @@ class Dropdown extends PureComponent {
             </div>
           ) : (
             <Selector
+              layout={layout}
               isOpen={isOpen}
               arrowPosition={arrowPosition}
               onSelectorClick={onSelectorClick}
@@ -174,6 +177,7 @@ class Dropdown extends PureComponent {
               {...getRootProps({ refKey: 'innerRef' })}
             >
               <Menu
+                layout={layout}
                 isOpen={isOpen}
                 activeValue={activeValue}
                 activeLabel={activeLabel}

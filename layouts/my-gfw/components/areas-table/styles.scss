@@ -9,6 +9,10 @@
     display: flex;
     justify-content: space-between;
 
+    &:hover {
+      background: $grey-light;
+    }
+
     @media screen and (min-width: $screen-m) {
       padding: rem(40px) 0;
     }
