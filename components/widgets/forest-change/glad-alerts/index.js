@@ -124,7 +124,7 @@ export default {
       spread((alertsResponse, latestResponse) => {
         const alerts = alertsResponse.data.data.attributes.value;
         const latestDate = latestResponse.attributes.updatedAt;
-        const {downloadUrls} = alertsResponse.data.data.attributes;
+        const { downloadUrls } = alertsResponse.data.data.attributes;
 
         return {
           alerts:
@@ -140,7 +140,8 @@ export default {
       })
     );
   },
-  getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
+  // https://www.notion.so/Remove-downloads-from-GLAD-alert-widget-4831737872e64d7793cebb1fea1f354a
+  // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: (payload) => {
     if (payload) {

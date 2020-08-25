@@ -124,9 +124,10 @@ export default {
           : {};
       })
     ),
-  getDataURL: (params) => [
-    fetchGladAlerts({ ...params, download: true }),
-    getExtentGrouped({ ...params, download: true }),
-  ],
+  // https://www.notion.so/Remove-downloads-from-GLAD-alert-widget-4831737872e64d7793cebb1fea1f354a
+  // getDataURL: (params) => [
+  //   fetchGladAlerts({ ...params, download: true }),
+  //   getExtentGrouped({ ...params, download: true }),
+  // ],
   getWidgetProps,
 };
