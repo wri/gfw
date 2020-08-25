@@ -23,6 +23,7 @@ const isServer = typeof window === 'undefined';
 
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
+    disabled: PropTypes.bool,
     getDataURL: PropTypes.func,
     gladAlertsDownloadUrls: PropTypes.object,
     settings: PropTypes.object,
@@ -204,7 +205,7 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const { areaTooLarge } = this.props;
+    const { areaTooLarge, disabled } = this.props;
 
     let tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
@@ -225,8 +226,8 @@ class WidgetDownloadButton extends PureComponent {
           'theme-button-grey-filled theme-button-xsmall': this.props.simple,
         })}
         onClick={this.onClickDownloadBtn}
-        tooltip={{ text: tooltipText }}
-        disabled={areaTooLarge}
+        tooltip={{ text: disabled ? 'Temporarily unavailable' : tooltipText }}
+        disabled={areaTooLarge || disabled}
       >
         <Icon icon={downloadIcon} className="download-icon" />
       </Button>
