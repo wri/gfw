@@ -36,6 +36,7 @@ class WidgetHeader extends PureComponent {
 
   render() {
     const {
+      widget,
       title,
       loading,
       active,
@@ -87,7 +88,12 @@ class WidgetHeader extends PureComponent {
           )}
           {showSeparator && <span className="separator" />}
           <div className="small-options">
-            {showDownloadBtn && <WidgetDownloadButton {...this.props} />}
+            {showDownloadBtn && (
+              <WidgetDownloadButton
+                disabled={widget === 'gladAlerts' || widget === 'gladRanked'}
+                {...this.props}
+              />
+            )}
             <WidgetInfoButton
               square={simple}
               handleOpenInfo={() => handleShowInfo(metaKey)}

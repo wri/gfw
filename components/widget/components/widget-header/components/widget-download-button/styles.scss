@@ -1,6 +1,14 @@
 @import '~styles/settings.scss';
 
 .c-widget-download-button {
+  &.disabled:not(.theme-button-grey-filled) {
+    background: rgba($green-gfw, 0.5);
+
+    svg {
+      fill: $white;
+    }
+  }
+
   .download-icon {
     width: rem(10px);
     height: rem(10px);

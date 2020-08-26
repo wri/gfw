@@ -378,6 +378,11 @@ export const getStatements = ({
           '*raw NLCD categories have been re-classed to match IPCC categories'
         )
       : null,
+    dataType === 'glad' && type === 'country'
+      ? translateText(
+          'Caution: GLAD alerts from the last six months are preliminary. Revisions are made as unconfirmed alerts are removed from the data and alert totals are finalized six months after posting.'
+        )
+      : null,
     ...(indicatorStatements || []),
   ]);
 

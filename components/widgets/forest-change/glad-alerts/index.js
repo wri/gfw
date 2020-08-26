@@ -124,7 +124,7 @@ export default {
       spread((alertsResponse, latestResponse) => {
         const alerts = alertsResponse.data.data.attributes.value;
         const latestDate = latestResponse.attributes.updatedAt;
-        const {downloadUrls} = alertsResponse.data.data.attributes;
+        const { downloadUrls } = alertsResponse.data.data.attributes;
 
         return {
           alerts:
