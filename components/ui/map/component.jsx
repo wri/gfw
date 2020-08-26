@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -84,6 +84,12 @@ class Map extends Component {
     },
   };
 
+  constructor(props) {
+    super(props);
+    this.map = createRef();
+    this.mapContainer = createRef();
+  }
+
   state = {
     viewport: {
       ...DEFAULT_VIEWPORT,
@@ -127,8 +133,9 @@ class Map extends Component {
 
   onLoad = () => {
     const { onLoad } = this.props;
+    // Convert map reference to mapbox map instance before parsing map options
+    this.map = this.map.current.getMap();
     this.setState({ loaded: true });
-
     onLoad({
       map: this.map,
       mapContainer: this.mapContainer,
@@ -241,18 +248,14 @@ class Map extends Component {
 
     return (
       <div
-        ref={(r) => {
-          this.mapContainer = r;
-        }}
+        ref={this.mapContainer}
         className={classnames({
           'c-mapbox-map': true,
           [customClass]: !!customClass,
         })}
       >
         <ReactMapGL
-          ref={(map) => {
-            this.map = map && map.getMap();
-          }}
+          ref={this.map}
           // CUSTOM PROPS FROM REACT MAPBOX API
           {...mapboxProps}
           // VIEWPORT
