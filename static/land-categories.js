@@ -73,7 +73,7 @@ export default [
     ],
   },
   {
-    label: 'Alliance for Zero Extinction',
+    label: 'Alliance for Zero Extinction sites',
     value: 'aze',
     preserveString: true,
     metaKey: 'alliance_for_zero_extinction_sites',
