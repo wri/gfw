@@ -13,6 +13,12 @@ const URL = ({
 }) => {
   const { pathname, asPath, replace, query } = useRouter();
 
+  let fullPathname = asPath?.split('?')?.[0];
+  // If path is map and we have no location, we need to default to global
+  if (pathname === '/map/[...location]' && fullPathname === '/map/') {
+    fullPathname = '/map/global/';
+  }
+
   useDeepCompareEffect(() => {
     if (query.location) {
       delete query.location;
@@ -26,7 +32,6 @@ const URL = ({
       { ...query, ...queryParams },
       options
     );
-    const fullPathname = asPath?.split('?')?.[0];
 
     replace(
       `${pathname}${queryParamsSerialized ? `?${queryParamsSerialized}` : ''}`,
