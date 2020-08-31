@@ -686,7 +686,7 @@ export const fetchVIIRSAlerts = params => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `viirs_fire_alerts${
+      name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
       url: url.replace('query', 'download')
@@ -708,10 +708,10 @@ export const fetchVIIRSAlerts = params => {
 };
 
 export const fetchVIIRSAlertsGrouped = params => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, dataset } = params || {};
   const url = `${getRequestUrl({
     ...params,
-    dataset: 'viirs',
+    dataset,
     datasetType: 'weekly',
     grouped: true
   })}${SQL_QUERIES.firesGrouped}`
@@ -725,7 +725,7 @@ export const fetchVIIRSAlertsGrouped = params => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `viirs_fire_alerts${
+      name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
       url: url.replace('query', 'download')
@@ -761,7 +761,7 @@ export const fetchFiresWithin = params => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `viirs_fire_alerts${
+      name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
       url: url.replace('query', 'download')

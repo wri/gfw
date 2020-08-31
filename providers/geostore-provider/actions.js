@@ -36,9 +36,10 @@ export const getGeostoreId = createThunkAction(
       .then((geostore) => {
         if (geostore && geostore.data && geostore.data.data) {
           const { id } = geostore.data.data;
-          dispatch(setGeostoreLoading({ loading: false, error: false }));
           if (callback) {
             callback(id);
+          } else {
+            dispatch(setGeostoreLoading({ loading: false, error: false }));
           }
         }
       })

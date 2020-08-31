@@ -115,13 +115,11 @@ export default {
               return { alerts: data, latest, area } || {};
             })
           )
-          .catch((error) => {
-            console.info(error);
+          .catch(() => {
             return null;
           })
       )
-      .catch((error) => {
-        console.info(error);
+      .catch(() => {
         return null;
       }),
   getDataURL: async (params) => {
