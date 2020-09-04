@@ -146,6 +146,34 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  RADDs: `
+  float day = (color.g * 255.)  + (color.r * 255.);
+  float confidence = color.b * 100.;
+  if (
+    day > 0. &&
+    day >= startDayIndex &&
+    day <= endDayIndex
+  ) {
+    // get intensity
+    float intensity = mod(confidence, 100.) * 50.;
+    if (intensity > 255.) {
+      intensity = 255.;
+    }
+    if (day >= numberOfDays - 7. && day <= numberOfDays) {
+      color.r = 219. / 255.;
+      color.g = 168. / 255.;
+      color.b = 0.;
+      alpha = intensity / 255.;
+    } else {
+      color.r = 220. / 255.;
+      color.g = 102. / 255.;
+      color.b = 153. / 255.;
+      alpha = intensity / 255.;
+    }
+  } else {
+    alpha = 0.;
+  }
+  `,
   biomassLoss: `
     float countBuckets = 5.; // buckets length / 3: three bands
     float year = 2000.0 + (color.r * 255.);
@@ -544,7 +572,7 @@ const decodes = {
     } else {
       alpha = 0.;
     }
-  `
+  `,
 };
 
 export default {
@@ -552,6 +580,7 @@ export default {
   treeCoverLoss: decodes.treeCoverLoss,
   treeLossByDriver: decodes.treeLossByDriver,
   GLADs: decodes.GLADs,
+  RADDs: decodes.RADDs,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
   terrai: decodes.terrai,
@@ -559,5 +588,5 @@ export default {
   grossCarbonEmissions: decodes.grossCarbonEmissions,
   cumulativeCarbonGain: decodes.cumulativeCarbonGain,
   netGHGFlux: decodes.netCarbonFlux,
-  formaAlerts: decodes.forma
+  formaAlerts: decodes.forma,
 };
