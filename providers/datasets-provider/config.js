@@ -147,8 +147,8 @@ const decodes = {
     }
   `,
   RADDs: `
-  float day = (color.g * 255.)  + (color.r * 255.);
-  float confidence = color.b * 100.;
+  float day = (color.r * 255. * 255.) + (color.g * 255.) - 1461.;
+  float confidence = color.b * 255.;
   if (
     day > 0. &&
     day >= startDayIndex &&
