@@ -188,8 +188,6 @@ const decodes = {
   color.r = red;
   color.g = green;
   color.b = blue;
-  
-  
   `,
   biomassLoss: `
     float countBuckets = 5.; // buckets length / 3: three bands
