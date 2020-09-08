@@ -1,14 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-datasets-locations {
-  h5 {
-    margin-bottom: rem(15px);
-    font-size: rem(12px);
-    color: $medium-grey;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-
   .search-container {
     position: relative;
     min-height: calc(80vh - 285px);

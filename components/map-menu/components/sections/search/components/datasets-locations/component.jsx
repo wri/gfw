@@ -9,6 +9,8 @@ import Icon from 'components/ui/icon';
 import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 
 import locationIcon from 'assets/icons/location.svg?sprite';
+import layersIcon from 'assets/icons/layers.svg?sprite';
+
 import './styles.scss';
 
 class DatasetsLocationsSearch extends PureComponent {
@@ -24,8 +26,10 @@ class DatasetsLocationsSearch extends PureComponent {
       datasets,
       locations,
     } = this.props;
-    const hasDatasets = datasets && type === 'datasets' && !!datasets.length;
-    const hasLocations = locations && type === 'locations' && !!locations.length;
+
+    const isLocationSearch = type === 'locations';
+    const hasDatasets = datasets && !isLocationSearch && !!datasets.length;
+    const hasLocations = locations && isLocationSearch && !!locations.length;
 
     return (
       <div className="c-datasets-locations">
@@ -40,16 +44,26 @@ class DatasetsLocationsSearch extends PureComponent {
           {!loading && !search && (
             <NoContent
               className="empty-search"
-              message="Enter a search and hit enter to find datasets or locations..."
-            />
+            >
+              <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
+              <span>
+                Use this to find
+                {isLocationSearch && ' any'}
+                {' '}
+                <b>{isLocationSearch ? 'location' : 'datasets'}</b>
+                {' '}
+                {isLocationSearch && 'on the map. Search for political boundaries, landmarks and natural features.'}
+                {!isLocationSearch && 'to add to the map.'}
+              </span>
+            </NoContent>
           )}
           {!loading &&
             search &&
-            (!datasets || !datasets.length) &&
-            (!locations || !locations.length) && (
+            ((!hasDatasets && !isLocationSearch) ||
+            (!hasLocations && isLocationSearch)) && (
               <NoContent
                 className="empty-search"
-                message="No datasets or locations found"
+                message={`No ${type} found`}
               />
             )}
           {!loading && search && (hasDatasets || hasLocations) && (
@@ -60,7 +74,6 @@ class DatasetsLocationsSearch extends PureComponent {
                     'show-border': locations && locations.length,
                   })}
                 >
-                  <h5>Datasets</h5>
                   {datasets.map((d) => (
                     <LayerToggle
                       key={d.id}
@@ -75,14 +88,13 @@ class DatasetsLocationsSearch extends PureComponent {
               )}
               {hasLocations && (
                 <div className="locations-search">
-                  <h5>Locations</h5>
                   {locations.map((loc) => (
                     <button
                       className={cx('location', { active: loc.active })}
                       key={loc.label}
                       onClick={() => handleClickLocation(loc)}
                     >
-                      <Icon icon={locationIcon} className="location-icon" />
+                      <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
                       <p>{loc.label}</p>
                     </button>
                   ))}

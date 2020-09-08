@@ -37,7 +37,22 @@
 
   .empty-search {
     position: relative;
-    min-height: rem(120px);
+    align-items: baseline;
+    width: 100%;
+
+    .message {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      color: $slate;
+    }
+
+    svg {
+      fill: rgba($slate, 0.5);
+      width: rem(40px);
+      height: rem(40px);
+      margin-bottom: 19px;
+    }
   }
 
   .label {
