@@ -19,8 +19,8 @@ import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import profileIcon from 'assets/icons/profile.svg?sprite';
 import mailIcon from 'assets/icons/mail.svg?sprite';
 
-import newsImage from './assets/news-bg.jpg';
-import bgImage from './assets/home-bg.jpg';
+import newsImage from './assets/news-bg.jpg?webp';
+import bgImage from './assets/home-bg.jpg?webp';
 import './styles.scss';
 
 class HomePage extends PureComponent {
