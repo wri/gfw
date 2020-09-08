@@ -1,7 +1,6 @@
 @import '~styles/settings';
 
 $map-menu-items-size: rem(76px);
-$map-menu-panel-width: rem(300px);
 $map-menu-panel-height: 75vh;
 $map-menu-panel-width-big: rem(560px);
 
@@ -18,7 +17,7 @@ $map-menu-panel-width-big: rem(560px);
   @media screen and (min-width: $screen-m) {
     height: 100%;
     max-height: 100%;
-    width: $map-menu-panel-width;
+    width: rem($map-menu-panel-width);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
     bottom: 0;
     top: 0;
@@ -106,7 +105,7 @@ $map-menu-panel-width-big: rem(560px);
     position: absolute;
     top: 0;
     right: 0;
-    padding: rem(15px);
+    padding: rem(25px) rem(20px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,8 +116,8 @@ $map-menu-panel-width-big: rem(560px);
     z-index: 1;
 
     .icon-close-panel {
-      width: rem(12px);
-      height: rem(12px);
+      width: rem(10px);
+      height: rem(10px);
       fill: $warm-grey;
     }
   }
