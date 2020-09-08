@@ -26,10 +26,12 @@
 
   .search-menu {
     flex: 0 0 35%;
+    flex-grow: 1;
   }
 
   .search-active-type {
     flex: 0 0 65%;
+    flex-grow: 1;
     padding: 15px 10px 0 10px;
   }
 

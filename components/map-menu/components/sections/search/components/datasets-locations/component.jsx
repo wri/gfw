@@ -16,6 +16,7 @@ class DatasetsLocationsSearch extends PureComponent {
     const {
       search,
       loading,
+      type,
       onToggleLayer,
       handleClickLocation,
       handleSearchChange,
@@ -23,14 +24,14 @@ class DatasetsLocationsSearch extends PureComponent {
       datasets,
       locations,
     } = this.props;
-    const hasDatasets = datasets && !!datasets.length;
-    const hasLocations = locations && !!locations.length;
+    const hasDatasets = datasets && type === 'datasets' && !!datasets.length;
+    const hasLocations = locations && type === 'locations' && !!locations.length;
 
     return (
       <div className="c-datasets-locations">
         <Search
           className="side-menu-search"
-          placeholder="Search"
+          placeholder={`Find ${type === 'datasets' ? 'datasets' : 'locations'}`}
           input={search}
           onChange={(value) => handleSearchChange(value)}
         />
@@ -96,6 +97,7 @@ class DatasetsLocationsSearch extends PureComponent {
 }
 
 DatasetsLocationsSearch.propTypes = {
+  type: PropTypes.oneOf(['datasets', 'locations']),
   datasets: PropTypes.array,
   locations: PropTypes.array,
   onToggleLayer: PropTypes.func,
