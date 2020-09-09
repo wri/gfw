@@ -4,6 +4,7 @@
   display: flex;
   flex-flow: column;
   height: 100%;
+  overflow: hidden;
 
   h3 {
     padding: 20px 10px;
@@ -14,14 +15,14 @@
     border-bottom: 1px solid rgba($hot-grey, 0.3);
   }
 
-  .search-container {
+  .search-wrapper {
     display: flex;
     justify-content: space-between;
     height: 100%;
   }
 
   .side-menu-search {
-    margin-bottom: rem(30px);
+    margin-bottom: rem(15px);
   }
 
   .search-menu {
@@ -29,10 +30,11 @@
     flex-grow: 1;
   }
 
-  .search-active-type {
+  .search-container {
     flex: 0 0 65%;
     flex-grow: 1;
     padding: 15px 10px 0 10px;
+    overflow-y: scroll;
   }
 
   .empty-search {

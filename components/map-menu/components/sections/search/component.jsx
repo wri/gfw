@@ -23,11 +23,13 @@ class MapMenuSearch extends PureComponent {
     const { menu } = this;
     const { isDesktop, searchType: currentSearchType, setMenuSettings } = this.props;
 
+    // Hide menu if mobile and we have a search type active
     if (!isDesktop && currentSearchType.length > 0) {
       return null;
     }
 
-    // If on mobile; you can go back and reset search type, but desktop always wants a default screen active, use first one if none present
+    // Mobile does not care about active, as its not shown on interaction
+    // Desktop always needs a active value, if none present (on resize) show the first menu item as active
     const currentValue = isDesktop && currentSearchType.length === 0 ? menu[0].value : currentSearchType;
 
     return (
@@ -42,17 +44,19 @@ class MapMenuSearch extends PureComponent {
 
   render() {
     const { searchType, isDesktop } = this.props;
-    // If we are on a mobile view, this will force the "overlay" layout without too much css trickery
+
+    // Mobile view displays eater menu or container depending on current action
+    // Desktop always shows both
     const showSearchResults = !isDesktop && searchType.length > 0 || isDesktop;
 
     return (
       <div className="c-map-menu-search">
         {isDesktop && <h3>Search</h3>}
 
-        <div className="search-container">
+        <div className="search-wrapper">
           {this.searchCategoryMenu()}
           {showSearchResults && (
-            <div className="search-active-type">
+            <div className="search-container">
               {(searchType === 'location' || searchType.length === 0) && (
                 <DatasetsLocationsSearch type="locations" {...this.props} />
               )}

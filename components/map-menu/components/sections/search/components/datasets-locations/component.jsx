@@ -14,22 +14,127 @@ import layersIcon from 'assets/icons/layers.svg?sprite';
 import './styles.scss';
 
 class DatasetsLocationsSearch extends PureComponent {
+  searchConditions() {
+    const { datasets, locations, type } = this.props;
+    const isLocationSearch = type === 'locations';
+    return {
+      isLocationSearch,
+      hasDatasets: datasets && !isLocationSearch && !!datasets.length,
+      hasLocations: locations && isLocationSearch && !!locations.length
+    }
+  }
+
+  searchIsEmpty() {
+    const { loading, search } = this.props;
+    const {
+      hasDatasets,
+      hasLocations,
+      isLocationSearch
+    } = this.searchConditions();
+
+    return !loading && search &&
+      ((!hasDatasets && !isLocationSearch) ||
+      (!hasLocations && isLocationSearch));
+  }
+
+  searchNoResults() {
+    const { loading, search } = this.props;
+    return !loading && !search;
+  }
+
+  searchHasResults() {
+    const { loading, search } = this.props;
+    const { hasDatasets, hasLocations } = this.searchConditions();
+    return !loading && search && (hasDatasets || hasLocations);
+  }
+
+  viewDefault() {
+    const { type } = this.props;
+    const isLocationSearch = type === 'locations';
+    return (
+      <NoContent
+        className="empty-search"
+      >
+        <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
+        <span>
+          Use this to find
+          {isLocationSearch && ' any'}
+          {' '}
+          <b>{isLocationSearch ? 'location' : 'datasets'}</b>
+          {' '}
+          {isLocationSearch && 'on the map. Search for political boundaries, landmarks and natural features.'}
+          {!isLocationSearch && 'to add to the map.'}
+        </span>
+      </NoContent>
+    )
+  }
+
+  viewNoResults() {
+    const { type } = this.props;
+    return (
+      <NoContent
+        className="empty-search"
+        message={`No ${type} found`}
+      />
+    )
+  }
+
+  viewSearchResults() {
+    const {
+      locations,
+      datasets,
+      onToggleLayer,
+      onInfoClick,
+      handleClickLocation
+    } = this.props;
+
+    const { hasDatasets, hasLocations, isLocationSearch } = this.searchConditions();
+
+    return (
+      <div className="search-results">
+        {hasDatasets && (
+          <div
+            className={cx('datasets-search', {
+              'show-border': locations && locations.length,
+            })}
+          >
+            {datasets.map((d) => (
+              <LayerToggle
+                key={d.id}
+                className="dataset-toggle"
+                data={{ ...d, dataset: d.id }}
+                onToggle={onToggleLayer}
+                onInfoClick={onInfoClick}
+                showSubtitle
+              />
+            ))}
+          </div>
+        )}
+        {hasLocations && (
+          <div className="locations-search">
+            {locations.map((loc) => (
+              <button
+                className={cx('location', { active: loc.active })}
+                key={loc.label}
+                onClick={() => handleClickLocation(loc)}
+              >
+                <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
+                <p>{loc.label}</p>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   render() {
     const {
       search,
       loading,
       type,
-      onToggleLayer,
-      handleClickLocation,
       handleSearchChange,
-      onInfoClick,
-      datasets,
-      locations,
     } = this.props;
-
-    const isLocationSearch = type === 'locations';
-    const hasDatasets = datasets && !isLocationSearch && !!datasets.length;
-    const hasLocations = locations && isLocationSearch && !!locations.length;
 
     return (
       <div className="c-datasets-locations">
@@ -41,67 +146,9 @@ class DatasetsLocationsSearch extends PureComponent {
         />
         <div className="search-container">
           {loading && <Loader />}
-          {!loading && !search && (
-            <NoContent
-              className="empty-search"
-            >
-              <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
-              <span>
-                Use this to find
-                {isLocationSearch && ' any'}
-                {' '}
-                <b>{isLocationSearch ? 'location' : 'datasets'}</b>
-                {' '}
-                {isLocationSearch && 'on the map. Search for political boundaries, landmarks and natural features.'}
-                {!isLocationSearch && 'to add to the map.'}
-              </span>
-            </NoContent>
-          )}
-          {!loading &&
-            search &&
-            ((!hasDatasets && !isLocationSearch) ||
-            (!hasLocations && isLocationSearch)) && (
-              <NoContent
-                className="empty-search"
-                message={`No ${type} found`}
-              />
-            )}
-          {!loading && search && (hasDatasets || hasLocations) && (
-            <div className="search-results">
-              {hasDatasets && (
-                <div
-                  className={cx('datasets-search', {
-                    'show-border': locations && locations.length,
-                  })}
-                >
-                  {datasets.map((d) => (
-                    <LayerToggle
-                      key={d.id}
-                      className="dataset-toggle"
-                      data={{ ...d, dataset: d.id }}
-                      onToggle={onToggleLayer}
-                      onInfoClick={onInfoClick}
-                      showSubtitle
-                    />
-                  ))}
-                </div>
-              )}
-              {hasLocations && (
-                <div className="locations-search">
-                  {locations.map((loc) => (
-                    <button
-                      className={cx('location', { active: loc.active })}
-                      key={loc.label}
-                      onClick={() => handleClickLocation(loc)}
-                    >
-                      <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
-                      <p>{loc.label}</p>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          {this.searchNoResults() && this.viewDefault()}
+          {this.searchIsEmpty() && this.viewNoResults()}
+          {this.searchHasResults() && this.viewSearchResults()}
         </div>
       </div>
     );
