@@ -9,6 +9,16 @@ import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import './styles.scss';
 
 class VerticalMenu extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    value: PropTypes.string,
+    menu: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string
+    })),
+    onClick: PropTypes.func
+  }
+
   render() {
     const {
       menu,
@@ -24,7 +34,7 @@ class VerticalMenu extends PureComponent {
         {...props}
       >
         {menu.map(({ label, value }) => (
-          <li className="menu-item">
+          <li className="menu-item" key={label}>
             <Button
               theme=""
               active={value === currentValue}
@@ -39,15 +49,5 @@ class VerticalMenu extends PureComponent {
     )
   }
 }
-
-VerticalMenu.propTypes = {
-  className: PropTypes.string,
-  value: PropTypes.string,
-  menu: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string
-  })),
-  onClick: PropTypes.func
-};
 
 export default VerticalMenu;

@@ -11,6 +11,21 @@ import UTMCoords from './components/utm-coords';
 import './styles.scss';
 
 class MapMenuSearch extends PureComponent {
+  static propTypes = {
+    datasets: PropTypes.array,
+    locations: PropTypes.array,
+    onToggleLayer: PropTypes.func,
+    onInfoClick: PropTypes.func,
+    search: PropTypes.string,
+    searchType: PropTypes.string,
+    setMenuSettings: PropTypes.func,
+    setMenuLoading: PropTypes.func,
+    handleClickLocation: PropTypes.func,
+    setMapSettings: PropTypes.func,
+    loading: PropTypes.bool,
+    isDesktop: PropTypes.bool
+  }
+
   menu = [
     { label: 'Locations', value: 'location' },
     { label: 'Datasets', value: 'dataset' },
@@ -45,7 +60,7 @@ class MapMenuSearch extends PureComponent {
   render() {
     const { searchType, isDesktop } = this.props;
 
-    // Mobile view displays eater menu or container depending on current action
+    // Mobile view displays either menu or container depending on current action
     // Desktop always shows both
     const showSearchResults = !isDesktop && searchType.length > 0 || isDesktop;
 
@@ -73,20 +88,5 @@ class MapMenuSearch extends PureComponent {
     );
   }
 }
-
-MapMenuSearch.propTypes = {
-  datasets: PropTypes.array,
-  locations: PropTypes.array,
-  onToggleLayer: PropTypes.func,
-  onInfoClick: PropTypes.func,
-  search: PropTypes.string,
-  searchType: PropTypes.string,
-  setMenuSettings: PropTypes.func,
-  setMenuLoading: PropTypes.func,
-  handleClickLocation: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  loading: PropTypes.bool,
-  isDesktop: PropTypes.bool
-};
 
 export default MapMenuSearch;
