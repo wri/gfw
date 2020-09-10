@@ -4,20 +4,20 @@ import sumBy from 'lodash/sumBy';
 import { formatNumber } from 'utils/format';
 import {
   yearTicksFormatter,
-  zeroFillYears
+  zeroFillYears,
 } from 'components/widgets/utils/data';
 
 // get list data
-const getLoss = state => state.data && state.data.loss;
-const getExtent = state => state.data && state.data.extent;
-const getPrimaryLoss = state => state.data && state.data.primaryLoss;
-const getAdminLoss = state => state.data && state.data.adminLoss;
-const getSettings = state => state.settings;
-const getLocationLabel = state => state.locationLabel;
-const getIndicator = state => state.indicator;
-const getColors = state => state.colors;
-const getSentence = state => state && state.sentence;
-const getTitle = state => state.title;
+const getLoss = (state) => state.data && state.data.loss;
+const getExtent = (state) => state.data && state.data.extent;
+const getPrimaryLoss = (state) => state.data && state.data.primaryLoss;
+const getAdminLoss = (state) => state.data && state.data.adminLoss;
+const getSettings = (state) => state.settings;
+const getLocationLabel = (state) => state.locationLabel;
+const getIndicator = (state) => state.indicator;
+const getColors = (state) => state.colors;
+const getSentence = (state) => state && state.sentence;
+const getTitle = (state) => state.title;
 
 const parseData = createSelector(
   [getAdminLoss, getPrimaryLoss, getLoss, getExtent, getSettings],
@@ -34,21 +34,21 @@ const parseData = createSelector(
       return null;
     }
     const { startYear, endYear, yearsRange } = settings;
-    const years = yearsRange && yearsRange.map(yearObj => yearObj.value);
+    const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
       area: 0,
       biomassLoss: 0,
       bound1: null,
       emissions: 0,
-      percentage: 0
+      percentage: 0,
     };
-    const initalLossArr = primaryLoss.find(d => d.year === 2002);
+    const initalLossArr = primaryLoss.find((d) => d.year === 2002);
     const initalLoss = initalLossArr
       ? initalLossArr.umd_tree_cover_loss__ha
       : 0;
     const totalAdminLoss =
       sumBy(
-        adminLoss.filter(d => d.year >= startYear && d.year <= endYear),
+        adminLoss.filter((d) => d.year >= startYear && d.year <= endYear),
         'area'
       ) || 0;
 
@@ -63,7 +63,7 @@ const parseData = createSelector(
       fillObj
     );
 
-    const parsedData = zeroFilledData.map(d => {
+    const parsedData = zeroFilledData.map((d) => {
       if (d.year !== 2001) initalExtent -= d.area;
       const yearData = {
         ...d,
@@ -72,7 +72,7 @@ const parseData = createSelector(
         area: d.area || 0,
         emissions: d.emissions || 0,
         extentRemainingHa: initalExtent,
-        extentRemaining: 100 * initalExtent / initalExtent2001
+        extentRemaining: (100 * initalExtent) / initalExtent2001,
       };
       return yearData;
     });
@@ -87,11 +87,11 @@ const filterData = createSelector(
       return null;
     }
     const { startYear, endYear } = settings;
-    return parsedData.filter(d => d.year >= startYear && d.year <= endYear);
+    return parsedData.filter((d) => d.year >= startYear && d.year <= endYear);
   }
 );
 
-const parseConfig = createSelector([getColors], colors => ({
+const parseConfig = createSelector([getColors], (colors) => ({
   height: 250,
   xKey: 'year',
   yKeys: {
@@ -99,48 +99,48 @@ const parseConfig = createSelector([getColors], colors => ({
       area: {
         fill: colors.primaryForestLoss,
         background: false,
-        yAxisId: 'area'
-      }
+        yAxisId: 'area',
+      },
     },
     lines: {
       extentRemaining: {
         stroke: colors.primaryForestExtent,
         yAxisId: 'extentRemaining',
-        strokeDasharray: '3 4'
-      }
-    }
+        strokeDasharray: '3 4',
+      },
+    },
   },
   xAxis: {
-    tickFormatter: yearTicksFormatter
+    tickFormatter: yearTicksFormatter,
   },
   yAxis: {
-    yAxisId: 'area'
+    yAxisId: 'area',
   },
   rightYAxis: {
     yAxisId: 'extentRemaining',
     unit: '%',
-    maxYValue: 100
+    maxYValue: 100,
   },
   unit: 'ha',
   tooltip: [
     {
-      key: 'year'
+      key: 'year',
     },
     {
       key: 'extentRemaining',
-      unitFormat: value =>
+      unitFormat: (value) =>
         formatNumber({ num: value, unit: '%', precision: 3 }),
       label: 'Primary forest extent remaining',
       color: colors.primaryForestExtent,
-      dashline: true
+      dashline: true,
     },
     {
       key: 'area',
-      unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
+      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
       label: 'Primary forest loss',
-      color: colors.primaryForestLoss
-    }
-  ]
+      color: colors.primaryForestLoss,
+    },
+  ],
 }));
 
 export const parseTitle = createSelector(
@@ -161,7 +161,7 @@ const parseSentence = createSelector(
     getSettings,
     getLocationLabel,
     getIndicator,
-    getSentence
+    getSentence,
   ],
   (data, extent, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
@@ -171,19 +171,26 @@ const parseSentence = createSelector(
       noLoss,
       noLossWithIndicator,
       globalInitial,
-      globalWithIndicator
+      globalWithIndicator,
     } = sentences;
     const { startYear, endYear } = settings;
-    const totalLossPrimary = (data && data.length && sumBy(data, 'area')) || 0;
-    const totalLoss = (data && data.length && data[0].totalLoss) || 0;
-    const percentageLoss =
-      (totalLoss && extent && totalLossPrimary / totalLoss * 100) || 0;
 
-    const initialExtentData = data.find(d => d.year === startYear - 1);
+    const filteredData =
+      data && data.length ? data.filter((y) => y.year > 2001) : [];
+    const totalLossPrimary = filteredData.length
+      ? sumBy(filteredData, 'area')
+      : 0;
+    const totalLoss = filteredData.length ? filteredData[0].totalLoss : 0;
+    const percentageLoss =
+      (totalLoss && extent && (totalLossPrimary / totalLoss) * 100) || 0;
+
+    const initialExtentData = filteredData.find(
+      (d) => d.year === startYear - 1
+    );
     const initialExtent =
       (initialExtentData && initialExtentData.extentRemaining) || 0;
 
-    const finalExtentData = data.find(d => d.year === endYear);
+    const finalExtentData = filteredData.find((d) => d.year === endYear);
     const finalExtent =
       (finalExtentData && finalExtentData.extentRemaining) || 0;
 
@@ -201,7 +208,7 @@ const parseSentence = createSelector(
       endYear,
       extentDelta: formatNumber({
         num: Math.abs(initialExtent - finalExtent),
-        unit: '%'
+        unit: '%',
       }),
       loss: formatNumber({ num: totalLossPrimary, unit: 'ha' }),
       percent: formatNumber({ num: percentageLoss, unit: '%' }),
@@ -209,13 +216,13 @@ const parseSentence = createSelector(
         key: 'total tree cover loss',
         fine: true,
         tooltip:
-          'Total tree cover loss includes loss in dry and non-tropical primary forests, secondary forests, and tree plantations in addition to humid primary forest loss.'
-      }
+          'Total tree cover loss includes loss in dry and non-tropical primary forests, secondary forests, and tree plantations in addition to humid primary forest loss.',
+      },
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -224,5 +231,5 @@ export default createStructuredSelector({
   data: filterData,
   config: parseConfig,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });
