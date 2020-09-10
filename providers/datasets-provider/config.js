@@ -174,6 +174,21 @@ const decodes = {
     alpha = 0.;
   }
   `,
+  staticRemap: `
+  float red = color.r;
+  float green = color.g;
+  float blue = color.b;
+
+  if (red == 0. && green == 0. && blue == 0.) {
+    alpha = 0.;
+  } else {
+    alpha = 1.;
+  }
+
+  color.r = red;
+  color.g = green;
+  color.b = blue;
+  `,
   biomassLoss: `
     float countBuckets = 5.; // buckets length / 3: three bands
     float year = 2000.0 + (color.r * 255.);
@@ -581,6 +596,7 @@ export default {
   treeLossByDriver: decodes.treeLossByDriver,
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
+  staticRemap: decodes.staticRemap,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
   terrai: decodes.terrai,
