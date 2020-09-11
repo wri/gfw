@@ -49,10 +49,12 @@
     top: rem(15px);
     right: rem(15px);
     z-index: 5;
+    display: flex;
 
     @media screen and (min-width: $screen-m) {
       bottom: rem(15px);
       top: auto;
+      display: block;
     }
   }
 
