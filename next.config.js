@@ -66,15 +66,15 @@ const nextConfig = {
     },
     {
       source: '/help/',
-      destination: `http://localhost:3001/help/`,
+      destination: `https://gfw-help-center.herokuapp.com/help/`,
     },
     {
       source: '/help/:path*/',
-      destination: `http://localhost:3001/help/:path*/`,
+      destination: `https://gfw-help-center.herokuapp.com/help/:path*/`,
     },
     {
       source: '/help/:path*',
-      destination: `http://localhost:3001/help/:path*`,
+      destination: `https://gfw-help-center.herokuapp.com/help/:path*`,
     },
     {
       source: '/map/',
