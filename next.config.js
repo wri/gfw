@@ -65,6 +65,18 @@ const nextConfig = {
       destination: `https://vizzuality.github.io/gfw-howto/:path*`,
     },
     {
+      source: '/help/',
+      destination: `http://localhost:3001/help/`,
+    },
+    {
+      source: '/help/:path*/',
+      destination: `http://localhost:3001/help/:path*/`,
+    },
+    {
+      source: '/help/:path*',
+      destination: `http://localhost:3001/help/:path*`,
+    },
+    {
       source: '/map/',
       destination: '/map/global/',
     },
