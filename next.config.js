@@ -67,14 +67,17 @@ const nextConfig = {
     {
       source: '/help/',
       destination: `https://gfw-help-center.herokuapp.com/help/`,
+      basePath: false,
     },
     {
       source: '/help/:path*/',
       destination: `https://gfw-help-center.herokuapp.com/help/:path*/`,
+      basePath: false,
     },
     {
       source: '/help/:path*',
       destination: `https://gfw-help-center.herokuapp.com/help/:path*`,
+      basePath: false,
     },
     {
       source: '/map/',
