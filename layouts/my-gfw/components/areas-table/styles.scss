@@ -9,12 +9,24 @@
     display: flex;
     justify-content: space-between;
 
+    &:hover {
+      background: $grey-light;
+    }
+
     @media screen and (min-width: $screen-m) {
       padding: rem(40px) 0;
     }
 
     &:last-child {
       border-bottom: solid 1px $border;
+    }
+
+    .area-button {
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     .area-links {

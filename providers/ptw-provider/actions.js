@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import uniqBy from 'lodash/uniqBy';
 import { reverseLatLng } from 'utils/geoms';
 
@@ -14,26 +14,25 @@ export const getPTW = createThunkAction(
     if (ptw && !ptw.loading) {
       dispatch(setPTWLoading(true));
       getPTWProvider()
-        .then(response => {
+        .then((response) => {
           const { rows } = response.data;
           if (rows && !!rows.length) {
             const ptwResponse = uniqBy(rows, 'cartodb_id')
-              .filter(d => d.bbox)
-              .map(p => {
+              .filter((d) => d.bbox)
+              .map((p) => {
                 const bbox = JSON.parse(p.bbox);
 
                 return {
                   ...p,
-                  bbox: reverseLatLng(bbox.coordinates[0])
+                  bbox: reverseLatLng(bbox.coordinates[0]),
                 };
               });
             dispatch(setPTW(uniqBy(ptwResponse, 'cartodb_id')));
           }
           dispatch(setPTWLoading(false));
         })
-        .catch(error => {
+        .catch(() => {
           dispatch(setPTWLoading(false));
-          console.info(error);
         });
     }
   }

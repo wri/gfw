@@ -126,7 +126,7 @@ export default {
       })
     ),
   getDataURL: (params) => [
-    getLoss({ ...params, forestType: 'tsc', tsc: true, download: true }),
+    getLoss({ ...params, landCategory: 'tsc', lossTsc: true, download: true }),
     getExtent({ ...params, download: true }),
   ],
   getWidgetProps,

@@ -1,11 +1,9 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'analytics';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
@@ -26,11 +24,6 @@ const actions = {
 };
 
 class MainMapContainer extends PureComponent {
-  state = {
-    showTooltip: false,
-    tooltipData: {},
-  };
-
   componentDidMount() {
     const { activeDatasets, basemap } = this.props;
     const layerIds = flatMap(activeDatasets?.map((d) => d.layers));
@@ -42,24 +35,11 @@ class MainMapContainer extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      selectedInteraction,
-      setMainMapAnalysisView,
       setMainMapSettings,
-      oneClickAnalysis,
       analysisActive,
       geostoreId,
       location,
     } = this.props;
-
-    // set analysis view if interaction changes
-    if (
-      oneClickAnalysis &&
-      selectedInteraction &&
-      !isEmpty(selectedInteraction.data) &&
-      !isEqual(selectedInteraction, prevProps.selectedInteraction)
-    ) {
-      setMainMapAnalysisView(selectedInteraction);
-    }
 
     if (!analysisActive && geostoreId && geostoreId !== prevProps.geostoreId) {
       setMainMapSettings({ showAnalysis: true });
@@ -72,10 +52,6 @@ class MainMapContainer extends PureComponent {
       this.props.setMenuSettings({ menuSection: 'my-gfw' });
     }
   }
-
-  handleShowTooltip = (show, data) => {
-    this.setState({ showTooltip: show, tooltipData: data });
-  };
 
   handleClickMap = () => {
     if (this.props.menuSection) {
@@ -116,7 +92,6 @@ class MainMapContainer extends PureComponent {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
-      handleShowTooltip: this.handleShowTooltip,
       handleClickAnalysis: this.handleClickAnalysis,
       handleClickMap: this.handleClickMap,
       onDrawComplete: this.onDrawComplete,
@@ -125,10 +100,8 @@ class MainMapContainer extends PureComponent {
 }
 
 MainMapContainer.propTypes = {
-  oneClickAnalysis: PropTypes.bool,
   setMainMapAnalysisView: PropTypes.func,
   getGeostoreId: PropTypes.func,
-  selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,
   setMainMapSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,

@@ -1,4 +1,4 @@
-import { createThunkAction } from 'utils/redux';
+import { createThunkAction } from 'redux/actions';
 import { getLocationFromData } from 'utils/format';
 import useRouter from 'utils/router';
 

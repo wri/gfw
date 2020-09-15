@@ -5,7 +5,6 @@
       "~/*": ["./*"],
       "data/*": ["static/*"],
       "pages/*": ["layouts/*"],
-      "store/*": ["store/*"],
     }
   }
 }

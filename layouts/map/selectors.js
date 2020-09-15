@@ -1,8 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
-  getDrawing,
-  getMapLoading,
   getActiveDatasetsFromState,
   getInteractionSelected,
   getBasemapFromState,
@@ -14,7 +12,6 @@ const selectLocationPayload = (state) =>
   state.location && state.location.payload;
 const selectMenuSection = (state) => state.mapMenu?.settings?.menuSection;
 const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
-const getShowDraw = (state) => state.analysis?.settings?.showDraw;
 
 // SELECTORS
 export const getEmbed = createSelector(
@@ -47,25 +44,9 @@ export const getShowAnalysis = createSelector(
   (settings) => settings.showAnalysis
 );
 
-export const getOneClickAnalysis = createSelector(
-  [
-    getShowDraw,
-    selectLocationPayload,
-    getDrawing,
-    getMapLoading,
-    getShowAnalysis,
-  ],
-  (showDraw, location, draw, loading, showAnalysis) => {
-    const hasLocation = !!location?.adm0;
-    const isDrawing = draw || showDraw;
-    return !hasLocation && !isDrawing && !loading && showAnalysis;
-  }
-);
-
 export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
   recentActive: getShowRecentImagery,
-  oneClickAnalysis: getOneClickAnalysis,
   hidePanels: getHidePanels,
   menuSection: selectMenuSection,
   activeDatasets: getActiveDatasetsFromState,

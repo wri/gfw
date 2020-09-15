@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -9,13 +9,13 @@ import sources from './config';
 
 const mapStateToProps = ({ modalSources }) => ({
   open: modalSources && modalSources.open,
-  data: (modalSources && sources[modalSources.source]) || {}
+  data: (modalSources && sources[modalSources.source]) || {},
 });
 
 reducerRegistry.registerModule('modalSources', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(Component);

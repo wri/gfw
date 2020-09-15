@@ -1,4 +1,4 @@
-import { createThunkAction, createAction } from 'utils/redux';
+import { createThunkAction, createAction } from 'redux/actions';
 import request from 'utils/request';
 
 export const setSearchData = createAction('setSearchData');

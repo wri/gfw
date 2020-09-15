@@ -3,9 +3,9 @@ import React, { useMemo } from 'react';
 import finallyShim from 'promise.prototype.finally';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import useStore from 'store';
+import useStore from 'redux/store';
 
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 import MyGFWProvider from 'providers/mygfw-provider';
 import LocationProvider from 'providers/location-provider';
 

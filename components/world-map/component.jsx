@@ -4,9 +4,8 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  Lines,
   ZoomableGroup,
-  Line
+  Line,
 } from 'react-simple-maps';
 import { Tooltip } from 'react-tippy';
 
@@ -24,14 +23,14 @@ class WorldMap extends React.PureComponent {
     const y1 = end[1];
     const curve = {
       forceUp: `${x1} ${y0}`,
-      forceDown: `${x0} ${y1}`
+      forceDown: `${x0} ${y1}`,
     }[arc.curveStyle];
 
     return `M ${start.join(' ')} Q ${curve} ${end.join(' ')}`;
   }
 
   static isDestinationCountry(iso, countries) {
-    return countries.map(f => f.geoId).includes(iso);
+    return countries.map((f) => f.geoId).includes(iso);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -40,7 +39,7 @@ class WorldMap extends React.PureComponent {
       return {
         flows: nextProps.flows,
         originGeoId: nextProps.originGeoId,
-        originCoordinates: nextProps.originCoordinates
+        originCoordinates: nextProps.originCoordinates,
       };
     }
     return prevState;
@@ -50,10 +49,10 @@ class WorldMap extends React.PureComponent {
     flows: [],
     originGeoId: null,
     tooltipConfig: null,
-    originCoordinates: []
+    originCoordinates: [],
   };
 
-  onMouseMove = (geometry, e) => {
+  onMouseMove = (e, geometry) => {
     const { flows } = this.state;
     const geoId = geometry.properties
       ? geometry.properties.iso2
@@ -66,17 +65,17 @@ class WorldMap extends React.PureComponent {
       const unit = 't';
       const volume =
         geometry.value ||
-        (flows.find(flow => flow.geoId === geoId) || {}).value;
+        (flows.find((flow) => flow.geoId === geoId) || {}).value;
       const height =
         geometry.height ||
-        (flows.find(flow => flow.geoId === geoId) || {}).height;
+        (flows.find((flow) => flow.geoId === geoId) || {}).height;
       const value = formatNumber({ num: volume, unit: 't' });
       const percentage = formatNumber({ num: height * 100, unit: '%' });
       const tooltipConfig = {
         x,
         y,
         text,
-        items: [{ title, value, unit, percentage }]
+        items: [{ title, value, unit, percentage }],
       };
       this.setState(() => ({ tooltipConfig }));
     }
@@ -90,7 +89,7 @@ class WorldMap extends React.PureComponent {
     const { flows, originGeoId } = this.state;
 
     return geographies.map(
-      geography =>
+      (geography) =>
         geography.properties.iso2 !== 'AQ' && (
           <Geography
             key={geography.properties.cartodb_id}
@@ -100,13 +99,13 @@ class WorldMap extends React.PureComponent {
                 '-dark': WorldMap.isDestinationCountry(
                   geography.properties.iso2,
                   flows
-                )
+                ),
               },
               { '-pink': originGeoId === geography.properties.iso2 }
             )}
             geography={geography}
             projection={projection}
-            onMouseMove={this.onMouseMove}
+            onMouseMove={(e) => this.onMouseMove(e, geography)}
             onMouseLeave={this.onMouseLeave}
           />
         )
@@ -116,20 +115,14 @@ class WorldMap extends React.PureComponent {
   renderLines = () => {
     const { originCoordinates, flows } = this.state;
 
-    return flows.map(flow => (
+    return flows.map((flow) => (
       <Line
         key={flow.geoId}
         className="world-map-arc"
-        line={{
-          ...flow,
-          coordinates: {
-            start: flow.coordinates,
-            end: originCoordinates
-          }
-        }}
-        buildPath={WorldMap.buildCurves}
+        from={originCoordinates}
+        to={flow.coordinates}
         strokeWidth={flow.strokeWidth}
-        onMouseMove={this.onMouseMove}
+        onMouseMove={(e) => this.onMouseMove(e, flow)}
         onMouseLeave={this.onMouseLeave}
       />
     ));
@@ -143,28 +136,28 @@ class WorldMap extends React.PureComponent {
       <Tooltip
         className={className}
         theme="tip"
-        html={
+        html={(
           <div className="c-world-map-tooltip">
             <p>{text && text.toLowerCase()}</p>
             <p>{items && items[0].value}</p>
             <p>{items && items[0].percentage}</p>
           </div>
-        }
+        )}
         followCursor
         animateFill={false}
         open={!!tooltipConfig}
       >
         <ComposableMap
           className={cx('c-world-map')}
-          projection="robinson"
           style={{ width: '100%', height: 'auto' }}
           projectionConfig={{ scale: 145 }}
         >
-          <ZoomableGroup disablePanning center={[20, 0]}>
-            <Geographies geography={WORLD_GEOGRAPHIES} disableOptimization>
-              {this.renderGeographies}
+          <ZoomableGroup center={[0, 0]}>
+            <Geographies geography={WORLD_GEOGRAPHIES}>
+              {({ geographies, projection }) =>
+                this.renderGeographies(geographies, projection)}
             </Geographies>
-            <Lines>{this.renderLines()}</Lines>
+            {this.renderLines()}
           </ZoomableGroup>
         </ComposableMap>
       </Tooltip>
@@ -173,7 +166,10 @@ class WorldMap extends React.PureComponent {
 }
 
 WorldMap.propTypes = {
-  className: PropTypes.string
+  flows: PropTypes.array,
+  originCoordinates: PropTypes.array,
+  originGeoId: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default WorldMap;

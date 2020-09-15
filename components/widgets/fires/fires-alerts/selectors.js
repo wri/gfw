@@ -3,6 +3,7 @@ import moment from 'moment';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
@@ -76,7 +77,7 @@ export const getData = createSelector(
         yearLengths[y] = lastWeek.isoWeek;
       } else if (moment(`${y}-12-31`).isoWeek() === 1) {
         yearLengths[y] = moment(`${y}-12-31`)
-          .subtract('week', 1)
+          .subtract(1, 'week')
           .isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
@@ -388,9 +389,9 @@ export const parseSentence = createSelector(
     const halfMax = (maxMean - minMean) * 0.5;
 
     const peakWeeks = data.filter(d => d.mean > halfMax);
-    const sortedPeakWeeks = sortBy(peakWeeks, ['year', 'week']);
-
+    const sortedPeakWeeks = orderBy(peakWeeks, ['year', 'week'], ['desc', 'asc']);
     const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
+
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
 

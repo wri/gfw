@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import { cartoRequest } from 'utils/request';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';

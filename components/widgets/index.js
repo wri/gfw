@@ -11,7 +11,7 @@ import {
   POLITICAL_BOUNDARIES,
 } from 'data/layers';
 
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { setMapSettings as setMapState } from 'components/map/actions';
@@ -104,7 +104,11 @@ class WidgetsContainer extends PureComponent {
         (mapSettingsChanged || activeWidgetChanged)
       ) {
         this.syncWidgetWithMap();
-      } else if (!datasets && activeWidgetChanged) {
+      } else if (
+        !datasets &&
+        activeWidgetChanged &&
+        !isEqual(settings, prevSettings)
+      ) {
         this.clearMap();
       }
     }

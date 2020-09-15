@@ -8,7 +8,7 @@ import {
   IND_FOREST_MAMATORIUM_DATASET,
   OIL_PALM_DATASET,
   WOOD_FIBER_DATASET,
-  LOGGING_CONCESSIONS_DATASET
+  LOGGING_CONCESSIONS_DATASET,
 } from './layers-datasets';
 import {
   MINING_CONCESSIONS,
@@ -20,7 +20,7 @@ import {
   IND_FOREST_MAMATORIUM,
   OIL_PALM,
   WOOD_FIBER,
-  LOGGING_CONCESSIONS
+  LOGGING_CONCESSIONS,
 } from './layers';
 
 export default [
@@ -33,9 +33,9 @@ export default [
     datasets: [
       {
         dataset: MINING_CONCESSIONS_DATASET,
-        layers: [MINING_CONCESSIONS]
-      }
-    ]
+        layers: [MINING_CONCESSIONS],
+      },
+    ],
   },
   {
     label: 'Protected Areas',
@@ -47,9 +47,9 @@ export default [
     datasets: [
       {
         dataset: PROTECTED_AREAS_DATASET,
-        layers: [PROTECTED_AREAS_LAYER]
-      }
-    ]
+        layers: [PROTECTED_AREAS_LAYER],
+      },
+    ],
   },
   {
     label: 'Key Biodiversity Areas',
@@ -57,7 +57,7 @@ export default [
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
     tableKey: 'is__birdlife_key_biodiversity_area',
-    global: true
+    global: true,
   },
   {
     label: 'Tiger Conservation Landscapes',
@@ -68,22 +68,23 @@ export default [
     datasets: [
       {
         dataset: TIGER_CONSERVATION_LANDSCAPES_DATASET,
-        layers: [TIGER_CONSERVATION_LANDSCAPES]
-      }
-    ]
+        layers: [TIGER_CONSERVATION_LANDSCAPES],
+      },
+    ],
   },
   {
-    label: 'Alliance for Zero Extinction',
+    label: 'Alliance for Zero Extinction sites',
     value: 'aze',
+    preserveString: true,
     metaKey: 'alliance_for_zero_extinction_sites',
     tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
     global: true,
     datasets: [
       {
         dataset: ALLIANCE_FOR_ZERO_EXSTINCTION_DATASET,
-        layers: [ALLIANCE_FOR_ZERO_EXSTINCTION]
-      }
-    ]
+        layers: [ALLIANCE_FOR_ZERO_EXSTINCTION],
+      },
+    ],
   },
   {
     label: 'Indigenous and Community Lands',
@@ -94,9 +95,9 @@ export default [
     datasets: [
       {
         dataset: INDIGENOUS_AND_COMMUNITY_LANDS_DATASET,
-        layers: [INDIGENOUS_AND_COMMUNITY_LANDS]
-      }
-    ]
+        layers: [INDIGENOUS_AND_COMMUNITY_LANDS],
+      },
+    ],
   },
   {
     label: 'Indonesia peat lands',
@@ -108,10 +109,10 @@ export default [
     datasets: [
       {
         dataset: IND_PEAT_LANDS_DATASET,
-        layers: [IND_PEAT_LANDS]
-      }
+        layers: [IND_PEAT_LANDS],
+      },
     ],
-    hidden: true
+    hidden: true,
   },
   {
     label: 'Indonesia forest moratorium areas',
@@ -123,9 +124,9 @@ export default [
     datasets: [
       {
         dataset: IND_FOREST_MAMATORIUM_DATASET,
-        layers: [IND_FOREST_MAMATORIUM]
-      }
-    ]
+        layers: [IND_FOREST_MAMATORIUM],
+      },
+    ],
   },
   {
     label: 'Oil palm concessions',
@@ -136,9 +137,9 @@ export default [
     datasets: [
       {
         dataset: OIL_PALM_DATASET,
-        layers: [OIL_PALM]
-      }
-    ]
+        layers: [OIL_PALM],
+      },
+    ],
   },
   {
     label: 'Wood fiber concessions',
@@ -149,12 +150,12 @@ export default [
     datasets: [
       {
         dataset: WOOD_FIBER_DATASET,
-        layers: [WOOD_FIBER]
-      }
-    ]
+        layers: [WOOD_FIBER],
+      },
+    ],
   },
   {
-    label: 'Managed forests',
+    label: 'Logging concessions',
     value: 'managed_forests',
     metaKey: 'gfw_logging',
     tableKey: 'is__gfw_managed_forest',
@@ -162,8 +163,8 @@ export default [
     datasets: [
       {
         dataset: LOGGING_CONCESSIONS_DATASET,
-        layers: [LOGGING_CONCESSIONS]
-      }
-    ]
-  }
+        layers: [LOGGING_CONCESSIONS],
+      },
+    ],
+  },
 ];

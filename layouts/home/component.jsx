@@ -19,8 +19,8 @@ import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import profileIcon from 'assets/icons/profile.svg?sprite';
 import mailIcon from 'assets/icons/mail.svg?sprite';
 
-import newsImage from './assets/news-bg.jpg';
-import bgImage from './assets/home-bg.jpg';
+import newsImage from './assets/news-bg.jpg?webp';
+import bgImage from './assets/home-bg.jpg?webp';
 import './styles.scss';
 
 class HomePage extends PureComponent {
@@ -30,7 +30,6 @@ class HomePage extends PureComponent {
     news: PropTypes.array,
     newsLoading: PropTypes.bool,
     uses: PropTypes.array.isRequired,
-    isDesktop: PropTypes.bool,
   };
 
   state = {
@@ -38,7 +37,7 @@ class HomePage extends PureComponent {
   };
 
   render() {
-    const { summary, uses, apps, news, newsLoading, isDesktop } = this.props;
+    const { summary, uses, apps, news, newsLoading } = this.props;
 
     return (
       <div className="l-home-page">
@@ -49,54 +48,50 @@ class HomePage extends PureComponent {
           bgImage={bgImage}
           large
         >
-          {isDesktop && (
-            <Fragment>
-              <div className={cx('home-video', { show: this.state.showVideo })}>
-                <YouTube
-                  videoId="0XsJNU75Si0"
-                  opts={{
-                    height: '100%',
-                    width: '100%',
-                    playerVars: {
-                      autoplay: 1,
-                      autohide: 1,
-                      loop: 1,
-                      modestbranding: 1,
-                      rel: 0,
-                      showinfo: 0,
-                      controls: 0,
-                      disablekb: 1,
-                      enablejsapi: 0,
-                      iv_load_policy: 3,
-                    },
-                  }}
-                  onPlay={() =>
-                    setTimeout(() => this.setState({ showVideo: true }), 300)}
-                  onEnd={() => this.setState({ showVideo: false })}
-                />
-              </div>
-              {this.state.showVideo && (
-                <Button
-                  className="stop-video-btn"
-                  onClick={() => {
-                    this.setState({ showVideo: false });
-                  }}
-                >
-                  STOP VIDEO
+          <Fragment>
+            <div className={cx('home-video', { show: this.state.showVideo })}>
+              <YouTube
+                videoId="0XsJNU75Si0"
+                opts={{
+                  height: '100%',
+                  width: '100%',
+                  playerVars: {
+                    autoplay: 1,
+                    autohide: 1,
+                    loop: 1,
+                    modestbranding: 1,
+                    rel: 0,
+                    showinfo: 0,
+                    controls: 0,
+                    disablekb: 1,
+                    enablejsapi: 0,
+                    iv_load_policy: 3,
+                  },
+                }}
+                onPlay={() =>
+                  setTimeout(() => this.setState({ showVideo: true }), 300)}
+                onEnd={() => this.setState({ showVideo: false })}
+              />
+            </div>
+            {this.state.showVideo && (
+              <Button
+                className="stop-video-btn"
+                onClick={() => {
+                  this.setState({ showVideo: false });
+                }}
+              >
+                STOP VIDEO
+              </Button>
+            )}
+            <Link href="/subscribe">
+              <a className="subscribe-btn">
+                <Button theme="square" className="subscribe-icon">
+                  <Icon icon={mailIcon} />
                 </Button>
-              )}
-              <Link href="/subscribe">
-                <a className="subscribe-btn">
-                  <Button theme="square" className="subscribe-icon">
-                    <Icon icon={mailIcon} />
-                  </Button>
-                  <p className="subscribe-msg">
-                    SUBSCRIBE TO THE GFW NEWSLETTER
-                  </p>
-                </a>
-              </Link>
-            </Fragment>
-          )}
+                <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+              </a>
+            </Link>
+          </Fragment>
         </Cover>
         <div
           className="row"

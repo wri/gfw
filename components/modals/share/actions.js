@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 
 import { getShortenUrl } from 'services/bitly';
 
@@ -11,17 +11,17 @@ export const setShareLoading = createAction('setShareLoading');
 
 export const setShareModal = createThunkAction(
   'setShareModal',
-  params => dispatch => {
+  (params) => (dispatch) => {
     const { shareUrl } = params;
 
     dispatch(
       setShareData({
-        ...params
+        ...params,
       })
     );
 
     getShortenUrl(shareUrl)
-      .then(response => {
+      .then((response) => {
         let shortShareUrl = '';
         if (response.status < 400) {
           shortShareUrl = response.data.link;

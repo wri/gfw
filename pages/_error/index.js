@@ -20,7 +20,7 @@ const Error = ({ statusCode }) => (
         <div className="column small-12 medium-8 medium-offset-2">
           <ConfirmationMessage
             title={
-              `An error ${statusCode} occurred` ||
+              `An error ${statusCode ? `${statusCode} ` : ''}occurred` ||
               "We're sorry, something went wrong."
             }
             description="Try refreshing the page or check your connection."

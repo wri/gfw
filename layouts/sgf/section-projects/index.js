@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { scroller } from 'react-scroll';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as modalActions from 'pages/sgf/section-projects/section-projects-modal/actions';
 import * as actions from './actions';

@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import cx from 'classnames';
-import { Media } from 'utils/responsive';
 import { track } from 'analytics';
 import { format } from 'd3-format';
 
@@ -51,10 +50,7 @@ class ChoseAnalysis extends PureComponent {
 
     return (
       <div className="layer-menu">
-        <div className="layer-title">
-          <Media greaterThanOrEqual="md">One click analysis on shape or:</Media>
-          <Media lessThan="md">Analysis on shape or:</Media>
-        </div>
+        <div className="layer-title">Analysis on shape or:</div>
         <Dropdown
           className="boundary-selector analysis-boundary-menu"
           options={boundaries}
@@ -63,9 +59,7 @@ class ChoseAnalysis extends PureComponent {
           native
         />
         <div className="layer-description">
-          <Media greaterThanOrEqual="md">One-click analysis </Media>
-          <Media lessThan="md">Analysis </Media>
-          is also available by default for most data layers under the
+          Analysis is also available by default for most data layers under the
           {' '}
           <button
             onClick={() =>

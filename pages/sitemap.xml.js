@@ -17,42 +17,42 @@ const config = [
     priority: '0.8',
   },
   {
-    path: '/dashboards/global',
+    path: '/dashboards/global/',
     priority: '0.8',
   },
   {
-    path: '/topics/[topic]',
+    path: '/topics/[topic]/',
     priority: '0.8',
     allowedParams: {
       topic: ['biodiversity', 'climate', 'commodities', 'water', 'fires'],
     },
   },
   {
-    path: '/about',
+    path: '/about/',
     priority: '0.8',
   },
   {
-    path: '/my-gfw',
+    path: '/my-gfw/',
     priority: '0.8',
   },
   {
-    path: '/privacy-policy',
+    path: '/privacy-policy/',
     priority: '0.8',
   },
   {
-    path: '/terms',
+    path: '/terms/',
     priority: '0.8',
   },
   {
-    path: '/subscrive',
+    path: '/subscribe/',
     priority: '0.8',
   },
   {
-    path: '/search',
+    path: '/search/',
     priority: '0.8',
   },
   {
-    path: '/grants-and-fellowships/[tab]',
+    path: '/grants-and-fellowships/[tab]/',
     priority: '0.8',
     allowedParams: {
       tab: ['projects', 'about', 'apply'],
@@ -90,22 +90,22 @@ const sitemapXml = () => {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${pageXml}
     <url>
-      <loc>${DEVELOPERS_URL}</loc>
+      <loc>${DEVELOPERS_URL}/</loc>
       <changefreq>weekly</changefreq>
       <priority>0.4</priority>
     </url>
     <url>
-      <loc>${HOWTO_URL}</loc>
+      <loc>${HOWTO_URL}/</loc>
       <changefreq>weekly</changefreq>
       <priority>0.4</priority>
     </url>
     <url>
-      <loc>${DATA_PORTAL_URL}</loc>
+      <loc>${DATA_PORTAL_URL}/</loc>
       <changefreq>weekly</changefreq>
       <priority>0.4</priority>
     </url>
     <url>
-      <loc>${BLOG_URL}</loc>
+      <loc>${BLOG_URL}/</loc>
       <changefreq>weekly</changefreq>
       <priority>0.4</priority>
     </url>

@@ -260,53 +260,57 @@ class MapComponent extends Component {
     const { basemap, lang, mapLabels } = this.props;
 
     const LABELS_GROUP = ['labels'];
-    const { layers, metadata } = this.map.getStyle();
 
-    const labelGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
-      const { name } = metadata['mapbox:groups'][k];
+    if (this.map) {
+      const { layers, metadata } = this.map.getStyle();
 
-      const matchedGroups = LABELS_GROUP.filter((rgr) =>
-        name.toLowerCase().includes(rgr)
-      );
+      const labelGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
+        const { name } = metadata['mapbox:groups'][k];
 
-      return matchedGroups.some((bool) => bool);
-    });
+        const matchedGroups = LABELS_GROUP.filter((rgr) =>
+          name.toLowerCase().includes(rgr)
+        );
 
-    const labelsWithMeta = labelGroups.map((_groupId) => ({
-      ...metadata['mapbox:groups'][_groupId],
-      id: _groupId,
-    }));
-    const labelsToDisplay =
-      labelsWithMeta.find((_basemap) =>
-        _basemap.name.includes(basemap?.labelsGroup)
-      ) || {};
+        return matchedGroups.some((bool) => bool);
+      });
 
-    const labelLayers = layers.filter((l) => {
-      const { metadata: layerMetadata } = l;
-      if (!layerMetadata) return false;
+      const labelsWithMeta = labelGroups.map((_groupId) => ({
+        ...metadata['mapbox:groups'][_groupId],
+        id: _groupId,
+      }));
+      const labelsToDisplay =
+        labelsWithMeta.find((_basemap) =>
+          _basemap.name.includes(basemap?.labelsGroup)
+        ) || {};
 
-      const gr = layerMetadata['mapbox:group'];
-      return labelGroups.includes(gr);
-    });
+      const labelLayers = layers.filter((l) => {
+        const { metadata: layerMetadata } = l;
+        if (!layerMetadata) return false;
 
-    labelLayers.forEach((_layer) => {
-      const match = _layer.metadata['mapbox:group'] === labelsToDisplay.id;
-      this.map.setLayoutProperty(
-        _layer.id,
-        'visibility',
-        match && mapLabels ? 'visible' : 'none'
-      );
-      this.map.setLayoutProperty(_layer.id, 'text-field', [
-        'get',
-        `name_${lang}`,
-      ]);
-    });
+        const gr = layerMetadata['mapbox:group'];
+        return labelGroups.includes(gr);
+      });
+
+      labelLayers.forEach((_layer) => {
+        const match = _layer.metadata['mapbox:group'] === labelsToDisplay.id;
+        this.map.setLayoutProperty(
+          _layer.id,
+          'visibility',
+          match && mapLabels ? 'visible' : 'none'
+        );
+        this.map.setLayoutProperty(_layer.id, 'text-field', [
+          'get',
+          `name_${lang}`,
+        ]);
+      });
+    }
 
     return true;
   };
 
   setRoads = () => {
     const ROADS_GROUP = ['roads'];
+
     if (this.map) {
       const { mapRoads } = this.props;
       const { layers, metadata } = this.map.getStyle();

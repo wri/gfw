@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import { track } from 'analytics';
 
 import { getNonGlobalDatasets } from 'services/analysis-cached';

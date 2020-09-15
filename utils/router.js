@@ -4,7 +4,7 @@ import compact from 'lodash/compact';
 
 import { decodeParamsForState, encodeStateForUrl } from './stateToUrl';
 
-export default () => {
+const useRouter = () => {
   const router = Router.router || {};
 
   if (router) {
@@ -47,3 +47,5 @@ export default () => {
 
   return { ...Router, ...router };
 };
+
+export default useRouter;

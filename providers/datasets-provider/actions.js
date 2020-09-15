@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';

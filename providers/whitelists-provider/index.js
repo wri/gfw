@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 import { CancelToken } from 'axios';
 
 import { getDataLocation } from 'utils/location';
@@ -10,19 +10,21 @@ import { getDataLocation } from 'utils/location';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = state => ({
-  location: getDataLocation(state)
+const mapStateToProps = (state) => ({
+  location: getDataLocation(state),
 });
 
 class WhitelistProvider extends PureComponent {
   static propTypes = {
     location: PropTypes.object.isRequired,
     getWhitelist: PropTypes.func.isRequired,
-    setWhitelist: PropTypes.func.isRequired
+    setWhitelist: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    const { location: { type, adm0, adm1, adm2 } } = this.props;
+    const {
+      location: { type, adm0, adm1, adm2 },
+    } = this.props;
     if (adm0) {
       this.handleFetchWhitelist({ type, adm0, adm1, adm2 });
     }
@@ -42,7 +44,7 @@ class WhitelistProvider extends PureComponent {
     }
   }
 
-  handleFetchWhitelist = params => {
+  handleFetchWhitelist = (params) => {
     const { getWhitelist } = this.props;
 
     this.cancelWhitelistFetch();
@@ -64,7 +66,7 @@ class WhitelistProvider extends PureComponent {
 reducerRegistry.registerModule('whitelists', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(WhitelistProvider);

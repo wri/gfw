@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 import { getGeostoreProvider, getGeostoreKey } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 
@@ -36,9 +36,10 @@ export const getGeostoreId = createThunkAction(
       .then((geostore) => {
         if (geostore && geostore.data && geostore.data.data) {
           const { id } = geostore.data.data;
-          dispatch(setGeostoreLoading({ loading: false, error: false }));
           if (callback) {
             callback(id);
+          } else {
+            dispatch(setGeostoreLoading({ loading: false, error: false }));
           }
         }
       })

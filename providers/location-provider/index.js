@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import useRouter from 'utils/router';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import { decodeParamsForState, encodeStateForUrl } from 'utils/stateToUrl';
 

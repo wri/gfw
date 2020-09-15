@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { createAction, createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux/actions';
 
 import { getLocationPolynameWhitelist } from 'services/analysis-cached';
 
@@ -56,9 +56,8 @@ export const getWhitelist = createThunkAction(
           );
         })
       )
-      .catch((error) => {
+      .catch(() => {
         dispatch(setWhitelistLoading(false));
-        console.info(error);
       });
   }
 );

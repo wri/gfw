@@ -9,6 +9,10 @@
     fill: $slate;
   }
 
+  &-underline:hover {
+    text-decoration: underline;
+  }
+
   &:hover {
     background-color: transparent;
 

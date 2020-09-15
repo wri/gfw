@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { initGA, handlePageTrack } from 'analytics';
+import { initAnalytics, handlePageTrack } from 'analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
@@ -29,9 +29,9 @@ class App extends PureComponent {
   componentDidMount() {
     const { router } = this.props;
 
-    if (!window.GA_INITIALIZED) {
-      initGA();
-      window.GA_INITIALIZED = true;
+    if (!window.ANALYTICS_INITIALIZED) {
+      initAnalytics();
+      window.ANALYTICS_INITIALIZED = true;
     }
     handlePageTrack();
 

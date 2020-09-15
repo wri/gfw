@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dashboard</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-883.000000, -2065.000000)" fill="#333333">
+            <g transform="translate(883.000000, 2065.000000)">
+                <path d="M7,4 L7,9 L7,9 L12,9 C12,11.7614237 9.76142375,14 7,14 C4.23857625,14 2,11.7614237 2,9 C2,6.23857625 4.23857625,4 7,4 L7,4 Z M8,2 C11.3137085,2 14,4.6862915 14,8 L14,8 L8,8 L8,8 Z" id="Combined-Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

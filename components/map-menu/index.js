@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import { setMapSettings } from 'components/map/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
@@ -12,11 +12,11 @@ import MenuComponent from './component';
 reducerRegistry.registerModule('mapMenu', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(getMenuProps, {
   ...actions,
   setMapSettings,
-  setMapPromptsSettings
+  setMapPromptsSettings,
 })(MenuComponent);

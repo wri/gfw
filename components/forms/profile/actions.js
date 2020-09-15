@@ -1,4 +1,4 @@
-import { createThunkAction } from 'utils/redux';
+import { createThunkAction } from 'redux/actions';
 import { FORM_ERROR } from 'final-form';
 
 import { updateProfile } from 'services/user';
@@ -14,7 +14,7 @@ export const saveProfile = createThunkAction(
     howDoYouUse,
     howDoYouUse_otherInput,
     ...rest
-  }) => dispatch => {
+  }) => (dispatch) => {
     const postData = {
       id,
       ...rest,
@@ -25,38 +25,38 @@ export const saveProfile = createThunkAction(
       howDoYouUse:
         howDoYouUse && howDoYouUse.includes('Other')
           ? [
-            ...howDoYouUse.filter(use => use !== 'Other'),
-            `Other: ${howDoYouUse_otherInput || ''}`
-          ]
+              ...howDoYouUse.filter((use) => use !== 'Other'),
+              `Other: ${howDoYouUse_otherInput || ''}`,
+            ]
           : howDoYouUse,
       signUpForNewsletter:
         !!signUpForNewsletter &&
         signUpForNewsletter.length &&
         signUpForNewsletter.includes('newsletter')
           ? 'true'
-          : false
+          : false,
     };
 
     return updateProfile(id, postData)
-      .then(response => {
+      .then((response) => {
         if (response.data && response.data.data) {
           const { attributes } = response.data.data;
           dispatch(
             setMyGFW({
               loggedIn: true,
               id: response.data.data.id,
-              ...attributes
+              ...attributes,
             })
           );
         }
 
         return true;
       })
-      .catch(error => {
+      .catch((error) => {
         const { errors } = error.response.data;
 
         return {
-          [FORM_ERROR]: errors[0].detail
+          [FORM_ERROR]: errors[0].detail,
         };
       });
   }

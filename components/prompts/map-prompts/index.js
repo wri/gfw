@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
@@ -23,30 +23,31 @@ class MapPromptsContainer extends PureComponent {
       recentActive,
       showPrompts,
       activeCategories,
-      datasetIds
+      datasetIds,
     } = this.props;
 
     const shouldOpenRecentImageryPrompt =
       showPrompts &&
       !recentActive &&
       // if map zooms past 9
-      (mapZoom > 9 && prevProps.mapZoom <= 9);
+      mapZoom > 9 &&
+      prevProps.mapZoom <= 9;
 
     const shouldOpenAnalysisPrompt =
       showPrompts &&
       // if map zooms past 9
-      (mapZoom > 3 &&
-        prevProps.mapZoom <= 3 &&
-        activeCategories &&
-        (activeCategories.includes('landUse') ||
-          activeCategories.includes('biodiversity') ||
-          datasetIds.includes(BIOMASS_LOSS_DATASET)));
+      mapZoom > 3 &&
+      prevProps.mapZoom <= 3 &&
+      activeCategories &&
+      (activeCategories.includes('landUse') ||
+        activeCategories.includes('biodiversity') ||
+        datasetIds.includes(BIOMASS_LOSS_DATASET));
 
     if (shouldOpenRecentImageryPrompt) {
       setMapPromptsSettings({
         open: true,
         stepsKey: 'recentImagery',
-        stepIndex: 0
+        stepIndex: 0,
       });
     }
 
@@ -54,7 +55,7 @@ class MapPromptsContainer extends PureComponent {
       setMapPromptsSettings({
         open: true,
         stepsKey: 'analyzeAnArea',
-        stepIndex: 0
+        stepIndex: 0,
       });
     }
   }
@@ -64,7 +65,7 @@ class MapPromptsContainer extends PureComponent {
     const {
       setMapPromptsSettings,
       setAnalysisView,
-      clearAnalysisView
+      clearAnalysisView,
     } = this.props;
 
     const allSteps = {
@@ -79,8 +80,8 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.resetMapLayout();
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-legend',
@@ -91,10 +92,10 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               next: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: true
+                  showAnalysis: true,
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-legend',
@@ -105,12 +106,12 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               next: () => {
                 this.props.setMenuSettings({
-                  menuSection: 'explore'
+                  menuSection: 'explore',
                 });
               },
               prev: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: false
+                  showAnalysis: false,
                 });
               },
               learnHow: () => {
@@ -120,11 +121,11 @@ class MapPromptsContainer extends PureComponent {
                     open: true,
                     stepsKey: 'analyzeAnAreaTour',
                     stepIndex: 0,
-                    force: true
+                    force: true,
                   });
                 }, 100);
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-menu-panel',
@@ -135,15 +136,15 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               next: () => {
                 this.props.setMenuSettings({
-                  menuSection: 'search'
+                  menuSection: 'search',
                 });
               },
               prev: () => {
                 this.props.setMenuSettings({
-                  menuSection: ''
+                  menuSection: '',
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-menu-panel',
@@ -154,18 +155,18 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               next: () => {
                 this.props.setMenuSettings({
-                  menuSection: ''
+                  menuSection: '',
                 });
                 this.props.setMainMapSettings({
-                  showBasemaps: true
+                  showBasemaps: true,
                 });
               },
               prev: () => {
                 this.props.setMenuSettings({
-                  menuSection: 'explore'
+                  menuSection: 'explore',
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-basemaps',
@@ -175,18 +176,18 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               next: () => {
                 this.props.setMainMapSettings({
-                  showBasemaps: false
+                  showBasemaps: false,
                 });
               },
               prev: () => {
                 this.props.setMenuSettings({
-                  menuSection: 'search'
+                  menuSection: 'search',
                 });
                 this.props.setMainMapSettings({
-                  showBasemaps: false
+                  showBasemaps: false,
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-recent-imagery',
@@ -196,7 +197,7 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.props.setMainMapSettings({
-                  showBasemaps: true
+                  showBasemaps: true,
                 });
               },
               learnHow: () => {
@@ -206,24 +207,24 @@ class MapPromptsContainer extends PureComponent {
                     open: true,
                     stepsKey: 'recentImageryTour',
                     stepIndex: 0,
-                    force: true
+                    force: true,
                   });
                 }, 100);
-              }
-            }
+              },
+            },
           },
           {
             target: '.map-tour-map-controls',
             disableBeacon: true,
             content:
-              'Access basic map tools: zoom out and in, expand the map, share or embed, print, and take a tour of the map. Also view zoom level and lat/long coordinates.'
+              'Access basic map tools: zoom out and in, expand the map, share or embed, print, and take a tour of the map. Also view zoom level and lat/long coordinates.',
           },
           {
             target: '.map-tour-main-menu',
             content: 'Access the main navigation menu.',
-            disableBeacon: true
-          }
-        ]
+            disableBeacon: true,
+          },
+        ],
       },
       recentImagery: {
         title: 'Recent Satellite Imagery',
@@ -241,16 +242,16 @@ class MapPromptsContainer extends PureComponent {
                     open: true,
                     stepsKey: 'recentImageryTour',
                     stepIndex: 0,
-                    force: true
+                    force: true,
                   });
                 }, 100);
-              }
-            }
-          }
+              },
+            },
+          },
         ],
         settings: {
-          disableOverlay: true
-        }
+          disableOverlay: true,
+        },
       },
       analyzeAnArea: {
         title: 'Analyze an Area of Interest',
@@ -264,10 +265,10 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: true
+                  showAnalysis: true,
                 });
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
               },
               learnHow: () => {
@@ -277,16 +278,16 @@ class MapPromptsContainer extends PureComponent {
                     open: true,
                     stepsKey: 'analyzeAnAreaTour',
                     stepIndex: 0,
-                    force: true
+                    force: true,
                   });
                 }, 100);
-              }
-            }
-          }
+              },
+            },
+          },
         ],
         settings: {
-          disableOverlay: true
-        }
+          disableOverlay: true,
+        },
       },
       recentImageryTour: {
         title: 'Recent Satellite Imagery',
@@ -305,30 +306,30 @@ class MapPromptsContainer extends PureComponent {
                     open: true,
                     stepsKey: 'mapTour',
                     stepIndex: 6,
-                    force: true
+                    force: true,
                   });
                 }, 100);
               },
               prev: () => {
                 this.props.setMainMapSettings({ showRecentImagery: true });
-              }
-            }
+              },
+            },
           },
           {
             target: '.top-section',
             content:
               'Change the settings like the Acquisition Date and Cloud Cover Percentage to filter the available images. Click on a thumbnail to overlay that image on the map. They are ordered by date (most recent first). You can see the date of an image by hovering over it.',
             disableBeacon: true,
-            placement: 'left'
+            placement: 'left',
           },
           {
             target: '.map-icon-crosshair',
             content:
               'Move the map to align the crosshair icon on the map outside of the image to load a new tile image  in a different area.',
             disableBeacon: true,
-            placement: 'left'
-          }
-        ]
+            placement: 'left',
+          },
+        ],
       },
       analyzeAnAreaTour: {
         title: 'Analyze an Area',
@@ -347,19 +348,19 @@ class MapPromptsContainer extends PureComponent {
                     open: true,
                     stepsKey: 'mapTour',
                     stepIndex: 2,
-                    force: true
+                    force: true,
                   });
                 }, 100);
               },
               prev: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: true
+                  showAnalysis: true,
                 });
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.draw-upload-tab',
@@ -370,24 +371,24 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               next: () => {
                 this.props.setAnalysisSettings({
-                  showDraw: true
+                  showDraw: true,
                 });
               },
               prev: () => {
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.draw-menu-input',
             content:
               'To upload a shape, click Pick a File or Drop One Here and select your desired shapefile. Once uploaded, the shape will appear on the map and the analysis will be performed.',
             disableBeacon: true,
-            placement: 'right'
-          }
-        ]
+            placement: 'right',
+          },
+        ],
       },
       areaOfInterestTour: {
         title: 'Create an area of interest',
@@ -401,22 +402,22 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: false
+                  showAnalysis: false,
                 });
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
                 clearAnalysisView();
               },
               next: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: true
+                  showAnalysis: true,
                 });
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.draw-upload-tab',
@@ -427,13 +428,13 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
                 this.props.setMainMapSettings({
-                  showAnalysis: false
+                  showAnalysis: false,
                 });
-              }
-            }
+              },
+            },
           },
           {
             target: '.analysis-boundary-menu',
@@ -445,17 +446,17 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.props.setMainMapSettings({
-                  showAnalysis: true
+                  showAnalysis: true,
                 });
                 this.props.setAnalysisSettings({
-                  showDraw: false
+                  showDraw: false,
                 });
                 clearAnalysisView();
               },
               next: () => {
                 setAnalysisView({ type: 'country', adm0: 'BRA' });
-              }
-            }
+              },
+            },
           },
           {
             target: '.analysis-actions',
@@ -466,9 +467,9 @@ class MapPromptsContainer extends PureComponent {
             placement: 'right',
             prev: () => {
               clearAnalysisView();
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       topicsClimate: {
         title: 'Climate',
@@ -478,12 +479,12 @@ class MapPromptsContainer extends PureComponent {
             content:
               'Click on a tropical country to calculate emissions from forest loss.',
             disableBeacon: true,
-            placement: 'top'
-          }
+            placement: 'top',
+          },
         ],
         settings: {
-          disableOverlay: true
-        }
+          disableOverlay: true,
+        },
       },
       topicsCommodities: {
         title: 'Commodities',
@@ -493,12 +494,12 @@ class MapPromptsContainer extends PureComponent {
             content:
               'Zoom in to click on a concession and calculate tree cover loss.',
             disableBeacon: true,
-            placement: 'top'
-          }
+            placement: 'top',
+          },
         ],
         settings: {
-          disableOverlay: true
-        }
+          disableOverlay: true,
+        },
       },
       topicsWater: {
         title: 'Water',
@@ -508,12 +509,12 @@ class MapPromptsContainer extends PureComponent {
             content:
               'Click on any of the watershed boundaries on the map to calculate forest change.',
             disableBeacon: true,
-            placement: 'top'
-          }
+            placement: 'top',
+          },
         ],
         settings: {
-          disableOverlay: true
-        }
+          disableOverlay: true,
+        },
       },
       subscribeToArea: {
         title: 'Subscribe to alerts',
@@ -523,13 +524,13 @@ class MapPromptsContainer extends PureComponent {
             content:
               'Did you know you can subscribe to receive email updates when new forest change is detected in this area?',
             disableBeacon: true,
-            placement: 'right'
-          }
+            placement: 'right',
+          },
         ],
         settings: {
-          disableOverlay: true
-        }
-      }
+          disableOverlay: true,
+        },
+      },
     };
 
     return allSteps[stepsKey];
@@ -538,7 +539,7 @@ class MapPromptsContainer extends PureComponent {
   resetMapLayout = () => {
     this.props.setMainMapSettings({
       showAnalysis: false,
-      showRecentImagery: false
+      showRecentImagery: false,
     });
     this.props.setMenuSettings({ menuSection: '' });
   };
@@ -548,11 +549,11 @@ class MapPromptsContainer extends PureComponent {
       open: false,
       stepIndex: 0,
       stepsKey: '',
-      force: true
+      force: true,
     });
   };
 
-  handleShowPrompts = showPrompts => {
+  handleShowPrompts = (showPrompts) => {
     this.props.setShowMapPrompts(showPrompts);
   };
 
@@ -560,7 +561,7 @@ class MapPromptsContainer extends PureComponent {
     return createElement(Component, {
       ...this.props,
       data: this.getStepsData(),
-      handleShowPrompts: this.handleShowPrompts
+      handleShowPrompts: this.handleShowPrompts,
     });
   }
 }
@@ -578,13 +579,13 @@ MapPromptsContainer.propTypes = {
   activeCategories: PropTypes.array,
   datasetIds: PropTypes.array,
   setAnalysisView: PropTypes.func,
-  clearAnalysisView: PropTypes.func
+  clearAnalysisView: PropTypes.func,
 };
 
 reducerRegistry.registerModule('mapPrompts', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(getMapPromptsProps, {
@@ -592,5 +593,5 @@ export default connect(getMapPromptsProps, {
   setMainMapSettings,
   setMenuSettings,
   setMapSettings,
-  setAnalysisSettings
+  setAnalysisSettings,
 })(MapPromptsContainer);

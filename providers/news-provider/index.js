@@ -2,13 +2,13 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ news }) => ({
-  data: news && news.data
+  data: news && news.data,
 });
 
 class NewsProvider extends PureComponent {
@@ -26,13 +26,13 @@ class NewsProvider extends PureComponent {
 
 NewsProvider.propTypes = {
   data: PropTypes.array,
-  getNews: PropTypes.func.isRequired
+  getNews: PropTypes.func.isRequired,
 };
 
 reducerRegistry.registerModule('news', {
   actions,
   reducers,
-  initialState
+  initialState,
 });
 
 export default connect(mapStateToProps, actions)(NewsProvider);

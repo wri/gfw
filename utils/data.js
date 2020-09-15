@@ -1,6 +1,8 @@
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 import chroma from 'chroma-js';
+import reduce from 'lodash/reduce';
+import isEqual from 'lodash/isEqual';
 
 export function deburrUpper(string) {
   return toUpper(deburr(string));
@@ -19,44 +21,41 @@ export const sortByKey = (array, key, isAsc) =>
 
 export const getColorPalette = (colorRange, quantity) => {
   const trim = 0.5 / (quantity - 0.6);
-  return chroma
-    .scale(colorRange)
-    .padding(trim)
-    .colors(quantity);
+  return chroma.scale(colorRange).padding(trim).colors(quantity);
 };
 
-export const getColorBuckets = colors => [
+export const getColorBuckets = (colors) => [
   {
     limit: 20,
     stdDev: -2,
-    color: colors.ramp[8]
+    color: colors.ramp[8],
   },
   {
     limit: 40,
     stdDev: -1,
-    color: colors.ramp[6]
+    color: colors.ramp[6],
   },
   {
     limit: 60,
     stdDev: 1,
-    color: colors.ramp[4]
+    color: colors.ramp[4],
   },
   {
     limit: 80,
     stdDev: 2,
-    color: colors.ramp[2]
+    color: colors.ramp[2],
   },
   {
     limit: 100,
     stdDev: 100,
-    color: colors.ramp[0]
-  }
+    color: colors.ramp[0],
+  },
 ];
 
 export const getColorBucket = (buckets, value) =>
-  buckets.find(c => value <= c.limit) || buckets[4];
+  buckets.find((c) => value <= c.limit) || buckets[4];
 
-export const hslShift = colorHex => {
+export const hslShift = (colorHex) => {
   const [h, s, l] = chroma(colorHex).hsl();
 
   const hueShift = 0;
@@ -80,11 +79,11 @@ export const hslShift = colorHex => {
 
 export const flattenObj = (target, opts = {}) => {
   const delimiter = opts.delimiter || '.';
-  const maxDepth = opts.maxDepth;
+  const {maxDepth} = opts;
   const output = {};
 
   const step = (object, prev, currentDepth = 1) => {
-    Object.keys(object).forEach(key => {
+    Object.keys(object).forEach((key) => {
       const value = object[key];
       const isarray = opts.safe && Array.isArray(value);
       const type = Object.prototype.toString.call(value);
@@ -109,4 +108,17 @@ export const flattenObj = (target, opts = {}) => {
   step(target);
 
   return output;
+};
+
+export const objDiff = (obj1, obj2) => {
+  return reduce(
+    obj1,
+    (result, value, key) => {
+      if (!isEqual(value, obj2[key])) {
+        result[key] = value;
+      }
+      return result;
+    },
+    {}
+  );
 };

@@ -30,17 +30,22 @@ export const getServerSideProps = async ({ params }) => {
     locationData = {};
   }
 
+  const locationType = params?.location[0];
+  const noIndex = !['global', 'country', 'wdpa'].includes(locationType);
+
   const { locationName } = locationData || {};
 
   return {
     props: {
-      title: `${
-        locationName ? `${locationName} ` : ''
-      }Interactive World Forest Map & Tree Cover Change Data | GFW`,
+      title: `${locationName ? `${locationName} ` : ''}Interactive ${
+        locationName ? '' : 'World '
+      }Forest Map${
+        params?.location[2] ? '' : ' & Tree Cover Change Data'
+      } | GFW`,
       description: `Explore the state of forests ${
         locationName ? `in ${locationName}` : 'worldwide'
       } by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`,
-      keywords: `${locationName}, Interactive world forest map, tree cover map, tree cover change, data, global forest cover change, satellite monitoring, deforestation, land use, forest communities, biodiversity`,
+      noIndex,
     },
   };
 };

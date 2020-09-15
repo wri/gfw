@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import reducerRegistry from 'store/registry';
+import reducerRegistry from 'redux/registry';
 
 import * as modalActions from 'pages/about/section-projects/section-projects-modal/actions';
 

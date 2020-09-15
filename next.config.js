@@ -72,6 +72,10 @@ const nextConfig = {
       source: '/embed/map/',
       destination: '/embed/map/global/',
     },
+    {
+      source: '/my-gfw/:path*/',
+      destination: '/my-gfw/',
+    },
   ],
   trailingSlash: true,
 };
