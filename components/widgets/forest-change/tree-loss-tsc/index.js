@@ -132,7 +132,7 @@ export default {
   getWidgetProps,
   parseInteraction: (payload) => {
     if (payload) {
-      const {year} = payload;
+      const { year } = payload;
       return {
         updateLayer: true,
         startDate:
