@@ -1,11 +1,14 @@
 import { fetchAnalysisEndpoint } from 'services/analysis';
 import { getLoss } from 'services/analysis-cached';
 
+import AnalysisService from 'services/analysis-cashed-v2';
+
 import biomassLossIsos from 'data/biomass-isos.json';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   BIOMASS_LOSS_DATASET
 } from 'data/layers-datasets';
+
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
@@ -20,6 +23,7 @@ import getWidgetProps from './selectors';
 const MIN_YEAR = 2001;
 const MAX_YEAR = 2019;
 
+// TODO: Check this edge case, we should move this to analysis service
 const getDataFromAPI = params =>
   fetchAnalysisEndpoint({
     ...params,
@@ -128,13 +132,15 @@ export default {
   },
   getData: params => {
     if (shouldQueryPrecomputedTables(params)) {
-      return getLoss(params).then(response => {
-        const loss = response.data.data;
+      return AnalysisService('loss', {
+        ...params,
+        dataset: 'annual',
+        datasetType: 'change'
+      }).getData().then(loss => {
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
           MIN_YEAR,
           MAX_YEAR
         );
-
         return {
           loss,
           settings: {
@@ -151,6 +157,7 @@ export default {
 
     return getDataFromAPI(params);
   },
+  // TODO: Move this to analysis service
   getDataURL: params => [getLoss({ ...params, download: true })],
   getWidgetProps
 };
