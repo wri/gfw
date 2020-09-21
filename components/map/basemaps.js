@@ -54,6 +54,8 @@ export default {
       'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv?fresh=true',
     url: `https://tiles.planet.com/basemaps/v1/planet-tiles/{name}/gmap/{z}/{x}/{y}.png?api_key=${
       process.env.PLANET_API_KEY
-    }`
+    }`,
+    availableYears: [2020, 2019, 2018],
+    defaultYear: 2020,
   }
 };
