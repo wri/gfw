@@ -10,6 +10,7 @@ import mapboxLogo from 'assets/logos/mapbox.svg?sprite';
 import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
 import infoIcon from 'assets/icons/info.svg?sprite';
+import planetLogo from 'assets/logos/planet.png';
 
 import './styles.scss';
 
@@ -40,6 +41,13 @@ class MapAttributions extends PureComponent {
             target="_blank"
           >
             <img src={cartoLogo} alt="carto" width="60" />
+          </a>
+          <a
+            href="https://www.planet.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img src={planetLogo} alt="planet" width="60" />
           </a>
         </div>
         {!smallView && (
