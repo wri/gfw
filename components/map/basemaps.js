@@ -51,7 +51,7 @@ export default {
     color: '#131620',
     image: satelliteImage,
     mapStyle:
-      'mapbox://styles/resourcewatch/cjww89e5j08o91cmjsbrd47qt?fresh=true',
+      'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv?fresh=true',
     url: `https://tiles.planet.com/basemaps/v1/planet-tiles/{name}/gmap/{z}/{x}/{y}.png?api_key=${
       process.env.PLANET_API_KEY
     }`
