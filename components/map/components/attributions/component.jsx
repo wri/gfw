@@ -43,7 +43,7 @@ class MapAttributions extends PureComponent {
             <img src={cartoLogo} alt="carto" width="60" />
           </a>
           <a
-            href="https://www.planet.com/"
+            href="https://www.planet.com"
             rel="noopener noreferrer"
             target="_blank"
           >
