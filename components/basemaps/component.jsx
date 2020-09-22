@@ -140,8 +140,10 @@ class Basemaps extends React.PureComponent {
       basemaps,
       isDesktop,
     } = this.props;
-    const year = activeBasemap.year || planetYears[0].value;
-    const month = activeBasemap.month || planetMonths[year][0].label;
+    const { defaultYear } = basemaps.planet;
+    const year = activeBasemap.value === 'planet' ? activeBasemap.year || defaultYear : defaultYear;
+    const defaultLabel = planetMonths[year][0].label;
+    const month = activeBasemap.value === 'planet' ? activeBasemap.month || defaultLabel : defaultLabel;
 
     const basemap = basemaps[item.value]
       ? basemaps[item.value]
