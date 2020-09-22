@@ -50,8 +50,8 @@ export default {
     value: 'planet',
     color: '#131620',
     image: satelliteImage,
-    mapStyle:
-      'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv?fresh=true',
+    labelsGroup: 'labels-dark',
+    mapStyle: 'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv',
     url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_{year}_01_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
       process.env.PLANET_API_KEY
     }`,
