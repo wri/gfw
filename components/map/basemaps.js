@@ -52,10 +52,15 @@ export default {
     image: satelliteImage,
     labelsGroup: 'labels-dark',
     mapStyle: 'mapbox://styles/resourcewatch/ckd6wptd60dmq1ilp73ulv6xv',
-    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_{year}_01_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
+    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_{year}_{month}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
       process.env.PLANET_API_KEY
     }`,
     availableYears: [2020, 2019, 2018],
+    availableMonths: {
+      2020: ['01', '02', '03', '04', '05', '06', '07', '08'],
+      2019: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+      2018: ['08', '09', '10', '11', '12']
+    },
     defaultYear: 2020,
   }
 };

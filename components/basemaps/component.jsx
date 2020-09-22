@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
+
 import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
@@ -30,6 +31,7 @@ class Basemaps extends React.PureComponent {
     labelSelected: PropTypes.object.isRequired,
     landsatYears: PropTypes.array.isRequired,
     planetYears: PropTypes.array.isRequired,
+    planetMonths: PropTypes.array.isRequired,
     selectLabels: PropTypes.func.isRequired,
     selectBasemap: PropTypes.func.isRequired,
     activeBasemap: PropTypes.object.isRequired,
@@ -134,10 +136,13 @@ class Basemaps extends React.PureComponent {
       selectBasemap,
       activeBasemap,
       planetYears,
+      planetMonths,
       basemaps,
       isDesktop,
     } = this.props;
     const year = activeBasemap.year || planetYears[0].value;
+    const month = activeBasemap.month || planetMonths[year][0].label;
+
     const basemap = basemaps[item.value]
       ? basemaps[item.value]
       : basemaps.planet;
@@ -149,6 +154,7 @@ class Basemaps extends React.PureComponent {
           selectBasemap({
             value: 'planet',
             year: basemap.defaultYear,
+            month: planetMonths[basemap.defaultYear][0].value
           });
           if (!isDesktop) {
             this.setState({ showBasemaps: !this.state.showBasemaps });
@@ -170,6 +176,23 @@ class Basemaps extends React.PureComponent {
             <Dropdown
               className="planet-selector"
               theme="theme-dropdown-native-inline"
+              value={month}
+              options={planetMonths[year]}
+              onChange={(value) => {
+                selectBasemap({
+                  value: 'planet',
+                  year,
+                  month: value,
+                });
+                if (!isDesktop) {
+                  this.setState({ showBasemaps: !this.state.showBasemaps });
+                }
+              }}
+              native
+            />
+            <Dropdown
+              className="planet-selector"
+              theme="theme-dropdown-native-inline"
               value={year}
               options={planetYears}
               onChange={(value) => {
@@ -177,6 +200,7 @@ class Basemaps extends React.PureComponent {
                 selectBasemap({
                   value: 'planet',
                   year: selectedYear,
+                  month: planetMonths[selectedYear][0].value
                 });
                 if (!isDesktop) {
                   this.setState({ showBasemaps: !this.state.showBasemaps });
