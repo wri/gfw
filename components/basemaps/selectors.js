@@ -20,6 +20,13 @@ export const getLandsatYears = createSelector([getBasemaps], basemaps =>
   }))
 );
 
+export const getPlanetYears = createSelector([getBasemaps], basemaps =>
+  basemaps.planet.availableYears.map(y => ({
+    label: y,
+    value: y
+  }))
+);
+
 export const getLabelsOptions = createSelector([], () => [
   {
     label: 'Show labels',
@@ -62,6 +69,7 @@ export const getBasemapsProps = createStructuredSelector({
   labelSelected: getLabelSelected,
   labels: getLabelsOptions,
   landsatYears: getLandsatYears,
+  planetYears: getPlanetYears,
   roads: getRoadsOptions,
   roadsSelected: getRoadsSelected
 });
