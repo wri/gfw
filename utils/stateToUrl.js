@@ -1,6 +1,5 @@
 import queryString from 'query-string';
 import oldLayers from 'data/v2-v3-datasets-layers.json';
-import basemaps from 'components/map/basemaps';
 import isEmpty from 'lodash/isEmpty';
 
 const oldLayersAndDatasets = oldLayers.reduce(
@@ -74,14 +73,6 @@ export const decodeUrlForState = (url) => {
     }
   });
 
-  if (
-    paramsParsed.map &&
-    paramsParsed.map.basemap &&
-    paramsParsed.map.basemap.value === 'planet'
-  ) {
-    paramsParsed.planetNotice = true;
-  }
-
   if (paramsParsed.map) {
     paramsParsed.map = {
       ...paramsParsed.map,
@@ -107,17 +98,6 @@ export const decodeUrlForState = (url) => {
             []
           ),
       }),
-      ...(paramsParsed.map.basemap &&
-        paramsParsed.map.basemap.value === 'planet' && {
-          basemap: {
-            value: 'landsat',
-            year: basemaps.landsat.availableYears.includes(
-              paramsParsed.map.basemap.planetYear
-            )
-              ? paramsParsed.map.basemap.planetYear
-              : basemaps.landsat.defaultYear,
-          },
-        }),
     };
   }
 

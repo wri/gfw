@@ -10,6 +10,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
+import PlanetBasemapsProvider from 'providers/planet-provider';
 
 import Map from 'components/map';
 import ModalMeta from 'components/modals/meta';
@@ -116,6 +117,7 @@ class MainMapComponent extends PureComponent {
         <GeodescriberProvider />
         <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <AreasProvider />
+        <PlanetBasemapsProvider />
       </div>
     );
   }
