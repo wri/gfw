@@ -21,40 +21,40 @@ export default {
     {
       label: 'Map',
       href: '/map/[...location]',
-      as: '/map/global',
+      as: '/map/global/',
     },
     {
       label: 'Dashboard',
       href: '/dashboards/[...location]',
-      as: '/dashboards/global',
+      as: '/dashboards/global/',
     },
     {
       label: 'Topics',
-      href: '/topics',
+      href: '/topics/',
       submenu: [
         {
           label: 'Biodiversity',
-          as: '/topics/biodiversity',
+          as: '/topics/biodiversity/',
           href: '/topics/[topic]',
         },
         {
           label: 'Climate',
-          as: '/topics/climate',
+          as: '/topics/climate/',
           href: '/topics/[topic]',
         },
         {
           label: 'Commodities',
-          as: '/topics/commodities',
+          as: '/topics/commodities/',
           href: '/topics/[topic]',
         },
         {
           label: 'Water',
-          as: '/topics/water',
+          as: '/topics/water/',
           href: '/topics/[topic]',
         },
         {
           label: 'Fires',
-          as: '/topics/fires',
+          as: '/topics/fires/',
           href: '/topics/[topic]',
         },
       ],
@@ -65,11 +65,11 @@ export default {
     },
     {
       label: 'About',
-      href: '/about',
+      href: '/about/',
     },
     {
       label: 'Help',
-      extLink: '/help',
+      extLink: '/help/',
     },
   ],
   myGfwLinks: [
