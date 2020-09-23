@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
+
 import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
@@ -29,6 +30,8 @@ class Basemaps extends React.PureComponent {
     labels: PropTypes.array.isRequired,
     labelSelected: PropTypes.object.isRequired,
     landsatYears: PropTypes.array.isRequired,
+    planetYears: PropTypes.array.isRequired,
+    planetMonths: PropTypes.array.isRequired,
     selectLabels: PropTypes.func.isRequired,
     selectBasemap: PropTypes.func.isRequired,
     activeBasemap: PropTypes.object.isRequired,
@@ -128,6 +131,91 @@ class Basemaps extends React.PureComponent {
     );
   }
 
+  renderPlanetBasemap(item) {
+    const {
+      selectBasemap,
+      activeBasemap,
+      planetYears,
+      planetMonths,
+      basemaps,
+      isDesktop,
+    } = this.props;
+    const { defaultYear } = basemaps.planet;
+    const year = activeBasemap.value === 'planet' ? activeBasemap.year || defaultYear : defaultYear;
+    const defaultLabel = planetMonths[year][0].label;
+    const month = activeBasemap.value === 'planet' ? activeBasemap.month || defaultLabel : defaultLabel;
+
+    const basemap = basemaps[item.value]
+      ? basemaps[item.value]
+      : basemaps.planet;
+
+    return (
+      <button
+        className="basemaps-list-item-button"
+        onClick={() => {
+          selectBasemap({
+            value: 'planet',
+            year: basemap.defaultYear,
+            month: planetMonths[basemap.defaultYear][0].value
+          });
+          if (!isDesktop) {
+            this.setState({ showBasemaps: !this.state.showBasemaps });
+          }
+        }}
+      >
+        <div
+          className="basemaps-list-item-image"
+          style={{
+            backgroundImage: `url(${item.image})`,
+          }}
+        />
+        <span
+          className="basemaps-list-item-name"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {item.label}
+          <div className="basemaps-list-item-selectors">
+            <Dropdown
+              className="planet-selector"
+              theme="theme-dropdown-native-inline"
+              value={month}
+              options={planetMonths[year]}
+              onChange={(value) => {
+                selectBasemap({
+                  value: 'planet',
+                  year,
+                  month: value,
+                });
+                if (!isDesktop) {
+                  this.setState({ showBasemaps: !this.state.showBasemaps });
+                }
+              }}
+              native
+            />
+            <Dropdown
+              className="planet-selector"
+              theme="theme-dropdown-native-inline"
+              value={year}
+              options={planetYears}
+              onChange={(value) => {
+                const selectedYear = parseInt(value, 10);
+                selectBasemap({
+                  value: 'planet',
+                  year: selectedYear,
+                  month: planetMonths[selectedYear][0].value
+                });
+                if (!isDesktop) {
+                  this.setState({ showBasemaps: !this.state.showBasemaps });
+                }
+              }}
+              native
+            />
+          </div>
+        </span>
+      </button>
+    );
+  }
+
   renderBasemapsSelector() {
     const { activeBasemap, basemaps, isDesktop } = this.props;
     return (
@@ -145,6 +233,10 @@ class Basemaps extends React.PureComponent {
               let basemapButton = this.renderButtonBasemap(item);
               if (item.value === 'landsat') {
                 basemapButton = this.renderLandsatBasemap(item);
+              }
+
+              if (item.value === 'planet') {
+                basemapButton = this.renderPlanetBasemap(item);
               }
 
               return (
