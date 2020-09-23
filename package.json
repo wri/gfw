@@ -1,6 +1,6 @@
 {
   "name": "global-forest-watch",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "Global Forest Watch",
   "engines": {
     "node": "12.16.2"
