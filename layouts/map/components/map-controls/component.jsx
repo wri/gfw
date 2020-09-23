@@ -13,6 +13,7 @@ import shareIcon from 'assets/icons/share.svg?sprite';
 import fullscreenIcon from 'assets/icons/fit-zoom.svg?sprite';
 import printIcon from 'assets/icons/print.svg?sprite';
 import helpIocn from 'assets/icons/help.svg?sprite';
+import searchIcon from 'assets/icons/search.svg?sprite';
 import globeIcon from 'assets/icons/globe.svg?sprite';
 import satelliteIcon from 'assets/icons/satellite.svg?sprite';
 
@@ -281,12 +282,26 @@ class MapControlsButtons extends PureComponent {
     );
   };
 
-  renderShareButton = () => {
-    const { setShareModal } = this.props;
+  renderSearchButton = () => {
+    const { setMenuSettings } = this.props;
 
     return (
       <Button
         className="theme-button-map-control"
+        onClick={() => setMenuSettings({ menuSection: 'search' })}
+        tooltip={{ text: 'Search' }}
+      >
+        <Icon icon={searchIcon} />
+      </Button>
+    );
+  };
+
+  renderShareButton() {
+    const { setShareModal } = this.props;
+
+    return (
+      <Button
+        className="theme-button-map-control -share"
         onClick={() =>
           setShareModal({
             title: 'Share this view',
@@ -306,7 +321,7 @@ class MapControlsButtons extends PureComponent {
         <Icon icon={shareIcon} />
       </Button>
     );
-  };
+  }
 
   renderPrintButton = () => (
     <Button
@@ -346,7 +361,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon:
+          lat, lon: 
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
@@ -379,10 +394,15 @@ class MapControlsButtons extends PureComponent {
             </div>
           </Fragment>
         ) : (
-          <div className="mobile-controls-wrapper">
-            {this.renderShareButton()}
-            {this.renderRecentImageryBtn()}
-          </div>
+          <Fragment>
+            <div className="mobile-controls-wrapper">
+              {this.renderRecentImageryBtn()}
+            </div>
+            <div className="mobile-controls-wrapper">
+              {this.renderSearchButton()}
+              {this.renderShareButton()}
+            </div>
+          </Fragment>
         )}
       </div>
     );
