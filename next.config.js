@@ -10,6 +10,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const Dotenv = require('dotenv-webpack');
 
+const howToRedirects = require('./static/howto-redirects');
+
 const nextConfig = {
   webpack: (config) => {
     config.plugins = [
@@ -50,19 +52,26 @@ const nextConfig = {
       destination: `/grants-and-fellowships/projects/`,
       permanent: true,
     },
+    ...howToRedirects.map((r) => ({
+      ...r,
+      permanent: true,
+    })),
   ],
   rewrites: async () => [
     {
-      source: '/howto/',
-      destination: `https://vizzuality.github.io/gfw-howto/`,
+      source: '/help/',
+      destination: `https://gfw-help-center.herokuapp.com/help/`,
+      basePath: false,
     },
     {
-      source: '/howto/:path*/',
-      destination: `https://vizzuality.github.io/gfw-howto/:path*/`,
+      source: '/help/:path*/',
+      destination: `https://gfw-help-center.herokuapp.com/help/:path*/`,
+      basePath: false,
     },
     {
-      source: '/howto/:path*',
-      destination: `https://vizzuality.github.io/gfw-howto/:path*`,
+      source: '/help/:path*',
+      destination: `https://gfw-help-center.herokuapp.com/help/:path*`,
+      basePath: false,
     },
     {
       source: '/map/',

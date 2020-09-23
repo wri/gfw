@@ -67,6 +67,10 @@ export default {
       label: 'About',
       href: '/about',
     },
+    {
+      label: 'Help',
+      extLink: '/help',
+    },
   ],
   myGfwLinks: [
     {
