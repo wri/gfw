@@ -18,7 +18,6 @@ import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 import MapPrompts from 'components/prompts/map-prompts';
-import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
 
 import MapMenu from 'components/map-menu';
@@ -92,7 +91,7 @@ class MainMapComponent extends PureComponent {
             <Media greaterThanOrEqual="md">
               <>
                 {!embed && <MapPrompts />}
-                <ModalWelcome />
+                {/* <ModalWelcome /> */}
                 <MapControlButtons className="main-map-controls" isDesktop />
               </>
             </Media>
