@@ -80,6 +80,7 @@
     "@zeit/next-sass": "^1.0.1",
     "aws-sdk": "^2.291.0",
     "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
     "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
     "d3-ease": "^1.0.5",

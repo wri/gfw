@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import 'babel-polyfill';
 import React, { useMemo } from 'react';
 import finallyShim from 'promise.prototype.finally';
 import { combineReducers } from 'redux';
