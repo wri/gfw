@@ -44,10 +44,15 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-arrow-functions": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@cypress/code-coverage": "^1.14.0",
     "autoprefixer": "^9.7.5",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "babel-plugin-istanbul": "^6.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "cypress": "^4.2.0",
     "cypress-audit": "^0.0.5",
     "cypress-lighthouse": "^0.1.0",
@@ -72,6 +77,7 @@
     "stylelint-scss": "^3.16.0"
   },
   "dependencies": {
+    "next-transpile-modules": "^4.1.0",
     "@artsy/fresnel": "^1.1.0",
     "@fullpage/react-fullpage": "^0.1.17",
     "@mapbox/mapbox-gl-draw": "^1.1.2",

@@ -1,4 +1,10 @@
 {
-  "presets": ["next/babel"],
-  "plugins": ["istanbul"]
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    "istanbul",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-arrow-functions"
+  ]
 }

@@ -2,6 +2,14 @@ require('dotenv').config();
 
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
+const withTM = require('next-transpile-modules')([
+    "gfw-components",
+    "vizzuality-components",
+    "@mapbox",
+    "split-on-first",
+    "strict-uri-encode",
+    "query-string"
+]);
 const optimizedImages = require('next-optimized-images');
 const withSass = require('@zeit/next-sass');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -17,8 +25,21 @@ const nextConfig = {
       new Dotenv({
         path: path.join(__dirname, '.env'),
         systemvars: true,
-      }),
+      })
     ];
+
+    config.module.rules.push({
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      test: /\.js$/,
+      options: {
+        cacheDirectory: true,
+        plugins: [
+          '@babel/plugin-proposal-object-rest-spread',
+          '@babel/plugin-transform-arrow-functions'
+        ]
+      }
+    });
 
     // mini-css-extract-plugin generates a warning when importing css as modules
     // as we scope manually we can ignore this warning: https://github.com/zeit/next-plugins/issues/506#issuecomment-589269285
@@ -81,6 +102,7 @@ const nextConfig = {
 };
 
 module.exports = withPlugins(
-  [[withSass], [optimizedImages], [withBundleAnalyzer]],
+  [[withTM], [withSass], [optimizedImages], [withBundleAnalyzer]],
   nextConfig
 );
+
