@@ -1,6 +1,5 @@
 import queryString from 'query-string';
 import oldLayers from 'data/v2-v3-datasets-layers.json';
-import basemaps from 'components/map/basemaps';
 import isEmpty from 'lodash/isEmpty';
 
 const oldLayersAndDatasets = oldLayers.reduce(
@@ -98,7 +97,7 @@ export const decodeUrlForState = (url) => {
             ],
             []
           ),
-      })
+      }),
     };
   }
 
