@@ -20,7 +20,7 @@ class GeodescriberProvider extends PureComponent {
 
   componentDidMount() {
     const { location, loading, geojson } = this.props;
-    console.log(location);
+
     if (!loading && !['global', 'country'].includes(location.type) && geojson) {
       this.handleGetGeodescriber();
     }
