@@ -20,7 +20,7 @@ export default {
   navMain: [
     {
       label: 'Map',
-      href: '/map/[...location]',
+      href: '/map/[[...location]]',
       as: '/map/global/',
     },
     {

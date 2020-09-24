@@ -73,7 +73,7 @@ export const handleClickLocation = createThunkAction(
 
     if (newLocation) {
       pushQuery({
-        pathname: '/map/[...location]',
+        pathname: '/map/[[...location]]',
         query: {
           ...query,
           location: ['country', ...Object.values(newLocation)],
