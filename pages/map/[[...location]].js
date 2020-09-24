@@ -52,19 +52,19 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
+  // fetch all admin0 iso codes to pre build static pages
   const countryData = await cartoRequest.get(
-    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA'"
-  );
-  const wdpaData = await cartoRequest.get(
-    '/sql?q=SELECT wdpaid FROM wdpa_protected_areas'
+    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY iso"
   );
   const { rows: countries } = countryData?.data || {};
-  const { rows: wdpas } = wdpaData?.data || {};
-  const countryPaths = countries.map((c) => `/map/country/${c.iso}/`);
-  const wdpaPaths = wdpas.map((c) => `/map/wdpa/${c.wdpaid}/`);
+  const countryPaths = countries.map((c) => ({
+    params: {
+      location: ['country', c.iso],
+    },
+  }));
 
   return {
-    paths: ['/map/', '/map/global/', ...countryPaths, ...wdpaPaths] || [],
+    paths: countryPaths || [],
     fallback: true,
   };
 };

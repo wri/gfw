@@ -1386,6 +1386,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@corex/deepmerge@^2.4.6":
+  version "2.4.14"
+  resolved "https://registry.yarnpkg.com/@corex/deepmerge/-/deepmerge-2.4.14.tgz#e673056e4512036c2a8277407798089a32c9cd6a"
+  integrity sha512-kjNIKt5zCoO0M4ArjFlU8cxx+7Yyx9nq3H6dMngnZxQ12Gh/9cUz4kXRkWrwNjp5vtlls2A8Qsi1onrj5OqTgA==
+
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
@@ -10863,6 +10868,13 @@ next-redux-wrapper@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-6.0.2.tgz#b8dcd214e7b5cedd7a2a611ddb60422384d24374"
   integrity sha512-I9CnIYhQwI/qEoNdc9VAPjIyuq4rFFhCTa4rKhoDHWEVHGB1DXZy8TAyGpwvWizESd8IoTI/OKlP6bFpCbXsOw==
+
+next-sitemap@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/next-sitemap/-/next-sitemap-1.2.4.tgz#6f4b94563da26133f265920ab9779c15e49639eb"
+  integrity sha512-Dpitr8mdRpdpEj7iE/3llrAw/uHK0UB6zf68FX3Zxlt5DvdxzwtXzbQc8s6V6DPtOvwfctj5LXvQr+C4NEpImw==
+  dependencies:
+    "@corex/deepmerge" "^2.4.6"
 
 next-tick@1:
   version "1.0.0"

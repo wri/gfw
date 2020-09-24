@@ -68,7 +68,11 @@ export const getStaticPaths = async () => {
     "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA'"
   );
   const { rows: countries } = countryData?.data || {};
-  const countryPaths = countries.map((c) => `/dashboards/country/${c.iso}/`);
+  const countryPaths = countries.map((c) => ({
+    params: {
+      location: ['country', c.iso],
+    },
+  }));
 
   return {
     paths: ['/dashboards/global/', ...countryPaths] || [],
