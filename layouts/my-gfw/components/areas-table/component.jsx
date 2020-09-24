@@ -240,7 +240,7 @@ class AreasTable extends PureComponent {
                     onClick={() => {
                       viewArea({
                         areaId: area.id,
-                        pathname: '/dashboards/[...location]',
+                        pathname: '/dashboards/[[...location]]',
                       });
                     }}
                     role="button"

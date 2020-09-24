@@ -25,7 +25,7 @@ export default {
     },
     {
       label: 'Dashboard',
-      href: '/dashboards/[...location]',
+      href: '/dashboards/[[...location]]',
       as: '/dashboards/global/',
     },
     {

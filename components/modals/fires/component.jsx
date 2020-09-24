@@ -34,7 +34,7 @@ class ModalGFWFires extends PureComponent {
           If you're looking for the Fire Report, `,
           <Link
             key="link"
-            href="/dashboards/[...location]"
+            href="/dashboards/[[...location]]"
             as="/dashboards/global?category=fires"
           >
             <button

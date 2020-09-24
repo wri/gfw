@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
 
@@ -18,13 +19,29 @@ import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
-import {
-  getStaticPaths as getPaths,
-  getStaticProps as getProps,
-} from '../../map/[[...location]]';
+import { getStaticProps as getProps } from '../../map/[[...location]]';
 
-export const getStaticPaths = getPaths;
 export const getStaticProps = getProps;
+
+export const getStaticPaths = async () => {
+  const countryData = await cartoRequest.get(
+    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA'"
+  );
+  const wdpaData = await cartoRequest.get(
+    '/sql?q=SELECT wdpaid FROM wdpa_protected_areas'
+  );
+  const { rows: countries } = countryData?.data || {};
+  const { rows: wdpas } = wdpaData?.data || {};
+  const countryPaths = countries.map((c) => `/embed/map/country/${c.iso}/`);
+  const wdpaPaths = wdpas.map((c) => `/embed/map/wdpa/${c.wdpaid}/`);
+
+  return {
+    paths:
+      ['/embed/map/', '/embed/map/global/', ...countryPaths, ...wdpaPaths] ||
+      [],
+    fallback: true,
+  };
+};
 
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();
