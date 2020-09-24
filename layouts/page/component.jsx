@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { initAnalytics, handlePageTrack } from 'analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
+import useRouter from 'utils/router';
 
 import { Footer } from 'gfw-components';
 import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
@@ -41,7 +42,7 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    const { router } = this.props;
+    const { push } = useRouter();
 
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
@@ -51,7 +52,7 @@ class App extends PureComponent {
 
     const isValidBrowser = checkBrowser();
     if (!isValidBrowser) {
-      router.push('/browser-support');
+      push('/browser-support');
     }
   }
 
