@@ -18,9 +18,16 @@ import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
-import { getServerSideProps as getProps } from '../../map/[...location]';
+import { getStaticProps as getProps } from '../../map/[[...location]]';
 
-export const getServerSideProps = getProps;
+export const getStaticProps = getProps;
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
 
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();

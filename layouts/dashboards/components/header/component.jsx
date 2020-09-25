@@ -211,7 +211,10 @@ class Header extends PureComponent {
           <div className="columns small-12 medium-10">
             <div className="select-container">
               {isAreaDashboard && (
-                <Link href="/dashboards/[...location]" as="/dashboards/global">
+                <Link
+                  href="/dashboards/[[...location]]"
+                  as="/dashboards/global"
+                >
                   <a className="breadcrumb-link">
                     <button
                       onClick={() =>
@@ -227,7 +230,7 @@ class Header extends PureComponent {
               )}
               {isCountryDashboard && !!firstArea && (
                 <Link
-                  href="/dashboards/[...location]"
+                  href="/dashboards/[[...location]]"
                   as={`/dashboards/aoi/${firstArea.id}`}
                 >
                   <a className="breadcrumb-link">

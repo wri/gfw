@@ -74,14 +74,6 @@ const nextConfig = {
       basePath: false,
     },
     {
-      source: '/map/',
-      destination: '/map/global/',
-    },
-    {
-      source: '/embed/map/',
-      destination: '/embed/map/global/',
-    },
-    {
       source: '/my-gfw/:path*/',
       destination: '/my-gfw/',
     },

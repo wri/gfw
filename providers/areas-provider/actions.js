@@ -111,7 +111,7 @@ export const viewArea = createThunkAction(
         query: {
           ...query,
           location: ['aoi', areaId],
-          ...(pathname === '/map/[...location]' && {
+          ...(pathname === '/map/[[...location]]' && {
             mainMap: {
               ...mainMap,
               showAnalysis: true,

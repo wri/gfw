@@ -25,6 +25,12 @@ const useRouter = () => {
         if (asPath?.includes(`[${key}]`)) {
           asPath = asPath.replace(`[${key}]`, query[key]);
           delete query[key];
+        } else if (asPath?.includes(`[[...${key}]]`)) {
+          asPath = asPath.replace(
+            `[[...${key}]]`,
+            compact(query[key]).join('/')
+          );
+          delete query[key];
         } else if (asPath?.includes(`[...${key}]`)) {
           asPath = asPath.replace(`[...${key}]`, compact(query[key]).join('/'));
           delete query[key];

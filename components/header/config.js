@@ -20,12 +20,12 @@ export default {
   navMain: [
     {
       label: 'Map',
-      href: '/map/[...location]',
+      href: '/map/[[...location]]',
       as: '/map/global/',
     },
     {
       label: 'Dashboard',
-      href: '/dashboards/[...location]',
+      href: '/dashboards/[[...location]]',
       as: '/dashboards/global/',
     },
     {

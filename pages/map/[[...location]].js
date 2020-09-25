@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
 
@@ -22,7 +23,7 @@ import { decodeParamsForState } from 'utils/stateToUrl';
 
 import MapUrlProvider from 'providers/map-url-provider';
 
-export const getServerSideProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   let locationData = {};
   try {
     locationData = await getLocationData(params?.location);
@@ -30,7 +31,7 @@ export const getServerSideProps = async ({ params }) => {
     locationData = {};
   }
 
-  const locationType = params?.location[0];
+  const locationType = params?.location?.[0] || 'global';
   const noIndex = !['global', 'country', 'wdpa'].includes(locationType);
 
   const { locationName } = locationData || {};
@@ -40,13 +41,31 @@ export const getServerSideProps = async ({ params }) => {
       title: `${locationName ? `${locationName} ` : ''}Interactive ${
         locationName ? '' : 'World '
       }Forest Map${
-        params?.location[2] ? '' : ' & Tree Cover Change Data'
+        params?.location?.[2] ? '' : ' & Tree Cover Change Data'
       } | GFW`,
       description: `Explore the state of forests ${
         locationName ? `in ${locationName}` : 'worldwide'
       } by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`,
       noIndex,
     },
+  };
+};
+
+export const getStaticPaths = async () => {
+  // fetch all admin0 iso codes to pre build static pages
+  const countryData = await cartoRequest.get(
+    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY iso"
+  );
+  const { rows: countries } = countryData?.data || {};
+  const countryPaths = countries.map((c) => ({
+    params: {
+      location: ['country', c.iso],
+    },
+  }));
+
+  return {
+    paths: countryPaths || [],
+    fallback: true,
   };
 };
 

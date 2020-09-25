@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
 
@@ -26,8 +27,9 @@ import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
 import './styles.scss';
 
-export const getServerSideProps = async (ctx) => {
-  const isGlobal = ctx?.params?.location?.[0] === 'global';
+export const getStaticProps = async (ctx) => {
+  const isGlobal =
+    !ctx?.params?.location?.[0] || ctx?.params?.location?.[0] === 'global';
   let locationData = {};
 
   try {
@@ -37,10 +39,10 @@ export const getServerSideProps = async (ctx) => {
     locationData = {};
   }
 
-  const locationType = ctx?.params?.location[0];
+  const locationType = ctx?.params?.location?.[0] || 'global';
   const noIndex = !['global', 'country'].includes(locationType);
 
-  const locationName = isGlobal ? 'Global' : locationData.locationName;
+  const locationName = isGlobal ? 'Global' : locationData?.locationName;
 
   return {
     props: locationName
@@ -58,6 +60,23 @@ export const getServerSideProps = async (ctx) => {
       : {
           title: 'Dashboard not found',
         },
+  };
+};
+
+export const getStaticPaths = async () => {
+  const countryData = await cartoRequest.get(
+    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA'"
+  );
+  const { rows: countries } = countryData?.data || {};
+  const countryPaths = countries.map((c) => ({
+    params: {
+      location: ['country', c.iso],
+    },
+  }));
+
+  return {
+    paths: ['/dashboards/global/', ...countryPaths] || [],
+    fallback: true,
   };
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Document, { Main, NextScript, Head } from 'next/document';
+import Document, { Html, Main, NextScript, Head } from 'next/document';
 import sprite from 'svg-sprite-loader/runtime/sprite.build';
 import { mediaStyles } from 'utils/responsive';
 
@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
     const spriteContent = sprite.stringify();
 
     return (
-      <html lang="en">
+      <Html lang="en">
         <Head>
           <style
             type="text/css"
@@ -73,7 +73,7 @@ export default class MyDocument extends Document {
           </main>
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }

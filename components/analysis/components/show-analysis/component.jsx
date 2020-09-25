@@ -255,7 +255,7 @@ class ShowAnalysis extends PureComponent {
                   To perform an in-depth analysis of this area please visit the
                   {' '}
                   <Link
-                    href="/dashboards/[...location]"
+                    href="/dashboards/[[...location]]"
                     as={`/dashboards/aoi/${activeArea.id}`}
                   >
                     <a>area dashboard</a>
