@@ -20,8 +20,8 @@ class DatasetsLocationsSearch extends PureComponent {
     return {
       isLocationSearch,
       hasDatasets: datasets && !isLocationSearch && !!datasets.length,
-      hasLocations: locations && isLocationSearch && !!locations.length
-    }
+      hasLocations: locations && isLocationSearch && !!locations.length,
+    };
   }
 
   searchIsEmpty() {
@@ -29,12 +29,15 @@ class DatasetsLocationsSearch extends PureComponent {
     const {
       hasDatasets,
       hasLocations,
-      isLocationSearch
+      isLocationSearch,
     } = this.searchConditions();
 
-    return !loading && search &&
+    return (
+      !loading &&
+      search &&
       ((!hasDatasets && !isLocationSearch) ||
-      (!hasLocations && isLocationSearch));
+        (!hasLocations && isLocationSearch))
+    );
   }
 
   searchNoResults() {
@@ -52,31 +55,28 @@ class DatasetsLocationsSearch extends PureComponent {
     const { type } = this.props;
     const isLocationSearch = type === 'locations';
     return (
-      <NoContent
-        className="empty-search"
-      >
-        <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
+      <NoContent className="empty-search">
+        <Icon
+          icon={isLocationSearch ? locationIcon : layersIcon}
+          className="location-icon"
+        />
         <span>
           Use this to find
           {isLocationSearch && ' any'}
           {' '}
           <b>{isLocationSearch ? 'location' : 'datasets'}</b>
           {' '}
-          {isLocationSearch && 'on the map. Search for political boundaries, landmarks and natural features.'}
+          {isLocationSearch &&
+            'on the map. Search for political boundaries, landmarks and natural features.'}
           {!isLocationSearch && 'to add to the map.'}
         </span>
       </NoContent>
-    )
+    );
   }
 
   viewNoResults() {
     const { type } = this.props;
-    return (
-      <NoContent
-        className="empty-search"
-        message={`No ${type} found`}
-      />
-    )
+    return <NoContent className="empty-search" message={`No ${type} found`} />;
   }
 
   viewSearchResults() {
@@ -85,10 +85,14 @@ class DatasetsLocationsSearch extends PureComponent {
       datasets,
       onToggleLayer,
       onInfoClick,
-      handleClickLocation
+      handleClickLocation,
     } = this.props;
 
-    const { hasDatasets, hasLocations, isLocationSearch } = this.searchConditions();
+    const {
+      hasDatasets,
+      hasLocations,
+      isLocationSearch,
+    } = this.searchConditions();
 
     return (
       <div className="search-results">
@@ -115,26 +119,24 @@ class DatasetsLocationsSearch extends PureComponent {
             {locations.map((loc) => (
               <button
                 className={cx('location', { active: loc.active })}
-                key={loc.label}
+                key={loc.text}
                 onClick={() => handleClickLocation(loc)}
               >
-                <Icon icon={isLocationSearch ? locationIcon : layersIcon} className="location-icon" />
-                <p>{loc.label}</p>
+                <Icon
+                  icon={isLocationSearch ? locationIcon : layersIcon}
+                  className="location-icon"
+                />
+                <p>{loc.place_name}</p>
               </button>
             ))}
           </div>
         )}
       </div>
-    )
+    );
   }
 
   render() {
-    const {
-      search,
-      loading,
-      type,
-      handleSearchChange,
-    } = this.props;
+    const { search, loading, type, handleSearchChange } = this.props;
 
     return (
       <div className="c-datasets-locations">
