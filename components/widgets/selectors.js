@@ -78,7 +78,8 @@ export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
 export const selectAnalysis = (state, { analysis }) => analysis;
 export const selectCategory = (state) =>
-  state.location && state.location.query && state.location.query.category;
+  (state.location && state.location.query && state.location.query.category) ||
+  'summary';
 export const selectModalClosing = (state) =>
   state.modalMeta && state.modalMeta.closing;
 export const selectNonGlobalDatasets = (state) =>
@@ -333,11 +334,10 @@ export const filterWidgetsByCategory = createSelector(
     filterWidgetsByLocation,
     getActiveCategory,
     selectAnalysis,
-    getLocationData,
     selectEmbed,
     selectActiveWidget,
   ],
-  (widgets, category, showAnalysis, locationData, embed, widget) => {
+  (widgets, category, showAnalysis, embed, widget) => {
     if (isEmpty(widgets)) return null;
 
     if (embed && widget) return widgets.filter((w) => w.widget === widget);

@@ -1,19 +1,19 @@
 import forestWatcherIcon from 'assets/icons/forest-watcher.svg';
 import proIcon from 'assets/icons/gfw-pro.svg';
 
-import conservationOrgs from './assets/conservation-orgs.jpg';
-import policyMakers from './assets/policy-makers.jpg';
-import journalists from './assets/journalists.jpg';
-import company from './assets/company.jpg';
+import conservationOrgs from './assets/conservation-orgs.jpg?webp';
+import policyMakers from './assets/policy-makers.jpg?webp';
+import journalists from './assets/journalists.jpg?webp';
+import company from './assets/company.jpg?webp';
 
-import card1 from './assets/card-0.png';
-import card2 from './assets/card-1.png';
-import card3 from './assets/card-2.png';
-import card4 from './assets/card-3.png';
-import card5 from './assets/card-4.png';
+import card1 from './assets/card-0.png?webp';
+import card2 from './assets/card-1.png?webp';
+import card3 from './assets/card-2.png?webp';
+import card4 from './assets/card-3.png?webp';
+import card5 from './assets/card-4.png?webp';
 
-import forestWatcherImage from './assets/forestwatcher@2x.jpg';
-import proImage from './assets/pro-bg@2x.png';
+import forestWatcherImage from './assets/forestwatcher@2x.jpg?webp';
+import proImage from './assets/pro-bg@2x.png?webp';
 
 export default {
   summary: [

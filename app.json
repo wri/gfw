@@ -38,6 +38,9 @@
     "MapboxAccessToken": {
       "required": true
     },
+    "PLANET_API_KEY": {
+      "required": true
+    },
     "TWITTER_CONVERSION_ID": {
       "required": true
     }

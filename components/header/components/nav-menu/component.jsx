@@ -71,12 +71,7 @@ class NavMenu extends PureComponent {
               </Fragment>
             )}
             {item.extLink && (
-              <a
-                href={item.extLink}
-                target="_blank"
-                className="nav-link"
-                rel="noopener noreferrer"
-              >
+              <a href={item.extLink} className="nav-link">
                 {item.label}
               </a>
             )}
