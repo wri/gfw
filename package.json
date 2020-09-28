@@ -176,7 +176,9 @@
     "wri-json-api-serializer": "^1.0.1"
   },
   "resolutions": {
-    "serialize-javascript": "^3.1.0"
+    "node-forge": "^0.10.0",
+    "serialize-javascript": "^3.1.0",
+    "yargs-parser": "^13.1.2"
   },
   "cacheDirectories": [
     ".next/cache"
