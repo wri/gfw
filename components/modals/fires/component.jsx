@@ -28,13 +28,13 @@ class ModalGFWFires extends PureComponent {
           </button>,
           " if you don't find what you're looking for.",
         ];
-      } else if (pathname === '/map/[...location]') {
+      } else if (pathname === '/map/[[]...location]]') {
         modalText = [
           `Welcome to the new home for Global Forest Watch Fires data and insights!
           If you're looking for the Fire Report, `,
           <Link
             key="link"
-            href="/dashboards/[...location]"
+            href="/dashboards/[[...location]]"
             as="/dashboards/global?category=fires"
           >
             <button

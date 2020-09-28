@@ -249,7 +249,7 @@ export const clearAnalysis = createThunkAction(
 export const goToDashboard = createThunkAction('goToDashboard', () => () => {
   const { query, pushQuery } = useRouter();
   pushQuery({
-    pathname: '/dashboards/[...location]',
+    pathname: '/dashboards/[[...location]]',
     query,
   });
 });

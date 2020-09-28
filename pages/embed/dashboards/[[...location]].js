@@ -8,7 +8,7 @@ export const getServerSideProps = async ({ res, query }) => {
     `/embed/widget/${widget}/${location.join('/')}${
       rest ? `?${stringify(rest)}` : ''
     }`
-  ); // Replace <link> with your url link
+  );
 
   return { props: {} };
 };
