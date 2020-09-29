@@ -1,5 +1,9 @@
 function initSpec(title, tests) {
   describe(title, () => {
+    beforeEach(() => {
+      cy.server();
+      cy.route("/query/*").as("analysis-service")
+    });
     tests.forEach(test => {
       describe(test.title, () => {
         test.specs.forEach(spec => {

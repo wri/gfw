@@ -5,7 +5,7 @@ const tests = [
     title: 'Validates header widget returns correct sentence',
     mock: {
       headerSentenceSelectorCountry: '.c-dashboards-header .c-dynamic-sentence',
-      headerSentenceSelectorAdmin: '.c-dashboards-header .sentence',
+      headerSentenceSelectorAdmin: '.c-dashboards-header .c-dynamic-sentence',
       sentenceDefault:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
       sentenceIDN:

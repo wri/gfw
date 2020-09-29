@@ -12,7 +12,7 @@ export function Sentence(parts, variables) {
   const words = entry.split(' ');
   return new RegExp(words.map(w => {
     if (w.match(/{([^\s]+)}/)) {
-      return '([^\\s]+)';
+      return '([\\w\\W\\s]+)';
     }
     return w;
   }).join(' ').replace(/[*|.]/g, '\\$&'));
