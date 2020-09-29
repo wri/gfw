@@ -7,8 +7,9 @@
   *          where {sentence} will turn to a verbose expression
   * @return regexp instance used for testing sentences
 */
-export function Sentence(parts) {
-  const words = parts[0].split(' ');
+export function Sentence(parts, variables) {
+  const entry = parts[0].length === 0 && variables.length !== 0 ? variables : parts[0];
+  const words = entry.split(' ');
   return new RegExp(words.map(w => {
     if (w.match(/{([^\s]+)}/)) {
       return '([^\\s]+)';
