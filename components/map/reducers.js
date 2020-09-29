@@ -2,14 +2,14 @@ import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_GAIN_DATASET,
   FOREST_LOSS_DATASET,
-  FOREST_EXTENT_DATASET
+  FOREST_EXTENT_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_GAIN,
   FOREST_LOSS,
-  FOREST_EXTENT
+  FOREST_EXTENT,
 } from 'data/layers';
 import * as actions from './actions';
 
@@ -19,13 +19,13 @@ export const initialState = {
     interactions: {
       latlng: {},
       interactions: {},
-      selected: ''
-    }
+      selected: '',
+    },
   },
   settings: {
     center: {
       lat: 27,
-      lng: 12
+      lng: 12,
     },
     zoom: 2,
     bearing: 0,
@@ -33,7 +33,7 @@ export const initialState = {
     minZoom: 2,
     maxZoom: 19,
     basemap: {
-      value: 'default'
+      value: 'default',
     },
     labels: true,
     roads: false,
@@ -46,60 +46,58 @@ export const initialState = {
         dataset: POLITICAL_BOUNDARIES_DATASET,
         layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
         opacity: 1,
-        visibility: true
+        visibility: true,
       },
       // gain
       {
         dataset: FOREST_GAIN_DATASET,
         layers: [FOREST_GAIN],
         opacity: 1,
-        visibility: true
+        visibility: true,
       },
       // loss
       {
         dataset: FOREST_LOSS_DATASET,
         layers: [FOREST_LOSS],
         opacity: 1,
-        visibility: true
+        visibility: true,
       },
       // extent
       {
         dataset: FOREST_EXTENT_DATASET,
         layers: [FOREST_EXTENT],
         opacity: 1,
-        visibility: true
-      }
-    ]
-  }
+        visibility: true,
+      },
+    ],
+  },
 };
 
 const setMapLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload,
 });
 
 const setMapSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    ...payload
-  }
+    ...payload,
+  },
 });
 
 const setMapInteractions = (state, { payload }) => {
-  const interactions =
-    payload &&
-    payload.features.reduce(
-      (obj, next) => ({
-        ...obj,
-        [next.layer.source]: {
-          id: next.id,
-          data: next.properties,
-          geometry: next.geometry
-        }
-      }),
-      {}
-    );
+  const interactions = payload?.features?.reduce(
+    (obj, { layer, id, geometry, ...data }) => ({
+      ...obj,
+      [layer?.source || id]: {
+        id: layer?.source || id,
+        geometry,
+        data,
+      },
+    }),
+    {}
+  );
 
   return {
     ...state,
@@ -110,10 +108,10 @@ const setMapInteractions = (state, { payload }) => {
         interactions,
         latlng: {
           lat: payload.lngLat[1],
-          lng: payload.lngLat[0]
-        }
-      }
-    }
+          lng: payload.lngLat[0],
+        },
+      },
+    },
   };
 };
 
@@ -123,21 +121,21 @@ const setMapInteractionSelected = (state, { payload }) => ({
     ...state.data,
     interactions: {
       ...state.data.interactions,
-      selected: payload
-    }
-  }
+      selected: payload,
+    },
+  },
 });
 
-const clearMapInteractions = state => ({
+const clearMapInteractions = (state) => ({
   ...state,
   data: {
     ...state.data,
     interactions: {
       interactions: {},
       latlng: null,
-      selected: ''
-    }
-  }
+      selected: '',
+    },
+  },
 });
 
 export default {
@@ -145,5 +143,5 @@ export default {
   [actions.setMapSettings]: setMapSettings,
   [actions.setMapInteractions]: setMapInteractions,
   [actions.setMapInteractionSelected]: setMapInteractionSelected,
-  [actions.clearMapInteractions]: clearMapInteractions
+  [actions.clearMapInteractions]: clearMapInteractions,
 };

@@ -6,7 +6,7 @@ import { createAction, createThunkAction } from 'redux/actions';
 
 import { fetchGeocodeLocations } from 'services/geocoding';
 
-import { setMapSettings } from 'components/map/actions';
+import { setMapSettings, setMapInteractions } from 'components/map/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 
 export const setLocationsData = createAction('setLocationsData');
@@ -81,7 +81,7 @@ export const getLocationFromSearch = createThunkAction(
 
 export const handleClickLocation = createThunkAction(
   'handleClickLocation',
-  ({ center, bbox: featureBbox }) => (dispatch) => {
+  ({ center, bbox: featureBbox, ...feature }) => (dispatch) => {
     if (featureBbox) {
       dispatch(setMapSettings({ canBound: true, bbox: featureBbox }));
     } else {
@@ -89,6 +89,7 @@ export const handleClickLocation = createThunkAction(
         setMapSettings({ center: { lat: center[1], lng: center[0] }, zoom: 12 })
       );
     }
+    dispatch(setMapInteractions({ features: [feature], lngLat: center }));
     // const { query, pushQuery } = useRouter();
     // const newLocation = parseGadm36Id(gid_2 || gid_1 || gid_0);
     // const { map, menu, mainMap } = query || {};

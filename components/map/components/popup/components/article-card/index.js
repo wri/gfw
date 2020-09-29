@@ -3,6 +3,6 @@ import { connect } from 'react-redux';
 import { setMapSettings } from 'components/map/actions';
 
 import Component from './component';
-import { getDataTableProps } from './selectors';
+import { getArticleCardProps } from './selectors';
 
-export default connect(getDataTableProps, { setMapSettings })(Component);
+export default connect(getArticleCardProps, { setMapSettings })(Component);

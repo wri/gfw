@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-class AreaSentence extends Component {
-  static propTypes = {
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    selected: PropTypes.object
-  };
+const AreaSentence = ({ data }) =>
+  data?.name ? (
+    <div className="c-boundary-sentence">
+      <p>{data?.name}</p>
+    </div>
+  ) : null;
 
-  render() {
-    const { data, selected } = this.props;
-    const { name } = selected.data || {};
-
-    return data ? (
-      <div className="c-boundary-sentence">
-        <p>{name}</p>
-      </div>
-    ) : null;
-  }
-}
+AreaSentence.propTypes = {
+  data: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+};
 
 export default AreaSentence;
