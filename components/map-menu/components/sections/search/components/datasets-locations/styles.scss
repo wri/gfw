@@ -22,6 +22,7 @@
 
     > div {
       margin-bottom: rem(15px);
+      padding-left: 10px;
     }
   }
 
@@ -32,6 +33,7 @@
       font-size: rem(14px);
       color: $slate;
       margin-bottom: rem(15px);
+      padding-left: 20px;
       cursor: pointer;
       display: flex;
       flex-direction: row;
@@ -63,6 +65,13 @@
       min-height: rem(23px);
       min-width: rem(23px);
       margin-right: rem(5px);
+    }
+  }
+
+  .empty-search {
+    .message {
+      min-height: 100px;
+      justify-content: center;
     }
   }
 }

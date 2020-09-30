@@ -88,11 +88,7 @@ class DatasetsLocationsSearch extends PureComponent {
       handleClickLocation,
     } = this.props;
 
-    const {
-      hasDatasets,
-      hasLocations,
-      isLocationSearch,
-    } = this.searchConditions();
+    const { hasDatasets, hasLocations } = this.searchConditions();
 
     return (
       <div className="search-results">
@@ -118,10 +114,6 @@ class DatasetsLocationsSearch extends PureComponent {
                 key={loc.place_name}
                 onClick={() => handleClickLocation(loc)}
               >
-                <Icon
-                  icon={isLocationSearch ? locationIcon : layersIcon}
-                  className="location-icon"
-                />
                 <p>{loc.place_name}</p>
               </button>
             ))}
