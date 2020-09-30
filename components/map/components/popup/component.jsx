@@ -98,7 +98,7 @@ class Popup extends Component {
           />
         )}
         {interactionOptionSelected && !hasManyInteractions && (
-          <div className="popup-title">{interactionOptionSelected.label}</div>
+          <div className="title">{interactionOptionSelected.label}</div>
         )}
         {isBoundary && (
           <BoundarySentence
