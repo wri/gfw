@@ -1,18 +1,15 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import lineString from 'turf-linestring';
-import isEmpty from 'lodash/isEmpty';
 import bbox from 'turf-bbox';
 
-const getInteractionData = (state) => state?.data;
+const getInteractionData = (state, { data }) => data;
 
 export const getCardData = createSelector(
   [getInteractionData],
-  (interaction) => {
-    if (isEmpty(interaction) || !interaction.article) {
-      return null;
-    }
+  (interaction = {}) => {
     const { data, layer } = interaction;
     const { interactionConfig, customMeta } = layer || {};
+
     const articleData =
       interactionConfig &&
       interactionConfig.output &&
@@ -22,7 +19,8 @@ export const getCardData = createSelector(
         const newObj = {
           ...obj,
           ...(renderKey &&
-            value && {
+            value &&
+            value !== 'null' && {
               [renderKey]: `${prefix || ''}${value}`,
             }),
         };

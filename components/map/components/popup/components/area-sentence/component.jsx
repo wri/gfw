@@ -5,7 +5,7 @@ import './styles.scss';
 
 const AreaSentence = ({ data }) =>
   data?.name ? (
-    <div className="c-boundary-sentence">
+    <div className="c-area-sentence">
       <p>{data?.name}</p>
     </div>
   ) : null;

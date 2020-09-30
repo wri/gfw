@@ -7,7 +7,7 @@ import './styles.scss';
 
 const ArticleCard = ({ data, setMapSettings }) => (
   <Card
-    className="popup-card"
+    className="c-article-card"
     theme="theme-card-small"
     clamp={5}
     data={{

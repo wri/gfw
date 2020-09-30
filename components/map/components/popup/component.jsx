@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-import bbox from 'turf-bbox';
 import { Popup as MapPopup } from 'react-map-gl';
 
-// import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
 
 import AreaSentence from './components/area-sentence';
 import ArticleCard from './components/article-card';
 import DataTable from './components/data-table';
 import BoundarySentence from './components/boundary-sentence';
+import ContextualSentence from './components/contextual-sentence';
 
 class Popup extends Component {
   static propTypes = {
@@ -25,7 +24,8 @@ class Popup extends Component {
     interactionOptionSelected: PropTypes.object,
     activeDatasets: PropTypes.array,
     onSelectBoundary: PropTypes.func,
-    setMapSettings: PropTypes.func,
+    onClickAnalysis: PropTypes.func,
+    map: PropTypes.object,
   };
 
   componentDidUpdate(prevProps) {
@@ -39,14 +39,7 @@ class Popup extends Component {
     }
   }
 
-  handleClickZoom = (selected) => {
-    const { setMapSettings } = this.props;
-    const newBbox = bbox(selected.geometry);
-    setMapSettings({ canBound: true, bbox: newBbox });
-    this.handleClose();
-  };
-
-  handleClickAction = (selected, handleAction) => {
+  handleClickAction = (selected) => {
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
@@ -55,7 +48,7 @@ class Popup extends Component {
     const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
     const isUse = cartodb_id && tableName;
 
-    handleAction({
+    this.props.onClickAnalysis({
       data,
       layer,
       geometry,
@@ -80,6 +73,9 @@ class Popup extends Component {
       interactionsOptions,
       setMapInteractionSelected,
       onSelectBoundary,
+      latitude,
+      longitude,
+      map,
     } = this.props;
 
     if (selected?.isArticle) {
@@ -87,10 +83,10 @@ class Popup extends Component {
     }
 
     const hasManyInteractions = interactionsOptions?.length > 1;
-    const { isAoi, isBoundary } = selected || {};
+    const { isAoi, isBoundary, isPoint } = selected || {};
 
     return (
-      <div className="popup-table">
+      <div className="popup-body">
         {hasManyInteractions && (
           <Dropdown
             className="layer-selector"
@@ -108,36 +104,27 @@ class Popup extends Component {
           <BoundarySentence
             data={selected}
             onSelectBoundary={onSelectBoundary}
+            onAnalyze={this.handleClickAction}
           />
         )}
         {isAoi && (
-          <AreaSentence
-            selected={selected}
+          <AreaSentence data={selected} onSelectBoundary={onSelectBoundary} />
+        )}
+        {!isBoundary && !isAoi && !isPoint && (
+          <DataTable
             data={selected}
-            onSelectBoundary={onSelectBoundary}
+            map={map}
+            onClose={this.handleClose}
+            onAnalyze={this.handleClickAction}
           />
         )}
-        {!isBoundary && !isAoi && <DataTable data={selected} />}
-        {/* <div className="popup-footer">
-          {zoomToShape && (
-            <Button onClick={() => this.handleClickZoom(selected)}>
-              Zoom
-            </Button>
-          )}
-          {!zoomToShape &&
-            !selected.aoi &&
-            buttons &&
-            buttons.map((p) => (
-              <Button
-                key={p.label}
-                onClick={() => {
-                  this.handleClickAction(selected, p.action);
-                }}
-              >
-                {p.label}
-              </Button>
-            ))}
-        </div> */}
+        {isPoint && (
+          <ContextualSentence
+            data={selected}
+            latitude={latitude}
+            longitude={longitude}
+          />
+        )}
       </div>
     );
   };

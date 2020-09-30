@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import DynamicSentence from 'components/ui/dynamic-sentence';
+import Button from 'components/ui/button';
 
 import './styles.scss';
 
@@ -15,6 +16,7 @@ class BoundarySentence extends Component {
       params: PropTypes.object,
     }),
     onSelectBoundary: PropTypes.func,
+    onAnalyze: PropTypes.func,
     selected: PropTypes.object,
   };
 
@@ -27,10 +29,19 @@ class BoundarySentence extends Component {
   };
 
   render() {
-    const { sentence } = this.props;
+    const { data, sentence, onAnalyze } = this.props;
 
     return (
-      <DynamicSentence className="c-boundary-sentence" sentence={sentence} />
+      <div className="c-boundary-sentence">
+        <DynamicSentence className="sentence" sentence={sentence} />
+        <Button
+          onClick={() => {
+            onAnalyze(data);
+          }}
+        >
+          analyze
+        </Button>
+      </div>
     );
   }
 }

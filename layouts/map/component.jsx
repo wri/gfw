@@ -72,12 +72,7 @@ class MainMapComponent extends PureComponent {
             className="main-map"
             onSelectBoundary={setMainMapAnalysisView}
             onDrawComplete={onDrawComplete}
-            popupActions={[
-              {
-                label: 'Analyze',
-                action: handleClickAnalysis,
-              },
-            ]}
+            onClickAnalysis={handleClickAnalysis}
           />
         </div>
         {!hidePanels && (

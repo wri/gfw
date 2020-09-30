@@ -1,16 +1,19 @@
 @import '~styles/settings.scss';
 
 .c-boundary-sentence {
-  font-size: rem(13px);
+  .sentence {
+    font-size: rem(13px);
+    margin-bottom: 20px;
 
-  b {
-    font-weight: 500;
-  }
+    b {
+      font-weight: 500;
+    }
 
-  button {
-    color: $green-gfw;
-    font-weight: 500;
-    display: contents;
-    cursor: pointer;
+    button {
+      color: $green-gfw;
+      font-weight: 500;
+      display: contents;
+      cursor: pointer;
+    }
   }
 }

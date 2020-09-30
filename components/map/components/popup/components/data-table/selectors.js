@@ -1,6 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import bbox from 'turf-bbox';
+import bboxPolygon from 'turf-bbox-polygon';
+import area from 'turf-area';
 
-const getInteractionData = (state) => state?.data;
+const getInteractionData = (state, { data }) => data;
+const getMap = (state, { map }) => map;
 
 export const getTableData = createSelector(
   [getInteractionData],
@@ -31,6 +35,43 @@ export const getTableData = createSelector(
   }
 );
 
+export const getShouldZoomToShape = createSelector(
+  [getInteractionData, getMap],
+  (selected, map) => {
+    if (!selected || !map) return null;
+    if (map.getZoom() > 12) return false;
+
+    const { data, layer, geometry } = selected;
+    const { cartodb_id, wdpaid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+
+    const isAdmin = analysisEndpoint === 'admin';
+    const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
+    const isUse = cartodb_id && tableName;
+
+    if (isAdmin || isWdpa || isUse) return false;
+
+    // get bbox of geometry
+    const shapeBbox = bbox(geometry);
+    const shapePolygon = bboxPolygon(shapeBbox);
+    // get bbox of map
+    const mapBounds = map.getBounds();
+    const mapPolygon = bboxPolygon([
+      mapBounds._sw.lng,
+      mapBounds._sw.lat,
+      mapBounds._ne.lng,
+      mapBounds._ne.lat,
+    ]);
+    // compare size
+    const shapeArea = area(shapePolygon);
+    const mapArea = area(mapPolygon);
+    const ratio = shapeArea / mapArea;
+
+    return ratio < 0.25;
+  }
+);
+
 export const getDataTableProps = createStructuredSelector({
   data: getTableData,
+  zoomToShape: getShouldZoomToShape,
 });
