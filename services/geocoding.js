@@ -67,7 +67,7 @@ export const fetchGeocodeLocations = (
         center: JSON.parse(c.centroid)?.coordinates,
       }));
 
-      return mapboxResponse?.data?.features?.concat(boundaries);
+      return boundaries.concat(mapboxResponse?.data?.features);
     })
   );
 };
