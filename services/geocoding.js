@@ -1,6 +1,9 @@
 import { mapboxRequest, cartoRequest } from 'utils/request';
 import compact from 'lodash/compact';
 import { all, spread } from 'axios';
+import bbox from 'turf-bbox';
+
+import { POLITICAL_BOUNDARIES } from 'static/layers';
 
 const getSearchSQL = (string, nameString, nameStringSimple) => {
   const words = string && string.split(/,| |, /);
@@ -41,7 +44,7 @@ export const fetchGeocodeLocations = (
   return all([
     mapboxRequest
       .get(
-        `/geocoding/v5/mapbox.places/${searchQuery}.json?language=${lang}&access_token=${process.env.MapboxAccessToken}&types=postcode,district,place,locality,neighborhood,address,poi`,
+        `/geocoding/v5/mapbox.places/${searchQuery}.json?language=${lang}&access_token=${process.env.MapboxAccessToken}&types=country,postcode,district,place,locality,neighborhood,address,poi`,
         {
           cancelToken,
         }
@@ -49,11 +52,22 @@ export const fetchGeocodeLocations = (
       .catch(() => {}),
     cartoRequest
       .get(
-        `/sql?q=SELECT cartodb_id, area, size, level, name_0, name_1, name_2, gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${nameString}) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${nameString}) WHEN gid_0 is not null THEN ${nameString} END AS place_name FROM gadm36_political_boundaries WHERE ${whereStatement} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, place_name LIMIT 5`,
+        `/sql?q=SELECT bbox, centroid, cartodb_id, area, size, level, name_0, name_1, name_2, gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', ${nameString}) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', ${nameString}) WHEN gid_0 is not null THEN ${nameString} END AS place_name FROM gadm36_political_boundaries WHERE ${whereStatement} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, place_name LIMIT 5`,
         {
           cancelToken,
         }
       )
       .catch(() => {}),
-  ]).then(spread((mapboxResponse) => mapboxResponse?.data?.features));
+  ]).then(
+    spread((mapboxResponse, cartoResponse) => {
+      const boundaries = cartoResponse?.data?.rows?.map((c) => ({
+        ...c,
+        id: POLITICAL_BOUNDARIES,
+        bbox: bbox(JSON.parse(c.bbox)),
+        center: JSON.parse(c.centroid)?.coordinates,
+      }));
+
+      return mapboxResponse?.data?.features?.concat(boundaries);
+    })
+  );
 };

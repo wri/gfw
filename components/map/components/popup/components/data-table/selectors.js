@@ -52,8 +52,8 @@ export const getShouldZoomToShape = createSelector(
     if (isAdmin || isWdpa || isUse) return false;
 
     // get bbox of geometry
-    const shapeBbox = bbox(geometry);
-    const shapePolygon = bboxPolygon(shapeBbox);
+    const shapeBbox = geometry && bbox(geometry);
+    const shapePolygon = shapeBbox && bboxPolygon(shapeBbox);
     // get bbox of map
     const mapBounds = map.getBounds();
     const mapPolygon = bboxPolygon([
@@ -63,8 +63,8 @@ export const getShouldZoomToShape = createSelector(
       mapBounds._ne.lat,
     ]);
     // compare size
-    const shapeArea = area(shapePolygon);
-    const mapArea = area(mapPolygon);
+    const shapeArea = shapePolygon && area(shapePolygon);
+    const mapArea = shapePolygon && area(mapPolygon);
     const ratio = shapeArea / mapArea;
 
     return ratio < 0.25;
