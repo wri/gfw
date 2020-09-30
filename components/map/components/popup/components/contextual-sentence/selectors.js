@@ -12,7 +12,7 @@ export const getSentence = createSelector(
 
     return {
       title: text,
-      sentence: '{category} in {contextLocation}',
+      sentence: '{category} in {contextLocation}.',
       params: {
         category: firstCategory,
         contextLocation,

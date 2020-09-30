@@ -34,7 +34,7 @@ export const getSentence = createSelector(
       area: formatNumber({ num: area, unit: 'ha' }),
     };
 
-    const sentence = translateText('{location}, with a total area of {area}');
+    const sentence = translateText('{location}, with a total area of {area}.');
 
     return {
       sentence,
