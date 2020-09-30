@@ -87,6 +87,7 @@ export const searchSections = [
     slug: 'search',
     icon: searchIcon,
     Component: Search,
+    large: true,
   },
   {
     label: 'my gfw',
