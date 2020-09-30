@@ -171,7 +171,7 @@ export const clearArea = createThunkAction('clearArea', () => () => {
     pathname,
     query: {
       ...query,
-      location: ['global'],
+      location: [],
     },
   });
 });

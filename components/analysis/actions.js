@@ -239,7 +239,7 @@ export const clearAnalysis = createThunkAction(
       pathname,
       query: {
         ...query,
-        location: ['global'],
+        location: [],
       },
     });
     dispatch(clearAnalysisData());
