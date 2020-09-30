@@ -8,14 +8,11 @@ export const getSentence = createSelector(
   ({ data } = {}) => {
     const { context, text, category } = data || {};
     const contextLocation = context?.map((c) => c.text).join(', ');
-    const firstCategory = upperFirst(category?.split(', ')?.[0]);
-    const sentenceTemplate = firstCategory
-      ? '{category} in {contextLocation}'
-      : `{contextLocation}`;
+    const firstCategory = upperFirst(category?.split(', ')?.[0]) || 'Location';
 
     return {
       title: text,
-      sentence: sentenceTemplate,
+      sentence: '{category} in {contextLocation}',
       params: {
         category: firstCategory,
         contextLocation,
