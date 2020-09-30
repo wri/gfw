@@ -23,7 +23,6 @@ class Popup extends Component {
     interactionsOptions: PropTypes.array,
     interactionOptionSelected: PropTypes.object,
     activeDatasets: PropTypes.array,
-    onSelectBoundary: PropTypes.func,
     onClickAnalysis: PropTypes.func,
     map: PropTypes.object,
   };
@@ -72,7 +71,6 @@ class Popup extends Component {
       interactionOptionSelected,
       interactionsOptions,
       setMapInteractionSelected,
-      onSelectBoundary,
       latitude,
       longitude,
       map,
@@ -103,13 +101,10 @@ class Popup extends Component {
         {isBoundary && (
           <BoundarySentence
             data={selected}
-            onSelectBoundary={onSelectBoundary}
             onAnalyze={this.handleClickAction}
           />
         )}
-        {isAoi && (
-          <AreaSentence data={selected} onSelectBoundary={onSelectBoundary} />
-        )}
+        {isAoi && <AreaSentence data={selected} />}
         {!isBoundary && !isAoi && !isPoint && (
           <DataTable
             data={selected}

@@ -34,7 +34,6 @@ class MainMapComponent extends PureComponent {
     hidePanels: PropTypes.bool,
     embed: PropTypes.bool,
     recentActive: PropTypes.bool,
-    setMainMapAnalysisView: PropTypes.func,
   };
 
   renderInfoTooltip = (string) => (
@@ -50,7 +49,6 @@ class MainMapComponent extends PureComponent {
       handleClickMap,
       recentActive,
       handleClickAnalysis,
-      setMainMapAnalysisView,
       onDrawComplete,
     } = this.props;
 
@@ -70,7 +68,6 @@ class MainMapComponent extends PureComponent {
         >
           <Map
             className="main-map"
-            onSelectBoundary={setMainMapAnalysisView}
             onDrawComplete={onDrawComplete}
             onClickAnalysis={handleClickAnalysis}
           />
