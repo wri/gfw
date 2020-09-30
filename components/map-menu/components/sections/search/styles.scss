@@ -1,10 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-map-menu-search {
-  display: flex;
-  flex-flow: column;
   height: 100%;
-  overflow: hidden;
 
   h3 {
     padding: 20px 10px;
@@ -18,7 +15,7 @@
   .search-wrapper {
     display: flex;
     justify-content: space-between;
-    height: 100%;
+    height: calc(100% - 62px);
   }
 
   .side-menu-search {
@@ -34,7 +31,6 @@
     flex: 0 0 65%;
     flex-grow: 1;
     padding: 15px 10px 0 10px;
-    overflow-y: scroll;
   }
 
   .empty-search {

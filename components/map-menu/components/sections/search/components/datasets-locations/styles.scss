@@ -4,15 +4,11 @@
   display: flex;
   flex-flow: column;
   height: 100%;
-  overflow: hidden;
 
-  .search-container {
+  .search-results-wrapper {
     position: relative;
-    min-height: calc(80vh - 285px);
-
-    @media screen and (min-width: $screen-m) {
-      min-height: rem(300px);
-    }
+    overflow-y: scroll;
+    height: calc(100% - 60px);
   }
 
   .search-results {
@@ -26,11 +22,6 @@
 
     > div {
       margin-bottom: rem(15px);
-    }
-
-    &.show-border {
-      padding-bottom: rem(20px);
-      border-bottom: solid 1px $border;
     }
   }
 

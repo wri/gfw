@@ -97,11 +97,7 @@ class DatasetsLocationsSearch extends PureComponent {
     return (
       <div className="search-results">
         {hasDatasets && (
-          <div
-            className={cx('datasets-search', {
-              'show-border': locations && locations.length,
-            })}
-          >
+          <div className="datasets-search">
             {datasets.map((d) => (
               <LayerToggle
                 key={d.id}
@@ -146,7 +142,7 @@ class DatasetsLocationsSearch extends PureComponent {
           input={search}
           onChange={(value) => handleSearchChange(value)}
         />
-        <div className="search-container">
+        <div className="search-results-wrapper">
           {loading && <Loader />}
           {this.searchNoResults() && this.viewDefault()}
           {this.searchIsEmpty() && this.viewNoResults()}
