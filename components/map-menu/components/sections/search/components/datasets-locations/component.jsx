@@ -119,7 +119,7 @@ class DatasetsLocationsSearch extends PureComponent {
             {locations.map((loc) => (
               <button
                 className={cx('location', { active: loc.active })}
-                key={loc.text}
+                key={loc.place_name}
                 onClick={() => handleClickLocation(loc)}
               >
                 <Icon
