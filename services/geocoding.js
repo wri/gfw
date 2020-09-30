@@ -44,7 +44,7 @@ export const fetchGeocodeLocations = (
   return all([
     mapboxRequest
       .get(
-        `/geocoding/v5/mapbox.places/${searchQuery}.json?language=${lang}&access_token=${process.env.MapboxAccessToken}&types=country,postcode,district,place,locality,neighborhood,address,poi`,
+        `/geocoding/v5/mapbox.places/${searchQuery}.json?language=${lang}&access_token=${process.env.MapboxAccessToken}&types=postcode,district,place,locality,neighborhood,address,poi`,
         {
           cancelToken,
         }
