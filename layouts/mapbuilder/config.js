@@ -1,11 +1,3 @@
-// import forestWatcherIcon from 'assets/icons/forest-watcher.svg';
-// import proIcon from 'assets/icons/gfw-pro.svg';
-
-// import conservationOrgs from './assets/conservation-orgs.jpg?webp';
-// import policyMakers from './assets/policy-makers.jpg?webp';
-// import journalists from './assets/journalists.jpg?webp';
-// import company from './assets/company.jpg?webp';
-
 import compellingDataIcon from './assets/icons/compellingdata.svg?sprite';
 import powerfulAnalysisIcon from './assets/icons/powerfulanalysis.svg?sprite';
 import provenPlatformIcon from './assets/icons/provenplatform.svg?sprite';
@@ -80,17 +72,4 @@ export default {
       extLink: 'http://gnq.forest-atlas.org',
     },
   ],
-  // tutorials: [
-  //   {
-  //     title: 'MapBuilder Interactive Map Overview',
-  //     summary: 'View an interactive map with land-use data for Cameroon.',
-  //     image: cameroonForestAtlasImg,
-  //     buttons: [
-  //       {
-  //         text: 'view map',
-  //         extLink: 'http://cmr.forest-atlas.org',
-  //       }
-  //     ]
-  //   },
-  // ]
 };
