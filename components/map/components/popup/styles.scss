@@ -17,49 +17,28 @@
     }
   }
 
-  .popup-card {
-    border: 0;
-    max-width: rem(240px);
+  .layer-selector {
+    margin-bottom: 20px;
 
-    .body {
-      background-color: $white;
+    select {
+      font-size: rem(14px);
     }
   }
 
-  .popup-table {
+  .popup-body {
     padding: rem(25px);
 
-    .popup-title {
+    .title {
       font-size: rem(16px);
       margin-bottom: rem(15px);
       color: $slate;
       font-weight: 400;
     }
 
-    .layer-selector {
-      margin-bottom: 20px;
-
-      select {
-        font-size: rem(14px);
-      }
+    button {
+      min-width: rem(200px);
+      margin: auto;
     }
-
-    .popup-footer {
-      margin-top: rem(20px);
-
-      > button {
-        min-width: rem(200px);
-        margin: auto;
-      }
-    }
-  }
-
-  .theme-button-small {
-    color: $white;
-  }
-
-  .theme-button-light {
-    color: $slate;
   }
 }
 

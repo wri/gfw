@@ -49,8 +49,7 @@ class MapComponent extends Component {
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
     basemap: PropTypes.object,
-    popupActions: PropTypes.array,
-    onSelectBoundary: PropTypes.func,
+    onClickAnalysis: PropTypes.func,
     onDrawComplete: PropTypes.func,
     lang: PropTypes.string,
   };
@@ -357,8 +356,7 @@ class MapComponent extends Component {
       loading,
       loadingMessage,
       basemap,
-      popupActions,
-      onSelectBoundary,
+      onClickAnalysis,
       onDrawComplete,
     } = this.props;
 
@@ -407,11 +405,7 @@ class MapComponent extends Component {
             {(map) => (
               <Fragment>
                 {/* POPUP */}
-                <Popup
-                  map={this.map}
-                  buttons={popupActions}
-                  onSelectBoundary={onSelectBoundary}
-                />
+                <Popup map={this.map} onClickAnalysis={onClickAnalysis} />
                 {/* LAYER MANAGER */}
                 <LayerManagerWrapper map={map} />
                 {/* DRAWING */}

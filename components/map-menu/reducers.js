@@ -7,7 +7,7 @@ export const initialState = {
     menuSection: '',
     datasetCategory: '',
     exploreType: 'topics',
-    searchType: 'dataset',
+    searchType: 'location',
     ptwType: 'all',
     search: '',
     selectedCountries: [],
