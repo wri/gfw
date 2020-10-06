@@ -56,4 +56,9 @@
       display: block;
     }
   }
+
+  .page-footer {
+    position: relative;
+    z-index: 2;
+  }
 }
