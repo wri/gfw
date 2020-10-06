@@ -68,3 +68,29 @@ export async function getPostsByType({ type, params, cancelToken } = {}) {
   });
   return serializePosts(postsResponse?.data);
 }
+
+export async function getPostByType({
+  type,
+  slug,
+  id,
+  params,
+  cancelToken,
+} = {}) {
+  const postResponse = await apiFetch({
+    url: `https://content.globalforestwatch.org/wp-json/wp/v2/${
+      type || 'posts'
+    }${id ? `/${id}` : ''}`,
+    params: {
+      ...params,
+      slug,
+      _embed: true,
+    },
+    cancelToken,
+  });
+
+  const post = Array.isArray(postResponse?.data)
+    ? postResponse?.data
+    : [postResponse?.data];
+
+  return serializePosts(post)[0];
+}

@@ -7,41 +7,51 @@ import Link from 'next/link';
 
 import Cover from 'components/cover';
 import Button from 'components/ui/button';
-import Icon from 'components/ui/icon';
 import Card from 'components/ui/card';
-
-import bgImage from './assets/home-background.png?webp';
-import bgAtlas from './assets/bkg-own-atlas.jpg';
-
-import config from './config';
 
 import './styles.scss';
 
-const HomePage = ({ summary, guide, apps: allApps, tutorials }) => {
+const HomePage = ({ page, apps: allApps, tutorials }) => {
   const [showAllApps, setShowAllApps] = useState(false);
   const apps = showAllApps ? allApps : allApps.slice(0, 6);
   const showViewAllButton = allApps.length > 6 && !showAllApps;
+  const {
+    title,
+    content,
+    acf: {
+      cover_image,
+      background_image,
+      summary,
+      guide_section,
+      maps_section,
+      tutorials_section,
+    },
+  } = page || {};
 
   return (
     <div className="l-mapbuilder-page">
       <div
         className="image-overlay"
-        style={{ backgroundImage: `url('${bgAtlas}')` }}
+        style={{ backgroundImage: `url('${background_image?.url}')` }}
       />
       <Cover
         className="page-cover"
-        title="MapBuilder"
-        description="Want to create a version of the Global Forest Watch map, featuring your own data? MapBuilder is an easy to use tool which enables users to combine their own datasets with GFW’s cutting-edge data and analysis tools."
-        bgImage={bgImage}
+        title={title}
+        description={ReactHtmlParser(content)}
+        bgImage={cover_image?.url}
       />
       <div className="summary-section">
         <div className="row">
-          {summary.map((item) => (
+          {summary?.map((item) => (
             <div key={item.title} className="column small-12 medium-6 large-3 ">
               <div className="summary-card">
-                <Icon icon={item.icon} className="summary-icon" />
-                <h5 className="summary-title">{item.title}</h5>
-                <p className="summary-description">{item.summary}</p>
+                <img
+                  src={item?.icon?.url}
+                  className="summary-icon"
+                  alt={item?.title}
+                />
+                <h5 className="summary-title">{item?.title}</h5>
+                <p className="summary-description">{item?.summary}</p>
               </div>
             </div>
           ))}
@@ -50,21 +60,19 @@ const HomePage = ({ summary, guide, apps: allApps, tutorials }) => {
       <div className="guide-section">
         <div className="row">
           <div className="column small-12">
-            <h4 className="guide-title">Start building your GFW MapBuilder</h4>
+            <h4 className="guide-title">{guide_section?.title}</h4>
           </div>
           <div className="column small-12">
-            <p className="guide-intro">
-              Here&apos;s your 1-2-3 guide on getting started.
-            </p>
+            <p className="guide-intro">{guide_section?.subtitle}</p>
           </div>
-          {guide.map((item, index) => (
+          {guide_section?.steps?.map((item, index) => (
             <div
-              key={item.key}
+              key={item.summary}
               className="column small-12 medium-4 guide-column"
             >
               <div className="guide-card">
                 <span className="guide-number">{index + 1}</span>
-                <p className="guide-text">{item.text}</p>
+                <p className="guide-text">{item.summary}</p>
               </div>
             </div>
           ))}
@@ -80,13 +88,10 @@ const HomePage = ({ summary, guide, apps: allApps, tutorials }) => {
       <div className="maps-section">
         <div className="row">
           <div className="column small-12">
-            <h4 className="maps-title">Featured maps</h4>
+            <h4 className="maps-title">{maps_section?.title}</h4>
           </div>
           <div className="column small-12">
-            <p className="maps-intro">
-              A hand-picked selection of GFW maps and applications built by our
-              user community. Imagine your map or app here!
-            </p>
+            <p className="maps-intro">{maps_section?.subtitle}</p>
           </div>
           {apps?.map((item) => (
             <div
@@ -136,13 +141,10 @@ const HomePage = ({ summary, guide, apps: allApps, tutorials }) => {
       <div className="tutorials-section">
         <div className="row">
           <div className="column small-12">
-            <h4 className="tutorials-title">Tutorials</h4>
+            <h4 className="tutorials-title">{tutorials_section?.title}</h4>
           </div>
           <div className="column small-12">
-            <p className="tutorials-intro">
-              Just getting started? Or need some help? Our tutorials will get
-              you pointed in the right direction.
-            </p>
+            <p className="tutorials-intro">{tutorials_section?.subtitle}</p>
           </div>
           {tutorials?.map((item) => (
             <div
@@ -173,14 +175,9 @@ const HomePage = ({ summary, guide, apps: allApps, tutorials }) => {
   );
 };
 
-HomePage.defaultProps = {
-  ...config,
-};
-
 HomePage.propTypes = {
-  summary: PropTypes.array.isRequired,
-  guide: PropTypes.array.isRequired,
   apps: PropTypes.array.isRequired,
+  page: PropTypes.object.isRequired,
   tutorials: PropTypes.array.isRequired,
 };
 

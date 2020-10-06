@@ -3,7 +3,7 @@ import sortBy from 'lodash/sortBy';
 import Layout from 'layouts/page';
 import MapBuilder from 'pages/mapbuilder';
 
-import { getPostsByType } from 'services/content';
+import { getPostsByType, getPostByType } from 'services/content';
 
 // eslint-disable-next-line react/prop-types
 const MapBuilderPage = (props) => (
@@ -13,6 +13,11 @@ const MapBuilderPage = (props) => (
 );
 
 export async function getStaticProps() {
+  const page = await getPostByType({
+    type: 'pages',
+    slug: 'mapbuilder',
+  });
+
   const apps = await getPostsByType({
     type: 'apps',
     params: {
@@ -30,6 +35,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      page: page || {},
       tutorials: tutorials || [],
       apps: sortBy(apps, 'menu_order') || [],
     },
