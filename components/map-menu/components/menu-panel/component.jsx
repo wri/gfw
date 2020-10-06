@@ -41,19 +41,37 @@ const PanelDesktop = posed.div({
 });
 
 class MenuPanel extends PureComponent {
+  panelLabel() {
+    const { label, category, setMenuSettings } = this.props;
+    const isSearch = label.toLowerCase() === 'search';
+
+    if (category || isSearch) {
+      return (
+        <button
+          onClick={() => setMenuSettings({
+            ...(category && { datasetCategory: '' }),
+            ...(isSearch && { searchType: '' })
+          })}
+        >
+          <Icon icon={arrowIcon} className="icon-return" />
+          <span>{isSearch ? label : startCase(category)}</span>
+        </button>
+      )
+    }
+
+    return <span>{label}</span>;
+  }
+
   render() {
     const {
       active,
       className,
       isDesktop,
-      label,
-      category,
       large,
       onClose,
       onOpen,
       children,
       loading,
-      setMenuSettings,
       collapsed,
     } = this.props;
     const Panel = isDesktop ? PanelDesktop : PanelMobile;
@@ -73,16 +91,7 @@ class MenuPanel extends PureComponent {
             {!isDesktop ? (
               <div className="panel-header">
                 <div className="panel-label">
-                  {category ? (
-                    <button
-                      onClick={() => setMenuSettings({ datasetCategory: '' })}
-                    >
-                      <Icon icon={arrowIcon} className="icon-return" />
-                      <span>{startCase(category)}</span>
-                    </button>
-                  ) : (
-                    <span>{label}</span>
-                  )}
+                  {this.panelLabel()}
                 </div>
                 <Button
                   className="panel-close"

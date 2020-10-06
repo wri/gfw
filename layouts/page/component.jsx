@@ -99,7 +99,11 @@ class App extends PureComponent {
             <ClimateModal />
             <ContactUsModal />
             {showFooter && (
-              <Footer openContactUsModal={() => setModalContactUsOpen(true)} />
+              <div className="page-footer">
+                <Footer
+                  openContactUsModal={() => setModalContactUsOpen(true)}
+                />
+              </div>
             )}
             <Cookies />
           </div>

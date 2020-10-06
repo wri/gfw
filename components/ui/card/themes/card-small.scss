@@ -20,7 +20,8 @@ $summary-color: #aaa;
       text-transform: uppercase;
     }
 
-    .summary {
+    .summary,
+    .summary p {
       font-size: 12px;
       line-height: 1.5;
       color: $summary-color;

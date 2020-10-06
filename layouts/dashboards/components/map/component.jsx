@@ -7,7 +7,7 @@ import MiniLegend from '../mini-legend';
 import './styles.scss';
 
 class MainMapComponent extends PureComponent {
-  renderInfoTooltip = string => (
+  renderInfoTooltip = (string) => (
     <div>
       <p className="tooltip-info">{string}</p>
     </div>
@@ -18,16 +18,7 @@ class MainMapComponent extends PureComponent {
 
     return (
       <div className="c-dashboard-map">
-        <Map
-          className="dashboard-map"
-          onSelectBoundary={handleLocationChange}
-          popupActions={[
-            {
-              label: 'View dashboard',
-              action: handleLocationChange
-            }
-          ]}
-        />
+        <Map className="dashboard-map" onClickAnalysis={handleLocationChange} />
         <MiniLegend className="mini-legend" />
       </div>
     );
@@ -35,7 +26,7 @@ class MainMapComponent extends PureComponent {
 }
 
 MainMapComponent.propTypes = {
-  handleLocationChange: PropTypes.func
+  handleLocationChange: PropTypes.func,
 };
 
 export default MainMapComponent;
