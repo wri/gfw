@@ -7,6 +7,18 @@ const serializePosts = (posts) =>
     return {
       ...p,
       title: decode(p.title?.rendered),
+      ...(p?.excerpt?.rendered && {
+        excerpt: p?.excerpt?.rendered,
+      }),
+      ...(p?.content?.rendered && {
+        content: p?.content?.rendered,
+      }),
+      ...(p?.acf?.post_link && {
+        link: p?.acf?.post_link,
+      }),
+      ...(p?.acf?.alt_link && {
+        link: p?.acf?.alt_link,
+      }),
       ...(p.featured_media && {
         featured_media_id: p.featured_media,
         featured_media: p._embedded?.['wp:featuredmedia']?.[0],

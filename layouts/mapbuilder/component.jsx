@@ -13,11 +13,14 @@ import Card from 'components/ui/card';
 import bgImage from './assets/home-background.png?webp';
 import bgAtlas from './assets/bkg-own-atlas.jpg';
 
+import config from './config';
+
 import './styles.scss';
 
-const HomePage = ({ summary, guide, maps, tutorials }) => {
-  const [showAllMaps, setShowAllMaps] = useState(false);
-  const featuredMaps = showAllMaps ? maps : maps.slice(0, 3);
+const HomePage = ({ summary, guide, apps: allApps, tutorials }) => {
+  const [showAllApps, setShowAllApps] = useState(false);
+  const apps = showAllApps ? allApps : allApps.slice(0, 6);
+  const showViewAllButton = allApps.length > 6 && !showAllApps;
 
   return (
     <div className="l-mapbuilder-page">
@@ -85,13 +88,20 @@ const HomePage = ({ summary, guide, maps, tutorials }) => {
               user community. Imagine your map or app here!
             </p>
           </div>
-          {featuredMaps.map((item) => (
+          {apps?.map((item) => (
             <div
               key={item.title}
               className="column small-12 medium-4 maps-card"
             >
-              <a href={item.extLink} target="_blank" rel="noopener noreferrer">
-                <Card theme="theme-card-small" data={item} />
+              <a href={item.link} target="_blank" rel="noopener noreferrer">
+                <Card
+                  theme="theme-card-small"
+                  data={{
+                    ...item,
+                    summary: ReactHtmlParser(item?.content),
+                    image: item?.featured_media?.source_url,
+                  }}
+                />
               </a>
             </div>
           ))}
@@ -100,7 +110,7 @@ const HomePage = ({ summary, guide, maps, tutorials }) => {
               <div
                 className={cx(
                   'column small-10 small-offset-1 medium-3 medium-offset-3',
-                  { 'medium-4 medium-offset-4': showAllMaps }
+                  { 'medium-4 medium-offset-4': !showViewAllButton }
                 )}
               >
                 <a href="mailto:gfw@wri.org">
@@ -109,11 +119,11 @@ const HomePage = ({ summary, guide, maps, tutorials }) => {
                   </Button>
                 </a>
               </div>
-              {!showAllMaps && (
+              {showViewAllButton && (
                 <div className="column small-10 small-offset-1 medium-3 medium-offset-0">
                   <Button
                     className="column-btn"
-                    onClick={() => setShowAllMaps(true)}
+                    onClick={() => setShowAllApps(true)}
                   >
                     view all
                   </Button>
@@ -144,7 +154,7 @@ const HomePage = ({ summary, guide, maps, tutorials }) => {
                   theme="theme-card-small"
                   data={{
                     ...item,
-                    summary: ReactHtmlParser(item?.excerpt?.rendered),
+                    summary: ReactHtmlParser(item?.excerpt),
                   }}
                 />
               </a>
@@ -163,10 +173,14 @@ const HomePage = ({ summary, guide, maps, tutorials }) => {
   );
 };
 
+HomePage.defaultProps = {
+  ...config,
+};
+
 HomePage.propTypes = {
   summary: PropTypes.array.isRequired,
   guide: PropTypes.array.isRequired,
-  maps: PropTypes.array.isRequired,
+  apps: PropTypes.array.isRequired,
   tutorials: PropTypes.array.isRequired,
 };
 
