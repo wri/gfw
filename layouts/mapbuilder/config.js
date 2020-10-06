@@ -56,20 +56,20 @@ export default {
       title: 'Cameroon Forest Atlas',
       summary: 'View an interactive map with land-use data for Cameroon.',
       image: cameroonForestAtlasImg,
-      extLink: 'http://cmr.forest-atlas.org',
+      extLink: 'https://cmr.forest-atlas.org',
     },
     {
       title: 'Gabon Forest Atlas',
       summary: 'View an interactive map with land-use data for Gabon.',
       image: gabonForestAtlasImg,
-      extLink: 'http://gab.forest-atlas.org',
+      extLink: 'https://gab.forest-atlas.org',
     },
     {
       title: 'Equatorial Guinea Forest Atlas',
       summary:
         'View an interactive map with land-use data for Equatorial Guinea.',
       image: equatorialGuineaForestAtlasImg,
-      extLink: 'http://gnq.forest-atlas.org',
+      extLink: 'https://gnq.forest-atlas.org',
     },
   ],
 };
