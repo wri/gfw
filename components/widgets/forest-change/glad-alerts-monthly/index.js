@@ -20,7 +20,7 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'gladAlerts',
+  widget: 'gladAlertsMonthly',
   title: 'Deforestation alerts in {location}',
   sentence: {
     default:

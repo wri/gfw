@@ -31,6 +31,8 @@ const SQL_QUERIES = {
     'SELECT {location}, SUM(area__ha) as area__ha, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  gladDaily:
+    `SELECT {location}, alert__date, alert__year SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__date`,
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
@@ -603,6 +605,38 @@ export const fetchHistoricalAlerts = params => {
         ...d,
         week: parseInt(d.alert__week, 10) || null,
         year: parseInt(d.alert__year, 10) || null,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha
+      }))
+    }
+  }));
+};
+
+export const fetchHistoricalGladAlerts = params => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const url = `${getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'daily'
+  })}${SQL_QUERIES.gladDaily}`
+    .replace(/{location}/g, getLocationSelect(params))
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }));
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download')
+    };
+  }
+  return apiRequest.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        date: d.alert__date,
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha
