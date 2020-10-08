@@ -13,8 +13,10 @@ const getStartDate = state => state.settings.startDate;
 const getEndDate = state => state.settings.endDate;
 const getSentences = state => state.sentences || null;
 const getLocationObject = state => state.location;
-const getOptionsSelected = state => state.optionsSelected;
-const getIndicator = state => state.indicator;
+const getOptionsSelected = state => ({
+  dataset: state.dataType
+});
+const getIndicator = state => state.location;
 const getStartIndex = state => state.settings.startIndex;
 const getEndIndex = state => state.settings.endIndex || null;
 
@@ -179,7 +181,7 @@ export const parseSentence = createSelector(
       indicator: indicatorLabel,
       start_date: moment(startDate).format('Do of MMMM YYYY'),
       end_date: moment(endDate).format('Do of MMMM YYYY'),
-      dataset: dataset && dataset.label,
+      dataset: dataset || null,
       total_alerts: {
         value: total ? format(',')(total) : 0,
         color: colors.main
