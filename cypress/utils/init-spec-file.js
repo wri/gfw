@@ -1,19 +1,20 @@
-function initSpec(title, tests) {
+function initSpec(title, testConfig) {
   describe(title, () => {
     beforeEach(() => {
       cy.server();
-      cy.route("/query/*").as("analysis-service")
+      cy.route('/query/*').as('analysis-service');
     });
-    tests.forEach(test => {
-      describe(test.title, () => {
-        test.specs.forEach(spec => {
+    testConfig.forEach((testGroup) => {
+      describe(testGroup.title, () => {
+        const {spec} = testGroup;
+        testGroup.tests.forEach((test) => {
           if (spec.only) {
-            it.only(spec.description, () => {
-              spec.test(test.mock);
+            it.only(test.description, () => {
+              spec.test(test);
             });
           } else {
-            it(spec.description, () => {
-              spec.test(test.mock);
+            it(test.description, () => {
+              spec.test(test);
             });
           }
         });
