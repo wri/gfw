@@ -68,6 +68,33 @@ const testConfig = [
         sentence:
           'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
       },
+      {
+        slug: 'lossIso',
+        description:
+          'when country with tree cover loss is selected correct sentence template returned',
+        visit: '/dashboards/country/GUY',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
+      },
+      {
+        slug: 'losssAdm1',
+        description:
+          'when admin 1 with tree cover loss is selected correct sentence template returned',
+        visit: '/dashboards/country/GUY/2',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
+      },
+      {
+        slug: 'lossAdm2',
+        description:
+          'when admin 2 with tree cover loss is selected correct sentence template returned',
+        visit: '/dashboards/country/GUY/12/8',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
+      },
     ],
     spec: {
       test: (test) => {
