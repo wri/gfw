@@ -41,6 +41,33 @@ const testConfig = [
         sentence:
           'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions.',
       },
+      {
+        slug: 'plantationsIso',
+        description:
+          'when country with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/ESP',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
+      },
+      {
+        slug: 'plantationsAdm1',
+        description:
+          'when admin 1 with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/ESP/12',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
+      },
+      {
+        slug: 'plantationsAdm2',
+        description:
+          'when admin 2 with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/ESP/12/1',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
+      },
     ],
     spec: {
       test: (test) => {
