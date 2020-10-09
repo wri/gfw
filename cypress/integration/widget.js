@@ -26,7 +26,7 @@ const testConfig = [
       {
         slug: 'indonesiaAdm1',
         description:
-          'when Indonesia is selected correct sentence template returned',
+          'when and admin 1 in Indonesia is selected correct sentence template returned',
         visit: '/dashboards/country/IDN/1',
         selector: '.c-dashboards-header .c-dynamic-sentence',
         sentence:
@@ -35,7 +35,7 @@ const testConfig = [
       {
         slug: 'indonesiaAdm2',
         description:
-          'when Indonesia is selected correct sentence template returned',
+          'when an admin 2 in Indonesia is selected correct sentence template returned',
         visit: '/dashboards/country/IDN/1/1',
         selector: '.c-dashboards-header .c-dynamic-sentence',
         sentence:
