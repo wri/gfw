@@ -95,6 +95,15 @@ const testConfig = [
         sentence:
           'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
       },
+      {
+        slug: 'globalInitial',
+        description:
+          'when global tree cover loss is selected correct sentence template returned',
+        visit: '/dashboards/global',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover.',
+      },
     ],
     spec: {
       test: (test) => {
