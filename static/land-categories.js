@@ -59,19 +59,19 @@ export default [
     tableKey: 'is__birdlife_key_biodiversity_area',
     global: true,
   },
-  {
-    label: 'Tiger Conservation Landscapes',
-    value: 'tiger_cl',
-    metaKey: 'tiger_conservation_landscapes',
-    tableKey: 'is__gfw_tiger_landscape',
-    global: true,
-    datasets: [
-      {
-        dataset: TIGER_CONSERVATION_LANDSCAPES_DATASET,
-        layers: [TIGER_CONSERVATION_LANDSCAPES],
-      },
-    ],
-  },
+  // {
+  //   label: 'Tiger Conservation Landscapes',
+  //   value: 'tiger_cl',
+  //   metaKey: 'tiger_conservation_landscapes',
+  //   tableKey: 'is__gfw_tiger_landscape',
+  //   global: true,
+  //   datasets: [
+  //     {
+  //       dataset: TIGER_CONSERVATION_LANDSCAPES_DATASET,
+  //       layers: [TIGER_CONSERVATION_LANDSCAPES],
+  //     },
+  //   ]
+  // },
   {
     label: 'Alliance for Zero Extinction sites',
     value: 'aze',

@@ -11,14 +11,35 @@ import { getIndicator } from 'utils/format';
 
 const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
 const VIIRS_START_YEAR = 2012;
+const KEYWORD_TYPE_COLUMNS = [
+  "tsc_tree_cover_loss_drivers__type",
+  "esa_land_cover_2015__class",
+  "is__birdlife_alliance_for_zero_extinction_site",
+  "gfw_plantation__type",
+  "is__gmw_mangroves_1996",
+  "is__gmw_mangroves_2016",
+  "is__umd_regional_primary_forest_2001",
+  "is__gfw_tiger_landscape",
+  "is__landmark_land_right",
+  "is__gfw_land_right",
+  "is__birdlife_key_biodiversity_area",
+  "is__gfw_mining",
+  "is__peatland",
+  "is__gfw_oil_palm",
+  "is__idn_forest_moratorium",
+  "is__gfw_wood_fiber",
+  "is__gfw_resource_right",
+  "is__gfw_managed_forest",
+  "wdpa_protected_area__iucn_cat"
+]
 
 const SQL_QUERIES = {
   loss:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
+    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   lossGrouped:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
     'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
@@ -140,12 +161,13 @@ export const getWHEREQuery = params => {
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
-
+      
+      const zeroString = KEYWORD_TYPE_COLUMNS.includes(tableKey) ? "'0'" : "0";
       const polynameString = `
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
 }${
-  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
+  isPolyname && !tableKey.includes('is__') ? `${tableKey} <> ${zeroString}` : ''
 }${
   isPolyname &&
         polynameMeta &&
