@@ -39,6 +39,7 @@ const SearchPage = () => {
 
   return (
     <Layout
+      noIndex
       title="Search"
       description="Search forest information, including forest data, news, updates and more."
     >
