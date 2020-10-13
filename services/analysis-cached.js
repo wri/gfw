@@ -140,8 +140,8 @@ export const getWHEREQuery = params => {
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
-      
-      const zeroString = polynameMeta.dataType === 'keyword' ? "'0'" : "0";
+      console.log('polynameMeta',polynameMeta)
+      const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : "0";
       const polynameString = `
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
