@@ -11,27 +11,6 @@ import { getIndicator } from 'utils/format';
 
 const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
 const VIIRS_START_YEAR = 2012;
-const KEYWORD_TYPE_COLUMNS = [
-  "tsc_tree_cover_loss_drivers__type",
-  "esa_land_cover_2015__class",
-  "is__birdlife_alliance_for_zero_extinction_site",
-  "gfw_plantation__type",
-  "is__gmw_mangroves_1996",
-  "is__gmw_mangroves_2016",
-  "is__umd_regional_primary_forest_2001",
-  "is__gfw_tiger_landscape",
-  "is__landmark_land_right",
-  "is__gfw_land_right",
-  "is__birdlife_key_biodiversity_area",
-  "is__gfw_mining",
-  "is__peatland",
-  "is__gfw_oil_palm",
-  "is__idn_forest_moratorium",
-  "is__gfw_wood_fiber",
-  "is__gfw_resource_right",
-  "is__gfw_managed_forest",
-  "wdpa_protected_area__iucn_cat"
-]
 
 const SQL_QUERIES = {
   loss:
@@ -162,7 +141,7 @@ export const getWHEREQuery = params => {
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
       
-      const zeroString = KEYWORD_TYPE_COLUMNS.includes(tableKey) ? "'0'" : "0";
+      const zeroString = polynameMeta.dataType === 'keyword' ? "'0'" : "0";
       const polynameString = `
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
