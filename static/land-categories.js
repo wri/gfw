@@ -27,6 +27,7 @@ export default [
   {
     label: 'Mining concessions',
     value: 'mining',
+    dataType: 'keyword',
     metaKey: 'gfw_mining',
     tableKey: 'is__gfw_mining',
     global: true,
@@ -40,6 +41,7 @@ export default [
   {
     label: 'Protected Areas',
     value: 'wdpa',
+    dataType: 'keyword',
     metaKey: 'wdpa_protected_areas',
     tableKey: 'wdpa_protected_area__iucn_cat',
     global: true,
@@ -54,6 +56,7 @@ export default [
   {
     label: 'Key Biodiversity Areas',
     preserveString: true,
+    dataType: 'keyword',
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
     tableKey: 'is__birdlife_key_biodiversity_area',
@@ -62,6 +65,7 @@ export default [
   // {
   //   label: 'Tiger Conservation Landscapes',
   //   value: 'tiger_cl',
+  //   dataType: 'keyword',
   //   metaKey: 'tiger_conservation_landscapes',
   //   tableKey: 'is__gfw_tiger_landscape',
   //   global: true,
@@ -75,6 +79,7 @@ export default [
   {
     label: 'Alliance for Zero Extinction sites',
     value: 'aze',
+    dataType: 'keyword',
     preserveString: true,
     metaKey: 'alliance_for_zero_extinction_sites',
     tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
@@ -89,6 +94,7 @@ export default [
   {
     label: 'Indigenous and Community Lands',
     value: 'landmark',
+    dataType: 'keyword',
     metaKey: 'landmark_icls_2020',
     tableKey: 'is__landmark_land_right',
     global: true,
@@ -102,6 +108,7 @@ export default [
   {
     label: 'Indonesia peat lands',
     preserveString: true,
+    dataType: 'keyword',
     value: 'idn_mys_peatlands',
     metaKey: 'idn_peat_lands',
     tableKey: 'is__peatland',
@@ -117,6 +124,7 @@ export default [
   {
     label: 'Indonesia forest moratorium areas',
     preserveString: true,
+    dataType: 'number',
     value: 'idn_forest_moratorium',
     metaKey: 'idn_forest_moratorium',
     tableKey: 'is__idn_forest_moratorium',
@@ -131,6 +139,7 @@ export default [
   {
     label: 'Oil palm concessions',
     value: 'oil_palm',
+    dataType: 'keyword',
     metaKey: 'gfw_oil_palm',
     tableKey: 'is__gfw_oil_palm',
     global: true,
@@ -144,6 +153,7 @@ export default [
   {
     label: 'Wood fiber concessions',
     value: 'wood_fiber',
+    dataType: 'keyword',
     metaKey: 'gfw_wood_fiber',
     tableKey: 'is__gfw_wood_fiber',
     global: true,
@@ -157,6 +167,7 @@ export default [
   {
     label: 'Logging concessions',
     value: 'managed_forests',
+    dataType: 'keyword',
     metaKey: 'gfw_logging',
     tableKey: 'is__gfw_managed_forest',
     global: true,
