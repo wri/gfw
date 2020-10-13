@@ -15,6 +15,7 @@ export default [
   {
     label: 'Plantations',
     value: 'plantations',
+    dataType: 'keyword',
     tableKey: 'gfw_plantation__type',
     metaKey: 'gfw_plantations',
     global: true,
@@ -42,6 +43,7 @@ export default [
   {
     label: 'Intact Forest Landscapes ({iflYear})',
     value: 'ifl',
+    dataType: 'number',
     tableKeys: {
       annual: 'ifl_intact_forest_landscape__year',
       glad: 'is__ifl_intact_forest_landscape_2016',
@@ -63,6 +65,7 @@ export default [
   {
     label: 'Primary Forests (2001, tropics only)',
     value: 'primary_forest',
+    dataType: 'keyword',
     tableKey: 'is__umd_regional_primary_forest_2001',
     metaKey: 'regional_primary_forests',
     global: true,
@@ -76,6 +79,7 @@ export default [
   {
     label: 'Mangrove forests',
     value: 'mangroves_2016',
+    dataType: 'number',
     tableKey: 'is__gmw_mangroves_2016',
     metaKey: 'mangrove_2010_gmw',
     global: true,
@@ -90,6 +94,7 @@ export default [
   {
     label: 'Tree cover loss driver category',
     value: 'tsc',
+    dataType: 'keyword',
     tableKey: 'tsc_tree_cover_loss_drivers__type',
     hidden: true
   }
