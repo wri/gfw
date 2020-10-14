@@ -14,11 +14,11 @@ const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   loss:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
+    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   lossGrouped:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} AND umd_tree_cover_loss__year > 0 GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
     'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
@@ -143,11 +143,12 @@ export const getWHEREQuery = params => {
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
 
+      const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : "0";
       const polynameString = `
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
 }${
-  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not 0` : ''
+  isPolyname && !tableKey.includes('is__') ? `${tableKey} <> ${zeroString}` : ''
 }${
   isPolyname &&
         polynameMeta &&
@@ -269,14 +270,14 @@ export const getLoss = params => {
   const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'change'
   })}${query}`.replace(
     '{WHERE}',
     getWHEREQuery({ ...params, dataset: 'annual' })
-  );
+  ));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -306,14 +307,14 @@ export const getLoss = params => {
 // disaggregated loss for child of location
 export const getLossGrouped = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'change',
     grouped: true
   })}${SQL_QUERIES.lossGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -342,13 +343,13 @@ export const getLossGrouped = params => {
 // summed extent for single location
 export const getExtent = params => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary'
   })}${SQL_QUERIES.extent}`
     .replace(/{extentYear}/g, extentYear)
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -375,7 +376,7 @@ export const getExtent = params => {
 // disaggregated extent for child of location
 export const getExtentGrouped = params => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
@@ -383,7 +384,7 @@ export const getExtentGrouped = params => {
   })}${SQL_QUERIES.extentGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
     .replace(/{extentYear}/g, extentYear)
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -410,14 +411,14 @@ export const getExtentGrouped = params => {
 // summed gain for single location
 export const getGain = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary'
   })}${SQL_QUERIES.gain}`.replace(
     '{WHERE}',
     getWHEREQuery({ ...params, dataset: 'annual' })
-  );
+  ));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -444,14 +445,14 @@ export const getGain = params => {
 // disaggregated gain for child of location
 export const getGainGrouped = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
     grouped: true
   })}${SQL_QUERIES.gainGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -481,7 +482,7 @@ export const getAreaIntersection = params => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary'
@@ -491,7 +492,7 @@ export const getAreaIntersection = params => {
       /{intersection}/g,
       intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
     )
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -523,7 +524,7 @@ export const getAreaIntersectionGrouped = params => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find(o => [forestType, landCategory].includes(o.value));
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
@@ -536,7 +537,7 @@ export const getAreaIntersectionGrouped = params => {
         ? intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
         : ''
     )
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);

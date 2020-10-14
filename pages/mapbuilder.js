@@ -38,6 +38,7 @@ export async function getStaticProps() {
       page: page || {},
       tutorials: tutorials || [],
       apps: sortBy(apps, 'menu_order') || [],
+      metaTags: page?.yoast_head || '',
     },
   };
 }
