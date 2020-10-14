@@ -95,7 +95,7 @@ export const getDatasets = createThunkAction(
                 selectorLayerConfig: {
                   options: layer.map((l) => ({
                     ...l.applicationConfig.selectorConfig,
-                    value: l.id,
+                    value: l?.applicationConfig?.slug,
                   })),
                   ...selectorConfig,
                 },
