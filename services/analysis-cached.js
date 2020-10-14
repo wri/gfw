@@ -32,7 +32,7 @@ const SQL_QUERIES = {
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily:
-    `SELECT {location}, alert__date, alert__year SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__date`,
+    `SELECT {location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__date`,
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
@@ -614,14 +614,16 @@ export const fetchHistoricalAlerts = params => {
 };
 
 export const fetchHistoricalGladAlerts = params => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, startDate, endDate } = params || {};
   const url = `${getRequestUrl({
     ...params,
     dataset: 'glad',
     datasetType: 'daily'
   })}${SQL_QUERIES.gladDaily}`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+    .replace('{startDate}', startDate)
+    .replace('{endDate}', endDate);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -632,6 +634,7 @@ export const fetchHistoricalGladAlerts = params => {
       url: url.replace('query', 'download')
     };
   }
+
   return apiRequest.get(url).then(response => ({
     data: {
       data: response.data.data.map(d => ({
@@ -639,6 +642,8 @@ export const fetchHistoricalGladAlerts = params => {
         date: d.alert__date,
         count: d.alert__count,
         alerts: d.alert__count,
+        year: moment(d.alert__date).year(),
+        week: moment(d.alert__date).week(),
         area_ha: d.alert_area__ha
       }))
     }

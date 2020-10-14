@@ -70,7 +70,6 @@ class WidgetComposedChart extends Component {
     const { originalData, handleChangeSettings } = this.props;
     if (handleChangeSettings) {
       const dataEnd = originalData[endIndex] || originalData[originalData.length - 1];
-
       handleChangeSettings({
         startIndex,
         endIndex,

@@ -4,12 +4,21 @@ import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
+import max from 'lodash/max';
+import min from 'lodash/min';
 
-import { getChartConfig } from 'components/widgets/utils/data';
+import {
+  getStatsData,
+  getDatesData,
+  getChartConfig
+} from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
+const getLatest = state => state.data && state.data.latest;
+const getCompareYear = state => state.settings.compareYear || null;
+const getDataset = state => state.settings.dataset || null;
 const getEndDate = state => state.settings.endDate;
 const getSentences = state => state.sentences || null;
 const getLocationObject = state => state.location;
@@ -41,13 +50,66 @@ export const getData = createSelector(
       count: 0,
       ...data.find(d => d.alert__date === date)
     }));
+    const d = sortBy(zeroFilledData, 'date');
+    return d;
+  }
+);
 
-    return sortBy(zeroFilledData, 'date');
+export const getStats = createSelector([getData, getLatest], (data, latest) => {
+  if (!data) return null;
+  return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
+});
+
+
+export const getDates = createSelector([getStats], data => {
+  if (!data) return null;
+  return getDatesData(data);
+});
+
+export const getMaxMinDates = createSelector(
+  [getData, getDates],
+  (data, currentData) => {
+    if (!data || !currentData) return {};
+    const minYear = min(data.map(d => d.year));
+    const maxYear = max(data.map(d => d.year));
+
+    return {
+      min: minYear,
+      max: maxYear
+    };
+  }
+);
+
+export const parseData = createSelector(
+  [getData, getDates, getMaxMinDates, getCompareYear],
+  (data, currentData, maxminYear, compareYear) => {
+    if (!data || !currentData) return null;
+
+    return currentData.map(d => {
+      const yearDifference = maxminYear.max - d.year;
+      const { week } = d;
+
+      if (compareYear) {
+        const parsedCompareYear = compareYear - yearDifference;
+
+        const compareWeek = data.find(
+          dt => dt.year === parsedCompareYear && dt.week === week
+        );
+
+        return {
+          ...d,
+          compareYear: parsedCompareYear,
+          compareCount: compareWeek ? compareWeek.count : null
+        };
+      }
+
+      return d;
+    });
   }
 );
 
 export const getStartEndIndexes = createSelector(
-  [getStartIndex, getEndIndex, getData],
+  [getStartIndex, getEndIndex, getDates],
   (startIndex, endIndex, currentData) => {
     if (!currentData) {
       return {
@@ -55,9 +117,9 @@ export const getStartEndIndexes = createSelector(
         endIndex
       };
     }
-
     const start =
       startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
+
     const end = endIndex || currentData.length - 1;
 
     return {
@@ -67,9 +129,60 @@ export const getStartEndIndexes = createSelector(
   }
 );
 
+export const parseBrushedData = createSelector(
+  [parseData, getStartEndIndexes],
+  (data, indexes) => {
+    if (!data) return null;
+
+    const { startIndex, endIndex } = indexes;
+
+    const start = startIndex || 0;
+    const end = endIndex || data.length - 1;
+    const d = data.slice(start, end + 1);
+    return d;
+  }
+);
+
+export const getLegend = createSelector(
+  [parseBrushedData, getColors, getCompareYear],
+  (data, colors, compareYear) => {
+    if (!data) return {};
+
+    const first = data[0];
+    const end = data[data.length - 1];
+
+    return {
+      current: {
+        label: `${moment(first.date).format('MMM DD')} – ${moment(
+          end.date
+        ).format('MMM DD')}`,
+        color: colors.main
+      },
+      ...(compareYear && {
+        compare: {
+          label: `${moment(first.date)
+            .set('year', first.compareYear)
+            .format('MMM DD')}–${moment(end.date)
+            .set('year', end.compareYear)
+            .format('MMM DD')}`,
+          color: '#49b5e3'
+        }
+      }),
+      average: {
+        label: 'Normal Range',
+        color: 'rgba(85,85,85, 0.15)'
+      },
+      unusual: {
+        label: 'Above/Below Normal Range',
+        color: 'rgba(85,85,85, 0.25)'
+      }
+    };
+  }
+);
+
 export const parseConfig = createSelector(
-  [getColors, getStartEndIndexes],
-  (colors, indexes) => {
+  [getLegend, getColors, getLatest, getMaxMinDates, getCompareYear, getDataset, getStartEndIndexes],
+  (legend, colors, latest, maxminYear, compareYear, dataset, indexes) => {
     const { startIndex, endIndex } = indexes;
     const tooltip = [
       {
@@ -77,7 +190,7 @@ export const parseConfig = createSelector(
       },
       {
         key: 'count',
-        labelKey: 'alert__date',
+        labelKey: 'date',
         labelFormat: value => moment(value).format('MMM DD YYYY'),
         unit: ' GLAD alerts',
         color: colors.main,
@@ -86,59 +199,89 @@ export const parseConfig = createSelector(
       }
     ];
 
+    if (compareYear) {
+      tooltip.push({
+        key: 'compareCount',
+        labelKey: 'date',
+        labelFormat: value => {
+          const date = moment(value);
+          const yearDifference = maxminYear.max - date.year();
+          date.set('year', compareYear - yearDifference);
+
+          return date.format('MMM DD YYYY');
+        },
+        unit: ` ${dataset.toUpperCase()} alerts`,
+        color: '#49b5e3',
+        nullValue: 'No data available',
+        unitFormat: value =>
+          (Number.isInteger(value) ? format(',')(value) : value)
+      });
+    }
+
     return {
-      ...getChartConfig(colors),
-      tooltip,
+      ...getChartConfig(colors, moment(latest)),
       xAxis: {
-        tickFormatter: t => moment(t).format('MMM DD, YY')
+        tickCount: 12,
+        interval: 4,
+        scale: 'point',
+        tickFormatter: t => moment(t).format('MMM'),
+        ...(typeof endIndex === 'number' &&
+          typeof startIndex === 'number' &&
+          endIndex - startIndex < 10 && {
+          tickCount: 5,
+          interval: 0,
+          tickFormatter: t => moment(t).format('MMM-DD')
+        })
       },
-      // brush: {
-      //   width: '100%',
-      //   height: 60,
-      //   margin: {
-      //     top: 0,
-      //     right: 10,
-      //     left: 48,
-      //     bottom: 12
-      //   },
-      //   minimumGap: 30,
-      //   maximumGap: 0,
-      //   dataKey: 'date',
-      //   startIndex: startIndex || 0,
-      //   endIndex,
-      //   config: {
-      //     margin: {
-      //       top: 5,
-      //       right: 0,
-      //       left: 42,
-      //       bottom: 20
-      //     },
-      //     yKeys: {
-      //       lines: {
-      //         count: {
-      //           stroke: colors.main,
-      //           isAnimationActive: false
-      //         },
-      //         compareCount: {
-      //           stroke: '#49b5e3',
-      //           isAnimationActive: false
-      //         }
-      //       }
-      //     },
-      //     xAxis: {
-      //       hide: true,
-      //       scale: 'point'
-      //     },
-      //     yAxis: {
-      //       hide: true
-      //     },
-      //     cartesianGrid: {
-      //       horizontal: false,
-      //       vertical: false
-      //     },
-      //     height: 60
-      //   }
-      // }
+      legend,
+      tooltip,
+      brush: {
+        width: '100%',
+        height: 60,
+        margin: {
+          top: 0,
+          right: 10,
+          left: 48,
+          bottom: 12
+        },
+        minimumGap: 30,
+        maximumGap: 0,
+        dataKey: 'date',
+        startIndex: startIndex || 0,
+        endIndex,
+        config: {
+          margin: {
+            top: 5,
+            right: 0,
+            left: 42,
+            bottom: 20
+          },
+          yKeys: {
+            lines: {
+              count: {
+                stroke: colors.main,
+                isAnimationActive: false
+              },
+              compareCount: {
+                stroke: '#49b5e3',
+                isAnimationActive: false
+              }
+            }
+          },
+          xAxis: {
+            hide: true,
+            scale: 'point'
+          },
+          yAxis: {
+            hide: true
+          },
+          cartesianGrid: {
+            horizontal: false,
+            vertical: false
+          },
+          height: 60
+        }
+      }
     };
   }
 );
@@ -187,12 +330,14 @@ export const parseSentence = createSelector(
         color: colors.main
       }
     };
+
     return { sentence, params };
   }
 );
 
 export default createStructuredSelector({
-  data: getData,
+  originalData: parseData,
+  data: parseBrushedData,
   config: parseConfig,
   sentence: parseSentence
 });

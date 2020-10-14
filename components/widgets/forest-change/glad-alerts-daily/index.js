@@ -1,4 +1,4 @@
-import { all, spread } from 'axios';
+import moment from 'moment';
 
 import { fetchGLADLatest, fetchHistoricalGladAlerts } from 'services/analysis-cached';
 
@@ -38,8 +38,8 @@ export default {
   settings: {
     dataset: 'glad',
     minDate: '2000-01-01',
-    startDate: '2020-05-01',
-    endDate: '2020-05-10'
+    startDate: '2015-01-01',
+    endDate: '2015-01-20'
   },
   datasets: [
     {
@@ -54,9 +54,9 @@ export default {
   ],
   sentences: {
     initial:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts',
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} glad alerts',
     withInd:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} fire alerts within {indicator}',
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} glas alerts within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.',
   },
   whitelists: {
