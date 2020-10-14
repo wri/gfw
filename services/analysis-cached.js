@@ -142,6 +142,7 @@ export const getWHEREQuery = params => {
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
 
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : "0";
+      
       const polynameString = `
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
@@ -153,9 +154,9 @@ export const getWHEREQuery = params => {
         !tableKey.includes('is__') &&
         polynameMeta.default &&
         polynameMeta.categories
-    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
-      polynameMeta.default
-    }'`
+    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} ${
+      polynameMeta?.dataType === 'keyword' ? `'${polynameMeta.default}'` : `${polynameMeta.default}`
+    }`
     : ''
 }${
   !isPolyname
