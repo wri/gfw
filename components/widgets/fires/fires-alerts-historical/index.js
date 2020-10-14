@@ -311,7 +311,7 @@ export default {
               settings: {
                 startDate:
                   data && data.length > 0 && data[data.length - 1].alert__date,
-                endDate: latest,
+                endDate: latest
               },
             };
           })

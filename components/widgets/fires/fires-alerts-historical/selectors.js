@@ -56,7 +56,7 @@ export const getStartEndIndexes = createSelector(
     }
 
     const start =
-      startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
+      startIndex || startIndex === 0 ? startIndex : currentData.length - 7;
     const end = endIndex || currentData.length - 1;
 
     return {
@@ -74,7 +74,6 @@ export const parseBrushedData = createSelector(
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
-
     return data.slice(start, end + 1);
   }
 );

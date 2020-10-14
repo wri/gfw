@@ -32,7 +32,7 @@ const SQL_QUERIES = {
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily:
-    `SELECT {location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__date`,
+    `SELECT {location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date`,
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
@@ -616,7 +616,7 @@ export const fetchHistoricalAlerts = params => {
 
 export const fetchHistoricalGladAlerts = params => {
   const { forestType, landCategory, ifl, download, startDate, endDate } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'glad',
     datasetType: 'daily'
@@ -624,7 +624,7 @@ export const fetchHistoricalGladAlerts = params => {
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
     .replace('{startDate}', startDate)
-    .replace('{endDate}', endDate);
+    .replace('{endDate}', endDate));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -635,6 +635,8 @@ export const fetchHistoricalGladAlerts = params => {
       url: url.replace('query', 'download')
     };
   }
+
+  console.log('URL', url)
 
   return apiRequest.get(url).then(response => ({
     data: {

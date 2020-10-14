@@ -4,28 +4,17 @@ import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
-import max from 'lodash/max';
-import min from 'lodash/min';
 
-import {
-  getStatsData,
-  getDatesData,
-  getChartConfig
-} from 'components/widgets/utils/data';
+import { getChartConfig } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data;
+const getAlerts = state => state.data?.data || null;
 const getColors = state => state.colors || null;
 const getStartDate = state => state.settings.startDate;
-const getLatest = state => state.data && state.data.latest;
-const getCompareYear = state => state.settings.compareYear || null;
-const getDataset = state => state.settings.dataset || null;
 const getEndDate = state => state.settings.endDate;
 const getSentences = state => state.sentences || null;
 const getLocationObject = state => state.location;
-const getOptionsSelected = state => ({
-  dataset: state.dataType
-});
-const getIndicator = state => state.location;
+const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
 const getStartIndex = state => state.settings.startIndex;
 const getEndIndex = state => state.settings.endIndex || null;
 
@@ -44,74 +33,19 @@ export const getData = createSelector(
   [getAlerts, getStartDate, getEndDate],
   (data, startDate, endDate) => {
     if (!data || isEmpty(data)) return null;
+
     const zeroFilledData = zeroFillDays(startDate, endDate).map(date => ({
       date,
       alert__count: 0,
-      year: moment(date).year(),
-      week: moment(date).week(),
       count: 0,
-      ...data.data.find(d => d.alert__date === date)
+      ...data.find(d => d.alert__date === date)
     }));
-    const d = sortBy(zeroFilledData, 'date');
-    return d;
-  }
-);
-
-export const getStats = createSelector([getData, getLatest], (data, latest) => {
-  if (!data) return null;
-  return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
-});
-
-
-export const getDates = createSelector([getStats], data => {
-  if (!data) return null;
-  return getDatesData(data);
-});
-
-export const getMaxMinDates = createSelector(
-  [getData, getDates],
-  (data, currentData) => {
-    if (!data || !currentData) return {};
-    const minYear = min(data.map(d => d.year));
-    const maxYear = max(data.map(d => d.year));
-
-    return {
-      min: minYear,
-      max: maxYear
-    };
-  }
-);
-
-export const parseData = createSelector(
-  [getData, getDates, getMaxMinDates, getCompareYear],
-  (data, currentData, maxminYear, compareYear) => {
-    if (!data || !currentData) return null;
-
-    return currentData.map(d => {
-      const yearDifference = maxminYear.max - d.year;
-      const { week } = d;
-
-      if (compareYear) {
-        const parsedCompareYear = compareYear - yearDifference;
-
-        const compareWeek = data.find(
-          dt => dt.year === parsedCompareYear && dt.week === week
-        );
-
-        return {
-          ...d,
-          compareYear: parsedCompareYear,
-          compareCount: compareWeek ? compareWeek.count : null
-        };
-      }
-
-      return d;
-    });
+    return sortBy(zeroFilledData, 'date');
   }
 );
 
 export const getStartEndIndexes = createSelector(
-  [getStartIndex, getEndIndex, getDates],
+  [getStartIndex, getEndIndex, getData],
   (startIndex, endIndex, currentData) => {
     if (!currentData) {
       return {
@@ -119,10 +53,12 @@ export const getStartEndIndexes = createSelector(
         endIndex
       };
     }
-    const start =
-      startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
 
-    const end = endIndex || currentData.length - 1;
+    const start =
+      startIndex || startIndex === 0 ? startIndex : currentData.length - 7;
+
+    const end = endIndex && (currentData.length - 1 >= endIndex) ? endIndex : currentData.length - 1;
+
     return {
       startIndex: start,
       endIndex: end
@@ -131,63 +67,25 @@ export const getStartEndIndexes = createSelector(
 );
 
 export const parseBrushedData = createSelector(
-  [parseData, getStartEndIndexes],
+  [getData, getStartEndIndexes],
   (data, indexes) => {
     if (!data) return null;
-
     const { startIndex, endIndex } = indexes;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
-    const d = data.slice(start, end + 1);
-    return d;
-  }
-);
-
-export const getLegend = createSelector(
-  [parseBrushedData, getColors, getCompareYear],
-  (data, colors, compareYear) => {
-    if (!data) return {};
-
-    const first = data[0];
-    const end = data[data.length - 1];
-
-    return {
-      current: {
-        label: `${moment(first.date).format('MMM DD')} – ${moment(
-          end.date
-        ).format('MMM DD')}`,
-        color: colors.main
-      },
-      ...(compareYear && {
-        compare: {
-          label: `${moment(first.date)
-            .set('year', first.compareYear)
-            .format('MMM DD')}–${moment(end.date)
-            .set('year', end.compareYear)
-            .format('MMM DD')}`,
-          color: '#49b5e3'
-        }
-      }),
-      average: {
-        label: 'Normal Range',
-        color: 'rgba(85,85,85, 0.15)'
-      },
-      unusual: {
-        label: 'Above/Below Normal Range',
-        color: 'rgba(85,85,85, 0.25)'
-      }
-    };
+    return data.slice(start, end + 1);
   }
 );
 
 export const parseConfig = createSelector(
-  [getLegend, getColors, getLatest, getMaxMinDates, getCompareYear, getDataset, getStartEndIndexes],
-  (legend, colors, latest, maxminYear, compareYear, dataset, indexes) => {
+  [getColors, getStartEndIndexes],
+  (colors, indexes) => {
     const { startIndex, endIndex } = indexes;
+
     const tooltip = [
       {
-        label: 'Glad alerts'
+        label: 'GLAD alerts'
       },
       {
         key: 'count',
@@ -200,42 +98,12 @@ export const parseConfig = createSelector(
       }
     ];
 
-    if (compareYear) {
-      tooltip.push({
-        key: 'compareCount',
-        labelKey: 'date',
-        labelFormat: value => {
-          const date = moment(value);
-          const yearDifference = maxminYear.max - date.year();
-          date.set('year', compareYear - yearDifference);
-
-          return date.format('MMM DD YYYY');
-        },
-        unit: ` ${dataset.toUpperCase()} alerts`,
-        color: '#49b5e3',
-        nullValue: 'No data available',
-        unitFormat: value =>
-          (Number.isInteger(value) ? format(',')(value) : value)
-      });
-    }
-
     return {
-      ...getChartConfig(colors, moment(latest)),
-      xAxis: {
-        tickCount: 12,
-        interval: 4,
-        scale: 'point',
-        tickFormatter: t => moment(t).format('MMM'),
-        ...(typeof endIndex === 'number' &&
-          typeof startIndex === 'number' &&
-          endIndex - startIndex < 10 && {
-          tickCount: 5,
-          interval: 0,
-          tickFormatter: t => moment(t).format('MMM-DD')
-        })
-      },
-      legend,
+      ...getChartConfig(colors),
       tooltip,
+      xAxis: {
+        tickFormatter: t => moment(t).format('MMM DD, YY')
+      },
       brush: {
         width: '100%',
         height: 60,
@@ -289,31 +157,24 @@ export const parseConfig = createSelector(
 
 export const parseSentence = createSelector(
   [
-    getData,
+    parseBrushedData,
     getColors,
     getSentences,
     getLocationObject,
-    getStartDate,
-    getEndDate,
     getOptionsSelected,
     getIndicator
   ],
-  (
-    data,
-    colors,
-    sentences,
-    location,
-    startDate,
-    endDate,
-    options,
-    indicator
-  ) => {
-    if (!data) return null;
+  (data, colors, sentences, location, options, indicator) => {
+    if (!data || !data.length) return null;
     const { initial, withInd, highConfidence } = sentences;
     const { confidence, dataset } = options;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
+
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
     const total = sumBy(data, 'alert__count');
+
     let sentence = indicator ? withInd : initial;
     sentence =
       confidence && confidence.value === 'h'
@@ -325,19 +186,18 @@ export const parseSentence = createSelector(
       indicator: indicatorLabel,
       start_date: moment(startDate).format('Do of MMMM YYYY'),
       end_date: moment(endDate).format('Do of MMMM YYYY'),
-      dataset: dataset || null,
+      dataset: dataset && dataset.label,
       total_alerts: {
         value: total ? format(',')(total) : 0,
         color: colors.main
       }
     };
-
     return { sentence, params };
   }
 );
 
 export default createStructuredSelector({
-  originalData: parseData,
+  originalData: getData,
   data: parseBrushedData,
   config: parseConfig,
   sentence: parseSentence

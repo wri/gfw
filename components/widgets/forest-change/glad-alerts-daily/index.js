@@ -16,7 +16,7 @@ export default {
   widget: 'gladAlertsDaily',
   title: 'Glad Alerts Count in {location}',
   large: true,
-  refetchKeys: ['startDate', 'endDate'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   settingsConfig: [
     {
       key: 'dataset',
@@ -50,9 +50,9 @@ export default {
   ],
   sentences: {
     initial:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} glad alerts',
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts',
     withInd:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} {dataset} glas alerts within {indicator}',
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.',
   },
   whitelists: {
@@ -279,7 +279,7 @@ export default {
           settings: {
              startDate:
                data && data.length > 0 && data[data.length - 1].alert__date,
-             endDate: latest,
+             endDate: latest
            },
           data
         };
