@@ -21,7 +21,7 @@ export default {
     {
       label: 'Map',
       href: '/map/[[...location]]',
-      as: '/map/global/',
+      as: '/map/',
     },
     {
       label: 'Dashboard',
