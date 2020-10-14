@@ -18,11 +18,7 @@ export default {
   large: true,
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
   settingsConfig: [
-    {
-      key: 'dataset',
-      label: 'glad dataset',
-      type: 'select',
-    },
+
   ],
   visible: ['dashboard', 'analysis'],
   types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
@@ -35,7 +31,8 @@ export default {
   metaKey: 'widget_deforestation_graph',
   settings: {
     dataset: 'glad',
-    minDate: '2000-01-01'
+    minDate: '2000-01-01',
+    confidence: ''
   },
   datasets: [
     {

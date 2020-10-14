@@ -305,7 +305,6 @@ export default {
         })
           .then((response) => {
             const { data } = response.data || {};
-
             return {
               alerts: data,
               settings: {
