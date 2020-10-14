@@ -16,10 +16,11 @@ export default {
   widget: 'gladAlertsDaily',
   title: 'Glad Alerts Count in {location}',
   large: true,
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
-  settingsConfig: [
-
-  ],
+  refetchKeys: ['forestType', 'landCategory'],
+  settingsConfig: [],
+  settings: {
+    minDate: '2000-01-01'
+  },
   visible: ['dashboard', 'analysis'],
   types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
   categories: ['summary', 'forest-change'],
@@ -29,11 +30,6 @@ export default {
   dataType: 'glad',
   colors: 'loss',
   metaKey: 'widget_deforestation_graph',
-  settings: {
-    dataset: 'glad',
-    minDate: '2000-01-01',
-    confidence: ''
-  },
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -49,8 +45,7 @@ export default {
     initial:
       'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts',
     withInd:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts within {indicator}',
-    highConfidence: ', considering <b>high confidence</b> alerts only.',
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts within {indicator}'
   },
   whitelists: {
     adm0: [
