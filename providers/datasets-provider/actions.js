@@ -1,5 +1,4 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
 import chroma from 'chroma-js';
@@ -24,8 +23,8 @@ export const getDatasets = createThunkAction(
   () => (dispatch) => {
     dispatch(setDatasetsLoading({ loading: true, error: false }));
     getDatasetsProvider()
-      .then((allDatasets) => {
-        const parsedDatasets = wriAPISerializer(allDatasets.data)
+      .then(({ data: datasets }) => {
+        const parsedDatasets = datasets
           .filter(
             (d) =>
               d.published &&
@@ -57,7 +56,7 @@ export const getDatasets = createThunkAction(
               isLossLayer,
               isLossDriverLayer,
             } = info || {};
-            const { id, iso, applicationConfig } = defaultLayer || {};
+            const { iso, applicationConfig } = defaultLayer || {};
             const { global, selectorConfig } = applicationConfig || {};
 
             // build statement config
@@ -81,13 +80,15 @@ export const getDatasets = createThunkAction(
             }
 
             return {
-              id: d.id,
-              dataset: d.id,
+              id: applicationConfig?.dataset_slug || applicationConfig.slug,
+              dataset:
+                applicationConfig?.dataset_slug || applicationConfig.slug,
               name: d.name,
-              layer: id,
+              layer: applicationConfig.slug,
               ...applicationConfig,
               ...info,
               iso,
+              slug: applicationConfig?.dataset_slug || applicationConfig.slug,
               tags: flatten(d.vocabulary.map((v) => v.tags)),
               // dropdown selector config
               ...((isSelectorLayer || isMultiSelectorLayer) && {
@@ -166,8 +167,12 @@ export const getDatasets = createThunkAction(
                       return {
                         ...info,
                         ...l,
+                        id: l?.applicationConfig.slug,
                         ...(d.tableName && { tableName: d.tableName }),
                         ...l.applicationConfig,
+                        dataset:
+                          applicationConfig.dataset_slug ||
+                          applicationConfig.slug,
                         // sorting position
                         position: l.applicationConfig.default
                           ? 0
