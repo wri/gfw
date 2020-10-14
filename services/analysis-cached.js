@@ -144,6 +144,8 @@ export const getWHEREQuery = params => {
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
 
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : "0";
+      const isNumericValue = typeof value === 'number' && !['adm0', 'adm1', 'adm2', 'confidence'].includes(p) ? true : false;
+      
       const polynameString = `
         ${
   isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
@@ -162,7 +164,7 @@ export const getWHEREQuery = params => {
 }${
   !isPolyname
     ? `${paramKey} = ${
-      typeof value === 'number' || (p !== 'adm0' && p !== 'confidence')
+      isNumericValue
         ? value
         : `'${value}'`
     }`
