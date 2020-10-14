@@ -1,20 +1,6 @@
 import queryString from 'query-string';
-import oldLayers from 'data/v2-v3-datasets-layers.json';
 import legacyIds from 'data/legacy-ids.json';
 import isEmpty from 'lodash/isEmpty';
-
-const oldLayersAndDatasets = oldLayers.reduce(
-  (obj, item) => ({
-    ...obj,
-    ...(item.v2_dataset_id && {
-      [item.v2_dataset_id]: item.v3_dataset_id,
-    }),
-    ...(item.v2_layer_id && {
-      [item.v2_layer_id]: item.v3_layer_id,
-    }),
-  }),
-  {}
-);
 
 export const decodeParamsForState = (params) => {
   const paramsParsed = {};
@@ -81,13 +67,9 @@ export const decodeUrlForState = (url) => {
               ...arr,
               {
                 ...dataset,
-                dataset:
-                  oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
+                dataset: legacyIds[dataset.dataset] || dataset.dataset,
                 layers: dataset.layers.reduce(
-                  (lArr, layerId) => [
-                    ...lArr,
-                    oldLayersAndDatasets[layerId] || layerId,
-                  ],
+                  (lArr, layerId) => [...lArr, legacyIds[layerId] || layerId],
                   []
                 ),
               },

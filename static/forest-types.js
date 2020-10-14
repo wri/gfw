@@ -2,13 +2,13 @@ import {
   TREE_PLANTATIONS_DATASET,
   INTACT_FOREST_LANDSCAPES_DATASET,
   PRIMARY_FOREST_DATASET,
-  MANGROVE_FORESTS_DATASET
-} from './layers-datasets';
+  MANGROVE_FORESTS_DATASET,
+} from './datasets';
 import {
   TREE_PLANTATIONS,
   INTACT_FOREST_LANDSCAPES,
   PRIMARY_FOREST,
-  MANGROVE_FORESTS
+  MANGROVE_FORESTS,
 } from './layers';
 
 export default [
@@ -31,14 +31,14 @@ export default [
       'Oil Palm Mix',
       'Rubber Mix',
       'Wood fiber / Timber Mix',
-      'Recently Cleared'
+      'Recently Cleared',
     ],
     datasets: [
       {
         dataset: TREE_PLANTATIONS_DATASET,
-        layers: [TREE_PLANTATIONS]
-      }
-    ]
+        layers: [TREE_PLANTATIONS],
+      },
+    ],
   },
   {
     label: 'Intact Forest Landscapes ({iflYear})',
@@ -48,7 +48,7 @@ export default [
       annual: 'ifl_intact_forest_landscape__year',
       glad: 'is__ifl_intact_forest_landscape_2016',
       viirs: 'is__ifl_intact_forest_landscape_2016',
-      modis: 'is__ifl_intact_forest_landscape_2016'
+      modis: 'is__ifl_intact_forest_landscape_2016',
     },
     metaKey: 'intact_forest_landscapes_change',
     global: true,
@@ -58,9 +58,9 @@ export default [
     datasets: [
       {
         dataset: INTACT_FOREST_LANDSCAPES_DATASET,
-        layers: [INTACT_FOREST_LANDSCAPES]
-      }
-    ]
+        layers: [INTACT_FOREST_LANDSCAPES],
+      },
+    ],
   },
   {
     label: 'Primary Forests (2001, tropics only)',
@@ -72,9 +72,9 @@ export default [
     datasets: [
       {
         dataset: PRIMARY_FOREST_DATASET,
-        layers: [PRIMARY_FOREST]
-      }
-    ]
+        layers: [PRIMARY_FOREST],
+      },
+    ],
   },
   {
     label: 'Mangrove forests',
@@ -86,16 +86,16 @@ export default [
     datasets: [
       {
         dataset: MANGROVE_FORESTS_DATASET,
-        layers: [MANGROVE_FORESTS]
-      }
+        layers: [MANGROVE_FORESTS],
+      },
     ],
-    hidden: false
+    hidden: false,
   },
   {
     label: 'Tree cover loss driver category',
     value: 'tsc',
     dataType: 'keyword',
     tableKey: 'tsc_tree_cover_loss_drivers__type',
-    hidden: true
-  }
+    hidden: true,
+  },
 ];
