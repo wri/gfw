@@ -5,7 +5,7 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,

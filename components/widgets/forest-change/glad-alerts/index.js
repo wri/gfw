@@ -5,7 +5,7 @@ import tropicalIsos from 'data/tropical-isos.json';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   GLAD_DEFORESTATION_ALERTS_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,

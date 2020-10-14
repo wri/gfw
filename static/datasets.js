@@ -1,11 +1,9 @@
 export const POLITICAL_BOUNDARIES_DATASET =
   '0b0208b6-b424-4b57-984f-caddfa25ba22';
-
 export const FOREST_GAIN_DATASET = '190acb0d-2b06-48d8-b894-234a7413674b';
+export const FOREST_LOSS_DATASET = 'tree-cover-loss';
 
-export const FOREST_LOSS_DATASET = 'b584954c-0d8d-40c6-859c-f3fdf3c2c5df';
-
-export const FOREST_EXTENT_DATASET = 'c92b6411-f0e5-4606-bbd9-138e40e50eb8';
+export const FOREST_EXTENT_DATASET = 'tree-cover';
 
 export const GLAD_DEFORESTATION_ALERTS_DATASET =
   'bfd1d211-8106-4393-86c3-9e1ab2ee1b9b';

@@ -2,13 +2,13 @@ import { getExtentGrouped } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_EXTENT_DATASET
-} from 'data/layers-datasets';
+  FOREST_EXTENT_DATASET,
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
-  TREE_COVER
+  TREE_COVER,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -17,7 +17,7 @@ export default {
   widget: 'treeCoverLocated',
   title: {
     global: 'Global Location of forest',
-    initial: 'Location of forest in {location}'
+    initial: 'Location of forest in {location}',
   },
   categories: ['summary', 'land-cover'],
   types: ['global', 'country'],
@@ -28,7 +28,7 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -36,26 +36,26 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'unit',
       label: 'unit',
       type: 'switch',
-      whitelist: ['ha', '%']
+      whitelist: ['ha', '%'],
     },
     {
       key: 'extentYear',
       label: 'extent year',
       type: 'switch',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   refetchKeys: ['extentYear', 'forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
@@ -65,20 +65,20 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // tree cover
     {
       dataset: FOREST_EXTENT_DATASET,
       layers: {
         2010: FOREST_EXTENT,
-        2000: TREE_COVER
-      }
-    }
+        2000: TREE_COVER,
+      },
+    },
   ],
   sortOrder: {
     summary: 5,
-    landCover: 2
+    landCover: 2,
   },
   settings: {
     threshold: 30,
@@ -86,7 +86,7 @@ export default {
     unit: 'ha',
     pageSize: 5,
     page: 0,
-    ifl: 2000
+    ifl: 2000,
   },
   sentences: {
     globalInitial:
@@ -113,22 +113,22 @@ export default {
       'In {location} as of {year}, the top {count} regions represent {percentage} of {indicator}. {region} had the most relative tree cover at {value} compared to an average of {average}.',
     percLandCatOnly:
       'In {location} as of {year}, the top {count} regions represent {percentage} of tree cover in {indicator}. {region} had the most relative tree cover at {value} compared to an average of {average}.',
-    noCover: 'No tree cover was identified in {location}.'
+    noCover: 'No tree cover was identified in {location}.',
   },
   data: [
     {
       data: 'extent',
       threshold: 'current',
-      indicator: 'gadm28'
+      indicator: 'gadm28',
     },
     {
       data: 'extent',
       threshold: 'current',
-      indicator: 'current'
-    }
+      indicator: 'current',
+    },
   ],
-  getData: params =>
-    getExtentGrouped(params).then(response => {
+  getData: (params) =>
+    getExtentGrouped(params).then((response) => {
       const { data } = response.data;
       let mappedData = {};
       if (data && data.length) {
@@ -136,21 +136,21 @@ export default {
         if (params.adm0) groupKey = 'adm1';
         if (params.adm1) groupKey = 'adm2';
 
-        mappedData = data.map(d => ({
+        mappedData = data.map((d) => ({
           id: parseInt(d[groupKey], 10),
           extent: d.extent || 0,
-          percentage: d.extent ? d.extent / d.total_area * 100 : 0
+          percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
         }));
         if (!params.type || params.type === 'global') {
-          mappedData = data.map(d => ({
+          mappedData = data.map((d) => ({
             id: d.iso,
             extent: d.extent || 0,
-            percentage: d.extent ? d.extent / d.total_area * 100 : 0
+            percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
           }));
         }
       }
       return mappedData;
     }),
-  getDataURL: params => [getExtentGrouped({ ...params, download: true })],
-  getWidgetProps
+  getDataURL: (params) => [getExtentGrouped({ ...params, download: true })],
+  getWidgetProps,
 };

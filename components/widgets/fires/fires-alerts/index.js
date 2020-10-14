@@ -7,7 +7,7 @@ import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FIRES_VIIRS_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
