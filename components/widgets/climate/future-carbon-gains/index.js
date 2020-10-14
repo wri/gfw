@@ -3,13 +3,13 @@ import { getEmissions } from 'services/climate';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  PROJECTED_CARBON_STORAGE_FOREST_REGROWTH,
-} from 'data/datasets';
+  PROJECTED_CARBON_STORAGE_FOREST_REGROWTH_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   POTENTIAL_CARBON_GAINS,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -46,7 +46,7 @@ export default {
     },
     // potential carbon gains
     {
-      dataset: PROJECTED_CARBON_STORAGE_FOREST_REGROWTH,
+      dataset: PROJECTED_CARBON_STORAGE_FOREST_REGROWTH_DATASET,
       layers: [POTENTIAL_CARBON_GAINS],
     },
   ],

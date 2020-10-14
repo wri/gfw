@@ -5,12 +5,12 @@ import biomassLossIsos from 'data/biomass-isos.json';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   BIOMASS_LOSS_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   BIOMASS_LOSS,
-} from 'data/layers';
+} from 'constants/layers';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';

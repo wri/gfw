@@ -5,12 +5,12 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
-} from 'data/layers';
+} from 'constants/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';

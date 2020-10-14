@@ -3,12 +3,12 @@ import { getGlobalLandCover } from 'services/forest-data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   LAND_COVER_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   LAND_COVER,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 

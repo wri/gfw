@@ -1,11 +1,11 @@
 import { getUSLandCover } from 'services/forest-data';
-import { USA_LAND_COVER_DATASET } from 'data/datasets';
+import { USA_LAND_COVER_DATASET } from 'constants/datasets';
 import {
   USA_LAND_COVER_2001,
   USA_LAND_COVER_2006,
   USA_LAND_COVER_2011,
   USA_LAND_COVER_2016,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 

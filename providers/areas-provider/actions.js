@@ -6,14 +6,14 @@ import {
   FOREST_GAIN_DATASET,
   FOREST_LOSS_DATASET,
   FOREST_EXTENT_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_GAIN,
   FOREST_LOSS,
   FOREST_EXTENT,
-} from 'data/layers';
+} from 'constants/layers';
 
 import { getAreas, getArea } from 'services/areas';
 

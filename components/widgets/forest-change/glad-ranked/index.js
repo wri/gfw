@@ -4,12 +4,12 @@ import tropicalIsos from 'data/tropical-isos.json';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   GLAD_DEFORESTATION_ALERTS_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   GLAD_ALERTS,
-} from 'data/layers';
+} from 'constants/layers';
 
 import {
   getExtentGrouped,

@@ -7,12 +7,12 @@ import { all, spread } from 'axios';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_PLANTATIONS_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   TREE_PLANTATIONS,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 

@@ -6,12 +6,12 @@ import { getYearsRangeFromData } from 'components/widgets/utils/data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_LOSS_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 

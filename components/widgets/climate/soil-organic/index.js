@@ -3,12 +3,12 @@ import { getSoilOrganicCarbon } from 'services/climate';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   SOIL_CARBON_DENSITY_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   SOIL_CARBON_DENSITY,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 

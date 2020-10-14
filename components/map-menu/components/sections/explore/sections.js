@@ -21,7 +21,7 @@ import {
   OIL_PALM_DATASET,
   LOGGING_CONCESSIONS_DATASET,
   FIRES_VIIRS_DATASET,
-} from 'data/datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
@@ -39,7 +39,7 @@ import {
   OIL_PALM,
   LOGGING_CONCESSIONS,
   FIRES_ALERTS_VIIRS,
-} from 'data/layers';
+} from 'constants/layers';
 
 export const descriptions = {
   topics: 'Explore data related to the drivers and impacts of forest change.',
