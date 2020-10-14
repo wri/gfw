@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import { fetchGLADLatest, fetchHistoricalGladAlerts } from 'services/analysis-cached';
 
 import {
@@ -37,9 +35,7 @@ export default {
   metaKey: 'widget_deforestation_graph',
   settings: {
     dataset: 'glad',
-    minDate: '2000-01-01',
-    startDate: '2015-01-01',
-    endDate: '2015-01-20'
+    minDate: '2000-01-01'
   },
   datasets: [
     {
@@ -279,7 +275,16 @@ export default {
         endDate: latest
       }).then((alerts) => {
         const { data } = alerts.data;
-        return data;
+        return {
+          settings: {
+             startDate:
+               data && data.length > 0 && data[data.length - 1].alert__date,
+             endDate: latest,
+           },
+          data
+        };
+  }).catch(() => {
+    return null;
   })),
   getDataURL: (params) => [
     fetchHistoricalGladAlerts({ ...params, frequency: 'daily', download: true }),

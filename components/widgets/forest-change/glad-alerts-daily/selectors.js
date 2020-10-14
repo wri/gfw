@@ -47,8 +47,10 @@ export const getData = createSelector(
     const zeroFilledData = zeroFillDays(startDate, endDate).map(date => ({
       date,
       alert__count: 0,
+      year: moment(date).year(),
+      week: moment(date).week(),
       count: 0,
-      ...data.find(d => d.alert__date === date)
+      ...data.data.find(d => d.alert__date === date)
     }));
     const d = sortBy(zeroFilledData, 'date');
     return d;
@@ -121,7 +123,6 @@ export const getStartEndIndexes = createSelector(
       startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
 
     const end = endIndex || currentData.length - 1;
-
     return {
       startIndex: start,
       endIndex: end
