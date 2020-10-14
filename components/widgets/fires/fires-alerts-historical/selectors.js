@@ -56,7 +56,7 @@ export const getStartEndIndexes = createSelector(
     }
 
     const start =
-      startIndex || startIndex === 0 ? startIndex : currentData.length - 7;
+      startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
     const end = endIndex || currentData.length - 1;
 
     return {
