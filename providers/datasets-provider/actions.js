@@ -2,6 +2,7 @@ import { createAction, createThunkAction } from 'redux/actions';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
 import chroma from 'chroma-js';
+import wriAPISerializer from 'wri-json-api-serializer';
 
 import { getDatasetsProvider } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
@@ -24,7 +25,7 @@ export const getDatasets = createThunkAction(
     dispatch(setDatasetsLoading({ loading: true, error: false }));
     getDatasetsProvider()
       .then(({ data: datasets }) => {
-        const parsedDatasets = datasets
+        const parsedDatasets = wriAPISerializer(datasets)
           .filter(
             (d) =>
               d.published &&
