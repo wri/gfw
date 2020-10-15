@@ -2,6 +2,25 @@ import queryString from 'query-string';
 import legacyIds from 'data/legacy-ids.json';
 import isEmpty from 'lodash/isEmpty';
 
+const idToSlugDict = legacyIds.reduce(
+  (obj, item) => ({
+    ...obj,
+    ...(item.v2_dataset_id && {
+      [item.v2_dataset_id]: item.dataset_slug,
+    }),
+    ...(item.v3_dataset_id && {
+      [item.v3_dataset_id]: item.dataset_slug,
+    }),
+    ...(item.v2_layer_id && {
+      [item.v2_layer_id]: item.layer_slug,
+    }),
+    ...(item.v3_layer_id && {
+      [item.v3_layer_id]: item.layer_slug,
+    }),
+  }),
+  {}
+);
+
 export const decodeParamsForState = (params) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
@@ -29,9 +48,12 @@ export const decodeParamsForState = (params) => {
               ...arr,
               {
                 ...dataset,
-                dataset: legacyIds[dataset.dataset] || dataset.dataset,
+                dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
                 layers: dataset.layers.reduce(
-                  (lArr, layerId) => [...lArr, legacyIds[layerId] || layerId],
+                  (lArr, layerId) => [
+                    ...lArr,
+                    idToSlugDict[layerId] || layerId,
+                  ],
                   []
                 ),
               },
@@ -67,9 +89,12 @@ export const decodeUrlForState = (url) => {
               ...arr,
               {
                 ...dataset,
-                dataset: legacyIds[dataset.dataset] || dataset.dataset,
+                dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
                 layers: dataset.layers.reduce(
-                  (lArr, layerId) => [...lArr, legacyIds[layerId] || layerId],
+                  (lArr, layerId) => [
+                    ...lArr,
+                    idToSlugDict[layerId] || layerId,
+                  ],
                   []
                 ),
               },
