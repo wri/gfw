@@ -7812,10 +7812,10 @@ gettext-parser@^1.3.1:
     encoding "^0.1.12"
     safe-buffer "^5.1.1"
 
-gfw-components@^1.3.11:
-  version "1.3.11"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.3.11.tgz#c869e09fcb12ea87cf457cf7c641bdae0d8decf7"
-  integrity sha512-pqhrQZKRZ+T5P2gRskg4HDVdVrsbZuAjMNMeLIusRVZfYlGU8cU94Lut2+iAv2m+/QpsBA351vQCBO/qOVPhVw==
+gfw-components@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.4.0.tgz#52dd5cf5888ce0ef5c3d73cfcd22c2bfbbdd46d1"
+  integrity sha512-MIrQ4oynyOMNSTxhZmxL4XKExzUnaIi37BKXYaYJ/jkVtQpXB5ZhbjUr+zjGtmTbAc5sWXPiufBZTct/DrVFJw==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
