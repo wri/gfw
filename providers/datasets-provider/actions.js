@@ -1,8 +1,8 @@
 import { createAction, createThunkAction } from 'redux/actions';
+import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
 import chroma from 'chroma-js';
-import wriAPISerializer from 'wri-json-api-serializer';
 
 import { getDatasetsProvider } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
@@ -24,8 +24,8 @@ export const getDatasets = createThunkAction(
   () => (dispatch) => {
     dispatch(setDatasetsLoading({ loading: true, error: false }));
     getDatasetsProvider()
-      .then(({ data: datasets }) => {
-        const parsedDatasets = wriAPISerializer(datasets)
+      .then((allDatasets) => {
+        const parsedDatasets = wriAPISerializer(allDatasets.data)
           .filter(
             (d) =>
               d.published &&
@@ -126,7 +126,7 @@ export const getDatasets = createThunkAction(
                         source, // v3
                         decode_function, // v3
                       } = layerConfig;
-                      const { tiles } = source; // previously url
+                      const { tiles } = source || {}; // previously url
                       const decodeFunction =
                         decodeLayersConfig[decode_function];
                       const customColor =
