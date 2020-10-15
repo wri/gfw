@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'redux/registry';
 
+import { setMenuSettings } from 'components/map-menu/actions';
+
 import {
   setMapPromptsSettings,
   setShowMapPrompts,
 } from 'components/prompts/map-prompts/actions';
+
 import { selectShowMapPrompts } from 'components/prompts/map-prompts/selectors';
 
 import MapWelcomeImage1 from 'assets/images/map-welcome-1.png';
@@ -19,7 +22,7 @@ const mapTourSteps = [
   {
     label: 'Explore recent deforestation and fire alerts',
     thumbnail: MapWelcomeImage1,
-    promptKey: 'recentImageryTour',
+    promptKey: 'gladsFiresTour',
   },
   {
     label: 'Analyze historical trends in tree cover loss and gain since 2000',
@@ -29,7 +32,7 @@ const mapTourSteps = [
   {
     label: 'Read the latest reporting on tropical forest loss',
     thumbnail: MapWelcomeImage3,
-    promptKey: 'analyzeAnAreaTour',
+    explore: 'placesToWatch'
   },
 ];
 
@@ -57,4 +60,5 @@ export default connect(mapStateToProps, {
   ...actions,
   setMapPromptsSettings,
   setShowMapPrompts,
+  setMenuSettings,
 })(Component);

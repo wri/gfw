@@ -21,6 +21,8 @@ $desktop-padding: rem(40px);
   }
 
   .intro {
+    font-size: rem(18px);
+    font-weight: 300;
     margin-bottom: rem(30px);
   }
 
@@ -70,6 +72,10 @@ $desktop-padding: rem(40px);
       font-size: rem(14px);
       color: $slate-light;
     }
+
+    &:first-child { margin-left: 0; }
+    &:last-child { margin-right: 0; }
+
   }
 
   .map-tour-thumbnail {

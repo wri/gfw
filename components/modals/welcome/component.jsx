@@ -16,6 +16,7 @@ class ModalWelcome extends PureComponent {
       setMapPromptsSettings,
       setShowMapPrompts,
       setModalWelcome,
+      setMenuSettings,
       description,
       mapTourSteps,
       showPrompts,
@@ -31,12 +32,22 @@ class ModalWelcome extends PureComponent {
                   className="guide-btn"
                   onClick={() => {
                     setModalWelcome(false);
-                    setMapPromptsSettings({
-                      open: true,
-                      stepsKey: step.promptKey,
-                      stepIndex: 0,
-                      force: true,
-                    });
+
+                    if (!step.promtKey && step.explore) {
+                      setMenuSettings({
+                        menuSection: 'explore',
+                        exploreType: step.explore
+                      });
+                    }
+
+                   if (step.promptKey) {
+                      setMapPromptsSettings({
+                         open: true,
+                         stepsKey: step.promptKey,
+                         stepIndex: 0,
+                         force: true,
+                       });
+                    }
                   }}
                 >
                   <img
@@ -72,7 +83,7 @@ class ModalWelcome extends PureComponent {
             {' '}
             or
             {' '}
-            <Link href="">visit the Help Center</Link>
+            <a href="https://www.globalforestwatch.org/help/">visit the Help Center</a>
             {' '}
             for tutorials.
           </p>
@@ -112,6 +123,7 @@ ModalWelcome.propTypes = {
   showPrompts: PropTypes.bool,
   description: PropTypes.string,
   setModalWelcome: PropTypes.func,
+  setMenuSettings: PropTypes.func,
   mapTourSteps: PropTypes.array,
   setMapPromptsSettings: PropTypes.func,
   setShowMapPrompts: PropTypes.func,
