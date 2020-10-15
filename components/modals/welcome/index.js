@@ -6,18 +6,29 @@ import {
   setShowMapPrompts,
 } from 'components/prompts/map-prompts/actions';
 import { selectShowMapPrompts } from 'components/prompts/map-prompts/selectors';
+
+import MapWelcomeImage1 from 'assets/images/map-welcome-1.png';
+import MapWelcomeImage2 from 'assets/images/map-welcome-2.png';
+import MapWelcomeImage3 from 'assets/images/map-welcome-3.png';
+
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapTourSteps = [
   {
-    label: 'View recent satellite imagery, searchable by date and cloud cover.',
+    label: 'Explore recent deforestation and fire alerts',
+    thumbnail: MapWelcomeImage1,
     promptKey: 'recentImageryTour',
   },
   {
-    label:
-      'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
+    label: 'Analyze historical trends in tree cover loss and gain since 2000',
+    thumbnail: MapWelcomeImage2,
+    promptKey: 'analyzeAnAreaTour',
+  },
+  {
+    label: 'Read the latest reporting on tropical forest loss',
+    thumbnail: MapWelcomeImage3,
     promptKey: 'analyzeAnAreaTour',
   },
 ];
@@ -32,9 +43,7 @@ const mapStateToProps = (state) => {
     title: hideModal
       ? 'Map How-To Guide'
       : 'Welcome to the new Global Forest Watch map!',
-    description: hideModal
-      ? ''
-      : "We've made exciting changes to the map to make it faster, more powerful, and easier to use.",
+    description: 'What yould you like to do?'
   };
 };
 

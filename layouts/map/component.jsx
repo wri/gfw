@@ -13,6 +13,7 @@ import AreasProvider from 'providers/areas-provider';
 import PlanetBasemapsProvider from 'providers/planet-provider';
 
 import Map from 'components/map';
+import ModalWelcome from 'components/modals/welcome';
 import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
@@ -83,7 +84,7 @@ class MainMapComponent extends PureComponent {
             <Media greaterThanOrEqual="md">
               <>
                 {!embed && <MapPrompts />}
-                {/* <ModalWelcome /> */}
+                <ModalWelcome />
                 <MapControlButtons className="main-map-controls" isDesktop />
               </>
             </Media>
