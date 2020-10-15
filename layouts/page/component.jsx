@@ -5,11 +5,12 @@ import { initAnalytics, handlePageTrack } from 'analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 import useRouter from 'utils/router';
+import moment from 'moment';
 
-import { Footer } from 'gfw-components';
+import { Footer, Header } from 'gfw-components';
 import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
+import { getMomentLangCode } from 'utils/lang';
 
-import Header from 'components/header';
 import Cookies from 'components/cookies';
 import ContactUsModal from 'components/modals/contact-us';
 import NavLink from 'components/nav-link';
@@ -23,7 +24,6 @@ import './styles.scss';
 
 class App extends PureComponent {
   static propTypes = {
-    loggedIn: PropTypes.bool,
     children: PropTypes.node,
     router: PropTypes.object,
     fullScreen: PropTypes.bool,
@@ -34,6 +34,8 @@ class App extends PureComponent {
     keywords: PropTypes.string,
     noIndex: PropTypes.bool,
     embed: PropTypes.bool,
+    setSearchQuery: PropTypes.func,
+    lang: PropTypes.string,
   };
 
   static defaultProps = {
@@ -54,11 +56,16 @@ class App extends PureComponent {
     if (!isValidBrowser) {
       push('/browser-support');
     }
+
+    moment.locale(getMomentLangCode(this.props.lang));
   }
+
+  handleLangSelect = (lang) => {
+    moment.locale(getMomentLangCode(lang));
+  };
 
   render() {
     const {
-      loggedIn,
       children,
       fullScreen,
       showHeader,
@@ -67,7 +74,9 @@ class App extends PureComponent {
       description,
       keywords,
       noIndex,
+      setSearchQuery,
     } = this.props;
+    const { push } = useRouter();
 
     return (
       <>
@@ -80,19 +89,26 @@ class App extends PureComponent {
         <MediaContextProvider>
           <div className={cx('l-root', { '-full-screen': fullScreen })}>
             {showHeader && (
-              <Header
-                loggedIn={loggedIn}
-                fullScreen={fullScreen}
-                NavLinkComponent={({
-                  children: headerChildren,
-                  className,
-                  ...props
-                }) => (
-                  <NavLink {...props}>
-                    <a className={className}>{headerChildren}</a>
-                  </NavLink>
-                )}
-              />
+              <div className="header-wrapper">
+                <Header
+                  fullScreen={fullScreen}
+                  NavLinkComponent={({
+                    children: headerChildren,
+                    className,
+                    ...props
+                  }) =>
+                    props?.href ? (
+                      <NavLink {...props}>
+                        <a className={className}>{headerChildren}</a>
+                      </NavLink>
+                    ) : null}
+                  openContactUsModal={() => setModalContactUsOpen(true)}
+                  setQueryToUrl={(query) => {
+                    push('/search/', `/search/?query=${query}`);
+                    setSearchQuery(query);
+                  }}
+                />
+              </div>
             )}
             <div className="page">{children}</div>
             <FiresModal />

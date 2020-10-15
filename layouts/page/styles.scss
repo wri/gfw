@@ -1,6 +1,17 @@
 @import '~styles/settings.scss';
 
 .l-root {
+  .header-wrapper {
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    top: 0;
+
+    @media screen and (min-width: $screen-m) {
+      position: relative;
+    }
+  }
+
   .page-logo {
     position: absolute;
     top: 0;
