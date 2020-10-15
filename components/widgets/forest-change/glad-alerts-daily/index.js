@@ -1,14 +1,17 @@
-import { fetchGLADLatest, fetchHistoricalGladAlerts } from 'services/analysis-cached';
+import {
+  fetchGLADLatest,
+  fetchHistoricalGladAlerts,
+} from 'services/analysis-cached';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET
+  GLAD_DEFORESTATION_ALERTS_DATASET,
 } from 'data/layers-datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  GLAD_ALERTS
+  GLAD_ALERTS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -33,10 +36,10 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
-    }
+    },
   ],
   settings: {
-    minDate: '2000-01-01'
+    minDate: '2000-01-01',
   },
   visible: ['dashboard', 'analysis'],
   types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
@@ -60,37 +63,44 @@ export default {
   ],
   sentences: {
     initial:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts',
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts.',
     withInd:
-      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts within {indicator}'
+      'Between {start_date} and {end_date} {location} experienced a total of {total_alerts} glad alerts within {indicator}.',
   },
   whitelists: {
     adm0: tropicalIsos,
   },
   getData: (params) =>
-  fetchGLADLatest(params)
-    .then((response) => response?.attributes?.updatedAt || null)
-    .then((latest) =>
-      fetchHistoricalGladAlerts({
-        ...params,
-        frequency: 'daily',
-        startDate: params.minDate,
-        endDate: latest
-      }).then((alerts) => {
-        const { data } = alerts.data;
-        return {
-          settings: {
-             startDate:
-               data && data.length > 0 && data[data.length - 1].alert__date,
-             endDate: latest
-           },
-          data
-        };
-  }).catch(() => {
-    return null;
-  })),
+    fetchGLADLatest(params)
+      .then((response) => response?.attributes?.updatedAt || null)
+      .then((latest) =>
+        fetchHistoricalGladAlerts({
+          ...params,
+          frequency: 'daily',
+          startDate: params.minDate,
+          endDate: latest,
+        })
+          .then((alerts) => {
+            const { data } = alerts.data;
+            return {
+              settings: {
+                startDate:
+                  data && data.length > 0 && data[data.length - 1].alert__date,
+                endDate: latest,
+              },
+              data,
+            };
+          })
+          .catch(() => {
+            return null;
+          })
+      ),
   getDataURL: (params) => [
-    fetchHistoricalGladAlerts({ ...params, frequency: 'daily', download: true }),
+    fetchHistoricalGladAlerts({
+      ...params,
+      frequency: 'daily',
+      download: true,
+    }),
   ],
   getWidgetProps,
 };
