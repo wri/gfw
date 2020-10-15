@@ -12,15 +12,6 @@
     }
   }
 
-  .page-logo {
-    position: absolute;
-    top: 0;
-    left: rem(15px);
-    z-index: 2;
-    display: none;
-    width: rem(76px);
-  }
-
   .page {
     position: relative;
     min-height: calc(100vh - 56px - 583px);
@@ -48,6 +39,7 @@
       width: 100%;
       background-color: $ocean;
       top: 0;
+      z-index: 2;
 
       @media screen and (min-width: $screen-m) {
         right: 0;

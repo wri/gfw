@@ -89,26 +89,25 @@ class App extends PureComponent {
         <MediaContextProvider>
           <div className={cx('l-root', { '-full-screen': fullScreen })}>
             {showHeader && (
-              <div className="header-wrapper">
-                <Header
-                  fullScreen={fullScreen}
-                  NavLinkComponent={({
-                    children: headerChildren,
-                    className,
-                    ...props
-                  }) =>
-                    props?.href ? (
-                      <NavLink {...props}>
-                        <a className={className}>{headerChildren}</a>
-                      </NavLink>
-                    ) : null}
-                  openContactUsModal={() => setModalContactUsOpen(true)}
-                  setQueryToUrl={(query) => {
-                    push('/search/', `/search/?query=${query}`);
-                    setSearchQuery(query);
-                  }}
-                />
-              </div>
+              <Header
+                className="header-wrapper"
+                NavLinkComponent={({
+                  children: headerChildren,
+                  className,
+                  ...props
+                }) =>
+                  props?.href ? (
+                    <NavLink {...props}>
+                      <a className={className}>{headerChildren}</a>
+                    </NavLink>
+                  ) : null}
+                openContactUsModal={() => setModalContactUsOpen(true)}
+                setQueryToUrl={(query) => {
+                  push('/search/', `/search/?query=${query}`);
+                  setSearchQuery(query);
+                }}
+                fullScreen={fullScreen}
+              />
             )}
             <div className="page">{children}</div>
             <FiresModal />
