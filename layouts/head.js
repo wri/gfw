@@ -35,7 +35,7 @@ class AppHead extends PureComponent {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/preview.jpg" />
-        {noIndex && <meta name="robots" content="noindex" />}
+        {noIndex && <meta name="robots" content="noindex,follow" />}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
