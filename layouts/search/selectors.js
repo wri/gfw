@@ -1,7 +1,7 @@
 import { createStructuredSelector } from 'reselect';
 
 // get list data
-const selectQuery = (state) => state.location?.query?.query;
+const selectQuery = (state) => state.search?.query;
 const selectSearchData = (state) => state.search && state.search.data;
 const selectSearchLoading = (state) => state.search && state.search.loading;
 
