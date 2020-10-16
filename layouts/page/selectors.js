@@ -30,4 +30,5 @@ export const getPageProps = createStructuredSelector({
   authenticating: selectLoggingIn,
   isGFW: getIsGFW,
   isTrase: getIsTrase,
+  lang: selectActiveLang,
 });
