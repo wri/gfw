@@ -5,6 +5,7 @@ import Link from 'next/link';
 import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
+import { Media } from 'utils/responsive';
 
 import { Carousel } from 'gfw-components';
 
@@ -115,15 +116,30 @@ class HomePage extends PureComponent {
                 <Icon icon={arrowIcon} />
               </Button>
               {summary && (
-                <Carousel settings={{ dots: true }}>
-                  {summary.map((c) => (
-                    <Card
-                      className="summary-card"
-                      key={c.title}
-                      data={{ ...c, fullSummary: true }}
-                    />
-                  ))}
-                </Carousel>
+                <>
+                  <Media greaterThanOrEqual="md">
+                    <Carousel settings={{ dots: true }}>
+                      {summary.map((c) => (
+                        <Card
+                          className="summary-card"
+                          key={c.title}
+                          data={{ ...c, fullSummary: true }}
+                        />
+                      ))}
+                    </Carousel>
+                  </Media>
+                  <Media lessThan="md">
+                    <Carousel settings={{ dots: true, slidesToShow: 1 }}>
+                      {summary.map((c) => (
+                        <Card
+                          className="summary-card"
+                          key={c.title}
+                          data={{ ...c, fullSummary: true }}
+                        />
+                      ))}
+                    </Carousel>
+                  </Media>
+                </>
               )}
             </div>
           </div>
@@ -238,28 +254,56 @@ class HomePage extends PureComponent {
               {newsLoading && <Loader className="news-loader" />}
               <div className="news-carousel">
                 {!newsLoading && news ? (
-                  <Carousel
-                    settings={{
-                      slidesToShow: 3,
-                    }}
-                  >
-                    {news.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.link}
-                        target="_blank"
-                        className="news-card"
-                        rel="noopener noreferrer"
+                  <>
+                    <Media greaterThanOrEqual="md">
+                      <Carousel
+                        settings={{
+                          slidesToShow: 3,
+                        }}
                       >
-                        <Card
-                          data={{
-                            title: item.name,
-                            summary: item.description,
-                          }}
-                        />
-                      </a>
-                    ))}
-                  </Carousel>
+                        {news.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.link}
+                            target="_blank"
+                            className="news-card"
+                            rel="noopener noreferrer"
+                          >
+                            <Card
+                              data={{
+                                title: item.name,
+                                summary: item.description,
+                              }}
+                            />
+                          </a>
+                        ))}
+                      </Carousel>
+                    </Media>
+                    <Media lessThan="md">
+                      <Carousel
+                        settings={{
+                          slidesToShow: 1,
+                        }}
+                      >
+                        {news.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.link}
+                            target="_blank"
+                            className="news-card"
+                            rel="noopener noreferrer"
+                          >
+                            <Card
+                              data={{
+                                title: item.name,
+                                summary: item.description,
+                              }}
+                            />
+                          </a>
+                        ))}
+                      </Carousel>
+                    </Media>
+                  </>
                 ) : (
                   <NoContent className="no-news" message="No news available" />
                 )}

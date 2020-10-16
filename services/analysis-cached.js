@@ -615,13 +615,13 @@ export const fetchHistoricalAlerts = params => {
 
 export const fetchGladAlerts = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'glad',
     datasetType: 'weekly'
   })}${SQL_QUERIES.glad}`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -679,11 +679,11 @@ export const fetchGLADLatest = () => {
 
 export const fetchVIIRSAlerts = params => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
-  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+  const url = encodeURI(`${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
     SQL_QUERIES.fires
   }`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -711,7 +711,7 @@ export const fetchVIIRSAlerts = params => {
 
 export const fetchVIIRSAlertsGrouped = params => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset,
     datasetType: 'weekly',
@@ -722,7 +722,7 @@ export const fetchVIIRSAlertsGrouped = params => {
     .replace(
       '{WHERE}',
       getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
-    );
+    ));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -753,12 +753,12 @@ export const fetchFiresWithin = params => {
   const filterYear = moment()
     .subtract(weeks, 'weeks')
     .year();
-  const url = `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+  const url = encodeURI(`${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
     SQL_QUERIES.firesWithin
   }`
     .replace(/{location}/g, getLocationSelect(params))
     .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
-    .replace('{alert__year}', filterYear);
+    .replace('{alert__year}', filterYear));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -808,14 +808,14 @@ export const fetchVIIRSLatest = () =>
 // whrc biomass grouped by location
 export const getBiomassStockGrouped = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
     grouped: true
   })}${SQL_QUERIES.biomassStockGrouped}`
     .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -843,13 +843,13 @@ export const getBiomassStockGrouped = params => {
 // whrc biomass
 export const getBiomassStock = params => {
   const { forestType, landCategory, ifl, download } = params || {};
-  const url = `${getRequestUrl({
+  const url = encodeURI(`${getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary'
   })}${SQL_QUERIES.biomassStock}`
     .replace(/{location}/g, getLocationSelect(params))
-    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }));
+    .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' })));
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
