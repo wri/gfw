@@ -288,7 +288,12 @@ const partnersCollaborators = [
     title: 'Osinfor',
   },
   {
-    img: '/assets/logos/rfukhover.png',
+    img: images('./planet.png'),
+    link: 'https://www.planet.com/',
+    title: 'Daily Satellite Imagery and Insights',
+  },
+  {
+    img: images('./rfukhover.png'),
     link: 'http://www.rainforestfoundationuk.org/',
     title: 'Rainforest Foundation UK',
   },

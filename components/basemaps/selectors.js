@@ -1,4 +1,5 @@
 import { createStructuredSelector, createSelector } from 'reselect';
+import moment from 'moment';
 
 import {
   getBasemaps,
@@ -18,6 +19,22 @@ export const getLandsatYears = createSelector([getBasemaps], basemaps =>
     label: y,
     value: y
   }))
+);
+
+export const getPlanetYears = createSelector([getBasemaps], basemaps =>
+  basemaps.planet.availableYears.map(y => ({
+    label: y,
+    value: y
+  }))
+);
+
+export const getPlanetMonths = createSelector([getBasemaps], basemaps =>
+  Object.assign(...Object.keys(basemaps.planet.availableMonths).map(y => ({
+    [y]: basemaps.planet.availableMonths[y].map(m => ({
+      label: moment().month(parseInt(m, 10) - 1).format("MMM"),
+      value: m
+    }))
+  })))
 );
 
 export const getLabelsOptions = createSelector([], () => [
@@ -62,6 +79,8 @@ export const getBasemapsProps = createStructuredSelector({
   labelSelected: getLabelSelected,
   labels: getLabelsOptions,
   landsatYears: getLandsatYears,
+  planetYears: getPlanetYears,
+  planetMonths: getPlanetMonths,
   roads: getRoadsOptions,
   roadsSelected: getRoadsSelected
 });

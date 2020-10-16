@@ -39,6 +39,7 @@ const MyGfwPage = () => {
 
   return (
     <Layout
+      noIndex
       title="My GFW | Global Forest Watch"
       description="Create an account or log into My GFW. Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use."
     >

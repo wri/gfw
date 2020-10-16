@@ -4,11 +4,13 @@ import cx from 'classnames';
 import { initAnalytics, handlePageTrack } from 'analytics';
 import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
+import useRouter from 'utils/router';
+import moment from 'moment';
 
-import { Footer } from 'gfw-components';
+import { Footer, Header } from 'gfw-components';
 import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
+import { getMomentLangCode } from 'utils/lang';
 
-import Header from 'components/header';
 import Cookies from 'components/cookies';
 import ContactUsModal from 'components/modals/contact-us';
 import NavLink from 'components/nav-link';
@@ -22,7 +24,6 @@ import './styles.scss';
 
 class App extends PureComponent {
   static propTypes = {
-    loggedIn: PropTypes.bool,
     children: PropTypes.node,
     router: PropTypes.object,
     fullScreen: PropTypes.bool,
@@ -33,6 +34,8 @@ class App extends PureComponent {
     keywords: PropTypes.string,
     noIndex: PropTypes.bool,
     embed: PropTypes.bool,
+    setSearchQuery: PropTypes.func,
+    lang: PropTypes.string,
   };
 
   static defaultProps = {
@@ -41,7 +44,7 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    const { router } = this.props;
+    const { push } = useRouter();
 
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
@@ -51,13 +54,18 @@ class App extends PureComponent {
 
     const isValidBrowser = checkBrowser();
     if (!isValidBrowser) {
-      router.push('/browser-support');
+      push('/browser-support');
     }
+
+    moment.locale(getMomentLangCode(this.props.lang));
   }
+
+  handleLangSelect = (lang) => {
+    moment.locale(getMomentLangCode(lang));
+  };
 
   render() {
     const {
-      loggedIn,
       children,
       fullScreen,
       showHeader,
@@ -66,7 +74,9 @@ class App extends PureComponent {
       description,
       keywords,
       noIndex,
+      setSearchQuery,
     } = this.props;
+    const { push } = useRouter();
 
     return (
       <>
@@ -80,17 +90,23 @@ class App extends PureComponent {
           <div className={cx('l-root', { '-full-screen': fullScreen })}>
             {showHeader && (
               <Header
-                loggedIn={loggedIn}
-                fullScreen={fullScreen}
+                className="header-wrapper"
                 NavLinkComponent={({
                   children: headerChildren,
                   className,
                   ...props
-                }) => (
-                  <NavLink {...props}>
-                    <a className={className}>{headerChildren}</a>
-                  </NavLink>
-                )}
+                }) =>
+                  props?.href ? (
+                    <NavLink {...props}>
+                      <a className={className}>{headerChildren}</a>
+                    </NavLink>
+                  ) : null}
+                openContactUsModal={() => setModalContactUsOpen(true)}
+                setQueryToUrl={(query) => {
+                  push('/search/', `/search/?query=${query}`);
+                  setSearchQuery(query);
+                }}
+                fullScreen={fullScreen}
               />
             )}
             <div className="page">{children}</div>
@@ -98,7 +114,11 @@ class App extends PureComponent {
             <ClimateModal />
             <ContactUsModal />
             {showFooter && (
-              <Footer openContactUsModal={() => setModalContactUsOpen(true)} />
+              <div className="page-footer">
+                <Footer
+                  openContactUsModal={() => setModalContactUsOpen(true)}
+                />
+              </div>
             )}
             <Cookies />
           </div>

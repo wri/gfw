@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
   getActiveDatasetsFromState,
-  getInteractionSelected,
   getBasemapFromState,
 } from 'components/map/selectors';
 
@@ -52,7 +51,6 @@ export const getMapProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   embed: getEmbed,
   geostoreId: getDrawGeostoreId,
-  selectedInteraction: getInteractionSelected,
   location: selectLocationPayload,
   basemap: getBasemapFromState,
 });

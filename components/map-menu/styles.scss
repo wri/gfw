@@ -13,8 +13,6 @@
     right: 0;
 
     &.embed {
-      bottom: rem(60px);
-
       @media screen and (min-width: $screen-m) {
         display: none;
       }

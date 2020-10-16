@@ -10,6 +10,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
+import PlanetBasemapsProvider from 'providers/planet-provider';
 
 import Map from 'components/map';
 import ModalMeta from 'components/modals/meta';
@@ -17,7 +18,6 @@ import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 import MapPrompts from 'components/prompts/map-prompts';
-import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
 
 import MapMenu from 'components/map-menu';
@@ -34,7 +34,6 @@ class MainMapComponent extends PureComponent {
     hidePanels: PropTypes.bool,
     embed: PropTypes.bool,
     recentActive: PropTypes.bool,
-    setMainMapAnalysisView: PropTypes.func,
   };
 
   renderInfoTooltip = (string) => (
@@ -50,7 +49,6 @@ class MainMapComponent extends PureComponent {
       handleClickMap,
       recentActive,
       handleClickAnalysis,
-      setMainMapAnalysisView,
       onDrawComplete,
     } = this.props;
 
@@ -70,14 +68,8 @@ class MainMapComponent extends PureComponent {
         >
           <Map
             className="main-map"
-            onSelectBoundary={setMainMapAnalysisView}
             onDrawComplete={onDrawComplete}
-            popupActions={[
-              {
-                label: 'Analyze',
-                action: handleClickAnalysis,
-              },
-            ]}
+            onClickAnalysis={handleClickAnalysis}
           />
         </div>
         {!hidePanels && (
@@ -91,7 +83,7 @@ class MainMapComponent extends PureComponent {
             <Media greaterThanOrEqual="md">
               <>
                 {!embed && <MapPrompts />}
-                <ModalWelcome />
+                {/* <ModalWelcome /> */}
                 <MapControlButtons className="main-map-controls" isDesktop />
               </>
             </Media>
@@ -116,6 +108,7 @@ class MainMapComponent extends PureComponent {
         <GeodescriberProvider />
         <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <AreasProvider />
+        <PlanetBasemapsProvider />
       </div>
     );
   }

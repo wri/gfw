@@ -73,13 +73,15 @@ $summary-color: #aaa;
       margin-bottom: rem(15px);
       font-size: rem(26px);
       font-weight: 300;
+      color: $slate;
 
       @media screen and (min-width: $screen-m) {
         font-size: rem(30px);
       }
     }
 
-    .summary {
+    .summary,
+    .summary p {
       font-size: rem(16px);
       margin-bottom: rem(20px);
       line-height: 1.5;

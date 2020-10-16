@@ -411,7 +411,7 @@ export const getLocationPath = (pathname, type, query, params) => {
   return {
     href: pathname,
     as: `${pathname.replace(
-      '[...location]',
+      '[[...location]]',
       Object.values(pathObj.payload).join('/')
     )}?${encodeStateForUrl(pathObj.query)}`,
   };

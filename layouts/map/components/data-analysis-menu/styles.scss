@@ -9,7 +9,7 @@
   z-index: 1;
 
   &.relocate {
-    transform: translateX(292px);
+    transform: translateX($map-menu-panel-width - 8);
   }
 
   &.big {

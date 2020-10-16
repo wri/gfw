@@ -8,7 +8,7 @@ import './styles.scss';
 const props = {
   title: 'Browser Not Supported',
   description:
-    'Oops, your browser isn’t supported. Please upgrade to a supported browser and try loading the website again.',
+    '<p>Oops, your browser isn’t supported. Please upgrade to a supported browser and try loading the website again.</p><p>Currently supported browsers: Chrome 50, Firefox 48, Safari 10, Opera 51, Edge 15.</p>',
 };
 
 const BrowserPage = () => (

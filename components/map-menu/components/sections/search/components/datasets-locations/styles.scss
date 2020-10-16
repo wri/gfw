@@ -1,26 +1,20 @@
 @import '~styles/settings.scss';
 
 .c-datasets-locations {
-  h5 {
-    margin-bottom: rem(15px);
-    font-size: rem(12px);
-    color: $medium-grey;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 
-  .search-container {
+  .search-results-wrapper {
     position: relative;
-    min-height: calc(80vh - 285px);
-
-    @media screen and (min-width: $screen-m) {
-      min-height: rem(300px);
-    }
+    overflow-y: auto;
+    height: calc(100% - 60px);
   }
 
   .search-results {
     position: relative;
     min-height: rem(200px);
+    padding-right: 10px;
   }
 
   .datasets-search {
@@ -28,11 +22,7 @@
 
     > div {
       margin-bottom: rem(15px);
-    }
-
-    &.show-border {
-      padding-bottom: rem(20px);
-      border-bottom: solid 1px $border;
+      padding-left: 10px;
     }
   }
 
@@ -43,11 +33,17 @@
       font-size: rem(14px);
       color: $slate;
       margin-bottom: rem(15px);
+      padding-left: 20px;
       cursor: pointer;
       display: flex;
       flex-direction: row;
+      align-items: center;
       text-align: left;
       line-height: 1.4;
+
+      p {
+        font-size: 14px;
+      }
 
       &:hover {
         p {
@@ -64,11 +60,18 @@
 
     .location-icon {
       fill: $green-gfw;
-      height: rem(20px);
-      width: rem(20px);
-      min-height: rem(20px);
-      min-width: rem(20px);
+      height: rem(23px);
+      width: rem(23px);
+      min-height: rem(23px);
+      min-width: rem(23px);
       margin-right: rem(5px);
+    }
+  }
+
+  .empty-search {
+    .message {
+      min-height: 100px;
+      justify-content: center;
     }
   }
 }

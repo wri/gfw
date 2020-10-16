@@ -1,0 +1,19 @@
+@import '~styles/settings.scss';
+
+.c-contextual-sentence {
+  .place {
+    font-size: rem(16px);
+    margin-bottom: rem(15px);
+    color: $slate;
+    font-weight: 400;
+  }
+
+  .sentence {
+    font-size: 13px;
+    margin-bottom: 20px;
+
+    b {
+      font-weight: 500;
+    }
+  }
+}
