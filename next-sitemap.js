@@ -1,7 +1,7 @@
 module.exports = {
   siteUrl: 'https://www.globalforestwatch.org',
-  generateRobotsTxt: true,
-  sitemapSize: 5000,
+  generateRobotsTxt: false,
+  sitemapSize: 50000,
   priority: 1.0,
   changefreq: 'weekly',
   exclude: [
