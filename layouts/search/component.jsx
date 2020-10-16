@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { Search } from 'gfw-components';
+
 import { handlePageTrack } from 'analytics';
 
 import treeImage from 'assets/icons/error.svg?sprite';
-import Search from 'components/ui/search';
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -20,6 +21,12 @@ class SearchPage extends PureComponent {
     const { query, getSearch } = this.props;
     if (query) {
       getSearch({ query });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.query && prevProps.query !== this.props.query) {
+      this.handleSubmit(this.props.query);
     }
   }
 
@@ -45,10 +52,10 @@ class SearchPage extends PureComponent {
           <div className="row">
             <div className="column small-12 medium-8 medium-offset-2">
               <Search
-                className="search-input"
+                className="search-input notranslate"
                 placeholder="Search"
                 input={this.state.search}
-                onSubmit={this.handleSubmit}
+                onSubmit={(e) => this.handleSubmit(e.target.value)}
               />
               <div className="search-results">
                 {loading && <Loader className="search-loader" />}

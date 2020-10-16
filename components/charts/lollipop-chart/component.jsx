@@ -120,7 +120,7 @@ class LollipopChart extends PureComponent {
                 {this.renderTicks(ticks, dataMin, dataMax, allNegative)}
               </div>
             </Media>
-            <Media greaterThanOrEqual="md">
+            <Media lessThan="md">
               <div
                 className="custom-xAxis-ticks"
                 style={{
