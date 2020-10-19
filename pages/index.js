@@ -1,4 +1,4 @@
-import PageWrapper from 'templates/page';
+import PageWrapper from 'layouts/page';
 import Home from 'pages/home';
 
 import { getNewsProvider } from 'services/news';
