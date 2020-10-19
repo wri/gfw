@@ -94,7 +94,7 @@
     "downshift": "^5.0.5",
     "file-saver": "^2.0.2",
     "final-form": "^4.18.7",
-    "gfw-components": "^1.4.1",
+    "gfw-components": "^1.4.2",
     "glob": "7.1.2",
     "history": "4.7.2",
     "image-trace-loader": "^1.0.2",
@@ -180,7 +180,8 @@
   "resolutions": {
     "node-forge": "^0.10.0",
     "serialize-javascript": "^3.1.0",
-    "yargs-parser": "^13.1.2"
+    "yargs-parser": "^13.1.2",
+    "npm-user-validate": "^1.0.1"
   },
   "cacheDirectories": [
     ".next/cache"

@@ -6,30 +6,30 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_DATASET
-} from 'data/layers-datasets';
+  FOREST_LOSS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_LOSS
-} from 'data/layers';
+  FOREST_LOSS,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
 const MAX_YEAR = 2019;
 
-const getGlobalLocation = params => ({
+const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
   adm1: params.type === 'global' ? null : params.adm1,
-  adm2: params.type === 'global' ? null : params.adm2
+  adm2: params.type === 'global' ? null : params.adm2,
 });
 
 export default {
   widget: 'treeLossPct',
   title: {
     default: 'Primary Forest loss in {location}',
-    global: 'Global Primary Forest loss'
+    global: 'Global Primary Forest loss',
   },
   categories: ['summary', 'forest-change'],
   types: ['global', 'country', 'wdpa', 'aoi'],
@@ -45,7 +45,7 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'years',
@@ -53,14 +53,14 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   pendingKeys: ['threshold', 'years'],
   refetchKeys: ['landCategory', 'threshold'],
@@ -70,17 +70,17 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS]
-    }
+      layers: [FOREST_LOSS],
+    },
   ],
   sortOrder: {
     summary: -1,
-    forestChange: -1
+    forestChange: -1,
   },
   sentence: {
     initial:
@@ -94,23 +94,23 @@ export default {
     noLoss:
       'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b>.',
     noLossWithIndicator:
-      'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b> in {indicator}.'
+      'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b> in {indicator}.',
   },
   whitelists: {
     indicators: ['primary_forest'],
-    checkStatus: true
+    checkStatus: true,
   },
   settings: {
     threshold: 30,
     extentYear: 2000,
-    forestType: 'primary_forest'
+    forestType: 'primary_forest',
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
     const globalLocation = {
       adm0: type === 'global' ? null : adm0,
       adm1: type === 'global' ? null : adm1,
-      adm2: type === 'global' ? null : adm2
+      adm2: type === 'global' ? null : adm2,
     };
 
     return all([
@@ -118,14 +118,14 @@ export default {
         ...params,
         forestType: null,
         landCategory: null,
-        ...globalLocation
+        ...globalLocation,
       }),
       getLoss({ ...params, ...globalLocation }),
       getExtent({
         ...params,
-        ...globalLocation
+        ...globalLocation,
       }),
-      getLoss({ ...params, forestType: null, ...globalLocation })
+      getLoss({ ...params, forestType: null, ...globalLocation }),
     ]).then(
       spread((adminLoss, primaryLoss, extent, loss) => {
         let data = {};
@@ -143,7 +143,7 @@ export default {
             adminLoss: adminLoss.data.data,
             loss: loss.data.data,
             primaryLoss: primaryLoss.data.data,
-            extent: (loss.data.data && extent.data.data[0].extent) || 0
+            extent: (loss.data.data && extent.data.data[0].extent) || 0,
           };
         }
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
@@ -155,16 +155,16 @@ export default {
           settings: {
             startYear,
             endYear,
-            yearsRange: range
+            yearsRange: range,
           },
           options: {
-            years: range
-          }
+            years: range,
+          },
         };
       })
     );
   },
-  getDataURL: params => {
+  getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
     return compact([
       getLoss({
@@ -172,12 +172,12 @@ export default {
         ...globalLocation,
         forestType: null,
         landCategory: null,
-        download: true
+        download: true,
       }),
       getLoss({
         ...params,
         ...globalLocation,
-        download: true
+        download: true,
       }),
       getExtent({ ...params, download: true }),
       params.landCategory &&
@@ -185,8 +185,8 @@ export default {
           ...params,
           forestType: null,
           ...globalLocation,
-          download: true
-        })
+          download: true,
+        }),
     ]);
   },
   getWidgetProps,
@@ -196,7 +196,7 @@ export default {
     return {
       updateLayer: true,
       startYear: parseInt(year, 10),
-      endYear: parseInt(year, 10)
+      endYear: parseInt(year, 10),
     };
-  }
+  },
 };

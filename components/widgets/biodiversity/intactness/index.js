@@ -3,14 +3,14 @@ import { cartoRequest } from 'utils/request';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
-  BIODIVERSITY_INTACTNESS_2016_DATASET
-} from 'data/layers-datasets';
+  BIODIVERSITY_INTACTNESS_2016_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   BIODIVERSITY_INTACTNESS,
-  BIODIVERSITY_SIGNIFICANCE
-} from 'data/layers';
+  BIODIVERSITY_SIGNIFICANCE,
+} from 'constants/layers';
 
 // import { getWidgetProps } from './selectors';
 
@@ -23,7 +23,7 @@ export default {
   large: true,
   analysis: false,
   options: {
-    bioTypes: true
+    bioTypes: true,
   },
   colors: 'biodiversity',
   dataType: 'biodiversity',
@@ -32,17 +32,17 @@ export default {
   chartType: 'chartAndList',
   sortOrder: {
     summary: 0,
-    forestChange: 0
+    forestChange: 0,
   },
   sentence: {
     initial:
-      'Around {percent} of {location} has a {percentile} degree of biodiversity {variable}.'
+      'Around {percent} of {location} has a {percentile} degree of biodiversity {variable}.',
   },
   settings: {
     bType: 'int',
     page: 0,
     pageSize: 6,
-    percentile: null
+    percentile: null,
   },
   settingsConfig: [
     {
@@ -51,49 +51,49 @@ export default {
       type: 'select',
       whitelist: ['kba', 'aze', 'tiger_cl', 'wdpa'],
       placeholder: 'All categories',
-      border: true
+      border: true,
     },
     {
       key: 'weeks',
       label: 'weeks',
       type: 'select',
       whitelist: [13, 26, 52],
-      noSort: true
+      noSort: true,
     },
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'unit',
       label: 'unit',
       whitelist: ['%', 'ha'],
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       dataset: BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
-      layers: [BIODIVERSITY_SIGNIFICANCE]
+      layers: [BIODIVERSITY_SIGNIFICANCE],
     },
     {
       dataset: BIODIVERSITY_INTACTNESS_2016_DATASET,
-      layers: [BIODIVERSITY_INTACTNESS]
-    }
+      layers: [BIODIVERSITY_INTACTNESS],
+    },
   ],
-  getData: params => {
+  getData: (params) => {
     const { adm0, adm1 } = params;
     let sql;
 
@@ -119,7 +119,7 @@ export default {
 
     return cartoRequest
       .get(`/sql`, { params: { q: sql } })
-      .then(response => response.data.rows);
+      .then((response) => response.data.rows);
   },
   // getWidgetProps
 };

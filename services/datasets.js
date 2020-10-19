@@ -7,9 +7,7 @@ const featureEnv = process.env.FEATURE_ENV;
 
 export const getDatasetsProvider = () =>
   request.get(
-    `${
-      REQUEST_URL
-    }/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&env=production${
+    `${REQUEST_URL}/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&env=production${
       featureEnv ? `,${featureEnv}` : ''
     }&${featureEnv === 'staging' ? `refresh${new Date()}` : ''}}`
   );

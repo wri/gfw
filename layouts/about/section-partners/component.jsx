@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { Row, Column } from 'gfw-components';
+
 import './styles.scss';
 
 class SectionPartners extends PureComponent {
@@ -15,10 +17,10 @@ class SectionPartners extends PureComponent {
     return (
       <section className="l-section-partners">
         <div className="logo-section">
-          <div className="row">
-            <div className="column small-12">
+          <Row>
+            <Column>
               <h3>Founding partners</h3>
-            </div>
+            </Column>
             {foundingPartners.map((l) => (
               <a
                 key={l.title}
@@ -30,13 +32,13 @@ class SectionPartners extends PureComponent {
                 <img alt={l.title} src={l.img} />
               </a>
             ))}
-          </div>
+          </Row>
         </div>
         <div className="logo-section">
-          <div className="row">
-            <div className="column small-12">
+          <Row>
+            <Column>
               <h3>Partners</h3>
-            </div>
+            </Column>
             {partnersCollaborators.map((l) => (
               <a
                 key={l.title}
@@ -48,13 +50,13 @@ class SectionPartners extends PureComponent {
                 <img alt={l.title} src={l.img} />
               </a>
             ))}
-          </div>
+          </Row>
         </div>
         <div className="logo-section">
-          <div className="row">
-            <div className="column small-12">
+          <Row>
+            <Column>
               <h3>Funders</h3>
-            </div>
+            </Column>
             {funders.map((l) => (
               <a
                 key={l.title}
@@ -66,7 +68,7 @@ class SectionPartners extends PureComponent {
                 <img alt={l.title} src={l.img} />
               </a>
             ))}
-          </div>
+          </Row>
         </div>
       </section>
     );

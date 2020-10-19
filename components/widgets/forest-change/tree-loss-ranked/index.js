@@ -5,13 +5,13 @@ import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_DATASET
-} from 'data/layers-datasets';
+  FOREST_LOSS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_LOSS
-} from 'data/layers';
+  FOREST_LOSS,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -19,7 +19,7 @@ export default {
   widget: 'treeLossRanked',
   title: {
     default: 'Tree cover loss in {location} compared to other areas',
-    global: 'Global Tree cover loss'
+    global: 'Global Tree cover loss',
   },
   categories: ['forest-change'],
   types: ['global', 'country'],
@@ -31,7 +31,7 @@ export default {
       whitelist: ['ifl', 'primary_forest'],
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -39,18 +39,18 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'unit',
       label: 'unit',
       whitelist: ['%', 'ha'],
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'years',
@@ -58,14 +58,14 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   chartType: 'rankedList',
   colors: 'loss',
@@ -76,17 +76,17 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS]
-    }
+      layers: [FOREST_LOSS],
+    },
   ],
   sortOrder: {
     summary: 5,
-    forestChange: 4
+    forestChange: 4,
   },
   sentence: {
     globalInitial:
@@ -97,7 +97,7 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of relative tree cover, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of the global total.',
     withIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree relative cover in {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of the global total.',
-    noLoss: 'There was no relative tree cover loss identified in {location}.'
+    noLoss: 'There was no relative tree cover loss identified in {location}.',
   },
   settings: {
     threshold: 30,
@@ -105,28 +105,28 @@ export default {
     extentYear: 2000,
     pageSize: 5,
     page: 0,
-    ifl: 2000
+    ifl: 2000,
   },
   getData: ({ adm0, adm1, adm2, ...rest } = {}) => {
     const parentLocation = {
       adm0: adm0 && !adm1 ? null : adm0,
       adm1: adm1 && !adm2 ? null : adm1,
-      adm2: null
+      adm2: null,
     };
 
     return all([
       getLossGrouped({ ...rest, ...parentLocation }),
-      getExtentGrouped({ ...rest, ...parentLocation })
+      getExtentGrouped({ ...rest, ...parentLocation }),
     ]).then(
       spread((lossResponse, extentResponse) => {
         const { data } = lossResponse.data;
         let mappedData = [];
         if (data && data.length) {
-          mappedData = data.map(item => {
+          mappedData = data.map((item) => {
             const loss = item.area || 0;
             return {
               ...item,
-              loss
+              loss,
             };
           });
         }
@@ -138,26 +138,26 @@ export default {
           settings: {
             startYear,
             endYear,
-            yearsRange: range
+            yearsRange: range,
           },
           options: {
-            years: range
-          }
+            years: range,
+          },
         };
       })
     );
   },
-  getDataURL: params => {
+  getDataURL: (params) => {
     const { adm0, adm1, adm2, ...rest } = params || {};
     const parentLocation = {
       adm0: adm0 && !adm1 ? null : adm0,
       adm1: adm1 && !adm2 ? null : adm1,
-      adm2: null
+      adm2: null,
     };
     return [
       getLossGrouped({ ...rest, ...parentLocation, download: true }),
-      getExtentGrouped({ ...rest, ...parentLocation, download: true })
+      getExtentGrouped({ ...rest, ...parentLocation, download: true }),
     ];
   },
-  getWidgetProps
+  getWidgetProps,
 };

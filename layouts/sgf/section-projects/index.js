@@ -15,12 +15,12 @@ import {
   getGlobeClusters,
 } from './selectors';
 
-const mapStateToProps = ({ sgfProjects }) => {
+const mapStateToProps = ({ sgfProjects }, { projects, images, latLngs }) => {
   const filters = sgfProjects?.customFilter;
   const projectData = {
-    data: sgfProjects?.data?.projects,
-    latLngs: sgfProjects?.data?.latLngs,
-    images: sgfProjects?.data?.images,
+    data: projects,
+    latLngs,
+    images,
     search: sgfProjects?.search,
     categorySelected: sgfProjects?.categorySelected,
     customFilter: filters,
@@ -35,11 +35,6 @@ const mapStateToProps = ({ sgfProjects }) => {
         ? ''
         : sgfProjects && sgfProjects.categorySelected,
     search: sgfProjects && sgfProjects.search,
-    loading:
-      !sgfProjects ||
-      sgfProjects.loading ||
-      (sgfProjects?.data?.projects && !sgfProjects?.data?.projects?.length) ||
-      !sgfProjects?.data?.images,
     customFilter: sgfProjects && sgfProjects.customFilter,
   };
 };
@@ -47,16 +42,8 @@ const mapStateToProps = ({ sgfProjects }) => {
 class SectionProjectsContainer extends PureComponent {
   static propTypes = {
     setCustomFilter: PropTypes.func,
-    fetchProjects: PropTypes.func,
-    fetchProjectsImages: PropTypes.func,
     setSectionProjectsModalSlug: PropTypes.func,
   };
-
-  componentDidMount() {
-    const { fetchProjects, fetchProjectsImages } = this.props;
-    fetchProjects();
-    fetchProjectsImages();
-  }
 
   handleOpenModal = (slug) => {
     this.props.setSectionProjectsModalSlug(slug);

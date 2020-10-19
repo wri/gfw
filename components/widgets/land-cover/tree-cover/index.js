@@ -5,26 +5,26 @@ import { fetchAnalysisEndpoint } from 'services/analysis';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_EXTENT_DATASET
-} from 'data/layers-datasets';
+  FOREST_EXTENT_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
-  TREE_COVER
-} from 'data/layers';
+  TREE_COVER,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
-export const getDataAPI = params =>
+export const getDataAPI = (params) =>
   fetchAnalysisEndpoint({
     ...params,
     name: 'umd',
     params,
     slug: 'umd-loss-gain',
     version: 'v1',
-    aggregate: false
-  }).then(response => {
+    aggregate: false,
+  }).then((response) => {
     const { data } = (response && response.data) || {};
     const totalArea = data && data.attributes.areaHa;
     const exentKey =
@@ -35,7 +35,7 @@ export const getDataAPI = params =>
       totalArea,
       totalCover,
       cover: totalCover,
-      plantations: 0
+      plantations: 0,
     };
   });
 
@@ -44,7 +44,7 @@ export default {
   title: {
     default: 'Tree cover in {location}',
     global: 'Global tree cover',
-    withPlantations: 'Forest cover in {location}'
+    withPlantations: 'Forest cover in {location}',
   },
   sentence: {
     globalInitial:
@@ -55,7 +55,7 @@ export default {
     hasPlantations: ' was natural forest cover.',
     noPlantations: ' was tree cover.',
     hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
-    noPlantationsInd: "<b>'s</b> tree cover was in {indicator}."
+    noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
   },
   metaKey: 'widget_tree_cover',
   chartType: 'pieChart',
@@ -71,19 +71,19 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       dataset: FOREST_EXTENT_DATASET,
       layers: {
         2010: FOREST_EXTENT,
-        2000: TREE_COVER
-      }
-    }
+        2000: TREE_COVER,
+      },
+    },
   ],
   sortOrder: {
     summary: 4,
-    landCover: 1
+    landCover: 1,
   },
   refetchKeys: ['threshold', 'extentYear', 'landCategory'],
   pendingKeys: ['threshold', 'extentYear'],
@@ -94,31 +94,31 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'extentYear',
       label: 'extent year',
       type: 'switch',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   settings: {
     threshold: 30,
-    extentYear: 2000
+    extentYear: 2000,
   },
-  getData: params => {
+  getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
       return all([
         getExtent(params),
         getExtent({ ...params, forestType: '', landCategory: '' }),
-        getExtent({ ...params, forestType: 'plantations' })
+        getExtent({ ...params, forestType: 'plantations' }),
       ]).then(
         spread((response, adminResponse, plantationsResponse) => {
           const extent = response.data && response.data.data;
@@ -136,7 +136,7 @@ export default {
               totalArea,
               totalCover,
               cover,
-              plantations
+              plantations,
             };
           }
           if (params.forestType || params.landCategory) {
@@ -152,7 +152,7 @@ export default {
           if (extent && extent.length) {
             data = {
               ...data,
-              plantations
+              plantations,
             };
           }
 
@@ -163,7 +163,7 @@ export default {
 
     return getDataAPI(params);
   },
-  getDataURL: params => {
+  getDataURL: (params) => {
     const urlArr =
       params.forestType || params.landCategory
         ? [getExtent({ ...params, download: true })]
@@ -174,10 +174,10 @@ export default {
         ...params,
         forestType: null,
         landCategory: null,
-        download: true
+        download: true,
       }),
-      getExtent({ ...params, forestType: 'plantations', download: true })
+      getExtent({ ...params, forestType: 'plantations', download: true }),
     ]);
   },
-  getWidgetProps
+  getWidgetProps,
 };

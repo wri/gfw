@@ -4,13 +4,13 @@ import { getGainGrouped } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_GAIN_DATASET
-} from 'data/layers-datasets';
+  FOREST_GAIN_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_GAIN
-} from 'data/layers';
+  FOREST_GAIN,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -18,7 +18,7 @@ export default {
   widget: 'treeCoverGain',
   title: {
     global: 'Global tree cover gain',
-    initial: 'Tree cover gain in {location} compared to other areas'
+    initial: 'Tree cover gain in {location} compared to other areas',
   },
   categories: ['summary', 'forest-change'],
   types: ['global', 'country'],
@@ -30,21 +30,21 @@ export default {
       whitelist: ['ifl', 'primary_forest'],
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   refetchKeys: ['forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
@@ -54,18 +54,18 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // gain
     {
       dataset: FOREST_GAIN_DATASET,
-      layers: [FOREST_GAIN]
-    }
+      layers: [FOREST_GAIN],
+    },
   ],
   visible: ['dashboard', 'analysis'],
   sortOrder: {
     summary: 3,
-    forestChange: 7
+    forestChange: 7,
   },
   sentences: {
     globalInitial:
@@ -79,31 +79,31 @@ export default {
     regionInitial:
       'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
     regionWithIndicator:
-      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.'
+      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
   },
   settings: {
     threshold: 50,
     unit: 'ha',
     pageSize: 5,
     page: 0,
-    ifl: 2000
+    ifl: 2000,
   },
-  getData: params => {
+  getData: (params) => {
     const { adm0, adm1, adm2, ...rest } = params || {};
     const parentLocation = {
       adm0: adm0 && !adm1 ? null : adm0,
       adm1: adm1 && !adm2 ? null : adm1,
-      adm2: null
+      adm2: null,
     };
     return all([getGainGrouped({ ...rest, ...parentLocation })]).then(
-      spread(gainResponse => {
+      spread((gainResponse) => {
         let groupKey = 'iso';
         if (adm1) groupKey = 'adm1';
         if (adm2) groupKey = 'adm2';
         const gainData = gainResponse.data.data;
         let mappedData = [];
         if (gainData && gainData.length) {
-          mappedData = gainData.map(item => {
+          mappedData = gainData.map((item) => {
             const gain = item.gain || 0;
             const extent = item.extent || 0;
             return {
@@ -113,7 +113,7 @@ export default {
                   : item[groupKey],
               gain,
               extent,
-              percentage: extent ? 100 * gain / extent : 0
+              percentage: extent ? (100 * gain) / extent : 0,
             };
           });
         }
@@ -121,6 +121,6 @@ export default {
       })
     );
   },
-  getDataURL: params => [getGainGrouped({ ...params, download: true })],
-  getWidgetProps
+  getDataURL: (params) => [getGainGrouped({ ...params, download: true })],
+  getWidgetProps,
 };

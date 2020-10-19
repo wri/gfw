@@ -1,14 +1,16 @@
 import React, { PureComponent } from 'react';
 import ContactForm from 'components/forms/contact';
 
+import { Row, Column } from 'gfw-components';
+
 import './styles.scss';
 
 class SectionContact extends PureComponent {
   render() {
     return (
       <div className="l-section-contact">
-        <div className="row">
-          <div className="column small-12 large-6 desc">
+        <Row>
+          <Column width={[1, 1 / 2]} className="desc">
             <h3>Contact us</h3>
             <p className="intro">
               Question, comment, request, feedback? We want to hear from you!
@@ -32,11 +34,11 @@ class SectionContact extends PureComponent {
             >
               Explore jobs
             </a>
-          </div>
-          <div className="column small-12 large-6">
+          </Column>
+          <Column className="column small-12 large-6">
             <ContactForm />
-          </div>
-        </div>
+          </Column>
+        </Row>
       </div>
     );
   }
