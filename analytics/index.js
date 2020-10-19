@@ -27,10 +27,10 @@ const events = {
   ...topicsEvents,
 };
 
-export const handlePageTrack = () => {
-  const url = `${window.location.pathname}${window.location.search}`;
-  ReactGA.set({ page: url });
-  ReactGA.pageview(url);
+export const handlePageTrack = (url) => {
+  const pageUrl = url || `${window.location.pathname}${window.location.search}`;
+  ReactGA.set({ page: pageUrl });
+  ReactGA.pageview(pageUrl);
   ReactPixel.pageView();
   TwitterConvTrkr.pageView();
 };

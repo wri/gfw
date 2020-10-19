@@ -1,5 +1,6 @@
 import { createThunkAction, createAction } from 'redux/actions';
-import request from 'utils/request';
+
+import { getSearchQuery } from 'services/search';
 
 export const setSearchData = createAction('setSearchData');
 export const setSearchQuery = createAction('setSearchQuery');
@@ -7,21 +8,10 @@ export const setSearchLoading = createAction('setSearchLoading');
 
 export const getSearch = createThunkAction(
   'getSearch',
-  ({ query, page }) => (dispatch, getState) => {
-    const { search } = getState() || {};
-    dispatch(setSearchQuery(query));
-    if (query && search && !search.loading) {
+  ({ query, page }) => (dispatch) => {
+    if (query) {
       dispatch(setSearchLoading(true));
-      request
-        .get('https://www.googleapis.com/customsearch/v1', {
-          params: {
-            key: process.env.GOOGLE_SEARCH_API_KEY,
-            cx: process.env.GOOGLE_CUSTOM_SEARCH_CX,
-            q: query,
-            start: page || 1,
-            filter: 0,
-          },
-        })
+      getSearchQuery({ query, page })
         .then((response) => {
           const { items } = response.data || {};
           dispatch(setSearchData(items || []));
