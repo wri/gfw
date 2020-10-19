@@ -2,13 +2,13 @@ import { getSoilOrganicCarbon } from 'services/climate';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  SOIL_CARBON_DENSITY_DATASET
-} from 'data/layers-datasets';
+  SOIL_CARBON_DENSITY_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  SOIL_CARBON_DENSITY
-} from 'data/layers';
+  SOIL_CARBON_DENSITY,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -16,7 +16,7 @@ export default {
   widget: 'soilOrganic',
   title: {
     default: 'Soil organic carbon in {location}',
-    global: 'Global soil organic carbon'
+    global: 'Global soil organic carbon',
   },
   categories: ['climate'],
   types: ['global', 'country'],
@@ -26,20 +26,20 @@ export default {
       key: 'variable',
       label: 'variable',
       type: 'switch',
-      whitelist: ['totalbiomass', 'biomassdensity']
-    }
+      whitelist: ['totalbiomass', 'biomassdensity'],
+    },
   ],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // soil organis carbon
     {
       dataset: SOIL_CARBON_DENSITY_DATASET,
-      layers: [SOIL_CARBON_DENSITY]
-    }
+      layers: [SOIL_CARBON_DENSITY],
+    },
   ],
   refetchKeys: ['variable'],
   chartType: 'rankedList',
@@ -48,14 +48,14 @@ export default {
   metaKey: 'soil_organic_carbon',
   sortOrder: {
     summary: 0,
-    forestChange: 0
+    forestChange: 0,
   },
   settings: {
     startYear: 2001,
     endYear: 2018,
     pageSize: 5,
     page: 0,
-    variable: 'totalbiomass'
+    variable: 'totalbiomass',
   },
   sentences: {
     initial:
@@ -63,10 +63,10 @@ export default {
     totalbiomass:
       'Around {value} of the world’s {label} is contained in the top 5 countries.',
     biomassdensity:
-      'The average {label} of the world’s top 5 countries is {value}.'
+      'The average {label} of the world’s top 5 countries is {value}.',
   },
-  getData: params =>
-    getSoilOrganicCarbon(params).then(res => res.data && res.data.rows),
-  getDataURL: params => [getSoilOrganicCarbon({ ...params, download: true })],
-  getWidgetProps
+  getData: (params) =>
+    getSoilOrganicCarbon(params).then((res) => res.data && res.data.rows),
+  getDataURL: (params) => [getSoilOrganicCarbon({ ...params, download: true })],
+  getWidgetProps,
 };

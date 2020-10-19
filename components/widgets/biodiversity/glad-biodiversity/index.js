@@ -2,13 +2,13 @@ import gladRanked from 'components/widgets/forest-change/glad-ranked';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET
-} from 'data/layers-datasets';
+  GLAD_DEFORESTATION_ALERTS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  GLAD_ALERTS
-} from 'data/layers';
+  GLAD_ALERTS,
+} from 'constants/layers';
 
 export default {
   ...gladRanked,
@@ -18,19 +18,19 @@ export default {
   settings: {
     landCategory: 'kba',
     period: 'week',
-    weeks: 13
+    weeks: 13,
   },
   chartType: 'rankedList',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: [GLAD_ALERTS]
-    }
+      layers: [GLAD_ALERTS],
+    },
   ],
   settingsConfig: [
     {
@@ -39,32 +39,32 @@ export default {
       type: 'select',
       whitelist: ['kba', 'aze', 'tiger_cl', 'wdpa'],
       placeholder: 'All categories',
-      border: true
+      border: true,
     },
     {
       key: 'weeks',
       label: 'weeks',
       type: 'select',
       whitelist: [13, 26, 52],
-      noSort: true
+      noSort: true,
     },
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'unit',
       label: 'unit',
       whitelist: ['%', 'ha'],
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
-  metaKey: 'widget_deforestation_alert_location_biodiversity'
+  metaKey: 'widget_deforestation_alert_location_biodiversity',
 };

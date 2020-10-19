@@ -7,41 +7,41 @@ import { fetchAnalysisEndpoint } from 'services/analysis';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_DATASET
-} from 'data/layers-datasets';
+  FOREST_LOSS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_LOSS
-} from 'data/layers';
+  FOREST_LOSS,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
 const MAX_YEAR = 2019;
 const MIN_YEAR = 2001;
 
-const getGlobalLocation = params => ({
+const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
   adm1: params.type === 'global' ? null : params.adm1,
-  adm2: params.type === 'global' ? null : params.adm2
+  adm2: params.type === 'global' ? null : params.adm2,
 });
 
-export const getDataAPI = params =>
+export const getDataAPI = (params) =>
   fetchAnalysisEndpoint({
     ...params,
     name: 'umd',
     params,
     slug: 'umd-loss-gain',
     version: 'v1',
-    aggregate: false
-  }).then(response => {
+    aggregate: false,
+  }).then((response) => {
     const { data } = (response && response.data) || {};
     const lossData = data && data.attributes.loss;
     const loss =
       lossData &&
-      Object.keys(lossData).map(d => ({
+      Object.keys(lossData).map((d) => ({
         area: lossData[d],
-        year: parseInt(d, 10)
+        year: parseInt(d, 10),
       }));
     const extent = data.attributes.treeExtent;
 
@@ -56,11 +56,11 @@ export const getDataAPI = params =>
       settings: {
         startYear,
         endYear,
-        yearsRange: range
+        yearsRange: range,
       },
       options: {
-        yearsRange: range
-      }
+        yearsRange: range,
+      },
     };
   });
 
@@ -81,7 +81,7 @@ export default {
       whitelist: ['ifl', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -89,12 +89,12 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
     },
     {
       key: 'years',
@@ -102,14 +102,14 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   pendingKeys: ['threshold', 'years', 'extentYear'],
   refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
@@ -119,17 +119,17 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS]
-    }
+      layers: [FOREST_LOSS],
+    },
   ],
   sortOrder: {
     summary: 0,
-    forestChange: 0
+    forestChange: 0,
   },
   sentence: {
     initial:
@@ -140,12 +140,12 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    co2Emissions: 'and {emissions} of CO\u2082 emissions'
+    co2Emissions: 'and {emissions} of CO\u2082 emissions',
   },
   settings: {
     threshold: 30,
     extentYear: 2000,
-    ifl: 2000
+    ifl: 2000,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
@@ -154,7 +154,7 @@ export default {
       const globalLocation = {
         adm0: type === 'global' ? null : adm0,
         adm1: type === 'global' ? null : adm1,
-        adm2: type === 'global' ? null : adm2
+        adm2: type === 'global' ? null : adm2,
       };
       const lossFetch =
         type === 'global'
@@ -166,7 +166,7 @@ export default {
           if (loss && loss.data && extent && extent.data) {
             data = {
               loss: loss.data.data,
-              extent: (loss.data.data && extent.data.data[0].extent) || 0
+              extent: (loss.data.data && extent.data.data[0].extent) || 0,
             };
           }
 
@@ -179,11 +179,11 @@ export default {
             settings: {
               startYear,
               endYear,
-              yearsRange: range
+              yearsRange: range,
             },
             options: {
-              years: range
-            }
+              years: range,
+            },
           };
         })
       );
@@ -191,13 +191,13 @@ export default {
 
     return getDataAPI(params);
   },
-  getDataURL: params => {
+  getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
     return [
       params.type === 'global'
         ? getLossGrouped({ ...params, ...globalLocation, download: true })
         : getLoss({ ...params, ...globalLocation, download: true }),
-      getExtent({ ...params, download: true })
+      getExtent({ ...params, download: true }),
     ];
   },
   getWidgetProps,
@@ -207,7 +207,7 @@ export default {
     return {
       updateLayer: true,
       startYear: parseInt(year, 10),
-      endYear: parseInt(year, 10)
+      endYear: parseInt(year, 10),
     };
-  }
+  },
 };

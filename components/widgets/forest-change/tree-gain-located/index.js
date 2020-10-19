@@ -3,13 +3,13 @@ import { all, spread } from 'axios';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_GAIN_DATASET
-} from 'data/layers-datasets';
+  FOREST_GAIN_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_GAIN
-} from 'data/layers';
+  FOREST_GAIN,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -26,7 +26,7 @@ export default {
       whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
     },
     {
       key: 'landCategory',
@@ -34,8 +34,8 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
-    }
+      border: true,
+    },
   ],
   refetchKeys: ['forestType', 'landCategory'],
   chartType: 'rankedList',
@@ -44,17 +44,17 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // gain
     {
       dataset: FOREST_GAIN_DATASET,
-      layers: [FOREST_GAIN]
-    }
+      layers: [FOREST_GAIN],
+    },
   ],
   metaKey: 'widget_tree_cover_gain_location',
   sortOrder: {
-    forestChange: 6
+    forestChange: 6,
   },
   sentences: {
     initial:
@@ -64,7 +64,7 @@ export default {
     initialPercent:
       'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2001 and 2012. {region} had the most relative tree cover gain at {value} compared to an average of {average}.',
     withIndicatorPercent:
-      'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2001 and 2012. {region} had the most relative tree cover gain at {value} compared to an average of {average}.'
+      'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2001 and 2012. {region} had the most relative tree cover gain at {value} compared to an average of {average}.',
   },
   settings: {
     threshold: 50,
@@ -72,9 +72,9 @@ export default {
     pageSize: 5,
     page: 0,
     extentYear: 2000,
-    ifl: 2000
+    ifl: 2000,
   },
-  getData: params =>
+  getData: (params) =>
     all([getExtentGrouped(params), getGainGrouped(params)]).then(
       spread((extentGrouped, gainGrouped) => {
         let groupKey = 'iso';
@@ -84,31 +84,31 @@ export default {
         const extentData = extentGrouped.data.data;
         let extentMappedData = {};
         if (extentData && extentData.length) {
-          extentMappedData = extentData.map(d => ({
+          extentMappedData = extentData.map((d) => ({
             id: d[groupKey],
             extent: d.extent || 0,
-            percentage: d.extent ? d.extent / d.total_area * 100 : 0
+            percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
           }));
         }
 
         const gainData = gainGrouped.data.data;
         let gainMappedData = {};
         if (gainData && gainData.length) {
-          gainMappedData = gainData.map(d => ({
+          gainMappedData = gainData.map((d) => ({
             id: d[groupKey],
-            gain: d.gain || 0
+            gain: d.gain || 0,
           }));
         }
 
         return {
           gain: gainMappedData,
-          extent: extentMappedData
+          extent: extentMappedData,
         };
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     getExtentGrouped({ ...params, download: true }),
-    getGainGrouped({ ...params, download: true })
+    getGainGrouped({ ...params, download: true }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

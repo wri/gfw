@@ -8,7 +8,7 @@ import { setMenuSettings } from 'components/map-menu/actions';
 import { setMapSettings } from 'components/map/actions';
 import { setMainMapSettings } from 'pages/map/actions';
 
-import { BIOMASS_LOSS_DATASET } from 'data/layers-datasets';
+import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
