@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { Carousel } from 'gfw-components';
+import { Carousel, Row, Column } from 'gfw-components';
 
 import img1997 from 'pages/about/section-history/images/1997.jpg?webp';
 import img2002 from 'pages/about/section-history/images/2002.jpg?webp';
@@ -92,15 +92,14 @@ class SectionHistory extends PureComponent {
   render() {
     return (
       <section className="l-section-history">
-        <div className="row">
-          <div className="column small-12">
+        <Row>
+          <Column>
             <h3>History</h3>
-          </div>
-        </div>
-        <div className="row">
-          <div className="column small-12">
+          </Column>
+        </Row>
+        <Row>
+          <Column>
             <Carousel
-              className="timeline"
               settings={{
                 slidesToShow: 1,
               }}
@@ -108,22 +107,22 @@ class SectionHistory extends PureComponent {
               {data &&
                 data.map((d) => (
                   <div className="year-card" key={d.title}>
-                    <div className="row">
-                      <div className="columns small-12 medium-6">
+                    <Row>
+                      <Column width={[1, 1 / 2]}>
                         <img className="image" src={d.img} alt={d.title} />
-                      </div>
-                      <div className="columns small-12 medium-6">
+                      </Column>
+                      <Column width={[1, 1 / 2]}>
                         <div className="description">
                           <h4>{d.title}</h4>
                           <p>{d.paragraph}</p>
                         </div>
-                      </div>
-                    </div>
+                      </Column>
+                    </Row>
                   </div>
                 ))}
             </Carousel>
-          </div>
-        </div>
+          </Column>
+        </Row>
       </section>
     );
   }

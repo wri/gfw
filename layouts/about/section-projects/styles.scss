@@ -30,6 +30,8 @@
   }
 
   .project-side {
+    position: relative;
+
     @media screen and (min-width: $screen-m) {
       padding: rem(20px);
     }
@@ -42,7 +44,7 @@
       margin-bottom: rem(30px);
     }
 
-    .how-to-btn {
+    .help-btn {
       width: rem(250px);
     }
   }
