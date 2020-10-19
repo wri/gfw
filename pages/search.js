@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import Layout from 'wrappers/page';
+import PageWrapper from 'templates/page';
 import Search from 'pages/search';
 import SearchUrlProvider from 'providers/search-url-provider';
 
@@ -16,10 +16,10 @@ const SearchPage = () => {
   });
 
   return (
-    <Layout
-      noIndex
+    <PageWrapper
       title="Search | Global Forest Watch"
       description="Search forest information, including forest data, news, updates and more."
+      noIndex
     >
       {ready && (
         <>
@@ -27,7 +27,7 @@ const SearchPage = () => {
           <SearchUrlProvider />
         </>
       )}
-    </Layout>
+    </PageWrapper>
   );
 };
 
