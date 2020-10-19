@@ -1,15 +1,14 @@
 import sortBy from 'lodash/sortBy';
 
-import Layout from 'wrappers/page';
+import PageWrapper from 'wrappers/page';
 import MapBuilder from 'pages/mapbuilder';
 
 import { getPostsByType, getPostByType } from 'services/content';
 
-// eslint-disable-next-line react/prop-types
 const MapBuilderPage = (props) => (
-  <Layout title="MapBuilder | Global Forest Watch" description="Mapbuilder">
+  <PageWrapper {...props}>
     <MapBuilder {...props} />
-  </Layout>
+  </PageWrapper>
 );
 
 export async function getStaticProps() {

@@ -1,14 +1,14 @@
-import Layout from 'wrappers/page';
-import PrivacyPolicy from 'pages/privacy';
+import PageWrapper from 'wrappers/page';
+import PrivacyPolicy from 'pages/privacy-policy';
 
 const PrivacyPolicyPage = () => (
-  <Layout
-    noIndex
+  <PageWrapper
     title="Privacy Policy | Global Forest Watch"
     description="This Privacy Policy tells you how WRI handles information collected about you through our websites and applications."
+    noIndex
   >
     <PrivacyPolicy />
-  </Layout>
+  </PageWrapper>
 );
 
 export default PrivacyPolicyPage;
