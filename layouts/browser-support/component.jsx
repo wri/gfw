@@ -6,7 +6,7 @@ const BrowserSupportPage = () => (
   <div className="l-browser-support-page">
     <ErrorMessage
       title="Browser Not Supported"
-      description="<p>Oops, your browser isn’t supported. Please upgrade and try loading the website again.</p><p>Currently supported: Chrome 50, Firefox 48, Safari 10, Opera 51, Edge 15.</p>"
+      description="<p>Oops, your browser isn’t supported.</p><p>For the most secure and best experience, we recommend <a href='https://www.google.com/chrome/'>Chrome</a> or <a href='https://www.mozilla.org/en-US/firefox/new/'>Firefox</a>.</p>"
       error
     />
   </div>

@@ -80,9 +80,6 @@ export const useSetLanguage = (lang) => {
 
 export const selectActiveLang = (state) =>
   !isServer &&
-  ((state.location &&
-    state.location &&
-    state.location.query &&
-    state.location.query.lang) ||
+  (state?.location?.query?.lang ||
     JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
     'en');
