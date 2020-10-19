@@ -1,21 +1,14 @@
 import { useMemo } from 'react';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
-
-import { reduxModule as myGfwReduxModule } from 'providers/mygfw-provider';
-
-import reducerRegistry from './registry';
-
-reducerRegistry.registerModule('myGfw', myGfwReduxModule);
+import { rootReducer } from 'fast-redux';
 
 let store;
 
-const initialReducers = combineReducers(reducerRegistry.getReducers());
-
 function initStore(initialState) {
   return createStore(
-    initialReducers,
+    rootReducer,
     initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );

@@ -11,6 +11,8 @@ import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
 import PlanetBasemapsProvider from 'providers/planet-provider';
+import LocationProvider from 'providers/location-provider';
+import MyGFWProvider from 'providers/mygfw-provider';
 
 import Map from 'components/map';
 import ModalMeta from 'components/modals/meta';
@@ -109,6 +111,8 @@ class MainMapComponent extends PureComponent {
         <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <AreasProvider />
         <PlanetBasemapsProvider />
+        <LocationProvider />
+        <MyGFWProvider />
       </div>
     );
   }

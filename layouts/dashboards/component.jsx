@@ -13,6 +13,8 @@ import GeodescriberProvider from 'providers/geodescriber-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
+import LocationProvider from 'providers/location-provider';
+import MyGfwProvider from 'providers/mygfw-provider';
 
 import ErrorPage from 'pages/error';
 
@@ -215,6 +217,8 @@ class DashboardsPage extends PureComponent {
           </Fragment>
         )}
         <AreasProvider />
+        <LocationProvider />
+        <MyGfwProvider />
         {!embed && (
           <Media greaterThanOrEqual="md">
             <DashboardPrompts />

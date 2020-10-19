@@ -12,6 +12,7 @@ import AreasProvider from 'providers/areas-provider';
 import CountryDataProvider from 'providers/country-data-provider';
 import DashboardImage from 'assets/images/aois/aoi-dashboard-small.png';
 import DashboardImageLarge from 'assets/images/aois/aoi-dashboard-small@2x.png';
+import MyGFWProvider from 'providers/mygfw-provider';
 
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 import UserProfile from './components/user-profile';
@@ -31,6 +32,7 @@ class MyGFWPage extends PureComponent {
 
     return (
       <div className={cx('l-my-gfw-page', { login: !loggedIn })}>
+        <MyGFWProvider />
         {loggedIn && (
           <Fragment>
             <div className="header-banner">

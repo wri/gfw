@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
-import { getLanguages } from 'utils/lang';
+import { languages } from 'utils/lang';
 import request from 'utils/request';
 
 import ModalSource from 'components/modals/sources';
@@ -249,18 +249,18 @@ class AreaOfInterestForm extends PureComponent {
                         },
                         {
                           label: 'As soon as forest change is detected',
-                          value: 'deforestationAlerts'
+                          value: 'deforestationAlerts',
                         },
                         {
                           label: 'Monthly summary',
-                          value: 'monthlySummary'
-                        }
+                          value: 'monthlySummary',
+                        },
                       ]}
                     />
                     <Select
                       name="language"
                       label="language"
-                      options={getLanguages()}
+                      options={languages}
                       placeholder="Select a language"
                       required
                     />

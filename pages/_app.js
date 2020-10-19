@@ -4,10 +4,10 @@ import finallyShim from 'promise.prototype.finally';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import useStore from 'redux/store';
+import { rootReducer } from 'fast-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import reducerRegistry from 'redux/registry';
-import MyGFWProvider from 'providers/mygfw-provider';
-import LocationProvider from 'providers/location-provider';
 
 import 'styles/styles.scss';
 
@@ -17,13 +17,16 @@ const App = ({ Component, pageProps }) => {
   const store = useStore(pageProps.initialReduxState);
 
   useMemo(() => {
-    store.replaceReducer(combineReducers(reducerRegistry.getReducers()));
+    const reducers = reducerRegistry.getReducers();
+    store.replaceReducer(
+      isEmpty(reducers)
+        ? rootReducer
+        : combineReducers(reducerRegistry.getReducers())
+    );
   });
 
   return (
     <Provider store={store}>
-      <MyGFWProvider />
-      <LocationProvider />
       <Component {...pageProps} />
     </Provider>
   );

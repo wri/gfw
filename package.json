@@ -92,6 +92,7 @@
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^1.7.0",
     "downshift": "^5.0.5",
+    "fast-redux": "^0.7.1",
     "file-saver": "^2.0.2",
     "final-form": "^4.18.7",
     "gfw-components": "^1.5.1",
