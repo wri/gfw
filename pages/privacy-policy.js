@@ -1,4 +1,4 @@
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import PrivacyPolicy from 'pages/privacy';
 
 const PrivacyPolicyPage = () => (

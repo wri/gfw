@@ -15,7 +15,7 @@ import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/select
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation } from 'utils/location';
 
-import { getIsTrase, selectActiveLang } from 'layouts/page/selectors';
+import { selectActiveLang } from 'utils/lang';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
@@ -48,6 +48,7 @@ const buildLocationDict = (locations) =>
 
 export const selectLocation = (state) =>
   state.location && state.location.payload;
+export const selectIsTrase = (state) => state.location?.query?.trase;
 export const selectRouteType = (state) =>
   state.location && state.location.pathname;
 export const selectActiveWidget = (state) => state.widgets?.activeWidget;
@@ -362,7 +363,7 @@ export const getWidgets = createSelector(
     selectWidgetSettings,
     selectLocationSearch,
     selectNonGlobalDatasets,
-    getIsTrase,
+    selectIsTrase,
     getActiveLayersWithDates,
     selectAnalysis,
     selectActiveWidget,

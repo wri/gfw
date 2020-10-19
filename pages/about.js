@@ -1,6 +1,6 @@
 import groupBy from 'lodash/groupBy';
 
-import PageWrapper from 'layouts/page';
+import PageWrapper from 'wrappers/page';
 import About from 'pages/about';
 
 import { fetchAllProjects, fetchAboutProjects } from 'services/projects';

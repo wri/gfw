@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import UAParser from 'ua-parser-js';
 
 const parser = new UAParser();
@@ -31,4 +33,14 @@ export const checkBrowser = () => {
   }
 
   return isValidBrowser;
+};
+
+export const useCheckBrowser = () => {
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (!checkBrowser()) {
+      push('/browser-support/');
+    }
+  }, []);
 };

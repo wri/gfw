@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import Search from 'pages/search';
 import SearchUrlProvider from 'providers/search-url-provider';
 

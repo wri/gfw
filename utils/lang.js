@@ -1,4 +1,9 @@
-const googleLangCode = {
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
+const isServer = typeof window === 'undefined';
+
+export const googleLangCode = {
   es_MX: 'es',
   en: 'en',
   zh: 'zh-CH',
@@ -7,7 +12,9 @@ const googleLangCode = {
   id: 'id',
 };
 
-const momentLangCode = {
+export const getGoogleLangCode = (lang) => googleLangCode[lang || 'en'];
+
+export const momentLangCode = {
   es_MX: 'es',
   en: 'en',
   zh: 'zh-cn',
@@ -16,7 +23,9 @@ const momentLangCode = {
   id: 'id',
 };
 
-export const getLanguages = () => [
+export const getMomentLangCode = (lang) => momentLangCode[lang || 'en'];
+
+export const languages = [
   {
     label: 'English',
     value: 'en',
@@ -43,5 +52,37 @@ export const getLanguages = () => [
   },
 ];
 
-export const getGoogleLangCode = (lang) => googleLangCode[lang || 'en'];
-export const getMomentLangCode = (lang) => momentLangCode[lang || 'en'];
+export function translateText(str, params) {
+  if (!str || typeof str !== 'string') {
+    return str;
+  }
+
+  if (typeof window !== 'undefined') {
+    const { Transifex } = window;
+    if (!isServer) {
+      return Transifex.live.translateText(str, params);
+    }
+  }
+
+  return str;
+}
+
+export const useSetLanguage = (lang) => {
+  const { query } = useRouter();
+  const langCode = lang || query?.lang;
+  const canSetLanguage = !isServer && langCode && window?.Transifex;
+
+  useEffect(
+    () => canSetLanguage && window?.Transifex?.live.translateTo(langCode),
+    []
+  );
+};
+
+export const selectActiveLang = (state) =>
+  !isServer &&
+  ((state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+    JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+    'en');

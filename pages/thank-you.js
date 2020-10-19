@@ -1,4 +1,4 @@
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import ThankYou from 'pages/thank-you';
 
 const ThankYouPage = () => (

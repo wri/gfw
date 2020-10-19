@@ -20,7 +20,7 @@ import { getLocationData } from 'services/location';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import Dashboards from 'pages/dashboards';
 import ConfirmationMessage from 'components/confirmation-message';
 import DashboardsUrlProvider from 'providers/dashboards-url-provider';

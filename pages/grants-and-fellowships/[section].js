@@ -7,7 +7,7 @@ import compact from 'lodash/compact';
 import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import GrantsAndFellowships from 'pages/sgf';
 import SgfUrlProvider from 'providers/sgf-url-provider';
 

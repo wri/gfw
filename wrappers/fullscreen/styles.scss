@@ -1,0 +1,15 @@
+@import '~styles/settings.scss';
+
+.l-fullscreen-page {
+  position: relative;
+
+  .content-wrapper {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}

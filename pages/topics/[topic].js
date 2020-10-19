@@ -1,4 +1,4 @@
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import Topics from 'pages/topics';
 
 const topics = ['biodiversity', 'climate', 'commodities', 'water', 'fires'];

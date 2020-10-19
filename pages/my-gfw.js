@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
 
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import MyGfw from 'pages/my-gfw';
 import MyGfwUrlProvider from 'providers/mygfw-url-provider';
 

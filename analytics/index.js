@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import ReactGA from 'react-ga';
-import ReactPixel from 'utils/facebook-pixel';
 import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
+import ReactPixel from 'utils/facebook-pixel';
 import { decodeUrlForState } from 'utils/stateToUrl';
+
 import mapEvents from 'analytics/map';
 import sharedEvents from 'analytics/shared';
 import dashboardsEvents from 'analytics/dashboards';
@@ -49,3 +51,13 @@ export const handleMapLatLonTrack = (location) => {
 
 export const track = (key, data) =>
   events[key] && ReactGA.event({ ...events[key], ...data });
+
+export const usePageTrack = () => {
+  useEffect(() => {
+    if (!window.ANALYTICS_INITIALIZED) {
+      initAnalytics();
+      window.ANALYTICS_INITIALIZED = true;
+    }
+    handlePageTrack();
+  }, []);
+};

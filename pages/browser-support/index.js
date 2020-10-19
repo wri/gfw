@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Layout from 'layouts/page';
+import Layout from 'wrappers/page';
 import ConfirmationMessage from 'components/confirmation-message';
 
 import './styles.scss';
