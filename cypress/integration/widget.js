@@ -41,33 +41,33 @@ const testConfig = [
         sentence:
           'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions.',
       },
-      // {
-      //   slug: 'plantationsIso',
-      //   description:
-      //     'when country with plantations is selected correct sentence template returned',
-      //   visit: '/dashboards/country/ESP',
-      //   selector: '.c-dashboards-header .c-dynamic-sentence',
-      //   sentence:
-      //     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest.',
-      // },
-      // {
-      //   slug: 'plantationsAdm1',
-      //   description:
-      //     'when admin 1 with plantations is selected correct sentence template returned',
-      //   visit: '/dashboards/country/ESP/12',
-      //   selector: '.c-dashboards-header .c-dynamic-sentence',
-      //   sentence:
-      //     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest.',
-      // },
-      // {
-      //   slug: 'plantationsAdm2',
-      //   description:
-      //     'when admin 2 with plantations is selected correct sentence template returned',
-      //   visit: '/dashboards/country/ESP/12/1',
-      //   selector: '.c-dashboards-header .c-dynamic-sentence',
-      //   sentence:
-      //     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest.',
-      // },
+      {
+        slug: 'plantationsIso',
+        description:
+          'when country with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/ESP',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO₂ of emissions.',
+      },
+      {
+        slug: 'plantationsAdm1',
+        description:
+          'when admin 1 with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/ESP/12',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO₂ of emissions.',
+      },
+      {
+        slug: 'plantationsAdm2',
+        description:
+          'when admin 2 with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/ESP/12/1',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO₂ of emissions.',
+      },
       {
         slug: 'plantationsTropicalIso',
         description:
@@ -77,15 +77,15 @@ const testConfig = [
         sentence:
           'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082 of emissions.',
       },
-      // {
-      //   slug: 'plantationsTropicalAdm1',
-      //   description:
-      //     'when a tropical admin 1 with plantations is selected correct sentence template returned',
-      //   visit: '/dashboards/country/MYS/14',
-      //   selector: '.c-dashboards-header .c-dynamic-sentence',
-      //   sentence:
-      //     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082 of emissions.',
-      // },
+      {
+        slug: 'plantationsTropicalAdm1',
+        description:
+          'when a tropical admin 1 with plantations is selected correct sentence template returned',
+        visit: '/dashboards/country/MYS/14',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082 of emissions.',
+      },
       {
         slug: 'plantationsTropicalAdm2',
         description:
@@ -113,29 +113,30 @@ const testConfig = [
         sentence:
           'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
       },
-      // {
-      //   slug: 'lossAdm2',
-      //   description:
-      //     'when admin 2 with tree cover loss is selected correct sentence template returned',
-      //   visit: '/dashboards/country/GUY/12/8',
-      //   selector: '.c-dashboards-header .c-dynamic-sentence',
-      //   sentence:
-      //     'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
-      // },
-      // {
-      //   slug: 'globalInitial',
-      //   description:
-      //     'when global tree cover loss is selected correct sentence template returned',
-      //   visit: '/dashboards/global',
-      //   selector: '.c-dashboards-header .c-dynamic-sentence',
-      //   sentence:
-      //     'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover.',
-      // },
+      {
+        slug: 'lossAdm2',
+        description:
+          'when admin 2 with tree cover loss is selected correct sentence template returned',
+        visit: '/dashboards/country/GUY/12/8',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
+      },
+      {
+        slug: 'globalInitial',
+        description:
+          'when global tree cover loss is selected correct sentence template returned',
+        visit: '/dashboards/global',
+        selector: '.c-dashboards-header .c-dynamic-sentence',
+        sentence:
+          'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover.',
+      },
     ],
     spec: {
       test: (test) => {
         cy.visit(test.visit, {
-          timeout: 100000
+          timeout: 100000,
+          retryOnStatusCodeFailure: true
         });
         cy.isValidSentence(test.selector, test.sentence);
       },

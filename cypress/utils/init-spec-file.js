@@ -44,7 +44,7 @@ function initSpec(title, testConfig) {
       describe(testGroup.title, () => {
         const {spec} = testGroup;
         testGroup.tests.forEach((test) => {
-          if (spec.only) {
+          if (test.only) {
             it.only(test.description, () => {
               spec.test(test);
             });
