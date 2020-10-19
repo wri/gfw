@@ -10,8 +10,6 @@ function initSpec(title, testConfig) {
         cy.writeFile(path, xhrData);
       }
     });
-    // 75.6mb
-    // 4.8mb
 
     beforeEach(() => {
       cy.server({
