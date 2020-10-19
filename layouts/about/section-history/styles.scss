@@ -18,6 +18,12 @@
   }
 
   .year-card {
+    @media screen and (min-width: $screen-m) {
+      > div > div {
+        width: 50% !important;
+      }
+    }
+
     .image {
       border-radius: 50%;
       border: 8px solid #fff;

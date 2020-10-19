@@ -44,7 +44,7 @@ class GrantsAndFellowshipsPage extends PureComponent {
         />
         <SubnavMenu links={links} />
         <div className="l-sgf-page">
-          {SectionComponent && <SectionComponent />}
+          {SectionComponent && <SectionComponent {...this.props} />}
         </div>
       </div>
     );

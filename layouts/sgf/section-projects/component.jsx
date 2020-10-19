@@ -134,7 +134,7 @@ class SectionProjects extends PureComponent {
             {loading && <Loader loading={loading} />}
           </ScrollEl>
         </div>
-        <ProjectsModal />
+        <ProjectsModal {...this.props} />
       </Fragment>
     );
   }

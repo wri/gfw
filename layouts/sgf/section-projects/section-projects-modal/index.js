@@ -8,9 +8,8 @@ import reducers, { initialState } from './reducers';
 import * as actions from './actions';
 import SectionProjectsModalComponent from './component';
 
-const mapStateToProps = ({ sgfProjects, sgfModal }) => {
+const mapStateToProps = ({ sgfModal }, { projects, images }) => {
   const slug = sgfModal?.open;
-  const { projects, images } = (sgfProjects && sgfProjects.data) || {};
   const allProjects = getProjectsWithImages({ data: projects, images });
 
   return {
