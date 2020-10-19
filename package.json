@@ -104,7 +104,7 @@
     "install": "0.10.1",
     "jszip": "^3.2.2",
     "jszip-utils": "^0.1.0",
-    "layer-manager": "^3.0.4",
+    "layer-manager": "^3.0.8",
     "lodash": "^4.17.19",
     "lodash-math": "0.0.7",
     "lottie-web": "^5.5.0",
