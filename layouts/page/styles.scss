@@ -1,13 +1,15 @@
 @import '~styles/settings.scss';
 
 .l-root {
-  .page-logo {
-    position: absolute;
+  .header-wrapper {
+    position: fixed;
+    z-index: 100;
+    width: 100%;
     top: 0;
-    left: rem(15px);
-    z-index: 2;
-    display: none;
-    width: rem(76px);
+
+    @media screen and (min-width: $screen-m) {
+      position: relative;
+    }
   }
 
   .page {
@@ -37,6 +39,7 @@
       width: 100%;
       background-color: $ocean;
       top: 0;
+      z-index: 2;
 
       @media screen and (min-width: $screen-m) {
         right: 0;
