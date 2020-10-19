@@ -129,6 +129,14 @@
     .uses {
       display: flex !important;
       height: 100%;
+
+      > div {
+        width: 100%;
+
+        @media screen and (min-width: $screen-m) {
+          width: 50%;
+        }
+      }
     }
 
     .use-image {
