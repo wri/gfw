@@ -1,13 +1,15 @@
 @import '~styles/settings.scss';
 
 .l-browser-support-page {
-  padding: rem(60px) 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
 
-  @media screen and (min-width: $screen-m) {
-    padding: rem(160px) 0;
+  > div {
+    max-width: 600px;
   }
 }

@@ -7,38 +7,36 @@
   flex-direction: column;
 
   svg {
-    max-width: rem(200px);
-    min-width: rem(200px);
-    height: rem(200px);
-    margin-bottom: rem(10px);
-    width: 100%;
+    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
 
     @media screen and (min-width: $screen-m) {
-      margin-bottom: rem(20px);
+      margin-bottom: 20px;
     }
   }
 
   h1 {
-    font-size: rem(26px);
+    font-size: 26px;
     color: $slate;
-    margin-bottom: rem(10px);
+    margin-bottom: 10px;
     text-align: center;
     font-weight: 400;
 
     @media screen and (min-width: $screen-m) {
-      font-size: rem(36px);
-      margin-bottom: rem(30px);
+      font-size: 36px;
+      margin-bottom: 30px;
     }
   }
 
   p {
-    font-size: rem(16px);
-    line-height: rem(30px);
+    font-size: 16px;
+    line-height: 30px;
     color: $slate;
     text-align: center;
 
     @media screen and (min-width: $screen-m) {
-      font-size: rem(18px);
+      font-size: 18px;
     }
   }
 
