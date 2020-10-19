@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
-import ContactForm from 'components/forms/contact';
-import Modal from '../modal';
+import { ContactUsModal } from 'gfw-components';
 
 import { setModalContactUsOpen } from './actions';
 
@@ -11,17 +11,16 @@ import './styles.scss';
 const ModalContactUs = () => {
   const { query } = useRouter();
   const { contactUs } = query || {};
+  const dispatch = useDispatch();
 
   return (
-    <Modal
-      isOpen={!!contactUs}
+    <ContactUsModal
+      open={!!contactUs}
       contentLabel="Contact Us"
-      onRequestClose={() => setModalContactUsOpen(false)}
+      onRequestClose={() => dispatch(setModalContactUsOpen(false))}
       title="Contact Us"
       className="c-contact-us-modal"
-    >
-      <ContactForm resetForm={() => setModalContactUsOpen(false)} />
-    </Modal>
+    />
   );
 };
 
