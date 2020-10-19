@@ -1,45 +1,40 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
 import Link from 'next/link';
 import cx from 'classnames';
 
-import NewsProvider from 'providers/news-provider';
-
-import { Carousel } from 'gfw-components';
+import {
+  MediaContextProvider,
+  Desktop,
+  Mobile,
+  Carousel,
+  Button,
+  Row,
+  Column,
+} from 'gfw-components';
 
 import Cover from 'components/cover';
-import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Card from 'components/ui/card';
-import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import profileIcon from 'assets/icons/profile.svg?sprite';
 import mailIcon from 'assets/icons/mail.svg?sprite';
 
+import config from './config';
 import newsImage from './assets/news-bg.jpg?webp';
 import bgImage from './assets/home-bg.jpg?webp';
+
 import './styles.scss';
 
-class HomePage extends PureComponent {
-  static propTypes = {
-    summary: PropTypes.array.isRequired,
-    apps: PropTypes.array.isRequired,
-    news: PropTypes.array,
-    newsLoading: PropTypes.bool,
-    uses: PropTypes.array.isRequired,
-  };
+const HomePage = ({ summary, uses, apps, news }) => {
+  const [showVideo, setShowVideo] = useState(false);
+  const summaryEl = useRef(null);
 
-  state = {
-    showVideo: false,
-  };
-
-  render() {
-    const { summary, uses, apps, news, newsLoading } = this.props;
-
-    return (
+  return (
+    <MediaContextProvider>
       <div className="l-home-page">
         <Cover
           className="home-cover"
@@ -48,8 +43,8 @@ class HomePage extends PureComponent {
           bgImage={bgImage}
           large
         >
-          <Fragment>
-            <div className={cx('home-video', { show: this.state.showVideo })}>
+          <>
+            <div className={cx('home-video', { show: showVideo })}>
               <YouTube
                 videoId="0XsJNU75Si0"
                 opts={{
@@ -68,66 +63,73 @@ class HomePage extends PureComponent {
                     iv_load_policy: 3,
                   },
                 }}
-                onPlay={() =>
-                  setTimeout(() => this.setState({ showVideo: true }), 300)}
-                onEnd={() => this.setState({ showVideo: false })}
+                onPlay={() => setTimeout(() => setShowVideo(true), 300)}
+                onEnd={() => setShowVideo(false)}
               />
             </div>
-            {this.state.showVideo && (
+            {showVideo && (
               <Button
                 className="stop-video-btn"
-                onClick={() => {
-                  this.setState({ showVideo: false });
-                }}
+                onClick={() => setShowVideo(false)}
               >
                 STOP VIDEO
               </Button>
             )}
             <Link href="/subscribe">
               <a className="subscribe-btn">
-                <Button theme="square" className="subscribe-icon">
+                <Button round className="subscribe-icon">
                   <Icon icon={mailIcon} />
                 </Button>
                 <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
               </a>
             </Link>
-          </Fragment>
+          </>
         </Cover>
-        <div
-          className="row"
-          ref={(ref) => {
-            this.uses = ref;
-          }}
-        >
-          <div className="column">
-            <div className="section-summary">
+        <Row>
+          <Column>
+            <div className="section-summary" ref={summaryEl}>
               <Button
                 className="scroll-to-btn"
-                theme="square"
+                round
                 onClick={() => {
                   window.scrollTo({
                     behavior: 'smooth',
                     left: 0,
-                    top: this.uses.offsetTop,
+                    top: summaryEl?.current?.offsetTop,
                   });
                 }}
               >
                 <Icon icon={arrowIcon} />
               </Button>
               {summary && (
-                <Carousel settings={{ dots: true }}>
-                  {summary.map((c) => (
-                    <Card
-                      className="summary-card"
-                      key={c.title}
-                      data={{ ...c, fullSummary: true }}
-                    />
-                  ))}
-                </Carousel>
+                <>
+                  <Desktop>
+                    <Carousel settings={{ dots: true }}>
+                      {summary.map((c) => (
+                        <Card
+                          className="summary-card"
+                          key={c.title}
+                          data={{ ...c, fullSummary: true }}
+                        />
+                      ))}
+                    </Carousel>
+                  </Desktop>
+                  <Mobile>
+                    <Carousel settings={{ dots: true, slidesToShow: 1 }}>
+                      {summary.map((c) => (
+                        <Card
+                          className="summary-card"
+                          key={c.title}
+                          data={{ ...c, fullSummary: true }}
+                        />
+                      ))}
+                    </Carousel>
+                  </Mobile>
+                </>
               )}
             </div>
-          </div>
-        </div>
+          </Column>
+        </Row>
         <div className="section-uses">
           <h3 className="section-title">
             What can you do with Global Forest Watch?
@@ -149,8 +151,8 @@ class HomePage extends PureComponent {
               }}
             >
               {uses.map((c) => (
-                <div className="row expanded uses" key={c.example}>
-                  <div className="column small-12 medium-6">
+                <Row className="uses" key={c.example}>
+                  <Column width={[1, 1 / 2]}>
                     <p className="use-example">
                       <i>
                         <span>“</span>
@@ -158,8 +160,8 @@ class HomePage extends PureComponent {
                         <span>”</span>
                       </i>
                     </p>
-                  </div>
-                  <div className="column small-12 medium-6">
+                  </Column>
+                  <Column width={[1, 1 / 2]}>
                     <div
                       className="use-image"
                       style={{ backgroundImage: `url(${c.img})` }}
@@ -173,8 +175,8 @@ class HomePage extends PureComponent {
                         {c.credit.name}
                       </a>
                     </div>
-                  </div>
-                </div>
+                  </Column>
+                </Row>
               ))}
             </Carousel>
           )}
@@ -202,8 +204,8 @@ class HomePage extends PureComponent {
                       backgroundColor: app.color,
                     }}
                   >
-                    <div className="row apps">
-                      <div className="column small-12">
+                    <Row className="apps">
+                      <Column>
                         <div className="app-content">
                           <Icon
                             className={cx('app-icon', app.className)}
@@ -218,8 +220,8 @@ class HomePage extends PureComponent {
                             }}
                           />
                         </div>
-                      </div>
-                    </div>
+                      </Column>
+                    </Row>
                   </div>
                 </a>
               ))}
@@ -232,52 +234,87 @@ class HomePage extends PureComponent {
             backgroundImage: `url(${newsImage})`,
           }}
         >
-          <div className="row">
-            <div className="column small-12">
+          <Row>
+            <Column>
               <h3 className="news-title">New on Global Forest Watch</h3>
-              {newsLoading && <Loader className="news-loader" />}
               <div className="news-carousel">
-                {!newsLoading && news ? (
-                  <Carousel
-                    settings={{
-                      slidesToShow: 3,
-                    }}
-                  >
-                    {news.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.link}
-                        target="_blank"
-                        className="news-card"
-                        rel="noopener noreferrer"
+                {news ? (
+                  <>
+                    <Desktop>
+                      <Carousel
+                        settings={{
+                          slidesToShow: 3,
+                        }}
                       >
-                        <Card
-                          data={{
-                            title: item.name,
-                            summary: item.description,
-                          }}
-                        />
-                      </a>
-                    ))}
-                  </Carousel>
+                        {news.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.link}
+                            target="_blank"
+                            className="news-card"
+                            rel="noopener noreferrer"
+                          >
+                            <Card
+                              data={{
+                                title: item.name,
+                                summary: item.description,
+                              }}
+                            />
+                          </a>
+                        ))}
+                      </Carousel>
+                    </Desktop>
+                    <Mobile>
+                      <Carousel
+                        settings={{
+                          slidesToShow: 1,
+                        }}
+                      >
+                        {news.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.link}
+                            target="_blank"
+                            className="news-card"
+                            rel="noopener noreferrer"
+                          >
+                            <Card
+                              data={{
+                                title: item.name,
+                                summary: item.description,
+                              }}
+                            />
+                          </a>
+                        ))}
+                      </Carousel>
+                    </Mobile>
+                  </>
                 ) : (
                   <NoContent className="no-news" message="No news available" />
                 )}
               </div>
-              <Button
-                className="my-gfw-btn"
-                theme="theme-button-light"
-                extLink="/my-gfw"
-              >
-                My GFW
-              </Button>
-            </div>
-          </div>
+              <Link href="/my-gfw">
+                <a>
+                  <Button className="my-gfw-btn" light>
+                    My GFW
+                  </Button>
+                </a>
+              </Link>
+            </Column>
+          </Row>
         </div>
-        <NewsProvider />
       </div>
-    );
-  }
-}
+    </MediaContextProvider>
+  );
+};
+
+HomePage.propTypes = {
+  summary: PropTypes.array.isRequired,
+  apps: PropTypes.array.isRequired,
+  news: PropTypes.array.isRequired,
+  uses: PropTypes.array.isRequired,
+};
+
+HomePage.defaultProps = config;
 
 export default HomePage;

@@ -3,12 +3,12 @@ import { fetchHistoricalAlerts } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FIRES_VIIRS_DATASET,
-} from 'data/layers-datasets';
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FIRES_ALERTS_VIIRS,
-} from 'data/layers';
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 

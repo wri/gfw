@@ -1,18 +1,18 @@
 import {
   getExtentGrouped,
-  getAreaIntersectionGrouped
+  getAreaIntersectionGrouped,
 } from 'services/analysis-cached';
 import { all, spread } from 'axios';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  TREE_PLANTATIONS_DATASET
-} from 'data/layers-datasets';
+  TREE_PLANTATIONS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  TREE_PLANTATIONS
-} from 'data/layers';
+  TREE_PLANTATIONS,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -31,36 +31,36 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       // global plantations
       dataset: TREE_PLANTATIONS_DATASET,
-      layers: [TREE_PLANTATIONS]
-    }
+      layers: [TREE_PLANTATIONS],
+    },
   ],
   sortOrder: {
-    landCover: 101
+    landCover: 101,
   },
   settings: {
     threshold: 10,
     pageSize: 5,
     page: 0,
-    extentYear: 2000
+    extentYear: 2000,
   },
   sentence:
     '{region} has the largest relative plantation area in {location} at {percentage}, most of which is in {topType}.',
   whitelists: {
-    indicators: ['plantations']
+    indicators: ['plantations'],
   },
-  getData: params =>
+  getData: (params) =>
     all([
       getExtentGrouped(params),
       getAreaIntersectionGrouped({
         ...params,
         forestType: 'plantations',
-        summary: true
-      })
+        summary: true,
+      }),
     ]).then(
       spread((extentGrouped, plantationsExtentResponse) => {
         let data = {};
@@ -70,21 +70,21 @@ export default {
         if (extent.length && plantationsExtent.length) {
           data = {
             extent,
-            plantations: plantationsExtent
+            plantations: plantationsExtent,
           };
         }
 
         return data;
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     getExtentGrouped({ ...params, download: true }),
     getAreaIntersectionGrouped({
       ...params,
       forestType: 'plantations',
       download: true,
-      summary: true
-    })
+      summary: true,
+    }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

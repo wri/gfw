@@ -11,14 +11,14 @@ import { setMainMapSettings } from 'pages/map/actions';
 import {
   BIOMASS_LOSS_DATASET,
   FIRES_VIIRS_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET
-} from 'data/layers-datasets';
+  GLAD_DEFORESTATION_ALERTS_DATASET,
+} from 'constants/datasets';
 
 import {
   GLAD_ALERTS,
   DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES
-} from 'data/layers';
+  POLITICAL_BOUNDARIES,
+} from 'constants/layers';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -310,8 +310,8 @@ class MapPromptsContainer extends PureComponent {
             actions: {
               prev: () => {
                 this.props.setMenuSettings({
-                   menuSection: 'datasets',
-                   datasetCategory: 'forestChange'
+                  menuSection: 'datasets',
+                  datasetCategory: 'forestChange',
                 });
 
                 this.props.setMapSettings({
@@ -320,19 +320,19 @@ class MapPromptsContainer extends PureComponent {
                       dataset: FIRES_VIIRS_DATASET,
                       opacity: 1,
                       visibility: true,
-                      layers: [GLAD_ALERTS]
+                      layers: [GLAD_ALERTS],
                     },
                     {
                       dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
                       layers: [
                         DISPUTED_POLITICAL_BOUNDARIES,
-                        POLITICAL_BOUNDARIES
+                        POLITICAL_BOUNDARIES,
                       ],
                       opacity: 1,
-                      visibility: true
-                    }
+                      visibility: true,
+                    },
                   ],
-                  canBound: true
+                  canBound: true,
                 });
               },
               learnHow: () => {

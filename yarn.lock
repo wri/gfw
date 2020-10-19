@@ -7812,10 +7812,10 @@ gettext-parser@^1.3.1:
     encoding "^0.1.12"
     safe-buffer "^5.1.1"
 
-gfw-components@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.3.2.tgz#0ab711b5aee26f0ab07c867bc3384b3eb8c29130"
-  integrity sha512-0Oy5J8OgRBHfMs64HguBTOiBbSbKLtB+CuJZoQRBu1tSk0Dbl0upEcLBQ/lu1m3Mqn0WgfDdTHjiVlqYIwY1MA==
+gfw-components@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.4.2.tgz#47f638359b0f0fbf902ccb9da503abee61cca992"
+  integrity sha512-YYXYHSlVAEo+LfQNw2U7EBTrppDupJBbR5hUVhG2v3yeL+Q3XKfQsOIif1qJ5jjXedmUPyCqHb5hfO7ZUaGnkg==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
@@ -9752,10 +9752,10 @@ layer-manager@^1.10.0:
     supercluster "^4.1.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^3.0.4:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-3.0.6.tgz#afe414f5620612c93f236a05649dc877825cb5e9"
-  integrity sha512-aT2eHVsSUtUHRW0hUJrZ8oJFVGbEIjVhgdJPKQtDwbSzSYSaVLbObHJPWvzYZWPked7/GSE4jKz7kz1JMafMwQ==
+layer-manager@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-3.0.8.tgz#c194ad43fa5baa2dabff8c2d99887be2e911e7e3"
+  integrity sha512-/pmjYym//UQ/TsJbNMPLtyjNiSD+wrTFlwu/9j2TFL6ynnXoI5GvFzkLNBVM6+/JHYd3MMEhwf0btiXvdorHmQ==
   dependencies:
     axios "^0.19.0"
     lodash "^4.17.15"
@@ -11320,6 +11320,11 @@ npm-run-path@^4.0.0:
   integrity sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==
   dependencies:
     path-key "^3.0.0"
+
+npm-user-validate@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/npm-user-validate/-/npm-user-validate-1.0.1.tgz#31428fc5475fe8416023f178c0ab47935ad8c561"
+  integrity sha512-uQwcd/tY+h1jnEaze6cdX/LrhWhoBxfSknxentoqmIuStxUExxjWd3ULMLFPiFUrZKbOVMowH6Jq2FRWfmhcEw==
 
 "npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.0:
   version "4.1.2"

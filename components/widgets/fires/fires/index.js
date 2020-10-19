@@ -2,13 +2,13 @@ import { fetchFireAlertsByGeostore } from 'services/alerts';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET
-} from 'data/layers-datasets';
+  FIRES_VIIRS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS
-} from 'data/layers';
+  FIRES_ALERTS_VIIRS,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -23,28 +23,28 @@ export default {
   colors: 'fires',
   sortOrder: {
     summary: 7,
-    forestChange: 11
+    forestChange: 11,
   },
   visible: ['analysis'],
   chartType: 'listLegend',
   sentences: {
-    initial: '{count} active fires detected in {location} in the last 7 days.'
+    initial: '{count} active fires detected in {location} in the last 7 days.',
   },
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // fires
     {
       dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS]
-    }
+      layers: [FIRES_ALERTS_VIIRS],
+    },
   ],
-  getData: params =>
-    fetchFireAlertsByGeostore(params).then(response => ({
-      fires: response.data.data.attributes.value
+  getData: (params) =>
+    fetchFireAlertsByGeostore(params).then((response) => ({
+      fires: response.data.data.attributes.value,
     })),
-  getWidgetProps
+  getWidgetProps,
 };

@@ -41,10 +41,10 @@ export const setWidgetSettings = createThunkAction(
         change,
       })
     );
-    track('changeWidgetSettings', {
-      label: `${widget}`,
-    });
     if (!change.interaction) {
+      track('changeWidgetSettings', {
+        label: `${widget}`,
+      });
       dispatch(
         setDashboardPromptsSettings({
           open: true,

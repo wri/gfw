@@ -1,15 +1,21 @@
 import queryString from 'query-string';
-import oldLayers from 'data/v2-v3-datasets-layers.json';
+import legacyIds from 'data/legacy-ids.json';
 import isEmpty from 'lodash/isEmpty';
 
-const oldLayersAndDatasets = oldLayers.reduce(
+const idToSlugDict = legacyIds.reduce(
   (obj, item) => ({
     ...obj,
     ...(item.v2_dataset_id && {
-      [item.v2_dataset_id]: item.v3_dataset_id,
+      [item.v2_dataset_id]: item.dataset_slug,
+    }),
+    ...(item.v3_dataset_id && {
+      [item.v3_dataset_id]: item.dataset_slug,
     }),
     ...(item.v2_layer_id && {
-      [item.v2_layer_id]: item.v3_layer_id,
+      [item.v2_layer_id]: item.layer_slug,
+    }),
+    ...(item.v3_layer_id && {
+      [item.v3_layer_id]: item.layer_slug,
     }),
   }),
   {}
@@ -42,12 +48,11 @@ export const decodeParamsForState = (params) => {
               ...arr,
               {
                 ...dataset,
-                dataset:
-                  oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
+                dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
                 layers: dataset.layers.reduce(
                   (lArr, layerId) => [
                     ...lArr,
-                    oldLayersAndDatasets[layerId] || layerId,
+                    idToSlugDict[layerId] || layerId,
                   ],
                   []
                 ),
@@ -84,12 +89,11 @@ export const decodeUrlForState = (url) => {
               ...arr,
               {
                 ...dataset,
-                dataset:
-                  oldLayersAndDatasets[dataset.dataset] || dataset.dataset,
+                dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
                 layers: dataset.layers.reduce(
                   (lArr, layerId) => [
                     ...lArr,
-                    oldLayersAndDatasets[layerId] || layerId,
+                    idToSlugDict[layerId] || layerId,
                   ],
                   []
                 ),

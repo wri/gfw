@@ -5,14 +5,14 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_LOSS_DATASET,
-  TREE_PLANTATIONS_DATASET
-} from 'data/layers-datasets';
+  TREE_PLANTATIONS_DATASET,
+} from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
-  TREE_PLANTATIONS
-} from 'data/layers';
+  TREE_PLANTATIONS,
+} from 'constants/layers';
 
 import getWidgetProps from './selectors';
 
@@ -33,14 +33,14 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   refetchKeys: ['threshold'],
   chartType: 'composedChart',
@@ -50,38 +50,38 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       // global plantations
       dataset: TREE_PLANTATIONS_DATASET,
-      layers: [TREE_PLANTATIONS]
+      layers: [TREE_PLANTATIONS],
     },
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS]
-    }
+      layers: [FOREST_LOSS],
+    },
   ],
   sortOrder: {
-    forestChange: 2
+    forestChange: 2,
   },
   sentence:
     'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO<sub>2</sub> emissions.',
   whitelists: {
     indicators: ['plantations'],
-    checkStatus: true
+    checkStatus: true,
   },
   settings: {
     threshold: 30,
     startYear: MIN_YEAR,
     endYear: MAX_YEAR,
-    extentYear: 2010
+    extentYear: 2010,
   },
-  getData: params =>
+  getData: (params) =>
     all([
       getLoss({ ...params, forestType: 'plantations' }),
-      getLoss({ ...params, forestType: '' })
+      getLoss({ ...params, forestType: '' }),
     ]).then(
       spread((plantationsloss, gadmLoss) => {
         let data = {};
@@ -96,7 +96,7 @@ export default {
         ) {
           data = {
             lossPlantations,
-            totalLoss
+            totalLoss,
           };
         }
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
@@ -108,17 +108,17 @@ export default {
           settings: {
             startYear,
             endYear,
-            yearsRange: range
+            yearsRange: range,
           },
           options: {
-            years: range
-          }
+            years: range,
+          },
         };
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     getLoss({ ...params, forestType: 'plantations', download: true }),
-    getLoss({ ...params, forestType: '', download: true })
+    getLoss({ ...params, forestType: '', download: true }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

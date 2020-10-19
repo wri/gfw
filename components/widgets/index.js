@@ -5,11 +5,11 @@ import intersection from 'lodash/intersection';
 import isEqual from 'lodash/isEqual';
 import compact from 'lodash/compact';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import { POLITICAL_BOUNDARIES_DATASET } from 'constants/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-} from 'data/layers';
+} from 'constants/layers';
 
 import reducerRegistry from 'redux/registry';
 
