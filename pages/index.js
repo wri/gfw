@@ -1,13 +1,25 @@
-import Layout from 'layouts/page';
+import PageWrapper from 'templates/page';
 import Home from 'pages/home';
 
-const HomePage = () => (
-  <Layout
+import { getNewsProvider } from 'services/news';
+
+const HomePage = (props) => (
+  <PageWrapper
     title="Forest Monitoring, Land Use & Deforestation Trends | Global Forest Watch"
     description="Global Forest Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
   >
-    <Home />
-  </Layout>
+    <Home {...props} />
+  </PageWrapper>
 );
+
+export const getStaticProps = async () => {
+  const newsResponse = await getNewsProvider();
+
+  return {
+    props: {
+      news: newsResponse?.data?.data,
+    },
+  };
+};
 
 export default HomePage;
