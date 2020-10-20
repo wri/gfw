@@ -36,7 +36,7 @@ const GrantsAndFellowshipsPage = (props) => {
         bgImage={bgImage}
       />
       <SubnavMenu links={links} />
-      <div className="l-sgf-page">
+      <div className="l-grants-page">
         {SectionComponent && <SectionComponent {...props} />}
       </div>
     </div>

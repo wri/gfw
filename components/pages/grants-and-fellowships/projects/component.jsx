@@ -32,16 +32,16 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
 
   const { projects, categories, globeData } = props || {};
   const {
-    query: { sgfModal },
+    query: { sgfModal, projectId },
     replace,
     asPath,
   } = useRouter();
   const selectedProject = projects?.find(
-    (p) => p.id === parseInt(sgfModal, 10)
+    (p) => p.id === parseInt(projectId || sgfModal, 10)
   );
 
   const setModalOpen = (id) =>
-    replace(`${asPath.split('?')?.[0]}?sgfModal=${id}`);
+    replace(`${asPath.split('?')?.[0]}?projectId=${id}`);
   const handleSetCategory = (cat) => {
     setCategory(cat);
     setCustomFilter([]);
@@ -64,7 +64,7 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
 
   return (
     <Fragment>
-      <div className="l-section-projects-sgf">
+      <div className="l-grants-projects-section">
         <div className="row">
           <div className="column small-12 large-7 project-globe">
             <Media greaterThanOrEqual="lg">

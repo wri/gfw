@@ -42,7 +42,7 @@ const GrantsProjectsModal = ({ open, data = {}, onRequestClose }) => {
 
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
-      <div className="c-sgf-projects-modal">
+      <div className="c-grants-projects-modal">
         <div className="header">
           {title && <h1>{title}</h1>}
           <span className="subtitle">

@@ -4,7 +4,7 @@ import techLogo from './assets/gfw-tech-fellowship-logo.png?webp';
 import './styles.scss';
 
 const GrantsApplySection = () => (
-  <section className="l-section-apply">
+  <section className="l-grants-apply-section">
     <div className="row">
       <div className="column small-12 medium-9">
         <p className="text -paragraph -color-2 -light -spaced">

@@ -8,7 +8,7 @@ import { sgfBenefits, fellowshipBenefits, results } from './config';
 import './styles.scss';
 
 const GrantsAboutSection = () => (
-  <div className="l-section-about">
+  <div className="l-grants-about-section">
     <section className="intro">
       <div className="row intro">
         <div className="column small-12 medium-9">
