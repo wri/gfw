@@ -1,5 +1,5 @@
 import PageWrapper from 'layouts/page';
-import Home from 'pages/home';
+import Home from 'components/pages/home';
 
 import { getNewsProvider } from 'services/news';
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import useRouter from 'utils/router';
 
 import Layout from 'layouts/page';
-import MyGfw from 'pages/my-gfw';
+import MyGfw from 'components/pages/my-gfw';
 import MyGfwUrlProvider from 'providers/mygfw-url-provider';
 
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';

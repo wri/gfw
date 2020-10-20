@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux';
 import useRouter from 'utils/router';
 
 import LayoutEmbed from 'layouts/embed';
-import Map from 'pages/map';
+import Map from 'components/pages/map';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
 import MapUrlProvider from 'providers/map-url-provider';
 
 import { setMapSettings } from 'components/map/actions';
-import { setMainMapSettings } from 'pages/map/actions';
+import { setMainMapSettings } from 'components/pages/map/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';

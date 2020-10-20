@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import StaticLayout from 'layouts/static';
-import ErrorPage from 'layouts/error';
+import ErrorPage from 'components/pages/error';
 
 const Error = ({ statusCode }) => {
   const title =

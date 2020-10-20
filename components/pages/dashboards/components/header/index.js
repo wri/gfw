@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 
 import * as shareActions from 'components/modals/share/actions';
-import { handleLocationChange } from 'components/pagesdashboards/actions';
+import { handleLocationChange } from 'components/pages/dashboards/actions';
 import { getHeaderProps } from './selectors';
 import HeaderComponent from './component';
 

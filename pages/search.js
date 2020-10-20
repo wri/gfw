@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import useRouter from 'utils/router';
 
 import PageWrapper from 'layouts/page';
-import Search from 'pages/search';
+import Search from 'components/pages/search';
 import SearchUrlProvider from 'providers/search-url-provider';
 
 import { setSearchQuery } from 'layouts/search/actions';

@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Globe from 'components/globe';
-import ProjectsModal from 'components/pagessgf/section-projects/section-projects-modal';
+import ProjectsModal from 'components/pages/sgf/section-projects/section-projects-modal';
 import Card from 'components/ui/card';
 import ItemsList from 'components/items-list';
 import Search from 'components/ui/search';
@@ -51,12 +51,12 @@ class SectionProjects extends PureComponent {
               <Media greaterThanOrEqual="lg">
                 <ul className="tags">
                   <li>
-                    <span id="grants" />
+                    <span id="grants" /> 
                     {' '}
                     <p>Grantees</p>
                   </li>
                   <li>
-                    <span id="fellows" />
+                    <span id="fellows" /> 
                     {' '}
                     <p>Fellows</p>
                   </li>

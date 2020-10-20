@@ -1,33 +1,33 @@
 // intro
-import intro1x from 'components/pagestopics/assets/biodiversity/intro/tiger.png?webp';
-import intro2x from 'components/pagestopics/assets/biodiversity/intro/tiger@2x.png?webp';
+import intro1x from 'components/pages/topics/assets/biodiversity/intro/tiger.png?webp';
+import intro2x from 'components/pages/topics/assets/biodiversity/intro/tiger@2x.png?webp';
 
 // slides
-import biodiversity1 from 'components/pagestopics/assets/biodiversity/slides/biodiversity1.png?webp';
-import biodiversity1Large from 'components/pagestopics/assets/biodiversity/slides/biodiversity1@2x.png?webp';
-import biodiversity2 from 'components/pagestopics/assets/biodiversity/slides/biodiversity2.png?webp';
-import biodiversity2Large from 'components/pagestopics/assets/biodiversity/slides/biodiversity2@2x.png?webp';
-import biodiversity3 from 'components/pagestopics/assets/biodiversity/slides/biodiversity3.png?webp';
-import biodiversity3Large from 'components/pagestopics/assets/biodiversity/slides/biodiversity3@2x.png?webp';
-import biodiversity4 from 'components/pagestopics/assets/biodiversity/slides/biodiversity4.png?webp';
-import biodiversity4Large from 'components/pagestopics/assets/biodiversity/slides/biodiversity4@2x.png?webp';
+import biodiversity1 from 'components/pages/topics/assets/biodiversity/slides/biodiversity1.png?webp';
+import biodiversity1Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity1@2x.png?webp';
+import biodiversity2 from 'components/pages/topics/assets/biodiversity/slides/biodiversity2.png?webp';
+import biodiversity2Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity2@2x.png?webp';
+import biodiversity3 from 'components/pages/topics/assets/biodiversity/slides/biodiversity3.png?webp';
+import biodiversity3Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity3@2x.png?webp';
+import biodiversity4 from 'components/pages/topics/assets/biodiversity/slides/biodiversity4.png?webp';
+import biodiversity4Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity4@2x.png?webp';
 
 // cards
-import investigate from 'components/pagestopics/assets/biodiversity/cards/investigate.png?webp';
-import investigateLarge from 'components/pagestopics/assets/biodiversity/cards/investigate@2x.png?webp';
-import explore from 'components/pagestopics/assets/biodiversity/cards/explore.png?webp';
-import exploreLarge from 'components/pagestopics/assets/biodiversity/cards/explore@2x.png?webp';
-import tigers from 'components/pagestopics/assets/biodiversity/cards/tigers.png?webp';
-import tigersLarge from 'components/pagestopics/assets/biodiversity/cards/tigers@2x.png?webp';
+import investigate from 'components/pages/topics/assets/biodiversity/cards/investigate.png?webp';
+import investigateLarge from 'components/pages/topics/assets/biodiversity/cards/investigate@2x.png?webp';
+import explore from 'components/pages/topics/assets/biodiversity/cards/explore.png?webp';
+import exploreLarge from 'components/pages/topics/assets/biodiversity/cards/explore@2x.png?webp';
+import tigers from 'components/pages/topics/assets/biodiversity/cards/tigers.png?webp';
+import tigersLarge from 'components/pages/topics/assets/biodiversity/cards/tigers@2x.png?webp';
 
 // animations
-import scene1 from 'components/pagestopics/assets/biodiversity/animations/scene1.json';
-import birds1 from 'components/pagestopics/assets/biodiversity/animations/birds1.json';
-import scene2 from 'components/pagestopics/assets/biodiversity/animations/scene2.json';
-import birds2 from 'components/pagestopics/assets/biodiversity/animations/birds2.json';
-import scene3 from 'components/pagestopics/assets/biodiversity/animations/scene3.json';
-import scene4 from 'components/pagestopics/assets/biodiversity/animations/scene4.json';
-import birds4 from 'components/pagestopics/assets/biodiversity/animations/birds4.json';
+import scene1 from 'components/pages/topics/assets/biodiversity/animations/scene1.json';
+import birds1 from 'components/pages/topics/assets/biodiversity/animations/birds1.json';
+import scene2 from 'components/pages/topics/assets/biodiversity/animations/scene2.json';
+import birds2 from 'components/pages/topics/assets/biodiversity/animations/birds2.json';
+import scene3 from 'components/pages/topics/assets/biodiversity/animations/scene3.json';
+import scene4 from 'components/pages/topics/assets/biodiversity/animations/scene4.json';
+import birds4 from 'components/pages/topics/assets/biodiversity/animations/birds4.json';
 
 export default {
   intro: {

@@ -5,10 +5,10 @@ import { Carousel, Row, Column } from 'gfw-components';
 
 import Card from 'components/ui/card';
 
-import awards0 from 'components/pagesabout/section-impacts/images/awards.png?webp';
-import awards1 from 'components/pagesabout/section-impacts/images/awards1.png?webp';
-import awards2 from 'components/pagesabout/section-impacts/images/awards2.png?webp';
-import awards3 from 'components/pagesabout/section-impacts/images/awards3.png?webp';
+import awards0 from 'components/pages/about/section-impacts/images/awards.png?webp';
+import awards1 from 'components/pages/about/section-impacts/images/awards1.png?webp';
+import awards2 from 'components/pages/about/section-impacts/images/awards2.png?webp';
+import awards3 from 'components/pages/about/section-impacts/images/awards3.png?webp';
 
 import './styles.scss';
 

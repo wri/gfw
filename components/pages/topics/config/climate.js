@@ -1,37 +1,37 @@
 // intro
-import intro1x from 'components/pagestopics/assets/climate/intro/leaf.png?webp';
-import intro2x from 'components/pagestopics/assets/climate/intro/leaf@2x.png?webp';
+import intro1x from 'components/pages/topics/assets/climate/intro/leaf.png?webp';
+import intro2x from 'components/pages/topics/assets/climate/intro/leaf@2x.png?webp';
 
 // slides
-import climate1 from 'components/pagestopics/assets/climate/slides/climate1.png?webp';
-import climate1Large from 'components/pagestopics/assets/climate/slides/climate1@2x.png?webp';
-import climate2 from 'components/pagestopics/assets/climate/slides/climate2.png?webp';
-import climate2Large from 'components/pagestopics/assets/climate/slides/climate2@2x.png?webp';
-import climate3 from 'components/pagestopics/assets/climate/slides/climate3.png?webp';
-import climate3Large from 'components/pagestopics/assets/climate/slides/climate3@2x.png?webp';
-import climate4 from 'components/pagestopics/assets/climate/slides/climate4.png?webp';
-import climate4Large from 'components/pagestopics/assets/climate/slides/climate4@2x.png?webp';
+import climate1 from 'components/pages/topics/assets/climate/slides/climate1.png?webp';
+import climate1Large from 'components/pages/topics/assets/climate/slides/climate1@2x.png?webp';
+import climate2 from 'components/pages/topics/assets/climate/slides/climate2.png?webp';
+import climate2Large from 'components/pages/topics/assets/climate/slides/climate2@2x.png?webp';
+import climate3 from 'components/pages/topics/assets/climate/slides/climate3.png?webp';
+import climate3Large from 'components/pages/topics/assets/climate/slides/climate3@2x.png?webp';
+import climate4 from 'components/pages/topics/assets/climate/slides/climate4.png?webp';
+import climate4Large from 'components/pages/topics/assets/climate/slides/climate4@2x.png?webp';
 
 // cards
-import monitor from 'components/pagestopics/assets/climate/cards/monitor.png?webp';
-import monitorLarge from 'components/pagestopics/assets/climate/cards/monitor@2x.png?webp';
-import explore from 'components/pagestopics/assets/climate/cards/explore.png?webp';
-import exploreLarge from 'components/pagestopics/assets/climate/cards/explore@2x.png?webp';
-import carbon from 'components/pagestopics/assets/climate/cards/carbon.png?webp';
-import carbonLarge from 'components/pagestopics/assets/climate/cards/carbon@2x.png?webp';
-import insights from 'components/pagestopics/assets/climate/cards/insights.png?webp';
-import insightsLarge from 'components/pagestopics/assets/climate/cards/insights@2x.png?webp';
-import research from 'components/pagestopics/assets/climate/cards/research.png?webp';
-import researchLarge from 'components/pagestopics/assets/climate/cards/research@2x.png?webp';
+import monitor from 'components/pages/topics/assets/climate/cards/monitor.png?webp';
+import monitorLarge from 'components/pages/topics/assets/climate/cards/monitor@2x.png?webp';
+import explore from 'components/pages/topics/assets/climate/cards/explore.png?webp';
+import exploreLarge from 'components/pages/topics/assets/climate/cards/explore@2x.png?webp';
+import carbon from 'components/pages/topics/assets/climate/cards/carbon.png?webp';
+import carbonLarge from 'components/pages/topics/assets/climate/cards/carbon@2x.png?webp';
+import insights from 'components/pages/topics/assets/climate/cards/insights.png?webp';
+import insightsLarge from 'components/pages/topics/assets/climate/cards/insights@2x.png?webp';
+import research from 'components/pages/topics/assets/climate/cards/research.png?webp';
+import researchLarge from 'components/pages/topics/assets/climate/cards/research@2x.png?webp';
 
 // animations
-import birds1 from 'components/pagestopics/assets/climate/animations/birds1.json';
-import birds2 from 'components/pagestopics/assets/climate/animations/birds2.json';
-import scene2 from 'components/pagestopics/assets/climate/animations/scene2.json';
-import birds4 from 'components/pagestopics/assets/climate/animations/birds4.json';
-import arrowsSmall from 'components/pagestopics/assets/climate/animations/arrow-small.svg?sprite';
-import arrowsMedium from 'components/pagestopics/assets/climate/animations/arrow-medium.svg?sprite';
-import arrowsLarge from 'components/pagestopics/assets/climate/animations/arrow-large.svg?sprite';
+import birds1 from 'components/pages/topics/assets/climate/animations/birds1.json';
+import birds2 from 'components/pages/topics/assets/climate/animations/birds2.json';
+import scene2 from 'components/pages/topics/assets/climate/animations/scene2.json';
+import birds4 from 'components/pages/topics/assets/climate/animations/birds4.json';
+import arrowsSmall from 'components/pages/topics/assets/climate/animations/arrow-small.svg?sprite';
+import arrowsMedium from 'components/pages/topics/assets/climate/animations/arrow-medium.svg?sprite';
+import arrowsLarge from 'components/pages/topics/assets/climate/animations/arrow-large.svg?sprite';
 
 // NYC tracker widget config
 import nycWidgetConfig from 'components/widgets/climate/cumulative-emissions';

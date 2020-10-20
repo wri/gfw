@@ -21,7 +21,7 @@ import { getLocationData } from 'services/location';
 import { decodeParamsForState } from 'utils/stateToUrl';
 
 import Layout from 'layouts/page';
-import Dashboards from 'pages/dashboards';
+import Dashboards from 'components/pages/dashboards';
 import ConfirmationMessage from 'components/confirmation-message';
 import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 

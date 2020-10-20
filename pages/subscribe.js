@@ -1,5 +1,5 @@
 import PageWrapper from 'layouts/page';
-import Subscribe from 'pages/subscribe';
+import Subscribe from 'components/pages/subscribe';
 
 const SubscribePage = () => (
   <PageWrapper

@@ -1,31 +1,31 @@
 // intro
-import intro1x from 'components/pagestopics/assets/water/intro/mangrove.png?webp';
-import intro2x from 'components/pagestopics/assets/water/intro/mangrove@2x.png?webp';
+import intro1x from 'components/pages/topics/assets/water/intro/mangrove.png?webp';
+import intro2x from 'components/pages/topics/assets/water/intro/mangrove@2x.png?webp';
 
 // slides
-import water1 from 'components/pagestopics/assets/water/slides/water1.png?webp';
-import water1Large from 'components/pagestopics/assets/water/slides/water1@2x.png?webp';
-import water2 from 'components/pagestopics/assets/water/slides/water2.png?webp';
-import water2Large from 'components/pagestopics/assets/water/slides/water2@2x.png?webp';
-import water3 from 'components/pagestopics/assets/water/slides/water3.png?webp';
-import water3Large from 'components/pagestopics/assets/water/slides/water3@2x.png?webp';
-import water4 from 'components/pagestopics/assets/water/slides/water4.png?webp';
-import water4Large from 'components/pagestopics/assets/water/slides/water4@2x.png?webp';
+import water1 from 'components/pages/topics/assets/water/slides/water1.png?webp';
+import water1Large from 'components/pages/topics/assets/water/slides/water1@2x.png?webp';
+import water2 from 'components/pages/topics/assets/water/slides/water2.png?webp';
+import water2Large from 'components/pages/topics/assets/water/slides/water2@2x.png?webp';
+import water3 from 'components/pages/topics/assets/water/slides/water3.png?webp';
+import water3Large from 'components/pages/topics/assets/water/slides/water3@2x.png?webp';
+import water4 from 'components/pages/topics/assets/water/slides/water4.png?webp';
+import water4Large from 'components/pages/topics/assets/water/slides/water4@2x.png?webp';
 
 // cards
-import health from 'components/pagestopics/assets/water/cards/health.png?webp';
-import healthLarge from 'components/pagestopics/assets/water/cards/health@2x.png?webp';
-import solutions from 'components/pagestopics/assets/water/cards/solutions.png?webp';
-import solutionsLarge from 'components/pagestopics/assets/water/cards/solutions@2x.png?webp';
-import learn from 'components/pagestopics/assets/water/cards/learn.png?webp';
-import learnLarge from 'components/pagestopics/assets/water/cards/learn@2x.png?webp';
+import health from 'components/pages/topics/assets/water/cards/health.png?webp';
+import healthLarge from 'components/pages/topics/assets/water/cards/health@2x.png?webp';
+import solutions from 'components/pages/topics/assets/water/cards/solutions.png?webp';
+import solutionsLarge from 'components/pages/topics/assets/water/cards/solutions@2x.png?webp';
+import learn from 'components/pages/topics/assets/water/cards/learn.png?webp';
+import learnLarge from 'components/pages/topics/assets/water/cards/learn@2x.png?webp';
 
 // animations
-import scene1 from 'components/pagestopics/assets/water/animations/scene1.json';
-import scene2 from 'components/pagestopics/assets/water/animations/scene2.json';
-import palm3 from 'components/pagestopics/assets/water/animations/palm3.json';
-import rain3 from 'components/pagestopics/assets/water/animations/rain3.json';
-import birds4 from 'components/pagestopics/assets/water/animations/birds4.json';
+import scene1 from 'components/pages/topics/assets/water/animations/scene1.json';
+import scene2 from 'components/pages/topics/assets/water/animations/scene2.json';
+import palm3 from 'components/pages/topics/assets/water/animations/palm3.json';
+import rain3 from 'components/pages/topics/assets/water/animations/rain3.json';
+import birds4 from 'components/pages/topics/assets/water/animations/birds4.json';
 
 export default {
   intro: {

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import reducerRegistry from 'redux/registry';
 
-import { getProjectsWithImages } from 'components/pagessgf/section-projects/selectors';
+import { getProjectsWithImages } from 'components/pages/sgf/section-projects/selectors';
 
 import reducers, { initialState } from './reducers';
 import * as actions from './actions';

@@ -1,5 +1,5 @@
 import PageWrapper from 'layouts/page';
-import Terms from 'pages/terms';
+import Terms from 'components/pages/terms';
 
 const TermsPage = () => (
   <PageWrapper

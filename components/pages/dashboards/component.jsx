@@ -16,7 +16,7 @@ import AreasProvider from 'providers/areas-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGfwProvider from 'providers/mygfw-provider';
 
-import ErrorPage from 'components/pageserror';
+import ErrorPage from 'components/pages/error';
 
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';

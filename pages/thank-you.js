@@ -1,5 +1,5 @@
 import PageWrapper from 'layouts/page';
-import ThankYou from 'pages/thank-you';
+import ThankYou from 'components/pages/thank-you';
 
 const ThankYouPage = () => (
   <PageWrapper title="Thank you | Global Forest Watch" noIndex>

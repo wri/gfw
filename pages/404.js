@@ -1,5 +1,5 @@
 import StaticWrapper from 'layouts/static';
-import Page404 from 'layouts/404';
+import Page404 from 'components/pages/404';
 
 const Custom404 = () => (
   <StaticWrapper

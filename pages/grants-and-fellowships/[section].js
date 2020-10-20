@@ -8,10 +8,10 @@ import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 
 import Layout from 'layouts/page';
-import GrantsAndFellowships from 'pages/sgf';
+import GrantsAndFellowships from 'components/pages/sgf';
 import SgfUrlProvider from 'providers/sgf-url-provider';
 
-import { setSectionProjectsModalSlug } from 'pages/sgf/section-projects/section-projects-modal/actions';
+import { setSectionProjectsModalSlug } from 'components/pages/sgf/section-projects/section-projects-modal/actions';
 
 import { fetchSGFProjects } from 'services/projects';
 import { getCountriesProvider, getCountriesLatLng } from 'services/country';
