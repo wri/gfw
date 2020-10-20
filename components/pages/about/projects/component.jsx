@@ -9,7 +9,7 @@ import Icon from 'components/ui/icon';
 import ModalVideo from 'components/modals/video';
 
 import playIcon from 'assets/icons/play.svg?sprite';
-import growth from 'components/pages/about/section-projects/images/growth.png';
+import growth from 'components/pages/about/projects/images/growth.png';
 
 import ProjectsModal from './projects-modal';
 

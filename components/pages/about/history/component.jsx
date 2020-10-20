@@ -1,15 +1,15 @@
 import { Carousel, Row, Column } from 'gfw-components';
 
-import img1997 from 'components/pages/about/section-history/images/1997.jpg';
-import img2002 from 'components/pages/about/section-history/images/2002.jpg';
-import img2004 from 'components/pages/about/section-history/images/2004.jpg';
-import img2005 from 'components/pages/about/section-history/images/2005.jpg';
-import img2014 from 'components/pages/about/section-history/images/2014.jpg';
-import img2015 from 'components/pages/about/section-history/images/2015.jpg';
-import img2016 from 'components/pages/about/section-history/images/2016.jpg';
-import img2017 from 'components/pages/about/section-history/images/2017.jpg';
-import img2018 from 'components/pages/about/section-history/images/2018.png';
-import img2019 from 'components/pages/about/section-history/images/2019.png';
+import img1997 from 'components/pages/about/history/images/1997.jpg';
+import img2002 from 'components/pages/about/history/images/2002.jpg';
+import img2004 from 'components/pages/about/history/images/2004.jpg';
+import img2005 from 'components/pages/about/history/images/2005.jpg';
+import img2014 from 'components/pages/about/history/images/2014.jpg';
+import img2015 from 'components/pages/about/history/images/2015.jpg';
+import img2016 from 'components/pages/about/history/images/2016.jpg';
+import img2017 from 'components/pages/about/history/images/2017.jpg';
+import img2018 from 'components/pages/about/history/images/2018.png';
+import img2019 from 'components/pages/about/history/images/2019.png';
 
 import './styles.scss';
 
