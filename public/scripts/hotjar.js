@@ -1,7 +1,7 @@
-(function(h, o, t, j, a, r) {
+(function (h, o, t, j, a, r) {
   h.hj =
     h.hj ||
-    function() {
+    function () {
       (h.hj.q = h.hj.q || []).push(arguments);
     };
   h._hjSettings = { hjid: 1060074, hjsv: 6 };

@@ -1,5 +1,5 @@
 // Don't delete this file without removing
-// public/trase-fonts directory
+// public/fonts directory
 // -trase class from layouts/page/styles.scss
 
 /* stylelint-disable */
@@ -8,38 +8,38 @@
   font-family: 'DecimaMonoPro';
   font-weight: 400;
   src:
-    url('/trase-fonts/DecimaMonoPro.woff2') format('woff2'),
-    url('/trase-fonts/DecimaMonoPro.woff') format('woff'),
-    url('/trase-fonts/DecimaMonoPro.otf') format('embedded-opentype'),
-    url('/trase-fonts/DecimaMonoPro.otf');
+    url('/fonts/DecimaMonoPro.woff2') format('woff2'),
+    url('/fonts/DecimaMonoPro.woff') format('woff'),
+    url('/fonts/DecimaMonoPro.otf') format('embedded-opentype'),
+    url('/fonts/DecimaMonoPro.otf');
 }
 
 @font-face {
   font-family: 'DecimaMonoPro';
   font-weight: 700;
   src:
-    url('/trase-fonts/DecimaMonoPro-Bold.woff2') format('woff2'),
-    url('/trase-fonts/DecimaMonoPro-Bold.woff') format('woff'),
-    url('/trase-fonts/DecimaMonoPro-Bold.otf') format('embedded-opentype'),
-    url('/trase-fonts/DecimaMonoPro-Bold.otf');
+    url('/fonts/DecimaMonoPro-Bold.woff2') format('woff2'),
+    url('/fonts/DecimaMonoPro-Bold.woff') format('woff'),
+    url('/fonts/DecimaMonoPro-Bold.otf') format('embedded-opentype'),
+    url('/fonts/DecimaMonoPro-Bold.otf');
 }
 
 @font-face {
   font-family: 'Merriweather';
   font-weight: 300;
-  src: url('/trase-fonts/Merriweather-Light.ttf');
+  src: url('/fonts/Merriweather-Light.ttf');
 }
 
 @font-face {
   font-family: 'Merriweather';
   font-weight: 400;
-  src: url('/trase-fonts/Merriweather-Regular.ttf');
+  src: url('/fonts/Merriweather-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Merriweather';
   font-weight: 700;
-  src: url('/trase-fonts/Merriweather-Bold.ttf');
+  src: url('/fonts/Merriweather-Bold.ttf');
 }
 
 $charcoal-grey: #34444c;
