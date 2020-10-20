@@ -7,13 +7,13 @@ import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 import Icon from 'components/ui/icon';
 
-import Projects from 'components/pages/about/section-projects';
-import How from 'components/pages/about/section-how';
-import Impacts from 'components/pages/about/section-impacts';
-import HistorySection from 'components/pages/about/section-history';
-import Contact from 'components/pages/about/section-contact';
-import Partners from 'components/pages/about/section-partners';
-import Join from 'components/pages/about/section-join';
+import Projects from 'components/pages/about/projects';
+import How from 'components/pages/about/how';
+import Impacts from 'components/pages/about/impacts';
+import HistorySection from 'components/pages/about/history';
+import Contact from 'components/pages/about/contact';
+import Partners from 'components/pages/about/partners';
+import Join from 'components/pages/about/join';
 
 import mailIcon from 'assets/icons/mail.svg?sprite';
 import bgImage from './header-bg.jpg';

@@ -37,7 +37,7 @@ const awards = [
   },
 ];
 
-const SectionImpacts = ({ impactProjects }) => (
+const AboutImpactsSection = ({ impactProjects }) => (
   <section className="l-section-impacts">
     <Row>
       <Column>
@@ -87,8 +87,8 @@ const SectionImpacts = ({ impactProjects }) => (
   </section>
 );
 
-SectionImpacts.propTypes = {
+AboutImpactsSection.propTypes = {
   impactProjects: PropTypes.array.isRequired,
 };
 
-export default SectionImpacts;
+export default AboutImpactsSection;

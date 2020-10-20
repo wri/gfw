@@ -1,5 +1,3 @@
-import React, { PureComponent } from 'react';
-
 import { Carousel, Row, Column } from 'gfw-components';
 
 import img1997 from 'components/pages/about/section-history/images/1997.jpg';
@@ -88,44 +86,40 @@ const data = [
   },
 ];
 
-class SectionHistory extends PureComponent {
-  render() {
-    return (
-      <section className="l-section-history">
-        <Row>
-          <Column>
-            <h3>History</h3>
-          </Column>
-        </Row>
-        <Row>
-          <Column>
-            <Carousel
-              settings={{
-                slidesToShow: 1,
-              }}
-            >
-              {data &&
-                data.map((d) => (
-                  <div className="year-card" key={d.title}>
-                    <Row>
-                      <Column width={[1, 1 / 2]}>
-                        <img className="image" src={d.img} alt={d.title} />
-                      </Column>
-                      <Column width={[1, 1 / 2]}>
-                        <div className="description">
-                          <h4>{d.title}</h4>
-                          <p>{d.paragraph}</p>
-                        </div>
-                      </Column>
-                    </Row>
-                  </div>
-                ))}
-            </Carousel>
-          </Column>
-        </Row>
-      </section>
-    );
-  }
-}
+const AboutHistorySection = () => (
+  <section className="l-section-history">
+    <Row>
+      <Column>
+        <h3>History</h3>
+      </Column>
+    </Row>
+    <Row>
+      <Column>
+        <Carousel
+          settings={{
+            slidesToShow: 1,
+          }}
+        >
+          {data &&
+            data.map((d) => (
+              <div className="year-card" key={d.title}>
+                <Row>
+                  <Column width={[1, 1 / 2]}>
+                    <img className="image" src={d.img} alt={d.title} />
+                  </Column>
+                  <Column width={[1, 1 / 2]}>
+                    <div className="description">
+                      <h4>{d.title}</h4>
+                      <p>{d.paragraph}</p>
+                    </div>
+                  </Column>
+                </Row>
+              </div>
+            ))}
+        </Carousel>
+      </Column>
+    </Row>
+  </section>
+);
 
-export default SectionHistory;
+export default AboutHistorySection;

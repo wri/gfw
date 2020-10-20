@@ -30,7 +30,7 @@ const data = [
   },
 ];
 
-class SectionHow extends PureComponent {
+class AboutHowSection extends PureComponent {
   state = {
     activeCategory: 'Transparency',
   };
@@ -73,4 +73,4 @@ class SectionHow extends PureComponent {
   }
 }
 
-export default SectionHow;
+export default AboutHowSection;

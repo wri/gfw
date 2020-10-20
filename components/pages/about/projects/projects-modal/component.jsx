@@ -6,7 +6,7 @@ import { Modal, Button } from 'gfw-components';
 
 import './styles.scss';
 
-const SectionProjectsModal = ({ data, onRequestClose }) => (
+const AboutProjectsModal = ({ data, onRequestClose }) => (
   <Modal
     open={!!data}
     title={data?.title}
@@ -35,9 +35,9 @@ const SectionProjectsModal = ({ data, onRequestClose }) => (
   </Modal>
 );
 
-SectionProjectsModal.propTypes = {
+AboutProjectsModal.propTypes = {
   data: PropTypes.object,
   onRequestClose: PropTypes.func,
 };
 
-export default SectionProjectsModal;
+export default AboutProjectsModal;

@@ -15,7 +15,7 @@ import ProjectsModal from './projects-modal';
 
 import './styles.scss';
 
-const SectionProjects = ({ categories, projectsByCategory }) => {
+const AboutProjectsSection = ({ categories, projectsByCategory }) => {
   const [category, setCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -88,9 +88,9 @@ const SectionProjects = ({ categories, projectsByCategory }) => {
   );
 };
 
-SectionProjects.propTypes = {
+AboutProjectsSection.propTypes = {
   projectsByCategory: PropTypes.object,
   categories: PropTypes.array,
 };
 
-export default SectionProjects;
+export default AboutProjectsSection;

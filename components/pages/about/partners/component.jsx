@@ -4,7 +4,7 @@ import { foundingPartners, partnersCollaborators, funders } from './partners';
 
 import './styles.scss';
 
-const SectionPartners = () => (
+const AboutPartnersSection = () => (
   <section className="l-section-partners">
     <div className="logo-section">
       <Row>
@@ -66,4 +66,4 @@ const SectionPartners = () => (
   </section>
 );
 
-export default SectionPartners;
+export default AboutPartnersSection;
