@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Search, Desktop } from 'gfw-components';
+import { Search, Desktop, Row, Column } from 'gfw-components';
 
 import { handlePageTrack } from 'analytics';
 import { getSearchQuery } from 'services/search';
 
+import Cover from 'components/cover';
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -46,16 +47,11 @@ const SearchPage = () => {
 
   return (
     <div className="l-search-page">
-      <div className="search-header">
-        <div className="row">
-          <div className="column small-12">
-            <h1>Search</h1>
-          </div>
-        </div>
-      </div>
+      <Cover title="Search" />
       <div className="search-container">
-        <div className="row">
-          <div className="column small-12 medium-8 medium-offset-2">
+        <Row>
+          <Column width={[0, 1 / 6]} />
+          <Column width={[1, 2 / 3]}>
             <Search
               className="search-input notranslate"
               placeholder="Search"
@@ -105,8 +101,8 @@ const SearchPage = () => {
                 </div>
               )}
             </div>
-          </div>
-        </div>
+          </Column>
+        </Row>
       </div>
     </div>
   );

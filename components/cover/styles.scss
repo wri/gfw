@@ -6,6 +6,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: $slate-light;
 
   @media screen and (min-width: $screen-m) {
     padding: rem(80px) 0;
