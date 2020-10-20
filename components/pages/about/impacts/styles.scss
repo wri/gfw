@@ -13,11 +13,13 @@
   }
 
   .awards {
+    margin-top: 40px;
+
     h3 {
       margin-bottom: rem(30px);
     }
 
-    a {
+    .award-logo {
       display: flex;
       justify-content: center;
       align-items: center;

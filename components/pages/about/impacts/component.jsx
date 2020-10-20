@@ -95,7 +95,7 @@ const AboutImpactsSection = ({ impactProjects }) => (
         <h3>Awards</h3>
       </Column>
       {awards.map((l) => (
-        <Column key={l.title} width={[1, 1 / 2, 1 / 4]}>
+        <Column className="award-logo" key={l.title} width={[1, 1 / 2, 1 / 4]}>
           <a href={l.link} target="_blank" rel="noopener noreferrer">
             <img alt={l.title} src={l.img} />
           </a>
