@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Loader, MediaContextProvider } from 'gfw-components';
 
 import { usePageTrack } from 'analytics';
-import { useCheckBrowser } from 'utils/browser';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'wrappers/head';
@@ -23,7 +22,6 @@ const FullScreenWrapper = ({
   metaTags,
 }) => {
   usePageTrack();
-  useCheckBrowser();
   useSetLanguage();
 
   // if a page is statically built with
