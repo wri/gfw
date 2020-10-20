@@ -7,11 +7,10 @@ import CountryDataProvider from 'providers/country-data-provider';
 
 import Footer from 'components/footer';
 import Card from 'components/ui/card';
-import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import './styles.scss';
 
-const TopicsFooter = ({ cards, topic, countries }) => (
+const TopicsFooter = ({ cards, topic, countries, setModalContactUsOpen }) => (
   <div className="c-topics-footer">
     <Row>
       <Column>
@@ -80,6 +79,7 @@ TopicsFooter.propTypes = {
   cards: PropTypes.array,
   topic: PropTypes.string,
   countries: PropTypes.array,
+  setModalContactUsOpen: PropTypes.func,
 };
 
 export default TopicsFooter;

@@ -3,7 +3,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { objDiff } from 'utils/data';
 
 import { initialState as mapInitialState } from 'components/map/reducers';
-import { initialState as mainMapInitialState } from 'layouts/map/reducers';
+import { initialState as mainMapInitialState } from 'components/pages/map/reducers';
 import { initialState as mapMenuInitialState } from 'components/map-menu/reducers';
 import { initialState as analysisInitialState } from 'components/analysis/reducers';
 import { initialState as recentImageryInitialState } from 'components/recent-imagery/reducers';

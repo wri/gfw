@@ -6,7 +6,7 @@ import reducerRegistry from 'redux/registry';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setMapSettings } from 'components/map/actions';
-import { setMainMapSettings } from 'components/pagesmap/actions';
+import { setMainMapSettings } from 'components/pages/map/actions';
 
 import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
 

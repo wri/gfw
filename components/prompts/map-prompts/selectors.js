@@ -3,7 +3,7 @@ import flatMap from 'lodash/flatMap';
 import uniq from 'lodash/uniq';
 
 import { getMapZoom, getActiveDatasets } from 'components/map/selectors';
-import { getShowRecentImagery } from 'components/pagesmap/selectors';
+import { getShowRecentImagery } from 'components/pages/map/selectors';
 
 const getMapPromptsSettings = (state) => state.mapPrompts?.settings || {};
 export const selectShowMapPrompts = (state) =>

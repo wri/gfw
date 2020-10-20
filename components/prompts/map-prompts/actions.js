@@ -3,7 +3,7 @@ import { track } from 'analytics';
 import useRouter from 'utils/router';
 
 import { setMenuSettings } from 'components/map-menu/actions';
-import { setMainMapSettings } from 'components/pagesmap/actions';
+import { setMainMapSettings } from 'components/pages/map/actions';
 
 export const setShowMapPrompts = createAction('setShowMapPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
