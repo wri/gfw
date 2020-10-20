@@ -26,8 +26,8 @@ const Wrapper = ({
   usePageTrack();
   useSetLanguage();
 
-  // if a page is statically built with
-  // fallback true we show a loader
+  // if a page is statically built with fallback true and not cached
+  // we show a loader while the staticProps are fetched
   const { isFallback } = useRouter();
 
   return (

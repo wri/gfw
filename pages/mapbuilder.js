@@ -1,14 +1,14 @@
 import sortBy from 'lodash/sortBy';
 
-import PageWrapper from 'layouts/page';
+import PageLayout from 'layouts/page';
 import MapBuilder from 'components/pages/mapbuilder';
 
 import { getPostsByType, getPostByType } from 'services/content';
 
 const MapBuilderPage = (props) => (
-  <PageWrapper {...props}>
+  <PageLayout {...props}>
     <MapBuilder {...props} />
-  </PageWrapper>
+  </PageLayout>
 );
 
 export async function getStaticProps() {

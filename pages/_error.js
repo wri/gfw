@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import StaticLayout from 'layouts/static';
+import ErrorLayout from 'layouts/error';
 import ErrorPage from 'components/pages/error';
 
 const Error = ({ statusCode }) => {
@@ -10,9 +10,9 @@ const Error = ({ statusCode }) => {
   const description = 'Try refreshing the page or check your connection.';
 
   return (
-    <StaticLayout title={title} description={description} noIndex>
+    <ErrorLayout title={title} description={description} noIndex>
       <ErrorPage title={title} description={description} />
-    </StaticLayout>
+    </ErrorLayout>
   );
 };
 

@@ -1,17 +1,17 @@
 import groupBy from 'lodash/groupBy';
 
-import PageWrapper from 'layouts/page';
+import PageLayout from 'layouts/page';
 import About from 'components/pages/about';
 
 import { fetchAllProjects, fetchAboutProjects } from 'services/projects';
 
 const AboutPage = (props) => (
-  <PageWrapper
+  <PageLayout
     title="About GFW | Global Forest Watch"
     description="Global Forest Watch is an online platform that provides data and tools for monitoring forests."
   >
     <About {...props} />
-  </PageWrapper>
+  </PageLayout>
 );
 
 export const getStaticProps = async () => {

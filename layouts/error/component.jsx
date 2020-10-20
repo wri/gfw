@@ -20,7 +20,7 @@ const StaticWrapper = ({ children, title, description, noIndex, metaTags }) => {
         noIndex={noIndex}
         metaTags={metaTags}
       />
-      <div className="l-static-page">{children}</div>
+      <div className="l-error-page">{children}</div>
     </>
   );
 };

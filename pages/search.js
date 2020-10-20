@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import useRouter from 'utils/router';
 
-import PageWrapper from 'layouts/page';
+import PageLayout from 'layouts/page';
 import Search from 'components/pages/search';
 import SearchUrlProvider from 'providers/search-url-provider';
 
@@ -30,7 +30,7 @@ const SearchPage = () => {
   });
 
   return (
-    <PageWrapper
+    <PageLayout
       title="Search | Global Forest Watch"
       description="Search forest information, including forest data, news, updates and more."
       noIndex
@@ -41,7 +41,7 @@ const SearchPage = () => {
           <SearchUrlProvider />
         </>
       )}
-    </PageWrapper>
+    </PageLayout>
   );
 };
 

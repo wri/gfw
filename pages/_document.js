@@ -1,7 +1,8 @@
 import React from 'react';
 import Document, { Html, Main, NextScript, Head } from 'next/document';
 import sprite from 'svg-sprite-loader/runtime/sprite.build';
-import { mediaStyles } from 'utils/responsive';
+
+import { mediaStyles } from 'gfw-components';
 
 export default class MyDocument extends Document {
   render() {
