@@ -63,12 +63,14 @@ const AboutProjectsSection = ({ categories, projectsByCategory }) => {
             sustainably source commodities, and conduct research at the
             forefront of conservation.
           </p>
-          <ItemsList
-            className="project-list"
-            data={categories}
-            itemSelected={category}
-            onClick={setCategory}
-          />
+          <Desktop>
+            <ItemsList
+              className="project-list"
+              data={categories}
+              itemSelected={category}
+              onClick={setCategory}
+            />
+          </Desktop>
           <a
             href="https://www.globalforestwatch.org/help/"
             target="_blank"
@@ -78,12 +80,14 @@ const AboutProjectsSection = ({ categories, projectsByCategory }) => {
           </a>
         </Column>
       </Row>
-      <div className="visitors" style={{ backgroundImage: `url(${growth})` }}>
-        <h4>
-          Since its launch in 2014, over 4 million people have visited Global
-          Forest Watch from every single country in the world.
-        </h4>
-      </div>
+      <Desktop>
+        <div className="visitors" style={{ backgroundImage: `url(${growth})` }}>
+          <h4>
+            Since its launch in 2014, over 4 million people have visited Global
+            Forest Watch from every single country in the world.
+          </h4>
+        </div>
+      </Desktop>
     </div>
   );
 };

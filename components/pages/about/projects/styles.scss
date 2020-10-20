@@ -8,21 +8,8 @@
     padding: rem(40px) 0 0;
   }
 
-  .project-header {
-    display: none;
-
-    @media screen and (min-width: $screen-l) {
-      display: block;
-    }
-  }
-
   .project-list {
     margin-bottom: rem(30px);
-    display: none;
-
-    @media screen and (min-width: $screen-l) {
-      display: block;
-    }
   }
 
   .project-globe {
@@ -51,14 +38,9 @@
 
   .visitors {
     padding: rem(100px) 0 rem(130px);
-    display: none;
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;
-
-    @media screen and (min-width: $screen-l) {
-      display: block;
-    }
 
     h4 {
       font-weight: 300;
@@ -75,6 +57,10 @@
     margin-bottom: rem(40px);
     width: fit-content;
     cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
 
     .video-icon {
       display: inline-block;
