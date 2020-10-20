@@ -49,21 +49,19 @@ const SectionImpacts = ({ impactProjects }) => (
         {impactProjects && (
           <Carousel>
             {impactProjects.map((c) => (
-              <div key={c.id}>
-                <Card
-                  key={c.title}
-                  data={{
-                    ...c,
-                    buttons: [
-                      {
-                        className: 'read-more',
-                        text: 'READ MORE',
-                        extLink: c.extLink,
-                      },
-                    ],
-                  }}
-                />
-              </div>
+              <Card
+                key={c.id}
+                data={{
+                  ...c,
+                  buttons: [
+                    {
+                      className: 'read-more',
+                      text: 'READ MORE',
+                      extLink: c.extLink,
+                    },
+                  ],
+                }}
+              />
             ))}
           </Carousel>
         )}
@@ -74,7 +72,7 @@ const SectionImpacts = ({ impactProjects }) => (
         <h3>Awards</h3>
       </Column>
       {awards.map((l) => (
-        <Column width={[1, 1 / 2, 1 / 4]}>
+        <Column key={l.title} width={[1, 1 / 2, 1 / 4]}>
           <a
             key={l.title}
             href={l.link}

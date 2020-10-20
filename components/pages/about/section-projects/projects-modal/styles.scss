@@ -1,13 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-projects-modal {
-  max-width: rem(540px);
-
-  h3 {
-    font-size: rem(30px);
-    font-weight: 400;
-    margin-bottom: rem(10px);
-  }
+  max-width: rem(700px) !important;
 
   p {
     opacity: 0.5;

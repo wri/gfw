@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
-import ContactForm from 'components/forms/contact';
 
-import { Row, Column } from 'gfw-components';
+import { Row, Column, ContactUsForm } from 'gfw-components';
 
 import './styles.scss';
 
@@ -35,8 +34,8 @@ class SectionContact extends PureComponent {
               Explore jobs
             </a>
           </Column>
-          <Column className="column small-12 large-6">
-            <ContactForm />
+          <Column width={[1, 1 / 2]}>
+            <ContactUsForm />
           </Column>
         </Row>
       </div>

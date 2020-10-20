@@ -7,9 +7,13 @@ import { Modal, Button } from 'gfw-components';
 import './styles.scss';
 
 const SectionProjectsModal = ({ data, onRequestClose }) => (
-  <Modal open={!!data} onRequestClose={onRequestClose}>
-    <div className="c-projects-modal">
-      <h3>{data?.title}</h3>
+  <Modal
+    open={!!data}
+    title={data?.title}
+    onRequestClose={onRequestClose}
+    className="c-projects-modal"
+  >
+    <div>
       <p>{data?.description}</p>
       <div className="links">
         {data?.sgf && (
