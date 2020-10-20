@@ -1,6 +1,6 @@
 import sortBy from 'lodash/sortBy';
 
-import PageWrapper from 'wrappers/page';
+import PageWrapper from 'layouts/page';
 import MapBuilder from 'pages/mapbuilder';
 
 import { getPostsByType, getPostByType } from 'services/content';

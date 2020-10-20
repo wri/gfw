@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import useRouter from 'utils/router';
 
-import PageWrapper from 'wrappers/page';
+import PageWrapper from 'layouts/page';
 import Search from 'pages/search';
 import SearchUrlProvider from 'providers/search-url-provider';
 

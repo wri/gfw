@@ -4,7 +4,7 @@ import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
 
-import Layout from 'wrappers/page';
+import Layout from 'layouts/page';
 import Map from 'pages/map';
 
 import { setMapSettings } from 'components/map/actions';

@@ -6,7 +6,7 @@ import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 import { getLocationData } from 'services/location';
 
-import LayoutEmbed from 'wrappers/embed';
+import LayoutEmbed from 'layouts/embed';
 import WidgetEmbed from 'pages/dashboards/components/embed';
 import ConfirmationMessage from 'components/confirmation-message';
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';

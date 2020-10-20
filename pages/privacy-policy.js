@@ -1,4 +1,4 @@
-import PageWrapper from 'wrappers/page';
+import PageWrapper from 'layouts/page';
 import PrivacyPolicy from 'pages/privacy-policy';
 
 const PrivacyPolicyPage = () => (
