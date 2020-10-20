@@ -7,7 +7,7 @@ import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import bgImage from 'pages/topics/assets/bg-leaf.jpeg?webp';
+import bgImage from 'pages/topics/assets/bg-leaf.jpeg';
 
 import Intro from './topics-intro';
 

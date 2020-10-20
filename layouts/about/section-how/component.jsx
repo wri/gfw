@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 
-import transparency from 'pages/about/section-how/images/how-to-1.png?webp';
-import engagement from 'pages/about/section-how/images/how-to-2.png?webp';
-import community from 'pages/about/section-how/images/how-to-3.png?webp';
+import transparency from 'pages/about/section-how/images/how-to-1.png';
+import engagement from 'pages/about/section-how/images/how-to-2.png';
+import community from 'pages/about/section-how/images/how-to-3.png';
 
 import './styles.scss';
 

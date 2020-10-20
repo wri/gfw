@@ -16,7 +16,7 @@ import Partners from 'pages/about/section-partners';
 import Join from 'pages/about/section-join';
 
 import mailIcon from 'assets/icons/mail.svg?sprite';
-import bgImage from './header-bg.jpg?webp';
+import bgImage from './header-bg.jpg';
 
 import './styles.scss';
 
