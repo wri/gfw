@@ -1,10 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import lottie from 'lottie-web';
+import { loadAnimation, setQuality, destroy } from 'lottie-web';
 import { track } from 'analytics';
 
-import Button from 'components/ui/button';
+import { Button } from 'gfw-components';
+
 import Icon from 'components/ui/icon';
 import infoIcon from 'assets/icons/info.svg?sprite';
 import { Tooltip } from 'react-tippy';
@@ -13,7 +14,7 @@ import './styles.scss';
 
 class TopicsImage extends PureComponent {
   componentDidMount() {
-    lottie.setQuality(2);
+    setQuality(2);
     this.animations = {};
     const { animations } = this.props;
     if (animations && animations.length) {
@@ -28,13 +29,13 @@ class TopicsImage extends PureComponent {
       if (prevAnimations && prevAnimations.length) {
         this.destroyAnimations(prevAnimations);
       }
-      lottie.setQuality(2);
+      setQuality(2);
       this.renderAnimations(animations);
     }
   }
 
   componentWillUnmount() {
-    lottie.destroy();
+    destroy();
   }
 
   destroyAnimations = (animations) => {
@@ -49,7 +50,7 @@ class TopicsImage extends PureComponent {
   renderAnimations = (animations) => {
     animations.forEach((a) => {
       if (a.type !== 'svg') {
-        this.animations[a.id] = lottie.loadAnimation({
+        this.animations[a.id] = loadAnimation({
           wrapper: this.svgWrappers[a.id],
           animType: 'svg',
           loop: true,
@@ -138,7 +139,7 @@ class TopicsImage extends PureComponent {
                         rel="noopener noreferrer"
                       >
                         <Button
-                          theme="theme-button-small"
+                          size="small"
                           onClick={() => {
                             track('topicsImageBubble', {
                               label: `${topic}: ${p.content}`,
@@ -152,7 +153,7 @@ class TopicsImage extends PureComponent {
                   </div>
                 )}
               >
-                <Button className="info-btn" theme="theme-button-small square">
+                <Button className="info-btn" round size="small">
                   <Icon icon={infoIcon} />
                 </Button>
               </Tooltip>
