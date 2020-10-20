@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
-import { Search } from 'gfw-components';
+import { Search, Desktop } from 'gfw-components';
 
 import { handlePageTrack } from 'analytics';
 
@@ -15,7 +14,7 @@ import { getSearchQuery } from 'services/search';
 
 import './styles.scss';
 
-const SearchPage = ({ data, isDesktop }) => {
+const SearchPage = () => {
   const {
     query: { query },
     replace,
@@ -85,7 +84,7 @@ const SearchPage = ({ data, isDesktop }) => {
                         MORE
                       </Button>
                     </div>
-                    {isDesktop && (
+                    <Desktop>
                       <div
                         className="item-image"
                         style={{
@@ -96,10 +95,10 @@ const SearchPage = ({ data, isDesktop }) => {
                           }')`,
                         }}
                       />
-                    )}
+                    </Desktop>
                   </div>
                 ))}
-              {!loading && (!data || data.length === 0) && (
+              {!loading && results?.length === 0 && (
                 <div className="no-results">
                   {query && <Icon icon={treeImage} className="error-tree" />}
                   <p>{query ? 'No search results.' : 'Enter a search'}</p>
@@ -111,11 +110,6 @@ const SearchPage = ({ data, isDesktop }) => {
       </div>
     </div>
   );
-};
-
-SearchPage.propTypes = {
-  data: PropTypes.array,
-  isDesktop: PropTypes.bool,
 };
 
 export default SearchPage;
