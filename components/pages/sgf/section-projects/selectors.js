@@ -1,23 +1,24 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import deburr from 'lodash/deburr';
 import toUpper from 'lodash/toUpper';
 import uniq from 'lodash/uniq';
 import flatten from 'lodash/flatten';
 import groupBy from 'lodash/groupBy';
+import compact from 'lodash/compact';
 import sortBy from 'lodash/sortBy';
 
 export function deburrUpper(string) {
   return toUpper(deburr(string));
 }
 
-const getProjects = (state) => state.data;
-const getCategory = (state) => state.categorySelected;
+const getProjects = (state) => state.projects;
+const getCategory = (state) => state.category;
 const getSearch = (state) => state.search;
 const getLatLngs = (state) => state.latLngs;
 const getImages = (state) => state.images;
 const getCustomFilter = (state) => state.customFilter;
 
-export const getProjectsWithImages = createSelector(
+const getProjectsWithImages = createSelector(
   [getProjects, getImages],
   (projects, images) => {
     if (!projects || !projects.length || !images) return null;
@@ -33,42 +34,43 @@ export const getProjectsWithImages = createSelector(
   }
 );
 
-export const getCategories = createSelector(getProjects, (projects) => {
+const getCategories = createSelector(getProjects, (projects) => {
   if (!projects || !projects.length) return null;
-  return sortBy(
-    uniq(flatten(projects.map((p) => p.categories))).filter((i) => i)
-  );
+  return [
+    'All',
+    ...sortBy(compact(uniq(flatten(projects.map((p) => p.categories))))),
+  ];
 });
 
-export const getProjectsByCategory = createSelector(
+const getProjectsByCategory = createSelector(
   [getProjectsWithImages, getCategories],
   (projects, categories) => {
     if (!projects || !categories) return null;
     const projectsByCategory = {};
     categories.forEach((c) => {
-      projectsByCategory[c] = projects.filter(
-        (p) => p.categories.indexOf(c) > -1
-      );
+      projectsByCategory[c] =
+        c === 'All'
+          ? projects
+          : projects.filter((p) => p.categories.indexOf(c) > -1);
     });
 
     return projectsByCategory;
   }
 );
 
-export const getCategoriesList = createSelector(
-  getProjectsByCategory,
+const getCategoriesList = createSelector(
+  [getProjectsByCategory],
   (projects) => {
     if (!projects) return null;
-    const categories = Object.keys(projects).map((c) => ({
+
+    return Object.keys(projects).map((c) => ({
       label: c,
       count: projects[c].length,
     }));
-
-    return [{ label: 'All', count: projects.length }, ...categories];
   }
 );
 
-export const getProjectsList = createSelector(
+const getProjectsList = createSelector(
   [
     getProjectsWithImages,
     getProjectsByCategory,
@@ -94,7 +96,7 @@ export const getProjectsList = createSelector(
 );
 
 // A project may belong to many countries, we need a globe entry for each
-export const getProjectsForGlobe = createSelector(
+const getProjectsForGlobe = createSelector(
   [getProjectsList, getCategories, getLatLngs],
   (projects, categories, latLngs) => {
     if (!projects || !categories) return null;
@@ -117,6 +119,7 @@ export const getProjectsForGlobe = createSelector(
       }
       projectsForGlobe = projectsForGlobe.concat(tempCountries);
     });
+
     return projectsForGlobe.map((p) => {
       const latLng = latLngs.find((l) => l.iso === p.iso);
       return {
@@ -128,10 +131,11 @@ export const getProjectsForGlobe = createSelector(
   }
 );
 
-export const getGlobeClusters = createSelector(
+const getGlobeClusters = createSelector(
   [getProjectsForGlobe, getCustomFilter],
   (projects, filters) => {
     if (!projects || !projects.length || !filters) return null;
+
     const points = filters.length
       ? projects.filter((p) => filters.indexOf(p.id) > -1)
       : projects;
@@ -147,3 +151,9 @@ export const getGlobeClusters = createSelector(
     return mapPoints;
   }
 );
+
+export const getProjectsProps = createStructuredSelector({
+  projects: getProjectsList,
+  categories: getCategoriesList,
+  globeData: getGlobeClusters,
+});
