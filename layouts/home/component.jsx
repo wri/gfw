@@ -24,8 +24,8 @@ import profileIcon from 'assets/icons/profile.svg?sprite';
 import mailIcon from 'assets/icons/mail.svg?sprite';
 
 import config from './config';
-import newsImage from './assets/news-bg.jpg?webp';
-import bgImage from './assets/home-bg.jpg?webp';
+import newsImage from './assets/news-bg.jpg';
+import bgImage from './assets/home-bg.jpg';
 
 import './styles.scss';
 

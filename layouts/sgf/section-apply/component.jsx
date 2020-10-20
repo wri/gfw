@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 
 import './styles.scss';
 
-import sgfLogo from './img/GFW_SGF_logo.png?webp';
-import techLogo from './img/GFW_TECH_logo.png?webp';
+import sgfLogo from './img/GFW_SGF_logo.png';
+import techLogo from './img/GFW_TECH_logo.png';
 
 class SectionAbout extends PureComponent {
   render() {
