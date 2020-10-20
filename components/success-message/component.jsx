@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
-import treeImage from 'assets/icons/tree-success.png?webp';
+import treeImage from 'assets/icons/tree-success.png';
 
 import './styles.scss';
 

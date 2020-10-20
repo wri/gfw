@@ -6,7 +6,7 @@ import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 import Icon from 'components/ui/icon';
 
-import bgImage from 'components/pages/topics/assets/bg-leaf.jpeg?webp';
+import bgImage from 'components/pages/topics/assets/bg-leaf.jpeg';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
 import Intro from './topics-intro';

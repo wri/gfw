@@ -1,26 +1,26 @@
 // intro
-import intro1x from 'components/pages/topics/assets/commodities/intro/truck.png?webp';
-import intro2x from 'components/pages/topics/assets/commodities/intro/truck@2x.png?webp';
+import intro1x from 'components/pages/topics/assets/commodities/intro/truck.png';
+import intro2x from 'components/pages/topics/assets/commodities/intro/truck@2x.png';
 
 // slides
-import commodities1 from 'components/pages/topics/assets/commodities/slides/commodities1.png?webp';
-import commodities1Large from 'components/pages/topics/assets/commodities/slides/commodities1@2x.png?webp';
-import commodities2 from 'components/pages/topics/assets/commodities/slides/commodities2.png?webp';
-import commodities2Large from 'components/pages/topics/assets/commodities/slides/commodities2@2x.png?webp';
-import commodities3 from 'components/pages/topics/assets/commodities/slides/commodities3.png?webp';
-import commodities3Large from 'components/pages/topics/assets/commodities/slides/commodities3@2x.png?webp';
-import commodities4 from 'components/pages/topics/assets/commodities/slides/commodities4.png?webp';
-import commodities4Large from 'components/pages/topics/assets/commodities/slides/commodities4@2x.png?webp';
+import commodities1 from 'components/pages/topics/assets/commodities/slides/commodities1.png';
+import commodities1Large from 'components/pages/topics/assets/commodities/slides/commodities1@2x.png';
+import commodities2 from 'components/pages/topics/assets/commodities/slides/commodities2.png';
+import commodities2Large from 'components/pages/topics/assets/commodities/slides/commodities2@2x.png';
+import commodities3 from 'components/pages/topics/assets/commodities/slides/commodities3.png';
+import commodities3Large from 'components/pages/topics/assets/commodities/slides/commodities3@2x.png';
+import commodities4 from 'components/pages/topics/assets/commodities/slides/commodities4.png';
+import commodities4Large from 'components/pages/topics/assets/commodities/slides/commodities4@2x.png';
 
 // cards
-import investigate from 'components/pages/topics/assets/commodities/cards/investigate.png?webp';
-import investigateLarge from 'components/pages/topics/assets/commodities/cards/investigate@2x.png?webp';
-import pro from 'components/pages/topics/assets/commodities/cards/pro.png?webp';
-import proLarge from 'components/pages/topics/assets/commodities/cards/pro@2x.png?webp';
-import explore from 'components/pages/topics/assets/commodities/cards/explore.png?webp';
-import exploreLarge from 'components/pages/topics/assets/commodities/cards/explore@2x.png?webp';
-import learn from 'components/pages/topics/assets/commodities/cards/learn.png?webp';
-import learnLarge from 'components/pages/topics/assets/commodities/cards/learn@2x.png?webp';
+import investigate from 'components/pages/topics/assets/commodities/cards/investigate.png';
+import investigateLarge from 'components/pages/topics/assets/commodities/cards/investigate@2x.png';
+import pro from 'components/pages/topics/assets/commodities/cards/pro.png';
+import proLarge from 'components/pages/topics/assets/commodities/cards/pro@2x.png';
+import explore from 'components/pages/topics/assets/commodities/cards/explore.png';
+import exploreLarge from 'components/pages/topics/assets/commodities/cards/explore@2x.png';
+import learn from 'components/pages/topics/assets/commodities/cards/learn.png';
+import learnLarge from 'components/pages/topics/assets/commodities/cards/learn@2x.png';
 
 // animations
 import birds1 from 'components/pages/topics/assets/commodities/animations/birds1.json';

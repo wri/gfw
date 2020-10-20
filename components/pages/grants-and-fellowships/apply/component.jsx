@@ -1,5 +1,5 @@
-import sgfLogo from './assets/gfw-sgf-logo.png?webp';
-import techLogo from './assets/gfw-tech-fellowship-logo.png?webp';
+import sgfLogo from './assets/gfw-sgf-logo.png';
+import techLogo from './assets/gfw-tech-fellowship-logo.png';
 
 import './styles.scss';
 

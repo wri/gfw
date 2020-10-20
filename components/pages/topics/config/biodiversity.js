@@ -1,24 +1,24 @@
 // intro
-import intro1x from 'components/pages/topics/assets/biodiversity/intro/tiger.png?webp';
-import intro2x from 'components/pages/topics/assets/biodiversity/intro/tiger@2x.png?webp';
+import intro1x from 'components/pages/topics/assets/biodiversity/intro/tiger.png';
+import intro2x from 'components/pages/topics/assets/biodiversity/intro/tiger@2x.png';
 
 // slides
-import biodiversity1 from 'components/pages/topics/assets/biodiversity/slides/biodiversity1.png?webp';
-import biodiversity1Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity1@2x.png?webp';
-import biodiversity2 from 'components/pages/topics/assets/biodiversity/slides/biodiversity2.png?webp';
-import biodiversity2Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity2@2x.png?webp';
-import biodiversity3 from 'components/pages/topics/assets/biodiversity/slides/biodiversity3.png?webp';
-import biodiversity3Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity3@2x.png?webp';
-import biodiversity4 from 'components/pages/topics/assets/biodiversity/slides/biodiversity4.png?webp';
-import biodiversity4Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity4@2x.png?webp';
+import biodiversity1 from 'components/pages/topics/assets/biodiversity/slides/biodiversity1.png';
+import biodiversity1Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity1@2x.png';
+import biodiversity2 from 'components/pages/topics/assets/biodiversity/slides/biodiversity2.png';
+import biodiversity2Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity2@2x.png';
+import biodiversity3 from 'components/pages/topics/assets/biodiversity/slides/biodiversity3.png';
+import biodiversity3Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity3@2x.png';
+import biodiversity4 from 'components/pages/topics/assets/biodiversity/slides/biodiversity4.png';
+import biodiversity4Large from 'components/pages/topics/assets/biodiversity/slides/biodiversity4@2x.png';
 
 // cards
-import investigate from 'components/pages/topics/assets/biodiversity/cards/investigate.png?webp';
-import investigateLarge from 'components/pages/topics/assets/biodiversity/cards/investigate@2x.png?webp';
-import explore from 'components/pages/topics/assets/biodiversity/cards/explore.png?webp';
-import exploreLarge from 'components/pages/topics/assets/biodiversity/cards/explore@2x.png?webp';
-import tigers from 'components/pages/topics/assets/biodiversity/cards/tigers.png?webp';
-import tigersLarge from 'components/pages/topics/assets/biodiversity/cards/tigers@2x.png?webp';
+import investigate from 'components/pages/topics/assets/biodiversity/cards/investigate.png';
+import investigateLarge from 'components/pages/topics/assets/biodiversity/cards/investigate@2x.png';
+import explore from 'components/pages/topics/assets/biodiversity/cards/explore.png';
+import exploreLarge from 'components/pages/topics/assets/biodiversity/cards/explore@2x.png';
+import tigers from 'components/pages/topics/assets/biodiversity/cards/tigers.png';
+import tigersLarge from 'components/pages/topics/assets/biodiversity/cards/tigers@2x.png';
 
 // animations
 import scene1 from 'components/pages/topics/assets/biodiversity/animations/scene1.json';
