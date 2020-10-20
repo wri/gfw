@@ -1,3 +1,5 @@
+import { Row, Column } from 'gfw-components';
+
 import Icon from 'components/ui/icon';
 
 import sgfLogo from './assets/gfw-sgf-logo.png';
@@ -10,8 +12,8 @@ import './styles.scss';
 const GrantsAboutSection = () => (
   <div className="l-grants-about-section">
     <section className="intro">
-      <div className="row intro">
-        <div className="column small-12 medium-9">
+      <Row className="intro">
+        <Column width={[1, 3 / 4]}>
           <h2 className="section-title" id="small-grants-fund">
             Small Grants Fund
           </h2>
@@ -27,15 +29,15 @@ const GrantsAboutSection = () => (
             with local organizations also helps GFW to understand how we can
             best adapt our tools to meet the unique needs of this user group.
           </p>
-        </div>
-        <div className="column small-12 medium-3 logo">
+        </Column>
+        <Column width={[1, 1 / 4]} className="logo">
           <img src={sgfLogo} alt="Logo Global Forest Watch Small Grant Funds" />
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
     <section className="program">
-      <div className="row">
-        <div className="column small-12 medium-9">
+      <Row>
+        <Column width={[1, 3 / 4]}>
           <h3 className="section-subtitle">Program Benefits</h3>
           <ul className="list">
             {sgfBenefits &&
@@ -46,12 +48,12 @@ const GrantsAboutSection = () => (
                 </li>
 ))}
           </ul>
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
     <section className="program">
-      <div className="row">
-        <div className="column small-12 medium-9">
+      <Row>
+        <Column width={[1, 3 / 4]}>
           <p className="text -paragraph -color-2 -light -spaced">
             Small Grants Fund projects have used GFW to strengthen community
             land rights, by providing evidence of the benefits of
@@ -60,28 +62,28 @@ const GrantsAboutSection = () => (
             campaigns, to raise awareness of deforestation drivers and hold
             those responsible to account.
           </p>
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
     <section className="results">
-      <div className="row">
-        <div className="column small-12">
+      <Row>
+        <Column>
           <h2 className="section-subtitle">Results</h2>
-          <div className="row icon-list">
+          <Row nested className="icon-list">
             {results &&
               results.map((item) => (
-                <div key={item.label} className="column small-12 medium-4">
+                <Column width={[1, 1 / 3]} key={item.label}>
                   <Icon icon={item.icon} />
                   <p dangerouslySetInnerHTML={{ __html: item.label }} />
-                </div>
+                </Column>
               ))}
-          </div>
-        </div>
-      </div>
+          </Row>
+        </Column>
+      </Row>
     </section>
     <section className="intro">
-      <div className="row intro">
-        <div className="column small-12 medium-9">
+      <Row className="intro">
+        <Column width={[1, 3 / 4]}>
           <h2 className="section-title" id="tech-fellowship">
             Tech Fellowship
           </h2>
@@ -103,15 +105,15 @@ const GrantsAboutSection = () => (
             monitoring technology effectively within their work and to enhance
             their ability to participate in monitoring of illegal deforestation.
           </p>
-        </div>
-        <div className="column small-12 medium-3 logo">
+        </Column>
+        <Column width={[1, 1 / 4]} className="logo">
           <img src={techLogo} alt="Logo Global Forest Watch Tech Fellowship" />
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
     <section className="program">
-      <div className="row">
-        <div className="column small-12 medium-9">
+      <Row>
+        <Column width={[1, 3 / 4]}>
           <h3 className="section-subtitle">Program Benefits</h3>
           <ul className="list">
             {fellowshipBenefits &&
@@ -122,12 +124,12 @@ const GrantsAboutSection = () => (
                 </li>
 ))}
           </ul>
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
     <section className="support">
-      <div className="row">
-        <div className="column small-12 medium-9">
+      <Row>
+        <Column width={[1, 3 / 4]}>
           <h2 className="section-title" id="support">
             Support the Small Grants Fund and Fellowship
           </h2>
@@ -143,8 +145,8 @@ const GrantsAboutSection = () => (
               gfwfund@wri.org.
             </a>
           </p>
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
   </div>
 );

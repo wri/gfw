@@ -1,3 +1,5 @@
+import { Row, Column } from 'gfw-components';
+
 import sgfLogo from './assets/gfw-sgf-logo.png';
 import techLogo from './assets/gfw-tech-fellowship-logo.png';
 
@@ -5,8 +7,8 @@ import './styles.scss';
 
 const GrantsApplySection = () => (
   <section className="l-grants-apply-section">
-    <div className="row">
-      <div className="column small-12 medium-9">
+    <Row>
+      <Column width={[1, 3 / 4]}>
         <p className="text -paragraph -color-2 -light -spaced">
           The specific focus of the Calls for Applications varies from year to
           year, though successful applicants must clearly articulate how GFW
@@ -22,11 +24,11 @@ const GrantsApplySection = () => (
         <p className="text -paragraph -color-2 -light -spaced">
           For details on how to apply to each, please see below:
         </p>
-      </div>
-    </div>
+      </Column>
+    </Row>
     <section className="apply-section">
-      <div className="row">
-        <div className="column small-12 medium-9 logo">
+      <Row>
+        <Column width={[1, 3 / 4]} className="logo">
           <h2 className="section-title">Small Grants Fund</h2>
           <ul className="list">
             <p className="text -paragraph -color-2 -light -spaced">
@@ -76,15 +78,15 @@ const GrantsApplySection = () => (
           <p className="text -paragraph -color-2 -light -spaced">
             The 2020 Small Grants Fund application window is now closed.
           </p>
-        </div>
-        <div className="column small-12 medium-3 logo">
+        </Column>
+        <Column width={[1, 1 / 4]} className="logo">
           <img src={sgfLogo} alt="Logo Global Forest Watch Small Grant Funds" />
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
     <section className="apply-section">
-      <div className="row">
-        <div className="column small-12 medium-9 logo">
+      <Row>
+        <Column width={[1, 3 / 4]} className="logo">
           <h2 className="section-title">Tech Fellowship</h2>
           <ul className="list">
             <li>
@@ -113,14 +115,14 @@ const GrantsApplySection = () => (
           <p className="text -paragraph -color-2 -light -spaced">
             The 2019 Tech Fellowship application window is now closed.
           </p>
-        </div>
-        <div className="column small-12 medium-3 logo">
+        </Column>
+        <Column width={[1, 1 / 4]} className="logo">
           <img src={techLogo} alt="Logo Global Forest Watch Tech fellowship" />
-        </div>
-      </div>
+        </Column>
+      </Row>
     </section>
-    <div className="row">
-      <div className="column small-12 medium-9">
+    <Row>
+      <Column width={[1, 3 / 4]}>
         <p className="text -paragraph -color-2 -light -spaced">
           For questions about the Small Grants Fund or Tech Fellowship program,
           or to be notifed when the next call opens, please write to us at&nbsp;
@@ -134,8 +136,8 @@ const GrantsApplySection = () => (
           </a>
           .
         </p>
-      </div>
-    </div>
+      </Column>
+    </Row>
   </section>
 );
 

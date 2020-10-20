@@ -103,43 +103,47 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
             )}
           </Column>
         </Row>
-        <div className="row">
-          <div className="column small-12 medium-6 large-4 medium-offset-6 large-offset-8">
+        <Row>
+          <Column width={[0, 1 / 2, 2 / 3]} />
+          <Column width={[1, 1 / 2, 1 / 3]}>
             <Search
               className="project-search"
               placeholder="Search"
               input={search}
               onChange={setSearch}
             />
-          </div>
-        </div>
-        <ScrollEl name="project-cards" className="row project-cards">
-          {projects?.map((d) => {
-            const isFellow = d?.categories?.includes('Fellow');
+          </Column>
+        </Row>
+        <ScrollEl name="project-cards" className="project-cards">
+          <Row>
+            {projects?.map((d) => {
+              const isFellow = d?.categories?.includes('Fellow');
 
-            return (
-              <div
-                key={d.id}
-                className="column small-12 medium-6 large-4 card-container"
-              >
-                <Card
-                  className="project-card"
-                  data={{
-                    ...d,
-                    tag: isFellow ? 'fellow' : 'grantee',
-                    tagColor: isFellow ? '#f88000' : '#97bd3d',
-                    buttons: [
-                      {
-                        className: 'read-more',
-                        text: 'READ MORE',
-                        onClick: () => setModalOpen(d.id),
-                      },
-                    ],
-                  }}
-                />
-              </div>
-            );
-          })}
+              return (
+                <Column
+                  key={d.id}
+                  width={[1, 1 / 2, 1 / 3]}
+                  className="card-container"
+                >
+                  <Card
+                    className="project-card"
+                    data={{
+                      ...d,
+                      tag: isFellow ? 'fellow' : 'grantee',
+                      tagColor: isFellow ? '#f88000' : '#97bd3d',
+                      buttons: [
+                        {
+                          className: 'read-more',
+                          text: 'READ MORE',
+                          onClick: () => setModalOpen(d.id),
+                        },
+                      ],
+                    }}
+                  />
+                </Column>
+              );
+            })}
+          </Row>
           {!projects?.length && (
             <NoContent
               className="no-projects"
