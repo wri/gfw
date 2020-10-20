@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import { Search, Desktop } from 'gfw-components';
 
 import { handlePageTrack } from 'analytics';
+import { getSearchQuery } from 'services/search';
 
-import treeImage from 'assets/icons/error.svg?sprite';
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
-import { getSearchQuery } from 'services/search';
+import treeImage from 'assets/icons/error.svg?sprite';
 
 import './styles.scss';
 
