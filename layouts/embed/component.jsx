@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { initAnalytics, handlePageTrack } from 'analytics';
-import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 
 import Button from 'components/ui/button';
@@ -17,7 +16,6 @@ class App extends PureComponent {
   static propTypes = {
     fullScreen: PropTypes.bool,
     children: PropTypes.node,
-    router: PropTypes.object,
     title: PropTypes.string,
     description: PropTypes.string,
     keywords: PropTypes.string,
@@ -27,18 +25,11 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    const { router } = this.props;
-
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
       window.ANALYTICS_INITIALIZED = true;
     }
     handlePageTrack();
-
-    const isValidBrowser = checkBrowser();
-    if (!isValidBrowser) {
-      router.push('/browser-support');
-    }
   }
 
   render() {

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { initAnalytics, handlePageTrack } from 'analytics';
-import { checkBrowser } from 'utils/browser';
 import { MediaContextProvider } from 'utils/responsive';
 import useRouter from 'utils/router';
 import moment from 'moment';
@@ -44,18 +43,11 @@ class App extends PureComponent {
   };
 
   componentDidMount() {
-    const { push } = useRouter();
-
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
       window.ANALYTICS_INITIALIZED = true;
     }
     handlePageTrack();
-
-    const isValidBrowser = checkBrowser();
-    if (!isValidBrowser) {
-      push('/browser-support');
-    }
 
     moment.locale(getMomentLangCode(this.props.lang));
   }
