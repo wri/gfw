@@ -27,7 +27,7 @@ const parseBodyContent = (html, className) => {
   );
 };
 
-const ProjectsModal = ({ open, data = {}, onRequestClose }) => {
+const GrantsProjectsModal = ({ open, data = {}, onRequestClose }) => {
   const isFellow = data?.categories?.includes('Fellow');
   const {
     title,
@@ -106,10 +106,10 @@ const ProjectsModal = ({ open, data = {}, onRequestClose }) => {
   );
 };
 
-ProjectsModal.propTypes = {
+GrantsProjectsModal.propTypes = {
   open: PropTypes.bool,
   data: PropTypes.object,
   onRequestClose: PropTypes.func,
 };
 
-export default ProjectsModal;
+export default GrantsProjectsModal;

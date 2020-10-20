@@ -1,25 +1,25 @@
 import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
 
-import Projects from 'components/pages/sgf/section-projects';
-import About from 'components/pages/sgf/section-about';
-import Apply from 'components/pages/sgf/section-apply';
+import Projects from 'components/pages/grants-and-fellowships/projects';
+import About from 'components/pages/grants-and-fellowships/about';
+import Apply from 'components/pages/grants-and-fellowships/apply';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 
-import bgImage from './header-bg.jpg?webp';
+import bgImage from './background.jpg?webp';
 import './styles.scss';
 
-const PAGE_COMPONENTS = {
+const GRANTS_PAGE_COMPONENTS = {
   projects: Projects,
   about: About,
   apply: Apply,
 };
 
 const GrantsAndFellowshipsPage = (props) => {
-  const SectionComponent = PAGE_COMPONENTS[props?.section];
-  const links = Object.keys(PAGE_COMPONENTS).map((key) => ({
+  const SectionComponent = GRANTS_PAGE_COMPONENTS[props?.section];
+  const links = Object.keys(GRANTS_PAGE_COMPONENTS).map((key) => ({
     label: capitalize(key),
     href: '/grants-and-fellowships/[section]',
     as: `/grants-and-fellowships/${key}`,

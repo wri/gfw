@@ -1,6 +1,6 @@
-import Earth from './img/earth.svg?sprite';
-import Map from './img/map.svg?sprite';
-import People from './img/people.svg?sprite';
+import Earth from './assets/earth.svg?sprite';
+import Map from './assets/map.svg?sprite';
+import People from './assets/people.svg?sprite';
 
 export const sgfBenefits = [
   'Grant awards between $10K - $40K.',

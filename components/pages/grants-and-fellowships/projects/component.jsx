@@ -11,12 +11,12 @@ import NoContent from 'components/ui/no-content';
 
 import { Media } from 'utils/responsive';
 
-import ProjectsModal from './section-projects-modal';
+import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
 import './styles.scss';
 
-const SectionProjects = ({ projects: allProjects, images, latLngs }) => {
+const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [customFilter, setCustomFilter] = useState([]);
@@ -159,10 +159,10 @@ const SectionProjects = ({ projects: allProjects, images, latLngs }) => {
   );
 };
 
-SectionProjects.propTypes = {
+GrantsProjectsSection.propTypes = {
   projects: PropTypes.array,
   images: PropTypes.object,
   latLngs: PropTypes.array,
 };
 
-export default SectionProjects;
+export default GrantsProjectsSection;

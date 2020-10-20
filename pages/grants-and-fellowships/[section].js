@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy';
 import compact from 'lodash/compact';
 
 import PageLayout from 'layouts/page';
-import GrantsAndFellowships from 'components/pages/sgf';
+import GrantsAndFellowships from 'components/pages/grants-and-fellowships';
 
 import { fetchSGFProjects } from 'services/projects';
 import { getCountriesProvider, getCountriesLatLng } from 'services/country';
