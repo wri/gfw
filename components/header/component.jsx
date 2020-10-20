@@ -7,7 +7,7 @@ import NavLink from 'components/nav-link';
 
 import './styles.scss';
 
-const Header = ({ setModalContactUsOpen, setSearchQuery, fullScreen }) => {
+const Header = ({ setModalContactUsOpen, fullScreen }) => {
   const { push } = useRouter();
 
   return (
@@ -20,10 +20,7 @@ const Header = ({ setModalContactUsOpen, setSearchQuery, fullScreen }) => {
           </NavLink>
         ) : null}
       openContactUsModal={() => setModalContactUsOpen(true)}
-      setQueryToUrl={(query) => {
-        push('/search/', `/search/?query=${query}`);
-        setSearchQuery(query);
-      }}
+      setQueryToUrl={(query) => push(`/search/?query=${query}`)}
       fullScreen={fullScreen}
     />
   );
