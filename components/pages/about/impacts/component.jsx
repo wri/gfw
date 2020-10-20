@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Carousel, Row, Column } from 'gfw-components';
+import { Carousel, Row, Column, Desktop, Mobile } from 'gfw-components';
 
 import Card from 'components/ui/card';
 
@@ -46,9 +46,9 @@ const AboutImpactsSection = ({ impactProjects }) => (
     </Row>
     <Row>
       <Column>
-        {impactProjects && (
+        <Desktop>
           <Carousel>
-            {impactProjects.map((c) => (
+            {impactProjects?.map((c) => (
               <Card
                 key={c.id}
                 data={{
@@ -64,7 +64,30 @@ const AboutImpactsSection = ({ impactProjects }) => (
               />
             ))}
           </Carousel>
-        )}
+        </Desktop>
+        <Mobile>
+          <Carousel
+            settings={{
+              slidesToShow: 1,
+            }}
+          >
+            {impactProjects?.map((c) => (
+              <Card
+                key={c.id}
+                data={{
+                  ...c,
+                  buttons: [
+                    {
+                      className: 'read-more',
+                      text: 'READ MORE',
+                      extLink: c.extLink,
+                    },
+                  ],
+                }}
+              />
+            ))}
+          </Carousel>
+        </Mobile>
       </Column>
     </Row>
     <Row className="awards">

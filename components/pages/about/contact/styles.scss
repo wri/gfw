@@ -16,6 +16,11 @@
       margin-bottom: rem(10px);
     }
 
+    p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
     .intro {
       margin-bottom: rem(20px);
       border-bottom: solid 1px $border;
@@ -26,7 +31,7 @@
       color: $green-gfw;
       display: inline-block;
       margin-top: rem(10px);
-      font-size: rem(16px);
+      font-size: rem(18px);
     }
   }
 

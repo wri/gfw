@@ -1,11 +1,12 @@
 @import '~styles/settings.scss';
 
 .c-projects-modal {
-  max-width: rem(700px) !important;
+  max-width: 700px !important;
 
   p {
-    opacity: 0.5;
-    margin-bottom: rem(20px);
+    margin-bottom: 40px;
+    font-size: 18px;
+    line-height: 30px;
   }
 
   .links {

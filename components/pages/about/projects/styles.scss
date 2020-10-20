@@ -4,7 +4,7 @@
   padding: rem(40px) 0;
   border-top: solid 1px $border;
 
-  @media screen and (min-width: $screen-l) {
+  @media screen and (min-width: $screen-m) {
     padding: rem(40px) 0 0;
   }
 
@@ -24,11 +24,13 @@
     }
 
     h3 {
-      margin-bottom: rem(20px);
+      margin-bottom: rem(30px);
     }
 
     p {
       margin-bottom: rem(30px);
+      font-size: 18px;
+      line-height: 30px;
     }
 
     .help-btn {

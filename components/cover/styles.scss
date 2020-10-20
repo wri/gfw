@@ -2,14 +2,14 @@
 
 .c-cover {
   position: relative;
-  padding: rem(60px) 0 rem(40px);
+  padding: 50px 0 60px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-color: $slate-light;
 
   @media screen and (min-width: $screen-m) {
-    padding: rem(80px) 0;
+    padding: 70px 0;
   }
 
   .cover-texts {
@@ -20,16 +20,15 @@
     position: relative;
 
     h1 {
-      margin-bottom: rem(5px);
+      margin: 0 0 15px 0;
       font-size: 48px;
 
       @media screen and (min-width: $screen-m) {
-        margin-bottom: rem(10px);
+        margin: 0 0 20px 0;
       }
     }
 
-    .description,
-    p {
+    .description {
       font-size: 18px;
       line-height: 30px;
       max-width: rem(768px);

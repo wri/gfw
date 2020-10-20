@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { Row, Column } from 'gfw-components';
+
 import './styles.scss';
 
 class Cover extends PureComponent {
@@ -19,19 +21,19 @@ class Cover extends PureComponent {
 
     return (
       <div className={cx('c-cover', { large }, className)} style={bgStyle}>
-        <div className="row">
-          <div className="columns small-12 medium-8">
+        <Row>
+          <Column width={[1, 2 / 3]}>
             <div className="cover-texts">
               <h1 className="text -title-biggest -color-1">{title}</h1>
               {Array.isArray(description) ? (
-                <div>{description}</div>
+                <div className="description">{description}</div>
               ) : (
-                <p>{description}</p>
+                <p className="description">{description}</p>
               )}
             </div>
             {children}
-          </div>
-        </div>
+          </Column>
+        </Row>
       </div>
     );
   }

@@ -45,7 +45,7 @@ const AboutProjectsSection = ({ categories, projectsByCategory }) => {
             role="button"
             tabIndex={0}
           >
-            <Button round className="video-icon">
+            <Button round size="medium" className="video-icon">
               <Icon icon={playIcon} />
             </Button>
             <p className="video-msg">Watch this 2 minute video</p>

@@ -16,7 +16,7 @@ import Partners from 'components/pages/about/partners';
 import Join from 'components/pages/about/join';
 
 import mailIcon from 'assets/icons/mail.svg?sprite';
-import bgImage from './header-bg.jpg';
+import bgImage from './background.jpg';
 
 import './styles.scss';
 

@@ -6,7 +6,7 @@
   border-bottom: solid 1px $border;
   overflow: hidden;
 
-  @media screen and (min-width: $screen-l) {
+  @media screen and (min-width: $screen-m) {
     padding: rem(60px) 0;
   }
 
@@ -33,13 +33,18 @@
     .description {
       margin-top: rem(30px);
 
-      @media screen and (min-width: $screen-l) {
+      @media screen and (min-width: $screen-m) {
         margin-top: calc(50% - 15px);
       }
 
       h4 {
         font-size: rem(30px);
         margin-bottom: rem(10px);
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 30px;
       }
     }
   }
