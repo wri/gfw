@@ -56,7 +56,7 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
           <p className="intro-text">{text}</p>
           <div className="intro-buttons">
             {button && (
-              <Button theme="intro-btn" light link={button.link}>
+              <Button className="intro-btn" link={button.link}>
                 {button.text}
               </Button>
             )}
