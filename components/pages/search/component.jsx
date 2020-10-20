@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
 import { Search } from 'gfw-components';
 
@@ -10,23 +11,38 @@ import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
+import { getSearchQuery } from 'services/search';
+
 import './styles.scss';
 
-const SearchPage = ({
-  query,
-  data,
-  loading,
-  isDesktop,
-  getSearch,
-  setSearchQuery,
-}) => {
+const SearchPage = ({ data, isDesktop }) => {
+  const {
+    query: { query },
+    replace,
+  } = useRouter();
+
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    getSearch({ query });
+    const fetchResults = async () => {
+      setLoading(true);
+      const resultsResponse = await getSearchQuery({ query });
+      setResults(resultsResponse?.data?.items || []);
+      setLoading(false);
+    };
+
+    if (query) {
+      fetchResults();
+    } else {
+      setResults([]);
+    }
   }, [query]);
 
   const handleSubmit = (search) => {
-    setSearchQuery(search);
-    handlePageTrack(`/search/?query=${search}`);
+    const newUrl = `/search?query=${search}`;
+    replace(newUrl);
+    handlePageTrack(newUrl);
   };
 
   return (
@@ -50,9 +66,7 @@ const SearchPage = ({
             <div className="search-results">
               {loading && <Loader className="search-loader" />}
               {!loading &&
-                data &&
-                !!data.length &&
-                data.map((item) => (
+                results?.map((item) => (
                   <div
                     key={`${item.title}-${item.cacheId}`}
                     className="search-item"
@@ -100,12 +114,8 @@ const SearchPage = ({
 };
 
 SearchPage.propTypes = {
-  query: PropTypes.string,
   data: PropTypes.array,
   isDesktop: PropTypes.bool,
-  loading: PropTypes.bool,
-  getSearch: PropTypes.func,
-  setSearchQuery: PropTypes.func,
 };
 
 export default SearchPage;
