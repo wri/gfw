@@ -74,9 +74,13 @@ const SearchPage = () => {
                         <h3>{item.title}</h3>
                       </a>
                       <p className="notranslate">{item.snippet}</p>
-                      <Button theme="theme-button-light" extLink={item.link}>
-                        MORE
-                      </Button>
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button light>MORE</Button>
+                      </a>
                     </div>
                     <Desktop>
                       <div
