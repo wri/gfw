@@ -1,8 +1,6 @@
 @import '~styles/settings.scss';
 
 .l-subscribe-page {
-  background-color: $white;
-  height: 100%;
   padding: rem(40px) 0 rem(60px);
 
   @media screen and (min-width: $screen-m) {
