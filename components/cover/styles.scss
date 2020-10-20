@@ -28,7 +28,8 @@
       }
     }
 
-    .description {
+    .description,
+    p {
       font-size: 18px;
       line-height: 30px;
       max-width: rem(768px);
