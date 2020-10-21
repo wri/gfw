@@ -143,6 +143,7 @@ class AreaOfInterestForm extends PureComponent {
             submitError,
             submitSucceeded,
             values: { webhookUrl, alerts },
+            errors: { webhookUrl: webhookInputError },
           }) => {
             let metaKey = 'saved';
             if (alerts && !!alerts.length) metaKey = 'savedWithSub';
@@ -210,7 +211,8 @@ class AreaOfInterestForm extends PureComponent {
                       type="text"
                       placeholder="https://my-webhook-url.com"
                       validate={[validateURL]}
-                      infoClick={() => this.setState({ webhookModalOpen: true })}
+                      infoClick={() =>
+                        this.setState({ webhookModalOpen: true })}
                       collapse
                     />
                     <div className="webhook-actions">
@@ -221,9 +223,10 @@ class AreaOfInterestForm extends PureComponent {
                           this.testWebhook(webhookUrl);
                         }}
                       >
-                        {!webhookError && !webhookSuccess && (
-                          <span>Test webhook</span>
-                        )}
+                        {webhookUrl &&
+                          !webhookInputError &&
+                          !webhookError &&
+                          !webhookSuccess && <span>Test webhook</span>}
                         {testingWebhook && (
                           <Loader className="webhook-loader" />
                         )}
@@ -302,20 +305,28 @@ class AreaOfInterestForm extends PureComponent {
           className="c-webhook-modal"
         >
           <h3>What is this feature?</h3>
-          <p>Webhooks are data sent on demand from one app (GFW) to another over HTTP(S) instead of through the command line in your computer, formatted in XML, JSON, or form-encoded serialization.</p>
+          <p>
+            Webhooks are data sent on demand from one app (GFW) to another over
+            HTTP(S) instead of through the command line in your computer,
+            formatted in XML, JSON, or form-encoded serialization.
+          </p>
           <h3>What does the payload look like?</h3>
           <pre>
-            {JSON.stringify({
-              layerSlug: "layer slug",
-              alert_name: "area of interest name",
-              alerts: "data for your area alert",
-              alert_date_begin: "begin date",
-              alert_date_end: "end date",
-              alert_link: "url of the area on the map",
-              dashboard_url: "url of the area dashboard",
-              subscription_url: "url to My GFW for managing the area",
-              unsubscribe_url: "link to unsubscribe from alerts",
-            }, null, 2)}
+            {JSON.stringify(
+              {
+                layerSlug: 'layer slug',
+                alert_name: 'area of interest name',
+                alerts: 'data for your area alert',
+                alert_date_begin: 'begin date',
+                alert_date_end: 'end date',
+                alert_link: 'url of the area on the map',
+                dashboard_url: 'url of the area dashboard',
+                subscription_url: 'url to My GFW for managing the area',
+                unsubscribe_url: 'link to unsubscribe from alerts',
+              },
+              null,
+              2
+            )}
           </pre>
         </Modal>
       </Fragment>
