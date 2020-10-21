@@ -159,7 +159,10 @@ class AreaOfInterestForm extends PureComponent {
                     <ConfirmationMessage {...confirmationMeta} />
                     <Button
                       className="reset-form-btn"
-                      onClick={() => {
+                      onClick={(e) => {
+                        // stops button click triggering another submission of the form
+                        e.preventDefault();
+                        e.stopPropagation();
                         closeForm();
                       }}
                     >
