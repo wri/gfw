@@ -165,7 +165,7 @@ class MapMenuMyGFW extends PureComponent {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  onEditClick({ open: true });
+                  onEditClick(activeArea?.id);
                 }}
               >
                 <Icon icon={editIcon} />
