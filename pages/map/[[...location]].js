@@ -4,7 +4,7 @@ import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
 
-import Layout from 'layouts/page';
+import FullscreenLayout from 'layouts/fullscreen';
 import Map from 'components/pages/map';
 
 import { setMapSettings } from 'components/map/actions';
@@ -122,14 +122,14 @@ const MapPage = (props) => {
   });
 
   return (
-    <Layout {...props} fullScreen showFooter={false}>
+    <FullscreenLayout {...props} fullScreen showFooter={false}>
       {ready && (
         <>
           <MapUrlProvider />
           <Map />
         </>
       )}
-    </Layout>
+    </FullscreenLayout>
   );
 };
 
