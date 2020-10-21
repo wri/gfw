@@ -20,7 +20,7 @@ const MyGfwPage = ({ loggedIn, loggingIn }) => (
   <div className="l-my-gfw-page">
     <MyGFWProvider />
     {!loggingIn && !loggedIn && (
-      <Row nested className="login">
+      <Row className="login">
         <Column width={[0, 1 / 12, 1 / 6]} />
         <Column width={[1, 5 / 6, 2 / 3]}>
           <LoginForm />
