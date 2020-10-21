@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Media } from 'utils/responsive';
+
+import { Media } from 'gfw-components';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -56,10 +57,10 @@ class MainMapComponent extends PureComponent {
 
     return (
       <div className={cx('c-map-main', { embed })}>
-        <Media greaterThanOrEqual="md">
+        <Media greaterThanOrEqual="small">
           <MapMenu className="map-menu" embed={embed} isDesktop />
         </Media>
-        <Media lessThan="md">
+        <Media lessThan="small">
           <MapMenu className="map-menu" embed={embed} />
         </Media>
         <div
@@ -75,21 +76,21 @@ class MainMapComponent extends PureComponent {
           />
         </div>
         {!hidePanels && (
-          <Media greaterThanOrEqual="md">
+          <Media greaterThanOrEqual="small">
             <DataAnalysisMenu className="data-analysis-menu" embed={embed} />
           </Media>
         )}
         <RecentImagery active={recentActive} />
         {!embed && (
           <>
-            <Media greaterThanOrEqual="md">
+            <Media greaterThanOrEqual="small">
               <>
                 {!embed && <MapPrompts />}
                 {/* <ModalWelcome /> */}
                 <MapControlButtons className="main-map-controls" isDesktop />
               </>
             </Media>
-            <Media lessThan="md">
+            <Media lessThan="small">
               <>
                 <MapControlButtons
                   className="main-map-controls"
@@ -108,7 +109,7 @@ class MainMapComponent extends PureComponent {
         <LatestProvider />
         <GeostoreProvider />
         <GeodescriberProvider />
-        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+        <AreaOfInterestModal clearAfterDelete canDelete />
         <AreasProvider />
         <PlanetBasemapsProvider />
         <LocationProvider />
