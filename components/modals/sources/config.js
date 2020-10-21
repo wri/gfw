@@ -13,22 +13,5 @@ export default {
     title: 'High-resolution satellite imagery',
     body:
       '<p>High-resolution satellite imagery may no longer be available for this view, so we have added Landsat imagery as a substitute. To access another basemap or imagery for a specific date, view our discussion forum post here for instructions.</p>'
-  },
-  webhookPreview: {
-    title: 'Webhook URL.',
-    body: `<h3>What is this feature?</h3><p>Webhooks are data sent on demand from one app (GFW) to another over HTTP(S) instead of through the command line in your computer, formatted in XML, JSON, or form-encoded serialization.</p><h3>What does the payload look like?</h3><div class="source_snippet"><pre><code>
-  {
-    <span class="json-key">layerSlug</span>: <span class="json-string">"layer slug"</span>,
-    <span class="json-key">alert_name</span>: <span class="json-string">"area of interest name"</span>,
-    <span class="json-key">alerts</span>: <span class="json-string">"data for your area alert"</span>,
-    <span class="json-key">alert_date_begin</span>: <span class="json-string">"begin date"</span>,
-    <span class="json-key">alert_date_end</span>: <span class="json-string">"end date"</span>
-    <span class="json-key">alert_link</span>: <span class="json-string">"url of the area on the map"</span>,
-    <span class="json-key">dashboard_url</span>: <span class="json-string">"url of the area dashboard"</span>,
-    <span class="json-key">subscription_url</span>: <span class="json-string">"url to My GFW for managing the area"</span>,
-    <span class="json-key">unsubscribe_url</span>: <span class="json-string">"link to unsubscribe from alerts"</span>,
-  }
-
-</code></pre></div>`
   }
 };

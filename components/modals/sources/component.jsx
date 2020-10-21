@@ -2,32 +2,30 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
-import Modal from '../modal';
+import { Modal } from 'gfw-components';
 
 import './styles.scss';
 
 class ModalSources extends PureComponent {
-  parseContent(html) {
-    return (
-      <div>
-        {ReactHtmlParser(html, {
-          transform: node =>
-            (node.name === 'a' ? (
-              <a
-                key={node.attribs.href}
-                href={node.attribs.href}
-                target="_blank"
-                rel="noopener"
-              >
-                {node.children[0].data}
-              </a>
-            ) : (
-              ''
-            ))
-        })}
-      </div>
-    );
-  }
+  parseContent = (html) => (
+    <div>
+      {ReactHtmlParser(html, {
+        transform: node =>
+          (node.name === 'a' ? (
+            <a
+              key={node.attribs.href}
+              href={node.attribs.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {node.children[0].data}
+            </a>
+          ) : (
+            ''
+          ))
+      })}
+    </div>
+  );
 
   getContent() {
     const { data: { body } } = this.props;
