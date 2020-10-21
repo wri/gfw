@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@artsy/fresnel": "^1.1.0",
-    "@fullpage/react-fullpage": "^0.1.17",
+    "@fullpage/react-fullpage": "^0.1.18",
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "@next/bundle-analyzer": "^9.4.4",
     "@wordpress/api-fetch": "^3.19.1",
@@ -108,7 +108,7 @@
     "layer-manager": "^3.0.8",
     "lodash": "^4.17.19",
     "lodash-math": "0.0.7",
-    "lottie-web": "^5.5.0",
+    "lottie-web": "^5.7.3",
     "luma.gl": "7.3.2",
     "mapbox-gl": "^1.11.1",
     "moment": "2.24.0",
