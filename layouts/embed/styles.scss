@@ -1,15 +1,11 @@
 @import '~styles/settings.scss';
 
-.l-fullscreen-page {
+.l-embed-page {
   position: relative;
 
-  .embed-logo {
-    position: absolute;
-    top: 0;
-    left: rem(15px);
-    z-index: 2;
-    display: none;
-    width: rem(76px);
+  .embed-content {
+    position: relative;
+    min-height: 400px;
   }
 
   .embed-footer {
@@ -28,7 +24,7 @@
   }
 
   .embed-btn {
-    width: rem(160px);
+    width: rem(200px);
     margin-left: rem(10px);
     margin-right: rem(10px);
   }

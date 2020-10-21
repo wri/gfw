@@ -3,16 +3,12 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { useRouter } from 'next/router';
-import { Loader, MediaContextProvider } from 'gfw-components';
+import { Loader, MediaContextProvider, Button } from 'gfw-components';
 
 import { usePageTrack } from 'analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'layouts/head';
-
-import Button from 'components/ui/button';
-
-import gfwLogo from 'assets/logos/gfw.png';
 
 import './styles.scss';
 
@@ -29,8 +25,10 @@ const EmbedWrapper = ({
 
   // if a page is statically built with
   // fallback true we show a loader
-  const { isFallback, query = {} } = useRouter();
-  const { trase, gfw } = query;
+  const {
+    isFallback,
+    query: { trase, gfw },
+  } = useRouter();
 
   return (
     <MediaContextProvider>
@@ -41,16 +39,15 @@ const EmbedWrapper = ({
         metaTags={metaTags}
       />
       <div className={cx('l-embed-page', { '-trase': trase })}>
-        <a className="embed-logo" href="/" target="_blank">
-          <img src={gfwLogo} alt="Global Forest Watch" />
-        </a>
-        {isFallback ? <Loader /> : children}
+        <div className="embed-content">
+          {isFallback ? <Loader /> : children}
+        </div>
         {!trase && !gfw && (
           <div className="embed-footer">
             <p>For more info</p>
-            <Button className="embed-btn" extLink={exploreLink}>
-              EXPLORE ON GFW
-            </Button>
+            <a href={exploreLink} target="_blank" rel="noopener noreferrer">
+              <Button className="embed-btn">EXPLORE ON GFW</Button>
+            </a>
           </div>
         )}
       </div>

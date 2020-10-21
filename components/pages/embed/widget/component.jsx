@@ -1,4 +1,3 @@
-import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -16,29 +15,25 @@ import ModalMeta from 'components/modals/meta';
 import './styles.scss';
 import './trase-embed-styles.scss';
 
-class Embed extends PureComponent {
-  render() {
-    const { isTrase } = this.props;
-    return (
-      <div className={cx('c-embed', { '-trase': isTrase })}>
-        <div className="widget-wrapper">
-          <Widgets embed />
-        </div>
-        <Share />
-        <ModalMeta />
-        <CountryDataProvider />
-        <WhitelistsProvider />
-        <GeodescriberProvider />
-        <AreasProvider />
-        <GeostoreProvider />
-        <LocationProvider />
-      </div>
-    );
-  }
-}
+const WidgetEmbedPage = ({ widget, trase }) => (
+  <div className={cx('c-widget-embed', { '-trase': !trase })}>
+    <div className="widget-wrapper">
+      <Widgets embed widget={widget} />
+    </div>
+    <Share />
+    <ModalMeta />
+    <CountryDataProvider />
+    <WhitelistsProvider />
+    <GeodescriberProvider />
+    <AreasProvider />
+    <GeostoreProvider />
+    <LocationProvider />
+  </div>
+);
 
-Embed.propTypes = {
-  isTrase: PropTypes.bool,
+WidgetEmbedPage.propTypes = {
+  widget: PropTypes.string,
+  trase: PropTypes.bool,
 };
 
-export default Embed;
+export default WidgetEmbedPage;

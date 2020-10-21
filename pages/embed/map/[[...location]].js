@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import useRouter from 'utils/router';
 
 import LayoutEmbed from 'layouts/embed';
-import Map from 'components/pages/map';
+import MapEmbed from 'components/pages/embed/map';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
@@ -16,7 +16,6 @@ import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
-import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
 import { getStaticProps as getProps } from '../../map/[[...location]]';
 
@@ -36,15 +35,8 @@ const MapEmbedPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useMemo(() => {
-    const {
-      map,
-      mainMap,
-      mapMenu,
-      analysis,
-      modalMeta,
-      recentImagery,
-      planetNotice,
-    } = decodeParamsForState(query) || {};
+    const { map, mainMap, mapMenu, analysis, modalMeta, recentImagery } =
+      decodeParamsForState(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
@@ -69,10 +61,6 @@ const MapEmbedPage = (props) => {
     if (recentImagery) {
       dispatch(setRecentImagerySettings(recentImagery));
     }
-
-    if (planetNotice) {
-      dispatch(setModalPlanetNoticeOpen(planetNotice));
-    }
   }, [fullPathname]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
@@ -90,7 +78,7 @@ const MapEmbedPage = (props) => {
       exploreLink={asPath?.replace('/embed', '')}
     >
       <MapUrlProvider />
-      <Map embed />
+      <MapEmbed />
     </LayoutEmbed>
   ) : null;
 };

@@ -19,7 +19,7 @@ import { getLocationData } from 'services/location';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
-import Layout from 'layouts/page';
+import PageLayout from 'layouts/page';
 import Dashboards from 'components/pages/dashboards';
 import ConfirmationMessage from 'components/confirmation-message';
 import DashboardsUrlProvider from 'providers/dashboards-url-provider';
@@ -137,7 +137,7 @@ const DashboardsPage = (props) => {
   const hasDashboard = props?.title !== 'Dashboard not found';
 
   return (
-    <Layout {...props} className="l-dashboards-page">
+    <PageLayout {...props} className="l-dashboards-page">
       {!hasDashboard && (
         <div className="no-dashboard-message">
           <ConfirmationMessage title="Dashboard not found" error large />
@@ -149,7 +149,7 @@ const DashboardsPage = (props) => {
           <DashboardsUrlProvider />
         </>
       )}
-    </Layout>
+    </PageLayout>
   );
 };
 
