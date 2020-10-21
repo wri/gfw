@@ -12,7 +12,6 @@ import Tip from 'components/ui/tip';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Map from 'components/ui/map';
-import PlanetNoticeModal from 'components/modals/planet-notice';
 
 import iconCrosshair from 'assets/icons/crosshair.svg?sprite';
 
@@ -434,7 +433,6 @@ class MapComponent extends Component {
             message={loadingMessage}
           />
         )}
-        <PlanetNoticeModal />
       </div>
     );
   }
