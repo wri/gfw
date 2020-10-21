@@ -1,5 +1,22 @@
 @import '~styles/settings.scss';
-@import '~highlight.js/styles/an-old-hope.css';
+
+.c-webhook-modal {
+  h3 {
+    margin-bottom: rem(20px);
+  }
+
+  p {
+    margin-bottom: rem(20px);
+    font-size: rem(16px);
+    line-height: rem(30px);
+  }
+
+  pre {
+    border: 1px solid #ccc;
+    font-size: 14px;
+    padding: 30px;
+  }
+}
 
 .c-area-of-interest-form {
   .input-field {
@@ -146,23 +163,5 @@
     margin: auto;
     width: rem(200px);
     margin-top: rem(30px);
-  }
-}
-
-.c-webhook-modal {
-  h3 {
-    margin-bottom: rem(20px);
-  }
-
-  p {
-    margin-bottom: rem(20px);
-    font-size: rem(16px);
-    line-height: rem(30px);
-  }
-
-  pre {
-    border: 1px solid #ccc;
-    font-size: 14px;
-    padding: 30px;
   }
 }

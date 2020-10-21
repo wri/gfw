@@ -8,7 +8,6 @@ import { initialState as mapMenuInitialState } from 'components/map-menu/reducer
 import { initialState as analysisInitialState } from 'components/analysis/reducers';
 import { initialState as recentImageryInitialState } from 'components/recent-imagery/reducers';
 import { initialState as mapPromptsInitialState } from 'components/prompts/map-prompts/reducers';
-import { initialState as areaOfInterestModalInitialState } from 'components/modals/area-of-interest/reducers';
 
 export const selectMapSettings = (state) => state.map?.settings;
 export const selectMainMapSettings = (state) => state.mainMap;
@@ -51,10 +50,6 @@ export const getUrlParams = createSelector(
     modalMeta,
     recentImagery: objDiff(recentImagery, recentImageryInitialState.settings),
     mapPrompts: objDiff(mapPrompts, mapPromptsInitialState.settings),
-    areaOfInterestModal: objDiff(
-      areaOfInterestModal,
-      areaOfInterestModalInitialState
-    ),
     planetNotice,
   })
 );
