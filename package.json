@@ -12,6 +12,7 @@
     "start": "next start -p $PORT",
     "test": "start-test dev 3000 cy:open",
     "test:ci": "start-test dev 3000 cy:run",
+    "cy:record": "cypress run --env RECORD=1",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
@@ -45,12 +46,12 @@
     ]
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^1.14.0",
+    "@cypress/code-coverage": "^3.8.1",
     "autoprefixer": "^9.7.5",
     "babel-eslint": "^10.1.0",
     "babel-plugin-istanbul": "^6.0.0",
-    "cypress": "^4.2.0",
-    "cypress-audit": "^0.0.5",
+    "cypress": "^5.4.0",
+    "cypress-audit": "^0.2.3",
     "cypress-lighthouse": "^0.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",

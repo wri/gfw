@@ -1,5 +1,7 @@
 {
   "baseUrl": "http://localhost:3000",
+  "defaultCommandTimeout": 100000,
+  "responseTimeout": 100000,
   "env": {
     "codeCoverage": {
       "url": "/api/__coverage__"
