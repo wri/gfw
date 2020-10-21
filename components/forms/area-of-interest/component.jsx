@@ -174,7 +174,7 @@ class AreaOfInterestForm extends PureComponent {
                       location={initialValues && initialValues.location}
                       padding={50}
                       height={300}
-                      width={600}
+                      width={700}
                     />
                     <Input
                       name="name"
