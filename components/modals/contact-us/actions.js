@@ -1,5 +1,4 @@
 import { createThunkAction } from 'redux/actions';
-
 import useRouter from 'utils/router';
 
 export const setModalContactUsOpen = createThunkAction(

@@ -24,7 +24,11 @@ class Cover extends PureComponent {
         <Row>
           <Column width={[1, 2 / 3]}>
             <div className="cover-texts">
-              <h1 className="text -title-biggest -color-1">{title}</h1>
+              <h1
+                className={cx('cover-title', { '-with-background': !!bgImage })}
+              >
+                {title}
+              </h1>
               {Array.isArray(description) ? (
                 <div className="description">{description}</div>
               ) : (

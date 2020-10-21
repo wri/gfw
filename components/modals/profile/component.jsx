@@ -1,45 +1,40 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
+
+import { Modal } from 'gfw-components';
 
 import ProfileForm from 'components/forms/profile';
-import Modal from '../modal';
 
 import './styles.scss';
 
-class ProfileModal extends PureComponent {
-  static propTypes = {
-    open: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    setProfileModalOpen: PropTypes.func,
-    filledProfile: PropTypes.bool
-  };
+const ProfileModal = ({ setProfileModalOpen, profileIncomplete }) => {
+  const {
+    query: { profile },
+  } = useRouter();
 
-  componentDidMount() {
-    const { filledProfile, setProfileModalOpen } = this.props;
-    if (!filledProfile) {
+  useEffect(() => {
+    if (profileIncomplete) {
       setProfileModalOpen(true);
     }
-  }
+  }, []);
 
-  handleCloseModal = () => {
-    const { setProfileModalOpen } = this.props;
-    setProfileModalOpen(false);
-  };
+  return (
+    <Modal
+      open={!!profile}
+      contentLabel="Update your profile"
+      onRequestClose={() => setProfileModalOpen(false)}
+    >
+      <div className="c-profile-modal">
+        <ProfileForm source="myGfw" />
+      </div>
+    </Modal>
+  );
+};
 
-  render() {
-    const { open } = this.props;
-
-    return (
-      <Modal
-        isOpen={open}
-        contentLabel="Update your profile"
-        onRequestClose={this.handleCloseModal}
-      >
-        <div className="c-profile-modal">
-          <ProfileForm source="myGfw" />
-        </div>
-      </Modal>
-    );
-  }
-}
+ProfileModal.propTypes = {
+  setProfileModalOpen: PropTypes.func,
+  profileIncomplete: PropTypes.bool,
+};
 
 export default ProfileModal;

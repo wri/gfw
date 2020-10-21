@@ -19,12 +19,19 @@
     z-index: 1;
     position: relative;
 
-    h1 {
+    .cover-title {
       margin: 0 0 15px 0;
       font-size: 48px;
+      line-height: 55px;
+      font-weight: 300;
+      color: $white;
 
       @media screen and (min-width: $screen-m) {
         margin: 0 0 20px 0;
+      }
+
+      &.-with-background {
+        font-weight: 400;
       }
     }
 

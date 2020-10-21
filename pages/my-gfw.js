@@ -8,7 +8,6 @@ import MyGfw from 'components/pages/my-gfw';
 import MyGfwUrlProvider from 'providers/mygfw-url-provider';
 
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
-import { setProfileModalOpen } from 'components/modals/profile/actions';
 
 import { decodeParamsForState } from 'utils/stateToUrl';
 
@@ -19,13 +18,9 @@ const MyGfwPage = () => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useMemo(() => {
-    const { areaOfInterestModal, profile } = decodeParamsForState(query) || {};
+    const { areaOfInterestModal } = decodeParamsForState(query) || {};
     if (areaOfInterestModal) {
       dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
-    }
-
-    if (profile) {
-      dispatch(setProfileModalOpen(profile));
     }
   }, [fullPathname]);
 
