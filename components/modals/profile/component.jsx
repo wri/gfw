@@ -8,13 +8,13 @@ import ProfileForm from 'components/forms/profile';
 
 import './styles.scss';
 
-const ProfileModal = ({ setProfileModalOpen, profileIncomplete }) => {
+const ProfileModal = ({ setProfileModalOpen, profileComplete }) => {
   const {
     query: { profile },
   } = useRouter();
 
   useEffect(() => {
-    if (profileIncomplete) {
+    if (!profileComplete) {
       setProfileModalOpen(true);
     }
   }, []);
@@ -34,7 +34,7 @@ const ProfileModal = ({ setProfileModalOpen, profileIncomplete }) => {
 
 ProfileModal.propTypes = {
   setProfileModalOpen: PropTypes.func,
-  profileIncomplete: PropTypes.bool,
+  profileComplete: PropTypes.bool,
 };
 
 export default ProfileModal;

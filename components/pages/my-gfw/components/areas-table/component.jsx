@@ -274,11 +274,7 @@ class AreasTable extends PureComponent {
                   <Button
                     className="area-link"
                     theme="theme-button-clear"
-                    onClick={() =>
-                      setAreaOfInterestModalSettings({
-                        open: true,
-                        activeAreaId: area.id,
-                      })}
+                    onClick={() => setAreaOfInterestModalSettings(area.id)}
                   >
                     <Icon className="link-icon" icon={editIcon} />
                     edit

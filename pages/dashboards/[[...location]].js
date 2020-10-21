@@ -14,7 +14,6 @@ import {
   setShowMap,
   setActiveWidget,
 } from 'components/widgets/actions';
-import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 
 import { getLocationData } from 'services/location';
 
@@ -116,10 +115,6 @@ const DashboardsPage = (props) => {
 
     if (category) {
       dispatch(setWidgetsCategory(category));
-    }
-
-    if (areaOfInterestModal) {
-      dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
     }
 
     if (showMap) {

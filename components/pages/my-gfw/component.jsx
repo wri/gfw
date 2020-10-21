@@ -10,6 +10,7 @@ import AreaOfInterestModal from 'components/modals/area-of-interest';
 import AreasProvider from 'providers/areas-provider';
 import CountryDataProvider from 'providers/country-data-provider';
 import MyGFWProvider from 'providers/mygfw-provider';
+import LocationProvider from 'providers/location-provider';
 
 import MyGfwHeader from './components/header';
 import Areas from './components/areas';
@@ -37,6 +38,7 @@ const MyGfwPage = ({ loggedIn, loggingIn }) => (
     {loggedIn && (
       <Fragment>
         <MyGfwHeader />
+        <LocationProvider />
         <Areas />
         <AreasProvider />
         <CountryDataProvider />

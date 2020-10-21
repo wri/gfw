@@ -14,7 +14,6 @@ import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMapPrompts } from 'components/prompts/map-prompts/actions';
-import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
 import { getLocationData } from 'services/location';
@@ -84,7 +83,6 @@ const MapPage = (props) => {
       modalMeta,
       recentImagery,
       mapPrompts,
-      areaOfInterestModal,
       planetNotice,
     } = decodeParamsForState(query) || {};
 
@@ -114,10 +112,6 @@ const MapPage = (props) => {
 
     if (mapPrompts) {
       dispatch(setMapPrompts(mapPrompts));
-    }
-
-    if (areaOfInterestModal) {
-      dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
     }
 
     if (planetNotice) {

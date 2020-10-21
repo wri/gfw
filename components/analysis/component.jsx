@@ -166,7 +166,7 @@ class AnalysisComponent extends PureComponent {
               {(!activeArea || (activeArea && !activeArea.userArea)) && (
                 <Button
                   className="analysis-action-btn save-to-mygfw-btn"
-                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                  onClick={() => setAreaOfInterestModalSettings(true)}
                   disabled={areaTooLarge}
                   {...(areaTooLarge && {
                     tooltip: {

@@ -89,7 +89,7 @@ class Header extends PureComponent {
                     }`,
                     position: 'bottom',
                   }}
-                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                  onClick={() => setAreaOfInterestModalSettings(activeArea.id)}
                 >
                   <Icon icon={editIcon} />
                   Edit area
@@ -105,7 +105,7 @@ class Header extends PureComponent {
                   text: 'Save as an area of interest',
                   position: 'bottom',
                 }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                onClick={() => setAreaOfInterestModalSettings(true)}
               >
                 <Icon icon={saveUserIcon} />
                 Save area
@@ -193,7 +193,7 @@ class Header extends PureComponent {
               className="area-share theme-button-small"
               onClick={() => {
                 if (activeArea && !activeArea.userArea) {
-                  setAreaOfInterestModalSettings({ open: true });
+                  setAreaOfInterestModalSettings(true);
                 } else {
                   setShareModal(shareData);
                 }

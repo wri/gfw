@@ -1,8 +1,10 @@
 import { createStructuredSelector } from 'reselect';
 
-const selectProfileIncomplete = (state) =>
-  !state.myGfw?.data?.fullName || !state.myGfw?.data?.lastName;
+import { checkUserProfileFilled } from 'utils/user';
+
+const selectProfileComplete = (state) =>
+  checkUserProfileFilled(state?.myGfw?.data);
 
 export const getProfileModalProps = createStructuredSelector({
-  profileIncomplete: selectProfileIncomplete,
+  profileComplete: selectProfileComplete,
 });
