@@ -2,8 +2,8 @@ import capitalize from 'lodash/capitalize';
 import groupBy from 'lodash/groupBy';
 import compact from 'lodash/compact';
 
-import PageLayout from 'layouts/page';
-import GrantsAndFellowships from 'components/pages/grants-and-fellowships';
+import PageLayout from 'layouts/wrappers/page';
+import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
 import { fetchSGFProjects } from 'services/projects';
 import { getCountriesProvider, getCountriesLatLng } from 'services/country';

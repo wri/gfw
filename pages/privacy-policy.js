@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import PrivacyPolicy from 'components/pages/privacy-policy';
+import PageLayout from 'layouts/wrappers/page';
+import PrivacyPolicy from 'layouts/privacy-policy';
 
 const PrivacyPolicyPage = () => (
   <PageLayout

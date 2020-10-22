@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import MyGfw from 'components/pages/my-gfw';
+import PageLayout from 'layouts/wrappers/page';
+import MyGfw from 'layouts/my-gfw';
 
 const MyGfwPage = () => (
   <PageLayout

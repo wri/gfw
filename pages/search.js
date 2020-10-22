@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import Search from 'components/pages/search';
+import PageLayout from 'layouts/wrappers/page';
+import Search from 'layouts/search';
 
 const SearchPage = () => (
   <PageLayout

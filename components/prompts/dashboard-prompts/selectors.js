@@ -1,6 +1,6 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
-import { getShowRecentImagery } from 'components/pages/map/selectors';
+import { getShowRecentImagery } from 'layouts/map/selectors';
 
 const getDashboardPromptsSettings = (state) =>
   state.dashboardPrompts?.settings || {};

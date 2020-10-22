@@ -1,3 +1,3 @@
-import Component from './component';
+import PageComponent from './component';
 
-export default Component;
+export default PageComponent;

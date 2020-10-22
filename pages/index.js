@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import Home from 'components/pages/home';
+import PageLayout from 'layouts/wrappers/page';
+import Home from 'layouts/home';
 
 import { getNewsProvider } from 'services/news';
 

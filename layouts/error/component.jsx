@@ -1,36 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
-import { usePageTrack } from 'analytics';
-import { useSetLanguage } from 'utils/lang';
-
-import Head from 'layouts/head';
+import Header from 'components/header';
+import ContactUsModal from 'components/modals/contact-us';
+import ErrorMessage from 'components/error-message';
 
 import './styles.scss';
 
-const StaticWrapper = ({ children, title, description, noIndex, metaTags }) => {
-  usePageTrack();
-  useSetLanguage();
+const ErrorPage = ({ title, description }) => (
+  <>
+    <Header />
+    <div className="l-error-page">
+      <ErrorMessage title={title} description={description} error />
+    </div>
+    <ContactUsModal />
+  </>
+);
 
-  return (
-    <>
-      <Head
-        title={title}
-        description={description}
-        noIndex={noIndex}
-        metaTags={metaTags}
-      />
-      <div className="l-error-page">{children}</div>
-    </>
-  );
-};
-
-StaticWrapper.propTypes = {
-  children: PropTypes.node,
+ErrorPage.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  noIndex: PropTypes.bool,
-  metaTags: PropTypes.string,
 };
 
-export default StaticWrapper;
+export default ErrorPage;

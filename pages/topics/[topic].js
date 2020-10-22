@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import Topics from 'components/pages/topics';
+import PageLayout from 'layouts/wrappers/page';
+import Topics from 'layouts/topics';
 
 const TOPICS = {
   biodiversity: {

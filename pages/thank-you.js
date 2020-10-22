@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import ThankYou from 'components/pages/thank-you';
+import PageLayout from 'layouts/wrappers/page';
+import ThankYou from 'layouts/thank-you';
 
 const ThankYouPage = () => (
   <PageLayout title="Thank you | Global Forest Watch" noIndex>

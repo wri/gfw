@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import Terms from 'components/pages/terms';
+import PageLayout from 'layouts/wrappers/page';
+import Terms from 'layouts/terms';
 
 const TermsPage = () => (
   <PageLayout

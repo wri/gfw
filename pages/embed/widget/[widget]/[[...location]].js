@@ -6,8 +6,9 @@ import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 import { getLocationData } from 'services/location';
 
-import LayoutEmbed from 'layouts/embed';
-import WidgetEmbed from 'components/pages/embed/widget';
+import LayoutEmbed from 'layouts/wrappers/embed';
+import WidgetEmbed from 'layouts/embed/widget';
+
 import ConfirmationMessage from 'components/confirmation-message';
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';
 

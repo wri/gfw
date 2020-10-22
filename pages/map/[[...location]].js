@@ -4,11 +4,11 @@ import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
 
-import FullscreenLayout from 'layouts/fullscreen';
-import Map from 'components/pages/map';
+import FullscreenLayout from 'layouts/wrappers/fullscreen';
+import Map from 'layouts/map';
 
 import { setMapSettings } from 'components/map/actions';
-import { setMainMapSettings } from 'components/pages/map/actions';
+import { setMainMapSettings } from 'layouts/map/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';

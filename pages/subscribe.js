@@ -1,5 +1,5 @@
-import PageLayout from 'layouts/page';
-import Subscribe from 'components/pages/subscribe';
+import PageLayout from 'layouts/wrappers/page';
+import Subscribe from 'layouts/subscribe';
 
 const SubscribePage = () => (
   <PageLayout
