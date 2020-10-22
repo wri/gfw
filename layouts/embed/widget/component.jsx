@@ -16,7 +16,7 @@ import './styles.scss';
 import './trase-embed-styles.scss';
 
 const WidgetEmbedPage = ({ widget, trase }) => (
-  <div className={cx('c-widget-embed', { '-trase': !trase })}>
+  <div className={cx('c-widget-embed', { '-trase': trase })}>
     <div className="widget-wrapper">
       <Widgets embed widget={widget} />
     </div>

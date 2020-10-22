@@ -77,7 +77,7 @@
   }
 
   &.embed {
-    min-height: calc(100vh - 60px);
+    height: calc(100vh - 60px);
 
     .main-map-container {
       width: 100%;
