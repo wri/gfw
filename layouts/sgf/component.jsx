@@ -9,7 +9,7 @@ import Apply from 'pages/sgf/section-apply';
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 
-import bgImage from './header-bg.jpg?webp';
+import bgImage from './header-bg.jpg';
 import './styles.scss';
 
 const sections = {

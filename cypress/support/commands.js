@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import { Sentence } from '../utils/template-tags';
+
+Cypress.Commands.add('isValidSentence', (selector, sentence) => {
+  cy.get(selector, {
+    timeout: 500000
+  }).invoke('text').then((text => {
+    expect(text.trim().length).not.to.equal(0);
+    expect(Sentence`${sentence}`.test(text.trim())).to.be.true; // eslint-disable-line
+  }));
+});

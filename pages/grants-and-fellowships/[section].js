@@ -93,15 +93,16 @@ export const getStaticProps = async ({ params }) => {
     });
     const latLngs = projectsData?.[2]?.data?.rows;
     const imageResponse = projectsData?.[3]?.response?.data?.Contents;
-
     const images = await Promise.all(
       imageResponse?.map((b) => {
         if (b.Key.slice(-1) !== '/' && b.Key.toLowerCase().includes('.jpg')) {
           const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
+          const imageUrl = getImageUrl(urlParams);
+
           return {
             key: b.Key,
             folder: b.Key.split('/')[1],
-            url: getImageUrl(urlParams),
+            url: imageUrl?.split('?')?.[0],
           };
         }
 

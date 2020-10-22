@@ -165,7 +165,7 @@ class TopicsPage extends PureComponent {
             </div>
           </Media>
         )}
-        <Media greaterThanOrEqual="md">
+        <Media greaterThanOrEqual="sm">
           <ReactFullpage
             licenseKey={process.env.FULLPAGE_LICENSE}
             scrollOverflow
@@ -183,7 +183,7 @@ class TopicsPage extends PureComponent {
             }}
           />
         </Media>
-        <Media lessThan="md">
+        <Media lessThan="sm">
           <ReactFullpage
             licenseKey={process.env.FULLPAGE_LICENSE}
             scrollOverflow
