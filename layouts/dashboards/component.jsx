@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import isEqual from 'lodash/isEqual';
 
-import { Media } from 'utils/responsive';
+import { Mobile, Desktop } from 'gfw-components';
 import { track } from 'analytics';
 
 import CountryDataProvider from 'providers/country-data-provider';
@@ -193,14 +193,12 @@ class DashboardsPage extends PureComponent {
               <Widgets className="dashboard-widgets" />
             </div>
             <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
-              <Media greaterThanOrEqual="md">
+              <Desktop>
                 <Sticky bottomBoundary=".l-dashboards-page">
                   {this.renderMap()}
                 </Sticky>
-              </Media>
-              <Media lessThan="md" className="mobile-map">
-                {this.renderMap()}
-              </Media>
+              </Desktop>
+              <Mobile className="mobile-map">{this.renderMap()}</Mobile>
             </div>
             <MapControls className="map-controls" />
             <Share />
@@ -220,9 +218,9 @@ class DashboardsPage extends PureComponent {
         <LocationProvider />
         <MyGfwProvider />
         {!embed && (
-          <Media greaterThanOrEqual="md">
+          <Desktop>
             <DashboardPrompts />
-          </Media>
+          </Desktop>
         )}
       </div>
     );
