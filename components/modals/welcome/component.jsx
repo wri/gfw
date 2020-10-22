@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import { track } from 'analytics';
 
 import Button from 'components/ui/button';
@@ -13,52 +12,61 @@ import './styles.scss';
 class ModalWelcome extends PureComponent {
   getContent() {
     const {
+      setMapSettings,
       setMapPromptsSettings,
+      setMainMapSettings,
       setShowMapPrompts,
       setModalWelcome,
       setMenuSettings,
       description,
-      mapTourSteps,
+      welcomeCards,
       showPrompts,
     } = this.props;
     return (
       <div className="modal-welcome-content">
         {description && <p className="intro">{description}</p>}
-        {mapTourSteps && (
+        {welcomeCards && (
           <ul className="map-tour-steps">
-            {mapTourSteps.map((step) => (
-              <li key={step.label} className="map-tour-step">
-                <button
-                  className="guide-btn"
-                  onClick={() => {
-                    setModalWelcome(false);
+            {welcomeCards.map(
+              ({ label, map, menu, mainMap, promptKey, thumbnail } = {}) => (
+                <li key={label} className="map-tour-step">
+                  <button
+                    className="guide-btn"
+                    onClick={() => {
+                      setModalWelcome(false);
 
-                    if (!step.promtKey && step.explore) {
-                      setMenuSettings({
-                        menuSection: 'explore',
-                        exploreType: step.explore
-                      });
-                    }
+                      if (map) {
+                        setMapSettings(map);
+                      }
 
-                   if (step.promptKey) {
-                      setMapPromptsSettings({
-                         open: true,
-                         stepsKey: step.promptKey,
-                         stepIndex: 0,
-                         force: true,
-                       });
-                    }
-                  }}
-                >
-                  <img
-                    src={step.thumbnail}
-                    alt={`Map welcome thumbnail - ${step.label}`}
-                    className="map-tour-thumbnail"
-                  />
-                  <p>{step.label}</p>
-                </button>
-              </li>
-            ))}
+                      if (menu) {
+                        setMenuSettings(menu);
+                      }
+
+                      if (mainMap) {
+                        setMainMapSettings(mainMap);
+                      }
+
+                      if (promptKey) {
+                        setMapPromptsSettings({
+                          open: true,
+                          stepsKey: promptKey,
+                          stepIndex: 0,
+                          force: true,
+                        });
+                      }
+                    }}
+                  >
+                    <img
+                      src={thumbnail}
+                      alt={`Map welcome thumbnail - ${label}`}
+                      className="map-tour-thumbnail"
+                    />
+                    <p>{label}</p>
+                  </button>
+                </li>
+              )
+            )}
           </ul>
         )}
 
@@ -83,7 +91,9 @@ class ModalWelcome extends PureComponent {
             {' '}
             or
             {' '}
-            <a href="https://www.globalforestwatch.org/help/">visit the Help Center</a>
+            <a href="https://www.globalforestwatch.org/help/">
+              visit the Help Center
+            </a>
             {' '}
             for tutorials.
           </p>
@@ -124,9 +134,11 @@ ModalWelcome.propTypes = {
   description: PropTypes.string,
   setModalWelcome: PropTypes.func,
   setMenuSettings: PropTypes.func,
-  mapTourSteps: PropTypes.array,
+  welcomeCards: PropTypes.array,
   setMapPromptsSettings: PropTypes.func,
   setShowMapPrompts: PropTypes.func,
+  setMapSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
 };
 
 export default ModalWelcome;

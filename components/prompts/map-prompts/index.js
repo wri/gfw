@@ -5,20 +5,9 @@ import reducerRegistry from 'redux/registry';
 
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
-import { setMapSettings } from 'components/map/actions';
 import { setMainMapSettings } from 'pages/map/actions';
 
-import {
-  BIOMASS_LOSS_DATASET,
-  FIRES_VIIRS_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET,
-} from 'constants/datasets';
-
-import {
-  GLAD_ALERTS,
-  DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES,
-} from 'constants/layers';
+import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -235,7 +224,6 @@ class MapPromptsContainer extends PureComponent {
           },
         ],
       },
-
       recentImagery: {
         title: 'Recent Satellite Imagery',
         steps: [
@@ -287,60 +275,6 @@ class MapPromptsContainer extends PureComponent {
                   setMapPromptsSettings({
                     open: true,
                     stepsKey: 'analyzeAnAreaTour',
-                    stepIndex: 0,
-                    force: true,
-                  });
-                }, 100);
-              },
-            },
-          },
-        ],
-        settings: {
-          disableOverlay: true,
-        },
-      },
-      gladsFiresTour: {
-        title: 'Recent Satellite Imagery',
-        steps: [
-          {
-            target: '.recent-imagery-btn',
-            content:
-              'Display recent satellite imagery over an area, filtered by date and cloud cover.',
-            disableBeacon: true,
-            actions: {
-              prev: () => {
-                this.props.setMenuSettings({
-                  menuSection: 'datasets',
-                  datasetCategory: 'forestChange',
-                });
-
-                this.props.setMapSettings({
-                  datasets: [
-                    {
-                      dataset: FIRES_VIIRS_DATASET,
-                      opacity: 1,
-                      visibility: true,
-                      layers: [GLAD_ALERTS],
-                    },
-                    {
-                      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-                      layers: [
-                        DISPUTED_POLITICAL_BOUNDARIES,
-                        POLITICAL_BOUNDARIES,
-                      ],
-                      opacity: 1,
-                      visibility: true,
-                    },
-                  ],
-                  canBound: true,
-                });
-              },
-              learnHow: () => {
-                this.resetPrompts();
-                setTimeout(() => {
-                  this.props.setMapPromptsSettings({
-                    open: true,
-                    stepsKey: 'recentImageryTour',
                     stepIndex: 0,
                     force: true,
                   });
@@ -633,7 +567,6 @@ class MapPromptsContainer extends PureComponent {
 MapPromptsContainer.propTypes = {
   setMainMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
-  setMapSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
   setAnalysisSettings: PropTypes.func,
   setShowMapPrompts: PropTypes.func,
@@ -657,6 +590,5 @@ export default connect(getMapPromptsProps, {
   ...actions,
   setMainMapSettings,
   setMenuSettings,
-  setMapSettings,
   setAnalysisSettings,
 })(MapPromptsContainer);
