@@ -233,6 +233,22 @@ $top-section-height: 125px;
     align-items: center;
     margin-top: rem(4px);
 
+    .planet-label {
+      display: flex;
+      align-items: center;
+      height: rem(10px);
+      font-size: rem(10px);
+      cursor: pointer;
+
+      .arrow-icon {
+        right: 0;
+        width: rem(6px);
+        height: auto;
+        fill: $green-gfw;
+        margin-left: rem(3px);
+      }
+    }
+
     .basemaps-tooltip {
       display: flex;
       height: auto;
@@ -262,6 +278,19 @@ $top-section-height: 125px;
 .c-basemaps-tooltip {
   padding: 20px;
   min-width: 200px;
+
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
 
   .date-selectors {
     display: flex;
