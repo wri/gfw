@@ -1,9 +1,9 @@
 @import '~styles/settings.scss';
 
-.c-map-main {
+.c-map-page {
   height: 100%;
 
-  .main-map-container {
+  .map-container {
     width: 100%;
     height: calc(100% - 50px);
     z-index: 1;
@@ -15,7 +15,7 @@
       margin-left: 76px;
     }
 
-    .main-map {
+    .map {
       height: 100%;
     }
 
@@ -40,11 +40,11 @@
     }
   }
 
-  .main-map-tooltip {
+  .map-tooltip {
     height: 100%;
   }
 
-  .main-map-controls {
+  .map-controls {
     position: absolute;
     top: rem(15px);
     right: rem(15px);
@@ -79,22 +79,12 @@
   &.embed {
     height: 100%;
 
-    .main-map-container {
+    .map-container {
       width: 100%;
 
       @media screen and (min-width: $screen-m) {
         width: 100%;
         margin-left: 0;
-      }
-    }
-
-    .leaflet-control-container {
-      .leaflet-bottom {
-        right: rem(15px);
-
-        @media screen and (min-width: $screen-m) {
-          right: rem(15px);
-        }
       }
     }
 

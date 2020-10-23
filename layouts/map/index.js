@@ -1,7 +1,8 @@
-import { createElement, PureComponent } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import flatMap from 'lodash/flatMap';
+
 import { track } from 'analytics';
 import reducerRegistry from 'redux/registry';
 
@@ -15,50 +16,52 @@ import * as ownActions from './actions';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
 
-const actions = {
-  setRecentImagerySettings,
-  setMenuSettings,
-  setMapPromptsSettings,
-  getGeostoreId,
-  ...ownActions,
-};
+const MapPageContainer = (props) => {
+  const {
+    activeDatasets,
+    basemap,
+    setMainMapSettings,
+    analysisActive,
+    menuSection,
+    geostoreId,
+    location,
+    setDrawnGeostore,
+    setMainMapAnalysisView,
+  } = props;
 
-class MainMapContainer extends PureComponent {
-  componentDidMount() {
-    const { activeDatasets, basemap } = this.props;
+  // on load track which layers were active
+  useEffect(() => {
     const layerIds = flatMap(activeDatasets?.map((d) => d.layers));
     track('mapInitialLayers', {
       label: layerIds && layerIds.join(', '),
     });
-    track('basemapsInitial', { label: basemap && basemap.value });
-  }
+    track('basemapsInitial', { label: basemap?.value });
+  }, []);
 
-  componentDidUpdate(prevProps) {
-    const {
-      setMainMapSettings,
-      analysisActive,
-      geostoreId,
-      location,
-    } = this.props;
-
-    if (!analysisActive && geostoreId && geostoreId !== prevProps.geostoreId) {
+  // show analysis view after routing to a drawn geostore
+  useEffect(() => {
+    if (!analysisActive && geostoreId) {
       setMainMapSettings({ showAnalysis: true });
     }
+  }, [analysisActive, geostoreId]);
 
-    if (
-      location?.type === 'aoi' &&
-      location?.type !== prevProps.location.type
-    ) {
-      this.props.setMenuSettings({ menuSection: 'my-gfw' });
+  // if the location changes to aoi show menu
+  useEffect(() => {
+    if (location?.type === 'aoi') {
+      setMenuSettings({ menuSection: 'my-gfw' });
     }
-  }
+  }, [location?.type]);
 
-  handleClickMap = () => {
-    if (this.props.menuSection) {
-      this.props.setMenuSettings({ menuSection: '' });
+  const onDrawComplete = (geojson) => {
+    getGeostoreId({ geojson, callback: setDrawnGeostore });
+  };
+
+  const handleClickMap = () => {
+    if (menuSection) {
+      setMenuSettings({ menuSection: '' });
     }
-    if (this.props.location?.type) {
-      this.props.setMapPromptsSettings({
+    if (location?.type) {
+      setMapPromptsSettings({
         open: true,
         stepsKey: 'subscribeToArea',
         stepIndex: 0,
@@ -66,7 +69,7 @@ class MainMapContainer extends PureComponent {
     }
   };
 
-  handleClickAnalysis = (selected) => {
+  const handleClickAnalysis = (selected) => {
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
@@ -75,31 +78,24 @@ class MainMapContainer extends PureComponent {
     const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
     const isUse = cartodb_id && tableName;
 
-    const { setMainMapAnalysisView } = this.props;
     if (isAdmin || isWdpa || isUse) {
       setMainMapAnalysisView(selected);
     } else {
-      this.onDrawComplete(geometry);
+      onDrawComplete(geometry);
     }
   };
 
-  onDrawComplete = (geojson) => {
-    const { setDrawnGeostore } = this.props;
-    this.props.getGeostoreId({ geojson, callback: setDrawnGeostore });
-  };
+  return (
+    <MapComponent
+      {...props}
+      handleClickAnalysis={handleClickAnalysis}
+      handleClickMap={handleClickMap}
+      onDrawComplete={onDrawComplete}
+    />
+  );
+};
 
-  render() {
-    return createElement(MapComponent, {
-      ...this.props,
-      ...this.state,
-      handleClickAnalysis: this.handleClickAnalysis,
-      handleClickMap: this.handleClickMap,
-      onDrawComplete: this.onDrawComplete,
-    });
-  }
-}
-
-MainMapContainer.propTypes = {
+MapPageContainer.propTypes = {
   setMainMapAnalysisView: PropTypes.func,
   getGeostoreId: PropTypes.func,
   setMenuSettings: PropTypes.func,
@@ -115,9 +111,15 @@ MainMapContainer.propTypes = {
 };
 
 reducerRegistry.registerModule('mainMap', {
-  actions,
+  actions: ownActions,
   reducers,
   initialState,
 });
 
-export default connect(getMapProps, actions)(MainMapContainer);
+export default connect(getMapProps, {
+  setRecentImagerySettings,
+  setMenuSettings,
+  setMapPromptsSettings,
+  getGeostoreId,
+  ...ownActions,
+})(MapPageContainer);
