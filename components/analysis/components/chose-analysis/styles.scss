@@ -259,3 +259,33 @@
     }
   }
 }
+
+.c-upload-shape-modal {
+  a {
+    color: $green-gfw;
+
+    &:hover {
+      color: $dark-green;
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    margin-bottom: rem(20px);
+    font-size: rem(16px);
+    line-height: rem(30px);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  ul {
+    list-style: none;
+    font-size: rem(16px);
+
+    li {
+      margin-bottom: rem(5px);
+    }
+  }
+}
