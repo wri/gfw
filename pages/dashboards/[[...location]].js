@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
+
 import { getLocationData } from 'services/location';
 import { getCountriesProvider } from 'services/country';
 
@@ -22,8 +23,8 @@ import {
   setActiveWidget,
 } from 'components/widgets/actions';
 
-export const getStaticProps = async (ctx) => {
-  const [type] = ctx?.params?.location;
+export const getStaticProps = async ({ params }) => {
+  const [type] = params?.location || [];
 
   if (!type || type === 'global') {
     return {
@@ -35,7 +36,16 @@ export const getStaticProps = async (ctx) => {
     };
   }
 
-  const locationData = await getLocationData(ctx?.params?.location);
+  const locationData = await getLocationData(params?.location).catch(() => {
+    return {
+      props: {
+        error: 404,
+        title: 'Dashboard Not Found | Global Forest Watch',
+        errorTitle: 'Dashboard Not Found',
+      },
+    };
+  });
+
   const { locationName } = locationData || {};
 
   if (!locationName) {

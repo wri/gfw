@@ -1,11 +1,16 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
+import { decodeParamsForState } from 'utils/stateToUrl';
+
+import { getLocationData } from 'services/location';
+import { getCountriesProvider } from 'services/country';
 
 import FullscreenLayout from 'layouts/wrappers/fullscreen';
 import Map from 'layouts/map';
+
+import MapUrlProvider from 'providers/map-url-provider';
 
 import { setMapSettings } from 'components/map/actions';
 import { setMainMapSettings } from 'layouts/map/actions';
@@ -15,45 +20,58 @@ import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMapPrompts } from 'components/prompts/map-prompts/actions';
 
-import { getLocationData } from 'services/location';
-
-import { decodeParamsForState } from 'utils/stateToUrl';
-
-import MapUrlProvider from 'providers/map-url-provider';
-
 export const getStaticProps = async ({ params }) => {
-  let locationData = {};
-  try {
-    locationData = await getLocationData(params?.location);
-  } catch (err) {
-    locationData = {};
+  const [type] = params?.location || [];
+
+  if (!type || type === 'global') {
+    return {
+      props: {
+        title: 'Interactive World Forest Map & Tree Cover Change Data | GFW',
+        description:
+          'Explore the state of forests worldwide by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
+      },
+    };
   }
 
-  const locationType = params?.location?.[0] || 'global';
-  const noIndex = !['global', 'country', 'wdpa'].includes(locationType);
+  const locationData = await getLocationData(params?.location).catch(() => {
+    return {
+      props: {
+        error: 404,
+        title: 'Location Not Found | Global Forest Watch',
+        errorTitle: 'Location Not Found',
+      },
+    };
+  });
 
   const { locationName } = locationData || {};
 
+  if (!locationName) {
+    return {
+      props: {
+        error: 404,
+        title: 'Location Not Found | Global Forest Watch',
+        errorTitle: 'Location Not Found',
+      },
+    };
+  }
+
+  const title = `${locationName} Interactive Forest Map ${
+    params?.location?.[2] ? '' : '& Tree Cover Change Data '
+  }| GFW`;
+  const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
+  const noIndex = !['country', 'wdpa'].includes(type);
+
   return {
     props: {
-      title: `${locationName ? `${locationName} ` : ''}Interactive ${
-        locationName ? '' : 'World '
-      }Forest Map${
-        params?.location?.[2] ? '' : ' & Tree Cover Change Data'
-      } | GFW`,
-      description: `Explore the state of forests ${
-        locationName ? `in ${locationName}` : 'worldwide'
-      } by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`,
+      title,
+      description,
       noIndex,
     },
   };
 };
 
 export const getStaticPaths = async () => {
-  // fetch all admin0 iso codes to pre build static pages
-  const countryData = await cartoRequest.get(
-    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY iso"
-  );
+  const countryData = await getCountriesProvider();
   const { rows: countries } = countryData?.data || {};
   const countryPaths = countries.map((c) => ({
     params: {
@@ -62,7 +80,7 @@ export const getStaticPaths = async () => {
   }));
 
   return {
-    paths: countryPaths || [],
+    paths: [{ params: { location: [] } }, ...countryPaths] || [],
     fallback: true,
   };
 };
@@ -122,7 +140,7 @@ const MapPage = (props) => {
   });
 
   return (
-    <FullscreenLayout {...props} fullScreen showFooter={false}>
+    <FullscreenLayout {...props}>
       {ready && (
         <>
           <MapUrlProvider />
