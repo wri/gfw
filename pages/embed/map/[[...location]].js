@@ -27,7 +27,7 @@ export const getStaticPaths = getPaths;
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
-  const { query, asPath } = useRouter();
+  const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
   useMemo(() => {
@@ -57,7 +57,7 @@ const MapEmbedPage = (props) => {
     if (recentImagery) {
       dispatch(setRecentImagerySettings(recentImagery));
     }
-  }, [fullPathname]);
+  }, [fullPathname, isFallback]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync

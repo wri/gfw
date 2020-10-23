@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
 import { useRouter } from 'next/router';
+
 import { Loader, MediaContextProvider, Button } from 'gfw-components';
 
 import { usePageTrack } from 'analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'layouts/wrappers/head';
+
+import ErrorMessage from 'components/error-message';
 
 import './styles.scss';
 
@@ -19,6 +21,9 @@ const EmbedWrapper = ({
   noIndex,
   metaTags,
   exploreLink,
+  error,
+  errorTitle,
+  errorDescription,
 }) => {
   usePageTrack();
   useSetLanguage();
@@ -39,8 +44,18 @@ const EmbedWrapper = ({
         metaTags={metaTags}
       />
       <div className={cx('l-embed-page', { '-trase': trase })}>
-        <div className="embed-content">
-          {isFallback ? <Loader /> : children}
+        <div className={cx('embed-content', { '-error': error })}>
+          {isFallback && <Loader />}
+          {!isFallback && error && (
+            <ErrorMessage
+              title={errorTitle || 'Page Not Found'}
+              description={
+                errorDescription ||
+                'You may have mistyped the address or the page may have moved.'
+              }
+            />
+          )}
+          {!isFallback && !error && children}
         </div>
         {!trase && !gfw && (
           <div className="embed-footer">
@@ -62,6 +77,9 @@ EmbedWrapper.propTypes = {
   noIndex: PropTypes.bool,
   metaTags: PropTypes.string,
   exploreLink: PropTypes.string,
+  error: PropTypes.number,
+  errorTitle: PropTypes.string,
+  errorDescription: PropTypes.string,
 };
 
 export default EmbedWrapper;
