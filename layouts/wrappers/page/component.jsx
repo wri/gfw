@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Loader, MediaContextProvider } from 'gfw-components';
+import cx from 'classnames';
 
 import { usePageTrack } from 'analytics';
 import { useSetLanguage } from 'utils/lang';
@@ -12,6 +13,7 @@ import Header from 'components/header';
 import Footer from 'components/footer';
 import Cookies from 'components/cookies';
 import ContactUsModal from 'components/modals/contact-us';
+import ErrorMessage from 'components/error-message';
 
 import './styles.scss';
 
@@ -22,6 +24,9 @@ const PageWrapper = ({
   description,
   noIndex,
   metaTags,
+  error,
+  errorTitle,
+  errorDescription,
 }) => {
   usePageTrack();
   useSetLanguage();
@@ -40,8 +45,18 @@ const PageWrapper = ({
       />
       <div className="l-page">
         <Header />
-        <div className="content-wrapper">
-          {isFallback ? <Loader /> : children}
+        <div className={cx('content-wrapper', { '-error': error })}>
+          {isFallback && <Loader />}
+          {!isFallback && error && (
+            <ErrorMessage
+              title={errorTitle || 'Page Not Found'}
+              description={
+                errorDescription ||
+                'You may have mistyped the address or the page may have moved.'
+              }
+            />
+          )}
+          {!isFallback && !error && children}
         </div>
         {showFooter && <Footer />}
         <Cookies />
@@ -58,6 +73,9 @@ PageWrapper.propTypes = {
   description: PropTypes.string,
   noIndex: PropTypes.bool,
   metaTags: PropTypes.string,
+  error: PropTypes.number,
+  errorTitle: PropTypes.string,
+  errorDescription: PropTypes.string,
 };
 
 PageWrapper.defaultProps = {

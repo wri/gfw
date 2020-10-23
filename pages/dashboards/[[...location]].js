@@ -1,9 +1,16 @@
 import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
+import { decodeParamsForState } from 'utils/stateToUrl';
+import { getLocationData } from 'services/location';
+import { getCountriesProvider } from 'services/country';
+
+import PageLayout from 'layouts/wrappers/page';
+import Dashboards from 'layouts/dashboards';
+
+import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
 import { setMapSettings } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
@@ -15,57 +22,47 @@ import {
   setActiveWidget,
 } from 'components/widgets/actions';
 
-import { getLocationData } from 'services/location';
-
-import { decodeParamsForState } from 'utils/stateToUrl';
-
-import PageLayout from 'layouts/wrappers/page';
-import Dashboards from 'layouts/dashboards';
-import ConfirmationMessage from 'components/confirmation-message';
-import DashboardsUrlProvider from 'providers/dashboards-url-provider';
-
-import './styles.scss';
-
 export const getStaticProps = async (ctx) => {
-  const isGlobal =
-    !ctx?.params?.location?.[0] || ctx?.params?.location?.[0] === 'global';
-  let locationData = {};
+  const [type] = ctx?.params?.location;
 
-  try {
-    locationData =
-      (!isGlobal && (await getLocationData(ctx?.params?.location))) || {};
-  } catch (err) {
-    locationData = {};
+  if (!type || type === 'global') {
+    return {
+      props: {
+        title: 'Global Deforestation Rates & Statistics by Country | GFW',
+        description:
+          'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.',
+      },
+    };
   }
 
-  const locationType = ctx?.params?.location?.[0] || 'global';
-  const noIndex = !['global', 'country'].includes(locationType);
+  const locationData = await getLocationData(ctx?.params?.location);
+  const { locationName } = locationData || {};
 
-  const locationName = isGlobal ? 'Global' : locationData?.locationName;
+  if (!locationName) {
+    return {
+      props: {
+        error: 404,
+        title: 'Dashboard Not Found | Global Forest Watch',
+        errorTitle: 'Dashboard Not Found',
+      },
+    };
+  }
+
+  const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+  const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
+  const noIndex = !['country'].includes(type);
 
   return {
-    props: locationName
-      ? {
-          title: `${
-            locationName || 'Global'
-          } Deforestation Rates & Statistics ${
-            isGlobal ? 'by Country ' : ''
-          }| GFW`,
-          description: isGlobal
-            ? 'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.'
-            : `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
-          noIndex,
-        }
-      : {
-          title: 'Dashboard not found',
-        },
+    props: {
+      title,
+      description,
+      noIndex,
+    },
   };
 };
 
 export const getStaticPaths = async () => {
-  const countryData = await cartoRequest.get(
-    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA'"
-  );
+  const countryData = await getCountriesProvider();
   const { rows: countries } = countryData?.data || {};
   const countryPaths = countries.map((c) => ({
     params: {
@@ -134,19 +131,12 @@ const DashboardsPage = (props) => {
     }
   });
 
-  const hasDashboard = props?.title !== 'Dashboard not found';
-
   return (
-    <PageLayout {...props} className="l-dashboards-page">
-      {!hasDashboard && (
-        <div className="no-dashboard-message">
-          <ConfirmationMessage title="Dashboard not found" error large />
-        </div>
-      )}
-      {hasDashboard && ready && (
+    <PageLayout {...props}>
+      {ready && (
         <>
-          <Dashboards />
           <DashboardsUrlProvider />
+          <Dashboards />
         </>
       )}
     </PageLayout>
