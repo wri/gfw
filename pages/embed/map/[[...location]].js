@@ -2,13 +2,12 @@ import { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-
-import LayoutEmbed from 'layouts/wrappers/embed';
-import MapEmbed from 'layouts/embed/map';
-
 import { decodeParamsForState } from 'utils/stateToUrl';
 
 import MapUrlProvider from 'providers/map-url-provider';
+
+import LayoutEmbed from 'layouts/wrappers/embed';
+import MapEmbed from 'layouts/embed/map';
 
 import { setMapSettings } from 'components/map/actions';
 import { setMainMapSettings } from 'layouts/map/actions';
@@ -17,16 +16,13 @@ import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 
-import { getStaticProps as getProps } from '../../map/[[...location]]';
+import {
+  getStaticProps as getProps,
+  getStaticPaths as getPaths,
+} from '../../map/[[...location]]';
 
 export const getStaticProps = getProps;
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
-};
+export const getStaticPaths = getPaths;
 
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();
@@ -71,16 +67,16 @@ const MapEmbedPage = (props) => {
     }
   });
 
-  return ready ? (
-    <LayoutEmbed
-      {...props}
-      fullScreen
-      exploreLink={asPath?.replace('/embed', '')}
-    >
-      <MapUrlProvider />
-      <MapEmbed />
+  return (
+    <LayoutEmbed {...props} exploreLink={asPath?.replace('/embed', '')}>
+      {ready && (
+        <>
+          <MapUrlProvider />
+          <MapEmbed />
+        </>
+      )}
     </LayoutEmbed>
-  ) : null;
+  );
 };
 
 export default MapEmbedPage;

@@ -80,7 +80,11 @@ export const getStaticPaths = async () => {
   }));
 
   return {
-    paths: [{ params: { location: [] } }, ...countryPaths] || [],
+    paths: [
+      { params: { location: [] } },
+      { params: { location: ['global'] } },
+      ...countryPaths,
+    ],
     fallback: true,
   };
 };
