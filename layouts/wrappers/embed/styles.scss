@@ -5,14 +5,14 @@
 
   .embed-content {
     position: relative;
-    min-height: 400px;
+    height: calc(100vh - 60px);
   }
 
   .embed-footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: rem(60px);
+    height: 60px;
     background: $white;
     border-top: solid 1px $border;
     z-index: 3;
