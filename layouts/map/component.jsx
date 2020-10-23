@@ -16,6 +16,8 @@ import MyGFWProvider from 'providers/mygfw-provider';
 import MetaModal from 'components/modals/meta';
 import ShareModal from 'components/modals/share';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
 
 import Map from 'components/map';
 import MapPrompts from 'components/prompts/map-prompts';
@@ -67,6 +69,8 @@ const MapPage = ({
     <ShareModal />
     <MetaModal />
     <AreaOfInterestModal clearAfterDelete canDelete />
+    <ClimateModal />
+    <FiresModal />
     <CountryDataProvider />
     <WhitelistsProvider />
     <DatasetsProvider />

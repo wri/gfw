@@ -18,12 +18,15 @@ import MyGfwProvider from 'providers/mygfw-provider';
 
 import ErrorPage from 'layouts/wrappers/static';
 
-import Widgets from 'components/widgets';
+import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
+
+import Widgets from 'components/widgets';
 import SubNavMenu from 'components/subnav-menu';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
 import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
@@ -222,6 +225,8 @@ class DashboardsPage extends PureComponent {
             <DashboardPrompts />
           </Desktop>
         )}
+        <ClimateModal />
+        <FiresModal />
       </div>
     );
   }

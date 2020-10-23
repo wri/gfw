@@ -6,6 +6,9 @@ import upperFirst from 'lodash/upperFirst';
 
 import { Desktop, Mobile, Button } from 'gfw-components';
 
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
+
 import TopicsHeader from './components/topics-header';
 import TopicsFooter from './components/topics-footer';
 import TopicsSlide from './components/topics-slide';
@@ -224,6 +227,8 @@ class TopicsPage extends PureComponent {
             }}
           />
         </Mobile>
+        <ClimateModal />
+        <FiresModal />
       </div>
     );
   }
