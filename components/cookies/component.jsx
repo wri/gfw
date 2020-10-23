@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { track } from 'analytics';
+import { track, initAnalytics, handlePageTrack } from 'analytics';
 import Button from 'components/ui/button';
 
 import './styles.scss';
@@ -17,6 +17,9 @@ class Cookies extends PureComponent {
   agreeCookies = () => {
     this.setState({ open: false });
     localStorage.setItem('agreeCookies', true);
+    initAnalytics();
+    handlePageTrack();
+    track('acceptCookies');
   };
 
   render() {
@@ -47,10 +50,7 @@ class Cookies extends PureComponent {
             <Button
               className="cookies-btn"
               theme="theme-button-grey theme-button-small"
-              onClick={() => {
-                this.agreeCookies();
-                track('acceptCookies');
-              }}
+              onClick={() => this.agreeCookies()}
             >
               I agree
             </Button>

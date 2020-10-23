@@ -14,9 +14,13 @@ const IS_BROWSER = typeof window !== 'undefined';
 
 export const initAnalytics = () => {
   if (IS_BROWSER) {
-    ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
-    ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
-    TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
+    const agreeCookies = localStorage.getItem('agreeCookies');
+    if (agreeCookies) {
+      window.ANALYTICS_INITIALIZED = true;
+      ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
+      ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
+      TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
+    }
   }
 };
 
@@ -28,11 +32,14 @@ const events = {
 };
 
 export const handlePageTrack = (url) => {
-  const pageUrl = url || `${window.location.pathname}${window.location.search}`;
-  ReactGA.set({ page: pageUrl });
-  ReactGA.pageview(pageUrl);
-  ReactPixel.pageView();
-  TwitterConvTrkr.pageView();
+  if (IS_BROWSER && window.ANALYTICS_INITIALIZED) {
+    const pageUrl =
+      url || `${window.location.pathname}${window.location.search}`;
+    ReactGA.set({ page: pageUrl });
+    ReactGA.pageview(pageUrl);
+    ReactPixel.pageView();
+    TwitterConvTrkr.pageView();
+  }
 };
 
 export const handleMapLatLonTrack = (location) => {
@@ -41,7 +48,7 @@ export const handleMapLatLonTrack = (location) => {
   const position =
     map && `/location/${map.center.lat}/${map.center.lng}/${map.zoom}`;
   if (position) {
-    ReactGA.pageview(
+    handlePageTrack(
       `${position}${window.location.pathname}?${JSON.stringify(
         decodeUrlForState(window.location.search)
       )}`
@@ -49,14 +56,16 @@ export const handleMapLatLonTrack = (location) => {
   }
 };
 
-export const track = (key, data) =>
-  events[key] && ReactGA.event({ ...events[key], ...data });
+export const track = (key, data) => {
+  if (IS_BROWSER && window.ANALYTICS_INITIALIZED && events[key]) {
+    ReactGA.event({ ...events[key], ...data });
+  }
+};
 
 export const usePageTrack = () => {
   useEffect(() => {
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
-      window.ANALYTICS_INITIALIZED = true;
     }
     handlePageTrack();
   }, []);
