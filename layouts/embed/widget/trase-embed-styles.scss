@@ -48,39 +48,41 @@ $trase-font-family-2: 'Merriweather';
 
 // Custom class for TRASE/GFW integration
 // READ COMMENT FROM TOP
-.c-widget-embed.-trase {
-  .c-widget-header {
-    .options {
-      display: none;
+.l-embed-widget-page {
+  &.-trase {
+    .c-widget-header {
+      .options {
+        display: none;
+      }
+
+      .title {
+        font-family: $trase-font-family-1;
+        font-weight: 700;
+        color: $charcoal-grey;
+      }
     }
 
-    .title {
-      font-family: $trase-font-family-1;
-      font-weight: 700;
+    .c-dynamic-sentence {
+      font-family: $trase-font-family-2;
       color: $charcoal-grey;
     }
-  }
 
-  .c-dynamic-sentence {
-    font-family: $trase-font-family-2;
-    color: $charcoal-grey;
-  }
+    text {
+      filter: none;
+      fill: $charcoal-grey;
+    }
 
-  text {
-    filter: none;
-    fill: $charcoal-grey;
-  }
-
-  .c-widget-footer {
-    display: flex;
-    justify-content: space-between;
-    font-family: $trase-font-family-2;
-    color: $charcoal-grey;
-    font-weight: 300;
-
-    a {
+    .c-widget-footer {
+      display: flex;
+      justify-content: space-between;
+      font-family: $trase-font-family-2;
       color: $charcoal-grey;
-      font-weight: 700;
+      font-weight: 300;
+
+      a {
+        color: $charcoal-grey;
+        font-weight: 700;
+      }
     }
   }
 }

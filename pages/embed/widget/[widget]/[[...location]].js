@@ -120,7 +120,7 @@ const WidgetEmbedPage = (props) => {
       {ready && (
         <>
           <WidgetsEmbedUrlProvider />
-          <WidgetEmbed embed {...props} />
+          <WidgetEmbed embed trase={query?.trase} {...props} />
         </>
       )}
     </LayoutEmbed>

@@ -16,10 +16,8 @@ import './styles.scss';
 import './trase-embed-styles.scss';
 
 const WidgetEmbedPage = ({ widget, trase }) => (
-  <div className={cx('c-widget-embed', { '-trase': trase })}>
-    <div className="widget-wrapper">
-      <Widgets embed widget={widget} />
-    </div>
+  <div className={cx('l-embed-widget-page', { '-trase': trase })}>
+    <Widgets className="embed-widget" embed widget={widget} />
     <Share />
     <ModalMeta />
     <CountryDataProvider />
