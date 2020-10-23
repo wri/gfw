@@ -14,7 +14,6 @@ import LocationProvider from 'providers/location-provider';
 import MyGFWProvider from 'providers/mygfw-provider';
 
 import MetaModal from 'components/modals/meta';
-import SourcesModal from 'components/modals/sources';
 import ShareModal from 'components/modals/share';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 
@@ -67,7 +66,6 @@ const MapPage = ({
     <RecentImagery active={recentActive} />
     <ShareModal />
     <MetaModal />
-    <SourcesModal />
     <AreaOfInterestModal clearAfterDelete canDelete />
     <CountryDataProvider />
     <WhitelistsProvider />
