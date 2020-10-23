@@ -37,8 +37,21 @@
     vertical-align: middle;
   }
 
-  .attribution-info-btn {
+  .attribution-btn {
     opacity: 0.8;
     margin-left: rem(10px);
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+
+    > div {
+      margin-top: 0;
+    }
+
+    svg {
+      width: 8px;
+      height: 8px;
+    }
   }
 }

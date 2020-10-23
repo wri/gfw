@@ -34,12 +34,17 @@
 
       * {
         margin-bottom: rem(15px);
+        font-weight: 500;
       }
 
       a {
         color: $green-gfw;
+
+        &:hover {
+          color: $dark-green;
+          text-decoration: underline;
+        }
       }
     }
   }
 }
-
