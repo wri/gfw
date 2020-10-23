@@ -15,27 +15,10 @@ const getProjects = (state) => state.projects;
 const getCategory = (state) => state.category;
 const getSearch = (state) => state.search;
 const getLatLngs = (state) => state.latLngs;
-const getImages = (state) => state.images;
 const getCustomFilter = (state) => state.customFilter;
 
-const getProjectsWithImages = createSelector(
-  [getProjects, getImages],
-  (projects, images) => {
-    if (!projects || !projects.length || !images) return null;
-    return projects.map((p) => {
-      const imagesArray =
-        images[p.imageKey] && images[p.imageKey].map((i) => i.url);
-      return {
-        ...p,
-        image: imagesArray && imagesArray[0],
-        images: imagesArray,
-      };
-    });
-  }
-);
-
 const getCategories = createSelector(getProjects, (projects) => {
-  if (!projects || !projects.length) return null;
+  if (!projects?.length) return null;
   return [
     'All',
     ...sortBy(compact(uniq(flatten(projects.map((p) => p.categories))))),
@@ -43,7 +26,7 @@ const getCategories = createSelector(getProjects, (projects) => {
 });
 
 const getProjectsByCategory = createSelector(
-  [getProjectsWithImages, getCategories],
+  [getProjects, getCategories],
   (projects, categories) => {
     if (!projects || !categories) return null;
     const projectsByCategory = {};
@@ -71,13 +54,7 @@ const getCategoriesList = createSelector(
 );
 
 const getProjectsList = createSelector(
-  [
-    getProjectsWithImages,
-    getProjectsByCategory,
-    getCategory,
-    getSearch,
-    getCustomFilter,
-  ],
+  [getProjects, getProjectsByCategory, getCategory, getSearch, getCustomFilter],
   (allProjects, groupedProjects, category, search, filter) => {
     if (!allProjects || !category) return null;
     if (filter && filter.length) {

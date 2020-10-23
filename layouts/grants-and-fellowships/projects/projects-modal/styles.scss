@@ -93,16 +93,17 @@
   }
 
   .content {
-    padding: rem(30px) 0;
+    padding: 30px 0;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(30px) 0;
+      padding: 50px 0;
     }
 
     .description {
-      margin-bottom: rem(20px);
-      font-size: rem(19px);
-      line-height: 1.7;
+      margin-bottom: 30px;
+      font-size: 18px;
+      line-height: 30px;
+      font-weight: 400;
 
       a {
         color: $green-gfw;

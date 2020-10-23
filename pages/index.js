@@ -1,7 +1,7 @@
 import PageLayout from 'layouts/wrappers/page';
 import Home from 'layouts/home';
 
-import { getNewsProvider } from 'services/news';
+import { getNewsArticles } from 'services/news';
 
 const HomePage = (props) => (
   <PageLayout
@@ -13,11 +13,11 @@ const HomePage = (props) => (
 );
 
 export const getStaticProps = async () => {
-  const newsResponse = await getNewsProvider();
+  const newsArticles = await getNewsArticles();
 
   return {
     props: {
-      news: newsResponse?.data?.data,
+      news: newsArticles || [],
     },
   };
 };

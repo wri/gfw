@@ -1,5 +1,3 @@
-import sortBy from 'lodash/sortBy';
-
 import PageLayout from 'layouts/wrappers/page';
 import MapBuilder from 'layouts/mapbuilder';
 
@@ -36,7 +34,7 @@ export async function getStaticProps() {
     props: {
       page: page || {},
       tutorials: tutorials || [],
-      apps: sortBy(apps, 'menu_order') || [],
+      apps: apps || [],
       metaTags: page?.yoast_head || '',
     },
   };
