@@ -261,6 +261,8 @@
 }
 
 .c-upload-shape-modal {
+  max-width: 800px !important;
+
   a {
     color: $green-gfw;
 
@@ -273,7 +275,7 @@
   p {
     margin-bottom: rem(20px);
     font-size: rem(16px);
-    line-height: rem(30px);
+    line-height: rem(26px);
   }
 
   strong {
