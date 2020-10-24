@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal } from 'gfw-components';
+import Modal from 'components/modals/modal';
 
 import './styles.scss';
 

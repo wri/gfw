@@ -9,7 +9,7 @@ import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
-import Modal from '../modal';
+import Modal from 'components/modals/modal';
 
 import './styles.scss';
 
@@ -127,10 +127,10 @@ class Share extends PureComponent {
     const { open, setShareOpen, data } = this.props;
     return (
       <Modal
-        isOpen={open}
+        open={open}
         contentLabel={`Share: ${data && data.title}`}
         onRequestClose={() => setShareOpen(false)}
-        title={this.props.data && this.props.data.title}
+        title={data?.title}
       >
         {this.getContent()}
       </Modal>

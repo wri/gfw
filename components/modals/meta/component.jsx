@@ -6,9 +6,9 @@ import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
 import { track } from 'analytics';
 
-import NoContent from 'components/ui/no-content';
-import Button from 'components/ui/button';
-import Modal from '../modal';
+import { Button, NoContent } from 'gfw-components';
+
+import Modal from 'components/modals/modal';
 
 import './styles.scss';
 
@@ -118,22 +118,25 @@ class ModalMeta extends PureComponent {
             {(learn_more || download_data || map_service || amazon_link) && (
               <div className="ext-actions">
                 {learn_more && (
-                  <Button theme="theme-button-medium" extLink={learn_more}>
+                  <a href={learn_more} target="_blank" rel="noopener noreferrer">
+                    <Button size="medium">
                       LEARN MORE
-                  </Button>
+                    </Button>
+                  </a>
                 )}
                 {download_data && (
-                  <Button theme="theme-button-medium" extLink={download_data}>
+                  <a href={download_data} target="_blank" rel="noopener noreferrer">
+                    <Button size="medium">
                       DOWNLOAD DATA
-                  </Button>
+                    </Button>
+                  </a>
                 )}
                 {(map_service || amazon_link) && (
-                  <Button
-                    theme="theme-button-medium"
-                    extLink={map_service || amazon_link}
-                  >
+                  <a href={map_service || amazon_link} target="_blank" rel="noopener noreferrer">
+                    <Button size="medium">
                       OPEN IN ARCGIS
-                  </Button>
+                    </Button>
+                  </a>
                 )}
               </div>
             )}
@@ -143,7 +146,7 @@ class ModalMeta extends PureComponent {
     );
   }
 
-  parseContent(html) {
+  parseContent = (html) => {
     return (
       <div>
         {ReactHtmlParser(html, {
@@ -153,7 +156,7 @@ class ModalMeta extends PureComponent {
                 key={node.attribs.href}
                 href={node.attribs.href}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                 {node.children[0].data}
               </a>
@@ -168,10 +171,10 @@ class ModalMeta extends PureComponent {
   render() {
     const { metakey, setModalMetaClosed, metaData, loading } = this.props;
     const { title } = metaData || {};
+
     return (
       <Modal
-        isOpen={!!metakey}
-        track={false}
+        open={!!metakey}
         onRequestClose={() => setModalMetaClosed()}
         className="c-modal-meta"
         title={title}

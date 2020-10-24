@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
-import { Modal, Loader } from 'gfw-components';
+import { Loader } from 'gfw-components';
 
 import { checkUserProfileFilled } from 'utils/user';
 
 import LoginForm from 'components/forms/login';
 import ProfileForm from 'components/forms/profile';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
+import Modal from 'components/modals/modal';
 
 import './styles.scss';
 

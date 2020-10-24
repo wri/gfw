@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { setModalFiresOpen, setContactUsOpen } from './actions';
+import Modal from 'components/modals/modal';
 
-import Modal from '../modal';
+import { setModalFiresOpen, setContactUsOpen } from './actions';
 
 import './styles.scss';
 
@@ -70,7 +70,7 @@ class ModalGFWFires extends PureComponent {
 
     return (
       <Modal
-        isOpen={open && !!modalText}
+        open={open && !!modalText}
         contentLabel="Global Forest Watch Fires"
         onRequestClose={() => {
           setModalFiresOpen(false);
@@ -78,9 +78,7 @@ class ModalGFWFires extends PureComponent {
         title="Global Forest Watch Fires."
         className="c-gfw-fires-modal"
       >
-        <div className="fires-modal-content">
-          <p>{modalText}</p>
-        </div>
+        <p>{modalText}</p>
       </Modal>
     );
   }
