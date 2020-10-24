@@ -41,7 +41,6 @@ class Header extends PureComponent {
     title: PropTypes.string,
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
-    errorMsg: PropTypes.string,
   };
 
   renderAreaActions({ isCountryDashboard, isAreaAndCountryDashboard }) {
@@ -170,7 +169,6 @@ class Header extends PureComponent {
       title,
       activeArea,
       firstArea,
-      errorMsg,
     } = this.props;
     const isCountryDashboard =
       location?.type === 'country' || location?.type === 'global';
@@ -248,9 +246,6 @@ class Header extends PureComponent {
               )}
               {title && (
                 <h3 className={cx({ global: title === 'global' })}>{title}</h3>
-              )}
-              {isAreaDashboard && !activeArea && !loading && (
-                <h3>{errorMsg}</h3>
               )}
               {adm0s && (
                 <Dropdown
