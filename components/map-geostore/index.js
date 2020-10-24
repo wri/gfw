@@ -1,6 +1,3 @@
-import { connect } from 'react-redux';
+import Component from './component';
 
-import { getRecentImageMapProps } from './selectors';
-import MapComponent from './component';
-
-export default connect(getRecentImageMapProps)(MapComponent);
+export default Component;
