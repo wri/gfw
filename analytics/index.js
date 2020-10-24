@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import ReactGA from 'react-ga';
 import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
@@ -63,10 +64,13 @@ export const track = (key, data) => {
 };
 
 export const usePageTrack = () => {
+  const { asPath } = useRouter();
+  const fullPathname = asPath?.split('?')?.[0];
+
   useEffect(() => {
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
     }
     handlePageTrack();
-  }, []);
+  }, [fullPathname]);
 };
