@@ -8,7 +8,7 @@ import { checkUserProfileFilled } from 'utils/user';
 import LoginForm from 'components/forms/login';
 import ProfileForm from 'components/forms/profile';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { Button } from 'gfw-components';
 
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 

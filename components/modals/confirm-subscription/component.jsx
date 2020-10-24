@@ -6,7 +6,7 @@ import { resendSubscriptionConfirmation } from 'services/subscriptions';
 
 import { Loader, Button } from 'gfw-components';
 
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 

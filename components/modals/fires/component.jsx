@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 
 import { setModalFiresOpen, setContactUsOpen } from './actions';
 

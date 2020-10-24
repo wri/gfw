@@ -6,7 +6,7 @@ import moment from 'moment';
 import { track } from 'analytics';
 import Link from 'next/link';
 
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';

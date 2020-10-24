@@ -5,7 +5,8 @@ import { Modal as ModalComponent } from 'gfw-components';
 
 const Modal = ({ children, ...props }) => (
   <ModalComponent
-    onAfterOpen={() => props.contentLabel && track('openModal', { label: props.contentLabel })}
+    onAfterOpen={() =>
+      props.contentLabel && track('openModal', { label: props.contentLabel })}
     {...props}
   >
     {children}
@@ -14,7 +15,7 @@ const Modal = ({ children, ...props }) => (
 
 Modal.propTypes = {
   children: PropTypes.node,
-  contentLabel: PropTypes.string
-}
+  contentLabel: PropTypes.string,
+};
 
 export default Modal;

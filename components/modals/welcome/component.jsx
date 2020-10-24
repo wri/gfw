@@ -9,7 +9,7 @@ import Checkbox from 'components/ui/checkbox';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import helpGreenIcon from 'assets/icons/help-green.svg?sprite';
 
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 

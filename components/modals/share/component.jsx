@@ -9,7 +9,7 @@ import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 

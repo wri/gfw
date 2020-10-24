@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { track } from 'analytics';
 import { format } from 'd3-format';
 
-import Modal from 'components/modals/modal';
+import Modal from 'components/modal';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Dropdown from 'components/ui/dropdown';
