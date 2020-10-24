@@ -1,23 +1,5 @@
 @import '~styles/settings.scss';
 
-.c-webhook-modal {
-  h3 {
-    margin-bottom: rem(20px);
-  }
-
-  p {
-    margin-bottom: rem(20px);
-    font-size: rem(16px);
-    line-height: rem(30px);
-  }
-
-  pre {
-    border: 1px solid #ccc;
-    font-size: 14px;
-    padding: 30px;
-  }
-}
-
 .c-area-of-interest-form {
   .input-field {
     max-width: rem(350px);
