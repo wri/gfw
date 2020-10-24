@@ -63,7 +63,8 @@ class Widgets extends PureComponent {
         className={cx(
           'c-widgets',
           className,
-          { simple: this.props.simple },
+          { simple },
+          { embed },
           { 'no-widgets': !hasWidgets }
         )}
       >

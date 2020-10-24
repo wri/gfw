@@ -40,6 +40,7 @@
 
   .widgets-loader {
     position: relative;
+    min-height: rem(460px);
   }
 
   &.simple {
@@ -62,6 +63,12 @@
 
     .widgets-loader {
       min-height: rem(150px);
+    }
+  }
+
+  &.embed {
+    .widgets-loader {
+      min-height: 100%;
     }
   }
 
