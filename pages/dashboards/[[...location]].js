@@ -23,6 +23,12 @@ import {
   setActiveWidget,
 } from 'components/widgets/actions';
 
+const notFoundProps = {
+  error: 404,
+  title: 'Dashboard Not Found | Global Forest Watch',
+  errorTitle: 'Dashboard Not Found',
+};
+
 export const getStaticProps = async ({ params }) => {
   const [type] = params?.location || [];
 
@@ -36,13 +42,19 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
-  const locationData = await getLocationData(params?.location).catch(() => {
+  const locationData = await getLocationData(params?.location).catch((err) => {
+    if (err?.response?.status === 401) {
+      return {
+        props: {
+          error: 401,
+          title: 'Area is private | Global Forest Watch',
+          errorTitle: 'Area is private',
+        },
+      };
+    }
+
     return {
-      props: {
-        error: 404,
-        title: 'Dashboard Not Found | Global Forest Watch',
-        errorTitle: 'Dashboard Not Found',
-      },
+      props: notFoundProps,
     };
   });
 
@@ -50,11 +62,7 @@ export const getStaticProps = async ({ params }) => {
 
   if (!locationName) {
     return {
-      props: {
-        error: 404,
-        title: 'Dashboard Not Found | Global Forest Watch',
-        errorTitle: 'Dashboard Not Found',
-      },
+      props: notFoundProps,
     };
   }
 

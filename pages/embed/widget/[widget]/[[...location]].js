@@ -35,7 +35,17 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
-  const locationData = await getLocationData(location).catch(() => {
+  const locationData = await getLocationData(location).catch((err) => {
+    if (err?.response?.status === 401) {
+      return {
+        props: {
+          error: 401,
+          title: 'Area is private | Global Forest Watch',
+          errorTitle: 'Area is private',
+        },
+      };
+    }
+
     return {
       props: errorProps,
     };

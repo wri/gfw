@@ -20,6 +20,12 @@ import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMapPrompts } from 'components/prompts/map-prompts/actions';
 
+const notFoundProps = {
+  error: 404,
+  title: 'Location Not Found | Global Forest Watch',
+  errorTitle: 'Location Not Found',
+};
+
 export const getStaticProps = async ({ params }) => {
   const [type] = params?.location || [];
 
@@ -33,13 +39,19 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
-  const locationData = await getLocationData(params?.location).catch(() => {
+  const locationData = await getLocationData(params?.location).catch((err) => {
+    if (err?.response?.status === 401) {
+      return {
+        props: {
+          error: 401,
+          title: 'Area is private | Global Forest Watch',
+          errorTitle: 'Area is private',
+        },
+      };
+    }
+
     return {
-      props: {
-        error: 404,
-        title: 'Location Not Found | Global Forest Watch',
-        errorTitle: 'Location Not Found',
-      },
+      props: notFoundProps,
     };
   });
 
@@ -47,11 +59,7 @@ export const getStaticProps = async ({ params }) => {
 
   if (!locationName) {
     return {
-      props: {
-        error: 404,
-        title: 'Location Not Found | Global Forest Watch',
-        errorTitle: 'Location Not Found',
-      },
+      props: notFoundProps,
     };
   }
 
