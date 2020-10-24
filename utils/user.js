@@ -4,7 +4,7 @@ export const checkUserProfileFilled = ({
   lastName,
   sector,
   subsector,
-}) =>
+} = {}) =>
   !!email &&
   (!!fullName || !!lastName) &&
   !!sector &&

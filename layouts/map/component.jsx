@@ -1,5 +1,6 @@
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
+import cx from 'classnames';
 import { Desktop, Mobile } from 'gfw-components';
 
 import CountryDataProvider from 'providers/country-data-provider';
@@ -29,67 +30,88 @@ import MapControlButtons from './components/map-controls';
 
 import './styles.scss';
 
-const MapPage = ({
-  hidePanels,
-  handleClickMap,
-  recentActive,
-  handleClickAnalysis,
-  onDrawComplete,
-}) => (
-  <div className="c-map-page">
-    <Desktop>
-      <MapMenu className="map-menu" isDesktop />
-    </Desktop>
-    <Mobile>
-      <MapMenu className="map-menu" />
-    </Mobile>
-    <div
-      className="map-container"
-      role="button"
-      tabIndex={0}
-      onClick={handleClickMap}
-    >
-      <Map
-        className="map"
-        onDrawComplete={onDrawComplete}
-        onClickAnalysis={handleClickAnalysis}
-      />
-    </div>
-    <Desktop>
-      <>
-        {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
-        <MapControlButtons className="map-controls" isDesktop />
-        <MapPrompts />
-      </>
-    </Desktop>
-    <Mobile>
-      <MapControlButtons className="map-controls" />
-    </Mobile>
-    <RecentImagery active={recentActive} />
-    <ShareModal />
-    <MetaModal />
-    <AreaOfInterestModal clearAfterDelete canDelete />
-    <ClimateModal />
-    <FiresModal />
-    <CountryDataProvider />
-    <WhitelistsProvider />
-    <DatasetsProvider />
-    <LatestProvider />
-    <GeostoreProvider />
-    <GeodescriberProvider />
-    <AreasProvider />
-    <PlanetBasemapsProvider />
-    <LocationProvider />
-    <MyGFWProvider />
-  </div>
-);
+class MainMapComponent extends PureComponent {
+  static propTypes = {
+    onDrawComplete: PropTypes.func,
+    handleClickAnalysis: PropTypes.func,
+    handleClickMap: PropTypes.func,
+    hidePanels: PropTypes.bool,
+    embed: PropTypes.bool,
+    recentActive: PropTypes.bool,
+  };
 
-MapPage.propTypes = {
-  onDrawComplete: PropTypes.func,
-  handleClickAnalysis: PropTypes.func,
-  handleClickMap: PropTypes.func,
-  hidePanels: PropTypes.bool,
-  recentActive: PropTypes.bool,
-};
+  render() {
+    const {
+      embed,
+      hidePanels,
+      handleClickMap,
+      recentActive,
+      handleClickAnalysis,
+      onDrawComplete,
+    } = this.props;
 
-export default MapPage;
+    return (
+      <div className={cx('c-map-main', { embed })}>
+        <Desktop>
+          <MapMenu className="map-menu" embed={embed} isDesktop />
+        </Desktop>
+        <Mobile>
+          <MapMenu className="map-menu" embed={embed} />
+        </Mobile>
+        <div
+          className="main-map-container"
+          role="button"
+          tabIndex={0}
+          onClick={handleClickMap}
+        >
+          <Map
+            className="main-map"
+            onDrawComplete={onDrawComplete}
+            onClickAnalysis={handleClickAnalysis}
+          />
+        </div>
+        {!hidePanels && (
+          <Desktop>
+            <DataAnalysisMenu className="data-analysis-menu" embed={embed} />
+          </Desktop>
+        )}
+        {!embed && (
+          <>
+            <Desktop>
+              <>
+                {!embed && <MapPrompts />}
+                {/* <ModalWelcome /> */}
+                <MapControlButtons className="main-map-controls" isDesktop />
+              </>
+            </Desktop>
+            <Mobile>
+              <>
+                <MapControlButtons
+                  className="main-map-controls"
+                  isDesktop={false}
+                />
+              </>
+            </Mobile>
+          </>
+        )}
+        <RecentImagery active={recentActive} />
+        <ShareModal />
+        <MetaModal />
+        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+        <ClimateModal />
+        <FiresModal />
+        <CountryDataProvider />
+        <WhitelistsProvider />
+        <DatasetsProvider />
+        <LatestProvider />
+        <GeostoreProvider />
+        <GeodescriberProvider />
+        <AreasProvider />
+        <PlanetBasemapsProvider />
+        <LocationProvider />
+        <MyGFWProvider />
+      </div>
+    );
+  }
+}
+export default MainMapComponent;
