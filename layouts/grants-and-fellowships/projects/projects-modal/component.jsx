@@ -1,7 +1,9 @@
 import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 
-import { Carousel, Modal } from 'gfw-components';
+import { Carousel } from 'gfw-components';
+
+import Modal from 'components/modals/modal';
 
 import './styles.scss';
 

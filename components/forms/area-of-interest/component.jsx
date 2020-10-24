@@ -4,9 +4,9 @@ import { Form } from 'react-final-form';
 import { languages } from 'utils/lang';
 import request from 'utils/request';
 
-import { Modal } from 'gfw-components';
+import { Loader } from 'gfw-components';
 
-import Loader from 'components/ui/loader';
+import Modal from 'components/modals/modal';
 import Input from 'components/forms/components/input';
 import InputTags from 'components/forms/components/input-tags';
 import Select from 'components/forms/components/select';

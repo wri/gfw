@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { Modal } from 'gfw-components';
-
+import Modal from 'components/modals/modal';
 import Icon from 'components/ui/icon';
 
 import mapboxLogo from 'assets/logos/mapbox.svg?sprite';

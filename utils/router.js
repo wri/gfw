@@ -26,6 +26,7 @@ const useRouter = () => {
         skipEmptyString: true,
         arrayFormat: 'comma',
       });
+
     router.push(
       `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,
       options

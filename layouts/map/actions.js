@@ -1,5 +1,7 @@
 import { createAction, createThunkAction } from 'redux/actions';
 import { getLocationFromData } from 'utils/format';
+import compact from 'lodash/compact';
+
 import useRouter from 'utils/router';
 
 export const setMainMapSettings = createAction('setMainMapSettings');
@@ -9,7 +11,7 @@ export const setMainMapAnalysisView = createThunkAction(
   ({ data, layer }) => () => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
-    const { query, pushQuery, asPath } = useRouter();
+    const { query, pushQuery } = useRouter();
     const { map, mainMap } = query || {};
 
     // get location payload based on layer type
@@ -36,7 +38,7 @@ export const setMainMapAnalysisView = createThunkAction(
 
     if (payload && payload.adm0) {
       pushQuery({
-        pathname: asPath?.split('?')?.[0],
+        pathname: `/map/${compact(Object.values(payload))?.join('/')}/`,
         query: {
           ...query,
           map: {

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { Modal, Button } from 'gfw-components';
+import { Button } from 'gfw-components';
+
+import Modal from 'components/modals/modal';
 
 import './styles.scss';
 
