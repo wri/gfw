@@ -1,10 +1,10 @@
 import useRouter from 'utils/router';
 
 export const setModalClimateOpen = (open) => {
-  const { query, pathname, pushQuery } = useRouter();
+  const { query, asPath, pushQuery } = useRouter();
 
   pushQuery({
-    pathname,
+    pathname: asPath?.split('?')?.[0],
     query: {
       ...query,
       gfwclimate: open || null,
@@ -13,10 +13,10 @@ export const setModalClimateOpen = (open) => {
 };
 
 export const setContactUsOpen = () => {
-  const { query, pathname, pushQuery } = useRouter();
+  const { query, asPath, pushQuery } = useRouter();
 
   pushQuery({
-    pathname,
+    pathname: asPath?.split('?')?.[0],
     query: {
       ...query,
       gfwfires: null,

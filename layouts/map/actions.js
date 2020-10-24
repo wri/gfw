@@ -9,7 +9,7 @@ export const setMainMapAnalysisView = createThunkAction(
   ({ data, layer }) => () => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
-    const { query, pushQuery, pathname } = useRouter();
+    const { query, pushQuery, asPath } = useRouter();
     const { map, mainMap } = query || {};
 
     // get location payload based on layer type
@@ -36,10 +36,9 @@ export const setMainMapAnalysisView = createThunkAction(
 
     if (payload && payload.adm0) {
       pushQuery({
-        pathname,
+        pathname: asPath?.split('?')?.[0],
         query: {
           ...query,
-          location: Object.values(payload),
           map: {
             ...map,
             canBound: true,
@@ -57,14 +56,13 @@ export const setMainMapAnalysisView = createThunkAction(
 export const setDrawnGeostore = createThunkAction(
   'setDrawnGeostore',
   (geostoreId) => () => {
-    const { pushQuery, query, pathname } = useRouter();
+    const { pushQuery, query } = useRouter();
 
     const { map, mainMap } = query || {};
     pushQuery({
-      pathname,
+      pathname: `/map/geostore/${geostoreId}/`,
       query: {
         ...query,
-        location: ['geostore', geostoreId],
         map: {
           ...map,
           canBound: true,

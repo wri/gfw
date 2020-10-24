@@ -4,10 +4,10 @@ import useRouter from 'utils/router';
 export const setModalContactUsOpen = createThunkAction(
   'setModalContactUsOpen',
   (open) => () => {
-    const { query, pathname, pushQuery } = useRouter();
+    const { query, asPath, pushQuery } = useRouter();
 
     pushQuery({
-      pathname,
+      pathname: asPath?.split('?')?.[0],
       query: {
         ...query,
         contactUs: open || null,

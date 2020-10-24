@@ -4,10 +4,10 @@ import useRouter from 'utils/router';
 export const setProfileModalOpen = createThunkAction(
   'setProfileModalOpen',
   (open) => () => {
-    const { query, pathname, pushQuery } = useRouter();
+    const { query, asPath, pushQuery } = useRouter();
 
     pushQuery({
-      pathname,
+      pathname: asPath?.split('?')?.[0],
       query: {
         ...query,
         profile: open || null,

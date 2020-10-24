@@ -158,13 +158,12 @@ export const uploadShape = createThunkAction(
               .then((geostore) => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
-                  const { pathname, query, pushQuery } = useRouter();
+                  const { query, pushQuery } = useRouter();
                   setTimeout(() => {
                     pushQuery({
-                      pathname,
+                      pathname: `/map/geostore/${id}/`,
                       query: {
                         ...query,
-                        location: ['geostore', id],
                         map: {
                           ...query?.map,
                           canBound: true,
@@ -234,13 +233,10 @@ export const uploadShape = createThunkAction(
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch) => {
-    const { query, pathname, pushQuery } = useRouter();
+    const { query, pushQuery } = useRouter();
     pushQuery({
-      pathname,
-      query: {
-        ...query,
-        location: [],
-      },
+      pathname: '/map/',
+      query,
     });
     dispatch(clearAnalysisData());
   }
@@ -249,7 +245,6 @@ export const clearAnalysis = createThunkAction(
 export const goToDashboard = createThunkAction('goToDashboard', () => () => {
   const { query, pushQuery } = useRouter();
   pushQuery({
-    pathname: '/dashboards/[[...location]]',
-    query,
+    pathname: `/dashboards/${query?.location?.join('/')}/`,
   });
 });

@@ -9,10 +9,10 @@ import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompt
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
   (category) => () => {
-    const { query, pathname, pushQuery } = useRouter();
+    const { query, asPath, pushQuery } = useRouter();
 
     pushQuery({
-      pathname,
+      pathname: asPath?.split('?')?.[0],
       query: {
         ...query,
         category,
@@ -26,7 +26,7 @@ export const handleLocationChange = createThunkAction(
   'handleLocationChange',
   (location) => (dispatch, getState) => {
     const { type, payload, query } = getState().location || {};
-    const { pathname, pushQuery } = useRouter();
+    const { pushQuery } = useRouter();
 
     const { data, layer } = location || {};
     const newQuery = {};
@@ -87,10 +87,9 @@ export const handleLocationChange = createThunkAction(
     }
 
     pushQuery({
-      pathname,
+      pathname: `/dashboards/${Object.values(newPayload)?.join('/')}/`,
       query: {
         ...newQuery,
-        location: Object.values(newPayload),
         widget: undefined,
         map: {
           ...(query && query.map),
@@ -118,9 +117,9 @@ export const handleLocationChange = createThunkAction(
 );
 
 export const clearScrollTo = createThunkAction('clearScrollTo', () => () => {
-  const { query, pathname, pushQuery } = useRouter();
+  const { query, asPath, pushQuery } = useRouter();
   pushQuery({
-    pathname,
+    pathname: asPath?.split('?')?.[0],
     query: {
       ...query,
       scrollTo: false,
