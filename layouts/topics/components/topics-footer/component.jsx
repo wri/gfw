@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
-import { track } from 'analytics';
 
-import { Carousel, Row, Column } from 'gfw-components';
-
-import CountryDataProvider from 'providers/country-data-provider';
+import { Row, Column, Desktop, Mobile } from 'gfw-components';
 
 import Footer from 'components/footer';
-import Card from 'components/ui/card';
+
+import TopicsCards from './cards';
 
 import './styles.scss';
 
-const TopicsFooter = ({ cards, topic, countries, setModalContactUsOpen }) => (
+const TopicsFooter = ({ cards, topic }) => (
   <div className="c-topics-footer">
     <Row>
       <Column>
@@ -19,64 +17,25 @@ const TopicsFooter = ({ cards, topic, countries, setModalContactUsOpen }) => (
     </Row>
     <Row className="row-cards">
       <Column>
-        <Carousel>
-          {cards &&
-            cards.map((c) => (
-              <Card
-                key={c.title}
-                theme={c.theme}
-                data={{
-                  ...c,
-                  ...(c.btnText && {
-                    buttons: [
-                      {
-                        text: c.btnText || 'READ MORE',
-                        link: c.link,
-                        extLink: c.extLink,
-                        onClick: () => {
-                          if (c.id === 'feedback') {
-                            setModalContactUsOpen(true);
-                          }
-                          track('topicsCardClicked', {
-                            label: `${topic}: ${c.title}`,
-                          });
-                        },
-                      },
-                    ],
-                  }),
-                  ...(c.selector && {
-                    selector: {
-                      ...c.selector,
-                      options: countries
-                        .filter(
-                          (country) =>
-                            !c.selector.whitelist ||
-                            c.selector.whitelist.includes(country.value)
-                        )
-                        .map((country) => ({
-                          ...country,
-                          path:
-                            c.selector.path &&
-                            c.selector.path.replace('{iso}', country.value),
-                        })),
-                    },
-                  }),
-                }}
-              />
-            ))}
-        </Carousel>
+        <Desktop>
+          <TopicsCards cards={cards} topic={topic} />
+        </Desktop>
+        <Mobile>
+          <TopicsCards
+            cards={cards}
+            topic={topic}
+            settings={{ slidesToShow: 1 }}
+          />
+        </Mobile>
       </Column>
     </Row>
     <Footer />
-    <CountryDataProvider />
   </div>
 );
 
 TopicsFooter.propTypes = {
   cards: PropTypes.array,
   topic: PropTypes.string,
-  countries: PropTypes.array,
-  setModalContactUsOpen: PropTypes.func,
 };
 
 export default TopicsFooter;

@@ -40,7 +40,7 @@ class TopicsPage extends PureComponent {
     skip: false,
     slideLeaving: 0,
     leaving: false,
-    showRelated: !isServer && window.location.hash.includes('slides'),
+    showRelated: false,
   };
 
   componentDidUpdate(prevProps) {
