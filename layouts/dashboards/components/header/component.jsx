@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -130,13 +130,14 @@ class Header extends PureComponent {
                   position: 'bottom',
                 }}
                 onClick={() => {
-                  track('downloadDashboardPage', {
-                    label:
-                      (locationNames &&
-                        locationNames.adm0 &&
-                        locationNames.adm0.label) ||
-                      'Global',
-                  });
+                  trackEvent({
+                    category: 'Dashboards page',
+                    action: 'Download page',
+                    label: (locationNames &&
+                      locationNames.adm0 &&
+                      locationNames.adm0.label) ||
+                    'Global'
+                  })
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -216,8 +217,10 @@ class Header extends PureComponent {
                   <a className="breadcrumb-link">
                     <button
                       onClick={() =>
-                        track('switchDashboardType', {
-                          label: 'changes to global',
+                        trackEvent({
+                          category: 'Areas of interest',
+                          action: 'User changes between global and areas dashboard',
+                          label: 'changes to global'
                         })}
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
@@ -234,8 +237,10 @@ class Header extends PureComponent {
                   <a className="breadcrumb-link">
                     <button
                       onClick={() =>
-                        track('switchDashboardType', {
-                          label: 'changes to areas',
+                        trackEvent({
+                          category: 'Areas of interest',
+                          action: 'User changes between global and areas dashboard',
+                          label: 'changes to areas'
                         })}
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />

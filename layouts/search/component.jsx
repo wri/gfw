@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Search, Desktop, Row, Column, Button, Loader } from 'gfw-components';
 
-import { handlePageTrack } from 'analytics';
+import { trackPage } from 'utils/analytics';
 import { getSearchQuery } from 'services/search';
 
 import Cover from 'components/cover';
@@ -40,7 +40,7 @@ const SearchPage = () => {
   const handleSubmit = (search) => {
     const newUrl = `/search?query=${search}`;
     replace(newUrl);
-    handlePageTrack(newUrl);
+    trackPage(newUrl);
   };
 
   return (

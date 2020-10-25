@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { Desktop, Mobile, Button, Row, Column } from 'gfw-components';
 
@@ -40,9 +40,11 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                track('topicsCitation', {
-                  label: title,
-                });
+                trackEvent({
+                  category: 'Topics pages',
+                  action: 'Open citation info button',
+                  label: title
+                })
               }}
             >
               <Icon className="citation-icon" icon={infoIcon} />

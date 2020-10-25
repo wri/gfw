@@ -2,7 +2,7 @@ import { createThunkAction } from 'redux/actions';
 import { getLocationFromData } from 'utils/format';
 import useRouter from 'utils/router';
 
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
@@ -98,13 +98,15 @@ export const handleLocationChange = createThunkAction(
       },
     });
 
-    track('changeDashboardLocation', {
+    trackEvent({
+      category: 'Dashboards page',
+      action: 'User changes dashboard location',
       label: `${type === 'global' ? type : ''}${
         newPayload.adm0 ? ` ${newPayload.adm0}` : ''
       }${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${
         newPayload.adm2 ? `.${newPayload.adm2}` : ''
       }`,
-    });
+    })
 
     dispatch(
       setDashboardPromptsSettings({

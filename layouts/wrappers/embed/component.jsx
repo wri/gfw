@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { Loader, MediaContextProvider, Button } from 'gfw-components';
 
-import { usePageTrack } from 'analytics';
+import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'layouts/wrappers/head';
@@ -25,7 +25,7 @@ const EmbedWrapper = ({
   errorTitle,
   errorDescription,
 }) => {
-  usePageTrack();
+  useTrackPage();
   useSetLanguage();
 
   // if a page is statically built with

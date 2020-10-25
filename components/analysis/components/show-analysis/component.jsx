@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import Link from 'next/link';
 
 import Modal from 'components/modal';
@@ -162,12 +162,14 @@ class ShowAnalysis extends PureComponent {
                   disabled={!downloadUrls || !downloadUrls.length}
                   onClick={() => {
                     handleShowDownloads(true);
-                    track('analysisDownload', {
+                    trackEvent({
+                      category: 'Map analysis',
+                      action: 'Download',
                       label:
                         downloadUrls &&
                         downloadUrls.length &&
                         downloadUrls.map((d) => d?.label).join(', '),
-                    });
+                    })
                   }}
                   tooltip={{ text: 'Download data' }}
                 >

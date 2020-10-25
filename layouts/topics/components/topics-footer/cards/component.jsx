@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { Carousel } from 'gfw-components';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import CountryDataProvider from 'providers/country-data-provider';
 
@@ -34,9 +34,11 @@ export const TopicsCards = ({
                       if (c.id === 'feedback') {
                         setModalContactUsOpen(true);
                       }
-                      track('topicsCardClicked', {
+                      trackEvent({
+                        category: 'Topics pages',
+                        action: 'Clicks through on a card',
                         label: `${topic}: ${c.title}`,
-                      });
+                      })
                     },
                   },
                 ],

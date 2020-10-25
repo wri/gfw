@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { ContactUsModal } from 'gfw-components';
 
@@ -21,7 +21,11 @@ const ModalContactUs = () => {
       onRequestClose={() => dispatch(setModalContactUsOpen(false))}
       title="Contact Us"
       className="c-contact-us-modal"
-      onAfterOpen={() => track('openModal', { label: 'Contact Us' })}
+      onAfterOpen={() => trackEvent({
+        category: 'Open modal',
+        action: 'Click to open',
+        label: 'Contact Us'
+      })}
     />
   );
 };

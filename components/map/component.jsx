@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import { handleMapLatLonTrack, track } from 'analytics';
+import { trackMapLatLon, trackEvent } from 'utils/analytics';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -132,9 +132,11 @@ class MapComponent extends Component {
 
     // fit bounds on cluster if clicked
     if (interaction && !isEqual(interaction, prevInteraction)) {
-      track('mapInteraction', {
+      trackEvent({
+        category: 'Map analysis',
+        action: 'User opens analysis popup infowindow',
         label: interaction.label,
-      });
+      })
 
       if (interaction.data.cluster) {
         const { data, layer, geometry } = interaction;
@@ -169,7 +171,7 @@ class MapComponent extends Component {
       pitch,
       zoom,
     });
-    handleMapLatLonTrack(location);
+    trackMapLatLon(location);
   }, 250);
 
   onStyleLoad = () => {

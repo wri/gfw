@@ -4,7 +4,7 @@ import Sticky from 'react-stickynode';
 import isEqual from 'lodash/isEqual';
 
 import { Mobile, Desktop } from 'gfw-components';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
@@ -83,9 +83,11 @@ class DashboardsPage extends PureComponent {
       !activeArea.userArea &&
       !isEqual(activeArea, prevActiveArea)
     ) {
-      track('publicArea', {
+      trackEvent({
+        category: 'Areas of interest',
+        action: 'Visit a shared area of interest',
         label: activeArea.id,
-      });
+      })
     }
 
     if (scrollY === 0 && prevScrollY > scrollY) {
@@ -157,9 +159,11 @@ class DashboardsPage extends PureComponent {
                 ...l,
                 onClick: () => {
                   setWidgetsCategory(l.category);
-                  track('selectDashboardCategory', {
-                    label: l.category,
-                  });
+                  trackEvent({
+                    category: 'Dashboards page',
+                    action: 'View',
+                    label: l.category
+                  })
                 },
               }))}
               checkActive

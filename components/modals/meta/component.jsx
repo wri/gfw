@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { Button, NoContent } from 'gfw-components';
 
@@ -42,7 +42,11 @@ class ModalMeta extends PureComponent {
       metaData.title &&
       metaData.title !== prevProps.metaData.title
     ) {
-      track('openModal', { label: `Metadata: ${metaData && metaData.title}` });
+      trackEvent({
+        category: 'Open modal',
+        action: 'Click to open',
+        label: `Metadata: ${metaData && metaData.title}`
+      })
     }
   }
 

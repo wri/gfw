@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import flatMap from 'lodash/flatMap';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import reducerRegistry from 'redux/registry';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
@@ -25,10 +25,16 @@ class MainMapContainer extends PureComponent {
   componentDidMount() {
     const { activeDatasets, basemap } = this.props;
     const layerIds = flatMap(activeDatasets?.map((d) => d.layers));
-    track('mapInitialLayers', {
+    trackEvent({
+      category: 'Map data',
+      action: 'Initial layers loaded',
       label: layerIds && layerIds.join(', '),
-    });
-    track('basemapsInitial', { label: basemap && basemap.value });
+    })
+    trackEvent({
+      category: 'Map data',
+      action: 'initial basemap loaded',
+      label: basemap?.value
+    })
   }
 
   componentDidUpdate(prevProps) {

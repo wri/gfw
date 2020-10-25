@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import upperFirst from 'lodash/upperFirst';
 
 import { Desktop, Mobile, Button } from 'gfw-components';
@@ -114,9 +114,11 @@ class TopicsPage extends PureComponent {
     this.setState({ skip: true }, () => {
       this.fullpageApi.moveTo('footer');
     });
-    track('topicsRelatedTools', {
-      label: source,
-    });
+    trackEvent({
+      category: 'Topics pages',
+      action: 'Clicked related tools',
+      label: source
+    })
   };
 
   handleSetLeaving = () => {

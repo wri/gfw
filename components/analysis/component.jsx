@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
@@ -123,7 +123,9 @@ class AnalysisComponent extends PureComponent {
                 theme="theme-button-light"
                 {...linkProps}
                 onClick={() =>
-                  track('analysisViewDashboards', {
+                  trackEvent({
+                    category: 'Map analysis',
+                    action: 'User goes to dashboards',
                     label: location.adm0,
                   })}
               >

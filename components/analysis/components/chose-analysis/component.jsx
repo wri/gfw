@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import cx from 'classnames';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import { format } from 'd3-format';
 
 import Button from 'components/ui/button';
@@ -124,7 +124,11 @@ class ChoseAnalysis extends PureComponent {
             if (!drawing) {
               setMenuSettings({ menuSection: '' });
             }
-            track(drawing ? 'analysisDrawCancel' : 'analysisDrawStart');
+            trackEvent({
+              category: 'Map analysis',
+              action: 'User drawn shape',
+              label: drawing ? 'Cancel' : 'Start'
+            })
           }}
         >
           {drawing ? 'CANCEL' : 'START DRAWING'}

@@ -6,11 +6,6 @@ import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 import ReactPixel from 'utils/facebook-pixel';
 import { decodeUrlForState } from 'utils/stateToUrl';
 
-import mapEvents from 'analytics/map';
-import sharedEvents from 'analytics/shared';
-import dashboardsEvents from 'analytics/dashboards';
-import topicsEvents from 'analytics/topics';
-
 const IS_BROWSER = typeof window !== 'undefined';
 
 export const initAnalytics = () => {
@@ -25,14 +20,7 @@ export const initAnalytics = () => {
   }
 };
 
-const events = {
-  ...mapEvents,
-  ...dashboardsEvents,
-  ...sharedEvents,
-  ...topicsEvents,
-};
-
-export const handlePageTrack = (url) => {
+export const trackPage = (url) => {
   if (IS_BROWSER && window.ANALYTICS_INITIALIZED) {
     const pageUrl =
       url || `${window.location.pathname}${window.location.search}`;
@@ -43,13 +31,19 @@ export const handlePageTrack = (url) => {
   }
 };
 
-export const handleMapLatLonTrack = (location) => {
+export const trackEvent = event => {
+  if (IS_BROWSER && window.ANALYTICS_INITIALIZED) {
+    ReactGA.event(event);
+  }
+};
+
+export const trackMapLatLon = (location) => {
   const { query } = location || {};
   const { map } = query || {};
   const position =
     map && `/location/${map.center.lat}/${map.center.lng}/${map.zoom}`;
   if (position) {
-    handlePageTrack(
+    trackPage(
       `${position}${window.location.pathname}?${JSON.stringify(
         decodeUrlForState(window.location.search)
       )}`
@@ -57,13 +51,7 @@ export const handleMapLatLonTrack = (location) => {
   }
 };
 
-export const track = (key, data) => {
-  if (IS_BROWSER && window.ANALYTICS_INITIALIZED && events[key]) {
-    ReactGA.event({ ...events[key], ...data });
-  }
-};
-
-export const usePageTrack = () => {
+export const useTrackPage = () => {
   const { asPath } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
@@ -71,6 +59,6 @@ export const usePageTrack = () => {
     if (!window.ANALYTICS_INITIALIZED) {
       initAnalytics();
     }
-    handlePageTrack();
+    trackPage();
   }, [fullPathname]);
 };

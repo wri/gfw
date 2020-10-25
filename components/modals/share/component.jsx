@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import twitterIcon from 'assets/icons/twitter.svg?sprite';
 import facebookIcon from 'assets/icons/facebook.svg?sprite';
@@ -101,7 +101,9 @@ class Share extends PureComponent {
             className="social-button"
             theme="theme-button-light theme-button-grey  square"
             onClick={() =>
-              track('shareSocial', {
+              trackEvent({
+                category: 'Share',
+                action: 'Share social',
                 label: shareUrl,
               })}
           >
@@ -112,7 +114,9 @@ class Share extends PureComponent {
             theme="theme-button-light theme-button-grey square"
             className="social-button"
             onClick={() =>
-              track('shareSocial', {
+              trackEvent({
+                category: 'Share',
+                action: 'Share social',
                 label: shareUrl,
               })}
           >

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { usePageTrack } from 'analytics';
+import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'layouts/wrappers/head';
@@ -9,7 +9,7 @@ import Head from 'layouts/wrappers/head';
 import './styles.scss';
 
 const StaticWrapper = ({ children, title, description, noIndex, metaTags }) => {
-  usePageTrack();
+  useTrackPage();
   useSetLanguage();
 
   return (

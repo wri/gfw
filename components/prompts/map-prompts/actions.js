@@ -1,5 +1,5 @@
 import { createThunkAction, createAction } from 'redux/actions';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import useRouter from 'utils/router';
 
 import { setMenuSettings } from 'components/map-menu/actions';
@@ -22,9 +22,11 @@ export const setMapPromptsSettings = createThunkAction(
     ) {
       dispatch(setMapPrompts(change));
       if (stepsKey) {
-        track('userPrompt', {
+        trackEvent({
+          category: 'User prompts',
+          action: 'User prompt is changed',
           label: `${stepsKey}: ${(stepIndex || 0) + 1}`,
-        });
+        })
       }
     }
 

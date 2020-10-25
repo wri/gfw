@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { loadAnimation, setQuality, destroy } from 'lottie-web';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { Button } from 'gfw-components';
 
@@ -141,9 +141,11 @@ class TopicsImage extends PureComponent {
                         <Button
                           size="small"
                           onClick={() => {
-                            track('topicsImageBubble', {
+                            trackEvent({
+                              category: 'Topics pages',
+                              action: 'Use bubble to advance to advance',
                               label: `${topic}: ${p.content}`,
-                            });
+                            })
                           }}
                         >
                           {p.btnText}

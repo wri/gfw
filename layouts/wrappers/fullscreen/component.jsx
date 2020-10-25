@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Loader, MediaContextProvider } from 'gfw-components';
 import cx from 'classnames';
 
-import { usePageTrack } from 'analytics';
+import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'layouts/wrappers/head';
@@ -26,7 +26,7 @@ const FullScreenWrapper = ({
   errorTitle,
   errorDescription,
 }) => {
-  usePageTrack();
+  useTrackPage();
   useSetLanguage();
 
   // if a page is statically built with fallback true and not cached

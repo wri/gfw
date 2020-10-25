@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import { CookiesBanner } from 'gfw-components';
 
-import { track, initAnalytics, handlePageTrack } from 'analytics';
+import { trackEvent, initAnalytics, trackPage } from 'utils/analytics';
 
 import './styles.scss';
 
@@ -21,8 +21,12 @@ class Cookies extends PureComponent {
     this.setState({ accepted: true });
     localStorage.setItem('agreeCookies', true);
     initAnalytics();
-    handlePageTrack();
-    track('acceptCookies');
+    trackPage();
+    trackEvent({
+      category: 'Cookies banner',
+      action: 'User accepts cookies',
+      label: 'cookies'
+    })
   };
 
   render() {
