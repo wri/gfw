@@ -8,10 +8,10 @@ import { usePageTrack } from 'analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'layouts/wrappers/head';
+import Cookies from 'layouts/wrappers/cookies';
 
 import Header from 'components/header';
 import Footer from 'components/footer';
-import Cookies from 'components/cookies';
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
 
