@@ -1,42 +1,48 @@
-import { useMemo } from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunkMiddleware from 'redux-thunk';
+import { useEffect, useMemo } from 'react';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import { rootReducer } from 'fast-redux';
+import { handleActions } from 'redux-actions';
 
-let store;
+import { useStore } from 'react-redux';
 
-function initStore(initialState) {
-  return createStore(
-    rootReducer,
-    initialState,
-    composeWithDevTools(applyMiddleware(thunkMiddleware))
-  );
-}
+// Configure the store
+const createStore = () => {
+  const store = configureStore({
+    reducer: rootReducer,
+    devTools: true,
+  });
 
-export const initializeStore = (preloadedState) => {
-  let _store = store ?? initStore(preloadedState);
+  // Add a dictionary to keep track of the registered async reducers
+  store.asyncReducers = {};
 
-  // After navigating to a page with an initial Redux state, merge that state
-  // with the current state in the store, and create a new store
-  if (preloadedState && store) {
-    _store = initStore({
-      ...store.getState(),
-      ...preloadedState,
-    });
-    // Reset the current store
-    store = undefined;
-  }
+  // Create an inject reducer function
+  // This function adds the async reducer, and creates a new combined reducer
+  store.injectReducer = ({ key, reducers, initialState }) => {
+    if (!store.asyncReducers[key]) {
+      store.asyncReducers[key] = handleActions(reducers, initialState);
+      store.replaceReducer(combineReducers(store.asyncReducers));
+    }
+  };
 
-  // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store;
-  // Create the store once in the client
-  if (!store) store = _store;
-
-  return _store;
+  // Return the modified store
+  return store;
 };
 
-export const useStore = (initialState) =>
-  useMemo(() => initializeStore(initialState), [initialState]);
+export const registerModule = (
+  reduxModule = {
+    key: '',
+    reducers: {},
+    initialState: {},
+  }
+) => {
+  const { injectReducer } = useStore();
+  useEffect(() => {
+    injectReducer(reduxModule);
+  }, []);
+};
 
-export default useStore;
+const makeStore = (initialState) =>
+  useMemo(() => createStore(initialState), [initialState]);
+
+export default makeStore;

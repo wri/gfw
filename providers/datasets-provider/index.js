@@ -1,29 +1,25 @@
-import { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import reducerRegistry from 'redux/registry';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import * as actions from './actions';
+import { registerModule } from 'redux/store';
+
+import { getDatasets } from './actions';
 import reducers, { initialState } from './reducers';
 
-class DatasetsProvider extends PureComponent {
-  componentDidMount() {
-    const { getDatasets } = this.props;
-    getDatasets();
-  }
+const DatasetsProvider = () => {
+  registerModule({
+    key: 'datasets',
+    reducers,
+    initialState,
+  });
 
-  render() {
-    return null;
-  }
-}
+  const dispatch = useDispatch();
 
-DatasetsProvider.propTypes = {
-  getDatasets: PropTypes.func.isRequired,
+  useEffect(() => {
+    dispatch(getDatasets());
+  }, []);
+
+  return null;
 };
 
-reducerRegistry.registerModule('datasets', {
-  actions,
-  reducers,
-  initialState,
-});
-export default connect(null, actions)(DatasetsProvider);
+export default DatasetsProvider;

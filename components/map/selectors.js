@@ -208,7 +208,7 @@ export const getDatasetsWithConfig = createSelector(
             timelineConfig: timelineConfigInit,
             id,
           } = l;
-          const maxDate = latestDates[id];
+          const maxDate = latestDates?.[id];
           const { latestFormat } = l.params || {};
           const maxDateFormatted = latestFormat
             ? moment(maxDate).format(latestFormat)

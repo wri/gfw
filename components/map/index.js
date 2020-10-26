@@ -1,15 +1,20 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'redux/registry';
+
+import { registerModule } from 'redux/store';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
 
-reducerRegistry.registerModule('map', {
-  actions,
-  reducers,
-  initialState,
-});
+const MapContainer = (props) => {
+  registerModule({
+    key: 'map',
+    reducers,
+    initialState,
+  });
 
-export default connect(getMapProps, actions)(MapComponent);
+  return <MapComponent {...props} />;
+};
+
+export default connect(getMapProps, actions)(MapContainer);

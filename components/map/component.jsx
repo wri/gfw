@@ -30,7 +30,7 @@ class MapComponent extends Component {
   static propTypes = {
     className: PropTypes.string,
     viewport: PropTypes.shape().isRequired,
-    mapStyle: PropTypes.string.isRequired,
+    mapStyle: PropTypes.string,
     setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
     clearMapInteractions: PropTypes.func.isRequired,
@@ -42,8 +42,8 @@ class MapComponent extends Component {
     stateBbox: PropTypes.array,
     geostoreBbox: PropTypes.array,
     interaction: PropTypes.object,
-    minZoom: PropTypes.number.isRequired,
-    maxZoom: PropTypes.number.isRequired,
+    minZoom: PropTypes.number,
+    maxZoom: PropTypes.number,
     drawing: PropTypes.bool,
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
@@ -136,7 +136,7 @@ class MapComponent extends Component {
         category: 'Map analysis',
         action: 'User opens analysis popup infowindow',
         label: interaction.label,
-      })
+      });
 
       if (interaction.data.cluster) {
         const { data, layer, geometry } = interaction;
@@ -212,7 +212,7 @@ class MapComponent extends Component {
     const BASEMAP_GROUPS = ['basemap'];
 
     if (this.map) {
-      const { layers, metadata } = this.map.getStyle();
+      const { layers, metadata } = this.map?.getStyle();
       const basemapGroups = Object.keys(metadata['mapbox:groups']).filter(
         (k) => {
           const { name } = metadata['mapbox:groups'][k];

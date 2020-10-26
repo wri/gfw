@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import useRouter from 'utils/router';
-import reducerRegistry from 'redux/registry';
+
+import { registerModule } from 'redux/store';
 
 import { decodeParamsForState, encodeStateForUrl } from 'utils/stateToUrl';
 
@@ -60,6 +61,12 @@ const buildNewLocation = () => {
 };
 
 const LocationProvider = ({ setLocation }) => {
+  registerModule({
+    key: 'location',
+    reducers,
+    initialState,
+  });
+
   const { events } = useRouter();
 
   const handleRouteChange = () => {
@@ -92,17 +99,5 @@ LocationProvider.propTypes = {
   setAnalysisSettings: PropTypes.func,
   urlParams: PropTypes.object,
 };
-
-export const reduxModule = {
-  actions,
-  reducers,
-  initialState,
-};
-
-reducerRegistry.registerModule('location', {
-  actions,
-  reducers,
-  initialState,
-});
 
 export default connect(null, actions)(LocationProvider);
