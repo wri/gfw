@@ -29,7 +29,7 @@ const createStore = () => {
   return store;
 };
 
-export const registerModule = (
+export const registerReducer = (
   reduxModule = {
     key: '',
     reducers: {},

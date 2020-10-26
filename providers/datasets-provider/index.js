@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { registerModule } from 'redux/store';
+import { registerReducer } from 'redux/store';
 
 import { getDatasets } from './actions';
 import reducers, { initialState } from './reducers';
 
 const DatasetsProvider = () => {
-  registerModule({
+  registerReducer({
     key: 'datasets',
     reducers,
     initialState,

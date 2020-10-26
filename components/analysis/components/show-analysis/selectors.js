@@ -46,7 +46,7 @@ export const getDataFromLayers = createSelector(
         }
         const { subKey, key, keys, service, unit, dateFormat, sumByKey } =
           analysisConfig || {};
-        const dataByService = data[service] || {};
+        const dataByService = data?.[service] || {};
         const selectedValue = subKey
           ? dataByService[key] && dataByService[key][subKey]
           : dataByService[key];

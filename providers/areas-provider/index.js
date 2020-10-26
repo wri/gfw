@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { registerModule } from 'redux/store';
+import { registerReducer } from 'redux/store';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -15,7 +15,7 @@ const AreasProvider = ({
   getAreasProvider,
   getAreaProvider,
 }) => {
-  registerModule({
+  registerReducer({
     key: 'areas',
     reducers,
     initialState,

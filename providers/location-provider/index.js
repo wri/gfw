@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import useRouter from 'utils/router';
 
-import { registerModule } from 'redux/store';
+import { registerReducer } from 'redux/store';
 
 import { decodeParamsForState, encodeStateForUrl } from 'utils/stateToUrl';
 
@@ -61,7 +61,7 @@ const buildNewLocation = () => {
 };
 
 const LocationProvider = ({ setLocation }) => {
-  registerModule({
+  registerReducer({
     key: 'location',
     reducers,
     initialState,
