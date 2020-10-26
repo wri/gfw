@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -101,7 +101,7 @@ const WidgetEmbedPage = (props) => {
   const { query, asPath, isFallback } = useRouter() || {};
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
+  useEffect(() => {
     const { widget, ...widgets } = decodeParamsForState(query) || {};
 
     if (widgets) {
