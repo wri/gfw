@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 
 import { CookiesBanner } from 'gfw-components';
@@ -7,53 +7,50 @@ import { trackEvent, initAnalytics, trackPage } from 'utils/analytics';
 
 import './styles.scss';
 
-class Cookies extends PureComponent {
-  state = {
-    accepted: false,
-  };
+const Cookies = () => {
+  const [accepted, setAccepted] = useState(false);
 
-  componentDidMount() {
+  useEffect(() => {
     const agreeCookies = JSON.parse(localStorage.getItem('agreeCookies'));
-    this.setState({ accepted: agreeCookies });
-  }
+    setAccepted(agreeCookies);
+  }, []);
 
-  agreeCookies = () => {
-    this.setState({ accepted: true });
-    localStorage.setItem('agreeCookies', true);
-    initAnalytics();
-    trackPage();
-    trackEvent({
-      category: 'Cookies banner',
-      action: 'User accepts cookies',
-      label: 'cookies'
-    })
-  };
+  useEffect(() => {
+    if (accepted) {
+      localStorage.setItem('agreeCookies', true);
+      initAnalytics();
+      trackPage();
+      trackEvent({
+        category: 'Cookies banner',
+        action: 'User accepts cookies',
+        label: 'cookies',
+      });
+    }
+  }, [accepted]);
 
-  render() {
-    const { accepted } = this.state;
-
-    return (
-      <>
+  return (
+    <>
+      {!accepted && (
         <div className="c-cookies">
-          <CookiesBanner afterAgree={this.agreeCookies} />
+          <CookiesBanner onAccept={() => setAccepted(true)} />
         </div>
-        {accepted && (
-          <Head>
-            <script
-              key="hotjar"
-              type="text/javascript"
-              src="/scripts/hotjar.js"
-            />
-            <script
-              key="crazyegg"
-              type="text/javascript"
-              src="//script.crazyegg.com/pages/scripts/0027/6897.js"
-            />
-          </Head>
-        )}
-      </>
-    );
-  }
-}
+      )}
+      {accepted && (
+        <Head>
+          <script
+            key="hotjar"
+            type="text/javascript"
+            src="/scripts/hotjar.js"
+          />
+          <script
+            key="crazyegg"
+            type="text/javascript"
+            src="//script.crazyegg.com/pages/scripts/0027/6897.js"
+          />
+        </Head>
+      )}
+    </>
+  );
+};
 
 export default Cookies;
