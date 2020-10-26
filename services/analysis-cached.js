@@ -770,7 +770,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       grouped: true,
     })}${SQL_QUERIES.firesGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-      .replace(/{dateFilter}/g, encodeURIComponent(getWeeksFilter(params)))
+      .replace(/{dateFilter}/g, getWeeksFilter(params))
       .replace(
         '{WHERE}',
         getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
