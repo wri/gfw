@@ -9,14 +9,17 @@ import './styles.scss';
 
 const Cookies = () => {
   const [accepted, setAccepted] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const agreeCookies = JSON.parse(localStorage.getItem('agreeCookies'));
     setAccepted(agreeCookies);
+    setOpen(!agreeCookies);
   }, []);
 
   const acceptCookies = () => {
     setAccepted(true);
+    setOpen(false);
     localStorage.setItem('agreeCookies', true);
     initAnalytics();
     trackPage();
@@ -29,7 +32,7 @@ const Cookies = () => {
 
   return (
     <>
-      {!accepted && (
+      {open && (
         <div className="c-cookies">
           <CookiesBanner onAccept={acceptCookies} />
         </div>
