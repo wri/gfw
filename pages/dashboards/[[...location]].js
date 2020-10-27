@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
@@ -100,7 +100,7 @@ const DashboardsPage = (props) => {
   const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
+  useEffect(() => {
     const {
       map,
       modalMeta,

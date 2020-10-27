@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
@@ -103,7 +103,7 @@ const MapPage = (props) => {
   const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
+  useEffect(() => {
     const {
       map,
       mainMap,
