@@ -189,6 +189,33 @@ const decodes = {
   color.g = green;
   color.b = blue;
   `,
+  treeHeight: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    float r1 = 188. / 255.;
+    float g1 = 255. / 255.;
+    float b1 = 184. / 255.;
+
+    float r2 = 0. / 255.;
+    float g2 = 92. / 255.;
+    float b2 = 24. / 255.;
+
+    vec3 color1 = vec3(r1, g1, b1);
+    vec3 color2 = vec3(r2, g2, b2);
+    color = mix(color1, color2, red * 255. / 41.);
+    
+    float minHeight = startYear - 2000.;
+    float maxHeight = endYear - 2000.;
+    float height = red * 255.;
+
+    if (height >= minHeight && height <= maxHeight && height >= 3. && height <= 41.) {
+      alpha = 1.;
+    } else {
+      alpha = 0.;
+    }
+  `,
   biomassLoss: `
     float countBuckets = 5.; // buckets length / 3: three bands
     float year = 2000.0 + (color.r * 255.);
@@ -597,6 +624,7 @@ export default {
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
   staticRemap: decodes.staticRemap,
+  treeHeight: decodes.treeHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
   terrai: decodes.terrai,
