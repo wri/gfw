@@ -1,9 +1,8 @@
-import { PureComponent } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
 import { cancelToken } from 'utils/request';
-import reducerRegistry from 'redux/registry';
+import { registerReducer } from 'redux/store';
 
 import { getDataLocation } from 'utils/location';
 
@@ -22,59 +21,53 @@ const mapStateToProps = (state) => {
   };
 };
 
-class GeostoreProvider extends PureComponent {
-  componentDidMount() {
-    const {
-      location: { adm0, type },
-      activeArea,
-    } = this.props;
+const GeostoreProvider = ({
+  location,
+  activeArea,
+  clearGeostore,
+  getGeostore,
+}) => {
+  registerReducer({
+    key: 'geostore',
+    reducers,
+    initialState,
+  });
 
-    if ((adm0 && type !== 'aoi') || (type === 'aoi' && activeArea)) {
-      this.handleGetGeostore();
+  let geostoreFetch = null;
+  const { adm0, adm1, adm2 } = location || {};
+
+  useEffect(() => {
+    if (adm0 || activeArea) {
+      if (geostoreFetch) {
+        geostoreFetch.cancel();
+        clearGeostore({});
+      }
+
+      geostoreFetch = cancelToken();
+
+      getGeostore({
+        ...location,
+        token: geostoreFetch.token,
+      });
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    const {
-      location: { adm0, adm1, adm2 },
-      activeArea,
-      clearGeostore,
-    } = this.props;
-    const hasAdm0Changed = adm0 && adm0 !== prevProps.location.adm0;
-    const hasAdm1Changed = adm0 && adm1 !== prevProps.location.adm1;
-    const hasAdm2Changed = adm0 && adm1 && adm2 !== prevProps.location.adm2;
-    const hasAoiChanged =
-      activeArea && !isEqual(activeArea, prevProps.activeArea);
-
-    if (!adm0 && adm0 !== prevProps.location.adm0) {
-      this.cancelGeostoreFetch();
-      clearGeostore({});
+    if (!adm0) {
+      if (geostoreFetch) {
+        geostoreFetch.cancel('Geostore cleared');
+      }
+      clearGeostore();
     }
 
-    if (hasAdm0Changed || hasAdm1Changed || hasAdm2Changed || hasAoiChanged) {
-      this.handleGetGeostore();
-    }
-  }
+    return () => {
+      if (geostoreFetch) {
+        geostoreFetch.cancel('Geostore unmounted');
+      }
+      clearGeostore();
+    };
+  }, [adm0, adm1, adm2, activeArea]);
 
-  handleGetGeostore = () => {
-    this.cancelGeostoreFetch();
-    this.geostoreFetch = cancelToken();
-    this.props.getGeostore({
-      ...this.props.location,
-      token: this.geostoreFetch.token,
-    });
-  };
-
-  cancelGeostoreFetch = () => {
-    if (this.geostoreFetch) {
-      this.geostoreFetch.cancel('Cancelling geostore fetch');
-    }
-  };
-
-  render() {
-    return null;
-  }
-}
+  return null;
+};
 
 GeostoreProvider.propTypes = {
   location: PropTypes.object.isRequired,
@@ -82,11 +75,5 @@ GeostoreProvider.propTypes = {
   clearGeostore: PropTypes.func.isRequired,
   activeArea: PropTypes.object,
 };
-
-reducerRegistry.registerModule('geostore', {
-  actions,
-  reducers,
-  initialState,
-});
 
 export default connect(mapStateToProps, actions)(GeostoreProvider);

@@ -50,7 +50,7 @@ export const getAnalysis = createThunkAction(
         endpoints &&
         endpoints.length &&
         endpoints.map((e) => e.slug).join(', '),
-    })
+    });
     dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     fetchUmdLossGain(location)
       .then((responses) =>
@@ -68,15 +68,11 @@ export const getAnalysis = createThunkAction(
         )
       )
       .catch((error) => {
-        const slugUrl = error.config.url.split('/')[4];
-        const slug = slugUrl.split('?')[0];
-        const layerName = endpoints.find((e) => e.slug === slug).name;
+        const slugUrl = error?.config?.url?.split('/')?.[4];
+        const slug = slugUrl?.split('?')?.[0];
+        const layerName = endpoints?.find((e) => e.slug === slug).name;
         const { response } = error;
-        const errors =
-          response &&
-          response.data &&
-          response.data.errors &&
-          response.data.errors[0];
+        const errors = response?.data?.errors?.[0];
         const { status } = errors || {};
         const errorMessage =
           layerName && (status >= 500 || !response)
@@ -139,8 +135,8 @@ export const uploadShape = createThunkAction(
             trackEvent({
               category: 'Map analysis',
               action: 'Upload custom shape',
-              label: 'Failed: too many features'
-            })
+              label: 'Failed: too many features',
+            });
           } else if (
             features &&
             featureCount === 1 &&
@@ -158,8 +154,8 @@ export const uploadShape = createThunkAction(
             trackEvent({
               category: 'Map analysis',
               action: 'Upload custom shape',
-              label: 'Failed: non polygon data'
-            })
+              label: 'Failed: non polygon data',
+            });
           } else {
             getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
               .then((geostore) => {
@@ -188,8 +184,8 @@ export const uploadShape = createThunkAction(
                   trackEvent({
                     category: 'Map analysis',
                     action: 'Upload custom shape',
-                    label: 'Success'
-                  })
+                    label: 'Success',
+                  });
                 }
               })
               .catch((error) => {
@@ -207,8 +203,8 @@ export const uploadShape = createThunkAction(
                 trackEvent({
                   category: 'Map analysis',
                   action: 'Upload custom shape',
-                  label: `Failed: ${errorMessage.title}`
-                })
+                  label: `Failed: ${errorMessage.title}`,
+                });
               });
           }
         } else {
@@ -223,8 +219,8 @@ export const uploadShape = createThunkAction(
           trackEvent({
             category: 'Map analysis',
             action: 'Upload custom shape',
-            label: 'Failed: file is empty'
-          })
+            label: 'Failed: file is empty',
+          });
         }
       })
       .catch((error) => {
@@ -242,8 +238,8 @@ export const uploadShape = createThunkAction(
           trackEvent({
             category: 'Map analysis',
             action: 'Upload custom shape',
-            label: `Failed: ${errorMessage.title}`
-          })
+            label: `Failed: ${errorMessage.title}`,
+          });
         }
       });
   }
@@ -258,6 +254,9 @@ export const clearAnalysis = createThunkAction(
       query,
     });
     dispatch(clearAnalysisData());
+    dispatch(
+      setAnalysisLoading({ loading: false, error: '', errorMessage: '' })
+    );
   }
 );
 

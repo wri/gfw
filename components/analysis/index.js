@@ -1,9 +1,9 @@
-import { createElement, PureComponent } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { cancelToken } from 'utils/request';
-import reducerRegistry from 'redux/registry';
+import { registerReducer } from 'redux/store';
 
 import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 import { setShareModal } from 'components/modals/share/actions';
@@ -12,18 +12,23 @@ import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';
 import AnalysisComponent from './component';
 
-class AnalysisContainer extends PureComponent {
-  static propTypes = {
-    location: PropTypes.object,
-    getAnalysis: PropTypes.func,
-    endpoints: PropTypes.array,
-    clearAnalysis: PropTypes.func,
-    setAnalysisLoading: PropTypes.func,
-    analysisLocation: PropTypes.object,
-  };
+const AnalysisContainer = (props) => {
+  const {
+    location,
+    endpoints,
+    analysisLocation,
+    getAnalysis,
+    clearAnalysis,
+  } = props;
+  registerReducer({
+    key: 'analysis',
+    reducers,
+    initialState,
+  });
 
-  componentDidMount() {
-    const { endpoints, location, analysisLocation } = this.props;
+  let analysisFetch = null;
+
+  useEffect(() => {
     const hasLocationChanged = !isEqual(
       { ...location, endpoints },
       analysisLocation
@@ -35,66 +40,38 @@ class AnalysisContainer extends PureComponent {
       endpoints &&
       endpoints.length
     ) {
-      this.handleFetchAnalysis(endpoints);
+      if (analysisFetch) {
+        analysisFetch.cancel();
+        clearAnalysis();
+      }
+      analysisFetch = cancelToken();
+
+      getAnalysis({
+        endpoints,
+        ...location,
+        token: analysisFetch.token,
+      });
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    const { location, endpoints } = this.props;
-    // get analysis if location changes
-    if (
-      location.type &&
-      location.adm0 &&
-      endpoints &&
-      endpoints.length &&
-      (!isEqual(endpoints, prevProps.endpoints) ||
-        !isEqual(location, prevProps.location))
-    ) {
-      this.handleFetchAnalysis(endpoints);
-    }
-  }
+    return () => {
+      if (analysisFetch) {
+        analysisFetch.cancel('Analysis unmounted');
+      }
+      clearAnalysis();
+    };
+  }, [endpoints, location]);
 
-  componentWillUnmount() {
-    if (this.analysisFetch) {
-      this.analysisFetch.cancel();
-    }
-  }
+  return <AnalysisComponent {...props} />;
+};
 
-  handleFetchAnalysis = (endpoints) => {
-    if (this.analysisFetch) {
-      this.analysisFetch.cancel();
-    }
-    this.analysisFetch = cancelToken();
-    this.props.getAnalysis({
-      endpoints,
-      ...this.props.location,
-      token: this.analysisFetch.token,
-    });
-  };
-
-  handleCancelAnalysis = () => {
-    const { clearAnalysis, setAnalysisLoading } = this.props;
-    clearAnalysis();
-    if (this.analysisFetch) {
-      this.analysisFetch.cancel();
-    }
-    setAnalysisLoading({ loading: false, error: '', errorMessage: '' });
-  };
-
-  render() {
-    return createElement(AnalysisComponent, {
-      ...this.props,
-      handleFetchAnalysis: this.handleFetchAnalysis,
-      handleCancelAnalysis: this.handleCancelAnalysis,
-    });
-  }
-}
-
-reducerRegistry.registerModule('analysis', {
-  actions,
-  reducers,
-  initialState,
-});
+AnalysisContainer.propTypes = {
+  location: PropTypes.object,
+  getAnalysis: PropTypes.func,
+  endpoints: PropTypes.array,
+  clearAnalysis: PropTypes.func,
+  setAnalysisLoading: PropTypes.func,
+  analysisLocation: PropTypes.object,
+};
 
 export default connect(getAnalysisProps, {
   ...actions,

@@ -4,6 +4,10 @@ import compact from 'lodash/compact';
 
 import useRouter from 'utils/router';
 
+import { getGeostoreId } from 'providers/geostore-provider/actions';
+import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
+import { setMenuSettings } from 'components/map-menu/actions';
+
 export const setMainMapSettings = createAction('setMainMapSettings');
 
 export const setMainMapAnalysisView = createThunkAction(
@@ -76,5 +80,57 @@ export const setDrawnGeostore = createThunkAction(
         },
       },
     });
+  }
+);
+
+export const onDrawComplete = createThunkAction(
+  'handleClickAnalysis',
+  (geojson) => (dispatch) => {
+    dispatch(
+      getGeostoreId({
+        geojson,
+        callback: (id) => dispatch(setDrawnGeostore(id)),
+      })
+    );
+  }
+);
+
+export const handleClickAnalysis = createThunkAction(
+  'handleClickAnalysis',
+  (selected) => (dispatch) => {
+    const { data, layer, geometry } = selected;
+    const { cartodb_id, wdpaid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+
+    const isAdmin = analysisEndpoint === 'admin';
+    const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
+    const isUse = cartodb_id && tableName;
+
+    if (isAdmin || isWdpa || isUse) {
+      dispatch(setMainMapAnalysisView(selected));
+    } else {
+      dispatch(onDrawComplete(geometry));
+    }
+  }
+);
+
+export const handleClickMap = createThunkAction(
+  'handleClickMap',
+  () => (dispatch, getState) => {
+    const { mapMenu, location } = getState();
+
+    if (mapMenu?.settings?.menuSection) {
+      dispatch(setMenuSettings({ menuSection: '' }));
+    }
+
+    if (location?.type) {
+      dispatch(
+        setMapPromptsSettings({
+          open: true,
+          stepsKey: 'subscribeToArea',
+          stepIndex: 0,
+        })
+      );
+    }
   }
 );

@@ -7,8 +7,7 @@ import {
 
 const getMainMapSettings = (state) => state.mainMap || {};
 const selectLocation = (state) => state.location && state.location;
-const selectLocationPayload = (state) =>
-  state.location && state.location.payload;
+const selectLocationPayload = (state) => state.location?.payload;
 const selectMenuSection = (state) => state.mapMenu?.settings?.menuSection;
 const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
 
