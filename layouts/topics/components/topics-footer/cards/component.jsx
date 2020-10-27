@@ -38,7 +38,7 @@ export const TopicsCards = ({
                         category: 'Topics pages',
                         action: 'Clicks through on a card',
                         label: `${topic}: ${c.title}`,
-                      })
+                      });
                     },
                   },
                 ],
@@ -47,12 +47,12 @@ export const TopicsCards = ({
                 selector: {
                   ...c.selector,
                   options: countries
-                    .filter(
+                    ?.filter(
                       (country) =>
                         !c.selector.whitelist ||
                         c.selector.whitelist.includes(country.value)
                     )
-                    .map((country) => ({
+                    ?.map((country) => ({
                       ...country,
                       path:
                         c.selector.path &&
