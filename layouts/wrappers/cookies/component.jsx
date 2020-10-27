@@ -15,24 +15,23 @@ const Cookies = () => {
     setAccepted(agreeCookies);
   }, []);
 
-  useEffect(() => {
-    if (accepted) {
-      localStorage.setItem('agreeCookies', true);
-      initAnalytics();
-      trackPage();
-      trackEvent({
-        category: 'Cookies banner',
-        action: 'User accepts cookies',
-        label: 'cookies',
-      });
-    }
-  }, [accepted]);
+  const acceptCookies = () => {
+    setAccepted(true);
+    localStorage.setItem('agreeCookies', true);
+    initAnalytics();
+    trackPage();
+    trackEvent({
+      category: 'Cookies banner',
+      action: 'User accepts cookies',
+      label: 'cookies',
+    });
+  };
 
   return (
     <>
       {!accepted && (
         <div className="c-cookies">
-          <CookiesBanner onAccept={() => setAccepted(true)} />
+          <CookiesBanner onAccept={acceptCookies} />
         </div>
       )}
       {accepted && (
