@@ -52,13 +52,6 @@ const AnalysisContainer = (props) => {
         token: analysisFetch.token,
       });
     }
-
-    return () => {
-      if (analysisFetch) {
-        analysisFetch.cancel('Analysis unmounted');
-      }
-      clearAnalysis();
-    };
   }, [endpoints, location]);
 
   return <AnalysisComponent {...props} />;

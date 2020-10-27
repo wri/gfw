@@ -1,5 +1,5 @@
 import { getGoogleLangCode } from 'utils/lang';
-import { apiRequest } from 'utils/request';
+import { apiRequest, makeCancelRequestCreator } from 'utils/request';
 
 const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   let slug = type !== 'geostore' ? type : '';
@@ -10,7 +10,13 @@ const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   }${adm2 ? `/${adm2}` : ''}${`?simplify=${!adm1 ? thresh : thresh / 10}`}`;
 };
 
-export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
+export const getGeostoreProvider = ({
+  type,
+  adm0,
+  adm1,
+  adm2,
+  cancel = false,
+}) => {
   let thresh = 0.005;
   if (type === 'country') {
     const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
@@ -18,7 +24,16 @@ export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
   }
   const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
 
-  return apiRequest.get(url, { cancelToken: token });
+  if (cancel) {
+    const request = makeCancelRequestCreator(apiRequest);
+
+    return request({
+      method: 'get',
+      url,
+    });
+  }
+
+  return apiRequest.get(url);
 };
 
 export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>

@@ -33,6 +33,22 @@ export const mapboxRequest = create({
 
 export const cancelToken = () => CancelToken.source();
 
-export default create({
+export const request = create({
   timeout: 30 * 1000,
 });
+
+export const makeCancelRequestCreator = (req) => {
+  let call;
+
+  return (config = {}) => {
+    if (call) {
+      call.cancel('Only one request allowed at a time.');
+    }
+    call = CancelToken.source();
+
+    config.cancelToken = call.token;
+    return req(config);
+  };
+};
+
+export default request;
