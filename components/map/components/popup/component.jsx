@@ -101,7 +101,7 @@ class Popup extends Component {
         {isBoundary && (
           <BoundarySentence
             data={selected}
-            onAnalyze={this.handleClickAction}
+            onAnalyze={() => this.handleClickAction(selected)}
           />
         )}
         {isAoi && <AreaSentence data={selected} />}
@@ -110,7 +110,7 @@ class Popup extends Component {
             data={selected}
             map={map}
             onClose={this.handleClose}
-            onAnalyze={this.handleClickAction}
+            onAnalyze={() => this.handleClickAction(selected)}
           />
         )}
         {isPoint && (

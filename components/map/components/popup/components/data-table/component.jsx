@@ -41,13 +41,7 @@ const DataTable = ({
         Zoom
       </Button>
     ) : (
-      <Button
-        onClick={() => {
-          onAnalyze(data);
-        }}
-      >
-        analyze
-      </Button>
+      <Button onClick={onAnalyze}>analyze</Button>
     )}
   </div>
 );
