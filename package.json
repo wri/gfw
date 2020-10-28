@@ -16,7 +16,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
-    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100"
+    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
+    "lint": "eslint ./components/** -c .eslintrc.json --ext js,jsx"
   },
   "repository": {
     "type": "git",
@@ -62,6 +63,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-security": "^1.4.0",
     "husky": "^4.2.3",
     "istanbul-lib-coverage": "^3.0.0",
     "lint-staged": "^10.0.8",
