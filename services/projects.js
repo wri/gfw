@@ -100,24 +100,26 @@ export const getSGFProjects = async () => {
   });
 
   const imageResponse = projectsData?.[2]?.response?.data?.Contents;
-  const images = await Promise.all(
-    imageResponse?.map((b) => {
-      if (b.Key.slice(-1) !== '/' && b.Key.toLowerCase().includes('.jpg')) {
-        const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
-        const imageUrl = getImageUrl(urlParams);
+  const images =
+    imageResponse &&
+    (await Promise.all(
+      imageResponse?.map((b) => {
+        if (b.Key.slice(-1) !== '/' && b.Key.toLowerCase().includes('.jpg')) {
+          const urlParams = { Bucket: 'gfw.blog', Key: b.Key };
+          const imageUrl = getImageUrl(urlParams);
 
-        return {
-          key: b.Key,
-          folder: b.Key.split('/')[1],
-          url: imageUrl?.split('?')?.[0],
-        };
-      }
+          return {
+            key: b.Key,
+            folder: b.Key.split('/')[1],
+            url: imageUrl?.split('?')?.[0],
+          };
+        }
 
-      return false;
-    })
-  );
+        return false;
+      })
+    ));
 
-  const imagesDictionary = groupBy(compact(images), 'folder');
+  const imagesDictionary = groupBy(compact(images || []), 'folder');
   return projects.map((p) => {
     const imagesArray = imagesDictionary?.[p?.imageKey]?.map((i) => i?.url);
 
