@@ -8,6 +8,8 @@ import { rootReducer } from 'fast-redux';
 import isEmpty from 'lodash/isEmpty';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
+import { GlobalStyles } from 'gfw-components';
+
 import reducerRegistry from 'redux/registry';
 
 import 'styles/styles.scss';
@@ -28,6 +30,7 @@ const App = ({ Component, pageProps }) => {
 
   return (
     <Provider store={store}>
+      <GlobalStyles />
       <Component {...pageProps} />
     </Provider>
   );

@@ -4,12 +4,11 @@
 
 // base styles
 @import './reset.scss';
-@import './foundation-grid.scss';
-@import './settings.scss';
 @import './base.scss';
+@import './settings.scss';
 @import './utils.scss';
 @import './text.scss';
-@import './tippy.scss';
-@import './rc-tooltip.scss';
-@import './rc-slider.scss';
-@import './semantic-styles.scss';
+@import './semantic.scss';
+@import './lib/tippy.scss';
+@import './lib/rc-tooltip.scss';
+@import './lib/rc-slider.scss';
