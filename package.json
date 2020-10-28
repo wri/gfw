@@ -17,7 +17,7 @@
     "cy:run": "cypress run",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
     "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
-    "lint": "eslint ./components/** -c .eslintrc.json --ext js,jsx"
+    "lint": "eslint ./components/** ./pages/** ./providers/** ./redux/** ./services/** ./utils/** ./constants/** ./analytics/** -c .eslintrc.json --ext js,jsx"
   },
   "repository": {
     "type": "git",
