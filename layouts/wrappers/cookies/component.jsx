@@ -9,30 +9,32 @@ import './styles.scss';
 
 const Cookies = () => {
   const [accepted, setAccepted] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const agreeCookies = JSON.parse(localStorage.getItem('agreeCookies'));
     setAccepted(agreeCookies);
+    setOpen(!agreeCookies);
   }, []);
 
-  useEffect(() => {
-    if (accepted) {
-      localStorage.setItem('agreeCookies', true);
-      initAnalytics();
-      trackPage();
-      trackEvent({
-        category: 'Cookies banner',
-        action: 'User accepts cookies',
-        label: 'cookies',
-      });
-    }
-  }, [accepted]);
+  const acceptCookies = () => {
+    setAccepted(true);
+    setOpen(false);
+    localStorage.setItem('agreeCookies', true);
+    initAnalytics();
+    trackPage();
+    trackEvent({
+      category: 'Cookies banner',
+      action: 'User accepts cookies',
+      label: 'cookies',
+    });
+  };
 
   return (
     <>
-      {!accepted && (
+      {open && (
         <div className="c-cookies">
-          <CookiesBanner onAccept={() => setAccepted(true)} />
+          <CookiesBanner onAccept={acceptCookies} />
         </div>
       )}
       {accepted && (

@@ -1,5 +1,9 @@
 import { getGoogleLangCode } from 'utils/lang';
-import { apiRequest, makeCancelRequestCreator } from 'utils/request';
+import {
+  apiRequest,
+  makeCancelRequestCreator,
+  dataRequest,
+} from 'utils/request';
 
 const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   let slug = type !== 'geostore' ? type : '';
@@ -15,13 +19,50 @@ export const getGeostoreProvider = ({
   adm0,
   adm1,
   adm2,
+  token,
   cancel = false,
 }) => {
   let thresh = 0.005;
+  if (!type || !adm0) return null;
   if (type === 'country') {
     const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
     thresh = bigCountries.includes(adm0) ? 0.05 : 0.005;
+  } else if (type === 'wdpa') {
+    return dataRequest
+      .get(
+        `/dataset/wdpa_protected_areas/latest/query?sql=SELECT gfw_geostore_id FROM data WHERE wdpaid = '${adm0}'`,
+        { cancelToken: token }
+      )
+      .then((response) => {
+        const { gfw_geostore_id } = response?.data?.data?.[0];
+        return dataRequest
+          .get(
+            `/dataset/wdpa_protected_areas/latest/geostore/${gfw_geostore_id}`,
+            { cancelToken: token }
+          )
+          .then((geostoreResponse) => {
+            const {
+              gfw_geojson,
+              gfw_area__ha,
+              gfw_bbox,
+            } = geostoreResponse?.data?.data;
+
+            return {
+              data: {
+                data: {
+                  id: gfw_geostore_id,
+                  attributes: {
+                    geojson: gfw_geojson,
+                    areaHa: gfw_area__ha,
+                    bbox: gfw_bbox,
+                  },
+                },
+              },
+            };
+          });
+      });
   }
+
   const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
 
   if (cancel) {

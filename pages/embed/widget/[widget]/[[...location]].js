@@ -6,7 +6,6 @@ import useRouter from 'utils/router';
 import { decodeParamsForState } from 'utils/stateToUrl';
 
 import { getLocationData } from 'services/location';
-import { getCountriesProvider } from 'services/country';
 
 import LayoutEmbed from 'layouts/wrappers/embed';
 import WidgetEmbed from 'layouts/embed/widget';
@@ -17,7 +16,6 @@ import {
   setWidgetsSettings,
   setActiveWidget,
 } from 'components/widgets/actions';
-import allWidgets from 'components/widgets/manifest';
 
 const errorProps = {
   error: 404,
@@ -69,28 +67,8 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  const widgetsKeys = Object.keys(allWidgets);
-  const countryData = await getCountriesProvider();
-  const { rows: countries } = countryData?.data || {};
-  const countryPaths = countries.map((c) => ({
-    params: {
-      location: ['country', c.iso],
-    },
-  }));
-
-  const paths = widgetsKeys.reduce((arr, widgetKey) => {
-    const widgetWithLocations = countryPaths.map((c) => ({
-      params: {
-        ...c.params,
-        widget: widgetKey,
-      },
-    }));
-
-    return [...arr, ...widgetWithLocations];
-  }, []);
-
   return {
-    paths: paths || [],
+    paths: [],
     fallback: true,
   };
 };

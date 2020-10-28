@@ -203,7 +203,7 @@ class MapComponent extends Component {
         features: features.map((f) => ({
           ...f,
           // _vectorTileFeature cannot be serialized by redux
-          // so we must remove it when dispatching action
+          // so we must remove them before dispatching the action
           _vectorTileFeature: null,
         })),
         lngLat,

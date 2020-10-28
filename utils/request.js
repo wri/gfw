@@ -1,13 +1,19 @@
 import { CancelToken, create } from 'axios';
 // import wriAPISerializer from 'wri-json-api-serializer';
 
-import { GFW_API, CARTO_API, MAPBOX_API } from 'utils/constants';
+import { GFW_API, GFW_DATA_API, CARTO_API, MAPBOX_API } from 'utils/constants';
 
 const isServer = typeof window === 'undefined';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_API,
+  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+});
+
+export const dataRequest = create({
+  timeout: 30 * 1000,
+  baseURL: GFW_DATA_API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 

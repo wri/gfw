@@ -19,8 +19,8 @@ const createStore = () => {
   // Create an inject reducer function
   // This function adds the async reducer, and creates a new combined reducer
   store.injectReducer = ({ key, reducers, initialState }) => {
-    if (!store.asyncReducers[key]) {
-      store.asyncReducers[key] = handleActions(reducers, initialState);
+    if (!store.asyncReducers[`${key}`]) {
+      store.asyncReducers[`${key}`] = handleActions(reducers, initialState);
       store.replaceReducer(combineReducers(store.asyncReducers));
     }
   };

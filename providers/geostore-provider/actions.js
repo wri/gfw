@@ -9,46 +9,49 @@ export const clearGeostore = createAction('clearGeostore');
 export const getGeostore = createThunkAction(
   'getGeostore',
   (params) => (dispatch) => {
-    const { type, adm0, adm1, adm2 } = params;
-    dispatch(setGeostoreLoading({ loading: true, error: false }));
-    getGeostoreProvider({ type, adm0, adm1, adm2, cancel: true })
-      .then((response) => {
-        const { data } = response.data;
-        if (data && data.attributes) {
-          const geostore = buildGeostore(
-            { id: data.id, ...data.attributes },
-            params
-          );
-          dispatch(setGeostore(geostore));
-        }
-      })
-      .catch(() => {
-        dispatch(clearGeostore({}));
-        dispatch(setGeostoreLoading({ loading: false, error: true }));
-      });
+    const { type, adm0, adm1, adm2, token } = params;
+    if (type && adm0) {
+      dispatch(setGeostoreLoading({ loading: true, error: false }));
+      getGeostoreProvider({ type, adm0, adm1, adm2, token })
+        .then((response) => {
+          const { data } = response.data;
+          if (data && data.attributes) {
+            const geostore = buildGeostore(
+              { id: data.id, ...data.attributes },
+              params
+            );
+            dispatch(setGeostore(geostore));
+          }
+        })
+        .catch(() => {
+          dispatch(setGeostoreLoading({ loading: false, error: true }));
+        });
+    }
   }
 );
 
 export const getGeostoreId = createThunkAction(
   'getGeostoreId',
   ({ geojson, callback }) => (dispatch) => {
-    dispatch(setGeostoreLoading({ loading: true, error: false }));
-    getGeostoreKey(geojson)
-      .then((geostore) => {
-        if (geostore && geostore.data && geostore.data.data) {
-          const { id } = geostore.data.data;
-          if (callback) {
-            callback(id);
-          } else {
-            dispatch(setGeostoreLoading({ loading: false, error: false }));
+    if (geojson) {
+      dispatch(setGeostoreLoading({ loading: true, error: false }));
+      getGeostoreKey(geojson)
+        .then((geostore) => {
+          if (geostore && geostore.data && geostore.data.data) {
+            const { id } = geostore.data.data;
+            if (callback) {
+              callback(id);
+            } else {
+              dispatch(setGeostoreLoading({ loading: false, error: false }));
+            }
           }
-        }
-      })
-      .catch(() => {
-        setGeostoreLoading({
-          loading: false,
-          error: true,
+        })
+        .catch(() => {
+          setGeostoreLoading({
+            loading: false,
+            error: true,
+          });
         });
-      });
+    }
   }
 );

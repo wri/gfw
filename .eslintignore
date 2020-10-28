@@ -2,4 +2,3 @@
 /public
 /cypress/support
 /cypress/plugins
-/pages/api/__coverage__.js
