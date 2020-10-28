@@ -10,7 +10,8 @@
 export function Sentence(parts, variables) {
   const entry =
     parts[0].length === 0 && variables.length !== 0 ? variables : parts[0];
-  const words = entry
+  const sanitise = entry.replace(/\\/g, '&#92;');
+  const words = sanitise
     .split(' ')
     .map((w) => {
       if (w.match(/{([^\s]+)}/)) {
