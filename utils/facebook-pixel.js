@@ -107,7 +107,7 @@ export default {
     }
   },
 
-  track(title, data) {
+  trackEvent(title, data) {
     if (!verifyInit()) {
       return;
     }

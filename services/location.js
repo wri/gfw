@@ -1,6 +1,7 @@
 /* eslint-disable no-else-return */
 import { CARTO_API } from 'utils/constants';
 import { get } from 'axios';
+import { dataRequest } from 'utils/request';
 import { getGeodescriber } from 'services/geostore';
 import { getArea } from 'services/areas';
 import lowerCase from 'lodash/lowerCase';
@@ -56,16 +57,18 @@ export const geostoreConfig = {
 
 export const wdpaConfig = {
   adm0: (params) =>
-    get(
-      `${CARTO_API}/sql?q=SELECT name FROM wdpa_protected_areas WHERE wdpaid = '${params.adm0}'`
-    ).then((response) => {
-      const { name: locationName, ...props } = response?.data?.rows?.[0];
+    dataRequest
+      .get(
+        `/dataset/wdpa_protected_areas/latest/query?sql=SELECT name FROM data WHERE wdpaid = '${params.adm0}'`
+      )
+      .then((response) => {
+        const { name: locationName, ...props } = response?.data?.data?.[0];
 
-      return {
-        locationName,
-        ...props,
-      };
-    }),
+        return {
+          locationName,
+          ...props,
+        };
+      }),
 };
 
 export const useConfig = {

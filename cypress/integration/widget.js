@@ -117,7 +117,7 @@ const testConfig = [
         slug: 'lossAdm2',
         description:
           'when admin 2 with tree cover loss is selected correct sentence template returned',
-        visit: '/dashboards/country/GUY/12/8',
+        visit: '/dashboards/country/GUY/2/8',
         selector: '.c-dashboards-header .c-dynamic-sentence',
         sentence:
           'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
@@ -136,7 +136,7 @@ const testConfig = [
       test: (test) => {
         cy.visit(test.visit, {
           timeout: 100000,
-          retryOnStatusCodeFailure: true
+          retryOnStatusCodeFailure: true,
         });
         cy.isValidSentence(test.selector, test.sentence);
       },

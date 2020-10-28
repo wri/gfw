@@ -21,8 +21,10 @@ export const selectLoading = (state) =>
   state.areas &&
   state.geostore &&
   state.geodescriber &&
+  state.whitelists &&
   (state.areas.loading ||
     state.geostore.loading ||
+    state.whitelists.loading ||
     state.geodescriber.loading ||
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||
@@ -201,13 +203,8 @@ export const getShareMeta = createSelector(
   }
 );
 
-export const getErrorMsg = createSelector(selectError, (error) =>
-  error === 401 ? 'Area is private' : 'Area not found'
-);
-
 export const getHeaderProps = createStructuredSelector({
   loading: selectLoading,
-  errorMsg: getErrorMsg,
   location: selectLocation,
   adm0s: getAdm0Data,
   adm1s: getAdm1Data,

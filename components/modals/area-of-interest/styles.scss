@@ -3,6 +3,11 @@
 .c-area-of-interest-modal {
   min-height: rem(100px);
 
+  .modal-content {
+    min-width: 300px !important;
+    min-height: 200px;
+  }
+
   .save-aoi-body {
     margin-bottom: rem(20px);
   }

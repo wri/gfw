@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { Slider } from 'vizzuality-components';
 
@@ -77,7 +77,11 @@ class RecentImagerySettings extends PureComponent {
                 options={WEEKS}
                 onChange={(option) => {
                   setRecentImagerySettings({ weeks: option });
-                  track('recentImageryDateRange');
+                  trackEvent({
+                    category: 'Map settings',
+                    action: 'Recent imagery feature',
+                    label: 'User changes date range'
+                  })
                 }}
                 native
               />
@@ -86,7 +90,11 @@ class RecentImagerySettings extends PureComponent {
                 date={date ? moment(date) : moment()}
                 handleOnDateChange={(d) => {
                   setRecentImagerySettings({ date: d.format('YYYY-MM-DD') });
-                  track('recentImageryDate');
+                  trackEvent({
+                    category: 'Map settings',
+                    action: 'Recent imagery feature',
+                    label: 'User changes start date'
+                  })
                 }}
                 settings={{
                   minDate: '2013-01-01',
@@ -121,7 +129,11 @@ class RecentImagerySettings extends PureComponent {
               onChange={this.handleCloundsChange}
               onAfterChange={(d) => {
                 setRecentImagerySettings({ clouds: d });
-                track('recentImageryClouds');
+                trackEvent({
+                  category: 'Map settings',
+                  action: 'Recent imagery feature',
+                  label: 'User changes cloud-cover value'
+                })
               }}
               handleStyle={{
                 backgroundColor: 'white',
@@ -162,7 +174,11 @@ class RecentImagerySettings extends PureComponent {
                       selected: null,
                       selectedIndex: 0,
                     });
-                    track('recentImageryImageType');
+                    trackEvent({
+                      category: 'Map settings',
+                      action: 'Recent imagery feature',
+                      label: 'User changes image type'
+                    })
                   }}
                   native
                 />
@@ -200,9 +216,11 @@ class RecentImagerySettings extends PureComponent {
             <RefreshButton
               refetchFn={() => {
                 setRecentImageryLoading({ loading: false, error: false });
-                track('refetchDataBtn', {
-                  label: 'Recent imagery',
-                });
+                trackEvent({
+                  category: 'Refetch data',
+                  action: 'Data failed to fetch, user clicks to refetch',
+                  label: 'Recent imagery'
+                })
               }}
             />
           )}

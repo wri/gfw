@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { cancelToken } from 'utils/request';
 
 import * as ownActions from 'components/analysis/actions';
-import * as modalActions from 'components/modals/sources/actions';
 import * as mapActions from 'components/map/actions';
 import * as menuActions from 'components/map-menu/actions';
 import uploadConfig from 'components/analysis/upload-config.json';
@@ -14,7 +13,6 @@ import { getChooseAnalysisProps } from './selectors';
 
 const actions = {
   ...mapActions,
-  ...modalActions,
   ...menuActions,
   ...ownActions
 };

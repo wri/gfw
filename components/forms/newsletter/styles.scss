@@ -1,6 +1,10 @@
 @import '~styles/settings.scss';
 
 .c-newsletter-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   h1 {
     font-size: rem(36px);
     margin-bottom: rem(10px);
@@ -20,6 +24,11 @@
 
   p {
     margin-bottom: rem(20px);
+  }
+
+  .c-form-field {
+    max-width: 450px;
+    width: 100%;
   }
 
   .submit-btn {

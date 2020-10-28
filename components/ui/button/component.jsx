@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import './styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line
@@ -43,7 +43,7 @@ const Button = (props) => {
     }
     if (trackingData) {
       const { event, label } = trackingData;
-      track(event, { label });
+      trackEvent(event, { label });
     }
   };
 

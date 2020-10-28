@@ -1,0 +1,16 @@
+@import '~styles/settings.scss';
+
+.c-mygfw-header {
+  background-color: $slate-light;
+  padding: 30px 0 40px;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 70px 0 80px;
+  }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 300;
+    color: $white;
+  }
+}

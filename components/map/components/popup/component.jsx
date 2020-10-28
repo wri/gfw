@@ -81,7 +81,7 @@ class Popup extends Component {
     }
 
     const hasManyInteractions = interactionsOptions?.length > 1;
-    const { isAoi, isBoundary, isPoint } = selected || {};
+    const { isAoi, isBoundary, isPoint, isLayer } = selected || {};
 
     return (
       <div className="popup-body">
@@ -101,19 +101,20 @@ class Popup extends Component {
         {isBoundary && (
           <BoundarySentence
             data={selected}
-            onAnalyze={this.handleClickAction}
+            onAnalyze={() => this.handleClickAction(selected)}
           />
         )}
         {isAoi && <AreaSentence data={selected} />}
-        {!isBoundary && !isAoi && !isPoint && (
+        {!isBoundary && !isAoi && isLayer && (
           <DataTable
             data={selected}
             map={map}
             onClose={this.handleClose}
-            onAnalyze={this.handleClickAction}
+            onAnalyze={() => this.handleClickAction(selected)}
+            isPoint={isPoint}
           />
         )}
-        {isPoint && (
+        {isPoint && !isLayer && (
           <ContextualSentence
             data={selected}
             latitude={latitude}

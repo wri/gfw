@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
@@ -28,21 +28,25 @@ class BasemapsContainer extends React.Component {
   selectBasemap = basemap => {
     const { setMapSettings } = this.props;
     setMapSettings({ basemap });
-    track('basemapChanged', {
-      label: basemap.value
-    });
+    trackEvent({
+      category: 'Map data',
+      action: 'basemap changed',
+      label: basemap?.value
+    })
   };
 
   selectLabels = label => {
     this.props.setMapSettings({ labels: label.value === 'showLabels' });
-    track('labelChanged', {
-      label: label.label
-    });
+    trackEvent({
+      category: 'Map data',
+      action: 'Label changed',
+      label: label?.label
+    })
   };
 
   selectRoads = roads => {
     this.props.setMapSettings({ roads: roads.value });
-    track('roadsChanged', {
+    trackEvent('roadsChanged', {
       roads: roads.label
     });
   };
@@ -66,9 +70,11 @@ class BasemapsContainer extends React.Component {
     } else {
       this.props.setMapSettings({ datasets: filteredLayers });
     }
-    track('boundaryChanged', {
-      label: item.dataset
-    });
+    trackEvent({
+      category: 'Map data',
+      action: 'Boundary changed',
+      label: item?.dataset
+    })
   };
 
   render() {

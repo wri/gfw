@@ -1,5 +1,5 @@
 import { apiAuthRequest, apiRequest } from 'utils/request';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 const REQUEST_URL = '/v2/area';
 
@@ -54,7 +54,11 @@ export const saveArea = data =>
     data
   }).then(areaResponse => {
     const { data: area } = areaResponse.data;
-    track(data.id ? 'editArea' : 'saveArea', { label: area.id });
+    trackEvent({
+      category: 'User AOIs',
+      action: data.id ? 'User edits aoi' : 'User saves aoi',
+      label: area.id
+    })
 
     return {
       id: area.id,
@@ -64,6 +68,10 @@ export const saveArea = data =>
   });
 
 export const deleteArea = id => {
-  track('deleteArea', { label: id });
+  trackEvent({
+    category: 'User AOIs',
+    action: 'User deletes aoi',
+    label: id
+  })
   return apiAuthRequest.delete(`${REQUEST_URL}/${id}`);
 };

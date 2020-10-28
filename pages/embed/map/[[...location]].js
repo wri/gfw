@@ -1,50 +1,38 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-
-import LayoutEmbed from 'layouts/embed';
-import Map from 'pages/map';
-
 import { decodeParamsForState } from 'utils/stateToUrl';
 
 import MapUrlProvider from 'providers/map-url-provider';
 
+import LayoutEmbed from 'layouts/wrappers/embed';
+import MapEmbed from 'layouts/embed/map';
+
 import { setMapSettings } from 'components/map/actions';
-import { setMainMapSettings } from 'pages/map/actions';
+import { setMainMapSettings } from 'layouts/map/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
-import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
-import { getStaticProps as getProps } from '../../map/[[...location]]';
+import {
+  getStaticProps as getProps,
+  getStaticPaths as getPaths,
+} from '../../map/[[...location]]';
 
 export const getStaticProps = getProps;
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
-};
+export const getStaticPaths = getPaths;
 
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
-  const { query, asPath } = useRouter();
+  const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
-    const {
-      map,
-      mainMap,
-      mapMenu,
-      analysis,
-      modalMeta,
-      recentImagery,
-      planetNotice,
-    } = decodeParamsForState(query) || {};
+  useEffect(() => {
+    const { map, mainMap, mapMenu, analysis, modalMeta, recentImagery } =
+      decodeParamsForState(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
@@ -69,11 +57,7 @@ const MapEmbedPage = (props) => {
     if (recentImagery) {
       dispatch(setRecentImagerySettings(recentImagery));
     }
-
-    if (planetNotice) {
-      dispatch(setModalPlanetNoticeOpen(planetNotice));
-    }
-  }, [fullPathname]);
+  }, [fullPathname, isFallback]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync
@@ -83,16 +67,16 @@ const MapEmbedPage = (props) => {
     }
   });
 
-  return ready ? (
-    <LayoutEmbed
-      {...props}
-      fullScreen
-      exploreLink={asPath?.replace('/embed', '')}
-    >
-      <MapUrlProvider />
-      <Map embed />
+  return (
+    <LayoutEmbed {...props} exploreLink={asPath?.replace('/embed', '')}>
+      {ready && (
+        <>
+          <MapUrlProvider />
+          <MapEmbed />
+        </>
+      )}
     </LayoutEmbed>
-  ) : null;
+  );
 };
 
 export default MapEmbedPage;
