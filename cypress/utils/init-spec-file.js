@@ -49,16 +49,11 @@ function initSpec(title, testConfig) {
           method: 'GET',
           url: '/v1/dataset/**',
         });
-        cy.route({
-          method: 'GET',
-          url: '/glad-alerts/**',
-        });
       }
 
       // When we are not recording, read our generated fixture for specified requests
       if (!Cypress.env('RECORD')) {
         cy.route('POST', '/j/**', []).as('ANALYTICS_REQUEST');
-        cy.route('GET', '/pages/data-scripts/**', []).as('PAGES_CONTENT');
         cy.route(
           {
             method: 'GET',
@@ -67,7 +62,7 @@ function initSpec(title, testConfig) {
           []
         ).as('GEOSTORE');
         cy.fixture(asSlug(title)).then((data) => {
-          for (let i = 0, {length} = data; i < length; i += 1) {
+          for (let i = 0, { length } = data; i < length; i += 1) {
             // eslint-disable-line
             cy.route(data[i].method, data[i].url, data[i].data); // eslint-disable-line
           }
