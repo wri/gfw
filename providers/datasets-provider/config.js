@@ -190,9 +190,7 @@ const decodes = {
   color.b = blue;
   `,
   treeHeight: `
-    float red = color.r;
-    float green = color.g;
-    float blue = color.b;
+    float height = color.r * 255.;
 
     float r1 = 188. / 255.;
     float g1 = 255. / 255.;
@@ -204,11 +202,10 @@ const decodes = {
 
     vec3 color1 = vec3(r1, g1, b1);
     vec3 color2 = vec3(r2, g2, b2);
-    color = mix(color1, color2, red * 255. / 41.);
+    color = mix(color1, color2, height / 41.);
     
     float minHeight = startYear - 2000.;
     float maxHeight = endYear - 2000.;
-    float height = red * 255.;
 
     if (height >= minHeight && height <= maxHeight && height >= 3. && height <= 41.) {
       alpha = 1.;
