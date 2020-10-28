@@ -1,4 +1,7 @@
-import { handleModule } from 'redux/actions';
+import { handleActions } from 'redux-actions';
+
+const handleModule = ({ reducers, initialState }) =>
+  handleActions(reducers.default || reducers, initialState || {});
 
 // As seen in http://nicolasgallagher.com/redux-modules-and-code-splitting/
 class ReducerRegistry {

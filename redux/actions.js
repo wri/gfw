@@ -1,7 +1,4 @@
-import { handleActions, createAction } from 'redux-actions';
-
-const handleModule = ({ reducers, initialState }) =>
-  handleActions(reducers.default || reducers, initialState || {});
+import { createAction } from '@reduxjs/toolkit';
 
 const createThunkAction = (name, thunkAction, metaCreator) => {
   const action = createAction(name, null, metaCreator);
@@ -15,4 +12,4 @@ const createThunkAction = (name, thunkAction, metaCreator) => {
   return returnAction;
 };
 
-export { createAction, handleModule, createThunkAction };
+export { createAction, createThunkAction };
