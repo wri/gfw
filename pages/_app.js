@@ -17,7 +17,7 @@ import 'styles/styles.scss';
 finallyShim.shim();
 
 const App = ({ Component, pageProps }) => {
-  const store = useStore(pageProps.initialReduxState);
+  const store = useStore();
   const reducers = reducerRegistry.getReducers();
 
   useDeepCompareEffect(() => {
