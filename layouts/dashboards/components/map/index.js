@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import { handleLocationChange } from 'pages/dashboards/actions';
+import { handleLocationChange } from 'layouts/dashboards/actions';
 import Component from './component';
 
 export default connect(null, {
-  handleLocationChange
+  handleLocationChange,
 })(Component);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
 
@@ -67,9 +67,11 @@ class MapMenu extends PureComponent {
       });
     }
 
-    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
+    trackEvent({
+      category: 'Map data',
+      action: enable ? 'User turns on a layer' : 'User turns off a layer' ,
       label: layer,
-    });
+    })
   };
 
   componentDidUpdate(prevProps) {

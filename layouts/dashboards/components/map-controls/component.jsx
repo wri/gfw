@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 
@@ -30,7 +30,11 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
-            track('zoomIn');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom in'
+            })
           }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom >= maxZoom}
@@ -41,7 +45,11 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
-            track('zoomOut');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom out'
+            })
           }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom <= minZoom}

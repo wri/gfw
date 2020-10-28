@@ -1,31 +1,31 @@
 // intro
-import intro1x from 'pages/topics/assets/water/intro/mangrove.png';
-import intro2x from 'pages/topics/assets/water/intro/mangrove@2x.png';
+import intro1x from 'layouts/topics/assets/water/intro/mangrove.png';
+import intro2x from 'layouts/topics/assets/water/intro/mangrove@2x.png';
 
 // slides
-import water1 from 'pages/topics/assets/water/slides/water1.png';
-import water1Large from 'pages/topics/assets/water/slides/water1@2x.png';
-import water2 from 'pages/topics/assets/water/slides/water2.png';
-import water2Large from 'pages/topics/assets/water/slides/water2@2x.png';
-import water3 from 'pages/topics/assets/water/slides/water3.png';
-import water3Large from 'pages/topics/assets/water/slides/water3@2x.png';
-import water4 from 'pages/topics/assets/water/slides/water4.png';
-import water4Large from 'pages/topics/assets/water/slides/water4@2x.png';
+import water1 from 'layouts/topics/assets/water/slides/water1.png';
+import water1Large from 'layouts/topics/assets/water/slides/water1@2x.png';
+import water2 from 'layouts/topics/assets/water/slides/water2.png';
+import water2Large from 'layouts/topics/assets/water/slides/water2@2x.png';
+import water3 from 'layouts/topics/assets/water/slides/water3.png';
+import water3Large from 'layouts/topics/assets/water/slides/water3@2x.png';
+import water4 from 'layouts/topics/assets/water/slides/water4.png';
+import water4Large from 'layouts/topics/assets/water/slides/water4@2x.png';
 
 // cards
-import health from 'pages/topics/assets/water/cards/health.png';
-import healthLarge from 'pages/topics/assets/water/cards/health@2x.png';
-import solutions from 'pages/topics/assets/water/cards/solutions.png';
-import solutionsLarge from 'pages/topics/assets/water/cards/solutions@2x.png';
-import learn from 'pages/topics/assets/water/cards/learn.png';
-import learnLarge from 'pages/topics/assets/water/cards/learn@2x.png';
+import health from 'layouts/topics/assets/water/cards/health.png';
+import healthLarge from 'layouts/topics/assets/water/cards/health@2x.png';
+import solutions from 'layouts/topics/assets/water/cards/solutions.png';
+import solutionsLarge from 'layouts/topics/assets/water/cards/solutions@2x.png';
+import learn from 'layouts/topics/assets/water/cards/learn.png';
+import learnLarge from 'layouts/topics/assets/water/cards/learn@2x.png';
 
 // animations
-import scene1 from 'pages/topics/assets/water/animations/scene1.json';
-import scene2 from 'pages/topics/assets/water/animations/scene2.json';
-import palm3 from 'pages/topics/assets/water/animations/palm3.json';
-import rain3 from 'pages/topics/assets/water/animations/rain3.json';
-import birds4 from 'pages/topics/assets/water/animations/birds4.json';
+import scene1 from 'layouts/topics/assets/water/animations/scene1.json';
+import scene2 from 'layouts/topics/assets/water/animations/scene2.json';
+import palm3 from 'layouts/topics/assets/water/animations/palm3.json';
+import rain3 from 'layouts/topics/assets/water/animations/rain3.json';
+import birds4 from 'layouts/topics/assets/water/animations/birds4.json';
 
 export default {
   intro: {

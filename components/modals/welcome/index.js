@@ -3,7 +3,7 @@ import reducerRegistry from 'redux/registry';
 
 import { setMapSettings } from 'components/map/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
-import { setMainMapSettings } from 'pages/map/actions';
+import { setMainMapSettings } from 'layouts/map/actions';
 
 import {
   setMapPromptsSettings,

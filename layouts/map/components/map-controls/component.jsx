@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import plusIcon from 'assets/icons/plus.svg?sprite';
 import minusIcon from 'assets/icons/minus.svg?sprite';
@@ -53,7 +53,11 @@ class MapControlsButtons extends PureComponent {
     setMainMapSettings({ hidePanels: !hidePanels });
     setMenuSettings({ menuSection: '' });
     if (!hidePanels) {
-      track('hidePanels');
+      trackEvent({
+        category: 'Map settings',
+        action: 'Other buttons',
+        label: 'Map only'
+      })
     }
   };
 
@@ -95,7 +99,11 @@ class MapControlsButtons extends PureComponent {
       zoom: showRecentImagery && zoom < 9 ? 9 : zoom,
     });
     if (showRecentImagery) {
-      track('recentImageryEnable');
+      trackEvent({
+        category: 'Map settings',
+        action: 'Recent imagery feature',
+        label: 'User turns on recent imagery'
+      })
     }
   };
 
@@ -125,7 +133,11 @@ class MapControlsButtons extends PureComponent {
         onClick={() => {
           setMainMapSettings({ showRecentImagery: !showRecentImagery });
           if (!showRecentImagery) {
-            track('recentImageryOpen');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Recent imagery feature',
+              label: 'User opens the config window'
+            })
           }
         }}
         disabled={datasetsLoading}
@@ -243,7 +255,11 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
-            track('zoomOut');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom out'
+            })
           }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom <= minZoom}
@@ -254,7 +270,11 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
-            track('zoomIn');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom in'
+            })
           }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom >= maxZoom}
@@ -327,7 +347,11 @@ class MapControlsButtons extends PureComponent {
     <Button
       theme="theme-button-map-control"
       tooltip={{ text: 'Print (not yet available)' }}
-      onClick={() => track('printMap')}
+      onClick={() => trackEvent({
+        category: 'Map settings',
+        action: 'Other buttons',
+        label: 'Print map'
+      })}
       disabled
     >
       <Icon icon={printIcon} className="print-icon" />
@@ -361,7 +385,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon: 
+          lat, lon:
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>

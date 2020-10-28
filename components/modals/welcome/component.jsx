@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Button from 'components/ui/button';
 import Checkbox from 'components/ui/checkbox';
-
-import Modal from '../modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 
@@ -69,7 +68,6 @@ class ModalWelcome extends PureComponent {
             )}
           </ul>
         )}
-
         <div className="outro">
           <p>
             Not finding what you want?
@@ -83,7 +81,11 @@ class ModalWelcome extends PureComponent {
                   stepsKey: 'mapTour',
                   force: true,
                 });
-                track('welcomeModal', { label: 'Tour' });
+                trackEvent({
+                  category: 'Map landing',
+                  action: 'User interacts with popup',
+                  label: 'Tour'
+                })
               }}
             >
               Take a tour of the map
@@ -113,11 +115,15 @@ class ModalWelcome extends PureComponent {
     const { open, setModalWelcome } = this.props;
     return (
       <Modal
-        isOpen={open}
-        contentLabel="Welcome"
+        open={open}
+        contentLabel="Welcome map modal"
         onRequestClose={() => {
           setModalWelcome(false);
-          track('welcomeModal', { label: 'Close' });
+          trackEvent({
+            category: 'Map landing',
+            action: 'User interacts with popup',
+            label: 'Close'
+          })
         }}
         title="Welcome to the new Global Forest Watch map!"
         className="c-modal-welcome"

@@ -1,9 +1,9 @@
 import { createThunkAction, createAction } from 'redux/actions';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import useRouter from 'utils/router';
 
 import { setMenuSettings } from 'components/map-menu/actions';
-import { setMainMapSettings } from 'pages/map/actions';
+import { setMainMapSettings } from 'layouts/map/actions';
 
 export const setShowMapPrompts = createAction('setShowMapPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
@@ -22,9 +22,11 @@ export const setMapPromptsSettings = createThunkAction(
     ) {
       dispatch(setMapPrompts(change));
       if (stepsKey) {
-        track('userPrompt', {
+        trackEvent({
+          category: 'User prompts',
+          action: 'User prompt is changed',
           label: `${stepsKey}: ${(stepIndex || 0) + 1}`,
-        });
+        })
       }
     }
 
@@ -48,12 +50,11 @@ export const setExploreView = createThunkAction(
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
   (params) => () => {
-    const { pathname, query, pushQuery } = useRouter();
+    const { query, pushQuery } = useRouter();
     pushQuery({
-      pathname,
+      pathname: `/map/${Object.values(params)?.join('/')}/`,
       query: {
         ...query,
-        location: Object.values(params),
         mainMap: {
           showAnalysis: true,
         },

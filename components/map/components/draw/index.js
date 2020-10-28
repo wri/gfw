@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import './styles.scss';
 
@@ -43,7 +43,11 @@ class Draw extends PureComponent {
       const geoJSON = e.features && e.features[0];
       if (geoJSON) {
         onDrawComplete(geoJSON);
-        track('analysisDrawComplete');
+        trackEvent({
+          category: 'Map analysis',
+          action: 'User drawn shape',
+          label: 'Complete'
+        })
       }
     });
   };

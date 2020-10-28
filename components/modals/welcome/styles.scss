@@ -3,12 +3,12 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-modal-welcome {
-  background-color: #333;
+  background-color: #333 !important;
   color: $white;
-  max-width: rem(920px);
+  max-width: rem(920px) !important;
 
   .modal-title {
-    color: $white;
+    color: $white !important;
   }
 
   p {

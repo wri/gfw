@@ -57,6 +57,13 @@
     .change-form {
       margin-right: rem(15px);
       font-size: rem(16px);
+      text-align: right;
+      line-height: 20px;
+
+      @media screen and (min-width: $screen-m) {
+        display: inline-block;
+        white-space: nowrap;
+      }
 
       b {
         text-decoration: underline;

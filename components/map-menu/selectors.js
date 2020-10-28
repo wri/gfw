@@ -8,7 +8,7 @@ import {
   getLayerGroups,
   getMapZoom,
 } from 'components/map/selectors';
-import { getEmbed, getShowRecentImagery } from 'pages/map/selectors';
+import { getEmbed, getShowRecentImagery } from 'layouts/map/selectors';
 
 import { datasetsSections, searchSections, mobileSections } from './sections';
 
