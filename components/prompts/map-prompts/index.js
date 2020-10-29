@@ -5,7 +5,6 @@ import reducerRegistry from 'redux/registry';
 
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
-import { setMapSettings } from 'components/map/actions';
 import { setMainMapSettings } from 'layouts/map/actions';
 
 import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
@@ -25,7 +24,6 @@ class MapPromptsContainer extends PureComponent {
       activeCategories,
       datasetIds,
     } = this.props;
-
     const shouldOpenRecentImageryPrompt =
       showPrompts &&
       !recentActive &&
@@ -592,6 +590,5 @@ export default connect(getMapPromptsProps, {
   ...actions,
   setMainMapSettings,
   setMenuSettings,
-  setMapSettings,
   setAnalysisSettings,
 })(MapPromptsContainer);

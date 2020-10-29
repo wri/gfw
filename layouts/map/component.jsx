@@ -14,6 +14,7 @@ import PlanetBasemapsProvider from 'providers/planet-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGFWProvider from 'providers/mygfw-provider';
 
+import ModalWelcome from 'components/modals/welcome';
 import MetaModal from 'components/modals/meta';
 import ShareModal from 'components/modals/share';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
@@ -80,7 +81,7 @@ class MainMapComponent extends PureComponent {
             <Desktop>
               <>
                 {!embed && <MapPrompts />}
-                {/* <ModalWelcome /> */}
+                <ModalWelcome />
                 <MapControlButtons className="main-map-controls" isDesktop />
               </>
             </Desktop>
