@@ -9,6 +9,7 @@ import './styles.scss';
 
 const DataTable = ({
   data,
+  selected,
   zoomToShape,
   onAnalyze,
   onClose,
@@ -47,7 +48,7 @@ const DataTable = ({
     {!isPoint && zoomToShape && (
       <Button
         onClick={() => {
-          const newBbox = data && bbox(data?.geometry);
+          const newBbox = selected && bbox(selected?.geometry);
           setMapSettings({ canBound: true, bbox: newBbox });
           onClose();
         }}
@@ -61,6 +62,7 @@ const DataTable = ({
 
 DataTable.propTypes = {
   data: PropTypes.array,
+  selected: PropTypes.object,
   zoomToShape: PropTypes.bool,
   isPoint: PropTypes.bool,
   onClose: PropTypes.func,

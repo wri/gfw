@@ -202,6 +202,7 @@ class MapComponent extends Component {
       setMapInteractions({
         features: features.map((f) => ({
           ...f,
+          geometry: f.geometry,
           // _vectorTileFeature cannot be serialized by redux
           // so we must remove them before dispatching the action
           _vectorTileFeature: null,
