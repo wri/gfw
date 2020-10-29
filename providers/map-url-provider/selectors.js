@@ -32,17 +32,7 @@ export const getUrlParams = createSelector(
     selectAOIModalSettings,
     selectPlanetNoticeModalOpen,
   ],
-  (
-    map,
-    mainMap,
-    mapMenu,
-    analysis,
-    modalMeta,
-    recentImagery,
-    mapPrompts,
-    areaOfInterestModal,
-    planetNotice
-  ) => ({
+  (map, mainMap, mapMenu, analysis, modalMeta, recentImagery, mapPrompts) => ({
     map: objDiff(map, mapInitialState.settings),
     mainMap: objDiff(mainMap, mainMapInitialState),
     mapMenu: objDiff(mapMenu, mapMenuInitialState.settings),
@@ -50,7 +40,6 @@ export const getUrlParams = createSelector(
     modalMeta,
     recentImagery: objDiff(recentImagery, recentImageryInitialState.settings),
     mapPrompts: objDiff(mapPrompts, mapPromptsInitialState.settings),
-    planetNotice,
   })
 );
 
