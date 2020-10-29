@@ -6,20 +6,23 @@ name: CI
 on: [push]
 
 jobs:
-  test:
-    name: Test
+  cypress-run:
+    name: e2e tests
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [12.16.2]
-
+        node: [12.16.2]
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn
-    - run: yarn
-    - run: yarn test:ci
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node -v
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn build
+          start: next start
+          wait-on: 'http://localhost:3000'
