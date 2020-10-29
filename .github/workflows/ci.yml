@@ -9,6 +9,9 @@ jobs:
   cypress-run:
     name: e2e tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [12.16.2]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
