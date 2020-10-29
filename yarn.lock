@@ -7956,10 +7956,10 @@ gettext-parser@^1.3.1:
     encoding "^0.1.12"
     safe-buffer "^5.1.1"
 
-gfw-components@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.6.4.tgz#6e466347210ee936b4d096cf81d3ffb3ae029952"
-  integrity sha512-r6BZQAVqkDss/WhSOF+WB5+Ldl6gdQTexwpLto5I4n+Yf250qwBWrIocUKyGhuunfSB7dqtI714stthVunzhmw==
+gfw-components@^1.6.6:
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.6.6.tgz#bb95710653e12e9d166162a64b6ebc291915cde0"
+  integrity sha512-+npL+NhS0EL3ksyXPhhHH4/gl7zFYf5uSeh4XSXGc8BI+OZEl48NOcStfydosHiMk+PhFmehujoHv1CFKKxEOQ==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
