@@ -1,0 +1,43 @@
+@import '~styles/settings.scss';
+
+.l-embed-page {
+  position: relative;
+
+  .embed-content {
+    position: relative;
+    height: calc(100vh - 60px);
+
+    &.-error {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .embed-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 60px;
+    background: $white;
+    border-top: solid 1px $border;
+    z-index: 3;
+    position: relative;
+
+    p {
+      opacity: 0.7;
+    }
+  }
+
+  .embed-btn {
+    width: rem(200px);
+    margin-left: rem(10px);
+    margin-right: rem(10px);
+  }
+
+  &.-trase {
+    .c-loader {
+      display: none;
+    }
+  }
+}

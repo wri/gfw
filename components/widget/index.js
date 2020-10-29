@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import WidgetComponent from './component';
 
@@ -96,9 +96,11 @@ class WidgetContainer extends Component {
     const { settings, location, widget } = this.props;
     const params = { ...location, ...settings };
     this.handleGetWidgetData(params);
-    track('refetchDataBtn', {
+    trackEvent({
+      category: 'Refetch data',
+      action: 'Data failed to fetch, user clicks to refetch',
       label: `Widget: ${widget}`
-    });
+    })
   };
 
   handleDataHighlight = highlighted => {

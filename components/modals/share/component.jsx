@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import twitterIcon from 'assets/icons/twitter.svg?sprite';
 import facebookIcon from 'assets/icons/facebook.svg?sprite';
@@ -9,7 +9,7 @@ import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
-import Modal from '../modal';
+import Modal from 'components/modal';
 
 import './styles.scss';
 
@@ -101,7 +101,9 @@ class Share extends PureComponent {
             className="social-button"
             theme="theme-button-light theme-button-grey  square"
             onClick={() =>
-              track('shareSocial', {
+              trackEvent({
+                category: 'Share',
+                action: 'Share social',
                 label: shareUrl,
               })}
           >
@@ -112,7 +114,9 @@ class Share extends PureComponent {
             theme="theme-button-light theme-button-grey square"
             className="social-button"
             onClick={() =>
-              track('shareSocial', {
+              trackEvent({
+                category: 'Share',
+                action: 'Share social',
                 label: shareUrl,
               })}
           >
@@ -127,10 +131,10 @@ class Share extends PureComponent {
     const { open, setShareOpen, data } = this.props;
     return (
       <Modal
-        isOpen={open}
+        open={open}
         contentLabel={`Share: ${data && data.title}`}
         onRequestClose={() => setShareOpen(false)}
-        title={this.props.data && this.props.data.title}
+        title={data?.title}
       >
         {this.getContent()}
       </Modal>

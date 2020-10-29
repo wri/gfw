@@ -3,23 +3,23 @@ import { createStructuredSelector } from 'reselect';
 import {
   getRecentImagerySettings,
   getRecentImageryLoading,
-  getRecentImageryDataset
+  getRecentImageryDataset,
 } from 'components/recent-imagery/selectors';
 import {
   getMapViewport,
   getActiveDatasetsFromState,
   getMapMinZoom,
   getMapMaxZoom,
-  getBasemap
+  getBasemap,
 } from 'components/map/selectors';
 import {
   getHidePanels,
   getShowBasemaps,
-  getShowRecentImagery
-} from 'pages/map/selectors';
+  getShowRecentImagery,
+} from 'layouts/map/selectors';
 
-const getDatasetsLoading = state => state.datasets && state.datasets.loading;
-const getMapTourOpen = state => state.mapTour && state.mapTour.open;
+const getDatasetsLoading = (state) => state.datasets && state.datasets.loading;
+const getMapTourOpen = (state) => state.mapTour && state.mapTour.open;
 
 export const getMapControlsProps = createStructuredSelector({
   recentLoading: getRecentImageryLoading,
@@ -34,5 +34,5 @@ export const getMapControlsProps = createStructuredSelector({
   showRecentImagery: getShowRecentImagery,
   recentSettings: getRecentImagerySettings,
   recentImageryDataset: getRecentImageryDataset,
-  mapTourOpen: getMapTourOpen
+  mapTourOpen: getMapTourOpen,
 });

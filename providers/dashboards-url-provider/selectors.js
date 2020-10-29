@@ -4,7 +4,6 @@ import { objDiff } from 'utils/data';
 
 import { initialState as mapInitialState } from 'components/map/reducers';
 import { initialState as dashboardPromptsInitialState } from 'components/prompts/dashboard-prompts/reducers';
-import { initialState as areaOfInterestModalInitialState } from 'components/modals/area-of-interest/reducers';
 
 export const selectMapSettings = (state) => state.map?.settings;
 export const selectMetaModalKey = (state) => state.modalMeta?.metakey;
@@ -43,10 +42,6 @@ export const getUrlParams = createSelector(
       ),
       ...widgetsSettings,
       category,
-      areaOfInterestModal: objDiff(
-        areaOfInterestModal,
-        areaOfInterestModalInitialState
-      ),
       showMap,
     };
   }

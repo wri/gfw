@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import './styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line
@@ -20,6 +20,7 @@ import './themes/button-clear.scss'; // eslint-disable-line
 import './themes/button-map-control.scss'; // eslint-disable-line
 import './themes/button-dashed.scss'; // eslint-disable-line
 import './themes/button-dark-round.scss'; // eslint-disable-line
+import './themes/button-inline.scss'; //eslint-disable-line
 
 const Button = (props) => {
   const {
@@ -43,7 +44,7 @@ const Button = (props) => {
     }
     if (trackingData) {
       const { event, label } = trackingData;
-      track(event, { label });
+      trackEvent(event, { label });
     }
   };
 

@@ -33,7 +33,6 @@ class LayerManagerComponent extends PureComponent {
         : null;
 
     const allLayers = [basemapLayer].concat(layers).filter(l => l);
-
     return (
       <LayerManager
         map={map}

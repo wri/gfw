@@ -42,21 +42,21 @@ $mobile-margin: rem(10px);
       align-items: center;
       flex-direction: column;
       border-top: solid 1px $border;
-      margin: 0 rem(-30px) rem(-30px);
+      margin: 0 rem(-30px) rem(-20px);
       margin-left: rem(-25px);
       width: calc(100% + (2 * #{rem(25px)}));
       padding: rem(20px) rem(30px) rem(10px);
 
       > a {
-        max-width: rem(150px);
         margin: 0 rem(10px);
         margin-bottom: rem(10px);
       }
 
       @media screen and (min-width: $screen-m) {
+        margin: 0 rem(-30px) rem(-30px);
         margin-left: -$horizontal-modal-padding-desktop;
         width: calc(100% + (2 * #{$horizontal-modal-padding-desktop}));
-        padding: rem(20px) rem(50px) rem(10px);
+        padding: rem(20px) rem(50px) 0;
         flex-direction: row;
       }
     }

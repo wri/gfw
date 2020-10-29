@@ -3,7 +3,7 @@
 .c-topics-intro {
   position: relative;
 
-  .titleRow {
+  .title-row {
     padding-top: 30px;
 
     @media screen and (min-width: $screen-m) {
@@ -12,7 +12,7 @@
     }
   }
 
-  .titleCol {
+  .title-col {
     position: relative;
 
     @media screen and (min-width: $screen-m) {

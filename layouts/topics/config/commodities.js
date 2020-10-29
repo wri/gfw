@@ -1,32 +1,32 @@
 // intro
-import intro1x from 'pages/topics/assets/commodities/intro/truck.png';
-import intro2x from 'pages/topics/assets/commodities/intro/truck@2x.png';
+import intro1x from 'layouts/topics/assets/commodities/intro/truck.png';
+import intro2x from 'layouts/topics/assets/commodities/intro/truck@2x.png';
 
 // slides
-import commodities1 from 'pages/topics/assets/commodities/slides/commodities1.png';
-import commodities1Large from 'pages/topics/assets/commodities/slides/commodities1@2x.png';
-import commodities2 from 'pages/topics/assets/commodities/slides/commodities2.png';
-import commodities2Large from 'pages/topics/assets/commodities/slides/commodities2@2x.png';
-import commodities3 from 'pages/topics/assets/commodities/slides/commodities3.png';
-import commodities3Large from 'pages/topics/assets/commodities/slides/commodities3@2x.png';
-import commodities4 from 'pages/topics/assets/commodities/slides/commodities4.png';
-import commodities4Large from 'pages/topics/assets/commodities/slides/commodities4@2x.png';
+import commodities1 from 'layouts/topics/assets/commodities/slides/commodities1.png';
+import commodities1Large from 'layouts/topics/assets/commodities/slides/commodities1@2x.png';
+import commodities2 from 'layouts/topics/assets/commodities/slides/commodities2.png';
+import commodities2Large from 'layouts/topics/assets/commodities/slides/commodities2@2x.png';
+import commodities3 from 'layouts/topics/assets/commodities/slides/commodities3.png';
+import commodities3Large from 'layouts/topics/assets/commodities/slides/commodities3@2x.png';
+import commodities4 from 'layouts/topics/assets/commodities/slides/commodities4.png';
+import commodities4Large from 'layouts/topics/assets/commodities/slides/commodities4@2x.png';
 
 // cards
-import investigate from 'pages/topics/assets/commodities/cards/investigate.png';
-import investigateLarge from 'pages/topics/assets/commodities/cards/investigate@2x.png';
-import pro from 'pages/topics/assets/commodities/cards/pro.png';
-import proLarge from 'pages/topics/assets/commodities/cards/pro@2x.png';
-import explore from 'pages/topics/assets/commodities/cards/explore.png';
-import exploreLarge from 'pages/topics/assets/commodities/cards/explore@2x.png';
-import learn from 'pages/topics/assets/commodities/cards/learn.png';
-import learnLarge from 'pages/topics/assets/commodities/cards/learn@2x.png';
+import investigate from 'layouts/topics/assets/commodities/cards/investigate.png';
+import investigateLarge from 'layouts/topics/assets/commodities/cards/investigate@2x.png';
+import pro from 'layouts/topics/assets/commodities/cards/pro.png';
+import proLarge from 'layouts/topics/assets/commodities/cards/pro@2x.png';
+import explore from 'layouts/topics/assets/commodities/cards/explore.png';
+import exploreLarge from 'layouts/topics/assets/commodities/cards/explore@2x.png';
+import learn from 'layouts/topics/assets/commodities/cards/learn.png';
+import learnLarge from 'layouts/topics/assets/commodities/cards/learn@2x.png';
 
 // animations
-import birds1 from 'pages/topics/assets/commodities/animations/birds1.json';
-import scene2 from 'pages/topics/assets/commodities/animations/scene2.json';
-import scene3 from 'pages/topics/assets/commodities/animations/scene3.json';
-import birds4 from 'pages/topics/assets/commodities/animations/birds4.json';
+import birds1 from 'layouts/topics/assets/commodities/animations/birds1.json';
+import scene2 from 'layouts/topics/assets/commodities/animations/scene2.json';
+import scene3 from 'layouts/topics/assets/commodities/animations/scene3.json';
+import birds4 from 'layouts/topics/assets/commodities/animations/birds4.json';
 
 export default {
   intro: {
@@ -180,7 +180,7 @@ export default {
       summary:
         'View recent deforestation alerts and satellite imagery and and subscribe to alerts.',
       link:
-        '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImZkYzhkYzFiLTI3MjgtNGE3OS1iMjNmLWIwOTQ4NTA1MmI4ZCIsImxheWVycyI6WyI2ZjY3OThlNi0zOWVjLTQxNjMtOTc5ZS0xODJhNzRjYTY1ZWUiLCJjNWQxZTAxMC0zODNhLTQ3MTMtOWFhYS00NGY3MjhjMDU3MWMiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiZTY2M2ViMDktMDRkZS00ZjM5LWI4NzEtMzVjNmMyZWQxMGI1Iiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImRkNWRmODdmLTM5YzItNGFlYi1hNDYyLTNlZjk2OWIyMGI2NiJdfSx7ImRhdGFzZXQiOiJmOGM3N2EzMy1kNmVhLTQ3OGItOWFjZC0yMDQ3Yjc1YjBjYjgiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiNDQ0ZDlmODAtZmI0ZC00ZDU3LWEzYTctNjk5OGFlNTZlZmJkIl19LHsiZGF0YXNldCI6ImRhOWI5MmRkLWNjZGMtNDRlMS05ZGZkLTZlODI2OGUzNmRkMCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyIyZTJhOWJmNS1jY2U1LTQzMzctYjQxNi1iM2ZiOTZjNmM0NmYiXX0seyJkYXRhc2V0IjoiOTNlNjdhNzctMWEzMS00ZDA0LWE3NWQtODZhNGQ2ZTM1ZDU0Iiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImY2ODA4MjhlLWJlNjgtNDg5NS1iMWVkLTFkMDkxNWQwNzQ1NyJdfSx7ImRhdGFzZXQiOiJjNGQ0ZTA3Yy1jNWI0LTRlMmMtOWRiMS01YzNiZWMxODVmMGUiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiMDkxMWFiYzQtZDg2MS00ZDdhLTg0ZDYtMGZhMDdiNTFkN2Q4Il19LHsiZGF0YXNldCI6IjdhNGQ5YTY0LWVjYjEtNDVlYy1hMDFlLTY1OGYxMzY0ZmIyZSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJmY2QxMDAyNi1lODkyLTRmYjgtOGQ3OS04ZDc2ZTNiOTQwMDUiXX0seyJkYXRhc2V0IjoiNGZjMjRhMDMtY2IzZS00ZGYzLWEyZWUtZTJhOGRjYTM0MmIzIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImMyNmRiNDFhLWI1ODYtNDYxYy1iNjQ4LTkzMjA1ZWFmZWEwYiJdfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6MiwiY2VudGVyIjp7ImxhdCI6OS44ODIyNzU0OTM0MDIxMDMsImxuZyI6LTIxLjk3MjY1NjI1MDAxNDA5fSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6IiJ9&modalMeta=eyJtZXRha2V5IjoiIiwibWV0YVdoaXRlbGlzdCI6W10sInRhYmxlV2hpdGVsaXN0IjpbXSwiY2l0YXRpb24iOiIifQ%3D%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJzdGVwSW5kZXgiOjB9',
+        '/map/?mainMap=eyJzaG93QW5hbHlzaXMiOnRydWV9&map=eyJjZW50ZXIiOnsibGF0Ijo5Ljg4MjI3NTQ5MzQwMjIzMSwibG5nIjotMjEuOTcyNjU2MjUwMDEyMTMzfSwiYmJveCI6bnVsbCwiY2FuQm91bmQiOmZhbHNlLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6InBvbGl0aWNhbC1ib3VuZGFyaWVzIiwibGF5ZXJzIjpbImRpc3B1dGVkLXBvbGl0aWNhbC1ib3VuZGFyaWVzIiwicG9saXRpY2FsLWJvdW5kYXJpZXMiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiZ2xhZC1kZWZvcmVzdGF0aW9uLWFsZXJ0cyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZWZvcmVzdGF0aW9uLWFsZXJ0cy1nbGFkIl19LHsiZGF0YXNldCI6ImY4Yzc3YTMzLWQ2ZWEtNDc4Yi05YWNkLTIwNDdiNzViMGNiOCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJyc3BvLW9pbC1wYWxtLWNvbmNlc3Npb25zLTIwMTkiXX0seyJkYXRhc2V0Ijoib2lsLWFuZC1nYXMtY29uY2Vzc2lvbnMiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsib2lsLWFuZC1nYXMtY29uY2Vzc2lvbnMiXX0seyJkYXRhc2V0Ijoid29vZC1maWJlci1jb25jZXNzaW9ucyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJmNjgwODI4ZS1iZTY4LTQ4OTUtYjFlZC0xZDA5MTVkMDc0NTciXX0seyJkYXRhc2V0IjoiYzRkNGUwN2MtYzViNC00ZTJjLTlkYjEtNWMzYmVjMTg1ZjBlIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIm9pbC1wYWxtLWNvbmNlc3Npb25zIl19LHsiZGF0YXNldCI6Im1pbmluZy1jb25jZXNzaW9ucyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJtaW5pbmctY29uY2Vzc2lvbnMtMjAxOSJdfSx7ImRhdGFzZXQiOiI0ZmMyNGEwMy1jYjNlLTRkZjMtYTJlZS1lMmE4ZGNhMzQyYjMiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiYzI2ZGI0MWEtYjU4Ni00NjFjLWI2NDgtOTMyMDVlYWZlYTBiIl19XX0%3D&mapPrompts=eyJzdGVwc0tleSI6ImFuYWx5emVBbkFyZWEiLCJmb3JjZSI6dHJ1ZX0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6IiJ9',
       img1x: investigate,
       img2x: investigateLarge,
       btnText: 'view on map',

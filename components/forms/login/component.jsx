@@ -4,9 +4,10 @@ import { Form } from 'react-final-form';
 import cx from 'classnames';
 import ReactHtmlParser from 'react-html-parser';
 
+import { Row, Column, Button } from 'gfw-components';
+
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';
-import Button from 'components/ui/button';
 import ConfirmationMessage from 'components/confirmation-message';
 import Error from 'components/forms/components/error';
 
@@ -118,9 +119,9 @@ class LoginForm extends PureComponent {
           form: { reset },
         }) => (
           <div className={cx('c-login-form', { simple })}>
-            <div className="row">
+            <Row nested>
               {submitSucceeded && showForm !== 'login' ? (
-                <div className="column small-12">
+                <Column>
                   <ConfirmationMessage {...confirmation} />
                   <Button
                     className="reset-form-btn"
@@ -131,21 +132,19 @@ class LoginForm extends PureComponent {
                   >
                     login
                   </Button>
-                </div>
+                </Column>
               ) : (
                 <Fragment>
                   {!simple && (
-                    <div className="column small-12">
+                    <Column>
                       <h1>Login to My GFW</h1>
                       <h3>
                         Log in is required so you can view, manage, and delete
                         your areas of interest.
                       </h3>
-                    </div>
+                    </Column>
                   )}
-                  <div
-                    className={cx('column small-12', { 'medium-5': !narrow })}
-                  >
+                  <Column width={narrow ? [1] : [1, 5 / 12]}>
                     <div className="social-btns">
                       {socialButtons.map((s) => (
                         <a
@@ -158,19 +157,16 @@ class LoginForm extends PureComponent {
                           target="_self"
                         >
                           <Button className={`social-btn -${s.value}`}>
-                            Login with
+                            Login with 
                             {' '}
                             {s.label}
                           </Button>
                         </a>
                       ))}
                     </div>
-                  </div>
-                  <div
-                    className={cx('column small-12', {
-                      'medium-6 medium-offset-1': !narrow,
-                    })}
-                  >
+                  </Column>
+                  {!narrow && <Column width={[0, 1 / 12]} />}
+                  <Column width={narrow ? [1] : [1, 1 / 2]}>
                     {showForm === 'reset' && (
                       <p>
                         To reset your password, enter your email and follow the
@@ -226,7 +222,6 @@ class LoginForm extends PureComponent {
                         <Submit submitting={submitting}>{submit}</Submit>
                         <button
                           className="change-form"
-                          theme="theme-button-light"
                           onClick={(e) => {
                             e.preventDefault();
                             this.setState({ showForm: altView });
@@ -237,10 +232,10 @@ class LoginForm extends PureComponent {
                         </button>
                       </div>
                     </form>
-                  </div>
+                  </Column>
                 </Fragment>
               )}
-            </div>
+            </Row>
           </div>
         )}
       </Form>

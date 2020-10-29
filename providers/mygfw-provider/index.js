@@ -19,7 +19,7 @@ class MyGFWProvider extends PureComponent {
 
   componentDidMount() {
     const { getUserProfile, router } = this.props;
-    const { push, pathname, asPath } = router;
+    const { push, asPath } = router;
     const query = parse(asPath.split('?')[1]);
 
     // facebook now append these charachter onto the token. We need to remove them.
@@ -32,8 +32,9 @@ class MyGFWProvider extends PureComponent {
       setUserToken(urlToken);
       delete query.token;
       push(
-        pathname,
-        `${pathname}${!isEmpty(query) ? `?${stringify(query)}` : ''}`
+        `${asPath?.split('?')?.[0]}${
+          !isEmpty(query) ? `?${stringify(query)}` : ''
+        }`
       );
     }
 

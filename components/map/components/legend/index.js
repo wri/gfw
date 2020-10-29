@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import * as modalActions from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
@@ -58,9 +58,11 @@ class Legend extends PureComponent {
       datasets: newActiveDatasets,
       ...(enable && { canBound: true })
     });
-    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
+    trackEvent({
+      category: 'Map data',
+      action: enable ? 'User turns on a layer' : 'User turns off a layer',
       label: layer.layer
-    });
+    })
   };
 
   onChangeLayer = (layerGroup, newLayerKey) => {
@@ -74,9 +76,11 @@ class Legend extends PureComponent {
         return dataset;
       })
     });
-    track('mapAddLayer', {
+    trackEvent({
+      category: 'Map data',
+      action: 'User turns on a layer',
       label: newLayerKey
-    });
+    })
   };
 
   onRemoveLayer = currentLayer => {
@@ -88,9 +92,11 @@ class Legend extends PureComponent {
       }
     });
     setMapSettings({ datasets: activeDatasets });
-    track('mapRemoveLayer', {
+    trackEvent({
+      category: 'Map data',
+      action: 'User turns off a layer',
       label: currentLayer.id
-    });
+    })
   };
 
   onChangeInfo = metadata => {

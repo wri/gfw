@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import cx from 'classnames';
 
 import Button from 'components/ui/button';
@@ -74,9 +74,11 @@ class WidgetSettingsButton extends PureComponent {
         }}
         onShow={() => {
           this.setState({ tooltipOpen: true });
-          track('openWidgetSettings', {
-            label: widget,
-          });
+          trackEvent({
+            category: 'Widget Settings',
+            action: 'User opens settings menu',
+            label: widget
+          })
         }}
         arrow
         useContext
