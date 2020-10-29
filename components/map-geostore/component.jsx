@@ -4,17 +4,19 @@ import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import cx from 'classnames';
 import ContentLoader from 'react-content-loader';
+import WebMercatorViewport from 'viewport-mercator-project';
+import { TRANSITION_EVENTS } from 'react-map-gl';
+import max from 'lodash/max';
 
-import Map from 'components/ui/map';
+import { PluginMapboxGl } from 'layer-manager';
+import { LayerManager, Layer } from 'layer-manager/dist/components';
 
 import { getGeostoreProvider } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 
-import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginMapboxGl } from 'layer-manager';
+import Map from 'components/ui/map';
 
-import { TRANSITION_EVENTS } from 'react-map-gl';
-import WebMercatorViewport from 'viewport-mercator-project';
+import BASEMAPS from 'components/map/basemaps';
 
 import './styles.scss';
 
@@ -24,9 +26,15 @@ const DEFAULT_VIEWPORT = {
   lng: 0,
 };
 
+const { landsat } = BASEMAPS;
+
+const basemap = {
+  ...landsat,
+  url: landsat.url.replace('{year}', max(landsat.availableYears)),
+};
+
 class MapGeostore extends Component {
   static propTypes = {
-    basemap: PropTypes.object,
     className: PropTypes.string,
     padding: PropTypes.number,
     width: PropTypes.number,
@@ -150,7 +158,7 @@ class MapGeostore extends Component {
   };
 
   render() {
-    const { basemap, className, width, height, cursor, small } = this.props;
+    const { className, width, height, cursor, small } = this.props;
     const { loading, viewport, geostore, error } = this.state;
 
     return (

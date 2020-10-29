@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
@@ -30,9 +30,11 @@ class ShareContainer extends PureComponent {
       alert('This browser does not support clipboard access'); // eslint-disable-line
     }
 
-    track(selected === 'link' ? 'shareCopyLink' : 'shareCopyEmbed', {
-      label: shareUrl,
-    });
+    trackEvent({
+      category: 'Share',
+      action: selected === 'link' ? 'Copy embed link' : 'Copy share link',
+      label: shareUrl
+    })
   };
 
   handleFocus = (event) => {

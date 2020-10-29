@@ -1,14 +1,14 @@
-import Layout from 'layouts/page';
-import Subscribe from 'pages/subscribe';
+import PageLayout from 'layouts/wrappers/page';
+import Subscribe from 'layouts/subscribe';
 
 const SubscribePage = () => (
-  <Layout
-    noIndex
+  <PageLayout
     title="Stay Updated on the World's Forests | Global Forest Watch"
     description="Subscribe to monthly GFW newsletters and updates based on your interests."
+    noIndex
   >
     <Subscribe />
-  </Layout>
+  </PageLayout>
 );
 
 export default SubscribePage;

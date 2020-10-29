@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import cx from 'classnames';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import { format } from 'd3-format';
 
 import Button from 'components/ui/button';
@@ -13,6 +13,8 @@ import infoIcon from 'assets/icons/info.svg?sprite';
 import closeIcon from 'assets/icons/close.svg?sprite';
 import squarePointIcon from 'assets/icons/square-point.svg?sprite';
 import polygonIcon from 'assets/icons/polygon.svg?sprite';
+
+import UploadShapeModal from './upload-shape-modal';
 
 import './styles.scss';
 
@@ -27,7 +29,6 @@ class ChoseAnalysis extends PureComponent {
     activeBoundary: PropTypes.object,
     selectBoundaries: PropTypes.func,
     setMenuSettings: PropTypes.func,
-    setModalSources: PropTypes.func,
     error: PropTypes.string,
     errorMessage: PropTypes.string,
     uploadConfig: PropTypes.object,
@@ -37,6 +38,10 @@ class ChoseAnalysis extends PureComponent {
     drawing: PropTypes.bool,
     setMapSettings: PropTypes.func,
     file: PropTypes.object,
+  };
+
+  state = {
+    uploadModalOpen: false,
   };
 
   renderLayerOption = () => {
@@ -94,7 +99,6 @@ class ChoseAnalysis extends PureComponent {
       drawing,
       setMapSettings,
       setMenuSettings,
-      setModalSources,
       errorMessage,
       error,
       onDropAccepted,
@@ -120,7 +124,11 @@ class ChoseAnalysis extends PureComponent {
             if (!drawing) {
               setMenuSettings({ menuSection: '' });
             }
-            track(drawing ? 'analysisDrawCancel' : 'analysisDrawStart');
+            trackEvent({
+              category: 'Map analysis',
+              action: 'User drawn shape',
+              label: drawing ? 'Cancel' : 'Start'
+            })
           }}
         >
           {drawing ? 'CANCEL' : 'START DRAWING'}
@@ -192,7 +200,7 @@ class ChoseAnalysis extends PureComponent {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                setModalSources({ open: true, source: 'uploads' });
+                this.setState({ uploadModalOpen: true });
               }}
             >
               <Icon icon={infoIcon} className="info-icon" />
@@ -206,6 +214,10 @@ class ChoseAnalysis extends PureComponent {
             </a>
           </p>
         </div>
+        <UploadShapeModal
+          open={this.state.uploadModalOpen}
+          onRequestClose={() => this.setState({ uploadModalOpen: false })}
+        />
       </div>
     );
   };

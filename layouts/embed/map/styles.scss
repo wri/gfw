@@ -1,0 +1,13 @@
+@import '~styles/settings.scss';
+
+.l-embed-map-page {
+  height: 100%;
+
+  .embed-logo {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    z-index: 2;
+    width: 76px;
+  }
+}
