@@ -5,7 +5,7 @@ import sortBy from 'lodash/sortBy';
 import { translateText } from 'utils/transifex';
 
 import { getActiveDatasetsFromState } from 'components/map/selectors';
-import { selectActiveLang } from 'layouts/page/selectors';
+import { selectActiveLang } from 'utils/lang';
 
 const selectSearch = (state) => state.mapMenu?.settings?.search;
 const selectLocation = (state) => state.location && state.location.payload;

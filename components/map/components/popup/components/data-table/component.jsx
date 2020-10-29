@@ -9,10 +9,14 @@ import './styles.scss';
 
 const DataTable = ({
   data,
+  selected,
   zoomToShape,
-  setMapSettings,
   onAnalyze,
   onClose,
+  isPoint,
+  setMapSettings,
+  setAnalysisSettings,
+  setMainMapSettings,
 }) => (
   <div className="c-data-table">
     <div className="table">
@@ -30,34 +34,42 @@ const DataTable = ({
         </div>
       ))}
     </div>
-    {zoomToShape ? (
+    {isPoint && (
       <Button
         onClick={() => {
-          const newBbox = bbox(data?.geometry);
+          setMapSettings({ drawing: true });
+          setAnalysisSettings({ showDraw: true });
+          setMainMapSettings({ showAnalysis: true });
+        }}
+      >
+        draw a shape to analyze
+      </Button>
+    )}
+    {!isPoint && zoomToShape && (
+      <Button
+        onClick={() => {
+          const newBbox = selected && bbox(selected?.geometry);
           setMapSettings({ canBound: true, bbox: newBbox });
           onClose();
         }}
       >
         Zoom
       </Button>
-    ) : (
-      <Button
-        onClick={() => {
-          onAnalyze(data);
-        }}
-      >
-        analyze
-      </Button>
     )}
+    {!isPoint && !zoomToShape && <Button onClick={onAnalyze}>analyze</Button>}
   </div>
 );
 
 DataTable.propTypes = {
   data: PropTypes.array,
-  zoomToShape: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  onAnalyze: PropTypes.func,
+  selected: PropTypes.object,
+  zoomToShape: PropTypes.bool,
+  isPoint: PropTypes.bool,
   onClose: PropTypes.func,
+  onAnalyze: PropTypes.func,
+  setMapSettings: PropTypes.func,
+  setAnalysisSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
 };
 
 export default DataTable;

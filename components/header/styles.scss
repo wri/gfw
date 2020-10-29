@@ -1,0 +1,10 @@
+@import '~styles/settings.scss';
+
+.c-header {
+  position: fixed !important;
+  top: 0;
+
+  @media screen and (min-width: $screen-m) {
+    position: relative !important;
+  }
+}

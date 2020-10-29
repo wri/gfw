@@ -2,17 +2,17 @@ import { createThunkAction } from 'redux/actions';
 import { getLocationFromData } from 'utils/format';
 import useRouter from 'utils/router';
 
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
   (category) => () => {
-    const { query, pathname, pushQuery } = useRouter();
+    const { query, asPath, pushQuery } = useRouter();
 
     pushQuery({
-      pathname,
+      pathname: asPath?.split('?')?.[0],
       query: {
         ...query,
         category,
@@ -26,7 +26,7 @@ export const handleLocationChange = createThunkAction(
   'handleLocationChange',
   (location) => (dispatch, getState) => {
     const { type, payload, query } = getState().location || {};
-    const { pathname, pushQuery } = useRouter();
+    const { pushQuery } = useRouter();
 
     const { data, layer } = location || {};
     const newQuery = {};
@@ -87,10 +87,9 @@ export const handleLocationChange = createThunkAction(
     }
 
     pushQuery({
-      pathname,
+      pathname: `/dashboards/${Object.values(newPayload)?.join('/')}/`,
       query: {
         ...newQuery,
-        location: Object.values(newPayload),
         widget: undefined,
         map: {
           ...(query && query.map),
@@ -99,13 +98,15 @@ export const handleLocationChange = createThunkAction(
       },
     });
 
-    track('changeDashboardLocation', {
+    trackEvent({
+      category: 'Dashboards page',
+      action: 'User changes dashboard location',
       label: `${type === 'global' ? type : ''}${
         newPayload.adm0 ? ` ${newPayload.adm0}` : ''
       }${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${
         newPayload.adm2 ? `.${newPayload.adm2}` : ''
       }`,
-    });
+    })
 
     dispatch(
       setDashboardPromptsSettings({
@@ -118,9 +119,9 @@ export const handleLocationChange = createThunkAction(
 );
 
 export const clearScrollTo = createThunkAction('clearScrollTo', () => () => {
-  const { query, pathname, pushQuery } = useRouter();
+  const { query, asPath, pushQuery } = useRouter();
   pushQuery({
-    pathname,
+    pathname: asPath?.split('?')?.[0],
     query: {
       ...query,
       scrollTo: false,

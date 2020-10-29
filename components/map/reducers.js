@@ -11,6 +11,7 @@ import {
   FOREST_LOSS,
   FOREST_EXTENT,
 } from 'constants/layers';
+
 import * as actions from './actions';
 
 export const initialState = {

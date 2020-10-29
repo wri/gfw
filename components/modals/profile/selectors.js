@@ -1,13 +1,10 @@
 import { createStructuredSelector } from 'reselect';
 
-const selectProfileOpen = (state) => state.profile?.open;
+import { checkUserProfileFilled } from 'utils/user';
 
-const selectUsername = (state) =>
-  state.myGfw &&
-  state.myGfw.data &&
-  !!(state.myGfw.data.fullName || state.myGfw.data.lastName);
+const selectProfileComplete = (state) =>
+  checkUserProfileFilled(state?.myGfw?.data);
 
-export const getModalAOIProps = createStructuredSelector({
-  open: selectProfileOpen,
-  filledProfile: selectUsername,
+export const getProfileModalProps = createStructuredSelector({
+  profileComplete: selectProfileComplete,
 });

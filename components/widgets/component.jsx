@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -63,7 +63,8 @@ class Widgets extends PureComponent {
         className={cx(
           'c-widgets',
           className,
-          { simple: this.props.simple },
+          { simple },
+          { embed },
           { 'no-widgets': !hasWidgets }
         )}
       >
@@ -101,9 +102,11 @@ class Widgets extends PureComponent {
                 })}
               handleShowMap={() => {
                 setActiveWidget(w.widget);
-                track('viewWidgetOnMap', {
-                  label: w.widget,
-                });
+                trackEvent({
+                  category: 'Dashboards page',
+                  action: 'User views a widget on the map',
+                  label: w.widget
+                })
               }}
               handleShowInfo={setModalMetaSettings}
               handleShowShare={() =>
