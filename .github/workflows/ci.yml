@@ -6,7 +6,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -20,4 +20,5 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
     - run: yarn test:ci
