@@ -32,7 +32,7 @@ const GrantsAndFellowshipsPage = (props) => {
         title="Grants & Fellowships"
         description="The Small Grants Fund and Tech Fellowship support civil society organizations
           and individuals around the world to use Global Forest Watch in their advocacy,
-          research, and feld work."
+          research, and field work."
         bgImage={bgImage}
       />
       <SubnavMenu links={links} />
