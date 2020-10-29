@@ -107,7 +107,7 @@ class Popup extends Component {
         {isAoi && <AreaSentence data={selected} />}
         {!isBoundary && !isAoi && isLayer && (
           <DataTable
-            data={selected}
+            selected={selected}
             map={map}
             onClose={this.handleClose}
             onAnalyze={() => this.handleClickAction(selected)}
