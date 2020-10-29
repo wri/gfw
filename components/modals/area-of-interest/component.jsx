@@ -24,7 +24,7 @@ const AreaOfInterestModal = ({
   const {
     query: { areaId },
   } = useRouter();
-  const activeArea = areas.find((a) => a.id === areaId);
+  const activeArea = areas?.find((a) => a.id === areaId);
   const { loggedIn } = userData || {};
   const profileComplete = checkUserProfileFilled(userData);
 
