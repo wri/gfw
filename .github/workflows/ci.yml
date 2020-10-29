@@ -3,11 +3,11 @@
 
 name: CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  build:
-
+  test:
+    name: Test
     runs-on: ubuntu-latest
 
     strategy:
