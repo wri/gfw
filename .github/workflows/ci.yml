@@ -13,6 +13,11 @@ jobs:
       matrix:
         node: [12.16.2]
     steps:
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node -v
       - name: Checkout
         uses: actions/checkout@v1
       - name: Cypress run
