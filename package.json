@@ -100,7 +100,7 @@
     "fast-redux": "^0.7.1",
     "file-saver": "^2.0.2",
     "final-form": "^4.18.7",
-    "gfw-components": "^1.6.6",
+    "gfw-components": "^1.6.8",
     "glob": "7.1.2",
     "history": "4.7.2",
     "image-trace-loader": "^1.0.2",
