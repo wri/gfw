@@ -1,28 +1,5 @@
 @import '~styles/settings.scss';
 
-body {
-  position: unset !important;
-  padding: 0;
-  margin: 0;
-  font-family: $font-family-1;
-  font-weight: normal;
-  line-height: 1.5;
-  font-size: rem(18px);
-  color: $slate;
-  background: transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-*[draggable="true"] {
-  cursor: move;
-  cursor: grab;
-
-  &:active {
-    cursor: grabbing;
-  }
-}
-
 img {
   display: inline-block;
   vertical-align: middle;
