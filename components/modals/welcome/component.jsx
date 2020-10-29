@@ -84,8 +84,8 @@ class ModalWelcome extends PureComponent {
                 trackEvent({
                   category: 'Map landing',
                   action: 'User interacts with popup',
-                  label: 'Tour'
-                })
+                  label: 'Tour',
+                });
               }}
             >
               Take a tour of the map
@@ -122,10 +122,10 @@ class ModalWelcome extends PureComponent {
           trackEvent({
             category: 'Map landing',
             action: 'User interacts with popup',
-            label: 'Close'
-          })
+            label: 'Close',
+          });
         }}
-        title="Welcome to the new Global Forest Watch map!"
+        title="Welcome to the Global Forest Watch map!"
         className="c-modal-welcome"
       >
         {this.getContent()}

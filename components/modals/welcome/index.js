@@ -157,8 +157,8 @@ const mapStateToProps = (state) => {
     showPrompts: selectShowMapPrompts(state),
     title: hideModal
       ? 'Map How-To Guide'
-      : 'Welcome to the new Global Forest Watch map!',
-    description: 'What yould you like to do?',
+      : 'Welcome to new Global Forest Watch map!',
+    description: 'What would you like to do?',
   };
 };
 
