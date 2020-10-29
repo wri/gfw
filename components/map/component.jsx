@@ -5,14 +5,13 @@ import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import { handleMapLatLonTrack, track } from 'analytics';
+import { trackMapLatLon, trackEvent } from 'utils/analytics';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Map from 'components/ui/map';
-import PlanetNoticeModal from 'components/modals/planet-notice';
 
 import iconCrosshair from 'assets/icons/crosshair.svg?sprite';
 
@@ -133,7 +132,9 @@ class MapComponent extends Component {
 
     // fit bounds on cluster if clicked
     if (interaction && !isEqual(interaction, prevInteraction)) {
-      track('mapInteraction', {
+      trackEvent({
+        category: 'Map analysis',
+        action: 'User opens analysis popup infowindow',
         label: interaction.label,
       });
 
@@ -170,7 +171,7 @@ class MapComponent extends Component {
       pitch,
       zoom,
     });
-    handleMapLatLonTrack(location);
+    trackMapLatLon(location);
   }, 250);
 
   onStyleLoad = () => {
@@ -198,7 +199,16 @@ class MapComponent extends Component {
     if (!drawing && e.features && e.features.length) {
       const { features, lngLat } = e;
       const { setMapInteractions } = this.props;
-      setMapInteractions({ features, lngLat });
+      setMapInteractions({
+        features: features.map((f) => ({
+          ...f,
+          geometry: f.geometry,
+          // _vectorTileFeature cannot be serialized by redux
+          // so we must remove them before dispatching the action
+          _vectorTileFeature: null,
+        })),
+        lngLat,
+      });
     } else if (drawing) {
       this.setState({ drawClicks: this.state.drawClicks + 1 });
     } else {
@@ -434,7 +444,6 @@ class MapComponent extends Component {
             message={loadingMessage}
           />
         )}
-        <PlanetNoticeModal />
       </div>
     );
   }

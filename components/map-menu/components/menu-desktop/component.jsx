@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import startCase from 'lodash/startCase';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import MenuTile from '../menu-tile';
 
@@ -33,7 +33,11 @@ class MenuDesktop extends PureComponent {
                     menuSection: s.active ? '' : s.slug
                   });
                   if (!s.active) {
-                    track('mapMenuSection', { label: s.slug });
+                    trackEvent({
+                      category: 'Map menu',
+                      action: 'Select Map menu',
+                      label: s.slug
+                    })
                   }
                 }}
               />
@@ -51,7 +55,11 @@ class MenuDesktop extends PureComponent {
                     datasetCategory: ''
                   });
                   if (!s.active) {
-                    track('mapMenuSection', { label: s.slug });
+                    trackEvent({
+                      category: 'Map menu',
+                      action: 'Select Map menu',
+                      label: s.slug
+                    })
                   }
                 }}
                 {...s}

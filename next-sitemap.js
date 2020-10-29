@@ -8,7 +8,6 @@ module.exports = {
     '/404',
     '/search',
     '/thank-you',
-    '/browser-support',
     '/terms',
     '/my-gfw',
     '/privacy-policy',

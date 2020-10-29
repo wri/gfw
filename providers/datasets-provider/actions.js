@@ -152,7 +152,7 @@ export const getDatasets = createThunkAction(
                             background: customColor,
                           },
                           {
-                            background: chroma(customColor).darken(1.3),
+                            background: chroma(customColor).darken(1.3).hex(),
                           },
                         ],
                       };

@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import ReactHtmlParser from 'react-html-parser';
 
 import SubnavMenu from 'components/subnav-menu';
@@ -31,7 +31,11 @@ class Explore extends PureComponent {
         active: section === 'topics',
         onClick: () => {
           setMenuSettings({ exploreType: 'topics' });
-          track('mapMenuExploreCategory', { label: 'Topics' });
+          trackEvent({
+            category: 'Map menu',
+            action: 'Select explore category',
+            label: 'Topics'
+          })
         }
       },
       {
@@ -39,7 +43,11 @@ class Explore extends PureComponent {
         active: section === 'placesToWatch',
         onClick: () => {
           setMenuSettings({ exploreType: 'placesToWatch' });
-          track('mapMenuExploreCategory', { label: 'Places to watch' });
+          trackEvent({
+            category: 'Map menu',
+            action: 'Select explore category',
+            label: 'Places to watch'
+          })
         }
       },
       {
@@ -47,7 +55,11 @@ class Explore extends PureComponent {
         active: section === 'stories',
         onClick: () => {
           setMenuSettings({ exploreType: 'stories' });
-          track('mapMenuExploreCategory', { label: 'Stories' });
+          trackEvent({
+            category: 'Map menu',
+            action: 'Select explore category',
+            label: 'Stories'
+          })
         }
       }
     ];
@@ -122,7 +134,11 @@ class Explore extends PureComponent {
                               stepIndex: 0,
                               stepsKey: `topics${item.title}`
                             });
-                            track('mapMenuAddTopic', { label: item.title });
+                            trackEvent({
+                              category: 'Map data',
+                              action: 'User loads a topic',
+                              label: item.title
+                            })
                           }
                         })
                       }))

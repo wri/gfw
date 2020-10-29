@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import * as modalMetaActions from 'components/modals/meta/actions';
 import * as modalShareActions from 'components/modals/share/actions';
-import * as modalSourcesActions from 'components/modals/sources/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import * as dataAnalysisActions from 'components/analysis/actions';
 
@@ -13,7 +12,6 @@ import Component from './component';
 const actions = {
   ...modalMetaActions,
   ...modalShareActions,
-  ...modalSourcesActions,
   ...dataAnalysisActions,
   setMenuSettings
 };

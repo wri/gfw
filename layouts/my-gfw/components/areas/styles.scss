@@ -1,0 +1,11 @@
+@import '~styles/settings.scss';
+
+.c-mygfw-areas {
+  padding: rem(30px) 0;
+  position: relative;
+  min-height: rem(300px);
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(50px) 0;
+  }
+}

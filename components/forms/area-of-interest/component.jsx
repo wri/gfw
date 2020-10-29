@@ -1,11 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
-import { getLanguages } from 'utils/lang';
+import { languages } from 'utils/lang';
 import request from 'utils/request';
 
-import ModalSource from 'components/modals/sources';
-import Loader from 'components/ui/loader';
+import { Loader } from 'gfw-components';
+
 import Input from 'components/forms/components/input';
 import InputTags from 'components/forms/components/input-tags';
 import Select from 'components/forms/components/select';
@@ -25,6 +25,8 @@ import {
   email as validateEmail,
   validateURL,
 } from 'components/forms/validations';
+
+import WebhookModal from './webhook-modal';
 
 import './styles.scss';
 
@@ -58,6 +60,7 @@ class AreaOfInterestForm extends PureComponent {
   };
 
   state = {
+    webhookModalOpen: false,
     webhookError: false,
     webhookSuccess: false,
     testingWebhook: false,
@@ -114,13 +117,13 @@ class AreaOfInterestForm extends PureComponent {
       saveAreaOfInterest,
       deleteAreaOfInterest,
       clearAfterDelete,
-      setModalSources,
       canDelete,
       viewAfterSave,
       title,
       closeForm,
     } = this.props;
     const {
+      webhookModalOpen,
       webhookError,
       webhookSuccess,
       testingWebhook,
@@ -141,6 +144,7 @@ class AreaOfInterestForm extends PureComponent {
             submitError,
             submitSucceeded,
             values: { webhookUrl, alerts },
+            errors: { webhookUrl: webhookInputError },
           }) => {
             let metaKey = 'saved';
             if (alerts && !!alerts.length) metaKey = 'savedWithSub';
@@ -156,7 +160,10 @@ class AreaOfInterestForm extends PureComponent {
                     <ConfirmationMessage {...confirmationMeta} />
                     <Button
                       className="reset-form-btn"
-                      onClick={() => {
+                      onClick={(e) => {
+                        // stops button click triggering another submission of the form
+                        e.preventDefault();
+                        e.stopPropagation();
                         closeForm();
                       }}
                     >
@@ -171,7 +178,7 @@ class AreaOfInterestForm extends PureComponent {
                       location={initialValues && initialValues.location}
                       padding={50}
                       height={300}
-                      width={600}
+                      width={700}
                     />
                     <Input
                       name="name"
@@ -209,10 +216,7 @@ class AreaOfInterestForm extends PureComponent {
                       placeholder="https://my-webhook-url.com"
                       validate={[validateURL]}
                       infoClick={() =>
-                        setModalSources({
-                          open: true,
-                          source: 'webhookPreview',
-                        })}
+                        this.setState({ webhookModalOpen: true })}
                       collapse
                     />
                     <div className="webhook-actions">
@@ -223,9 +227,10 @@ class AreaOfInterestForm extends PureComponent {
                           this.testWebhook(webhookUrl);
                         }}
                       >
-                        {!webhookError && !webhookSuccess && (
-                          <span>Test webhook</span>
-                        )}
+                        {webhookUrl &&
+                          !webhookInputError &&
+                          !webhookError &&
+                          !webhookSuccess && <span>Test webhook</span>}
                         {testingWebhook && (
                           <Loader className="webhook-loader" />
                         )}
@@ -249,18 +254,18 @@ class AreaOfInterestForm extends PureComponent {
                         },
                         {
                           label: 'As soon as forest change is detected',
-                          value: 'deforestationAlerts'
+                          value: 'deforestationAlerts',
                         },
                         {
                           label: 'Monthly summary',
-                          value: 'monthlySummary'
-                        }
+                          value: 'monthlySummary',
+                        },
                       ]}
                     />
                     <Select
                       name="language"
                       label="language"
-                      options={getLanguages()}
+                      options={languages}
                       placeholder="Select a language"
                       required
                     />
@@ -297,7 +302,10 @@ class AreaOfInterestForm extends PureComponent {
             );
           }}
         />
-        <ModalSource />
+        <WebhookModal
+          open={webhookModalOpen}
+          onRequestClose={() => this.setState({ webhookModalOpen: false })}
+        />
       </Fragment>
     );
   }

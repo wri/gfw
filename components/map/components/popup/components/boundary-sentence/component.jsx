@@ -6,16 +6,10 @@ import Button from 'components/ui/button';
 
 import './styles.scss';
 
-const BoundarySentence = ({ data, sentence, onAnalyze }) => (
+const BoundarySentence = ({ sentence, onAnalyze }) => (
   <div className="c-boundary-sentence">
     <DynamicSentence className="sentence" sentence={sentence} />
-    <Button
-      onClick={() => {
-        onAnalyze(data);
-      }}
-    >
-      analyze
-    </Button>
+    <Button onClick={onAnalyze}>analyze</Button>
   </div>
 );
 

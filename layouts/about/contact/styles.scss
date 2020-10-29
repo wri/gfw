@@ -1,0 +1,57 @@
+@import '~styles/settings.scss';
+
+.l-section-contact {
+  padding: rem(30px) 0;
+  border-bottom: solid 1px $border;
+  position: relative;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(60px) 0;
+  }
+
+  .desc {
+    margin-bottom: rem(30px);
+
+    h3 {
+      margin-bottom: rem(10px);
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .intro {
+      margin-bottom: rem(20px);
+      border-bottom: solid 1px $border;
+      padding-bottom: rem(20px);
+    }
+
+    a {
+      color: $green-gfw;
+      display: inline-block;
+      margin-top: rem(10px);
+      font-size: rem(18px);
+    }
+  }
+
+  .feedback-message {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $white;
+    margin: auto;
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    h3 {
+      font-size: rem(30px);
+      max-width: rem(600px);
+    }
+  }
+}

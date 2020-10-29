@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { cancelToken } from 'utils/request';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 
 import Component from './component';
@@ -35,9 +35,11 @@ class SearchMenu extends PureComponent {
       lang: this.props.lang,
       token: this.searchFetch.token
     });
-    track('mapMenuSarch', {
+    trackEvent({
+      category: 'Map menu',
+      action: 'Search',
       label: search
-    });
+    })
   }, 500);
 
   handleSearchChange = value => {
