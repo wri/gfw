@@ -54,7 +54,7 @@ const SearchPage = () => {
               className="search-input notranslate"
               placeholder="Search"
               input={query}
-              onSubmit={(e) => handleSubmit(e.target.value)}
+              onSubmit={handleSubmit}
             />
             <div className="search-results">
               {loading && <Loader className="search-loader" />}
