@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import { format } from 'd3-format';
@@ -13,24 +14,24 @@ import { getColorPalette } from 'utils/data';
 import {
   getCumulativeStatsData,
   getDatesData,
-  getChartConfig
+  getChartConfig,
 } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data && state.data.alerts;
-const getLatest = state => state.data && state.data.latest;
-const getColors = state => state.colors || null;
-const getCompareYear = state => state.settings.compareYear || null;
-const getAllYears = state =>
+const getAlerts = (state) => state.data && state.data.alerts;
+const getLatest = (state) => state.data && state.data.latest;
+const getColors = (state) => state.colors || null;
+const getCompareYear = (state) => state.settings.compareYear || null;
+const getAllYears = (state) =>
   state.data &&
   state.data.options &&
-  state.data.options.compareYear.map(y => y.value);
-const getDataset = state => state.settings.dataset || null;
-const getStartIndex = state => state.settings.startIndex || 0;
-const getEndIndex = state => state.settings.endIndex || null;
-const getSentences = state => state.sentences || null;
-const getLocationName = state => state.locationLabel;
-const getOptionsSelected = state => state.optionsSelected;
-const getIndicator = state => state.indicator;
+  state.data.options.compareYear.map((y) => y.value);
+const getDataset = (state) => state.settings.dataset || null;
+const getStartIndex = (state) => state.settings.startIndex || 0;
+const getEndIndex = (state) => state.settings.endIndex || null;
+const getSentences = (state) => state.sentences || null;
+const getLocationName = (state) => state.locationLabel;
+const getOptionsSelected = (state) => state.optionsSelected;
+const getIndicator = (state) => state.indicator;
 
 export const getCompareYears = createSelector(
   [getCompareYear, getAllYears],
@@ -38,7 +39,7 @@ export const getCompareYears = createSelector(
     if (!compareYear || !allYears) return null;
     if (compareYear === 'all') return allYears;
 
-    return allYears.filter(y => y === compareYear);
+    return allYears.filter((y) => y === compareYear);
   }
 );
 
@@ -46,11 +47,11 @@ export const getData = createSelector(
   [getAlerts, getLatest],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const parsedData = data.map(d => ({
+    const parsedData = data.map((d) => ({
       ...d,
       count: d.alert__count,
       week: parseInt(d.alert__week, 10),
-      year: parseInt(d.alert__year, 10)
+      year: parseInt(d.alert__year, 10),
     }));
     const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
@@ -58,16 +59,16 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some(item => item.alerts > 0)
+          [year]: next.some((item) => item.alerts > 0),
         };
       },
       {}
     );
 
     const dataYears = Object.keys(hasAlertsByYears).filter(
-      key => hasAlertsByYears[key] === true
+      (key) => hasAlertsByYears[key] === true
     );
-    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
+    const minYear = Math.min(...dataYears.map((el) => parseInt(el, 10)));
     const startYear =
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
@@ -75,7 +76,7 @@ export const getData = createSelector(
     const latestWeek = moment(latest);
     const lastWeek = {
       isoWeek: latestWeek.isoWeek(),
-      year: latestWeek.year()
+      year: latestWeek.year(),
     };
 
     for (let i = startYear; i <= lastWeek.year; i += 1) {
@@ -83,11 +84,9 @@ export const getData = createSelector(
     }
 
     const yearLengths = {};
-    years.forEach(y => {
+    years.forEach((y) => {
       if (moment(`${y}-12-31`).isoWeek() === 1) {
-        yearLengths[y] = moment(`${y}-12-31`)
-          .subtract(1, 'week')
-          .isoWeek();
+        yearLengths[y] = moment(`${y}-12-31`).subtract(1, 'week').isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
       }
@@ -95,7 +94,7 @@ export const getData = createSelector(
 
     const zeroFilledData = [];
 
-    years.forEach(d => {
+    years.forEach((d) => {
       let acc = 0;
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
@@ -106,12 +105,12 @@ export const getData = createSelector(
         if (parseInt(d, 10) === lastWeek.year && i > lastWeek.isoWeek) {
           zeroFilledData.push({
             ...weekData,
-            count: null
+            count: null,
           });
         } else {
           zeroFilledData.push({
             ...weekData,
-            count: acc
+            count: acc,
           });
         }
       }
@@ -120,12 +119,12 @@ export const getData = createSelector(
   }
 );
 
-export const getStats = createSelector([getData], data => {
+export const getStats = createSelector([getData], (data) => {
   if (!data) return null;
   return getCumulativeStatsData(data);
 });
 
-export const getDates = createSelector([getStats], data => {
+export const getDates = createSelector([getStats], (data) => {
   if (!data) return null;
   return getDatesData(data);
 });
@@ -134,12 +133,12 @@ export const getMaxMinDates = createSelector(
   [getData, getDates],
   (data, currentData) => {
     if (!data || !currentData) return {};
-    const minYear = min(data.map(d => d.year));
-    const maxYear = max(data.map(d => d.year));
+    const minYear = min(data.map((d) => d.year));
+    const maxYear = max(data.map((d) => d.year));
 
     return {
       min: minYear,
-      max: maxYear
+      max: maxYear,
     };
   }
 );
@@ -149,25 +148,25 @@ export const parseData = createSelector(
   (data, currentData, maxminYear, compareYears) => {
     if (!data || !currentData) return null;
 
-    return currentData.map(d => {
+    return currentData.map((d) => {
       const yearDifference = maxminYear.max - d.year;
-      const week = d.week;
+      const { week } = d;
 
       if (compareYears) {
         const compareYearData = compareYears.reduce((acc, year) => {
           const compareWeek = data.find(
-            dt => dt.year === year - yearDifference && dt.week === week
+            (dt) => dt.year === year - yearDifference && dt.week === week
           );
 
           return {
             ...acc,
-            [year]: compareWeek ? compareWeek.count : null
+            [year]: compareWeek ? compareWeek.count : null,
           };
         }, {});
 
         return {
           ...d,
-          ...compareYearData
+          ...compareYearData,
         };
       }
 
@@ -194,11 +193,11 @@ export const getLegend = createSelector(
     if (!data) return {};
     const end = data[data.length - 1];
     const yearsArray =
-      compareYears && compareYears.filter(y => y !== maxminYear.max).sort();
+      compareYears && compareYears.filter((y) => y !== maxminYear.max).sort();
     return {
       current: {
         label: `${moment(end.date).format('YYYY')}`,
-        color: colors.main
+        color: colors.main,
       },
       ...(yearsArray && {
         compare: {
@@ -206,17 +205,17 @@ export const getLegend = createSelector(
             yearsArray.length > 1
               ? `${yearsArray[0]}-${yearsArray[yearsArray.length - 1]}`
               : `${yearsArray}`,
-          color: '#49b5e3'
-        }
+          color: '#49b5e3',
+        },
       }),
       average: {
         label: 'Normal Range',
-        color: 'rgba(85,85,85, 0.15)'
+        color: 'rgba(85,85,85, 0.15)',
       },
       unusual: {
         label: 'Above/Below Normal Range',
-        color: 'rgba(85,85,85, 0.25)'
-      }
+        color: 'rgba(85,85,85, 0.25)',
+      },
     };
   }
 );
@@ -231,7 +230,7 @@ export const parseConfig = createSelector(
     getCompareYears,
     getDataset,
     getStartIndex,
-    getEndIndex
+    getEndIndex,
   ],
   (
     currentData,
@@ -250,13 +249,13 @@ export const parseConfig = createSelector(
       {
         key: 'count',
         labelKey: 'date',
-        labelFormat: value => moment(value).format('MMM DD YYYY'),
+        labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         nullValue: 'No data available',
-        unitFormat: value =>
-          (Number.isInteger(value) ? format(',')(value) : value)
-      }
+        unitFormat: (value) =>
+          Number.isInteger(value) ? format(',')(value) : value,
+      },
     ];
     const compareYearsLines = {};
     if (compareYears && compareYears.length > 0) {
@@ -265,14 +264,14 @@ export const parseConfig = createSelector(
         compareYears.length
       );
       const yearsArray = compareYears
-        .filter(y => y !== maxminYear.max)
+        .filter((y) => y !== maxminYear.max)
         .sort()
         .reverse();
       yearsArray.forEach((year, i) => {
         tooltip.push({
           key: year,
           labelKey: 'date',
-          labelFormat: value => {
+          labelFormat: (value) => {
             const date = moment(value);
             const yearDifference = maxminYear.max - date.year();
             date.set('year', year - yearDifference);
@@ -282,19 +281,19 @@ export const parseConfig = createSelector(
           unit: ` ${dataset.toUpperCase()} alerts`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
-          unitFormat: value =>
-            (Number.isInteger(value) ? format(',')(value) : value)
+          unitFormat: (value) =>
+            Number.isInteger(value) ? format(',')(value) : value,
         });
         compareYearsLines[year] = {
           stroke:
             compareYears.length === 1 ? colors.compareYear : colorRange[i],
-          isAnimationActive: false
+          isAnimationActive: false,
         };
       });
     }
     const presentDayIndex = findLastIndex(
       currentData,
-      d => typeof d.count === 'number'
+      (d) => typeof d.count === 'number'
     );
     const presentDay = currentData[presentDayIndex].date;
     return {
@@ -303,14 +302,14 @@ export const parseConfig = createSelector(
         tickCount: 12,
         interval: 4,
         scale: 'point',
-        tickFormatter: t => moment(t).format('MMM'),
+        tickFormatter: (t) => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
           endIndex - startIndex < 12 && {
-          tickCount: 5,
-          interval: 0,
-          tickFormatter: t => moment(t).format('MMM-DD')
-        })
+            tickCount: 5,
+            interval: 0,
+            tickFormatter: (t) => moment(t).format('MMM-DD'),
+          }),
       },
       legend,
       tooltip: [...tooltip],
@@ -319,16 +318,18 @@ export const parseConfig = createSelector(
           settings &&
           values &&
           settings.sort((a, b) => values[a.key] - values[b.key]).reverse();
-        return Array.isArray(sorted) ? [
-          {
-            label: 'Fire alerts'
-          },
-          ...sorted
-        ] : [
-          {
-            label: 'Fire alerts'
-          }
-        ];
+        return Array.isArray(sorted)
+          ? [
+              {
+                label: 'Fire alerts',
+              },
+              ...sorted,
+            ]
+          : [
+              {
+                label: 'Fire alerts',
+              },
+            ];
       },
       referenceLine: {
         x: presentDay,
@@ -339,8 +340,8 @@ export const parseConfig = createSelector(
           position: 'top',
           value: 'Latest data',
           fill: '#333',
-          fontSize: 11
-        }
+          fontSize: 11,
+        },
       },
       brush: {
         width: '100%',
@@ -349,7 +350,7 @@ export const parseConfig = createSelector(
           top: 0,
           right: 10,
           left: 48,
-          bottom: 12
+          bottom: 12,
         },
         minimumGap: 4,
         dataKey: 'date',
@@ -360,34 +361,34 @@ export const parseConfig = createSelector(
             top: 5,
             right: 0,
             left: 42,
-            bottom: 20
+            bottom: 20,
           },
           yKeys: {
             lines: {
               count: {
                 stroke: colors.main,
-                isAnimationActive: false
+                isAnimationActive: false,
               },
               compareCount: {
                 stroke: '#49b5e3',
-                isAnimationActive: false
+                isAnimationActive: false,
               },
-              ...(Object.keys(compareYearsLines).length, compareYearsLines)
-            }
+              ...(Object.keys(compareYearsLines).length, compareYearsLines),
+            },
           },
           xAxis: {
-            hide: true
+            hide: true,
           },
           yAxis: {
-            hide: true
+            hide: true,
           },
           cartesianGrid: {
             horizontal: false,
-            vertical: false
+            vertical: false,
           },
-          height: 60
-        }
-      }
+          height: 60,
+        },
+      },
     };
   }
 );
@@ -403,7 +404,7 @@ export const parseSentence = createSelector(
     getStartIndex,
     // getEndIndex,
     getOptionsSelected,
-    getIndicator
+    getIndicator,
   ],
   (
     raw_data,
@@ -422,7 +423,7 @@ export const parseSentence = createSelector(
       highConfidence,
       allAlerts,
       highConfidenceWithInd,
-      allAlertsWithInd
+      allAlertsWithInd,
     } = sentences;
     const { confidence } = options;
     const indicatorLabel =
@@ -431,13 +432,13 @@ export const parseSentence = createSelector(
     const latestYear = maxBy(data, 'year').year;
     const lastDate =
       maxBy(
-        data.filter(d => d.year === latestYear && d.count !== null),
+        data.filter((d) => d.year === latestYear && d.count !== null),
         'date'
       ) || {};
     const firstDate = data[start] || {};
 
     const slicedData = data.filter(
-      el => el.date >= firstDate.date && el.date <= lastDate.date
+      (el) => el.date >= firstDate.date && el.date <= lastDate.date
     );
 
     const maxWeek = maxBy(raw_data, 'count');
@@ -505,17 +506,17 @@ export const parseSentence = createSelector(
       maxYear,
       maxTotal: {
         value: maxTotal ? format(',')(maxTotal) : 0,
-        color: colors.main
+        color: colors.main,
       },
       dataset: dataset.toUpperCase(),
       count: {
         value: totalCurrentYear ? format(',')(totalCurrentYear) : 0,
-        color: colors.main
+        color: colors.main,
       },
       status: {
         value: status,
-        color: statusColor
-      }
+        color: statusColor,
+      },
     };
     return { sentence, params };
   }
@@ -525,5 +526,5 @@ export default createStructuredSelector({
   originalData: parseData,
   data: parseBrushedData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

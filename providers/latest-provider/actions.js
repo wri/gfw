@@ -45,8 +45,8 @@ export const getLatest = createThunkAction(
             dispatch(setLatestDates(latestDates));
           })
         )
-        .catch((error) => {
-          console.error('Error in latest request:', error);
+        .catch(() => {
+          dispatch(setLatestLoading({ loading: false, error: true }));
         });
     }
   }

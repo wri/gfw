@@ -1,8 +1,8 @@
-export const getPolygonCenter = polygon => {
+export const getPolygonCenter = (polygon) => {
   const vertices = polygon.getPath();
   const latitude = [];
   const longitude = [];
-  for (let i = 0; i < vertices.length; i++) {
+  for (let i = 0; i < vertices.length; i += 1) {
     longitude.push(vertices.getAt(i).lng());
     latitude.push(vertices.getAt(i).lat());
   }
@@ -27,6 +27,6 @@ export const getPolygonCenter = polygon => {
     top,
     bottom,
     left,
-    right
+    right,
   };
 };

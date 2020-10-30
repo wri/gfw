@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import { Row, Column } from 'gfw-components';
 
 import Icon from 'components/ui/icon';

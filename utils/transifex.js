@@ -10,7 +10,5 @@ export function translateText(str, params) {
     }
   }
 
-  console.warn('Attempted translation before transifex finished loading:', str);
-
   return str;
 }
