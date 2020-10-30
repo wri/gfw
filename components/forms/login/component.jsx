@@ -44,6 +44,7 @@ class LoginForm extends PureComponent {
     simple: PropTypes.bool,
     narrow: PropTypes.bool,
     initialValues: PropTypes.object,
+    className: PropTypes.string,
   };
 
   state = {
@@ -63,6 +64,7 @@ class LoginForm extends PureComponent {
       initialValues,
       simple,
       narrow,
+      className,
     } = this.props;
     const { showForm } = this.state;
 
@@ -118,7 +120,7 @@ class LoginForm extends PureComponent {
           valid,
           form: { reset },
         }) => (
-          <div className={cx('c-login-form', { simple })}>
+          <div className={cx('c-login-form', className, { simple })}>
             <Row nested>
               {submitSucceeded && showForm !== 'login' ? (
                 <Column>
