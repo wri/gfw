@@ -13,7 +13,7 @@ class WidgetLollipop extends PureComponent {
       settingsConfig,
       config,
       handleChangeSettings,
-      embed
+      embed,
     } = this.props;
 
     return (
@@ -23,12 +23,11 @@ class WidgetLollipop extends PureComponent {
         config={config}
         settings={{
           ...settings,
-          format: settings.unit === '%' ? '.2r' : '.3s'
+          format: settings.unit === '%' ? '.2r' : '.3s',
         }}
         settingsConfig={settingsConfig}
-        handlePageChange={change =>
-          handleChangeSettings({ page: settings.page + change })
-        }
+        handlePageChange={(change) =>
+          handleChangeSettings({ page: settings.page + change })}
         linksExt={embed}
       />
     );
@@ -41,7 +40,7 @@ WidgetLollipop.propTypes = {
   settingsConfig: PropTypes.array,
   config: PropTypes.object,
   handleChangeSettings: PropTypes.func.isRequired,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
 };
 
 export default WidgetLollipop;
