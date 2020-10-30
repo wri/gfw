@@ -25,7 +25,8 @@ class WhitelistProvider extends PureComponent {
     const {
       location: { type, adm0, adm1, adm2 },
     } = this.props;
-    if (adm0) {
+
+    if (type !== 'use' && adm0) {
       this.handleFetchWhitelist({ type, adm0, adm1, adm2 });
     }
   }
@@ -35,7 +36,7 @@ class WhitelistProvider extends PureComponent {
     const { type, adm0, adm1, adm2 } = location;
     const hasLocationChanged = !isEqual(location, prevProps.location);
 
-    if (adm0 && hasLocationChanged) {
+    if (type !== 'use' && adm0 && hasLocationChanged) {
       this.handleFetchWhitelist({ type, adm0, adm1, adm2 });
     }
 
