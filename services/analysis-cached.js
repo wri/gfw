@@ -9,7 +9,6 @@ import { get } from 'axios';
 import { GFW_API } from 'utils/constants';
 import { getIndicator } from 'utils/format';
 
-const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
@@ -100,7 +99,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   }
 
   const datasetId =
-    DATASETS_ENV[
+    DATASETS[
       `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
     ];
   return `${GFW_API}/query/${datasetId}?sql=`;
