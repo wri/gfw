@@ -15,13 +15,11 @@ jobs:
   cypress-run:
     name: e2e tests
     runs-on: ubuntu-latest
-    with:
-      node-version: '12.16.2'
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '12.16.2'
       - run: node -v
       - name: Checkout
         uses: actions/checkout@v1
