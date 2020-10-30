@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -12,30 +13,30 @@ import { getLegendProps } from './selectors';
 
 const actions = {
   ...mapActions,
-  ...modalActions
+  ...modalActions,
 };
 
 class Legend extends PureComponent {
   onChangeOpacity = (currentLayer, opacity) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      datasets: activeDatasets.map(d => {
+      datasets: activeDatasets.map((d) => {
         const activeDataset = { ...d };
         if (d.layers.includes(currentLayer.id)) {
           activeDataset.opacity = opacity;
         }
         return activeDataset;
-      })
+      }),
     });
   };
 
-  onChangeOrder = layerGroupsIds => {
+  onChangeOrder = (layerGroupsIds) => {
     const { setMapSettings, activeDatasets } = this.props;
-    const datasetIds = activeDatasets.map(d => d.dataset);
+    const datasetIds = activeDatasets.map((d) => d.dataset);
     const datasetsDiff = difference(datasetIds, layerGroupsIds);
     const newActiveDatasets = datasetsDiff
       .concat(layerGroupsIds)
-      .map(id => activeDatasets.find(d => d.dataset === id));
+      .map((id) => activeDatasets.find((d) => d.dataset === id));
     setMapSettings({ datasets: newActiveDatasets });
   };
 
@@ -49,41 +50,41 @@ class Legend extends PureComponent {
           ...newActiveDataset,
           layers: enable
             ? [...newActiveDataset.layers, layer.layer]
-            : newActiveDataset.layers.filter(l => l !== layer.layer)
+            : newActiveDataset.layers.filter((l) => l !== layer.layer),
         };
       }
       return newDataset;
     });
     setMapSettings({
       datasets: newActiveDatasets,
-      ...(enable && { canBound: true })
+      ...(enable && { canBound: true }),
     });
     trackEvent({
       category: 'Map data',
       action: enable ? 'User turns on a layer' : 'User turns off a layer',
-      label: layer.layer
-    })
+      label: layer.layer,
+    });
   };
 
   onChangeLayer = (layerGroup, newLayerKey) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      datasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map((l) => {
         const dataset = l;
         if (l.dataset === layerGroup.dataset) {
           dataset.layers = [newLayerKey];
         }
         return dataset;
-      })
+      }),
     });
     trackEvent({
       category: 'Map data',
       action: 'User turns on a layer',
-      label: newLayerKey
-    })
+      label: newLayerKey,
+    });
   };
 
-  onRemoveLayer = currentLayer => {
+  onRemoveLayer = (currentLayer) => {
     const { setMapSettings } = this.props;
     const activeDatasets = [...this.props.activeDatasets];
     activeDatasets.forEach((l, i) => {
@@ -95,11 +96,11 @@ class Legend extends PureComponent {
     trackEvent({
       category: 'Map data',
       action: 'User turns off a layer',
-      label: currentLayer.id
-    })
+      label: currentLayer.id,
+    });
   };
 
-  onChangeInfo = metadata => {
+  onChangeInfo = (metadata) => {
     const { setModalMetaSettings } = this.props;
     if (metadata && typeof metadata === 'string') {
       setModalMetaSettings(metadata);
@@ -109,11 +110,11 @@ class Legend extends PureComponent {
   onChangeTimeline = (dates, currentLayer, absolute) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      datasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map((l) => {
         const dataset = { ...l };
         if (l.layers.indexOf(currentLayer.id) > -1) {
           dataset.timelineParams = {
-            ...dataset.timelineParams
+            ...dataset.timelineParams,
           };
           if (absolute) {
             dataset.timelineParams.startDateAbsolute = dates[0];
@@ -128,51 +129,51 @@ class Legend extends PureComponent {
           }
         }
         return dataset;
-      })
+      }),
     });
   };
 
   onChangeParam = (currentLayer, newParam) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      datasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map((l) => {
         const dataset = { ...l };
         if (l.layers.includes(currentLayer.id)) {
           dataset.params = {
             ...dataset.params,
-            ...newParam
+            ...newParam,
           };
         }
         return dataset;
-      })
+      }),
     });
   };
 
   onChangeDecodeParam = (currentLayer, newParam) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      datasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map((l) => {
         const dataset = { ...l };
         if (l.layers.includes(currentLayer.id)) {
           dataset.decodeParams = {
             ...dataset.params,
-            ...newParam
+            ...newParam,
           };
         }
         return dataset;
-      })
+      }),
     });
   };
 
-  setConfirmed = layer => {
+  setConfirmed = (layer) => {
     const { activeDatasets, setMapSettings } = this.props;
     const { dataset } = layer;
-    const datasetIndex = activeDatasets.findIndex(l => l.dataset === dataset);
+    const datasetIndex = activeDatasets.findIndex((l) => l.dataset === dataset);
     const newActiveDatasets = [...activeDatasets];
     let newDataset = newActiveDatasets[datasetIndex];
     newDataset = {
       ...newDataset,
-      confirmedOnly: true
+      confirmedOnly: true,
     };
     newActiveDatasets[datasetIndex] = newDataset;
     setMapSettings({ datasets: newActiveDatasets || [] });
@@ -190,7 +191,7 @@ class Legend extends PureComponent {
       onChangeTimeline: this.onChangeTimeline,
       onChangeParam: this.onChangeParam,
       onChangeDecodeParam: this.onChangeDecodeParam,
-      setConfirmed: this.setConfirmed
+      setConfirmed: this.setConfirmed,
     });
   }
 }
@@ -198,7 +199,7 @@ class Legend extends PureComponent {
 Legend.propTypes = {
   activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func,
-  setModalMetaSettings: PropTypes.func
+  setModalMetaSettings: PropTypes.func,
 };
 
 export default connect(getLegendProps, actions)(Legend);

@@ -29,7 +29,7 @@ class Datasets extends PureComponent {
       setModalMetaSettings,
       setMenuSettings,
       handleRemoveCountry,
-      handleAddCountry
+      handleAddCountry,
     } = this.props;
 
     return (
@@ -39,33 +39,31 @@ class Datasets extends PureComponent {
           !datasetCategory &&
           datasetCategories &&
           datasetCategories.length && (
-          <div>
-            <Basemaps />
-            <CategoriesMenu
-              categories={datasetCategories}
-              onSelectCategory={setMenuSettings}
-            />
-          </div>
-        )}
-        {menuSection &&
-          datasetCategory && (
+            <div>
+              <Basemaps />
+              <CategoriesMenu
+                categories={datasetCategories}
+                onSelectCategory={setMenuSettings}
+              />
+            </div>
+          )}
+        {menuSection && datasetCategory && (
           <Fragment>
             <div className="countries-selection">
               <span className="sub-title">country-specific data</span>
               <div className="pills">
                 {selectedCountries &&
-                    selectedCountries.map(c => (
-                      <Pill
-                        key={c.value}
-                        active={!countriesWithoutData.includes(c.label)}
-                        label={c.label}
-                        onRemove={() => handleRemoveCountry(c.value)}
-                      >
-                        {c.label}
-                      </Pill>
-                    ))}
-                {countries &&
-                    !!countries.length && (
+                  selectedCountries.map((c) => (
+                    <Pill
+                      key={c.value}
+                      active={!countriesWithoutData.includes(c.label)}
+                      label={c.label}
+                      onRemove={() => handleRemoveCountry(c.value)}
+                    >
+                      {c.label}
+                    </Pill>
+                  ))}
+                {countries && !!countries.length && (
                   <Dropdown
                     className="country-dropdown"
                     theme="theme-dropdown-button theme-dropdown-button-small"
@@ -79,63 +77,67 @@ class Datasets extends PureComponent {
               </div>
             </div>
             {countriesWithoutData &&
-                !!countriesWithoutData.length &&
-                selectedCountries &&
-                !!selectedCountries.length && (
-              <div className="no-datasets-legend">
-                <span className="legend-dot" />
-                <p className="no-datasets-message">
-                      No datasets available in{' '}
-                  {countriesWithoutData.map((c, i, a) => {
-                    let separator = ', ';
-                    if (i === a.length - 2) separator = ' or ';
-                    if (i === a.length - 1) separator = ' ';
-                    return (
-                      <Fragment key={c}>
-                        <strong>{c}</strong>
-                        {separator}
-                      </Fragment>
-                    );
-                  })}
-                      for {datasetCategory && datasetCategory.toLowerCase()}.
-                </p>
-              </div>
-            )}
+              !!countriesWithoutData.length &&
+              selectedCountries &&
+              !!selectedCountries.length && (
+                <div className="no-datasets-legend">
+                  <span className="legend-dot" />
+                  <p className="no-datasets-message">
+                    No datasets available in
+                    {' '}
+                    {countriesWithoutData.map((c, i, a) => {
+                      let separator = ', ';
+                      if (i === a.length - 2) separator = ' or ';
+                      if (i === a.length - 1) separator = ' ';
+                      return (
+                        <Fragment key={c}>
+                          <strong>{c}</strong>
+                          {separator}
+                        </Fragment>
+                      );
+                    })}
+                    for 
+                    {' '}
+                    {datasetCategory && datasetCategory.toLowerCase()}
+                    .
+                  </p>
+                </div>
+              )}
             {subCategories
-              ? subCategories.map(subCat => (
+              ? subCategories.map((subCat) => (
                 <DatasetSection key={subCat.slug} {...subCat}>
                   {!isEmpty(subCat.datasets) ? (
-                    subCat.datasets.map(d => (
-                      <LayerToggle
-                        key={d.id}
-                        className="dataset-toggle"
-                        data={{ ...d, dataset: d.id }}
-                        onToggle={onToggleLayer}
-                        onInfoClick={setModalMetaSettings}
-                        showSubtitle
-                        category={datasetCategory}
+                      subCat.datasets.map((d) => (
+                        <LayerToggle
+                          key={d.id}
+                          className="dataset-toggle"
+                          data={{ ...d, dataset: d.id }}
+                          onToggle={onToggleLayer}
+                          onInfoClick={setModalMetaSettings}
+                          showSubtitle
+                          category={datasetCategory}
+                        />
+                      ))
+                    ) : (
+                      <NoContent
+                        className="no-datasets"
+                        message="No datasets available"
                       />
-                    ))
-                  ) : (
-                    <NoContent
-                      className="no-datasets"
-                      message="No datasets available"
-                    />
-                  )}
+                    )}
                 </DatasetSection>
-              ))
+                ))
               : datasets &&
-                  datasets.map((d, i) => (
-                    <LayerToggle
-                      key={d.id}
-                      tabIndex={i}
-                      className="dataset-toggle"
-                      data={{ ...d, dataset: d.id }}
-                      onToggle={onToggleLayer}
-                      onInfoClick={setModalMetaSettings}
-                      category={datasetCategory}
-                    />
-                  ))}
+                datasets.map((d, i) => (
+                  <LayerToggle
+                    key={d.id}
+                    tabIndex={i}
+                    className="dataset-toggle"
+                    data={{ ...d, dataset: d.id }}
+                    onToggle={onToggleLayer}
+                    onInfoClick={setModalMetaSettings}
+                    category={datasetCategory}
+                  />
+                ))}
           </Fragment>
         )}
       </div>
@@ -163,7 +165,7 @@ Datasets.propTypes = {
   handleAddCountry: PropTypes.func,
   datasetCategory: PropTypes.string,
   datasetCategories: PropTypes.array,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
 };
 
 export default Datasets;

@@ -13,7 +13,7 @@ class DynamicSentence extends PureComponent {
     className: PropTypes.string,
     sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     handleMouseOver: PropTypes.func,
-    handleMouseOut: PropTypes.func
+    handleMouseOut: PropTypes.func,
   };
 
   reduceSentence = (sentence, pattern, component) => {
@@ -27,11 +27,12 @@ class DynamicSentence extends PureComponent {
     const { component } = params || {};
     let formattedSentence = translateText(sentence);
     if (params) {
-      Object.keys(params).forEach(p => {
+      Object.keys(params).forEach((p) => {
         const param = params[p];
         if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {
+              // eslint-disable-next-line security/detect-non-literal-regexp
               const regex = new RegExp(`{${p}}`, 'g');
               formattedSentence =
                 formattedSentence &&
@@ -43,6 +44,7 @@ class DynamicSentence extends PureComponent {
                 );
             }
           } else {
+            // eslint-disable-next-line security/detect-non-literal-regexp
             const regex = new RegExp(`{${p}}`, 'g');
             formattedSentence =
               formattedSentence &&
@@ -59,7 +61,7 @@ class DynamicSentence extends PureComponent {
     if (component) {
       const mappedComponent = {
         ...component,
-        pattern: `{${component.key}}`
+        pattern: `{${component.key}}`,
       };
 
       formattedSentence = this.reduceSentence(
@@ -86,8 +88,8 @@ class DynamicSentence extends PureComponent {
 
     return (
       <div className={`c-dynamic-sentence notranslate ${className || ''}`}>
-        {formattedSentence.map(
-          s => (typeof s === 'string' ? ReactHtmlParser(s) : s)
+        {formattedSentence.map((s) =>
+          typeof s === 'string' ? ReactHtmlParser(s) : s
         )}
       </div>
     );

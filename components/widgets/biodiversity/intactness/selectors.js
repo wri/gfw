@@ -5,26 +5,26 @@ import { getColorPalette } from 'utils/data';
 import breaks from './percentiles.json';
 
 // get list data
-const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentence;
-const getData = state => state.data && state.data;
-const getLocationName = state => state.locationName || null;
-const getLocation = state => state.location || null;
-const getAllLocation = state => state.allLocation || null;
-const getChildLocationDict = state => state.childLocationDict || null;
-const getSettings = state => state.settings || null;
+const getColors = (state) => state.colors || null;
+const getSentences = (state) => state.config && state.config.sentence;
+const getData = (state) => state.data && state.data;
+const getLocationName = (state) => state.locationName || null;
+const getLocation = (state) => state.location || null;
+const getAllLocation = (state) => state.allLocation || null;
+const getChildLocationDict = (state) => state.childLocationDict || null;
+const getSettings = (state) => state.settings || null;
 
-const normalizeInt = d => ({
+const normalizeInt = (d) => ({
   ...d,
-  int: -d.int / d.area
+  int: -d.int / d.area,
 });
 
-const normalizeSig = d => ({
+const normalizeSig = (d) => ({
   ...d,
-  sig: Math.log10(d.sig / d.area)
+  sig: Math.log10(d.sig / d.area),
 });
 
-export const parsePayload = payload =>
+export const parsePayload = (payload) =>
   payload && { percentile: payload.activeLabel };
 
 const parseData = createSelector(
@@ -46,17 +46,17 @@ const parseData = createSelector(
       { name: 'Medium-low', data: [], count: 0, percent: 0 },
       { name: 'Medium', data: [], count: 0, percent: 0 },
       { name: 'Medium-high', data: [], count: 0, percent: 0 },
-      { name: 'High', data: [], count: 0, percent: 0 }
+      { name: 'High', data: [], count: 0, percent: 0 },
     ];
 
-    data.forEach(d => {
+    data.forEach((d) => {
       const datapoint = bType === 'int' ? normalizeInt(d) : normalizeSig(d);
 
       // foreach percentile division
       for (
         let i = 0;
         i < Object.keys(breaks[locationType][bType]).length;
-        i++
+        i += 1
       ) {
         // get the percentile key (e.g. "10th")
         const key = Object.keys(breaks[locationType][bType])[i];
@@ -66,7 +66,7 @@ const parseData = createSelector(
           if (childLocations[datapoint.location]) {
             percentiles[i].data.push({
               ...datapoint,
-              label: childLocations[datapoint.location]
+              label: childLocations[datapoint.location],
             });
           }
 
@@ -77,9 +77,9 @@ const parseData = createSelector(
       }
     });
 
-    return percentiles.map(p => ({
+    return percentiles.map((p) => ({
       ...p,
-      percent: Math.round(p.count / data.length * 100)
+      percent: Math.round((p.count / data.length) * 100),
     }));
   }
 );
@@ -97,11 +97,13 @@ const buildData = createSelector(
         percentiles[0]
       );
     } else {
-      selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
+      selectedPercentile = percentiles.filter(
+        (p) => p.name === percentile
+      )?.[0];
     }
 
     const activeIndex = percentiles.findIndex(
-      p => p.name === selectedPercentile.name
+      (p) => p.name === selectedPercentile.name
     );
     const colorRange = getColorPalette(
       colors.ramp,
@@ -111,14 +113,14 @@ const buildData = createSelector(
       .map((p, i) => ({ color: colorRange[i], ...p }))
       .reverse();
     const { query, type } = location;
-    const list = sortBy(selectedPercentile.data, 'label').map(item => ({
+    const list = sortBy(selectedPercentile.data, 'label').map((item) => ({
       label: item.label,
       color: colorRange[activeIndex],
       path: {
         type,
         payload: { adm0: item.location, type: 'country' },
-        query
-      }
+        query,
+      },
     }));
 
     return {
@@ -126,13 +128,13 @@ const buildData = createSelector(
       list,
       selectedPercentile,
       barBackground: {
-        activeIndex: data.findIndex(p => p.name === selectedPercentile.name)
-      }
+        activeIndex: data.findIndex((p) => p.name === selectedPercentile.name),
+      },
     };
   }
 );
 
-const parseConfig = createSelector([buildData], data => {
+const parseConfig = createSelector([buildData], (data) => {
   if (!data) return null;
 
   return {
@@ -141,21 +143,21 @@ const parseConfig = createSelector([buildData], data => {
     xAxis: {
       type: 'number',
       domain: [0, 100],
-      unit: '%'
+      unit: '%',
     },
     // default unitFormat expects a number
-    unitFormat: text => text,
+    unitFormat: (text) => text,
     xKeys: {
       bars: {
         percent: {
           clickable: true,
-          itemColor: true
-        }
-      }
+          itemColor: true,
+        },
+      },
     },
     yAxis: {
-      type: 'category'
-    }
+      type: 'category',
+    },
   };
 });
 
@@ -173,7 +175,9 @@ const parseSentence = createSelector(
         percentiles[0]
       );
     } else {
-      selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
+      selectedPercentile = percentiles.filter(
+        (p) => p.name === percentile
+      )?.[0];
     }
 
     const percentileName =
@@ -182,11 +186,11 @@ const parseSentence = createSelector(
       location: location === 'global' ? 'the world' : location,
       percent: `${selectedPercentile.percent}%`,
       percentile: percentileName === 'normal' ? 'average' : percentileName,
-      variable: bType === 'int' ? 'intactness' : 'significance'
+      variable: bType === 'int' ? 'intactness' : 'significance',
     };
     return {
       sentence: sentence.initial,
-      params
+      params,
     };
   }
 );
@@ -194,5 +198,5 @@ const parseSentence = createSelector(
 export default createStructuredSelector({
   dataConfig: parseConfig,
   data: buildData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

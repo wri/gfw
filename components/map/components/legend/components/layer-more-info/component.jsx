@@ -10,7 +10,7 @@ class LayerMoreInfo extends PureComponent {
     return (
       <div className={`c-layer-more-info ${className || ''}`}>
         <p>{text}</p>
-        <a href={linkUrl} target="_blank" rel="noopener nofollower">
+        <a href={linkUrl} target="_blank" rel="noopener noreferrer nofollower">
           {linkText}
         </a>
       </div>
@@ -22,7 +22,7 @@ LayerMoreInfo.propTypes = {
   className: PropTypes.string,
   linkUrl: PropTypes.string,
   linkText: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 
 export default LayerMoreInfo;
