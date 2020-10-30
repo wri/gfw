@@ -35,13 +35,13 @@ class MiniLegend extends PureComponent {
                 <span style={{ backgroundColor: l.color }} />
                 <div>
                   <p>{l.name}</p>
-                  <p className="time-range">
-                    {startDateAbsolute &&
-                      endDateAbsolute &&
-                      `${moment(startDateAbsolute).format(
+                  {startDateAbsolute && endDateAbsolute && (
+                    <p className="time-range">
+                      {`${moment(startDateAbsolute).format(
                         'MMM DD YYYY'
                       )} - ${moment(endDateAbsolute).format('MMM DD YYYY')}`}
-                  </p>
+                    </p>
+                  )}
                   {isVIIRS && (
                     <p className="time-range-disclaimer">
                       *a maximum of 3 months of fires data can be shown on the
@@ -61,8 +61,8 @@ class MiniLegend extends PureComponent {
               trackEvent({
                 category: 'Dashboards page',
                 action: 'User clicks through to main map',
-                label: layers?.map((l) => l.name).join(', ')
-              })
+                label: layers?.map((l) => l.name).join(', '),
+              });
             }}
             tooltip={{
               theme: 'tip',

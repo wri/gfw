@@ -26,17 +26,15 @@ class GeostoreProvider extends PureComponent {
   componentDidMount() {
     const {
       location: { adm0, type },
-      activeArea,
     } = this.props;
-
-    if ((adm0 && type !== 'aoi') || (type === 'aoi' && activeArea)) {
+    if (adm0 && type !== 'aoi') {
       this.handleGetGeostore();
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
-      location: { adm0, adm1, adm2 },
+      location: { type, adm0, adm1, adm2 },
       activeArea,
       clearGeostore,
     } = this.props;
@@ -51,7 +49,12 @@ class GeostoreProvider extends PureComponent {
       clearGeostore({});
     }
 
-    if (hasAdm0Changed || hasAdm1Changed || hasAdm2Changed || hasAoiChanged) {
+    if (
+      (type !== 'aoi' && hasAdm0Changed) ||
+      hasAdm1Changed ||
+      hasAdm2Changed ||
+      hasAoiChanged
+    ) {
       this.handleGetGeostore();
     }
   }
