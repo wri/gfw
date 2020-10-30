@@ -32,5 +32,11 @@
     @media screen and (min-width: $screen-m) {
       padding-bottom: 0;
     }
+
+    &.search {
+      .close-menu {
+        height: 62px;
+      }
+    }
   }
 }

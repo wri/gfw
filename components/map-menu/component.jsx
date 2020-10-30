@@ -69,9 +69,9 @@ class MapMenu extends PureComponent {
 
     trackEvent({
       category: 'Map data',
-      action: enable ? 'User turns on a layer' : 'User turns off a layer' ,
+      action: enable ? 'User turns on a layer' : 'User turns off a layer',
       label: layer,
-    })
+    });
   };
 
   componentDidUpdate(prevProps) {
@@ -150,7 +150,7 @@ class MapMenu extends PureComponent {
           )}
         </div>
         <MenuPanel
-          className="menu-panel"
+          className={cx('menu-panel', menuSection)}
           label={label}
           category={category}
           active={!!menuSection}
