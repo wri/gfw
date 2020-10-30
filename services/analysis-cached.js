@@ -9,7 +9,6 @@ import { get } from 'axios';
 import { GFW_API } from 'utils/constants';
 import { getIndicator } from 'utils/format';
 
-const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
@@ -100,7 +99,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   }
 
   const datasetId =
-    DATASETS_ENV[
+    DATASETS[
       `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
     ];
   return `${GFW_API}/query/${datasetId}?sql=`;
@@ -144,8 +143,7 @@ export const getWHEREQuery = (params) => {
 
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       const isNumericValue = !!(
-        typeof value === 'number' &&
-        !['adm0', 'adm1', 'adm2', 'confidence'].includes(p)
+        typeof value === 'number' && !['adm0', 'confidence'].includes(p)
       );
 
       const polynameString = `
@@ -838,9 +836,7 @@ export const fetchFiresWithin = (params) => {
 
 export const fetchVIIRSLatest = () =>
   get(
-    `https://${
-      process.env.FEATURE_ENV === 'staging' ? 'staging-' : ''
-    }tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date`
+    'https://tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date'
   )
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;

@@ -43,12 +43,7 @@
   .list-wrapper {
     position: relative;
     max-height: rem(340px);
-    overflow-y: hidden;
-
-    &.-scrollable {
-      overflow-y: scroll;
-      overflow-x: hidden;
-    }
+    overflow-y: auto;
   }
 
   .list-item {

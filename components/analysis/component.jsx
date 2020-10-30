@@ -23,6 +23,7 @@ class AnalysisComponent extends PureComponent {
     activeArea: PropTypes.object,
     goToDashboard: PropTypes.func,
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    geostoreError: PropTypes.bool,
     handleCancelAnalysis: PropTypes.func,
     handleFetchAnalysis: PropTypes.func,
     embed: PropTypes.bool,
@@ -47,6 +48,7 @@ class AnalysisComponent extends PureComponent {
       clearAnalysis,
       goToDashboard,
       error,
+      geostoreError,
       handleCancelAnalysis,
       handleFetchAnalysis,
       setAreaOfInterestModalSettings,
@@ -80,7 +82,7 @@ class AnalysisComponent extends PureComponent {
           )}
           {location.type && location.adm0 && (loading || (!loading && error)) && (
             <div className={cx('cancel-analysis', { fetching: loading })}>
-              {!loading && error && (
+              {!loading && error && !geostoreError && (
                 <Button
                   className="refresh-analysis-btn"
                   onClick={() => handleFetchAnalysis(endpoints)}
@@ -94,10 +96,16 @@ class AnalysisComponent extends PureComponent {
               >
                 CANCEL ANALYSIS
               </Button>
-              {!loading && error && <p className="error-message">{error}</p>}
+              {!loading && error && (
+                <p className="error-message">
+                  {geostoreError
+                    ? 'We are having trouble getting the selected geometry. Please try again later.'
+                    : error}
+                </p>
+              )}
             </div>
           )}
-          {location.type && location.adm0 && (
+          {location.type && location.adm0 && !error && (
             <ShowAnalysis
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
