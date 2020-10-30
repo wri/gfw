@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import Document, { Html, Main, NextScript, Head } from 'next/document';
 import sprite from 'svg-sprite-loader/runtime/sprite.build';

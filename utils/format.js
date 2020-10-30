@@ -34,7 +34,7 @@ export const buildGadm36Id = (country, region, subRegion) =>
     subRegion ? `.${subRegion}_1` : '_1'
   }`;
 
-export const parseGadm36Id = gid => {
+export const parseGadm36Id = (gid) => {
   if (!gid) return null;
   const ids = gid.split('.');
   const adm0 = (ids && ids[0]) || null;
@@ -43,18 +43,18 @@ export const parseGadm36Id = gid => {
   return {
     adm0,
     adm1: adm1 ? parseInt(adm1, 10) : undefined,
-    adm2: adm2 ? parseInt(adm2, 10) : undefined
+    adm2: adm2 ? parseInt(adm2, 10) : undefined,
   };
 };
 
-export const getLocationFromData = data => {
+export const getLocationFromData = (data) => {
   let newLocation = {};
   if (data && data.gid_0) {
     newLocation = parseGadm36Id(data[`gid_${data.level || '0'}`]);
   }
   return {
     type: 'country',
-    ...newLocation
+    ...newLocation,
   };
 };
 
@@ -71,17 +71,17 @@ export const buildFullLocationName = (
     return '';
   }
   if (adm0) {
-    const adm0Obj = adm0s && adm0s.find(a => a.value === adm0);
+    const adm0Obj = adm0s && adm0s.find((a) => a.value === adm0);
     location = adm0Obj ? adm0Obj.label : '';
   }
   if (adm1) {
-    const adm1Obj = adm1s && adm1s.find(a => a.value === parseInt(adm1, 10));
+    const adm1Obj = adm1s && adm1s.find((a) => a.value === parseInt(adm1, 10));
     location = adm1Obj
       ? `${adm1Obj.label || 'unnamed region'}, ${location}`
       : location;
   }
   if (adm2) {
-    const adm2Obj = adm2s && adm2s.find(a => a.value === parseInt(adm2, 10));
+    const adm2Obj = adm2s && adm2s.find((a) => a.value === parseInt(adm2, 10));
     location = adm2Obj
       ? `${adm2Obj.label || 'unnamed region'}, ${location}`
       : location;
@@ -96,11 +96,12 @@ export const buildLocationName = (
   let activeLocation = { label: '' };
   if (subRegion) {
     activeLocation =
-      adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
+      adm2s && adm2s.find((a) => a.value === parseInt(subRegion, 10));
   } else if (region) {
-    activeLocation = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
+    activeLocation =
+      adm1s && adm1s.find((a) => a.value === parseInt(region, 10));
   } else if (country) {
-    activeLocation = adms && adms.find(a => a.value === country);
+    activeLocation = adms && adms.find((a) => a.value === country);
   }
   return activeLocation && activeLocation.label;
 };
@@ -108,21 +109,21 @@ export const buildLocationName = (
 export const buildLocationFromNames = (name_0, name_1, name_2) =>
   `${name_2 ? `${name_2}, ` : ''}${name_1 ? `${name_1}, ` : ''}${name_0}`;
 
-export const locationLevelToStr = location => {
+export const locationLevelToStr = (location) => {
   const { type, adm0, adm1, adm2 } = location;
   if (adm2) return 'adm2';
-  else if (adm1) return 'adm1';
-  else if (adm0) return 'adm0';
+  if (adm1) return 'adm1';
+  if (adm0) return 'adm0';
   return type || 'global';
 };
 
-export const validateEmail = email => {
+export const validateEmail = (email) => {
   // eslint-disable-next-line
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };
 
-export const validateURL = url => {
+export const validateURL = (url) => {
   if (!url) return true;
   // eslint-disable-next-line
   const re = /((([A-Za-z]{3,9}:(?:\/\/)+)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(:[0-9]+)?|(?:www\.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
@@ -130,8 +131,10 @@ export const validateURL = url => {
 };
 
 export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
-  const forestType = forestTypes.find(f => f.value === activeForestType);
-  const landCategory = landCategories.find(f => f.value === activeLandCategory);
+  const forestType = forestTypes.find((f) => f.value === activeForestType);
+  const landCategory = landCategories.find(
+    (f) => f.value === activeLandCategory
+  );
   if (!forestType && !landCategory) return null;
   let label = '';
   let value = '';
@@ -160,6 +163,6 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 
   return {
     label: label.replace('({iflyear})', ifl),
-    value
+    value,
   };
 };

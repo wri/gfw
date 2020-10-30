@@ -14,13 +14,12 @@ class CategoriesMenu extends PureComponent {
       <div className="c-categories-menu">
         <h2 className="categories-title">DATASETS</h2>
         <ul className="categories-wrapper">
-          {categories.map(c => (
+          {categories.map((c) => (
             <li key={c.category}>
               <button
                 className={cx({ active: c.active })}
                 onClick={() =>
-                  onSelectCategory({ datasetCategory: c.category })
-                }
+                  onSelectCategory({ datasetCategory: c.category })}
               >
                 <div className="category-button">
                   {!!c.layerCount && (
@@ -40,7 +39,7 @@ class CategoriesMenu extends PureComponent {
 
 CategoriesMenu.propTypes = {
   categories: PropTypes.array,
-  onSelectCategory: PropTypes.func
+  onSelectCategory: PropTypes.func,
 };
 
 export default CategoriesMenu;

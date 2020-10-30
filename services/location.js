@@ -49,7 +49,7 @@ export const geostoreConfig = {
       const { title, ...props } = response?.data?.data;
 
       return {
-        locationName: title,
+        locationName: title || 'Area',
         ...props,
       };
     }),

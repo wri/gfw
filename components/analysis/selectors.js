@@ -25,6 +25,7 @@ const selectEmbed = (state) => state.location?.pathname?.includes('/embed');
 const selectError = (state) =>
   (state.analysis && state.analysis.error) ||
   (state.geostore && state.geostore.error);
+const selectGeostoreError = (state) => state.geostore?.error;
 const selectDatasets = (state) => state.datasets && state.datasets.data;
 const selectGeostoreSize = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.areaHa;
@@ -174,6 +175,7 @@ export const checkGeostoreSize = createSelector(
 export const getAnalysisProps = createStructuredSelector({
   loading: getLoading,
   error: selectError,
+  geostoreError: selectGeostoreError,
   embed: selectEmbed,
   endpoints: getLayerEndpoints,
   location: getDataLocation,

@@ -21,11 +21,11 @@ class WidgetComposedChart extends Component {
     active: PropTypes.bool,
     simple: PropTypes.bool,
     barBackground: PropTypes.string,
-    toggleSettingsMenu: PropTypes.func
+    toggleSettingsMenu: PropTypes.func,
   };
 
   static defaultProps = {
-    preventRenderKeys: []
+    preventRenderKeys: [],
   };
 
   shouldComponentUpdate(nextProps) {
@@ -34,7 +34,7 @@ class WidgetComposedChart extends Component {
       data: nextData,
       settings: nextSettings,
       config: nextConfig,
-      preventRenderKeys: nextPreventRenderKeys
+      preventRenderKeys: nextPreventRenderKeys,
     } = nextProps;
 
     return (
@@ -48,7 +48,7 @@ class WidgetComposedChart extends Component {
     );
   }
 
-  handleMouseMove = debounce(data => {
+  handleMouseMove = debounce((data) => {
     const { parseInteraction, handleChangeSettings } = this.props;
     if (parseInteraction && handleChangeSettings) {
       const { activePayload } = data && data;
@@ -69,13 +69,14 @@ class WidgetComposedChart extends Component {
   handleBrushEnd = ({ startIndex, endIndex }) => {
     const { originalData, handleChangeSettings } = this.props;
     if (handleChangeSettings) {
-      const dataEnd = originalData[endIndex] || originalData[originalData.length - 1];
+      const dataEnd =
+        originalData[endIndex] || originalData[originalData.length - 1];
 
       handleChangeSettings({
         startIndex,
         endIndex,
-        startDateAbsolute: originalData[startIndex].date,
-        endDateAbsolute: dataEnd.date
+        startDateAbsolute: originalData[startIndex]?.date,
+        endDateAbsolute: dataEnd.date,
       });
     }
   };
@@ -89,17 +90,16 @@ class WidgetComposedChart extends Component {
       active,
       simple,
       barBackground,
-      toggleSettingsMenu
+      toggleSettingsMenu,
     } = this.props;
     const { brush, legend } = config;
-    const showLegendSettingsBtn = settingsConfig && settingsConfig.some(
-      conf => conf.key === 'compareYear'
-    );
+    const showLegendSettingsBtn =
+      settingsConfig &&
+      settingsConfig.some((conf) => conf.key === 'compareYear');
 
     return (
       <div className="c-widget-composed-chart">
-        {!simple &&
-          legend && (
+        {!simple && legend && (
           <Legend
             data={data}
             config={legend}
@@ -120,8 +120,7 @@ class WidgetComposedChart extends Component {
           handleMouseLeave={this.handleMouseLeave}
         />
 
-        {!simple &&
-          brush && (
+        {!simple && brush && (
           <Brush
             {...brush}
             data={originalData}

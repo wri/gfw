@@ -14,7 +14,7 @@ function SankeyNode({ x, y, height, index, payload, config }) {
     ? config.shouldShowLabel(payload)
     : true;
 
-  const tSpans = text => {
+  const tSpans = (text) => {
     const fontSize = config.fontSize || 12;
     const lineHeight = config.lineHeigth || 1.1;
     const textHeight = config.textHeight || 20;
@@ -38,10 +38,12 @@ function SankeyNode({ x, y, height, index, payload, config }) {
           (t, i) =>
             `<tspan
           x="${startX}"
-          y="${startY +
+          y="${
+            startY +
             fontSize * lineHeight +
             i * fontSize * lineHeight -
-            0.5 * (svgTexts.length - 1) * fontSize}"
+            0.5 * (svgTexts.length - 1) * fontSize
+          }"
         >
           ${t}
         </tspan>`
@@ -83,7 +85,6 @@ function SankeyNode({ x, y, height, index, payload, config }) {
 SankeyNode.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
-  width: PropTypes.number,
   height: PropTypes.number,
   index: PropTypes.number,
   payload: PropTypes.shape({
@@ -98,24 +99,31 @@ SankeyNode.propTypes = {
     targetNodes: PropTypes.array,
     value: PropTypes.number,
     x: PropTypes.number,
-    y: PropTypes.number
+    y: PropTypes.number,
   }),
   config: PropTypes.shape({
     unit: PropTypes.string,
     suffix: PropTypes.string,
+    shouldShowLabel: PropTypes.func,
+    highlight: PropTypes.func,
+    nodeWidth: PropTypes.number,
+    padding: PropTypes.number,
     // Padding for the titles, before and after the chart
-    titlePadding: PropTypes.number
-  })
+    titlePadding: PropTypes.number,
+    fontSize: PropTypes.number,
+    lineHeigth: PropTypes.number,
+    textHeight: PropTypes.number,
+    tspanLineHeight: PropTypes.number,
+  }),
 };
 
 SankeyNode.defaultProps = {
   x: 0,
   y: 0,
-  width: 20,
   height: 20,
   index: 0,
   payload: {},
-  config: {}
+  config: {},
 };
 
 export default SankeyNode;
