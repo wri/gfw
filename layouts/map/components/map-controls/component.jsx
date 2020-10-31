@@ -56,8 +56,8 @@ class MapControlsButtons extends PureComponent {
       trackEvent({
         category: 'Map settings',
         action: 'Other buttons',
-        label: 'Map only'
-      })
+        label: 'Map only',
+      });
     }
   };
 
@@ -102,8 +102,8 @@ class MapControlsButtons extends PureComponent {
       trackEvent({
         category: 'Map settings',
         action: 'Recent imagery feature',
-        label: 'User turns on recent imagery'
-      })
+        label: 'User turns on recent imagery',
+      });
     }
   };
 
@@ -136,8 +136,8 @@ class MapControlsButtons extends PureComponent {
             trackEvent({
               category: 'Map settings',
               action: 'Recent imagery feature',
-              label: 'User opens the config window'
-            })
+              label: 'User opens the config window',
+            });
           }
         }}
         disabled={datasetsLoading}
@@ -258,8 +258,8 @@ class MapControlsButtons extends PureComponent {
             trackEvent({
               category: 'Map settings',
               action: 'Other buttons',
-              label: 'Zoom out'
-            })
+              label: 'Zoom out',
+            });
           }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom <= minZoom}
@@ -273,8 +273,8 @@ class MapControlsButtons extends PureComponent {
             trackEvent({
               category: 'Map settings',
               action: 'Other buttons',
-              label: 'Zoom in'
-            })
+              label: 'Zoom in',
+            });
           }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom >= maxZoom}
@@ -347,11 +347,12 @@ class MapControlsButtons extends PureComponent {
     <Button
       theme="theme-button-map-control"
       tooltip={{ text: 'Print (not yet available)' }}
-      onClick={() => trackEvent({
-        category: 'Map settings',
-        action: 'Other buttons',
-        label: 'Print map'
-      })}
+      onClick={() =>
+        trackEvent({
+          category: 'Map settings',
+          action: 'Other buttons',
+          label: 'Print map',
+        })}
       disabled
     >
       <Icon icon={printIcon} className="print-icon" />
@@ -385,7 +386,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon:
+          lat, lon: 
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>

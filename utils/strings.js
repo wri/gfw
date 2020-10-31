@@ -1,4 +1,4 @@
-export const pluralise = str => {
+export const pluralise = (str) => {
   if (str.substr(-1) === 's') return str;
   return str.substr(-1) === 'y' && str.substr(-1) !== 's'
     ? `${str.substr(0, str.length - 1)}ies`
@@ -22,7 +22,7 @@ export const splitSVGText = (
   const lines = [];
   let currentLine = '';
 
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words.length; i += 1) {
     const word = words[i];
     let line = word;
     if (currentLine.trim() !== '') {

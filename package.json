@@ -11,14 +11,12 @@
     "postbuild": "next-sitemap",
     "start": "next start -p $PORT",
     "test": "start-test dev 3000 cy:open",
-    "start:test": "next start",
-    "test:ci": "yarn build && start-test start:test 3000 cy:run",
     "cy:record": "cypress run --env RECORD=1",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
     "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
-    "lint": "eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** ./constants/** ./analytics/** -c .eslintrc.json --ext js,jsx"
+    "lint": "eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** ./constants/** -c .eslintrc.json --ext js,jsx"
   },
   "repository": {
     "type": "git",
@@ -52,7 +50,7 @@
     "autoprefixer": "^9.7.5",
     "babel-eslint": "^10.1.0",
     "babel-plugin-istanbul": "^6.0.0",
-    "cypress": "^5.4.0",
+    "cypress": "^5.5.0",
     "cypress-audit": "^0.2.3",
     "cypress-lighthouse": "^0.1.0",
     "eslint": "^6.8.0",
@@ -100,7 +98,7 @@
     "fast-redux": "^0.7.1",
     "file-saver": "^2.0.2",
     "final-form": "^4.18.7",
-    "gfw-components": "^1.6.6",
+    "gfw-components": "^1.6.9",
     "glob": "7.1.2",
     "history": "4.7.2",
     "image-trace-loader": "^1.0.2",

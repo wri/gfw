@@ -88,25 +88,24 @@ class MapGeostore extends Component {
     this.mounted = false;
   }
 
-  handleGetGeostore = () => {
+  handleGetGeostore = async () => {
     if (this.mounted) {
       this.setState({ error: false });
-      getGeostoreProvider(this.props.location)
-        .then((response) => {
-          if (this.mounted) {
-            const { data } = response.data || {};
-            const geostore = buildGeostore(
-              { id: data.id, ...data.attributes },
-              this.props.location
-            );
-            this.setState({ geostore });
-          }
-        })
-        .catch(() => {
-          if (this.mounted) {
-            this.setState({ error: true });
-          }
-        });
+      try {
+        if (this.mounted) {
+          const response = await getGeostoreProvider(this.props.location);
+          const { data } = response.data || {};
+          const geostore = buildGeostore(
+            { id: data.id, ...data.attributes },
+            this.props.location
+          );
+          this.setState({ geostore });
+        }
+      } catch (error) {
+        if (this.mounted) {
+          this.setState({ error: true });
+        }
+      }
     }
   };
 

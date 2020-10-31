@@ -13,7 +13,7 @@ class DashboardPrompts extends PureComponent {
       setTourOpen,
       setDashboardPromptsSettings,
       showPrompts,
-      handleShowPrompts
+      handleShowPrompts,
     } = this.props;
 
     return open && data ? (
@@ -24,9 +24,8 @@ class DashboardPrompts extends PureComponent {
         stepIndex={stepIndex}
         setTourClosed={setTourOpen}
         showPrompts={showPrompts}
-        handleStateChange={state =>
-          setDashboardPromptsSettings({ stepsKey, ...state, force: true })
-        }
+        handleStateChange={(state) =>
+          setDashboardPromptsSettings({ stepsKey, ...state, force: true })}
         handleShowPrompts={handleShowPrompts}
         settings={data.settings}
       />
@@ -42,7 +41,7 @@ DashboardPrompts.propTypes = {
   setDashboardPromptsSettings: PropTypes.func,
   setTourOpen: PropTypes.func,
   showPrompts: PropTypes.bool,
-  handleShowPrompts: PropTypes.func
+  handleShowPrompts: PropTypes.func,
 };
 
 export default DashboardPrompts;
