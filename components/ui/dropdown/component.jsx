@@ -60,7 +60,6 @@ class Dropdown extends PureComponent {
     handleClearSelection: PropTypes.func,
     onInputClick: PropTypes.func,
     onSelectorClick: PropTypes.func,
-    isDeviceTouch: PropTypes.bool,
     inputValue: PropTypes.string,
     isOpen: PropTypes.bool,
     showGroup: PropTypes.string,
@@ -116,7 +115,6 @@ class Dropdown extends PureComponent {
       handleSelectGroup,
       buildInputProps,
       onSelectorClick,
-      isDeviceTouch,
       isOpen,
       showGroup,
       items,
@@ -129,7 +127,7 @@ class Dropdown extends PureComponent {
       onChange,
       options,
       selectorIcon,
-      layout
+      layout,
     } = this.props;
 
     const dropdown = (
@@ -224,8 +222,8 @@ class Dropdown extends PureComponent {
             arrow
             hideOnClick
             html={<Tip text={tooltip.text} />}
+            touchHold
             {...tooltip}
-            disabled={isDeviceTouch || tooltip.disabled}
           >
             {dropdown}
           </Tooltip>

@@ -1,7 +1,6 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { isTouch } from 'utils/browser';
 import { deburrUpper } from 'utils/strings';
 import groupBy from 'lodash/groupBy';
 import remove from 'lodash/remove';
@@ -21,7 +20,6 @@ const mapStateToProps = (
   return {
     modalOpen: modalMeta ? modalMeta.open : false,
     modalClosing: modalMeta ? modalMeta.closing : false,
-    isDeviceTouch: isTouch(),
     activeValue,
     activeLabel,
   };
