@@ -8,7 +8,7 @@ import { decodeParamsForState } from 'utils/stateToUrl';
 import { getLocationData } from 'services/location';
 import { getCountriesProvider } from 'services/country';
 
-import PageLayout from 'layouts/wrappers/page';
+import PageLayout from 'wrappers/page';
 import Dashboards from 'layouts/dashboards';
 
 import DashboardsUrlProvider from 'providers/dashboards-url-provider';

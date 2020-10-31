@@ -7,7 +7,7 @@ import { decodeParamsForState } from 'utils/stateToUrl';
 import { getLocationData } from 'services/location';
 import { getCountriesProvider } from 'services/country';
 
-import FullscreenLayout from 'layouts/wrappers/fullscreen';
+import FullscreenLayout from 'wrappers/fullscreen';
 import Map from 'layouts/map';
 
 import MapUrlProvider from 'providers/map-url-provider';

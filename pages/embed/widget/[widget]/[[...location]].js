@@ -7,7 +7,7 @@ import { decodeParamsForState } from 'utils/stateToUrl';
 
 import { getLocationData } from 'services/location';
 
-import LayoutEmbed from 'layouts/wrappers/embed';
+import LayoutEmbed from 'wrappers/embed';
 import WidgetEmbed from 'layouts/embed/widget';
 
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';

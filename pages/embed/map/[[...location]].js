@@ -6,7 +6,7 @@ import { decodeParamsForState } from 'utils/stateToUrl';
 
 import MapUrlProvider from 'providers/map-url-provider';
 
-import LayoutEmbed from 'layouts/wrappers/embed';
+import LayoutEmbed from 'wrappers/embed';
 import MapEmbed from 'layouts/embed/map';
 
 import { setMapSettings } from 'components/map/actions';

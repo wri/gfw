@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
-import Head from 'layouts/wrappers/head';
+import Head from 'wrappers/head';
 
 import './styles.scss';
 
