@@ -64,7 +64,7 @@ class MapControlsButtons extends PureComponent {
   onBasemapsRequestClose = () => {
     const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
     this.basemapsRef.clearEvt();
-    if (!isTargetOnTooltip && this.props.showBasemaps) {
+    if (!isTargetOnTooltip && !this.props.metaModalOpen && this.props.showBasemaps) {
       this.toggleBasemaps();
     }
   };
@@ -386,7 +386,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon: 
+          lat, lon:
           {' '}
           {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
@@ -453,6 +453,7 @@ MapControlsButtons.propTypes = {
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
   activeBasemap: PropTypes.object,
+  metaModalOpen: PropTypes.bool
 };
 
 export default connect()(MapControlsButtons);
