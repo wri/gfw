@@ -4,12 +4,13 @@ import ReactGA from 'react-ga';
 import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
 import ReactPixel from 'utils/facebook';
+import { COOKIES_SLUG } from 'utils/cookies';
 
 const IS_BROWSER = typeof window !== 'undefined';
 
 export const initAnalytics = () => {
   if (IS_BROWSER) {
-    const agreeCookies = localStorage.getItem('agreeCookies');
+    const agreeCookies = localStorage.getItem(COOKIES_SLUG);
     if (agreeCookies) {
       window.ANALYTICS_INITIALIZED = true;
       ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
