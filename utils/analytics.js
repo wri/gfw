@@ -4,24 +4,21 @@ import ReactGA from 'react-ga';
 import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
 import ReactPixel from 'utils/facebook';
-import { COOKIES_SLUG } from 'utils/cookies';
+import { getAgreedCookies } from 'utils/cookies';
 
-const IS_BROWSER = typeof window !== 'undefined';
+const isServer = typeof window !== 'undefined';
 
 export const initAnalytics = () => {
-  if (IS_BROWSER) {
-    const agreeCookies = localStorage.getItem(COOKIES_SLUG);
-    if (agreeCookies) {
-      window.ANALYTICS_INITIALIZED = true;
-      ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
-      ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
-      TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
-    }
+  if (isServer && getAgreedCookies()) {
+    window.ANALYTICS_INITIALIZED = true;
+    ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
+    ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
+    TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
   }
 };
 
 export const trackPage = (url) => {
-  if (IS_BROWSER && window.ANALYTICS_INITIALIZED) {
+  if (isServer && window.ANALYTICS_INITIALIZED) {
     const pageUrl =
       url || `${window.location.pathname}${window.location.search}`;
     ReactGA.set({ page: pageUrl });
@@ -32,7 +29,7 @@ export const trackPage = (url) => {
 };
 
 export const trackEvent = (event) => {
-  if (IS_BROWSER && window.ANALYTICS_INITIALIZED) {
+  if (isServer && window.ANALYTICS_INITIALIZED) {
     ReactGA.event(event);
   }
 };
