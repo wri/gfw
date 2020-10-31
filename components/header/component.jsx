@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
+import useRouter from 'utils/router';
 
 import { Header as HeaderComponent } from 'gfw-components';
 
@@ -8,7 +8,7 @@ import NavLink from 'components/nav-link';
 import './styles.scss';
 
 const Header = ({ setModalContactUsOpen, fullScreen }) => {
-  const { push } = useRouter();
+  const { push, pushQuery, asPath, query } = useRouter();
 
   return (
     <HeaderComponent
@@ -20,8 +20,13 @@ const Header = ({ setModalContactUsOpen, fullScreen }) => {
           </NavLink>
         ) : null}
       openContactUsModal={() => setModalContactUsOpen(true)}
-      setQueryToUrl={(query) => push(`/search/?query=${query}`)}
+      setQueryToUrl={(search) => push(`/search/?query=${search}`)}
       fullScreen={fullScreen}
+      afterLangSelect={(lang) =>
+        pushQuery({
+          pathname: `${asPath?.split('?')?.[0]}`,
+          query: { ...query, lang },
+        })}
     />
   );
 };

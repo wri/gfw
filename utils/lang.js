@@ -3,28 +3,6 @@ import { useRouter } from 'next/router';
 
 const isServer = typeof window === 'undefined';
 
-export const googleLangCode = {
-  es_MX: 'es',
-  en: 'en',
-  zh: 'zh-CH',
-  pt_BR: 'pt',
-  fr: 'fr',
-  id: 'id',
-};
-
-export const getGoogleLangCode = (lang) => googleLangCode[lang || 'en'];
-
-export const momentLangCode = {
-  es_MX: 'es',
-  en: 'en',
-  zh: 'zh-cn',
-  pt_BR: 'pt-br',
-  fr: 'fr',
-  id: 'id',
-};
-
-export const getMomentLangCode = (lang) => momentLangCode[lang || 'en'];
-
 export const languages = [
   {
     label: 'English',
@@ -51,6 +29,39 @@ export const languages = [
     value: 'es_MX',
   },
 ];
+
+export const googleLangCodes = {
+  es_MX: 'es',
+  en: 'en',
+  zh: 'zh-CH',
+  pt_BR: 'pt',
+  fr: 'fr',
+  id: 'id',
+};
+
+export const getGoogleLangCode = (lang) => googleLangCodes[lang || 'en'];
+
+export const momentLangCodes = {
+  es_MX: 'es',
+  en: 'en',
+  zh: 'zh-cn',
+  pt_BR: 'pt-br',
+  fr: 'fr',
+  id: 'id',
+};
+
+export const getMomentLangCode = (lang) => momentLangCodes[lang || 'en'];
+
+export const mapboxLangCodes = {
+  es_MX: 'es',
+  en: 'en',
+  zh: 'zh-Hans',
+  pt_BR: 'pt',
+  fr: 'fr',
+  id: 'en',
+};
+
+export const getMapboxLang = (lang) => mapboxLangCodes[lang || 'en'];
 
 export function translateText(str, params) {
   if (!str || typeof str !== 'string') {

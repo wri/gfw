@@ -6,7 +6,7 @@ import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
 
-import { selectActiveLang } from 'utils/lang';
+import { selectActiveLang, getMapboxLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import basemaps from './basemaps';
@@ -574,12 +574,9 @@ export const getInteractionSelected = createSelector(
   }
 );
 
-export const getActiveMapLang = createSelector(selectActiveLang, (lang) => {
-  if (lang === 'pt_BR') return 'pt';
-  if (lang === 'es_MX') return 'es';
-  if (lang === 'id') return 'en';
-  return lang;
-});
+export const getActiveMapLang = createSelector(selectActiveLang, (lang) =>
+  getMapboxLang(lang)
+);
 
 export const getMapProps = createStructuredSelector({
   viewport: getMapViewport,
