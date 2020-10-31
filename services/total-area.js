@@ -1,5 +1,5 @@
 import { cartoRequest } from 'utils/request';
-import { buildGadm36Id } from 'utils/gadm';
+import { getGadm36Id } from 'utils/gadm';
 
 const SQL_QUERIES = {
   getCountryArea:
@@ -15,12 +15,12 @@ export const getArea = ({ adm0, adm1, adm2 }) => {
   if (adm0) {
     url = `/sql?q=${SQL_QUERIES.getSubRegionArea}`
       .replace('{adm0}', adm0)
-      .replace('{adm1}', buildGadm36Id(adm0, adm1))
-      .replace('{adm2}', buildGadm36Id(adm0, adm1, adm2));
+      .replace('{adm1}', getGadm36Id(adm0, adm1))
+      .replace('{adm2}', getGadm36Id(adm0, adm1, adm2));
   } else if (adm1) {
     url = `/sql?q=${SQL_QUERIES.getRegionArea}`
       .replace('{adm0}', adm0)
-      .replace('{adm1}', buildGadm36Id(adm0, adm1));
+      .replace('{adm1}', getGadm36Id(adm0, adm1));
   } else {
     url = `/sql?q=${SQL_QUERIES.getCountryArea}`.replace('{adm0}', adm0);
   }

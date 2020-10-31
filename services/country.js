@@ -1,5 +1,5 @@
 import { cartoRequest } from 'utils/request';
-import { buildGadm36Id } from 'utils/gadm';
+import { getGadm36Id } from 'utils/gadm';
 
 const SQL_QUERIES = {
   getCountries:
@@ -36,7 +36,7 @@ export const getRegionsProvider = ({ adm0, token }) => {
 export const getSubRegionsProvider = (adm0, adm1, token) => {
   const url = `/sql?q=${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', adm0)
-    .replace('{adm1}', buildGadm36Id(adm0, adm1));
+    .replace('{adm1}', getGadm36Id(adm0, adm1));
   return cartoRequest.get(url, { cancelToken: token });
 };
 
