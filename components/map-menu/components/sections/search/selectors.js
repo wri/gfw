@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { deburrUpper } from 'utils/string';
+import { deburrUpper } from 'utils/strings';
 import { buildGadm36Id } from 'utils/gadm';
 import sortBy from 'lodash/sortBy';
 import { translateText, selectActiveLang } from 'utils/lang';
