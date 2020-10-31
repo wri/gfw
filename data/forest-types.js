@@ -3,13 +3,13 @@ import {
   INTACT_FOREST_LANDSCAPES_DATASET,
   PRIMARY_FOREST_DATASET,
   MANGROVE_FORESTS_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   TREE_PLANTATIONS,
   INTACT_FOREST_LANDSCAPES,
   PRIMARY_FOREST,
   MANGROVE_FORESTS,
-} from 'constants/layers';
+} from 'data/layers';
 
 export default [
   {

@@ -12,7 +12,7 @@ import {
   getGeodescriberDescription,
 } from 'providers/geodescriber-provider/selectors';
 
-import { FOREST_GAIN, FOREST_LOSS } from 'constants/layers';
+import { FOREST_GAIN, FOREST_LOSS } from 'data/layers';
 
 const gainID = FOREST_GAIN;
 const lossID = FOREST_LOSS;

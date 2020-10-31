@@ -19,7 +19,7 @@ import {
   FOREST_GAIN_DATASET,
   FOREST_LOSS_DATASET,
   FOREST_EXTENT_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 
 import {
   GLAD_ALERTS,
@@ -30,7 +30,7 @@ import {
   FOREST_GAIN,
   FOREST_LOSS,
   FOREST_EXTENT,
-} from 'constants/layers';
+} from 'data/layers';
 
 import MapWelcomeImage1 from 'assets/images/map-welcome-1.png';
 import MapWelcomeImage2 from 'assets/images/map-welcome-2.png';

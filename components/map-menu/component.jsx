@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { trackEvent } from 'utils/analytics';
 
-import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
+import { BIOMASS_LOSS_DATASET } from 'data/datasets';
 
 import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';

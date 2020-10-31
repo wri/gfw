@@ -3,12 +3,12 @@ import { getBiomassStockGrouped } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_BIOMASS_DENSITY_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   TREE_BIOMASS_DENSITY,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 

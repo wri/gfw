@@ -5,14 +5,14 @@ import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_EXTENT_DATASET,
   INTACT_FOREST_LANDSCAPES_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
   TREE_COVER,
   INTACT_FOREST_LANDSCAPES,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
