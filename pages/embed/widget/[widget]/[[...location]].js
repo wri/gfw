@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
 
@@ -80,7 +80,7 @@ const WidgetEmbedPage = (props) => {
   const fullPathname = asPath?.split('?')?.[0];
 
   useEffect(() => {
-    const { widget, ...widgets } = decodeParamsForState(query) || {};
+    const { widget, ...widgets } = decodeQueryParams(query) || {};
 
     if (widgets) {
       dispatch(setWidgetsSettings(widgets));

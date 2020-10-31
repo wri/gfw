@@ -1,7 +1,13 @@
 import { CancelToken, create } from 'axios';
 // import wriAPISerializer from 'wri-json-api-serializer';
 
-import { GFW_API, GFW_DATA_API, CARTO_API, MAPBOX_API } from 'utils/constants';
+import {
+  GFW_API,
+  GFW_DATA_API,
+  GFW_TILES_API,
+  CARTO_API,
+  MAPBOX_API,
+} from 'utils/apis';
 
 const isServer = typeof window === 'undefined';
 
@@ -14,6 +20,12 @@ export const apiRequest = create({
 export const dataRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_DATA_API,
+  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+});
+
+export const tilesRequest = create({
+  timeout: 30 * 1000,
+  baseURL: GFW_TILES_API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 

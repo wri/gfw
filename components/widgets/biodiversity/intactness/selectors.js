@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'utils/colors';
 import breaks from './percentiles.json';
 
 // get list data

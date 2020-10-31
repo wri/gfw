@@ -1,5 +1,5 @@
 import { cartoRequest } from 'utils/request';
-import { buildGadm36Id } from 'utils/format';
+import { buildGadm36Id } from 'utils/gadm';
 
 const SQL_QUERIES = {
   getCountries:

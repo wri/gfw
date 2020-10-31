@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import { decodeQueryParams } from 'utils/url';
 
 import MapUrlProvider from 'providers/map-url-provider';
 
@@ -32,7 +32,7 @@ const MapEmbedPage = (props) => {
 
   useEffect(() => {
     const { map, mainMap, mapMenu, analysis, modalMeta, recentImagery } =
-      decodeParamsForState(query) || {};
+      decodeQueryParams(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));

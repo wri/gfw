@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
-import { translateText } from 'utils/transifex';
+import { translateText } from 'utils/lang';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';

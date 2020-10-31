@@ -1,7 +1,9 @@
 import React from 'react';
 import { Rectangle, Layer } from 'recharts';
 import { PropTypes } from 'prop-types';
-import { splitSVGText } from 'utils/strings';
+
+import { splitSVGText } from './utils';
+
 import './styles.scss';
 
 function SankeyNode({ x, y, height, index, payload, config }) {

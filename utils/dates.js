@@ -1,24 +1,4 @@
-import compact from 'lodash/compact';
 import moment from 'moment';
-
-export const formatDate = (date, format = 'YYYY-MM-DD') => {
-  const d = new Date(date);
-  let month = null;
-  let day = null;
-  const year = d.getFullYear();
-
-  if (format.includes('MM')) {
-    month = (d.getMonth() + 1).toString();
-    if (month.length < 2) month = `0${month}`;
-  }
-
-  if (format.includes('DD')) {
-    day = d.getDate().toString();
-    if (day.length < 2) day = `0${day}`;
-  }
-
-  return compact([year, month, day]).join('-');
-};
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -33,7 +13,7 @@ export const dateDiffInDays = (startDate, endDate) => {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 };
 
-export const getDayRange = params => {
+export const getDayRange = (params) => {
   const { startDate, endDate, minDate, maxDate, weeks } = params || {};
 
   const minDateTime = new Date(minDate);
@@ -55,7 +35,7 @@ export const getDayRange = params => {
   return {
     startDayIndex,
     endDayIndex,
-    numberOfDays
+    numberOfDays,
   };
 };
 

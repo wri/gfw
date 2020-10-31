@@ -1,5 +1,5 @@
 /* eslint-disable no-else-return */
-import { CARTO_API } from 'utils/constants';
+import { CARTO_API } from 'utils/apis';
 import { get } from 'axios';
 import { dataRequest } from 'utils/request';
 import { getGeodescriber } from 'services/geostore';

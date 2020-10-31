@@ -2,27 +2,27 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'utils/colors';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 const EMISSIONS_KEYS = ['Total including LUCF', 'Land-Use Change and Forestry'];
 
 // get list data
-const getData = state => state.data || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
-const getSentences = state => state.sentences;
+const getData = (state) => state.data || null;
+const getLocationName = (state) => state.locationLabel || null;
+const getColors = (state) => state.colors || null;
+const getSentences = (state) => state.sentences;
 
-const getSortedData = createSelector([getData], data => {
+const getSortedData = createSelector([getData], (data) => {
   if (!data || isEmpty(data)) return null;
 
   const sortedData = {
     data: [],
-    total: {}
+    total: {},
   };
   Object.keys(data)
-    .filter(key => EMISSIONS_KEYS.includes(data[key].sector))
-    .forEach(key => {
+    .filter((key) => EMISSIONS_KEYS.includes(data[key].sector))
+    .forEach((key) => {
       if (data[key].sector === 'Total including LUCF') {
         sortedData.total = data[key];
       } else {
@@ -32,7 +32,7 @@ const getSortedData = createSelector([getData], data => {
   return sortedData;
 });
 
-export const parseData = createSelector([getSortedData], sortedData => {
+export const parseData = createSelector([getSortedData], (sortedData) => {
   if (!sortedData || !sortedData.data.length) return null;
 
   const { data, total } = sortedData;
@@ -43,14 +43,14 @@ export const parseData = createSelector([getSortedData], sortedData => {
     chartData.push({
       year: item.year,
       e1Value,
-      e1Percentage: totalEmissions > 0 ? e1Value / totalEmissions * 100 : 100,
-      total: totalEmissions
+      e1Percentage: totalEmissions > 0 ? (e1Value / totalEmissions) * 100 : 100,
+      total: totalEmissions,
     });
   });
   return chartData;
 });
 
-export const parseConfig = createSelector([getColors], colors => {
+export const parseConfig = createSelector([getColors], (colors) => {
   const colorRange = getColorPalette(colors.ramp, 2);
 
   return {
@@ -65,32 +65,32 @@ export const parseConfig = createSelector([getColors], colors => {
           strokeWidth: 0,
           background: false,
           activeDot: false,
-          stackId: 1
-        }
-      }
+          stackId: 1,
+        },
+      },
     },
     xAxis: {
-      tickFormatter: yearTicksFormatter
+      tickFormatter: yearTicksFormatter,
     },
     unit: 'tCO₂e',
     tooltip: [
       {
-        key: 'year'
+        key: 'year',
       },
       {
         key: 'total',
         label: 'Total',
         unit: 'tCO₂e',
-        unitFormat: num => formatNumber({ num })
+        unitFormat: (num) => formatNumber({ num }),
       },
       {
         key: 'e1Percentage',
         label: 'Land-Use Change and Forestry',
         color: colorRange[0],
         unit: '%',
-        unitFormat: value => format('.1f')(value)
-      }
-    ]
+        unitFormat: (value) => format('.1f')(value),
+      },
+    ],
   };
 });
 
@@ -101,7 +101,7 @@ export const parseSentence = createSelector(
     const { positive, negative } = sentences;
     const { data, total } = sortedData;
     const emissionsCount = data[0].emissions
-      .map(a => a.value)
+      .map((a) => a.value)
       .reduce((iSum, value) => iSum + value);
     const totalEmissionsCount = total.emissions.reduce(
       (accumulator, item) =>
@@ -112,7 +112,7 @@ export const parseSentence = createSelector(
     const endYear = data[0].emissions[data[0].emissions.length - 1].year;
     const emissionFraction =
       totalEmissionsCount > 0
-        ? emissionsCount / totalEmissionsCount * 100
+        ? (emissionsCount / totalEmissionsCount) * 100
         : 100;
     const params = {
       location: locationName,
@@ -126,7 +126,7 @@ export const parseSentence = createSelector(
       )}tCO₂e`,
       startYear,
       endYear,
-      type: emissionsCount >= 0 ? 'net source' : 'net sink'
+      type: emissionsCount >= 0 ? 'net source' : 'net sink',
     };
 
     const sentence = emissionsCount >= 0 ? positive : negative;
@@ -138,5 +138,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

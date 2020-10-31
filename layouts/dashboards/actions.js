@@ -1,5 +1,5 @@
 import { createThunkAction } from 'redux/actions';
-import { getLocationFromData } from 'utils/format';
+import { getLocationFromData } from 'utils/gadm';
 import useRouter from 'utils/router';
 
 import { trackEvent } from 'utils/analytics';
@@ -106,7 +106,7 @@ export const handleLocationChange = createThunkAction(
       }${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${
         newPayload.adm2 ? `.${newPayload.adm2}` : ''
       }`,
-    })
+    });
 
     dispatch(
       setDashboardPromptsSettings({

@@ -10,7 +10,7 @@ import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
 import findLastIndex from 'lodash/findLastIndex';
 
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'utils/colors';
 import {
   getCumulativeStatsData,
   getDatesData,

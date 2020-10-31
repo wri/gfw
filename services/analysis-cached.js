@@ -1,13 +1,12 @@
-import { apiRequest, cartoRequest } from 'utils/request';
+import { apiRequest, tilesRequest, cartoRequest } from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
-import { get } from 'axios';
 
-import { GFW_API } from 'utils/constants';
-import { getIndicator } from 'utils/format';
+import { GFW_API } from 'utils/apis';
+import { getIndicator } from 'utils/indicators';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -835,9 +834,8 @@ export const fetchFiresWithin = (params) => {
 };
 
 export const fetchVIIRSLatest = () =>
-  get(
-    'https://tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date'
-  )
+  tilesRequest
+    .get('/nasa_viirs_fire_alerts/latest/max_alert__date')
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 

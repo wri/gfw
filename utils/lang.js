@@ -59,7 +59,7 @@ export function translateText(str, params) {
 
   if (typeof window !== 'undefined') {
     const { Transifex } = window;
-    if (!isServer) {
+    if (typeof Transifex !== 'undefined') {
       return Transifex.live.translateText(str, params);
     }
   }

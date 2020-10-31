@@ -3,8 +3,7 @@ import { useRouter } from 'next/router';
 import ReactGA from 'react-ga';
 import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
-import ReactPixel from 'utils/facebook-pixel';
-import { decodeUrlForState } from 'utils/stateToUrl';
+import ReactPixel from 'utils/facebook';
 
 const IS_BROWSER = typeof window !== 'undefined';
 
@@ -31,7 +30,7 @@ export const trackPage = (url) => {
   }
 };
 
-export const trackEvent = event => {
+export const trackEvent = (event) => {
   if (IS_BROWSER && window.ANALYTICS_INITIALIZED) {
     ReactGA.event(event);
   }
@@ -43,11 +42,7 @@ export const trackMapLatLon = (location) => {
   const position =
     map && `/location/${map.center.lat}/${map.center.lng}/${map.zoom}`;
   if (position) {
-    trackPage(
-      `${position}${window.location.pathname}?${JSON.stringify(
-        decodeUrlForState(window.location.search)
-      )}`
-    );
+    trackPage(`${position}${window.location.pathname}`);
   }
 };
 

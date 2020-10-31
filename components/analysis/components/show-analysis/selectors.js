@@ -1,9 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 
-import { GFW_API } from 'utils/constants';
-
-import { locationLevelToStr } from 'utils/format';
+import { GFW_API } from 'utils/apis';
+import { locationLevelToStr } from 'utils/location';
 
 import { getActiveLayers, getMapZoom } from 'components/map/selectors';
 import { getWidgetLayers, getLoading } from 'components/analysis/selectors';

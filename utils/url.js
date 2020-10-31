@@ -1,6 +1,7 @@
-import queryString from 'query-string';
-import legacyIds from 'data/legacy-ids.json';
+import { stringify } from 'query-string';
 import isEmpty from 'lodash/isEmpty';
+
+import legacyIds from 'data/legacy-ids.json';
 
 const idToSlugDict = legacyIds.reduce(
   (obj, item) => ({
@@ -21,7 +22,7 @@ const idToSlugDict = legacyIds.reduce(
   {}
 );
 
-export const decodeParamsForState = (params) => {
+export const decodeQueryParams = (params) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
     try {
@@ -67,48 +68,7 @@ export const decodeParamsForState = (params) => {
   return paramsParsed;
 };
 
-export const decodeUrlForState = (url) => {
-  const paramsParsed = {};
-  const params = queryString.parse(url);
-  Object.keys(params).forEach((key) => {
-    try {
-      paramsParsed[key] = JSON.parse(atob(params[key]));
-    } catch (err) {
-      paramsParsed[key] = params[key];
-    }
-  });
-
-  if (paramsParsed.map) {
-    paramsParsed.map = {
-      ...paramsParsed.map,
-      ...(paramsParsed.map.datasets && {
-        datasets:
-          paramsParsed.map &&
-          paramsParsed.map.datasets.reduce(
-            (arr, dataset) => [
-              ...arr,
-              {
-                ...dataset,
-                dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
-                layers: dataset.layers.reduce(
-                  (lArr, layerId) => [
-                    ...lArr,
-                    idToSlugDict[layerId] || layerId,
-                  ],
-                  []
-                ),
-              },
-            ],
-            []
-          ),
-      }),
-    };
-  }
-
-  return paramsParsed;
-};
-
-export const encodeStateForUrl = (params, options) => {
+export const encodeQueryParams = (params, options) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
     if (
@@ -122,5 +82,5 @@ export const encodeStateForUrl = (params, options) => {
     }
   });
 
-  return queryString.stringify(paramsParsed, options);
+  return stringify(paramsParsed, options);
 };

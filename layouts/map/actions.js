@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { getLocationFromData } from 'utils/format';
+import { getLocationFromData } from 'utils/gadm';
 import compact from 'lodash/compact';
 
 import useRouter from 'utils/router';

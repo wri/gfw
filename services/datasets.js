@@ -1,6 +1,6 @@
 import request from 'utils/request';
 
-import { RESOURCE_WATCH_API } from 'utils/constants';
+import { RESOURCE_WATCH_API } from 'utils/apis';
 
 const REQUEST_URL = `${RESOURCE_WATCH_API}`;
 const featureEnv = process.env.FEATURE_ENV;

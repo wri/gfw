@@ -1,11 +1,11 @@
 import request from 'utils/request';
-import { CLIMATE_WATCH_API } from 'utils/constants';
+import { CLIMATE_WATCH_API } from 'utils/apis';
 
 const REQUEST_URL = `${CLIMATE_WATCH_API}/emissions`;
 
 const QUERIES = {
   meta: '/meta',
-  gas: '?gas={gas}&location={adm0}&source={source}'
+  gas: '?gas={gas}&location={adm0}&source={source}',
 };
 
 export const getMeta = () => {

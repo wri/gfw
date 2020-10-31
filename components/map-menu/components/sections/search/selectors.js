@@ -1,11 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { deburrUpper } from 'utils/data';
-import { buildGadm36Id } from 'utils/format';
+import { deburrUpper } from 'utils/string';
+import { buildGadm36Id } from 'utils/gadm';
 import sortBy from 'lodash/sortBy';
-import { translateText } from 'utils/transifex';
+import { translateText, selectActiveLang } from 'utils/lang';
 
 import { getActiveDatasetsFromState } from 'components/map/selectors';
-import { selectActiveLang } from 'utils/lang';
 
 const selectSearch = (state) => state.mapMenu?.settings?.search;
 const selectLocation = (state) => state.location && state.location.payload;

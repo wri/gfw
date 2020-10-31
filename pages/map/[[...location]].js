@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
 import { getCountriesProvider } from 'services/country';
@@ -112,7 +112,7 @@ const MapPage = (props) => {
       modalMeta,
       recentImagery,
       mapPrompts,
-    } = decodeParamsForState(query) || {};
+    } = decodeQueryParams(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));

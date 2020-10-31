@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
 import { getCountriesProvider } from 'services/country';
@@ -110,7 +110,7 @@ const DashboardsPage = (props) => {
       showMap,
       widget,
       ...widgets
-    } = decodeParamsForState(query) || {};
+    } = decodeQueryParams(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));

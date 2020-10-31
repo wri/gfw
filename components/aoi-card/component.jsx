@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 import ContentLoader from 'react-content-loader';
-import { translateText } from 'utils/transifex';
+import { translateText } from 'utils/lang';
 import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 
@@ -39,7 +39,9 @@ const getLatestAlerts = ({ location, params }) =>
   ])
     .then(
       spread((gladsResponse, firesResponse) => {
-        const glads = (gladsResponse && gladsResponse.data && gladsResponse.data.data) || {};
+        const glads =
+          (gladsResponse && gladsResponse.data && gladsResponse.data.data) ||
+          {};
         const fires = firesResponse ? firesResponse.data.data : {};
 
         return {
@@ -161,9 +163,9 @@ class AoICard extends PureComponent {
       },
       {
         label: 'mothly summary',
-        subscribed: monthlySummary
-      }
-    ].filter(s => s.subscribed);
+        subscribed: monthlySummary,
+      },
+    ].filter((s) => s.subscribed);
     const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
     const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
     const isPending = status === 'pending';
