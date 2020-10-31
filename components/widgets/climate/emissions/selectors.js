@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
-import { getColorPalette } from 'utils/colors';
+import { getColorPalette } from 'components/widgets/utils/colors';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 const EMISSIONS_KEYS = ['Total including LUCF', 'Land-Use Change and Forestry'];

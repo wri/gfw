@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { hslShift } from 'utils/colors';
+import { hslShift } from 'components/widgets/utils/colors';
 
 // get list data
 const getData = (state) => state.data && state.data.data;

@@ -22,6 +22,22 @@ const idToSlugDict = legacyIds.reduce(
   {}
 );
 
+const remapDatasets = (datasets) =>
+  datasets?.reduce(
+    (arr, dataset) => [
+      ...arr,
+      {
+        ...dataset,
+        dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
+        layers: dataset.layers?.reduce(
+          (lArr, layerId) => [...lArr, idToSlugDict[layerId] || layerId],
+          []
+        ),
+      },
+    ],
+    []
+  );
+
 export const decodeQueryParams = (params) => {
   const paramsParsed = {};
   Object.keys(params).forEach((key) => {
@@ -38,30 +54,10 @@ export const decodeQueryParams = (params) => {
     }
   });
 
-  if (paramsParsed.map) {
+  if (paramsParsed?.map?.datasets) {
     paramsParsed.map = {
       ...paramsParsed.map,
-      ...(paramsParsed.map.datasets && {
-        datasets:
-          paramsParsed.map &&
-          paramsParsed.map.datasets.reduce(
-            (arr, dataset) => [
-              ...arr,
-              {
-                ...dataset,
-                dataset: idToSlugDict[dataset.dataset] || dataset.dataset,
-                layers: dataset.layers.reduce(
-                  (lArr, layerId) => [
-                    ...lArr,
-                    idToSlugDict[layerId] || layerId,
-                  ],
-                  []
-                ),
-              },
-            ],
-            []
-          ),
-      }),
+      datasets: remapDatasets(paramsParsed.map.datasets),
     };
   }
 

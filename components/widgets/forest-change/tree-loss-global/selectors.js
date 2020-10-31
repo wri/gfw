@@ -5,7 +5,7 @@ import sum from 'lodash/sum';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { getColorPalette } from 'utils/colors';
+import { getColorPalette } from 'components/widgets/utils/colors';
 import { sortByKey } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 

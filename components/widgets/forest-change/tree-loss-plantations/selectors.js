@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy';
 import uniqBy from 'lodash/uniqBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
-import { getColorPalette } from 'utils/colors';
+import { getColorPalette } from 'components/widgets/utils/colors';
 import { zeroFillYears } from 'components/widgets/utils/data';
 
 // get list data
