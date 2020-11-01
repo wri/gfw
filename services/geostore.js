@@ -1,94 +1,72 @@
-import { apiRequest, dataRequest } from 'utils/request';
+import { apiRequest } from 'utils/request';
 
-import BOUNDS from 'data/bounds.json';
+import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
+
 import BBOX from 'data/bbox.json';
 
-export const getBounds = (cornerBounds, country, region) => {
-  if (!region && Object.keys(BOUNDS).includes(country)) {
-    return BOUNDS[country];
-  }
+const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
 
-  return [
-    [cornerBounds[0], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[1]],
-  ];
-};
+const getWDPAGeostore = ({ id, token }) =>
+  getDatasetQuery({
+    dataset: 'wdpa_protected_areas',
+    sql: `SELECT gfw_geostore_id FROM data WHERE wdpaid = '${id}'`,
+    token,
+  }).then((data) =>
+    getDatasetGeostore({
+      dataset: 'wdpa_protected_areas',
+      geostoreId: data?.[0]?.gfw_geostore_id,
+      token,
+    }).then((geostore) => {
+      const { gfw_geojson, gfw_area__ha, gfw_bbox } = geostore;
 
-export const getBbox = (bbox, country, region) => {
-  if (!region && Object.keys(BBOX).includes(country)) {
-    return BBOX[country];
-  }
-  return bbox;
-};
-
-export const parseGeostore = (data, params) => {
-  const { adm0, adm1 } = params || {};
-  const { bbox } = data || {};
-  return {
-    ...data,
-    bbox: getBbox(bbox, adm0, adm1),
-    bounds: getBounds(bbox, adm0, adm1),
-  };
-};
-
-const parseGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
-  let slug = type !== 'geostore' ? type : '';
-  if (type === 'country') slug = 'admin';
-
-  return `/v2/geostore${slug ? `/${slug}` : ''}/${adm0}${
-    adm1 ? `/${adm1}` : ''
-  }${adm2 ? `/${adm2}` : ''}${`?simplify=${!adm1 ? thresh : thresh / 10}`}`;
-};
+      return {
+        id: data?.[0]?.gfw_geostore_id,
+        geojson: gfw_geojson,
+        areaHa: gfw_area__ha,
+        bbox: gfw_bbox,
+      };
+    })
+  );
 
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
-  let thresh = 0.005;
   if (!type || !adm0) return null;
-  if (type === 'country') {
-    const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
-    thresh = bigCountries.includes(adm0) ? 0.05 : 0.005;
-  } else if (type === 'wdpa') {
-    return dataRequest
-      .get(
-        `/dataset/wdpa_protected_areas/latest/query?sql=SELECT gfw_geostore_id FROM data WHERE wdpaid = '${adm0}'`,
-        { cancelToken: token }
-      )
-      .then((response) => {
-        const { gfw_geostore_id } = response?.data?.data?.[0];
-        return dataRequest
-          .get(
-            `/dataset/wdpa_protected_areas/latest/geostore/${gfw_geostore_id}`,
-            { cancelToken: token }
-          )
-          .then((geostoreResponse) => {
-            const {
-              gfw_geojson,
-              gfw_area__ha,
-              gfw_bbox,
-            } = geostoreResponse?.data?.data;
 
-            return {
-              id: gfw_geostore_id,
-              geojson: gfw_geojson,
-              areaHa: gfw_area__ha,
-              bbox: gfw_bbox,
-            };
-          });
+  let thresh = adm1 ? 0.0005 : 0.005;
+  let url = '/v2/geostore';
+
+  switch (type) {
+    case 'country':
+      thresh = LARGE_ISOS.includes(adm0) ? 0.05 : 0.005;
+      url = url.concat(
+        `/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`
+      );
+      break;
+    case 'use':
+      url = url.concat(`/use/${adm0}/${adm1}`);
+      break;
+    case 'geostore':
+      url = url.concat(`/${adm0}`);
+      break;
+    case 'wdpa':
+      return getWDPAGeostore({
+        id: adm0,
+        token,
       });
+    default:
+      return false;
   }
 
-  const url = parseGeostoreUrl({ type, adm0, adm1, adm2, thresh });
+  return apiRequest
+    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
+    .then((response) => {
+      const { attributes: geostore } = response?.data?.data || {};
 
-  return apiRequest.get(url, { cancelToken: token }).then((response) => {
-    const { data } = response?.data;
-
-    return parseGeostore(
-      { id: data.id, ...data.attributes },
-      { type, adm0, adm1, adm2 }
-    );
-  });
+      return {
+        ...geostore,
+        id: geostore?.hash,
+        bbox: BBOX[adm0] || geostore?.bbox,
+      };
+    });
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) =>

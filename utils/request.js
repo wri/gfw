@@ -7,6 +7,7 @@ import {
   GFW_TILES_API,
   CARTO_API,
   MAPBOX_API,
+  RESOURCE_WATCH_API,
 } from 'utils/apis';
 
 const isServer = typeof window === 'undefined';
@@ -26,6 +27,12 @@ export const dataRequest = create({
 export const tilesRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_TILES_API,
+  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+});
+
+export const rwRequest = create({
+  timeout: 30 * 1000,
+  baseURL: RESOURCE_WATCH_API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
