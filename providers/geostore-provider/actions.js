@@ -1,6 +1,5 @@
 import { createAction, createThunkAction } from 'redux/actions';
 import { getGeostore, saveGeostore } from 'services/geostore';
-import { buildGeostore } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
@@ -13,13 +12,8 @@ export const fetchGeostore = createThunkAction(
     if (type && adm0) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
       getGeostore({ type, adm0, adm1, adm2, token })
-        .then((response) => {
-          const { data } = response.data;
-          if (data && data.attributes) {
-            const geostore = buildGeostore(
-              { id: data.id, ...data.attributes },
-              params
-            );
+        .then((geostore) => {
+          if (geostore) {
             dispatch(setGeostore(geostore));
           }
         })

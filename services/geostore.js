@@ -1,6 +1,40 @@
 import { apiRequest, dataRequest } from 'utils/request';
 
-const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
+import BOUNDS from 'data/bounds.json';
+import BBOX from 'data/bbox.json';
+
+export const getBounds = (cornerBounds, country, region) => {
+  if (!region && Object.keys(BOUNDS).includes(country)) {
+    return BOUNDS[country];
+  }
+
+  return [
+    [cornerBounds[0], cornerBounds[1]],
+    [cornerBounds[0], cornerBounds[3]],
+    [cornerBounds[2], cornerBounds[3]],
+    [cornerBounds[2], cornerBounds[1]],
+    [cornerBounds[0], cornerBounds[1]],
+  ];
+};
+
+export const getBbox = (bbox, country, region) => {
+  if (!region && Object.keys(BBOX).includes(country)) {
+    return BBOX[country];
+  }
+  return bbox;
+};
+
+export const parseGeostore = (data, params) => {
+  const { adm0, adm1 } = params || {};
+  const { bbox } = data || {};
+  return {
+    ...data,
+    bbox: getBbox(bbox, adm0, adm1),
+    bounds: getBounds(bbox, adm0, adm1),
+  };
+};
+
+const parseGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   let slug = type !== 'geostore' ? type : '';
   if (type === 'country') slug = 'admin';
 
@@ -36,24 +70,25 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
             } = geostoreResponse?.data?.data;
 
             return {
-              data: {
-                data: {
-                  id: gfw_geostore_id,
-                  attributes: {
-                    geojson: gfw_geojson,
-                    areaHa: gfw_area__ha,
-                    bbox: gfw_bbox,
-                  },
-                },
-              },
+              id: gfw_geostore_id,
+              geojson: gfw_geojson,
+              areaHa: gfw_area__ha,
+              bbox: gfw_bbox,
             };
           });
       });
   }
 
-  const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
+  const url = parseGeostoreUrl({ type, adm0, adm1, adm2, thresh });
 
-  return apiRequest.get(url, { cancelToken: token });
+  return apiRequest.get(url, { cancelToken: token }).then((response) => {
+    const { data } = response?.data;
+
+    return parseGeostore(
+      { id: data.id, ...data.attributes },
+      { type, adm0, adm1, adm2 }
+    );
+  });
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) =>

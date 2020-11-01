@@ -12,7 +12,6 @@ import { PluginMapboxGl } from 'layer-manager';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 
 import { getGeostore } from 'services/geostore';
-import { buildGeostore } from 'utils/geoms';
 
 import Map from 'components/ui/map';
 
@@ -93,12 +92,7 @@ class MapGeostore extends Component {
       this.setState({ error: false });
       try {
         if (this.mounted) {
-          const response = await getGeostore(this.props.location);
-          const { data } = response.data || {};
-          const geostore = buildGeostore(
-            { id: data.id, ...data.attributes },
-            this.props.location
-          );
+          const geostore = await getGeostore(this.props.location);
           this.setState({ geostore });
         }
       } catch (error) {
