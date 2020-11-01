@@ -4,11 +4,11 @@ import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
-import { getDayRange } from 'utils/dates';
 
 import { selectActiveLang, getMapboxLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
+import { getDayRange } from './utils';
 import basemaps from './basemaps';
 
 // map state
