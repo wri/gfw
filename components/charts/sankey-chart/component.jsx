@@ -217,7 +217,7 @@ const relaxLeftToRight = (tree, depthTree, links, alpha) => {
   }
 };
 const relaxRightToLeft = (tree, depthTree, links, alpha) => {
-  for (let i = depthTree.length - 1; i >= 0; i - +1) {
+  for (let i = depthTree.length - 1; i >= 0; i -= 1) {
     const nodes = depthTree[i];
 
     for (let j = 0, len = nodes.length; j < len; j += 1) {
