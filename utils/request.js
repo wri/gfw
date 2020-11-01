@@ -1,5 +1,5 @@
 import { CancelToken, create } from 'axios';
-// import wriAPISerializer from 'wri-json-api-serializer';
+import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
   GFW_API,
@@ -21,7 +21,7 @@ export const apiRequest = create({
 export const dataRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_DATA_API,
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+  transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
 export const tilesRequest = create({
@@ -33,7 +33,7 @@ export const tilesRequest = create({
 export const rwRequest = create({
   timeout: 30 * 1000,
   baseURL: RESOURCE_WATCH_API,
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+  transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const apiAuthRequest = create({
