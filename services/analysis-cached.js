@@ -6,7 +6,6 @@ import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
 import { GFW_API } from 'utils/apis';
-import { getIndicator } from 'utils/indicators';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -85,6 +84,43 @@ const typeByGrouped = {
     default: 'adm2',
     grouped: 'adm2',
   },
+};
+
+export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
+  const forestType = forestTypes.find((f) => f.value === activeForestType);
+  const landCategory = landCategories.find(
+    (f) => f.value === activeLandCategory
+  );
+  if (!forestType && !landCategory) return null;
+  let label = '';
+  let value = '';
+  let forestTypeLabel = (forestType && forestType.label) || '';
+  let landCatLabel = (landCategory && landCategory.label) || '';
+
+  forestTypeLabel =
+    forestType && forestType.preserveString === true
+      ? forestTypeLabel
+      : forestTypeLabel.toLowerCase();
+  landCatLabel =
+    landCategory && landCategory.preserveString === true
+      ? landCatLabel
+      : landCatLabel.toLowerCase();
+
+  if (forestType && landCategory) {
+    label = `${forestTypeLabel} in ${landCatLabel}`;
+    value = `${forestType.value}__${landCategory.value}`;
+  } else if (landCategory) {
+    label = landCatLabel;
+    value = landCategory.value;
+  } else {
+    label = forestTypeLabel;
+    value = forestType.value;
+  }
+
+  return {
+    label: label.replace('({iflyear})', ifl),
+    value,
+  };
 };
 
 // build the base query for the query with the correct dataset id
