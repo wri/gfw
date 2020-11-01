@@ -2,7 +2,7 @@ import { apiRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
-import BBOX from 'data/bbox.json';
+import BBOXS from 'data/bboxs.json';
 
 const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
 
@@ -64,7 +64,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
       return {
         ...geostore,
         id: geostore?.hash,
-        bbox: BBOX[adm0] || geostore?.bbox,
+        bbox: BBOXS[adm0] || geostore?.bbox,
       };
     });
 };
