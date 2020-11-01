@@ -1,5 +1,12 @@
 @import '~styles/settings.scss';
 
+html {
+  font-family: 'Fira Sans', Arial, sans-serif;
+  color: #333;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 h1 {
   font-size: 48px;
   font-weight: 400;
@@ -55,15 +62,7 @@ a {
 
 a {
   color: $green-gfw;
-
-  &:hover {
-
-  }
 }
-
-
-
-
 
 // img {
 //   display: inline-block;
