@@ -18,12 +18,9 @@ export const parseGadm36Id = (gid) => {
   };
 };
 
-export const getLocationFromData = (data) => {
-  const newLocation =
-    (data?.gid_0 && parseGadm36Id(data[`gid_${data.level || '0'}`])) || {};
-
-  return {
-    type: 'country',
-    ...newLocation,
-  };
-};
+export const getGadmLocationByLevel = ({ level, ...location }) => ({
+  type: 'country',
+  ...(location?.gid_0 && {
+    ...parseGadm36Id(location[`gid_${level || '0'}`]),
+  }),
+});
