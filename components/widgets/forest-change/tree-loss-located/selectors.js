@@ -2,19 +2,19 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { formatNumber } from 'utils/format';
 import { format } from 'd3-format';
 
 // get list data
-const getLoss = state => state.data && state.data.lossByRegion;
-const getExtent = state => state.data && state.data.extent;
-const getSettings = state => state.settings;
-const getIndicator = state => state.indicator;
-const getLocationsMeta = state => state.childData;
-const getLocationName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
+const getLoss = (state) => state.data && state.data.lossByRegion;
+const getExtent = (state) => state.data && state.data.extent;
+const getSettings = (state) => state.settings;
+const getIndicator = (state) => state.indicator;
+const getLocationsMeta = (state) => state.childData;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
 
 export const mapData = createSelector(
   [getLoss, getExtent, getSettings, getLocationsMeta],
@@ -22,20 +22,20 @@ export const mapData = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
 
-    const mappedData = data.map(d => {
+    const mappedData = data.map((d) => {
       const region = meta[d.id];
       const loss =
         sumBy(
-          d.loss.filter(l => l.year >= startYear && l.year <= endYear),
+          d.loss.filter((l) => l.year >= startYear && l.year <= endYear),
           'area'
         ) || 0;
-      const locationExtentById = extent.filter(l => l.id === d.id);
+      const locationExtentById = extent.filter((l) => l.id === d.id);
       const locationExtent =
         locationExtentById &&
         !!locationExtentById.length &&
         locationExtentById[0].extent;
       const percentage =
-        loss && locationExtent ? loss / locationExtent * 100 : 0;
+        loss && locationExtent ? (loss / locationExtent) * 100 : 0;
       const normalPercentage = percentage > 100 ? 100 : percentage;
 
       return {
@@ -43,11 +43,11 @@ export const mapData = createSelector(
         loss,
         path: (region && region.path) || '',
         percentage: normalPercentage,
-        value: settings.unit === 'ha' ? loss : normalPercentage
+        value: settings.unit === 'ha' ? loss : normalPercentage,
       };
     });
 
-    return sortByKey(mappedData, 'loss');
+    return sortBy(mappedData, 'loss');
   }
 );
 
@@ -55,11 +55,11 @@ export const parseData = createSelector(
   [mapData, getColors],
   (data, colors) => {
     if (!data) return null;
-    const sortedData = sortByKey(uniqBy(data, 'label'), 'value', true);
+    const sortedData = sortBy(uniqBy(data, 'label'), 'value').reverse();
 
-    return sortedData.map(o => ({
+    return sortedData.map((o) => ({
       ...o,
-      color: colors.main
+      color: colors.main,
     }));
   }
 );
@@ -71,7 +71,7 @@ export const parseSentence = createSelector(
     getSettings,
     getIndicator,
     getLocationName,
-    getSentences
+    getSentences,
   ],
   (data, sortedData, settings, indicator, locationName, sentences) => {
     if (!data || !locationName || !sortedData) return null;
@@ -80,7 +80,7 @@ export const parseSentence = createSelector(
       withIndicator,
       initialPercent,
       withIndicatorPercent,
-      noLoss
+      noLoss,
     } = sentences;
     const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'loss') || 0;
@@ -104,7 +104,7 @@ export const parseSentence = createSelector(
       percentileLength += 1;
     }
 
-    const topLoss = percentileLoss / totalLoss * 100 || 0;
+    const topLoss = (percentileLoss / totalLoss) * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
 
     if (settings.unit !== '%') {
@@ -129,17 +129,17 @@ export const parseSentence = createSelector(
       average:
         topRegion.percentage > 0 && settings.unit === '%'
           ? formatNumber({ num: avgLossPercentage, unit: '%' })
-          : formatNumber({ num: avgLoss, unit: 'ha' })
+          : formatNumber({ num: avgLoss, unit: 'ha' }),
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

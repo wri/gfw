@@ -2,16 +2,16 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { formatUSD } from 'utils/format';
 
 // get list data
-const getData = state => state.data && state.data.data;
-const getSettings = state => state.settings;
-const getLocationsMeta = state => state.locationData;
-const getLocationObject = state => state.location;
-const getColors = state => state.colors;
-const getSentences = state => state.sentence;
+const getData = (state) => state.data && state.data.data;
+const getSettings = (state) => state.settings;
+const getLocationsMeta = (state) => state.locationData;
+const getLocationObject = (state) => state.location;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentence;
 
 // get lists selected
 export const getFilteredData = createSelector(
@@ -20,7 +20,7 @@ export const getFilteredData = createSelector(
     if (isEmpty(data)) return null;
     const { year } = settings;
     const gdps = data.filter(
-      item =>
+      (item) =>
         item.gdpusd2012 &&
         item.gdpusd2012 !== '' &&
         item.gdpusd2012 !== '-9999' &&
@@ -29,17 +29,17 @@ export const getFilteredData = createSelector(
 
     return data
       .filter(
-        d =>
+        (d) =>
           d.country !== 'LBN' &&
           d.usdrev !== null &&
           d.usdexp !== null &&
           d.usdexp !== '' &&
           d.year === year
       )
-      .map(item => {
+      .map((item) => {
         const usdexp = parseInt(item.usdexp, 10);
         const net = (item.usdrev - usdexp) * 1000;
-        const countryGdp = gdps.filter(d => d.country === item.country);
+        const countryGdp = gdps.filter((d) => d.country === item.country);
         const gdp = countryGdp.length
           ? parseFloat(countryGdp[0].gdpusd2012)
           : 0;
@@ -48,9 +48,9 @@ export const getFilteredData = createSelector(
           rev: item.usdrev * 1000,
           exp: usdexp * 1000,
           net_usd: net,
-          net_perc: gdp ? net / gdp * 100 : 0,
+          net_perc: gdp ? (net / gdp) * 100 : 0,
           gdp,
-          year: item.year
+          year: item.year,
         };
       });
   }
@@ -62,10 +62,12 @@ export const getSortedData = createSelector(
     if (!data || !data.length) return null;
 
     const { unit } = settings;
-    return sortByKey(data, unit, true).map((d, i) => ({
-      ...d,
-      rank: i + 1
-    }));
+    return sortBy(data, unit)
+      .reverse()
+      .map((d, i) => ({
+        ...d,
+        rank: i + 1,
+      }));
   }
 );
 
@@ -74,7 +76,9 @@ export const chartData = createSelector(
   (filteredData, locationObject, colors) => {
     if (!filteredData || !filteredData.length || !locationObject) return null;
 
-    const data = filteredData.filter(item => item.iso === locationObject.value);
+    const data = filteredData.filter(
+      (item) => item.iso === locationObject.value
+    );
     if (!data.length) return null;
 
     return [
@@ -82,14 +86,14 @@ export const chartData = createSelector(
         ...data[0],
         name: 'Expenditure',
         value: data[0].exp,
-        color: colors.male
+        color: colors.male,
       },
       {
         ...data[0],
         name: 'Revenue',
         value: data[0].rev,
-        color: colors.female
-      }
+        color: colors.female,
+      },
     ];
   }
 );
@@ -98,7 +102,10 @@ export const rankData = createSelector(
   [getSortedData, getSettings, getLocationsMeta, getLocationObject, getColors],
   (data, settings, meta, locationObject, colors) => {
     if (!data || !data.length || !locationObject) return null;
-    const locationIndex = findIndex(data, d => d.iso === locationObject.value);
+    const locationIndex = findIndex(
+      data,
+      (d) => d.iso === locationObject.value
+    );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
     if (locationIndex < 2) {
@@ -110,13 +117,13 @@ export const rankData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    return dataTrimmed.map(d => {
+    return dataTrimmed.map((d) => {
       const locationData = meta && meta[d.iso];
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        value: settings.unit === 'net_usd' ? d.net_usd : d.net_perc
+        value: settings.unit === 'net_usd' ? d.net_usd : d.net_perc,
       };
     });
   }
@@ -128,7 +135,7 @@ export const parseData = createSelector(
     if (!data || !rankedData) return null;
     return {
       chartData: data,
-      rankedData
+      rankedData,
     };
   }
 );
@@ -138,27 +145,29 @@ export const parseConfig = () => ({
   yKeys: {
     bars: {
       value: {
-        itemColor: true
-      }
-    }
+        itemColor: true,
+      },
+    },
   },
   xKey: 'name',
   tooltip: [
     {
       key: 'value',
       unit: ' USD',
-      unitFormat: value => formatUSD(value, false)
-    }
+      unitFormat: (value) => formatUSD(value, false),
+    },
   ],
   unit: ' $',
-  unitFormat: value => formatUSD(value)
+  unitFormat: (value) => formatUSD(value),
 });
 
 export const parseSentence = createSelector(
   [getFilteredData, getSettings, getLocationObject, getSentences],
   (data, settings, locationObject, sentence) => {
     if (isEmpty(data) || !locationObject) return null;
-    const selectedFAO = data.filter(item => item.iso === locationObject.value);
+    const selectedFAO = data.filter(
+      (item) => item.iso === locationObject.value
+    );
     if (!selectedFAO.length) return null;
 
     const params = {
@@ -168,12 +177,12 @@ export const parseSentence = createSelector(
         selectedFAO[0].net_perc >= 0.1
           ? `${format('2r')(selectedFAO[0].net_perc)}%`
           : '< 0.1%',
-      year: settings.year
+      year: settings.year,
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -181,5 +190,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

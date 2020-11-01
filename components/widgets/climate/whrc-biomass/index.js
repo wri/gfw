@@ -100,11 +100,15 @@ export default {
         let mappedData = [];
         if (data && data.length) {
           mappedData = data.map((item) => {
-            const { extent, biomass } = item;
-            const biomassDensity = biomass && extent > 0 ? biomass / extent : 0;
+            const { extent, biomass, carbon } = item;
+            const biomassDensity =
+              biomass > 0 && extent > 0 ? biomass / extent : 0;
             return {
               ...item,
               biomassDensity,
+              extent: extent || 0,
+              biomass: biomass || 0,
+              carbon: carbon || 0,
             };
           });
         }

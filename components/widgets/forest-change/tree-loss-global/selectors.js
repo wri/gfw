@@ -6,7 +6,7 @@ import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { getColorPalette } from 'components/widgets/utils/colors';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
@@ -54,15 +54,16 @@ export const getFilteredData = createSelector(
 
 export const getTopIsos = createSelector([getFilteredData], (data) => {
   if (isEmpty(data)) return null;
-  const groupedLoss = groupBy(sortByKey(data, 'area'), 'iso');
-  const sortedLoss = sortByKey(
+  const groupedLoss = groupBy(sortBy(data, 'area').reverse(), 'iso');
+  const sortedLoss = sortBy(
     Object.keys(groupedLoss).map((k) => ({
       iso: k,
       area: sumBy(groupedLoss[k], 'area') || 0,
     })),
-    'area',
-    true
-  ).slice(0, 5);
+    'area'
+  )
+    .reverse()
+    .slice(0, 5);
   return sortedLoss.map((d) => d.iso);
 });
 

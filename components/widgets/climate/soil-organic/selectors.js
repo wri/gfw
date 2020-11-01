@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import findIndex from 'lodash/findIndex';
 import { formatNumber } from 'utils/format';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 
 // get list data
 const getData = (state) => state.data;
@@ -20,7 +20,7 @@ const getSortedData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-    return sortByKey(data, settings.variable).reverse();
+    return sortBy(data, settings.variable).reverse();
   }
 );
 
@@ -83,7 +83,7 @@ export const parseSentence = createSelector(
     if (!sentences || isEmpty(data)) return null;
 
     if (location === 'global') {
-      const sorted = sortByKey(data, [settings.variable]).reverse();
+      const sorted = sortBy(data, settings.variable).reverse();
 
       let biomTop5 = 0;
       let densTop5 = 0;

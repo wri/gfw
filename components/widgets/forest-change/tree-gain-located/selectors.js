@@ -2,30 +2,30 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 
 // get list data
-const getGain = state => state.data && state.data.gain;
-const getExtent = state => state.data && state.data.extent;
-const getSettings = state => state.settings;
-const getIndicator = state => state.indicator;
-const getLocationsMeta = state => state.childData;
-const getLocationName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
+const getGain = (state) => state.data && state.data.gain;
+const getExtent = (state) => state.data && state.data.extent;
+const getSettings = (state) => state.settings;
+const getIndicator = (state) => state.indicator;
+const getLocationsMeta = (state) => state.childData;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
 
 export const getSortedData = createSelector(
   [getGain, getExtent, getSettings, getLocationsMeta, getColors],
   (data, extent, settings, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
-    data.forEach(d => {
+    data.forEach((d) => {
       const region = meta[d.id];
       if (region) {
-        const locationExtent = extent.find(l => l.id === parseInt(d.id, 10));
+        const locationExtent = extent.find((l) => l.id === parseInt(d.id, 10));
         const percentage = locationExtent
-          ? d.gain / locationExtent.extent * 100
+          ? (d.gain / locationExtent.extent) * 100
           : 0;
 
         dataMapped.push({
@@ -33,17 +33,17 @@ export const getSortedData = createSelector(
           gain: d.gain,
           percentage,
           value: settings.unit === 'ha' ? d.gain : percentage,
-          color: colors.main
+          color: colors.main,
         });
       }
     });
-    return sortByKey(dataMapped, 'gain');
+    return sortBy(dataMapped, 'gain');
   }
 );
 
-export const parseData = createSelector([getSortedData], data => {
+export const parseData = createSelector([getSortedData], (data) => {
   if (!data || !data.length) return null;
-  return sortByKey(uniqBy(data, 'label'), 'value', true);
+  return sortBy(uniqBy(data, 'label'), 'value').reverse();
 });
 
 export const parseSentence = createSelector(
@@ -53,7 +53,7 @@ export const parseSentence = createSelector(
     getSettings,
     getIndicator,
     getLocationName,
-    getSentences
+    getSentences,
   ],
   (data, sortedData, settings, indicator, locationName, sentences) => {
     if (!data || !locationName) return null;
@@ -61,7 +61,7 @@ export const parseSentence = createSelector(
       initial,
       withIndicator,
       initialPercent,
-      withIndicatorPercent
+      withIndicatorPercent,
     } = sentences;
     const totalGain = sumBy(data, 'gain') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
@@ -80,7 +80,7 @@ export const parseSentence = createSelector(
       percentileLength += 1;
     }
 
-    const topGain = percentileGain / totalGain * 100 || 0;
+    const topGain = (percentileGain / totalGain) * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
       sentence = !indicator ? initial : withIndicator;
@@ -102,17 +102,17 @@ export const parseSentence = createSelector(
       average:
         topRegion.percentage > 0 && settings.unit === '%'
           ? `${format('.2r')(avgGainPercentage)}%`
-          : `${format(aveFormat)(avgGain)}ha`
+          : `${format(aveFormat)(avgGain)}ha`,
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });
