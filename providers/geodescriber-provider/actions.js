@@ -8,7 +8,7 @@ import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 
 import { getExtent, getLoss } from 'services/analysis-cached';
-import { getGeodescriberService } from 'services/geostore';
+import { getGeodescriberService } from 'services/geodescriber';
 
 export const setGeodescriberLoading = createAction('setGeodescriberLoading');
 export const setGeodescriber = createAction('setGeodescriber');

@@ -1,18 +1,18 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { getGeostoreProvider, getGeostoreKey } from 'services/geostore';
+import { getGeostore, saveGeostore } from 'services/geostore';
 import { buildGeostore } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
 export const clearGeostore = createAction('clearGeostore');
 
-export const getGeostore = createThunkAction(
-  'getGeostore',
+export const fetchGeostore = createThunkAction(
+  'fetchGeostore',
   (params) => (dispatch) => {
     const { type, adm0, adm1, adm2, token } = params;
     if (type && adm0) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
-      getGeostoreProvider({ type, adm0, adm1, adm2, token })
+      getGeostore({ type, adm0, adm1, adm2, token })
         .then((response) => {
           const { data } = response.data;
           if (data && data.attributes) {
@@ -35,7 +35,7 @@ export const getGeostoreId = createThunkAction(
   ({ geojson, callback }) => (dispatch) => {
     if (geojson) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
-      getGeostoreKey(geojson)
+      saveGeostore(geojson)
         .then((geostore) => {
           if (geostore && geostore.data && geostore.data.data) {
             const { id } = geostore.data.data;

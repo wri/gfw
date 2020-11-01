@@ -1,4 +1,3 @@
-import { getGoogleLangCode } from 'utils/lang';
 import { apiRequest, dataRequest } from 'utils/request';
 
 const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
@@ -10,7 +9,7 @@ const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   }${adm2 ? `/${adm2}` : ''}${`?simplify=${!adm1 ? thresh : thresh / 10}`}`;
 };
 
-export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
+export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   let thresh = 0.005;
   if (!type || !adm0) return null;
   if (type === 'country') {
@@ -57,7 +56,7 @@ export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
   return apiRequest.get(url, { cancelToken: token });
 };
 
-export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>
+export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) =>
   apiRequest({
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -67,27 +66,4 @@ export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>
     url: '/geostore',
     onUploadProgress,
     onDownloadProgress,
-  });
-
-export const getGeodescriberService = ({ geojson, lang, token }) =>
-  // for now we are forcing english until API works
-  apiRequest({
-    method: 'post',
-    url: `/geodescriber/geom?lang=${getGoogleLangCode(
-      lang
-    )}&template=true&app=gfw`,
-    data: {
-      geojson,
-    },
-    cancelToken: token,
-  });
-
-export const getGeodescriber = ({ geostore, lang, token }) =>
-  // for now we are forcing english until API works
-  apiRequest({
-    method: 'get',
-    url: `/geodescriber/?geostore=${geostore}&lang=${getGoogleLangCode(
-      lang
-    )}&app=gfw`,
-    cancelToken: token,
   });

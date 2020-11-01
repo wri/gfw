@@ -2,7 +2,7 @@
 import { CARTO_API } from 'utils/apis';
 import { get } from 'axios';
 import { dataRequest } from 'utils/request';
-import { getGeodescriber } from 'services/geostore';
+import { getGeodescriber } from 'services/geodescriber';
 import { getArea } from 'services/areas';
 import lowerCase from 'lodash/lowerCase';
 import startCase from 'lodash/startCase';
