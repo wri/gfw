@@ -6,7 +6,7 @@ import moment from 'moment';
 const QUERIES = {
   umdAdmin: '/{version}/{slug}/admin/{location}{params}',
   umdByType: '/{version}/{slug}/{type}/{location}{params}',
-  umdGeostore: '/{version}/{slug}{params}'
+  umdGeostore: '/{version}/{slug}{params}',
 };
 
 const getLocationUrl = ({ adm0, adm1, adm2 }) =>
@@ -22,7 +22,7 @@ const buildAnalysisUrl = ({
   adm2,
   params,
   aggregate,
-  aggregateBy
+  aggregateBy,
 }) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
   const { startDate, endDate, threshold, query, number_of_days } = params;
@@ -39,21 +39,21 @@ const buildAnalysisUrl = ({
 
   const queryParams = qs.stringify({
     ...(period && {
-      period
+      period,
     }),
     ...(thresh && {
-      thresh
+      thresh,
     }),
     ...(geostore && {
-      geostore
+      geostore,
     }),
     aggregate_values: aggregate ? 'True' : false,
     ...(aggregateBy && {
-      aggregate_by: aggregateBy
+      aggregate_by: aggregateBy,
     }),
     ...(query && {
-      [query.param]: query.value
-    })
+      [query.param]: query.value,
+    }),
   });
 
   return urlTemplate
@@ -64,14 +64,14 @@ const buildAnalysisUrl = ({
     .replace('{params}', `?${queryParams}`);
 };
 
-const getUrlTemplate = type => {
+const getUrlTemplate = (type) => {
   let urlTemplate = QUERIES.umdGeostore;
   if (type === 'country') urlTemplate = QUERIES.umdAdmin;
   if (type === 'use' || type === 'wdpa') urlTemplate = QUERIES.umdByType;
   return urlTemplate;
 };
 
-const reduceAnalysisResponse = response => {
+const reduceAnalysisResponse = (response) => {
   const { data } = response.data;
   const { attributes } = data || {};
   if (attributes) {
@@ -79,19 +79,20 @@ const reduceAnalysisResponse = response => {
     const fetchKey =
       fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
     return {
-      [fetchKey]: attributes
+      [fetchKey]: attributes,
     };
   }
   return {};
 };
 
-export const fetchAnalysisEndpoint = ({ type, ...rest }) => apiRequest.get(
-  `${buildAnalysisUrl({
-    urlTemplate: getUrlTemplate(type),
-    type,
-    ...rest
-  })}`
-);
+export const fetchAnalysisEndpoint = ({ type, ...rest }) =>
+  apiRequest.get(
+    `${buildAnalysisUrl({
+      urlTemplate: getUrlTemplate(type),
+      type,
+      ...rest,
+    })}`
+  );
 
 export const fetchUmdLossGain = ({
   endpoints,
@@ -99,11 +100,11 @@ export const fetchUmdLossGain = ({
   adm0,
   adm1,
   adm2,
-  token
+  token,
 }) => {
   const endpointUrls =
     endpoints &&
-    endpoints.map(endpoint => {
+    endpoints.map((endpoint) => {
       const urlTemplate = getUrlTemplate(type);
 
       return apiRequest.get(
@@ -113,14 +114,14 @@ export const fetchUmdLossGain = ({
           type,
           adm0,
           adm1,
-          adm2
+          adm2,
         })}`
       );
     });
 
   return all(endpointUrls, {
     cancelToken: token,
-    timeout: 1800
+    timeout: 1800,
   }).then(
     spread(
       (...responses) =>
@@ -129,9 +130,18 @@ export const fetchUmdLossGain = ({
           const analysis = reduceAnalysisResponse(response);
           return {
             ...obj,
-            ...analysis
+            ...analysis,
           };
         }, {})
     )
   );
 };
+
+export const fetchFireAlertsByGeostore = (params) =>
+  fetchAnalysisEndpoint({
+    ...params,
+    params,
+    name: 'viirs-alerts',
+    slug: 'viirs-active-fires',
+    version: 'v1',
+  });
