@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import qs from 'query-string';
 
-import { decodeParamsForState, encodeStateForUrl } from './stateToUrl';
+import { decodeQueryParams, encodeQueryParams } from './url';
 
 const useRouter = () => {
   const router = Router.router || {};
@@ -14,14 +14,14 @@ const useRouter = () => {
       };
     }
 
-    router.query = router.query ? decodeParamsForState(router.query) : {};
+    router.query = router.query ? decodeQueryParams(router.query) : {};
   }
 
   router.pushQuery = ({ pathname, query, hash, options }) => {
     const queryWithoutLocation = { ...query, location: null };
     const queryString =
       queryWithoutLocation &&
-      encodeStateForUrl(queryWithoutLocation, {
+      encodeQueryParams(queryWithoutLocation, {
         skipNull: true,
         skipEmptyString: true,
         arrayFormat: 'comma',

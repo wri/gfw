@@ -20,6 +20,7 @@ import {
 
 const getDatasetsLoading = (state) => state.datasets && state.datasets.loading;
 const getMapTourOpen = (state) => state.mapTour && state.mapTour.open;
+const getMetaModalOpen = (state) => !!state.modalMeta?.metakey || state?.modalMeta?.closing;
 
 export const getMapControlsProps = createStructuredSelector({
   recentLoading: getRecentImageryLoading,
@@ -35,4 +36,5 @@ export const getMapControlsProps = createStructuredSelector({
   recentSettings: getRecentImagerySettings,
   recentImageryDataset: getRecentImageryDataset,
   mapTourOpen: getMapTourOpen,
+  metaModalOpen: getMetaModalOpen
 });

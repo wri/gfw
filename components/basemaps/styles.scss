@@ -62,6 +62,7 @@ $top-section-height: 125px;
 
     @media screen and (min-width: $screen-m) {
       padding: rem(15px) rem(20px) rem(10px);
+      border-bottom: none;
       background: #fff;
       margin-bottom: initial;
     }

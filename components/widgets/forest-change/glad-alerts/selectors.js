@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'components/widgets/utils/colors';
 
 import {
   getMeansData,

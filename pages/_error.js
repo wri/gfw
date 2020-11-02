@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import StaticLayout from 'layouts/wrappers/static';
+import StaticLayout from 'wrappers/static';
 import ErrorPage from 'layouts/error';
 
 const Error = ({ statusCode }) => {

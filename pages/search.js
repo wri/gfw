@@ -1,4 +1,4 @@
-import PageLayout from 'layouts/wrappers/page';
+import PageLayout from 'wrappers/page';
 import Search from 'layouts/search';
 
 const SearchPage = () => (

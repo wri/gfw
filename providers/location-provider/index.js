@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import useRouter from 'utils/router';
 import reducerRegistry from 'redux/registry';
 
-import { decodeParamsForState, encodeStateForUrl } from 'utils/stateToUrl';
+import { decodeQueryParams, encodeQueryParams } from 'utils/url';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -46,8 +46,8 @@ const getLocationFromParams = (url, params, asPath) => {
 
 const buildNewLocation = () => {
   const { query, pathname, asPath } = useRouter();
-  const search = encodeStateForUrl(query);
-  const decodedQuery = query && decodeParamsForState(query);
+  const search = encodeQueryParams(query);
+  const decodedQuery = query && decodeQueryParams(query);
   const location =
     decodedQuery && getLocationFromParams(pathname, decodedQuery, asPath);
 

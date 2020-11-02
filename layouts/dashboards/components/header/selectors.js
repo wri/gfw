@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import upperFirst from 'lodash/upperFirst';
-import { deburrUpper } from 'utils/data';
+import { deburrUpper } from 'utils/strings';
 
 import {
   getGeodescriberTitleFull,

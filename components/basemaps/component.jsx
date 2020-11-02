@@ -19,11 +19,6 @@ import roadsIcon from 'assets/icons/roads.svg?sprite';
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { showBasemaps: false };
-  }
-
   static propTypes = {
     onClose: PropTypes.func,
     boundaries: PropTypes.array,
@@ -42,7 +37,6 @@ class Basemaps extends React.PureComponent {
     roadsSelected: PropTypes.object.isRequired,
     selectRoads: PropTypes.func.isRequired,
     roads: PropTypes.array.isRequired,
-    setMapSettings: PropTypes.func,
     planetBasemapSelected: PropTypes.object,
     planetYears: PropTypes.array,
     planetYearSelected: PropTypes.object,
@@ -52,6 +46,7 @@ class Basemaps extends React.PureComponent {
 
   state = {
     planetTooltipOpen: false,
+    showBasemaps: false
   };
 
   renderButtonBasemap(item) {
@@ -329,6 +324,7 @@ class Basemaps extends React.PureComponent {
     const selectedBoundaries = activeBoundaries
       ? { label: activeBoundaries.name }
       : boundaries && boundaries[0];
+
     return (
       <div
         className={cx('c-basemaps', 'map-tour-basemaps')}

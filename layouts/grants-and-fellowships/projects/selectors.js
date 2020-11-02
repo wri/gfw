@@ -1,15 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import deburr from 'lodash/deburr';
-import toUpper from 'lodash/toUpper';
 import uniq from 'lodash/uniq';
 import flatten from 'lodash/flatten';
 import groupBy from 'lodash/groupBy';
 import compact from 'lodash/compact';
 import sortBy from 'lodash/sortBy';
 
-export function deburrUpper(string) {
-  return toUpper(deburr(string));
-}
+import { deburrUpper } from 'utils/strings';
 
 const getProjects = (state) => state.projects;
 const getCategory = (state) => state.category;

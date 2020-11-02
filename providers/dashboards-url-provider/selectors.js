@@ -11,7 +11,6 @@ export const selectDashboardPrompts = (state) =>
   state.dashboardPrompts?.settings;
 export const selectWidgetSettings = (state) => state.widgets?.settings;
 export const selectWidgetsCategory = (state) => state.widgets?.category;
-export const selectAOIModalSettings = (state) => state.areaOfInterestModal;
 export const selectShowMap = (state) => state.widgets?.showMap;
 
 export const getUrlParams = createSelector(
@@ -21,18 +20,10 @@ export const getUrlParams = createSelector(
     selectDashboardPrompts,
     selectWidgetSettings,
     selectWidgetsCategory,
-    selectAOIModalSettings,
     selectShowMap,
   ],
-  (
-    map,
-    modalMeta,
-    dashboardPrompts,
-    widgetsSettings,
-    category,
-    areaOfInterestModal,
-    showMap
-  ) => {
+  (map, modalMeta, dashboardPrompts, widgetsSettings, category, showMap) => {
+    console.log('widj', widgetsSettings);
     return {
       map: objDiff(map, mapInitialState.settings),
       modalMeta,

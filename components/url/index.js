@@ -1,7 +1,7 @@
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import useRouter from 'utils/router';
 
-import { encodeStateForUrl } from 'utils/stateToUrl';
+import { encodeQueryParams } from 'utils/url';
 
 const URL = ({
   queryParams = {},
@@ -24,7 +24,7 @@ const URL = ({
       delete query.token;
     }
 
-    const queryParamsSerialized = encodeStateForUrl(
+    const queryParamsSerialized = encodeQueryParams(
       { ...query, ...queryParams },
       options
     );

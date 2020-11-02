@@ -4,13 +4,13 @@ import { all, spread } from 'axios';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_EXTENT_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
   TREE_COVER,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 

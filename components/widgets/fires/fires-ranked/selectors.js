@@ -6,11 +6,15 @@ import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
 import mean from 'lodash/mean';
 import { format } from 'd3-format';
-import { getColorBuckets, getColorBucket } from 'utils/data';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
-import { stdDevData } from 'components/widgets/utils/data';
+
+import {
+  stdDevData,
+  getColorBuckets,
+  getColorBucket,
+} from 'components/widgets/utils/data';
 
 // get list data
 const getData = (state) => state.data && state.data.alerts;

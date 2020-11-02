@@ -4,16 +4,16 @@ import groupBy from 'lodash/groupBy';
 import uniqBy from 'lodash/uniqBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'components/widgets/utils/colors';
 import { zeroFillYears } from 'components/widgets/utils/data';
 
 // get list data
-const getLossPlantations = state => state.data && state.data.lossPlantations;
-const getTotalLoss = state => state.data && state.data.totalLoss;
-const getSettings = state => state.settings;
-const getLocationName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getSentence = state => state.sentence;
+const getLossPlantations = (state) => state.data && state.data.lossPlantations;
+const getTotalLoss = (state) => state.data && state.data.totalLoss;
+const getSettings = (state) => state.settings;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getSentence = (state) => state.sentence;
 
 // get lists selected
 export const parseData = createSelector(
@@ -21,13 +21,13 @@ export const parseData = createSelector(
   (lossPlantations, totalLoss, settings) => {
     if (!lossPlantations || !totalLoss) return null;
     const { startYear, endYear, yearsRange } = settings;
-    const years = yearsRange && yearsRange.map(yearObj => yearObj.value);
+    const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
       area: 0,
       biomassLoss: 0,
       bound1: null,
       emissions: 0,
-      percentage: 0
+      percentage: 0,
     };
     const zeroFilledData = zeroFillYears(
       lossPlantations,
@@ -39,8 +39,8 @@ export const parseData = createSelector(
     const totalLossByYear = groupBy(totalLoss, 'year');
     const parsedData = uniqBy(
       zeroFilledData
-        .filter(d => d.year >= startYear && d.year <= endYear)
-        .map(d => {
+        .filter((d) => d.year >= startYear && d.year <= endYear)
+        .map((d) => {
           const groupedPlantations = groupBy(lossPlantations, 'year')[d.year];
           const summedPlatationsLoss =
             (groupedPlantations && sumBy(groupedPlantations, 'area')) || 0;
@@ -56,7 +56,7 @@ export const parseData = createSelector(
             totalLoss: totalLossForYear.area || 0,
             outsideCo2Loss:
               totalLossByYear[d.year][0].emissions - summedPlatationsEmissions,
-            co2Loss: summedPlatationsEmissions || 0
+            co2Loss: summedPlatationsEmissions || 0,
           };
           return returnData;
         }),
@@ -66,7 +66,7 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getColors], colors => {
+export const parseConfig = createSelector([getColors], (colors) => {
   const colorRange = getColorPalette(colors.ramp, 2);
   return {
     height: 250,
@@ -75,40 +75,40 @@ export const parseConfig = createSelector([getColors], colors => {
       bars: {
         areaLoss: {
           fill: colorRange[0],
-          stackId: 1
+          stackId: 1,
         },
         outsideAreaLoss: {
           fill: colorRange[1],
-          stackId: 1
-        }
-      }
+          stackId: 1,
+        },
+      },
     },
     unit: 'ha',
     tooltip: [
       {
-        key: 'year'
+        key: 'year',
       },
       {
         key: 'totalLoss',
         label: 'Total',
         unit: 'ha',
-        unitFormat: value => format('.3s')(value)
+        unitFormat: (value) => format('.3s')(value),
       },
       {
         key: 'outsideAreaLoss',
         label: 'Natural forest',
         color: colorRange[1],
         unit: 'ha',
-        unitFormat: value => format('.3s')(value)
+        unitFormat: (value) => format('.3s')(value),
       },
       {
         key: 'areaLoss',
         label: 'Plantations',
         color: colorRange[0],
         unit: 'ha',
-        unitFormat: value => format('.3s')(value)
-      }
-    ]
+        unitFormat: (value) => format('.3s')(value),
+      },
+    ],
   };
 });
 
@@ -126,20 +126,20 @@ export const parseSentence = createSelector(
       plantationsLoss > outsideLoss ? 'plantations' : 'natural forest';
     const percentage =
       plantationsLoss > outsideLoss
-        ? 100 * plantationsLoss / totalLoss
-        : 100 * outsideLoss / totalLoss;
+        ? (100 * plantationsLoss) / totalLoss
+        : (100 * outsideLoss) / totalLoss;
     const params = {
       location: locationName,
       startYear,
       endYear,
       lossPhrase,
       value: `${format('.3s')(outsideEmissions)}t`,
-      percentage: formatNumber({ num: percentage, unit: '%' })
+      percentage: formatNumber({ num: percentage, unit: '%' }),
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -147,5 +147,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

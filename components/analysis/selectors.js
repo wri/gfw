@@ -6,8 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
-import { getDataLocation } from 'utils/location';
-import { locationLevelToStr } from 'utils/format';
+import { getDataLocation, locationLevelToStr } from 'utils/location';
 import { getWidgets } from 'components/widgets/selectors';
 
 const selectAnalysisLoading = (state) =>
