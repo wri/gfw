@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { getLocationFromData } from 'utils/gadm';
+import { getGadmLocationByLevel } from 'utils/gadm';
 import compact from 'lodash/compact';
 
 import useRouter from 'utils/router';
@@ -20,7 +20,7 @@ export const setMainMapAnalysisView = createThunkAction(
       if (analysisEndpoint === 'admin') {
         payload = {
           type: 'country',
-          ...getLocationFromData(data),
+          ...getGadmLocationByLevel(data),
         };
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         payload = {

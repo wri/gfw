@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { differenceInDays } from 'date-fns';
 
 export const getDayRange = (params) => {
@@ -15,8 +14,10 @@ export const getDayRange = (params) => {
     numberOfDays - differenceInDays(maxDateTime, startDateTime);
   const activeEndDay =
     numberOfDays - differenceInDays(maxDateTime, endDateTime);
+
   // show specified weeks from end date
   const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+
   // get start and end day
   const startDayIndex = activeStartDay || rangeStartDate || 0;
   const endDayIndex = activeEndDay || numberOfDays;
@@ -26,15 +27,4 @@ export const getDayRange = (params) => {
     endDayIndex,
     numberOfDays,
   };
-};
-
-export const buildDateArray = (startDate, stopDate, resolution, interval) => {
-  const dateArray = [];
-  let currentDate = moment(startDate);
-  const endDate = moment(stopDate);
-  while (currentDate <= endDate) {
-    dateArray.push(moment(currentDate).format('YYYY-MM-DD'));
-    currentDate = moment(currentDate).add(interval || 1, resolution || 'days');
-  }
-  return dateArray;
 };
