@@ -1,8 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { isTouch } from 'utils/browser';
-import { deburrUpper } from 'utils/data';
+import { deburrUpper } from 'utils/strings';
 import groupBy from 'lodash/groupBy';
 import remove from 'lodash/remove';
 
@@ -14,16 +13,15 @@ const mapStateToProps = (
 ) => {
   const activeValue =
     options && (typeof value === 'string' || typeof value === 'number')
-      ? options.find(o => o.value === value)
+      ? options.find((o) => o.value === value)
       : value;
   const activeLabel = (activeValue && activeValue.label) || noSelectedValue;
 
   return {
     modalOpen: modalMeta ? modalMeta.open : false,
     modalClosing: modalMeta ? modalMeta.closing : false,
-    isDeviceTouch: isTouch(),
     activeValue,
-    activeLabel
+    activeLabel,
   };
 };
 
@@ -34,7 +32,7 @@ class DropdownContainer extends PureComponent {
       inputValue: '',
       isOpen: false,
       showGroup: '',
-      highlightedIndex: 0
+      highlightedIndex: 0,
     };
   }
 
@@ -45,9 +43,9 @@ class DropdownContainer extends PureComponent {
     return groupBy(
       inputValue
         ? options.filter(
-          item =>
-            deburrUpper(item.label).indexOf(deburrUpper(inputValue)) > -1
-        )
+            (item) =>
+              deburrUpper(item.label).indexOf(deburrUpper(inputValue)) > -1
+          )
         : options,
       groupKey || 'group'
     );
@@ -55,13 +53,13 @@ class DropdownContainer extends PureComponent {
 
   getGroupedItems = () => {
     const newItems = this.filterItems();
-    const groups = remove(Object.keys(newItems), r => r !== 'undefined');
+    const groups = remove(Object.keys(newItems), (r) => r !== 'undefined');
     const list = newItems.undefined || [];
     const listWithGroups = list.concat(
-      groups.map(g => ({ label: g, value: g, groupParent: g }))
+      groups.map((g) => ({ label: g, value: g, groupParent: g }))
     );
     let listWithGroupsAndItems = listWithGroups;
-    groups.forEach(g => {
+    groups.forEach((g) => {
       listWithGroupsAndItems = listWithGroupsAndItems.concat(newItems[g]);
     });
     return listWithGroupsAndItems;
@@ -115,15 +113,15 @@ class DropdownContainer extends PureComponent {
     this.setState({ isOpen: false, showGroup: '', inputValue: '' });
   };
 
-  handleSelectGroup = item => {
+  handleSelectGroup = (item) => {
     const { showGroup } = this.state;
     this.setState({
       showGroup: item.groupParent === showGroup ? '' : item.groupParent,
-      isOpen: true
+      isOpen: true,
     });
   };
 
-  handleKeyEnter = e => {
+  handleKeyEnter = (e) => {
     const { showGroup, highlightedIndex } = this.state;
     if (e.key === 'Enter') {
       const groupedItems = this.getGroupedItems();
@@ -133,20 +131,20 @@ class DropdownContainer extends PureComponent {
         e.preventDownshiftDefault = true;
         this.setState({
           showGroup:
-            showGroup === selected.groupParent ? '' : selected.groupParent
+            showGroup === selected.groupParent ? '' : selected.groupParent,
         });
       }
     }
   };
 
-  buildInputProps = getInputProps => {
+  buildInputProps = (getInputProps) => {
     const { isOpen } = this.state;
     const { searchable, placeholder } = this.props;
     return getInputProps({
       placeholder: isOpen && searchable ? placeholder : '',
       onClick: this.onInputClick,
       readOnly: !isOpen || !searchable,
-      onKeyDown: e => this.handleKeyEnter(e)
+      onKeyDown: (e) => this.handleKeyEnter(e),
     });
   };
 
@@ -166,7 +164,7 @@ class DropdownContainer extends PureComponent {
       handleClearSelection: this.handleClearSelection,
       buildInputProps: this.buildInputProps,
       handleSelectGroup: this.handleSelectGroup,
-      items: this.getGroupedItems()
+      items: this.getGroupedItems(),
     });
   }
 }
@@ -178,7 +176,7 @@ DropdownContainer.propTypes = {
   options: PropTypes.array,
   groupKey: PropTypes.string,
   placeholder: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 export default connect(mapStateToProps, null)(DropdownContainer);

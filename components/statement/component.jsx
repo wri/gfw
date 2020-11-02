@@ -15,7 +15,7 @@ class Statement extends PureComponent {
       tooltipDesc,
       followCursor,
       handleMouseOver,
-      handleMouseOut
+      handleMouseOut,
     } = this.props;
 
     return (
@@ -30,7 +30,9 @@ class Statement extends PureComponent {
         onHidden={handleMouseOut}
       >
         <div className={`c-layer-statement ${className || ''}`}>
-          {statementPlain} <span>{statementHighlight}</span>
+          {statementPlain} 
+          {' '}
+          <span>{statementHighlight}</span>
         </div>
       </Tooltip>
     );
@@ -38,7 +40,7 @@ class Statement extends PureComponent {
 }
 
 Statement.defaultProps = {
-  followCursor: true
+  followCursor: true,
 };
 
 Statement.propTypes = {
@@ -48,7 +50,7 @@ Statement.propTypes = {
   tooltipDesc: PropTypes.string,
   followCursor: PropTypes.bool,
   handleMouseOver: PropTypes.func,
-  handleMouseOut: PropTypes.func
+  handleMouseOut: PropTypes.func,
 };
 
 export default Statement;

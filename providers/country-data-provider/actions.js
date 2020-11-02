@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { parseGadm36Id } from 'utils/format';
+import { parseGadm36Id } from 'utils/gadm';
 import { all, spread } from 'axios';
 import uniqBy from 'lodash/uniqBy';
 

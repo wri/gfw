@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { CookiesBanner } from 'gfw-components';
 
 import { trackEvent, initAnalytics, trackPage } from 'utils/analytics';
+import { getAgreedCookies, setAgreedCookies } from 'utils/cookies';
 
 import './styles.scss';
 
@@ -12,15 +13,15 @@ const Cookies = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const agreeCookies = JSON.parse(localStorage.getItem('agreeCookies'));
-    setAccepted(agreeCookies);
-    setOpen(!agreeCookies);
+    const agreedCookies = getAgreedCookies();
+    setAccepted(agreedCookies);
+    setOpen(!agreedCookies);
   }, []);
 
   const acceptCookies = () => {
     setAccepted(true);
     setOpen(false);
-    localStorage.setItem('agreeCookies', true);
+    setAgreedCookies();
     initAnalytics();
     trackPage();
     trackEvent({

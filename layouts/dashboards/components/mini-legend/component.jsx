@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { isTouch } from 'utils/browser';
 import cx from 'classnames';
 import { trackEvent } from 'utils/analytics';
 import moment from 'moment';
@@ -17,7 +16,6 @@ class MiniLegend extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { layers, activeDatasets, setMainMapView, className } = this.props;
-    const isDeviceTouch = isTouch();
 
     return layers && layers.length ? (
       <div className={cx('c-mini-legend', className)}>
@@ -35,13 +33,13 @@ class MiniLegend extends PureComponent {
                 <span style={{ backgroundColor: l.color }} />
                 <div>
                   <p>{l.name}</p>
-                  <p className="time-range">
-                    {startDateAbsolute &&
-                      endDateAbsolute &&
-                      `${moment(startDateAbsolute).format(
+                  {startDateAbsolute && endDateAbsolute && (
+                    <p className="time-range">
+                      {`${moment(startDateAbsolute).format(
                         'MMM DD YYYY'
                       )} - ${moment(endDateAbsolute).format('MMM DD YYYY')}`}
-                  </p>
+                    </p>
+                  )}
                   {isVIIRS && (
                     <p className="time-range-disclaimer">
                       *a maximum of 3 months of fires data can be shown on the
@@ -61,14 +59,13 @@ class MiniLegend extends PureComponent {
               trackEvent({
                 category: 'Dashboards page',
                 action: 'User clicks through to main map',
-                label: layers?.map((l) => l.name).join(', ')
-              })
+                label: layers?.map((l) => l.name).join(', '),
+              });
             }}
             tooltip={{
               theme: 'tip',
               position: 'top',
               arrow: true,
-              disabled: isDeviceTouch,
               html: <Tip text="Explore the data on the global map" />,
             }}
           >

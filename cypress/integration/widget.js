@@ -138,6 +138,8 @@ const testConfig = [
           timeout: 100000,
           retryOnStatusCodeFailure: true,
         });
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000);
         cy.isValidSentence(test.selector, test.sentence);
       },
     },

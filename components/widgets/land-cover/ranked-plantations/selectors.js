@@ -5,24 +5,22 @@ import remove from 'lodash/remove';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import endsWith from 'lodash/endsWith';
 
-const getPlantations = state => state.data && state.data.plantations;
-const getExtent = state => state.data && state.data.extent;
-const getSettings = state => state.settings;
-const getAdm0 = state => state.adm0;
-const getAdm1 = state => state.adm1;
-const getLocationsMeta = state => state.childData;
-const getLocationName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getEmbed = state => state.embed;
-const getSentences = state => state.sentence;
+const getPlantations = (state) => state.data && state.data.plantations;
+const getExtent = (state) => state.data && state.data.extent;
+const getSettings = (state) => state.settings;
+const getAdm0 = (state) => state.adm0;
+const getAdm1 = (state) => state.adm1;
+const getLocationsMeta = (state) => state.childData;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getEmbed = (state) => state.embed;
+const getSentences = (state) => state.sentence;
 
-const getPlanationKeys = createSelector(
-  [getPlantations],
-  plantations =>
-    (plantations ? Object.keys(groupBy(plantations, 'plantations')) : null)
+const getPlanationKeys = createSelector([getPlantations], (plantations) =>
+  plantations ? Object.keys(groupBy(plantations, 'plantations')) : null
 );
 
 export const parseData = createSelector(
@@ -33,7 +31,7 @@ export const parseData = createSelector(
     getLocationsMeta,
     getAdm0,
     getAdm1,
-    getEmbed
+    getEmbed,
   ],
   (plantations, extent, plantationKeys, meta, adm0, adm1, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
@@ -41,7 +39,7 @@ export const parseData = createSelector(
     if (adm0) groupKey = 'adm1';
     if (adm1) groupKey = 'adm2';
     const groupedByRegion = groupBy(plantations, groupKey);
-    const regionData = Object.keys(groupedByRegion).map(r => {
+    const regionData = Object.keys(groupedByRegion).map((r) => {
       const yKeys = {};
       const regionId = parseInt(r, 10);
       const regionLabel = meta && meta[regionId];
@@ -49,14 +47,14 @@ export const parseData = createSelector(
       const totalRegionPlantations =
         sumBy(regionGroup, 'intersection_area') || 0;
       const regionExtent = extent.find(
-        e => parseInt(e[groupKey], 10) === regionId
+        (e) => parseInt(e[groupKey], 10) === regionId
       );
       const totalArea = regionExtent && regionExtent.total_area;
-      plantationKeys.forEach(key => {
+      plantationKeys.forEach((key) => {
         const labelFromKey =
-          regionGroup && regionGroup.find(p => p.plantations === key);
+          regionGroup && regionGroup.find((p) => p.plantations === key);
         const pExtent = labelFromKey && labelFromKey.intersection_area;
-        const pPercentage = pExtent / totalRegionPlantations * 100;
+        const pPercentage = (pExtent / totalRegionPlantations) * 100;
         yKeys[key] = pPercentage || 0;
         yKeys[`${key} label`] = key;
       });
@@ -65,11 +63,11 @@ export const parseData = createSelector(
         region: regionLabel && regionLabel.label,
         ...yKeys,
         path: regionLabel && regionLabel.path,
-        total: totalRegionPlantations / totalArea * 100,
-        extLink: embed
+        total: (totalRegionPlantations / totalArea) * 100,
+        extLink: embed,
       };
     });
-    const dataParsed = sortByKey(regionData, 'total', true);
+    const dataParsed = sortBy(regionData, 'total').reverse();
 
     return dataParsed;
   }
@@ -87,13 +85,13 @@ export const parseConfig = createSelector(
       xKey: 'region',
       yKeys: dataKeys,
       yAxisDotFill: '#d4d4d4',
-      tooltip: dataKeys.map(item => ({
+      tooltip: dataKeys.map((item) => ({
         key: item,
         label: item,
         color: colorsByType[item],
         unit: '%',
-        unitFormat: value => format('.1f')(value)
-      }))
+        unitFormat: (value) => format('.1f')(value),
+      })),
     };
   }
 );
@@ -105,11 +103,11 @@ export const parseSentence = createSelector(
     const topRegion = data[0] || {};
     const topPlantation = maxBy(
       remove(
-        Object.keys(topRegion).map(k => ({
+        Object.keys(topRegion).map((k) => ({
           label: k,
-          value: topRegion[k] > 0 ? topRegion[k] : 0
+          value: topRegion[k] > 0 ? topRegion[k] : 0,
         })),
-        item => item.label !== 'total'
+        (item) => item.label !== 'total'
       ),
       'value'
     );
@@ -119,12 +117,12 @@ export const parseSentence = createSelector(
       location: locationName,
       region: topRegion.region,
       topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
-      percentage: `${format('.2r')(data[0].total)}%`
+      percentage: `${format('.2r')(data[0].total)}%`,
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -132,5 +130,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

@@ -3,12 +3,12 @@ import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   GLAD_DEFORESTATION_ALERTS_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   GLAD_ALERTS,
-} from 'constants/layers';
+} from 'data/layers';
 
 export default {
   ...gladRanked,

@@ -1,5 +1,5 @@
 import { createThunkAction } from 'redux/actions';
-import { getLocationFromData } from 'utils/format';
+import { getGadmLocationByLevel } from 'utils/gadm';
 import useRouter from 'utils/router';
 
 import { trackEvent } from 'utils/analytics';
@@ -59,10 +59,14 @@ export const handleLocationChange = createThunkAction(
       const { cartodb_id, wdpaid } = data || {};
       const { analysisEndpoint, tableName } = layer || {};
       if (analysisEndpoint === 'admin') {
-        newPayload = {
-          type: payload.type === 'global' ? 'country' : payload.type,
-          ...getLocationFromData(data),
-        };
+        newPayload =
+          payload.type === 'global'
+            ? {
+                type: 'global',
+              }
+            : {
+                ...getGadmLocationByLevel(data),
+              };
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         newPayload = {
           type: analysisEndpoint,
@@ -87,7 +91,9 @@ export const handleLocationChange = createThunkAction(
     }
 
     pushQuery({
-      pathname: `/dashboards/${Object.values(newPayload)?.join('/')}/`,
+      pathname: `/dashboards/${Object.values(newPayload)
+        ?.filter((o) => o)
+        ?.join('/')}/`,
       query: {
         ...newQuery,
         widget: undefined,
@@ -106,7 +112,7 @@ export const handleLocationChange = createThunkAction(
       }${newPayload.adm1 ? `.${newPayload.adm1}` : ''}${
         newPayload.adm2 ? `.${newPayload.adm2}` : ''
       }`,
-    })
+    });
 
     dispatch(
       setDashboardPromptsSettings({
