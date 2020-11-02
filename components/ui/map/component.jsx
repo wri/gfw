@@ -84,11 +84,9 @@ class Map extends Component {
     },
   };
 
-  constructor(props) {
-    super(props);
-    this.map = createRef();
-    this.mapContainer = createRef();
-  }
+  mapRef = createRef();
+
+  mapContainer = createRef();
 
   state = {
     viewport: {
@@ -134,7 +132,7 @@ class Map extends Component {
   onLoad = () => {
     const { onLoad } = this.props;
     // Convert map reference to mapbox map instance before parsing map options
-    this.map = this.map.current.getMap();
+    this.map = this.mapRef.current.getMap();
     this.setState({ loaded: true });
     onLoad({
       map: this.map,
@@ -227,6 +225,7 @@ class Map extends Component {
         this.setState({ flying: false });
       }, 2500);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   };
@@ -255,7 +254,7 @@ class Map extends Component {
         })}
       >
         <ReactMapGL
-          ref={this.map}
+          ref={this.mapRef}
           // CUSTOM PROPS FROM REACT MAPBOX API
           {...mapboxProps}
           // VIEWPORT

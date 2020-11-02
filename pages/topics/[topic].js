@@ -1,9 +1,7 @@
-import Layout from 'layouts/page';
-import Topics from 'pages/topics';
+import PageLayout from 'wrappers/page';
+import Topics from 'layouts/topics';
 
-const topics = ['biodiversity', 'climate', 'commodities', 'water', 'fires'];
-
-const topicsMeta = {
+const TOPICS = {
   biodiversity: {
     title:
       'Effects of Forests on Biodiversity | Deforestation & Biodiversity Loss | GFW',
@@ -36,7 +34,7 @@ const topicsMeta = {
 };
 
 export const getStaticPaths = async () => {
-  const paths = topics.map((key) => ({
+  const paths = Object.keys(TOPICS).map((key) => ({
     params: { topic: key },
   }));
 
@@ -44,14 +42,17 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => ({
-  props: topicsMeta[params?.topic],
+  props: {
+    topic: params?.topic,
+    ...TOPICS[params?.topic],
+  },
 });
 
 const TopicPage = (props) => {
   return (
-    <Layout {...props} showFooter={false}>
-      <Topics />
-    </Layout>
+    <PageLayout {...props} showFooter={false}>
+      <Topics {...props} />
+    </PageLayout>
   );
 };
 

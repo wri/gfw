@@ -4,12 +4,12 @@ import { getLoss } from 'services/analysis-cached';
 import biomassLossIsos from 'data/biomass-isos.json';
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  BIOMASS_LOSS_DATASET
-} from 'data/layers-datasets';
+  BIOMASS_LOSS_DATASET,
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  BIOMASS_LOSS
+  BIOMASS_LOSS,
 } from 'data/layers';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
@@ -20,7 +20,7 @@ import getWidgetProps from './selectors';
 const MIN_YEAR = 2001;
 const MAX_YEAR = 2019;
 
-const getDataFromAPI = params =>
+const getDataFromAPI = (params) =>
   fetchAnalysisEndpoint({
     ...params,
     name: 'Umd',
@@ -29,8 +29,8 @@ const getDataFromAPI = params =>
       ? 'biomass-loss'
       : 'umd-loss-gain',
     version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v2' : 'v3',
-    aggregate: false
-  }).then(response => {
+    aggregate: false,
+  }).then((response) => {
     const { attributes: data } =
       (response && response.data && response.data.data) || {};
     let loss = [];
@@ -38,10 +38,10 @@ const getDataFromAPI = params =>
     if (['wdpa', 'use', 'geostore'].includes(params.type)) {
       const biomassData = data.biomassLossByYear;
       const emissionsData = data.co2LossByYear;
-      loss = Object.keys(biomassData).map(l => ({
+      loss = Object.keys(biomassData).map((l) => ({
         year: parseInt(l, 10),
         emissions: emissionsData[l],
-        biomassLoss: biomassData[l]
+        biomassLoss: biomassData[l],
       }));
     } else {
       loss = data.years;
@@ -57,11 +57,11 @@ const getDataFromAPI = params =>
       settings: {
         startYear,
         endYear,
-        yearsRange: range
+        yearsRange: range,
       },
       options: {
-        years: range
-      }
+        years: range,
+      },
     };
   });
 
@@ -77,7 +77,7 @@ export default {
       key: 'unit',
       label: 'unit',
       type: 'switch',
-      whitelist: ['co2LossByYear', 'biomassLoss']
+      whitelist: ['co2LossByYear', 'biomassLoss'],
     },
     {
       key: 'years',
@@ -85,26 +85,26 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // biomass loss
     {
       dataset: BIOMASS_LOSS_DATASET,
-      layers: [BIOMASS_LOSS]
-    }
+      layers: [BIOMASS_LOSS],
+    },
   ],
   pendingKeys: ['threshold', 'unit'],
   refetchKeys: ['threshold'],
@@ -113,7 +113,7 @@ export default {
   dataType: 'loss',
   colors: 'climate',
   sortOrder: {
-    climate: 2
+    climate: 2,
   },
   sentences:
     'Between {startYear} and {endYear}, a total of {value} of {type} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year.',
@@ -121,14 +121,14 @@ export default {
     unit: 'co2LossByYear',
     threshold: 30,
     startYear: 2001,
-    endYear: 2018
+    endYear: 2018,
   },
   whitelists: {
-    adm0: biomassLossIsos
+    adm0: biomassLossIsos,
   },
-  getData: params => {
+  getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
-      return getLoss(params).then(response => {
+      return getLoss(params).then((response) => {
         const loss = response.data.data;
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
           MIN_YEAR,
@@ -140,17 +140,17 @@ export default {
           settings: {
             startYear,
             endYear,
-            yearsRange: range
+            yearsRange: range,
           },
           options: {
-            years: range
-          }
+            years: range,
+          },
         };
       });
     }
 
     return getDataFromAPI(params);
   },
-  getDataURL: params => [getLoss({ ...params, download: true })],
-  getWidgetProps
+  getDataURL: (params) => [getLoss({ ...params, download: true })],
+  getWidgetProps,
 };

@@ -3,7 +3,7 @@ import compact from 'lodash/compact';
 import { all, spread } from 'axios';
 import bbox from 'turf-bbox';
 
-import { POLITICAL_BOUNDARIES } from 'static/layers';
+import { POLITICAL_BOUNDARIES } from 'data/layers';
 
 const getSearchSQL = (string, nameString, nameStringSimple) => {
   const words = string && string.split(/,| |, /);

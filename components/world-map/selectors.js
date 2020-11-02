@@ -198,7 +198,7 @@ export const COUNTRIES_COORDINATES = {
   EG: [31.248022361126118, 30.051906205103705],
   FR: [2.33138946713035, 48.86863878981461],
   SG: [103.85387481909902, 1.2949793251059418],
-  HK: [114.18306345846304, 22.30692675357551]
+  HK: [114.18306345846304, 22.30692675357551],
 };
 
 const getSelectedContext = (state, { context }) => context;
@@ -206,12 +206,12 @@ const getTopNodes = (state, { topNodes }) => topNodes && topNodes.targetNodes;
 
 export const getOriginGeoId = createSelector(
   getSelectedContext,
-  selectedContext => (selectedContext ? selectedContext.worldMap.geoId : null)
+  (selectedContext) => (selectedContext ? selectedContext.worldMap.geoId : null)
 );
 
 export const getOriginCoordinates = createSelector(
   getOriginGeoId,
-  originGeoId => (originGeoId ? COUNTRIES_COORDINATES[originGeoId] : null)
+  (originGeoId) => (originGeoId ? COUNTRIES_COORDINATES[originGeoId] : null)
 );
 
 export const getWorldMapFlows = createSelector(
@@ -223,38 +223,39 @@ export const getWorldMapFlows = createSelector(
 
     const contextFlows = countries
       ? countries
-        .filter(country => country.geoId !== originGeoId)
-        .sort((a, b) => {
-          if (a.value < b.value) return -1;
-          if (a.value > b.value) return 1;
-          return 0;
-        })
-        .map((country, index) => ({
-          ...country,
-          strokeWidth: index + 1,
-          coordinates: COUNTRIES_COORDINATES[country.geo_id],
-          geoId: country.geo_id
-        }))
+          .filter((country) => country.geoId !== originGeoId)
+          .sort((a, b) => {
+            if (a.value < b.value) return -1;
+            if (a.value > b.value) return 1;
+            return 0;
+          })
+          .map((country, index) => ({
+            ...country,
+            strokeWidth: index + 1,
+            coordinates: COUNTRIES_COORDINATES[country.geo_id],
+            geoId: country.geo_id,
+          }))
       : [];
 
     const contextFlowsWithCoordinates = contextFlows.filter(
-      f => typeof f.coordinates !== 'undefined'
+      (f) => typeof f.coordinates !== 'undefined'
     );
 
     if (contextFlowsWithCoordinates.length !== contextFlows.length) {
+      // eslint-disable-next-line no-console
       console.warn('World map flows are missing geoids. Check your database.');
     }
 
     const [minX, , maxX] = bbox(
-      lineString(contextFlowsWithCoordinates.map(f => f.coordinates))
+      lineString(contextFlowsWithCoordinates.map((f) => f.coordinates))
     );
     const medianX = (maxX + minX) / 2;
     const originLeftOfBbox = originCoordinates[0] < medianX;
     const pointOfControl = {
-      x: originLeftOfBbox ? minX - 10 : maxX + 10
+      x: originLeftOfBbox ? minX - 10 : maxX + 10,
     };
 
-    const getCurveStyle = destination => {
+    const getCurveStyle = (destination) => {
       if (destination[0] < pointOfControl.x) {
         // left
         return 'forceDown';
@@ -263,9 +264,9 @@ export const getWorldMapFlows = createSelector(
       return 'forceUp';
     };
 
-    return contextFlowsWithCoordinates.map(destination => ({
+    return contextFlowsWithCoordinates.map((destination) => ({
       ...destination,
-      curveStyle: getCurveStyle(destination.coordinates)
+      curveStyle: getCurveStyle(destination.coordinates),
     }));
   }
 );
@@ -274,5 +275,5 @@ export const getWorldMapProps = createStructuredSelector({
   flows: getWorldMapFlows,
   originGeoId: getOriginGeoId,
   selectedContext: getSelectedContext,
-  originCoordinates: getOriginCoordinates
+  originCoordinates: getOriginCoordinates,
 });

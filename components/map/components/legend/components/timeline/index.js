@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import moment from 'moment';
 
 import TimelineComponent from './component';
@@ -45,10 +45,11 @@ class TimelineContainer extends PureComponent {
     }
     handleChange(newRange, this.props.activeLayer, absolute);
 
-    track('legendTimelineChange', {
+    trackEvent({
+      category: 'Map legend',
       action: `User changes date range for ${this.props.activeLayer.id}`,
       label: `${newRange[0]}:${newRange[2]}`
-    });
+    })
   };
 
   render() {

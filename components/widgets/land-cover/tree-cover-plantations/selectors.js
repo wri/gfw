@@ -1,16 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import endsWith from 'lodash/endsWith';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getLocatonName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getLocatonName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
 
 // get lists selected
 export const parseData = createSelector(
@@ -20,19 +20,20 @@ export const parseData = createSelector(
     const { plantations } = data;
     const allColors = {
       ...colors.types,
-      ...colors.species
+      ...colors.species,
     };
     const totalPlantations = sumBy(plantations, 'intersection_area') || 0;
-    return sortByKey(
-      plantations.filter(d => d.intersection_area).map(d => ({
-        label: d.plantations,
-        value: d.intersection_area,
-        color: allColors[d.plantations],
-        percentage: d.intersection_area / totalPlantations * 100
-      })),
-      'value',
-      true
-    );
+    return sortBy(
+      plantations
+        .filter((d) => d.intersection_area)
+        .map((d) => ({
+          label: d.plantations,
+          value: d.intersection_area,
+          color: allColors[d.plantations],
+          percentage: (d.intersection_area / totalPlantations) * 100,
+        })),
+      'value'
+    ).reverse();
   }
 );
 
@@ -43,7 +44,7 @@ export const parseSentence = createSelector(
     const { initialSpecies, singleSpecies, initialTypes } = sentences;
     const top =
       settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
-    const areaPerc = 100 * (sumBy(top, 'value') || 0) / rawData.totalArea;
+    const areaPerc = (100 * (sumBy(top, 'value') || 0)) / rawData.totalArea;
     const topExtent = sumBy(top, 'value') || 0;
     const otherExtent = sumBy(data.slice(2), 'value') || 0;
     const params = {
@@ -61,7 +62,7 @@ export const parseSentence = createSelector(
           : `${format('.3s')(otherExtent)}ha`,
       count: data.length - top.length,
       topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
-      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '< 0.1%'
+      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '< 0.1%',
     };
     const sentence =
       settings.type === 'bound1'
@@ -70,12 +71,12 @@ export const parseSentence = createSelector(
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

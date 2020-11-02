@@ -3,7 +3,7 @@ import {
   FOREST_GAIN_DATASET,
   FOREST_LOSS_DATASET,
   FOREST_EXTENT_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
@@ -11,6 +11,7 @@ import {
   FOREST_LOSS,
   FOREST_EXTENT,
 } from 'data/layers';
+
 import * as actions from './actions';
 
 export const initialState = {

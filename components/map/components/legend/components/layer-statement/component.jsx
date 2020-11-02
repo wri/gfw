@@ -13,7 +13,7 @@ class LayerStatement extends PureComponent {
       tooltipClassname,
       statementPlain,
       statementHighlight,
-      tooltipDesc
+      tooltipDesc,
     } = this.props;
 
     return tooltipDesc ? (
@@ -26,7 +26,8 @@ class LayerStatement extends PureComponent {
         animateFill={false}
       >
         <div className={`c-layer-statement ${className || ''}`}>
-          {statementPlain} <span>{statementHighlight}</span>
+          {statementPlain}
+          <span>{statementHighlight}</span>
         </div>
       </Tooltip>
     ) : (
@@ -40,7 +41,7 @@ LayerStatement.propTypes = {
   tooltipClassname: PropTypes.string,
   statementPlain: PropTypes.string,
   statementHighlight: PropTypes.string,
-  tooltipDesc: PropTypes.string
+  tooltipDesc: PropTypes.string,
 };
 
 export default LayerStatement;

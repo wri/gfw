@@ -1,10 +1,9 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
 import chroma from 'chroma-js';
 
-import { getDatasetsProvider } from 'services/datasets';
+import { getDatasets } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
 
 import { reduceParams, reduceSqlParams } from './utils';
@@ -19,13 +18,13 @@ const byVocabulary = (dataset) =>
     (o) => o.name === 'layer_manager_ver' && o.tags.includes('3.0')
   );
 
-export const getDatasets = createThunkAction(
-  'getDatasets',
+export const fetchDatasets = createThunkAction(
+  'fetchDatasets',
   () => (dispatch) => {
     dispatch(setDatasetsLoading({ loading: true, error: false }));
-    getDatasetsProvider()
-      .then((allDatasets) => {
-        const parsedDatasets = wriAPISerializer(allDatasets.data)
+    getDatasets()
+      .then((datasets) => {
+        const parsedDatasets = datasets
           .filter(
             (d) =>
               d.published &&
@@ -57,7 +56,7 @@ export const getDatasets = createThunkAction(
               isLossLayer,
               isLossDriverLayer,
             } = info || {};
-            const { id, iso, applicationConfig } = defaultLayer || {};
+            const { iso, applicationConfig } = defaultLayer || {};
             const { global, selectorConfig } = applicationConfig || {};
 
             // build statement config
@@ -81,20 +80,22 @@ export const getDatasets = createThunkAction(
             }
 
             return {
-              id: d.id,
-              dataset: d.id,
+              id: applicationConfig?.dataset_slug || applicationConfig.slug,
+              dataset:
+                applicationConfig?.dataset_slug || applicationConfig.slug,
               name: d.name,
-              layer: id,
+              layer: applicationConfig.slug,
               ...applicationConfig,
               ...info,
               iso,
+              slug: applicationConfig?.dataset_slug || applicationConfig.slug,
               tags: flatten(d.vocabulary.map((v) => v.tags)),
               // dropdown selector config
               ...((isSelectorLayer || isMultiSelectorLayer) && {
                 selectorLayerConfig: {
                   options: layer.map((l) => ({
                     ...l.applicationConfig.selectorConfig,
-                    value: l.id,
+                    value: l?.applicationConfig?.slug,
                   })),
                   ...selectorConfig,
                 },
@@ -124,7 +125,7 @@ export const getDatasets = createThunkAction(
                         source, // v3
                         decode_function, // v3
                       } = layerConfig;
-                      const { tiles } = source; // previously url
+                      const { tiles } = source || {}; // previously url
                       const decodeFunction =
                         decodeLayersConfig[decode_function];
                       const customColor =
@@ -150,7 +151,7 @@ export const getDatasets = createThunkAction(
                             background: customColor,
                           },
                           {
-                            background: chroma(customColor).darken(1.3),
+                            background: chroma(customColor).darken(1.3).hex(),
                           },
                         ],
                       };
@@ -166,8 +167,12 @@ export const getDatasets = createThunkAction(
                       return {
                         ...info,
                         ...l,
+                        id: l?.applicationConfig.slug,
                         ...(d.tableName && { tableName: d.tableName }),
                         ...l.applicationConfig,
+                        dataset:
+                          applicationConfig.dataset_slug ||
+                          applicationConfig.slug,
                         // sorting position
                         position: l.applicationConfig.default
                           ? 0

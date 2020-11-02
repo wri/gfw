@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+
+.c-error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  svg {
+    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 20px;
+    }
+  }
+
+  h1 {
+    font-size: 26px;
+    color: $slate;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 400;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 30px;
+    color: $slate;
+    text-align: center;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 18px;
+    }
+  }
+
+  b {
+    font-weight: 500;
+  }
+}

@@ -3,6 +3,10 @@
 .c-topics-footer {
   padding-bottom: rem(55px);
 
+  .row-cards {
+    margin-bottom: 40px;
+  }
+
   .footer-title {
     padding: rem(40px) 0 0;
     text-transform: uppercase;
@@ -17,4 +21,3 @@
     display: block !important;
   }
 }
-

@@ -25,7 +25,7 @@ function SankeyChart({
   handleMouseOver,
   handleMouseLeave,
   handleOnClick,
-  handleOutsideClick
+  handleOutsideClick,
 }) {
   return (
     <div className="c-sankey-chart" style={{ height, minWidth: '100%' }}>
@@ -33,7 +33,7 @@ function SankeyChart({
         className="node-titles"
         style={{
           paddingLeft: margin.left || 0,
-          paddingRight: margin.right || 0
+          paddingRight: margin.right || 0,
         }}
       >
         {config.nodeTitles &&
@@ -67,14 +67,14 @@ function SankeyChart({
                   config={{
                     ...config.node,
                     ...config,
-                    nodeWidth
+                    nodeWidth,
                   }}
                 />
               )
             }
           >
             <Tooltip
-              content={content => {
+              content={(content) => {
                 const payloadData =
                   content.payload &&
                   content.payload.length > 0 &&
@@ -86,15 +86,17 @@ function SankeyChart({
                       settings={[
                         {
                           key: payloadData.name,
-                          label: `${payloadData.name &&
-                            payloadData.name.replace('-', '>')}`
+                          label: `${
+                            payloadData.name &&
+                            payloadData.name.replace('-', '>')
+                          }`,
                         },
                         {
                           key: 'value',
                           unit: config.tooltip && config.tooltip.unit,
-                          unitFormat: num => format('.2s')(num),
-                          label: ''
-                        }
+                          unitFormat: (num) => format('.2s')(num),
+                          label: '',
+                        },
                       ]}
                     />
                   )
@@ -126,27 +128,29 @@ SankeyChart.propTypes = {
   /** Custom node component. Will replace the default */
   customNode: PropTypes.node,
   /** Function that takes the node info and returns the components to add at the bottom of the tooltip */
-  // tooltipChildren: PropTypes.func,
   /** Configuration */
   config: PropTypes.shape({
     /** Configuration for the tooltip */
     tooltip: PropTypes.object,
+    /** Titles for each node */
+    nodeTitles: PropTypes.array,
     /** Configuration for each node */
     node: PropTypes.object,
     /** Configuration for the aspect of the responsive container */
-    aspect: PropTypes.number
+    aspect: PropTypes.number,
+    link: PropTypes.object,
   }),
   /** Set margin of sankey component, used to calculate a position of all child elements inside sankey charts  */
   margin: PropTypes.shape({
     top: PropTypes.number,
     right: PropTypes.number,
     bottom: PropTypes.number,
-    left: PropTypes.number
+    left: PropTypes.number,
   }),
   handleMouseOver: PropTypes.func,
   handleMouseLeave: PropTypes.func,
   handleOnClick: PropTypes.func,
-  handleOutsideClick: PropTypes.func
+  handleOutsideClick: PropTypes.func,
 };
 
 SankeyChart.defaultProps = {
@@ -157,11 +161,9 @@ SankeyChart.defaultProps = {
   nodePadding: 10,
   containerWidth: 800,
   config: {},
-  customTooltip: null,
   customLink: null,
   customNode: null,
-  tooltipChildren: null,
-  margin: { top: 10 }
+  margin: { top: 10 },
 };
 
 export default SankeyChart;

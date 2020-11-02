@@ -8,12 +8,12 @@ import moment from 'moment';
 import { saveAs } from 'file-saver';
 import cx from 'classnames';
 
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import downloadIcon from 'assets/icons/download.svg?sprite';
-import { GFW_API } from 'utils/constants';
+import { GFW_API } from 'utils/apis';
 
 import './styles.scss';
 
@@ -201,7 +201,11 @@ class WidgetDownloadButton extends PureComponent {
     } else {
       this.generateZipFromURL();
     }
-    track('downloadWidgetData', { label: this.props.widget });
+    trackEvent({
+      category: 'Dashboards page',
+      action: 'Download widget',
+      label: this.props.widget,
+    });
   };
 
   render() {

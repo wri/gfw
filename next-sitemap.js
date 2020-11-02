@@ -1,13 +1,13 @@
 module.exports = {
   siteUrl: 'https://www.globalforestwatch.org',
-  generateRobotsTxt: true,
-  sitemapSize: 5000,
+  generateRobotsTxt: false,
+  sitemapSize: 50000,
+  priority: 1.0,
   changefreq: 'weekly',
   exclude: [
     '/404',
     '/search',
     '/thank-you',
-    '/browser-support',
     '/terms',
     '/my-gfw',
     '/privacy-policy',
@@ -22,7 +22,7 @@ module.exports = {
       return {
         loc: url,
         changefreq: config.changefreq,
-        priority: '0.7',
+        priority: config.priority,
         lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
       };
     }
@@ -30,7 +30,7 @@ module.exports = {
     return {
       loc: url,
       changefreq: config.changefreq,
-      priority: '1.0',
+      priority: config.priority,
       lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
     };
   },

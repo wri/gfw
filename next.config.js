@@ -10,7 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const Dotenv = require('dotenv-webpack');
 
-const howToRedirects = require('./static/howto-redirects');
+const howToRedirects = require('./data/howto-redirects');
 
 const nextConfig = {
   webpack: (config) => {

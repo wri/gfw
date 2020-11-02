@@ -6,7 +6,7 @@ import {
   FOREST_GAIN_DATASET,
   FOREST_LOSS_DATASET,
   FOREST_EXTENT_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
@@ -98,20 +98,17 @@ export const viewArea = createThunkAction(
   'viewArea',
   ({ areaId, pathname: forcePathname }) => () => {
     const { pushQuery, query, pathname } = useRouter();
+    const route = forcePathname || pathname;
+    const basePath = route === '/map/[[...location]]' ? 'map' : 'dashboards';
 
     if (areaId && location) {
       const { mainMap, map } = query || {};
 
       pushQuery({
-        pathname: forcePathname || pathname,
-        payload: {
-          type: 'aoi',
-          adm0: areaId,
-        },
+        pathname: `/${basePath}/aoi/${areaId}/`,
         query: {
           ...query,
-          location: ['aoi', areaId],
-          ...(pathname === '/map/[[...location]]' && {
+          ...(basePath === 'map' && {
             mainMap: {
               ...mainMap,
               showAnalysis: true,
@@ -164,14 +161,11 @@ export const viewArea = createThunkAction(
 );
 
 export const clearArea = createThunkAction('clearArea', () => () => {
-  const { pathname, pushQuery } = useRouter();
+  const { asPath, pushQuery } = useRouter();
   const { query } = location;
 
   pushQuery({
-    pathname,
-    query: {
-      ...query,
-      location: [],
-    },
+    pathname: asPath?.split('?')?.[0],
+    query,
   });
 });

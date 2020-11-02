@@ -3,13 +3,13 @@ import { all, spread } from 'axios';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_EXTENT_DATASET
-} from 'data/layers-datasets';
+  FOREST_EXTENT_DATASET,
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
-  TREE_COVER
+  TREE_COVER,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -27,14 +27,14 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   chartType: 'pieChart',
   colors: 'extent',
@@ -43,31 +43,31 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // tree cover
     {
       dataset: FOREST_EXTENT_DATASET,
       layers: {
         2010: FOREST_EXTENT,
-        2000: TREE_COVER
-      }
-    }
+        2000: TREE_COVER,
+      },
+    },
   ],
   visible: ['dashboard', 'analysis'],
   sortOrder: {
-    landCover: 4
+    landCover: 4,
   },
   settings: {
     forestType: 'primary_forest',
     threshold: 30,
-    extentYear: 2000
+    extentYear: 2000,
   },
   sentences: {
     initial:
       'As of 2001, {percentage} of {location} total tree cover was <b>primary forest</b>.',
     withIndicator:
-      'As of 2001, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
+      'As of 2001, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.',
   },
   refetchKeys: ['landCategory', 'threshold', 'extentYear'],
   whitelists: {
@@ -177,10 +177,10 @@ export default {
       'CHL',
       'CUW',
       'UMI',
-      'GRD'
-    ]
+      'GRD',
+    ],
   },
-  getData: params =>
+  getData: (params) =>
     all([
       getExtent({ ...params, forestType: '' }),
       getExtent({ ...params }),
@@ -189,8 +189,8 @@ export default {
         forestType:
           params.forestType === 'primary_forest'
             ? 'plantations'
-            : params.forestType
-      })
+            : params.forestType,
+      }),
     ]).then(
       spread((gadm28Response, iflResponse, plantationsResponse) => {
         const gadmExtent = gadm28Response.data && gadm28Response.data.data;
@@ -211,13 +211,13 @@ export default {
             totalArea,
             totalExtent,
             extent,
-            plantations
+            plantations,
           };
         }
         return data;
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     getExtent({ ...params, forestType: '', download: true }),
     getExtent({ ...params, download: true }),
     getExtent({
@@ -226,8 +226,8 @@ export default {
         params.forestType === 'primary_forest'
           ? 'plantations'
           : params.forestType,
-      download: true
-    })
+      download: true,
+    }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

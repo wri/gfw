@@ -1,71 +1,53 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import capitalize from 'lodash/capitalize';
 
-import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import PageLayout from 'wrappers/page';
+import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
-import Layout from 'layouts/page';
-import GrantsAndFellowships from 'pages/sgf';
-import SgfUrlProvider from 'providers/sgf-url-provider';
+import { getSGFProjects } from 'services/projects';
+import { getCountriesLatLng } from 'services/country';
 
-import { setSectionProjectsModalSlug } from 'pages/sgf/section-projects/section-projects-modal/actions';
+const SECTIONS = ['projects', 'about', 'apply'];
 
-const pageProps = {
-  description:
-    'The Small Grants Fund & Tech Fellowship support civil society organizations and individuals around the world to use GFW in their advocacy, research and field work.',
-};
-
-const sections = ['projects', 'about', 'apply'];
+const GrantsAndFellowshipsPage = (props) => (
+  <PageLayout
+    {...props}
+    description="The Small Grants Fund & Tech Fellowship support civil society organizations and individuals around the world to use GFW in their advocacy, research and field work."
+  >
+    <GrantsAndFellowships {...props} />
+  </PageLayout>
+);
 
 export const getStaticPaths = async () => {
-  const paths = sections.map((key) => ({
+  const paths = SECTIONS.map((key) => ({
     params: { section: key },
   }));
 
   return { paths, fallback: false };
 };
 
-export const getStaticProps = async ({ params }) => ({
-  props: {
-    title: `${capitalize(
-      params?.section
-    )} | Grants & Fellowships | Global Forest Watch`,
-  },
-});
+export const getStaticProps = async ({ params }) => {
+  if (params?.section === 'projects') {
+    const projects = await getSGFProjects();
+    const latLngs = await getCountriesLatLng();
 
-const GrantsAndFellowshipsPage = (props) => {
-  const dispatch = useDispatch();
-  const [ready, setReady] = useState(false);
-  const { query, asPath } = useRouter();
-  const fullPathname = asPath?.split('?')?.[0];
+    return {
+      props: {
+        title: 'Projects | Grants & Fellowships | Global Forest Watch',
+        section: params?.section,
+        projects: projects || [],
+        latLngs: latLngs || [],
+      },
+    };
+  }
 
-  useMemo(() => {
-    const { sgfModal } = decodeParamsForState(query) || {};
-
-    if (sgfModal) {
-      dispatch(setSectionProjectsModalSlug(sgfModal));
-    }
-  }, [fullPathname]);
-
-  // when setting the query params from the URL we need to make sure we don't render the map
-  // on the server otherwise the DOM will be out of sync
-  useEffect(() => {
-    if (!ready) {
-      setReady(true);
-    }
-  });
-
-  return (
-    <Layout {...props} {...pageProps}>
-      {ready && (
-        <>
-          <SgfUrlProvider />
-          <GrantsAndFellowships />
-        </>
-      )}
-    </Layout>
-  );
+  return {
+    props: {
+      title: `${capitalize(
+        params?.section
+      )} | Grants & Fellowships | Global Forest Watch`,
+      section: params?.section,
+    },
+  };
 };
 
 export default GrantsAndFellowshipsPage;

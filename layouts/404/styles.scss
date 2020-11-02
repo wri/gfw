@@ -1,0 +1,19 @@
+@import '~styles/settings.scss';
+
+.l-404-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+
+  > div {
+    max-width: 600px;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: calc(100vh - 56px);
+  }
+}

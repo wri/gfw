@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { translateText } from 'utils/transifex';
+import { translateText } from 'utils/lang';
 
 import Dropdown from 'components/ui/dropdown';
 
@@ -8,7 +8,7 @@ import './styles.scss';
 
 class SentenceSelector extends PureComponent {
   static defaultProps = {
-    sentence: 'Displaying {name} for {selector}'
+    sentence: 'Displaying {name} for {selector}',
   };
 
   reduceSentence = (sentence, pattern, component) => {
@@ -52,12 +52,12 @@ SentenceSelector.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
-    PropTypes.object
+    PropTypes.object,
   ]),
   onChange: PropTypes.func,
   options: PropTypes.array,
   sentence: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
 };
 
 export default SentenceSelector;

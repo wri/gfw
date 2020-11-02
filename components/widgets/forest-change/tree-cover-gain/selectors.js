@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { formatNumber } from 'utils/format';
 
 // get list data
@@ -29,14 +29,15 @@ export const getSortedData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (!data || !data.length) return null;
-    return sortByKey(
+    return sortBy(
       uniqBy(data, 'id'),
-      settings.unit === 'ha' ? 'gain' : 'percentage',
-      true
-    ).map((d, i) => ({
-      ...d,
-      rank: i + 1,
-    }));
+      settings.unit === 'ha' ? 'gain' : 'percentage'
+    )
+      .reverse()
+      .map((d, i) => ({
+        ...d,
+        rank: i + 1,
+      }));
   }
 );
 

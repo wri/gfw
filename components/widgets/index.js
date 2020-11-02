@@ -5,7 +5,7 @@ import intersection from 'lodash/intersection';
 import isEqual from 'lodash/isEqual';
 import compact from 'lodash/compact';
 
-import { POLITICAL_BOUNDARIES_DATASET } from 'data/layers-datasets';
+import { POLITICAL_BOUNDARIES_DATASET } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,

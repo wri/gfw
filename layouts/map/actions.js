@@ -1,5 +1,7 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { getLocationFromData } from 'utils/format';
+import { getGadmLocationByLevel } from 'utils/gadm';
+import compact from 'lodash/compact';
+
 import useRouter from 'utils/router';
 
 export const setMainMapSettings = createAction('setMainMapSettings');
@@ -9,7 +11,7 @@ export const setMainMapAnalysisView = createThunkAction(
   ({ data, layer }) => () => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
-    const { query, pushQuery, pathname } = useRouter();
+    const { query, pushQuery } = useRouter();
     const { map, mainMap } = query || {};
 
     // get location payload based on layer type
@@ -18,7 +20,7 @@ export const setMainMapAnalysisView = createThunkAction(
       if (analysisEndpoint === 'admin') {
         payload = {
           type: 'country',
-          ...getLocationFromData(data),
+          ...getGadmLocationByLevel(data),
         };
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         payload = {
@@ -36,10 +38,9 @@ export const setMainMapAnalysisView = createThunkAction(
 
     if (payload && payload.adm0) {
       pushQuery({
-        pathname,
+        pathname: `/map/${compact(Object.values(payload))?.join('/')}/`,
         query: {
           ...query,
-          location: Object.values(payload),
           map: {
             ...map,
             canBound: true,
@@ -57,14 +58,13 @@ export const setMainMapAnalysisView = createThunkAction(
 export const setDrawnGeostore = createThunkAction(
   'setDrawnGeostore',
   (geostoreId) => () => {
-    const { pushQuery, query, pathname } = useRouter();
+    const { pushQuery, query } = useRouter();
 
     const { map, mainMap } = query || {};
     pushQuery({
-      pathname,
+      pathname: `/map/geostore/${geostoreId}/`,
       query: {
         ...query,
-        location: ['geostore', geostoreId],
         map: {
           ...map,
           canBound: true,

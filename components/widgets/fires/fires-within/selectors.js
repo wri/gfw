@@ -3,16 +3,16 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { hslShift } from 'utils/data';
+import { hslShift } from 'components/widgets/utils/colors';
 
 // get list data
-const getData = state => state.data && state.data.data;
-const getLocationName = state => state.locationLabel;
-const getOptionsSelected = state => state.optionsSelected;
-const getIndicator = state => state.indicator;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
-const getTitle = state => state.title;
+const getData = (state) => state.data && state.data.data;
+const getLocationName = (state) => state.locationLabel;
+const getOptionsSelected = (state) => state.optionsSelected;
+const getIndicator = (state) => state.indicator;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
+const getTitle = (state) => state.title;
 
 // get lists selected
 export const parseData = createSelector(
@@ -29,14 +29,14 @@ export const parseData = createSelector(
 
     fireCountIn = fireCountIn
       .filter(
-        a =>
+        (a) =>
           (a.year === filterYear && a.week >= filterWeek) || a.year > filterYear
       )
       .reduce((acc, n) => acc + n.count, 0);
 
     fireCountAll = fireCountAll
       .filter(
-        a =>
+        (a) =>
           (a.year === filterYear && a.week >= filterWeek) || a.year > filterYear
       )
       .reduce((acc, n) => acc + n.count, 0);
@@ -57,8 +57,10 @@ export const parseData = createSelector(
         color: mainColour,
         unit: 'counts',
         percentage:
-          indicator && fireCountAll > 0 ? fireCountIn / fireCountAll * 100 : 100
-      }
+          indicator && fireCountAll > 0
+            ? (fireCountIn / fireCountAll) * 100
+            : 100,
+      },
     ];
     if (indicator) {
       parsedData.push({
@@ -66,7 +68,8 @@ export const parseData = createSelector(
         value: fireCountOutside,
         color: otherColour,
         unit: 'counts',
-        percentage: fireCountAll > 0 ? fireCountOutside / fireCountAll * 100 : 0
+        percentage:
+          fireCountAll > 0 ? (fireCountOutside / fireCountAll) * 100 : 0,
       });
     }
     return parsedData;
@@ -82,7 +85,7 @@ export const parseSentence = createSelector(
       withInd,
       noIndicator,
       globalNoIndicator,
-      highConfidence
+      highConfidence,
     } = sentences;
     const { confidence } = optionsSelected;
     const indicatorLabel =
@@ -95,7 +98,7 @@ export const parseSentence = createSelector(
       location: locationName !== 'global' ? locationName : 'globally',
       indicator: indicatorLabel,
       firesWithinPerc: `${format('.2r')(firesWithinPerc)}%`,
-      totalFires: `${format(',')(totalFires)}`
+      totalFires: `${format(',')(totalFires)}`,
     };
     let sentence = indicator ? withInd : noIndicator;
     if (locationName === 'global') {
@@ -107,7 +110,7 @@ export const parseSentence = createSelector(
         : `${sentence}.`;
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -124,5 +127,5 @@ export const parseTitle = createSelector(
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });
