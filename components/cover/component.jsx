@@ -2,28 +2,42 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { Row, Column } from 'gfw-components';
+
 import './styles.scss';
 
 class Cover extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { bgImage, large, className } = this.props;
+    const {
+      bgImage,
+      large,
+      className,
+      title,
+      description,
+      children,
+    } = this.props;
     const bgStyle = bgImage ? { backgroundImage: `url('${bgImage}'` } : {};
+
     return (
       <div className={cx('c-cover', { large }, className)} style={bgStyle}>
-        <div className="row">
-          <div className="columns small-12 medium-8">
+        <Row>
+          <Column width={[1, 2 / 3]}>
             <div className="cover-texts">
-              <h1 className="text -title-biggest -color-1">
-                {this.props.title}
+              <h1
+                className={cx('cover-title', { '-with-background': !!bgImage })}
+              >
+                {title}
               </h1>
-              <p className="description text -paragraph -color-1">
-                {this.props.description}
-              </p>
+              {Array.isArray(description) ? (
+                <div className="description">{description}</div>
+              ) : (
+                <p className="description">{description}</p>
+              )}
             </div>
-            {this.props.children}
-          </div>
-        </div>
+            {children}
+          </Column>
+        </Row>
       </div>
     );
   }
@@ -32,10 +46,10 @@ class Cover extends PureComponent {
 Cover.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   large: PropTypes.bool,
   bgImage: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default Cover;

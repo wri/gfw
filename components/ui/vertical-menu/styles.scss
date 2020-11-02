@@ -1,0 +1,45 @@
+@import '~styles/settings.scss';
+
+.c-vertical-menu {
+  border-right: 1px solid rgba($hot-grey, 0.3);
+
+  .menu-item {
+    border-bottom: 1px solid rgba($hot-grey, 0.3);
+  }
+
+  button {
+    margin: 0;
+    padding: 15px 10px;
+    width: 100%;
+    height: inherit;
+    background-color: transparent;
+    color: $slate;
+    border: 0;
+    text-transform: none;
+    font-weight: normal;
+    text-align: left;
+
+    svg {
+      fill: $slate;
+      transform: rotate(270deg);
+      width: rem(10px);
+      height: rem(10px);
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    &.--active {
+      color: $green-gfw;
+
+      svg {
+        fill: $green-gfw;
+      }
+    }
+  }
+
+  .button-wrapper {
+    justify-content: space-between !important;
+  }
+}

@@ -1,13 +1,12 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
 import ShowAnalysis from 'components/analysis/components/show-analysis';
-import NoContent from 'components/ui/no-content';
 
 import './styles.scss';
 
@@ -24,6 +23,7 @@ class AnalysisComponent extends PureComponent {
     activeArea: PropTypes.object,
     goToDashboard: PropTypes.func,
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    geostoreError: PropTypes.bool,
     handleCancelAnalysis: PropTypes.func,
     handleFetchAnalysis: PropTypes.func,
     embed: PropTypes.bool,
@@ -34,7 +34,6 @@ class AnalysisComponent extends PureComponent {
     checkingShape: PropTypes.bool,
     areaTooLarge: PropTypes.bool,
     uploadingShape: PropTypes.bool,
-    areaError: PropTypes.bool,
   };
 
   render() {
@@ -49,6 +48,7 @@ class AnalysisComponent extends PureComponent {
       clearAnalysis,
       goToDashboard,
       error,
+      geostoreError,
       handleCancelAnalysis,
       handleFetchAnalysis,
       setAreaOfInterestModalSettings,
@@ -57,7 +57,6 @@ class AnalysisComponent extends PureComponent {
       embed,
       setShareModal,
       areaTooLarge,
-      areaError,
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -74,8 +73,6 @@ class AnalysisComponent extends PureComponent {
         target: '_blank',
       }),
     };
-    const isDeletedAoI = location.areaId && (areaError || !activeArea);
-    const areaPrivate = areaError === 401 || (activeArea && !activeArea.public);
 
     return (
       <Fragment>
@@ -83,39 +80,32 @@ class AnalysisComponent extends PureComponent {
           {loading && (
             <Loader className={cx('analysis-loader', { fetching: loading })} />
           )}
-          {!loading && isDeletedAoI && (
-            <NoContent
-              className="deleted-area-message"
-              message={
-                areaPrivate
-                  ? 'This area is set to private'
-                  : 'This area does not exist or has been deleted.'
-              }
-            />
-          )}
-          {location.type &&
-            location.adm0 &&
-            !isDeletedAoI &&
-            (loading || (!loading && error)) && (
-              <div className={cx('cancel-analysis', { fetching: loading })}>
-                {!loading && error && (
-                  <Button
-                    className="refresh-analysis-btn"
-                    onClick={() => handleFetchAnalysis(endpoints)}
-                  >
-                    REFRESH ANALYSIS
-                  </Button>
-                )}
+          {location.type && location.adm0 && (loading || (!loading && error)) && (
+            <div className={cx('cancel-analysis', { fetching: loading })}>
+              {!loading && error && !geostoreError && (
                 <Button
-                  className="cancel-analysis-btn"
-                  onClick={handleCancelAnalysis}
+                  className="refresh-analysis-btn"
+                  onClick={() => handleFetchAnalysis(endpoints)}
                 >
-                  CANCEL ANALYSIS
+                  REFRESH ANALYSIS
                 </Button>
-                {!loading && error && <p className="error-message">{error}</p>}
-              </div>
-            )}
-          {location.type && location.adm0 && !isDeletedAoI && (
+              )}
+              <Button
+                className="cancel-analysis-btn"
+                onClick={handleCancelAnalysis}
+              >
+                CANCEL ANALYSIS
+              </Button>
+              {!loading && error && (
+                <p className="error-message">
+                  {geostoreError
+                    ? 'We are having trouble getting the selected geometry. Please try again later.'
+                    : error}
+                </p>
+              )}
+            </div>
+          )}
+          {location.type && location.adm0 && !error && (
             <ShowAnalysis
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
@@ -125,7 +115,7 @@ class AnalysisComponent extends PureComponent {
               analysis
             />
           )}
-          {location.type === 'global' && !location.adm0 && !isDeletedAoI && (
+          {location.type === 'global' && !location.adm0 && (
             <ChoseAnalysis
               checkingShape={checkingShape}
               uploadingShape={uploadingShape}
@@ -133,75 +123,72 @@ class AnalysisComponent extends PureComponent {
             />
           )}
         </div>
-        {!loading &&
-          !error &&
-          location &&
-          location.type &&
-          !isDeletedAoI &&
-          location.adm0 && (
-            <div className="analysis-actions">
-              {location.type === 'country' && !location.areaId && (
-                <Button
-                  className="analysis-action-btn"
-                  theme="theme-button-light"
-                  {...linkProps}
-                  onClick={() =>
-                    track('analysisViewDashboards', {
-                      label: location.adm0,
-                    })}
-                >
-                  DASHBOARD
-                </Button>
-              )}
-              {activeArea && (
-                <Button
-                  className="analysis-action-btn"
-                  theme="theme-button-light"
-                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
-                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
-                >
-                  DASHBOARD
-                </Button>
-              )}
-              {(!activeArea || (activeArea && !activeArea.userArea)) && (
-                <Button
-                  className="analysis-action-btn save-to-mygfw-btn"
-                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
-                  disabled={areaTooLarge}
-                  {...(areaTooLarge && {
-                    tooltip: {
-                      text:
-                        'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).',
-                    },
+        {!loading && !error && location && location.type && location.adm0 && (
+          <div className="analysis-actions">
+            {location.type === 'country' && !location.areaId && (
+              <Button
+                className="analysis-action-btn"
+                theme="theme-button-light"
+                {...linkProps}
+                onClick={() =>
+                  trackEvent({
+                    category: 'Map analysis',
+                    action: 'User goes to dashboards',
+                    label: location.adm0,
                   })}
-                >
-                  save in my gfw
-                </Button>
-              )}
-              {activeArea && activeArea.userArea && (
-                <Button
-                  className="analysis-action-btn"
-                  onClick={() =>
-                    setShareModal({
-                      title: 'Share this view',
-                      shareUrl:
-                        !isServer &&
-                        (window.location.href.includes('embed')
-                          ? window.location.href.replace('/embed', '')
-                          : window.location.href),
-                      embedUrl:
-                        !isServer &&
-                        (window.location.href.includes('embed')
-                          ? window.location.href
-                          : window.location.href.replace('/map', '/embed/map')),
-                    })}
-                  tooltip={{ text: 'Share or embed this area' }}
-                >
-                  Share area
-                </Button>
-              )}
-            </div>
-          )}
+              >
+                DASHBOARD
+              </Button>
+            )}
+            {activeArea && (
+              <Button
+                className="analysis-action-btn"
+                theme="theme-button-light"
+                link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+              >
+                DASHBOARD
+              </Button>
+            )}
+            {(!activeArea || (activeArea && !activeArea.userArea)) && (
+              <Button
+                className="analysis-action-btn save-to-mygfw-btn"
+                onClick={() => setAreaOfInterestModalSettings(true)}
+                disabled={areaTooLarge}
+                {...(areaTooLarge && {
+                  tooltip: {
+                    text:
+                      'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).',
+                  },
+                })}
+              >
+                save in my gfw
+              </Button>
+            )}
+            {activeArea && activeArea.userArea && (
+              <Button
+                className="analysis-action-btn"
+                onClick={() =>
+                  setShareModal({
+                    title: 'Share this view',
+                    shareUrl:
+                      !isServer &&
+                      (window.location.href.includes('embed')
+                        ? window.location.href.replace('/embed', '')
+                        : window.location.href),
+                    embedUrl:
+                      !isServer &&
+                      (window.location.href.includes('embed')
+                        ? window.location.href
+                        : window.location.href.replace('/map', '/embed/map')),
+                  })}
+                tooltip={{ text: 'Share or embed this area' }}
+              >
+                Share area
+              </Button>
+            )}
+          </div>
+        )}
       </Fragment>
     );
   }

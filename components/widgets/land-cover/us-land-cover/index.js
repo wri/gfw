@@ -1,10 +1,10 @@
 import { getUSLandCover } from 'services/forest-data';
-import { USA_LAND_COVER_DATASET } from 'data/layers-datasets';
+import { USA_LAND_COVER_DATASET } from 'data/datasets';
 import {
   USA_LAND_COVER_2001,
   USA_LAND_COVER_2006,
   USA_LAND_COVER_2011,
-  USA_LAND_COVER_2016
+  USA_LAND_COVER_2016,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -29,23 +29,23 @@ export default {
         2001: USA_LAND_COVER_2001,
         2006: USA_LAND_COVER_2006,
         2011: USA_LAND_COVER_2011,
-        2016: USA_LAND_COVER_2016
-      }
-    }
+        2016: USA_LAND_COVER_2016,
+      },
+    },
   ],
   settingsConfig: [
     {
       key: 'source',
       label: 'source',
       type: 'select',
-      whitelist: ['ipcc', 'nlcd']
+      whitelist: ['ipcc', 'nlcd'],
     },
     {
       key: 'variable',
       label: 'variable',
       type: 'select',
       whitelist: ['changes_only', 'all_data'],
-      border: true
+      border: true,
     },
     {
       key: 'years',
@@ -53,18 +53,18 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      options: [2001, 2006, 2011, 2016].map(y => ({ label: y, value: y }))
-    }
+      options: [2001, 2006, 2011, 2016].map((y) => ({ label: y, value: y })),
+    },
   ],
   sortOrder: {
-    landCover: 101
+    landCover: 101,
   },
   settings: {
     startYear: 2001,
     endYear: 2016,
     variable: 'changes_only',
     unit: 'ha',
-    source: 'ipcc'
+    source: 'ipcc',
   },
   sentences: {
     initial: `From {startYear} to {endYear}, the highest land cover change was found in areas converted from {firstCategory} to
@@ -72,32 +72,32 @@ export default {
     interaction: `From {startYear} to {endYear}, land cover changing from {firstCategory} to {secondCategory}, was equivalent to {amount}, which
     represents {percentage} of all land cover.`,
     noChange:
-      'From {startYear} to {endYear}, most land cover remained {firstCategory}, equivalent to {amount}, which represents {percentage} of all land cover.'
+      'From {startYear} to {endYear}, most land cover remained {firstCategory}, equivalent to {amount}, which represents {percentage} of all land cover.',
   },
   whitelists: {
-    adm0: ['USA']
+    adm0: ['USA'],
   },
   blacklists: {
-    adm1: [2, 12]
+    adm1: [2, 12],
   },
-  getData: params =>
-    getUSLandCover(params).then(response => {
+  getData: (params) =>
+    getUSLandCover(params).then((response) => {
       const data = response.data.rows;
       return data;
     }),
   showDownloadButton: true,
-  getDataURL: params => [getUSLandCover({ ...params, download: true })],
+  getDataURL: (params) => [getUSLandCover({ ...params, download: true })],
   getWidgetProps,
-  parseInteraction: payload => {
+  parseInteraction: (payload) => {
     if (payload) {
       const { source, target, key } = payload;
       return {
         updateLayer: true,
         source,
         target,
-        key
+        key,
       };
     }
     return {};
-  }
+  },
 };

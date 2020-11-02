@@ -18,31 +18,29 @@ class LayerSelectorMenu extends PureComponent {
       onChange,
       className,
       sentence,
-      groupSentence
+      groupSentence,
     } = this.props;
-    const optionName = selected.group || name;
+    const optionName = selected?.group || name;
 
     return (
       <div className={`c-layer-selector-menu ${className || ''}`}>
-        {groups &&
-          !!groups.length && (
+        {groups && !!groups.length && (
           <div className="menu-wrapper -group">
             <SentenceSelector
               options={groups}
               value={selectedGroup && selectedGroup.value}
-              onChange={e => onChange(layerGroup, e)}
+              onChange={(e) => onChange(layerGroup, e)}
               name={optionName}
               sentence={groupSentence}
             />
           </div>
         )}
-        {options &&
-          !!options.length && (
+        {options && !!options.length && (
           <div className="menu-wrapper">
             <SentenceSelector
               options={sortBy(options, 'position')}
               value={selected}
-              onChange={e => onChange(layerGroup, e)}
+              onChange={(e) => onChange(layerGroup, e)}
               name={optionName}
               sentence={sentence}
             />
@@ -63,7 +61,7 @@ LayerSelectorMenu.propTypes = {
   selected: PropTypes.object,
   sentence: PropTypes.string,
   groupSentence: PropTypes.string,
-  selectedGroup: PropTypes.object
+  selectedGroup: PropTypes.object,
 };
 
 export default LayerSelectorMenu;

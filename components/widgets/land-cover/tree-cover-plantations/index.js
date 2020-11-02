@@ -3,12 +3,12 @@ import { all, spread } from 'axios';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  TREE_PLANTATIONS_DATASET
-} from 'data/layers-datasets';
+  TREE_PLANTATIONS_DATASET,
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  TREE_PLANTATIONS
+  TREE_PLANTATIONS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -25,22 +25,22 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     {
       // global plantations
       dataset: TREE_PLANTATIONS_DATASET,
-      layers: [TREE_PLANTATIONS]
-    }
+      layers: [TREE_PLANTATIONS],
+    },
   ],
   visible: ['dashboard', 'analysis'],
   metaKey: 'widget_plantation_extent',
   sortOrder: {
-    landCover: 100
+    landCover: 100,
   },
   settings: {
     threshold: 10,
-    extentYear: 2010
+    extentYear: 2010,
   },
   sentences: {
     initialSpecies:
@@ -48,16 +48,16 @@ export default {
     singleSpecies:
       'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
     initialTypes:
-      'In {location}, the largest plantation area by type is {topType}, spanning {extent} and {percent} of land area.'
+      'In {location}, the largest plantation area by type is {topType}, spanning {extent} and {percent} of land area.',
   },
   whitelists: {
     indicators: ['plantations'],
-    checkStatus: true
+    checkStatus: true,
   },
-  getData: params =>
+  getData: (params) =>
     all([
       getExtent(params),
-      getAreaIntersection({ ...params, forestType: 'plantations' })
+      getAreaIntersection({ ...params, forestType: 'plantations' }),
     ]).then(
       spread((gadmResponse, plantationsResponse) => {
         const gadmExtent = gadmResponse.data && gadmResponse.data.data;
@@ -70,20 +70,20 @@ export default {
           data = {
             totalArea,
             totalExtent,
-            plantations: plantationsExtent
+            plantations: plantationsExtent,
           };
         }
 
         return data;
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     getExtent({ ...params, download: true }),
     getAreaIntersection({
       ...params,
       forestType: 'plantations',
-      download: true
-    })
+      download: true,
+    }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };

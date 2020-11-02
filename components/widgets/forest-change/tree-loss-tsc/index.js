@@ -5,7 +5,7 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
@@ -18,7 +18,7 @@ import { getExtent, getLoss } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2018;
+const MAX_YEAR = 2019;
 
 export default {
   ...treeLoss,
@@ -132,7 +132,7 @@ export default {
   getWidgetProps,
   parseInteraction: (payload) => {
     if (payload) {
-      const {year} = payload;
+      const { year } = payload;
       return {
         updateLayer: true,
         startDate:

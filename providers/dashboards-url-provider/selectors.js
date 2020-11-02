@@ -4,7 +4,6 @@ import { objDiff } from 'utils/data';
 
 import { initialState as mapInitialState } from 'components/map/reducers';
 import { initialState as dashboardPromptsInitialState } from 'components/prompts/dashboard-prompts/reducers';
-import { initialState as areaOfInterestModalInitialState } from 'components/modals/area-of-interest/reducers';
 
 export const selectMapSettings = (state) => state.map?.settings;
 export const selectMetaModalKey = (state) => state.modalMeta?.metakey;
@@ -12,7 +11,6 @@ export const selectDashboardPrompts = (state) =>
   state.dashboardPrompts?.settings;
 export const selectWidgetSettings = (state) => state.widgets?.settings;
 export const selectWidgetsCategory = (state) => state.widgets?.category;
-export const selectAOIModalSettings = (state) => state.areaOfInterestModal;
 export const selectShowMap = (state) => state.widgets?.showMap;
 
 export const getUrlParams = createSelector(
@@ -22,18 +20,10 @@ export const getUrlParams = createSelector(
     selectDashboardPrompts,
     selectWidgetSettings,
     selectWidgetsCategory,
-    selectAOIModalSettings,
     selectShowMap,
   ],
-  (
-    map,
-    modalMeta,
-    dashboardPrompts,
-    widgetsSettings,
-    category,
-    areaOfInterestModal,
-    showMap
-  ) => {
+  (map, modalMeta, dashboardPrompts, widgetsSettings, category, showMap) => {
+    console.log('widj', widgetsSettings);
     return {
       map: objDiff(map, mapInitialState.settings),
       modalMeta,
@@ -43,10 +33,6 @@ export const getUrlParams = createSelector(
       ),
       ...widgetsSettings,
       category,
-      areaOfInterestModal: objDiff(
-        areaOfInterestModal,
-        areaOfInterestModalInitialState
-      ),
       showMap,
     };
   }

@@ -4,7 +4,7 @@ import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
 import { Tooltip } from 'react-tippy';
-import { deburrUpper } from 'utils/data';
+import { deburrUpper } from 'utils/strings';
 
 import Tip from 'components/ui/tip';
 import Icon from 'components/ui/icon';
@@ -226,91 +226,89 @@ class AreasTable extends PureComponent {
             </div>
           </div>
         </div>
-        {areasTrimmed && !!areasTrimmed.length ? (
-          areasTrimmed.map((area) => (
-            <div key={area.id} className="row area-row">
-              <div className="column small-12 medium-9">
-                <Tooltip
-                  theme="light"
-                  followCursor
-                  html={<Tip text="Open dashboard" />}
-                >
-                  <div
-                    className="area-button"
-                    onClick={() => {
-                      viewArea({
-                        areaId: area.id,
-                        pathname: '/dashboards/[...location]',
-                      });
-                    }}
-                    role="button"
-                    tabIndex={0}
-                    alt="view area"
+        <div>
+          {areasTrimmed && !!areasTrimmed.length ? (
+            areasTrimmed.map((area) => (
+              <div key={area.id} className="row area-row">
+                <div className="column small-12 medium-9">
+                  <Tooltip
+                    theme="light"
+                    followCursor
+                    html={<Tip text="Open dashboard" />}
                   >
-                    <AoICard
-                      {...area}
-                      onFetchAlerts={(alertsResponse) =>
-                        this.setState({
-                          alerts: { ...allAlerts, [area.id]: alertsResponse },
+                    <div
+                      className="area-button"
+                      onClick={() => {
+                        viewArea({
+                          areaId: area.id,
+                          pathname: '/dashboards/[[...location]]',
+                        });
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      alt="view area"
+                    >
+                      <AoICard
+                        {...area}
+                        onFetchAlerts={(alertsResponse) =>
+                          this.setState({
+                            alerts: { ...allAlerts, [area.id]: alertsResponse },
+                          })}
+                      />
+                    </div>
+                  </Tooltip>
+                </div>
+                <div className="column small-12 medium-3">
+                  <div className="area-links">
+                    <Button
+                      className="area-link"
+                      theme="theme-button-clear"
+                      onClick={() =>
+                        viewArea({
+                          areaId: area.id,
+                          pathname: '/map/[[...location]]',
                         })}
-                    />
+                    >
+                      <Icon className="link-icon" icon={mapIcon} />
+                      view on map
+                    </Button>
+                    <Button
+                      className="area-link"
+                      theme="theme-button-clear"
+                      onClick={() => setAreaOfInterestModalSettings(area.id)}
+                    >
+                      <Icon className="link-icon" icon={editIcon} />
+                      edit
+                    </Button>
+                    <Button
+                      className="area-link"
+                      theme="theme-button-clear"
+                      onClick={() =>
+                        setShareModal({
+                          title: 'Share your area',
+                          shareUrl:
+                            !isServer &&
+                            `${window.location.host}/dashboards/aoi/${area.id}`,
+                        })}
+                    >
+                      <Icon className="link-icon" icon={shareIcon} />
+                      share
+                    </Button>
                   </div>
-                </Tooltip>
-              </div>
-              <div className="column small-12 medium-3">
-                <div className="area-links">
-                  <Button
-                    className="area-link"
-                    theme="theme-button-clear"
-                    onClick={() =>
-                      viewArea({
-                        areaId: area.id,
-                        pathname: '/map/[...location]',
-                      })}
-                  >
-                    <Icon className="link-icon" icon={mapIcon} />
-                    view on map
-                  </Button>
-                  <Button
-                    className="area-link"
-                    theme="theme-button-clear"
-                    onClick={() =>
-                      setAreaOfInterestModalSettings({
-                        open: true,
-                        activeAreaId: area.id,
-                      })}
-                  >
-                    <Icon className="link-icon" icon={editIcon} />
-                    edit
-                  </Button>
-                  <Button
-                    className="area-link"
-                    theme="theme-button-clear"
-                    onClick={() =>
-                      setShareModal({
-                        title: 'Share your area',
-                        shareUrl:
-                          !isServer &&
-                          `${window.location.host}/dashboards/aoi/${area.id}`,
-                      })}
-                  >
-                    <Icon className="link-icon" icon={shareIcon} />
-                    share
-                  </Button>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="row no-content-row">
+              <div className="column small-12">
+                <NoContent
+                  className="no-areas-msg"
+                  message="No areas with that search"
+                />
+              </div>
             </div>
-          ))
-        ) : (
-          <div className="row no-content-row">
-            <div className="column small-12">
-              <NoContent
-                className="no-areas-msg"
-                message="No areas with that search"
-              />
-            </div>
-          </div>
-        )}
+          )}
+        </div>
         {orderedAreas.length > pageSize && (
           <Paginate
             settings={{

@@ -11,6 +11,7 @@ class Toggle extends PureComponent {
     return (
       <button
         role="switch"
+        aria-label="toggle"
         aria-checked={value && value.toString()}
         className={`c-toggle ${value ? '-active' : ''} ${theme || ''}`}
         style={{ backgroundColor: value && color ? color : null }}
@@ -24,7 +25,7 @@ Toggle.propTypes = {
   color: PropTypes.string,
   onToggle: PropTypes.func,
   value: PropTypes.bool,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 export default Toggle;

@@ -8,18 +8,15 @@ import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
-import { translateText } from 'utils/transifex';
+import { translateText, selectActiveLang } from 'utils/lang';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
-import { getDataLocation } from 'utils/location';
-
-import { getIsTrase, selectActiveLang } from 'layouts/page/selectors';
+import { getDataLocation, locationLevelToStr } from 'utils/location';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
-import { locationLevelToStr } from 'utils/format';
 
 import {
   getSettingsConfig,
@@ -48,6 +45,7 @@ const buildLocationDict = (locations) =>
 
 export const selectLocation = (state) =>
   state.location && state.location.payload;
+export const selectIsTrase = (state) => state.location?.query?.trase;
 export const selectRouteType = (state) =>
   state.location && state.location.pathname;
 export const selectActiveWidget = (state) => state.widgets?.activeWidget;
@@ -78,7 +76,8 @@ export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
 export const selectAnalysis = (state, { analysis }) => analysis;
 export const selectCategory = (state) =>
-  state.location && state.location.query && state.location.query.category;
+  (state.location && state.location.query && state.location.query.category) ||
+  'summary';
 export const selectModalClosing = (state) =>
   state.modalMeta && state.modalMeta.closing;
 export const selectNonGlobalDatasets = (state) =>
@@ -333,11 +332,10 @@ export const filterWidgetsByCategory = createSelector(
     filterWidgetsByLocation,
     getActiveCategory,
     selectAnalysis,
-    getLocationData,
     selectEmbed,
     selectActiveWidget,
   ],
-  (widgets, category, showAnalysis, locationData, embed, widget) => {
+  (widgets, category, showAnalysis, embed, widget) => {
     if (isEmpty(widgets)) return null;
 
     if (embed && widget) return widgets.filter((w) => w.widget === widget);
@@ -362,7 +360,7 @@ export const getWidgets = createSelector(
     selectWidgetSettings,
     selectLocationSearch,
     selectNonGlobalDatasets,
-    getIsTrase,
+    selectIsTrase,
     getActiveLayersWithDates,
     selectAnalysis,
     selectActiveWidget,

@@ -1,0 +1,33 @@
+@import '~styles/settings';
+
+.c-upload-shape-modal {
+  max-width: 800px !important;
+
+  a {
+    color: $green-gfw;
+
+    &:hover {
+      color: $dark-green;
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    margin-bottom: rem(20px);
+    font-size: rem(16px);
+    line-height: rem(26px);
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  ul {
+    list-style: none;
+    font-size: rem(16px);
+
+    li {
+      margin-bottom: rem(5px);
+    }
+  }
+}

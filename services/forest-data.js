@@ -2,7 +2,7 @@ import { cartoRequest } from 'utils/request';
 
 import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 
-import { CARTO_API } from 'utils/constants';
+import { CARTO_API } from 'utils/apis';
 
 const NEW_SQL_QUERIES = {
   faoExtent:
@@ -26,9 +26,9 @@ const NEW_SQL_QUERIES = {
   year,
   ${globalLandCoverCategories
     .map(
-      category =>
+      (category) =>
         `(${category.classes
-          .map(c => `coalesce(${c}, 0)`)
+          .map((c) => `coalesce(${c}, 0)`)
           .join(' + \n')}) AS ${category.label
           .replace(/ /g, '_')
           .toLowerCase()}`
@@ -36,7 +36,7 @@ const NEW_SQL_QUERIES = {
     .join(',\n')}
   FROM global_land_cover_adm2 WHERE {location}`,
   getNLCDLandCover:
-    'SELECT from_class_nlcd AS initial_nlcd_category, to_class_nlcd AS final_nlcd_category, from_class_ipcc AS initial_ipcc_category, to_class_ipcc AS final_ipcc_category, {area} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
+    'SELECT from_class_nlcd AS initial_nlcd_category, to_class_nlcd AS final_nlcd_category, from_class_ipcc AS initial_ipcc_category, to_class_ipcc AS final_ipcc_category, {area} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}',
 };
 
 const getLocationQuery = (adm0, adm1, adm2) =>
@@ -53,14 +53,14 @@ export const getFAOExtent = ({ adm0, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_extent__ha',
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
-  return cartoRequest.get(url).then(response => ({
+  return cartoRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map(o => {
+      rows: response.data.rows.map((o) => {
         // delete old key, replace it with new
         // delete Object.assign(o, {[newKey]: o[oldKey] })[oldKey]
         delete Object.assign(o, { planted_forest: o.planted_forest__ha })
@@ -68,13 +68,13 @@ export const getFAOExtent = ({ adm0, download }) => {
         delete Object.assign(o, { forest_primary: o.primary_forest__ha })
           .primary_forest__ha;
         delete Object.assign(o, {
-          forest_regenerated: o.regenerated_forest__ha
+          forest_regenerated: o.regenerated_forest__ha,
         }).regenerated_forest__ha;
         delete Object.assign(o, { extent: o.fao_treecover__ha })
           .fao_treecover__ha;
         return o;
-      })
-    }
+      }),
+    },
   }));
 };
 
@@ -87,21 +87,21 @@ export const getFAOReforest = ({ period, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_reforestation__ha',
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
-  return cartoRequest.get(url).then(response => ({
+  return cartoRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map(o => {
+      rows: response.data.rows.map((o) => {
         delete Object.assign(o, { rate: o.reforestation__rate })
           .reforestation__rate;
         delete Object.assign(o, { extent: o.fao_treecover_reforest__ha })
           .fao_treecover_reforest__ha;
         return o;
-      })
-    }
+      }),
+    },
   }));
 };
 
@@ -114,20 +114,20 @@ export const getFAODeforest = ({ adm0, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_deforestation__ha',
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
-  return cartoRequest.get(url).then(response => ({
+  return cartoRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map(o => {
+      rows: response.data.rows.map((o) => {
         delete Object.assign(o, { country: o.iso }).iso;
         delete Object.assign(o, { deforest: o.fao_treecover_deforest__ha })
           .fao_treecover_deforest__ha;
         return o;
-      })
-    }
+      }),
+    },
   }));
 };
 
@@ -140,37 +140,37 @@ export const getFAODeforestRank = ({ period, download }) => {
   if (download) {
     return {
       name: 'fao_treecover_deforestation_rank',
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
-  return cartoRequest.get(url).then(response => ({
+  return cartoRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map(o => {
+      rows: response.data.rows.map((o) => {
         delete Object.assign(o, { deforest: o.fao_treecover_deforest__ha })
           .fao_treecover_deforest__ha;
         return o;
-      })
-    }
+      }),
+    },
   }));
 };
 
-export const getFAOEcoLive = params => {
+export const getFAOEcoLive = (params) => {
   const { download } = params || {};
   const url = `/sql?q=${NEW_SQL_QUERIES.faoEcoLive}`;
 
   if (download) {
     return {
       name: 'fao_treecover_economic_live',
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
-  return cartoRequest.get(url).then(response => ({
+  return cartoRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map(o => {
+      rows: response.data.rows.map((o) => {
         delete Object.assign(o, { country: o.iso }).iso;
         delete Object.assign(o, { usdrev: o.revenue__usd }).revenue__usd;
         delete Object.assign(o, { usdexp: o.expenditure__usd })
@@ -181,8 +181,8 @@ export const getFAOEcoLive = params => {
         delete Object.assign(o, { femempl: o.female_forest_employees })
           .female_forest_employees;
         return o;
-      })
-    }
+      }),
+    },
   }));
 };
 
@@ -195,14 +195,14 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
   if (download) {
     return {
       name: 'global_land_cover',
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
   return cartoRequest.get(url);
 };
 
-export const getUSLandCover = params => {
+export const getUSLandCover = (params) => {
   const { adm0, adm1, adm2, startYear, endYear, download } = params;
   let admQuery = '';
   if (adm1 && !adm2) {
@@ -229,14 +229,14 @@ export const getUSLandCover = params => {
       name: `land_cover_in_ha_in_${adm0}${adm1 ? `_${adm1}` : ''}${
         adm2 ? `_${adm2}` : ''
       }_from_${startYear}_to_${endYear}`,
-      url: `${CARTO_API}${url}&format=csv`
+      url: `${CARTO_API}${url}&format=csv`,
     };
   }
 
-  return cartoRequest.get(url).then(response => ({
+  return cartoRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map(o => {
+      rows: response.data.rows.map((o) => {
         delete Object.assign(o, { from_class_ipcc: o.initial_ipcc_category })
           .initial_ipcc_category;
         delete Object.assign(o, { to_class_ipcc: o.final_ipcc_category })
@@ -246,7 +246,7 @@ export const getUSLandCover = params => {
         delete Object.assign(o, { to_class_nlcd: o.final_nlcd_category })
           .final_nlcd_category;
         return o;
-      })
-    }
+      }),
+    },
   }));
 };

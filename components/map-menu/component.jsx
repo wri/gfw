@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
-import { BIOMASS_LOSS_DATASET } from 'data/layers-datasets';
+import { BIOMASS_LOSS_DATASET } from 'data/datasets';
 
 import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
@@ -20,7 +20,10 @@ class MapMenu extends PureComponent {
 
     let newActiveDatasets = [...activeDatasets];
     if (!enable) {
-      newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
+      newActiveDatasets = remove(
+        newActiveDatasets,
+        (l) => l.dataset !== dataset
+      );
     } else {
       newActiveDatasets = [
         {
@@ -30,14 +33,14 @@ class MapMenu extends PureComponent {
           layers: [layer],
           ...(iso &&
             iso.length === 1 && {
-            iso: iso[0]
-          })
-        }
+              iso: iso[0],
+            }),
+        },
       ].concat([...newActiveDatasets]);
     }
     this.props.setMapSettings({
       datasets: newActiveDatasets || [],
-      ...(enable && { canBound: true })
+      ...(enable && { canBound: true }),
     });
 
     // show recent imagery prompt
@@ -45,7 +48,7 @@ class MapMenu extends PureComponent {
       this.props.setMapPromptsSettings({
         stepsKey: 'recentImagery',
         stepsIndex: 0,
-        open: true
+        open: true,
       });
     }
 
@@ -60,12 +63,14 @@ class MapMenu extends PureComponent {
       this.props.setMapPromptsSettings({
         stepsKey: 'analyzeAnArea',
         stepsIndex: 0,
-        open: true
+        open: true,
       });
     }
 
-    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
-      label: layer
+    trackEvent({
+      category: 'Map data',
+      action: enable ? 'User turns on a layer' : 'User turns off a layer',
+      label: layer,
     });
   };
 
@@ -76,7 +81,7 @@ class MapMenu extends PureComponent {
       location,
       menuSection,
       recentActive,
-      isDesktop
+      isDesktop,
     } = this.props;
     if (
       !isDesktop &&
@@ -124,14 +129,12 @@ class MapMenu extends PureComponent {
       collapsed,
       openSection,
       ...rest
-    } =
-      activeSection || {};
+    } = activeSection || {};
 
     return (
       <div className={cx('c-map-menu', className)}>
         <div className={cx('menu-tiles', 'map-tour-data-layers', { embed })}>
-          {isDesktop &&
-            !embed && (
+          {isDesktop && !embed && (
             <MenuDesktop
               className="menu-desktop"
               datasetSections={datasetSections}
@@ -147,7 +150,7 @@ class MapMenu extends PureComponent {
           )}
         </div>
         <MenuPanel
-          className="menu-panel"
+          className={cx('menu-panel', menuSection)}
           label={label}
           category={category}
           active={!!menuSection}
@@ -157,8 +160,7 @@ class MapMenu extends PureComponent {
           loading={loading}
           collapsed={collapsed}
           onClose={() =>
-            setMenuSettings({ menuSection: '', datasetCategory: '' })
-          }
+            setMenuSettings({ menuSection: '', datasetCategory: '' })}
           onOpen={() => setMenuSettings({ menuSection: openSection })}
         >
           {Component && (
@@ -168,9 +170,9 @@ class MapMenu extends PureComponent {
               setMenuSettings={setMenuSettings}
               onToggleLayer={this.onToggleLayer}
               {...props}
-              {...menuSection === 'datasets' && {
-                ...rest
-              }}
+              {...(menuSection === 'datasets' && {
+                ...rest,
+              })}
             />
           )}
         </MenuPanel>
@@ -206,7 +208,7 @@ MapMenu.propTypes = {
   isDesktop: PropTypes.bool,
   embed: PropTypes.bool,
   recentActive: PropTypes.bool,
-  setMapPromptsSettings: PropTypes.func
+  setMapPromptsSettings: PropTypes.func,
 };
 
 export default MapMenu;

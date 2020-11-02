@@ -6,17 +6,13 @@ import {
   getWidgetCategories,
   getActiveCategory,
 } from 'components/widgets/selectors';
-import {
-  getActiveArea,
-  selectAreaLoading,
-} from 'providers/areas-provider/selectors';
+import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import CATEGORIES from 'data/categories.json';
 
 // get list data
 const selectShowMap = (state) => state.widgets?.showMap;
 const selectLocation = (state) => state.location;
-const selectAreaError = (state) => state.areas && state.areas.error;
 const selectLocationType = (state) =>
   state.location && state.location.payload && state.location.payload.type;
 const selectCategory = (state) =>
@@ -70,7 +66,5 @@ export const getDashboardsProps = createStructuredSelector({
   noWidgetsMessage: getNoWidgetsMessage,
   locationType: selectLocationType,
   activeArea: getActiveArea,
-  areaLoading: selectAreaLoading,
   widgets: filterWidgetsByLocation,
-  areaError: selectAreaError,
 });

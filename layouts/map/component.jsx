@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Media } from 'utils/responsive';
+import { Desktop, Mobile } from 'gfw-components';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -10,17 +10,22 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
+import PlanetBasemapsProvider from 'providers/planet-provider';
+import LocationProvider from 'providers/location-provider';
+import MyGFWProvider from 'providers/mygfw-provider';
+
+import ModalWelcome from 'components/modals/welcome';
+import MetaModal from 'components/modals/meta';
+import ShareModal from 'components/modals/share';
+import AreaOfInterestModal from 'components/modals/area-of-interest';
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
 
 import Map from 'components/map';
-import ModalMeta from 'components/modals/meta';
-import ModalSource from 'components/modals/sources';
-import Share from 'components/modals/share';
-import AreaOfInterestModal from 'components/modals/area-of-interest';
 import MapPrompts from 'components/prompts/map-prompts';
-import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
-
 import MapMenu from 'components/map-menu';
+
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
 
@@ -34,14 +39,7 @@ class MainMapComponent extends PureComponent {
     hidePanels: PropTypes.bool,
     embed: PropTypes.bool,
     recentActive: PropTypes.bool,
-    setMainMapAnalysisView: PropTypes.func,
   };
-
-  renderInfoTooltip = (string) => (
-    <div>
-      <p className="tooltip-info">{string}</p>
-    </div>
-  );
 
   render() {
     const {
@@ -50,18 +48,17 @@ class MainMapComponent extends PureComponent {
       handleClickMap,
       recentActive,
       handleClickAnalysis,
-      setMainMapAnalysisView,
       onDrawComplete,
     } = this.props;
 
     return (
       <div className={cx('c-map-main', { embed })}>
-        <Media greaterThanOrEqual="md">
+        <Desktop>
           <MapMenu className="map-menu" embed={embed} isDesktop />
-        </Media>
-        <Media lessThan="md">
+        </Desktop>
+        <Mobile>
           <MapMenu className="map-menu" embed={embed} />
-        </Media>
+        </Mobile>
         <div
           className="main-map-container"
           role="button"
@@ -70,55 +67,52 @@ class MainMapComponent extends PureComponent {
         >
           <Map
             className="main-map"
-            onSelectBoundary={setMainMapAnalysisView}
             onDrawComplete={onDrawComplete}
-            popupActions={[
-              {
-                label: 'Analyze',
-                action: handleClickAnalysis,
-              },
-            ]}
+            onClickAnalysis={handleClickAnalysis}
           />
         </div>
         {!hidePanels && (
-          <Media greaterThanOrEqual="md">
+          <Desktop>
             <DataAnalysisMenu className="data-analysis-menu" embed={embed} />
-          </Media>
+          </Desktop>
         )}
-        <RecentImagery active={recentActive} />
         {!embed && (
           <>
-            <Media greaterThanOrEqual="md">
+            <Desktop>
               <>
                 {!embed && <MapPrompts />}
                 <ModalWelcome />
                 <MapControlButtons className="main-map-controls" isDesktop />
               </>
-            </Media>
-            <Media lessThan="md">
+            </Desktop>
+            <Mobile>
               <>
                 <MapControlButtons
                   className="main-map-controls"
                   isDesktop={false}
                 />
               </>
-            </Media>
+            </Mobile>
           </>
         )}
-        <Share />
-        <ModalMeta />
-        <ModalSource />
+        <RecentImagery active={recentActive} />
+        <ShareModal />
+        <MetaModal />
+        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+        <ClimateModal />
+        <FiresModal />
         <CountryDataProvider />
         <WhitelistsProvider />
         <DatasetsProvider />
         <LatestProvider />
         <GeostoreProvider />
         <GeodescriberProvider />
-        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <AreasProvider />
+        <PlanetBasemapsProvider />
+        <LocationProvider />
+        <MyGFWProvider />
       </div>
     );
   }
 }
-
 export default MainMapComponent;

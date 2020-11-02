@@ -1,12 +1,12 @@
 import { createAction, createThunkAction } from 'redux/actions';
 import combine from 'turf-combine';
 import compact from 'lodash/compact';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import useRouter from 'utils/router';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
-import { getGeostoreKey } from 'services/geostore';
+import { saveGeostore } from 'services/geostore';
 
 import uploadFileConfig from './upload-config.json';
 
@@ -43,7 +43,8 @@ export const getAnalysis = createThunkAction(
   'getAnalysis',
   (location) => (dispatch) => {
     const { type, adm0, adm1, adm2, endpoints } = location;
-    track('analysis', {
+    trackEvent({
+      category: 'Map analysis',
       action: compact([type, adm0, adm1, adm2]).join(', '),
       label:
         endpoints &&
@@ -135,7 +136,9 @@ export const uploadShape = createThunkAction(
                   'We cannot support an analysis for a file with more than 1000 features.',
               })
             );
-            track('analysisUploadShape', {
+            trackEvent({
+              category: 'Map analysis',
+              action: 'Upload custom shape',
               label: 'Failed: too many features',
             });
           } else if (
@@ -152,19 +155,22 @@ export const uploadShape = createThunkAction(
               })
             );
 
-            track('analysisUploadShape', { label: 'Failed: non polygon data' });
+            trackEvent({
+              category: 'Map analysis',
+              action: 'Upload custom shape',
+              label: 'Failed: non polygon data',
+            });
           } else {
-            getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
+            saveGeostore(geometry, onGeostoreUpload, onGeostoreDownload)
               .then((geostore) => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
-                  const { pathname, query, pushQuery } = useRouter();
+                  const { query, pushQuery } = useRouter();
                   setTimeout(() => {
                     pushQuery({
-                      pathname,
+                      pathname: `/map/geostore/${id}/`,
                       query: {
                         ...query,
-                        location: ['geostore', id],
                         map: {
                           ...query?.map,
                           canBound: true,
@@ -179,7 +185,11 @@ export const uploadShape = createThunkAction(
                       })
                     );
                   }, 300);
-                  track('analysisUploadShape', { label: 'Success' });
+                  trackEvent({
+                    category: 'Map analysis',
+                    action: 'Upload custom shape',
+                    label: 'Success',
+                  });
                 }
               })
               .catch((error) => {
@@ -194,7 +204,9 @@ export const uploadShape = createThunkAction(
                   })
                 );
 
-                track('analysisUploadShape', {
+                trackEvent({
+                  category: 'Map analysis',
+                  action: 'Upload custom shape',
                   label: `Failed: ${errorMessage.title}`,
                 });
               });
@@ -208,7 +220,11 @@ export const uploadShape = createThunkAction(
                 'Please attach a file that contains geometric data.',
             })
           );
-          track('analysisUploadShape', { label: 'Failed: file is empty' });
+          trackEvent({
+            category: 'Map analysis',
+            action: 'Upload custom shape',
+            label: 'Failed: file is empty',
+          });
         }
       })
       .catch((error) => {
@@ -223,7 +239,9 @@ export const uploadShape = createThunkAction(
               errorMessage: errorMessage.desc,
             })
           );
-          track('analysisUploadShape', {
+          trackEvent({
+            category: 'Map analysis',
+            action: 'Upload custom shape',
             label: `Failed: ${errorMessage.title}`,
           });
         }
@@ -234,13 +252,10 @@ export const uploadShape = createThunkAction(
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch) => {
-    const { query, pathname, pushQuery } = useRouter();
+    const { query, pushQuery } = useRouter();
     pushQuery({
-      pathname,
-      query: {
-        ...query,
-        location: ['global'],
-      },
+      pathname: '/map/',
+      query,
     });
     dispatch(clearAnalysisData());
   }
@@ -249,7 +264,6 @@ export const clearAnalysis = createThunkAction(
 export const goToDashboard = createThunkAction('goToDashboard', () => () => {
   const { query, pushQuery } = useRouter();
   pushQuery({
-    pathname: '/dashboards/[...location]',
-    query,
+    pathname: `/dashboards/${query?.location?.join('/')}/`,
   });
 });

@@ -1,31 +1,32 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import sumBy from 'lodash/sumBy';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getLocationData = state => state.locationData;
-const getColors = state => state.colors;
-const getIndicator = state => state.indicator;
-const getLocationObject = state => state.location;
-const getSentences = state => state.sentences;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getLocationData = (state) => state.locationData;
+const getColors = (state) => state.colors;
+const getIndicator = (state) => state.indicator;
+const getLocationObject = (state) => state.location;
+const getSentences = (state) => state.sentences;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (!data || !data.length) return null;
-    return sortByKey(
+    return sortBy(
       uniqBy(data, 'id'),
-      settings.unit === 'ha' ? 'extent' : 'percentage',
-      true
-    ).map((d, i) => ({
-      ...d,
-      rank: i + 1
-    }));
+      settings.unit === 'ha' ? 'extent' : 'percentage'
+    )
+      .reverse()
+      .map((d, i) => ({
+        ...d,
+        rank: i + 1,
+      }));
   }
 );
 
@@ -35,7 +36,7 @@ export const parseData = createSelector(
     if (!data || !data.length || !locationObject || !meta) return null;
     const locationIndex = findIndex(
       data,
-      d => d.id === (locationObject && locationObject && locationObject.value)
+      (d) => d.id === (locationObject && locationObject && locationObject.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -48,14 +49,14 @@ export const parseData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    return dataTrimmed.map(d => {
+    return dataTrimmed.map((d) => {
       const locationData = meta && meta[d.id];
 
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        value: settings.unit === 'ha' ? d.extent : d.percentage
+        value: settings.unit === 'ha' ? d.extent : d.percentage,
       };
     });
   }
@@ -68,17 +69,18 @@ export const parseSentence = createSelector(
     getSettings,
     getIndicator,
     getLocationObject,
-    getSentences
+    getSentences,
   ],
   (rawData, data, settings, indicator, locationObject, sentences) => {
     if (!data || !data.length || !locationObject) return null;
     const { forestType, landCategory } = settings;
     const { initial, withInd, landCatOnly } = sentences;
     const locationData =
-      locationObject && data.find(l => l.id === locationObject.value);
+      locationObject && data.find((l) => l.id === locationObject.value);
     const extent = locationData && locationData.extent;
-    const landPercent = (locationData && 100 * extent / locationData.area) || 0;
-    const globalPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
+    const landPercent =
+      (locationData && (100 * extent) / locationData.area) || 0;
+    const globalPercent = (100 * extent) / sumBy(rawData, 'extent') || 0;
     const params = {
       extentYear: settings.extentYear,
       location: locationObject.label,
@@ -90,7 +92,7 @@ export const parseSentence = createSelector(
       landPercentage:
         landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '< 0.1%',
       globalPercentage:
-        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '< 0.1%'
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '< 0.1%',
     };
 
     let sentence = indicator ? withInd : initial;
@@ -98,12 +100,12 @@ export const parseSentence = createSelector(
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

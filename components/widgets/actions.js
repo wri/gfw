@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import { getNonGlobalDatasets } from 'services/analysis-cached';
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
@@ -41,10 +41,12 @@ export const setWidgetSettings = createThunkAction(
         change,
       })
     );
-    track('changeWidgetSettings', {
-      label: `${widget}`,
-    });
     if (!change.interaction) {
+      trackEvent({
+        category: 'Widget Settings',
+        action: 'User changes the widget settings',
+        label: widget
+      })
       dispatch(
         setDashboardPromptsSettings({
           open: true,

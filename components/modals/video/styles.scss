@@ -1,17 +1,28 @@
 @import '~styles/settings.scss';
 
 .c-modal-video {
-  max-width: unset;
-  padding: 0;
+  width: 100% !important;
+  height: 100% !important;
 
-  .modal-content,
-  .modal-title {
-    padding: 0;
+  > div {
+    height: 100%;
+
+    > button {
+      svg {
+        fill: $white;
+      }
+
+      &:hover {
+        svg {
+          fill: $grey-dark;
+        }
+      }
+    }
   }
 
-  .modal-video-content {
-    width: 100vw;
-    height: 100vh;
+  .modal-content {
+    padding: 90px 0 !important;
+    height: 100%;
     background: $black;
   }
 }

@@ -1,5 +1,5 @@
 import { createThunkAction, createAction } from 'redux/actions';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 export const setShowDashboardPrompts = createAction('setShowDashboardPrompts');
 export const setShowPromptsViewed = createAction('setShowPromptsViewed');
@@ -18,9 +18,11 @@ export const setDashboardPromptsSettings = createThunkAction(
     ) {
       dispatch(setDashboardPrompts(change));
       if (stepsKey) {
-        track('userPrompt', {
+        trackEvent({
+          category: 'User prompts',
+          action: 'User prompt is changed',
           label: `${stepsKey}: ${stepIndex + 1}`,
-        });
+        })
       }
     }
 

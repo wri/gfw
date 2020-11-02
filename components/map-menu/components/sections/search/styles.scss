@@ -1,34 +1,56 @@
 @import '~styles/settings.scss';
 
 .c-map-menu-search {
-  padding: rem(20px);
+  height: 100%;
 
   h3 {
+    padding: 20px 10px;
     text-transform: uppercase;
     color: $slate;
     font-size: rem(14px);
     font-weight: 500;
+    border-bottom: 1px solid rgba($hot-grey, 0.3);
+  }
+
+  .search-wrapper {
+    display: flex;
+    justify-content: space-between;
+    height: calc(100% - 62px);
   }
 
   .side-menu-search {
-    margin-bottom: rem(30px);
+    margin-bottom: rem(15px);
   }
 
-  .search-type {
-    display: inline-block;
-    font-size: rem(12px);
-    margin-bottom: rem(20px);
+  .search-menu {
+    flex: 0 0 35%;
+    flex-grow: 1;
   }
 
-  .search-type-select {
-    width: rem(135px);
-    display: inline-block;
-    margin-left: rem(5px);
+  .search-container {
+    flex: 0 0 65%;
+    flex-grow: 1;
+    padding: 15px 10px 0 10px;
   }
 
   .empty-search {
     position: relative;
-    min-height: rem(120px);
+    align-items: baseline;
+    width: 100%;
+
+    .message {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      color: $slate;
+    }
+
+    svg {
+      fill: rgba($slate, 0.5);
+      width: rem(40px);
+      height: rem(40px);
+      margin-bottom: 19px;
+    }
   }
 
   .label {

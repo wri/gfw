@@ -1,8 +1,7 @@
 import Router from 'next/router';
 import qs from 'query-string';
-import compact from 'lodash/compact';
 
-import { decodeParamsForState, encodeStateForUrl } from './stateToUrl';
+import { decodeQueryParams, encodeQueryParams } from './url';
 
 const useRouter = () => {
   const router = Router.router || {};
@@ -15,32 +14,21 @@ const useRouter = () => {
       };
     }
 
-    router.query = router.query ? decodeParamsForState(router.query) : {};
+    router.query = router.query ? decodeQueryParams(router.query) : {};
   }
 
   router.pushQuery = ({ pathname, query, hash, options }) => {
-    let asPath = pathname;
-    if (query) {
-      Object.keys(query).forEach((key) => {
-        if (asPath?.includes(`[${key}]`)) {
-          asPath = asPath.replace(`[${key}]`, query[key]);
-          delete query[key];
-        } else if (asPath?.includes(`[...${key}]`)) {
-          asPath = asPath.replace(`[...${key}]`, compact(query[key]).join('/'));
-          delete query[key];
-        }
+    const queryWithoutLocation = { ...query, location: null };
+    const queryString =
+      queryWithoutLocation &&
+      encodeQueryParams(queryWithoutLocation, {
+        skipNull: true,
+        skipEmptyString: true,
+        arrayFormat: 'comma',
       });
-    }
-
-    const queryString = encodeStateForUrl(query, {
-      skipNull: true,
-      skipEmptyString: true,
-      arrayFormat: 'comma',
-    });
 
     router.push(
       `${pathname}${queryString ? `?${queryString}` : ''}${hash || ''}`,
-      `${asPath}${queryString ? `?${queryString}` : ''}${hash || ''}`,
       options
     );
   };

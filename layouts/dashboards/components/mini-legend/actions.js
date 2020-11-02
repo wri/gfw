@@ -8,7 +8,7 @@ export const setMainMapView = createThunkAction(
     const { map, mainMap } = query || {};
 
     pushQuery({
-      pathname: '/map/[...location]',
+      pathname: `/map/${query?.location?.join('/')}/`,
       query: {
         ...query,
         map: {

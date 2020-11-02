@@ -8,6 +8,7 @@
   "extends": [
       "plugin:react/recommended",
       "plugin:cypress/recommended",
+      "plugin:security/recommended",
       "airbnb",
       "prettier"
   ],
@@ -26,7 +27,8 @@
   "plugins": [
       "react",
       "prettier",
-      "react-hooks"
+      "react-hooks",
+      "security"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
@@ -40,7 +42,6 @@
     "react/state-in-constructor": "off",
     "react/jsx-fragments": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    // to be removed once ready
     "react/require-default-props": "off",
     "react/button-has-type": "off",
     "react/destructuring-assignment": "off",
@@ -50,6 +51,7 @@
     "no-restricted-globals": "off",
     "react/sort-comp": "off",
     "import/prefer-default-export": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "security/detect-object-injection": "off"
   }
 }

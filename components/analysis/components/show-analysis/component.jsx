@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import Link from 'next/link';
 
+import Modal from 'components/modal';
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
@@ -32,7 +33,6 @@ class ShowAnalysis extends PureComponent {
     error: PropTypes.string,
     analysisTitle: PropTypes.object,
     analysisDescription: PropTypes.object,
-    setModalSources: PropTypes.func,
     handleShowDownloads: PropTypes.func,
     setMenuSettings: PropTypes.func,
     showDownloads: PropTypes.bool,
@@ -42,6 +42,10 @@ class ShowAnalysis extends PureComponent {
     zoomLevel: PropTypes.number,
     showAnalysisDisclaimer: PropTypes.bool,
     activeArea: PropTypes.object,
+  };
+
+  state = {
+    disclaimerModalOpen: false,
   };
 
   renderStatItem = ({
@@ -99,7 +103,6 @@ class ShowAnalysis extends PureComponent {
       data,
       loading,
       error,
-      setModalSources,
       handleShowDownloads,
       showDownloads,
       downloadUrls,
@@ -159,12 +162,14 @@ class ShowAnalysis extends PureComponent {
                   disabled={!downloadUrls || !downloadUrls.length}
                   onClick={() => {
                     handleShowDownloads(true);
-                    track('analysisDownload', {
+                    trackEvent({
+                      category: 'Map analysis',
+                      action: 'Download',
                       label:
                         downloadUrls &&
                         downloadUrls.length &&
                         downloadUrls.map((d) => d?.label).join(', '),
-                    });
+                    })
                   }}
                   tooltip={{ text: 'Download data' }}
                 >
@@ -219,22 +224,93 @@ class ShowAnalysis extends PureComponent {
                     </p>
                   )}
                   {showAnalysisDisclaimer && (
-                    <p>
-                      <b>NOTE:</b>
-                      {' '}
-                      tree cover loss and gain statistics cannot be
-                      compared against each other.
-                      {' '}
-                      <button
-                        onClick={() =>
-                          setModalSources({
-                            open: true,
-                            source: 'lossDisclaimer',
-                          })}
+                    <>
+                      <p>
+                        <b>NOTE:</b>
+                        {' '}
+                        tree cover loss and gain statistics cannot
+                        be compared against each other.
+                        {' '}
+                        <button
+                          onClick={() =>
+                            this.setState({ disclaimerModalOpen: true })}
+                        >
+                          Learn more.
+                        </button>
+                      </p>
+                      <Modal
+                        open={this.state.disclaimerModalOpen}
+                        title="Comparing Loss and Gain"
+                        onRequestClose={() =>
+                          this.setState({ disclaimerModalOpen: false })}
+                        className="c-loss-disclaimer-modal"
                       >
-                        Learn more.
-                      </button>
-                    </p>
+                        <p>
+                          Due to variation in research methodology and/or date
+                          of content, tree cover and tree cover loss and gain
+                          statistics cannot be compared against each other.
+                          Accordingly, “net” loss cannot be calculated by
+                          subtracting tree cover gain from tree cover loss, and
+                          current (or post-2000) tree cover cannot be determined
+                          by subtracting annual tree cover loss from year 2000
+                          tree cover.
+                        </p>
+                        <p>
+                          Please also be aware that “tree cover” does not equate
+                          to “forest cover.” “Tree cover” refers to the
+                          biophysical presence of trees, which may be a part of
+                          natural forests or tree plantations. Thus, loss of
+                          tree cover may occur for many reasons, including
+                          deforestation, fire, and logging within the course of
+                          sustainable forestry operations. Similarly, tree cover
+                          gain may indicate the growth of tree canopy within
+                          natural or managed forests.
+                        </p>
+                        <p className="credits">
+                          <strong>Citation:</strong>
+                          {' '}
+                          Hansen, M. C., P. V.
+                          Potapov, R. Moore, M. Hancher, S. A. Turubanova, A.
+                          Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R.
+                          Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O.
+                          Justice, and J. R. G. Townshend. 2013.
+                          “High-Resolution Global Maps of 21st-Century Forest
+                          Cover Change.” Science 342 (15 November): 850–53. Data
+                          available on-line from:
+                          {' '}
+                          <a
+                            href="http://earthenginepartners.appspot.com/science-2013-global-forest"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            http://earthenginepartners.appspot.com/science-2013-global-forest
+                          </a>
+                          .
+                        </p>
+                        <p className="credits">
+                          <strong>
+                            Suggested citations for data as displayed on GFW:
+                          </strong>
+                          {' '}
+                          Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S.
+                          A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman,
+                          S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov,
+                          L. Chini, C. O. Justice, and J. R. G. Townshend. 2013.
+                          “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain
+                          Area.” University of Maryland, Google, USGS, and NASA.
+                          Accessed through Global Forest Watch on [date].
+                          {' '}
+                          <a
+                            href="https://www.globalforestwatch.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            www.globalforestwatch.org
+                          </a>
+                          .
+                        </p>
+                      </Modal>
+                    </>
                   )}
                 </div>
               </Fragment>
@@ -255,7 +331,7 @@ class ShowAnalysis extends PureComponent {
                   To perform an in-depth analysis of this area please visit the
                   {' '}
                   <Link
-                    href="/dashboards/[...location]"
+                    href="/dashboards/[[...location]]"
                     as={`/dashboards/aoi/${activeArea.id}`}
                   >
                     <a>area dashboard</a>

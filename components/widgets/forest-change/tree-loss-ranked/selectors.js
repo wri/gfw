@@ -4,23 +4,23 @@ import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getLocationData = state => state.locationData;
-const getLocation = state => state.location;
-const getColors = state => state.colors;
-const getIndicator = state => state.indicator;
-const getAdm0 = state => state.adm0;
-const getAdm1 = state => state.adm1;
-const getAdm2 = state => state.adm2;
-const getSentences = state => state && state.sentence;
-const getTitle = state => state.title;
-const getLocationName = state => state.locationLabel;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getLocationData = (state) => state.locationData;
+const getLocation = (state) => state.location;
+const getColors = (state) => state.colors;
+const getIndicator = (state) => state.indicator;
+const getAdm0 = (state) => state.adm0;
+const getAdm1 = (state) => state.adm1;
+const getAdm2 = (state) => state.adm2;
+const getSentences = (state) => state && state.sentence;
+const getTitle = (state) => state.title;
+const getLocationName = (state) => state.locationLabel;
 
 export const getSummedByYearsData = createSelector(
   [getData, getSettings, getAdm1, getAdm2],
@@ -28,34 +28,33 @@ export const getSummedByYearsData = createSelector(
     if (isEmpty(data)) return null;
     const { loss, extent } = data;
     const filteredByYears = loss.filter(
-      d => d.year >= settings.startYear && d.year <= settings.endYear
+      (d) => d.year >= settings.startYear && d.year <= settings.endYear
     );
     let regionKey = 'iso';
     if (adm1) regionKey = 'adm1';
     if (adm2) regionKey = 'adm2';
     const groupedByRegion = groupBy(filteredByYears, regionKey);
     const regions = Object.keys(groupedByRegion);
-    const mappedData = regions.map(i => {
+    const mappedData = regions.map((i) => {
       const isoLoss = Math.round(sumBy(groupedByRegion[i], 'loss')) || 0;
-      const regionExtent = extent.find(e => e[regionKey] === i);
+      const regionExtent = extent.find((e) => e[regionKey] === i);
       const isoExtent = (regionExtent && regionExtent.extent) || 1;
       const percentageLoss =
-        isoExtent && isoLoss ? 100 * isoLoss / isoExtent : 0;
+        isoExtent && isoLoss ? (100 * isoLoss) / isoExtent : 0;
 
       return {
         id: adm1 ? parseInt(i, 10) : i,
         loss: isoLoss,
         extent: isoExtent,
-        percentage: percentageLoss > 100 ? 100 : percentageLoss
+        percentage: percentageLoss > 100 ? 100 : percentageLoss,
       };
     });
-    return sortByKey(
+    return sortBy(
       uniqBy(mappedData, 'id'),
-      settings.unit === 'ha' ? 'loss' : 'percentage',
-      true
+      settings.unit === 'ha' ? 'loss' : 'percentage'
     ).map((d, i) => ({
       ...d,
-      rank: i + 1
+      rank: i + 1,
     }));
   }
 );
@@ -64,11 +63,10 @@ export const sortData = createSelector(
   [getSummedByYearsData, getSettings],
   (data, settings) => {
     if (!data || !data.length) return null;
-    return sortByKey(
+    return sortBy(
       uniqBy(data, 'id'),
-      settings.unit === 'ha' ? 'loss' : 'percentage',
-      true
-    );
+      settings.unit === 'ha' ? 'loss' : 'percentage'
+    ).reverse();
   }
 );
 
@@ -78,25 +76,25 @@ export const parseData = createSelector(
     if (isEmpty(data)) return null;
     let dataTrimmed = [];
 
-    data.forEach(d => {
+    data.forEach((d) => {
       const locationMeta = parentData && parentData[d.id];
 
       if (locationMeta) {
         dataTrimmed.push({
           ...d,
           label: locationMeta.label,
-          path: locationMeta.path
+          path: locationMeta.path,
         });
       }
     });
     dataTrimmed = dataTrimmed.map((d, i) => ({
       ...d,
-      rank: i + 1
+      rank: i + 1,
     }));
     if (adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
-        d => d.id === (location && location.value)
+        (d) => d.id === (location && location.value)
       );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
@@ -110,10 +108,10 @@ export const parseData = createSelector(
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-    return dataTrimmed.map(d => ({
+    return dataTrimmed.map((d) => ({
       ...d,
       color: colors.main,
-      value: settings.unit === 'ha' ? d.loss : d.percentage
+      value: settings.unit === 'ha' ? d.loss : d.percentage,
     }));
   }
 );
@@ -125,7 +123,7 @@ export const parseSentence = createSelector(
     getIndicator,
     getLocation,
     getSentences,
-    getLocationData
+    getLocationData,
   ],
   (data, settings, indicator, location, sentences, meta) => {
     if (!data || !data.length || !location) return null;
@@ -135,9 +133,9 @@ export const parseSentence = createSelector(
       withIndicator,
       globalInitial,
       globalWithIndicator,
-      noLoss
+      noLoss,
     } = sentences;
-    const locationData = location && data.find(l => l.id === location.value);
+    const locationData = location && data.find((l) => l.id === location.value);
 
     const loss = locationData && locationData.loss;
     const globalLoss = sumBy(data, 'loss') || 0;
@@ -145,9 +143,9 @@ export const parseSentence = createSelector(
     const lossArea = location.label === 'global' ? globalLoss : loss;
     const areaPercent =
       location.label === 'global'
-        ? 100 * globalLoss / globalExtent
+        ? (100 * globalLoss) / globalExtent
         : (locationData && format('.1f')(locationData.percentage)) || 0;
-    const lossPercent = loss && locationData ? 100 * loss / globalLoss : 0;
+    const lossPercent = loss && locationData ? (100 * loss) / globalLoss : 0;
     const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
     let sentence = !indicator ? initial : withIndicator;
     if (location.label === 'global') {
@@ -174,12 +172,12 @@ export const parseSentence = createSelector(
       loss: formatNumber({ num: lossArea, unit: 'ha' }),
       localPercent: formatNumber({ num: areaPercent, unit: '%' }),
       globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
-      extentYear: settings.extentYear
+      extentYear: settings.extentYear,
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -198,5 +196,5 @@ export const parseTitle = createSelector(
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });

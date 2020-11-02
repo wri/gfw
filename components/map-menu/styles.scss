@@ -13,8 +13,6 @@
     right: 0;
 
     &.embed {
-      bottom: rem(60px);
-
       @media screen and (min-width: $screen-m) {
         display: none;
       }
@@ -33,6 +31,12 @@
 
     @media screen and (min-width: $screen-m) {
       padding-bottom: 0;
+    }
+
+    &.search {
+      .close-menu {
+        height: 62px;
+      }
     }
   }
 }

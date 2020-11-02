@@ -5,7 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: rem(20px) $mobile-gutter rem(30px) $mobile-gutter;
+  padding: rem(30px) $mobile-gutter rem(30px) $mobile-gutter;
   min-width: 100%;
   margin-bottom: rem(15px);
 
@@ -63,6 +63,12 @@
 
     .widgets-loader {
       min-height: rem(150px);
+    }
+  }
+
+  &.embed {
+    .widgets-loader {
+      min-height: 100%;
     }
   }
 

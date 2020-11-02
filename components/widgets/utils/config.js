@@ -2,8 +2,8 @@ import lowerCase from 'lodash/lowerCase';
 import sortBy from 'lodash/sortBy';
 import compact from 'lodash/compact';
 import moment from 'moment';
-import { translateText } from 'utils/transifex';
-import { encodeStateForUrl } from 'utils/stateToUrl';
+import { translateText } from 'utils/lang';
+import { encodeQueryParams } from 'utils/url';
 
 import allOptions from '../options';
 
@@ -411,8 +411,8 @@ export const getLocationPath = (pathname, type, query, params) => {
   return {
     href: pathname,
     as: `${pathname.replace(
-      '[...location]',
+      '[[...location]]',
       Object.values(pathObj.payload).join('/')
-    )}?${encodeStateForUrl(pathObj.query)}`,
+    )}?${encodeQueryParams(pathObj.query)}`,
   };
 };

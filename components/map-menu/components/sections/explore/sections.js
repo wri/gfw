@@ -21,7 +21,7 @@ import {
   OIL_PALM_DATASET,
   LOGGING_CONCESSIONS_DATASET,
   FIRES_VIIRS_DATASET,
-} from 'data/layers-datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,

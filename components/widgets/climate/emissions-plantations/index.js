@@ -7,12 +7,12 @@ import range from 'lodash/range';
 import biomassLossIsos from 'data/biomass-isos.json';
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  BIOMASS_LOSS_DATASET
-} from 'data/layers-datasets';
+  BIOMASS_LOSS_DATASET,
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  BIOMASS_LOSS
+  BIOMASS_LOSS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -20,7 +20,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'emissions-plantations',
   title: {
-    initial: 'Biomass loss emissions in natural forest vs. plantations'
+    initial: 'Biomass loss emissions in natural forest vs. plantations',
   },
   categories: ['climate'],
   types: ['country', 'aoi'],
@@ -30,7 +30,7 @@ export default {
       key: 'unit',
       label: 'unit',
       type: 'switch',
-      whitelist: ['co2LossByYear', 'cLossByYear']
+      whitelist: ['co2LossByYear', 'cLossByYear'],
     },
     {
       key: 'years',
@@ -38,14 +38,14 @@ export default {
       endKey: 'endYear',
       startKey: 'startYear',
       type: 'range-select',
-      border: true
+      border: true,
     },
     {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
-      metaKey: 'widget_canopy_density'
-    }
+      metaKey: 'widget_canopy_density',
+    },
   ],
   refetchKeys: ['threshold'],
   chartType: 'pieChart',
@@ -53,28 +53,28 @@ export default {
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true
+      boundary: true,
     },
     // biomass loss
     {
       dataset: BIOMASS_LOSS_DATASET,
-      layers: [BIOMASS_LOSS]
-    }
+      layers: [BIOMASS_LOSS],
+    },
   ],
   visible: ['dashboard', 'analysis'],
   colors: 'climate',
   metaKey: 'tree_biomass_loss',
   sortOrder: {
-    climate: 3
+    climate: 3,
   },
   sentences: {
     initial:
-      'From {startYear} to {endYear}, a total of {emissions} of {variable} emissions were released from tree cover loss in {location} natural forests.'
+      'From {startYear} to {endYear}, a total of {emissions} of {variable} emissions were released from tree cover loss in {location} natural forests.',
   },
   whitelists: {
     indicators: ['plantations'],
     adm0: biomassLossIsos,
-    checkStatus: true
+    checkStatus: true,
   },
   settings: {
     forestType: 'ifl',
@@ -82,12 +82,12 @@ export default {
     threshold: 30,
     startYear: 2013,
     endYear: 2018,
-    unit: 'co2LossByYear'
+    unit: 'co2LossByYear',
   },
-  getData: params =>
+  getData: (params) =>
     all([
       getLoss(params),
-      getLoss({ ...params, forestType: 'plantations' })
+      getLoss({ ...params, forestType: 'plantations' }),
     ]).then(
       spread((admin, plantations) => {
         const adminData = admin.data && admin.data.data;
@@ -105,18 +105,21 @@ export default {
           adminData,
           plantData,
           options: {
-            years: range(2013, maxYear + 1).map(y => ({ label: y, value: y }))
+            years: range(2013, maxYear + 1).map((y) => ({
+              label: y,
+              value: y,
+            })),
           },
           settings: {
             startYear: 2013,
-            endYear: maxYear
-          }
+            endYear: maxYear,
+          },
         };
       })
     ),
-  getDataURL: params => [
+  getDataURL: (params) => [
     getLoss({ ...params, download: true }),
-    getLoss({ ...params, forestType: 'plantations', download: true })
+    getLoss({ ...params, forestType: 'plantations', download: true }),
   ],
-  getWidgetProps
+  getWidgetProps,
 };
