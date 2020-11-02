@@ -1,5 +1,4 @@
-import { formatDate } from 'utils/dates';
-import { deburrUpper } from 'utils/data';
+import { deburrUpper } from 'utils/strings';
 import moment from 'moment';
 
 export const reduceParams = (params) => {
@@ -9,9 +8,9 @@ export const reduceParams = (params) => {
     let paramValue = param.default;
     const isDate = deburrUpper(param.key).includes('DATE');
     if (isDate && !paramValue) {
-      let date = formatDate(new Date());
-      if (interval && count) date = moment(date).subtract(count, interval);
-      paramValue = moment(date).format(format || 'YYYY-MM-DD');
+      let date = moment().utc();
+      if (interval && count) date = date.subtract(count, interval);
+      paramValue = date.format(format || 'YYYY-MM-DD');
     }
 
     const newObj = {

@@ -8,18 +8,15 @@ import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
-import { translateText } from 'utils/transifex';
+import { translateText, selectActiveLang } from 'utils/lang';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
-import { getDataLocation } from 'utils/location';
-
-import { selectActiveLang } from 'utils/lang';
+import { getDataLocation, locationLevelToStr } from 'utils/location';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
-import { locationLevelToStr } from 'utils/format';
 
 import {
   getSettingsConfig,

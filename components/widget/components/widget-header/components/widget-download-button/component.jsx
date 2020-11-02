@@ -13,7 +13,7 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import downloadIcon from 'assets/icons/download.svg?sprite';
-import { GFW_API } from 'utils/constants';
+import { GFW_API } from 'utils/apis';
 
 import './styles.scss';
 
@@ -204,8 +204,8 @@ class WidgetDownloadButton extends PureComponent {
     trackEvent({
       category: 'Dashboards page',
       action: 'Download widget',
-      label: this.props.widget
-    })
+      label: this.props.widget,
+    });
   };
 
   render() {

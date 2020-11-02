@@ -87,7 +87,7 @@ class DashboardsPage extends PureComponent {
         category: 'Areas of interest',
         action: 'Visit a shared area of interest',
         label: activeArea.id,
-      })
+      });
     }
 
     if (scrollY === 0 && prevScrollY > scrollY) {
@@ -162,8 +162,8 @@ class DashboardsPage extends PureComponent {
                   trackEvent({
                     category: 'Dashboards page',
                     action: 'View',
-                    label: l.category
-                  })
+                    label: l.category,
+                  });
                 },
               }))}
               checkActive
@@ -186,7 +186,9 @@ class DashboardsPage extends PureComponent {
           </Desktop>
           <Mobile className="mobile-map">{this.renderMap()}</Mobile>
         </div>
-        <MapControls className="map-controls" />
+        <Desktop>
+          <MapControls className="map-controls" />
+        </Desktop>
         <Share />
         <ModalMeta />
         {widgetAnchor && (

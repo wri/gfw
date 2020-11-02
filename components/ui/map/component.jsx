@@ -225,6 +225,7 @@ class Map extends Component {
         this.setState({ flying: false });
       }, 2500);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   };

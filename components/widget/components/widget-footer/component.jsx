@@ -9,7 +9,7 @@ class WidgetFooter extends PureComponent {
   static propTypes = {
     simple: PropTypes.bool,
     statements: PropTypes.array,
-    showAttributionLink: PropTypes.bool
+    showAttributionLink: PropTypes.bool,
   };
 
   render() {
@@ -18,15 +18,13 @@ class WidgetFooter extends PureComponent {
 
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {statementsMapped &&
-          !!statementsMapped.length && (
-          <div className="notranslate">
-            {ReactHtmlParser(statementsMapped)}
-          </div>
+        {statementsMapped && !!statementsMapped.length && (
+          <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}
         {showAttributionLink && (
           <span>
-            Source:{' '}
+            Source:
+            {' '}
             <a
               target="_blank"
               rel="noopener noreferrer"

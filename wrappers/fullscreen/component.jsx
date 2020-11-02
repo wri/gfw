@@ -1,26 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { useRouter } from 'next/router';
-
-import { Loader, MediaContextProvider, Button } from 'gfw-components';
+import { Loader, MediaContextProvider } from 'gfw-components';
+import cx from 'classnames';
 
 import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
-import Head from 'layouts/wrappers/head';
+import Head from 'wrappers/head';
+import Cookies from 'wrappers/cookies';
 
+import Header from 'components/header';
+import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
 
 import './styles.scss';
 
-const EmbedWrapper = ({
+const FullScreenWrapper = ({
   children,
   title,
   description,
   noIndex,
   metaTags,
-  exploreLink,
   error,
   errorTitle,
   errorDescription,
@@ -28,12 +29,9 @@ const EmbedWrapper = ({
   useTrackPage();
   useSetLanguage();
 
-  // if a page is statically built with
-  // fallback true we show a loader
-  const {
-    isFallback,
-    query: { trase, gfw },
-  } = useRouter();
+  // if a page is statically built with fallback true and not cached
+  // we show a loader while the staticProps are fetched
+  const { isFallback } = useRouter();
 
   return (
     <MediaContextProvider>
@@ -43,8 +41,9 @@ const EmbedWrapper = ({
         noIndex={noIndex}
         metaTags={metaTags}
       />
-      <div className={cx('l-embed-page', { '-trase': trase })}>
-        <div className={cx('embed-content', { '-error': error })}>
+      <div className="l-fullscreen-page">
+        <Header fullScreen />
+        <div className={cx('content-wrapper', { '-error': error })}>
           {isFallback && <Loader />}
           {!isFallback && error && (
             <ErrorMessage
@@ -57,29 +56,22 @@ const EmbedWrapper = ({
           )}
           {!isFallback && !error && children}
         </div>
-        {!trase && !gfw && (
-          <div className="embed-footer">
-            <p>For more info</p>
-            <a href={exploreLink} target="_blank" rel="noopener noreferrer">
-              <Button className="embed-btn">EXPLORE ON GFW</Button>
-            </a>
-          </div>
-        )}
+        <Cookies />
+        <ContactUsModal />
       </div>
     </MediaContextProvider>
   );
 };
 
-EmbedWrapper.propTypes = {
+FullScreenWrapper.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string,
   description: PropTypes.string,
   noIndex: PropTypes.bool,
   metaTags: PropTypes.string,
-  exploreLink: PropTypes.string,
   error: PropTypes.number,
   errorTitle: PropTypes.string,
   errorDescription: PropTypes.string,
 };
 
-export default EmbedWrapper;
+export default FullScreenWrapper;

@@ -14,10 +14,10 @@ class WidgetSettings extends PureComponent {
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func.isRequired,
     loading: PropTypes.bool,
-    getTooltipContentProps: PropTypes.func.isRequired
+    getTooltipContentProps: PropTypes.func.isRequired,
   };
 
-  renderOption = option => {
+  renderOption = (option) => {
     const {
       type,
       label,
@@ -35,7 +35,7 @@ class WidgetSettings extends PureComponent {
       handleChangeSettings,
       loading,
       placeholder,
-      clearable
+      clearable,
     } = option;
 
     switch (type) {
@@ -47,7 +47,7 @@ class WidgetSettings extends PureComponent {
             label={label}
             value={value && value.value}
             options={options}
-            onChange={change => handleChangeSettings({ [key]: change })}
+            onChange={(change) => handleChangeSettings({ [key]: change })}
             disabled={loading}
           />
         );
@@ -59,9 +59,8 @@ class WidgetSettings extends PureComponent {
               theme="theme-dropdown-button"
               value={startValue}
               options={startOptions}
-              onChange={change =>
-                handleChangeSettings({ [startKey]: change && change.value })
-              }
+              onChange={(change) =>
+                handleChangeSettings({ [startKey]: change && change.value })}
               disabled={loading}
             />
             <span className="text-separator">to</span>
@@ -69,9 +68,8 @@ class WidgetSettings extends PureComponent {
               theme="theme-dropdown-button"
               value={endValue}
               options={endOptions}
-              onChange={change =>
-                handleChangeSettings({ [endKey]: change && change.value })
-              }
+              onChange={(change) =>
+                handleChangeSettings({ [endKey]: change && change.value })}
               disabled={loading}
             />
           </div>
@@ -84,14 +82,13 @@ class WidgetSettings extends PureComponent {
 
             <Dropdown
               theme={cx('theme-select-light', {
-                'theme-dropdown-button': type === 'mini-select'
+                'theme-dropdown-button': type === 'mini-select',
               })}
               value={value}
               options={options}
               clearable={clearable}
-              onChange={change =>
-                handleChangeSettings({ [key]: change && change.value })
-              }
+              onChange={(change) =>
+                handleChangeSettings({ [key]: change && change.value })}
               noSelectedValue={placeholder}
             />
           </div>
@@ -104,14 +101,13 @@ class WidgetSettings extends PureComponent {
             <Dropdown
               className={cx('widget-settings-selector', type)}
               theme={cx('theme-select-light', {
-                'theme-dropdown-button': type === 'mini-select'
+                'theme-dropdown-button': type === 'mini-select',
               })}
               label={label}
               value={value}
               options={options}
-              onChange={change =>
-                handleChangeSettings({ [key]: change && change.value })
-              }
+              onChange={(change) =>
+                handleChangeSettings({ [key]: change && change.value })}
               disabled={loading}
               clearable={clearable}
               infoAction={metaKey ? () => handleShowInfo(metaKey) : null}
@@ -130,14 +126,14 @@ class WidgetSettings extends PureComponent {
       loading,
       handleChangeSettings,
       handleShowInfo,
-      getTooltipContentProps
+      getTooltipContentProps,
     } = this.props;
 
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
         {settingsConfig &&
           settingsConfig.map(
-            option =>
+            (option) =>
               option.options &&
               !!option.options.length && (
                 <div
@@ -148,7 +144,7 @@ class WidgetSettings extends PureComponent {
                     ...option,
                     loading,
                     handleChangeSettings,
-                    handleShowInfo
+                    handleShowInfo,
                   })}
                 </div>
               )

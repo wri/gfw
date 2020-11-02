@@ -11,8 +11,7 @@ import max from 'lodash/max';
 import { PluginMapboxGl } from 'layer-manager';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 
-import { getGeostoreProvider } from 'services/geostore';
-import { buildGeostore } from 'utils/geoms';
+import { getGeostore } from 'services/geostore';
 
 import Map from 'components/ui/map';
 
@@ -88,25 +87,19 @@ class MapGeostore extends Component {
     this.mounted = false;
   }
 
-  handleGetGeostore = () => {
+  handleGetGeostore = async () => {
     if (this.mounted) {
       this.setState({ error: false });
-      getGeostoreProvider(this.props.location)
-        .then((response) => {
-          if (this.mounted) {
-            const { data } = response.data || {};
-            const geostore = buildGeostore(
-              { id: data.id, ...data.attributes },
-              this.props.location
-            );
-            this.setState({ geostore });
-          }
-        })
-        .catch(() => {
-          if (this.mounted) {
-            this.setState({ error: true });
-          }
-        });
+      try {
+        if (this.mounted) {
+          const geostore = await getGeostore(this.props.location);
+          this.setState({ geostore });
+        }
+      } catch (error) {
+        if (this.mounted) {
+          this.setState({ error: true });
+        }
+      }
     }
   };
 

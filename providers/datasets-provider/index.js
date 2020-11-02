@@ -8,8 +8,8 @@ import reducers, { initialState } from './reducers';
 
 class DatasetsProvider extends PureComponent {
   componentDidMount() {
-    const { getDatasets } = this.props;
-    getDatasets();
+    const { fetchDatasets } = this.props;
+    fetchDatasets();
   }
 
   render() {
@@ -18,7 +18,7 @@ class DatasetsProvider extends PureComponent {
 }
 
 DatasetsProvider.propTypes = {
-  getDatasets: PropTypes.func.isRequired,
+  fetchDatasets: PropTypes.func.isRequired,
 };
 
 reducerRegistry.registerModule('datasets', {

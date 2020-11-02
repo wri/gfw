@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { formatNumber } from 'utils/format';
-import { translateText } from 'utils/transifex';
+import { translateText } from 'utils/lang';
 
 const getInteractionData = (state, { data }) => data;
 

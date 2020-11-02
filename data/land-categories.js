@@ -9,7 +9,7 @@ import {
   OIL_PALM_DATASET,
   WOOD_FIBER_DATASET,
   LOGGING_CONCESSIONS_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   MINING_CONCESSIONS,
   PROTECTED_AREAS_LAYER,
@@ -21,7 +21,7 @@ import {
   OIL_PALM,
   WOOD_FIBER,
   LOGGING_CONCESSIONS,
-} from 'constants/layers';
+} from 'data/layers';
 
 export default [
   {

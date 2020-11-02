@@ -2,25 +2,25 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import findIndex from 'lodash/findIndex';
 import { formatNumber } from 'utils/format';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 
 // get list data
-const getData = state => state.data;
-const getLocationName = state => state.locationLabel;
-const getAdm0 = state => state.adm0;
-const getLocationDict = state =>
-  (state.adm0 ? state.locationData : state.childData);
-const getLocationObject = state => state.location;
-const getSentences = state => state.sentences;
-const getTitle = state => state.title;
-const getColors = state => state.colors;
-const getSettings = state => state.settings;
+const getData = (state) => state.data;
+const getLocationName = (state) => state.locationLabel;
+const getAdm0 = (state) => state.adm0;
+const getLocationDict = (state) =>
+  state.adm0 ? state.locationData : state.childData;
+const getLocationObject = (state) => state.location;
+const getSentences = (state) => state.sentences;
+const getTitle = (state) => state.title;
+const getColors = (state) => state.colors;
+const getSettings = (state) => state.settings;
 
 const getSortedData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-    return sortByKey(data, settings.variable).reverse();
+    return sortBy(data, settings.variable).reverse();
   }
 );
 
@@ -31,14 +31,14 @@ export const parseData = createSelector(
     getAdm0,
     getLocationDict,
     getLocationObject,
-    getSettings
+    getSettings,
   ],
   (data, colors, adm0, locationsDict, locationObj, settings) => {
     if (isEmpty(data) || !locationsDict) return null;
 
     let dataTrimmed = data.map((d, i) => ({
       ...d,
-      rank: i + 1
+      rank: i + 1,
     }));
 
     let key;
@@ -48,7 +48,7 @@ export const parseData = createSelector(
 
     if (adm0) {
       const locationIndex = locationObj
-        ? findIndex(data, d => d[key] === locationObj.value)
+        ? findIndex(data, (d) => d[key] === locationObj.value)
         : -1;
       if (locationIndex === -1) return null;
 
@@ -72,7 +72,7 @@ export const parseData = createSelector(
       color: colors.carbon[0],
       id: `${d.iso}-${i}`,
       value: d[settings.variable],
-      unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha'
+      unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha',
     }));
   }
 );
@@ -83,7 +83,7 @@ export const parseSentence = createSelector(
     if (!sentences || isEmpty(data)) return null;
 
     if (location === 'global') {
-      const sorted = sortByKey(data, [settings.variable]).reverse();
+      const sorted = sortBy(data, settings.variable).reverse();
 
       let biomTop5 = 0;
       let densTop5 = 0;
@@ -95,7 +95,7 @@ export const parseSentence = createSelector(
         return acc + next.totalbiomass;
       }, 0);
 
-      const percent = biomTop5 / biomTotal * 100;
+      const percent = (biomTop5 / biomTotal) * 100;
       const avgBiomDensity = densTop5 / 5;
 
       const value =
@@ -105,23 +105,23 @@ export const parseSentence = createSelector(
 
       const labels = {
         biomassdensity: 'soil organic carbon density',
-        totalbiomass: 'total carbon storage'
+        totalbiomass: 'total carbon storage',
       };
 
       return {
         sentence: sentences[settings.variable],
         params: {
           label: labels[settings.variable],
-          value
-        }
+          value,
+        },
       };
     }
     const iso = locationObj && locationObj.value;
     const region =
       data &&
-      data.find(item => {
+      data.find((item) => {
         if (item.admin_2) return item.admin_2 === iso;
-        else if (item.admin_1) return item.admin_1 === iso;
+        if (item.admin_1) return item.admin_1 === iso;
         return item.iso === iso;
       });
     if (!region) return null;
@@ -132,8 +132,8 @@ export const parseSentence = createSelector(
       params: {
         location,
         biomassDensity: formatNumber({ num: biomassdensity, unit: 'tC/ha' }),
-        totalBiomass: formatNumber({ num: totalbiomass, unit: 'tC' })
-      }
+        totalBiomass: formatNumber({ num: totalbiomass, unit: 'tC' }),
+      },
     };
   }
 );
@@ -152,5 +152,5 @@ export const parseTitle = createSelector(
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });

@@ -1,6 +1,6 @@
 import capitalize from 'lodash/capitalize';
 
-import PageLayout from 'layouts/wrappers/page';
+import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
 import { getSGFProjects } from 'services/projects';

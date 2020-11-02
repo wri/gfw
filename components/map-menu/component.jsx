@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { trackEvent } from 'utils/analytics';
 
-import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
+import { BIOMASS_LOSS_DATASET } from 'data/datasets';
 
 import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
@@ -69,9 +69,9 @@ class MapMenu extends PureComponent {
 
     trackEvent({
       category: 'Map data',
-      action: enable ? 'User turns on a layer' : 'User turns off a layer' ,
+      action: enable ? 'User turns on a layer' : 'User turns off a layer',
       label: layer,
-    })
+    });
   };
 
   componentDidUpdate(prevProps) {
@@ -150,7 +150,7 @@ class MapMenu extends PureComponent {
           )}
         </div>
         <MenuPanel
-          className="menu-panel"
+          className={cx('menu-panel', menuSection)}
           label={label}
           category={category}
           active={!!menuSection}

@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { Media } from 'utils/responsive';
 import isEmpty from 'lodash/isEmpty';
+
+import { Desktop, Mobile } from 'gfw-components';
 
 import SankeyChart from 'components/charts/sankey-chart';
 
@@ -74,7 +75,7 @@ class WidgetSankey extends PureComponent {
 
     return (
       <div className="c-sankey-chart-widget">
-        <Media greaterThanOrEqual="md">
+        <Desktop>
           <SankeyChart
             data={data}
             config={configMerged}
@@ -89,8 +90,8 @@ class WidgetSankey extends PureComponent {
               bottom: 50,
             }}
           />
-        </Media>
-        <Media lessThan="md">
+        </Desktop>
+        <Mobile>
           <SankeyChart
             data={data}
             config={configMerged}
@@ -105,7 +106,7 @@ class WidgetSankey extends PureComponent {
               bottom: 50,
             }}
           />
-        </Media>
+        </Mobile>
       </div>
     );
   }

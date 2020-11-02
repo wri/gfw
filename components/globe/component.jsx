@@ -76,9 +76,10 @@ class GlobeComponent extends React.Component {
 
     this.el.addEventListener(
       'click',
-      event => {
+      (event) => {
         event.preventDefault();
-        mouse.x = event.offsetX / this.renderer.domElement.clientWidth * 2 - 1;
+        mouse.x =
+          (event.offsetX / this.renderer.domElement.clientWidth) * 2 - 1;
         mouse.y =
           -(event.offsetY / this.renderer.domElement.clientHeight) * 2 + 1;
 
@@ -96,9 +97,10 @@ class GlobeComponent extends React.Component {
 
     this.el.addEventListener(
       'mousemove',
-      event => {
+      (event) => {
         event.preventDefault();
-        mouse.x = event.offsetX / this.renderer.domElement.clientWidth * 2 - 1;
+        mouse.x =
+          (event.offsetX / this.renderer.domElement.clientWidth) * 2 - 1;
         mouse.y =
           -(event.offsetY / this.renderer.domElement.clientHeight) * 2 + 1;
 
@@ -113,7 +115,7 @@ class GlobeComponent extends React.Component {
       },
       false
     );
-  }
+  };
 
   addControls = () => {
     this.control = new Control(this.camera, this.renderer.domElement);
@@ -126,7 +128,7 @@ class GlobeComponent extends React.Component {
     this.control.autoRotateSpeed = this.props.velocity;
     this.control.minPolarAngle = Math.PI / 2;
     this.control.maxPolarAngle = Math.PI / 2;
-  }
+  };
 
   addLights = () => {
     const ambientLight = new THREE.AmbientLight(0xaaaaaa);
@@ -134,23 +136,23 @@ class GlobeComponent extends React.Component {
     this.directionalLight.position.set(this.props.width, this.props.height, 0);
     this.scene.add(ambientLight);
     this.camera.add(this.directionalLight);
-  }
+  };
 
   addGlobe = () => {
     const material = new THREE.MeshPhongMaterial({
       map: this.imageLoader.load(this.props.earthImage),
-      bumpScale: 4
+      bumpScale: 4,
     });
     const geometry = new THREE.SphereGeometry(this.props.radius, 50, 50);
     const earth = new THREE.Mesh(geometry, material);
     earth.updateMatrix();
     this.earth = earth;
     this.scene.add(earth);
-  }
+  };
 
   handleClick = (data) => {
     this.props.onClick(data);
-  }
+  };
 
   getUserIcon = (isFellow) => {
     const texture = new THREE.TextureLoader().load(
@@ -160,9 +162,9 @@ class GlobeComponent extends React.Component {
     return new THREE.MeshBasicMaterial({
       map: texture,
       side: THREE.DoubleSide,
-      transparent: true
+      transparent: true,
     });
-  }
+  };
 
   getTextLabel = (text) => {
     const canvas = document.createElement('canvas');
@@ -192,9 +194,9 @@ class GlobeComponent extends React.Component {
     return new THREE.MeshBasicMaterial({
       map: texture,
       side: THREE.DoubleSide,
-      transparent: true
+      transparent: true,
     });
-  }
+  };
 
   addMarker(d) {
     const position = latLongToVector3(
@@ -212,9 +214,9 @@ class GlobeComponent extends React.Component {
     const mesh =
       d.cluster && d.cluster.length > 1
         ? [
-          new THREE.PlaneGeometry(50, 25),
-          this.getTextLabel(d.cluster.length, 50)
-        ]
+            new THREE.PlaneGeometry(50, 25),
+            this.getTextLabel(d.cluster.length, 50),
+          ]
         : [new THREE.PlaneGeometry(25, 25), this.getUserIcon(isFellow)];
     const marker = new THREE.Mesh(...mesh);
     marker.position.set(position.x, position.y, position.z);
@@ -229,10 +231,10 @@ class GlobeComponent extends React.Component {
 
     this.control.rotateSpeed = 0.5;
     if (data && data.length) {
-      data.forEach(d => {
+      data.forEach((d) => {
         markers = markers.concat(this.addMarker(d));
       });
-      markers.forEach(marker => {
+      markers.forEach((marker) => {
         this.scene.add(marker);
       });
     }
@@ -243,7 +245,7 @@ class GlobeComponent extends React.Component {
   removeMarkers() {
     this.control.rotateSpeed = 0.1;
     if (this.markers && this.markers.length) {
-      for (let i = this.markers.length - 1; i >= 0; i--) {
+      for (let i = this.markers.length - 1; i >= 0; i -= 1) {
         this.scene.remove(this.markers[i]);
       }
     }
@@ -253,7 +255,7 @@ class GlobeComponent extends React.Component {
     requestAnimationFrame(this.draw.bind(this));
     this.control.update();
     if (this.markers.length) {
-      for (let i = this.markers.length - 1; i >= 0; i--) {
+      for (let i = this.markers.length - 1; i >= 0; i -= 1) {
         this.markers[i].lookAt(this.camera.position);
       }
     }
@@ -263,13 +265,13 @@ class GlobeComponent extends React.Component {
   render() {
     return (
       <div
-        ref={node => {
+        ref={(node) => {
           this.container = node;
         }}
         className="c-globe"
       >
         <div
-          ref={node => {
+          ref={(node) => {
             this.el = node;
           }}
           className="vizz-component-globe z2"
@@ -280,12 +282,12 @@ class GlobeComponent extends React.Component {
 }
 
 GlobeComponent.defaultProps = {
-  width: !isServer ? window.innerWidth: 0,
+  width: !isServer ? window.innerWidth : 0,
   height: 500,
   radius: 205,
   autorotate: true,
   velocity: 0.25,
-  earthImage
+  earthImage,
 };
 
 GlobeComponent.propTypes = {
@@ -296,7 +298,7 @@ GlobeComponent.propTypes = {
   radius: PropTypes.number,
   earthImage: PropTypes.string,
   data: PropTypes.array,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default GlobeComponent;
