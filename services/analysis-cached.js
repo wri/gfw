@@ -44,7 +44,7 @@ const SQL_QUERIES = {
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC",
   biomassStock:
-    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
     'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
