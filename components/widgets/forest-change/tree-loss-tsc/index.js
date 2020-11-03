@@ -1,5 +1,4 @@
 import { all, spread } from 'axios';
-import moment from 'moment';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
@@ -130,17 +129,4 @@ export default {
     getExtent({ ...params, download: true }),
   ],
   getWidgetProps,
-  parseInteraction: (payload) => {
-    if (payload) {
-      const { year } = payload;
-      return {
-        updateLayer: true,
-        startDate:
-          year && moment().year(year).startOf('year').format('YYYY-MM-DD'),
-        endDate: year && moment().year(year).endOf('year').format('YYYY-MM-DD'),
-      };
-    }
-
-    return {};
-  },
 };

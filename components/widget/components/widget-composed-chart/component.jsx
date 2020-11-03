@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 
 import ComposedChart from 'components/charts/composed-chart';
 import Brush from 'components/charts/brush-chart';
@@ -16,6 +14,7 @@ class WidgetComposedChart extends Component {
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
     preventRenderKeys: PropTypes.array,
+    handleSetInteraction: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
     active: PropTypes.bool,
@@ -28,41 +27,21 @@ class WidgetComposedChart extends Component {
     preventRenderKeys: [],
   };
 
-  shouldComponentUpdate(nextProps) {
-    const { data, settings, config } = this.props;
-    const {
-      data: nextData,
-      settings: nextSettings,
-      config: nextConfig,
-      preventRenderKeys: nextPreventRenderKeys,
-    } = nextProps;
-
-    return (
-      !isEqual(data, nextData) ||
-      !isEqual(config, nextConfig) ||
-      (!isEqual(
-        omit(nextSettings, nextPreventRenderKeys),
-        omit(settings, nextPreventRenderKeys)
-      ) &&
-        isEqual(nextSettings.interaction, settings.interaction))
-    );
-  }
-
   handleMouseMove = debounce((data) => {
-    const { parseInteraction, handleChangeSettings } = this.props;
-    if (parseInteraction && handleChangeSettings) {
+    const { parseInteraction, handleSetInteraction } = this.props;
+    if (parseInteraction && handleSetInteraction) {
       const { activePayload } = data && data;
       if (activePayload && activePayload.length) {
         const interaction = parseInteraction(activePayload[0].payload);
-        handleChangeSettings({ interaction });
+        handleSetInteraction(interaction);
       }
     }
   }, 100);
 
   handleMouseLeave = debounce(() => {
-    const { handleChangeSettings } = this.props;
-    if (handleChangeSettings) {
-      handleChangeSettings({ interaction: {} });
+    const { handleSetInteraction, parseInteraction } = this.props;
+    if (parseInteraction && handleSetInteraction) {
+      handleSetInteraction(null);
     }
   }, 100);
 

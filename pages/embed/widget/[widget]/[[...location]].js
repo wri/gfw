@@ -33,6 +33,16 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
+  if (type === 'global') {
+    return {
+      props: {
+        widget: widget || '',
+        title: `Global Deforestation Rates & Statistics | GFW`,
+        description: `Explore interactive tree cover loss data charts and analyze global forest trends, including land use change, deforestation rates and forest fires.`,
+      },
+    };
+  }
+
   const locationData = await getLocationData(location).catch((err) => {
     if (err?.response?.status === 401) {
       return {

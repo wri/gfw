@@ -5,6 +5,7 @@ export const initialState = {
   error: false,
   data: {},
   settings: {},
+  interactions: {},
   category: 'summary',
   activeWidget: '',
   showMap: false,
@@ -57,6 +58,14 @@ const setWidgetSettingsByKey = (state, { payload }) => ({
   },
 });
 
+const setWidgetInteractionByKey = (state, { payload }) => ({
+  ...state,
+  interactions: {
+    ...state.interactions,
+    [payload?.key]: payload?.payload,
+  },
+});
+
 const setWidgetsLoading = (state, { payload }) => ({
   ...state,
   loading: payload.loading,
@@ -70,5 +79,6 @@ export default {
   [actions.setActiveWidget]: setActiveWidget,
   [actions.setWidgetsSettings]: setWidgetsSettings,
   [actions.setWidgetSettingsByKey]: setWidgetSettingsByKey,
+  [actions.setWidgetInteractionByKey]: setWidgetInteractionByKey,
   [actions.setWidgetsLoading]: setWidgetsLoading,
 };
