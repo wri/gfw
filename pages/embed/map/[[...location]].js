@@ -68,7 +68,10 @@ const MapEmbedPage = (props) => {
   });
 
   return (
-    <LayoutEmbed {...props} exploreLink={asPath?.replace('/embed', '')}>
+    <LayoutEmbed
+      {...props}
+      exploreLink={ready ? asPath?.replace('/embed', '') : ''}
+    >
       {ready && (
         <>
           <MapUrlProvider />
