@@ -24,6 +24,7 @@ class Widgets extends PureComponent {
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
     setWidgetSettings: PropTypes.func.isRequired,
+    setWidgetInteractionByKey: PropTypes.func.isRequired,
     setActiveWidget: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
@@ -46,6 +47,7 @@ class Widgets extends PureComponent {
       loadingMeta,
       setWidgetsData,
       setWidgetSettings,
+      setWidgetInteractionByKey,
       setActiveWidget,
       setModalMetaSettings,
       setShareModal,
@@ -83,6 +85,11 @@ class Widgets extends PureComponent {
               geostore={geostore}
               metaLoading={loadingMeta || loadingData}
               setWidgetData={(data) => setWidgetsData({ [w.widget]: data })}
+              handleSetInteraction={(payload) =>
+                setWidgetInteractionByKey({
+                  key: w.widget,
+                  payload,
+                })}
               handleChangeSettings={(change) =>
                 setWidgetSettings({
                   widget: w.widget,
@@ -105,8 +112,8 @@ class Widgets extends PureComponent {
                 trackEvent({
                   category: 'Dashboards page',
                   action: 'User views a widget on the map',
-                  label: w.widget
-                })
+                  label: w.widget,
+                });
               }}
               handleShowInfo={setModalMetaSettings}
               handleShowShare={() =>

@@ -14,6 +14,7 @@ class WidgetComposedChart extends Component {
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
     preventRenderKeys: PropTypes.array,
+    handleSetInteraction: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
     active: PropTypes.bool,
@@ -27,20 +28,20 @@ class WidgetComposedChart extends Component {
   };
 
   handleMouseMove = debounce((data) => {
-    const { parseInteraction, handleChangeSettings } = this.props;
-    if (parseInteraction && handleChangeSettings) {
+    const { parseInteraction, handleSetInteraction } = this.props;
+    if (parseInteraction && handleSetInteraction) {
       const { activePayload } = data && data;
       if (activePayload && activePayload.length) {
         const interaction = parseInteraction(activePayload[0].payload);
-        handleChangeSettings({ interaction });
+        handleSetInteraction(interaction);
       }
     }
   }, 100);
 
   handleMouseLeave = debounce(() => {
-    const { handleChangeSettings } = this.props;
-    if (handleChangeSettings) {
-      handleChangeSettings({ interaction: {} });
+    const { handleSetInteraction, parseInteraction } = this.props;
+    if (parseInteraction && handleSetInteraction) {
+      handleSetInteraction(null);
     }
   }, 100);
 

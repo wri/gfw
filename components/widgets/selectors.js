@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
-import omit from 'lodash/omit';
 import intersection from 'lodash/intersection';
 import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
@@ -53,6 +52,8 @@ export const selectActiveWidget = (state) => state.widgets?.activeWidget;
 export const selectLocationQuery = (state) =>
   state.location && state.location.query;
 export const selectWidgetSettings = (state) => state.widgets?.settings || {};
+export const selectWidgetInteractions = (state) =>
+  state.widgets?.interactions || {};
 export const selectLocationSearch = (state) =>
   state.location && state.location.search;
 export const selectWidgetsData = (state) => state.widgets && state.widgets.data;
@@ -359,6 +360,7 @@ export const getWidgets = createSelector(
     getLocationData,
     selectWidgetsData,
     selectWidgetSettings,
+    selectWidgetInteractions,
     selectLocationSearch,
     selectNonGlobalDatasets,
     selectIsTrase,
@@ -373,6 +375,7 @@ export const getWidgets = createSelector(
     locationData,
     widgetsData,
     widgetSettings,
+    interactions,
     search,
     datasets,
     isTrase,
@@ -425,6 +428,7 @@ export const getWidgets = createSelector(
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
       const widgetQuerySettings = widgetSettings && widgetSettings[widget];
+      const widgetInteraction = interactions && interactions[widget];
 
       const layerSettings = {
         ...layerParams,
@@ -503,8 +507,8 @@ export const getWidgets = createSelector(
         ...locationData,
         active,
         data: rawData,
-        settings: omit(settings, ['interaction']),
-        interaction: settings?.interaction,
+        settings,
+        interaction: widgetInteraction,
         title: titleTemplate,
         settingsConfig: settingsConfigFiltered,
         optionsSelected,
