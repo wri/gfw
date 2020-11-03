@@ -135,7 +135,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
 
   const datasetId =
     DATASETS[
-      `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
+      `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
   return `${GFW_API}/query/${datasetId}?sql=`;
 };
