@@ -188,7 +188,7 @@ const parseSentence = createSelector(
       (d) => d.year === startYear - 1
     );
     const initialExtent =
-      (initialExtentData && initialExtentData.extentRemaining) || 0;
+      (initialExtentData && initialExtentData.extentRemaining) || 100;
 
     const finalExtentData = filteredData.find((d) => d.year === endYear);
     const finalExtent =
