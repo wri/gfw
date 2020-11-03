@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { trackEvent } from 'utils/analytics';
 
@@ -74,36 +73,22 @@ class MapMenu extends PureComponent {
     });
   };
 
-  componentDidUpdate(prevProps) {
-    const {
-      showAnalysis,
-      setMenuSettings,
-      location,
-      menuSection,
-      recentActive,
-      isDesktop,
-    } = this.props;
-    if (
-      !isDesktop &&
-      location &&
-      location.type &&
-      location.adm0 &&
-      !isEqual(location, prevProps.location)
-    ) {
-      showAnalysis();
-    }
+  onToggleMobileMenu = (slug) => {
+    const { setMenuSettings, recentActive } = this.props;
 
-    if (!isDesktop && !menuSection && recentActive) {
-      setMenuSettings({ menuSection: 'recent-imagery-collapsed' });
+    if (slug) {
+      setMenuSettings({ menuSection: slug });
+      trackEvent({
+        category: 'Map menu',
+        action: 'Select Map menu',
+        label: slug,
+      });
+    } else {
+      setMenuSettings({
+        menuSection: recentActive ? 'recent-imagery-collapsed' : '',
+      });
     }
-
-    if (
-      !isEqual(isDesktop, prevProps.isDesktop) ||
-      (!recentActive && !isEqual(recentActive, prevProps.recentActive))
-    ) {
-      setMenuSettings({ menuSection: '' });
-    }
-  }
+  };
 
   render() {
     const {
@@ -118,6 +103,7 @@ class MapMenu extends PureComponent {
       analysisLoading,
       embed,
       isDesktop,
+      recentActive,
       ...props
     } = this.props;
     const {
@@ -145,7 +131,7 @@ class MapMenu extends PureComponent {
           {!isDesktop && (
             <MenuMobile
               sections={mobileSections}
-              setMenuSettings={setMenuSettings}
+              onToggleMenu={this.onToggleMobileMenu}
             />
           )}
         </div>
@@ -160,7 +146,11 @@ class MapMenu extends PureComponent {
           loading={loading}
           collapsed={collapsed}
           onClose={() =>
-            setMenuSettings({ menuSection: '', datasetCategory: '' })}
+            setMenuSettings({
+              menuSection:
+                !isDesktop && recentActive ? 'recent-imagery-collapsed' : '',
+              datasetCategory: '',
+            })}
           onOpen={() => setMenuSettings({ menuSection: openSection })}
         >
           {Component && (

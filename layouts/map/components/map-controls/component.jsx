@@ -124,6 +124,8 @@ class MapControlsButtons extends PureComponent {
       showRecentImagery,
       datasetsLoading,
       setMainMapSettings,
+      setMenuSettings,
+      isDesktop,
     } = this.props;
 
     return (
@@ -141,6 +143,11 @@ class MapControlsButtons extends PureComponent {
               category: 'Map settings',
               action: 'Recent imagery feature',
               label: 'User opens the config window',
+            });
+          }
+          if (!isDesktop) {
+            setMenuSettings({
+              menuSection: !showRecentImagery ? 'recent-imagery-collapsed' : '',
             });
           }
         }}
