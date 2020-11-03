@@ -175,7 +175,7 @@ export const parseSentence = createSelector(
     const params = {
       weeknum,
       year,
-      alerts: formatNumber({ num: alerts, unit: '' }),
+      alerts: formatNumber({ num: alerts, unit: 'counts' }),
       deforestation: formatNumber({
         num: cumulative_deforestation,
         unit: 'ha',
