@@ -112,7 +112,7 @@ const WidgetEmbedPage = (props) => {
   return (
     <LayoutEmbed
       {...props}
-      exploreLink={`/dashboards/${query?.location?.join('/')}`}
+      exploreLink={ready ? `/dashboards/${query?.location?.join('/')}` : ''}
       noIndex
     >
       {ready && (
