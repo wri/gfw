@@ -38,7 +38,6 @@ class WidgetContainer extends Component {
     this._mounted = true;
     const { location, settings, status } = this.props;
     const params = { ...location, ...settings, status };
-    console.log(location);
 
     this.handleGetWidgetData(params);
   }
@@ -69,7 +68,7 @@ class WidgetContainer extends Component {
   }
 
   handleGetWidgetData = (params) => {
-    if (params?.type && params?.adm0) {
+    if (params?.type) {
       const { getData, setWidgetData, geostore } = this.props;
       this.cancelWidgetDataFetch();
       this.widgetDataFetch = CancelToken.source();

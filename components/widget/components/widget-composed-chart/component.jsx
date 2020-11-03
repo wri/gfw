@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 
 import ComposedChart from 'components/charts/composed-chart';
 import Brush from 'components/charts/brush-chart';
@@ -27,26 +25,6 @@ class WidgetComposedChart extends Component {
   static defaultProps = {
     preventRenderKeys: [],
   };
-
-  shouldComponentUpdate(nextProps) {
-    const { data, settings, config } = this.props;
-    const {
-      data: nextData,
-      settings: nextSettings,
-      config: nextConfig,
-      preventRenderKeys: nextPreventRenderKeys,
-    } = nextProps;
-
-    return (
-      !isEqual(data, nextData) ||
-      !isEqual(config, nextConfig) ||
-      (!isEqual(
-        omit(nextSettings, nextPreventRenderKeys),
-        omit(settings, nextPreventRenderKeys)
-      ) &&
-        isEqual(nextSettings.interaction, settings.interaction))
-    );
-  }
 
   handleMouseMove = debounce((data) => {
     const { parseInteraction, handleChangeSettings } = this.props;
