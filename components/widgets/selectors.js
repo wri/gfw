@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
+import omit from 'lodash/omit';
 import intersection from 'lodash/intersection';
 import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
@@ -502,7 +503,8 @@ export const getWidgets = createSelector(
         ...locationData,
         active,
         data: rawData,
-        settings,
+        settings: omit(settings, ['interaction']),
+        interaction: settings?.interaction,
         title: titleTemplate,
         settingsConfig: settingsConfigFiltered,
         optionsSelected,
