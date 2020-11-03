@@ -9,7 +9,7 @@ import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = (state) => state.data && state.data.data;
 const getColors = (state) => state.colors;
-const getInteractionData = (state) => state.settings.interaction;
+const getInteractionData = (state) => state.interaction;
 const getSentences = (state) => state.sentences;
 const getSettings = (state) => state.settings;
 
@@ -175,7 +175,7 @@ export const parseSentence = createSelector(
     const params = {
       weeknum,
       year,
-      alerts: formatNumber({ num: alerts, unit: '' }),
+      alerts: formatNumber({ num: alerts, unit: 'counts' }),
       deforestation: formatNumber({
         num: cumulative_deforestation,
         unit: 'ha',
