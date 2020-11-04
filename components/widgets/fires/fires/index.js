@@ -1,4 +1,4 @@
-import { fetchFireAlertsByGeostore } from 'services/alerts';
+import { fetchFireAlertsByGeostore } from 'services/analysis';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,

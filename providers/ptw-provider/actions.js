@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux/actions';
 import uniqBy from 'lodash/uniqBy';
 import { reverseLatLng } from 'utils/geoms';
 
-import { getPTWProvider } from 'services/places-to-watch';
+import { getPlacesToWatch } from 'services/places-to-watch';
 
 export const setPTWLoading = createAction('setPTWLoading');
 export const setPTW = createAction('setPTW');
@@ -13,7 +13,7 @@ export const getPTW = createThunkAction(
     const { ptw } = getState();
     if (ptw && !ptw.loading) {
       dispatch(setPTWLoading(true));
-      getPTWProvider()
+      getPlacesToWatch()
         .then((response) => {
           const { rows } = response.data;
           if (rows && !!rows.length) {

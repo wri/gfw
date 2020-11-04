@@ -23,7 +23,6 @@ export const getUrlParams = createSelector(
     selectShowMap,
   ],
   (map, modalMeta, dashboardPrompts, widgetsSettings, category, showMap) => {
-    console.log('widj', widgetsSettings);
     return {
       map: objDiff(map, mapInitialState.settings),
       modalMeta,

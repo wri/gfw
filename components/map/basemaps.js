@@ -53,6 +53,6 @@ export default {
     basemapGroup: 'basemap-dark',
     labelsGroup: 'labels-dark',
     mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
-    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/{name}/gmap/{z}/{x}/{y}.png?api_key=${process.env.PLANET_API_KEY}`,
+    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/{name}/gmap/{z}/{x}/{y}.png?api_key=${process.env.NEXT_PUBLIC_PLANET_API_KEY}`,
   },
 };
