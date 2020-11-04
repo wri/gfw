@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 
-import { postNewsletterSubscription } from 'services/newsletter';
+import { submitNewsletterSubscription } from 'services/forms';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
@@ -60,7 +60,7 @@ class NewsletterForm extends PureComponent {
       pardot_extra_field: comments,
     };
 
-    return postNewsletterSubscription(postData)
+    return submitNewsletterSubscription(postData)
       .then(() => {})
       .catch((error) => {
         if (!error.response) {

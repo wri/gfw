@@ -36,8 +36,8 @@ class WidgetSankey extends PureComponent {
     const { data, config, settings } = this.props;
     const { unit, startYear, endYear } = settings;
     const { selectedElement } = data;
-    const selected = !isEmpty(settings.activeData)
-      ? settings.activeData
+    const selected = !isEmpty(settings.interaction)
+      ? settings.interaction
       : selectedElement;
     const shouldHighlight = (item) => {
       if (!selected) return false;

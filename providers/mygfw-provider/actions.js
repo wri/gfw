@@ -40,6 +40,8 @@ export const getUserProfile = createThunkAction(
         .catch(() => {
           dispatch(setMyGFWLoading({ loading: false, error: true }));
         });
+    } else {
+      dispatch(setMyGFWLoading({ loading: false, error: false }));
     }
   }
 );

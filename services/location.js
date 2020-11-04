@@ -1,7 +1,7 @@
 import lowerCase from 'lodash/lowerCase';
 import startCase from 'lodash/startCase';
 import { cartoRequest } from 'utils/request';
-import { getGeodescriber } from 'services/geodescriber';
+import { getGeodescriberByGeostore } from 'services/geodescriber';
 import { getDatasetQuery } from 'services/datasets';
 import { getArea } from 'services/areas';
 
@@ -43,7 +43,7 @@ export const countryConfig = {
 
 export const geostoreConfig = {
   adm0: (params) =>
-    getGeodescriber({ geostore: params.adm0 }).then((response) => {
+    getGeodescriberByGeostore({ geostore: params.adm0 }).then((response) => {
       const { title, ...props } = response?.data?.data;
 
       return {
@@ -102,7 +102,7 @@ export const aoiConfig = {
         return wdpaConfig.adm0({ adm0: wdpaid });
       }
 
-      return getGeodescriber(area).then((response) => {
+      return getGeodescriberByGeostore(area).then((response) => {
         const geodescriber = response?.data?.data;
 
         return {

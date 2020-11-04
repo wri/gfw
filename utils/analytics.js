@@ -11,9 +11,9 @@ const isServer = typeof window !== 'undefined';
 export const initAnalytics = () => {
   if (isServer && getAgreedCookies()) {
     window.ANALYTICS_INITIALIZED = true;
-    ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
-    ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
-    TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
+    ReactGA.initialize(process.env.NEXT_PUBLIC_ANALYTICS_PROPERTY_ID);
+    ReactPixel.init(process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID);
+    TwitterConvTrkr.init(process.env.NEXT_PUBLIC_TWITTER_CONVERSION_ID);
   }
 };
 
