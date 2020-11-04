@@ -7,6 +7,7 @@ import useStore from 'redux/store';
 import { rootReducer } from 'fast-redux';
 import isEmpty from 'lodash/isEmpty';
 
+import { trackEvent } from 'utils/analytics';
 import reducerRegistry from 'redux/registry';
 
 import 'styles/styles.scss';
@@ -42,5 +43,15 @@ const App = ({ Component, pageProps }) => {
     </Provider>
   );
 };
+
+export function reportWebVitals({ id, name, label, value }) {
+  trackEvent({
+    action: name,
+    category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
+    value: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
+    label: id, // id unique to current page load
+    nonInteraction: true, // avoids affecting bounce rate.
+  });
+}
 
 export default App;
