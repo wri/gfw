@@ -1,4 +1,4 @@
-import PageLayout from 'layouts/wrappers/page';
+import PageLayout from 'wrappers/page';
 import MapBuilder from 'layouts/mapbuilder';
 
 import { getPostsByType, getPostByType } from 'services/content';

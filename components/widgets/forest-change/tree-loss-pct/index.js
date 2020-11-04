@@ -7,12 +7,12 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_LOSS_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
@@ -190,13 +190,4 @@ export default {
     ]);
   },
   getWidgetProps,
-  parseInteraction: (payload = {}) => {
-    const { year } = payload;
-
-    return {
-      updateLayer: true,
-      startYear: parseInt(year, 10),
-      endYear: parseInt(year, 10),
-    };
-  },
 };

@@ -71,15 +71,11 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
   }
 
   .map-controls {
-    display: none;
+    display: block;
     position: absolute;
     top: rem(15px);
     right: rem(15px);
     z-index: 999;
-
-    @media screen and (min-width: $screen-m) {
-      display: block;
-    }
   }
 
   .close-map-button {

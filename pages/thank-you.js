@@ -1,4 +1,4 @@
-import PageLayout from 'layouts/wrappers/page';
+import PageLayout from 'wrappers/page';
 import ThankYou from 'layouts/thank-you';
 
 const ThankYouPage = () => (

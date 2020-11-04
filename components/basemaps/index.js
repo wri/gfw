@@ -90,6 +90,4 @@ class BasemapsContainer extends React.Component {
   }
 }
 
-export default withTooltipEvt(
-  connect(getBasemapsProps, actions)(BasemapsContainer)
-);
+export default withTooltipEvt(connect(getBasemapsProps, actions)(BasemapsContainer))

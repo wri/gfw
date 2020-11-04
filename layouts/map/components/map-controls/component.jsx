@@ -64,7 +64,11 @@ class MapControlsButtons extends PureComponent {
   onBasemapsRequestClose = () => {
     const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
     this.basemapsRef.clearEvt();
-    if (!isTargetOnTooltip && this.props.showBasemaps) {
+    if (
+      !isTargetOnTooltip &&
+      !this.props.metaModalOpen &&
+      this.props.showBasemaps
+    ) {
       this.toggleBasemaps();
     }
   };
@@ -120,6 +124,8 @@ class MapControlsButtons extends PureComponent {
       showRecentImagery,
       datasetsLoading,
       setMainMapSettings,
+      setMenuSettings,
+      isDesktop,
     } = this.props;
 
     return (
@@ -137,6 +143,11 @@ class MapControlsButtons extends PureComponent {
               category: 'Map settings',
               action: 'Recent imagery feature',
               label: 'User opens the config window',
+            });
+          }
+          if (!isDesktop) {
+            setMenuSettings({
+              menuSection: !showRecentImagery ? 'recent-imagery-collapsed' : '',
             });
           }
         }}
@@ -382,7 +393,7 @@ class MapControlsButtons extends PureComponent {
     return (
       <div className="map-position">
         <span className="notranslate">
-          zoom:
+          zoom:&nbsp;
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
@@ -453,6 +464,7 @@ MapControlsButtons.propTypes = {
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
   activeBasemap: PropTypes.object,
+  metaModalOpen: PropTypes.bool,
 };
 
 export default connect()(MapControlsButtons);

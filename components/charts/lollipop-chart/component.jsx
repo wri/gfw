@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { format } from 'd3-format';
 
-import { Media } from 'utils/responsive';
+import { Desktop, Mobile } from 'gfw-components';
+
 import Legend from 'components/charts/components/chart-legend';
 
 import './styles.scss';
@@ -105,7 +106,7 @@ class LollipopChart extends PureComponent {
         </div>
         <div className="custom-xAxis">
           <div className="axis-wrapper">
-            <Media greaterThanOrEqual="md">
+            <Desktop>
               <div
                 className="custom-xAxis-ticks"
                 style={{
@@ -119,8 +120,8 @@ class LollipopChart extends PureComponent {
               >
                 {this.renderTicks(ticks, dataMin, dataMax, allNegative)}
               </div>
-            </Media>
-            <Media lessThan="md">
+            </Desktop>
+            <Mobile>
               <div
                 className="custom-xAxis-ticks"
                 style={{
@@ -134,7 +135,7 @@ class LollipopChart extends PureComponent {
               >
                 {this.renderTicks(ticks, dataMin, dataMax, allNegative)}
               </div>
-            </Media>
+            </Mobile>
           </div>
         </div>
         <div className="list-wrapper">
@@ -244,7 +245,7 @@ class LollipopChart extends PureComponent {
               })}
           </ul>
         </div>
-        <Media greaterThanOrEqual="md">
+        <Desktop>
           <div
             className="cartesian-grid"
             style={{
@@ -290,7 +291,7 @@ class LollipopChart extends PureComponent {
               />
             ))}
           </div>
-        </Media>
+        </Desktop>
       </div>
     );
   }

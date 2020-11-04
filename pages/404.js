@@ -1,4 +1,4 @@
-import StaticLayout from 'layouts/wrappers/static';
+import StaticLayout from 'wrappers/static';
 import Page404 from 'layouts/404';
 
 const Custom404 = () => (

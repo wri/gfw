@@ -7,7 +7,7 @@ import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setMainMapSettings } from 'layouts/map/actions';
 
-import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
+import { BIOMASS_LOSS_DATASET } from 'data/datasets';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';

@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'components/widgets/utils/colors';
 
 import {
   getMeansData,
@@ -18,7 +18,7 @@ import {
 const selectAlerts = (state) => state.data && state.data.alerts;
 const selectLatestDates = (state) => state.data && state.data.latest;
 const selectColors = (state) => state.colors;
-const selectInteraction = (state) => state.settings.interaction;
+const selectInteraction = (state) => state.interaction;
 const selectWeeks = (state) => state.settings && state.settings.weeks;
 const selectSentences = (state) => state.sentence;
 const selectLang = (state) => state.lang;

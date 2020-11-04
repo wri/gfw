@@ -13,7 +13,7 @@ import Error from 'components/forms/components/error';
 
 import { email } from 'components/forms/validations';
 
-import { GFW_API } from 'utils/constants';
+import { GFW_API } from 'utils/apis';
 
 import './styles.scss';
 

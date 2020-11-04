@@ -2,25 +2,25 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getIndicator = state => state.indicator;
-const getLocationsMeta = state => state.childData;
-const getLocationName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
-const getTitle = state => state.title;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getIndicator = (state) => state.indicator;
+const getLocationsMeta = (state) => state.childData;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
+const getTitle = (state) => state.title;
 
 export const parseList = createSelector(
   [getData, getSettings, getLocationsMeta, getColors],
   (data, settings, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
-    data.forEach(d => {
+    data.forEach((d) => {
       const regionMeta = meta[d.id];
       if (regionMeta) {
         dataMapped.push({
@@ -29,17 +29,17 @@ export const parseList = createSelector(
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
           path: regionMeta.path,
-          color: colors.main
+          color: colors.main,
         });
       }
     });
-    return sortByKey(dataMapped, 'extent', true);
+    return sortBy(dataMapped, 'extent');
   }
 );
 
-export const parseData = createSelector([parseList], data => {
+export const parseData = createSelector([parseList], (data) => {
   if (isEmpty(data)) return null;
-  return sortByKey(uniqBy(data, 'label'), 'value', true);
+  return sortBy(uniqBy(data, 'label'), 'value').reverse();
 });
 
 export const parseSentence = createSelector(
@@ -49,7 +49,7 @@ export const parseSentence = createSelector(
     getSettings,
     getIndicator,
     getLocationName,
-    getSentences
+    getSentences,
   ],
   (sortedList, data, settings, indicator, locationName, sentences) => {
     if (!data || !locationName) return null;
@@ -66,7 +66,7 @@ export const parseSentence = createSelector(
       percGlobalInitial,
       percGlobalWithIndicator,
       percGlobalLandCatOnly,
-      noCover
+      noCover,
     } = sentences;
     const { forestType, landCategory } = settings;
     const topRegion = (data.length && data[0]) || {};
@@ -83,7 +83,7 @@ export const parseSentence = createSelector(
       percentileExtent += sortedList[percentileLength].extent;
       percentileLength += 1;
     }
-    const topExtent = percentileExtent / (totalExtent || 0) * 100;
+    const topExtent = (percentileExtent / (totalExtent || 0)) * 100;
 
     const topRegionExtent =
       topRegion.extent < 1
@@ -111,7 +111,7 @@ export const parseSentence = createSelector(
       year: settings.extentYear,
       value: settings.unit === '%' ? topRegionPercent : topRegionExtent,
       average: settings.unit === '%' ? aveRegionPercent : aveRegionExtent,
-      count: percentileLength
+      count: percentileLength,
     };
 
     let sentence = noCover;
@@ -137,7 +137,7 @@ export const parseSentence = createSelector(
     }
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -156,5 +156,5 @@ export const parseTitle = createSelector(
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });

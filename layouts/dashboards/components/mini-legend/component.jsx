@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { isTouch } from 'utils/browser';
 import cx from 'classnames';
 import { trackEvent } from 'utils/analytics';
 import moment from 'moment';
@@ -17,7 +16,6 @@ class MiniLegend extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { layers, activeDatasets, setMainMapView, className } = this.props;
-    const isDeviceTouch = isTouch();
 
     return layers && layers.length ? (
       <div className={cx('c-mini-legend', className)}>
@@ -68,7 +66,6 @@ class MiniLegend extends PureComponent {
               theme: 'tip',
               position: 'top',
               arrow: true,
-              disabled: isDeviceTouch,
               html: <Tip text="Explore the data on the global map" />,
             }}
           >

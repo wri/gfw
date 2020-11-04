@@ -7,8 +7,8 @@ import cx from 'classnames';
 import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
-import Head from 'layouts/wrappers/head';
-import Cookies from 'layouts/wrappers/cookies';
+import Head from 'wrappers/head';
+import Cookies from 'wrappers/cookies';
 
 import Header from 'components/header';
 import Footer from 'components/footer';

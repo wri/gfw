@@ -8,7 +8,7 @@ import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 
 import { getExtent, getLoss } from 'services/analysis-cached';
-import { getGeodescriberService } from 'services/geostore';
+import { getGeodescriberByGeoJson } from 'services/geodescriber';
 
 export const setGeodescriberLoading = createAction('setGeodescriberLoading');
 export const setGeodescriber = createAction('setGeodescriber');
@@ -19,7 +19,7 @@ export const getGeodescriber = createThunkAction(
   (params) => (dispatch) => {
     if (!isEmpty(params)) {
       dispatch(setGeodescriberLoading({ loading: true, error: false }));
-      getGeodescriberService(params)
+      getGeodescriberByGeoJson(params)
         .then((response) => {
           dispatch(setGeodescriber(response.data.data));
         })

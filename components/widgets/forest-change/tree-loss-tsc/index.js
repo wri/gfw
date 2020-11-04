@@ -1,16 +1,15 @@
 import { all, spread } from 'axios';
-import moment from 'moment';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
-} from 'constants/layers';
+} from 'data/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';
@@ -130,17 +129,4 @@ export default {
     getExtent({ ...params, download: true }),
   ],
   getWidgetProps,
-  parseInteraction: (payload) => {
-    if (payload) {
-      const { year } = payload;
-      return {
-        updateLayer: true,
-        startDate:
-          year && moment().year(year).startOf('year').format('YYYY-MM-DD'),
-        endDate: year && moment().year(year).endOf('year').format('YYYY-MM-DD'),
-      };
-    }
-
-    return {};
-  },
 };

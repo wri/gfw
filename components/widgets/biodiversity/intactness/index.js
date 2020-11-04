@@ -4,13 +4,13 @@ import {
   POLITICAL_BOUNDARIES_DATASET,
   BIODIVERSITY_SIGNIFICANCE_2016_DATASET,
   BIODIVERSITY_INTACTNESS_2016_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   BIODIVERSITY_INTACTNESS,
   BIODIVERSITY_SIGNIFICANCE,
-} from 'constants/layers';
+} from 'data/layers';
 
 // import { getWidgetProps } from './selectors';
 

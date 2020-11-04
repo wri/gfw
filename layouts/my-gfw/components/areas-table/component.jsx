@@ -4,7 +4,7 @@ import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
 import { Tooltip } from 'react-tippy';
-import { deburrUpper } from 'utils/data';
+import { deburrUpper } from 'utils/strings';
 
 import { Row, Column } from 'gfw-components';
 

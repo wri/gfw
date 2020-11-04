@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
 import { getCountriesProvider } from 'services/country';
 
-import FullscreenLayout from 'layouts/wrappers/fullscreen';
+import FullscreenLayout from 'wrappers/fullscreen';
 import Map from 'layouts/map';
 
 import MapUrlProvider from 'providers/map-url-provider';
@@ -26,8 +26,16 @@ const notFoundProps = {
   errorTitle: 'Location Not Found',
 };
 
+const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
+
 export const getStaticProps = async ({ params }) => {
   const [type] = params?.location || [];
+
+  if (!ALLOWED_TYPES.includes(type)) {
+    return {
+      props: notFoundProps,
+    };
+  }
 
   if (!type || type === 'global') {
     return {
@@ -112,7 +120,7 @@ const MapPage = (props) => {
       modalMeta,
       recentImagery,
       mapPrompts,
-    } = decodeParamsForState(query) || {};
+    } = decodeQueryParams(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
