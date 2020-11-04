@@ -35,6 +35,7 @@ class Widget extends PureComponent {
     handleShowMap: PropTypes.func,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
+    handleSetInteraction: PropTypes.func,
     handleDataHighlight: PropTypes.func,
     handleShowShare: PropTypes.func,
     parseInteraction: PropTypes.func,
@@ -86,6 +87,7 @@ class Widget extends PureComponent {
       handleShowMap,
       handleShowInfo,
       handleChangeSettings,
+      handleSetInteraction,
       handleShowShare,
       handleRefetchData,
       handleDataHighlight,
@@ -171,6 +173,7 @@ class Widget extends PureComponent {
           config={config}
           handleRefetchData={handleRefetchData}
           handleDataHighlight={handleDataHighlight}
+          handleSetInteraction={handleSetInteraction}
           handleChangeSettings={handleChangeSettings}
           parseInteraction={parseInteraction}
           toggleSettingsMenu={toggleSettingsMenu}

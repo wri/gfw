@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux/actions';
 import moment from 'moment';
 import { all, spread } from 'axios';
 
-import { fetchLatestDate } from 'services/alerts';
+import { fetchLatestDate } from 'services/latest';
 
 export const setLatestLoading = createAction('setLatestLoading');
 export const setLatestDates = createAction('setLatestDates');
