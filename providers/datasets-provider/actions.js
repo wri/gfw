@@ -29,7 +29,8 @@ export const fetchDatasets = createThunkAction(
             (d) =>
               d.published &&
               d.layer.length &&
-              (d.env === 'production' || d.env === process.env.FEATURE_ENV)
+              (d.env === 'production' ||
+                d.env === process.env.NEXT_PUBLIC_FEATURE_ENV)
           )
           .filter(byVocabulary)
           .map((d) => {
@@ -42,7 +43,7 @@ export const fetchDatasets = createThunkAction(
                 layer.find(
                   (l) =>
                     (l.env === 'production' ||
-                      l.env === process.env.FEATURE_ENV) &&
+                      l.env === process.env.NEXT_PUBLIC_FEATURE_ENV) &&
                     l.applicationConfig &&
                     l.applicationConfig.default
                 )) ||
@@ -110,7 +111,7 @@ export const fetchDatasets = createThunkAction(
                     .filter(
                       (l) =>
                         (l.env === 'production' ||
-                          l.env === process.env.FEATURE_ENV) &&
+                          l.env === process.env.NEXT_PUBLIC_FEATURE_ENV) &&
                         l.published
                     )
                     .map((l, i) => {

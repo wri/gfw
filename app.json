@@ -1,54 +1,54 @@
 {
+  "name": "gfw",
   "buildpacks": [
     {
       "url": "heroku/nodejs"
     }
   ],
-  "env": {
-    "ANALYTICS_PROPERTY_ID": {
-      "required": true
-    },
-    "AWS_ACCESS_KEY_ID": {
-      "required": true
-    },
-    "AWS_REGION": {
-      "required": true
-    },
-    "AWS_SECRET_ACCESS_KEY": {
-      "required": true
-    },
-    "BITLY_TOKEN": {
-      "required": true
-    },
-    "FACEBOOK_PIXEL_ID": {
-      "required": true
-    },
-    "FEATURE_ENV": {
-      "required": true
-    },
-    "FULLPAGE_LICENSE": {
-      "required": true
-    },
-    "GOOGLE_CUSTOM_SEARCH_CX": {
-      "required": true
-    },
-    "GOOGLE_SEARCH_API_KEY": {
-      "required": true
-    },
-    "MapboxAccessToken": {
-      "required": true
-    },
-    "PLANET_API_KEY": {
-      "required": true
-    },
-    "TWITTER_CONVERSION_ID": {
-      "required": true
-    }
-  },
   "formation": {
     "web": {
       "quantity": 1
     }
   },
-  "name": "gfw"
+  "env": {
+    "NEXT_PUBLIC_ANALYTICS_PROPERTY_ID": {
+      "required": true
+    },
+    "NEXT_PUBLIC_AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "NEXT_PUBLIC_AWS_REGION": {
+      "required": true
+    },
+    "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "NEXT_PUBLIC_BITLY_TOKEN": {
+      "required": true
+    },
+    "NEXT_PUBLIC_FACEBOOK_PIXEL_ID": {
+      "required": true
+    },
+    "NEXT_PUBLIC_FEATURE_ENV": {
+      "required": true
+    },
+    "NEXT_PUBLIC_FULLPAGE_LICENSE": {
+      "required": true
+    },
+    "NEXT_PUBLIC_GOOGLE_CUSTOM_SEARCH_CX": {
+      "required": true
+    },
+    "NEXT_PUBLIC_GOOGLE_SEARCH_API_KEY": {
+      "required": true
+    },
+    "NEXT_PUBLIC_MAPBOX_TOKEN": {
+      "required": true
+    },
+    "NEXT_PUBLIC_PLANET_API_KEY": {
+      "required": true
+    },
+    "NEXT_PUBLIC_TWITTER_CONVERSION_ID": {
+      "required": true
+    }
+  }
 }
