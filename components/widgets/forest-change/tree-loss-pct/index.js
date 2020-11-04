@@ -190,13 +190,4 @@ export default {
     ]);
   },
   getWidgetProps,
-  parseInteraction: (payload = {}) => {
-    const { year } = payload;
-
-    return {
-      updateLayer: true,
-      startYear: parseInt(year, 10),
-      endYear: parseInt(year, 10),
-    };
-  },
 };

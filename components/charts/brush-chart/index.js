@@ -44,8 +44,11 @@ export default class Brush extends PureComponent {
 
   componentDidMount() {
     const { margin, data, startIndex, endIndex } = this.props;
-    const { width, height } = this.svg.getBoundingClientRect();
+
     if (!data) return;
+
+    const { width, height } = this.svg.getBoundingClientRect();
+
     this.scale = scaleLinear()
       .domain([0, data.length - 1])
       .rangeRound([margin.left, width - margin.right]);

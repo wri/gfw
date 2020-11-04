@@ -68,7 +68,7 @@ class SVGBrush extends PureComponent {
     const {
       extent: [[x0, y0], [x1, y1]],
     } = this.props;
-    console.log('render overlay', this.props);
+
     return (
       <rect
         className="overlay"

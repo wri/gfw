@@ -117,8 +117,8 @@ class TopicsPage extends PureComponent {
     trackEvent({
       category: 'Topics pages',
       action: 'Clicked related tools',
-      label: source
-    })
+      label: source,
+    });
   };
 
   handleSetLeaving = () => {
@@ -195,7 +195,7 @@ class TopicsPage extends PureComponent {
         )}
         <Desktop>
           <ReactFullpage
-            licenseKey={process.env.FULLPAGE_LICENSE}
+            licenseKey={process.env.NEXT_PUBLIC_FULLPAGE_LICENSE}
             scrollOverflow
             anchors={anchors}
             animateAnchor={false}
@@ -213,7 +213,7 @@ class TopicsPage extends PureComponent {
         </Desktop>
         <Mobile>
           <ReactFullpage
-            licenseKey={process.env.FULLPAGE_LICENSE}
+            licenseKey={process.env.NEXT_PUBLIC_FULLPAGE_LICENSE}
             scrollOverflow
             anchors={anchors}
             animateAnchor={false}

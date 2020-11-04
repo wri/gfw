@@ -1,7 +1,7 @@
 import { getGoogleLangCode } from 'utils/lang';
 import { apiRequest } from 'utils/request';
 
-export const getGeodescriberService = ({ geojson, lang, token }) =>
+export const getGeodescriberByGeoJson = ({ geojson, lang, token }) =>
   // for now we are forcing english until API works
   apiRequest({
     method: 'post',
@@ -14,7 +14,7 @@ export const getGeodescriberService = ({ geojson, lang, token }) =>
     cancelToken: token,
   });
 
-export const getGeodescriber = ({ geostore, lang, token }) =>
+export const getGeodescriberByGeostore = ({ geostore, lang, token }) =>
   // for now we are forcing english until API works
   apiRequest({
     method: 'get',

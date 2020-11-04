@@ -68,28 +68,30 @@ class WidgetContainer extends Component {
   }
 
   handleGetWidgetData = (params) => {
-    const { getData, setWidgetData, geostore } = this.props;
-    this.cancelWidgetDataFetch();
-    this.widgetDataFetch = CancelToken.source();
+    if (params?.type) {
+      const { getData, setWidgetData, geostore } = this.props;
+      this.cancelWidgetDataFetch();
+      this.widgetDataFetch = CancelToken.source();
 
-    this.setState({ loading: true, error: false });
-    getData({ ...params, geostore, token: this.widgetDataFetch.token })
-      .then((data) => {
-        setWidgetData(data);
-        setTimeout(() => {
+      this.setState({ loading: true, error: false });
+      getData({ ...params, geostore, token: this.widgetDataFetch.token })
+        .then((data) => {
+          setWidgetData(data);
+          setTimeout(() => {
+            if (this._mounted) {
+              this.setState({ loading: false, error: false });
+            }
+          }, 200);
+        })
+        .catch((error) => {
           if (this._mounted) {
-            this.setState({ loading: false, error: false });
+            this.setState({
+              error: error.message !== `Cancelling ${this.props.widget} fetch`,
+              loading: false,
+            });
           }
-        }, 200);
-      })
-      .catch((error) => {
-        if (this._mounted) {
-          this.setState({
-            error: error.message !== `Cancelling ${this.props.widget} fetch`,
-            loading: false,
-          });
-        }
-      });
+        });
+    }
   };
 
   handleRefetchData = () => {
