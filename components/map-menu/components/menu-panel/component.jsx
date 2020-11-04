@@ -29,7 +29,7 @@ const PanelMobile = posed.div({
 
 const PanelDesktop = posed.div({
   enter: {
-    x: 66,
+    x: 76,
     opacity: 1,
     delay: 300,
   },
@@ -48,15 +48,16 @@ class MenuPanel extends PureComponent {
     if (category || isSearch) {
       return (
         <button
-          onClick={() => setMenuSettings({
-            ...(category && { datasetCategory: '' }),
-            ...(isSearch && { searchType: '' })
-          })}
+          onClick={() =>
+            setMenuSettings({
+              ...(category && { datasetCategory: '' }),
+              ...(isSearch && { searchType: '' }),
+            })}
         >
           <Icon icon={arrowIcon} className="icon-return" />
           <span>{isSearch ? label : startCase(category)}</span>
         </button>
-      )
+      );
     }
 
     return <span>{label}</span>;
@@ -90,9 +91,7 @@ class MenuPanel extends PureComponent {
           >
             {!isDesktop ? (
               <div className="panel-header">
-                <div className="panel-label">
-                  {this.panelLabel()}
-                </div>
+                <div className="panel-label">{this.panelLabel()}</div>
                 <Button
                   className="panel-close"
                   theme="theme-button-clear"
