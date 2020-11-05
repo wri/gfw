@@ -5,16 +5,18 @@ import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
 
-import Icon from 'components/ui/icon';
-import Button from 'components/ui/button';
+import { Row, Column, Button } from 'gfw-components';
 
-import infoIcon from 'assets/icons/info.svg?sprite';
+import Icon from 'components/ui/icon';
+
 import closeIcon from 'assets/icons/close.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
 import boundariesIcon from 'assets/icons/boundaries.svg?sprite';
 import labelsIcon from 'assets/icons/labels.svg?sprite';
 import roadsIcon from 'assets/icons/roads.svg?sprite';
+
+import BasemapsMenu from './basemaps-menu';
 
 import './styles.scss';
 
@@ -49,30 +51,6 @@ class Basemaps extends React.PureComponent {
     planetTooltipOpen: false,
     showBasemaps: false,
   };
-
-  renderButtonBasemap(item) {
-    const { selectBasemap, isDesktop } = this.props;
-
-    return (
-      <button
-        className="basemaps-list-item-button"
-        onClick={() => {
-          if (!isDesktop) {
-            this.setState({ showBasemaps: !this.state.showBasemaps });
-          }
-          selectBasemap({ value: item.value });
-        }}
-      >
-        <div
-          className="basemaps-list-item-image"
-          style={{
-            backgroundImage: `url(${item.image})`,
-          }}
-        />
-        <p className="basemaps-list-item-name">{item.label}</p>
-      </button>
-    );
-  }
 
   renderLandsatBasemap(item) {
     const {
@@ -266,48 +244,9 @@ class Basemaps extends React.PureComponent {
     );
   }
 
-  renderBasemapsSelector() {
-    const { activeBasemap, basemaps, isDesktop } = this.props;
-    return (
-      <div className="basemaps-bottom-section">
-        {isDesktop ? (
-          <div className="basemaps-header">
-            <h2 className="basemaps-title">MAP STYLES</h2>
-          </div>
-        ) : (
-          <div className="menu-arrow" />
-        )}
-        <div className="basemap-list-scroll-wrapper">
-          <ul className="basemaps-list">
-            {Object.values(basemaps).map((item) => {
-              let basemapButton = this.renderButtonBasemap(item);
-              if (item.value === 'landsat') {
-                basemapButton = this.renderLandsatBasemap(item);
-              } else if (item.value === 'planet') {
-                basemapButton = this.renderPlanetBasemap(item);
-              }
-
-              return (
-                <li
-                  key={item.value}
-                  className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.value === item.value,
-                  })}
-                >
-                  {basemapButton}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     const {
       className,
-      onClose,
       labelSelected,
       activeBasemap,
       getTooltipContentProps,
@@ -317,10 +256,12 @@ class Basemaps extends React.PureComponent {
       selectLabels,
       labels,
       isDesktop,
-      setModalMetaSettings,
       roadsSelected,
       selectRoads,
       roads,
+      basemaps,
+
+      selectBasemap
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -332,81 +273,77 @@ class Basemaps extends React.PureComponent {
         className={cx('c-basemaps', 'map-tour-basemaps', className)}
         {...getTooltipContentProps()}
       >
-        <div className="basemaps-top-section">
-          <div className="basemaps-header">
-            <h2 className="basemaps-title">Map settings</h2>
-            {isDesktop && (
-              <div className="basemaps-actions">
-                <Button
-                  className="info-btn"
-                  theme="theme-button-tiny theme-button-grey-filled square"
-                  onClick={() => setModalMetaSettings('flagship_basemaps')}
-                >
-                  <Icon icon={infoIcon} />
-                </Button>
-                <button className="basemaps-action-button" onClick={onClose}>
-                  <Icon icon={closeIcon} />
-                </button>
-              </div>
-            )}
-          </div>
-          <ul className="basemaps-options-container">
-            {!isDesktop && (
-              <li className="basemaps-options-wrapper">
-                <Button
-                  theme="theme-button-dark-round"
-                  background={`url(${activeBasemap.image})`}
-                  onClick={() =>
-                    this.setState({ showBasemaps: !this.state.showBasemaps })}
-                >
-                  <span className="value">
-                    {activeBasemap.label}
-                    {activeBasemap.year && ` - ${activeBasemap.year}`}
-                  </span>
-                </Button>
-              </li>
-            )}
-            <li className="basemaps-options-wrapper">
-              <Dropdown
-                theme={cx('theme-dropdown-button', {
-                  'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop,
-                })}
-                value={selectedBoundaries}
-                options={boundaries}
-                onChange={selectBoundaries}
-                selectorIcon={boundariesIcon}
-              />
-            </li>
-            <li className="basemaps-options-wrapper">
-              <Dropdown
-                theme={cx('theme-dropdown-button', {
-                  'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop,
-                })}
-                value={labelSelected}
-                options={labels}
-                onChange={selectLabels}
-                selectorIcon={labelsIcon}
-              />
-            </li>
-            <li className="basemaps-options-wrapper">
-              <Dropdown
-                theme={cx('theme-dropdown-button', {
-                  'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop,
-                })}
-                className="basemaps-roads"
-                value={roadsSelected}
-                options={roads}
-                onChange={selectRoads}
-                selectorIcon={roadsIcon}
-              />
-            </li>
-          </ul>
-        </div>
-        {(isDesktop || this.state.showBasemaps) &&
-          this.renderBasemapsSelector()}
+        <Row className="map-settings">
+          <Column>
+            <h4>Map settings</h4>
+          </Column>
+          <Column width={[1 / 4]}>
+            <div className="map-settings-item">
+              <Button
+                round
+                size="large"
+                clear
+                onClick={() =>
+                  this.setState({ showBasemaps: !this.state.showBasemaps })}
+              >
+                <img src={activeBasemap.image} alt={activeBasemap.label} className="basemap-img" />
+              </Button>
+              <span className="item-label">
+                {activeBasemap.label}
+                {activeBasemap.year && ` - ${activeBasemap.year}`}
+              </span>
+            </div>
+          </Column>
+          <Column width={[1 / 4]}>
+            <Dropdown
+              theme={cx('theme-dropdown-button', {
+                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-squared': isDesktop,
+              })}
+              value={selectedBoundaries}
+              options={boundaries}
+              onChange={selectBoundaries}
+              selectorIcon={boundariesIcon}
+            />
+          </Column>
+          <Column width={[1 / 4]}>
+            <Dropdown
+              theme={cx('theme-dropdown-button', {
+                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-squared': isDesktop,
+              })}
+              value={labelSelected}
+              options={labels}
+              onChange={selectLabels}
+              selectorIcon={labelsIcon}
+            />
+          </Column>
+          <Column width={[1 / 4]}>
+            <Dropdown
+              theme={cx('theme-dropdown-button', {
+                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-squared': isDesktop,
+              })}
+              className="basemaps-roads"
+              value={roadsSelected}
+              options={roads}
+              onChange={selectRoads}
+              selectorIcon={roadsIcon}
+            />
+          </Column>
+        </Row>
+        {(isDesktop || this.state.showBasemaps) && (
+          <BasemapsMenu
+            basemaps={basemaps}
+            activeBasemap={activeBasemap?.value}
+            onSelectBasemap={basemap => selectBasemap({
+              value: basemap?.value,
+              ...basemap?.defaultYear && {
+                year: basemap.defaultYear
+              }
+            })}
+          />
+        )}
       </div>
     );
   }

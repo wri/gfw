@@ -7,6 +7,49 @@ $top-section-height: 125px;
   width: 100%;
   background-color: $white;
 
+  .map-settings {
+    padding: 20px 0 30px;
+
+    h4 {
+      font-size: rem(13px);
+      font-weight: 500;
+      line-height: 1.62;
+      color: #aaa;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+
+      @media screen and (min-width: $screen-m) {
+        color: $slate;
+      }
+    }
+  }
+
+  .map-settings-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .basemap-img {
+      border-radius: 50%;
+      border: solid 1px $grey;
+    }
+
+    .item-label, .value {
+      text-align: center;
+      font-size: 11px;
+      color: $slate-dark;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+  }
+
+
+
+
+
+
+
+
   .basemaps-header {
     display: flex;
     justify-content: space-between;
@@ -32,25 +75,15 @@ $top-section-height: 125px;
     }
   }
 
-  .basemaps-title {
-    font-size: rem(13px);
-    font-weight: 500;
-    line-height: 1.62;
-    color: #aaa;
-    text-transform: uppercase;
 
-    @media screen and (min-width: $screen-m) {
-      color: $slate;
-    }
-  }
 
-  .basemaps-top-section {
-    padding: rem(20px) rem(15px) rem(10px);
+  // .basemaps-top-section {
+  //   padding: rem(20px) rem(15px) rem(10px);
 
-    @media screen and (min-width: $screen-m) {
-      padding: rem(15px) rem(20px) 0;
-    }
-  }
+  //   @media screen and (min-width: $screen-m) {
+  //     padding: rem(15px) rem(20px) 0;
+  //   }
+  // }
 
   .basemaps-bottom-section {
     position: relative;
@@ -100,7 +133,7 @@ $top-section-height: 125px;
     height: calc(#{$item-size} + #{rem(15px)});
     margin: rem(20px) 0;
     z-index: 5;
-    width: rem(50px);
+    width: 25%;
     display: flex;
     justify-content: center;
 
@@ -126,7 +159,7 @@ $top-section-height: 125px;
       }
     }
 
-    & .basemaps-roads {
+    &.basemaps-roads {
       .selector-btn .c-icon {
         width: rem(26px);
         height: rem(26px);
