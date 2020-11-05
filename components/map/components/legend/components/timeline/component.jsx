@@ -8,7 +8,7 @@ import Datepicker from 'components/ui/datepicker';
 
 import './styles.scss';
 
-const Timeline = props => {
+const Timeline = (props) => {
   const {
     className,
     minDate,
@@ -22,49 +22,37 @@ const Timeline = props => {
     maxRange,
     startDateAbsolute,
     endDateAbsolute,
-    description
+    description,
   } = props;
 
   return (
     <div className={`c-timeline ${className || ''}`}>
       {description && <p className="description">{description}</p>}
-      {dateFormat === 'YYYY-MM-DD' &&
-        interval !== 'years' && (
+      {dateFormat === 'YYYY-MM-DD' && interval !== 'years' && (
         <div className="date-pickers">
           From
           <Datepicker
-            className="datepicker start-date"
-            theme="datepicker-small"
-            date={moment(maxRange ? startDateAbsolute : startDate)}
-            handleOnDateChange={date => handleOnDateChange(date, 0, true)}
-            settings={{
-              numberOfMonths: 1,
-              minDate,
-              maxDate: maxRange ? maxDate : trimEndDate,
-              isOutsideRange: d =>
-                d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
-                  d.isBefore(moment(minDate)),
-              hideKeyboardShortcutsPanel: true,
-              noBorder: true,
-              readOnly: true
-            }}
+            withPortal
+            selected={new Date(maxRange ? startDateAbsolute : startDate)}
+            onChange={(date) => handleOnDateChange(moment(date), 0, true)}
+            minDate={new Date(minDate)}
+            maxDate={maxRange ? new Date(maxDate) : new Date(trimEndDate)}
+            isOutsideRange={(d) =>
+              d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
+              d.isBefore(moment(minDate))}
           />
           to
           <Datepicker
-            className="datepicker"
-            theme="datepicker-small"
-            date={moment(maxRange ? endDateAbsolute : trimEndDate)}
-            handleOnDateChange={date => handleOnDateChange(date, 2, true)}
-            settings={{
-              numberOfMonths: 1,
-              minDate: maxRange ? minDate : startDate,
-              maxDate,
-              isOutsideRange: d =>
-                d.isAfter(moment(maxDate)) || d.isBefore(moment(maxRange ? minDate : startDate)),
-              hideKeyboardShortcutsPanel: true,
-              noBorder: true,
-              readOnly: true
-            }}
+            withPortal
+            selected={
+              new Date(moment(maxRange ? endDateAbsolute : trimEndDate))
+            }
+            onChange={(date) => handleOnDateChange(moment(date), 2, true)}
+            minDate={maxRange ? new Date(minDate) : new Date(startDate)}
+            maxDate={new Date(maxDate)}
+            isOutsideRange={(d) =>
+              d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
+              d.isBefore(moment(minDate))}
           />
         </div>
       )}
@@ -75,36 +63,36 @@ const Timeline = props => {
             ...activeLayer,
             timelineParams: {
               ...activeLayer.timelineParams,
-              ...maxRange && {
+              ...(maxRange && {
                 minDate: activeLayer.timelineParams.startDateAbsolute,
-                maxDate: activeLayer.timelineParams.endDateAbsolute
-              },
-              ...!maxRange && {
-                marks: props.marks
-              },
+                maxDate: activeLayer.timelineParams.endDateAbsolute,
+              }),
+              ...(!maxRange && {
+                marks: props.marks,
+              }),
               handleStyle: {
                 backgroundColor: 'white',
                 borderRadius: '2px',
                 boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
                 border: '0px',
-                zIndex: 2
-              }
-            }
+                zIndex: 2,
+              },
+            },
           }}
-          handleOnPlay={p => {
+          handleOnPlay={(p) => {
             if (p) {
               trackEvent({
                 category: 'Map legend',
                 action: 'User animates data',
-                label: activeLayer.id
-              })
+                label: activeLayer.id,
+              });
             }
           }}
         />
       </div>
     </div>
   );
-}
+};
 
 Timeline.propTypes = {
   className: PropTypes.string,
@@ -133,7 +121,7 @@ Timeline.propTypes = {
   dateFormat: PropTypes.string,
   interval: PropTypes.string,
   activeLayer: PropTypes.object,
-  maxRange: PropTypes.number
+  maxRange: PropTypes.number,
 };
 
 export default Timeline;
