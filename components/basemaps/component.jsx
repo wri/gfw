@@ -9,6 +9,7 @@ import { Row, Column, Button } from 'gfw-components';
 
 import Icon from 'components/ui/icon';
 
+import infoIcon from 'assets/icons/info.svg?sprite';
 import closeIcon from 'assets/icons/close.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
@@ -260,7 +261,7 @@ class Basemaps extends React.PureComponent {
       selectRoads,
       roads,
       basemaps,
-
+      setModalMetaSettings,
       selectBasemap
     } = this.props;
 
@@ -275,7 +276,18 @@ class Basemaps extends React.PureComponent {
       >
         <Row className="map-settings">
           <Column>
-            <h4>Map settings</h4>
+            <div className="map-settings-header">
+              <h4>Map settings</h4>
+              <Button
+                className="info-btn"
+                size="small"
+                dark
+                round
+                onClick={() => setModalMetaSettings('flagship_basemaps')}
+              >
+                <Icon icon={infoIcon} />
+              </Button>
+            </div>
           </Column>
           <Column width={[1 / 4]}>
             <div className="map-settings-item">
@@ -296,6 +308,7 @@ class Basemaps extends React.PureComponent {
           </Column>
           <Column width={[1 / 4]}>
             <Dropdown
+              className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
                 'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
                 'theme-dropdown-dark-squared': isDesktop,
@@ -308,6 +321,7 @@ class Basemaps extends React.PureComponent {
           </Column>
           <Column width={[1 / 4]}>
             <Dropdown
+              className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
                 'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
                 'theme-dropdown-dark-squared': isDesktop,
@@ -320,11 +334,11 @@ class Basemaps extends React.PureComponent {
           </Column>
           <Column width={[1 / 4]}>
             <Dropdown
+              className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
                 'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
                 'theme-dropdown-dark-squared': isDesktop,
               })}
-              className="basemaps-roads"
               value={roadsSelected}
               options={roads}
               onChange={selectRoads}
