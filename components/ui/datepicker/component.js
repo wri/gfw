@@ -82,11 +82,14 @@ const Datepicker = ({ lang, withPortal, ...props }) => {
         onChange={(date) => setStartDate(date)}
         onCalendarOpen={getPosition}
         customInput={<CustomInput />}
-        onClickOutside={() => {}}
         popperClassName="c-datepicker-popper"
         calendarClassName="datepicker-calendar"
         renderCustomHeader={(headerProps) => (
-          <DatepickerHeader {...headerProps} />
+          <DatepickerHeader
+            {...headerProps}
+            minDate={props?.minDate}
+            maxDate={props?.maxDate}
+          />
         )}
         locale={lang || 'en'}
         {...(withPortal && {
@@ -106,6 +109,8 @@ Datepicker.propTypes = {
   withPortal: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
 };
 
 export default Datepicker;

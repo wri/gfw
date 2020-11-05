@@ -1,4 +1,4 @@
-import { getMonth, getYear } from 'date-fns';
+import { getMonth, getYear, eachMonthOfInterval, format } from 'date-fns';
 import range from 'lodash/range';
 import PropTypes from 'prop-types';
 
@@ -13,6 +13,8 @@ import './styles.scss';
 
 const DatepickerHeader = ({
   date,
+  minDate,
+  maxDate,
   changeYear,
   changeMonth,
   decreaseMonth,
@@ -20,21 +22,26 @@ const DatepickerHeader = ({
   prevMonthButtonDisabled,
   nextMonthButtonDisabled,
 }) => {
-  const years = range(1990, getYear(new Date()) + 1, 1);
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  const years = range(getYear(minDate), getYear(maxDate) + 1, 1);
+
+  const minYear = years[0];
+  const maxYear = years[years.length - 1];
+  const currentYear = getYear(date);
+
+  const startDate =
+    currentYear === minYear ? minDate : new Date(`${currentYear}-01-01`);
+  const endDate =
+    currentYear === maxYear ? maxDate : new Date(`${currentYear}-12-31`);
+
+  const monthsInYear = eachMonthOfInterval({
+    start: startDate,
+    end: endDate,
+  });
+
+  const months = monthsInYear.map((m) => ({
+    label: format(m, 'MMMM'),
+    value: getMonth(m),
+  }));
 
   return (
     <div className="c-datepicker-header">
@@ -50,9 +57,9 @@ const DatepickerHeader = ({
       <Dropdown
         className="selector-month"
         theme="theme-dropdown-native theme-dropdown-native-button"
-        options={months.map((m) => ({ label: m, value: m }))}
-        value={months[getMonth(date)]}
-        onChange={(value) => changeMonth(months.indexOf(value))}
+        options={months}
+        value={getMonth(date)}
+        onChange={changeMonth}
         native
       />
       <Dropdown
@@ -84,6 +91,8 @@ DatepickerHeader.propTypes = {
   increaseMonth: PropTypes.func,
   prevMonthButtonDisabled: PropTypes.bool,
   nextMonthButtonDisabled: PropTypes.bool,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
 };
 
 export default DatepickerHeader;
