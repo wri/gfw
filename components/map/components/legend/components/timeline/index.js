@@ -35,6 +35,8 @@ class TimelineContainer extends PureComponent {
       handleChange,
       rangeInterval,
       maxRange,
+      minDate,
+      maxDate,
     } = this.props;
     const newRange = absolute
       ? [startDateAbsolute, endDateAbsolute, endDateAbsolute]
@@ -54,11 +56,13 @@ class TimelineContainer extends PureComponent {
       diffInterval < 0
     ) {
       if (position) {
-        newRange[0] = date
-          .subtract(maxRange, rangeInterval)
-          .format('YYYY-MM-DD');
+        const modDate = date.subtract(maxRange, rangeInterval);
+        const outsideMinDate = modDate.isBefore(moment(minDate));
+        newRange[0] = outsideMinDate ? minDate : modDate.format('YYYY-MM-DD');
       } else {
-        const newDate = date.add(maxRange, rangeInterval).format('YYYY-MM-DD');
+        const modDate = date.add(maxRange, rangeInterval);
+        const outsideMaxDate = modDate.isAfter(moment(maxDate));
+        const newDate = outsideMaxDate ? maxDate : modDate.format('YYYY-MM-DD');
         newRange[2] = newDate;
         newRange[1] = newDate;
       }
@@ -91,6 +95,8 @@ TimelineContainer.propTypes = {
   maxRange: PropTypes.number,
   startDateAbsolute: PropTypes.string,
   endDateAbsolute: PropTypes.string,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);
