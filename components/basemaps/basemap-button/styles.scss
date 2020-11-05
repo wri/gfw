@@ -5,15 +5,23 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  cursor: pointer;
 
   .basemap-thumb {
     width: 50px;
     height: 50px;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
 
     &.-active {
       border: solid 2px $green-gfw;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      color: $slate;
+      border-radius: 0;
+      width: 60px;
+      height: 60px;
     }
   }
 

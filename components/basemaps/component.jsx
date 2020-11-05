@@ -5,7 +5,7 @@ import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import { Tooltip } from 'react-tippy';
 
-import { Row, Column, Button } from 'gfw-components';
+import { Row, Column, Button, Mobile, Desktop } from 'gfw-components';
 
 import Icon from 'components/ui/icon';
 
@@ -262,7 +262,8 @@ class Basemaps extends React.PureComponent {
       roads,
       basemaps,
       setModalMetaSettings,
-      selectBasemap
+      selectBasemap,
+      onClose,
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -274,39 +275,54 @@ class Basemaps extends React.PureComponent {
         className={cx('c-basemaps', 'map-tour-basemaps', className)}
         {...getTooltipContentProps()}
       >
-        <Row className="map-settings">
+        <Row>
           <Column>
             <div className="map-settings-header">
               <h4>Map settings</h4>
-              <Button
-                className="info-btn"
-                size="small"
-                dark
-                round
-                onClick={() => setModalMetaSettings('flagship_basemaps')}
-              >
-                <Icon icon={infoIcon} />
-              </Button>
+              <div className="header-actions">
+                <Button
+                  className="info-btn"
+                  size="small"
+                  dark
+                  round
+                  onClick={() => setModalMetaSettings('flagship_basemaps')}
+                >
+                  <Icon icon={infoIcon} />
+                </Button>
+                <Desktop>
+                  <button className="close-btn" onClick={onClose}>
+                    <Icon icon={closeIcon} />
+                  </button>
+                </Desktop>
+              </div>
             </div>
           </Column>
-          <Column width={[1 / 4]}>
-            <div className="map-settings-item">
-              <Button
-                round
-                size="large"
-                clear
-                onClick={() =>
-                  this.setState({ showBasemaps: !this.state.showBasemaps })}
-              >
-                <img src={activeBasemap.image} alt={activeBasemap.label} className="basemap-img" />
-              </Button>
-              <span className="item-label">
-                {activeBasemap.label}
-                {activeBasemap.year && ` - ${activeBasemap.year}`}
-              </span>
-            </div>
+        </Row>
+        <Row className="map-settings">
+          <Column width={[1 / 4, 0]} className="mobile-basemaps-btn">
+            <Mobile>
+              <div className="map-settings-item">
+                <Button
+                  round
+                  size="large"
+                  clear
+                  onClick={() =>
+                    this.setState({ showBasemaps: !this.state.showBasemaps })}
+                >
+                  <img
+                    src={activeBasemap.image}
+                    alt={activeBasemap.label}
+                    className="basemap-img"
+                  />
+                </Button>
+                <span className="item-label">
+                  {activeBasemap.label}
+                  {activeBasemap.year && ` - ${activeBasemap.year}`}
+                </span>
+              </div>
+            </Mobile>
           </Column>
-          <Column width={[1 / 4]}>
+          <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
             <Dropdown
               className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
@@ -319,7 +335,7 @@ class Basemaps extends React.PureComponent {
               selectorIcon={boundariesIcon}
             />
           </Column>
-          <Column width={[1 / 4]}>
+          <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
             <Dropdown
               className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
@@ -332,7 +348,7 @@ class Basemaps extends React.PureComponent {
               selectorIcon={labelsIcon}
             />
           </Column>
-          <Column width={[1 / 4]}>
+          <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
             <Dropdown
               className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
@@ -350,12 +366,13 @@ class Basemaps extends React.PureComponent {
           <BasemapsMenu
             basemaps={basemaps}
             activeBasemap={activeBasemap?.value}
-            onSelectBasemap={basemap => selectBasemap({
-              value: basemap?.value,
-              ...basemap?.defaultYear && {
-                year: basemap.defaultYear
-              }
-            })}
+            onSelectBasemap={(basemap) =>
+              selectBasemap({
+                value: basemap?.value,
+                ...(basemap?.defaultYear && {
+                  year: basemap.defaultYear,
+                }),
+              })}
           />
         )}
       </div>

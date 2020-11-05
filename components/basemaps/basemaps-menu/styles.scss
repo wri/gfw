@@ -4,6 +4,15 @@
   background-color: $white-tree;
   padding: 10px 0;
 
+  @media screen and (min-width: $screen-m) {
+    background-color: $white;
+    padding: 10px 0 20px;
+  }
+
+  h4 {
+    margin-bottom: 5px;
+  }
+
   .btn-col {
     margin: 10px 0;
   }
