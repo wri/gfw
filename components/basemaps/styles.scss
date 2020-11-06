@@ -6,6 +6,7 @@ $top-section-height: 125px;
 .c-basemaps {
   width: 100%;
   background-color: $white;
+  height: 100%;
 
   h4 {
     font-size: 13px;
@@ -23,7 +24,7 @@ $top-section-height: 125px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 15px;
+    padding: 15px 0;
 
     .header-actions {
       display: flex;
@@ -58,11 +59,16 @@ $top-section-height: 125px;
     }
   }
 
+  .map-settings-wrapper {
+    overflow-y: auto;
+    height: calc(100% - 52px);
+  }
+
   .map-settings {
-    padding: 20px 0 30px;
+    padding: 0 0 30px;
 
     @media screen and (min-width: $screen-m) {
-      padding: 15px 13px 10px;
+      padding: 0 13px 10px;
 
       .map-settings-col {
         padding: 0 7px;

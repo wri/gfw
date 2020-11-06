@@ -24,7 +24,7 @@
         margin-right: rem(5px);
       }
 
-      &:last-child {
+      &:nth-child(2n) {
         margin-left: rem(5px);
       }
     }
@@ -162,6 +162,5 @@
 
 .recent-imagery-panel,
 .basemaps-panel {
-  max-height: calc(100vh - 158px);
-  overflow-y: auto;
+  height: calc(100vh - 158px);
 }

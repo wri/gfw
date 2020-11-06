@@ -4,6 +4,7 @@ import { Row, Column, Desktop } from 'gfw-components';
 
 import BasemapButton from '../basemap-button';
 import LandsatMenu from '../landsat-menu';
+import PlanetMenu from '../planet-menu';
 
 import './styles.scss';
 
@@ -25,9 +26,16 @@ export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
         </Column>
       ))}
       {activeBasemap?.value === 'landsat' && (
-        <div className="basemap-submenu">
+        <div className="basemap-submenu -landsat">
           <Column>
             <LandsatMenu {...activeBasemap} onSelectBasemap={onSelectBasemap} />
+          </Column>
+        </div>
+      )}
+      {activeBasemap?.value === 'planet' && (
+        <div className="basemap-submenu -planet">
+          <Column>
+            <PlanetMenu {...activeBasemap} onSelectBasemap={onSelectBasemap} />
           </Column>
         </div>
       )}

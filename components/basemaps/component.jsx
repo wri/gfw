@@ -70,83 +70,85 @@ const Basemaps = ({
           </div>
         </Column>
       </Row>
-      <Row className="map-settings">
-        <Column width={[1 / 4, 0]} className="mobile-basemaps-btn">
-          <Mobile>
-            <div className="map-settings-item">
-              <Button
-                round
-                size="large"
-                clear
-                onClick={() => setShowBasemaps(!showBasemaps)}
-              >
-                <img
-                  src={activeBasemap.image}
-                  alt={activeBasemap.label}
-                  className="basemap-img"
-                />
-              </Button>
-              <span className="item-label">
-                {activeBasemap.label}
-                {activeBasemap.year && ` - ${activeBasemap.year}`}
-              </span>
-            </div>
-          </Mobile>
-        </Column>
-        <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
-          <Dropdown
-            className="map-settings-dropdown"
-            theme={cx('theme-dropdown-button', {
-              'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-              'theme-dropdown-dark-squared': isDesktop,
-            })}
-            value={selectedBoundaries}
-            options={boundaries}
-            onChange={selectBoundaries}
-            selectorIcon={boundariesIcon}
+      <div className="map-settings-wrapper">
+        <Row className="map-settings">
+          <Column width={[1 / 4, 0]} className="mobile-basemaps-btn">
+            <Mobile>
+              <div className="map-settings-item">
+                <Button
+                  round
+                  size="large"
+                  clear
+                  onClick={() => setShowBasemaps(!showBasemaps)}
+                >
+                  <img
+                    src={activeBasemap.image}
+                    alt={activeBasemap.label}
+                    className="basemap-img"
+                  />
+                </Button>
+                <span className="item-label">
+                  {activeBasemap.label}
+                  {activeBasemap.year && ` - ${activeBasemap.year}`}
+                </span>
+              </div>
+            </Mobile>
+          </Column>
+          <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
+            <Dropdown
+              className="map-settings-dropdown"
+              theme={cx('theme-dropdown-button', {
+                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-squared': isDesktop,
+              })}
+              value={selectedBoundaries}
+              options={boundaries}
+              onChange={selectBoundaries}
+              selectorIcon={boundariesIcon}
+            />
+          </Column>
+          <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
+            <Dropdown
+              className="map-settings-dropdown"
+              theme={cx('theme-dropdown-button', {
+                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-squared': isDesktop,
+              })}
+              value={labelSelected}
+              options={labels}
+              onChange={selectLabels}
+              selectorIcon={labelsIcon}
+            />
+          </Column>
+          <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
+            <Dropdown
+              className="map-settings-dropdown"
+              theme={cx('theme-dropdown-button', {
+                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-squared': isDesktop,
+              })}
+              value={roadsSelected}
+              options={roads}
+              onChange={selectRoads}
+              selectorIcon={roadsIcon}
+            />
+          </Column>
+        </Row>
+        {(isDesktop || showBasemaps) && (
+          <BasemapsMenu
+            basemaps={basemaps}
+            activeBasemap={activeBasemap}
+            onSelectBasemap={(basemap) =>
+              selectBasemap({
+                value: basemap?.value,
+                ...(basemap?.year ||
+                  (basemap?.defaultYear && {
+                    year: basemap?.year || basemap.defaultYear,
+                  })),
+              })}
           />
-        </Column>
-        <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
-          <Dropdown
-            className="map-settings-dropdown"
-            theme={cx('theme-dropdown-button', {
-              'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-              'theme-dropdown-dark-squared': isDesktop,
-            })}
-            value={labelSelected}
-            options={labels}
-            onChange={selectLabels}
-            selectorIcon={labelsIcon}
-          />
-        </Column>
-        <Column width={[1 / 4, 1 / 3]} className="map-settings-col">
-          <Dropdown
-            className="map-settings-dropdown"
-            theme={cx('theme-dropdown-button', {
-              'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
-              'theme-dropdown-dark-squared': isDesktop,
-            })}
-            value={roadsSelected}
-            options={roads}
-            onChange={selectRoads}
-            selectorIcon={roadsIcon}
-          />
-        </Column>
-      </Row>
-      {(isDesktop || showBasemaps) && (
-        <BasemapsMenu
-          basemaps={basemaps}
-          activeBasemap={activeBasemap}
-          onSelectBasemap={(basemap) =>
-            selectBasemap({
-              value: basemap?.value,
-              ...(basemap?.year ||
-                (basemap?.defaultYear && {
-                  year: basemap?.year || basemap.defaultYear,
-                })),
-            })}
-        />
-      )}
+        )}
+      </div>
     </div>
   );
 };
