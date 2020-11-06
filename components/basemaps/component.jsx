@@ -136,19 +136,20 @@ const Basemaps = ({
       {(isDesktop || showBasemaps) && (
         <BasemapsMenu
           basemaps={basemaps}
-          activeBasemap={activeBasemap?.value}
+          activeBasemap={activeBasemap}
           onSelectBasemap={(basemap) =>
             selectBasemap({
               value: basemap?.value,
-              ...(basemap?.defaultYear && {
-                year: basemap.defaultYear,
-              }),
+              ...(basemap?.year ||
+                (basemap?.defaultYear && {
+                  year: basemap?.year || basemap.defaultYear,
+                })),
             })}
         />
       )}
     </div>
   );
-}
+};
 
 Basemaps.propTypes = {
   className: PropTypes.string,
@@ -174,6 +175,6 @@ Basemaps.propTypes = {
   planetYearSelected: PropTypes.object,
   planetPeriods: PropTypes.array,
   planetPeriodSelected: PropTypes.object,
-}
+};
 
 export default Basemaps;

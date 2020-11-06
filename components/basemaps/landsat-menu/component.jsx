@@ -1,73 +1,37 @@
-import cx from 'classnames';
 import PropTypes from 'prop-types';
+
+import Dropdown from 'components/ui/dropdown';
 
 import './styles.scss';
 
 export const LandsatMenu = ({
-  selectBasemap,
-  activeBasemap,
-  landsatYears,
-  basemaps,
-  isDesktop,
-}) => {
-  const year = activeBasemap.year || landsatYears[0].value;
-  const basemap = basemaps[item.value]
-    ? basemaps[item.value]
-    : basemaps.landsat;
-
-  return (
-    <button
-      className="c-landsat-menu"
-      onClick={() => {
-        selectBasemap({
+  year,
+  defaultYear,
+  availableYears,
+  onSelectBasemap,
+}) => (
+  <div className="c-landsat-menu">
+    <h6>period</h6>
+    <Dropdown
+      className="landsat-selector"
+      theme="theme-dropdown-native theme-dropdown-native-button-green"
+      value={year || defaultYear}
+      options={availableYears?.map((y) => ({ label: y, value: y }))}
+      onChange={(value) =>
+        onSelectBasemap({
           value: 'landsat',
-          year: basemap.defaultYear,
-        });
-        if (!isDesktop) {
-          this.setState({ showBasemaps: !this.state.showBasemaps });
-        }
-      }}
-    >
-      <div
-        className="basemaps-list-item-image"
-        style={{
-          backgroundImage: `url(${item.image})`,
-        }}
-      />
-      <span
-        className="basemaps-list-item-name"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {item.label}
-        <div className="basemaps-list-item-selectors">
-          <Dropdown
-            className="landsat-selector"
-            theme="theme-dropdown-native-inline"
-            value={year}
-            options={landsatYears}
-            onChange={(value) => {
-              const selectedYear = parseInt(value, 10);
-              selectBasemap({
-                value: 'landsat',
-                year: selectedYear,
-              });
-              if (!isDesktop) {
-                this.setState({ showBasemaps: !this.state.showBasemaps });
-              }
-            }}
-            native
-          />
-        </div>
-      </span>
-    </button>
-  )
-}
+          year: parseInt(value, 10),
+        })}
+      native
+    />
+  </div>
+);
 
 LandsatMenu.propTypes = {
-  image: PropTypes.string,
-  label: PropTypes.string,
-  active: PropTypes.bool,
-  onClick: PropTypes.func,
-}
+  year: PropTypes.number,
+  defaultYear: PropTypes.number,
+  availableYears: PropTypes.array,
+  onSelectBasemap: PropTypes.func,
+};
 
 export default LandsatMenu;
