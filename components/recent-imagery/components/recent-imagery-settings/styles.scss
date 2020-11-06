@@ -7,8 +7,12 @@
   background-color: $white;
 
   .top-section {
-    padding: rem(15px) rem(20px) rem(30px);
+    padding: rem(20px) $mobile-gutter rem(40px);
     width: 100%;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px) $desktop-gutter rem(30px);
+    }
 
     .recent-menu {
       display: none;
@@ -65,17 +69,19 @@
 
       .buttons {
         display: flex;
-        justify-content: space-between;
         align-items: center;
 
-        .c-dropdown {
-          max-width: calc(50% - 30px);
-          margin: rem(1px) rem(15px) 0 0;
+        .time-range-selector {
+          max-width: 100px;
         }
 
-        .c-datepicker {
-          max-width: calc(50% - 30px);
-          margin: 0 0 0 rem(15px);
+        .before {
+          margin: 0 5px;
+        }
+
+        .datepicker-input {
+          border: 1px solid $green-gfw;
+          height: 1.875rem;
         }
       }
     }
@@ -91,15 +97,9 @@
         margin-bottom: rem(10px);
       }
 
-      .c-slider {
+      .vizzuality-slider {
         padding: 0 rem(5px);
       }
-    }
-
-    .datepicker-input {
-      border: 1px solid $green-gfw;
-      height: 1.875rem;
-      margin: rem(1px) rem(15px) 0 0;
     }
   }
 
@@ -109,7 +109,11 @@
     height: rem(300px);
     border-top: 1px solid rgba(#9e9e9e, 0.3);
     z-index: 1;
-    padding: rem(20px) rem(20px) rem(20px);
+    padding: rem(20px) $mobile-gutter;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px) $desktop-gutter;
+    }
 
     .header {
       position: relative;

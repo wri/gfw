@@ -13,7 +13,7 @@ export const fetchLatestDate = (url) =>
         data: {
           data: [
             {
-              attributes: { date: lastFriday },
+              attributes: { date: lastFriday() },
             },
           ],
         },

@@ -16,29 +16,53 @@ const mapStateToProps = (
     minDate,
     startDate,
     endDate,
-    trimEndDate
+    trimEndDate,
   };
   return {
     marks: getMarks({ dates }),
-    ...props
+    ...props,
   };
 };
 
 class TimelineContainer extends PureComponent {
   handleOnDateChange = (date, position, absolute) => {
-    const { startDate, endDate, trimEndDate, startDateAbsolute, endDateAbsolute, handleChange, rangeInterval, maxRange } = this.props;
-    const newRange = absolute ? [startDateAbsolute, endDateAbsolute, endDateAbsolute] : [startDate, endDate, trimEndDate];
+    const {
+      startDate,
+      endDate,
+      trimEndDate,
+      startDateAbsolute,
+      endDateAbsolute,
+      handleChange,
+      rangeInterval,
+      maxRange,
+      minDate,
+      maxDate,
+    } = this.props;
+    const newRange = absolute
+      ? [startDateAbsolute, endDateAbsolute, endDateAbsolute]
+      : [startDate, endDate, trimEndDate];
     newRange[position] = date.format('YYYY-MM-DD');
     if (position) {
       newRange[position - 1] = date.format('YYYY-MM-DD');
     }
 
-    const diffInterval = moment(newRange[2]).diff(moment(newRange[0]), rangeInterval);
-    if (!diffInterval || diffInterval >= maxRange || diffInterval < 0) {
+    const diffInterval = moment(newRange[2]).diff(
+      moment(newRange[0]),
+      rangeInterval
+    );
+    if (
+      (maxRange && !diffInterval) ||
+      diffInterval >= maxRange ||
+      diffInterval < 0
+    ) {
       if (position) {
-        newRange[0] = date.subtract(maxRange, rangeInterval).format('YYYY-MM-DD');
+        const modDate = date.subtract(maxRange, rangeInterval);
+        const outsideMinDate = modDate.isBefore(moment(minDate));
+        newRange[0] = outsideMinDate ? minDate : modDate.format('YYYY-MM-DD');
       } else {
-        const newDate = date.add(maxRange, rangeInterval).format('YYYY-MM-DD');
+        const modDate = date.add(maxRange, rangeInterval);
+        const outsideMaxDate = modDate.isAfter(moment(maxDate));
+        const newDate = outsideMaxDate ? maxDate : modDate.format('YYYY-MM-DD');
         newRange[2] = newDate;
         newRange[1] = newDate;
       }
@@ -48,15 +72,15 @@ class TimelineContainer extends PureComponent {
     trackEvent({
       category: 'Map legend',
       action: `User changes date range for ${this.props.activeLayer.id}`,
-      label: `${newRange[0]}:${newRange[2]}`
-    })
+      label: `${newRange[0]}:${newRange[2]}`,
+    });
   };
 
   render() {
     return createElement(TimelineComponent, {
       ...this.props,
       ...this.state,
-      handleOnDateChange: this.handleOnDateChange
+      handleOnDateChange: this.handleOnDateChange,
     });
   }
 }
@@ -70,7 +94,9 @@ TimelineContainer.propTypes = {
   rangeInterval: PropTypes.string,
   maxRange: PropTypes.number,
   startDateAbsolute: PropTypes.string,
-  endDateAbsolute: PropTypes.string
+  endDateAbsolute: PropTypes.string,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);

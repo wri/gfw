@@ -215,6 +215,7 @@ class MapControlsButtons extends PureComponent {
         open={showRecentImagery}
         html={(
           <RecentImagerySettings
+            className="recent-imagery-panel"
             onClickClose={() =>
               setMainMapSettings({ showRecentImagery: false })}
           />
@@ -241,6 +242,7 @@ class MapControlsButtons extends PureComponent {
         onRequestClose={this.onBasemapsRequestClose}
         html={(
           <Basemaps
+            className="basemaps-panel"
             onClose={this.toggleBasemaps}
             ref={this.setBasemapsRef}
             isDesktop={this.props.isDesktop}
