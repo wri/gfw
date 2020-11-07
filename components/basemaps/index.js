@@ -19,18 +19,23 @@ class BasemapsContainer extends React.Component {
   static propTypes = {
     activeLabels: PropTypes.object,
     basemaps: PropTypes.object,
+    defaultPlanetBasemap: PropTypes.string,
     labels: PropTypes.array,
     activeDatasets: PropTypes.array,
     activeBoundaries: PropTypes.object,
     setMapSettings: PropTypes.func.isRequired,
   };
 
-  selectBasemap = ({ value, year, defaultYear } = {}) => {
-    const { setMapSettings } = this.props;
+  selectBasemap = ({ value, year, defaultYear, name, color } = {}) => {
+    const { setMapSettings, defaultPlanetBasemap } = this.props;
     const basemapOptions = {
       value,
       ...(value === 'landsat' && {
         year: year || defaultYear,
+      }),
+      ...(value === 'planet' && {
+        name: name || defaultPlanetBasemap,
+        color: color || 'rgb',
       }),
     };
 

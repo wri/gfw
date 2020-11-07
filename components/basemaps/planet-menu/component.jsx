@@ -6,40 +6,46 @@ import Dropdown from 'components/ui/dropdown';
 
 import './styles.scss';
 
-export const LandsatMenu = ({
-  year,
-  defaultYear,
-  availableYears,
+export const PlanetMenu = ({
+  name,
+  rangeOptions,
+  rangeSelected,
+  periodOptions,
+  periodSelected,
   onSelectBasemap,
+  colorOptions,
+  colorSelected,
 }) => (
   <div className="c-landsat-menu">
     <Row nested className="menu-row">
-      <Column width={[1 / 3]}>
+      <Column width={[5 / 12]}>
         <h6>range</h6>
         <Dropdown
           className="landsat-selector"
           theme="theme-dropdown-native theme-dropdown-native-button-green"
-          value={year || defaultYear}
-          options={availableYears?.map((y) => ({ label: y, value: y }))}
+          value={rangeSelected?.value}
+          options={rangeOptions}
           onChange={(value) =>
             onSelectBasemap({
-              value: 'landsat',
-              year: parseInt(value, 10),
+              value: 'planet',
+              name: value,
+              color: colorSelected,
             })}
           native
         />
       </Column>
-      <Column width={[2 / 3]}>
+      <Column width={[7 / 12]}>
         <h6>period</h6>
         <Dropdown
           className="landsat-selector"
           theme="theme-dropdown-native theme-dropdown-native-button-green"
-          value={year || defaultYear}
-          options={availableYears?.map((y) => ({ label: y, value: y }))}
+          value={periodSelected?.value}
+          options={periodOptions}
           onChange={(value) =>
             onSelectBasemap({
-              value: 'landsat',
-              year: parseInt(value, 10),
+              value: 'planet',
+              name: value,
+              color: colorSelected,
             })}
           native
         />
@@ -51,12 +57,13 @@ export const LandsatMenu = ({
         <Dropdown
           className="landsat-selector"
           theme="theme-dropdown-native theme-dropdown-native-button-green"
-          value={year || defaultYear}
-          options={availableYears?.map((y) => ({ label: y, value: y }))}
+          value={colorSelected}
+          options={colorOptions}
           onChange={(value) =>
             onSelectBasemap({
-              value: 'landsat',
-              year: parseInt(value, 10),
+              value: 'planet',
+              name,
+              color: value,
             })}
           native
         />
@@ -65,11 +72,15 @@ export const LandsatMenu = ({
   </div>
 );
 
-LandsatMenu.propTypes = {
-  year: PropTypes.number,
-  defaultYear: PropTypes.number,
-  availableYears: PropTypes.array,
+PlanetMenu.propTypes = {
+  name: PropTypes.string,
+  rangeOptions: PropTypes.array,
+  rangeSelected: PropTypes.object,
+  periodOptions: PropTypes.array,
+  periodSelected: PropTypes.object,
+  colorOptions: PropTypes.array,
+  colorSelected: PropTypes.string,
   onSelectBasemap: PropTypes.func,
 };
 
-export default LandsatMenu;
+export default PlanetMenu;

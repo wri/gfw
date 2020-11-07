@@ -2,7 +2,7 @@ const axios = require('axios');
 
 export default async function userHandler(req, res) {
   const {
-    query: { params },
+    query: { params, proc },
     method,
   } = req;
   if (method === 'GET') {
@@ -10,7 +10,9 @@ export default async function userHandler(req, res) {
       const tile = await axios.get(
         `https://tiles.planet.com/basemaps/v1/planet-tiles/${params?.join(
           '/'
-        )}.png?api_key=${process.env.NEXT_PUBLIC_PLANET_API_KEY}`,
+        )}.png?proc=${proc || 'rgb'}&api_key=${
+          process.env.NEXT_PUBLIC_PLANET_API_KEY
+        }`,
         {
           responseType: 'arraybuffer',
         }
