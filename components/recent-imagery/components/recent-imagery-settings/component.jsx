@@ -7,7 +7,6 @@ import { trackEvent } from 'utils/analytics';
 import cx from 'classnames';
 
 import { Slider } from 'vizzuality-components';
-import { Desktop, Mobile } from 'gfw-components';
 
 import Icon from 'components/ui/icon';
 // import Slider from 'components/ui/slider';
@@ -95,42 +94,22 @@ class RecentImagerySettings extends PureComponent {
                 native
               />
               <div className="before">before</div>
-              <Desktop>
-                <Datepicker
-                  selected={date ? new Date(date) : new Date()}
-                  onChange={(d) => {
-                    setRecentImagerySettings({
-                      date: moment(d).format('YYYY-MM-DD'),
-                    });
-                    trackEvent({
-                      category: 'Map settings',
-                      action: 'Recent imagery feature',
-                      label: 'User changes start date',
-                    });
-                  }}
-                  minDate={new Date('2013-01-01')}
-                  maxDate={new Date()}
-                  popperPlacement="bottom-end"
-                />
-              </Desktop>
-              <Mobile>
-                <Datepicker
-                  selected={date ? new Date(date) : new Date()}
-                  onChange={(d) => {
-                    setRecentImagerySettings({
-                      date: moment(d).format('YYYY-MM-DD'),
-                    });
-                    trackEvent({
-                      category: 'Map settings',
-                      action: 'Recent imagery feature',
-                      label: 'User changes start date',
-                    });
-                  }}
-                  minDate={new Date('2013-01-01')}
-                  maxDate={new Date()}
-                  withPortal
-                />
-              </Mobile>
+              <Datepicker
+                selected={date ? new Date(date) : new Date()}
+                onChange={(d) => {
+                  setRecentImagerySettings({
+                    date: moment(d).format('YYYY-MM-DD'),
+                  });
+                  trackEvent({
+                    category: 'Map settings',
+                    action: 'Recent imagery feature',
+                    label: 'User changes start date',
+                  });
+                }}
+                minDate={new Date('2013-01-01')}
+                maxDate={new Date()}
+                popperPlacement="bottom-end"
+              />
             </div>
           </div>
           <div className="clouds">

@@ -19,27 +19,29 @@
       outline: none;
     }
   }
-
-  .react-datepicker__portal {
-    background-color: rgba(17, 55, 80, 0.4);
-    z-index: 10000;
-
-    @media screen and (min-width: $screen-m) {
-      background-color: transparent;
-
-      > div {
-        position: absolute;
-        width: 0;
-        height: 0;
-        top: 0;
-        left: 0;
-      }
-    }
-  }
 }
 
 .c-datepicker-popper {
   font-family: inherit;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(17, 55, 80, 0.4);
+
+  @media screen and (min-width: $screen-m) {
+    background-color: transparent;
+    display: block;
+  }
+
+  > div:first-child {
+    width: fit-content;
+  }
 
   .react-datepicker__triangle {
     border-bottom-color: $white !important;
