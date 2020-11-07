@@ -16,7 +16,7 @@ import {
   getAllBoundaries,
 } from 'components/analysis/selectors';
 
-const selectPlanetBasemaps = (state) => state.planet && state.planet.data;
+const selectPlanetBasemaps = (state) => state.planet?.data;
 
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
@@ -38,16 +38,17 @@ export const getPlanetBasemaps = createSelector(
           name,
           range,
           period,
+          sortOrder: Date(startDate),
         };
       }),
-      ['range', 'period']
-    );
+      'sortOrder'
+    ).reverse();
   }
 );
 
 export const getDefaultPlanetBasemap = createSelector(
   [getPlanetBasemaps],
-  (planetBasemaps) => planetBasemaps[0]?.name
+  (planetBasemaps) => planetBasemaps?.[0]?.name
 );
 
 export const getLandsatYears = createSelector([getBasemaps], (basemaps) =>
