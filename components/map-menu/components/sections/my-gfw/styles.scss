@@ -156,10 +156,14 @@
       .edit-button {
         position: absolute;
         right: rem(10px);
-        top: rem(10px);
+        top: rem(5px);
         width: rem(16px);
         height: rem(16px);
         min-width: rem(16px);
+
+        @media screen and (min-width: $screen-m) {
+          top: rem(10px);
+        }
       }
     }
   }

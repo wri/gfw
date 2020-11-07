@@ -28,23 +28,26 @@
     margin-top: 10px;
     position: relative;
     border-top: solid 1px $border;
-    border-bottom: solid 1px $border;
 
-    &::before {
-      content: '';
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid $white-tree;
-      position: absolute;
-      top: -10px;
-      left: 38px;
-    }
+    @media screen and (min-width: $screen-m) {
+      border-bottom: solid 1px $border;
 
-    &.-planet {
       &::before {
-        left: 135px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid $white-tree;
+        position: absolute;
+        top: -10px;
+        left: 38px;
+      }
+
+      &.-planet {
+        &::before {
+          left: 135px;
+        }
       }
     }
   }
