@@ -148,7 +148,7 @@ class RecentImagerySettings extends PureComponent {
           </div>
         </div>
         <div className="thumbnails">
-          {tiles && !!tiles.length && (
+          {!loading && tiles && !!tiles.length && (
             <Fragment>
               <div key="thumbnails-header" className="header">
                 <div className="description">
@@ -231,9 +231,7 @@ class RecentImagerySettings extends PureComponent {
               message="We can't find additional images for the selection"
             />
           )}
-          {loading && !error && (!tiles || !tiles.length) && (
-            <Loader className="placeholder" />
-          )}
+          {loading && !error && <Loader className="placeholder" />}
         </div>
       </div>
     );
