@@ -163,4 +163,5 @@
 .recent-imagery-panel,
 .basemaps-panel {
   max-height: calc(100vh - 158px);
+  overflow-y: auto;
 }
