@@ -127,15 +127,17 @@
   }
 
   .aoi-items {
+    padding: 0 15px;
+
     @media screen and (min-width: $screen-m) {
-      padding-bottom: rem(76px);
+      padding: 0 0 76px 0;
     }
 
     .aoi-item {
       position: relative;
       cursor: pointer;
       outline: none;
-      padding: rem(10px) rem(15px);
+      padding: rem(10px);
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
 
@@ -145,8 +147,13 @@
 
       &.--active {
         background-color: #f6f6f4;
-        border-top: 1px solid $green-gfw;
-        border-bottom: 1px solid $green-gfw;
+        border: 1px solid $green-gfw;
+
+        @media screen and (min-width: $screen-m) {
+          padding: rem(20px);
+          border-left: 0;
+          border-right: 0;
+        }
       }
 
       &.--inactive {
@@ -155,7 +162,7 @@
 
       .edit-button {
         position: absolute;
-        right: rem(10px);
+        right: rem(5px);
         top: rem(5px);
         width: rem(16px);
         height: rem(16px);
@@ -163,6 +170,7 @@
 
         @media screen and (min-width: $screen-m) {
           top: rem(10px);
+          right: rem(10px);
         }
       }
     }

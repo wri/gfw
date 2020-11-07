@@ -259,8 +259,8 @@ class MapMenuMyGFW extends PureComponent {
                     trackEvent({
                       category: 'User AOIs',
                       action: 'User filters areas by a tag',
-                      label: tag?.label
-                    })
+                      label: tag?.label,
+                    });
                   }
                 }}
               />
@@ -282,12 +282,14 @@ class MapMenuMyGFW extends PureComponent {
                       '--inactive': activeArea && !active,
                     })}
                     onClick={() => {
-                      viewArea({ areaId: area.id });
-                      trackEvent({
-                        category: 'Map menu',
-                        action: 'Select saved area',
-                        label: area?.id
-                      })
+                      if (!active) {
+                        viewArea({ areaId: area.id });
+                        trackEvent({
+                          category: 'Map menu',
+                          action: 'Select saved area',
+                          label: area?.id,
+                        });
+                      }
                     }}
                     role="button"
                     tabIndex={0}
