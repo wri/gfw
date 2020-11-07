@@ -56,7 +56,7 @@ const Datepicker = ({ lang, ...props }) => {
     <Portal>
       <Desktop>
         <div
-          className="c-datepicker-popper"
+          className="c-datepicker-portal"
           style={{
             transform: `translate(${position?.x}px, calc(${position?.y}px + 1.75rem))`,
           }}
@@ -66,17 +66,15 @@ const Datepicker = ({ lang, ...props }) => {
               {children}
             </CalendarContainer>
           </OutsideClickHandler>
-          <div className="react-datepicker__triangle" />
         </div>
       </Desktop>
       <Mobile>
-        <div className="c-datepicker-popper">
+        <div className="c-datepicker-portal">
           <OutsideClickHandler onOutsideClick={() => setOpen(false)}>
             <CalendarContainer className={className}>
               {children}
             </CalendarContainer>
           </OutsideClickHandler>
-          <div className="react-datepicker__triangle" />
         </div>
       </Mobile>
     </Portal>
@@ -91,13 +89,13 @@ const Datepicker = ({ lang, ...props }) => {
         onChange={(date) => setStartDate(date)}
         onSelect={() => setOpen(false)}
         customInput={<CustomInput />}
-        popperClassName="c-datepicker-popper"
         calendarClassName="datepicker-calendar"
         renderCustomHeader={(headerProps) => (
           <DatepickerHeader
             {...headerProps}
             minDate={props?.minDate}
             maxDate={props?.maxDate}
+            open={open}
           />
         )}
         locale={lang || 'en'}

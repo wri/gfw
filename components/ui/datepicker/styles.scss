@@ -21,7 +21,7 @@
   }
 }
 
-.c-datepicker-popper {
+.c-datepicker-portal {
   font-family: inherit;
   position: fixed;
   top: 0;
@@ -41,14 +41,6 @@
 
   > div:first-child {
     width: fit-content;
-  }
-
-  .react-datepicker__triangle {
-    border-bottom-color: $white !important;
-
-    &::before {
-      border-bottom-color: rgba($border, 0.8) !important;
-    }
   }
 
   .react-datepicker__header {
