@@ -40,7 +40,7 @@ const Basemaps = ({
   const [showBasemaps, setShowBasemaps] = useState(false);
   const selectedBoundaries = activeBoundaries
     ? { label: activeBoundaries.name }
-    : boundaries && boundaries[0];
+    : boundaries?.[0];
 
   return (
     <div
@@ -138,14 +138,7 @@ const Basemaps = ({
           <BasemapsMenu
             basemaps={basemaps}
             activeBasemap={activeBasemap}
-            onSelectBasemap={(basemap) =>
-              selectBasemap({
-                value: basemap?.value,
-                ...(basemap?.year ||
-                  (basemap?.defaultYear && {
-                    year: basemap?.year || basemap.defaultYear,
-                  })),
-              })}
+            onSelectBasemap={selectBasemap}
           />
         )}
       </div>

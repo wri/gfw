@@ -21,7 +21,7 @@ export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
           <BasemapButton
             {...item}
             active={activeBasemap?.value === item?.value}
-            onClick={onSelectBasemap}
+            onSelectBasemap={onSelectBasemap}
           />
         </Column>
       ))}
