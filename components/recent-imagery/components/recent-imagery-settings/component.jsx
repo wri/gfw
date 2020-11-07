@@ -81,7 +81,7 @@ class RecentImagerySettings extends PureComponent {
             <div className="buttons">
               <Dropdown
                 className="time-range-selector"
-                theme="theme-dropdown-button"
+                theme="theme-dropdown-native-button-green"
                 value={weeks}
                 options={WEEKS}
                 onChange={(option) => {
@@ -186,7 +186,7 @@ class RecentImagerySettings extends PureComponent {
                 </div>
                 <Dropdown
                   className="band-selector"
-                  theme="theme-dropdown-button"
+                  theme="theme-dropdown-native-button-green"
                   value={bands}
                   options={BANDS}
                   onChange={(option) => {

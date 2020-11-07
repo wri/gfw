@@ -206,6 +206,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Tooltip
+        className="recent-imagery-tooltip"
         theme="light"
         position="top-end"
         useContext
@@ -232,6 +233,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Tooltip
+        className="basemaps-tooltip"
         theme="light"
         position="top-end"
         useContext
