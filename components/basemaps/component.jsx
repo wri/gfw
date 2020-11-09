@@ -20,6 +20,7 @@ import './styles.scss';
 
 class Basemaps extends React.PureComponent {
   static propTypes = {
+    className: PropTypes.string,
     onClose: PropTypes.func,
     boundaries: PropTypes.array,
     basemaps: PropTypes.object.isRequired,
@@ -46,7 +47,7 @@ class Basemaps extends React.PureComponent {
 
   state = {
     planetTooltipOpen: false,
-    showBasemaps: false
+    showBasemaps: false,
   };
 
   renderButtonBasemap(item) {
@@ -305,6 +306,7 @@ class Basemaps extends React.PureComponent {
 
   render() {
     const {
+      className,
       onClose,
       labelSelected,
       activeBasemap,
@@ -327,7 +329,7 @@ class Basemaps extends React.PureComponent {
 
     return (
       <div
-        className={cx('c-basemaps', 'map-tour-basemaps')}
+        className={cx('c-basemaps', 'map-tour-basemaps', className)}
         {...getTooltipContentProps()}
       >
         <div className="basemaps-top-section">
