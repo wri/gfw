@@ -2,7 +2,6 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { format, isValid, differenceInMonths, endOfMonth } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
 
 import {
   getBasemaps,
@@ -26,11 +25,11 @@ export const getPlanetBasemaps = createSelector(
     return sortBy(
       planetBasemaps.map(({ name } = {}) => {
         const splitName = name?.split('_');
-        const startDate = zonedTimeToUtc(new Date(`${splitName?.[4]}-01`));
+        const startDate = new Date(`${splitName?.[4]}-02`);
         const endDate =
           splitName?.[5] === 'mosaic'
             ? null
-            : zonedTimeToUtc(endOfMonth(new Date(`${splitName?.[5]}-01`)));
+            : endOfMonth(new Date(`${splitName?.[5]}-02`));
 
         const numberOfMonths = differenceInMonths(endDate, startDate) + 1;
         const range = isValid(endDate) ? `${numberOfMonths} months` : '1 month';
