@@ -1,6 +1,6 @@
 import { rwRequest, dataRequest } from 'utils/request';
 
-const featureEnv = process.env.FEATURE_ENV;
+const featureEnv = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
 export const getDatasets = () =>
   rwRequest

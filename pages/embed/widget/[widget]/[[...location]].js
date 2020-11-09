@@ -23,11 +23,13 @@ const errorProps = {
   errorTitle: 'Widget Not Found',
 };
 
+const ALLOWED_TYPES = ['global', 'country', 'aoi'];
+
 export const getStaticProps = async ({ params }) => {
   const { location, widget } = params || {};
   const [type] = location || [];
 
-  if (!type || !widget) {
+  if (!type || !widget || !ALLOWED_TYPES.includes(type)) {
     return {
       props: errorProps,
     };
@@ -112,7 +114,11 @@ const WidgetEmbedPage = (props) => {
   return (
     <LayoutEmbed
       {...props}
-      exploreLink={ready ? `/dashboards/${query?.location?.join('/')}` : ''}
+      exploreLink={
+        ready
+          ? `/dashboards/${query?.location?.join('/')}`
+          : '/dashboards/global/'
+      }
       noIndex
     >
       {ready && (

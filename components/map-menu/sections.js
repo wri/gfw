@@ -24,7 +24,7 @@ import Explore from './components/sections/explore';
 import Search from './components/sections/search';
 import MyGFW from './components/sections/my-gfw';
 
-const ENVIRONMENT = process.env.FEATURE_ENV;
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
 export const mobileSections = [
   {
