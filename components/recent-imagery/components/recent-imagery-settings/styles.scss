@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: flex-start;
   background-color: $white;
+  min-width: 290px;
 
   .top-section {
     padding: rem(20px) $mobile-gutter rem(40px);
@@ -76,12 +77,12 @@
         }
 
         .before {
-          margin: 0 5px;
+          margin: 0 8px;
+          line-height: 20px;
         }
 
         .datepicker-input {
           border: 1px solid $green-gfw;
-          height: 1.875rem;
         }
       }
     }
