@@ -435,6 +435,7 @@ export const getWidgets = createSelector(
         ...decodeParams,
         ...(startYear && {
           startYear,
+          startIndex: 0,
         }),
         ...(endYear && {
           endYear,
