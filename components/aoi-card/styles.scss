@@ -39,6 +39,11 @@
       margin-bottom: rem(10px);
       font-size: rem(18px);
       color: $slate-light;
+      margin-right: 20px;
+
+      @media screen and (min-width: $screen-m) {
+        margin-right: 0;
+      }
     }
 
     .created {

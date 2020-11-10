@@ -9,11 +9,11 @@
   z-index: 1;
 
   &.relocate {
-    transform: translateX($map-menu-panel-width - 8);
+    transform: translateX(305px);
   }
 
   &.big {
-    transform: translateX(552px);
+    transform: translateX(562px);
   }
 
   .nav {
