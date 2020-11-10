@@ -8,8 +8,6 @@ import './styles.scss';
 
 export const PlanetMenu = ({
   name,
-  rangeOptions,
-  rangeSelected,
   periodOptions,
   periodSelected,
   onSelectBasemap,
@@ -18,23 +16,7 @@ export const PlanetMenu = ({
 }) => (
   <div className="c-landsat-menu">
     <Row nested className="menu-row">
-      <Column width={[5 / 12]}>
-        <h6>range</h6>
-        <Dropdown
-          className="landsat-selector"
-          theme="theme-dropdown-native theme-dropdown-native-button-green"
-          value={rangeSelected?.value}
-          options={rangeOptions}
-          onChange={(value) =>
-            onSelectBasemap({
-              value: 'planet',
-              name: value,
-              color: colorSelected,
-            })}
-          native
-        />
-      </Column>
-      <Column width={[7 / 12]}>
+      <Column>
         <h6>period</h6>
         <Dropdown
           className="landsat-selector"
@@ -74,8 +56,6 @@ export const PlanetMenu = ({
 
 PlanetMenu.propTypes = {
   name: PropTypes.string,
-  rangeOptions: PropTypes.array,
-  rangeSelected: PropTypes.object,
   periodOptions: PropTypes.array,
   periodSelected: PropTypes.object,
   colorOptions: PropTypes.array,
