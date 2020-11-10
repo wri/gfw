@@ -2,11 +2,19 @@
 
 html,
 body {
-  font-family: 'Fira Sans', Arial, sans-serif;
-  color: #333;
+  font-family: $font-family-1;
+  color: $slate-light;
   font-size: 16px;
   font-weight: 400;
   line-height: 1;
+}
+
+* {
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 h1 {
@@ -64,18 +72,18 @@ a {
 
 a {
   color: $green-gfw;
+
+  &:hover {
+    color: $dark-green;
+    text-decoration: underline;
+  }
 }
 
 button {
   cursor: pointer;
-  font-family: inherit;
   border: none;
   background: transparent;
   appearance: none;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 // img {
