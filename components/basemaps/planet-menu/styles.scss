@@ -18,6 +18,14 @@
   }
 
   .menu-row {
-    margin-bottom: 15px;
+    > div {
+      &:first-child {
+        padding-right: 8px;
+      }
+
+      &:last-child {
+        padding-left: 8px;
+      }
+    }
   }
 }
