@@ -7,8 +7,6 @@ import useStore from 'redux/store';
 import { rootReducer } from 'fast-redux';
 import isEmpty from 'lodash/isEmpty';
 
-import { GlobalStyles } from 'gfw-components';
-
 import { trackEvent } from 'utils/analytics';
 import reducerRegistry from 'redux/registry';
 
@@ -41,7 +39,6 @@ const App = ({ Component, pageProps }) => {
 
   return (
     <Provider store={store}>
-      <GlobalStyles />
       <Component {...pageProps} />
     </Provider>
   );

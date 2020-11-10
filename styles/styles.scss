@@ -3,8 +3,9 @@
 @import '~react-tippy/dist/tippy.css';
 
 // base styles
-@import './base.scss';
 @import './settings.scss';
+@import './reset.scss';
+@import './base.scss';
 @import './utils.scss';
 
 // override styles
