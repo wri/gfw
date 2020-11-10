@@ -32,7 +32,6 @@ const Timeline = (props) => {
         <div className="date-pickers">
           From
           <Datepicker
-            withPortal
             selected={new Date(maxRange ? startDateAbsolute : startDate)}
             onChange={(date) => handleOnDateChange(moment(date), 0, true)}
             minDate={new Date(minDate)}
@@ -43,7 +42,6 @@ const Timeline = (props) => {
           />
           to
           <Datepicker
-            withPortal
             selected={
               new Date(moment(maxRange ? endDateAbsolute : trimEndDate))
             }
