@@ -22,6 +22,7 @@ import './themes/dropdown-button.scss';
 import './themes/dropdown-button-small.scss';
 import './themes/dropdown-native.scss';
 import './themes/dropdown-native-button.scss';
+import './themes/dropdown-native-button-green.scss';
 import './themes/dropdown-native-plain.scss';
 import './themes/dropdown-native-inline.scss';
 import './themes/dropdown-native-form.scss';

@@ -31,7 +31,7 @@ const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
 export const getStaticProps = async ({ params }) => {
   const [type] = params?.location || [];
 
-  if (!ALLOWED_TYPES.includes(type)) {
+  if (type && !ALLOWED_TYPES.includes(type)) {
     return {
       props: notFoundProps,
     };

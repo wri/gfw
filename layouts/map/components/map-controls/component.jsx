@@ -131,11 +131,12 @@ class MapControlsButtons extends PureComponent {
     return (
       <Button
         className={cx(
+          'map-control wide',
           'map-tool-btn recent-imagery-btn',
           { active: showRecentImagery },
           'map-tour-recent-imagery'
         )}
-        theme="theme-button-map-control wide"
+        theme="theme-button-map-control"
         onClick={() => {
           setMainMapSettings({ showRecentImagery: !showRecentImagery });
           if (!showRecentImagery) {
@@ -171,8 +172,10 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className={cx('map-tool-btn basemaps-btn', { active: showBasemaps })}
-        theme="theme-button-map-control wide"
+        className={cx('map-control wide', 'map-tool-btn basemaps-btn', {
+          active: showBasemaps,
+        })}
+        theme="theme-button-map-control"
         onClick={this.toggleBasemaps}
         tooltip={
           !showBasemaps
@@ -206,6 +209,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Tooltip
+        className="recent-imagery-tooltip"
         theme="light"
         position="top-end"
         useContext
@@ -215,6 +219,7 @@ class MapControlsButtons extends PureComponent {
         open={showRecentImagery}
         html={(
           <RecentImagerySettings
+            className="recent-imagery-panel"
             onClickClose={() =>
               setMainMapSettings({ showRecentImagery: false })}
           />
@@ -231,6 +236,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Tooltip
+        className="basemaps-tooltip"
         theme="light"
         position="top-end"
         useContext
@@ -241,6 +247,7 @@ class MapControlsButtons extends PureComponent {
         onRequestClose={this.onBasemapsRequestClose}
         html={(
           <Basemaps
+            className="basemaps-panel"
             onClose={this.toggleBasemaps}
             ref={this.setBasemapsRef}
             isDesktop={this.props.isDesktop}
@@ -263,6 +270,7 @@ class MapControlsButtons extends PureComponent {
     return (
       <Fragment>
         <Button
+          className="map-control"
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
@@ -278,6 +286,7 @@ class MapControlsButtons extends PureComponent {
           <Icon icon={minusIcon} className="minus-icon" />
         </Button>
         <Button
+          className="map-control"
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
@@ -301,6 +310,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
+        className="map-control"
         theme="theme-button-map-control"
         onClick={this.handleHidePanels}
         tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
@@ -318,7 +328,8 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className="theme-button-map-control"
+        className="map-control"
+        theme="theme-button-map-control"
         onClick={() => setMenuSettings({ menuSection: 'search' })}
         tooltip={{ text: 'Search' }}
       >
@@ -332,7 +343,8 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className="theme-button-map-control -share"
+        className="map-control -share"
+        theme="theme-button-map-control"
         onClick={() =>
           setShareModal({
             title: 'Share this view',
@@ -356,6 +368,7 @@ class MapControlsButtons extends PureComponent {
 
   renderPrintButton = () => (
     <Button
+      className="map-control"
       theme="theme-button-map-control"
       tooltip={{ text: 'Print (not yet available)' }}
       onClick={() =>
@@ -372,6 +385,7 @@ class MapControlsButtons extends PureComponent {
 
   renderMapTourBtn = () => (
     <Button
+      className="map-control"
       theme="theme-button-map-control"
       tooltip={{ text: 'Map How-To Guide' }}
       onClick={() => this.props.setModalWelcomeOpen(true)}

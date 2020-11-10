@@ -1,0 +1,54 @@
+@import '~styles/settings.scss';
+
+.c-basemaps-menu {
+  background-color: $white-tree;
+  padding: 10px 0;
+
+  @media screen and (min-width: $screen-m) {
+    background-color: $white;
+    padding: 10px 0 15px;
+  }
+
+  h4 {
+    margin-bottom: 5px;
+  }
+
+  .btn-col {
+    margin: 10px 0;
+  }
+
+  .basemap-tiles {
+    padding-bottom: 20px;
+  }
+
+  .basemap-submenu {
+    background: $white-tree;
+    width: 100%;
+    padding: 15px 0;
+    margin-top: 10px;
+    position: relative;
+    border-top: solid 1px $border;
+
+    @media screen and (min-width: $screen-m) {
+      border-bottom: solid 1px $border;
+
+      &::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid $white-tree;
+        position: absolute;
+        top: -10px;
+        left: 38px;
+      }
+
+      &.-planet {
+        &::before {
+          left: 135px;
+        }
+      }
+    }
+  }
+}

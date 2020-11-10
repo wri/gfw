@@ -29,12 +29,12 @@ class MainMapContainer extends PureComponent {
       category: 'Map data',
       action: 'Initial layers loaded',
       label: layerIds && layerIds.join(', '),
-    })
+    });
     trackEvent({
       category: 'Map data',
       action: 'initial basemap loaded',
-      label: basemap?.value
-    })
+      label: basemap?.value,
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -58,10 +58,15 @@ class MainMapContainer extends PureComponent {
   }
 
   handleClickMap = () => {
-    if (this.props.menuSection) {
-      this.props.setMenuSettings({ menuSection: '' });
+    const { menuSection, recentActive, location } = this.props;
+
+    if (menuSection) {
+      this.props.setMenuSettings({
+        menuSection: recentActive ? 'recent-imagery-collapsed' : '',
+      });
     }
-    if (this.props.location?.type) {
+
+    if (location?.type) {
       this.props.setMapPromptsSettings({
         open: true,
         stepsKey: 'subscribeToArea',
@@ -116,6 +121,7 @@ MainMapContainer.propTypes = {
   location: PropTypes.object,
   geostoreId: PropTypes.string,
   basemap: PropTypes.object,
+  recentActive: PropTypes.bool,
 };
 
 reducerRegistry.registerModule('mainMap', {
