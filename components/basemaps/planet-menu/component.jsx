@@ -16,7 +16,7 @@ export const PlanetMenu = ({
 }) => (
   <div className="c-landsat-menu">
     <Row nested className="menu-row">
-      <Column width={[1 / 2]}>
+      <Column width={[6.5 / 12]}>
         <h6>period</h6>
         <Dropdown
           className="landsat-selector"
@@ -32,7 +32,7 @@ export const PlanetMenu = ({
           native
         />
       </Column>
-      <Column width={[1 / 2]}>
+      <Column width={[5.5 / 12]}>
         <h6>image type</h6>
         <Dropdown
           className="landsat-selector"
