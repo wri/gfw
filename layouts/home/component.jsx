@@ -28,14 +28,15 @@ const HomePage = ({ summary, uses, apps, news }) => {
   return (
     <div className="l-home-page">
       <Cover
-        className="home-cover"
+        className="section-cover"
         title="Forest Monitoring Designed for Action"
         description="Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests."
         bgImage={bgImage}
+        bgAlt="View of the earth from space"
         large
       >
         <>
-          <div className={cx('home-video', { show: showVideo })}>
+          <div className={cx('home-video', { '-show': showVideo })}>
             <YouTube
               videoId="0XsJNU75Si0"
               opts={{
@@ -67,11 +68,13 @@ const HomePage = ({ summary, uses, apps, news }) => {
             </Button>
           )}
           <Link href="/subscribe">
-            <a className="subscribe-btn">
-              <Button round className="subscribe-icon">
+            <a className="subscribe-link">
+              <Button round className="subscribe-btn">
                 <Icon icon={mailIcon} />
               </Button>
-              <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+              <span className="subscribe-msg">
+                SUBSCRIBE TO THE GFW NEWSLETTER
+              </span>
             </a>
           </Link>
         </>

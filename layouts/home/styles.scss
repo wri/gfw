@@ -3,110 +3,108 @@
 .l-home-page {
   overflow: hidden;
 
-  .scroll-to-btn {
-    position: absolute;
-    top: rem(-20px);
-    left: calc(50% - 20px);
-  }
-
-  .home-cover {
-    overflow: hidden;
-
-    h1,
-    p {
-      z-index: 1;
-    }
-  }
-
-  .stop-video-btn {
-    z-index: 1;
-    position: absolute;
-    bottom: rem(20px);
-    right: rem(20px);
-    background-color: rgba($slate, 0.7);
-  }
-
-  .subscribe-btn {
+  .section-cover {
     position: relative;
-    z-index: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-top: rem(20px);
-    width: fit-content;
 
-    .subscribe-icon {
-      margin-right: rem(10px);
+    .stop-video-btn {
+      z-index: 1;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba($slate, 0.7);
     }
 
-    .subscribe-msg {
-      color: $white;
-      font-weight: 500;
-      text-transform: uppercase;
+    .subscribe-link {
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-top: rem(20px);
+      width: fit-content;
+
+      .subscribe-btn {
+        margin-right: rem(10px);
+      }
+
+      .subscribe-msg {
+        color: $white;
+        font-weight: 500;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
     }
-  }
 
-  .home-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    overflow: hidden;
-    z-index: 0;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-
-    iframe {
+    .home-video {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    > div {
-      position: absolute;
-      top: rem(-60px);
-      left: 0;
       right: 0;
-      bottom: rem(-60px);
-      height: calc(100% + 120px);
-    }
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      overflow: hidden;
+      z-index: 0;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
 
-    &.show {
-      opacity: 1;
-    }
-  }
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
 
-  .summary-card {
-    background-color: $grey-light;
-    border: 0;
-    overflow: hidden;
+      > div {
+        position: absolute;
+        top: rem(-60px);
+        left: 0;
+        right: 0;
+        bottom: rem(-60px);
+        height: calc(100% + 120px);
+      }
 
-    .body {
-      height: 100%;
-    }
-
-    .image {
-      position: absolute;
-      bottom: rem(-150px);
-      left: rem(-100px);
-      height: 100%;
-      width: 110%;
-      background-size: contain;
-    }
-
-    .summary {
-      margin-bottom: rem(180px);
+      &.-show {
+        opacity: 1;
+      }
     }
   }
 
   .section-summary {
     padding: rem(40px) 0 rem(20px);
     position: relative;
+
+    .scroll-to-btn {
+      position: absolute;
+      top: -20px;
+      left: calc(50% - 20px);
+      z-index: 1;
+    }
+
+    .summary-card {
+      background-color: $grey-light;
+      border: 0;
+      overflow: hidden;
+      width: auto;
+
+      .body {
+        height: 100%;
+      }
+
+      .image {
+        position: absolute;
+        bottom: rem(-150px);
+        left: rem(-100px);
+        height: 100%;
+        width: 110%;
+        background-size: contain;
+      }
+
+      .summary {
+        margin-bottom: rem(180px);
+      }
+    }
   }
 
   .section-uses {
