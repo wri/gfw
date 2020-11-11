@@ -1,75 +1,28 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import cx from 'classnames';
 
 import { Desktop, Mobile, Carousel, Button, Row, Column } from 'gfw-components';
 
-import Icon from 'components/ui/icon';
 import Card from 'components/ui/card';
 import NoContent from 'components/ui/no-content';
 
-import config from './config';
 import newsImage from './assets/news-bg.jpg';
 
 import HomeCover from './cover';
 import HomeSummary from './summary';
 import HomeUses from './uses';
+import HomeApps from './apps';
 
 import './styles.scss';
 
-const HomePage = ({ apps, news }) => {
+const HomePage = ({ news }) => {
   return (
     <div className="l-home-page">
       <HomeCover />
       <HomeSummary />
       <HomeUses />
-      <div className="section-apps">
-        <h3 className="section-title">BROWSE APPLICATIONS</h3>
-        {apps && (
-          <Carousel
-            className="apps-carousel"
-            settings={{
-              slidesToShow: 1,
-              infinite: true,
-            }}
-          >
-            {apps.map((app) => (
-              <a
-                key={app.title}
-                href={app.extLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div
-                  className="app-slide"
-                  style={{
-                    backgroundColor: app.color,
-                  }}
-                >
-                  <Row className="apps">
-                    <Column>
-                      <div className="app-content">
-                        <Icon
-                          className={cx('app-icon', app.className)}
-                          icon={app.icon}
-                        />
-                        <h4>{app.title}</h4>
-                        <p>{app.description}</p>
-                        <div
-                          className="app-image"
-                          style={{
-                            backgroundImage: `url(${app.background})`,
-                          }}
-                        />
-                      </div>
-                    </Column>
-                  </Row>
-                </div>
-              </a>
-            ))}
-          </Carousel>
-        )}
-      </div>
+      <HomeApps />
+
       <div
         className="section-news"
         style={{
@@ -150,10 +103,7 @@ const HomePage = ({ apps, news }) => {
 };
 
 HomePage.propTypes = {
-  apps: PropTypes.array.isRequired,
   news: PropTypes.array.isRequired,
 };
-
-HomePage.defaultProps = config;
 
 export default HomePage;

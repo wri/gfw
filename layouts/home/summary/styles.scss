@@ -1,8 +1,12 @@
 @import '~styles/settings.scss';
 
 .c-home-summary {
-  padding: rem(40px) 0 rem(20px);
+  padding: 20px 0 20px;
   position: relative;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 40px 0 20px;
+  }
 
   .scroll-to-btn {
     position: absolute;

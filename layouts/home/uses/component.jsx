@@ -53,51 +53,6 @@ const HomeUses = () => {
           {credit.name}
         </a>
       </Media>
-
-      {/* <Carousel
-        className="uses-carousel"
-        settings={{
-          slidesToShow: 1,
-          dots: true,
-          arrows: false,
-          speed: 0,
-          customPaging: (i) => (
-            <div className="use-user">
-              <Icon className="icon-user" icon={profileIcon} />
-              {USE_SECTIONS[i].profile}
-            </div>
-          ),
-        }}
-      >
-        {USE_SECTIONS.map((c) => (
-          <Row className="uses" key={c.example}>
-            <Column width={[1, 1 / 2]}>
-              <p className="use-example">
-                <i>
-                  <span>“</span>
-                  {c.example}
-                  <span>”</span>
-                </i>
-              </p>
-            </Column>
-            <Column width={[1, 1 / 2]}>
-              <div
-                className="use-image"
-                style={{ backgroundImage: `url(${c.img})` }}
-              >
-                <a
-                  className="use-credit"
-                  href={c.credit.extLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {c.credit.name}
-                </a>
-              </div>
-            </Column>
-          </Row>
-        ))}
-      </Carousel> */}
     </div>
   );
 };
