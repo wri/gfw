@@ -6,6 +6,11 @@
   .section-cover {
     position: relative;
 
+    h1,
+    p {
+      z-index: 1;
+    }
+
     .stop-video-btn {
       z-index: 1;
       position: absolute;
