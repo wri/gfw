@@ -190,7 +190,7 @@ const decodes = {
   color.b = blue;
   `,
   forestHeight: `
-    float height = color.r * 255.;
+    float h = color.r * 255.;
 
     float r1 = 188. / 255.;
     float g1 = 255. / 255.;
@@ -202,9 +202,9 @@ const decodes = {
 
     vec3 color1 = vec3(r1, g1, b1);
     vec3 color2 = vec3(r2, g2, b2);
-    color = mix(color1, color2, height / 41.);
+    color = mix(color1, color2, h / 41.);
 
-    if (height >= minHeight && height <= maxHeight && height >= 3. && height <= 41.) {
+    if (h >= height && h <= 41.) {
       alpha = 1.;
     } else {
       alpha = 0.;
