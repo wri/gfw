@@ -1,0 +1,17 @@
+@import '~styles/settings.scss';
+
+.c-home-summary {
+  padding: rem(40px) 0 rem(20px);
+  position: relative;
+
+  .scroll-to-btn {
+    position: absolute;
+    top: -20px;
+    left: calc(50% - 20px);
+    z-index: 1;
+  }
+
+  .summary-card {
+    height: 400px;
+  }
+}
