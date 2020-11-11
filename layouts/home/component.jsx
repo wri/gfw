@@ -8,72 +8,21 @@ import Icon from 'components/ui/icon';
 import Card from 'components/ui/card';
 import NoContent from 'components/ui/no-content';
 
-import profileIcon from 'assets/icons/profile.svg?sprite';
-
 import config from './config';
 import newsImage from './assets/news-bg.jpg';
 
 import HomeCover from './cover';
 import HomeSummary from './summary';
+import HomeUses from './uses';
 
 import './styles.scss';
 
-const HomePage = ({ uses, apps, news }) => {
+const HomePage = ({ apps, news }) => {
   return (
     <div className="l-home-page">
       <HomeCover />
       <HomeSummary />
-      <div className="section-uses">
-        <h3 className="section-title">
-          What can you do with Global Forest Watch?
-        </h3>
-        {uses && (
-          <Carousel
-            className="uses-carousel"
-            settings={{
-              slidesToShow: 1,
-              dots: true,
-              arrows: false,
-              speed: 0,
-              customPaging: (i) => (
-                <div className="use-user">
-                  <Icon className="icon-user" icon={profileIcon} />
-                  {uses[i].profile}
-                </div>
-              ),
-            }}
-          >
-            {uses.map((c) => (
-              <Row className="uses" key={c.example}>
-                <Column width={[1, 1 / 2]}>
-                  <p className="use-example">
-                    <i>
-                      <span>“</span>
-                      {c.example}
-                      <span>”</span>
-                    </i>
-                  </p>
-                </Column>
-                <Column width={[1, 1 / 2]}>
-                  <div
-                    className="use-image"
-                    style={{ backgroundImage: `url(${c.img})` }}
-                  >
-                    <a
-                      className="use-credit"
-                      href={c.credit.extLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {c.credit.name}
-                    </a>
-                  </div>
-                </Column>
-              </Row>
-            ))}
-          </Carousel>
-        )}
-      </div>
+      <HomeUses />
       <div className="section-apps">
         <h3 className="section-title">BROWSE APPLICATIONS</h3>
         {apps && (
@@ -203,7 +152,6 @@ const HomePage = ({ uses, apps, news }) => {
 HomePage.propTypes = {
   apps: PropTypes.array.isRequired,
   news: PropTypes.array.isRequired,
-  uses: PropTypes.array.isRequired,
 };
 
 HomePage.defaultProps = config;
