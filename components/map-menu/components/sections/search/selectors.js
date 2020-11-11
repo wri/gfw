@@ -54,7 +54,7 @@ const getLocations = createSelector(
     return locations
       .map((l) => ({
         ...l,
-        active: Object.values(l).includes(gadmId),
+        active: l && Object.values(l)?.includes(gadmId),
       }))
       .slice(0, 15);
   }

@@ -26,14 +26,22 @@ const getWhereStatement = (search, nameString, nameStringSimple) => {
   return getSearchSQL(searchLower, nameString, nameStringSimple);
 };
 
+const langCodes = {
+  en: '0',
+  fr: 'fr',
+  zh: 'zh',
+  id: '0',
+  es_MX: 'es_mx',
+  pt_BR: '0',
+};
+
 export const fetchGeocodeLocations = (
   searchQuery = '',
   lang = 'en',
   cancelToken
 ) => {
-  let nameString = 'name_0';
+  const nameString = `name_${langCodes[lang]}`;
   let nameStringSimple = 'simple_name_0';
-  if (lang !== 'en') nameString = `name_${lang.toLowerCase()}`;
   if (lang !== 'en') nameStringSimple = nameString;
   const whereStatement = getWhereStatement(
     searchQuery,
