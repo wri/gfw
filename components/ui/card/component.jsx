@@ -50,10 +50,15 @@ class Card extends PureComponent {
       <div className={cx('c-card', className, theme, { active })}>
         {tag && tagColor && (
           <span className="tag" style={{ backgroundColor: tagColor }}>
-            {tag}
+            <p>{tag}</p>
           </span>
         )}
-        {image && <img className="image" src={image} alt={title} />}
+        {image && (
+          <div
+            className="image"
+            style={{ backgroundImage: `url('${image}')` }}
+          />
+        )}
         {(img1x || img2x) && (
           <img
             className="image"
@@ -73,15 +78,15 @@ class Card extends PureComponent {
             {imageCredit && <span>{imageCredit}</span>}
             {title && <h3 className="title">{title}</h3>}
             {summary && (
-              <p className="summary">
+              <div className="summary">
                 {fullSummary ? (
                   summary
                 ) : (
                   <Dotdotdot clamp={clamp || 3}>{summary}</Dotdotdot>
                 )}
-              </p>
+              </div>
             )}
-            {meta && <span className="meta">{meta}</span>}
+            {meta && <p className="meta">{meta}</p>}
           </div>
           {buttons && (
             <div className="buttons">
