@@ -225,6 +225,7 @@ class Map extends Component {
         this.setState({ flying: false });
       }, 2500);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   };
@@ -275,6 +276,8 @@ class Map extends Component {
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
           preventStyleDiffing
+          disableTokenWarning={false}
+          mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
         >
           {loaded &&
             !!this.map &&

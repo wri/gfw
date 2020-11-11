@@ -1,61 +1,93 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
+import { decodeQueryParams } from 'utils/url';
 
-import Layout from 'layouts/page';
-import Map from 'pages/map';
+import { getLocationData } from 'services/location';
+import { getCountriesProvider } from 'services/country';
+
+import FullscreenLayout from 'wrappers/fullscreen';
+import Map from 'layouts/map';
+
+import MapUrlProvider from 'providers/map-url-provider';
 
 import { setMapSettings } from 'components/map/actions';
-import { setMainMapSettings } from 'pages/map/actions';
+import { setMainMapSettings } from 'layouts/map/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMapPrompts } from 'components/prompts/map-prompts/actions';
-import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
-import { setModalPlanetNoticeOpen } from 'components/modals/planet-notice/actions';
 
-import { getLocationData } from 'services/location';
+const notFoundProps = {
+  error: 404,
+  title: 'Location Not Found | Global Forest Watch',
+  errorTitle: 'Location Not Found',
+};
 
-import { decodeParamsForState } from 'utils/stateToUrl';
-
-import MapUrlProvider from 'providers/map-url-provider';
+const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
 
 export const getStaticProps = async ({ params }) => {
-  let locationData = {};
-  try {
-    locationData = await getLocationData(params?.location);
-  } catch (err) {
-    locationData = {};
+  const [type] = params?.location || [];
+
+  if (type && !ALLOWED_TYPES.includes(type)) {
+    return {
+      props: notFoundProps,
+    };
   }
 
-  const locationType = params?.location?.[0] || 'global';
-  const noIndex = !['global', 'country', 'wdpa'].includes(locationType);
+  if (!type || type === 'global') {
+    return {
+      props: {
+        title: 'Interactive World Forest Map & Tree Cover Change Data | GFW',
+        description:
+          'Explore the state of forests worldwide by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
+      },
+    };
+  }
+
+  const locationData = await getLocationData(params?.location).catch((err) => {
+    if (err?.response?.status === 401) {
+      return {
+        props: {
+          error: 401,
+          title: 'Area is private | Global Forest Watch',
+          errorTitle: 'Area is private',
+        },
+      };
+    }
+
+    return {
+      props: notFoundProps,
+    };
+  });
 
   const { locationName } = locationData || {};
 
+  if (!locationName) {
+    return {
+      props: notFoundProps,
+    };
+  }
+
+  const title = `${locationName} Interactive Forest Map ${
+    params?.location?.[2] ? '' : '& Tree Cover Change Data '
+  }| GFW`;
+  const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
+  const noIndex = !['country', 'wdpa'].includes(type);
+
   return {
     props: {
-      title: `${locationName ? `${locationName} ` : ''}Interactive ${
-        locationName ? '' : 'World '
-      }Forest Map${
-        params?.location?.[2] ? '' : ' & Tree Cover Change Data'
-      } | GFW`,
-      description: `Explore the state of forests ${
-        locationName ? `in ${locationName}` : 'worldwide'
-      } by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`,
+      title,
+      description,
       noIndex,
     },
   };
 };
 
 export const getStaticPaths = async () => {
-  // fetch all admin0 iso codes to pre build static pages
-  const countryData = await cartoRequest.get(
-    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY iso"
-  );
+  const countryData = await getCountriesProvider();
   const { rows: countries } = countryData?.data || {};
   const countryPaths = countries.map((c) => ({
     params: {
@@ -64,7 +96,11 @@ export const getStaticPaths = async () => {
   }));
 
   return {
-    paths: countryPaths || [],
+    paths: [
+      { params: { location: [] } },
+      { params: { location: ['global'] } },
+      ...countryPaths,
+    ],
     fallback: true,
   };
 };
@@ -72,10 +108,10 @@ export const getStaticPaths = async () => {
 const MapPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
-  const { query, asPath } = useRouter();
+  const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
+  useEffect(() => {
     const {
       map,
       mainMap,
@@ -84,9 +120,7 @@ const MapPage = (props) => {
       modalMeta,
       recentImagery,
       mapPrompts,
-      areaOfInterestModal,
-      planetNotice,
-    } = decodeParamsForState(query) || {};
+    } = decodeQueryParams(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
@@ -115,15 +149,7 @@ const MapPage = (props) => {
     if (mapPrompts) {
       dispatch(setMapPrompts(mapPrompts));
     }
-
-    if (areaOfInterestModal) {
-      dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
-    }
-
-    if (planetNotice) {
-      dispatch(setModalPlanetNoticeOpen(planetNotice));
-    }
-  }, [fullPathname]);
+  }, [fullPathname, isFallback]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync
@@ -134,14 +160,14 @@ const MapPage = (props) => {
   });
 
   return (
-    <Layout {...props} fullScreen showFooter={false}>
+    <FullscreenLayout {...props}>
       {ready && (
         <>
           <MapUrlProvider />
           <Map />
         </>
       )}
-    </Layout>
+    </FullscreenLayout>
   );
 };
 

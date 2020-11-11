@@ -1,4 +1,4 @@
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import * as actions from './actions';
 
 const isServer = typeof window === 'undefined';
@@ -22,9 +22,11 @@ const setShowDashboardPrompts = (state, { payload }) => {
   if (!isServer) {
     localStorage.setItem('showPrompts', payload);
   }
-  track('userPromptShowHide', {
-    label: payload ? 'User enables prompts' : 'User hides prompts',
-  });
+  trackEvent({
+    category: 'User prompts',
+    action: 'User prompt is hidden/shown',
+    label: payload ? 'User enables prompts' : 'User hides prompts'
+  })
 
   return {
     ...state,

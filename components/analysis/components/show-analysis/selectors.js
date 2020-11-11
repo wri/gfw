@@ -1,9 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 
-import { GFW_API } from 'utils/constants';
-
-import { locationLevelToStr } from 'utils/format';
+import { GFW_API } from 'utils/apis';
+import { locationLevelToStr } from 'utils/location';
 
 import { getActiveLayers, getMapZoom } from 'components/map/selectors';
 import { getWidgetLayers, getLoading } from 'components/analysis/selectors';
@@ -12,7 +11,7 @@ import {
   getGeodescriberDescription,
 } from 'providers/geodescriber-provider/selectors';
 
-import { FOREST_GAIN, FOREST_LOSS } from 'constants/layers';
+import { FOREST_GAIN, FOREST_LOSS } from 'data/layers';
 
 const gainID = FOREST_GAIN;
 const lossID = FOREST_LOSS;

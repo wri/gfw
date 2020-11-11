@@ -22,7 +22,6 @@ $map-menu-panel-width-big: rem(560px);
     bottom: 0;
     top: 0;
     border-radius: 0;
-    padding-left: rem(10px);
 
     &.large {
       width: $map-menu-panel-width-big;
@@ -92,6 +91,8 @@ $map-menu-panel-width-big: rem(560px);
     width: 100%;
     overflow-y: auto;
     margin-top: rem(40px);
+    position: relative;
+    z-index: 5;
 
     @media screen and (min-width: $screen-m) {
       min-height: rem(250px);
@@ -113,7 +114,7 @@ $map-menu-panel-width-big: rem(560px);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     cursor: pointer;
-    z-index: 1;
+    z-index: 6;
 
     .icon-close-panel {
       width: rem(10px);

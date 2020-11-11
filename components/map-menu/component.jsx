@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
-import { BIOMASS_LOSS_DATASET } from 'constants/datasets';
+import { BIOMASS_LOSS_DATASET } from 'data/datasets';
 
 import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
@@ -67,41 +66,29 @@ class MapMenu extends PureComponent {
       });
     }
 
-    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
+    trackEvent({
+      category: 'Map data',
+      action: enable ? 'User turns on a layer' : 'User turns off a layer',
       label: layer,
     });
   };
 
-  componentDidUpdate(prevProps) {
-    const {
-      showAnalysis,
-      setMenuSettings,
-      location,
-      menuSection,
-      recentActive,
-      isDesktop,
-    } = this.props;
-    if (
-      !isDesktop &&
-      location &&
-      location.type &&
-      location.adm0 &&
-      !isEqual(location, prevProps.location)
-    ) {
-      showAnalysis();
-    }
+  onToggleMobileMenu = (slug) => {
+    const { setMenuSettings, recentActive } = this.props;
 
-    if (!isDesktop && !menuSection && recentActive) {
-      setMenuSettings({ menuSection: 'recent-imagery-collapsed' });
+    if (slug) {
+      setMenuSettings({ menuSection: slug });
+      trackEvent({
+        category: 'Map menu',
+        action: 'Select Map menu',
+        label: slug,
+      });
+    } else {
+      setMenuSettings({
+        menuSection: recentActive ? 'recent-imagery-collapsed' : '',
+      });
     }
-
-    if (
-      !isEqual(isDesktop, prevProps.isDesktop) ||
-      (!recentActive && !isEqual(recentActive, prevProps.recentActive))
-    ) {
-      setMenuSettings({ menuSection: '' });
-    }
-  }
+  };
 
   render() {
     const {
@@ -116,6 +103,7 @@ class MapMenu extends PureComponent {
       analysisLoading,
       embed,
       isDesktop,
+      recentActive,
       ...props
     } = this.props;
     const {
@@ -143,12 +131,12 @@ class MapMenu extends PureComponent {
           {!isDesktop && (
             <MenuMobile
               sections={mobileSections}
-              setMenuSettings={setMenuSettings}
+              onToggleMenu={this.onToggleMobileMenu}
             />
           )}
         </div>
         <MenuPanel
-          className="menu-panel"
+          className={cx('menu-panel', menuSection)}
           label={label}
           category={category}
           active={!!menuSection}
@@ -158,7 +146,11 @@ class MapMenu extends PureComponent {
           loading={loading}
           collapsed={collapsed}
           onClose={() =>
-            setMenuSettings({ menuSection: '', datasetCategory: '' })}
+            setMenuSettings({
+              menuSection:
+                !isDesktop && recentActive ? 'recent-imagery-collapsed' : '',
+              datasetCategory: '',
+            })}
           onOpen={() => setMenuSettings({ menuSection: openSection })}
         >
           {Component && (

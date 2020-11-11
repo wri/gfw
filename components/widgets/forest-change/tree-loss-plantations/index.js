@@ -6,13 +6,13 @@ import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_LOSS_DATASET,
   TREE_PLANTATIONS_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
   TREE_PLANTATIONS,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 

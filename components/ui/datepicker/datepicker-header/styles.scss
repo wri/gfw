@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+.c-datepicker-header {
+  font-family: $font-family-1;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px 20px 20px;
+
+  .btn-select-left {
+    margin-right: 5px;
+  }
+
+  .btn-select-right {
+    margin-left: 5px;
+  }
+
+  .arrow-select-left,
+  .arrow-select-right {
+    width: 8px;
+    height: 8px;
+    margin-top: -1px;
+  }
+
+  .arrow-select-left {
+    transform: rotate(90deg);
+  }
+
+  .arrow-select-right {
+    transform: rotate(-90deg);
+  }
+
+  .selector-month,
+  .selector-year {
+    width: 100%;
+    margin: 0 5px;
+
+    > .select-wrapper {
+      width: 100%;
+    }
+  }
+}

@@ -24,7 +24,7 @@ Installing dependencies:
 $ yarn
 ```
 
-Copy the `.env.sample` to `.env`, and start the server:
+Copy the `.env.sample` to `.env.local`, and start the server:
 
 ```bash
 $ yarn dev

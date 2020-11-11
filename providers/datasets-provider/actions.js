@@ -1,10 +1,9 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
 import chroma from 'chroma-js';
 
-import { getDatasetsProvider } from 'services/datasets';
+import { getDatasets } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
 
 import { reduceParams, reduceSqlParams } from './utils';
@@ -19,18 +18,19 @@ const byVocabulary = (dataset) =>
     (o) => o.name === 'layer_manager_ver' && o.tags.includes('3.0')
   );
 
-export const getDatasets = createThunkAction(
-  'getDatasets',
+export const fetchDatasets = createThunkAction(
+  'fetchDatasets',
   () => (dispatch) => {
     dispatch(setDatasetsLoading({ loading: true, error: false }));
-    getDatasetsProvider()
-      .then((allDatasets) => {
-        const parsedDatasets = wriAPISerializer(allDatasets.data)
+    getDatasets()
+      .then((datasets) => {
+        const parsedDatasets = datasets
           .filter(
             (d) =>
               d.published &&
               d.layer.length &&
-              (d.env === 'production' || d.env === process.env.FEATURE_ENV)
+              (d.env === 'production' ||
+                d.env === process.env.NEXT_PUBLIC_FEATURE_ENV)
           )
           .filter(byVocabulary)
           .map((d) => {
@@ -43,7 +43,7 @@ export const getDatasets = createThunkAction(
                 layer.find(
                   (l) =>
                     (l.env === 'production' ||
-                      l.env === process.env.FEATURE_ENV) &&
+                      l.env === process.env.NEXT_PUBLIC_FEATURE_ENV) &&
                     l.applicationConfig &&
                     l.applicationConfig.default
                 )) ||
@@ -111,7 +111,7 @@ export const getDatasets = createThunkAction(
                     .filter(
                       (l) =>
                         (l.env === 'production' ||
-                          l.env === process.env.FEATURE_ENV) &&
+                          l.env === process.env.NEXT_PUBLIC_FEATURE_ENV) &&
                         l.published
                     )
                     .map((l, i) => {
@@ -152,7 +152,7 @@ export const getDatasets = createThunkAction(
                             background: customColor,
                           },
                           {
-                            background: chroma(customColor).darken(1.3),
+                            background: chroma(customColor).darken(1.3).hex(),
                           },
                         ],
                       };

@@ -62,19 +62,20 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
 
     &.-open-mobile {
       right: 0;
+      z-index: 1;
+
+      .map-container {
+        height: calc(100vh - 56px);
+      }
     }
   }
 
   .map-controls {
-    display: none;
+    display: block;
     position: absolute;
     top: rem(15px);
     right: rem(15px);
     z-index: 999;
-
-    @media screen and (min-width: $screen-m) {
-      display: block;
-    }
   }
 
   .close-map-button {
@@ -83,6 +84,8 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     right: rem(15px);
     width: rem(60px);
     height: rem(60px);
+    min-width: rem(60px);
+    min-height: rem(60px);
     background-color: $white;
     z-index: 1002;
     cursor: pointer;

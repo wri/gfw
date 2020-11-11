@@ -15,18 +15,19 @@
     z-index: 2;
     margin-bottom: rem(10px);
 
-    > div {
+    .recent-imagery-tooltip,
+    .basemaps-tooltip {
       width: 100%;
       box-shadow: 0 1px 2px rgba($black, 0.25);
       display: none;
+    }
 
-      &:first-child {
-        margin-right: rem(5px);
-      }
+    .recent-imagery-tooltip {
+      margin-right: rem(5px);
+    }
 
-      &:last-child {
-        margin-left: rem(5px);
-      }
+    .basemaps-tooltip {
+      margin-left: rem(5px);
     }
   }
 
@@ -53,7 +54,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        margin-left: rem(10px);
+        padding: 0 rem(10px);
 
         span {
           text-align: left;
@@ -131,13 +132,20 @@
     margin-left: 10px;
     box-shadow: 0 1px 2px rgba($black, 0.25);
 
-    .theme-button-map-control {
+    .map-control {
       min-width: rem(40px);
       height: rem(40px);
 
       svg {
         width: 25px;
         height: 25px;
+      }
+
+      &.-share {
+        svg {
+          width: 18px;
+          height: 18px;
+        }
       }
     }
 
@@ -158,4 +166,10 @@
     display: flex;
     justify-content: space-between;
   }
+}
+
+.recent-imagery-panel,
+.basemaps-panel {
+  max-height: calc(100vh - 158px);
+  overflow-y: auto;
 }

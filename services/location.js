@@ -1,15 +1,14 @@
-/* eslint-disable no-else-return */
-import { CARTO_API } from 'utils/constants';
-import { get } from 'axios';
-import { getGeodescriber } from 'services/geostore';
-import { getArea } from 'services/areas';
 import lowerCase from 'lodash/lowerCase';
 import startCase from 'lodash/startCase';
+import { cartoRequest } from 'utils/request';
+import { getGeodescriberByGeostore } from 'services/geodescriber';
+import { getDatasetQuery } from 'services/datasets';
+import { getArea } from 'services/areas';
 
 export const countryConfig = {
   adm0: (params) =>
-    get(
-      `${CARTO_API}/sql?q=SELECT iso, name_engli as name FROM gadm36_countries WHERE iso = '${params.adm0}' AND iso != 'XCA' AND iso != 'TWN'`
+    cartoRequest(
+      `/sql?q=SELECT iso, name_engli as name FROM gadm36_countries WHERE iso = '${params.adm0}' AND iso != 'XCA' AND iso != 'TWN'`
     ).then((response) => {
       const { name, ...props } = response?.data?.rows?.[0];
 
@@ -19,8 +18,8 @@ export const countryConfig = {
       };
     }),
   adm1: (params) =>
-    get(
-      `${CARTO_API}/sql?q=SELECT iso, gid_1 as id, name_0 as adm0, name_1 as adm1 FROM gadm36_adm1 WHERE gid_1 = '${params.adm0}.${params.adm1}_1' AND iso != 'XCA' AND iso != 'TWN'`
+    cartoRequest(
+      `/sql?q=SELECT iso, gid_1 as id, name_0 as adm0, name_1 as adm1 FROM gadm36_adm1 WHERE gid_1 = '${params.adm0}.${params.adm1}_1' AND iso != 'XCA' AND iso != 'TWN'`
     ).then((response) => {
       const { adm1, adm0, ...props } = response?.data?.rows?.[0];
 
@@ -30,8 +29,8 @@ export const countryConfig = {
       };
     }),
   adm2: (params) =>
-    get(
-      `${CARTO_API}/sql?q=SELECT gid_2, name_0 as adm0, name_1 as adm1, name_2 as adm2 FROM gadm36_adm2 WHERE gid_2 = '${params.adm0}.${params.adm1}.${params.adm2}_1' AND iso != 'XCA' AND iso != 'TWN'`
+    cartoRequest(
+      `/sql?q=SELECT gid_2, name_0 as adm0, name_1 as adm1, name_2 as adm2 FROM gadm36_adm2 WHERE gid_2 = '${params.adm0}.${params.adm1}.${params.adm2}_1' AND iso != 'XCA' AND iso != 'TWN'`
     ).then((response) => {
       const { adm2, adm1, adm0, ...props } = response?.data?.rows?.[0];
 
@@ -44,11 +43,11 @@ export const countryConfig = {
 
 export const geostoreConfig = {
   adm0: (params) =>
-    getGeodescriber({ geostore: params.adm0 }).then((response) => {
+    getGeodescriberByGeostore({ geostore: params.adm0 }).then((response) => {
       const { title, ...props } = response?.data?.data;
 
       return {
-        locationName: title,
+        locationName: title || 'Area',
         ...props,
       };
     }),
@@ -56,10 +55,11 @@ export const geostoreConfig = {
 
 export const wdpaConfig = {
   adm0: (params) =>
-    get(
-      `${CARTO_API}/sql?q=SELECT name FROM wdpa_protected_areas WHERE wdpaid = '${params.adm0}'`
-    ).then((response) => {
-      const { name: locationName, ...props } = response?.data?.rows?.[0];
+    getDatasetQuery({
+      dataset: 'wdpa_protected_areas',
+      sql: `SELECT name FROM data WHERE wdpaid = '${params.adm0}'`,
+    }).then((data) => {
+      const { name: locationName, ...props } = data?.[0];
 
       return {
         locationName,
@@ -94,15 +94,15 @@ export const aoiConfig = {
           adm2: iso.subRegion || admin.adm2,
         };
         if (locationParams.adm2) return countryConfig.adm2(locationParams);
-        else if (locationParams.adm1) return countryConfig.adm1(locationParams);
-        else if (locationParams.adm0) return countryConfig.adm0(locationParams);
+        if (locationParams.adm1) return countryConfig.adm1(locationParams);
+        if (locationParams.adm0) return countryConfig.adm0(locationParams);
       } else if (use && use.id) {
         return useConfig.adm1({ adm0: use.name, adm1: use.id });
       } else if (wdpaid) {
         return wdpaConfig.adm0({ adm0: wdpaid });
       }
 
-      return getGeodescriber(area).then((response) => {
+      return getGeodescriberByGeostore(area).then((response) => {
         const geodescriber = response?.data?.data;
 
         return {

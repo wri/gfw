@@ -7,7 +7,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 import Paginate from 'components/paginate';
 import ChartToolTip from '../components/chart-tooltip';
@@ -52,41 +52,38 @@ class HorizontalBarChart extends PureComponent {
               type="category"
               axisLine={false}
               tickLine={false}
-              tick={
+              tick={(
                 <CustomTick
                   data={pageData}
                   yAxisDotFill={yAxisDotFill}
                   settings={settings}
                 />
-              }
+              )}
             />
             {pageData &&
               pageData.length &&
-              Object.keys(pageData[0]).map(
-                (key, index) =>
-                  (yKeys.indexOf(key) === -1 ? null : (
-                    <Bar
-                      key={key}
-                      dataKey={key}
-                      stackId={1}
-                      barSize={10}
-                      fill={colors[key]}
-                      background={!index ? { fill: '#e9e9ea' } : false}
-                    />
-                  ))
+              Object.keys(pageData[0]).map((key, index) =>
+                yKeys.indexOf(key) === -1 ? null : (
+                  <Bar
+                    key={key}
+                    dataKey={key}
+                    stackId={1}
+                    barSize={10}
+                    fill={colors[key]}
+                    background={!index ? { fill: '#e9e9ea' } : false}
+                  />
+                )
               )}
           </BarChart>
         </ResponsiveContainer>
-        {handlePageChange &&
-          data &&
-          data.length > settings.pageSize && (
-            <Paginate
-              className="horizontal-pagintation"
-              settings={settings}
-              count={data.length}
-              onClickChange={handlePageChange}
-            />
-          )}
+        {handlePageChange && data && data.length > settings.pageSize && (
+          <Paginate
+            className="horizontal-pagintation"
+            settings={settings}
+            count={data.length}
+            onClickChange={handlePageChange}
+          />
+        )}
       </div>
     );
   }
@@ -97,13 +94,13 @@ HorizontalBarChart.propTypes = {
   className: PropTypes.string,
   config: PropTypes.object,
   settings: PropTypes.object,
-  handlePageChange: PropTypes.func
+  handlePageChange: PropTypes.func,
 };
 
 HorizontalBarChart.defaultProps = {
   config: {
-    tooltip: [{ key: 'value', unit: null }]
-  }
+    tooltip: [{ key: 'value', unit: null }],
+  },
 };
 
 export default HorizontalBarChart;

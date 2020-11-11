@@ -1,15 +1,12 @@
-import { apiRequest, cartoRequest } from 'utils/request';
+import { apiRequest, tilesRequest, cartoRequest } from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
-import { get } from 'axios';
 
-import { GFW_API } from 'utils/constants';
-import { getIndicator } from 'utils/format';
+import { GFW_API } from 'utils/apis';
 
-const DATASETS_ENV = DATASETS[process.env.FEATURE_ENV || 'production'];
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
@@ -47,7 +44,7 @@ const SQL_QUERIES = {
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC",
   biomassStock:
-    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
     'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
@@ -89,6 +86,43 @@ const typeByGrouped = {
   },
 };
 
+export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
+  const forestType = forestTypes.find((f) => f.value === activeForestType);
+  const landCategory = landCategories.find(
+    (f) => f.value === activeLandCategory
+  );
+  if (!forestType && !landCategory) return null;
+  let label = '';
+  let value = '';
+  let forestTypeLabel = (forestType && forestType.label) || '';
+  let landCatLabel = (landCategory && landCategory.label) || '';
+
+  forestTypeLabel =
+    forestType && forestType.preserveString === true
+      ? forestTypeLabel
+      : forestTypeLabel.toLowerCase();
+  landCatLabel =
+    landCategory && landCategory.preserveString === true
+      ? landCatLabel
+      : landCatLabel.toLowerCase();
+
+  if (forestType && landCategory) {
+    label = `${forestTypeLabel} in ${landCatLabel}`;
+    value = `${forestType.value}__${landCategory.value}`;
+  } else if (landCategory) {
+    label = landCatLabel;
+    value = landCategory.value;
+  } else {
+    label = forestTypeLabel;
+    value = forestType.value;
+  }
+
+  return {
+    label: label.replace('({iflyear})', ifl),
+    value,
+  };
+};
+
 // build the base query for the query with the correct dataset id
 const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   let typeByLevel = type;
@@ -100,8 +134,8 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   }
 
   const datasetId =
-    DATASETS_ENV[
-      `${dataset.toUpperCase()}_${typeByLevel.toUpperCase()}_${datasetType.toUpperCase()}`
+    DATASETS[
+      `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
   return `${GFW_API}/query/${datasetId}?sql=`;
 };
@@ -144,8 +178,7 @@ export const getWHEREQuery = (params) => {
 
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       const isNumericValue = !!(
-        typeof value === 'number' &&
-        !['adm0', 'adm1', 'adm2', 'confidence'].includes(p)
+        typeof value === 'number' && !['adm0', 'confidence'].includes(p)
       );
 
       const polynameString = `
@@ -837,11 +870,8 @@ export const fetchFiresWithin = (params) => {
 };
 
 export const fetchVIIRSLatest = () =>
-  get(
-    `https://${
-      process.env.FEATURE_ENV === 'staging' ? 'staging-' : ''
-    }tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date`
-  )
+  tilesRequest
+    .get('/nasa_viirs_fire_alerts/latest/max_alert__date')
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 

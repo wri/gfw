@@ -1,9 +1,17 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { cartoRequest } from 'utils/request';
 
 import useRouter from 'utils/router';
+import { decodeQueryParams } from 'utils/url';
+
+import { getLocationData } from 'services/location';
+import { getCountriesProvider } from 'services/country';
+
+import PageLayout from 'wrappers/page';
+import Dashboards from 'layouts/dashboards';
+
+import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
 import { setMapSettings } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
@@ -14,59 +22,73 @@ import {
   setShowMap,
   setActiveWidget,
 } from 'components/widgets/actions';
-import { setAreaOfInterestModalSettings } from 'components/modals/area-of-interest/actions';
 
-import { getLocationData } from 'services/location';
+const notFoundProps = {
+  error: 404,
+  title: 'Dashboard Not Found | Global Forest Watch',
+  errorTitle: 'Dashboard Not Found',
+};
 
-import { decodeParamsForState } from 'utils/stateToUrl';
+const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
-import Layout from 'layouts/page';
-import Dashboards from 'pages/dashboards';
-import ConfirmationMessage from 'components/confirmation-message';
-import DashboardsUrlProvider from 'providers/dashboards-url-provider';
+export const getStaticProps = async ({ params }) => {
+  const [type] = params?.location || [];
 
-import './styles.scss';
-
-export const getStaticProps = async (ctx) => {
-  const isGlobal =
-    !ctx?.params?.location?.[0] || ctx?.params?.location?.[0] === 'global';
-  let locationData = {};
-
-  try {
-    locationData =
-      (!isGlobal && (await getLocationData(ctx?.params?.location))) || {};
-  } catch (err) {
-    locationData = {};
+  if (type && !ALLOWED_TYPES.includes(type)) {
+    return {
+      props: notFoundProps,
+    };
   }
 
-  const locationType = ctx?.params?.location?.[0] || 'global';
-  const noIndex = !['global', 'country'].includes(locationType);
+  if (!type || type === 'global') {
+    return {
+      props: {
+        title: 'Global Deforestation Rates & Statistics by Country | GFW',
+        description:
+          'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.',
+      },
+    };
+  }
 
-  const locationName = isGlobal ? 'Global' : locationData?.locationName;
+  const locationData = await getLocationData(params?.location).catch((err) => {
+    if (err?.response?.status === 401) {
+      return {
+        props: {
+          error: 401,
+          title: 'Area is private | Global Forest Watch',
+          errorTitle: 'Area is private',
+        },
+      };
+    }
+
+    return {
+      props: notFoundProps,
+    };
+  });
+
+  const { locationName } = locationData || {};
+
+  if (!locationName) {
+    return {
+      props: notFoundProps,
+    };
+  }
+
+  const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+  const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
+  const noIndex = !['country'].includes(type);
 
   return {
-    props: locationName
-      ? {
-          title: `${
-            locationName || 'Global'
-          } Deforestation Rates & Statistics ${
-            isGlobal ? 'by Country ' : ''
-          }| GFW`,
-          description: isGlobal
-            ? 'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.'
-            : `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
-          noIndex,
-        }
-      : {
-          title: 'Dashboard not found',
-        },
+    props: {
+      title,
+      description,
+      noIndex,
+    },
   };
 };
 
 export const getStaticPaths = async () => {
-  const countryData = await cartoRequest.get(
-    "/sql?q=SELECT iso FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA'"
-  );
+  const countryData = await getCountriesProvider();
   const { rows: countries } = countryData?.data || {};
   const countryPaths = countries.map((c) => ({
     params: {
@@ -83,10 +105,10 @@ export const getStaticPaths = async () => {
 const DashboardsPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
-  const { query, asPath } = useRouter();
+  const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
+  useEffect(() => {
     const {
       map,
       modalMeta,
@@ -96,7 +118,7 @@ const DashboardsPage = (props) => {
       showMap,
       widget,
       ...widgets
-    } = decodeParamsForState(query) || {};
+    } = decodeQueryParams(query) || {};
 
     if (map) {
       dispatch(setMapSettings(map));
@@ -118,10 +140,6 @@ const DashboardsPage = (props) => {
       dispatch(setWidgetsCategory(category));
     }
 
-    if (areaOfInterestModal) {
-      dispatch(setAreaOfInterestModalSettings(areaOfInterestModal));
-    }
-
     if (showMap) {
       dispatch(setShowMap(showMap));
     }
@@ -129,7 +147,7 @@ const DashboardsPage = (props) => {
     if (widget) {
       dispatch(setActiveWidget(widget));
     }
-  }, [fullPathname]);
+  }, [fullPathname, isFallback]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync
@@ -139,22 +157,15 @@ const DashboardsPage = (props) => {
     }
   });
 
-  const hasDashboard = props?.title !== 'Dashboard not found';
-
   return (
-    <Layout {...props} className="l-dashboards-page">
-      {!hasDashboard && (
-        <div className="no-dashboard-message">
-          <ConfirmationMessage title="Dashboard not found" error large />
-        </div>
-      )}
-      {hasDashboard && ready && (
+    <PageLayout {...props}>
+      {ready && (
         <>
-          <Dashboards />
           <DashboardsUrlProvider />
+          <Dashboards />
         </>
       )}
-    </Layout>
+    </PageLayout>
   );
 };
 

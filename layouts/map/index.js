@@ -2,12 +2,11 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import flatMap from 'lodash/flatMap';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import reducerRegistry from 'redux/registry';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
-import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 
 import reducers, { initialState } from './reducers';
@@ -16,7 +15,6 @@ import { getMapProps } from './selectors';
 import MapComponent from './component';
 
 const actions = {
-  setRecentImagerySettings,
   setMenuSettings,
   setMapPromptsSettings,
   getGeostoreId,
@@ -27,10 +25,16 @@ class MainMapContainer extends PureComponent {
   componentDidMount() {
     const { activeDatasets, basemap } = this.props;
     const layerIds = flatMap(activeDatasets?.map((d) => d.layers));
-    track('mapInitialLayers', {
+    trackEvent({
+      category: 'Map data',
+      action: 'Initial layers loaded',
       label: layerIds && layerIds.join(', '),
     });
-    track('basemapsInitial', { label: basemap && basemap.value });
+    trackEvent({
+      category: 'Map data',
+      action: 'initial basemap loaded',
+      label: basemap?.value,
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -54,10 +58,15 @@ class MainMapContainer extends PureComponent {
   }
 
   handleClickMap = () => {
-    if (this.props.menuSection) {
-      this.props.setMenuSettings({ menuSection: '' });
+    const { menuSection, recentActive, location } = this.props;
+
+    if (menuSection) {
+      this.props.setMenuSettings({
+        menuSection: recentActive ? 'recent-imagery-collapsed' : '',
+      });
     }
-    if (this.props.location?.type) {
+
+    if (location?.type) {
       this.props.setMapPromptsSettings({
         open: true,
         stepsKey: 'subscribeToArea',
@@ -112,6 +121,7 @@ MainMapContainer.propTypes = {
   location: PropTypes.object,
   geostoreId: PropTypes.string,
   basemap: PropTypes.object,
+  recentActive: PropTypes.bool,
 };
 
 reducerRegistry.registerModule('mainMap', {

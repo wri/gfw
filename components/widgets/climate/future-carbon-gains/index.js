@@ -4,12 +4,12 @@ import { getEmissions } from 'services/climate';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   PROJECTED_CARBON_STORAGE_FOREST_REGROWTH_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   POTENTIAL_CARBON_GAINS,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 

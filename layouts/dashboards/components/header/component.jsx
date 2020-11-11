@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -41,7 +41,6 @@ class Header extends PureComponent {
     title: PropTypes.string,
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
-    errorMsg: PropTypes.string,
   };
 
   renderAreaActions({ isCountryDashboard, isAreaAndCountryDashboard }) {
@@ -89,7 +88,7 @@ class Header extends PureComponent {
                     }`,
                     position: 'bottom',
                   }}
-                  onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                  onClick={() => setAreaOfInterestModalSettings(activeArea.id)}
                 >
                   <Icon icon={editIcon} />
                   Edit area
@@ -105,7 +104,7 @@ class Header extends PureComponent {
                   text: 'Save as an area of interest',
                   position: 'bottom',
                 }}
-                onClick={() => setAreaOfInterestModalSettings({ open: true })}
+                onClick={() => setAreaOfInterestModalSettings(true)}
               >
                 <Icon icon={saveUserIcon} />
                 Save area
@@ -131,13 +130,14 @@ class Header extends PureComponent {
                   position: 'bottom',
                 }}
                 onClick={() => {
-                  track('downloadDashboardPage', {
-                    label:
-                      (locationNames &&
-                        locationNames.adm0 &&
-                        locationNames.adm0.label) ||
-                      'Global',
-                  });
+                  trackEvent({
+                    category: 'Dashboards page',
+                    action: 'Download page',
+                    label: (locationNames &&
+                      locationNames.adm0 &&
+                      locationNames.adm0.label) ||
+                    'Global'
+                  })
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -170,7 +170,6 @@ class Header extends PureComponent {
       title,
       activeArea,
       firstArea,
-      errorMsg,
     } = this.props;
     const isCountryDashboard =
       location?.type === 'country' || location?.type === 'global';
@@ -193,7 +192,7 @@ class Header extends PureComponent {
               className="area-share theme-button-small"
               onClick={() => {
                 if (activeArea && !activeArea.userArea) {
-                  setAreaOfInterestModalSettings({ open: true });
+                  setAreaOfInterestModalSettings(true);
                 } else {
                   setShareModal(shareData);
                 }
@@ -218,8 +217,10 @@ class Header extends PureComponent {
                   <a className="breadcrumb-link">
                     <button
                       onClick={() =>
-                        track('switchDashboardType', {
-                          label: 'changes to global',
+                        trackEvent({
+                          category: 'Areas of interest',
+                          action: 'User changes between global and areas dashboard',
+                          label: 'changes to global'
                         })}
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
@@ -236,8 +237,10 @@ class Header extends PureComponent {
                   <a className="breadcrumb-link">
                     <button
                       onClick={() =>
-                        track('switchDashboardType', {
-                          label: 'changes to areas',
+                        trackEvent({
+                          category: 'Areas of interest',
+                          action: 'User changes between global and areas dashboard',
+                          label: 'changes to areas'
                         })}
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
@@ -248,9 +251,6 @@ class Header extends PureComponent {
               )}
               {title && (
                 <h3 className={cx({ global: title === 'global' })}>{title}</h3>
-              )}
-              {isAreaDashboard && !activeArea && !loading && (
-                <h3>{errorMsg}</h3>
               )}
               {adm0s && (
                 <Dropdown

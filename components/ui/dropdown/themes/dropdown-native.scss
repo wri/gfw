@@ -29,6 +29,10 @@ $dd-font-size-large: rem(16px);
       height: 100%;
       cursor: pointer;
       position: relative;
+      line-height: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &::-ms-expand {
         display: none;
@@ -67,6 +71,7 @@ $dd-font-size-large: rem(16px);
 
       select {
         font-size: $dd-font-size-large;
+        line-height: 28px;
       }
     }
   }

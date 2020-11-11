@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import plusIcon from 'assets/icons/plus.svg?sprite';
 import minusIcon from 'assets/icons/minus.svg?sprite';
@@ -53,14 +53,22 @@ class MapControlsButtons extends PureComponent {
     setMainMapSettings({ hidePanels: !hidePanels });
     setMenuSettings({ menuSection: '' });
     if (!hidePanels) {
-      track('hidePanels');
+      trackEvent({
+        category: 'Map settings',
+        action: 'Other buttons',
+        label: 'Map only',
+      });
     }
   };
 
   onBasemapsRequestClose = () => {
     const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
     this.basemapsRef.clearEvt();
-    if (!isTargetOnTooltip && this.props.showBasemaps) {
+    if (
+      !isTargetOnTooltip &&
+      !this.props.metaModalOpen &&
+      this.props.showBasemaps
+    ) {
       this.toggleBasemaps();
     }
   };
@@ -95,7 +103,11 @@ class MapControlsButtons extends PureComponent {
       zoom: showRecentImagery && zoom < 9 ? 9 : zoom,
     });
     if (showRecentImagery) {
-      track('recentImageryEnable');
+      trackEvent({
+        category: 'Map settings',
+        action: 'Recent imagery feature',
+        label: 'User turns on recent imagery',
+      });
     }
   };
 
@@ -112,20 +124,32 @@ class MapControlsButtons extends PureComponent {
       showRecentImagery,
       datasetsLoading,
       setMainMapSettings,
+      setMenuSettings,
+      isDesktop,
     } = this.props;
 
     return (
       <Button
         className={cx(
+          'map-control wide',
           'map-tool-btn recent-imagery-btn',
           { active: showRecentImagery },
           'map-tour-recent-imagery'
         )}
-        theme="theme-button-map-control wide"
+        theme="theme-button-map-control"
         onClick={() => {
           setMainMapSettings({ showRecentImagery: !showRecentImagery });
           if (!showRecentImagery) {
-            track('recentImageryOpen');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Recent imagery feature',
+              label: 'User opens the config window',
+            });
+          }
+          if (!isDesktop) {
+            setMenuSettings({
+              menuSection: !showRecentImagery ? 'recent-imagery-collapsed' : '',
+            });
           }
         }}
         disabled={datasetsLoading}
@@ -148,8 +172,10 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className={cx('map-tool-btn basemaps-btn', { active: showBasemaps })}
-        theme="theme-button-map-control wide"
+        className={cx('map-control wide', 'map-tool-btn basemaps-btn', {
+          active: showBasemaps,
+        })}
+        theme="theme-button-map-control"
         onClick={this.toggleBasemaps}
         tooltip={
           !showBasemaps
@@ -183,6 +209,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Tooltip
+        className="recent-imagery-tooltip"
         theme="light"
         position="top-end"
         useContext
@@ -192,6 +219,7 @@ class MapControlsButtons extends PureComponent {
         open={showRecentImagery}
         html={(
           <RecentImagerySettings
+            className="recent-imagery-panel"
             onClickClose={() =>
               setMainMapSettings({ showRecentImagery: false })}
           />
@@ -208,6 +236,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Tooltip
+        className="basemaps-tooltip"
         theme="light"
         position="top-end"
         useContext
@@ -218,6 +247,7 @@ class MapControlsButtons extends PureComponent {
         onRequestClose={this.onBasemapsRequestClose}
         html={(
           <Basemaps
+            className="basemaps-panel"
             onClose={this.toggleBasemaps}
             ref={this.setBasemapsRef}
             isDesktop={this.props.isDesktop}
@@ -240,10 +270,15 @@ class MapControlsButtons extends PureComponent {
     return (
       <Fragment>
         <Button
+          className="map-control"
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
-            track('zoomOut');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom out',
+            });
           }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom <= minZoom}
@@ -251,10 +286,15 @@ class MapControlsButtons extends PureComponent {
           <Icon icon={minusIcon} className="minus-icon" />
         </Button>
         <Button
+          className="map-control"
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
-            track('zoomIn');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom in',
+            });
           }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom >= maxZoom}
@@ -270,6 +310,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
+        className="map-control"
         theme="theme-button-map-control"
         onClick={this.handleHidePanels}
         tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
@@ -287,7 +328,8 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className="theme-button-map-control"
+        className="map-control"
+        theme="theme-button-map-control"
         onClick={() => setMenuSettings({ menuSection: 'search' })}
         tooltip={{ text: 'Search' }}
       >
@@ -301,7 +343,8 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className="theme-button-map-control -share"
+        className="map-control -share"
+        theme="theme-button-map-control"
         onClick={() =>
           setShareModal({
             title: 'Share this view',
@@ -325,9 +368,15 @@ class MapControlsButtons extends PureComponent {
 
   renderPrintButton = () => (
     <Button
+      className="map-control"
       theme="theme-button-map-control"
       tooltip={{ text: 'Print (not yet available)' }}
-      onClick={() => track('printMap')}
+      onClick={() =>
+        trackEvent({
+          category: 'Map settings',
+          action: 'Other buttons',
+          label: 'Print map',
+        })}
       disabled
     >
       <Icon icon={printIcon} className="print-icon" />
@@ -336,6 +385,7 @@ class MapControlsButtons extends PureComponent {
 
   renderMapTourBtn = () => (
     <Button
+      className="map-control"
       theme="theme-button-map-control"
       tooltip={{ text: 'Map How-To Guide' }}
       onClick={() => this.props.setModalWelcomeOpen(true)}
@@ -357,7 +407,7 @@ class MapControlsButtons extends PureComponent {
     return (
       <div className="map-position">
         <span className="notranslate">
-          zoom:
+          zoom:&nbsp;
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
@@ -428,6 +478,7 @@ MapControlsButtons.propTypes = {
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
   activeBasemap: PropTypes.object,
+  metaModalOpen: PropTypes.bool,
 };
 
 export default connect()(MapControlsButtons);

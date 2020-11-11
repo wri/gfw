@@ -1,33 +1,51 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
+import upperFirst from 'lodash/upperFirst';
 
-import { Media } from 'utils/responsive';
+import { Desktop, Mobile, Button } from 'gfw-components';
 
-import Button from 'components/ui/button';
+import ClimateModal from 'components/modals/climate';
+import FiresModal from 'components/modals/fires';
 
 import TopicsHeader from './components/topics-header';
 import TopicsFooter from './components/topics-footer';
 import TopicsSlide from './components/topics-slide';
 
+import Biodiversity from './config/biodiversity';
+import Commodities from './config/commodities';
+import Climate from './config/climate';
+import Water from './config/water';
+import Fires from './config/fires';
+
 import './styles.scss';
 
 const anchors = ['intro', 'slides', 'footer'];
-
 const isServer = typeof window === 'undefined';
+const TOPICS_CONFIGS = {
+  biodiversity: Biodiversity,
+  climate: Climate,
+  commodities: Commodities,
+  water: Water,
+  fires: Fires,
+};
 
 class TopicsPage extends PureComponent {
+  static propTypes = {
+    topic: PropTypes.string,
+  };
+
   state = {
     skip: false,
     slideLeaving: 0,
     leaving: false,
-    showRelated: !isServer && window.location.hash.includes('slides'),
+    showRelated: false,
   };
 
   componentDidUpdate(prevProps) {
-    const { title } = this.props;
-    if (this.fullpageApi && title !== prevProps.title) {
+    const { topic } = this.props;
+    if (this.fullpageApi && topic !== prevProps.topic) {
       this.resetState();
       this.fullpageApi.reBuild();
     }
@@ -96,7 +114,9 @@ class TopicsPage extends PureComponent {
     this.setState({ skip: true }, () => {
       this.fullpageApi.moveTo('footer');
     });
-    track('topicsRelatedTools', {
+    trackEvent({
+      category: 'Topics pages',
+      action: 'Clicked related tools',
       label: source,
     });
   };
@@ -111,8 +131,16 @@ class TopicsPage extends PureComponent {
   };
 
   renderFullPageContent = (fullpageApi, isDesktop) => {
-    const { links, topicData, title } = this.props;
-    const { cards, slides, intro } = topicData || {};
+    const { topic } = this.props;
+
+    const title = upperFirst(topic);
+    const config = TOPICS_CONFIGS[topic];
+    const { cards, slides, intro } = config || {};
+    const links = Object.keys(TOPICS_CONFIGS).map((t) => ({
+      label: t,
+      href: `/topics/${t}`,
+      activeShallow: topic === t,
+    }));
 
     return (
       <ReactFullpage.Wrapper>
@@ -152,10 +180,10 @@ class TopicsPage extends PureComponent {
     return (
       <div className="l-topics-page">
         {this.state.showRelated && (
-          <Media lessThan="md">
+          <Mobile>
             <div className="related-tools-btn">
               <Button
-                theme="theme-button-light"
+                light
                 onClick={() => {
                   this.fullpageApi.moveSectionDown();
                 }}
@@ -163,11 +191,11 @@ class TopicsPage extends PureComponent {
                 Related Tools
               </Button>
             </div>
-          </Media>
+          </Mobile>
         )}
-        <Media greaterThanOrEqual="sm">
+        <Desktop>
           <ReactFullpage
-            licenseKey={process.env.FULLPAGE_LICENSE}
+            licenseKey={process.env.NEXT_PUBLIC_FULLPAGE_LICENSE}
             scrollOverflow
             anchors={anchors}
             animateAnchor={false}
@@ -182,10 +210,10 @@ class TopicsPage extends PureComponent {
               return this.renderFullPageContent(fullpageApi, true);
             }}
           />
-        </Media>
-        <Media lessThan="sm">
+        </Desktop>
+        <Mobile>
           <ReactFullpage
-            licenseKey={process.env.FULLPAGE_LICENSE}
+            licenseKey={process.env.NEXT_PUBLIC_FULLPAGE_LICENSE}
             scrollOverflow
             anchors={anchors}
             animateAnchor={false}
@@ -200,16 +228,12 @@ class TopicsPage extends PureComponent {
               return this.renderFullPageContent(fullpageApi);
             }}
           />
-        </Media>
+        </Mobile>
+        <ClimateModal />
+        <FiresModal />
       </div>
     );
   }
 }
-
-TopicsPage.propTypes = {
-  links: PropTypes.array.isRequired,
-  topicData: PropTypes.object,
-  title: PropTypes.string,
-};
 
 export default TopicsPage;

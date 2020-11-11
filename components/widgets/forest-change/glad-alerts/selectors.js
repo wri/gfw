@@ -1,39 +1,38 @@
+/* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
-import { getColorPalette } from 'utils/data';
+import { getColorPalette } from 'components/widgets/utils/colors';
 
 import {
   getMeansData,
   getStdDevData,
   getDatesData,
-  getChartConfig
+  getChartConfig,
 } from 'components/widgets/utils/data';
 
 // get list data
-const selectAlerts = state => state.data && state.data.alerts;
-const selectLatestDates = state => state.data && state.data.latest;
-const selectColors = state => state.colors;
-const selectInteraction = state => state.settings.interaction;
-const selectWeeks = state => state.settings && state.settings.weeks;
-const selectSentences = state => state.sentence;
-const selectLang = state => state.lang;
-const getIndicator = state => state.indicator || null;
+const selectAlerts = (state) => state.data && state.data.alerts;
+const selectLatestDates = (state) => state.data && state.data.latest;
+const selectColors = (state) => state.colors;
+const selectInteraction = (state) => state.interaction;
+const selectWeeks = (state) => state.settings && state.settings.weeks;
+const selectSentences = (state) => state.sentence;
+const selectLang = (state) => state.lang;
+const getIndicator = (state) => state.indicator || null;
 
-export const parsePayload = payload => {
-  const payloadData = payload && payload.find(p => p.name === 'count');
+export const parsePayload = (payload) => {
+  const payloadData = payload && payload.find((p) => p.name === 'count');
   const payloadValues = payloadData && payloadData.payload;
   if (payloadValues) {
     return {
       startDate: payloadValues.date,
-      endDate: moment(payloadValues.date)
-        .add(7, 'days')
-        .format('YYYY-MM-DD'),
+      endDate: moment(payloadValues.date).add(7, 'days').format('YYYY-MM-DD'),
       updateLayer: true,
-      ...payloadValues
+      ...payloadValues,
     };
   }
   return {};
@@ -43,13 +42,13 @@ export const getData = createSelector(
   [selectAlerts, selectLatestDates],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
-    const parsedData = data.map(d => ({
+    const parsedData = data.map((d) => ({
       ...d,
-      ...d.alert__count && {
+      ...(d.alert__count && {
         count: d.alert__count,
         week: parseInt(d.alert__week, 10),
-        year: parseInt(d.alert__year, 10)
-      }
+        year: parseInt(d.alert__year, 10),
+      }),
     }));
     const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
@@ -57,16 +56,16 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some(item => item.alerts > 0)
+          [year]: next.some((item) => item.alerts > 0),
         };
       },
       {}
     );
 
     const dataYears = Object.keys(hasAlertsByYears).filter(
-      key => hasAlertsByYears[key] === true
+      (key) => hasAlertsByYears[key] === true
     );
-    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
+    const minYear = Math.min(...dataYears.map((el) => parseInt(el, 10)));
     const startYear =
       minYear === moment().year() ? moment().year() - 1 : minYear;
 
@@ -74,7 +73,7 @@ export const getData = createSelector(
     const latestWeek = moment(latest);
     const lastWeek = {
       isoWeek: latestWeek.isoWeek(),
-      year: latestWeek.year()
+      year: latestWeek.year(),
     };
 
     for (let i = startYear; i <= lastWeek.year; i += 1) {
@@ -82,13 +81,11 @@ export const getData = createSelector(
     }
 
     const yearLengths = {};
-    years.forEach(y => {
+    years.forEach((y) => {
       if (lastWeek.year === y) {
         yearLengths[y] = lastWeek.isoWeek;
       } else if (moment(`${y}-12-31`).isoWeek() === 1) {
-        yearLengths[y] = moment(`${y}-12-31`)
-          .subtract(1, 'week')
-          .isoWeek();
+        yearLengths[y] = moment(`${y}-12-31`).subtract(1, 'week').isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
       }
@@ -96,7 +93,7 @@ export const getData = createSelector(
 
     const zeroFilledData = [];
 
-    years.forEach(d => {
+    years.forEach((d) => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
         zeroFilledData.push(
@@ -127,7 +124,7 @@ export const getStdDev = createSelector(
   }
 );
 
-export const getDates = createSelector([getStdDev], data => {
+export const getDates = createSelector([getStdDev], (data) => {
   if (!data) return null;
   return getDatesData(data);
 });
@@ -156,7 +153,7 @@ export const parseSentence = createSelector(
     selectInteraction,
     selectSentences,
     getIndicator,
-    selectLang
+    selectLang,
   ],
   (data, colors, interaction, sentences, indicator) => {
     if (!data) return null;
@@ -175,9 +172,8 @@ export const parseSentence = createSelector(
       plusStdDev,
       minusStdDev,
       twoMinusStdDev,
-      date
-    } =
-      lastDate || {};
+      date,
+    } = lastDate || {};
 
     if (twoPlusStdDev && count > twoPlusStdDev[1]) {
       status = 'unusually high';
@@ -211,16 +207,16 @@ export const parseSentence = createSelector(
       date: formattedDate,
       count: {
         value: lastDate.count ? format(',')(lastDate.count) : 0,
-        color: colors.main
+        color: colors.main,
       },
       status: {
         value: status,
-        color: statusColor
-      }
+        color: statusColor,
+      },
     };
     return {
       sentence: indicator ? sentences.withInd : sentences.default,
-      params
+      params,
     };
   }
 );
@@ -228,5 +224,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

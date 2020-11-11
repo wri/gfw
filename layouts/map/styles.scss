@@ -70,14 +70,8 @@
     }
   }
 
-  &.analysis {
-    .leaflet-container {
-      cursor: pointer;
-    }
-  }
-
   &.embed {
-    min-height: calc(100vh - 60px);
+    height: 100%;
 
     .main-map-container {
       width: 100%;
@@ -85,16 +79,6 @@
       @media screen and (min-width: $screen-m) {
         width: 100%;
         margin-left: 0;
-      }
-    }
-
-    .leaflet-control-container {
-      .leaflet-bottom {
-        right: rem(15px);
-
-        @media screen and (min-width: $screen-m) {
-          right: rem(15px);
-        }
       }
     }
 

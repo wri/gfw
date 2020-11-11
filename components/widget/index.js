@@ -3,33 +3,33 @@ import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import WidgetComponent from './component';
 
 class WidgetContainer extends Component {
   static propTypes = {
-    widget: PropTypes.string.isRequired,
-    location: PropTypes.object.isRequired,
-    getData: PropTypes.func.isRequired,
-    setWidgetData: PropTypes.func.isRequired,
+    widget: PropTypes.string,
+    location: PropTypes.object,
+    getData: PropTypes.func,
+    setWidgetData: PropTypes.func,
     refetchKeys: PropTypes.array,
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
     geostore: PropTypes.object,
-    status: PropTypes.string
+    status: PropTypes.string,
   };
 
   static defaultProps = {
     widget: '',
     location: {},
     getData: fetch,
-    setWidgetData: () => {}
+    setWidgetData: () => {},
   };
 
   state = {
     loading: false,
-    error: false
+    error: false,
   };
 
   _mounted = false;
@@ -67,41 +67,45 @@ class WidgetContainer extends Component {
     this._mounted = false;
   }
 
-  handleGetWidgetData = params => {
-    const { getData, setWidgetData, geostore } = this.props;
-    this.cancelWidgetDataFetch();
-    this.widgetDataFetch = CancelToken.source();
+  handleGetWidgetData = (params) => {
+    if (params?.type) {
+      const { getData, setWidgetData, geostore } = this.props;
+      this.cancelWidgetDataFetch();
+      this.widgetDataFetch = CancelToken.source();
 
-    this.setState({ loading: true, error: false });
-    getData({ ...params, geostore, token: this.widgetDataFetch.token })
-      .then(data => {
-        setWidgetData(data);
-        setTimeout(() => {
+      this.setState({ loading: true, error: false });
+      getData({ ...params, geostore, token: this.widgetDataFetch.token })
+        .then((data) => {
+          setWidgetData(data);
+          setTimeout(() => {
+            if (this._mounted) {
+              this.setState({ loading: false, error: false });
+            }
+          }, 200);
+        })
+        .catch((error) => {
           if (this._mounted) {
-            this.setState({ loading: false, error: false });
+            this.setState({
+              error: error.message !== `Cancelling ${this.props.widget} fetch`,
+              loading: false,
+            });
           }
-        }, 200);
-      })
-      .catch(error => {
-        if (this._mounted) {
-          this.setState({
-            error: error.message !== `Cancelling ${this.props.widget} fetch`,
-            loading: false
-          });
-        }
-      });
+        });
+    }
   };
 
   handleRefetchData = () => {
     const { settings, location, widget } = this.props;
     const params = { ...location, ...settings };
     this.handleGetWidgetData(params);
-    track('refetchDataBtn', {
-      label: `Widget: ${widget}`
+    trackEvent({
+      category: 'Refetch data',
+      action: 'Data failed to fetch, user clicks to refetch',
+      label: `Widget: ${widget}`,
     });
   };
 
-  handleDataHighlight = highlighted => {
+  handleDataHighlight = (highlighted) => {
     this.props.handleChangeSettings({ highlighted });
   };
 
@@ -116,7 +120,7 @@ class WidgetContainer extends Component {
       ...this.props,
       ...this.state,
       handleRefetchData: this.handleRefetchData,
-      handleDataHighlight: this.handleDataHighlight
+      handleDataHighlight: this.handleDataHighlight,
     });
   }
 }

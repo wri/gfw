@@ -6,8 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
-import { getDataLocation } from 'utils/location';
-import { locationLevelToStr } from 'utils/format';
+import { getDataLocation, locationLevelToStr } from 'utils/location';
 import { getWidgets } from 'components/widgets/selectors';
 
 const selectAnalysisLoading = (state) =>
@@ -25,10 +24,10 @@ const selectEmbed = (state) => state.location?.pathname?.includes('/embed');
 const selectError = (state) =>
   (state.analysis && state.analysis.error) ||
   (state.geostore && state.geostore.error);
+const selectGeostoreError = (state) => state.geostore?.error;
 const selectDatasets = (state) => state.datasets && state.datasets.data;
 const selectGeostoreSize = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.areaHa;
-const selectAreaError = (state) => state.areas && state.areas.error;
 
 export const getLoading = createSelector(
   [
@@ -175,6 +174,7 @@ export const checkGeostoreSize = createSelector(
 export const getAnalysisProps = createStructuredSelector({
   loading: getLoading,
   error: selectError,
+  geostoreError: selectGeostoreError,
   embed: selectEmbed,
   endpoints: getLayerEndpoints,
   location: getDataLocation,
@@ -185,5 +185,4 @@ export const getAnalysisProps = createStructuredSelector({
   activeArea: getActiveArea,
   search: selectSearch,
   areaTooLarge: checkGeostoreSize,
-  areaError: selectAreaError,
 });

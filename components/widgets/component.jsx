@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -24,6 +24,7 @@ class Widgets extends PureComponent {
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
     setWidgetSettings: PropTypes.func.isRequired,
+    setWidgetInteractionByKey: PropTypes.func.isRequired,
     setActiveWidget: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
@@ -46,6 +47,7 @@ class Widgets extends PureComponent {
       loadingMeta,
       setWidgetsData,
       setWidgetSettings,
+      setWidgetInteractionByKey,
       setActiveWidget,
       setModalMetaSettings,
       setShareModal,
@@ -63,7 +65,8 @@ class Widgets extends PureComponent {
         className={cx(
           'c-widgets',
           className,
-          { simple: this.props.simple },
+          { simple },
+          { embed },
           { 'no-widgets': !hasWidgets }
         )}
       >
@@ -82,6 +85,11 @@ class Widgets extends PureComponent {
               geostore={geostore}
               metaLoading={loadingMeta || loadingData}
               setWidgetData={(data) => setWidgetsData({ [w.widget]: data })}
+              handleSetInteraction={(payload) =>
+                setWidgetInteractionByKey({
+                  key: w.widget,
+                  payload,
+                })}
               handleChangeSettings={(change) =>
                 setWidgetSettings({
                   widget: w.widget,
@@ -101,7 +109,9 @@ class Widgets extends PureComponent {
                 })}
               handleShowMap={() => {
                 setActiveWidget(w.widget);
-                track('viewWidgetOnMap', {
+                trackEvent({
+                  category: 'Dashboards page',
+                  action: 'User views a widget on the map',
                   label: w.widget,
                 });
               }}

@@ -3,12 +3,12 @@ import { getBiomassStockGrouped } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_BIOMASS_DENSITY_DATASET,
-} from 'constants/datasets';
+} from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   TREE_BIOMASS_DENSITY,
-} from 'constants/layers';
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
@@ -100,11 +100,15 @@ export default {
         let mappedData = [];
         if (data && data.length) {
           mappedData = data.map((item) => {
-            const { extent, biomass } = item;
-            const biomassDensity = biomass && extent > 0 ? biomass / extent : 0;
+            const { extent, biomass, carbon } = item;
+            const biomassDensity =
+              biomass > 0 && extent > 0 ? biomass / extent : 0;
             return {
               ...item,
               biomassDensity,
+              extent: extent || 0,
+              biomass: biomass || 0,
+              carbon: carbon || 0,
             };
           });
         }

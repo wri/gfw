@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux/actions';
 import moment from 'moment';
 import { all, spread } from 'axios';
 
-import { fetchLatestDate } from 'services/alerts';
+import { fetchLatestDate } from 'services/latest';
 
 export const setLatestLoading = createAction('setLatestLoading');
 export const setLatestDates = createAction('setLatestDates');
@@ -45,8 +45,8 @@ export const getLatest = createThunkAction(
             dispatch(setLatestDates(latestDates));
           })
         )
-        .catch((error) => {
-          console.error('Error in latest request:', error);
+        .catch(() => {
+          dispatch(setLatestLoading({ loading: false, error: true }));
         });
     }
   }

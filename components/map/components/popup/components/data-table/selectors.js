@@ -3,7 +3,7 @@ import bbox from 'turf-bbox';
 import bboxPolygon from 'turf-bbox-polygon';
 import area from 'turf-area';
 
-const getInteractionData = (state, { data }) => data;
+const getInteractionData = (state, { selected }) => selected;
 const getMap = (state, { map }) => map;
 
 export const getTableData = createSelector(

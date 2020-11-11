@@ -8,18 +8,15 @@ import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
-import { translateText } from 'utils/transifex';
+import { translateText, selectActiveLang } from 'utils/lang';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
-import { getDataLocation } from 'utils/location';
-
-import { getIsTrase, selectActiveLang } from 'layouts/page/selectors';
+import { getDataLocation, locationLevelToStr } from 'utils/location';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
-import { locationLevelToStr } from 'utils/format';
 
 import {
   getSettingsConfig,
@@ -48,12 +45,15 @@ const buildLocationDict = (locations) =>
 
 export const selectLocation = (state) =>
   state.location && state.location.payload;
+export const selectIsTrase = (state) => state.location?.query?.trase;
 export const selectRouteType = (state) =>
   state.location && state.location.pathname;
 export const selectActiveWidget = (state) => state.widgets?.activeWidget;
 export const selectLocationQuery = (state) =>
   state.location && state.location.query;
 export const selectWidgetSettings = (state) => state.widgets?.settings || {};
+export const selectWidgetInteractions = (state) =>
+  state.widgets?.interactions || {};
 export const selectLocationSearch = (state) =>
   state.location && state.location.search;
 export const selectWidgetsData = (state) => state.widgets && state.widgets.data;
@@ -360,9 +360,10 @@ export const getWidgets = createSelector(
     getLocationData,
     selectWidgetsData,
     selectWidgetSettings,
+    selectWidgetInteractions,
     selectLocationSearch,
     selectNonGlobalDatasets,
-    getIsTrase,
+    selectIsTrase,
     getActiveLayersWithDates,
     selectAnalysis,
     selectActiveWidget,
@@ -374,6 +375,7 @@ export const getWidgets = createSelector(
     locationData,
     widgetsData,
     widgetSettings,
+    interactions,
     search,
     datasets,
     isTrase,
@@ -426,6 +428,7 @@ export const getWidgets = createSelector(
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
       const widgetQuerySettings = widgetSettings && widgetSettings[widget];
+      const widgetInteraction = interactions && interactions[widget];
 
       const layerSettings = {
         ...layerParams,
@@ -505,6 +508,7 @@ export const getWidgets = createSelector(
         active,
         data: rawData,
         settings,
+        interaction: widgetInteraction,
         title: titleTemplate,
         settingsConfig: settingsConfigFiltered,
         optionsSelected,

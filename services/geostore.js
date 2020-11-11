@@ -1,27 +1,75 @@
-import { getGoogleLangCode } from 'utils/lang';
 import { apiRequest } from 'utils/request';
 
-const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
-  let slug = type !== 'geostore' ? type : '';
-  if (type === 'country') slug = 'admin';
+import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
-  return `/v2/geostore${slug ? `/${slug}` : ''}/${adm0}${
-    adm1 ? `/${adm1}` : ''
-  }${adm2 ? `/${adm2}` : ''}${`?simplify=${!adm1 ? thresh : thresh / 10}`}`;
-};
+import BBOXS from 'data/bboxs.json';
 
-export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
-  let thresh = 0.005;
-  if (type === 'country') {
-    const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
-    thresh = bigCountries.includes(adm0) ? 0.05 : 0.005;
+const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
+
+const getWDPAGeostore = ({ id, token }) =>
+  getDatasetQuery({
+    dataset: 'wdpa_protected_areas',
+    sql: `SELECT gfw_geostore_id FROM data WHERE wdpaid = '${id}'`,
+    token,
+  }).then((data) =>
+    getDatasetGeostore({
+      dataset: 'wdpa_protected_areas',
+      geostoreId: data?.[0]?.gfw_geostore_id,
+      token,
+    }).then((geostore) => {
+      const { gfw_geojson, gfw_area__ha, gfw_bbox } = geostore;
+
+      return {
+        id: data?.[0]?.gfw_geostore_id,
+        geojson: gfw_geojson,
+        areaHa: gfw_area__ha,
+        bbox: gfw_bbox,
+      };
+    })
+  );
+
+export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
+  if (!type || !adm0) return null;
+
+  let thresh = adm1 ? 0.0005 : 0.005;
+  let url = '/v2/geostore';
+
+  switch (type) {
+    case 'country':
+      thresh = LARGE_ISOS.includes(adm0) ? 0.05 : 0.005;
+      url = url.concat(
+        `/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`
+      );
+      break;
+    case 'use':
+      url = url.concat(`/use/${adm0}/${adm1}`);
+      break;
+    case 'geostore':
+      url = url.concat(`/${adm0}`);
+      break;
+    case 'wdpa':
+      return getWDPAGeostore({
+        id: adm0,
+        token,
+      });
+    default:
+      return false;
   }
-  const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
 
-  return apiRequest.get(url, { cancelToken: token });
+  return apiRequest
+    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
+    .then((response) => {
+      const { attributes: geostore } = response?.data?.data || {};
+
+      return {
+        ...geostore,
+        id: geostore?.hash,
+        bbox: BBOXS[adm0] || geostore?.bbox,
+      };
+    });
 };
 
-export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>
+export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) =>
   apiRequest({
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -31,27 +79,4 @@ export const getGeostoreKey = (geojson, onUploadProgress, onDownloadProgress) =>
     url: '/geostore',
     onUploadProgress,
     onDownloadProgress,
-  });
-
-export const getGeodescriberService = ({ geojson, lang, token }) =>
-  // for now we are forcing english until API works
-  apiRequest({
-    method: 'post',
-    url: `/geodescriber/geom?lang=${getGoogleLangCode(
-      lang
-    )}&template=true&app=gfw`,
-    data: {
-      geojson,
-    },
-    cancelToken: token,
-  });
-
-export const getGeodescriber = ({ geostore, lang, token }) =>
-  // for now we are forcing english until API works
-  apiRequest({
-    method: 'get',
-    url: `/geodescriber/?geostore=${geostore}&lang=${getGoogleLangCode(
-      lang
-    )}&app=gfw`,
-    cancelToken: token,
   });

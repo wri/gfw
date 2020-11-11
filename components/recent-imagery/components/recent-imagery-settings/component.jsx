@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
+import cx from 'classnames';
 
 import { Slider } from 'vizzuality-components';
 
@@ -37,6 +38,7 @@ class RecentImagerySettings extends PureComponent {
 
   render() {
     const {
+      className,
       activeTile,
       tiles,
       loading,
@@ -51,7 +53,12 @@ class RecentImagerySettings extends PureComponent {
     const selected = this.state.selected || activeTile || {};
 
     return (
-      <div className="c-recent-imagery-settings prompts-recent-imagery">
+      <div
+        className={cx(
+          'c-recent-imagery-settings prompts-recent-imagery',
+          className
+        )}
+      >
         <div className="top-section">
           <div className="recent-menu">
             <div className="title">Recent satellite imagery</div>
@@ -72,34 +79,36 @@ class RecentImagerySettings extends PureComponent {
             <div className="title">ACQUISITION DATE</div>
             <div className="buttons">
               <Dropdown
-                theme="theme-dropdown-button"
+                className="time-range-selector"
+                theme="theme-dropdown-native-button-green"
                 value={weeks}
                 options={WEEKS}
                 onChange={(option) => {
                   setRecentImagerySettings({ weeks: option });
-                  track('recentImageryDateRange');
+                  trackEvent({
+                    category: 'Map settings',
+                    action: 'Recent imagery feature',
+                    label: 'User changes date range',
+                  });
                 }}
                 native
               />
               <div className="before">before</div>
               <Datepicker
-                date={date ? moment(date) : moment()}
-                handleOnDateChange={(d) => {
-                  setRecentImagerySettings({ date: d.format('YYYY-MM-DD') });
-                  track('recentImageryDate');
+                selected={date ? new Date(date) : new Date()}
+                onChange={(d) => {
+                  setRecentImagerySettings({
+                    date: moment(d).format('YYYY-MM-DD'),
+                  });
+                  trackEvent({
+                    category: 'Map settings',
+                    action: 'Recent imagery feature',
+                    label: 'User changes start date',
+                  });
                 }}
-                settings={{
-                  minDate: '2013-01-01',
-                  maxDate: moment().format('YYYY-MM-DD'),
-                  hideKeyboardShortcutsPanel: true,
-                  noBorder: true,
-                  readOnly: true,
-                  displayFormat: 'D MMM YYYY',
-                  isOutsideRange: (d) =>
-                    d.isAfter(moment()) || d.isBefore(moment('2000-01-01')),
-                  block: true,
-                  placement: 'left',
-                }}
+                minDate={new Date('2013-01-01')}
+                maxDate={new Date()}
+                popperPlacement="bottom-end"
               />
             </div>
           </div>
@@ -121,7 +130,11 @@ class RecentImagerySettings extends PureComponent {
               onChange={this.handleCloundsChange}
               onAfterChange={(d) => {
                 setRecentImagerySettings({ clouds: d });
-                track('recentImageryClouds');
+                trackEvent({
+                  category: 'Map settings',
+                  action: 'Recent imagery feature',
+                  label: 'User changes cloud-cover value',
+                });
               }}
               handleStyle={{
                 backgroundColor: 'white',
@@ -135,7 +148,7 @@ class RecentImagerySettings extends PureComponent {
           </div>
         </div>
         <div className="thumbnails">
-          {tiles && !!tiles.length && (
+          {!loading && tiles && !!tiles.length && (
             <Fragment>
               <div key="thumbnails-header" className="header">
                 <div className="description">
@@ -152,7 +165,7 @@ class RecentImagerySettings extends PureComponent {
                 </div>
                 <Dropdown
                   className="band-selector"
-                  theme="theme-dropdown-button"
+                  theme="theme-dropdown-native-button-green"
                   value={bands}
                   options={BANDS}
                   onChange={(option) => {
@@ -162,7 +175,11 @@ class RecentImagerySettings extends PureComponent {
                       selected: null,
                       selectedIndex: 0,
                     });
-                    track('recentImageryImageType');
+                    trackEvent({
+                      category: 'Map settings',
+                      action: 'Recent imagery feature',
+                      label: 'User changes image type',
+                    });
                   }}
                   native
                 />
@@ -200,7 +217,9 @@ class RecentImagerySettings extends PureComponent {
             <RefreshButton
               refetchFn={() => {
                 setRecentImageryLoading({ loading: false, error: false });
-                track('refetchDataBtn', {
+                trackEvent({
+                  category: 'Refetch data',
+                  action: 'Data failed to fetch, user clicks to refetch',
                   label: 'Recent imagery',
                 });
               }}
@@ -212,9 +231,7 @@ class RecentImagerySettings extends PureComponent {
               message="We can't find additional images for the selection"
             />
           )}
-          {loading && !error && (!tiles || !tiles.length) && (
-            <Loader className="placeholder" />
-          )}
+          {loading && !error && <Loader className="placeholder" />}
         </div>
       </div>
     );
@@ -222,6 +239,7 @@ class RecentImagerySettings extends PureComponent {
 }
 
 RecentImagerySettings.propTypes = {
+  className: PropTypes.string,
   activeTile: PropTypes.object,
   tiles: PropTypes.array,
   settings: PropTypes.object,

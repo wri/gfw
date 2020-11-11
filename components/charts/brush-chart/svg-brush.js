@@ -4,14 +4,17 @@ import PropTypes from 'prop-types';
 
 class SVGBrush extends PureComponent {
   static defaultProps = {
-    extent: [[0, 0], [1, 1]],
+    extent: [
+      [0, 0],
+      [1, 1],
+    ],
     minimumGap: 0,
     maximumGap: 0,
-    onBrushStart: event => {},
-    onBrush: event => {},
-    onBrushEnd: event => {},
-    getEventMouse: event => [event.clientX, event.clientY],
-    brushType: '2d' // 'x', 'y'
+    onBrushStart: (event) => {},
+    onBrush: (event) => {},
+    onBrushEnd: (event) => {},
+    getEventMouse: (event) => [event.clientX, event.clientY],
+    brushType: '2d', // 'x', 'y'
   };
 
   static propTypes = {
@@ -23,45 +26,48 @@ class SVGBrush extends PureComponent {
     onBrush: PropTypes.func.isRequired,
     onBrushEnd: PropTypes.func.isRequired,
     getEventMouse: PropTypes.func.isRequired,
-    brushType: PropTypes.string.isRequired
+    brushType: PropTypes.string.isRequired,
   };
 
   static getDerivedStateFromProps = (props, state) => ({
     ...state,
-    selection: props.selection === undefined ? state.selection : props.selection
+    selection:
+      props.selection === undefined ? state.selection : props.selection,
   });
 
   constructor(props) {
     super(props);
     this.state = {
-      selection: null
+      selection: null,
     };
     this.move = null;
   }
 
-  _handleBrushStart = event => {
+  _handleBrushStart = (event) => {
     event.target.setPointerCapture(event.pointerId);
     this.move = this.props.getEventMouse(event);
     this.props.onBrushStart({
       target: this,
       type: 'start',
       selection: this.state.selection,
-      sourceEvent: event
+      sourceEvent: event,
     });
   };
 
-  _handleBrushEnd = event => {
+  _handleBrushEnd = (event) => {
     this.move = null;
     this.props.onBrushEnd({
       target: this,
       type: 'end',
       selection: this.state.selection,
-      sourceEvent: event
+      sourceEvent: event,
     });
   };
 
   _renderOverlay() {
-    const { extent: [[x0, y0], [x1, y1]] } = this.props;
+    const {
+      extent: [[x0, y0], [x1, y1]],
+    } = this.props;
 
     return (
       <rect
@@ -82,7 +88,7 @@ class SVGBrush extends PureComponent {
       scale,
       maximumGap,
       minimumGap,
-      brushType
+      brushType,
     } = this.props;
     const { selection } = this.state;
     if (!selection) {
@@ -90,8 +96,8 @@ class SVGBrush extends PureComponent {
     }
     const [[x0, y0], [x1, y1]] = selection;
     const [x, y, w, h] = [x0, y0, x1 - x0, y1 - y0];
-    const xbf = x => Math.min(Math.max(x, ex0), ex1);
-    const ybf = y => Math.min(Math.max(y, ey0), ey1);
+    const xbf = (x) => Math.min(Math.max(x, ex0), ex1);
+    const ybf = (y) => Math.min(Math.max(y, ey0), ey1);
     const sxbf = (x0, x1, dx) => {
       if (x0 + dx < ex0) {
         return [ex0, x1 + (ex0 - x0)];
@@ -113,6 +119,7 @@ class SVGBrush extends PureComponent {
 
     const hW = 14;
     const hH = h - 10;
+    const padding = 10;
 
     return (
       <React.Fragment>
@@ -121,9 +128,9 @@ class SVGBrush extends PureComponent {
           fill="#FFFFFF"
           fillOpacity="0.75"
           shapeRendering="crispEdges"
-          x={ex0}
+          x={ex0 - padding}
           y={ey0}
-          width={x0 - ex0}
+          width={x0 - ex0 + padding}
           height={h - 2}
         />
 
@@ -134,7 +141,7 @@ class SVGBrush extends PureComponent {
           shapeRendering="crispEdges"
           x={x1}
           y={ey0}
-          width={ex1 - x1 < 0 ? Math.abs(ex1 - x1) : ex1 - x1}
+          width={(ex1 - x1 < 0 ? Math.abs(ex1 - x1) : ex1 - x1) + padding}
           height={h - 2}
         />
 
@@ -150,7 +157,7 @@ class SVGBrush extends PureComponent {
           width={w}
           height={h - 2}
           onPointerDown={this._handleBrushStart}
-          onPointerMove={event => {
+          onPointerMove={(event) => {
             if (this.move) {
               const [x, y] = this.props.getEventMouse(event);
               const [sx, sy] = this.move;
@@ -160,13 +167,22 @@ class SVGBrush extends PureComponent {
               let selection = this.state.selection;
               switch (brushType) {
                 case '2d':
-                  selection = [[mx0, my0], [mx1, my1]];
+                  selection = [
+                    [mx0, my0],
+                    [mx1, my1],
+                  ];
                   break;
                 case 'x':
-                  selection = [[mx0, y0], [mx1, y1]];
+                  selection = [
+                    [mx0, y0],
+                    [mx1, y1],
+                  ];
                   break;
                 case 'y':
-                  selection = [[x0, my0], [x1, my1]];
+                  selection = [
+                    [x0, my0],
+                    [x1, my1],
+                  ];
               }
               this.move = [x, y];
               this.setState({ selection });
@@ -174,7 +190,7 @@ class SVGBrush extends PureComponent {
                 target: this,
                 type: 'brush',
                 selection,
-                sourceEvent: event
+                sourceEvent: event,
               });
             }
           }}
@@ -182,7 +198,7 @@ class SVGBrush extends PureComponent {
         />
         <g transform={`translate(${x + w - hW / 2},${y + 5})`}>
           <rect
-            ref={input => (this.handleE = input)}
+            ref={(input) => (this.handleE = input)}
             className="handle handle--e"
             cursor="ew-resize"
             width={hW}
@@ -191,7 +207,7 @@ class SVGBrush extends PureComponent {
             filter="url(#shadow1)"
             pointerEvents="visible"
             onPointerDown={this._handleBrushStart}
-            onPointerMove={event => {
+            onPointerMove={(event) => {
               if (this.move) {
                 const [x, y] = this.props.getEventMouse(event);
                 const [sx, sy] = this.move;
@@ -224,7 +240,10 @@ class SVGBrush extends PureComponent {
                 switch (brushType) {
                   case '2d':
                   case 'x':
-                    selection = [[smx0, y0], [smx1, y1]];
+                    selection = [
+                      [smx0, y0],
+                      [smx1, y1],
+                    ];
                 }
                 this.move = [x, y];
                 this.setState({ selection });
@@ -232,7 +251,7 @@ class SVGBrush extends PureComponent {
                   target: this,
                   type: 'brush',
                   selection,
-                  sourceEvent: event
+                  sourceEvent: event,
                 });
                 if (x0 >= mx) {
                   this.handleW.setPointerCapture(event.pointerId);
@@ -256,7 +275,7 @@ class SVGBrush extends PureComponent {
 
         <g transform={`translate(${x - hW / 2},${y + 5})`}>
           <rect
-            ref={input => (this.handleW = input)}
+            ref={(input) => (this.handleW = input)}
             className="handle handle--w"
             cursor="ew-resize"
             width={hW}
@@ -265,7 +284,7 @@ class SVGBrush extends PureComponent {
             filter="url(#shadow1)"
             pointerEvents="visible"
             onPointerDown={this._handleBrushStart}
-            onPointerMove={event => {
+            onPointerMove={(event) => {
               if (this.move) {
                 const [x, y] = this.props.getEventMouse(event);
                 const [sx, sy] = this.move;
@@ -298,7 +317,10 @@ class SVGBrush extends PureComponent {
                 switch (brushType) {
                   case '2d':
                   case 'x':
-                    selection = [[smx0, y0], [smx1, y1]];
+                    selection = [
+                      [smx0, y0],
+                      [smx1, y1],
+                    ];
                 }
                 this.move = [x, y];
                 this.setState({ selection });
@@ -306,7 +328,7 @@ class SVGBrush extends PureComponent {
                   target: this,
                   type: 'brush',
                   selection,
-                  sourceEvent: event
+                  sourceEvent: event,
                 });
                 if (mx >= x1) {
                   this.handleE.setPointerCapture(event.pointerId);

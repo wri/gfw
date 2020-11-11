@@ -6,7 +6,7 @@ import slice from 'lodash/slice';
 import { logout } from 'services/user';
 import Link from 'next/link';
 
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import AoICard from 'components/aoi-card';
 import LoginForm from 'components/forms/login';
@@ -165,7 +165,7 @@ class MapMenuMyGFW extends PureComponent {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  onEditClick({ open: true });
+                  onEditClick(activeArea?.id);
                 }}
               >
                 <Icon icon={editIcon} />
@@ -256,7 +256,11 @@ class MapMenuMyGFW extends PureComponent {
                     this.setState({
                       activeTags: [...activeTags, tag.value],
                     });
-                    track('userSelectsAoiTag', { label: tag.label });
+                    trackEvent({
+                      category: 'User AOIs',
+                      action: 'User filters areas by a tag',
+                      label: tag?.label,
+                    });
                   }
                 }}
               />
@@ -278,8 +282,14 @@ class MapMenuMyGFW extends PureComponent {
                       '--inactive': activeArea && !active,
                     })}
                     onClick={() => {
-                      viewArea({ areaId: area.id });
-                      track('clickAreaOfInterest', { label: area.id });
+                      if (!active) {
+                        viewArea({ areaId: area.id });
+                        trackEvent({
+                          category: 'Map menu',
+                          action: 'Select saved area',
+                          label: area?.id,
+                        });
+                      }
                     }}
                     role="button"
                     tabIndex={0}

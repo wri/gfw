@@ -1,5 +1,6 @@
 import { stringify } from 'query-string';
 
+// redirection for old widget embed routes
 export const getServerSideProps = async ({ res, query }) => {
   const { widget, location, ...rest } = query || {};
   res.statusCode = 302;

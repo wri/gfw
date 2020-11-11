@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
@@ -12,45 +12,61 @@ import BasemapsComponent from './component';
 
 const actions = {
   setModalMetaSettings,
-  ...mapActions
+  ...mapActions,
 };
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
     activeLabels: PropTypes.object,
     basemaps: PropTypes.object,
+    defaultPlanetBasemap: PropTypes.string,
     labels: PropTypes.array,
     activeDatasets: PropTypes.array,
     activeBoundaries: PropTypes.object,
-    setMapSettings: PropTypes.func.isRequired
+    setMapSettings: PropTypes.func.isRequired,
   };
 
-  selectBasemap = basemap => {
-    const { setMapSettings } = this.props;
-    setMapSettings({ basemap });
-    track('basemapChanged', {
-      label: basemap.value
+  selectBasemap = ({ value, year, defaultYear, name, color } = {}) => {
+    const { setMapSettings, defaultPlanetBasemap } = this.props;
+    const basemapOptions = {
+      value,
+      ...(value === 'landsat' && {
+        year: year || defaultYear,
+      }),
+      ...(value === 'planet' && {
+        name: name || defaultPlanetBasemap,
+        color: color || 'rgb',
+      }),
+    };
+
+    setMapSettings({ basemap: basemapOptions });
+    trackEvent({
+      category: 'Map data',
+      action: 'basemap changed',
+      label: value,
     });
   };
 
-  selectLabels = label => {
+  selectLabels = (label) => {
     this.props.setMapSettings({ labels: label.value === 'showLabels' });
-    track('labelChanged', {
-      label: label.label
+    trackEvent({
+      category: 'Map data',
+      action: 'Label changed',
+      label: label?.label,
     });
   };
 
-  selectRoads = roads => {
+  selectRoads = (roads) => {
     this.props.setMapSettings({ roads: roads.value });
-    track('roadsChanged', {
-      roads: roads.label
+    trackEvent('roadsChanged', {
+      roads: roads.label,
     });
   };
 
-  selectBoundaries = item => {
+  selectBoundaries = (item) => {
     const { activeDatasets, activeBoundaries } = this.props;
     const filteredLayers = activeBoundaries
-      ? activeDatasets.filter(l => l.dataset !== activeBoundaries.dataset)
+      ? activeDatasets.filter((l) => l.dataset !== activeBoundaries.dataset)
       : activeDatasets;
     if (item.value !== 'no-boundaries') {
       const newActiveDatasets = [
@@ -58,16 +74,18 @@ class BasemapsContainer extends React.Component {
           layers: item.layers,
           dataset: item.dataset,
           opacity: 1,
-          visibility: true
+          visibility: true,
         },
-        ...filteredLayers
+        ...filteredLayers,
       ];
       this.props.setMapSettings({ datasets: newActiveDatasets });
     } else {
       this.props.setMapSettings({ datasets: filteredLayers });
     }
-    track('boundaryChanged', {
-      label: item.dataset
+    trackEvent({
+      category: 'Map data',
+      action: 'Boundary changed',
+      label: item?.dataset,
     });
   };
 

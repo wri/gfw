@@ -1,9 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'analytics';
+import { trackEvent } from 'utils/analytics';
 import Sticky from 'react-stickynode';
-import { SCREEN_M } from 'utils/constants';
 
 import plusIcon from 'assets/icons/plus.svg?sprite';
 import minusIcon from 'assets/icons/minus.svg?sprite';
@@ -12,8 +11,6 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import './styles.scss';
-
-const isServer = typeof window === 'undefined';
 
 class MapControlsButtons extends PureComponent {
   renderZoomButtons = () => {
@@ -30,7 +27,11 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
-            track('zoomIn');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom in',
+            });
           }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom >= maxZoom}
@@ -41,7 +42,11 @@ class MapControlsButtons extends PureComponent {
           theme="theme-button-map-control"
           onClick={() => {
             setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
-            track('zoomOut');
+            trackEvent({
+              category: 'Map settings',
+              action: 'Other buttons',
+              label: 'Zoom out',
+            });
           }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom <= minZoom}
@@ -57,9 +62,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <div className={`c-dashboard-map-controls ${className || ''}`}>
-        <Sticky top={!isServer && window.innerWidth >= SCREEN_M ? 15 : 73}>
-          {this.renderZoomButtons()}
-        </Sticky>
+        <Sticky top={15}>{this.renderZoomButtons()}</Sticky>
       </div>
     );
   }

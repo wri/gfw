@@ -1,15 +1,12 @@
-import sortBy from 'lodash/sortBy';
-
-import Layout from 'layouts/page';
-import MapBuilder from 'pages/mapbuilder';
+import PageLayout from 'wrappers/page';
+import MapBuilder from 'layouts/mapbuilder';
 
 import { getPostsByType, getPostByType } from 'services/content';
 
-// eslint-disable-next-line react/prop-types
 const MapBuilderPage = (props) => (
-  <Layout title="MapBuilder | Global Forest Watch" description="Mapbuilder">
+  <PageLayout {...props}>
     <MapBuilder {...props} />
-  </Layout>
+  </PageLayout>
 );
 
 export async function getStaticProps() {
@@ -37,7 +34,7 @@ export async function getStaticProps() {
     props: {
       page: page || {},
       tutorials: tutorials || [],
-      apps: sortBy(apps, 'menu_order') || [],
+      apps: apps || [],
       metaTags: page?.yoast_head || '',
     },
   };

@@ -2,7 +2,6 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'redux/registry';
-import { CancelToken } from 'axios';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -13,41 +12,49 @@ class AreasProvider extends PureComponent {
     getAreasProvider: PropTypes.func.isRequired,
     getAreaProvider: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool,
+    loggingIn: PropTypes.bool,
     loading: PropTypes.bool,
     location: PropTypes.object,
+    areas: PropTypes.array,
   };
 
   componentDidMount() {
-    const { getAreaProvider, loggedIn, location, loading } = this.props;
+    const { loggedIn, location, loading } = this.props;
     if (!loading && loggedIn) {
       this.handleGetAreas();
     }
 
     if (!loading && location?.type === 'aoi' && !loggedIn) {
-      getAreaProvider(location.adm0);
+      this.handleGetAreas(location.adm0);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { loggedIn, loading } = this.props;
+    const { loggedIn, loggingIn, loading, location, areas } = this.props;
     const { loggedIn: prevLoggedIn } = prevProps;
 
     if (!loading && loggedIn && loggedIn !== prevLoggedIn) {
       this.handleGetAreas();
     }
+
+    if (
+      !loading &&
+      !loggedIn &&
+      !loggingIn &&
+      location?.type === 'aoi' &&
+      !areas?.length
+    ) {
+      this.handleGetAreas(location.adm0);
+    }
   }
 
-  handleGetAreas = () => {
-    const { getAreasProvider } = this.props;
-    this.cancelAreasFetch();
-    this.areasFetch = CancelToken.source();
+  handleGetAreas = (id) => {
+    const { getAreasProvider, getAreaProvider } = this.props;
 
-    getAreasProvider(this.areasFetch.token);
-  };
-
-  cancelAreasFetch = () => {
-    if (this.areasFetch) {
-      this.areasFetch.cancel('Cancelling areas fetches');
+    if (id) {
+      getAreaProvider(id);
+    } else {
+      getAreasProvider();
     }
   };
 

@@ -2,9 +2,9 @@ import S3 from 'aws-sdk/clients/s3';
 import { config } from 'aws-sdk/lib/core';
 
 const creds = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
+  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+  region: process.env.NEXT_PUBLIC_AWS_REGION,
 };
 
 export const initS3 = () => {

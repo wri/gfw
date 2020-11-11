@@ -19,7 +19,7 @@ class UTMCoords extends PureComponent {
     lngDeg: '',
     lngMin: '',
     lngSec: '',
-    lngCard: 'W'
+    lngCard: 'W',
   };
 
   convertDMSToDD = (degrees, minutes, seconds, cardinal) => {
@@ -37,7 +37,7 @@ class UTMCoords extends PureComponent {
       lngDeg,
       lngMin,
       lngSec,
-      lngCard
+      lngCard,
     } = this.state;
     const { setMapSettings } = this.props;
     const lat = this.convertDMSToDD(
@@ -59,7 +59,7 @@ class UTMCoords extends PureComponent {
     }
   };
 
-  handleKeyPress = e => {
+  handleKeyPress = (e) => {
     if (e.keyCode === 13 && !this.state.error) {
       this.handleSubmit();
     }
@@ -75,7 +75,7 @@ class UTMCoords extends PureComponent {
       lngMin,
       lngSec,
       lngCard,
-      error
+      error,
     } = this.state;
 
     return (
@@ -83,31 +83,28 @@ class UTMCoords extends PureComponent {
         <div className="input-row">
           <input
             value={latDeg}
-            onChange={e =>
-              this.setState({ latDeg: e.target.value, error: false })
-            }
+            onChange={(e) =>
+              this.setState({ latDeg: e.target.value, error: false })}
             onKeyDown={this.handleKeyPress}
             className={cx('coord-input', { error: latDeg && error })}
           />
           {'\u00b0'}
           <input
             value={latMin}
-            onChange={e =>
-              this.setState({ latMin: e.target.value, error: false })
-            }
+            onChange={(e) =>
+              this.setState({ latMin: e.target.value, error: false })}
             className={cx('coord-input', { error: latMin && error })}
             onKeyDown={this.handleKeyPress}
           />
-          {"'"}
+          &apos;
           <input
             value={latSec}
-            onChange={e =>
-              this.setState({ latSec: e.target.value, error: false })
-            }
+            onChange={(e) =>
+              this.setState({ latSec: e.target.value, error: false })}
             className={cx('coord-input', { error: latSec && error })}
             onKeyDown={this.handleKeyPress}
           />
-          {"''"}
+          &apos;&apos;
           <Dropdown
             className="hemisphere-select"
             theme="theme-dropdown-button-small"
@@ -115,44 +112,41 @@ class UTMCoords extends PureComponent {
             options={[
               {
                 label: 'N',
-                value: 'N'
+                value: 'N',
               },
               {
                 label: 'S',
-                value: 'S'
-              }
+                value: 'S',
+              },
             ]}
-            onChange={value => this.setState({ latCard: value.value })}
+            onChange={(value) => this.setState({ latCard: value.value })}
           />
         </div>
         <div className="input-row">
           <input
             value={lngDeg}
-            onChange={e =>
-              this.setState({ lngDeg: e.target.value, error: false })
-            }
+            onChange={(e) =>
+              this.setState({ lngDeg: e.target.value, error: false })}
             onKeyDown={this.handleKeyPress}
             className={cx('coord-input', { error: lngDeg && error })}
           />
           {'\u00b0'}
           <input
             value={lngMin}
-            onChange={e =>
-              this.setState({ lngMin: e.target.value, error: false })
-            }
+            onChange={(e) =>
+              this.setState({ lngMin: e.target.value, error: false })}
             className={cx('coord-input', { error: lngMin && error })}
             onKeyDown={this.handleKeyPress}
           />
-          {"'"}
+          &apos;
           <input
             value={lngSec}
-            onChange={e =>
-              this.setState({ lngSec: e.target.value, error: false })
-            }
+            onChange={(e) =>
+              this.setState({ lngSec: e.target.value, error: false })}
             className={cx('coord-input', { error: lngSec && error })}
             onKeyDown={this.handleKeyPress}
           />
-          {"''"}
+          &apos;&apos;
           <Dropdown
             className="hemisphere-select"
             theme="theme-dropdown-button-small"
@@ -160,14 +154,14 @@ class UTMCoords extends PureComponent {
             options={[
               {
                 label: 'W',
-                value: 'W'
+                value: 'W',
               },
               {
                 label: 'E',
-                value: 'E'
-              }
+                value: 'E',
+              },
             ]}
-            onChange={value => this.setState({ lngCard: value.value })}
+            onChange={(value) => this.setState({ lngCard: value.value })}
           />
         </div>
         <Button
@@ -191,7 +185,7 @@ class UTMCoords extends PureComponent {
 }
 
 UTMCoords.propTypes = {
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
 };
 
 export default UTMCoords;

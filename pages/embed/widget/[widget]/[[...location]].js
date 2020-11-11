@@ -1,14 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import useRouter from 'utils/router';
-import { decodeParamsForState } from 'utils/stateToUrl';
+import { decodeQueryParams } from 'utils/url';
+
 import { getLocationData } from 'services/location';
 
-import LayoutEmbed from 'layouts/embed';
-import WidgetEmbed from 'pages/dashboards/components/embed';
-import ConfirmationMessage from 'components/confirmation-message';
+import LayoutEmbed from 'wrappers/embed';
+import WidgetEmbed from 'layouts/embed/widget';
+
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';
 
 import {
@@ -16,28 +17,64 @@ import {
   setActiveWidget,
 } from 'components/widgets/actions';
 
-export const getStaticProps = async (ctx) => {
-  let locationData = {};
+const errorProps = {
+  error: 404,
+  title: 'Widget Not Found | Global Forest Watch',
+  errorTitle: 'Widget Not Found',
+};
 
-  try {
-    locationData = await getLocationData(ctx?.params?.location);
-  } catch (err) {
-    locationData = {};
+const ALLOWED_TYPES = ['global', 'country', 'aoi'];
+
+export const getStaticProps = async ({ params }) => {
+  const { location, widget } = params || {};
+  const [type] = location || [];
+
+  if (!type || !widget || !ALLOWED_TYPES.includes(type)) {
+    return {
+      props: errorProps,
+    };
   }
+
+  if (type === 'global') {
+    return {
+      props: {
+        widget: widget || '',
+        title: `Global Deforestation Rates & Statistics | GFW`,
+        description: `Explore interactive tree cover loss data charts and analyze global forest trends, including land use change, deforestation rates and forest fires.`,
+      },
+    };
+  }
+
+  const locationData = await getLocationData(location).catch((err) => {
+    if (err?.response?.status === 401) {
+      return {
+        props: {
+          error: 401,
+          title: 'Area is private | Global Forest Watch',
+          errorTitle: 'Area is private',
+        },
+      };
+    }
+
+    return {
+      props: errorProps,
+    };
+  });
 
   const { locationName } = locationData || {};
 
+  if (!locationName) {
+    return {
+      props: errorProps,
+    };
+  }
+
   return {
-    props: locationName
-      ? {
-          widget: ctx?.params?.widget,
-          title: `${locationName} Deforestation Rates & Statistics | GFW`,
-          description: `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
-          noIndex: true,
-        }
-      : {
-          title: 'Widget embed not found',
-        },
+    props: {
+      widget: widget || '',
+      title: `${locationName} Deforestation Rates & Statistics | GFW`,
+      description: `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
+    },
   };
 };
 
@@ -54,8 +91,8 @@ const WidgetEmbedPage = (props) => {
   const { query, asPath, isFallback } = useRouter() || {};
   const fullPathname = asPath?.split('?')?.[0];
 
-  useMemo(() => {
-    const { widget, ...widgets } = decodeParamsForState(query) || {};
+  useEffect(() => {
+    const { widget, ...widgets } = decodeQueryParams(query) || {};
 
     if (widgets) {
       dispatch(setWidgetsSettings(widgets));
@@ -74,21 +111,24 @@ const WidgetEmbedPage = (props) => {
     }
   }, []);
 
-  return ready ? (
+  return (
     <LayoutEmbed
       {...props}
-      exploreLink={`/dashboards/${query?.location?.join('/')}`}
+      exploreLink={
+        ready
+          ? `/dashboards/${query?.location?.join('/')}`
+          : '/dashboards/global/'
+      }
+      noIndex
     >
-      {props?.title === 'Widget not found' ? (
-        <ConfirmationMessage title="Location not found" error large />
-      ) : (
+      {ready && (
         <>
           <WidgetsEmbedUrlProvider />
-          <WidgetEmbed embed />
+          <WidgetEmbed embed trase={query?.trase} {...props} />
         </>
       )}
     </LayoutEmbed>
-  ) : null;
+  );
 };
 
 WidgetEmbedPage.propTypes = {

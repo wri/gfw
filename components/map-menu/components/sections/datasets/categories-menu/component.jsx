@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+
+import { Row, Column, Button } from 'gfw-components';
 
 import Icon from 'components/ui/icon';
 
@@ -12,27 +13,32 @@ class CategoriesMenu extends PureComponent {
 
     return (
       <div className="c-categories-menu">
-        <h2 className="categories-title">DATASETS</h2>
-        <ul className="categories-wrapper">
-          {categories.map(c => (
-            <li key={c.category}>
-              <button
-                className={cx({ active: c.active })}
-                onClick={() =>
-                  onSelectCategory({ datasetCategory: c.category })
-                }
-              >
-                <div className="category-button">
+        <Row>
+          <Column>
+            <h2 className="categories-title">DATASETS</h2>
+          </Column>
+          {categories.map((c) => (
+            <Column key={c.category} width={[1 / 4]}>
+              <div className="category-item">
+                <Button
+                  className="category-btn"
+                  round
+                  size="large"
+                  onClick={() =>
+                    onSelectCategory({ datasetCategory: c.category })}
+                >
                   {!!c.layerCount && (
-                    <span className="btn-layer-count">{c.layerCount}</span>
+                    <span className="category-btn-count">{c.layerCount}</span>
                   )}
                   <Icon icon={c.icon} />
-                </div>
-                {c.label}
-              </button>
-            </li>
+                </Button>
+                <span className="category-item-label">
+                  {c.label}
+                </span>
+              </div>
+            </Column>
           ))}
-        </ul>
+        </Row>
       </div>
     );
   }
@@ -40,7 +46,7 @@ class CategoriesMenu extends PureComponent {
 
 CategoriesMenu.propTypes = {
   categories: PropTypes.array,
-  onSelectCategory: PropTypes.func
+  onSelectCategory: PropTypes.func,
 };
 
 export default CategoriesMenu;

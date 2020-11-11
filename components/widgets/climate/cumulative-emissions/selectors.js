@@ -7,11 +7,11 @@ import moment from 'moment';
 
 import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data && state.data.data;
-const getColors = state => state.colors;
-const getInteractionData = state => state.settings.interaction;
-const getSentences = state => state.sentences;
-const getSettings = state => state.settings;
+const getAlerts = (state) => state.data && state.data.data;
+const getColors = (state) => state.colors;
+const getInteractionData = (state) => state.interaction;
+const getSentences = (state) => state.sentences;
+const getSettings = (state) => state.settings;
 
 const TARGET_EMISSIONS = 265000000;
 const TARGET_DEFORESTATION = 988880;
@@ -30,15 +30,15 @@ export const getData = createSelector(
     const groupedByYear = Object.entries(data).reduce(
       (acc, [y, arr]) => ({
         ...acc,
-        [y]: arr.map(d => ({
+        [y]: arr.map((d) => ({
           ...d,
           count:
             variable === 'cumulative_emissions'
               ? d[variable] * 1000000
               : d[variable],
           year: y,
-          target
-        }))
+          target,
+        })),
       }),
       {}
     );
@@ -46,13 +46,13 @@ export const getData = createSelector(
     const latestFullWeek = moment().subtract(2, 'w');
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
-      year: latestFullWeek.year()
+      year: latestFullWeek.year(),
     };
 
     const years = range(2015, lastWeek.year);
     const yearLengths = {};
 
-    years.forEach(y => {
+    years.forEach((y) => {
       if (lastWeek.year === parseInt(y, 10)) {
         yearLengths[y] = lastWeek.isoWeek;
       } else if (moment(`${y}-12-31`).weekday() === 1) {
@@ -87,8 +87,8 @@ export const getStdDev = createSelector(
     const stdevs = [];
     const means = [];
 
-    for (let weeknum = 0; weeknum < 53; weeknum++) {
-      const n = years.filter(y => !!data[y][weeknum]).length;
+    for (let weeknum = 0; weeknum < 53; weeknum += 1) {
+      const n = years.filter((y) => !!data[y][weeknum]).length;
       if (n === 1) {
         means.push(means[means.length - 1]);
         stdevs.push(stdevs[stdevs.length - 1]);
@@ -100,9 +100,9 @@ export const getStdDev = createSelector(
         const mean = sum / n;
         const divident = years.reduce(
           (acc, y) =>
-            (!data[y][weeknum]
+            !data[y][weeknum]
               ? acc
-              : acc + (data[y][weeknum].count - mean) ** 2),
+              : acc + (data[y][weeknum].count - mean) ** 2,
           0
         );
         const stdev = Math.sqrt(divident / n);
@@ -116,18 +116,18 @@ export const getStdDev = createSelector(
         ...d,
         mean: means[w],
         twoPlusStdDev: [means[w], means[w] + stdevs[w]],
-        twoMinusStdDev: [means[w] - stdevs[w], means[w]]
+        twoMinusStdDev: [means[w] - stdevs[w], means[w]],
       };
     });
   }
 );
 
-export const getDates = createSelector([getStdDev], data => {
+export const getDates = createSelector([getStdDev], (data) => {
   if (!data) return null;
   return getDatesData(data);
 });
 
-export const parseData = createSelector([getDates], data => {
+export const parseData = createSelector([getDates], (data) => {
   if (!data) return null;
   return data;
 });
@@ -137,9 +137,7 @@ export const parseConfig = createSelector(
   (colors, settings) =>
     getChartConfig(
       colors,
-      moment()
-        .subtract(2, 'w')
-        .format('YYYY-MM-DD'),
+      moment().subtract(2, 'w').format('YYYY-MM-DD'),
       settings.variable === 'cumulative_emissions' ? 'tCO\u2082' : 'ha'
     )
 );
@@ -163,31 +161,30 @@ export const parseSentence = createSelector(
       percent_to_deforestation_target,
       percent_to_emissions_target,
       cumulative_emissions,
-      cumulative_deforestation
-    } =
-      lastDate || {};
+      cumulative_deforestation,
+    } = lastDate || {};
 
     const budget = formatNumber({
       num:
         variable === 'cumulative_emissions'
           ? percent_to_emissions_target
           : percent_to_deforestation_target,
-      unit: '%'
+      unit: '%',
     });
 
     const params = {
       weeknum,
       year,
-      alerts: formatNumber({ num: alerts, unit: '' }),
+      alerts: formatNumber({ num: alerts, unit: 'counts' }),
       deforestation: formatNumber({
         num: cumulative_deforestation,
-        unit: 'ha'
+        unit: 'ha',
       }),
       emissions: formatNumber({
         num: cumulative_emissions * 1000000,
-        unit: 'tCO\u2082'
+        unit: 'tCO\u2082',
       }),
-      budget
+      budget,
     };
 
     return { sentence, params };
@@ -197,5 +194,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

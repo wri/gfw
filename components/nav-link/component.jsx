@@ -27,8 +27,10 @@ class NavLink extends PureComponent {
     const { pathname, asPath: oldPath } = router;
     const child = Children.only(children);
     const asPath = oldPath?.split('#')[0];
+    const path = oldPath?.split('?')?.[0];
     const isActiveLink =
-      (asPath === props.href || asPath === props.as) && !!activeClassName;
+      (path === props.href || asPath === props.href || asPath === props.as) &&
+      !!activeClassName;
     const baseRoute = pathname?.split('/')[1];
     const basePath = props?.href?.split('/')[1];
     const isActiveShallow =
