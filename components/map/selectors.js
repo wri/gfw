@@ -474,7 +474,7 @@ export const getActiveLayersWithDates = createSelector(
                 startMonth: moment(params.startDate).month(),
                 startDay: moment(params.startDate).dayOfYear(),
               }),
-              ...(endDate && {
+              ...(params?.endDate && {
                 endYear: moment(params.endDate).year(),
                 endMonth: moment(params.endDate).month(),
                 endDay: moment(params.endDate).dayOfYear(),
