@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Desktop, Mobile, Carousel, Button, Row, Column } from 'gfw-components';
 
-import Card from 'components/ui/card';
+import SimpleCard from 'components/ui/simple-card';
 import NoContent from 'components/ui/no-content';
 
 import newsImage from './images/news-bg.jpg';
@@ -15,16 +15,15 @@ const HomeNews = ({ articles }) => {
     articles?.map((item) => (
       <a
         key={item.name}
+        className="news-card"
         href={item.link}
         target="_blank"
-        className="news-card"
         rel="noopener noreferrer"
       >
-        <Card
-          data={{
-            title: item.name,
-            summary: item.description,
-          }}
+        <SimpleCard
+          className="news-card"
+          title={item.name}
+          description={item.description}
         />
       </a>
     ));
@@ -38,7 +37,7 @@ const HomeNews = ({ articles }) => {
     >
       <Row>
         <Column>
-          <h3 className="news-title">New on Global Forest Watch</h3>
+          <h2 className="news-title">New on Global Forest Watch</h2>
           <div className="news-carousel">
             {articles ? (
               <>
