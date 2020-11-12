@@ -51,9 +51,8 @@ class TimelineContainer extends PureComponent {
       rangeInterval
     );
     if (
-      (maxRange && !diffInterval) ||
-      diffInterval >= maxRange ||
-      diffInterval < 0
+      maxRange &&
+      (!diffInterval || diffInterval >= maxRange || diffInterval < 0)
     ) {
       if (position) {
         const modDate = date.subtract(maxRange, rangeInterval);

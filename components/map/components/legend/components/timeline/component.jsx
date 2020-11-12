@@ -33,7 +33,7 @@ const Timeline = (props) => {
           From
           <Datepicker
             selected={new Date(maxRange ? startDateAbsolute : startDate)}
-            onChange={(date) => handleOnDateChange(moment(date), 0, true)}
+            onChange={(date) => handleOnDateChange(moment(date), 0, !!maxRange)}
             minDate={new Date(minDate)}
             maxDate={maxRange ? new Date(maxDate) : new Date(trimEndDate)}
             isOutsideRange={(d) =>
@@ -42,10 +42,8 @@ const Timeline = (props) => {
           />
           to
           <Datepicker
-            selected={
-              new Date(moment(maxRange ? endDateAbsolute : trimEndDate))
-            }
-            onChange={(date) => handleOnDateChange(moment(date), 2, true)}
+            selected={new Date(maxRange ? endDateAbsolute : trimEndDate)}
+            onChange={(date) => handleOnDateChange(moment(date), 2, !!maxRange)}
             minDate={maxRange ? new Date(minDate) : new Date(startDate)}
             maxDate={new Date(maxDate)}
             isOutsideRange={(d) =>
