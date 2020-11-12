@@ -22,21 +22,25 @@
 }
 
 .c-datepicker-portal {
-  font-family: inherit;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(17, 55, 80, 0.4);
+  .react-datepicker-popper {
+    z-index: 10000;
+  }
 
-  @media screen and (min-width: $screen-m) {
-    background-color: transparent;
-    display: block;
+  @media screen and (max-width: $screen-m) {
+    .react-datepicker-popper {
+      font-family: inherit;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(17, 55, 80, 0.4);
+      transform: none !important;
+      margin: 0 !important;
+    }
   }
 
   > div:first-child {
