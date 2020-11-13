@@ -189,6 +189,27 @@ const decodes = {
   color.g = green;
   color.b = blue;
   `,
+  forestHeight: `
+    float h = color.r * 255.;
+
+    float r1 = 188. / 255.;
+    float g1 = 255. / 255.;
+    float b1 = 184. / 255.;
+
+    float r2 = 0. / 255.;
+    float g2 = 92. / 255.;
+    float b2 = 24. / 255.;
+
+    vec3 color1 = vec3(r1, g1, b1);
+    vec3 color2 = vec3(r2, g2, b2);
+    color = mix(color1, color2, h / 41.);
+
+    if (h >= height && h <= 41.) {
+      alpha = 1.;
+    } else {
+      alpha = 0.;
+    }
+  `,
   biomassLoss: `
     float countBuckets = 5.; // buckets length / 3: three bands
     float year = 2000.0 + (color.r * 255.);
@@ -597,6 +618,7 @@ export default {
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
   staticRemap: decodes.staticRemap,
+  forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
   terrai: decodes.terrai,

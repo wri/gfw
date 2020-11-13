@@ -443,7 +443,7 @@ export const getActiveLayersWithDates = createSelector(
   (layers) => {
     if (isEmpty(layers)) return [];
     return layers.map((l) => {
-      const { decodeFunction, decodeParams } = l;
+      const { decodeFunction, decodeParams, params } = l;
       const { startDate, endDate } = decodeParams || {};
 
       return {
@@ -463,6 +463,23 @@ export const getActiveLayersWithDates = createSelector(
                 endDay: moment(endDate).dayOfYear(),
               }),
               ...getDayRange(decodeParams),
+            },
+          }),
+        ...(params &&
+          params.startDate && {
+            params: {
+              ...params,
+              ...(params.startDate && {
+                startYear: moment(params.startDate).year(),
+                startMonth: moment(params.startDate).month(),
+                startDay: moment(params.startDate).dayOfYear(),
+              }),
+              ...(params?.endDate && {
+                endYear: moment(params.endDate).year(),
+                endMonth: moment(params.endDate).month(),
+                endDay: moment(params.endDate).dayOfYear(),
+              }),
+              ...getDayRange(params),
             },
           }),
       };
