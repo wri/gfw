@@ -24,8 +24,7 @@ registerLocale('zh', zh);
 registerLocale('pt_BR', ptBR);
 registerLocale('id', id);
 
-const Datepicker = ({ lang, ...props }) => {
-  const [startDate, setStartDate] = useState(new Date());
+const Datepicker = ({ lang, selected, minDate, maxDate, ...props }) => {
   const [open, setOpen] = useState(false);
   const inputEl = useRef();
 
@@ -51,27 +50,38 @@ const Datepicker = ({ lang, ...props }) => {
     </Portal>
   );
 
+  const selectedUTC = new Date(
+    selected.getTime() + selected.getTimezoneOffset() * 60000
+  );
+  const minDateUTC = new Date(
+    minDate.getTime() + minDate.getTimezoneOffset() * 60000
+  );
+  const maxDateUTC = new Date(
+    maxDate.getTime() + maxDate.getTimezoneOffset() * 60000
+  );
+
   return (
     <div className="c-datepicker notranslate" ref={inputEl}>
       <ReactDatePicker
         open={open}
         dateFormat="dd MMM yyyy"
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
         onSelect={() => setOpen(false)}
         customInput={<CustomInput />}
         calendarClassName="datepicker-calendar"
         renderCustomHeader={(headerProps) => (
           <DatepickerHeader
             {...headerProps}
-            minDate={props?.minDate}
-            maxDate={props?.maxDate}
+            minDate={minDateUTC}
+            maxDate={maxDateUTC}
           />
         )}
         popperContainer={PortalContainer}
         locale={lang || 'en'}
         calendarContainer={CalendarWrapper}
         {...props}
+        selected={selectedUTC}
+        minDate={minDateUTC}
+        maxDate={maxDateUTC}
       />
     </div>
   );
@@ -83,8 +93,9 @@ Datepicker.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
   children: PropTypes.node,
-  minDate: PropTypes.object,
-  maxDate: PropTypes.object,
+  selected: PropTypes.string,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
 };
 
 export default Datepicker;
