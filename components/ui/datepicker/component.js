@@ -93,9 +93,9 @@ Datepicker.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
   children: PropTypes.node,
-  selected: PropTypes.string,
-  minDate: PropTypes.string,
-  maxDate: PropTypes.string,
+  selected: PropTypes.object,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
 };
 
 export default Datepicker;

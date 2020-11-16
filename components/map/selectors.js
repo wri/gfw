@@ -214,8 +214,12 @@ export const getDatasetsWithConfig = createSelector(
             ? moment(maxDate).format(latestFormat)
             : maxDate;
 
-          const { min: minRange, max: maxRange, interval: rangeInterval } =
-            (timelineConfigInit && timelineConfigInit.dateRange) || {};
+          const {
+            min: minRange,
+            max: maxRange,
+            interval: rangeInterval,
+            default: defaultRange,
+          } = (timelineConfigInit && timelineConfigInit.dateRange) || {};
 
           const timelineConfig = {
             ...timelineConfigInit,
@@ -223,10 +227,10 @@ export const getDatasetsWithConfig = createSelector(
               rangeInterval &&
               timelineConfigInit && {
                 startDate: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(maxRange, rangeInterval)
+                  .subtract(defaultRange || maxRange, rangeInterval)
                   .format('YYYY-MM-DD'),
                 startDateAbsolute: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(maxRange, rangeInterval)
+                  .subtract(defaultRange || maxRange, rangeInterval)
                   .format('YYYY-MM-DD'),
               }),
             maxRange,
@@ -240,10 +244,10 @@ export const getDatasetsWithConfig = createSelector(
               rangeInterval &&
               timelineConfigInit && {
                 startDate: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(maxRange, rangeInterval)
+                  .subtract(defaultRange || maxRange, rangeInterval)
                   .format('YYYY-MM-DD'),
                 startDateAbsolute: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(maxRange, rangeInterval)
+                  .subtract(defaultRange || maxRange, rangeInterval)
                   .format('YYYY-MM-DD'),
                 endDateAbsolute: maxDate || l.params.endDate,
               }),
