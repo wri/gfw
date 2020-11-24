@@ -1,6 +1,9 @@
 import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
+
+import OTFAnalysis from 'services/otf-analysis';
+
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
@@ -149,6 +152,18 @@ export default {
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
+
+    if (!shouldQueryPrecomputedTables(params)) {
+      const LAYERS = [
+        "umd_tree_cover_loss__year"
+      ]
+
+      const analysis = new OTFAnalysis(params.geostore.id)
+      console.log('not cached', params.geostore.id);
+      analysis.sum(LAYERS);
+      analysis.getData();
+
+    }
 
     if (shouldQueryPrecomputedTables(params)) {
       const globalLocation = {
