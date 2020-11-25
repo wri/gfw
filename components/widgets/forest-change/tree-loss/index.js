@@ -30,23 +30,25 @@ const getGlobalLocation = (params) => ({
 
 const getOTFAnalysis = async params => {
  const analysis = new OTFAnalysis(params.geostore.id)
- analysis.setLayer(FOREST_LOSS, params);
  analysis.setDates({
-   startDate: params.startDate,
-   endDate: params.endDate
- })
+    startDate: params.startDate,
+    endDate: params.endDate
+ });
+ analysis.setData(['loss', 'extent'], params);
+
  return analysis.getData().then(response => {
-   const { data: { data } } = response;
+   const { loss, extent } = response;
    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
      MIN_YEAR,
      MAX_YEAR
    );
+
    return {
-     loss: data.map(d => ({
+     loss: loss.data.map(d => ({
        area: d.area__ha,
        year: d.umd_tree_cover_loss__year
      })),
-     extent: 22953.86,
+     extent: extent?.data?.area__ha,
      settings: {
        startYear,
        endYear,
@@ -142,7 +144,7 @@ export default {
     extentYear: 2000,
     ifl: 2000,
   },
-  getData: async (params = {}) => {
+  getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
 
     if (shouldQueryPrecomputedTables(params)) {
