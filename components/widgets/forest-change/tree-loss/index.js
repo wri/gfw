@@ -5,7 +5,6 @@ import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
 import OTFAnalysis from 'services/otf-analysis';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
-import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
@@ -29,43 +28,36 @@ const getGlobalLocation = (params) => ({
   adm2: params.type === 'global' ? null : params.adm2,
 });
 
-export const getDataAPI = (params) =>
-  fetchAnalysisEndpoint({
-    ...params,
-    name: 'umd',
-    params,
-    slug: 'umd-loss-gain',
-    version: 'v1',
-    aggregate: false,
-  }).then((response) => {
-    const { data } = (response && response.data) || {};
-    const lossData = data && data.attributes.loss;
-    const loss =
-      lossData &&
-      Object.keys(lossData).map((d) => ({
-        area: lossData[d],
-        year: parseInt(d, 10),
-      }));
-    const extent = data.attributes.treeExtent;
-
-    const { startYear, endYear, range } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
-
-    return {
-      loss,
-      extent,
-      settings: {
-        startYear,
-        endYear,
-        yearsRange: range,
-      },
-      options: {
-        yearsRange: range,
-      },
-    };
-  });
+const getOTFAnalysis = async params => {
+ const analysis = new OTFAnalysis(params.geostore.id)
+ analysis.setLayer(FOREST_LOSS, params);
+ analysis.setDates({
+   startDate: params.startDate,
+   endDate: params.endDate
+ })
+ return analysis.getData().then(response => {
+   const { data: { data } } = response;
+   const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
+     MIN_YEAR,
+     MAX_YEAR
+   );
+   return {
+     loss: data.map(d => ({
+       area: d.area__ha,
+       year: d.umd_tree_cover_loss__year
+     })),
+     extent: 22953.86,
+     settings: {
+       startYear,
+       endYear,
+       yearsRange
+     },
+     options: {
+       yearsRange
+     }
+   }
+ })
+}
 
 export default {
   widget: 'treeLoss',
@@ -150,20 +142,8 @@ export default {
     extentYear: 2000,
     ifl: 2000,
   },
-  getData: (params = {}) => {
+  getData: async (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
-
-    if (!shouldQueryPrecomputedTables(params)) {
-      const LAYERS = [
-        "umd_tree_cover_loss__year"
-      ]
-
-      const analysis = new OTFAnalysis(params.geostore.id)
-      console.log('not cached', params.geostore.id);
-      analysis.sum(LAYERS);
-      analysis.getData();
-
-    }
 
     if (shouldQueryPrecomputedTables(params)) {
       const globalLocation = {
@@ -204,7 +184,7 @@ export default {
       );
     }
 
-    return getDataAPI(params);
+    return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);

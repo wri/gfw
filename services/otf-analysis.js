@@ -1,19 +1,24 @@
+import has from 'lodash/has';
+
 import { apiRequest } from 'utils/request';
+
+import otfLayers from 'data/otf-layers';
 
 // Perform a OTF(on the fly) analysis for un-cached widgets
 // https://data-api.globalforestwatch.org/#tag/Analysis
 class OTFAnalysis {
-  constructor(geostoreId, geostoreOrigin = 'gfw') {
+  constructor(geostoreId, geostoreOrigin = 'rw') {
     if (!geostoreId) {
-      throw new Error('OTFAnalysis: geostoreId is required');
+      this.throwError('geostoreId is required, new OTFAnalysis( -> geostoreId)');
     }
 
     this.endpoint = 'https://data-api.globalforestwatch.org/analysis/';
     this.path = 'zonal';
+    this.layerInstance = null;
     this.geostoreId = geostoreId;
     this.geostoreOrigin = geostoreOrigin;
-    this.sumLayers = null;
-    this.groupLayers = null;
+    this.sumFields = null;
+    this.groupFields = null;
     this.layerFilters = null;
     this.startDate = null;
     this.endDate = null;
@@ -21,13 +26,42 @@ class OTFAnalysis {
     this.query = null;
   }
 
-  sum(xIn) {
-    this.sumLayers = xIn;
+  throwError(msg) { // eslint-disable-line
+    throw new Error(`OTFAnalysis: ${msg}`);
   }
 
+  setLayer(layer, params) {
+    if (!has(otfLayers, layer)) {
+      this.throwError(`layer ${layer} does not exsist in data/otf-layers.js`);
+    }
+    this.layerInstance = otfLayers[layer];
+    this.sumFields = this.layerInstance.sum;
+    this.groupFields = this.layerInstance.groupBy;
+    if (this.layerInstance.filters) {
+      this.layerFilters = [];
+      this.layerInstance.filters.forEach(filter => {
+        // If variables are defined in a filter, replace them with props
+        // from current widget instance, if they don't exists we throw error
+        const match = filter.match(/{([a-zA-Z]+)}/g);
+        let f = filter;
+        if (match && match.length) {
+          match.forEach(v => {
+            const paramValue = v.replace(/{|}/g, '');
+            if (!has(params, paramValue)) {
+              this.throwError(`param ${paramValue} does not exsist in params`);
+            }
+            f = f.replace(v, params[paramValue])
+          });
+          this.layerFilters.push(f);
+        } else {
+          this.layerFilters.push(f);
+        }
+      });
+    }
+  }
 
-  groupBy(xIn) {
-    this.groupLayers = xIn;
+  setQueryParam(key, value, token = null) {
+    this.query += `${token || '&'}${key}=${value}`;
   }
 
   filter(xIn) {
@@ -40,37 +74,55 @@ class OTFAnalysis {
   }
 
   buildQuery() {
-    if (!this.sumLayers) { throw new Error('OTFAnalysis: sum is required to perform analysis') }
-    this.query = this.endpoint;
-    this.query += `${this.path}/${this.geostoreId}`;
+    const {
+      endpoint,
+      path,
+      geostoreId,
+      geostoreOrigin,
+      sumFields,
+      groupFields,
+      layerFilters,
+      startDate,
+      endDate
+    } = this;
 
-    this.query += `?geostore_origin=${this.geostoreOrigin}`;
+    if (!sumFields) {
+      this.throwError('sum is required to perform analysis analysis set layer to continue');
+    }
 
-    this.sumLayers.forEach(layer => {
-      this.query += `&sum=${layer}`;
+    this.query = endpoint;
+    this.query += `${path}/${geostoreId}`;
+
+    this.setQueryParam('geostore_origin', geostoreOrigin, '?');
+
+    sumFields.forEach(layer => {
+      this.setQueryParam('sum', layer);
     });
 
-    if (this.groupLayers) {
-      this.query += `&group_by=${this.groupBy.join(',')}`;
+    if (groupFields) {
+      groupFields.forEach(group => {
+        this.setQueryParam('group_by', group);
+      });
     }
 
-    if (this.layerFilters) {
-      this.query += `&filters=${this.layerFilters.join(',')}`;
+    if (layerFilters) {
+      this.layerFilters.forEach(filter => {
+        this.setQueryParam('filters', filter);
+      });
     }
 
-    if (this.startDate) {
-      this.query += `&start_date=${this.startDate}`;
+    if (startDate) {
+      this.setQueryParam('start_date', startDate);
     }
 
-    if (this.endDate) {
-      this.query += `&end_date=${this.endDate}`;
+    if (endDate) {
+      this.setQueryParam('end_date', endDate);
     }
   }
 
   async getData() {
     this.buildQuery();
-    const data = await apiRequest.get(this.query);
-    console.log('data', data);
+    return apiRequest.get(this.query);
   }
 
 }
