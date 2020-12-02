@@ -1,11 +1,17 @@
+import {
+  AREA_HA,
+  TREE_COVER_LOSS_YEAR,
+  TREE_COVER_DENSITY
+} from 'data/layers-v2';
+
 export default {
   loss: {
-    sum: ['area__ha'],
-    groupBy: ['umd_tree_cover_loss__year'],
-    filters: ['umd_tree_cover_density_{extentYear}__{threshold}'],
+    sum: [AREA_HA],
+    groupBy: [TREE_COVER_LOSS_YEAR],
+    filters: [TREE_COVER_DENSITY]
   },
   extent: {
-    sum: ['area__ha'],
-    filters: ['umd_tree_cover_density_{extentYear}__{threshold}']
+    sum: [AREA_HA],
+    filters: [TREE_COVER_DENSITY]
   }
-}
+};
