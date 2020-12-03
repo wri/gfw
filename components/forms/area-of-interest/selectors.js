@@ -54,8 +54,6 @@ export const getInitialValues = createSelector(
       ]),
       geostore: geostoreId,
       location: {
-        type: 'geostore',
-        adm0: geostoreId,
         ...location,
       },
       ...rest,
