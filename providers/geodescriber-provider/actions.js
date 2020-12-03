@@ -19,7 +19,7 @@ export const getGeodescriber = createThunkAction(
   (params) => (dispatch) => {
     if (!isEmpty(params)) {
       dispatch(setGeodescriberLoading({ loading: true, error: false }));
-      getGeodescriberByGeoJson(params)
+      getGeodescriberByGeoJson({ ...params, template: true })
         .then((response) => {
           dispatch(setGeodescriber(response.data.data));
         })

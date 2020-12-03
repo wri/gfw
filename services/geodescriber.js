@@ -1,25 +1,18 @@
-import { getGoogleLangCode } from 'utils/lang';
 import { apiRequest } from 'utils/request';
 
-export const getGeodescriberByGeoJson = ({ geojson, lang, token }) =>
-  // for now we are forcing english until API works
+export const getGeodescriberByGeoJson = ({ geojson, token, template }) =>
   apiRequest({
     method: 'post',
-    url: `/geodescriber/geom?lang=${getGoogleLangCode(
-      lang
-    )}&template=true&app=gfw`,
+    url: `/geodescriber/geom?template=${template ? 'true' : 'false'}&app=gfw`,
     data: {
       geojson,
     },
     cancelToken: token,
   });
 
-export const getGeodescriberByGeostore = ({ geostore, lang, token }) =>
-  // for now we are forcing english until API works
-  apiRequest({
-    method: 'get',
-    url: `/geodescriber/?geostore=${geostore}&lang=${getGoogleLangCode(
-      lang
-    )}&app=gfw`,
-    cancelToken: token,
-  });
+export const getGeodescriberByGeostore = async ({ geostore, token }) => {
+  const geostoreResponse = await apiRequest(`/v2/geostore/${geostore}`);
+  const { geojson } = geostoreResponse?.data?.data?.attributes || {};
+
+  return getGeodescriberByGeoJson({ geojson, token });
+};

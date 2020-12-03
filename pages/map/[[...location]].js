@@ -47,7 +47,38 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
-  const locationData = await getLocationData(params?.location).catch((err) => {
+  try {
+    const locationData = await getLocationData(params?.location);
+    const { locationName } = locationData || {};
+
+    if (!locationName) {
+      return {
+        props: notFoundProps,
+      };
+    }
+
+    const title = `${locationName} Interactive Forest Map ${
+      params?.location?.[2] ? '' : '& Tree Cover Change Data '
+    }| GFW`;
+    const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
+    const noIndex = !['country', 'wdpa'].includes(type);
+
+    return {
+      props: {
+        title,
+        description,
+        noIndex,
+      },
+    };
+  } catch (err) {
+    if (type === 'geostore') {
+      return {
+        props: {
+          title: 'Interactive Forest Map for custom area | GFW',
+        },
+      };
+    }
+
     if (err?.response?.status === 401) {
       return {
         props: {
@@ -61,29 +92,7 @@ export const getStaticProps = async ({ params }) => {
     return {
       props: notFoundProps,
     };
-  });
-
-  const { locationName } = locationData || {};
-
-  if (!locationName) {
-    return {
-      props: notFoundProps,
-    };
   }
-
-  const title = `${locationName} Interactive Forest Map ${
-    params?.location?.[2] ? '' : '& Tree Cover Change Data '
-  }| GFW`;
-  const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
-  const noIndex = !['country', 'wdpa'].includes(type);
-
-  return {
-    props: {
-      title,
-      description,
-      noIndex,
-    },
-  };
 };
 
 export const getStaticPaths = async () => {
