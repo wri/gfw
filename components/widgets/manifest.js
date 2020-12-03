@@ -44,7 +44,6 @@ import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
 import soilBiomass from 'components/widgets/climate/soil-organic';
 import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
 import emissionsPlantations from 'components/widgets/climate/emissions-plantations';
-import futureCarbonGains from 'components/widgets/climate/future-carbon-gains';
 import cumulativeEmissions from 'components/widgets/climate/cumulative-emissions';
 import carbonStock from 'components/widgets/climate/carbon-stock';
 
@@ -100,7 +99,6 @@ export default {
   emissionsPlantations,
   woodyBiomass,
   soilBiomass,
-  futureCarbonGains,
   cumulativeEmissions,
   carbonStock,
 

@@ -147,15 +147,18 @@ const decodes = {
     }
   `,
   RADDs: `
-  float day = (color.r * 255. * 255.) + (color.g * 255.) - 1461.;
-  float confidence = color.b * 255.;
+  float r = color.r * 255.;
+  float g = color.g * 255.;
+  float b = color.b * 255.;
+  float day = (r * 255.) + (g * 255.) - 1461.;
+  float confidence = (floor(b / 100.) * 50.) - 1.;
   if (
     day > 0. &&
     day >= startDayIndex &&
     day <= endDayIndex
   ) {
     // get intensity
-    float intensity = mod(confidence, 100.) * 50.;
+    float intensity = mod(b, 100.);
     if (intensity > 255.) {
       intensity = 255.;
     }
@@ -163,12 +166,12 @@ const decodes = {
       color.r = 219. / 255.;
       color.g = 168. / 255.;
       color.b = 0.;
-      alpha = intensity / 255.;
+      alpha = intensity * 50. / 255.;
     } else {
       color.r = 220. / 255.;
       color.g = 102. / 255.;
       color.b = 153. / 255.;
-      alpha = intensity / 255.;
+      alpha = intensity * 50. / 255.;
     }
   } else {
     alpha = 0.;
