@@ -8007,10 +8007,10 @@ gettext-parser@^1.3.1:
     encoding "^0.1.12"
     safe-buffer "^5.1.1"
 
-gfw-components@^1.6.15:
-  version "1.6.15"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.6.15.tgz#4c2b10367438b291345c19c7d5216bde4aac3c41"
-  integrity sha512-EU3iPuyIFdPrnkiNJw2GJiMmMZgaypUygwVAe0HN603x/grWRNq/oVdJOs1AAlgXSW/ElHcC6Ty/j70bJFXgWw==
+gfw-components@^1.6.16:
+  version "1.6.16"
+  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.6.16.tgz#591cba8c6c8de3851b6d25c42cb59b353551a097"
+  integrity sha512-zHDup+90s+Fatuo36CeDuNR+qpXGbDfMP1Fr3qCIHoIRqI+UHea+n6UkoUr2G03t5clSdyDkHtaPViXtlu9CZw==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
