@@ -6,6 +6,13 @@ General layers
 */
 
 export const AREA_HA = 'area__ha';
+export const ALERT_COUNT = 'alert__count';
+
+/*
+  GLAD
+*/
+
+export const GLAD_ALERTS_ISO_WEEK = 'umd_glad_alerts__isoweek';
 
 /*
   Tree cover
