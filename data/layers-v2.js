@@ -21,3 +21,4 @@ export const GLAD_ALERTS_ISO_WEEK = 'umd_glad_alerts__isoweek';
 export const TREE_COVER_LOSS_YEAR = 'umd_tree_cover_loss__year';
 export const TREE_COVER_DENSITY =
   'umd_tree_cover_density_{extentYear}__{threshold}';
+export const TREE_COVER_GAIN = 'is__umd_tree_cover_gain';

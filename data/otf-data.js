@@ -3,7 +3,8 @@ import {
   ALERT_COUNT,
   GLAD_ALERTS_ISO_WEEK,
   TREE_COVER_LOSS_YEAR,
-  TREE_COVER_DENSITY
+  TREE_COVER_DENSITY,
+  TREE_COVER_GAIN
 } from 'data/layers-v2';
 
 export default {
@@ -11,6 +12,15 @@ export default {
     sum: [AREA_HA],
     groupBy: [TREE_COVER_LOSS_YEAR],
     filters: [TREE_COVER_DENSITY]
+  },
+  gain: {
+    sum: [AREA_HA],
+    groupBy: [TREE_COVER_GAIN],
+    filters: [TREE_COVER_GAIN]
+  },
+  gainExtent: {
+    sum: [AREA_HA],
+    filters: [TREE_COVER_GAIN]
   },
   areaHa: {
     sum: [AREA_HA]
