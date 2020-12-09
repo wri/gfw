@@ -10,6 +10,9 @@ export default {
     groupBy: [TREE_COVER_LOSS_YEAR],
     filters: [TREE_COVER_DENSITY]
   },
+  areaHa: {
+    sum: [AREA_HA]
+  },
   extent: {
     sum: [AREA_HA],
     filters: [TREE_COVER_DENSITY]
