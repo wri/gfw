@@ -50,7 +50,28 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 
-  const locationData = await getLocationData(params?.location).catch((err) => {
+  try {
+    const locationData = await getLocationData(params?.location);
+    const { locationName } = locationData || {};
+
+    if (!locationName) {
+      return {
+        props: notFoundProps,
+      };
+    }
+
+    const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+    const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
+    const noIndex = !['country'].includes(type);
+
+    return {
+      props: {
+        title,
+        description,
+        noIndex,
+      },
+    };
+  } catch (err) {
     if (err?.response?.status === 401) {
       return {
         props: {
@@ -64,27 +85,7 @@ export const getStaticProps = async ({ params }) => {
     return {
       props: notFoundProps,
     };
-  });
-
-  const { locationName } = locationData || {};
-
-  if (!locationName) {
-    return {
-      props: notFoundProps,
-    };
   }
-
-  const title = `${locationName} Deforestation Rates & Statistics | GFW`;
-  const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
-  const noIndex = !['country'].includes(type);
-
-  return {
-    props: {
-      title,
-      description,
-      noIndex,
-    },
-  };
 };
 
 export const getStaticPaths = async () => {

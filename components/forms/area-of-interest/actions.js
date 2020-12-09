@@ -38,7 +38,10 @@ export const saveAreaOfInterest = createThunkAction(
       name,
       type,
       application: application || 'gfw',
-      geostore: geostoreId || (geostoreData && geostoreData.id),
+      geostore:
+        type !== 'wdpa'
+          ? geostoreId || (geostoreData && geostoreData.id)
+          : null,
       email,
       language,
       deforestationAlerts: alerts.includes('deforestationAlerts'),
