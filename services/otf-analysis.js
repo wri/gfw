@@ -9,7 +9,9 @@ import otfData from 'data/otf-data';
 class OTFAnalysis {
   constructor(geostoreId, geostoreOrigin = 'rw') {
     if (!geostoreId) {
-      this.throwError('geostoreId is required, new OTFAnalysis( -> geostoreId)');
+      this.throwError(
+        'geostoreId is required, new OTFAnalysis( -> geostoreId)'
+      );
     }
 
     this.endpoint = 'https://data-api.globalforestwatch.org/analysis/';
@@ -22,7 +24,8 @@ class OTFAnalysis {
     this.endDate = null;
   }
 
-  throwError(msg) { // eslint-disable-line
+  // eslint-disable-next-line
+  throwError(msg) {
     throw new Error(`OTFAnalysis: ${msg}`);
   }
 
@@ -40,7 +43,7 @@ class OTFAnalysis {
             if (!has(params, paramValue)) {
               this.throwError(`param ${paramValue} does not exsist in params`);
             }
-            f = f.replace(v, params[paramValue])
+            f = f.replace(v, params[paramValue]);
           });
           out.push(f);
         } else {
@@ -54,21 +57,28 @@ class OTFAnalysis {
   setData(dependences, params = {}) {
     dependences.forEach(dep => {
       if (!has(otfData, dep)) {
-        this.throwError(`data dependency ${dep} does not exsist in data/otf-data.js`);
+        this.throwError(
+          `data dependency ${dep} does not exsist in data/otf-data.js`
+        );
       }
+
       const sumFields = otfData[dep].sum;
-      const groupFields = otfData[dep].groupBy;
-      const filters = this.parseFilters(otfData[dep].filters, params);
+      const groupFields = otfData[dep]?.groupBy;
+      const filters = this.parseFilters(otfData[dep]?.filters, params);
+
       this.dataInstances.push({
         key: dep,
-        request: new Promise(
-          resolve => resolve(apiRequest.get(this.buildQuery(sumFields, groupFields, filters))
-        ))
+        request: new Promise(resolve =>
+          resolve(
+            apiRequest.get(this.buildQuery(sumFields, groupFields, filters))
+          )
+        )
       });
     });
   }
 
-  setQueryParam(key, value, token = null) { // eslint-disable-line
+  // eslint-disable-next-line
+  setQueryParam(key, value, token = null) {
     return `${token || '&'}${key}=${value}`;
   }
 
@@ -88,7 +98,9 @@ class OTFAnalysis {
     } = this;
     let url = '';
     if (!sumFields) {
-      this.throwError('analysis requires a layer to fetch data. Use analysis.setLayer(layer, params) to continue');
+      this.throwError(
+        'analysis requires a layer to fetch data. Use analysis.setLayer(layer, params) to continue'
+      );
     }
 
     url = endpoint;
@@ -124,15 +136,19 @@ class OTFAnalysis {
   }
 
   async getData() {
-    return Promise.all(this.dataInstances.map(ins => ins.request)).then(responses => {
-      return new Promise((resolve) => {
-        const out = {};
-        responses.forEach((r, index) => {
-          out[this.dataInstances[index].key] = r?.data;
+    return Promise.all(this.dataInstances.map(ins => ins.request))
+      .then(responses => {
+        return new Promise(resolve => {
+          const out = {};
+          responses.forEach((r, index) => {
+            out[this.dataInstances[index].key] = r?.data;
+          });
+          resolve(out);
         });
-        resolve(out);
       })
-    })
+      .catch(e => {
+        this.throwError(e);
+      });
   }
 }
 

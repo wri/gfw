@@ -22,3 +22,9 @@ export const TREE_COVER_LOSS_YEAR = 'umd_tree_cover_loss__year';
 export const TREE_COVER_DENSITY =
   'umd_tree_cover_density_{extentYear}__{threshold}';
 export const TREE_COVER_GAIN = 'is__umd_tree_cover_gain';
+
+/*
+  Carbon
+*/
+
+export const CARBON_EMISSIONS = 'whrc_aboveground_co2_emissions__Mg';

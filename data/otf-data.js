@@ -4,7 +4,8 @@ import {
   GLAD_ALERTS_ISO_WEEK,
   TREE_COVER_LOSS_YEAR,
   TREE_COVER_DENSITY,
-  TREE_COVER_GAIN
+  TREE_COVER_GAIN,
+  CARBON_EMISSIONS
 } from 'data/layers-v2';
 
 export default {
@@ -32,5 +33,10 @@ export default {
   gladAlerts: {
     sum: [AREA_HA, ALERT_COUNT],
     groupBy: [GLAD_ALERTS_ISO_WEEK]
+  },
+  emissionsDeforestation: {
+    sum: [AREA_HA],
+    groupBy: [CARBON_EMISSIONS],
+    filters: [TREE_COVER_DENSITY]
   }
 };

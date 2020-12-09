@@ -4,6 +4,7 @@ import { getLoss } from 'services/analysis-cached';
 import OTFAnalysis from 'services/otf-analysis';
 
 import biomassLossIsos from 'data/biomass-isos.json';
+
 import {
   POLITICAL_BOUNDARIES_DATASET,
   BIOMASS_LOSS_DATASET
@@ -23,35 +24,16 @@ const MIN_YEAR = 2001;
 const MAX_YEAR = 2019;
 
 const getOTFAnalysis = async params => {
+  console.log('WIDGET params', params);
   const analysis = new OTFAnalysis(params.geostore.id);
-  analysis.setDates({
-    startDate: params.startDate,
-    endDate: params.endDate
+  analysis.setData(['emissionsDeforestation'], {
+    ...params,
+    extentYear: 2000
   });
-  analysis.setData(['loss', 'extent'], params);
 
   return analysis.getData().then(response => {
-    const { loss, extent } = response;
-    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
-
-    return {
-      loss: loss.data.map(d => ({
-        area: d.area__ha,
-        year: d.umd_tree_cover_loss__year
-      })),
-      extent: extent?.data?.area__ha,
-      settings: {
-        startYear,
-        endYear,
-        yearsRange
-      },
-      options: {
-        yearsRange
-      }
-    };
+    console.log('OTF ANALYSIS RESPONSE', response);
+    return {};
   });
 };
 
@@ -183,10 +165,10 @@ export default {
         };
       });
     }
-    const DATA_API = await getDataFromAPI(params);
     const OTF = await getOTFAnalysis(params);
-    console.log('DATA API', DATA_API);
+    const OLD_API = await getDataFromAPI(params);
     console.log('OTF', OTF);
+    console.log('OLD ANALYSIS', OLD_API);
     return getDataFromAPI(params);
   },
   getDataURL: params => [getLoss({ ...params, download: true })],
