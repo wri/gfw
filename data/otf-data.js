@@ -19,10 +19,6 @@ export default {
     groupBy: [TREE_COVER_GAIN],
     filters: [TREE_COVER_GAIN]
   },
-  gainExtent: {
-    sum: [AREA_HA],
-    filters: [TREE_COVER_GAIN]
-  },
   areaHa: {
     sum: [AREA_HA]
   },
@@ -36,7 +32,7 @@ export default {
   },
   emissionsDeforestation: {
     sum: [AREA_HA],
-    groupBy: [CARBON_EMISSIONS],
+    groupBy: [CARBON_EMISSIONS, 'umd_tree_cover_loss__year'],
     filters: [TREE_COVER_DENSITY]
   }
 };
