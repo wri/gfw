@@ -24,16 +24,30 @@ const MIN_YEAR = 2001;
 const MAX_YEAR = 2019;
 
 const getOTFAnalysis = async params => {
-  console.log('WIDGET params', params);
   const analysis = new OTFAnalysis(params.geostore.id);
   analysis.setData(['emissionsDeforestation'], {
     ...params,
     extentYear: 2000
   });
 
+  const { startYear, endYear, range } = getYearsRangeFromMinMax(
+    MIN_YEAR,
+    MAX_YEAR
+  );
+
   return analysis.getData().then(response => {
     console.log('OTF ANALYSIS RESPONSE', response);
-    return {};
+    return {
+      loss: [],
+      settings: {
+        startYear,
+        endYear,
+        yearsRange: range
+      },
+      options: {
+        years: range
+      }
+    };
   });
 };
 
