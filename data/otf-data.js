@@ -32,7 +32,7 @@ export default {
   },
   emissionsDeforestation: {
     sum: [AREA_HA],
-    groupBy: [CARBON_EMISSIONS, 'umd_tree_cover_loss__year'],
+    groupBy: [CARBON_EMISSIONS],
     filters: [TREE_COVER_DENSITY]
   }
 };

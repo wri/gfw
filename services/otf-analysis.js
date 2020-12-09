@@ -29,26 +29,28 @@ class OTFAnalysis {
     throw new Error(`OTFAnalysis: ${msg}`);
   }
 
-  parseFilters(filters = null, params) {
-    const out = [];
-    if (filters) {
-      filters.forEach(filter => {
-        // If variables are defined in a filter, replace them with props
-        // from current widget instance, if they don't exists we throw error
-        const match = filter.match(/{([a-zA-Z]+)}/g);
-        let f = filter;
-        if (match && match.length) {
-          match.forEach(v => {
-            const paramValue = v.replace(/{|}/g, '');
-            if (!has(params, paramValue)) {
-              this.throwError(`param ${paramValue} does not exsist in params`);
-            }
-            f = f.replace(v, params[paramValue]);
-          });
-          out.push(f);
-        } else {
-          out.push(f);
+  parseParam(prop, params) {
+    // If variables are defined in prop, replace them with widget properties
+    const match = prop.match(/{([a-zA-Z]+)}/g);
+    let serializedProp = prop;
+
+    if (match && match.length) {
+      match.forEach(v => {
+        const paramValue = v.replace(/{|}/g, '');
+        if (!has(params, paramValue)) {
+          this.throwError(`param ${paramValue} does not exsist in params`);
         }
+        serializedProp = serializedProp.replace(v, params[paramValue]);
+      });
+    }
+    return serializedProp;
+  }
+
+  parseProps(props = null, params) {
+    const out = [];
+    if (props) {
+      props.forEach(prop => {
+        out.push(this.parseParam(prop, params));
       });
     }
     return out;
@@ -62,9 +64,15 @@ class OTFAnalysis {
         );
       }
 
-      const sumFields = otfData[dep].sum;
-      const groupFields = otfData[dep]?.groupBy;
-      const filters = this.parseFilters(otfData[dep]?.filters, params);
+      if (!otfData[dep].sum) {
+        this.throwError(
+          `Sum is required and missing in: data/otf-data.js -> ${dep}`
+        );
+      }
+
+      const sumFields = this.parseProps(otfData[dep].sum, params);
+      const groupFields = this.parseProps(otfData[dep]?.groupBy, params);
+      const filters = this.parseProps(otfData[dep]?.filters, params);
 
       this.dataInstances.push({
         key: dep,
