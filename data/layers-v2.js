@@ -28,3 +28,10 @@ export const TREE_COVER_GAIN = 'is__umd_tree_cover_gain';
 */
 
 export const CARBON_EMISSIONS = 'whrc_aboveground_co2_emissions__Mg';
+
+/*
+  Biomass
+*/
+
+// TODO: Layers v1 has this constant, but its not the same ID
+export const BIOMASS_LOSS = 'whrc_aboveground_biomass_stock_2000__Mg_ha-1';

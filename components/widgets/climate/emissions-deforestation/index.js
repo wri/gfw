@@ -1,4 +1,5 @@
-import { fetchAnalysisEndpoint } from 'services/analysis';
+import sortBy from 'lodash/sortBy';
+
 import { getLoss } from 'services/analysis-cached';
 
 import OTFAnalysis from 'services/otf-analysis';
@@ -9,11 +10,17 @@ import {
   POLITICAL_BOUNDARIES_DATASET,
   BIOMASS_LOSS_DATASET
 } from 'data/datasets';
+
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   BIOMASS_LOSS
 } from 'data/layers';
+
+import {
+  TREE_COVER_LOSS_YEAR,
+  BIOMASS_LOSS as BIOMASS_LOSS_v2
+} from 'data/layers-v2';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -25,7 +32,7 @@ const MAX_YEAR = 2019;
 
 const getOTFAnalysis = async params => {
   const analysis = new OTFAnalysis(params.geostore.id);
-  analysis.setData(['emissionsDeforestation'], {
+  analysis.setData(['emissionsDeforestation', 'biomassLoss'], {
     ...params,
     extentYear: 2000
   });
@@ -36,51 +43,15 @@ const getOTFAnalysis = async params => {
   );
 
   return analysis.getData().then(response => {
-    console.log('OTF ANALYSIS RESPONSE', response);
-    return {
-      loss: [],
-      settings: {
-        startYear,
-        endYear,
-        yearsRange: range
-      },
-      options: {
-        years: range
-      }
-    };
-  });
-};
+    const { emissionsDeforestation, biomassLoss } = response;
 
-const getDataFromAPI = params =>
-  fetchAnalysisEndpoint({
-    ...params,
-    name: 'Umd',
-    params,
-    slug: ['wdpa', 'use', 'geostore'].includes(params.type)
-      ? 'biomass-loss'
-      : 'umd-loss-gain',
-    version: ['wdpa', 'use', 'geostore'].includes(params.type) ? 'v2' : 'v3',
-    aggregate: false
-  }).then(response => {
-    const { attributes: data } =
-      (response && response.data && response.data.data) || {};
-    let loss = [];
-
-    if (['wdpa', 'use', 'geostore'].includes(params.type)) {
-      const biomassData = data.biomassLossByYear;
-      const emissionsData = data.co2LossByYear;
-      loss = Object.keys(biomassData).map(l => ({
-        year: parseInt(l, 10),
-        emissions: emissionsData[l],
-        biomassLoss: biomassData[l]
-      }));
-    } else {
-      loss = data.years;
-    }
-
-    const { startYear, endYear, range } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
+    const loss = sortBy(
+      emissionsDeforestation.data.map((d, index) => ({
+        biomassLoss: biomassLoss?.data[index][BIOMASS_LOSS_v2],
+        emissions: d.whrc_aboveground_co2_emissions__Mg,
+        year: d.umd_tree_cover_loss__year
+      })),
+      TREE_COVER_LOSS_YEAR
     );
 
     return {
@@ -95,6 +66,7 @@ const getDataFromAPI = params =>
       }
     };
   });
+};
 
 export default {
   widget: 'emissionsDeforestation',
@@ -131,7 +103,6 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true
     },
-    // biomass loss
     {
       dataset: BIOMASS_LOSS_DATASET,
       layers: [BIOMASS_LOSS]
@@ -157,7 +128,7 @@ export default {
   whitelists: {
     adm0: biomassLossIsos
   },
-  getData: async params => {
+  getData: params => {
     if (shouldQueryPrecomputedTables(params)) {
       return getLoss(params).then(response => {
         const loss = response.data.data;
@@ -165,7 +136,6 @@ export default {
           MIN_YEAR,
           MAX_YEAR
         );
-
         return {
           loss,
           settings: {
@@ -179,11 +149,7 @@ export default {
         };
       });
     }
-    const OTF = await getOTFAnalysis(params);
-    const OLD_API = await getDataFromAPI(params);
-    console.log('OTF', OTF);
-    console.log('OLD ANALYSIS', OLD_API);
-    return getDataFromAPI(params);
+    return getOTFAnalysis(params);
   },
   getDataURL: params => [getLoss({ ...params, download: true })],
   getWidgetProps

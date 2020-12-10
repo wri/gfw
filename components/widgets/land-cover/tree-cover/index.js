@@ -109,7 +109,7 @@ export default {
     threshold: 30,
     extentYear: 2000
   },
-  getData: async params => {
+  getData: params => {
     if (shouldQueryPrecomputedTables(params)) {
       return all([
         getExtent(params),

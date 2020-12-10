@@ -5,7 +5,8 @@ import {
   TREE_COVER_LOSS_YEAR,
   TREE_COVER_DENSITY,
   TREE_COVER_GAIN,
-  CARBON_EMISSIONS
+  CARBON_EMISSIONS,
+  BIOMASS_LOSS
 } from 'data/layers-v2';
 
 export default {
@@ -30,9 +31,14 @@ export default {
     sum: [AREA_HA, ALERT_COUNT],
     groupBy: [GLAD_ALERTS_ISO_WEEK]
   },
+  biomassLoss: {
+    sum: [BIOMASS_LOSS],
+    groupBy: [TREE_COVER_LOSS_YEAR],
+    filters: [TREE_COVER_DENSITY]
+  },
   emissionsDeforestation: {
-    sum: [AREA_HA],
-    groupBy: [CARBON_EMISSIONS],
+    sum: [CARBON_EMISSIONS],
+    groupBy: [TREE_COVER_LOSS_YEAR],
     filters: [TREE_COVER_DENSITY]
   }
 };
