@@ -57,7 +57,9 @@ class TimelineContainer extends PureComponent {
       if (position) {
         const modDate = date.subtract(maxRange, rangeInterval);
         const outsideMinDate = modDate.isBefore(moment(minDate));
-        newRange[0] = outsideMinDate ? minDate : modDate.format('YYYY-MM-DD');
+        if (outsideMinDate) {
+          newRange[0] = minDate;
+        }
       } else {
         const modDate = date.add(maxRange, rangeInterval);
         const outsideMaxDate = modDate.isAfter(moment(maxDate));
@@ -66,6 +68,7 @@ class TimelineContainer extends PureComponent {
         newRange[1] = newDate;
       }
     }
+
     handleChange(newRange, this.props.activeLayer, absolute);
 
     trackEvent({
