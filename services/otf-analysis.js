@@ -29,13 +29,13 @@ class OTFAnalysis {
     throw new Error(`OTFAnalysis: ${msg}`);
   }
 
-  parseParam(prop, params) {
+  parseLayer(prop, params) {
     // If variables are defined in prop, replace them with widget properties
     const match = prop.match(/{([a-zA-Z]+)}/g);
     let serializedProp = prop;
 
     if (match && match.length) {
-      match.forEach(v => {
+      match.forEach((v) => {
         const paramValue = v.replace(/{|}/g, '');
         if (!has(params, paramValue)) {
           this.throwError(`param ${paramValue} does not exsist in params`);
@@ -46,18 +46,31 @@ class OTFAnalysis {
     return serializedProp;
   }
 
-  parseProps(props = null, params) {
+  parseLayers(props = null, params) {
     const out = [];
     if (props) {
-      props.forEach(prop => {
-        out.push(this.parseParam(prop, params));
+      props.forEach((prop) => {
+        out.push(this.parseLayer(prop, params));
       });
     }
     return out;
   }
 
+  // eslint-disable-next-line
+  parseWidgetParams(params = {}) {
+    // thresh is our on runtime threshold value
+    // simply replace threshold with it so we can perform user defined analysis
+    return {
+      ...params,
+      ...(params.thresh &&
+        params.thresh.length > 0 && {
+          threshold: parseInt(params.thresh, 10),
+        }),
+    };
+  }
+
   setData(dependences, params = {}) {
-    dependences.forEach(dep => {
+    dependences.forEach((dep) => {
       if (!has(otfData, dep)) {
         this.throwError(
           `data dependency ${dep} does not exsist in data/otf-data.js`
@@ -70,17 +83,26 @@ class OTFAnalysis {
         );
       }
 
-      const sumFields = this.parseProps(otfData[dep].sum, params);
-      const groupFields = this.parseProps(otfData[dep]?.groupBy, params);
-      const filters = this.parseProps(otfData[dep]?.filters, params);
+      const sumFields = this.parseLayers(
+        otfData[dep].sum,
+        this.parseWidgetParams(params)
+      );
+      const groupFields = this.parseLayers(
+        otfData[dep]?.groupBy,
+        this.parseWidgetParams(params)
+      );
+      const filters = this.parseLayers(
+        otfData[dep]?.filters,
+        this.parseWidgetParams(params)
+      );
 
       this.dataInstances.push({
         key: dep,
-        request: new Promise(resolve =>
+        request: new Promise((resolve) =>
           resolve(
             apiRequest.get(this.buildQuery(sumFields, groupFields, filters))
           )
-        )
+        ),
       });
     });
   }
@@ -102,7 +124,7 @@ class OTFAnalysis {
       geostoreId,
       geostoreOrigin,
       startDate,
-      endDate
+      endDate,
     } = this;
     let url = '';
     if (!sumFields) {
@@ -116,18 +138,18 @@ class OTFAnalysis {
 
     url += this.setQueryParam('geostore_origin', geostoreOrigin, '?');
 
-    sumFields.forEach(layer => {
+    sumFields.forEach((layer) => {
       url += this.setQueryParam('sum', layer);
     });
 
     if (groupFields) {
-      groupFields.forEach(group => {
+      groupFields.forEach((group) => {
         url += this.setQueryParam('group_by', group);
       });
     }
 
     if (filters && filters.length > 0) {
-      filters.forEach(filter => {
+      filters.forEach((filter) => {
         url += this.setQueryParam('filters', filter);
       });
     }
@@ -144,9 +166,9 @@ class OTFAnalysis {
   }
 
   async getData() {
-    return Promise.all(this.dataInstances.map(ins => ins.request))
-      .then(responses => {
-        return new Promise(resolve => {
+    return Promise.all(this.dataInstances.map((ins) => ins.request))
+      .then((responses) => {
+        return new Promise((resolve) => {
           const out = {};
           responses.forEach((r, index) => {
             out[this.dataInstances[index].key] = r?.data;
@@ -154,7 +176,7 @@ class OTFAnalysis {
           resolve(out);
         });
       })
-      .catch(e => {
+      .catch((e) => {
         this.throwError(e);
       });
   }
