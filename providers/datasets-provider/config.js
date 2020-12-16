@@ -147,50 +147,59 @@ const decodes = {
     }
   `,
   RADDs: `
-  float r = color.r * 255.;
-  float g = color.g * 255.;
-  float b = color.b * 255.;
-  float day = (r * 255.) + (g * 255.) - 1461.;
-  float confidence = (floor(b / 100.) * 50.) - 1.;
-  if (
-    day > 0. &&
-    day >= startDayIndex &&
-    day <= endDayIndex
-  ) {
-    // get intensity
-    float intensity = mod(b, 100.);
-    if (intensity > 255.) {
-      intensity = 255.;
+  // values for creating power scale, domain (input), and range (output)
+    float confidenceValue = 0.;
+    if (confirmedOnly > 0.) {
+      confidenceValue = 1.;
     }
-    if (day >= numberOfDays - 7. && day <= numberOfDays) {
-      color.r = 219. / 255.;
-      color.g = 168. / 255.;
-      color.b = 0.;
-      alpha = intensity * 50. / 255.;
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    // 1461 = days from 2019/01/01 to 2014/12/31
+    float day = (r * 255.) + g - 1461.;
+    float confidence = floor(b / 100.) - 1.;
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex  &&
+      confidence >= confidenceValue
+    ) {
+      // get intensity
+      float intensity = mod(b, 100.) * 50.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      if (day >= numberOfDays - 7. && day <= numberOfDays) {
+        color.r = 219. / 255.;
+        color.g = 168. / 255.;
+        color.b = 0.;
+        alpha = intensity / 255.;
+      } else {
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      }
     } else {
-      color.r = 220. / 255.;
-      color.g = 102. / 255.;
-      color.b = 153. / 255.;
-      alpha = intensity * 50. / 255.;
+      alpha = 0.;
     }
-  } else {
-    alpha = 0.;
-  }
   `,
   staticRemap: `
-  float red = color.r;
-  float green = color.g;
-  float blue = color.b;
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
 
-  if (red == 0. && green == 0. && blue == 0.) {
-    alpha = 0.;
-  } else {
-    alpha = 1.;
-  }
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      alpha = 1.;
+    }
 
-  color.r = red;
-  color.g = green;
-  color.b = blue;
+    color.r = red;
+    color.g = green;
+    color.b = blue;
   `,
   forestHeight: `
     float h = color.r * 255.;
