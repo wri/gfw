@@ -71,6 +71,7 @@ export const saveAreaOfInterest = createThunkAction(
       }),
       ...(type === 'wdpa' && {
         wdpaid: parseInt(adm0, 10),
+        geostoreDataAPI: geostoreId || (geostoreData && geostoreData.id),
       }),
       ...(webhookUrl && {
         webhookUrl,
