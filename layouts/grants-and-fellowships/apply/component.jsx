@@ -6,40 +6,14 @@ import techLogo from './assets/gfw-tech-fellowship-logo.png';
 import './styles.scss';
 
 const GrantsApplySection = () => (
-  <section className="l-grants-apply-section">
-    <Row>
-      <Column width={[1, 3 / 4]}>
-        <p className="text -paragraph -color-2 -light -spaced">
-          The specific focus of the Calls for Applications varies from year to
-          year, though successful applicants must clearly articulate how GFW
-          will support and enhance their ongoing work related to:
-        </p>
-        <ul className="list">
-          <li>- Advocacy</li>
-          <li>- Community engagement</li>
-          <li>- Forest monitoring and enforcement</li>
-          <li>- Journalism</li>
-          <li>- Education</li>
-        </ul>
-        <p className="text -paragraph -color-2 -light -spaced">
-          For details on how to apply to each, please see below:
-        </p>
-      </Column>
-    </Row>
     <section className="apply-section">
       <Row>
         <Column width={[1, 3 / 4]} className="logo">
           <h2 className="section-title">Small Grants Fund</h2>
           <ul className="list">
             <p className="text -paragraph -color-2 -light -spaced">
-              The scope of this year’s Small Grants Fund is on using near
-              real-time data to combat deforestation. Winning proposals will
-              clearly demonstrate how they intend to use GLAD deforestation
-              and/or VIIRs fire alerts, made available through GFW tools, to
-              curb deforestation through enforcement or advocacy. Please note
-              that this year’s call also has geographic restrictions. Applicants
-              should carefully read through the Guidelines for Applicants and
-              Frequently Asked Questions for more details.
+              The scope of this year’s Small Grants Fund focuses on three key themes: forest protection, forests and agriculture, and forest policy. The specific objectives for each theme, along with more details on the application process, can be found in the Guidelines for Applicants. Before applying, please carefully review these guidelines along with the Small Grants Fund FAQ.  
+Winning proposals will clearly demonstrate how they intend to use GFW’s suite of tools and data on GFW to curb deforestation within one of these three key themes. 
             </p>
             <li>
               - Read the 2020&nbsp;
@@ -113,7 +87,7 @@ const GrantsApplySection = () => (
             </li>
           </ul>
           <p className="text -paragraph -color-2 -light -spaced">
-            The 2019 Tech Fellowship application window is now closed.
+            Applications for the GFW Tech Fellowship are currently closed.
           </p>
         </Column>
         <Column width={[1, 1 / 4]} className="logo">
