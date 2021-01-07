@@ -203,7 +203,7 @@ const decodes = {
   `,
   forestHeight: `
     float h = color.r * 255.;
-    fload heightMax = 41.;
+    float heightMax = 41.;
 
     // color at 3m
     float r1 = 230. / 255.;
