@@ -203,20 +203,26 @@ const decodes = {
   `,
   forestHeight: `
     float h = color.r * 255.;
+    float heightMax = 41.;
 
-    float r1 = 188. / 255.;
-    float g1 = 255. / 255.;
-    float b1 = 184. / 255.;
+    // color at 3m
+    float r1 = 230. / 255.;
+    float g1 = 240. / 255.;
+    float b1 = 230. / 255.;
 
+    // color at 30m
     float r2 = 0. / 255.;
-    float g2 = 92. / 255.;
-    float b2 = 24. / 255.;
+    float g2 = 102. / 255.;
+    float b2 = 0. / 255.;
 
-    vec3 color1 = vec3(r1, g1, b1);
-    vec3 color2 = vec3(r2, g2, b2);
-    color = mix(color1, color2, h / 41.);
+    vec3 colorMin = vec3(r1, g1, b1);
+    vec3 colorMax = vec3(r2, g2, b2);
 
-    if (h >= height && h <= 41.) {
+    // h > 30m will default to colorMax
+    color = mix(colorMin, colorMax, h / 30.);
+
+    // Only show pixels bettween the specified height and heightMax from data
+    if (h >= height && h <= heightMax) {
       alpha = 1.;
     } else {
       alpha = 0.;
