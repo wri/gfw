@@ -8,6 +8,7 @@ const NotFoundPage = () => (
   <>
     <Header />
     <div className="l-404-page">
+      <span style={{ display: 'none' }}>test</span>
       <ErrorMessage
         title="Page Not Found"
         description="You may have mistyped the address or the page may have moved."
