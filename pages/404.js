@@ -7,6 +7,7 @@ const Custom404 = () => (
     description="You may have mistyped the address or the page may have moved."
     noIndex
   >
+    test
     <Page404 />
   </StaticLayout>
 );
