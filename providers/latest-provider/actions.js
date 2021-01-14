@@ -32,10 +32,10 @@ export const getLatest = createThunkAction(
 
                   // high confidence alerts from top-level max
                   // max = abbbb where a = confidence value, bbbb = days since 2014-12-31
-                  const encodedLatestDate = max.toString(10);
-                  const daysSinceString = encodedLatestDate.substring(
+                  const encodedMax = max.toString(10);
+                  const daysSinceString = encodedMax.substring(
                     1,
-                    encodedLatestDate.length
+                    encodedMax.length
                   );
                   const daysSince = parseInt(daysSinceString, 10);
 
@@ -56,10 +56,10 @@ export const getLatest = createThunkAction(
                     histogram.min + (maxBinIndex - latestIndex) * binSize,
                     10
                   );
-                  const encodedLatestDateLowConfidence = binStart.toString(10);
-                  const daysSinceStringLowConfidence = encodedLatestDateLowConfidence.substring(
+                  const encodedMaxLowConfidence = binStart.toString(10);
+                  const daysSinceStringLowConfidence = encodedMaxLowConfidence.substring(
                     1,
-                    encodedLatestDateLowConfidence.length
+                    encodedMaxLowConfidence.length
                   );
                   const daysSinceLowConfidence = parseInt(
                     daysSinceStringLowConfidence,
