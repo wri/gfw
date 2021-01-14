@@ -25,6 +25,58 @@ export const getLatest = createThunkAction(
               responses.reduce((obj, response, index) => {
                 const latestResponse = response.data.data || response.data;
                 let date = latestResponse.date || latestResponse.max_date;
+                const { bands } = latestResponse;
+                // if the response is from the stats endpoint, get bands key
+                if (bands && bands.length) {
+                  const { max, histogram } = bands[0];
+
+                  // high confidence alerts from top-level max
+                  // max = abbbb where a = confidence value, bbbb = days since 2014-12-31
+                  const encodedLatestDate = max.toString(10);
+                  const daysSinceString = encodedLatestDate.substring(
+                    1,
+                    encodedLatestDate.length
+                  );
+                  const daysSince = parseInt(daysSinceString, 10);
+
+                  // low confidence alerts from histogram
+                  // need to find the last non-zero bin where where index < 30,000 (high conf)
+                  const binSize =
+                    (histogram.max - histogram.min) / histogram.bin_count;
+                  const maxBinIndex = Math.floor(
+                    (30000 - histogram.min) / binSize
+                  );
+                  const valueBins = histogram.value_count
+                    .slice(0, maxBinIndex)
+                    .reverse();
+                  const latestIndex = valueBins.findIndex((el) => el !== 0);
+
+                  // Start of bin represents the encoded value
+                  const binStart = parseInt(
+                    histogram.min + (maxBinIndex - latestIndex) * binSize,
+                    10
+                  );
+                  const encodedLatestDateLowConfidence = binStart.toString(10);
+                  const daysSinceStringLowConfidence = encodedLatestDateLowConfidence.substring(
+                    1,
+                    encodedLatestDateLowConfidence.length
+                  );
+                  const daysSinceLowConfidence = parseInt(
+                    daysSinceStringLowConfidence,
+                    10
+                  );
+
+                  // whichever is latest (i.e. most days since 2014-12-31)
+                  const days =
+                    daysSinceLowConfidence > daysSince
+                      ? daysSinceLowConfidence
+                      : daysSince;
+
+                  // convert to date
+                  date = moment('2014-12-31')
+                    .add(days, 'days')
+                    .format('YYYY-MM-DD');
+                }
                 if (!date) {
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes
