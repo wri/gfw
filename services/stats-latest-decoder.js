@@ -1,5 +1,6 @@
 export const statsLatestDecoder = (bands) => {
-  // TODO: What if we dont have bands?
+  // TODO: What if we don't have bands? or max / histogram is not present?
+  // i would recommend this service to simply return "null" if something is not formatted as we expect it to be
   const { max, histogram } = bands[0];
 
   // high confidence alerts from top-level max
@@ -17,6 +18,7 @@ export const statsLatestDecoder = (bands) => {
 
   const valueBins = histogram.value_count.slice(0, maxBinIndex).reverse();
 
+  // TODO: make sure we get a index here, and not -1, if we get -1 we should exit with "null"
   const latestIndex = valueBins.findIndex((el) => el !== 0);
 
   // Start of bin represents the encoded value
@@ -33,9 +35,16 @@ export const statsLatestDecoder = (bands) => {
 
   const daysSinceLowConfidence = parseInt(daysSinceStringLowConfidence, 10);
 
-  // whichever is latest (i.e. most days since 2014-12-31)
-  const days =
-    daysSinceLowConfidence > daysSince ? daysSinceLowConfidence : daysSince;
+  // NOTE: Removed the ternary here to make it more clear what the end result of this factory is, and what its returning by default
 
-  return days;
+  // OLD:
+  // const days =
+  // daysSinceLowConfidence > daysSince ? daysSinceLowConfidence : daysSince;
+
+  // whichever is latest (i.e. most days since 2014-12-31)
+  if (daysSinceLowConfidence > daysSince) {
+    return daysSinceLowConfidence;
+  }
+
+  return daysSince;
 };

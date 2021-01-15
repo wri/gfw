@@ -29,6 +29,8 @@ export const getLatest = createThunkAction(
                 const { bands } = latestResponse;
                 // if the response is from the stats endpoint, get bands key
                 if (bands && bands.length) {
+                  // TODO: What if we don't get dates properly formatted back?
+                  // Can this service return "null" or similar and then we can handle that case here
                   const days = statsLatestDecoder(bands);
                   // convert to date
                   date = moment('2014-12-31')
