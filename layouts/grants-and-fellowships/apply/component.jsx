@@ -11,14 +11,15 @@ const GrantsApplySection = () => (
       <Column width={[1, 3 / 4]} className="logo">
         <h2 className="section-title">Small Grants Fund</h2>
         <p className="text -paragraph -color-2 -light -spaced">
-          The scope of this year’s Small Grants Fund focuses on three key
-          themes: forest protection, forests and agriculture, and forest policy.
-          The specific objectives for each theme, along with more details on the
+          The scope of the 2021 Small Grants Fund focuses on three key themes:
+          forest protection, forests and agriculture, and forest policy. The
+          specific objectives for each theme, along with more details on the
           application process, can be found in the Guidelines for Applicants.
           Before applying, please carefully review these guidelines along with
-          the Small Grants Fund FAQ. Winning proposals will clearly demonstrate
-          how they intend to use GFW’s suite of tools and data on GFW to curb
-          deforestation within one of these three key themes.
+          the Small Grants Fund Frequently Asked Questions. Winning proposals
+          will clearly demonstrate how they intend to use GFW’s suite of tools
+          and data on GFW to curb deforestation within one of these three key
+          themes.
         </p>
         <ul className="list">
           <li>
@@ -53,12 +54,15 @@ const GrantsApplySection = () => (
             >
               2021 Small Grants Fund Applicant Webinar
             </a>
+            {' '}
             on Wednesday, February 3rd, 2021 at 8:00 am EST
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
-          The 2021 Small Grants Fund application window is open from February
-          1st, 2021 – March 1st, 2021.
+          The 2021 Small Grants Fund application window is open from
+          {' '}
+          <strong>February 1st, 2021 – March 1st, 2021</strong>
+          .
           <br />
           <a
             className="text -paragraph -color-4 -bold"
@@ -81,6 +85,7 @@ const GrantsApplySection = () => (
         <p className="text -paragraph -color-2 -light -spaced">
           We are not currently accepting applications for the GFW Tech
           Fellowship. For more information about the Tech Fellowship, see our
+          {' '}
           <a
             className="text -paragraph -color-4 -bold"
             href="https://www.globalforestwatch.org/help/faqs/grants-fellowships/"
