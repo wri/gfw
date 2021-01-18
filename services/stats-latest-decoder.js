@@ -8,6 +8,7 @@ export const statsLatestDecoder = (bands) => {
   const encodedMax = max.toString(10);
   const daysSinceString = encodedMax.substring(1, encodedMax.length);
 
+  // This is always a confirmed alert
   const daysSince = parseInt(daysSinceString, 10);
 
   // low confidence alerts from histogram
@@ -42,9 +43,8 @@ export const statsLatestDecoder = (bands) => {
   // daysSinceLowConfidence > daysSince ? daysSinceLowConfidence : daysSince;
 
   // whichever is latest (i.e. most days since 2014-12-31)
-  if (daysSinceLowConfidence > daysSince) {
-    return daysSinceLowConfidence;
-  }
+  // if both are > days since
+  const daysSinceArray = [daysSince, daysSinceLowConfidence];
 
-  return daysSince;
+  return Math.max(...daysSinceArray);
 };
