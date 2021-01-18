@@ -186,6 +186,20 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  RADDsCoverage: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      color.r = 253. / 255.;
+      color.g = 204. / 255.;
+      color.b = 220. / 255.;
+      alpha = 1.;
+    }
+  `,
   staticRemap: `
     float red = color.r;
     float green = color.g;
@@ -635,6 +649,7 @@ export default {
   treeLossByDriver: decodes.treeLossByDriver,
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
+  RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,

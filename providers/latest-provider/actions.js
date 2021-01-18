@@ -3,6 +3,7 @@ import moment from 'moment';
 import { all, spread } from 'axios';
 
 import { fetchLatestDate } from 'services/latest';
+import { statsLatestDecoder } from 'services/stats-latest-decoder';
 
 export const setLatestLoading = createAction('setLatestLoading');
 export const setLatestDates = createAction('setLatestDates');
@@ -25,6 +26,20 @@ export const getLatest = createThunkAction(
               responses.reduce((obj, response, index) => {
                 const latestResponse = response.data.data || response.data;
                 let date = latestResponse.date || latestResponse.max_date;
+                const { bands } = latestResponse;
+                // if the response is from the stats endpoint, get bands key
+                if (bands && bands.length) {
+                  // TODO: What if we don't get dates properly formatted back?
+                  // Can this service return "null" or similar and then we can handle that case here
+                  const days = statsLatestDecoder(bands);
+                  const endDate = moment('2014-12-31')
+                    .add(days, 'days')
+                    .format('YYYY-MM-DD');
+
+                  const defaultEndDate = moment.now().subract(7, 'days');
+                  // convert to date
+                  date = days ? endDate : defaultEndDate;
+                }
                 if (!date) {
                   const data = Array.isArray(latestResponse)
                     ? latestResponse[0].attributes
