@@ -33,9 +33,11 @@ export const getLatest = createThunkAction(
                   // Can this service return "null" or similar and then we can handle that case here
                   const days = statsLatestDecoder(bands);
                   // convert to date
-                  date = moment('2014-12-31')
-                    .add(days, 'days')
-                    .format('YYYY-MM-DD');
+                  date = days
+                    ? moment('2014-12-31')
+                        .add(days, 'days')
+                        .format('YYYY-MM-DD')
+                    : moment.now().subract(7, 'days');
                 }
                 if (!date) {
                   const data = Array.isArray(latestResponse)
