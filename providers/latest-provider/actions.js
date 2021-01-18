@@ -32,12 +32,13 @@ export const getLatest = createThunkAction(
                   // TODO: What if we don't get dates properly formatted back?
                   // Can this service return "null" or similar and then we can handle that case here
                   const days = statsLatestDecoder(bands);
+                  const endDate = moment('2014-12-31')
+                    .add(days, 'days')
+                    .format('YYYY-MM-DD');
+
+                  const defaultEndDate = moment.now().subract(7, 'days');
                   // convert to date
-                  date = days
-                    ? moment('2014-12-31')
-                        .add(days, 'days')
-                        .format('YYYY-MM-DD')
-                    : moment.now().subract(7, 'days');
+                  date = days ? endDate : defaultEndDate;
                 }
                 if (!date) {
                   const data = Array.isArray(latestResponse)
