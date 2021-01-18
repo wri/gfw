@@ -36,12 +36,6 @@ export const statsLatestDecoder = (bands) => {
 
   const daysSinceLowConfidence = parseInt(daysSinceStringLowConfidence, 10);
 
-  // NOTE: Removed the ternary here to make it more clear what the end result of this factory is, and what its returning by default
-
-  // OLD:
-  // const days =
-  // daysSinceLowConfidence > daysSince ? daysSinceLowConfidence : daysSince;
-
   // whichever is latest (i.e. most days since 2014-12-31)
   // if both are > days since
   const daysSinceArray = [daysSince, daysSinceLowConfidence];
