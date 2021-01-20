@@ -26,6 +26,8 @@ export const getLatest = createThunkAction(
               responses.reduce((obj, response, index) => {
                 const latestResponse = response.data.data || response.data;
                 let date = latestResponse.date || latestResponse.max_date;
+                console.log('date', date);
+
                 const { bands } = latestResponse;
                 // if the response is from the stats endpoint, get bands key
                 if (bands && bands.length) {
@@ -35,10 +37,12 @@ export const getLatest = createThunkAction(
                   const endDate = moment('2014-12-31')
                     .add(days, 'days')
                     .format('YYYY-MM-DD');
+                  const defaultEndDate = moment()
+                    .add(-7, 'days')
+                    .format('YYYY-MM-DD');
 
-                  const defaultEndDate = moment.now().subract(7, 'days');
                   // convert to date
-                  date = days ? endDate : defaultEndDate;
+                  date = days && days > 0 ? endDate : defaultEndDate;
                 }
                 if (!date) {
                   const data = Array.isArray(latestResponse)
