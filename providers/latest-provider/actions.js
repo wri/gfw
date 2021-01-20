@@ -26,7 +26,6 @@ export const getLatest = createThunkAction(
               responses.reduce((obj, response, index) => {
                 const latestResponse = response.data.data || response.data;
                 let date = latestResponse.date || latestResponse.max_date;
-                console.log('date', date);
 
                 const { bands } = latestResponse;
                 // if the response is from the stats endpoint, get bands key
