@@ -5,6 +5,8 @@ import sprite from 'svg-sprite-loader/runtime/sprite.build';
 
 import { mediaStyles } from 'gfw-components';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export default class MyDocument extends Document {
   render() {
     const spriteContent = sprite.stringify();
@@ -60,6 +62,26 @@ export default class MyDocument extends Document {
             src="//cdn.transifex.com/live.js"
             rel="preconnect"
           />
+
+          {isProduction && (
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-JVWWXY8NP3"
+            />
+          )}
+
+          {isProduction && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-JVWWXY8NP3');
+                `,
+              }}
+            />
+          )}
         </Head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: spriteContent }} />
