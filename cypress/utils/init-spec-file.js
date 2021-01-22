@@ -8,7 +8,7 @@ function initSpec(title, testConfig) {
       // In record mode, save gathered XHR data to local JSON file
       if (Cypress.env('RECORD')) {
         const path = `./cypress/fixtures/${asSlug(title)}.json`;
-        cy.writeFile(path, xhrData);
+        cy.writeFile(path, xhrData); // eslint-disable-line
       }
     });
 
@@ -49,6 +49,11 @@ function initSpec(title, testConfig) {
           method: 'GET',
           url: '/v1/dataset/**',
         });
+        // OTF endpoint
+        cy.route({
+          method: 'GET',
+          url: '/analysis/zonal/**',
+        });
       }
 
       // When we are not recording, read our generated fixture for specified requests
@@ -61,6 +66,7 @@ function initSpec(title, testConfig) {
           },
           []
         ).as('GEOSTORE');
+
         cy.fixture(asSlug(title)).then((data) => {
           for (let i = 0, { length } = data; i < length; i += 1) {
             // eslint-disable-line
