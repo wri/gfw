@@ -4,8 +4,13 @@ const isServer = typeof window === 'undefined';
 
 export const setUserToken = (token) => {
   if (!isServer) {
-    localStorage.setItem('userToken', token);
-    apiAuthRequest.defaults.headers.Authorization = `Bearer ${token}`;
+    let serializedToken = token;
+    // XXX: FB/Google token hack
+    if (token?.endsWith('#')) {
+      serializedToken = token.replace(/#$/, '');
+    }
+    localStorage.setItem('userToken', serializedToken);
+    apiAuthRequest.defaults.headers.Authorization = `Bearer ${serializedToken}`;
   }
 };
 
