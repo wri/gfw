@@ -156,7 +156,8 @@ export const parseTitle = createSelector(
 
 const parseSentence = createSelector(
   [
-    parseData,
+    // parseData,
+    filterData,
     getExtent,
     getSettings,
     getLocationLabel,
@@ -175,22 +176,19 @@ const parseSentence = createSelector(
     } = sentences;
     const { startYear, endYear } = settings;
 
-    const filteredData =
-      data && data.length ? data.filter((y) => y.year > 2001) : [];
-    const totalLossPrimary = filteredData.length
-      ? sumBy(filteredData, 'area')
-      : 0;
-    const totalLoss = filteredData.length ? filteredData[0].totalLoss : 0;
+    // const data =
+    //  data && data.length ? data.filter((y) => y.year > 2001) : [];
+    const totalLossPrimary = data && data.length ? sumBy(data, 'area') : 0;
+    console.log(data, totalLossPrimary);
+    const totalLoss = data.length ? data[0].totalLoss : 0;
     const percentageLoss =
       (totalLoss && extent && (totalLossPrimary / totalLoss) * 100) || 0;
 
-    const initialExtentData = filteredData.find(
-      (d) => d.year === startYear - 1
-    );
+    const initialExtentData = data.find((d) => d.year === startYear - 1);
     const initialExtent =
       (initialExtentData && initialExtentData.extentRemaining) || 100;
 
-    const finalExtentData = filteredData.find((d) => d.year === endYear);
+    const finalExtentData = data.find((d) => d.year === endYear);
     const finalExtent =
       (finalExtentData && finalExtentData.extentRemaining) || 0;
 
