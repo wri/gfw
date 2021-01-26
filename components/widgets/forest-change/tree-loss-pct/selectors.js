@@ -184,8 +184,6 @@ const parseSentence = createSelector(
     } = sentences;
     const { startYear, endYear } = settings;
 
-    // const data =
-    //  data && data.length ? data.filter((y) => y.year > 2001) : [];
     const totalLossPrimary =
       filteredData && filteredData.length ? sumBy(filteredData, 'area') : 0;
 
