@@ -25,6 +25,17 @@ const selectPlanetBasemaps = (state) => {
   return planetBasemaps?.filter((bm) => bm.name.includes(imageType));
 };
 
+const getGroupedPlanetBasemaps = (state) => {
+  const planetBasemaps = state.planet?.data;
+  const visual = planetBasemaps
+    ?.filter((bm) => bm.name.includes('visual'))
+    .reverse();
+  const cir = planetBasemaps
+    ?.filter((bm) => bm.name.includes('analytic'))
+    .reverse();
+  return [visual, cir];
+};
+
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   (planetBasemaps) => {
@@ -55,6 +66,17 @@ export const getPlanetBasemaps = createSelector(
 export const getDefaultPlanetBasemap = createSelector(
   [getPlanetBasemaps],
   (planetBasemaps) => planetBasemaps?.[0]?.name
+);
+
+export const getDefaultPlanetBasemaps = createSelector(
+  [getGroupedPlanetBasemaps],
+  (grouped) => {
+    const [visual, cir] = grouped;
+    return {
+      visual: visual?.[0]?.name,
+      cir: cir?.[0]?.name,
+    };
+  }
 );
 
 export const getLandsatYears = createSelector([getBasemaps], (basemaps) =>
@@ -99,6 +121,7 @@ export const getRoadsSelected = createSelector(
 export const getBasemapsProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   mapZoom: getMapZoom,
+  defaultPlanetBasemapsByCategory: getDefaultPlanetBasemaps,
   activeBasemap: getBasemap,
   boundaries: getAllBoundaries,
   activeBoundaries: getActiveBoundaryDatasets,
