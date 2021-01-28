@@ -174,7 +174,7 @@ export const datasetsSections = compact([
       },
       {
         slug: 'carbonGains',
-        title: 'Carbon Gains',
+        title: 'Potential Carbon Gains',
       },
     ],
   },
