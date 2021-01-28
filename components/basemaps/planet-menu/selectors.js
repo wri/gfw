@@ -10,7 +10,7 @@ const COLOR_OPTIONS = [
   },
   {
     label: 'False color (NIR)',
-    value: 'nir',
+    value: 'cir',
   },
 ];
 

@@ -19,13 +19,10 @@ import {
 const selectPlanetBasemaps = (state) => {
   const activeType = state?.map?.settings?.basemap?.color;
   // This can be either rgb<string> hex value <#xxx> or nir<string>
-  const imageType = activeType !== 'nir' ? 'visual' : 'analytic';
+  const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
   const planetBasemaps = state.planet?.data;
-  if (activeType && planetBasemaps) {
-    // XXX: Filter planet basemaps based on active image type
-    return planetBasemaps.filter((bm) => bm.name.includes(imageType));
-  }
-  return [];
+  // XXX: Filter planet basemaps based on active image type
+  return planetBasemaps?.filter((bm) => bm.name.includes(imageType));
 };
 
 export const getPlanetBasemaps = createSelector(
@@ -57,9 +54,7 @@ export const getPlanetBasemaps = createSelector(
 
 export const getDefaultPlanetBasemap = createSelector(
   [getPlanetBasemaps],
-  (planetBasemaps) => {
-    return planetBasemaps?.[0]?.name;
-  }
+  (planetBasemaps) => planetBasemaps?.[0]?.name
 );
 
 export const getLandsatYears = createSelector([getBasemaps], (basemaps) =>
