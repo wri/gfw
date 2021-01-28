@@ -31,7 +31,7 @@ class BasemapsContainer extends React.Component {
   selectBasemap = ({ value, year, defaultYear, name, color } = {}) => {
     const { setMapSettings, defaultPlanetBasemap } = this.props;
     if (value === 'planet') {
-      triggerEvent(TOGGLE_PLANET_BASEMAP, 70);
+      triggerEvent(TOGGLE_PLANET_BASEMAP);
     }
     const basemapOptions = {
       value,
