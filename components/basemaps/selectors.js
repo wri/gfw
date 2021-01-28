@@ -57,7 +57,6 @@ export const getPlanetBasemaps = createSelector(
 export const getDefaultPlanetBasemap = createSelector(
   [getPlanetBasemaps],
   (planetBasemaps) => {
-    console.log('planet basemaps', planetBasemaps);
     return planetBasemaps?.[0]?.name;
   }
 );
