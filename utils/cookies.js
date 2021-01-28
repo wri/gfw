@@ -7,3 +7,9 @@ export const getAgreedCookies = () =>
 
 export const setAgreedCookies = () =>
   isServer && localStorage.setItem(COOKIES_SLUG, true);
+
+export const setSurveySeenCookie = (trackingID) =>
+  localStorage.setItem(trackingID, true);
+
+export const hasSeenSurvey = (trackingID) =>
+  JSON.parse(localStorage.getItem(trackingID)) === true;
