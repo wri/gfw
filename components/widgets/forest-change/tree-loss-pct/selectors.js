@@ -157,13 +157,22 @@ export const parseTitle = createSelector(
 const parseSentence = createSelector(
   [
     parseData,
+    filterData,
     getExtent,
     getSettings,
     getLocationLabel,
     getIndicator,
     getSentence,
   ],
-  (data, extent, settings, locationLabel, indicator, sentences) => {
+  (
+    data,
+    filteredData,
+    extent,
+    settings,
+    locationLabel,
+    indicator,
+    sentences
+  ) => {
     if (!data) return null;
     const {
       initial,
@@ -175,22 +184,18 @@ const parseSentence = createSelector(
     } = sentences;
     const { startYear, endYear } = settings;
 
-    const filteredData =
-      data && data.length ? data.filter((y) => y.year > 2001) : [];
-    const totalLossPrimary = filteredData.length
-      ? sumBy(filteredData, 'area')
-      : 0;
-    const totalLoss = filteredData.length ? filteredData[0].totalLoss : 0;
+    const totalLossPrimary =
+      filteredData && filteredData.length ? sumBy(filteredData, 'area') : 0;
+
+    const totalLoss = data && data.length ? data[0].totalLoss : 0;
     const percentageLoss =
       (totalLoss && extent && (totalLossPrimary / totalLoss) * 100) || 0;
 
-    const initialExtentData = filteredData.find(
-      (d) => d.year === startYear - 1
-    );
+    const initialExtentData = data.find((d) => d.year === startYear - 1);
     const initialExtent =
       (initialExtentData && initialExtentData.extentRemaining) || 100;
 
-    const finalExtentData = filteredData.find((d) => d.year === endYear);
+    const finalExtentData = data.find((d) => d.year === endYear);
     const finalExtent =
       (finalExtentData && finalExtentData.extentRemaining) || 0;
 

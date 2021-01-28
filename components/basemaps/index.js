@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { trackEvent } from 'utils/analytics';
 
+import { TOGGLE_PLANET_BASEMAP, triggerEvent } from 'utils/hotjar';
+
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
@@ -28,6 +30,9 @@ class BasemapsContainer extends React.Component {
 
   selectBasemap = ({ value, year, defaultYear, name, color } = {}) => {
     const { setMapSettings, defaultPlanetBasemap } = this.props;
+    if (value === 'planet') {
+      triggerEvent(TOGGLE_PLANET_BASEMAP);
+    }
     const basemapOptions = {
       value,
       ...(value === 'landsat' && {
