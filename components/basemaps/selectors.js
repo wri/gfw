@@ -16,7 +16,16 @@ import {
   getAllBoundaries,
 } from 'components/analysis/selectors';
 
-const selectPlanetBasemaps = (state) => state.planet?.data;
+const selectPlanetBasemaps = (state) => {
+  const activeType = state?.map?.settings?.basemap?.color;
+  const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
+  const planetBasemaps = state.planet?.data;
+  if (activeType && planetBasemaps) {
+    // XXX: Filter planet basemaps based on active image type
+    return planetBasemaps.filter((bm) => bm.name.includes(imageType));
+  }
+  return [];
+};
 
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
@@ -27,7 +36,6 @@ export const getPlanetBasemaps = createSelector(
         const startDate = new Date(first_acquired);
         const endDate = new Date(last_acquired);
         const monthDiff = differenceInMonths(endDate, startDate);
-
         const period =
           monthDiff === 1
             ? `${format(startDate, 'MMM yyyy')}`
@@ -35,7 +43,6 @@ export const getPlanetBasemaps = createSelector(
                 endDate,
                 'MMM yyyy'
               )}`;
-
         return {
           name,
           period,
@@ -49,7 +56,10 @@ export const getPlanetBasemaps = createSelector(
 
 export const getDefaultPlanetBasemap = createSelector(
   [getPlanetBasemaps],
-  (planetBasemaps) => planetBasemaps?.[0]?.name
+  (planetBasemaps) => {
+    console.log('planet basemaps', planetBasemaps);
+    return planetBasemaps?.[0]?.name;
+  }
 );
 
 export const getLandsatYears = createSelector([getBasemaps], (basemaps) =>
