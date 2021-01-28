@@ -18,15 +18,20 @@ const selectBasemapSelected = (state) => state?.map?.settings?.basemap?.name;
 const selectBasemapColorSelected = (state) =>
   state?.map?.settings?.basemap?.color;
 
-export const getPeriodOptions = createSelector(
-  [getPlanetBasemaps],
-  (planetBasemaps) => {
-    if (isEmpty(planetBasemaps)) return null;
+const getPeriodsByImageType = (basemaps, selected) => {
+  const imageType = selected === 'rgb' ? 'visual' : 'analytic';
+  return basemaps.filter((b) => b.value.includes(imageType));
+};
 
-    return planetBasemaps?.map(({ period, name } = {}) => ({
+export const getPeriodOptions = createSelector(
+  [getPlanetBasemaps, selectBasemapColorSelected],
+  (planetBasemaps, selected) => {
+    if (isEmpty(planetBasemaps)) return null;
+    const serialize = planetBasemaps?.map(({ period, name } = {}) => ({
       label: period,
       value: name,
     }));
+    return serialize ? getPeriodsByImageType(serialize, selected) : [];
   }
 );
 
