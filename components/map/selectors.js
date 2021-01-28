@@ -78,7 +78,6 @@ export const getBasemap = createSelector(
         }
       });
     }
-
     return { ...basemap, url };
   }
 );
