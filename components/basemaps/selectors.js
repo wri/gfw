@@ -18,7 +18,8 @@ import {
 
 const selectPlanetBasemaps = (state) => {
   const activeType = state?.map?.settings?.basemap?.color;
-  const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
+  // This can be either rgb<string> hex value <#xxx> or nir<string>
+  const imageType = activeType !== 'nir' ? 'visual' : 'analytic';
   const planetBasemaps = state.planet?.data;
   if (activeType && planetBasemaps) {
     // XXX: Filter planet basemaps based on active image type
