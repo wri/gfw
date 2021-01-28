@@ -39,12 +39,9 @@ import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
 import USLandCover from 'components/widgets/land-cover/us-land-cover';
 
 // Climate
-import emissions from 'components/widgets/climate/emissions';
 import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
 import soilBiomass from 'components/widgets/climate/soil-organic';
 import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
-import emissionsPlantations from 'components/widgets/climate/emissions-plantations';
-import cumulativeEmissions from 'components/widgets/climate/cumulative-emissions';
 import carbonStock from 'components/widgets/climate/carbon-stock';
 
 // Land Use
@@ -94,12 +91,10 @@ export default {
   treeCoverLocated,
 
   // climate
-  emissions,
+  // emissions,
   emissionsDeforestation,
-  emissionsPlantations,
   woodyBiomass,
   soilBiomass,
-  cumulativeEmissions,
   carbonStock,
 
   // land use
