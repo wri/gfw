@@ -17,9 +17,10 @@ import {
 } from 'components/analysis/selectors';
 
 const selectPlanetBasemaps = (state) => {
-  const activeType = state?.map?.settings?.basemap?.color;
+  // const activeType = state?.map?.settings?.basemap?.color;
   // This can be either rgb<string> hex value <#xxx> or nir<string>
-  const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
+  // const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
+  const imageType = 'analytic';
   const planetBasemaps = state.planet?.data;
   // XXX: Filter planet basemaps based on active image type
   return planetBasemaps?.filter((bm) => bm.name.includes(imageType));
@@ -27,13 +28,14 @@ const selectPlanetBasemaps = (state) => {
 
 const getGroupedPlanetBasemaps = (state) => {
   const planetBasemaps = state.planet?.data;
-  const visual = planetBasemaps
-    ?.filter((bm) => bm.name.includes('visual'))
-    .reverse();
+  // Visual is broken for now
+  // const visual = planetBasemaps
+  //   ?.filter((bm) => bm.name.includes('visual'))
+  //   .reverse();
   const cir = planetBasemaps
     ?.filter((bm) => bm.name.includes('analytic'))
     .reverse();
-  return [visual, cir];
+  return [cir, cir];
 };
 
 export const getPlanetBasemaps = createSelector(
