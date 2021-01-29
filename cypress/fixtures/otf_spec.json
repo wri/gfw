@@ -2168,5 +2168,100 @@
       ],
       "status": "success"
     }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&group_by=umd_tree_cover_loss__year&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2019-12-31",
+    "method": "GET",
+    "data": {
+      "data": [
+      {
+      "umd_tree_cover_loss__year": 2001,
+      "area__ha": 42.81004591916666
+      },
+      {
+      "umd_tree_cover_loss__year": 2002,
+      "area__ha": 16.62304974520833
+      },
+      {
+      "umd_tree_cover_loss__year": 2003,
+      "area__ha": 22.08816199020833
+      },
+      {
+      "umd_tree_cover_loss__year": 2004,
+      "area__ha": 52.29808801118055
+      },
+      {
+      "umd_tree_cover_loss__year": 2005,
+      "area__ha": 60.116234694999996
+      },
+      {
+      "umd_tree_cover_loss__year": 2006,
+      "area__ha": 37.26902933743055
+      },
+      {
+      "umd_tree_cover_loss__year": 2007,
+      "area__ha": 8.045859694027778
+      },
+      {
+      "umd_tree_cover_loss__year": 2008,
+      "area__ha": 3.4156951531249997
+      },
+      {
+      "umd_tree_cover_loss__year": 2009,
+      "area__ha": 9.336233418541665
+      },
+      {
+      "umd_tree_cover_loss__year": 2010,
+      "area__ha": 34.00514285777778
+      },
+      {
+      "umd_tree_cover_loss__year": 2011,
+      "area__ha": 1.442182397986111
+      },
+      {
+      "umd_tree_cover_loss__year": 2012,
+      "area__ha": 9.336233418541665
+      },
+      {
+      "umd_tree_cover_loss__year": 2013,
+      "area__ha": 8.956711734861111
+      },
+      {
+      "umd_tree_cover_loss__year": 2014,
+      "area__ha": 0.3036173469444444
+      },
+      {
+      "umd_tree_cover_loss__year": 2015,
+      "area__ha": 2.277130102083333
+      },
+      {
+      "umd_tree_cover_loss__year": 2016,
+      "area__ha": 35.37142091902778
+      },
+      {
+      "umd_tree_cover_loss__year": 2017,
+      "area__ha": 8.653094387916665
+      },
+      {
+      "umd_tree_cover_loss__year": 2018,
+      "area__ha": 25.124335459652777
+      },
+      {
+      "umd_tree_cover_loss__year": 2019,
+      "area__ha": 14.801345663541666
+      }
+      ],
+      "status": "success"
+      }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2019-12-31",
+    "method": "GET",
+    "data": {
+      "data": {
+      "area__ha": 1143.2711199193054
+      },
+      "status": "success"
+      }
   }
 ]

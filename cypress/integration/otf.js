@@ -6,12 +6,21 @@ const testConfig = [
     tests: [
       {
         slug: 'default',
-        description: 'Gana shape Testing OTF tree cover loss',
+        description: 'Gana shape Testing OTF tree cover gain',
         visit:
           '/map/geostore/6d5cfdf69bf468fc9b22c420e3c52d20/?analysis=eyJzaG93RHJhdyI6dHJ1ZX0%3D&mainMap=eyJzaG93QW5hbHlzaXMiOnRydWV9&map=eyJjZW50ZXIiOnsibGF0Ijo2LjQ4MDk3MTM4MTE4ODg4MiwibG5nIjotMS4xMzY1ODQ5ODg5ODI0OTU3fSwiem9vbSI6Ny45NTc5NzcyNjkxODQzMSwiY2FuQm91bmQiOmZhbHNlLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6InRyZWUtY292ZXItZ2FpbiIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJ0cmVlLWNvdmVyLWdhaW4tMjAwMS0yMDEyIl19LHsiZGF0YXNldCI6InBvbGl0aWNhbC1ib3VuZGFyaWVzIiwibGF5ZXJzIjpbImRpc3B1dGVkLXBvbGl0aWNhbC1ib3VuZGFyaWVzIiwicG9saXRpY2FsLWJvdW5kYXJpZXMiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dfQ%3D%3D&mapMenu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UifQ%3D%3D&mapPrompts=eyJvcGVuIjp0cnVlLCJzdGVwc0tleSI6InN1YnNjcmliZVRvQXJlYSIsInN0ZXBzSW5kZXgiOjB9',
         selector: '#treeCoverGainSimple .c-dynamic-sentence',
         sentence:
           'From {yearStart} to {yearEnd}, Area near Ashanti Region, Ghana gained {valueGain} of tree cover equal to {valueExtent} is its total extent.',
+      },
+      {
+        slug: 'default',
+        description: 'Rio Branco shape Testing OTF tree cover loss',
+        visit:
+          '/map/geostore/211fca3fbea311473797cc967bc7a073/?analysis=eyJzaG93RHJhdyI6dHJ1ZX0%3D&mainMap=eyJzaG93QW5hbHlzaXMiOnRydWV9&map=eyJjZW50ZXIiOnsibGF0IjotOS43OTk1NDczMDQwNjM5ODMsImxuZyI6LTY3LjgzNjM2NDI5MDkzNDExfSwiem9vbSI6MTEuOTY2ODg2Njk1ODc3MDA2LCJjYW5Cb3VuZCI6ZmFsc2UsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoicG9saXRpY2FsLWJvdW5kYXJpZXMiLCJsYXllcnMiOlsiZGlzcHV0ZWQtcG9saXRpY2FsLWJvdW5kYXJpZXMiLCJwb2xpdGljYWwtYm91bmRhcmllcyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJ0cmVlLWNvdmVyLWxvc3MiLCJsYXllcnMiOlsidHJlZS1jb3Zlci1sb3NzIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XX0%3D',
+        selector: '#treeLoss .c-dynamic-sentence',
+        sentence:
+          'From {startYear} to {endYear}, Area in Acre, Brazil lost {loss} of tree cover, equivalent to a {percent} decrease in tree cover since {extentYear}.',
       },
     ],
     spec: {
