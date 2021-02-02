@@ -7210,7 +7210,7 @@ expand-tilde@^1.2.2:
   dependencies:
     os-homedir "^1.0.1"
 
-express@^4.16.3:
+express@^4.16.3, express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   integrity sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==
@@ -8530,6 +8530,11 @@ he@1.1.x:
 he@1.2.0, he@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
+
+heroku-ssl-redirect@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/heroku-ssl-redirect/-/heroku-ssl-redirect-0.1.1.tgz#c55d60c0ec4473358ead66c75e8c7e99d9e8a689"
+  integrity sha512-kL/DvLR2J53iB3TXasQlo5JwF/j2L2zkala6Ddk9o6JwIPeDvbTGT9Aty8WElxcF389ObICCeyf2m7RKpCg5Bg==
 
 hey-listen@^1.0.4, hey-listen@^1.0.5:
   version "1.0.5"
