@@ -38,14 +38,20 @@ const getGroupedPlanetBasemaps = (state) => {
   return [cir, cir];
 };
 
+// ES6 provision, replace the hyphens with slashes forces UTC to be calculated from timestamp
+// instead of local time
+// interesting article: https://codeofmatt.com/javascript-date-parsing-changes-in-es6/
+const cleanPlanetDate = (dateStr) =>
+  new Date(dateStr.substring(0, 10).replace(/-/g, '/'));
+
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   (planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
     return sortBy(
       planetBasemaps.map(({ name, first_acquired, last_acquired } = {}) => {
-        const startDate = new Date(first_acquired);
-        const endDate = new Date(last_acquired);
+        const startDate = cleanPlanetDate(first_acquired);
+        const endDate = cleanPlanetDate(last_acquired);
         const monthDiff = differenceInMonths(endDate, startDate);
         const period =
           monthDiff === 1
@@ -54,6 +60,7 @@ export const getPlanetBasemaps = createSelector(
                 endDate,
                 'MMM yyyy'
               )}`;
+
         return {
           name,
           period,
