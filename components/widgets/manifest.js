@@ -13,6 +13,7 @@ import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 import glads from 'components/widgets/forest-change/glads';
 import gladAlerts from 'components/widgets/forest-change/glad-alerts';
+import gladAlertsSimple from 'components/widgets/forest-change/glad-alerts-simple';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
 
 // fires
@@ -64,6 +65,7 @@ export default {
   treeCoverGainSimple,
   glads,
   gladAlerts,
+  gladAlertsSimple,
   gladRanked,
 
   // fires
