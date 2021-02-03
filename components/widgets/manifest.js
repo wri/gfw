@@ -32,7 +32,6 @@ import treeCoverRanked from 'components/widgets/land-cover/tree-cover-ranked';
 import treeCoverPlantations from 'components/widgets/land-cover/tree-cover-plantations';
 import rankedPlantations from 'components/widgets/land-cover/ranked-plantations';
 import faoCover from 'components/widgets/land-cover/fao-cover';
-// import globalLandCover from 'components/widgets/land-cover/global-land-cover';
 import intactTreeCover from 'components/widgets/land-cover/intact-tree-cover';
 import primaryForest from 'components/widgets/land-cover/primary-forest';
 import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
