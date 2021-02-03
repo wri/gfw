@@ -12,7 +12,10 @@ import {
   GLAD_ALERTS,
 } from 'data/layers';
 
+// function for OTF analysis
 import { fetchAnalysisEndpoint } from 'services/analysis';
+
+// function for retreiving glad alerts from tables
 import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -79,9 +82,11 @@ export default {
       noSort: true,
     },
   ],
+  // where should we see this widget
   whitelists: {
     adm0: tropicalIsos,
   },
+  // initial settings
   settings: {
     period: 'week',
     weeks: 13,
@@ -89,6 +94,7 @@ export default {
   },
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
+      //
       return all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
         spread((alerts, latest) => {
           const gladsData = alerts && alerts.data.data;

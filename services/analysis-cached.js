@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import { GFW_API } from 'utils/apis';
 
+// Oscar see here!
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
