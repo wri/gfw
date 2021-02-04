@@ -30,6 +30,7 @@ const SQL_QUERIES = {
   glad:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily: `SELECT {location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
+  gladDailySum: `SELECT {location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   fires:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
@@ -724,6 +725,46 @@ export const fetchGladAlerts = (params) => {
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha,
+      })),
+    },
+  }));
+};
+
+export const fetchGladAlertsSum = (params) => {
+  const { forestType, landCategory, ifl, startDate, endDate, download } = params || {};
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset: 'glad',
+      datasetType: 'daily',
+    })}${SQL_QUERIES.gladDailySum}`
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  console.log('url', url)
+
+  // THIS NEEDS UPDATING
+  // if (download) {
+  //   const indicator = getIndicator(forestType, landCategory, ifl);
+  //   return {
+  //     name: `glad_alerts${
+  //       indicator ? `_in_${snakeCase(indicator.label)}` : ''
+  //     }__count`,
+  //     url: url.replace('query', 'download'),
+  //   };
+  // }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.is__confirmed_alert.toLowerCase() === 'true',
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha,

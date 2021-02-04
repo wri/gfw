@@ -16,7 +16,7 @@ import {
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 // function for retreiving glad alerts from tables
-import { fetchGladAlerts, fetchGLADLatest } from 'services/analysis-cached';
+import { fetchGladAlertsSum, fetchGLADLatest } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -94,9 +94,12 @@ export default {
   },
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
-      //
-      return all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
+      params.startDate = '2021-01-01'
+      params.endDate = '2021-01-20'
+      console.log('params', params)
+      return all([fetchGladAlertsSum(params), fetchGLADLatest(params)]).then(
         spread((alerts, latest) => {
+          console.log('alerts', alerts)
           const gladsData = alerts && alerts.data.data;
           let data = {};
           if (gladsData && latest) {
@@ -146,7 +149,7 @@ export default {
       })
     );
   },
-  getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
+  // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,
   parseInteraction: (payload) => {
     if (payload) {
