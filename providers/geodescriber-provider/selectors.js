@@ -10,7 +10,7 @@ import { getActiveArea } from 'providers/areas-provider/selectors';
 import tropicalIsos from 'data/tropical-isos.json';
 
 const adminSentences = {
-  default:
+  defaultSentence:
     'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
   withLoss:
     'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
@@ -141,6 +141,7 @@ export const getAdminDescription = createSelector(
       return {};
     }
     const {
+      defaultSentence,
       withLoss,
       withPlantationLoss,
       globalInitial,
@@ -210,7 +211,7 @@ export const getAdminDescription = createSelector(
       naturalLoss: `${naturalLoss}ha`,
     };
 
-    let sentence = adminSentences.default;
+    let sentence = defaultSentence;
     if (extent > 0 && totalLoss.area) {
       sentence = areaPlantations && location ? withPlantationLoss : withLoss;
     }
