@@ -390,8 +390,7 @@ export const parseSentence = createSelector(
     const sortedWeeks = orderBy(data, 'date');
 
     const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
-    const lastMinDate =
-      minWeeks && minWeeks.length ? minWeeks[minWeeks.length - 1].date : 0;
+    const lastMinDate = minWeeks[minWeeks.length - 1].date;
     const sortedPeakWeeks = sortedWeeks.filter((d) => d.mean > halfMax);
     const seasonStartDate =
       sortedPeakWeeks.length &&
