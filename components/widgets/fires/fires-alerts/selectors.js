@@ -387,14 +387,14 @@ export const parseSentence = createSelector(
     const minMean = min(data.map((d) => d.mean));
     const halfMax = (maxMean - minMean) * 0.5;
 
-    const peakWeeks = data.filter((d) => d.mean > halfMax);
-    const sortedPeakWeeks = orderBy(
-      peakWeeks,
-      ['year', 'week'],
-      ['desc', 'asc']
-    );
-    const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
+    const sortedWeeks = orderBy(data, 'date');
 
+    const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
+    const lastMinDate = minWeeks[minWeeks.length - 1].date;
+    const sortedPeakWeeks = sortedWeeks.filter((d) => d.mean > halfMax);
+    const seasonStartDate =
+      sortedPeakWeeks.length &&
+      sortedPeakWeeks.filter((d) => d.date > lastMinDate)[0].date;
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
 
