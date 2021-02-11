@@ -48,19 +48,25 @@ export const dateRange = (
     rangeInterval
   );
 
+  let modDate;
   // User selects dates that are either before or after the comparison date
   // example: pos=0 start (after) end date
   // or : pos=2 start end date (before start)
   if (diffInterval < 0) {
     if (position === 0) {
-      newRange[2] = date.add('months', 1).format('YYYY-MM-DD');
+      modDate = date.add('months', 1).format('YYYY-MM-DD');
+      newRange[2] = modDate.isAfter(maxDate)
+        ? maxDate
+        : modDate.format('YYYY-MM-DD');
     } else {
-      newRange[0] = date.subtract('months', 1).format('YYYY-MM-DD');
+      modDate = date.subtract('months', 1);
+      newRange[0] = modDate.isBefore(minDate)
+        ? minDate
+        : modDate.format('YYYY-MM-DD');
     }
   } else if (maxRange && diffInterval > maxRange) {
     // User reached above our max range
     // If this does not happen, we simply ignore all checks below as we now ignore "min" date
-    let modDate;
     if (position === 0) {
       modDate = date.add(maxRange, rangeInterval);
       const outsideMaxDate = modDate.isAfter(moment(maxDate));
