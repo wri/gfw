@@ -45,17 +45,15 @@ const GrantsApplySection = () => (
             </a>
           </li>
           <li>
-            - Register for the&nbsp;
+            - Watch a recording of the&nbsp;
             <a
               className="text -paragraph -color-4 -bold"
-              href="https://wri.zoom.us/webinar/register/WN_8Tu5L0MbRaaZwIvseMS74Q"
+              href="https://www.youtube.com/watch?v=lD_2FlY9hoM&feature=youtu.be"
               target="_blank"
               rel="noopener noreferrer"
             >
-              2021 Small Grants Fund Applicant Webinar
+              2021 Small Grants Fund Webinar
             </a>
-            {' '}
-            on Wednesday, February 3rd, 2021 at 8:00 am EST
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
