@@ -1,5 +1,19 @@
 import moment from 'moment';
 
+const invalidDateRange = (date, range, maxRange, position) => {
+  const [start, end] = range;
+
+  if (position === 0 && moment(date).isAfter(end)) {
+    return true;
+  }
+
+  if (position === 2 && moment(date).isBefore(start)) {
+    return true;
+  }
+
+  return false;
+};
+
 const setRange = (
   absolute,
   startDateAbsolute,
@@ -49,12 +63,19 @@ export const dateRange = (
   );
 
   let modDate;
+  const isInvalidDateRange = invalidDateRange(
+    date,
+    newRange,
+    maxRange,
+    position
+  );
+  const aboveMaxRange = maxRange && diffInterval > maxRange;
   // User selects dates that are either before or after the comparison date
   // example: pos=0 start (after) end date
   // or : pos=2 start end date (before start)
-  if (diffInterval < 0) {
+  if (isInvalidDateRange) {
     if (position === 0) {
-      modDate = date.add('months', 1).format('YYYY-MM-DD');
+      modDate = date.add('months', 1);
       newRange[2] = modDate.isAfter(maxDate)
         ? maxDate
         : modDate.format('YYYY-MM-DD');
@@ -64,7 +85,7 @@ export const dateRange = (
         ? minDate
         : modDate.format('YYYY-MM-DD');
     }
-  } else if (maxRange && diffInterval > maxRange) {
+  } else if (aboveMaxRange) {
     // User reached above our max range
     // If this does not happen, we simply ignore all checks below as we now ignore "min" date
     if (position === 0) {
