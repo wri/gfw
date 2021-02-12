@@ -749,7 +749,7 @@ export const fetchGladAlertsSum = (params) => {
 
   console.log('url', url)
 
-  // THIS NEEDS UPDATING
+  // TODO: THIS NEEDS UPDATING
   // if (download) {
   //   const indicator = getIndicator(forestType, landCategory, ifl);
   //   return {

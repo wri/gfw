@@ -1,218 +1,102 @@
 /* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
-import groupBy from 'lodash/groupBy';
-import sortBy from 'lodash/sortBy';
+import { formatNumber } from 'utils/format';
 import moment from 'moment';
-import { getColorPalette } from 'components/widgets/utils/colors';
 
-import {
-  getMeansData,
-  getStdDevData,
-  getDatesData,
-  getChartConfig,
-} from 'components/widgets/utils/data';
 
 // get list data
 const selectAlerts = (state) => state.data && state.data.alerts;
-const selectLatestDates = (state) => state.data && state.data.latest;
+// const selectLatestDates = (state) => state.data && state.data.latest;
 const selectColors = (state) => state.colors;
-const selectInteraction = (state) => state.interaction;
-const selectWeeks = (state) => state.settings && state.settings.weeks;
 const selectSentences = (state) => state.sentence;
-const selectLang = (state) => state.lang;
 const getIndicator = (state) => state.indicator || null;
 
-export const parsePayload = (payload) => {
-  const payloadData = payload && payload.find((p) => p.name === 'count');
-  const payloadValues = payloadData && payloadData.payload;
-  if (payloadValues) {
-    return {
-      startDate: payloadValues.date,
-      endDate: moment(payloadValues.date).add(7, 'days').format('YYYY-MM-DD'),
-      updateLayer: true,
-      ...payloadValues,
-    };
-  }
-  return {};
-};
-
-export const getData = createSelector(
-  [selectAlerts, selectLatestDates],
-  (data, latest) => {
-    if (!data || isEmpty(data)) return null;
-    const parsedData = data.map((d) => ({
-      ...d,
-      ...(d.alert__count && {
-        count: d.alert__count,
-        week: parseInt(d.alert__week, 10),
-        year: parseInt(d.alert__year, 10),
-      }),
-    }));
-    const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
-    const hasAlertsByYears = Object.values(groupedByYear).reduce(
-      (acc, next) => {
-        const { year } = next[0];
-        return {
-          ...acc,
-          [year]: next.some((item) => item.alerts > 0),
-        };
-      },
-      {}
-    );
-
-    const dataYears = Object.keys(hasAlertsByYears).filter(
-      (key) => hasAlertsByYears[key] === true
-    );
-    const minYear = Math.min(...dataYears.map((el) => parseInt(el, 10)));
-    const startYear =
-      minYear === moment().year() ? moment().year() - 1 : minYear;
-
-    const years = [];
-    const latestWeek = moment(latest);
-    const lastWeek = {
-      isoWeek: latestWeek.isoWeek(),
-      year: latestWeek.year(),
-    };
-
-    for (let i = startYear; i <= lastWeek.year; i += 1) {
-      years.push(i);
-    }
-
-    const yearLengths = {};
-    years.forEach((y) => {
-      if (lastWeek.year === y) {
-        yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
-        yearLengths[y] = moment(`${y}-12-31`).subtract(1, 'week').isoWeek();
-      } else {
-        yearLengths[y] = moment(`${y}-12-31`).isoWeek();
-      }
-    });
-
-    const zeroFilledData = [];
-
-    years.forEach((d) => {
-      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
-      for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(
-          yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { alerts: 0, count: 0, week: i, year: parseInt(d, 10) }
-        );
-      }
-    });
-
-    return zeroFilledData;
-  }
-);
-
-export const getMeans = createSelector(
-  [getData, selectLatestDates],
-  (data, latest) => {
-    if (!data || isEmpty(data)) return null;
-    return getMeansData(data, latest);
-  }
-);
-
-export const getStdDev = createSelector(
-  [getMeans, getData],
-  (data, rawData) => {
-    if (!data) return null;
-    return getStdDevData(data, rawData);
-  }
-);
-
-export const getDates = createSelector([getStdDev], (data) => {
-  if (!data) return null;
-  return getDatesData(data);
-});
-
 export const parseData = createSelector(
-  [getDates, selectWeeks],
-  (data, weeks) => {
-    if (!data) return null;
-    return data.slice(-weeks);
+  [selectAlerts, getIndicator],
+  (data, indicator, hasPlantations) => {
+    if (isEmpty(data)) return null;
+    console.log('hasPlantations', hasPlantations)
+    console.log('indicator', indicator)
+    console.log('data', data)
+    
+    const unconfirmedAlertsData = data.filter(d => d.confirmed === false);
+    const confimedAlertsData = data.filter(d => d.confirmed === true);
+
+    const unconfirmedAlerts = unconfirmedAlertsData.length ? unconfirmedAlertsData[0].alerts : 0;
+    const confirmedAlerts = confimedAlertsData.length ? confimedAlertsData[0].alerts : 0;
+
+    const totalAlerts = unconfirmedAlerts + confirmedAlerts;
+
+    return {
+      totalAlertCount: totalAlerts,
+      unconfirmedAlertCount: unconfirmedAlerts,
+      unconfirmedAlertPercentage: 100 * unconfirmedAlerts / totalAlerts,
+      confirmedAlertCount: confirmedAlerts,
+      confirmedAlertPercentage: 100 * confirmedAlerts / totalAlerts,
+    };
   }
 );
 
 export const parseConfig = createSelector(
-  [selectColors, selectLatestDates],
-  (colors, latest) => {
-    if (!latest) return null;
-
-    return getChartConfig(colors, latest);
+  [parseData, selectColors, getIndicator],
+  (data, colors, indicator, hasPlantations) => {
+    if (isEmpty(data)) return null;
+    // const label = indicator ? ` in ${indicator.label}` : '';
+    const parsedData = [
+      {
+        label: 'Alerts',
+        value: data.unconfirmedAlertCount,
+        color: colors.main,
+        percentage: data.unconfirmedAlertPercentage,
+        unit: ' '
+      },
+      {
+        label: 'Confirmed Alerts',
+        value: data.confirmedAlertCount,
+        color: colors.gladConfirmed,
+        percentage: data.confirmedAlertPercentage.totalAlertCount,
+        unit: ' '
+      }
+    ];
+    // if (indicator) {
+    //   parsedData.splice(1, 0, {
+    //     label: hasPlantations ? 'Other forest cover' : 'Other tree cover',
+    //     value: otherCover,
+    //     color: colors.otherCover,
+    //     percentage: otherCover / totalArea * 100
+    //   });
+    // } else if (!indicator && hasPlantations) {
+    //   parsedData.splice(1, 0, {
+    //     label: 'Plantations',
+    //     value: plantations,
+    //     color: colors.plantedForest,
+    //     percentage: plantations / totalArea * 100
+    //   });
+    // }
+    return parsedData;
   }
 );
 
 export const parseSentence = createSelector(
   [
     parseData,
-    selectColors,
-    selectInteraction,
     selectSentences,
-    getIndicator,
-    selectLang,
+    getIndicator
   ],
-  (data, colors, interaction, sentences, indicator) => {
+  (data, sentences, indicator) => {
     if (!data) return null;
+    const startDate = '2021-01-01'
+    const endDate = '2021-01-20'
 
-    let lastDate = data[data.length - 1] || {};
-    if (!isEmpty(interaction)) {
-      lastDate = interaction;
-    }
-    const colorRange = getColorPalette(colors.ramp, 5);
-    let statusColor = colorRange[4];
-    let status = 'unusually low';
-
-    const {
-      count,
-      twoPlusStdDev,
-      plusStdDev,
-      minusStdDev,
-      twoMinusStdDev,
-      date,
-    } = lastDate || {};
-
-    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
-      status = 'unusually high';
-      statusColor = colorRange[0];
-    } else if (
-      twoPlusStdDev &&
-      count <= twoPlusStdDev[1] &&
-      count > twoPlusStdDev[0]
-    ) {
-      status = 'high';
-      statusColor = colorRange[1];
-    } else if (
-      plusStdDev &&
-      minusStdDev &&
-      count <= plusStdDev[1] &&
-      count > minusStdDev[0]
-    ) {
-      status = 'normal';
-      statusColor = colorRange[2];
-    } else if (
-      twoMinusStdDev &&
-      count >= twoMinusStdDev[0] &&
-      count < twoMinusStdDev[1]
-    ) {
-      status = 'low';
-      statusColor = colorRange[3];
-    }
-    const formattedDate = moment(date).format('Do of MMMM YYYY');
+    const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
+    const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
     const params = {
       indicator: indicator && indicator.label,
-      date: formattedDate,
-      count: {
-        value: lastDate.count ? format(',')(lastDate.count) : 0,
-        color: colors.main,
-      },
-      status: {
-        value: status,
-        color: statusColor,
-      },
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      count: formatNumber({num: data.totalAlertCount, unit: 'count'}), 
+      confirmedPercentage: formatNumber({num:data.confirmedAlertPercentage, unit: '%'})
     };
     return {
       sentence: indicator ? sentences.withInd : sentences.default,
@@ -222,7 +106,6 @@ export const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
-  config: parseConfig,
+  data: parseConfig,
   sentence: parseSentence,
 });

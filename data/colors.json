@@ -11,6 +11,7 @@
   },
   "loss": {
     "main": "#fe6598",
+    "gladConfirmed": "#e4c600",
     "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
     "noLoss": "#e7e5a4",
     "primaryForestLoss": "#bed65c",
