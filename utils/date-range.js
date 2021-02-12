@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const invalidDateRange = (date, range, maxRange, position) => {
+const invalidDateRange = (date, range, position) => {
   const [start, end] = range;
 
   if (position === 0 && moment(date).isAfter(end)) {
@@ -63,12 +63,7 @@ export const dateRange = (
   );
 
   let modDate;
-  const isInvalidDateRange = invalidDateRange(
-    date,
-    newRange,
-    maxRange,
-    position
-  );
+  const isInvalidDateRange = invalidDateRange(date, newRange, position);
   const aboveMaxRange = maxRange && diffInterval > maxRange;
   // User selects dates that are either before or after the comparison date
   // example: pos=0 start (after) end date
