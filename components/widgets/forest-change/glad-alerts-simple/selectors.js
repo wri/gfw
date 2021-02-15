@@ -95,7 +95,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
-      count: formatNumber({num: data.totalAlertCount, unit: 'count'}), 
+      count: formatNumber({num: data.totalAlertCount, unit: ','}), 
       confirmedPercentage: formatNumber({num:data.confirmedAlertPercentage, unit: '%'})
     };
     return {
