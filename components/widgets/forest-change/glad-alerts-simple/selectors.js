@@ -6,11 +6,11 @@ import moment from 'moment';
 
 // get list data
 const selectAlerts = (state) => state.data && state.data.alerts;
-// const selectLatestDates = (state) => state.data && state.data.latest;
 const selectColors = (state) => state.colors;
 const selectSentences = (state) => state.sentence;
 const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
+const getLocationName = (state) => state.locationLabel;
 
 
 export const parseData = createSelector([selectAlerts], (data) => {
@@ -38,6 +38,8 @@ export const parseConfig = createSelector(
   [parseData, selectColors, getIndicator],
   (data, colors, indicator) => {
     if (isEmpty(data)) return null;
+
+    const { otherAlertCount, otherAlertPercentage, highConfidenceAlertCount, highConfidenceAlertPercentage} = data;
     const alertsLabel = indicator
       ? `Other alerts in ${indicator.label}`
       : 'Other alerts';
@@ -48,17 +50,17 @@ export const parseConfig = createSelector(
     const parsedData = [
       {
         label: alertsLabel,
-        value: data.otherAlertCount,
+        value: otherAlertCount,
         color: colors.main,
-        percentage: data.otherAlertPercentage,
-        unit: ' ',
+        percentage: otherAlertPercentage,
+        unit: 'counts',
       },
       {
         label: highConfidenceAlertsLabel,
-        value: data.highConfidenceAlertCount,
+        value: highConfidenceAlertCount,
         color: colors.gladConfirmed,
-        percentage: data.highConfidenceAlertPercentage,
-        unit: ' ',
+        percentage: highConfidenceAlertPercentage,
+        unit: 'counts',
       },
     ];
     // if (indicator) {
@@ -85,9 +87,10 @@ export const parseSentence = createSelector(
     parseData,
     getSettings,
     selectSentences,
-    getIndicator
+    getIndicator,
+    getLocationName
   ],
-  (data, settings, sentences, indicator) => {
+  (data, settings, sentences, indicator, location) => {
     if (!data) return null;
 
     const startDate = settings.startDate;
@@ -96,10 +99,11 @@ export const parseSentence = createSelector(
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
     const params = {
       indicator: indicator && indicator.label,
+      location,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
       count: formatNumber({ num: data.totalAlertCount, unit: ',' }),
-      highConfidencePercentage: formatNumber({
+      highConfidencePercentage: data.highConfidenceAlertCount === 0 ? 'none' : formatNumber({
         num: data.highConfidenceAlertPercentage,
         unit: '%',
       }),

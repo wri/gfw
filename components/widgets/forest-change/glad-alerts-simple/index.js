@@ -27,9 +27,9 @@ export default {
   title: 'Deforestation alerts in {location}',
   sentence: {
     default:
-      'There were {count} GLAD alerts reported between {startDate} and {endDate}, of which {highConfidencePercentage} were high confidence alerts.',
+      'There were {count} GLAD alerts reported in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were <b>high confidence alerts</b>.',
     withInd:
-      'There were {count} GLAD alerts reported in {indicator} between {startDate} and {endDate}, of which {highConfidencePercentage} were confirmed alerts.',
+      'There were {count} GLAD alerts reported in {indicator} in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were <b>high confidence alerts</b>.',
   },
   metaKey: 'widget_deforestation_graph',
   large: true,
@@ -89,11 +89,8 @@ export default {
   // initial settings
   settings: {
     dataset: 'glad',
-    startDate: '2021-01-01',
-    endDate: '2021-01-20'
   },
   getData: (params) => {
-    console.log('get data', params);
     if (shouldQueryPrecomputedTables(params)) {
       return all([fetchGladAlertsSum(params), fetchGLADLatest(params)]).then(
         spread((alerts, latest) => {
@@ -105,15 +102,13 @@ export default {
 
             data = {
               alerts: gladsData,
-              latest: latestDate,
               settings: {
-                latestDate,
-                startDate: params.startDate,
-                endDate: params.endDate
+                startDate: moment(latestDate).add(-7, 'days').format('YYYY-MM-DD'),
+                endDate: latestDate
               },
               options: {
-                minDate: '2020-01-01',
-                maxDate: '2021-01-20'
+                minDate: '2015-01-01',
+                maxDate: latestDate
               }
             };
           }

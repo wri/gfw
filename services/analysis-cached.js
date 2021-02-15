@@ -747,8 +747,6 @@ export const fetchGladAlertsSum = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
 
-  console.log('url', url)
-
   // TODO: THIS NEEDS UPDATING
   // if (download) {
   //   const indicator = getIndicator(forestType, landCategory, ifl);
