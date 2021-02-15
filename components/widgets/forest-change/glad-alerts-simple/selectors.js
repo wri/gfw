@@ -11,15 +11,12 @@ const selectAlerts = (state) => state.data && state.data.alerts;
 const selectColors = (state) => state.colors;
 const selectSentences = (state) => state.sentence;
 const getIndicator = (state) => state.indicator || null;
+const getSettings = (state) => state.settings || null;
 
 export const parseData = createSelector(
   [selectAlerts, getIndicator],
   (data, indicator, hasPlantations) => {
     if (isEmpty(data)) return null;
-    console.log('hasPlantations', hasPlantations)
-    console.log('indicator', indicator)
-    console.log('data', data)
-    
     const unconfirmedAlertsData = data.filter(d => d.confirmed === false);
     const confimedAlertsData = data.filter(d => d.confirmed === true);
 
@@ -81,13 +78,15 @@ export const parseConfig = createSelector(
 export const parseSentence = createSelector(
   [
     parseData,
+    getSettings,
     selectSentences,
     getIndicator
   ],
-  (data, sentences, indicator) => {
+  (data, settings, sentences, indicator) => {
     if (!data) return null;
-    const startDate = '2021-01-01'
-    const endDate = '2021-01-20'
+
+    const startDate = settings.startDate;
+    const endDate = settings.endDate;
 
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
@@ -95,7 +94,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
-      count: formatNumber({num: data.totalAlertCount, unit: 'count'}), 
+      count: formatNumber({num: data.totalAlertCount, unit: 'count'}),
       confirmedPercentage: formatNumber({num:data.confirmedAlertPercentage, unit: '%'})
     };
     return {

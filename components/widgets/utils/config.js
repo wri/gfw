@@ -98,6 +98,7 @@ export const getSettingsConfig = ({
             locationType,
           });
       }
+
       const parsedOptions = noSort
         ? mergedOptions
         : sortBy(mergedOptions, 'label');
@@ -110,20 +111,16 @@ export const getSettingsConfig = ({
           ),
           value: parsedOptions.find((opt) => opt.value === settings[key]),
           ...(startKey && {
-            startOptions: parsedOptions.filter(
-              (opt) => opt.value <= settings[endKey]
-            ),
+            startOptions: parsedOptions.filter(opt => opt.value <= settings[endKey]),
             startValue: parsedOptions.find(
               (opt) => opt.value === settings[startKey]
             ),
           }),
           ...(endKey && {
-            endOptions: parsedOptions.filter(
-              (opt) => opt.value >= settings[startKey]
-            ),
+            endOptions: parsedOptions.filter(opt => opt.value <= settings[endKey]),
             endValue: parsedOptions.find(
               (opt) => opt.value === settings[endKey]
-            ),
+            )
           }),
           ...(compareKey && {
             compareOptions: parsedOptions.filter(
@@ -133,6 +130,11 @@ export const getSettingsConfig = ({
               (opt) => opt.value === settings[compareKey]
             ),
           }),
+        }),
+        ...(o.type === 'datepicker' && {
+          ...dataOptions,
+          startValue: settings[startKey],
+          endValue: settings[endKey]
         }),
       };
     });

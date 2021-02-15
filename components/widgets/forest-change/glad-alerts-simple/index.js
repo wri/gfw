@@ -56,8 +56,8 @@ export default {
     summary: 6,
     forestChange: 10,
   },
-  pendingKeys: ['weeks'],
-  refetchKeys: ['forestType', 'landCategory'],
+  pendingKeys: [],
+  refetchKeys: ['forestType', 'landCategory', 'startDate', 'endDate'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -73,6 +73,13 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+    },
+    {
+      key: 'dateRange',
+      label: 'Range',
+      endKey: 'endDate',
+      startKey: 'startDate',
+      type: 'datepicker',
     }
   ],
   // where should we see this widget
@@ -81,18 +88,15 @@ export default {
   },
   // initial settings
   settings: {
-    period: 'week',
-    weeks: 13,
     dataset: 'glad',
+    startDate: '2021-01-01',
+    endDate: '2021-01-20'
   },
   getData: (params) => {
+    console.log('get data', params);
     if (shouldQueryPrecomputedTables(params)) {
-      params.startDate = '2021-01-01';
-      params.endDate = '2021-01-20';
-      console.log('params', params)
       return all([fetchGladAlertsSum(params), fetchGLADLatest(params)]).then(
         spread((alerts, latest) => {
-          console.log('alerts index', alerts)
           const gladsData = alerts && alerts.data.data;
           let data = {};
           if (gladsData && latest) {
@@ -102,7 +106,15 @@ export default {
             data = {
               alerts: gladsData,
               latest: latestDate,
-              settings: { latestDate },
+              settings: {
+                latestDate,
+                startDate: params.startDate,
+                endDate: params.endDate
+              },
+              options: {
+                minDate: '2020-01-01',
+                maxDate: '2021-01-20'
+              }
             };
           }
 
@@ -147,7 +159,6 @@ export default {
   parseInteraction: (payload) => {
     if (payload) {
       const startDate = moment().year(payload.year).week(payload.week);
-
       return {
         startDate: startDate.format('YYYY-MM-DD'),
         endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),

@@ -90,23 +90,22 @@ class Widgets extends PureComponent {
                   key: w.widget,
                   payload,
                 })}
-              handleChangeSettings={(change) =>
-                setWidgetSettings({
-                  widget: w.widget,
-                  change: {
-                    ...change,
-                    ...(change.forestType === 'ifl' &&
-                      w.settings &&
-                      w.settings.extentYear && {
-                        extentYear: w.settings.ifl === '2016' ? 2010 : 2000,
-                      }),
-                    ...(change.forestType === 'primary_forest' &&
-                      w.settings &&
-                      w.settings.extentYear && {
-                        extentYear: 2000,
-                      }),
-                  },
-                })}
+              handleChangeSettings={(change) => setWidgetSettings({
+                widget: w.widget,
+                change: {
+                  ...change,
+                  ...(change.forestType === 'ifl' &&
+                    w.settings &&
+                    w.settings.extentYear && {
+                      extentYear: w.settings.ifl === '2016' ? 2010 : 2000,
+                    }),
+                  ...(change.forestType === 'primary_forest' &&
+                    w.settings &&
+                    w.settings.extentYear && {
+                      extentYear: 2000,
+                    }),
+                },
+              })}
               handleShowMap={() => {
                 setActiveWidget(w.widget);
                 trackEvent({

@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
+import moment from 'moment';
 import Dropdown from 'components/ui/dropdown';
 import Switch from 'components/ui/switch';
+import Datepicker from 'components/ui/datepicker';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
 import './styles.scss';
@@ -36,8 +37,9 @@ class WidgetSettings extends PureComponent {
       loading,
       placeholder,
       clearable,
+      minDate,
+      maxDate
     } = option;
-
     switch (type) {
       case 'switch':
         return (
@@ -93,7 +95,34 @@ class WidgetSettings extends PureComponent {
             />
           </div>
         );
-
+      case 'datepicker':
+        return (
+          <div className={cx('widget-settings-selector', type)}>
+            <span className="label">{label}</span>
+            From
+            <Datepicker
+              selected={new Date(startValue)}
+              onChange={(change) =>
+                handleChangeSettings({ [startKey]: moment(change).format('YYYY-MM-DD') })}
+              minDate={new Date(minDate)}
+              maxDate={new Date(maxDate)}
+              isOutsideRange={(d) =>
+                d.isAfter(moment(maxDate)) ||
+                d.isBefore(moment(minDate))}
+            />
+            To
+            <Datepicker
+              selected={new Date(endValue)}
+              onChange={(change) =>
+                handleChangeSettings({ [endKey]: moment(change).format('YYYY-MM-DD') })}
+              minDate={new Date(minDate)}
+              maxDate={new Date(maxDate)}
+              isOutsideRange={(d) =>
+                d.isAfter(moment(maxDate)) ||
+                d.isBefore(moment(minDate))}
+            />
+          </div>
+        );
       default:
         return (
           options &&
@@ -134,8 +163,8 @@ class WidgetSettings extends PureComponent {
         {settingsConfig &&
           settingsConfig.map(
             (option) =>
-              option.options &&
-              !!option.options.length && (
+              ((option.options &&
+              !!option.options.length) || option.type === 'datepicker') && (
                 <div
                   key={option.key}
                   className={cx('settings-option', { border: option.border })}
