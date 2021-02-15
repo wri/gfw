@@ -27,9 +27,9 @@ export default {
   title: 'Deforestation alerts in {location}',
   sentence: {
     default:
-      'There were {count} GLAD alerts reported between {startDate} and {endDate}. Of these {confirmedPercentage} were confirmed alerts.',
+      'There were {count} GLAD alerts reported between {startDate} and {endDate}, of which {highConfidencePercentage} were high confidence alerts.',
     withInd:
-      'There were {count} GLAD alerts reported in {indicator} between {startDate} and {endDate}. Of these {confirmedPercentage} were confirmed alerts.',
+      'There were {count} GLAD alerts reported in {indicator} between {startDate} and {endDate}, of which {highConfidencePercentage} were confirmed alerts.',
   },
   metaKey: 'widget_deforestation_graph',
   large: true,
@@ -73,7 +73,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
-    }
+    },
   ],
   // where should we see this widget
   whitelists: {
@@ -87,12 +87,12 @@ export default {
   },
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
-      params.startDate = '2021-01-01';
+      params.startDate = '2020-01-01';
       params.endDate = '2021-01-20';
-      console.log('params', params)
+      console.log('params', params);
       return all([fetchGladAlertsSum(params), fetchGLADLatest(params)]).then(
         spread((alerts, latest) => {
-          console.log('alerts index', alerts)
+          console.log('alerts index', alerts);
           const gladsData = alerts && alerts.data.data;
           let data = {};
           if (gladsData && latest) {

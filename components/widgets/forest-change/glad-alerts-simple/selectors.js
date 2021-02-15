@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
 import moment from 'moment';
 
-
 // get list data
 const selectAlerts = (state) => state.data && state.data.alerts;
 // const selectLatestDates = (state) => state.data && state.data.latest;
@@ -12,52 +11,53 @@ const selectColors = (state) => state.colors;
 const selectSentences = (state) => state.sentence;
 const getIndicator = (state) => state.indicator || null;
 
-export const parseData = createSelector(
-  [selectAlerts, getIndicator],
-  (data, indicator, hasPlantations) => {
-    if (isEmpty(data)) return null;
-    console.log('hasPlantations', hasPlantations)
-    console.log('indicator', indicator)
-    console.log('data', data)
-    
-    const unconfirmedAlertsData = data.filter(d => d.confirmed === false);
-    const confimedAlertsData = data.filter(d => d.confirmed === true);
+export const parseData = createSelector([selectAlerts], (data) => {
+  if (isEmpty(data)) return null;
+  const otherAlertsData = data.filter((d) => d.confirmed === false);
+  const confimedAlertsData = data.filter((d) => d.confirmed === true);
 
-    const unconfirmedAlerts = unconfirmedAlertsData.length ? unconfirmedAlertsData[0].alerts : 0;
-    const confirmedAlerts = confimedAlertsData.length ? confimedAlertsData[0].alerts : 0;
+  const otherAlerts = otherAlertsData.length ? otherAlertsData[0].alerts : 0;
+  const highConfidenceAlerts = confimedAlertsData.length
+    ? confimedAlertsData[0].alerts
+    : 0;
 
-    const totalAlerts = unconfirmedAlerts + confirmedAlerts;
+  const totalAlerts = otherAlerts + highConfidenceAlerts;
 
-    return {
-      totalAlertCount: totalAlerts,
-      unconfirmedAlertCount: unconfirmedAlerts,
-      unconfirmedAlertPercentage: 100 * unconfirmedAlerts / totalAlerts,
-      confirmedAlertCount: confirmedAlerts,
-      confirmedAlertPercentage: 100 * confirmedAlerts / totalAlerts,
-    };
-  }
-);
+  return {
+    totalAlertCount: totalAlerts,
+    otherAlertCount: otherAlerts,
+    otherAlertPercentage: (100 * otherAlerts) / totalAlerts,
+    highConfidenceAlertCount: highConfidenceAlerts,
+    highConfidenceAlertPercentage: (100 * highConfidenceAlerts) / totalAlerts,
+  };
+});
 
 export const parseConfig = createSelector(
   [parseData, selectColors, getIndicator],
-  (data, colors, indicator, hasPlantations) => {
+  (data, colors, indicator) => {
     if (isEmpty(data)) return null;
-    // const label = indicator ? ` in ${indicator.label}` : '';
+    const alertsLabel = indicator
+      ? `Other alerts in ${indicator.label}`
+      : 'Other alerts';
+    const highConfidenceAlertsLabel = indicator
+      ? `High confidence alerts in ${indicator.label}`
+      : 'High confidence alerts';
+
     const parsedData = [
       {
-        label: 'Alerts',
-        value: data.unconfirmedAlertCount,
+        label: alertsLabel,
+        value: data.otherAlertCount,
         color: colors.main,
-        percentage: data.unconfirmedAlertPercentage,
-        unit: ' '
+        percentage: data.otherAlertPercentage,
+        unit: ' ',
       },
       {
-        label: 'Confirmed Alerts',
-        value: data.confirmedAlertCount,
+        label: highConfidenceAlertsLabel,
+        value: data.highConfidenceAlertCount,
         color: colors.gladConfirmed,
-        percentage: data.confirmedAlertPercentage.totalAlertCount,
-        unit: ' '
-      }
+        percentage: data.highConfidenceAlertPercentage,
+        unit: ' ',
+      },
     ];
     // if (indicator) {
     //   parsedData.splice(1, 0, {
@@ -79,15 +79,11 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [
-    parseData,
-    selectSentences,
-    getIndicator
-  ],
+  [parseData, selectSentences, getIndicator],
   (data, sentences, indicator) => {
     if (!data) return null;
-    const startDate = '2021-01-01'
-    const endDate = '2021-01-20'
+    const startDate = '2020-01-01';
+    const endDate = '2021-01-20';
 
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
@@ -95,8 +91,11 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
-      count: formatNumber({num: data.totalAlertCount, unit: ','}), 
-      confirmedPercentage: formatNumber({num:data.confirmedAlertPercentage, unit: '%'})
+      count: formatNumber({ num: data.totalAlertCount, unit: ',' }),
+      highConfidencePercentage: formatNumber({
+        num: data.highConfidenceAlertPercentage,
+        unit: '%',
+      }),
     };
     return {
       sentence: indicator ? sentences.withInd : sentences.default,
