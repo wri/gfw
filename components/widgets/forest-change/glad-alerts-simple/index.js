@@ -27,9 +27,9 @@ export default {
   title: 'Deforestation alerts in {location}',
   sentence: {
     default:
-      'There were {count} GLAD alerts reported between {startDate} and {endDate}. Of these {confirmedPercentage} were confirmed alerts.',
+      'There were {count} GLAD alerts reported between {startDate} and {endDate}, of which {highConfidencePercentage} were high confidence alerts.',
     withInd:
-      'There were {count} GLAD alerts reported in {indicator} between {startDate} and {endDate}. Of these {confirmedPercentage} were confirmed alerts.',
+      'There were {count} GLAD alerts reported in {indicator} between {startDate} and {endDate}, of which {highConfidencePercentage} were confirmed alerts.',
   },
   metaKey: 'widget_deforestation_graph',
   large: true,
