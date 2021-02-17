@@ -33,7 +33,11 @@ export const getLatest = createThunkAction(
                   // TODO: What if we don't get dates properly formatted back?
                   // Can this service return "null" or similar and then we can handle that case here
                   const days = statsLatestDecoder(bands);
-                  const endDate = moment('2014-12-31')
+                  const raddStartDate = moment('2014-12-31');
+                  const today = moment();
+                  const todayDays = today.diff(raddStartDate, 'days');
+                  const isPast = todayDays - days >= 0;
+                  const endDate = raddStartDate
                     .add(days, 'days')
                     .format('YYYY-MM-DD');
                   const defaultEndDate = moment()
@@ -41,7 +45,7 @@ export const getLatest = createThunkAction(
                     .format('YYYY-MM-DD');
 
                   // convert to date
-                  date = days && days > 0 ? endDate : defaultEndDate;
+                  date = days && days > 0 && isPast ? endDate : defaultEndDate;
                 }
                 if (!date) {
                   const data = Array.isArray(latestResponse)
@@ -51,6 +55,7 @@ export const getLatest = createThunkAction(
                     data && (data.date || data.latestResponse || data.latest);
                 }
                 let latestDate = moment(date).utc();
+
                 if (newEndpoints[index].resolution) {
                   latestDate = latestDate.endOf(newEndpoints[index].resolution);
                 }
