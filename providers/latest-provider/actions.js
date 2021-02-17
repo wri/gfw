@@ -27,9 +27,13 @@ export const getLatest = createThunkAction(
                 const latestResponse = response.data.data || response.data;
                 let date = latestResponse.date || latestResponse.max_date;
 
-                const { bands } = latestResponse;
+                const { bands, metadata } = latestResponse;
+                // if response is from the meta endpoint (prioritise this)
+                if (metadata && metadata.content_date) {
+                  date = metadata.content_date;
+                }
                 // if the response is from the stats endpoint, get bands key
-                if (bands && bands.length) {
+                else if (bands && bands.length) {
                   // TODO: What if we don't get dates properly formatted back?
                   // Can this service return "null" or similar and then we can handle that case here
                   const days = statsLatestDecoder(bands);
@@ -43,7 +47,6 @@ export const getLatest = createThunkAction(
                   const defaultEndDate = today
                     .add(-7, 'days')
                     .format('YYYY-MM-DD');
-
                   // convert to date
                   date = days && days > 0 && isPast ? endDate : defaultEndDate;
                 }
@@ -54,8 +57,7 @@ export const getLatest = createThunkAction(
                   date =
                     data && (data.date || data.latestResponse || data.latest);
                 }
-                let latestDate = moment(date).utc();
-
+                let latestDate = moment(date); // .utc();
                 if (newEndpoints[index].resolution) {
                   latestDate = latestDate.endOf(newEndpoints[index].resolution);
                 }
