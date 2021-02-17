@@ -1,0 +1,5 @@
+cypress/fixtures
+.vscode
+/coverage
+/cypress/videos
+/cypress/screenshots
