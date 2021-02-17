@@ -40,7 +40,7 @@ export const getLatest = createThunkAction(
                   const endDate = raddStartDate
                     .add(days, 'days')
                     .format('YYYY-MM-DD');
-                  const defaultEndDate = moment()
+                  const defaultEndDate = today
                     .add(-7, 'days')
                     .format('YYYY-MM-DD');
 
