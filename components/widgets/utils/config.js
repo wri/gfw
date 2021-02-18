@@ -111,16 +111,20 @@ export const getSettingsConfig = ({
           ),
           value: parsedOptions.find((opt) => opt.value === settings[key]),
           ...(startKey && {
-            startOptions: parsedOptions.filter(opt => opt.value <= settings[endKey]),
+            startOptions: parsedOptions.filter(
+              (opt) => opt.value <= settings[endKey]
+            ),
             startValue: parsedOptions.find(
               (opt) => opt.value === settings[startKey]
             ),
           }),
           ...(endKey && {
-            endOptions: parsedOptions.filter(opt => opt.value <= settings[endKey]),
+            endOptions: parsedOptions.filter(
+              (opt) => opt.value <= settings[endKey]
+            ),
             endValue: parsedOptions.find(
               (opt) => opt.value === settings[endKey]
-            )
+            ),
           }),
           ...(compareKey && {
             compareOptions: parsedOptions.filter(
@@ -134,7 +138,7 @@ export const getSettingsConfig = ({
         ...(o.type === 'datepicker' && {
           ...dataOptions,
           startValue: settings[startKey],
-          endValue: settings[endKey]
+          endValue: settings[endKey],
         }),
       };
     });
@@ -382,7 +386,7 @@ export const getStatements = ({
       : null,
     dataType === 'glad' && type === 'country'
       ? translateText(
-          'Caution: GLAD alerts from the last six months are preliminary. Revisions are made as unconfirmed alerts are removed from the data and alert totals are finalized six months after posting.'
+          'Caution: GLAD alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image. Learn more here.'
         )
       : null,
     ...(indicatorStatements || []),
