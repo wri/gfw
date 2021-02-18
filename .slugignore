@@ -1,5 +1,9 @@
-cypress/fixtures
 .vscode
-/coverage
-/cypress/videos
-/cypress/screenshots
+*.psd
+*.pdf
+/cypress
+/spec
+.env.sample
+.eslintignore
+.eslintrc
+cypress.json
