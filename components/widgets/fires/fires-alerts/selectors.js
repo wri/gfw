@@ -393,13 +393,13 @@ export const parseSentence = createSelector(
 
     const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
 
-    const earliestMinDate = minWeeks[0].date;
+    const earliestMinDate = minWeeks[0]?.date;
     const sortedPeakWeeks = sortedWeeks.filter(
       (d) => d.mean > halfMax && d.date && d.date > earliestMinDate
     );
 
     const seasonStartDate =
-      sortedPeakWeeks.length > 0 && sortedPeakWeeks[0].date;
+      sortedPeakWeeks.length > 0 && sortedPeakWeeks[0]?.date;
 
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
