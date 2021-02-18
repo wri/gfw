@@ -88,14 +88,17 @@ export default {
     confidence: 'h',
   },
   sentences: {
+    defaultSentence: 'In {location} there ',
+    seasonSentence:
+      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There ',
     allAlerts:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidence:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'were {count} {dataset} fire alerts reported between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
     allAlertsWithInd:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidenceWithInd:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
   },
   whitelists: {
     adm0: [
