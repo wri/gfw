@@ -2,6 +2,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
+
 import moment from 'moment';
 
 // get list data
@@ -11,7 +12,6 @@ const selectSentences = (state) => state.sentence;
 const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
-
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (isEmpty(data)) return null;
@@ -39,7 +39,12 @@ export const parseConfig = createSelector(
   (data, colors, indicator) => {
     if (isEmpty(data)) return null;
 
-    const { otherAlertCount, otherAlertPercentage, highConfidenceAlertCount, highConfidenceAlertPercentage} = data;
+    const {
+      otherAlertCount,
+      otherAlertPercentage,
+      highConfidenceAlertCount,
+      highConfidenceAlertPercentage,
+    } = data;
     const alertsLabel = indicator
       ? `Other alerts in ${indicator.label}`
       : 'Other alerts';
@@ -47,19 +52,21 @@ export const parseConfig = createSelector(
       ? `High confidence alerts in ${indicator.label}`
       : 'High confidence alerts';
 
+    const highConfidenceColour = colors.main;
+    const otherColour = colors.gladOther; // hslShift(mainColour)
     const parsedData = [
-      {
-        label: alertsLabel,
-        value: otherAlertCount,
-        color: colors.main,
-        percentage: otherAlertPercentage,
-        unit: 'counts',
-      },
       {
         label: highConfidenceAlertsLabel,
         value: highConfidenceAlertCount,
-        color: colors.gladConfirmed,
+        color: highConfidenceColour,
         percentage: highConfidenceAlertPercentage,
+        unit: 'counts',
+      },
+      {
+        label: alertsLabel,
+        value: otherAlertCount,
+        color: otherColour,
+        percentage: otherAlertPercentage,
         unit: 'counts',
       },
     ];
@@ -83,13 +90,7 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [
-    parseData,
-    getSettings,
-    selectSentences,
-    getIndicator,
-    getLocationName
-  ],
+  [parseData, getSettings, selectSentences, getIndicator, getLocationName],
   (data, settings, sentences, indicator, location) => {
     if (!data) return null;
 
@@ -102,11 +103,20 @@ export const parseSentence = createSelector(
       location,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
+      component: {
+        key: 'high confidence alerts',
+        fine: false,
+        tooltip:
+          'Caution: GLAD alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image. Learn more here.',
+      },
       count: formatNumber({ num: data.totalAlertCount, unit: ',' }),
-      highConfidencePercentage: data.highConfidenceAlertCount === 0 ? 'none' : formatNumber({
-        num: data.highConfidenceAlertPercentage,
-        unit: '%',
-      }),
+      highConfidencePercentage:
+        data.highConfidenceAlertCount === 0
+          ? 'none'
+          : formatNumber({
+              num: data.highConfidenceAlertPercentage,
+              unit: '%',
+            }),
     };
     return {
       sentence: indicator ? sentences.withInd : sentences.default,

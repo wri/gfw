@@ -27,12 +27,12 @@ export default {
   title: 'Deforestation alerts in {location}',
   sentence: {
     default:
-      'There were {count} GLAD alerts reported in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were <b>high confidence alerts</b>.',
+      'There were {count} GLAD alerts reported in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
     withInd:
-      'There were {count} GLAD alerts reported in {indicator} in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were <b>high confidence alerts</b>.',
+      'There were {count} GLAD alerts reported in {indicator} in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
   },
   metaKey: 'widget_deforestation_graph',
-  large: true,
+  large: false,
   visible: ['dashboard', 'analysis'],
   colors: 'loss',
   chartType: 'pieChart',
@@ -53,8 +53,8 @@ export default {
     },
   ],
   sortOrder: {
-    summary: 6,
-    forestChange: 10,
+    summary: 999,
+    forestChange: 999,
   },
   pendingKeys: [],
   refetchKeys: ['forestType', 'landCategory', 'startDate', 'endDate'],
@@ -80,7 +80,7 @@ export default {
       endKey: 'endDate',
       startKey: 'startDate',
       type: 'datepicker',
-    }
+    },
   ],
   // where should we see this widget
   whitelists: {
@@ -103,13 +103,15 @@ export default {
             data = {
               alerts: gladsData,
               settings: {
-                startDate: moment(latestDate).add(-7, 'days').format('YYYY-MM-DD'),
-                endDate: latestDate
+                startDate: moment(latestDate)
+                  .add(-7, 'days')
+                  .format('YYYY-MM-DD'),
+                endDate: latestDate,
               },
               options: {
                 minDate: '2015-01-01',
-                maxDate: latestDate
-              }
+                maxDate: latestDate,
+              },
             };
           }
 
