@@ -90,7 +90,7 @@ class Widgets extends PureComponent {
                   key: w.widget,
                   payload,
                 })}
-              handleChangeSettings={(change) =>
+              handleChangeSettings={(change) => {
                 setWidgetSettings({
                   widget: w.widget,
                   change: {
@@ -106,7 +106,8 @@ class Widgets extends PureComponent {
                         extentYear: 2000,
                       }),
                   },
-                })}
+                });
+              }}
               handleShowMap={() => {
                 setActiveWidget(w.widget);
                 trackEvent({

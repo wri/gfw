@@ -29,7 +29,6 @@ class TimelineContainer extends PureComponent {
     const { handleChange } = this.props;
 
     const newRange = dateRange(this.props, date, position, absolute);
-
     handleChange(newRange, this.props.activeLayer, absolute);
 
     trackEvent({
