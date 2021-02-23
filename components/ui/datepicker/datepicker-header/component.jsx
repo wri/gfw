@@ -29,9 +29,9 @@ const DatepickerHeader = ({
   const currentYear = getYear(date);
 
   const startDate =
-    currentYear === minYear ? minDate : new Date(`${currentYear}-01-01`);
+    currentYear === minYear ? minDate : new Date(`${currentYear}/01/01`);
   const endDate =
-    currentYear === maxYear ? maxDate : new Date(`${currentYear}-12-31`);
+    currentYear === maxYear ? maxDate : new Date(`${currentYear}/12/31`);
 
   const monthsInYear = eachMonthOfInterval({
     start: startDate,
