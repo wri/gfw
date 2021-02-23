@@ -58,4 +58,5 @@ const testConfig = [
   },
 ];
 
-initSpecFile('OTF spec', testConfig);
+// Title, config, lock = if true, fixtures will be locked even in recording mode
+initSpecFile('OTF spec', testConfig, false);

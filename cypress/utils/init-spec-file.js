@@ -1,12 +1,12 @@
 const asSlug = (s) => s.trim().toLowerCase().replace(/\s/g, '_');
 
-function initSpec(title, testConfig) {
+function initSpec(title, testConfig, locked = false) {
   describe(title, () => {
     const xhrData = [];
 
     after(() => {
       // In record mode, save gathered XHR data to local JSON file
-      if (Cypress.env('RECORD')) {
+      if (Cypress.env('RECORD') && !locked) {
         const path = `./cypress/fixtures/${asSlug(title)}.json`;
         cy.writeFile(path, xhrData); // eslint-disable-line
       }
@@ -17,7 +17,7 @@ function initSpec(title, testConfig) {
         onResponse: (response) => {
           // If we are in "record mode", push requests we are spying on into memory
           // these will later be stored as a fixture
-          if (Cypress.env('RECORD')) {
+          if (Cypress.env('RECORD') && !locked) {
             const url = response.url; // eslint-disable-line
             const method = response.method; // eslint-disable-line
             const data = response?.response?.body; // eslint-disable-line
@@ -32,7 +32,7 @@ function initSpec(title, testConfig) {
       // Its IMPORTANT not to spy on all requests, you will end up with a HUGE file that will crash the world
       // Ex; recording all requests fileSize 100mb+
       // Ex; specifying spyOn requests fileSize: 4mb ish
-      if (Cypress.env('RECORD')) {
+      if (Cypress.env('RECORD') && !locked) {
         cy.route({
           method: 'GET',
           url: '/pages/data-scripts/*',
@@ -57,7 +57,7 @@ function initSpec(title, testConfig) {
       }
 
       // When we are not recording, read our generated fixture for specified requests
-      if (!Cypress.env('RECORD')) {
+      if (!Cypress.env('RECORD') || locked) {
         cy.route('POST', '/j/**', []).as('ANALYTICS_REQUEST');
         cy.route(
           {
