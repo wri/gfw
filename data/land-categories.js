@@ -106,7 +106,7 @@ export default [
     ],
   },
   {
-    label: 'Indonesia peat lands',
+    label: 'Indonesia & Malaysia peat lands',
     preserveString: true,
     dataType: 'keyword',
     value: 'idn_mys_peatlands',
@@ -119,7 +119,7 @@ export default [
         layers: [IND_PEAT_LANDS],
       },
     ],
-    hidden: true,
+    hidden: false,
   },
   {
     label: 'Indonesia forest moratorium areas',

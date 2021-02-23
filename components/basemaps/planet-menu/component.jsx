@@ -7,7 +7,6 @@ import Dropdown from 'components/ui/dropdown';
 import './styles.scss';
 
 export const PlanetMenu = ({
-  name,
   periodOptions,
   periodSelected,
   onSelectBasemap,
@@ -42,7 +41,6 @@ export const PlanetMenu = ({
           onChange={(value) =>
             onSelectBasemap({
               value: 'planet',
-              name,
               color: value,
             })}
           native
@@ -53,7 +51,6 @@ export const PlanetMenu = ({
 );
 
 PlanetMenu.propTypes = {
-  name: PropTypes.string,
   periodOptions: PropTypes.array,
   periodSelected: PropTypes.object,
   colorOptions: PropTypes.array,

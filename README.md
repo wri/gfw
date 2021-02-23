@@ -58,7 +58,7 @@ So how do you make a release on GFW?
 
 # RW API Documentation for GFW
 
-Map layers and relevent datasets are stored in the [RW-API](http://api.resourcewatch.org/) and the `globalforestwatch.org/map` utilises the [layer-manager](https://github.com/Vizzuality/layer-manager) to render them.
+Map layers and relevant datasets are stored in the [RW-API](http://api.resourcewatch.org/) and the `globalforestwatch.org/map` utilises the [layer-manager](https://github.com/Vizzuality/layer-manager) to render them.
 
 The schema used to style these layers, their legends, and define their interactions are specific to the *Global Forest Watch* platform.
 

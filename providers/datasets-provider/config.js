@@ -147,67 +147,96 @@ const decodes = {
     }
   `,
   RADDs: `
-  float r = color.r * 255.;
-  float g = color.g * 255.;
-  float b = color.b * 255.;
-  float day = (r * 255.) + (g * 255.) - 1461.;
-  float confidence = (floor(b / 100.) * 50.) - 1.;
-  if (
-    day > 0. &&
-    day >= startDayIndex &&
-    day <= endDayIndex
-  ) {
-    // get intensity
-    float intensity = mod(b, 100.);
-    if (intensity > 255.) {
-      intensity = 255.;
+  // values for creating power scale, domain (input), and range (output)
+    float confidenceValue = 0.;
+    if (confirmedOnly > 0.) {
+      confidenceValue = 1.;
     }
-    if (day >= numberOfDays - 7. && day <= numberOfDays) {
-      color.r = 219. / 255.;
-      color.g = 168. / 255.;
-      color.b = 0.;
-      alpha = intensity * 50. / 255.;
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    // 1461 = days from 2019/01/01 to 2014/12/31
+    float day = (r * 255.) + g - 1461.;
+    float confidence = floor(b / 100.) - 1.;
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex  &&
+      confidence >= confidenceValue
+    ) {
+      // get intensity
+      float intensity = mod(b, 100.) * 50.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      if (day >= numberOfDays - 7. && day <= numberOfDays) {
+        color.r = 219. / 255.;
+        color.g = 168. / 255.;
+        color.b = 0.;
+        alpha = intensity / 255.;
+      } else {
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      }
     } else {
-      color.r = 220. / 255.;
-      color.g = 102. / 255.;
-      color.b = 153. / 255.;
-      alpha = intensity * 50. / 255.;
+      alpha = 0.;
     }
-  } else {
-    alpha = 0.;
-  }
+  `,
+  RADDsCoverage: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      color.r = 253. / 255.;
+      color.g = 204. / 255.;
+      color.b = 220. / 255.;
+      alpha = 1.;
+    }
   `,
   staticRemap: `
-  float red = color.r;
-  float green = color.g;
-  float blue = color.b;
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
 
-  if (red == 0. && green == 0. && blue == 0.) {
-    alpha = 0.;
-  } else {
-    alpha = 1.;
-  }
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      alpha = 1.;
+    }
 
-  color.r = red;
-  color.g = green;
-  color.b = blue;
+    color.r = red;
+    color.g = green;
+    color.b = blue;
   `,
   forestHeight: `
     float h = color.r * 255.;
+    float heightMax = 41.;
 
-    float r1 = 188. / 255.;
-    float g1 = 255. / 255.;
-    float b1 = 184. / 255.;
+    // color at 3m
+    float r1 = 230. / 255.;
+    float g1 = 240. / 255.;
+    float b1 = 230. / 255.;
 
+    // color at 30m
     float r2 = 0. / 255.;
-    float g2 = 92. / 255.;
-    float b2 = 24. / 255.;
+    float g2 = 102. / 255.;
+    float b2 = 0. / 255.;
 
-    vec3 color1 = vec3(r1, g1, b1);
-    vec3 color2 = vec3(r2, g2, b2);
-    color = mix(color1, color2, h / 41.);
+    vec3 colorMin = vec3(r1, g1, b1);
+    vec3 colorMax = vec3(r2, g2, b2);
 
-    if (h >= height && h <= 41.) {
+    // h > 30m will default to colorMax
+    color = mix(colorMin, colorMax, h / 30.);
+
+    // Only show pixels bettween the specified height and heightMax from data
+    if (h >= height && h <= heightMax) {
       alpha = 1.;
     } else {
       alpha = 0.;
@@ -620,6 +649,7 @@ export default {
   treeLossByDriver: decodes.treeLossByDriver,
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
+  RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,

@@ -30,7 +30,6 @@ const Cookies = () => {
       label: 'cookies',
     });
   };
-
   return (
     <>
       {open && (

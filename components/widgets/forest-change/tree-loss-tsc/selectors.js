@@ -148,7 +148,7 @@ export const parseConfig = createSelector(
       },
     ];
     tooltip = tooltip.concat(
-      drivers
+      sortBy(drivers, 'position')
         .map((d) => {
           const tscCat = tscLossCategories.find((c) => c.value === d.driver);
           const label = tscCat && tscCat.label;

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { trackEvent } from 'utils/analytics';
 
+import { TOGGLE_PLANET_BASEMAP, triggerEvent } from 'utils/hotjar';
+
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import * as mapActions from 'components/map/actions';
@@ -19,6 +21,7 @@ class BasemapsContainer extends React.Component {
   static propTypes = {
     activeLabels: PropTypes.object,
     basemaps: PropTypes.object,
+    defaultPlanetBasemapsByCategory: PropTypes.object,
     defaultPlanetBasemap: PropTypes.string,
     labels: PropTypes.array,
     activeDatasets: PropTypes.array,
@@ -26,15 +29,28 @@ class BasemapsContainer extends React.Component {
     setMapSettings: PropTypes.func.isRequired,
   };
 
+  handlePlanetName = (name, color) => {
+    const { defaultPlanetBasemapsByCategory } = this.props;
+    const { visual, cir } = defaultPlanetBasemapsByCategory;
+    if (!name) {
+      // User selects image category
+      return color === 'cir' ? cir : visual;
+    }
+    return name;
+  };
+
   selectBasemap = ({ value, year, defaultYear, name, color } = {}) => {
-    const { setMapSettings, defaultPlanetBasemap } = this.props;
+    const { setMapSettings } = this.props;
+    if (value === 'planet') {
+      triggerEvent(TOGGLE_PLANET_BASEMAP);
+    }
     const basemapOptions = {
       value,
       ...(value === 'landsat' && {
         year: year || defaultYear,
       }),
       ...(value === 'planet' && {
-        name: name || defaultPlanetBasemap,
+        name: this.handlePlanetName(name, color),
         color: color || 'rgb',
       }),
     };

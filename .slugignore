@@ -1,0 +1,9 @@
+.vscode
+*.psd
+*.pdf
+/cypress
+/spec
+.env.sample
+.eslintignore
+.eslintrc
+cypress.json

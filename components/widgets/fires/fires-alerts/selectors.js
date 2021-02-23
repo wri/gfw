@@ -363,6 +363,8 @@ export const parseSentence = createSelector(
   ) => {
     if (!data) return null;
     const {
+      defaultSentence,
+      seasonSentence,
       highConfidence,
       allAlerts,
       highConfidenceWithInd,
@@ -387,13 +389,17 @@ export const parseSentence = createSelector(
     const minMean = min(data.map((d) => d.mean));
     const halfMax = (maxMean - minMean) * 0.5;
 
-    const peakWeeks = data.filter((d) => d.mean > halfMax);
-    const sortedPeakWeeks = orderBy(
-      peakWeeks,
-      ['year', 'week'],
-      ['desc', 'asc']
+    const sortedWeeks = orderBy(data, 'date');
+
+    const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
+
+    const earliestMinDate = minWeeks[0]?.date;
+    const sortedPeakWeeks = sortedWeeks.filter(
+      (d) => d.mean > halfMax && d.date && d.date > earliestMinDate
     );
-    const seasonStartDate = sortedPeakWeeks.length && sortedPeakWeeks[0].date;
+
+    const seasonStartDate =
+      sortedPeakWeeks.length > 0 && sortedPeakWeeks[0]?.date;
 
     const seasonMonth = moment(seasonStartDate).format('MMMM');
     const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
@@ -425,8 +431,11 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
+    const initialSentence = seasonStartDate ? seasonSentence : defaultSentence;
     let sentence =
-      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
+      confidence && confidence.value === 'h'
+        ? initialSentence + highConfidence
+        : initialSentence + allAlerts;
     if (indicator) {
       sentence =
         confidence && confidence.value === 'h'
