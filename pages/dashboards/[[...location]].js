@@ -13,7 +13,7 @@ import {
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
-  getCountryLinksSerialized
+  getCountryLinksSerialized,
 } from 'services/country';
 
 import PageLayout from 'wrappers/page';
@@ -86,24 +86,24 @@ export const getStaticProps = async ({ params }) => {
     const title = `${locationName} Deforestation Rates & Statistics | GFW`;
     const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
     const noIndex = !['country'].includes(type);
-    const [asType, adm0, adm1, adm2] = params?.location;
+    const [locationType, adm0, lvl1, lvl2] = params?.location;
+    const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
+    const adm2 = lvl2 ? parseInt(lvl2, 10) : null;
+
     const data = await getSentenceData({
-      type: asType,
+      type: locationType,
       adm0,
       adm1,
       adm2,
       threshold: 30,
-      extentYear: 2010
+      extentYear: 2010,
     });
 
-    const parsedSentence = parseSentence(
-      data,
-      {
-        adm0,
-        adm1,
-        adm2
-      }
-    );
+    const parsedSentence = parseSentence(data, {
+      adm0,
+      adm1,
+      adm2,
+    });
 
     if (adm0) {
       const regions = await getRegionsProvider({ adm0 });
@@ -114,24 +114,23 @@ export const getStaticProps = async ({ params }) => {
           id: parseGadm36Id(row.id).adm1,
           value: parseGadm36Id(row.id).adm1,
           label: row.name,
-          name: row.name
+          name: row.name,
         })),
-        countryLinks
-      }
+        countryLinks,
+      };
     }
 
     if (adm1) {
       const subRegions = await getSubRegionsProvider(adm0, adm1);
-      console.log('sub regions', subRegions);
       countryData = {
         ...countryData,
         subRegions: uniqBy(subRegions.data.rows).map((row) => ({
           id: parseGadm36Id(row.id).adm2,
           value: parseGadm36Id(row.id).adm2,
           label: row.name,
-          name: row.name
-        }))
-      }
+          name: row.name,
+        })),
+      };
     }
 
     return {
@@ -231,7 +230,6 @@ const DashboardsPage = (props) => {
     if (countryData) {
       dispatch(setCountriesSSR(JSON.parse(countryData)));
     }
-
   }, [fullPathname, isFallback]);
 
   // when setting the query params from the URL we need to make sure we don't render the map
@@ -247,7 +245,7 @@ const DashboardsPage = (props) => {
       {ready && (
         <>
           <DashboardsUrlProvider />
-          <Dashboards globalSentence={globalSentence}  />
+          <Dashboards globalSentence={globalSentence} />
         </>
       )}
     </PageLayout>
@@ -258,7 +256,7 @@ DashboardsPage.propTypes = {
   title: PropTypes.string,
   globalSentence: PropTypes.object,
   geodescriber: PropTypes.string,
-  countryData: PropTypes.string
+  countryData: PropTypes.string,
 };
 
 export default DashboardsPage;
