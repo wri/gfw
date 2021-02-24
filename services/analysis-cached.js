@@ -5,17 +5,21 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
-import { GFW_API } from 'utils/apis';
+import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const GFW_API =
+  ENVIRONMENT === 'production' ? GFW_DATA_API : GFW_STAGING_DATA_API;
 
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   loss:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
+    'SELECT umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   lossGrouped:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
     'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
@@ -44,9 +48,9 @@ const SQL_QUERIES = {
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date ORDER BY alert__date DESC",
   biomassStock:
-    'SELECT SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
-    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -137,7 +141,8 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
-  return `${GFW_API}/query/${datasetId}?sql=`;
+  // use latest not v202101.1
+  return `${GFW_API}/dataset/${datasetId}/v202101.1/query?sql=`;
 };
 
 // build {select} from location params
@@ -176,7 +181,6 @@ export const getWHEREQuery = (params) => {
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
 
-      const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       const isNumericValue = !!(
         typeof value === 'number' && !['adm0', 'confidence'].includes(p)
       );
@@ -186,7 +190,7 @@ export const getWHEREQuery = (params) => {
           isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
         }${
         isPolyname && !tableKey.includes('is__')
-          ? `${tableKey} <> ${zeroString}`
+          ? `${tableKey} IS NOT NULL`
           : ''
       }${
         isPolyname &&
