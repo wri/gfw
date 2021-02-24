@@ -22,7 +22,6 @@ class GeodescriberProvider extends PureComponent {
     const { location, loading, geojson } = this.props;
 
     if (!loading && !['global', 'country'].includes(location.type) && geojson) {
-      console.log('location fetched');
       this.handleGetGeodescriber();
     }
   }
@@ -43,7 +42,7 @@ class GeodescriberProvider extends PureComponent {
     if (
       !loading &&
       ['global', 'country'].includes(location.type) &&
-      !isEqual(location, prevLocation)
+      !isEqual(location, prevLocation) && prevProps?.location?.pathname !== ""
     ) {
       this.handleGetAdminGeodescriber();
     }

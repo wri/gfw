@@ -24,8 +24,9 @@ export const getGeodescriber = createThunkAction(
   }
 );
 
-// XXX: Step 2
 export const getAdminStats = (params) => getSentenceData(params);
+
+export const setGeodescriberSSR = (payload) => setGeodescriber(payload);
 
 export const getAdminGeodescriber = createThunkAction(
   'getAdminGeodescriber',

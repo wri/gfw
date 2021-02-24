@@ -10,8 +10,6 @@ import isEmpty from 'lodash/isEmpty';
 
 import tropicalIsos from 'data/tropical-isos.json';
 
-import { translateText } from 'utils/lang';
-
 import { getExtent, getLoss } from 'services/analysis-cached';
 
 const ADMINS = {
