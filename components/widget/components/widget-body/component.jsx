@@ -30,11 +30,12 @@ const chartOptions = {
   mapList: WidgetMapList,
   sankey: WidgetSankey,
   listLegend: WidgetListLegend,
-  lollipop: WidgetLollipop
+  lollipop: WidgetLollipop,
 };
 
 class WidgetBody extends PureComponent {
   static propTypes = {
+    widget: PropTypes.string,
     settings: PropTypes.object,
     loading: PropTypes.bool,
     metaLoading: PropTypes.bool,
@@ -47,11 +48,12 @@ class WidgetBody extends PureComponent {
     locationName: PropTypes.string,
     parsePayload: PropTypes.func,
     handleDataHighlight: PropTypes.func,
-    handleRefetchData: PropTypes.func
+    handleRefetchData: PropTypes.func,
   };
 
   render() {
     const {
+      widget,
       loading,
       metaLoading,
       error,
@@ -62,7 +64,7 @@ class WidgetBody extends PureComponent {
       rawData,
       chartType,
       handleRefetchData,
-      handleDataHighlight
+      handleDataHighlight,
     } = this.props;
 
     const hasData = !isEmpty(data);
@@ -79,27 +81,23 @@ class WidgetBody extends PureComponent {
           !hasData &&
           !hasSentence &&
           Component && (
-          <NoContent
-            message={`No data in selection for ${locationName || '...'}`}
-          />
-        )}
+            <NoContent
+              message={`No data in selection for ${locationName || '...'}`}
+            />
+          )}
         {!loading && error && <RefreshButton refetchFn={handleRefetchData} />}
-        {!error &&
-          !metaLoading &&
-          sentence &&
-          hasSentence && (
+        {!error && !metaLoading && sentence && hasSentence && (
           <DynamicSentence
             className="sentence"
+            testId={`sentence-${widget}`}
             sentence={sentence}
             handleMouseOver={() => handleDataHighlight(true)}
             handleMouseOut={() => handleDataHighlight(false)}
           />
         )}
-        {!error &&
-          hasData &&
-          !metaLoading &&
-          hasRawData &&
-          Component && <Component {...this.props} />}
+        {!error && hasData && !metaLoading && hasRawData && Component && (
+          <Component {...this.props} />
+        )}
       </div>
     );
   }

@@ -133,11 +133,12 @@ class Header extends PureComponent {
                   trackEvent({
                     category: 'Dashboards page',
                     action: 'Download page',
-                    label: (locationNames &&
-                      locationNames.adm0 &&
-                      locationNames.adm0.label) ||
-                    'Global'
-                  })
+                    label:
+                      (locationNames &&
+                        locationNames.adm0 &&
+                        locationNames.adm0.label) ||
+                      'Global',
+                  });
                 }}
               >
                 <Icon icon={downloadIcon} />
@@ -219,8 +220,9 @@ class Header extends PureComponent {
                       onClick={() =>
                         trackEvent({
                           category: 'Areas of interest',
-                          action: 'User changes between global and areas dashboard',
-                          label: 'changes to global'
+                          action:
+                            'User changes between global and areas dashboard',
+                          label: 'changes to global',
                         })}
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
@@ -239,8 +241,9 @@ class Header extends PureComponent {
                       onClick={() =>
                         trackEvent({
                           category: 'Areas of interest',
-                          action: 'User changes between global and areas dashboard',
-                          label: 'changes to areas'
+                          action:
+                            'User changes between global and areas dashboard',
+                          label: 'changes to areas',
                         })}
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
@@ -353,7 +356,11 @@ class Header extends PureComponent {
             <div className="description text -title-xs">
               {!loading && (
                 <div>
-                  <DynamicSentence className="sentence" sentence={sentence} />
+                  <DynamicSentence
+                    testId="dashboard-header-sentence"
+                    className="sentence"
+                    sentence={sentence}
+                  />
                   {location && location.adm0 === 'IDN' && (
                     <Fragment>
                       <p className="disclaimer">

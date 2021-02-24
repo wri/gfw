@@ -108,7 +108,6 @@ class Widget extends PureComponent {
       status,
     } = this.props;
     const { main } = colors || {};
-
     const toggleSettingsMenu = () =>
       this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
 
@@ -155,6 +154,7 @@ class Widget extends PureComponent {
           toggleSettingsMenu={toggleSettingsMenu}
         />
         <WidgetBody
+          widget={widget}
           chartType={chartType}
           loading={loading}
           metaLoading={metaLoading}
