@@ -13,6 +13,8 @@ import Dashboards from 'layouts/dashboards';
 
 import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
+import { getSentenceData, parseSentence } from 'services/sentences';
+
 import { setMapSettings } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setDashboardPrompts } from 'components/prompts/dashboard-prompts/actions';
@@ -41,9 +43,15 @@ export const getStaticProps = async ({ params }) => {
   }
 
   if (!type || type === 'global') {
+    // get global data
+    // 1. get geodescriber for global
+    // 2. use whatever we have to parse sentence
+    const data = await getSentenceData();
+    const parsedSentence = parseSentence(data);
     return {
       props: {
         title: 'Global Deforestation Rates & Statistics by Country | GFW',
+        globalSentence: parsedSentence,
         description:
           'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.',
       },
@@ -108,6 +116,7 @@ const DashboardsPage = (props) => {
   const [ready, setReady] = useState(false);
   const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
+  const { globalSentence } = props;
 
   useEffect(() => {
     const {
@@ -163,7 +172,7 @@ const DashboardsPage = (props) => {
       {ready && (
         <>
           <DashboardsUrlProvider />
-          <Dashboards />
+          <Dashboards globalSentence={globalSentence}  />
         </>
       )}
     </PageLayout>

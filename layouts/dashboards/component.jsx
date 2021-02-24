@@ -54,7 +54,7 @@ class DashboardsPage extends PureComponent {
   };
 
   state = {
-    scrollY: 0,
+    scrollY: 0
   };
 
   componentDidMount() {
@@ -137,9 +137,9 @@ class DashboardsPage extends PureComponent {
       setWidgetsCategory,
       activeArea,
       clearScrollTo,
+      globalSentence,
       embed,
     } = this.props;
-
     const { status, location } = activeArea || {};
 
     const isPendingDashboard =
@@ -150,7 +150,7 @@ class DashboardsPage extends PureComponent {
     return (
       <div className="l-dashboards-page">
         <div className="content-panel">
-          <Header className="header" />
+          <Header className="header" globalSentence={globalSentence} />
           {links && !!links.length && (
             <SubNavMenu
               className="nav"

@@ -2,6 +2,8 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
+import isEmpty from 'lodash/isEmpty';
+
 import { trackEvent } from 'utils/analytics';
 
 import Dropdown from 'components/ui/dropdown';
@@ -34,6 +36,7 @@ class Header extends PureComponent {
     location: PropTypes.object.isRequired,
     forestAtlasLink: PropTypes.object,
     sentence: PropTypes.object,
+    globalSentence: PropTypes.object,
     downloadLink: PropTypes.string,
     selectorMeta: PropTypes.object,
     shareMeta: PropTypes.string,
@@ -164,6 +167,7 @@ class Header extends PureComponent {
       shareData,
       location,
       forestAtlasLink,
+      globalSentence,
       sentence,
       selectorMeta,
       shareMeta,
@@ -172,6 +176,7 @@ class Header extends PureComponent {
       activeArea,
       firstArea,
     } = this.props;
+
     const isCountryDashboard =
       location?.type === 'country' || location?.type === 'global';
     const isAreaDashboard = location?.type === 'aoi';
@@ -183,6 +188,8 @@ class Header extends PureComponent {
     const showMetaControls =
       !loading && (!isAreaDashboard || (isAreaDashboard && activeArea));
     const { tags } = activeArea || {};
+
+    const displaySentence = !sentence || isEmpty(sentence) ? globalSentence : sentence;
 
     return (
       <div className={cx('c-dashboards-header', className)}>
@@ -354,32 +361,30 @@ class Header extends PureComponent {
           )}
           <div className="columns small-12 medium-10">
             <div className="description text -title-xs">
-              {!loading && (
-                <div>
-                  <DynamicSentence
-                    testId="dashboard-header-sentence"
-                    className="sentence"
-                    sentence={sentence}
-                  />
-                  {location && location.adm0 === 'IDN' && (
-                    <Fragment>
-                      <p className="disclaimer">
-                        *Primary forest is defined as mature natural humid
-                        tropical forest that has not been completely cleared and
-                        regrown in recent history.
-                      </p>
-                    </Fragment>
-                  )}
-                  {forestAtlasLink && isCountryDashboard && (
-                    <Button
-                      className="forest-atlas-btn"
-                      extLink={forestAtlasLink.url}
-                    >
-                      EXPLORE FOREST ATLAS
-                    </Button>
-                  )}
-                </div>
-              )}
+              <div>
+                <DynamicSentence
+                  testId="dashboard-header-sentence"
+                  className="sentence"
+                  sentence={displaySentence}
+                />
+                {location && location.adm0 === 'IDN' && (
+                  <Fragment>
+                    <p className="disclaimer">
+                      *Primary forest is defined as mature natural humid
+                      tropical forest that has not been completely cleared and
+                      regrown in recent history.
+                    </p>
+                  </Fragment>
+                )}
+                {forestAtlasLink && isCountryDashboard && (
+                  <Button
+                    className="forest-atlas-btn"
+                    extLink={forestAtlasLink.url}
+                  >
+                    EXPLORE FOREST ATLAS
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>
