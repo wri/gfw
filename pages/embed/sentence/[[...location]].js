@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import uniqBy from 'lodash/uniqBy';
 
@@ -49,6 +50,8 @@ export const getServerSideProps = async ({ params }) => {
       props: {
         title: 'Global Deforestation Rates & Statistics by Country | GFW',
         location: params?.location,
+        locationNames: null,
+        locationObj: null,
         globalSentence: parsedSentence,
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
@@ -124,6 +127,8 @@ export const getServerSideProps = async ({ params }) => {
       props: {
         title,
         description,
+        locationNames,
+        locationObj,
         globalSentence: parsedSentence,
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
@@ -162,14 +167,59 @@ export const getServerSideProps = async ({ params }) => {
 //   };
 // };
 
+const getSentenceClientSide = async (
+  locationNames = null,
+  locationObj = null
+) => {
+  const data = await getSentenceData();
+  let parsedSentence;
+  if (locationNames && locationObj) {
+    parsedSentence = parseSentence(data, locationNames, locationObj);
+  } else {
+    parsedSentence = parseSentence(data);
+  }
+  return parsedSentence;
+};
+
 const SentenceEmbed = (props) => {
-  const { globalSentence, geodescriber } = props;
+  const { geodescriber, globalSentence, locationNames, locationObj } = props;
+  const [sentence, setSentence] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    getSentenceClientSide(locationNames, locationObj).then((payload) => {
+      if (mounted) {
+        setSentence(payload);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
   return (
     <LayoutEmbed {...props} noIndex>
       <DynamicSentence
         className="sentence"
         testId="sentence"
-        sentence={globalSentence}
+        sentence={{
+          ...(!sentence
+            ? {
+                params: {},
+                sentence: 'Loading dynamic sentence...',
+              }
+            : sentence),
+        }}
+      />
+      <DynamicSentence
+        className="sentence"
+        testId="sentence-ssr"
+        sentence={{
+          params: {
+            ...globalSentence.params,
+            SSR: 'SSR Generated:',
+          },
+          sentence: `{SSR} ${globalSentence.sentence}`,
+        }}
       />
       <pre data-test="sentence-payload">
         {JSON.stringify(JSON.parse(geodescriber), null, 2)}
@@ -180,6 +230,8 @@ const SentenceEmbed = (props) => {
 
 SentenceEmbed.propTypes = {
   title: PropTypes.string,
+  locationNames: PropTypes.object,
+  locationObj: PropTypes.object,
   globalSentence: PropTypes.object,
   geodescriber: PropTypes.string,
   countryData: PropTypes.string,
