@@ -8,8 +8,7 @@ import moment from 'moment';
 import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API =
-  ENVIRONMENT === 'production' ? GFW_DATA_API : GFW_STAGING_DATA_API;
+const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const VIIRS_START_YEAR = 2012;
 
