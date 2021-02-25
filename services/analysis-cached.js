@@ -16,26 +16,26 @@ const SQL_QUERIES = {
   lossTsc:
     'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   loss:
-    'SELECT {location}, umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT {select_location}, umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
-    'SELECT {location}, SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT {location}, SUM("umd_tree_cover_gain_2000-2012__ha") as "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM("umd_tree_cover_gain_2000-2012__ha") as "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
-    'SELECT {location}, SUM(area__ha) as area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
+    'SELECT {select_location}, SUM(area__ha) as area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  gladDaily: `SELECT {location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   fires:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week',
   firesWithin:
-    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
+    'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE}',
+    'SELECT {select_location}, {polynames} FROM data {WHERE}',
   alertsWeekly:
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year ORDER BY alert__year DESC, alert__week DESC',
   alertsDaily:
@@ -43,7 +43,7 @@ const SQL_QUERIES = {
   biomassStock:
     'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
-    'SELECT {location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -139,14 +139,19 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
 };
 
 // build {select} from location params
-const getLocationSelect = ({ type, adm0, adm1, adm2, grouped }) => {
+const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
   if (['geostore', 'use'].includes(type)) return 'geostore__id';
 
-  let locationString = `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
+  let locationString = `iso${adm1 ? ', adm1{castTemplate}' : ''}${
+    adm2 ? ', adm2{castTemplate}' : ''
+  }`;
+  const castString = cast ? '::integer' : '';
   if (grouped)
-    locationString = `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
-  return locationString;
+    locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
+      adm1 ? ', adm2{castTemplate}' : ''
+    }`;
+  return locationString.replace(/{castTemplate}/g, castString);
 };
 
 // build {where} statement for query
@@ -303,7 +308,11 @@ export const getLoss = (params) => {
       dataset: 'annual',
       datasetType: 'change',
     })}${query}`
-      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -342,8 +351,9 @@ export const getLossGrouped = (params) => {
       datasetType: 'change',
       grouped: true,
     })}${SQL_QUERIES.loss}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
-        /{location}/g,
+        /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -383,6 +393,10 @@ export const getExtent = (params) => {
       datasetType: 'summary',
     })}${SQL_QUERIES.extent}`
       .replace(/{extentYear}/g, extentYear)
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -419,8 +433,9 @@ export const getExtentGrouped = (params) => {
       datasetType: 'summary',
       grouped: true,
     })}${SQL_QUERIES.extent}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
-        /{location}/g,
+        /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
       .replace(/{extentYear}/g, extentYear)
@@ -458,6 +473,10 @@ export const getGain = (params) => {
       dataset: 'annual',
       datasetType: 'summary',
     })}${SQL_QUERIES.gain}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -494,8 +513,9 @@ export const getGainGrouped = (params) => {
       datasetType: 'summary',
       grouped: true,
     })}${SQL_QUERIES.gain}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
-        /{location}/g,
+        /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -535,6 +555,10 @@ export const getAreaIntersection = (params) => {
       dataset: 'annual',
       datasetType: 'summary',
     })}${SQL_QUERIES.areaIntersection}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
         /{intersection}/g,
@@ -581,8 +605,9 @@ export const getAreaIntersectionGrouped = (params) => {
       datasetType: 'summary',
       grouped: true,
     })}${SQL_QUERIES.areaIntersection}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
-        /{location}/g,
+        /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
       .replace(
@@ -638,6 +663,10 @@ export const fetchHistoricalAlerts = (params) => {
       ...params,
       datasetType: frequency,
     })}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery(params))
       .replace(/{dateFilter}/g, getDatesFilter(params))
@@ -678,6 +707,10 @@ export const fetchHistoricalGladAlerts = (params) => {
       dataset: 'glad',
       datasetType: 'daily',
     })}${SQL_QUERIES.gladDaily}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
       .replace('{startDate}', startDate)
@@ -717,6 +750,10 @@ export const fetchGladAlerts = (params) => {
       dataset: 'glad',
       datasetType: 'weekly',
     })}${SQL_QUERIES.glad}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
@@ -779,6 +816,10 @@ export const fetchVIIRSAlerts = (params) => {
     `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
       SQL_QUERIES.fires
     }`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
   );
@@ -816,8 +857,9 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       datasetType: 'weekly',
       grouped: true,
     })}${SQL_QUERIES.firesGrouped}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
-        /{location}/g,
+        /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
       .replace(/{dateFilter}/g, getWeeksFilter(params))
@@ -858,6 +900,10 @@ export const fetchFiresWithin = (params) => {
     `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
       SQL_QUERIES.firesWithin
     }`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
       .replace('{alert__year}', filterYear)
@@ -912,8 +958,9 @@ export const getBiomassStockGrouped = (params) => {
       datasetType: 'summary',
       grouped: true,
     })}${SQL_QUERIES.biomassStockGrouped}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
-        /{location}/g,
+        /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -951,6 +998,10 @@ export const getBiomassStock = (params) => {
       dataset: 'annual',
       datasetType: 'summary',
     })}${SQL_QUERIES.biomassStock}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -1011,6 +1062,7 @@ export const getLocationPolynameWhitelist = (params) => {
   const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
+    .replace(/{select_location}/g, getLocationSelect({ ...params, cast: true }))
     .replace(/{location}/g, getLocationSelect(params))
     .replace(
       '{polynames}',
