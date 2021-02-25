@@ -44,7 +44,7 @@ const testConfig = [
     spec: {
       test: (sheet) => {
         cy.visit(sheet.visit, {
-          timeout: 100000,
+          timeout: 500000,
           retryOnStatusCodeFailure: true,
         });
         // Agree cookies
