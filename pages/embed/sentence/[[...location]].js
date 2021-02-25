@@ -5,7 +5,7 @@ import { parseGadm36Id } from 'utils/gadm';
 
 import { getLocationData } from 'services/location';
 import {
-  getCountriesProvider,
+  // getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
@@ -30,7 +30,7 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const [type] = params?.location || [];
 
   if (type && !ALLOWED_TYPES.includes(type)) {
@@ -146,21 +146,21 @@ export const getStaticProps = async ({ params }) => {
     };
   }
 };
-
-export const getStaticPaths = async () => {
-  const countryData = await getCountriesProvider();
-  const { rows: countries } = countryData?.data || {};
-  const countryPaths = countries.map((c) => ({
-    params: {
-      location: ['country', c.iso],
-    },
-  }));
-
-  return {
-    paths: ['/embed/sentence/', ...countryPaths] || [],
-    fallback: true,
-  };
-};
+//
+// export const getStaticPaths = async () => {
+//   const countryData = await getCountriesProvider();
+//   const { rows: countries } = countryData?.data || {};
+//   const countryPaths = countries.map((c) => ({
+//     params: {
+//       location: ['country', c.iso],
+//     },
+//   }));
+//
+//   return {
+//     paths: ['/embed/sentence/', ...countryPaths] || [],
+//     fallback: true,
+//   };
+// };
 
 const SentenceEmbed = (props) => {
   const { globalSentence, geodescriber } = props;
@@ -171,11 +171,9 @@ const SentenceEmbed = (props) => {
         testId="sentence"
         sentence={globalSentence}
       />
-      {geodescriber && (
-        <pre data-test="sentence-payload">
-          {JSON.stringify(JSON.parse(geodescriber), null, 2)}
-        </pre>
-      )}
+      <pre data-test="sentence-payload">
+        {JSON.stringify(JSON.parse(geodescriber), null, 2)}
+      </pre>
     </LayoutEmbed>
   );
 };

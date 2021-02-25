@@ -9,7 +9,7 @@ import { parseGadm36Id } from 'utils/gadm';
 
 import { getLocationData } from 'services/location';
 import {
-  getCountriesProvider,
+  // getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
@@ -49,7 +49,7 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const [type] = params?.location || [];
 
   if (type && !ALLOWED_TYPES.includes(type)) {
@@ -167,20 +167,20 @@ export const getStaticProps = async ({ params }) => {
   }
 };
 
-export const getStaticPaths = async () => {
-  const countryData = await getCountriesProvider();
-  const { rows: countries } = countryData?.data || {};
-  const countryPaths = countries.map((c) => ({
-    params: {
-      location: ['country', c.iso],
-    },
-  }));
-
-  return {
-    paths: ['/dashboards/global/', ...countryPaths] || [],
-    fallback: true,
-  };
-};
+// export const getStaticPaths = async () => {
+//   const countryData = await getCountriesProvider();
+//   const { rows: countries } = countryData?.data || {};
+//   const countryPaths = countries.map((c) => ({
+//     params: {
+//       location: ['country', c.iso],
+//     },
+//   }));
+//
+//   return {
+//     paths: ['/dashboards/global/', ...countryPaths] || [],
+//     fallback: true,
+//   };
+// };
 
 const DashboardsPage = (props) => {
   const dispatch = useDispatch();

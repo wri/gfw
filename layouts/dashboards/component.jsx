@@ -46,6 +46,7 @@ class DashboardsPage extends PureComponent {
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     setWidgetsCategory: PropTypes.func,
+    globalSentence: PropTypes.object,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     embed: PropTypes.bool,
@@ -54,7 +55,7 @@ class DashboardsPage extends PureComponent {
   };
 
   state = {
-    scrollY: 0
+    scrollY: 0,
   };
 
   componentDidMount() {
