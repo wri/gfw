@@ -14,7 +14,11 @@ import {
 
 import LayoutEmbed from 'wrappers/embed';
 
-import { getSentenceData, parseSentence } from 'services/sentences';
+import {
+  getSentenceData,
+  parseSentence,
+  handleSSRLocationObjects,
+} from 'services/sentences';
 
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
@@ -70,7 +74,6 @@ export const getStaticProps = async ({ params }) => {
     const [locationType, adm0, lvl1, lvl2] = params?.location;
     const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
     const adm2 = lvl2 ? parseInt(lvl2, 10) : null;
-
     const data = await getSentenceData({
       type: locationType === 'aoi' ? 'country' : locationType,
       adm0,
@@ -78,12 +81,6 @@ export const getStaticProps = async ({ params }) => {
       adm2,
       threshold: 30,
       extentYear: 2010,
-    });
-
-    const parsedSentence = parseSentence(data, {
-      adm0,
-      adm1,
-      adm2,
     });
 
     if (adm0) {
@@ -113,6 +110,15 @@ export const getStaticProps = async ({ params }) => {
         })),
       };
     }
+
+    const { locationNames, locationObj } = handleSSRLocationObjects(
+      countryData,
+      adm0,
+      adm1,
+      adm2
+    );
+
+    const parsedSentence = parseSentence(data, locationNames, locationObj);
 
     return {
       props: {

@@ -23,7 +23,11 @@ import DashboardsUrlProvider from 'providers/dashboards-url-provider';
 
 import { setCountriesSSR } from 'providers/country-data-provider/actions';
 
-import { getSentenceData, parseSentence } from 'services/sentences';
+import {
+  getSentenceData,
+  parseSentence,
+  handleSSRLocationObjects,
+} from 'services/sentences';
 
 import { setGeodescriberSSR } from 'providers/geodescriber-provider/actions';
 import { setMapSettings } from 'components/map/actions';
@@ -99,12 +103,6 @@ export const getStaticProps = async ({ params }) => {
       extentYear: 2010,
     });
 
-    const parsedSentence = parseSentence(data, {
-      adm0,
-      adm1,
-      adm2,
-    });
-
     if (adm0) {
       const regions = await getRegionsProvider({ adm0 });
       const countryLinks = await getCountryLinksSerialized();
@@ -132,6 +130,15 @@ export const getStaticProps = async ({ params }) => {
         })),
       };
     }
+
+    const { locationNames, locationObj } = handleSSRLocationObjects(
+      countryData,
+      adm0,
+      adm1,
+      adm2
+    );
+
+    const parsedSentence = parseSentence(data, locationNames, locationObj);
 
     return {
       props: {
