@@ -91,7 +91,7 @@ export const getStaticProps = async ({ params }) => {
     const adm2 = lvl2 ? parseInt(lvl2, 10) : null;
 
     const data = await getSentenceData({
-      type: locationType,
+      type: locationType === 'aoi' ? 'country' : locationType,
       adm0,
       adm1,
       adm2,
