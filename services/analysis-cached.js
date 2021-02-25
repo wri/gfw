@@ -13,19 +13,13 @@ const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
-  loss:
-    'SELECT umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
     'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
-  lossGrouped:
-    'SELECT umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  loss:
+    'SELECT {location}, umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") as "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   extent:
-    'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
-  extentGrouped:
     'SELECT {location}, SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT SUM("umd_tree_cover_gain_2000-2012__ha") as "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE}',
-  gainGrouped:
     'SELECT {location}, SUM("umd_tree_cover_gain_2000-2012__ha") as "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {location}, SUM(area__ha) as area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
@@ -148,8 +142,11 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
 const getLocationSelect = ({ type, adm0, adm1, adm2, grouped }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
   if (['geostore', 'use'].includes(type)) return 'geostore__id';
-  if (grouped) return `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
-  return `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
+
+  let locationString = `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
+  if (grouped)
+    locationString = `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
+  return locationString;
 };
 
 // build {where} statement for query
@@ -177,6 +174,8 @@ export const getWHEREQuery = (params) => {
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') paramKey = 'umd_tree_cover_density__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
+      if (p === 'adm1' && type === 'country') paramKey = 'adm1::integer';
+      if (p === 'adm2' && type === 'country') paramKey = 'adm2::integer';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
 
@@ -303,10 +302,9 @@ export const getLoss = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'change',
-    })}${query}`.replace(
-      '{WHERE}',
-      getWHEREQuery({ ...params, dataset: 'annual' })
-    )
+    })}${query}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
   if (download) {
@@ -343,8 +341,11 @@ export const getLossGrouped = (params) => {
       dataset: 'annual',
       datasetType: 'change',
       grouped: true,
-    })}${SQL_QUERIES.lossGrouped}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    })}${SQL_QUERIES.loss}`
+      .replace(
+        /{location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -382,6 +383,7 @@ export const getExtent = (params) => {
       datasetType: 'summary',
     })}${SQL_QUERIES.extent}`
       .replace(/{extentYear}/g, extentYear)
+      .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -416,8 +418,11 @@ export const getExtentGrouped = (params) => {
       dataset: 'annual',
       datasetType: 'summary',
       grouped: true,
-    })}${SQL_QUERIES.extentGrouped}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    })}${SQL_QUERIES.extent}`
+      .replace(
+        /{location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace(/{extentYear}/g, extentYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -452,10 +457,9 @@ export const getGain = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
-    })}${SQL_QUERIES.gain}`.replace(
-      '{WHERE}',
-      getWHEREQuery({ ...params, dataset: 'annual' })
-    )
+    })}${SQL_QUERIES.gain}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
   if (download) {
@@ -489,8 +493,11 @@ export const getGainGrouped = (params) => {
       dataset: 'annual',
       datasetType: 'summary',
       grouped: true,
-    })}${SQL_QUERIES.gainGrouped}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+    })}${SQL_QUERIES.gain}`
+      .replace(
+        /{location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -574,7 +581,10 @@ export const getAreaIntersectionGrouped = (params) => {
       datasetType: 'summary',
       grouped: true,
     })}${SQL_QUERIES.areaIntersection}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace(
         /{intersection}/g,
         intersectionPolyname
@@ -806,7 +816,10 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       datasetType: 'weekly',
       grouped: true,
     })}${SQL_QUERIES.firesGrouped}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace(/{dateFilter}/g, getWeeksFilter(params))
       .replace(
         '{WHERE}',
@@ -899,7 +912,10 @@ export const getBiomassStockGrouped = (params) => {
       datasetType: 'summary',
       grouped: true,
     })}${SQL_QUERIES.biomassStockGrouped}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
