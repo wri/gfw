@@ -24,9 +24,9 @@ const SQL_QUERIES = {
   extentGrouped:
     'SELECT {location}, SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT SUM(umd_tree_cover_gain_2000-2012__ha) as umd_tree_cover_gain_2000-2012__ha, SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM("umd_tree_cover_gain_2000-2012__ha") as "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   gainGrouped:
-    'SELECT {location}, SUM(umd_tree_cover_gain_2000-2012__ha) as umd_tree_cover_gain_2000-2012__ha, SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM("umd_tree_cover_gain_2000-2012__ha") as "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {location}, SUM(area__ha) as area__ha, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
   glad:
