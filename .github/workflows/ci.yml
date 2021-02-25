@@ -36,7 +36,7 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: Cache next build
-        id: yarn-cache
+        id: next-cache
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/.next/cache
