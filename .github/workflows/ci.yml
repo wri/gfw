@@ -81,7 +81,7 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: Install Dependencies
-          run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
