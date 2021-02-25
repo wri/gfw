@@ -20,6 +20,11 @@ jobs:
     name: e2e tests
     runs-on: ubuntu-latest
     steps:
+      - name: Next build cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
