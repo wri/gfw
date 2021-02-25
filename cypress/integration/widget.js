@@ -146,6 +146,4 @@ const testConfig = [
   },
 ];
 
-// 4,4 MB
-
 initSpecFile('Widgets spec', testConfig, true);
