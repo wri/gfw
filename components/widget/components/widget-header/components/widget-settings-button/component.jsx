@@ -19,6 +19,7 @@ class WidgetSettingsButton extends PureComponent {
     settingsConfig: PropTypes.array,
     loading: PropTypes.bool,
     active: PropTypes.bool,
+    embed: PropTypes.bool,
     preventCloseSettings: PropTypes.bool,
     handleChangeSettings: PropTypes.func.isRequired,
     handleShowInfo: PropTypes.func.isRequired,
@@ -45,6 +46,7 @@ class WidgetSettingsButton extends PureComponent {
       handleChangeSettings,
       handleShowInfo,
       widget,
+      embed,
       active,
       shouldSettingsOpen,
       toggleSettingsMenu,
@@ -77,8 +79,8 @@ class WidgetSettingsButton extends PureComponent {
           trackEvent({
             category: 'Widget Settings',
             action: 'User opens settings menu',
-            label: widget
-          })
+            label: widget,
+          });
         }}
         arrow
         useContext
@@ -88,6 +90,7 @@ class WidgetSettingsButton extends PureComponent {
             ref={(node) => {
               this.widgetSettingsRef = node;
             }}
+            embed={embed}
             settingsConfig={settingsConfig}
             loading={loading}
             handleChangeSettings={handleChangeSettings}

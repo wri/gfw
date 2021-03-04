@@ -31,7 +31,7 @@ class WidgetHeader extends PureComponent {
     getDataURL: PropTypes.func,
     status: PropTypes.string,
     shouldSettingsOpen: PropTypes.bool,
-    toggleSettingsMenu: PropTypes.func
+    toggleSettingsMenu: PropTypes.func,
   };
 
   render() {
@@ -54,7 +54,7 @@ class WidgetHeader extends PureComponent {
       getDataURL,
       status,
       shouldSettingsOpen,
-      toggleSettingsMenu
+      toggleSettingsMenu,
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
@@ -78,6 +78,7 @@ class WidgetHeader extends PureComponent {
               settingsConfig={settingsConfig}
               loading={loading}
               title={title}
+              embed={embed}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}
