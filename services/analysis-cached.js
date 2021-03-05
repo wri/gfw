@@ -37,6 +37,8 @@ const SQL_QUERIES = {
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week',
   firesWithin:
     'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
+  firesDailySum:
+    `SELECT {location}, alert__date, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -922,6 +924,42 @@ export const fetchVIIRSLatest = () =>
     .catch(() => ({
       date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
     }));
+  
+export const fetchVIIRSAlertsSum = (params) => {
+  const { forestType, landCategory, startDate, endDate, download } = params || {};
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset: 'viirs',
+      datasetType: 'daily',
+    })}${SQL_QUERIES.firesDailySum}`
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
+  );
+  // TODO: THIS NEEDS UPDATING
+  // if (download) {
+  //   const indicator = getIndicator(forestType, landCategory, ifl);
+  //   return {
+  //     name: `glad_alerts${
+  //       indicator ? `_in_${snakeCase(indicator.label)}` : ''
+  //     }__count`,
+  //     url: url.replace('query', 'download'),
+  //   };
+  // }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.confidence__cat === 'h',
+        count: d.alert__count,
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
 
 // Climate fetches
 
