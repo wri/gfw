@@ -111,7 +111,7 @@ export default {
         };
         })
       )
-    }
+    };
 
     return all([
       fetchAnalysisEndpoint({
@@ -127,7 +127,6 @@ export default {
       spread((alertsResponse) => {
         const alerts = alertsResponse.data.data.attributes.value;
         const { downloadUrls } = alertsResponse.data.data.attributes;
-
         return {
           alerts:
             alerts &&
@@ -135,7 +134,6 @@ export default {
               ...d,
               alerts: d.count,
             })),
-          settings: {  },
           downloadUrls,
         };
       })
@@ -143,16 +141,16 @@ export default {
   },
   // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,
-  parseInteraction: (payload) => {
-    if (payload) {
-      const startDate = moment().year(payload.year).day(payload.day);
-      return {
-        startDate: startDate.format('YYYY-MM-DD'),
-        endDate: endDate.format('YYYY-MM-DD'),
-        updateLayer: true,
-        ...payload,
-      };
-    }
-    return {};
-  },
+  // parseInteraction: (payload) => {
+  //   if (payload) {
+  //     const startDate = moment().year(payload.year).day(payload.day);
+  //     return {
+  //       startDate: startDate.format('YYYY-MM-DD'),
+  //       endDate: endDate.format('YYYY-MM-DD'),
+  //       updateLayer: true,
+  //       ...payload,
+  //     };
+  //   }
+  //   return {};
+  // },
 };
