@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -249,6 +250,12 @@ const DashboardsPage = (props) => {
 
   return (
     <PageLayout {...props}>
+      <Head>
+        <link
+          rel="canonical"
+          href={`https://www.globalforestwatch.org${fullPathname}`}
+        />
+      </Head>
       {ready && (
         <>
           <DashboardsUrlProvider />
