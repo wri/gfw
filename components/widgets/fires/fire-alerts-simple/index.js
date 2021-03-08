@@ -16,7 +16,10 @@ import {
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 // function for retreiving glad alerts from tables
-import { fetchVIIRSAlertsSum } from 'services/analysis-cached';
+import {
+  fetchVIIRSAlertsSum,
+  fetchVIIRSLatest,
+} from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -91,28 +94,35 @@ export default {
     dataset: 'viirs',
   },
   getData: (params) => {
-    params.startDate = '2020-01-30';
-    params.endDate = '2021-01-30';
     if (shouldQueryPrecomputedTables(params)) {
-      return all([
-        fetchVIIRSAlertsSum(params),
-      ]).then(
-        spread((fires) => {
+      return all([fetchVIIRSAlertsSum(params), fetchVIIRSLatest(params)]).then(
+        spread((fires, latest) => {
           const firesData = fires.data && fires.data.data;
-          console.log('firesData', firesData);
           let data = {};
-          if (firesData) {
+          console.log('data', data);
+          console.log('latest data', latest);
+          if (firesData && latest) {
+            const latestDate = latest && latest.date;
             data = {
-              alerts: firesData
-          };
+              alerts: firesData,
+              settings: {
+                startDate: moment(latestDate)
+                  .add(-7, 'days')
+                  .format('YYYY-MM-DD'),
+                endDate: latestDate,
+              },
+              options: {
+                minDate: '2000-01-01',
+                maxDate: latestDate,
+              },
+            };
+          }
           return {
             data,
           };
-        };
         })
-      )
-    };
-
+      );
+    }
     return all([
       fetchAnalysisEndpoint({
         ...params,

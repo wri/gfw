@@ -14,27 +14,6 @@ const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
 
 export const parseData = createSelector([selectAlerts], (data) => {
-  data = [{adm1: 4,
-    alert__count: 81266,
-    alerts: 81266,
-    confidence__cat: "n",
-    confirmed: false,
-    count: 81266,
-    iso: "BRA"},
-    {adm1: 4,
-    alert__count: 5525,
-    alerts: 5525,
-    confidence__cat: "l",
-    confirmed: false,
-    count: 5525,
-    iso: "BRA"},
-    {adm1: 4,
-    alert__count: 5975,
-    alerts: 5975,
-    confidence__cat: "h",
-    confirmed: true,
-    count: 5975,
-    iso: "BRA"}];
   if (isEmpty(data)) return null;
   const otherAlertsData = data.filter((d) => d.confirmed === false);
   const confimedAlertsData = data.filter((d) => d.confirmed === true);
@@ -115,7 +94,6 @@ export const parseSentence = createSelector(
   [parseData, getSettings, selectSentences, getIndicator, getLocationName],
   (data, settings, sentences, indicator, location) => {
     if (!data) return null;
-
     const startDate = settings.startDate;
     const endDate = settings.endDate;
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
