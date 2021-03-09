@@ -116,6 +116,27 @@ const setMapInteractions = (state, { payload }) => {
   };
 };
 
+const syncBrushSettings = (state, { payload } ) => {
+  return {
+    ...state,
+    settings: {
+      ...state.settings,
+       datasets: state.settings.datasets.map(d => {
+         if (!d.boundary && 'timelineParams' in d) {
+           return {
+             ...d,
+             timelineParams: {
+               ...d.timelineParams,
+               ...payload
+             }
+           }
+         }
+         return d;
+       })
+    }
+  };
+}
+
 const setMapInteractionSelected = (state, { payload }) => ({
   ...state,
   data: {
@@ -142,6 +163,7 @@ const clearMapInteractions = (state) => ({
 export default {
   [actions.setMapLoading]: setMapLoading,
   [actions.setMapSettings]: setMapSettings,
+  [actions.syncBrushSettings]: syncBrushSettings,
   [actions.setMapInteractions]: setMapInteractions,
   [actions.setMapInteractionSelected]: setMapInteractionSelected,
   [actions.clearMapInteractions]: clearMapInteractions,

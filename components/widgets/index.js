@@ -14,7 +14,7 @@ import {
 import reducerRegistry from 'redux/registry';
 
 import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
-import { setMapSettings as setMapState } from 'components/map/actions';
+import { setMapSettings as setMapState, syncBrushSettings } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setShareModal } from 'components/modals/share/actions';
 
@@ -27,6 +27,7 @@ import { getWidgetsProps } from './selectors';
 const actions = {
   ...ownActions,
   setMapSettings: setMapState,
+  syncBrushSettings,
   setModalMetaSettings,
   setDashboardPromptsSettings,
   setShareModal,

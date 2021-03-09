@@ -51,13 +51,12 @@ class WidgetComposedChart extends Component {
     if (handleChangeSettings) {
       const dataEnd =
         originalData[endIndex] || originalData[originalData.length - 1];
-
       handleChangeSettings({
         startIndex,
         endIndex,
         startDateAbsolute: originalData[startIndex]?.date,
         endDateAbsolute: dataEnd.date,
-      });
+      }, 'brush');
     }
   };
 

@@ -47,6 +47,7 @@ class Widgets extends PureComponent {
       loadingMeta,
       setWidgetsData,
       setWidgetSettings,
+      syncBrushSettings,
       setWidgetInteractionByKey,
       setActiveWidget,
       setModalMetaSettings,
@@ -90,7 +91,7 @@ class Widgets extends PureComponent {
                   key: w.widget,
                   payload,
                 })}
-              handleChangeSettings={(change) => {
+              handleChangeSettings={(change, type = null) => {
                 setWidgetSettings({
                   widget: w.widget,
                   change: {
@@ -107,6 +108,9 @@ class Widgets extends PureComponent {
                       }),
                   },
                 });
+                if (type === 'brush') {
+                  syncBrushSettings(change);
+                }
               }}
               handleShowMap={() => {
                 setActiveWidget(w.widget);
