@@ -1,8 +1,10 @@
 import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
+
+import OTFAnalysis from 'services/otf-analysis';
+
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
-import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
@@ -26,43 +28,39 @@ const getGlobalLocation = (params) => ({
   adm2: params.type === 'global' ? null : params.adm2,
 });
 
-export const getDataAPI = (params) =>
-  fetchAnalysisEndpoint({
-    ...params,
-    name: 'umd',
-    params,
-    slug: 'umd-loss-gain',
-    version: 'v1',
-    aggregate: false,
-  }).then((response) => {
-    const { data } = (response && response.data) || {};
-    const lossData = data && data.attributes.loss;
-    const loss =
-      lossData &&
-      Object.keys(lossData).map((d) => ({
-        area: lossData[d],
-        year: parseInt(d, 10),
-      }));
-    const extent = data.attributes.treeExtent;
+const getOTFAnalysis = async (params) => {
+  const analysis = new OTFAnalysis(params.geostore.id);
+  analysis.setDates({
+    startDate: params.startDate,
+    endDate: params.endDate,
+  });
 
-    const { startYear, endYear, range } = getYearsRangeFromMinMax(
+  analysis.setData(['loss', 'extent'], params);
+
+  return analysis.getData().then((response) => {
+    const { loss, extent } = response;
+    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
       MIN_YEAR,
       MAX_YEAR
     );
 
     return {
-      loss,
-      extent,
+      loss: loss.data.map((d) => ({
+        area: d.area__ha,
+        year: d.umd_tree_cover_loss__year,
+      })),
+      extent: extent?.data?.area__ha,
       settings: {
         startYear,
         endYear,
-        yearsRange: range,
+        yearsRange,
       },
       options: {
-        yearsRange: range,
+        yearsRange,
       },
     };
   });
+};
 
 export default {
   widget: 'treeLoss',
@@ -189,7 +187,7 @@ export default {
       );
     }
 
-    return getDataAPI(params);
+    return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
