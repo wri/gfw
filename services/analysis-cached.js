@@ -34,7 +34,7 @@ const SQL_QUERIES = {
   firesGrouped:
     'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
-    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
+    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
