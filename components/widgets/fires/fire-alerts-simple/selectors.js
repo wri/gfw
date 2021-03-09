@@ -38,7 +38,7 @@ export const parseConfig = createSelector(
   [parseData, selectColors, getIndicator],
   (data, colors, indicator) => {
     if (isEmpty(data)) return null;
-
+    console.log('selector', data)
     const {
       otherAlertCount,
       otherAlertPercentage,

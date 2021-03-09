@@ -926,7 +926,8 @@ export const fetchVIIRSLatest = () =>
     }));
   
 export const fetchVIIRSAlertsSum = (params) => {
-  const { forestType, landCategory, startDate, endDate, download } = params || {};
+  const { forestType, landCategory, latest, download } = params || {};
+  const {startDate, endDate} = latest;
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
