@@ -112,7 +112,6 @@ class DashboardsPage extends PureComponent {
 
   renderMap = () => {
     const { showMapMobile, setShowMap } = this.props;
-
     return (
       <div className="map-container">
         {showMapMobile && (

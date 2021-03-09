@@ -116,26 +116,30 @@ const setMapInteractions = (state, { payload }) => {
   };
 };
 
-const syncBrushSettings = (state, { payload } ) => {
+const syncBrushSettings = (state, { payload }) => {
   return {
     ...state,
     settings: {
       ...state.settings,
-       datasets: state.settings.datasets.map(d => {
-         if (!d.boundary && 'timelineParams' in d) {
-           return {
-             ...d,
-             timelineParams: {
-               ...d.timelineParams,
-               ...payload
-             }
-           }
-         }
-         return d;
-       })
-    }
+      datasets: state.settings.datasets.map((d) => {
+        if (!d.boundary && 'timelineParams' in d) {
+          return {
+            ...d,
+            timelineParams: {
+              ...d.timelineParams,
+              startDate: payload.startDateAbsolute,
+              endDate: payload.endDateAbsolute,
+              startDateAbsolute: payload.startDateAbsolute,
+              endDateAbsolute: payload.endDateAbsolute,
+              trimEndDate: payload.endDateAbsolute,
+            },
+          };
+        }
+        return d;
+      }),
+    },
   };
-}
+};
 
 const setMapInteractionSelected = (state, { payload }) => ({
   ...state,
