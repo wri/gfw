@@ -16,9 +16,6 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2020;
-const MIN_YEAR = 2001;
-
 export default {
   widget: 'treeLossLocated',
   title: 'Location of tree cover loss in {location}',
@@ -97,8 +94,8 @@ export default {
     unit: 'ha',
     pageSize: 5,
     page: 0,
-    startYear: MIN_YEAR,
-    endYear: MAX_YEAR,
+    startYear: 2001,
+    endYear: 2018,
     ifl: 2000,
   },
   sentences: {
