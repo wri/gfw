@@ -27,8 +27,8 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
+const MAX_YEAR = 2020;
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2019;
 
 const getOTFAnalysis = async params => {
   const analysis = new OTFAnalysis(params.geostore.id);

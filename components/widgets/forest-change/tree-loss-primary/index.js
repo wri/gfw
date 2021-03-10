@@ -16,8 +16,8 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MAX_YEAR = 2020;
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2019;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
