@@ -35,6 +35,7 @@ class Widgets extends PureComponent {
     activeWidget: PropTypes.object,
     noDataMessage: PropTypes.string,
     geostore: PropTypes.object,
+    meta: PropTypes.object,
   };
 
   render() {
@@ -56,6 +57,7 @@ class Widgets extends PureComponent {
       modalClosing,
       noDataMessage,
       geostore,
+      meta,
       handleClickWidget,
     } = this.props;
     const hasWidgets = !isEmpty(widgets);
@@ -83,6 +85,7 @@ class Widgets extends PureComponent {
               simple={simple}
               location={location}
               geostore={geostore}
+              meta={meta}
               metaLoading={loadingMeta || loadingData}
               setWidgetData={(data) => setWidgetsData({ [w.widget]: data })}
               handleSetInteraction={(payload) =>
@@ -90,22 +93,23 @@ class Widgets extends PureComponent {
                   key: w.widget,
                   payload,
                 })}
-              handleChangeSettings={(change) => setWidgetSettings({
-                widget: w.widget,
-                change: {
-                  ...change,
-                  ...(change.forestType === 'ifl' &&
-                    w.settings &&
-                    w.settings.extentYear && {
-                      extentYear: w.settings.ifl === '2016' ? 2010 : 2000,
-                    }),
-                  ...(change.forestType === 'primary_forest' &&
-                    w.settings &&
-                    w.settings.extentYear && {
-                      extentYear: 2000,
-                    }),
-                },
-              })}
+              handleChangeSettings={(change) =>
+                setWidgetSettings({
+                  widget: w.widget,
+                  change: {
+                    ...change,
+                    ...(change.forestType === 'ifl' &&
+                      w.settings &&
+                      w.settings.extentYear && {
+                        extentYear: w.settings.ifl === '2016' ? 2010 : 2000,
+                      }),
+                    ...(change.forestType === 'primary_forest' &&
+                      w.settings &&
+                      w.settings.extentYear && {
+                        extentYear: 2000,
+                      }),
+                  },
+                })}
               handleShowMap={() => {
                 setActiveWidget(w.widget);
                 trackEvent({

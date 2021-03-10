@@ -13,6 +13,7 @@ import AreasProvider from 'providers/areas-provider';
 import PlanetBasemapsProvider from 'providers/planet-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGFWProvider from 'providers/mygfw-provider';
+import MetaProvider from 'providers/meta-provider';
 
 import ModalWelcome from 'components/modals/welcome';
 import MetaModal from 'components/modals/meta';
@@ -103,6 +104,7 @@ class MainMapComponent extends PureComponent {
         <FiresModal />
         <CountryDataProvider />
         <WhitelistsProvider />
+        <MetaProvider />
         <DatasetsProvider />
         <LatestProvider />
         <GeostoreProvider />

@@ -11,6 +11,7 @@ import qs from 'query-string';
 import { translateText, selectActiveLang } from 'utils/lang';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getGFWMeta } from 'providers/meta-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation, locationLevelToStr } from 'utils/location';
@@ -70,7 +71,8 @@ export const selectLoadingFilterData = (state) =>
 export const selectLoadingMeta = (state) =>
   state.geostore &&
   state.geodescriber &&
-  (state.geostore.loading || state.geodescriber.loading);
+  state.meta &&
+  (state.geostore.loading || state.geodescriber.loading || state.meta.loading);
 export const selectCountryData = (state) => state.countryData;
 export const selectPolynameWhitelist = (state) =>
   state.whitelists && state.whitelists.data;
@@ -390,7 +392,6 @@ export const getWidgets = createSelector(
 
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
-
     return widgets.map((w, index) => {
       const {
         settings: defaultSettings,
@@ -400,7 +401,6 @@ export const getWidgets = createSelector(
         title: titleTemplate,
         dataType,
       } = w || {};
-
       const active =
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
 
@@ -596,4 +596,5 @@ export const getWidgetsProps = () =>
     modalClosing: selectModalClosing,
     noDataMessage: getNoDataMessage,
     geostore: selectGeostore,
+    meta: getGFWMeta,
   });

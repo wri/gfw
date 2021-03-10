@@ -17,6 +17,7 @@ class WidgetContainer extends Component {
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
     geostore: PropTypes.object,
+    meta: PropTypes.object,
     status: PropTypes.string,
   };
 
@@ -36,14 +37,14 @@ class WidgetContainer extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const { location, settings, status } = this.props;
+    const { location, settings, meta, status } = this.props;
     const params = { ...location, ...settings, status };
 
-    this.handleGetWidgetData(params);
+    this.handleGetWidgetData({ ...params, GFW_META: meta });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location, settings, refetchKeys, status } = this.props;
+    const { location, settings, refetchKeys, status, meta } = this.props;
     const { error } = this.state;
 
     const hasLocationChanged =
@@ -59,7 +60,7 @@ class WidgetContainer extends Component {
     // refetch data if error, settings, or location changes
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings, status };
-      this.handleGetWidgetData(params);
+      this.handleGetWidgetData({ ...params, GFW_META: meta });
     }
   }
 
@@ -95,9 +96,9 @@ class WidgetContainer extends Component {
   };
 
   handleRefetchData = () => {
-    const { settings, location, widget } = this.props;
+    const { settings, location, widget, meta } = this.props;
     const params = { ...location, ...settings };
-    this.handleGetWidgetData(params);
+    this.handleGetWidgetData({ ...params, GFW_META: meta });
     trackEvent({
       category: 'Refetch data',
       action: 'Data failed to fetch, user clicks to refetch',

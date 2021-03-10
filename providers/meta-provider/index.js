@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import reducerRegistry from 'redux/registry';
 
 import * as actions from './actions';
+import { getLatestProps } from './selectors';
 import reducers, { initialState } from './reducers';
 
-class DatasetsProvider extends PureComponent {
+class MetaProvider extends PureComponent {
   componentDidMount() {
-    const { fetchDatasets } = this.props;
-    fetchDatasets();
+    const { fetchGfwMeta } = this.props;
+    fetchGfwMeta();
   }
 
   render() {
@@ -17,14 +18,14 @@ class DatasetsProvider extends PureComponent {
   }
 }
 
-DatasetsProvider.propTypes = {
-  fetchDatasets: PropTypes.func.isRequired,
+MetaProvider.propTypes = {
+  fetchGfwMeta: PropTypes.func.isRequired,
 };
 
-reducerRegistry.registerModule('datasets', {
+reducerRegistry.registerModule('meta', {
   actions,
   reducers,
   initialState,
 });
 
-export default connect(null, actions)(DatasetsProvider);
+export default connect(getLatestProps, actions)(MetaProvider);

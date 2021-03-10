@@ -11,6 +11,7 @@ import LayoutEmbed from 'wrappers/embed';
 import WidgetEmbed from 'layouts/embed/widget';
 
 import WidgetsEmbedUrlProvider from 'providers/widgets-embed-url-provider';
+import MetaProvider from 'providers/meta-provider';
 
 import {
   setWidgetsSettings,
@@ -124,6 +125,7 @@ const WidgetEmbedPage = (props) => {
       {ready && (
         <>
           <WidgetsEmbedUrlProvider />
+          <MetaProvider />
           <WidgetEmbed embed trase={query?.trase} {...props} />
         </>
       )}
