@@ -759,7 +759,7 @@ export const fetchGladAlertsSum = (params) => {
   //     url: url.replace('query', 'download'),
   //   };
   // }
-
+  console.log('url', url)
   return apiRequest.get(url).then((response) => ({
     data: {
       data: response.data.data.map((d) => ({
@@ -926,8 +926,7 @@ export const fetchVIIRSLatest = () =>
     }));
   
 export const fetchVIIRSAlertsSum = (params) => {
-  const { forestType, landCategory, latest, download } = params || {};
-  const {startDate, endDate} = latest;
+  const { forestType, landCategory, startDate, endDate, download } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,

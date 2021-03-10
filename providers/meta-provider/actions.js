@@ -19,14 +19,20 @@ export const fetchGfwMeta = createThunkAction(
             GLAD: {
               ...gladLatest?.attributes,
               ...(gladLatest?.attributes?.updatedAt && {
-                startDate: moment(gladLatest?.attributes.updatedAt)
+                defaultStartDate: moment(gladLatest?.attributes.updatedAt)
                   .add(-7, 'days')
                   .format('YYYY-MM-DD'),
-                endDate: gladLatest?.attributes.updatedAt,
+                  defaultEndDate: gladLatest?.attributes.updatedAt,
               }),
             },
             VIIRS: {
               ...viirsLatest,
+              ...(viirsLatest?.date && {
+                defaultStartDate: moment(viirsLatest?.date)
+                  .add(-7, 'days')
+                  .format('YYYY-MM-DD'),
+                  defaultEndDate: viirsLatest?.date,
+              }),
             },
           },
         })

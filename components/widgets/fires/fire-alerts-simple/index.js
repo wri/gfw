@@ -93,69 +93,32 @@ export default {
   settings: {
     dataset: 'viirs',
   },
-  getData: async (params) => {
+  getData: (params) => {
+    const { VIIRS } = params.GFW_META.datasets;
+    const defaultStartDate = VIIRS?.defaultStartDate
+    const defaultEndDate = VIIRS?.defaultEndDate
     if (shouldQueryPrecomputedTables(params)) {
-      const latest = await fetchVIIRSLatest(params);
-      let startDate;
-      let endDate;
-      if (latest && latest.date) {
-        startDate = moment(latest.date)
-          .add(-7, 'days')
-          .format('YYYY-MM-DD');
-        endDate = latest.date;
-      }
-      const hasDates = startDate && endDate;
-      const firesData = await fetchVIIRSAlertsSum({ ...params, startDate, endDate });
-      let data = {};
-      if (firesData && hasDates) {
-        data =  {
-          alerts: firesData,
-          settings: {
-            startDate,
-            endDate
-          },
-          options: {
-            minDate: '2000-01-01',
-            maxDate: endDate,
-          },
-        };
-      }
-      console.log('index', data)
-      return {
-        data
-      }
+      return fetchVIIRSAlertsSum({ ...params, startDate: defaultStartDate, endDate: defaultEndDate}).then(
+        (alerts) => {
+          const firesData = alerts && alerts.data.data;
+          let data = {};
+          if (firesData && VIIRS) {
+            data = {
+              alerts: firesData,
+              settings: {
+                startDate: defaultStartDate,
+                endDate: defaultEndDate
+              },
+              options: {
+                minDate: '2000-01-01',
+                maxDate: defaultEndDate,
+              },
+            };
+          }
+          return data;
+        })
     }
-    // old way
-    //   return all([fetchVIIRSAlertsSum(params), fetchVIIRSLatest(params)]).then(
-    //     spread((fires, latest) => {
-    //       const firesData = fires.data && fires.data.data;
-    //       let data = {};
-    //       console.log('data', data);
-    //       console.log('latest data', latest);
-    //       if (firesData && latest) {
-    //         const latestDate = latest && latest.date;
-    //         data = {
-    //           alerts: firesData,
-    //           settings: {
-    //             startDate: moment(latestDate)
-    //               .add(-7, 'days')
-    //               .format('YYYY-MM-DD'),
-    //             endDate: latestDate,
-    //           },
-    //           options: {
-    //             minDate: '2000-01-01',
-    //             maxDate: latestDate,
-    //           },
-    //         };
-    //       }
-    //       return {
-    //         data,
-    //       };
-    //     })
-    //   );
-    // }
-    return all([
-      fetchAnalysisEndpoint({
+    return fetchAnalysisEndpoint({
         ...params,
         params,
         name: 'viirs-alerts',
@@ -163,9 +126,7 @@ export default {
         version: 'v1',
         aggregate: true,
         aggregateBy: 'day',
-      }),
-    ]).then(
-      spread((alertsResponse) => {
+      }).then((alertsResponse) => {
         const alerts = alertsResponse.data.data.attributes.value;
         const { downloadUrls } = alertsResponse.data.data.attributes;
         return {
@@ -178,7 +139,6 @@ export default {
           downloadUrls,
         };
       })
-    );
   },
   // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,

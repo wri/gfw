@@ -91,52 +91,41 @@ export default {
     dataset: 'glad',
   },
   getData: (params) => {
+    const { GLAD } = params.GFW_META.datasets;
+    const defaultStartDate = GLAD?.defaultStartDate
+    const defaultEndDate = GLAD?.defaultEndDate
     if (shouldQueryPrecomputedTables(params)) {
-      return all([fetchGladAlertsSum(params), fetchGLADLatest(params)]).then(
-        spread((alerts, latest) => {
+      return fetchGladAlertsSum({ ...params, startDate: defaultStartDate, endDate: defaultEndDate}).then(
+        (alerts) => {
           const gladsData = alerts && alerts.data.data;
           let data = {};
-          if (gladsData && latest) {
-            const latestDate =
-              latest && latest.attributes && latest.attributes.updatedAt;
-
+          if (gladsData && GLAD) {
             data = {
               alerts: gladsData,
               settings: {
-                startDate: moment(latestDate)
-                  .add(-7, 'days')
-                  .format('YYYY-MM-DD'),
-                endDate: latestDate,
+                startDate: defaultStartDate,
+                endDate: defaultEndDate
               },
               options: {
                 minDate: '2015-01-01',
-                maxDate: latestDate,
+                maxDate: defaultEndDate,
               },
             };
           }
-
           return data;
         })
-      );
     }
-
-    return all([
-      fetchAnalysisEndpoint({
+    return fetchAnalysisEndpoint({
         ...params,
         params,
         name: 'glad-alerts',
         slug: 'glad-alerts',
         version: 'v1',
         aggregate: true,
-        aggregateBy: 'week',
-      }),
-      fetchGLADLatest(params),
-    ]).then(
-      spread((alertsResponse, latestResponse) => {
+        aggregateBy: 'days',
+      }).then((alertsResponse) => {
         const alerts = alertsResponse.data.data.attributes.value;
-        const latestDate = latestResponse.attributes.updatedAt;
         const { downloadUrls } = alertsResponse.data.data.attributes;
-
         return {
           alerts:
             alerts &&
@@ -144,12 +133,11 @@ export default {
               ...d,
               alerts: d.count,
             })),
-          latest: latestDate,
-          settings: { latestDate },
+          latest: defaultEndDate,
+          settings: { defaultEndDate },
           downloadUrls,
         };
       })
-    );
   },
   // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,
