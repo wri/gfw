@@ -926,11 +926,11 @@ export const fetchVIIRSLatest = () =>
     }));
   
 export const fetchVIIRSAlertsSum = (params) => {
-  const { forestType, landCategory, startDate, endDate, download } = params || {};
+  const { forestType, landCategory, startDate, endDate, download, dataset } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
-      dataset: 'viirs',
+      dataset,
       datasetType: 'daily',
     })}${SQL_QUERIES.firesDailySum}`
       .replace(/{location}/g, getLocationSelect(params))

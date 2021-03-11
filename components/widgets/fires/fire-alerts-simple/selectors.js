@@ -12,6 +12,7 @@ const selectSentences = (state) => state.sentence;
 const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
+const getDataset = (state) => state.settings.dataset || null;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (isEmpty(data)) return null;
@@ -91,8 +92,8 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getSettings, selectSentences, getIndicator, getLocationName],
-  (data, settings, sentences, indicator, location) => {
+  [parseData, getDataset, getSettings, selectSentences, getIndicator, getLocationName],
+  (data, dataset, settings, sentences, indicator, location) => {
     if (!data) return null;
     const startDate = settings.startDate;
     const endDate = settings.endDate;
@@ -101,13 +102,14 @@ export const parseSentence = createSelector(
     const params = {
       indicator: indicator && indicator.label,
       location,
+      dataset: dataset.toUpperCase(),
       startDate: formattedStartDate,
       endDate: formattedEndDate,
       component: {
         key: 'high confidence alerts',
         fine: false,
         tooltip:
-          'Fire alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image. Learn more here.',
+          'Fire alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image.',
       },
       count: formatNumber({ num: data.totalAlertCount, unit: ',' }),
       highConfidencePercentage:

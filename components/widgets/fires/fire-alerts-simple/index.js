@@ -30,9 +30,9 @@ export default {
   title: 'Fire alerts in {location}',
   sentence: {
     default:
-      'There were {count} fire alerts reported in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
+      'There were {count} {dataset} fire alerts reported in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
     withInd:
-      'There were {count} fire alerts reported in {indicator} in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
+      'There were {count} {dataset} fire alerts reported in {indicator} in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
@@ -60,7 +60,7 @@ export default {
     forestChange: 999,
   },
   pendingKeys: [],
-  refetchKeys: ['forestType', 'landCategory', 'startDate', 'endDate'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'startDate', 'endDate'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -76,6 +76,10 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+    },{
+      key: 'dataset',
+      label: 'fires dataset',
+      type: 'select',
     },
     {
       key: 'dateRange',
@@ -85,6 +89,11 @@ export default {
       type: 'datepicker',
     },
   ],
+  settingsBtnConfig: {
+    text: '+ Select an intersection',
+    shouldShowButton: (props) =>
+      !props.settings.forestType && !props.settings.landCategory,
+  },
   // where should we see this widget
   whitelists: {
     adm0: tropicalIsos,
