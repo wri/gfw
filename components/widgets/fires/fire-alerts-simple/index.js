@@ -1,5 +1,3 @@
-import { all, spread } from 'axios';
-import moment from 'moment';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import {
@@ -17,8 +15,7 @@ import { fetchAnalysisEndpoint } from 'services/analysis';
 
 // function for retreiving glad alerts from tables
 import {
-  fetchVIIRSAlertsSum,
-  fetchVIIRSLatest,
+  fetchVIIRSAlertsSum
 } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -34,7 +31,7 @@ export default {
     withInd:
       'There were {count} {dataset} fire alerts reported in {indicator} in {location} between {startDate} and {endDate}, of which {highConfidencePercentage} were {high confidence alerts}.',
   },
-  metaKey: 'widget_deforestation_graph',
+  metaKey: 'widget_fire_alert_location',
   large: false,
   visible: ['dashboard', 'analysis'],
   colors: 'fires',
@@ -56,8 +53,8 @@ export default {
     },
   ],
   sortOrder: {
-    summary: 999,
-    forestChange: 999,
+    summary: 9999,
+    fires: 9999,
   },
   pendingKeys: [],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'startDate', 'endDate'],
@@ -149,6 +146,7 @@ export default {
         };
       })
   },
+  // https://data-api.globalforestwatch.org/dataset/nasa_viirs_fire_alerts/latest/download/csv?sql=select * from mytable&geostore_id={GEOSTORE ID}&geostore_origin=rw
   // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
   getWidgetProps,
   // parseInteraction: (payload) => {

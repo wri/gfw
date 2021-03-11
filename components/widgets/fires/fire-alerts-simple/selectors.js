@@ -71,22 +71,6 @@ export const parseConfig = createSelector(
         unit: 'counts',
       },
     ];
-
-    // if (indicator) {
-    //   parsedData.splice(1, 0, {
-    //     label: hasPlantations ? 'Other forest cover' : 'Other tree cover',
-    //     value: otherCover,
-    //     color: colors.otherCover,
-    //     percentage: otherCover / totalArea * 100
-    //   });
-    // } else if (!indicator && hasPlantations) {
-    //   parsedData.splice(1, 0, {
-    //     label: 'Plantations',
-    //     value: plantations,
-    //     color: colors.plantedForest,
-    //     percentage: plantations / totalArea * 100
-    //   });
-    // }
     return parsedData;
   }
 );
