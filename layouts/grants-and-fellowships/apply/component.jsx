@@ -57,20 +57,7 @@ const GrantsApplySection = () => (
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
-          The 2021 Small Grants Fund application window is open from
-          {' '}
-          <strong>February 1st, 2021 – March 1st, 2021</strong>
-          .
-          <br />
-          <a
-            className="text -paragraph -color-4 -bold"
-            href="https://gfw.smapply.io/prog/small_grants_fund_2021_application_/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Apply now
-          </a>
-          .
+          The 2021 Small Grants Fund application is now closed.
         </p>
       </Column>
       <Column width={[1, 1 / 4]} className="logo">
