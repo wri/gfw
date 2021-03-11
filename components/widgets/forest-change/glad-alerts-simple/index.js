@@ -82,6 +82,11 @@ export default {
       type: 'datepicker',
     },
   ],
+  settingsBtnConfig: {
+    text: '+ Select an intersection',
+    shouldShowButton: (props) =>
+      !props.settings.forestType && !props.settings.landCategory,
+  },
   // where should we see this widget
   whitelists: {
     adm0: tropicalIsos,
