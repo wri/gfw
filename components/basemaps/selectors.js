@@ -28,14 +28,15 @@ const selectPlanetBasemaps = (state) => {
 
 const getGroupedPlanetBasemaps = (state) => {
   const planetBasemaps = state.planet?.data;
-  // Visual is broken for now
-  // const visual = planetBasemaps
-  //   ?.filter((bm) => bm.name.includes('visual'))
-  //   .reverse();
+  console.log('planetBasemaps', planetBasemaps);
+
+  const visual = planetBasemaps
+    ?.filter((bm) => bm.name.includes('visual'))
+    .reverse();
   const cir = planetBasemaps
     ?.filter((bm) => bm.name.includes('analytic'))
     .reverse();
-  return [cir, cir];
+  return [visual, cir];
 };
 
 // ES6 provision, replace the hyphens with slashes forces UTC to be calculated from timestamp

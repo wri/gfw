@@ -6,13 +6,16 @@ export default async function userHandler(req, res) {
     method,
   } = req;
   if (method === 'GET') {
+    const ENV = process.env.NEXT_PUBLIC_FEATURE_ENV;
+    const PLANET_KEY =
+      ENV === 'staging'
+        ? process.env.NEXT_PUBLIC_STAGING_PLANET_API_KEY
+        : process.env.NEXT_PUBLIC_PLANET_API_KEY;
     try {
       const tile = await axios.get(
         `https://tiles.planet.com/basemaps/v1/planet-tiles/${params?.join(
           '/'
-        )}.png?proc=${proc || 'rgb'}&api_key=${
-          process.env.NEXT_PUBLIC_PLANET_API_KEY
-        }`,
+        )}.png?proc=${proc || ''}&api_key=${PLANET_KEY}`,
         {
           responseType: 'arraybuffer',
         }
