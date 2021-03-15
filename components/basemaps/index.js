@@ -31,10 +31,12 @@ class BasemapsContainer extends React.Component {
 
   handlePlanetName = (name, color) => {
     const { defaultPlanetBasemapsByCategory } = this.props;
-    const { visual, cir } = defaultPlanetBasemapsByCategory;
+    const { visual, cir, rgb } = defaultPlanetBasemapsByCategory;
     if (!name) {
       // User selects image category
-      return color === 'cir' ? cir : visual;
+      if (color === 'rgb') return rgb;
+      if (color === 'cir') return cir;
+      return visual;
     }
     return name;
   };
@@ -51,7 +53,7 @@ class BasemapsContainer extends React.Component {
       }),
       ...(value === 'planet' && {
         name: this.handlePlanetName(name, color),
-        color: color || 'rgb',
+        color: color || '',
       }),
     };
 

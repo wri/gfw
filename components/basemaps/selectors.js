@@ -28,7 +28,6 @@ const selectPlanetBasemaps = (state) => {
 
 const getGroupedPlanetBasemaps = (state) => {
   const planetBasemaps = state.planet?.data;
-  console.log('planetBasemaps', planetBasemaps);
 
   const visual = planetBasemaps
     ?.filter((bm) => bm.name.includes('visual'))
@@ -36,7 +35,8 @@ const getGroupedPlanetBasemaps = (state) => {
   const cir = planetBasemaps
     ?.filter((bm) => bm.name.includes('analytic'))
     .reverse();
-  return [visual, cir];
+
+  return [visual, cir, cir];
 };
 
 // ES6 provision, replace the hyphens with slashes forces UTC to be calculated from timestamp
@@ -85,6 +85,7 @@ export const getDefaultPlanetBasemaps = createSelector(
     return {
       visual: visual?.[0]?.name,
       cir: cir?.[0]?.name,
+      rgb: cir?.[0]?.name,
     };
   }
 );

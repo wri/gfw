@@ -6,11 +6,15 @@ import { getPlanetBasemaps } from '../selectors';
 const COLOR_OPTIONS = [
   {
     label: 'Natural color',
-    value: 'rgb',
+    value: '',
   },
   {
     label: 'False color (NIR)',
     value: 'cir',
+  },
+  {
+    label: 'False color (RGB)',
+    value: 'rgb',
   },
 ];
 
