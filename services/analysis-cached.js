@@ -134,8 +134,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
-  // use latest not v202101.1
-  return `${GFW_API}/dataset/${datasetId}/v202101.1/query?sql=`;
+  return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
 };
 
 // build {select} from location params
