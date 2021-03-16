@@ -204,7 +204,7 @@ export const fetchDatasets = createThunkAction(
                             ...(p.key.includes('thresh') && {
                               sentence:
                                 'Displaying {name} with {selector} canopy density',
-                              options: thresholdOptions,
+                              options: p.options || thresholdOptions,
                             }),
                             ...(p.key.includes('soyYear') && {
                               sentence:
@@ -219,6 +219,11 @@ export const fetchDatasets = createThunkAction(
                                   label: o + p.min,
                                   value: o + p.min,
                                 })),
+                              }),
+                            ...(p.sentence &&
+                              p.options && {
+                                sentence: p.sentence,
+                                options: p.options,
                               }),
                           })),
                         }),
