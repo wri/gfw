@@ -74,6 +74,7 @@ class LollipopChart extends PureComponent {
       unitsConfig &&
       unitsConfig.options &&
       unitsConfig.options.find((opt) => opt.value === unit);
+
     let formatUnit = unit;
     if (selectedUnitConfig) {
       formatUnit =
@@ -100,7 +101,7 @@ class LollipopChart extends PureComponent {
       <div className={cx('c-lollipop-chart', className)}>
         {!simple && legend && <Legend config={legend} simple={simple} />}
         <div className="unit-legend">
-          {`${unit.charAt(0).toUpperCase()}${unit.slice(1)} ${
+          {`${selectedUnitConfig.label || ''} ${
             formatUnit !== '' ? `(${formatUnit.trim()})` : ''
           }`}
         </div>
