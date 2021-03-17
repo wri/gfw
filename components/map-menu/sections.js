@@ -200,7 +200,7 @@ export const datasetsSections = compact([
     subCategories: [
       {
         slug: 'test',
-        title: 'Test',
+        title: 'Test Layers',
       },
     ],
   },

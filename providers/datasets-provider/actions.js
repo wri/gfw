@@ -206,8 +206,7 @@ export const fetchDatasets = createThunkAction(
                                 'Displaying {name} with {selector} canopy density',
                               options: p.options || thresholdOptions,
                             }),
-                            ...(p.key.includes('years') &&
-                              p.min &&
+                            ...(p.min &&
                               p.max && {
                                 options: Array.from(
                                   Array(p.max - p.min + 1).keys()
