@@ -1,7 +1,6 @@
 import forestType from 'data/forest-types';
 import landCategory from 'data/land-categories';
 import threshold from 'data/thresholds.json';
-import soyYear from 'data/soy-years.json';
 import unit from 'data/units.json';
 import variable from 'data/variables.json';
 import period from 'data/periods.json';
@@ -19,7 +18,6 @@ export default {
   forestType: forestType.filter((f) => !f.hidden),
   landCategory: landCategory.filter((l) => !l.hidden),
   threshold,
-  soyYear,
   unit,
   period,
   extentYear,

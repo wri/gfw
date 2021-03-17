@@ -5,7 +5,6 @@ import chroma from 'chroma-js';
 
 import { getDatasets } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
-import soyYearOptions from 'data/soy-years.json';
 
 import { reduceParams, reduceSqlParams } from './utils';
 import decodeLayersConfig from './config';
@@ -207,12 +206,8 @@ export const fetchDatasets = createThunkAction(
                                 'Displaying {name} with {selector} canopy density',
                               options: p.options || thresholdOptions,
                             }),
-                            ...(p.key.includes('soyYear') && {
-                              sentence:
-                                'Displaying Soy planted area in {selector}',
-                              options: soyYearOptions,
-                            }),
-                            ...(p.min &&
+                            ...(p.key.includes('years') &&
+                              p.min &&
                               p.max && {
                                 options: Array.from(
                                   Array(p.max - p.min + 1).keys()
