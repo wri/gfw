@@ -202,8 +202,9 @@ export const fetchDatasets = createThunkAction(
                             ...p,
                             ...(p.key.includes('thresh') && {
                               sentence:
+                                p.sentence ||
                                 'Displaying {name} with {selector} canopy density',
-                              options: thresholdOptions,
+                              options: p.options || thresholdOptions,
                             }),
                             ...(p.min &&
                               p.max && {
@@ -213,6 +214,11 @@ export const fetchDatasets = createThunkAction(
                                   label: o + p.min,
                                   value: o + p.min,
                                 })),
+                              }),
+                            ...(p.sentence &&
+                              p.options && {
+                                sentence: p.sentence,
+                                options: p.options,
                               }),
                           })),
                         }),
