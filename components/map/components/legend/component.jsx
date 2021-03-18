@@ -6,6 +6,8 @@ import {
   Legend,
   LegendListItem,
   LegendItemTypes,
+  LegendItemTypeBasic,
+  LegendItemTypeProportional,
   LegendItemToolbar,
   LegendItemButtonOpacity,
   LegendItemButtonInfo,
@@ -22,6 +24,8 @@ import LayerListMenu from './components/layer-list-menu';
 import LayerSelectorMenu from './components/layer-selector-menu';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
+import LegendItemTypeGradient from './components/legend-item-type-gradient';
+import LegendItemTypeChoropleth from './components/legend-item-type-choropleth';
 
 import './styles.scss';
 import './themes/vizzuality-legend.scss';
@@ -76,7 +80,6 @@ const MapLegend = ({
               moreInfo,
               timelineParams,
             } = activeLayer || {};
-
             return (
               <LegendListItem
                 index={i}
@@ -117,7 +120,13 @@ const MapLegend = ({
                   </LegendItemToolbar>
                 )}
               >
-                <LegendItemTypes />
+                <LegendItemTypes>
+                  <LegendItemTypeBasic />
+                  <LegendItemTypeChoropleth />
+                  <LegendItemTypeProportional />
+                  <LegendItemTypeGradient />
+                </LegendItemTypes>
+
                 {statementConfig && (
                   <LayerStatement
                     className="layer-statement"
