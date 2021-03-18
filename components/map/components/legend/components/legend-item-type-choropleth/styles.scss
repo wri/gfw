@@ -47,7 +47,7 @@
     margin-bottom: 5px;
   }
 
-  @media screen and (max-width: map-get($screen-s, small)) {
+  @media screen and (max-width: $screen-s) {
     flex-direction: column;
     margin-top: 10px;
 
