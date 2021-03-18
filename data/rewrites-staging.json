@@ -20,17 +20,17 @@
   },
   {
     "source": "/blog/",
-    "destination": "https://gfw-blog-staging.herokuapp.com/",
+    "destination": "https://gfw-blog-staging.herokuapp.com/blog/",
     "basePath": false
   },
   {
     "source": "/blog/:path*/",
-    "destination": "https://gfw-blog-staging.herokuapp.com/:path*/",
+    "destination": "https://gfw-blog-staging.herokuapp.com/blog/:path*/",
     "basePath": false
   },
   {
     "source": "/blog/:path*",
-    "destination": "https://gfw-blog-staging.herokuapp.com/:path*",
+    "destination": "https://gfw-blog-staging.herokuapp.com/blog/:path*",
     "basePath": false
   }
 ]
