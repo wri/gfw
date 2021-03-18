@@ -12,10 +12,6 @@ const COLOR_OPTIONS = [
     label: 'False color (NIR)',
     value: 'cir',
   },
-  {
-    label: 'False color (RGB)',
-    value: 'rgb',
-  },
 ];
 
 const selectBasemapSelected = (state) => state?.map?.settings?.basemap?.name;
