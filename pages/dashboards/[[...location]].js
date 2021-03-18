@@ -7,6 +7,7 @@ import uniqBy from 'lodash/uniqBy';
 import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
 import { parseGadm36Id } from 'utils/gadm';
+import { parseStringWithVars } from 'utils/strings';
 
 import { getLocationData } from 'services/location';
 import {
@@ -65,6 +66,10 @@ export const getServerSideProps = async ({ params }) => {
     // get global data
     const data = await getSentenceData();
     const parsedSentence = parseSentence(data);
+    const description = parseStringWithVars(
+      parsedSentence.sentence,
+      parsedSentence.params
+    );
     return {
       props: {
         title: 'Global Deforestation Rates & Statistics by Country | GFW',
@@ -72,8 +77,7 @@ export const getServerSideProps = async ({ params }) => {
         globalSentence: parsedSentence,
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
-        description:
-          'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.',
+        description,
       },
     };
   }
@@ -89,7 +93,6 @@ export const getServerSideProps = async ({ params }) => {
     }
 
     const title = `${locationName} Deforestation Rates & Statistics | GFW`;
-    const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
     const noIndex = !['country'].includes(type);
     const [locationType, adm0, lvl1, lvl2] = params?.location;
     const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
@@ -141,11 +144,24 @@ export const getServerSideProps = async ({ params }) => {
 
     const parsedSentence = parseSentence(data, locationNames, locationObj);
 
+    const handleSSRLocation = {
+      adm0,
+      adm1,
+      adm2,
+      type: locationType,
+    };
+
+    const description = parseStringWithVars(
+      parsedSentence.sentence,
+      parsedSentence.params
+    );
+
     return {
       props: {
         title,
         description,
         globalSentence: parsedSentence,
+        handleSSRLocation,
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
         noIndex,
@@ -188,7 +204,12 @@ const DashboardsPage = (props) => {
   const [ready, setReady] = useState(false);
   const { query, asPath, isFallback } = useRouter();
   const fullPathname = asPath?.split('?')?.[0];
-  const { globalSentence, geodescriber, countryData } = props;
+  const {
+    globalSentence,
+    handleSSRLocation,
+    geodescriber,
+    countryData,
+  } = props;
 
   useEffect(() => {
     const {
@@ -247,7 +268,6 @@ const DashboardsPage = (props) => {
       setReady(true);
     }
   });
-
   return (
     <PageLayout {...props}>
       <Head>
@@ -256,12 +276,11 @@ const DashboardsPage = (props) => {
           href={`https://www.globalforestwatch.org${fullPathname}`}
         />
       </Head>
-      {ready && (
-        <>
-          <DashboardsUrlProvider />
-          <Dashboards globalSentence={globalSentence} />
-        </>
-      )}
+      <DashboardsUrlProvider />
+      <Dashboards
+        ssrLocation={handleSSRLocation}
+        globalSentence={globalSentence}
+      />
     </PageLayout>
   );
 };
@@ -269,6 +288,7 @@ const DashboardsPage = (props) => {
 DashboardsPage.propTypes = {
   title: PropTypes.string,
   globalSentence: PropTypes.object,
+  handleSSRLocation: PropTypes.object,
   geodescriber: PropTypes.string,
   countryData: PropTypes.string,
 };

@@ -41,6 +41,7 @@ const isServer = typeof window === 'undefined';
 
 class DashboardsPage extends PureComponent {
   static propTypes = {
+    handleSSRLocation: PropTypes.object,
     showMapMobile: PropTypes.bool,
     setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
@@ -135,6 +136,7 @@ class DashboardsPage extends PureComponent {
       showMapMobile,
       links,
       widgetAnchor,
+      handleSSRLocation,
       setWidgetsCategory,
       activeArea,
       clearScrollTo,
@@ -151,7 +153,11 @@ class DashboardsPage extends PureComponent {
     return (
       <div className="l-dashboards-page">
         <div className="content-panel">
-          <Header className="header" globalSentence={globalSentence} />
+          <Header
+            className="header"
+            handleSSRLocation={handleSSRLocation}
+            globalSentence={globalSentence}
+          />
           {links && !!links.length && (
             <SubNavMenu
               className="nav"

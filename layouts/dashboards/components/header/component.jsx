@@ -33,6 +33,7 @@ class Header extends PureComponent {
     handleLocationChange: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
     shareData: PropTypes.object.isRequired,
+    handleSSRLocation: PropTypes.object,
     location: PropTypes.object.isRequired,
     forestAtlasLink: PropTypes.object,
     sentence: PropTypes.object,
@@ -52,12 +53,12 @@ class Header extends PureComponent {
       locationNames,
       setAreaOfInterestModalSettings,
       activeArea,
+      location,
     } = this.props;
 
     const btnTheme = cx(
       'theme-button-clear theme-button-clear-underline theme-button-small'
     );
-
     return (
       <Dropdown
         layout="overflow-menu"
@@ -165,17 +166,31 @@ class Header extends PureComponent {
       setShareModal,
       locationNames,
       shareData,
-      location,
+      location: runtimeLocation,
+      handleSSRLocation,
       forestAtlasLink,
       globalSentence,
       sentence,
-      selectorMeta,
+      selectorMeta: runtimeSelectorMeta,
       shareMeta,
       setAreaOfInterestModalSettings,
       title,
       activeArea,
       firstArea,
     } = this.props;
+
+    const location = isEmpty(runtimeLocation)
+      ? handleSSRLocation
+      : runtimeLocation;
+    let selectorMeta;
+    if (isEmpty(runtimeLocation)) {
+      selectorMeta = {
+        typeVerb: 'country',
+        typeName: 'country',
+      };
+    } else {
+      selectorMeta = runtimeSelectorMeta;
+    }
 
     const isCountryDashboard =
       location?.type === 'country' || location?.type === 'global';
@@ -189,7 +204,8 @@ class Header extends PureComponent {
       !loading && (!isAreaDashboard || (isAreaDashboard && activeArea));
     const { tags } = activeArea || {};
 
-    const displaySentence = !sentence || isEmpty(sentence) ? globalSentence : sentence;
+    const displaySentence =
+      !sentence || isEmpty(sentence) ? globalSentence : sentence;
 
     return (
       <div className={cx('c-dashboards-header', className)}>
