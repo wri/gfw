@@ -7,7 +7,6 @@ import {
   LegendListItem,
   LegendItemTypes,
   LegendItemTypeBasic,
-  LegendItemTypeChoropleth,
   LegendItemTypeProportional,
   LegendItemToolbar,
   LegendItemButtonOpacity,
@@ -26,6 +25,7 @@ import LayerSelectorMenu from './components/layer-selector-menu';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 import LegendItemTypeGradient from './components/legend-item-type-gradient';
+import LegendItemTypeChoropleth from './components/legend-item-type-choropleth';
 
 import './styles.scss';
 import './themes/vizzuality-legend.scss';
