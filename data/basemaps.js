@@ -20,7 +20,7 @@ function sortPlanetBasemaps(items) {
     return {
       name,
       period,
-      date: startDate,
+      date: Date(startDate),
     };
   });
 
