@@ -1,6 +1,6 @@
 // forest change
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import treeLossPct from 'components/widgets/forest-change/tree-loss-pct';
+import treeLossPct from 'components/widgets/forest-change/tree-loss-primary';
 import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
 import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 import faoDeforest from 'components/widgets/forest-change/fao-deforest';
