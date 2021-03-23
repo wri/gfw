@@ -3,6 +3,7 @@ import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
   GFW_API,
+  GFW_STAGING_API,
   GFW_DATA_API,
   GFW_TILES_API,
   CARTO_API,
@@ -10,11 +11,14 @@ import {
   RESOURCE_WATCH_API,
 } from 'utils/apis';
 
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const API = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
+
 const isServer = typeof window === 'undefined';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_API,
+  baseURL: API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
