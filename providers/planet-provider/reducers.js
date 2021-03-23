@@ -1,21 +1,29 @@
+import basemapParser from 'data/basemaps';
 import * as actions from './actions';
 
 export const initialState = {
   loading: false,
-  data: []
+  data: [],
+  analytical: null,
+  visual: null,
+  options: null,
 };
 
-const setPlanetBasemaps = (state, { payload }) => ({
-  ...state,
-  data: payload
-});
+const setPlanetBasemaps = (state, { payload }) => {
+  const additionalParsing = basemapParser.planet(payload);
+  return {
+    ...state,
+    data: payload,
+    ...additionalParsing,
+  };
+};
 
 const setPlanetBasemapsLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload,
 });
 
 export default {
   [actions.setPlanetBasemaps]: setPlanetBasemaps,
-  [actions.setPlanetBasemapsLoading]: setPlanetBasemapsLoading
+  [actions.setPlanetBasemapsLoading]: setPlanetBasemapsLoading,
 };

@@ -27,6 +27,8 @@ const selectLatest = (state) => state.latest && state.latest.data;
 export const selectGeostore = (state) => state.geostore && state.geostore.data;
 const selectLocation = (state) => state.location && state.location.payload;
 
+const getPlanetSettings = (state) => state.planet;
+
 // CONSTS
 export const getBasemaps = () => basemaps;
 
@@ -60,7 +62,21 @@ export const getMapMaxZoom = createSelector(
 
 export const getBasemapFromState = createSelector(
   getMapSettings,
-  (settings) => settings.basemap
+  getPlanetSettings,
+  ({ basemap }, planet) => {
+    if (basemap.value === 'planet') {
+      return {
+        ...basemap,
+        ...(basemap.color === 'cir' && {
+          color: planet?.options?.analytical?.value || 'cir',
+        }),
+        ...(basemap.color !== 'cir' && {
+          color: planet?.options?.visual?.value || '',
+        }),
+      };
+    }
+    return basemap;
+  }
 );
 
 export const getBasemap = createSelector(

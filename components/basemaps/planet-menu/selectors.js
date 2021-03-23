@@ -3,20 +3,11 @@ import isEmpty from 'lodash/isEmpty';
 
 import { getPlanetBasemaps } from '../selectors';
 
-const COLOR_OPTIONS = [
-  {
-    label: 'Natural color',
-    value: '',
-  },
-  {
-    label: 'False color (NIR)',
-    value: 'cir',
-  },
-];
-
 const selectBasemapSelected = (state) => state?.map?.settings?.basemap?.name;
 const selectBasemapColorSelected = (state) =>
   state?.map?.settings?.basemap?.color;
+
+const getBasemapOptions = (state) => state?.planet?.options;
 
 export const getPeriodOptions = createSelector(
   [getPlanetBasemaps],
@@ -37,11 +28,27 @@ export const getPeriodSelected = createSelector(
   }
 );
 
-export const getColorOptions = createSelector([], () => COLOR_OPTIONS);
+export const getColorOptions = createSelector(
+  [getBasemapOptions],
+  (options) => {
+    if (!options) return null;
+    try {
+      return Object.values(options);
+    } catch (_) {
+      return null;
+    }
+  }
+);
 
 export const getColorSelected = createSelector(
   [getColorOptions, selectBasemapColorSelected],
-  (options, selected) => options.find((o) => o.value === selected)?.value
+  (options, selected) => {
+    if (!options) return null;
+    if (selected === 'cir') {
+      return options.find((opt) => opt.id === 'analytical').value;
+    }
+    return options.find((opt) => opt.id === 'visual').value;
+  }
 );
 
 export default createStructuredSelector({

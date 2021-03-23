@@ -1,7 +1,5 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import sortBy from 'lodash/sortBy';
-import { format, differenceInMonths } from 'date-fns';
 
 import {
   getBasemaps,
@@ -17,59 +15,25 @@ import {
 } from 'components/analysis/selectors';
 
 const selectPlanetBasemaps = (state) => {
-  // const activeType = state?.map?.settings?.basemap?.color;
+  const activeType = state?.map?.settings?.basemap?.color;
   // This can be either rgb<string> hex value <#xxx> or nir<string>
-  // const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
-  const imageType = 'analytic';
-  const planetBasemaps = state.planet?.data;
-  // XXX: Filter planet basemaps based on active image type
-  return planetBasemaps?.filter((bm) => bm.name.includes(imageType));
+  const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
+  const { visual, analytical } = state.planet;
+  return imageType === 'cir' ? analytical : visual;
 };
 
-const getGroupedPlanetBasemaps = (state) => {
-  const planetBasemaps = state.planet?.data;
-
-  const visual = planetBasemaps
-    ?.filter((bm) => bm.name.includes('visual'))
-    .reverse();
-  const cir = planetBasemaps
-    ?.filter((bm) => bm.name.includes('analytic'))
-    .reverse();
-
-  return [visual, cir, cir];
+const getPlanetBasemapOptions = (state) => {
+  const {
+    planet: { visual, analytical },
+  } = state;
+  return { visual, analytical };
 };
-
-// ES6 provision, replace the hyphens with slashes forces UTC to be calculated from timestamp
-// instead of local time
-// interesting article: https://codeofmatt.com/javascript-date-parsing-changes-in-es6/
-const cleanPlanetDate = (dateStr) =>
-  new Date(dateStr.substring(0, 10).replace(/-/g, '/'));
 
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   (planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
-    return sortBy(
-      planetBasemaps.map(({ name, first_acquired, last_acquired } = {}) => {
-        const startDate = cleanPlanetDate(first_acquired);
-        const endDate = cleanPlanetDate(last_acquired);
-        const monthDiff = differenceInMonths(endDate, startDate);
-        const period =
-          monthDiff === 1
-            ? `${format(startDate, 'MMM yyyy')}`
-            : `${format(startDate, 'MMM yyyy')} - ${format(
-                endDate,
-                'MMM yyyy'
-              )}`;
-
-        return {
-          name,
-          period,
-          sortOrder: Date(startDate),
-        };
-      }),
-      'sortOrder'
-    ).reverse();
+    return planetBasemaps;
   }
 );
 
@@ -79,13 +43,11 @@ export const getDefaultPlanetBasemap = createSelector(
 );
 
 export const getDefaultPlanetBasemaps = createSelector(
-  [getGroupedPlanetBasemaps],
-  (grouped) => {
-    const [visual, cir] = grouped;
+  [getPlanetBasemapOptions],
+  (basemaps) => {
     return {
-      visual: visual?.[0]?.name,
-      cir: cir?.[0]?.name,
-      rgb: cir?.[0]?.name,
+      visual: basemaps.visual?.[0]?.name,
+      cir: basemaps.analytical?.[0]?.name,
     };
   }
 );
