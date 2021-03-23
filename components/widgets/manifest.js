@@ -1,5 +1,6 @@
 // forest change
 import treeLoss from 'components/widgets/forest-change/tree-loss';
+import treeLoss2020 from 'components/widgets/forest-change/tree-loss-2020';
 import treeLossPct from 'components/widgets/forest-change/tree-loss-primary';
 import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
 import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
@@ -51,6 +52,7 @@ import traseCommodities from 'components/widgets/land-use/trase-commodities';
 export default {
   // forest change
   treeLoss,
+  treeLoss2020,
   treeLossPct,
   treeLossGlobal,
   treeLossRanked,
