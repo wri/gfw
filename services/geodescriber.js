@@ -1,9 +1,13 @@
 import { apiRequest } from 'utils/request';
 
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+
 export const getGeodescriberByGeoJson = ({ geojson, token, template }) =>
   apiRequest({
     method: 'post',
-    url: `/geodescriber/geom?template=${template ? 'true' : 'false'}&app=gfw`,
+    url: `${
+      ENVIRONMENT === 'staging' ? '/v1' : ''
+    }/geodescriber/geom?template=${template ? 'true' : 'false'}&app=gfw`,
     data: {
       geojson,
     },
