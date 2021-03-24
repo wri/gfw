@@ -66,7 +66,7 @@ export default {
   widget: 'treeLoss2020',
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
-  types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  types: ['geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
