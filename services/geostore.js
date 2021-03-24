@@ -4,8 +4,6 @@ import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
 import BBOXS from 'data/bboxs.json';
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-
 const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
 
 const getWDPAGeostore = ({ id, token }) =>
@@ -78,7 +76,7 @@ export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) =>
     data: {
       geojson,
     },
-    url: ENVIRONMENT === 'staging' ? '/v1/geostore' : '/geostore',
+    url: '/geostore',
     onUploadProgress,
     onDownloadProgress,
   });

@@ -6,7 +6,8 @@ import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 import otfData from 'data/otf-data';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+const DATA_API =
+  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 // Perform a OTF(on the fly) analysis for un-cached widgets
 // https://data-api.globalforestwatch.org/#tag/Analysis
@@ -18,7 +19,7 @@ class OTFAnalysis {
       );
     }
 
-    this.endpoint = `${GFW_API}/analysis/`;
+    this.endpoint = `${DATA_API}/analysis/`;
     this.path = 'zonal';
     this.dataInstances = [];
     this.geostoreId = geostoreId;
