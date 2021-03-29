@@ -141,6 +141,7 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
     co2Emissions: 'and {emissions} of CO\u2082 emissions',
   },
+  caution: 'New 2020 data will be available soon!',
   settings: {
     threshold: 30,
     extentYear: 2000,

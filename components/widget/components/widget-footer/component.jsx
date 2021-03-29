@@ -8,16 +8,18 @@ import './styles.scss';
 class WidgetFooter extends PureComponent {
   static propTypes = {
     simple: PropTypes.bool,
+    caution: PropTypes.string,
     statements: PropTypes.array,
     showAttributionLink: PropTypes.bool,
   };
 
   render() {
-    const { statements, simple, showAttributionLink } = this.props;
+    const { statements, caution, simple, showAttributionLink } = this.props;
     const statementsMapped = statements && statements.join(' | ');
 
     return (
       <div className={cx('c-widget-footer', { simple })}>
+        {caution && <div className="--caution">{caution}</div>}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}
