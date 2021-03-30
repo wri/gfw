@@ -13,6 +13,7 @@ class WidgetFooter extends PureComponent {
     simple: PropTypes.bool,
     caution: PropTypes.string,
     statements: PropTypes.array,
+    analysis: PropTypes.bool,
     showAttributionLink: PropTypes.bool,
   };
 
@@ -22,12 +23,15 @@ class WidgetFooter extends PureComponent {
       caution,
       type,
       simple,
+      analysis,
       showAttributionLink,
     } = this.props;
     const statementsMapped = statements && statements.join(' | ');
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {caution && <WidgetCaution type={type} caution={caution} />}
+        {caution && (
+          <WidgetCaution type={type} caution={caution} analysis={analysis} />
+        )}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}

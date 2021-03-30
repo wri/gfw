@@ -70,6 +70,7 @@ export default {
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
     text: 'New 2020 data will be available soon!',
+    visible: ['dashboard'],
     applyFor: ['wdpa', 'aoi', 'geostore'],
   },
   admins: ['adm0', 'adm1', 'adm2'],

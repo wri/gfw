@@ -14,6 +14,7 @@ class Widget extends PureComponent {
     title: PropTypes.string.isRequired,
     type: PropTypes.string,
     active: PropTypes.bool,
+    analysis: PropTypes.bool,
     embed: PropTypes.bool,
     large: PropTypes.bool,
     colors: PropTypes.object,
@@ -70,6 +71,7 @@ class Widget extends PureComponent {
       colors,
       type,
       active,
+      analysis,
       large,
       embed,
       simple,
@@ -111,6 +113,7 @@ class Widget extends PureComponent {
       settingsBtnConfig,
       status,
     } = this.props;
+
     const { main } = colors || {};
     const toggleSettingsMenu = () =>
       this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
@@ -185,6 +188,7 @@ class Widget extends PureComponent {
         {sentence && data && (
           <WidgetFooter
             showAttributionLink={showAttributionLink}
+            analysis={analysis}
             statements={statements}
             type={type}
             caution={caution}

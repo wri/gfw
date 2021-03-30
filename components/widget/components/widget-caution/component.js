@@ -7,11 +7,28 @@ class WidgetCaution extends PureComponent {
   static propTypes = {
     type: PropTypes.string,
     caution: PropTypes.string,
+    analysis: PropTypes.bool,
   };
+
+  isVisible() {
+    const {
+      caution: { visible },
+      analysis,
+    } = this.props;
+    if (visible.length === 2) return true;
+    if (analysis && visible.indexOf('analysis') === -1) return false;
+    if (!analysis && visible.indexOf('dashboard') === -1) return false;
+    return true;
+  }
 
   isValidCaution() {
     const { caution, type } = this.props;
-    return type && caution?.applyFor && caution?.applyFor.indexOf(type) > -1;
+    return (
+      this.isVisible() &&
+      type &&
+      caution?.applyFor &&
+      caution?.applyFor.indexOf(type) > -1
+    );
   }
 
   render() {

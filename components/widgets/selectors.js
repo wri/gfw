@@ -260,6 +260,7 @@ export const filterWidgetsByLocation = createSelector(
         types.includes(areaId && status === 'saved' ? 'aoi' : type) &&
         admins &&
         admins.includes(adminLevel);
+
       const adminWhitelist =
         type === 'country' && whitelists && whitelists.adm0;
 
@@ -505,6 +506,7 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
+        analysis,
         active,
         data: rawData,
         settings,
