@@ -186,7 +186,8 @@ class Widget extends PureComponent {
           <WidgetFooter
             showAttributionLink={showAttributionLink}
             statements={statements}
-            caution={type === 'wdpa' || type === 'aoi' ? caution : null}
+            type={type}
+            caution={caution}
             simple={simple}
           />
         )}

@@ -68,6 +68,10 @@ export default {
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  caution: {
+    text: 'New 2020 data will be available soon!',
+    applyFor: ['wdpa', 'aoi', 'geostore'],
+  },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -141,7 +145,6 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
     co2Emissions: 'and {emissions} of CO\u2082 emissions',
   },
-  caution: '2020 data coming soon for this area.',
   settings: {
     threshold: 30,
     extentYear: 2000,
