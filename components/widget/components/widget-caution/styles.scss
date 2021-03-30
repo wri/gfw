@@ -1,0 +1,10 @@
+@import '~styles/settings.scss';
+
+.c-widget-caution {
+  background: $yellow;
+  padding: 6px;
+  border-radius: 5px;
+  margin: 0 0 10px 0;
+  color: $slate-light;
+  font-weight: 500;
+}

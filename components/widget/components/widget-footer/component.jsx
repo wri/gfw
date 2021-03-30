@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactHtmlParser from 'react-html-parser';
 
+import WidgetCaution from 'components/widget/components/widget-caution';
+
 import './styles.scss';
 
 class WidgetFooter extends PureComponent {
   static propTypes = {
+    type: PropTypes.string,
     simple: PropTypes.bool,
     caution: PropTypes.string,
     statements: PropTypes.array,
@@ -14,12 +17,17 @@ class WidgetFooter extends PureComponent {
   };
 
   render() {
-    const { statements, caution, simple, showAttributionLink } = this.props;
+    const {
+      statements,
+      caution,
+      type,
+      simple,
+      showAttributionLink,
+    } = this.props;
     const statementsMapped = statements && statements.join(' | ');
-
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {caution && <div className="--caution">{caution}</div>}
+        {caution && <WidgetCaution type={type} caution={caution} />}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}
