@@ -5,7 +5,6 @@ import './styles.scss';
 
 class WidgetCaution extends PureComponent {
   static propTypes = {
-    type: PropTypes.string,
     caution: PropTypes.string,
     locationType: PropTypes.string,
   };
@@ -15,27 +14,13 @@ class WidgetCaution extends PureComponent {
       caution: { visible },
       locationType,
     } = this.props;
-    console.log('locationType', locationType);
-    return; // locationType = 'aoi' etc
-    if (visible?.length === 2) return true;
-    if (analysis && visible && !visible.includes('analysis')) return false;
-    if (!analysis && visible && !visible.includes('dashboard')) return false;
-    return true;
-  }
-
-  isValidCaution() {
-    const { caution, type } = this.props;
-    return (
-      this.isVisible() &&
-      type &&
-      caution?.applyFor &&
-      caution?.applyFor.indexOf(type) > -1
-    );
+    if (visible && locationType && visible.includes(locationType)) return true;
+    return false;
   }
 
   render() {
     const { caution } = this.props;
-    if (this.isValidCaution()) {
+    if (this.isVisible()) {
       return <div className="c-widget-caution">{caution.text}</div>;
     }
 
