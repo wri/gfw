@@ -506,7 +506,7 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
-        analysis,
+        locationType: locationObj?.locationType,
         active,
         data: rawData,
         settings,

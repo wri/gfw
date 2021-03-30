@@ -71,7 +71,6 @@ class Widget extends PureComponent {
       colors,
       type,
       active,
-      analysis,
       large,
       embed,
       simple,
@@ -188,9 +187,9 @@ class Widget extends PureComponent {
         {sentence && data && (
           <WidgetFooter
             showAttributionLink={showAttributionLink}
-            analysis={analysis}
             statements={statements}
             type={type}
+            locationType={location?.locationType}
             caution={caution}
             simple={simple}
           />

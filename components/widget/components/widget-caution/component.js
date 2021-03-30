@@ -7,14 +7,16 @@ class WidgetCaution extends PureComponent {
   static propTypes = {
     type: PropTypes.string,
     caution: PropTypes.string,
-    analysis: PropTypes.bool,
+    locationType: PropTypes.string,
   };
 
   isVisible() {
     const {
       caution: { visible },
-      analysis,
+      locationType,
     } = this.props;
+    console.log('locationType', locationType);
+    return; // locationType = 'aoi' etc
     if (visible?.length === 2) return true;
     if (analysis && visible && !visible.includes('analysis')) return false;
     if (!analysis && visible && !visible.includes('dashboard')) return false;
