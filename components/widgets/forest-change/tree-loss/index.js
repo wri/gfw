@@ -69,7 +69,7 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
-    text: 'New 2020 data will be available soon!',
+    text: '2020 data coming soon for this area.',
     visible: ['dashboard'],
     applyFor: ['wdpa', 'aoi', 'geostore'],
   },

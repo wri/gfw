@@ -36,7 +36,7 @@ export default {
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
-    text: 'New 2020 data will be available soon!',
+    text: '2020 data coming soon for this area.',
     applyFor: ['wdpa', 'aoi', 'geostore'],
   },
   large: true,
