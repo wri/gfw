@@ -67,6 +67,7 @@ export default {
   refetchKeys: ['landCategory', 'threshold'],
   dataType: 'lossPrimary',
   metaKey: 'widget_primary_forest_loss',
+  caution: '2020 data coming soon for this area.',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
