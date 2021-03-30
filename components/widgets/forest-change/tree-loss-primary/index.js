@@ -35,6 +35,10 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
+  caution: {
+    text: 'New 2020 data will be available soon!',
+    applyFor: ['wdpa', 'aoi', 'geostore'],
+  },
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
@@ -67,7 +71,6 @@ export default {
   refetchKeys: ['landCategory', 'threshold'],
   dataType: 'lossPrimary',
   metaKey: 'widget_primary_forest_loss',
-  caution: '2020 data coming soon for this area.',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
