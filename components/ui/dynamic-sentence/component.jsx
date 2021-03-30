@@ -26,10 +26,14 @@ class DynamicSentence extends PureComponent {
     const { className, testId, handleMouseOver, handleMouseOut } = this.props;
     const { sentence, params } = this.props.sentence;
     const { component } = params || {};
+    const sentenceParams = {
+      ...(params && params),
+      ...(!params?.location && { ...params, location: 'selected area' }),
+    };
     let formattedSentence = translateText(sentence);
     if (params) {
-      Object.keys(params).forEach((p) => {
-        const param = params[p];
+      Object.keys(sentenceParams).forEach((p) => {
+        const param = sentenceParams[p];
         if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {

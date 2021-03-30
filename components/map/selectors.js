@@ -387,7 +387,7 @@ export const getActiveLayers = createSelector(
       ...(activeArea && {
         features: [
           {
-            ...geostore.geojson.features[0],
+            ...geostore.geojson.features?.[0],
             properties: activeArea,
           },
         ],

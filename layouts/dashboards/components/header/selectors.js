@@ -12,6 +12,7 @@ import {
 } from 'providers/areas-provider/selectors';
 
 const isServer = typeof window === 'undefined';
+const MAX_YEAR = 2020;
 
 // get list data
 export const selectLocation = (state) =>
@@ -114,7 +115,7 @@ export const getDownloadLink = createSelector(
     const { admin } = area || {};
     const { adm0 } = admin || {};
 
-    return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${
+    return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${MAX_YEAR}/${
       adm0 || location?.adm0 || 'global'
     }.xlsx`;
   }

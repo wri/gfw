@@ -12,12 +12,13 @@ import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
+  FOREST_LOSS_2020,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -34,6 +35,10 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
+  caution: {
+    text: '2020 data coming soon for this area.',
+    visible: ['wdpa', 'aoi'],
+  },
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
@@ -75,7 +80,7 @@ export default {
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS],
+      layers: [FOREST_LOSS, FOREST_LOSS_2020],
     },
   ],
   sortOrder: {
