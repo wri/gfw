@@ -16,9 +16,8 @@ class WidgetCaution extends PureComponent {
       analysis,
     } = this.props;
     if (visible?.length === 2) return true;
-    if (analysis && visible && visible.indexOf('analysis') === -1) return false;
-    if (!analysis && visible && visible.indexOf('dashboard') === -1)
-      return false;
+    if (analysis && visible && !visible.includes('analysis')) return false;
+    if (!analysis && visible && !visible.includes('dashboard')) return false;
     return true;
   }
 
