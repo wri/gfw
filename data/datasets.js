@@ -1,5 +1,6 @@
 export const POLITICAL_BOUNDARIES_DATASET = 'political-boundaries';
 export const RIVER_BASINS_BOUNDARIES_DATASET = 'river-basins';
+export const FOREST_LOSS_DATASET_2020 = 'tree-cover-loss-2020';
 export const FOREST_LOSS_DATASET = 'tree-cover-loss';
 export const GLAD_DEFORESTATION_ALERTS_DATASET = 'glad-deforestation-alerts';
 export const FOREST_GAIN_DATASET = 'tree-cover-gain';

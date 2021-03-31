@@ -15,11 +15,12 @@ import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
+  FOREST_LOSS_2020,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 const MIN_YEAR = 2001;
 
 const getGlobalLocation = (params) => ({
@@ -67,6 +68,10 @@ export default {
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  caution: {
+    text: '2020 data coming soon for this area.',
+    visible: ['wdpa', 'aoi'],
+  },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -122,7 +127,7 @@ export default {
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS],
+      layers: [FOREST_LOSS, FOREST_LOSS_2020],
     },
   ],
   sortOrder: {

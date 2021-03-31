@@ -1,6 +1,7 @@
 export const DISPUTED_POLITICAL_BOUNDARIES = 'disputed-political-boundaries';
 export const POLITICAL_BOUNDARIES = 'political-boundaries';
 export const FOREST_GAIN = 'tree-cover-gain-2001-2012';
+export const FOREST_LOSS_2020 = 'tree-cover-loss-2020';
 export const FOREST_LOSS = 'tree-cover-loss';
 export const FOREST_EXTENT = 'tree-cover-2010';
 export const TREE_COVER = 'tree-cover-2000';
