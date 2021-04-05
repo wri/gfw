@@ -12,7 +12,6 @@ import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
-  FOREST_LOSS_2020,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -80,7 +79,7 @@ export default {
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS, FOREST_LOSS_2020],
+      layers: [FOREST_LOSS],
     },
   ],
   sortOrder: {
