@@ -36,7 +36,7 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
     text: '2020 data coming soon for this area.',
-    visible: ['wdpa', 'aoi'],
+    visible: ['wdpa'],
   },
   large: true,
   visible: ['dashboard', 'analysis'],
