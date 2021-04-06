@@ -15,7 +15,6 @@ import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
-  FOREST_LOSS_2020,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -70,7 +69,7 @@ export default {
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
     text: '2020 data coming soon for this area.',
-    visible: ['wdpa', 'aoi'],
+    visible: [],
   },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
@@ -127,7 +126,7 @@ export default {
     // loss
     {
       dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS, FOREST_LOSS_2020],
+      layers: [FOREST_LOSS],
     },
   ],
   sortOrder: {
