@@ -44,3 +44,5 @@ jobs:
           parallel: true
           wait-on-timeout: 120
           wait-on: 'http://localhost:3000'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.GFW_CYPRESS_KEY }}
