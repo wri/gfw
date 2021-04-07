@@ -27,6 +27,7 @@ jobs:
           start: yarn start 3000
           group: 'Integration tests'
           parallel: true
+          record: true
           wait-on-timeout: 120
           wait-on: 'http://localhost:3000'
         env:
