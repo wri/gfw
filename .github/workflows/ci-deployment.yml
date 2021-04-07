@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  cypress-run:
+  cypress-run-production:
     name: e2e tests - production
     runs-on: ubuntu-latest
     strategy:
