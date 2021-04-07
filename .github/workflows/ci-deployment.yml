@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-
 jobs:
   cypress-run:
     name: e2e tests
@@ -25,7 +24,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           build: yarn build
-          build_wait_on: yarn add --save wait-on
           start: yarn start 3000
           group: 'Integration tests'
           parallel: true
