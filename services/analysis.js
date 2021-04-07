@@ -34,15 +34,14 @@ const buildAnalysisUrl = ({
       .format('YYYY-MM-DD')},${moment().format('YYYY-MM-DD')}`;
   }
 
-  const thresh = params.thresh || threshold ? params.thresh || threshold : '';
   const geostore = type === 'geostore' ? adm0 : '';
 
   const queryParams = qs.stringify({
     ...(period && {
       period,
     }),
-    ...(thresh && {
-      thresh,
+    ...(threshold && {
+      threshold: parseInt(threshold, 10),
     }),
     ...(geostore && {
       geostore,

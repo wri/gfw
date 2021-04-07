@@ -178,7 +178,8 @@ export const getWHEREQuery = (params) => {
 
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       const isNumericValue = !!(
-        typeof value === 'number' && !['adm0', 'confidence'].includes(p)
+        typeof value === 'number' ||
+        (!isNaN(value) && !['adm0', 'confidence'].includes(p))
       );
 
       const polynameString = `
