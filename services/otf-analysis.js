@@ -67,10 +67,9 @@ class OTFAnalysis {
     // simply replace threshold with it so we can perform user defined analysis
     return {
       ...params,
-      ...(params.thresh &&
-        params.thresh.length > 0 && {
-          threshold: parseInt(params.thresh, 10),
-        }),
+      ...(params.threshold && {
+        threshold: parseInt(params.threshold, 10),
+      }),
     };
   }
 
