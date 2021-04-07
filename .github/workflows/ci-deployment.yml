@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   cypress-run:
-    name: e2e tests
+    name: e2e tests - production
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
