@@ -1,12 +1,12 @@
-name: CI
+name: CI Production
 
 on:
   push:
     branches:
       - master
 jobs:
-  cypress-run:
-    name: e2e tests
+  cypress-run-production:
+    name: e2e tests - production
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
