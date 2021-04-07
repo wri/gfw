@@ -19,6 +19,10 @@ jobs:
   cypress-run:
     name: e2e tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -32,4 +36,7 @@ jobs:
         with:
           build: yarn build
           start: yarn start 3000
+          group: 'Integration tests'
+          parallel: true
+          wait-on-timeout: 120
           wait-on: 'http://localhost:3000'
