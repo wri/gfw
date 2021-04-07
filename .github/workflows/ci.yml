@@ -38,9 +38,9 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           build: yarn install
-          build_wait_on: yarn add --save wait-on
           start: yarn dev
           group: 'Integration tests'
+          record: true
           parallel: true
           wait-on-timeout: 120
           wait-on: 'http://localhost:3000'
