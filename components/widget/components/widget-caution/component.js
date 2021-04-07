@@ -5,7 +5,7 @@ import './styles.scss';
 
 class WidgetCaution extends PureComponent {
   static propTypes = {
-    caution: PropTypes.string,
+    caution: PropTypes.object,
     locationType: PropTypes.string,
   };
 
