@@ -150,6 +150,7 @@ const getLocationSelect = ({ type, adm0, adm1, adm2, grouped }) => {
 
 // build {where} statement for query
 export const getWHEREQuery = (params) => {
+  console.log('get Where query', params);
   const allPolynames = forestTypes.concat(landCategories);
   const paramKeys = params && Object.keys(params);
   const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
@@ -178,7 +179,8 @@ export const getWHEREQuery = (params) => {
 
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       const isNumericValue = !!(
-        typeof value === 'number' && !['adm0', 'confidence'].includes(p)
+        typeof value === 'number' ||
+        (!isNaN(value) && !['adm0', 'confidence'].includes(p))
       );
 
       const polynameString = `
