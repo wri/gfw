@@ -150,7 +150,6 @@ const getLocationSelect = ({ type, adm0, adm1, adm2, grouped }) => {
 
 // build {where} statement for query
 export const getWHEREQuery = (params) => {
-  console.log('get Where query', params);
   const allPolynames = forestTypes.concat(landCategories);
   const paramKeys = params && Object.keys(params);
   const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
