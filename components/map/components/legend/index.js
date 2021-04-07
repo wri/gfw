@@ -135,13 +135,21 @@ class Legend extends PureComponent {
 
   onChangeParam = (currentLayer, newParam) => {
     const { setMapSettings, activeDatasets } = this.props;
+
     setMapSettings({
       datasets: activeDatasets.map((l) => {
         const dataset = { ...l };
         if (l.layers.includes(currentLayer.id)) {
           dataset.params = {
             ...dataset.params,
-            ...newParam,
+            ...(newParam.thresh
+              ? {
+                  ...newParam,
+                  threshold: parseInt(newParam.thresh, 10),
+                }
+              : {
+                  ...newParam,
+                }),
           };
         }
         return dataset;

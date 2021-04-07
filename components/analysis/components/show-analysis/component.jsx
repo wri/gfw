@@ -57,7 +57,6 @@ class ShowAnalysis extends PureComponent {
     endDate,
     dateFormat,
     threshold,
-    thresh,
   }) => (
     <li className="draw-stat" key={label}>
       <div className="title">
@@ -68,8 +67,7 @@ class ShowAnalysis extends PureComponent {
             ` (${moment(startDate).format(
               dateFormat || 'YYYY-MM-DD'
             )} to ${moment(endDate).format(dateFormat || 'YYYY-MM-DD')})`}
-          {(thresh || threshold) &&
-            ` with >${threshold || thresh}% canopy density`}
+          {threshold && ` with >${threshold}% canopy density`}
         </span>
       </div>
       <div className="value" style={{ color }}>
@@ -169,7 +167,7 @@ class ShowAnalysis extends PureComponent {
                         downloadUrls &&
                         downloadUrls.length &&
                         downloadUrls.map((d) => d?.label).join(', '),
-                    })
+                    });
                   }}
                   tooltip={{ text: 'Download data' }}
                 >
