@@ -18,7 +18,7 @@ class Widget extends PureComponent {
     large: PropTypes.bool,
     colors: PropTypes.object,
     simple: PropTypes.bool,
-    caution: PropTypes.string,
+    caution: PropTypes.object,
     datasets: PropTypes.array,
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
