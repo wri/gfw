@@ -170,6 +170,12 @@ export const getWHEREQuery = (params) => {
         polynameMeta &&
         (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
 
+      /* TODO
+       perform better casting / allow to configure types:
+       as for example wdpa_protected_area__id needs to be a string,
+       even that it evaluates as a number.
+       Note that the postgres tables will allow us to cast at the query level.
+      */
       const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       let isNumericValue = !!(
         typeof value === 'number' ||
