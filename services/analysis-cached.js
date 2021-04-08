@@ -169,18 +169,28 @@ export const getWHEREQuery = (params) => {
       const tableKey =
         polynameMeta &&
         (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
+
+      /* TODO
+       perform better casting / allow to configure types:
+       as for example wdpa_protected_area__id needs to be a string,
+       even that it evaluates as a number.
+       Note that the postgres tables will allow us to cast at the query level.
+      */
+      const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
+      let isNumericValue = !!(
+        typeof value === 'number' ||
+        (!isNaN(value) && !['adm0', 'confidence'].includes(p))
+      );
+
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') paramKey = 'umd_tree_cover_density__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
-      if (p === 'adm0' && type === 'wdpa') paramKey = 'wdpa_protected_area__id';
-
-      const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
-      const isNumericValue = !!(
-        typeof value === 'number' ||
-        (!isNaN(value) && !['adm0', 'confidence'].includes(p))
-      );
+      if (p === 'adm0' && type === 'wdpa') {
+        paramKey = 'wdpa_protected_area__id';
+        isNumericValue = false;
+      }
 
       const polynameString = `
         ${
