@@ -1,23 +1,12 @@
-name: CI
+name: CI Production
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 jobs:
-  lint:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.16.2'
-      - name: Install modules
-        run: yarn
-      - name: Run ESLint
-        run: yarn lint
-  cypress-run:
-    name: e2e tests
+  cypress-run-production:
+    name: e2e tests - production
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -34,11 +23,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: yarn install
-          start: yarn dev
+          build: yarn build
+          start: yarn start 3000
           group: 'Integration tests'
-          record: true
           parallel: true
+          record: true
           wait-on-timeout: 120
           wait-on: 'http://localhost:3000'
         env:

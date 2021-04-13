@@ -1,8 +1,13 @@
 import has from 'lodash/has';
 
 import { apiRequest } from 'utils/request';
+import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 
 import otfData from 'data/otf-data';
+
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const DATA_API =
+  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 // Perform a OTF(on the fly) analysis for un-cached widgets
 // https://data-api.globalforestwatch.org/#tag/Analysis
@@ -14,7 +19,7 @@ class OTFAnalysis {
       );
     }
 
-    this.endpoint = 'https://data-api.globalforestwatch.org/analysis/';
+    this.endpoint = `${DATA_API}/analysis/`;
     this.path = 'zonal';
     this.dataInstances = [];
     this.geostoreId = geostoreId;
@@ -62,10 +67,9 @@ class OTFAnalysis {
     // simply replace threshold with it so we can perform user defined analysis
     return {
       ...params,
-      ...(params.thresh &&
-        params.thresh.length > 0 && {
-          threshold: parseInt(params.thresh, 10),
-        }),
+      ...(params.threshold && {
+        threshold: parseInt(params.threshold, 10),
+      }),
     };
   }
 

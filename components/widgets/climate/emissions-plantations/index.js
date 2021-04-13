@@ -17,6 +17,9 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MAX_YEAR = 2020;
+const MIN_YEAR = 2013;
+
 export default {
   widget: 'emissions-plantations',
   title: {
@@ -80,8 +83,8 @@ export default {
     forestType: 'ifl',
     ifl: 2016,
     threshold: 30,
-    startYear: 2013,
-    endYear: 2018,
+    startYear: MIN_YEAR,
+    endYear: MAX_YEAR,
     unit: 'co2LossByYear',
   },
   getData: (params) =>
@@ -99,7 +102,7 @@ export default {
           (maxAdmin &&
             maxPlantations &&
             max([maxAdmin.year, maxPlantations.year])) ||
-          2018;
+          MAX_YEAR;
 
         return {
           adminData,

@@ -30,11 +30,10 @@ export const getDataLocation = createSelector(
       ...(payload?.type === 'aoi' && {
         areaId: payload?.adm0,
       }),
+      locationType: payload?.type,
     };
-
     if (!area) return newLocation;
     const { location: areaLocation } = area;
-
     return {
       ...newLocation,
       ...areaLocation,

@@ -1,0 +1,76 @@
+.c-legend-type-gradient {
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 12px;
+  }
+
+  li {
+    padding: 0;
+    margin: 0;
+    flex: 1 1 auto;
+
+    &::before {
+      content: none !important; // For the NexGDDP tool
+    }
+
+    .name {
+      display: block;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    &:first-child {
+      .name {
+        text-align: left;
+      }
+    }
+
+    &:last-child {
+      .name {
+        text-align: right;
+      }
+    }
+  }
+
+  .label {
+    display: flex;
+
+    span {
+      flex: 1 1 auto;
+
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+
+  .legend-gradient-icon {
+    display: flex;
+  }
+
+  .icon-gradient {
+    display: block;
+    height: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .icon-gradient-transparent {
+    display: block;
+    height: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-image:
+      linear-gradient(45deg, rgba(black, 0.4) 25%, transparent 25%, transparent 75%, rgba(black, 0.4) 75%, rgba(black, 0.4)),
+      linear-gradient(45deg, rgba(black, 0.4) 25%, transparent 25%, transparent 75%, rgba(black, 0.4) 75%, rgba(black, 0.4));
+    background-size: 4px 4px;
+    background-position: 0 0, 2px 2px;
+  }
+}

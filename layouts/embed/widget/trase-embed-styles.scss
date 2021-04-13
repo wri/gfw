@@ -52,6 +52,10 @@ $trase-font-family-2: 'Merriweather';
   &.-trase {
     .embed-widget {
       overflow: visible;
+
+      .c-composed-chart {
+        overflow: visible;
+      }
     }
 
     .c-widget-header {

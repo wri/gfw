@@ -23,7 +23,7 @@ const errorProps = {
   errorTitle: 'Widget Not Found',
 };
 
-const ALLOWED_TYPES = ['global', 'country', 'aoi'];
+const ALLOWED_TYPES = ['geostore', 'global', 'country', 'aoi'];
 
 export const getStaticProps = async ({ params }) => {
   const { location, widget } = params || {};

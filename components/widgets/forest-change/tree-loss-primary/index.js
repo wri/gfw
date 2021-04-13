@@ -17,7 +17,7 @@ import {
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -34,6 +34,10 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
+  caution: {
+    text: '2020 data coming soon for this area.',
+    visible: [],
+  },
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
