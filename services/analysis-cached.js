@@ -331,7 +331,7 @@ export const getLoss = (params) => {
       name: `treecover_loss${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -374,7 +374,7 @@ export const getLossGrouped = (params) => {
       name: `treecover_loss_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -416,7 +416,7 @@ export const getExtent = (params) => {
       name: `treecover_extent_${extentYear}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -457,7 +457,7 @@ export const getExtentGrouped = (params) => {
       name: `treecover_extent_${extentYear}_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -496,7 +496,7 @@ export const getGain = (params) => {
       name: `treecover_gain_2000-2012${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -536,7 +536,7 @@ export const getGainGrouped = (params) => {
       name: `treecover_gain_2000-2012_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -583,7 +583,7 @@ export const getAreaIntersection = (params) => {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -635,7 +635,7 @@ export const getAreaIntersectionGrouped = (params) => {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }_by_region__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -689,7 +689,7 @@ export const fetchHistoricalAlerts = (params) => {
       name: `${dataset}_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
   return apiRequest.get(url).then((response) => ({
@@ -732,7 +732,7 @@ export const fetchHistoricalGladAlerts = (params) => {
       name: `glad_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -773,7 +773,7 @@ export const fetchGladAlerts = (params) => {
       name: `glad_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -839,7 +839,7 @@ export const fetchVIIRSAlerts = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -884,7 +884,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -924,7 +924,7 @@ export const fetchFiresWithin = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -981,7 +981,7 @@ export const getBiomassStockGrouped = (params) => {
       name: `whrc_biomass_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -1021,7 +1021,7 @@ export const getBiomassStock = (params) => {
       name: `whrc_biomass_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -1049,9 +1049,9 @@ const buildPolynameSelects = (nonTable, dataset) => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value} as ${
-        p.value
-      }${isLast ? '' : ', '}`
+      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value}, ${
+        !nonTable ? p.tableKey || p.tableKeys[dataset] : p.value
+      } AS ${p.value}${isLast ? '' : ', '}`
     );
   });
   return polyString;
