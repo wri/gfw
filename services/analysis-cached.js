@@ -137,6 +137,15 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
 };
 
+const getDownloadUrl = (url) => {
+  const queryUrl = new URL(url);
+  const downloadUrl = {
+    ...queryUrl,
+    pathname: queryUrl.pathname.replace('query', 'download/csv'),
+  };
+  return downloadUrl.toString();
+};
+
 // build {select} from location params
 const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
@@ -331,7 +340,7 @@ export const getLoss = (params) => {
       name: `treecover_loss${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -374,7 +383,7 @@ export const getLossGrouped = (params) => {
       name: `treecover_loss_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -416,7 +425,7 @@ export const getExtent = (params) => {
       name: `treecover_extent_${extentYear}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -457,7 +466,7 @@ export const getExtentGrouped = (params) => {
       name: `treecover_extent_${extentYear}_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -496,7 +505,7 @@ export const getGain = (params) => {
       name: `treecover_gain_2000-2012${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -536,7 +545,7 @@ export const getGainGrouped = (params) => {
       name: `treecover_gain_2000-2012_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -583,7 +592,7 @@ export const getAreaIntersection = (params) => {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -635,7 +644,7 @@ export const getAreaIntersectionGrouped = (params) => {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }_by_region__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -689,7 +698,7 @@ export const fetchHistoricalAlerts = (params) => {
       name: `${dataset}_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
   return apiRequest.get(url).then((response) => ({
@@ -732,7 +741,7 @@ export const fetchHistoricalGladAlerts = (params) => {
       name: `glad_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -773,7 +782,7 @@ export const fetchGladAlerts = (params) => {
       name: `glad_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -839,7 +848,7 @@ export const fetchVIIRSAlerts = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -884,7 +893,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -924,7 +933,7 @@ export const fetchFiresWithin = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -981,7 +990,7 @@ export const getBiomassStockGrouped = (params) => {
       name: `whrc_biomass_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -1021,7 +1030,7 @@ export const getBiomassStock = (params) => {
       name: `whrc_biomass_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download/csv'),
+      url: getDownloadUrl(url),
     };
   }
 
