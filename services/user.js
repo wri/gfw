@@ -32,7 +32,10 @@ export const register = (formData) =>
   apiRequest.post('/auth/sign-up', { ...formData, apps: ['gfw'] });
 
 export const resetPassword = (formData) =>
-  apiRequest.post('/auth/reset-password', formData);
+  apiRequest.post(
+    '/auth/reset-password?callbackUrl=https://www.globalforestwatch.org/my-gfw/',
+    formData
+  );
 
 export const updateProfile = (id, data) =>
   apiAuthRequest({
