@@ -19,7 +19,7 @@ export const setUserToken = (token) => {
 export const login = (formData) =>
   apiRequest({
     method: 'POST',
-    url: `/auth/login?callbackUrl=${CALLBACK_URL}`,
+    url: '/auth/login',
     data: formData,
   }).then((response) => {
     if (response.status < 400 && response.data) {
@@ -31,7 +31,10 @@ export const login = (formData) =>
   });
 
 export const register = (formData) =>
-  apiRequest.post('/auth/sign-up', { ...formData, apps: ['gfw'] });
+  apiRequest.post(`/auth/sign-up?callbackUrl=${CALLBACK_URL}`, {
+    ...formData,
+    apps: ['gfw'],
+  });
 
 export const resetPassword = (formData) =>
   apiRequest.post(`/auth/reset-password?callbackUrl=${CALLBACK_URL}`, formData);
