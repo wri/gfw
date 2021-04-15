@@ -184,7 +184,7 @@ class LoginForm extends PureComponent {
                         validate={[email]}
                         required
                       />
-                      {showForm !== 'register' && (
+                      {showForm === 'login' && (
                         <Input
                           name="password"
                           label="password"
