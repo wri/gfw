@@ -19,7 +19,10 @@ export default {
         { label: 'Fires', href: '/topics/fires/' },
       ],
     },
-    { label: 'Blog', href: '/blog/' },
+    {
+      label: 'Blog',
+      extLink: 'https://blog.globalforestwatch.org/',
+    },
     { label: 'About', href: '/about/' },
     { label: 'Help', href: '/help/' },
   ],
