@@ -7,6 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const redirects = require('./data/redirects');
+
 const rewrites = require('./data/rewrites');
 
 const nextConfig = {

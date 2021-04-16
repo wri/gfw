@@ -5,6 +5,8 @@ import { Header as HeaderComponent } from 'gfw-components';
 
 import NavLink from 'components/nav-link';
 
+import config from './config';
+
 import './styles.scss';
 
 const Header = ({ setModalContactUsOpen, fullScreen }) => {
@@ -13,6 +15,7 @@ const Header = ({ setModalContactUsOpen, fullScreen }) => {
   return (
     <HeaderComponent
       className="c-header"
+      navMain={config.navMain}
       NavLinkComponent={({ children: headerChildren, className, ...props }) =>
         props.href ? (
           <NavLink {...props}>
