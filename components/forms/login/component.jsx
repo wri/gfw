@@ -184,19 +184,10 @@ class LoginForm extends PureComponent {
                         validate={[email]}
                         required
                       />
-                      {showForm !== 'reset' && (
+                      {showForm === 'login' && (
                         <Input
                           name="password"
                           label="password"
-                          type="password"
-                          placeholder="**********"
-                          required
-                        />
-                      )}
-                      {showForm === 'register' && (
-                        <Input
-                          name="repeatPassword"
-                          label="repeat password"
                           type="password"
                           placeholder="**********"
                           required

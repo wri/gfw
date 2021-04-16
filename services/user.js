@@ -2,6 +2,8 @@ import { apiRequest, apiAuthRequest } from 'utils/request';
 
 const isServer = typeof window === 'undefined';
 
+const CALLBACK_URL = 'https://www.globalforestwatch.org/my-gfw/';
+
 export const setUserToken = (token) => {
   if (!isServer) {
     let serializedToken = token;
@@ -29,10 +31,13 @@ export const login = (formData) =>
   });
 
 export const register = (formData) =>
-  apiRequest.post('/auth/sign-up', { ...formData, apps: ['gfw'] });
+  apiRequest.post(`/auth/sign-up?callbackUrl=${CALLBACK_URL}`, {
+    ...formData,
+    apps: ['gfw'],
+  });
 
 export const resetPassword = (formData) =>
-  apiRequest.post('/auth/reset-password', formData);
+  apiRequest.post(`/auth/reset-password?callbackUrl=${CALLBACK_URL}`, formData);
 
 export const updateProfile = (id, data) =>
   apiAuthRequest({
