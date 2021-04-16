@@ -7,7 +7,18 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const redirects = require('./data/redirects');
-const rewrites = require('./data/rewrites');
+
+const FEATURE_ENV = process.env.NEXT_PUBLIC_FEATURE_ENV;
+
+let rewrites;
+
+if (FEATURE_ENV === 'staging') {
+  // eslint-disable-next-line global-require
+  rewrites = require('./data/rewrites-staging');
+} else {
+  // eslint-disable-next-line global-require
+  rewrites = require('./data/rewrites');
+}
 
 const nextConfig = {
   webpack: (config) => {
