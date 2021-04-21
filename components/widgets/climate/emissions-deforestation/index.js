@@ -71,6 +71,7 @@ const getOTFAnalysis = async (params) => {
 export default {
   widget: 'emissionsDeforestation',
   title: 'Emissions from biomass loss in {location}',
+  large: true,
   categories: ['climate'],
   types: ['country', 'geostore', 'aoi', 'use', 'wdpa'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -115,7 +116,7 @@ export default {
   dataType: 'loss',
   colors: 'climate',
   sortOrder: {
-    climate: 2,
+    climate: 1,
   },
   sentences:
     'Between {startYear} and {endYear}, a total of {value} of {type} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year.',

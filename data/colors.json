@@ -38,11 +38,11 @@
       "secondary": "#F9A000"
     },
     "lossDrivers": {
-      "Commodity driven deforestation": "#F41D36",
-      "Shifting agriculture": "#efd31a",
-      "Forestry": "#2FBF71",
-      "Wildfire": "#ad6824",
-      "Urbanization": "#B235CC"
+      "Commodity driven deforestation": "#DF511E",
+      "Shifting agriculture": "#F9A000",
+      "Forestry": "#898522",
+      "Wildfire": "#895122",
+      "Urbanization": "#892227"
     }
   },
   "plantations": {

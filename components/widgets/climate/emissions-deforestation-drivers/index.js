@@ -23,6 +23,7 @@ export default {
   ...treeLoss,
   widget: 'emissionsDeforestationDrivers',
   title: 'Emissions from biomass loss in {location} by driver',
+  categories: ['climate'],
   types: ['country', 'geostore', 'aoi', 'use', 'wdpa'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
