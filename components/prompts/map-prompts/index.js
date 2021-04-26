@@ -23,6 +23,7 @@ class MapPromptsContainer extends PureComponent {
       showPrompts,
       activeCategories,
       datasetIds,
+      shouldShowPlanetPrompt,
     } = this.props;
     const shouldOpenRecentImageryPrompt =
       showPrompts &&
@@ -40,6 +41,15 @@ class MapPromptsContainer extends PureComponent {
       (activeCategories.includes('landUse') ||
         activeCategories.includes('biodiversity') ||
         datasetIds.includes(BIOMASS_LOSS_DATASET));
+
+    if (shouldShowPlanetPrompt) {
+      setMapPromptsSettings({
+        open: true,
+        force: true,
+        stepsKey: 'planetBasemapTour',
+        stepIndex: 0,
+      });
+    }
 
     if (shouldOpenRecentImageryPrompt) {
       setMapPromptsSettings({
@@ -67,6 +77,33 @@ class MapPromptsContainer extends PureComponent {
     } = this.props;
 
     const allSteps = {
+      planetBasemapTour: {
+        title: 'Planet basemaps',
+        steps: [
+          {
+            disableBeacon: true,
+            bypassUserDisableTips: true,
+            target: '.basemaps-btn',
+            content:
+              'Visit the Planet website to register for a free account and download mosaics',
+            actions: {
+              learnHow: () => {
+                const URL =
+                  'https://www.globalforestwatch.org/help/map/guides/select-customize-basemap/';
+                // eslint-disable-next-line security/detect-non-literal-fs-filename
+                window.open(URL, '_blank').focus();
+              },
+              onClose: () => {
+                localStorage.setItem('seenPlanetPrompt', true);
+                this.resetPrompts();
+              },
+            },
+          },
+        ],
+        settings: {
+          disableOverlay: true,
+        },
+      },
       mapTour: {
         title: 'Map tour',
         steps: [
@@ -574,6 +611,7 @@ MapPromptsContainer.propTypes = {
   mapZoom: PropTypes.number,
   recentActive: PropTypes.bool,
   showPrompts: PropTypes.bool,
+  shouldShowPlanetPrompt: PropTypes.bool,
   activeCategories: PropTypes.array,
   datasetIds: PropTypes.array,
   setAnalysisView: PropTypes.func,
