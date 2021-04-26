@@ -142,12 +142,13 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
 };
 
 const getDownloadUrl = (url) => {
-  const queryUrl = new URL(url);
-  const downloadUrl = {
-    ...queryUrl,
-    pathname: queryUrl.pathname.replace('query', 'download/csv'),
-  };
-  return downloadUrl.toString();
+  try {
+    const queryUrl = new URL(url);
+    queryUrl.pathname = queryUrl.pathname.replace('query', 'download/csv');
+    return queryUrl.toString();
+  } catch {
+    return null; // invalid url, front end should deal with this
+  }
 };
 
 // build {select} from location params
@@ -365,9 +366,9 @@ export const getLoss = (params) => {
 
 // summed loss for single location
 export const getEmissions = (params) => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, byDriver } = params || {};
   const { emissions, emissionsByDriver } = SQL_QUERIES;
-  const query = params.byDriver ? emissionsByDriver : emissions;
+  const query = byDriver ? emissionsByDriver : emissions;
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -385,13 +386,12 @@ export const getEmissions = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `biomass_emissions${
+      name: `biomass_emissions${byDriver ? '_by_driver' : ''}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__Mt`,
       url: getDownloadUrl(url),
     };
   }
-  console.log('url', url);
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
