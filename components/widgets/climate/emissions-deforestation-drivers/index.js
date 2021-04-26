@@ -2,11 +2,13 @@ import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
+  CARBON_EMISSIONS_DATASET,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
+  CARBON_EMISSIONS,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
 
@@ -16,7 +18,7 @@ import { getEmissions } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2019;
 
 export default {
   ...treeLoss,
@@ -24,7 +26,7 @@ export default {
   title: 'Emissions from biomass loss in {location} by driver',
   categories: ['climate'],
   types: ['country', 'geostore', 'aoi', 'use', 'wdpa'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  admins: ['adm0', 'adm1'],
   settingsConfig: [
     {
       key: 'tscDriverGroup',
@@ -52,6 +54,10 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
+    {
+      dataset: CARBON_EMISSIONS_DATASET,
+      layers: [CARBON_EMISSIONS],
+    },
     // loss tsc
     {
       dataset: TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
@@ -67,7 +73,6 @@ export default {
     emissionType: 'emissionsAll',
     tscDriverGroup: 'all',
     highlighted: false,
-    extentYear: 2000,
     threshold: 30,
   },
   sentences: {
