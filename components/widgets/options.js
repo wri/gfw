@@ -2,6 +2,7 @@ import forestType from 'data/forest-types';
 import landCategory from 'data/land-categories';
 import threshold from 'data/thresholds.json';
 import unit from 'data/units.json';
+import emissionType from 'data/emission-types.json';
 import variable from 'data/variables.json';
 import period from 'data/periods.json';
 import extentYear from 'data/extent-years.json';
@@ -19,6 +20,7 @@ export default {
   landCategory: landCategory.filter((l) => !l.hidden),
   threshold,
   unit,
+  emissionType,
   period,
   extentYear,
   tscDriverGroup,
