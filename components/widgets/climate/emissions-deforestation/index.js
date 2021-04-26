@@ -31,6 +31,7 @@ import getWidgetProps from './selectors';
 const MIN_YEAR = 2001;
 const MAX_YEAR = 2020;
 
+// To do
 const getOTFAnalysis = async (params) => {
   const analysis = new OTFAnalysis(params.geostore.id);
   analysis.setData(['emissionsDeforestation', 'biomassLoss'], {

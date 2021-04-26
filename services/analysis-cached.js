@@ -365,7 +365,7 @@ export const getLoss = (params) => {
 
 // summed loss for single location
 export const getEmissions = (params) => {
-  // const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download } = params || {};
   const { emissions, emissionsByDriver } = SQL_QUERIES;
   const query = params.byDriver ? emissionsByDriver : emissions;
   const url = encodeURI(
@@ -382,17 +382,16 @@ export const getEmissions = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
-  // TODO
-  // if (download) {
-  //   const indicator = getIndicator(forestType, landCategory, ifl);
-  //   return {
-  //     name: `treecover_loss${
-  //       indicator ? `_in_${snakeCase(indicator.label)}` : ''
-  //     }__ha`,
-  //     url: getDownloadUrl(url),
-  //   };
-  // }
-
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `biomass_emissions${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__Mt`,
+      url: getDownloadUrl(url),
+    };
+  }
+  console.log('url', url);
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
