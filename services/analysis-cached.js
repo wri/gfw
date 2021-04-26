@@ -365,7 +365,7 @@ export const getLoss = (params) => {
 
 // summed loss for single location
 export const getEmissions = (params) => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  // const { forestType, landCategory, ifl, download } = params || {};
   const { emissions, emissionsByDriver } = SQL_QUERIES;
   const query = params.byDriver ? emissionsByDriver : emissions;
   const url = encodeURI(
@@ -402,7 +402,7 @@ export const getEmissions = (params) => {
         year: d.umd_tree_cover_loss__year,
         emissionsAll: d.gfw_gross_emissions_co2e_all_gases__Mg,
         emissionsCo2: d.gfw_gross_emissions_co2e_co2_only__Mg,
-        emissionsNonCo2: d.gfw_gross_emissions_co2e_non_co2__Mg
+        emissionsNonCo2: d.gfw_gross_emissions_co2e_non_co2__Mg,
       })),
     },
   }));
