@@ -1,4 +1,3 @@
-import { all, spread } from 'axios';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
@@ -12,7 +11,7 @@ import {
 } from 'data/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getExtent, getLoss } from 'services/analysis-cached';
+import { getEmissions } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -30,6 +29,11 @@ export default {
     {
       key: 'tscDriverGroup',
       label: 'drivers',
+      type: 'select',
+    },
+    {
+      key: 'emissionType',
+      label: 'Emissions Type',
       type: 'select',
     },
     {
@@ -71,6 +75,7 @@ export default {
     climate: 2,
   },
   settings: {
+    emissionType: 'emissionsAll',
     tscDriverGroup: 'all',
     highlighted: false,
     extentYear: 2000,
@@ -78,31 +83,28 @@ export default {
   },
   sentences: {
     initial:
-      'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+      'In {location} from {startYear} to {endYear}, {totalEmissions} occurred in areas where the dominant drivers of loss resulted in {deforestation}',
     noLoss:
-      'In {location} from {startYear} to {endYear}, <b>no</b> tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+      'In {location} from {startYear} to {endYear}, <b>no</b> occurred in areas where the dominant drivers of loss resulted in {deforestation}',
     globalInitial:
-      '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+      'In {location} from {startYear} to {endYear}, {totalEmissions} occurred in areas where the dominant drivers of loss resulted in {deforestation}',
+    co2Only: ', considering emissions from CO2 gases only.',
+    nonCo2Only: ', considering only emissions from non-CO2 gases only.',
   },
   whitelists: {
     checkStatus: true,
   },
   getData: (params) =>
-    all([
-      getLoss({ ...params, landCategory: 'tsc', lossTsc: true }),
-      getExtent({ ...params }),
-    ]).then(
-      spread((loss, extent) => {
+    getEmissions({ ...params, landCategory: 'tsc', byDriver: true }).then(
+      (emissions) => {
         let data = {};
-        if (loss && loss.data && extent && extent.data) {
+        if (emissions && emissions.data) {
           data = {
-            loss: loss.data.data.filter(
+            emissions: emissions.data.data.filter(
               (d) => d.tsc_tree_cover_loss_drivers__type !== 'Unknown'
             ),
-            extent: (loss.data.data && extent.data.data[0].value) || 0,
           };
         }
-
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
           MIN_YEAR,
           MAX_YEAR
@@ -118,11 +120,15 @@ export default {
             years: range,
           },
         };
-      })
+      }
     ),
   getDataURL: (params) => [
-    getLoss({ ...params, landCategory: 'tsc', lossTsc: true, download: true }),
-    getExtent({ ...params, download: true }),
+    getEmissions({
+      ...params,
+      landCategory: 'tsc',
+      byDriver: true,
+      download: true,
+    }),
   ],
   getWidgetProps,
 };

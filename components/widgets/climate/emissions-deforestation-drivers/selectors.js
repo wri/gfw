@@ -12,7 +12,7 @@ import { yearTicksFormatter } from 'components/widgets/utils/data';
 import tscLossCategories from 'data/tsc-loss-categories.json';
 
 // get list data
-const getLoss = (state) => state.data && state.data.loss;
+const getEmissions = (state) => state.data && state.data.emissions;
 const getSettings = (state) => state.settings;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
@@ -24,10 +24,9 @@ export const getPermCats = createSelector([], () =>
 );
 
 export const mergeDataWithCetagories = createSelector(
-  [getLoss, getPermCats],
+  [getEmissions, getPermCats],
   (data, permCats) => {
     if (isEmpty(data)) return null;
-
     return data.map((d) => ({
       ...d,
       permanent: permCats.includes(d.bound1),
@@ -39,25 +38,20 @@ export const getFilteredData = createSelector(
   [mergeDataWithCetagories, getSettings, getPermCats],
   (data, settings, permCats) => {
     if (isEmpty(data)) return null;
-    const { startYear, endYear } = settings;
+    const { startYear, endYear, emissionType } = settings;
     const filteredByYear = data.filter(
       (d) => d.year >= startYear && d.year <= endYear
     );
-    const permanentData = filteredByYear.filter((d) =>
+    const emissionsData = filteredByYear.map((d) => ({
+      ...d,
+      selectedEmissions: d[emissionType],
+    }));
+    const permanentData = emissionsData.filter((d) =>
       permCats.includes(d.bound1)
     );
     return settings.tscDriverGroup === 'permanent'
       ? permanentData
-      : filteredByYear;
-  }
-);
-
-export const getAllLoss = createSelector(
-  [mergeDataWithCetagories, getSettings],
-  (data, settings) => {
-    if (isEmpty(data)) return null;
-    const { startYear, endYear } = settings;
-    return data.filter((d) => d.year >= startYear && d.year <= endYear);
+      : emissionsData;
   }
 );
 
@@ -65,7 +59,11 @@ export const getDrivers = createSelector(
   [getFilteredData, getSettings, getPermCats],
   (data, settings, permCats) => {
     if (isEmpty(data)) return null;
-    const groupedData = groupBy(sortBy(data, 'area').reverse(), 'bound1');
+
+    const groupedData = groupBy(
+      sortBy(data, 'selectedEmissions').reverse(),
+      'bound1'
+    );
     const filteredData = Object.keys(groupedData)
       .filter((key) => permCats.includes(key))
       .reduce(
@@ -85,7 +83,7 @@ export const getDrivers = createSelector(
             return {
               driver: k,
               position: cat && cat.position,
-              area: sumBy(groupedLoss[k], 'area'),
+              area: sumBy(groupedLoss[k], 'selectedEmissions'),
               permanent: permCats.includes(k),
             };
           }),
@@ -106,7 +104,7 @@ export const parseData = createSelector([getFilteredData], (data) => {
   const x = Object.keys(groupedData).map((y) => {
     const groupedByBound = groupBy(groupedData[y], 'bound1');
     const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
-      const areaSum = sumBy(value, 'area');
+      const areaSum = sumBy(value, 'selectedEmissions');
       return {
         ...acc,
         [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum,
@@ -142,7 +140,7 @@ export const parseConfig = createSelector(
       {
         key: 'total',
         label: 'Total',
-        unit: 'ha',
+        unit: 't CO2e',
         unitFormat: (value) =>
           value < 1000 ? Math.round(value) : format('.3s')(value),
       },
@@ -155,7 +153,7 @@ export const parseConfig = createSelector(
           return {
             key: `class_${d.driver}`,
             label,
-            unit: 'ha',
+            unit: 't CO2e',
             color: categoryColors[d.driver],
             unitFormat: (value) =>
               value < 1000 ? Math.round(value) : format('.3s')(value),
@@ -179,46 +177,41 @@ export const parseConfig = createSelector(
       xAxis: {
         tickFormatter: yearTicksFormatter,
       },
-      unit: 'ha',
+      unit: 't CO2e',
       tooltip,
     };
   }
 );
 
 export const parseSentence = createSelector(
-  [
-    getFilteredData,
-    getAllLoss,
-    getSettings,
-    getLocationName,
-    getSentences,
-    getPermCats,
-  ],
-  (data, allLoss, settings, locationName, sentences, permCats) => {
+  [getFilteredData, getSettings, getLocationName, getSentences, getPermCats],
+  (data, settings, locationName, sentences, permCats) => {
     if (isEmpty(data)) return null;
-    const { initial, globalInitial, noLoss } = sentences;
-    const { startYear, endYear } = settings;
-
-    const filteredLoss =
+    const { initial, globalInitial, noLoss, co2Only, nonCo2Only } = sentences;
+    const { startYear, endYear, emissionType } = settings;
+    const filteredEmissions =
       data && data.filter((x) => permCats.includes(x.bound1));
 
-    const permLoss =
-      (filteredLoss && filteredLoss.length && sumBy(filteredLoss, 'area')) || 0;
-    const totalLoss =
-      (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
-    const permPercent = (permLoss && (permLoss / totalLoss) * 100) || 0;
+    const totalEmissions =
+      (filteredEmissions &&
+        filteredEmissions.length &&
+        sumBy(filteredEmissions, 'selectedEmissions')) ||
+      0;
 
     let sentence = locationName === 'global' ? globalInitial : initial;
-    if (!permLoss) sentence = noLoss;
+    if (!totalEmissions) sentence = noLoss;
+
+    let emissionString = '.';
+    if (emissionType !== 'emissionsAll') {
+      emissionString = emissionType === 'emissionsCo2' ? co2Only : nonCo2Only;
+    }
+    sentence += emissionString;
 
     const params = {
       location: locationName === 'global' ? 'Globally' : locationName,
       startYear,
       endYear,
-      permPercent:
-        permPercent && permPercent < 0.1
-          ? '< 0.1%'
-          : `${format('.2r')(permPercent)}%`,
+      totalEmissions: `${format('.3s')(totalEmissions)}t CO2e`,
       component: {
         key: 'deforestation',
         tooltip:
