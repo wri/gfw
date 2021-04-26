@@ -16,7 +16,7 @@ import { getEmissions } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 
 export default {
   ...treeLoss,
@@ -35,24 +35,13 @@ export default {
       key: 'emissionType',
       label: 'Emissions Type',
       type: 'select',
-    },
-    {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      type: 'range-select',
       border: true,
     },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
+    ...treeLoss.settingsConfig,
   ],
   chartType: 'composedChart',
   datasets: [
+    // TODO BIOMASS LOSS LAYER
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
@@ -83,11 +72,11 @@ export default {
   },
   sentences: {
     initial:
-      'In {location} from {startYear} to {endYear}, {totalEmissions} emissions occurred in areas where the dominant drivers of loss resulted in {deforestation}',
+      'In {location} from {startYear} to {endYear}, {totalEmissions} occurred in areas where the dominant drivers of loss resulted in {deforestation}',
     noLoss:
-      'In {location} from {startYear} to {endYear}, <b>no emissions</b> emissions occurred in areas where the dominant drivers of loss resulted in {deforestation}',
+      'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of loss resulted in {deforestation}',
     globalInitial:
-      'In {location} from {startYear} to {endYear}, {totalEmissions} emissions occurred in areas where the dominant drivers of loss resulted in {deforestation}',
+      'In {location} from {startYear} to {endYear}, {totalEmissions} in areas where the dominant drivers of loss resulted in {deforestation}',
     co2Only: ', considering emissions from CO2 gases only.',
     nonCo2Only: ', considering only emissions from non-CO2 gases only.',
   },
