@@ -4,6 +4,8 @@ import { getEmissions } from 'services/analysis-cached';
 
 import OTFAnalysis from 'services/otf-analysis';
 
+import biomassLossIsos from 'data/biomass-isos.json';
+
 import {
   POLITICAL_BOUNDARIES_DATASET,
   CARBON_EMISSIONS_DATASET,
@@ -145,6 +147,9 @@ export default {
     threshold: 30,
     startYear: 2001,
     endYear: 2018,
+  },
+  whitelists: {
+    adm0: biomassLossIsos,
   },
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {

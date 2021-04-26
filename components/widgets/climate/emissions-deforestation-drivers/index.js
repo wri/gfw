@@ -1,4 +1,5 @@
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
+import biomassLossIsos from 'data/biomass-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -80,6 +81,7 @@ export default {
     nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
   },
   whitelists: {
+    adm0: biomassLossIsos,
     checkStatus: true,
   },
   getData: (params) =>
