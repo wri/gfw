@@ -1,6 +1,6 @@
 import sortBy from 'lodash/sortBy';
 
-import { getLoss } from 'services/analysis-cached';
+import { getEmissions } from 'services/analysis-cached';
 
 import OTFAnalysis from 'services/otf-analysis';
 
@@ -8,13 +8,13 @@ import biomassLossIsos from 'data/biomass-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  BIOMASS_LOSS_DATASET,
+  CARBON_EMISSIONS_DATASET,
 } from 'data/datasets';
 
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  BIOMASS_LOSS,
+  CARBON_EMISSIONS,
 } from 'data/layers';
 
 import {
@@ -25,6 +25,7 @@ import {
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
+import treeLoss from 'components/widgets/forest-change/tree-loss';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
@@ -69,6 +70,7 @@ const getOTFAnalysis = async (params) => {
 };
 
 export default {
+  ...treeLoss,
   widget: 'emissionsDeforestation',
   title: 'Emissions from biomass loss in {location}',
   large: true,
@@ -78,25 +80,12 @@ export default {
   chartType: 'composedChart',
   settingsConfig: [
     {
-      key: 'unit',
-      label: 'unit',
-      type: 'switch',
-      whitelist: ['co2LossByYear', 'biomassLoss'],
-    },
-    {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      type: 'range-select',
+      key: 'emissionType',
+      label: 'Emissions Type',
+      type: 'select',
       border: true,
     },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
+    ...treeLoss.settingsConfig.filter((el) => el.key !== 'extentYear'),
   ],
   datasets: [
     {
@@ -105,11 +94,11 @@ export default {
       boundary: true,
     },
     {
-      dataset: BIOMASS_LOSS_DATASET,
-      layers: [BIOMASS_LOSS],
+      dataset: CARBON_EMISSIONS_DATASET,
+      layers: [CARBON_EMISSIONS],
     },
   ],
-  pendingKeys: ['threshold', 'unit'],
+  pendingKeys: ['threshold'],
   refetchKeys: ['threshold'],
   visible: ['dashboard', 'analysis'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
@@ -118,10 +107,14 @@ export default {
   sortOrder: {
     climate: 1,
   },
-  sentences:
-    'Between {startYear} and {endYear}, a total of {value} of {type} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year.',
+  sentences: {
+    initial:
+      'Between {startYear} and {endYear}, a total of {value} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year',
+    co2Only: ', considering emissions from CO\u2082 gases only.',
+    nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
+  },
   settings: {
-    unit: 'co2LossByYear',
+    emissionType: 'emissionsAll',
     threshold: 30,
     startYear: 2001,
     endYear: 2018,
@@ -131,7 +124,7 @@ export default {
   },
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
-      return getLoss(params).then((response) => {
+      return getEmissions(params).then((response) => {
         const loss = response.data.data;
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
           MIN_YEAR,
@@ -152,6 +145,6 @@ export default {
     }
     return getOTFAnalysis(params);
   },
-  getDataURL: (params) => [getLoss({ ...params, download: true })],
+  getDataURL: (params) => [getEmissions({ ...params, download: true })],
   getWidgetProps,
 };

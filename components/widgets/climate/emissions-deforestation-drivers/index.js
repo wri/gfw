@@ -39,7 +39,7 @@ export default {
       type: 'select',
       border: true,
     },
-    ...treeLoss.settingsConfig,
+    ...treeLoss.settingsConfig.filter((el) => el.key !== 'extentYear'),
   ],
   chartType: 'composedChart',
   datasets: [
@@ -82,8 +82,8 @@ export default {
       'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of loss resulted in {deforestation}',
     globalInitial:
       'In {location} from {startYear} to {endYear}, {totalEmissions} in areas where the dominant drivers of loss resulted in {deforestation}',
-    co2Only: ', considering emissions from CO2 gases only.',
-    nonCo2Only: ', considering only emissions from non-CO2 gases only.',
+    co2Only: ', considering emissions from CO\u2082 gases only.',
+    nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
   },
   whitelists: {
     checkStatus: true,

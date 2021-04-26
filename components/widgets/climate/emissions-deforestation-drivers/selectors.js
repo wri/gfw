@@ -211,7 +211,7 @@ export const parseSentence = createSelector(
       location: locationName === 'global' ? 'Globally' : locationName,
       startYear,
       endYear,
-      totalEmissions: `${format('.3s')(totalEmissions)}t CO2e`,
+      totalEmissions: `${format('.3s')(totalEmissions)}t of CO\u2082e`,
       component: {
         key: 'deforestation',
         tooltip:
