@@ -12,7 +12,7 @@ import {
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
 
-import treeLoss from 'components/widgets/forest-change/tree-loss';
+import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
 import { getEmissions } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
@@ -21,7 +21,7 @@ const MIN_YEAR = 2001;
 const MAX_YEAR = 2019;
 
 export default {
-  ...treeLoss,
+  ...emissionsDeforestation,
   widget: 'emissionsDeforestationDrivers',
   title: 'Emissions from biomass loss in {location} by driver',
   categories: ['climate'],
@@ -33,13 +33,7 @@ export default {
       label: 'drivers',
       type: 'select',
     },
-    {
-      key: 'emissionType',
-      label: 'Emissions Type',
-      type: 'select',
-      border: true,
-    },
-    ...treeLoss.settingsConfig.filter((el) => el.key !== 'extentYear'),
+    ...emissionsDeforestation.settingsConfig,
   ],
   chartType: 'composedChart',
   datasets: [
