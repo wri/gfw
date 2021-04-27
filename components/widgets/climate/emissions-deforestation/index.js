@@ -97,7 +97,7 @@ export default {
     nonCo2Only: ', considering emissions from non-CO\u2082 gases only.',
   },
   settings: {
-    gasesIncluded: 'emissionsAll',
+    gasesIncluded: 'allGases',
     threshold: 30,
     startYear: 2001,
     endYear: 2018,

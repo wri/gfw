@@ -399,9 +399,9 @@ export const getEmissions = (params) => {
         ...d,
         bound1: d.tsc_tree_cover_loss_drivers__type,
         year: d.umd_tree_cover_loss__year,
-        emissionsAll: d.gfw_gross_emissions_co2e_all_gases__Mg,
-        emissionsCo2: d.gfw_gross_emissions_co2e_co2_only__Mg,
-        emissionsNonCo2: d.gfw_gross_emissions_co2e_non_co2__Mg,
+        allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
+        co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
+        nonCo2Gases: d.gfw_gross_emissions_co2e_non_co2__Mg,
       })),
     },
   }));
