@@ -24,9 +24,7 @@ const MAX_YEAR = 2019;
 export default {
   ...emissionsDeforestation,
   widget: 'emissionsDeforestationDrivers',
-  title: 'Emissions from biomass loss in {location} by driver',
-  categories: ['climate'],
-  types: ['country', 'geostore', 'aoi', 'use', 'wdpa'],
+  title: 'Forest-related greenhouse gas emissions in {location} by driver',
   admins: ['adm0', 'adm1'],
   settingsConfig: [
     {
@@ -36,7 +34,6 @@ export default {
     },
     ...emissionsDeforestation.settingsConfig,
   ],
-  chartType: 'composedChart',
   datasets: [
     // TODO BIOMASS LOSS LAYER
     {
@@ -72,7 +69,7 @@ export default {
   },
   sentences: {
     initial:
-      'In {location} from {startYear} to {endYear}, {totalEmissions} occurred in areas where the dominant drivers of loss resulted in {deforestation}',
+      'In {location} from {startYear} to {endYear}, an average of {totalEmissions} occurred in areas where the dominant drivers of loss resulted in {deforestation}',
     noLoss:
       'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of loss resulted in {deforestation}',
     globalInitial:

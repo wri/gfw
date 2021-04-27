@@ -73,7 +73,7 @@ const getOTFAnalysis = async (params) => {
 export default {
   ...treeLoss,
   widget: 'emissionsDeforestation',
-  title: 'Emissions from biomass loss in {location}',
+  title: 'Forest-related greenhouse gas emissions in {location}',
   large: true,
   categories: ['climate'],
   types: ['country', 'geostore', 'aoi', 'use', 'wdpa'],
@@ -82,7 +82,7 @@ export default {
   settingsConfig: [
     {
       key: 'emissionType',
-      label: 'Emissions Type',
+      label: 'Greenhouse gases included',
       type: 'select',
       border: true,
     },
@@ -113,6 +113,7 @@ export default {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
+      whitelist: [30, 50, 75],
       metaKey: 'widget_canopy_density',
     },
   ],
@@ -128,7 +129,7 @@ export default {
     },
   ],
   pendingKeys: ['threshold'],
-  refetchKeys: ['threshold'],
+  refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
@@ -138,9 +139,9 @@ export default {
   },
   sentences: {
     initial:
-      'Between {startYear} and {endYear}, a total of {value} was released into the atmosphere as a result of tree cover loss in {location}. This is equivalent to {annualAvg} per year',
-    co2Only: ', considering emissions from CO\u2082 gases only.',
-    nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
+      'Between {startYear} and {endYear}, an average of {annualAvg} per year was released into the atmosphere as a result of tree cover loss in {location}. In total, {value} was emitted in this period',
+    co2Only: ', considering emissions from CO\u2082 only.',
+    nonCo2Only: ', considering emissions from non-CO\u2082 gases only.',
   },
   settings: {
     emissionType: 'emissionsAll',
