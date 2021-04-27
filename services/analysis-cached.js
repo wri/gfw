@@ -14,9 +14,9 @@ const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("whrc_aboveground_biomass_loss__Mg") AS "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   loss:
-    'SELECT {select_location}, umd_tree_cover_loss__year, SUM("whrc_aboveground_biomass_loss__Mg") AS "whrc_aboveground_biomass_loss__Mg", SUM("whrc_aboveground_co2_emissions__Mg") AS "whrc_aboveground_co2_emissions__Mg", SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissions:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsByDriver:
@@ -357,8 +357,7 @@ export const getLoss = (params) => {
         bound1: d.tsc_tree_cover_loss_drivers__type,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
-        emissions: d.whrc_aboveground_co2_emissions__Mg,
-        biomassLoss: d.whrc_aboveground_biomass_loss__Mg,
+        emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
       })),
     },
   }));
@@ -442,8 +441,7 @@ export const getLossGrouped = (params) => {
         ...d,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
-        emissions: d.whrc_aboveground_co2_emissions__Mg,
-        biomassLoss: d.whrc_aboveground_biomass_loss__Mg,
+        emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
       })),
     },
   }));
