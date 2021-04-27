@@ -70,12 +70,12 @@ export const parseConfig = createSelector([getColors], (colors) => {
       },
       {
         key: 'emissions',
-        unit: 't',
+        unit: 't CO2e',
         unitFormat: (value) => format('.3s')(value),
         color: loss.main,
       },
     ],
-    unit: 't',
+    unit: 't CO2e',
     unitFormat: (value) => format('.2s')(value),
   };
 });
