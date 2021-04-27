@@ -130,12 +130,12 @@ export default {
   ],
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
-  visible: ['dashboard', 'analysis'],
+  visible: ['dashboard', 'analysis', 'aoi'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
   colors: 'climate',
   sortOrder: {
-    climate: 1,
+    climate: 2,
   },
   sentences: {
     initial:
