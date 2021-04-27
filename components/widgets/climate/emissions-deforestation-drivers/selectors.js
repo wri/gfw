@@ -38,13 +38,13 @@ export const getFilteredData = createSelector(
   [mergeDataWithCetagories, getSettings, getPermCats],
   (data, settings, permCats) => {
     if (isEmpty(data)) return null;
-    const { startYear, endYear, emissionType } = settings;
+    const { startYear, endYear, gasesIncluded } = settings;
     const filteredByYear = data.filter(
       (d) => d.year >= startYear && d.year <= endYear
     );
     const emissionsData = filteredByYear.map((d) => ({
       ...d,
-      selectedEmissions: d[emissionType],
+      selectedEmissions: d[gasesIncluded],
     }));
     const permanentData = emissionsData.filter((d) =>
       permCats.includes(d.bound1)
@@ -188,7 +188,7 @@ export const parseSentence = createSelector(
   (data, settings, locationName, sentences, permCats) => {
     if (isEmpty(data)) return null;
     const { initial, globalInitial, noLoss, co2Only, nonCo2Only } = sentences;
-    const { startYear, endYear, emissionType } = settings;
+    const { startYear, endYear, gasesIncluded } = settings;
     const filteredEmissions =
       data && data.filter((x) => permCats.includes(x.bound1));
 
@@ -202,8 +202,8 @@ export const parseSentence = createSelector(
     if (!totalEmissions) sentence = noLoss;
 
     let emissionString = '.';
-    if (emissionType !== 'emissionsAll') {
-      emissionString = emissionType === 'emissionsCo2' ? co2Only : nonCo2Only;
+    if (gasesIncluded !== 'allGases') {
+      emissionString = gasesIncluded === 'co2Only' ? co2Only : nonCo2Only;
     }
     sentence += emissionString;
 

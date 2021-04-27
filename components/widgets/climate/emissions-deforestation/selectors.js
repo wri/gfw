@@ -20,7 +20,7 @@ export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-    const { startYear, endYear, yearsRange, emissionType } = settings;
+    const { startYear, endYear, yearsRange, gasesIncluded } = settings;
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
       area: 0,
@@ -42,7 +42,7 @@ export const parseData = createSelector(
         .filter((d) => d.year >= startYear && d.year <= endYear)
         .map((d) => ({
           ...d,
-          emissions: d[emissionType],
+          emissions: d[gasesIncluded],
         }))
     );
   }
@@ -52,11 +52,11 @@ export const parseConfig = createSelector(
   [getColors, getSettings],
   (colors, settings) => {
     const { loss } = colors;
-    const { emissionType } = settings;
+    const { gasesIncluded } = settings;
     let emissionLabel = 'Emissions';
-    if (emissionType !== 'emissionsAll') {
+    if (gasesIncluded !== 'allGases') {
       emissionLabel +=
-        emissionType === 'emissionsCo2' ? ' (CO\u2082)' : '(non-CO\u2082)';
+        gasesIncluded === 'co2Only' ? ' (CO\u2082)' : ' (non-CO\u2082)';
     }
     return {
       height: 250,
@@ -95,7 +95,7 @@ export const parseSentence = createSelector(
   (data, settings, indicator, sentences, locationName) => {
     if (!data || isEmpty(data)) return null;
     const { initial, co2Only, nonCo2Only } = sentences;
-    const { startYear, endYear, emissionType } = settings;
+    const { startYear, endYear, gasesIncluded } = settings;
     const totalBiomass = data
       .map((d) => d.emissions)
       .reduce((sum, d) => (d ? sum + d : sum));
@@ -108,8 +108,8 @@ export const parseSentence = createSelector(
     }
 
     let emissionString = '.';
-    if (emissionType !== 'emissionsAll') {
-      emissionString = emissionType === 'emissionsCo2' ? co2Only : nonCo2Only;
+    if (gasesIncluded !== 'allGases') {
+      emissionString = gasesIncluded === 'co2Only' ? co2Only : nonCo2Only;
     }
     const sentence = initial + emissionString;
 

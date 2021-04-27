@@ -66,7 +66,7 @@ export default {
     climate: 3,
   },
   settings: {
-    emissionType: 'emissionsAll',
+    gasesIncluded: 'emissionsAll',
     tscDriverGroup: 'all',
     highlighted: false,
     threshold: 30,

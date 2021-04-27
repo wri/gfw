@@ -81,7 +81,7 @@ export default {
   chartType: 'composedChart',
   settingsConfig: [
     {
-      key: 'emissionType',
+      key: 'gasesIncluded',
       label: 'Greenhouse gases included',
       type: 'select',
       border: true,
@@ -144,7 +144,7 @@ export default {
     nonCo2Only: ', considering emissions from non-CO\u2082 gases only.',
   },
   settings: {
-    emissionType: 'emissionsAll',
+    gasesIncluded: 'emissionsAll',
     threshold: 30,
     startYear: 2001,
     endYear: 2018,

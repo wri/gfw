@@ -1,14 +1,14 @@
 [
   {
     "label": "All gases",
-    "value": "emissionsAll"
+    "value": "allGases"
   },
   {
     "label": "CO\u2082 emissions only",
-    "value": "emissionsCo2"
+    "value": "co2Only"
   },
   {
     "label": "Non-CO\u2082 emissions",
-    "value": "emissionsNonCo2"
+    "value": "nonCo2Gases"
   }
 ]
