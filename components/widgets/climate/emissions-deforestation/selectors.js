@@ -48,37 +48,47 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getColors], (colors) => {
-  const { loss } = colors;
-  return {
-    height: 250,
-    xKey: 'year',
-    yKeys: {
-      bars: {
-        emissions: {
-          fill: loss.main,
-          background: false,
+export const parseConfig = createSelector(
+  [getColors, getSettings],
+  (colors, settings) => {
+    const { loss } = colors;
+    const { emissionType } = settings;
+    let emissionLabel = 'Emissions';
+    if (emissionType !== 'emissionsAll') {
+      emissionLabel +=
+        emissionType === 'emissionsCo2' ? ' (CO\u2082)' : '(non-CO\u2082)';
+    }
+    return {
+      height: 250,
+      xKey: 'year',
+      yKeys: {
+        bars: {
+          emissions: {
+            fill: loss.main,
+            background: false,
+          },
         },
       },
-    },
-    xAxis: {
-      tickFormatter: yearTicksFormatter,
-    },
-    tooltip: [
-      {
-        key: 'year',
+      xAxis: {
+        tickFormatter: yearTicksFormatter,
       },
-      {
-        key: 'emissions',
-        unit: 't CO2e',
-        unitFormat: (value) => format('.3s')(value),
-        color: loss.main,
-      },
-    ],
-    unit: 't CO2e',
-    unitFormat: (value) => format('.2s')(value),
-  };
-});
+      tooltip: [
+        {
+          key: 'year',
+        },
+        {
+          key: 'emissions',
+          label: emissionLabel,
+          unit: 't CO2e',
+          unitFormat: (value) => format('.3s')(value),
+          color: loss.main,
+        },
+      ],
+      unit: 't CO2e',
+      unitFormat: (value) => format('.2s')(value),
+    };
+  }
+);
 
 export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],
