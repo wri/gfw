@@ -385,9 +385,9 @@ export const getEmissions = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `Forest_related_GHG_emissions${byDriver ? '_by_driver' : ''}${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }`,
+      name: `Forest_related_GHG_emissions${
+        byDriver ? '_by_dominant_driver' : ''
+      }${indicator ? `_in_${snakeCase(indicator.label)}` : ''}`,
       url: getDownloadUrl(url),
     };
   }
