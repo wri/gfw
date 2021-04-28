@@ -10,7 +10,6 @@ import { getChartConfig, getDatesData } from 'components/widgets/utils/data';
 
 const getAlerts = (state) => state.data && state.data.alerts;
 const getColors = (state) => state.colors || null;
-// const getStartDate = state => state.settings.startDate;
 const getEndDate = (state) => state.settings.endDate;
 const getSentences = (state) => state.sentences || null;
 const getLocationObject = (state) => state.location;

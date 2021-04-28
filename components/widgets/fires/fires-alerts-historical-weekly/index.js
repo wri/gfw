@@ -308,8 +308,6 @@ export default {
             return {
               alerts: data,
               settings: {
-                startDate:
-                  data && data.length > 0 && data[data.length - 1].alert__date,
                 endDate: latest,
               },
             };
@@ -322,7 +320,12 @@ export default {
         return null;
       }),
   getDataURL: (params) => [
-    fetchHistoricalAlerts({ ...params, frequency: 'weekly', download: true }),
+    fetchHistoricalAlerts({
+      ...params,
+      startDate: params.minDate,
+      frequency: 'weekly',
+      download: true,
+    }),
   ],
   getWidgetProps,
 };
