@@ -4,6 +4,7 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = (state) => state.data;
@@ -33,7 +34,7 @@ export const parseList = createSelector(
         });
       }
     });
-    return sortBy(dataMapped, 'extent');
+    return sortBy(dataMapped, 'extent').reverse();
   }
 );
 
@@ -68,11 +69,14 @@ export const parseSentence = createSelector(
       percGlobalLandCatOnly,
       noCover,
     } = sentences;
+    const { unit, extentYear } = settings;
     const { forestType, landCategory } = settings;
+
     const topRegion = (data.length && data[0]) || {};
     const totalExtent = sumBy(data, 'extent') || 0;
-    const avgExtent = sumBy(data, 'extent') || 0 / data.length;
+    const avgExtent = sumBy(data, 'extent') / data.length || 0;
     const avgExtentPercentage = (sumBy(data, 'percentage') || 0) / data.length;
+
     let percentileExtent = 0;
     let percentileLength = 0;
     while (
@@ -83,39 +87,34 @@ export const parseSentence = createSelector(
       percentileExtent += sortedList[percentileLength].extent;
       percentileLength += 1;
     }
-    const topExtent = (percentileExtent / (totalExtent || 0)) * 100;
+    const topExtent =
+      (totalExtent > 0 && (percentileExtent / totalExtent) * 100) || 0;
 
-    const topRegionExtent =
-      topRegion.extent < 1
-        ? `${format('.3r')(topRegion.extent)}ha`
-        : `${format('.3s')(topRegion.extent)}ha`;
-    const aveRegionExtent =
-      avgExtent < 1
-        ? `${format('.3r')(avgExtent)}ha`
-        : `${format('.3s')(avgExtent)}ha`;
-
-    const topRegionPercent =
-      topRegion.percentage < 0.1
-        ? '< 0.1%'
-        : `${format('.2r')(topRegion.percentage)}%`;
-    const aveRegionPercent =
-      avgExtentPercentage < 0.1
-        ? '< 0.1%'
-        : `${format('.2r')(avgExtentPercentage)}%`;
+    const topRegionExtent = formatNumber({ num: topRegion.extent, unit: 'ha' });
+    const aveRegionExtent = formatNumber({ num: avgExtent, unit: 'ha' });
+    const topRegionPercent = formatNumber({
+      num: topRegion.percentage,
+      unit: '%',
+    });
+    const aveRegionPercent = formatNumber({
+      num: avgExtentPercentage,
+      unit: '%',
+    });
 
     const params = {
       location: locationName === 'global' ? 'Globally' : locationName,
       region: topRegion.label,
       indicator: indicator && indicator.label,
       percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
-      year: settings.extentYear,
-      value: settings.unit === '%' ? topRegionPercent : topRegionExtent,
-      average: settings.unit === '%' ? aveRegionPercent : aveRegionExtent,
+      year: extentYear,
+      value: unit === '%' ? topRegionPercent : topRegionExtent,
+      average: unit === '%' ? aveRegionPercent : aveRegionExtent,
       count: percentileLength,
     };
 
     let sentence = noCover;
-    if (params.percentage !== '0%' && settings.unit === '%') {
+
+    if (topExtent !== 0 && unit === '%') {
       sentence = locationName === 'global' ? percGlobalInitial : percInitial;
       if (landCategory && !forestType) {
         sentence =
@@ -126,7 +125,7 @@ export const parseSentence = createSelector(
             ? percGlobalWithIndicator
             : percHasIndicator;
       }
-    } else if (params.percentage !== '0%' && settings.unit === 'ha') {
+    } else if (topExtent !== 0 && settings.unit === 'ha') {
       sentence = locationName === 'global' ? globalInitial : initial;
       if (landCategory && !forestType) {
         sentence = locationName === 'global' ? globalLandCatOnly : landCatOnly;
