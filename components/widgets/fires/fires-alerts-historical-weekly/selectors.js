@@ -19,6 +19,8 @@ const getIndicator = (state) => state.indicator;
 const getStartIndex = (state) => state.settings.startIndex;
 const getEndIndex = (state) => state.settings.endIndex || null;
 
+const INITIAL_WINDOW_WEEKS = 3 * 52 + 1;
+
 export const getZeroFilledData = createSelector(
   [getAlerts, getEndDate],
   (data, endDate) => {
@@ -109,7 +111,9 @@ export const getStartEndIndexes = createSelector(
       };
     }
     const start =
-      startIndex || startIndex === 0 ? startIndex : currentData.length - 52;
+      startIndex || startIndex === 0
+        ? startIndex
+        : currentData.length - INITIAL_WINDOW_WEEKS;
     const end = endIndex || currentData.length - 1;
 
     return {
