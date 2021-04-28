@@ -15,22 +15,22 @@
     "basePath": false
   },
   {
-    "source": "/my-gfw/:path*/",
-    "destination": "/my-gfw/"
-  },
-  {
     "source": "/blog/",
-    "destination": "https://gfw-blog-staging.herokuapp.com/blog/",
+    "destination": "https://gfw-blog-staging.herokuapp.com/",
     "basePath": false
   },
   {
     "source": "/blog/:path*/",
-    "destination": "https://gfw-blog-staging.herokuapp.com/blog/:path*/",
+    "destination": "https://gfw-blog-staging.herokuapp.com/:path*/",
     "basePath": false
   },
   {
     "source": "/blog/:path*",
-    "destination": "https://gfw-blog-staging.herokuapp.com/blog/:path*",
+    "destination": "https://gfw-blog-staging.herokuapp.com/:path*",
     "basePath": false
+  },
+  {
+    "source": "/my-gfw/:path*/",
+    "destination": "/my-gfw/"
   }
 ]
