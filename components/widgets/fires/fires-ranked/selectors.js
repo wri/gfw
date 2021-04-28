@@ -9,6 +9,7 @@ import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
+import { formatNumber } from 'utils/format';
 
 import {
   stdDevData,
@@ -226,10 +227,10 @@ export const parseSentence = createSelector(
         color: statusColor,
       },
       topRegion,
-      topRegionCount: format(',')(topRegionCount),
-      topRegionPerc: topRegionPerc ? `${format('.2r')(topRegionPerc)}%` : '0%',
+      topRegionCount: formatNumber({ num: topRegionCount, unit: 'counts' }),
+      topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
       topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
-      location: locationName,
+      location: locationName === 'global' ? 'globally' : locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`,
       component:
         unit === 'significance'
