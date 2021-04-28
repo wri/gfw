@@ -20,7 +20,7 @@ import firesOTF from 'components/widgets/fires/fires';
 import firesWithin from 'components/widgets/fires/fires-within';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
-import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical';
+import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical-weekly';
 import firesAlertsHistoricalDaily from 'components/widgets/fires/fires-alerts-historical-daily';
 import firesRanked from 'components/widgets/fires/fires-ranked';
 

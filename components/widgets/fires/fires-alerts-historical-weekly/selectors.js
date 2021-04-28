@@ -1,15 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import { format } from 'd3-format';
+import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 
-import { getChartConfig } from 'components/widgets/utils/data';
+import { getChartConfig, getDatesData } from 'components/widgets/utils/data';
 
 const getAlerts = (state) => state.data && state.data.alerts;
 const getColors = (state) => state.colors || null;
-const getStartDate = (state) => state.settings.startDate;
+// const getStartDate = state => state.settings.startDate;
 const getEndDate = (state) => state.settings.endDate;
 const getSentences = (state) => state.sentences || null;
 const getLocationObject = (state) => state.location;
@@ -18,32 +19,85 @@ const getIndicator = (state) => state.indicator;
 const getStartIndex = (state) => state.settings.startIndex;
 const getEndIndex = (state) => state.settings.endIndex || null;
 
-const zeroFillDays = (startDate, endDate) => {
-  const start = moment(startDate);
-  const diffInDays = moment(endDate).diff(moment(startDate), 'days');
-  const dates = Array.from(Array(diffInDays).keys());
-
-  return [
-    startDate,
-    ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD')),
-  ];
-};
-
-export const getData = createSelector(
-  [getAlerts, getStartDate, getEndDate],
-  (data, startDate, endDate) => {
+export const getZeroFilledData = createSelector(
+  [getAlerts, getEndDate],
+  (data, endDate) => {
     if (!data || isEmpty(data)) return null;
-
-    const zeroFilledData = zeroFillDays(startDate, endDate).map((date) => ({
-      date,
-      alert__count: 0,
-      count: 0,
-      ...data.find((d) => d.alert__date === date),
+    const parsedData = data.map((d) => ({
+      ...d,
+      count: d.alert__count,
+      week: parseInt(d.alert__week, 10),
+      year: parseInt(d.alert__year, 10),
     }));
+    const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
+    const hasAlertsByYears = Object.values(groupedByYear).reduce(
+      (acc, next) => {
+        const { year } = next[0];
+        return {
+          ...acc,
+          [year]: next.some((item) => item.alerts > 0),
+        };
+      },
+      {}
+    );
 
-    return sortBy(zeroFilledData, 'date');
+    const dataYears = Object.keys(hasAlertsByYears).filter(
+      (key) => hasAlertsByYears[key] === true
+    );
+    const minYear = Math.min(...dataYears.map((el) => parseInt(el, 10)));
+    const startYear =
+      minYear === moment().year() ? moment().year() - 1 : minYear;
+
+    const years = [];
+    const latestWeek = moment(endDate);
+    const lastWeek = {
+      isoWeek: latestWeek.isoWeek(),
+      year: latestWeek.year(),
+    };
+
+    for (let i = startYear; i <= lastWeek.year; i += 1) {
+      years.push(i);
+    }
+
+    const yearLengths = {};
+    years.forEach((y) => {
+      if (lastWeek.year === y) {
+        yearLengths[y] = lastWeek.isoWeek;
+      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
+        yearLengths[y] = moment(`${y}-12-31`).subtract(1, 'week').isoWeek();
+      } else {
+        yearLengths[y] = moment(`${y}-12-31`).isoWeek();
+      }
+    });
+
+    const zeroFilledData = [];
+
+    years.forEach((d) => {
+      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
+      for (let i = 1; i <= yearLengths[d]; i += 1) {
+        zeroFilledData.push(
+          yearDataByWeek[i]
+            ? yearDataByWeek[i][0]
+            : { count: 0, week: i, year: parseInt(d, 10) }
+        );
+      }
+    });
+    return zeroFilledData;
   }
 );
+
+export const getData = createSelector([getZeroFilledData], (data) => {
+  if (!data || isEmpty(data)) return null;
+  const zeroFilledData = data.map((date) => ({
+    alert__count: 0,
+    count: 0,
+    ...date,
+    ...data.find((d) => d.alert__date === date),
+    date: null,
+  }));
+  const zeroFilledDates = getDatesData(zeroFilledData);
+  return sortBy(zeroFilledDates, 'date');
+});
 
 export const getStartEndIndexes = createSelector(
   [getStartIndex, getEndIndex, getData],
@@ -54,9 +108,8 @@ export const getStartEndIndexes = createSelector(
         endIndex,
       };
     }
-
     const start =
-      startIndex || startIndex === 0 ? startIndex : currentData.length - 365;
+      startIndex || startIndex === 0 ? startIndex : currentData.length - 52;
     const end = endIndex || currentData.length - 1;
 
     return {
@@ -105,6 +158,7 @@ export const parseConfig = createSelector(
       xAxis: {
         tickFormatter: (t) => moment(t).format("MMM DD, 'YY"),
       },
+      unit: ' weekly alerts',
       brush: {
         width: '100%',
         height: 60,
