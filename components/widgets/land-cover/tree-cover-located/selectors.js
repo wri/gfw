@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 
 // get list data
@@ -100,12 +99,16 @@ export const parseSentence = createSelector(
       num: avgExtentPercentage,
       unit: '%',
     });
+    const topExtentPercent = formatNumber({
+      num: topExtent,
+      unit: '%',
+    });
 
     const params = {
       location: locationName === 'global' ? 'Globally' : locationName,
       region: topRegion.label,
       indicator: indicator && indicator.label,
-      percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
+      percentage: topExtentPercent,
       year: extentYear,
       value: unit === '%' ? topRegionPercent : topRegionExtent,
       average: unit === '%' ? aveRegionPercent : aveRegionExtent,
