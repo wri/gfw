@@ -24,7 +24,8 @@ const MAX_YEAR = 2019;
 export default {
   ...emissionsDeforestation,
   widget: 'emissionsDeforestationDrivers',
-  title: 'Forest-related greenhouse gas emissions in {location} by driver',
+  title:
+    'Forest-related greenhouse gas emissions in {location} by dominant driver',
   admins: ['adm0', 'adm1'],
   caution: {
     visible: ['wdpa', 'country', 'aoi'],
