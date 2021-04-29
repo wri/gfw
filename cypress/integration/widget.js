@@ -21,7 +21,7 @@ const testConfig = [
         visit: '/dashboards/country/IDN',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions.',
+          'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO\u2082e of emissions.',
       },
       {
         slug: 'indonesiaAdm1',
@@ -30,7 +30,7 @@ const testConfig = [
         visit: '/dashboards/country/IDN/1',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions.',
+          'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO\u2082e of emissions.',
       },
       {
         slug: 'indonesiaAdm2',
@@ -39,7 +39,7 @@ const testConfig = [
         visit: '/dashboards/country/IDN/1/1',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions.',
+          'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO\u2082e of emissions.',
       },
       {
         slug: 'plantationsIso',
@@ -48,7 +48,7 @@ const testConfig = [
         visit: '/dashboards/country/ESP',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO₂ of emissions.',
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO\u2082e of emissions.',
       },
       {
         slug: 'plantationsAdm1',
@@ -57,7 +57,7 @@ const testConfig = [
         visit: '/dashboards/country/ESP/12',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO₂ of emissions.',
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO\u2082e of emissions.',
       },
       {
         slug: 'plantationsAdm2',
@@ -66,7 +66,7 @@ const testConfig = [
         visit: '/dashboards/country/ESP/12/1',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO₂ of emissions.',
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {naturalEmissions} of CO\u2082e of emissions.',
       },
       {
         slug: 'plantationsTropicalIso',
@@ -75,7 +75,7 @@ const testConfig = [
         visit: '/dashboards/country/MYS',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082 of emissions.',
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082e of emissions.',
       },
       {
         slug: 'plantationsTropicalAdm1',
@@ -84,7 +84,7 @@ const testConfig = [
         visit: '/dashboards/country/MYS/14',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082 of emissions.',
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082e of emissions.',
       },
       {
         slug: 'plantationsTropicalAdm2',
@@ -93,7 +93,7 @@ const testConfig = [
         visit: '/dashboards/country/MYS/14/31',
         test: 'dashboard-header-sentence',
         sentence:
-          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082 of emissions.',
+          'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO\u2082e of emissions.',
       },
       {
         slug: 'lossIso',
