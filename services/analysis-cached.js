@@ -224,7 +224,7 @@ export const getWHEREQuery = (params) => {
   return '';
 };
 
-export const getDatesFilter = ({ startDate, endDate }) => {
+export const getDatesFilter = ({ startDate }) => {
   const startYear = startDate
     ? moment(startDate).year()
     : moment().subtract(1, 'weeks').year();
@@ -233,18 +233,7 @@ export const getDatesFilter = ({ startDate, endDate }) => {
     ? moment(startDate).isoWeek()
     : moment().subtract(1, 'weeks').isoWeek();
 
-  const endYear = moment(endDate).year();
-  const endWeek = moment(endDate).isoWeek();
-
-  let middleYears = startYear === endYear ? 'AND' : 'OR';
-  if (endYear - startYear > 1) {
-    middleYears = '';
-    for (let y = startYear + 1; y < endYear; y += 1) {
-      middleYears += `OR alert__year = ${y} `;
-    }
-    middleYears += 'OR';
-  }
-  return `(alert__year = ${startYear} AND alert__week >= ${startWeek}) ${middleYears} (alert__year = ${endYear} AND alert__week <= ${endWeek})`;
+  return `(alert__year = ${startYear} AND alert__week >= ${startWeek}) OR alert__year >= ${startYear}`;
 };
 
 // build complex WHERE filter for dates (VIIRS/GLAD)
