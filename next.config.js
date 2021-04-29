@@ -10,7 +10,7 @@ const redirects = require('./data/redirects');
 
 let rewrites;
 
-if (process.env.NEXT_PUBLIC_FEATURE_ENV !== 'production') {
+if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging') {
   // eslint-disable-next-line global-require
   rewrites = require('./data/rewrites-staging');
 } else {
