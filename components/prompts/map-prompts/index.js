@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'redux/registry';
 
+import { A } from 'gfw-components';
+
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 import { setMainMapSettings } from 'layouts/map/actions';
@@ -84,15 +86,22 @@ class MapPromptsContainer extends PureComponent {
             disableBeacon: true,
             bypassUserDisableTips: true,
             target: '.basemaps-btn',
-            content:
-              'Visit the Planet website to register for a free account and download mosaics',
+            content: (
+              <>
+                Visit the
+                {' '}
+                <A
+                  href="https://www.planet.com/nicfi/"
+                  target="__BLANK"
+                  rel="noreferrer noopener"
+                >
+                  Planet website
+                </A>
+                {' '}
+                to register for a free account and to download mosaics
+              </>
+            ),
             actions: {
-              learnHow: () => {
-                const URL =
-                  'https://www.globalforestwatch.org/help/map/guides/select-customize-basemap/';
-                // eslint-disable-next-line security/detect-non-literal-fs-filename
-                window.open(URL, '_blank').focus();
-              },
               onClose: () => {
                 localStorage.setItem('seenPlanetPrompt', true);
                 this.resetPrompts();
