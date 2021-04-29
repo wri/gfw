@@ -41,6 +41,7 @@ import USLandCover from 'components/widgets/land-cover/us-land-cover';
 import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
 import soilBiomass from 'components/widgets/climate/soil-organic';
 import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
+import emissionsDeforestationDrivers from 'components/widgets/climate/emissions-deforestation-drivers';
 import carbonStock from 'components/widgets/climate/carbon-stock';
 
 // Land Use
@@ -91,6 +92,7 @@ export default {
   // climate
   // emissions,
   emissionsDeforestation,
+  emissionsDeforestationDrivers,
   woodyBiomass,
   soilBiomass,
   carbonStock,
