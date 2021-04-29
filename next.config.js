@@ -8,7 +8,15 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const redirects = require('./data/redirects');
 
-const rewrites = require('./data/rewrites');
+let rewrites;
+
+if (process.env.NEXT_PUBLIC_FEATURE_ENV !== 'production') {
+  // eslint-disable-next-line global-require
+  rewrites = require('./data/rewrites-staging');
+} else {
+  // eslint-disable-next-line global-require
+  rewrites = require('./data/rewrites');
+}
 
 const nextConfig = {
   webpack: (config) => {

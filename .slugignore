@@ -7,3 +7,4 @@
 .eslintignore
 .eslintrc
 cypress.json
+/docs
