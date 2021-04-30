@@ -72,8 +72,9 @@ class WidgetDownloadButton extends PureComponent {
               'page',
               'page_size',
               'ifl',
+              'yearsRange',
             ].includes(key) && {
-              [snakeCase(key)]: settings[key],
+              [snakeCase(key)]: snakeCase(settings[key]),
             }),
           }),
           {}
