@@ -39,7 +39,7 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum:
-    `SELECT {select_location}, alert__date, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+    `SELECT {select_location}, confidence_cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence_cat`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -858,6 +858,7 @@ export const fetchGladAlertsSum = (params) => {
       dataset: 'glad',
       datasetType: 'daily',
     })}${SQL_QUERIES.gladDailySum}`
+      .replace(/{select_location}/g, getLocationSelect({...params, cast: true }))
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
@@ -874,18 +875,18 @@ export const fetchGladAlertsSum = (params) => {
   //     url: url.replace('query', 'download'),
   //   };
   // }
-  console.log('url', url)
   return apiRequest.get(url).then((response) => ({
     data: {
       data: response.data.data.map((d) => ({
         ...d,
-        confirmed: d.is__confirmed_alert.toLowerCase() === 'true',
+        confirmed: d.is__confirmed_alert,
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha,
       })),
     },
-  }));
+  })
+  );
 };
 
 // Latest Dates for Alerts
@@ -1060,6 +1061,7 @@ export const fetchVIIRSAlertsSum = (params) => {
       dataset,
       datasetType: 'daily',
     })}${SQL_QUERIES.firesDailySum}`
+      .replace(/{select_location}/g, getLocationSelect({...params, cast: true }))
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
