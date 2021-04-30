@@ -33,6 +33,11 @@
     "main": "#5b80a0",
     "ramp": [ "#EDD093", "#BFBC35", "#007F53", "#123A33"],
     "carbon": ["#895122", "#898522", "#892227"],
+    "fluxCarbon": {
+      "emissions": "#895122",
+      "netCarbonFlux": "#898522",
+      "removals": "#892227"
+    },
     "loss": {
       "main": "#DF511E",
       "secondary": "#F9A000"

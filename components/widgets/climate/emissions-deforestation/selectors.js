@@ -20,7 +20,7 @@ export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-    const { startYear, endYear, yearsRange, gasesIncluded } = settings;
+    const { startYear, endYear, yearsRange } = settings;
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
       area: 0,
@@ -42,28 +42,24 @@ export const parseData = createSelector(
         .filter((d) => d.year >= startYear && d.year <= endYear)
         .map((d) => ({
           ...d,
-          emissions: d[gasesIncluded],
+          co2LossByYear: d.emissions,
+          biomassLoss: d.biomassLoss,
         }))
     );
   }
 );
 
 export const parseConfig = createSelector(
-  [getColors, getSettings],
-  (colors, settings) => {
+  [getSettings, getColors],
+  (settings, colors) => {
+    const { unit } = settings;
     const { loss } = colors;
-    const { gasesIncluded } = settings;
-    let emissionLabel = 'Emissions';
-    if (gasesIncluded !== 'allGases') {
-      emissionLabel +=
-        gasesIncluded === 'co2Only' ? ' (CO\u2082)' : ' (non-CO\u2082)';
-    }
     return {
       height: 250,
       xKey: 'year',
       yKeys: {
         bars: {
-          emissions: {
+          [unit]: {
             fill: loss.main,
             background: false,
           },
@@ -77,14 +73,12 @@ export const parseConfig = createSelector(
           key: 'year',
         },
         {
-          key: 'emissions',
-          label: emissionLabel,
-          unit: 't CO2e',
+          key: [unit],
+          unit: 't',
           unitFormat: (value) => format('.3s')(value),
-          color: loss.main,
         },
       ],
-      unit: 't CO2e',
+      unit: 't',
       unitFormat: (value) => format('.2s')(value),
     };
   }
@@ -92,14 +86,14 @@ export const parseConfig = createSelector(
 
 export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],
-  (data, settings, indicator, sentences, locationName) => {
+  (data, settings, indicator, sentence, locationName) => {
     if (!data || isEmpty(data)) return null;
-    const { initial, co2Only, nonCo2Only } = sentences;
-    const { startYear, endYear, gasesIncluded } = settings;
+    const { startYear, endYear, unit } = settings;
     const totalBiomass = data
-      .map((d) => d.emissions)
+      .map((d) => d[unit])
       .reduce((sum, d) => (d ? sum + d : sum));
-
+    const emissionType =
+      unit === 'biomassLoss' ? 'aboveground biomass' : 'CO\u2082';
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label} regions`;
@@ -107,14 +101,9 @@ export const parseSentence = createSelector(
       indicatorText = ` ${indicator.label}`;
     }
 
-    let emissionString = '.';
-    if (gasesIncluded !== 'allGases') {
-      emissionString = gasesIncluded === 'co2Only' ? co2Only : nonCo2Only;
-    }
-    const sentence = initial + emissionString;
-
     const params = {
-      value: `${formatNumber({ num: totalBiomass, unit: 't' })} of CO\u2082e`,
+      type: emissionType,
+      value: formatNumber({ num: totalBiomass, unit: 't' }),
       location: locationName,
       annualAvg: formatNumber({ num: totalBiomass / data.length, unit: 't' }),
       startYear,
