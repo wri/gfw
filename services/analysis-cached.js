@@ -865,16 +865,17 @@ export const fetchGladAlertsSum = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
 
-  // TODO: THIS NEEDS UPDATING
-  // if (download) {
-  //   const indicator = getIndicator(forestType, landCategory, ifl);
-  //   return {
-  //     name: `glad_alerts${
-  //       indicator ? `_in_${snakeCase(indicator.label)}` : ''
-  //     }__count`,
-  //     url: url.replace('query', 'download'),
-  //   };
-  // }
+  // Todo, get latlon
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `daily_glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download'),
+    };
+  }
+
   return apiRequest.get(url).then((response) => ({
     data: {
       data: response.data.data.map((d) => ({
@@ -1071,7 +1072,7 @@ export const fetchVIIRSAlertsSum = (params) => {
   // if (download) {
   //   const indicator = getIndicator(forestType, landCategory, ifl);
   //   return {
-  //     name: `glad_alerts${
+  //     name: `daily_${dataset}_alerts${
   //       indicator ? `_in_${snakeCase(indicator.label)}` : ''
   //     }__count`,
   //     url: url.replace('query', 'download'),

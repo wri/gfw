@@ -144,7 +144,12 @@ export default {
         };
       })
   },
-  // getDataURL: (params) => [fetchGladAlerts({ ...params, download: true })],
+  getDataURL: (params) => {
+    const { GLAD } = params.GFW_META.datasets;
+    const defaultStartDate = GLAD?.defaultStartDate
+    const defaultEndDate = GLAD?.defaultEndDate
+    return [fetchGladAlertsSum({ ...params, startDate: defaultStartDate, endDate: defaultEndDate, download: true})]
+  },
   getWidgetProps,
   parseInteraction: (payload) => {
     if (payload) {
