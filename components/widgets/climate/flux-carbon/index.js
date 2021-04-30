@@ -15,13 +15,8 @@ import {
   CARBON_EMISSIONS,
 } from 'data/layers';
 
-import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
-
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import getWidgetProps from './selectors';
-
-const MIN_YEAR = 2001;
-const MAX_YEAR = 2020;
 
 export default {
   ...treeLoss,
@@ -98,7 +93,7 @@ export default {
     gasesIncluded: 'allGases',
     threshold: 30,
     startYear: 2001,
-    endYear: 2018,
+    endYear: 2019, // or 2020
   },
   whitelists: {
     adm0: biomassLossIsos,
@@ -106,22 +101,10 @@ export default {
   getData: (params) => {
     return getCarbonFlux(params).then((response) => {
       const flux = response.data.data;
-      console.log(flux)
-      const { startYear, endYear, range } = getYearsRangeFromMinMax(
-        MIN_YEAR,
-        MAX_YEAR
-      );
+      if (!flux || !flux.length) return {}
       return {
-        flux,
-        settings: {
-          startYear,
-          endYear,
-          yearsRange: range,
-        },
-        options: {
-          years: range,
-        },
-      };
+        ...flux[0]
+      }
     });
   },
   getDataURL: (params) => [getCarbonFlux({ ...params, download: true })],
