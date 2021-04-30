@@ -1,4 +1,4 @@
-import { getEmissions } from 'services/analysis-cached';
+import { getCarbonFlux } from 'services/analysis-cached';
 
 // import OTFAnalysis from 'services/otf-analysis';
 
@@ -92,7 +92,7 @@ export default {
   },
   sentences: {
     initial:
-      'Between {startYear} and {endYear}, forests in {location} emitted X Mt CO2e/year, and removed Y MtCO2e/year. This represents a net carbon flux of Z GtCO2e/year.',
+      'Between {startYear} and {endYear}, forests in {location} emitted {emission} Mt CO2e/year, and removed {removals} MtCO2e/year. This represents a net carbon flux of {flux} GtCO2e/year.',
   },
   settings: {
     gasesIncluded: 'allGases',
@@ -104,14 +104,15 @@ export default {
     adm0: biomassLossIsos,
   },
   getData: (params) => {
-    return getEmissions(params).then((response) => {
-      const loss = response.data.data;
+    return getCarbonFlux(params).then((response) => {
+      const flux = response.data.data;
+      console.log(flux)
       const { startYear, endYear, range } = getYearsRangeFromMinMax(
         MIN_YEAR,
         MAX_YEAR
       );
       return {
-        loss,
+        flux,
         settings: {
           startYear,
           endYear,
@@ -123,6 +124,6 @@ export default {
       };
     });
   },
-  getDataURL: (params) => [getEmissions({ ...params, download: true })],
+  getDataURL: (params) => [getCarbonFlux({ ...params, download: true })],
   getWidgetProps,
 };

@@ -20,10 +20,10 @@ const SQL_QUERIES = {
   emissions:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg", TRUE AS "includes_gain_pixels" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsByDriver:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg", TRUE AS "includes_gain_pixels" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT SUM("gfw_net_flux_co2e__Mg") AS "gfw_net_flux_co2e__Mg", SUM("gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg") AS "gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg", SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" {WHERE}',
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  extentGlobal:
     'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE}',
   gain:
     'SELECT {select_location}, SUM("umd_tree_cover_gain_2000-2012__ha") AS "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
@@ -418,6 +418,49 @@ export const getEmissions = (params) => {
         allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
         co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
         nonCo2Gases: d.gfw_gross_emissions_co2e_non_co2__Mg,
+      })),
+    },
+  }));
+};
+
+// summed loss for single location
+export const getCarbonFlux = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const { carbonFlux } = SQL_QUERIES;
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset: 'annual',
+      datasetType: 'change',
+    })}${carbonFlux}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  // if (download) {
+  //   const indicator = getIndicator(forestType, landCategory, ifl);
+  //   return {
+  //     name: `Forest_related_GHG_emissions${
+  //       byDriver ? '_by_dominant_driver' : ''
+  //     }${indicator ? `_in_${snakeCase(indicator.label)}` : ''}`,
+  //     url: getDownloadUrl(url),
+  //   };
+  // }
+  console.log('url', url);
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        // bound1: d.tsc_tree_cover_loss_drivers__type,
+        // year: d.umd_tree_cover_loss__year,
+        // allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
+        // co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
+        // nonCo2Gases: d.gfw_gross_emissions_co2e_non_co2__Mg,
       })),
     },
   }));

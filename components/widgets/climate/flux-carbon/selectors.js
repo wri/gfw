@@ -18,191 +18,9 @@ const getSentences = (state) => state.sentences;
 
 export const parseData = createSelector(
   [getData, getSettings],
-  (old_data, settings) => {
-    if (isEmpty(old_data)) return null;
-    console.log(settings, 'flux');
-    const data = [
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2001,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2002,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2003,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2004,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2005,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2006,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2007,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2008,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2009,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2010,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2011,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2012,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 842272501.2011116,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2013,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 875674232.5882894,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2014,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 1034754070.8924707,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2015,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 1314577679.1050954,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2016,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 1373967899.3919582,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2017,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 1091660629.379034,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2018,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 1212749268.005095,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2019,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-      {
-        iso: 'BRA',
-        emissions: 907211582.5373274,
-        umd_tree_cover_loss__ha: 2746361.5567,
-        umd_tree_cover_loss__year: 2020,
-        gfw_gross_emissions_co2e_all_gases__Mg: 0,
-        whrc_aboveground_biomass_loss__Mg: 661499600.730052,
-        whrc_aboveground_co2_emissions__Mg: 907211582.5373,
-      },
-    ];
+  (data, settings) => {
+    if (isEmpty(data)) return null;
+
     const { startYear, endYear, yearsRange, gasesIncluded } = settings;
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
@@ -236,7 +54,9 @@ export const parseData = createSelector(
 export const parseConfig = createSelector(
   [getColors, getSettings],
   (colors, settings) => {
-    const { climate } = colors;
+    console.log(colors)
+    // const { climate } = colors;
+    // const  { fluxCarbon } = climate;
     const { gasesIncluded } = settings;
     let emissionLabel = 'Emissions';
     if (gasesIncluded !== 'allGases') {
@@ -250,21 +70,24 @@ export const parseConfig = createSelector(
       yKeys: {
         bars: {
           emissions: {
-            fill: climate.emissions,
+            fill: '#f69',//fluxCarbon.emissions,
             background: false,
             stackId: 1,
           },
           netCarbonFlux: {
-            fill: climate.netCarbonFlux,
+            fill: '#f69',//fluxCarbon.netCarbonFlux,
             background: false,
           },
           removals: {
-            fill: climate.removals,
+            fill: '#f69', //fluxCarbon.removals,
             background: false,
             stackId: 1,
           },
         },
       },
+      referenceLine: [
+        { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
+      ],
       xAxis: {
         tickFormatter: yearTicksFormatter,
       },
@@ -277,7 +100,7 @@ export const parseConfig = createSelector(
           label: emissionLabel,
           unit: 't CO2e',
           unitFormat: (value) => format('.3s')(value),
-          color: climate.main,
+          color: '#f69'//colors.climate.main,
         },
       ],
       unit: 't CO2e',
