@@ -1,7 +1,7 @@
 name: CI
 
-on: [push]
-
+on:
+  pull_request:
 jobs:
   lint:
     name: lint
@@ -19,6 +19,10 @@ jobs:
   cypress-run:
     name: e2e tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -30,6 +34,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: yarn build
-          start: yarn start 3000
+          build: yarn install
+          start: yarn dev
+          group: 'Integration tests'
+          record: true
+          parallel: true
+          wait-on-timeout: 120
           wait-on: 'http://localhost:3000'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.GFW_CYPRESS_KEY }}

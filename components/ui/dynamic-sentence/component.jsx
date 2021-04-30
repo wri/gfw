@@ -11,6 +11,7 @@ import './styles.scss';
 class DynamicSentence extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
+    testId: PropTypes.string,
     sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     handleMouseOver: PropTypes.func,
     handleMouseOut: PropTypes.func,
@@ -22,13 +23,17 @@ class DynamicSentence extends PureComponent {
   };
 
   render() {
-    const { className, handleMouseOver, handleMouseOut } = this.props;
+    const { className, testId, handleMouseOver, handleMouseOut } = this.props;
     const { sentence, params } = this.props.sentence;
     const { component } = params || {};
+    const sentenceParams = {
+      ...(params && params),
+      ...(!params?.location && { ...params, location: 'selected area' }),
+    };
     let formattedSentence = translateText(sentence);
     if (params) {
-      Object.keys(params).forEach((p) => {
-        const param = params[p];
+      Object.keys(sentenceParams).forEach((p) => {
+        const param = sentenceParams[p];
         if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {
@@ -87,7 +92,10 @@ class DynamicSentence extends PureComponent {
     }
 
     return (
-      <div className={`c-dynamic-sentence notranslate ${className || ''}`}>
+      <div
+        data-test={!!testId && testId}
+        className={`c-dynamic-sentence notranslate ${className || ''}`}
+      >
         {formattedSentence.map((s) =>
           typeof s === 'string' ? ReactHtmlParser(s) : s
         )}

@@ -1,0 +1,34 @@
+name: CI Production
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  cypress-run-production:
+    name: e2e tests - production
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.16.2'
+      - run: node -v
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn build
+          start: yarn start 3000
+          group: 'Integration tests'
+          parallel: true
+          record: true
+          wait-on-timeout: 120
+          wait-on: 'http://localhost:3000'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.GFW_CYPRESS_KEY }}

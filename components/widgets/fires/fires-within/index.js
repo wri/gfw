@@ -27,7 +27,7 @@ export default {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
-      placeholder: 'All categories',
+      placeholder: 'All land cover',
       clearable: true,
       border: false,
     },
@@ -125,12 +125,16 @@ export default {
     ),
   getDataURL: (params) => [
     fetchFiresWithin({ ...params, download: true }),
-    fetchFiresWithin({
-      ...params,
-      forestType: '',
-      landCategory: '',
-      download: true,
-    }),
+    ...(params.forestType || params.landCategory
+      ? [
+          fetchFiresWithin({
+            ...params,
+            forestType: '',
+            landCategory: '',
+            download: true,
+          }),
+        ]
+      : []),
   ],
   getWidgetProps,
 };

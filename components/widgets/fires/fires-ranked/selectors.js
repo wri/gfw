@@ -113,7 +113,7 @@ export const parseList = createSelector(
 
       const counts = adm.currentYearCounts;
       const locationAreaData =
-        areas.find((el) => el[matchKey] === adm.id) || {};
+        areas.find((el) => el[matchKey] === locationId) || {};
 
       const locationArea = locationAreaData.area__ha || null;
       // Density in counts per Mha

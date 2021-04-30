@@ -45,34 +45,19 @@ const GrantsApplySection = () => (
             </a>
           </li>
           <li>
-            - Register for the&nbsp;
+            - Watch a recording of the&nbsp;
             <a
               className="text -paragraph -color-4 -bold"
-              href="https://wri.zoom.us/webinar/register/WN_8Tu5L0MbRaaZwIvseMS74Q"
+              href="https://www.youtube.com/watch?v=lD_2FlY9hoM&feature=youtu.be"
               target="_blank"
               rel="noopener noreferrer"
             >
-              2021 Small Grants Fund Applicant Webinar
+              2021 Small Grants Fund Webinar
             </a>
-            {' '}
-            on Wednesday, February 3rd, 2021 at 8:00 am EST
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
-          The 2021 Small Grants Fund application window is open from
-          {' '}
-          <strong>February 1st, 2021 – March 1st, 2021</strong>
-          .
-          <br />
-          <a
-            className="text -paragraph -color-4 -bold"
-            href="https://gfw.smapply.io/prog/small_grants_fund_2021_application_/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Apply now
-          </a>
-          .
+          The 2021 Small Grants Fund application is now closed.
         </p>
       </Column>
       <Column width={[1, 1 / 4]} className="logo">

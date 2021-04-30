@@ -166,7 +166,7 @@ export const datasetsSections = compact([
     subCategories: [
       {
         slug: 'carbonEmissions',
-        title: 'Carbon Emissions',
+        title: 'Carbon Flux',
       },
       {
         slug: 'carbonDensity',
@@ -200,7 +200,7 @@ export const datasetsSections = compact([
     subCategories: [
       {
         slug: 'test',
-        title: 'Test',
+        title: 'Test Layers',
       },
     ],
   },

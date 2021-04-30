@@ -12,11 +12,13 @@ class Widget extends PureComponent {
   static propTypes = {
     widget: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    type: PropTypes.string,
     active: PropTypes.bool,
     embed: PropTypes.bool,
     large: PropTypes.bool,
     colors: PropTypes.object,
     simple: PropTypes.bool,
+    caution: PropTypes.object,
     datasets: PropTypes.array,
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
@@ -64,7 +66,9 @@ class Widget extends PureComponent {
     const {
       title,
       widget,
+      caution,
       colors,
+      type,
       active,
       large,
       embed,
@@ -107,11 +111,10 @@ class Widget extends PureComponent {
       settingsBtnConfig,
       status,
     } = this.props;
-    const { main } = colors || {};
 
+    const { main } = colors || {};
     const toggleSettingsMenu = () =>
       this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
-
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
@@ -155,6 +158,7 @@ class Widget extends PureComponent {
           toggleSettingsMenu={toggleSettingsMenu}
         />
         <WidgetBody
+          widget={widget}
           chartType={chartType}
           loading={loading}
           metaLoading={metaLoading}
@@ -183,6 +187,9 @@ class Widget extends PureComponent {
           <WidgetFooter
             showAttributionLink={showAttributionLink}
             statements={statements}
+            type={type}
+            locationType={location?.locationType}
+            caution={caution}
             simple={simple}
           />
         )}

@@ -1,8 +1,10 @@
 import { all, spread } from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
+
+import OTFAnalysis from 'services/otf-analysis';
+
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
-import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
@@ -17,7 +19,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 const MIN_YEAR = 2001;
 
 const getGlobalLocation = (params) => ({
@@ -26,49 +28,49 @@ const getGlobalLocation = (params) => ({
   adm2: params.type === 'global' ? null : params.adm2,
 });
 
-export const getDataAPI = (params) =>
-  fetchAnalysisEndpoint({
-    ...params,
-    name: 'umd',
-    params,
-    slug: 'umd-loss-gain',
-    version: 'v1',
-    aggregate: false,
-  }).then((response) => {
-    const { data } = (response && response.data) || {};
-    const lossData = data && data.attributes.loss;
-    const loss =
-      lossData &&
-      Object.keys(lossData).map((d) => ({
-        area: lossData[d],
-        year: parseInt(d, 10),
-      }));
-    const extent = data.attributes.treeExtent;
+const getOTFAnalysis = async (params) => {
+  const analysis = new OTFAnalysis(params.geostore.id);
+  analysis.setDates({
+    startDate: params.startDate,
+    endDate: params.endDate,
+  });
 
-    const { startYear, endYear, range } = getYearsRangeFromMinMax(
+  analysis.setData(['loss', 'extent'], params);
+
+  return analysis.getData().then((response) => {
+    const { loss, extent } = response;
+    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
       MIN_YEAR,
       MAX_YEAR
     );
 
     return {
-      loss,
-      extent,
+      loss: loss.data.map((d) => ({
+        area: d.area__ha,
+        year: d.umd_tree_cover_loss__year,
+      })),
+      extent: extent?.data?.area__ha,
       settings: {
         startYear,
         endYear,
-        yearsRange: range,
+        yearsRange,
       },
       options: {
-        yearsRange: range,
+        yearsRange,
       },
     };
   });
+};
 
 export default {
   widget: 'treeLoss',
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  caution: {
+    text: '2020 data coming soon for this area.',
+    visible: [],
+  },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -140,7 +142,7 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    co2Emissions: 'and {emissions} of CO\u2082 emissions',
+    co2Emissions: 'and {emissions} of CO\u2082e emissions',
   },
   settings: {
     threshold: 30,
@@ -189,7 +191,7 @@ export default {
       );
     }
 
-    return getDataAPI(params);
+    return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);

@@ -240,7 +240,7 @@ export const getWidgetDatasets = ({
         }),
         ...(threshold && {
           params: {
-            thresh: threshold,
+            threshold,
             visibility: true,
           },
         }),

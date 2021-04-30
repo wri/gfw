@@ -22,7 +22,7 @@ export default {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
-      placeholder: 'All tree cover',
+      placeholder: 'All land cover',
       clearable: true,
     },
     {
