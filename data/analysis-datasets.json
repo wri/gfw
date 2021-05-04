@@ -33,7 +33,7 @@
   "VIIRS_ADM2_DAILY": "gadm__viirs__adm2_daily_alerts",
   "VIIRS_ADM2_WEEKLY": "gadm__viirs__adm2_weekly_alerts",
   "VIIRS_GEOSTORE_DAILY": "geostore__viirs__daily_alerts",
-  "VIIRS_GEOSTORE_WEEKLY": "geostore__viirs__wekly_alerts",
+  "VIIRS_GEOSTORE_WEEKLY": "geostore__viirs__weekly_alerts",
   "VIIRS_GEOSTORE_WHITELIST": "geostore__viirs__whitelist",
   "MODIS_ADM0_WHITELIST": "gadm__modis__iso_whitelist",
   "MODIS_ADM0_WEEKLY": "gadm__modis__iso_weekly_alerts",
