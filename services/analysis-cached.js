@@ -196,7 +196,7 @@ export const getWHEREQuery = (params) => {
        Note that the postgres tables will allow us to cast at the query level.
       */
       // const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
-      const isNumericValue = !!(
+      let isNumericValue = !!(
         typeof value === 'number' ||
         (!isNaN(value) && !['adm0', 'confidence'].includes(p))
       );
@@ -208,8 +208,10 @@ export const getWHEREQuery = (params) => {
       if (p === 'adm1' && type === 'country') paramKey = 'adm1::integer';
       if (p === 'adm2' && type === 'country') paramKey = 'adm2::integer';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
-      if (p === 'adm0' && type === 'wdpa')
-        paramKey = 'wdpa_protected_area__id::integer';
+      if (p === 'adm0' && type === 'wdpa') {
+        paramKey = 'wdpa_protected_area__id';
+        isNumericValue = false;
+      }
 
       const polynameString = `
         ${
