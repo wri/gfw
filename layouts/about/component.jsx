@@ -16,7 +16,9 @@ import Partners from 'layouts/about/partners';
 import Join from 'layouts/about/join';
 
 import mailIcon from 'assets/icons/mail.svg?sprite';
+
 import bgImage from './background.jpg';
+import bgImageWebP from './background.webp';
 
 import './styles.scss';
 
@@ -62,6 +64,7 @@ const AboutPage = (props) => (
       title="About"
       description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
       bgImage={bgImage}
+      webP={bgImageWebP}
     >
       <Link href="/subscribe">
         <a className="subscribe-btn">

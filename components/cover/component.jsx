@@ -16,11 +16,11 @@ class Cover extends PureComponent {
       title,
       description,
       children,
+      webP,
+      altImageText,
     } = this.props;
-    const bgStyle = bgImage ? { backgroundImage: `url('${bgImage}'` } : {};
-
     return (
-      <div className={cx('c-cover', { large }, className)} style={bgStyle}>
+      <div className={cx('c-cover', { large }, className)}>
         <Row>
           <Column width={[1, 2 / 3]}>
             <div className="cover-texts">
@@ -38,6 +38,13 @@ class Cover extends PureComponent {
             {children}
           </Column>
         </Row>
+        {bgImage && (
+          <picture className="picture">
+            {webP && <source srcSet={webP} type="image/webp" />}
+            <source srcSet={bgImage} type="image/jpeg" />
+            <img src={bgImage} alt={altImageText || 'Cover image'} />
+          </picture>
+        )}
       </div>
     );
   }
@@ -49,6 +56,8 @@ Cover.propTypes = {
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   large: PropTypes.bool,
   bgImage: PropTypes.string,
+  webP: PropTypes.string,
+  altImageText: PropTypes.string,
   children: PropTypes.node,
 };
 
