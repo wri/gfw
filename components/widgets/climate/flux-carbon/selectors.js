@@ -2,10 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 
-import { formatNumber } from 'utils/format';
-import {
-  yearTicksFormatter,
-} from 'components/widgets/utils/data';
 
 // get list data
 const getData = (state) => state.data;
@@ -25,52 +21,89 @@ export const parseData = createSelector(
 
 export const parseConfig = createSelector(
   [parseData, getColors, getSettings],
-  (data, colors, settings) => {
-    const  { fluxCarbon } = colors;
-    /// get data
-
+  (data, colors) => {
+    const  {
+      fluxCarbon: {
+        emissions,
+        netCarbonFlux,
+        removals
+      }
+    } = colors;
+    if (!data) return null;
+    const { removals: removalsValue, emissions: emissionsValue }  = data[0];
     return {
       height: 250,
-      layout: 'vertical',
-      xKey: 'umd_tree_cover_loss__year',
-      yKeys: {
+      margin: {
+        bottom: 40
+      },
+      yAxis: {
+        hide: true,
+        type: 'category',
+      },
+      xAxis: {
+        type: 'number',
+        domain: [-300, 300],
+        label: {
+          value: 'GtCO2/year',
+          fontSize: "14px",
+          position: "bottom"
+        },
+      },
+      yKey: 'name',
+      xKeys: {
         bars: {
           emissions: {
-            fill: fluxCarbon.emissions,
+            value: [0, emissionsValue],
+            x: 0,
+            fill: emissions,
             background: false,
-            stackId: 1,
+            stackId: 2,
           },
-          netCarbonFlux: {
-            fill: fluxCarbon.netCarbonFlux,
+          flux: {
+            fill: netCarbonFlux,
             background: false,
           },
           removals: {
-            fill: fluxCarbon.removals,
+            value: -[removalsValue, 0],
+            x: (removalsValue / 2),
+            fill: removals,
             background: false,
-            stackId: 1,
+            stackId: 2,
+            shape: ({ y, width, height, fill }) => {
+              return (
+                <g>
+                  <rect
+                    x={width / 2}
+                    y={y}
+                    width={width}
+                    height={height}
+                    fill={fill}
+                  />
+                </g>
+              );
+            },
+            // transform: (props) => console.log(props, 'props') ||`translate(${-((removalsValue + emissionsValue))}, 0)`
           },
         },
       },
-      referenceLine: [
-        { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
-      ],
-      xAxis: {
-        tickFormatter: yearTicksFormatter,
-      },
+      referenceLine: { x: 0, stroke: '#606060', strokeWidth: 2 },
+      // xAxis: {
+      //   tickFormatter: yearTicksFormatter,
+      // },
       tooltip: [
         {
-          key: 'umd_tree_cover_loss__year',
+          key: 'flux',
+          unit: 'GtCO2/year',
+          unitFormat: (value) => format('.3s')(value),
+          color: emissions,
         },
         {
           key: 'emissions',
-          label: emissionLabel,
-          unit: 't CO2e',
+          unit: 'GtCO2/year',
           unitFormat: (value) => format('.3s')(value),
-          color: colors.main,
+          color: emissions,
         },
       ],
-      unit: 't CO2e',
-      unitFormat: (value) => format('.2s')(value),
     };
   }
 );
@@ -79,7 +112,6 @@ export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],
   (data, settings, indicator, sentences, locationName) => {
     if (!data || isEmpty(data)) return null;
-    console.log(data)
 
     const { initial } = sentences;
     // if multiple sentences - implement logic

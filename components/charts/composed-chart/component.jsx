@@ -90,7 +90,6 @@ class CustomComposedChart extends PureComponent {
     let rightMargin = 0;
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
-
     return (
       <div
         className={cx('c-composed-chart', className)}

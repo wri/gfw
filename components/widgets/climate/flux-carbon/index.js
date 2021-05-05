@@ -94,17 +94,15 @@ export default {
     threshold: 30,
     startYear: 2001,
     endYear: 2019, // or 2020
+    unit: 'co2Gain',
   },
   whitelists: {
     adm0: biomassLossIsos,
   },
   getData: (params) => {
-    return getCarbonFlux(params).then((response) => {
-      const flux = response.data.data;
-      if (!flux || !flux.length) return {}
-      return {
-        ...flux[0]
-      }
+    return getCarbonFlux(params).then((flux) => {
+      if (!flux || !flux.length) return []
+      return flux
     });
   },
   getDataURL: (params) => [getCarbonFlux({ ...params, download: true })],
