@@ -28,6 +28,14 @@ export default {
   },
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
+  caution: {
+    text:
+      'The methods behind this data have changed over time {read more here}, be cautious comparing old and new data especially before/after 2015.',
+    visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+    linkText: 'read more here',
+    link:
+      'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
+  },
   settingsConfig: [
     {
       key: 'tscDriverGroup',
