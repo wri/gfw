@@ -8,7 +8,7 @@ export default {
   title: 'Global Annual Tree cover loss',
   caution: {
     text:
-      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}',
+      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
     visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
     linkText: 'Read more here',
     link:

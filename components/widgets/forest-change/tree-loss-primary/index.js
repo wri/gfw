@@ -36,7 +36,7 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
     text:
-      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}',
+      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
     visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
     linkText: 'Read more here',
     link:
