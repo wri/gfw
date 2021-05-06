@@ -68,8 +68,12 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
-    text: '2020 data coming soon for this area.',
-    visible: [],
+    text:
+      'The methods behind this data have changed over time {read more here}, be cautious comparing old and new data especially before/after 2015.',
+    visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+    linkText: 'read more here',
+    link:
+      'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
   },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
