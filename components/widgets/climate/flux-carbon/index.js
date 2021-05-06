@@ -20,7 +20,7 @@ import getWidgetProps from './selectors';
 
 export default {
   ...treeLoss,
-  widget: 'fluxCarbon',
+  widget: 'carbonFlux',
   title: 'Forest-related greenhouse gas emissions in {location}',
   large: true,
   categories: ['climate'],
@@ -87,7 +87,7 @@ export default {
   },
   sentences: {
     initial:
-      'Between {startYear} and {endYear}, forests in {location} emitted {emission} Mt CO2e/year, and removed {removals} MtCO2e/year. This represents a net carbon flux of {flux} GtCO2e/year.',
+      'Between {startYear} and {endYear}, forests in {location} emitted {totalEmissions}<strong>tCO2e/year</strong>, and removed {totalRemovals}<strong>tCO2e/year</strong>. This represents a net carbon flux of {totalFlux}<strong>tCO2e/year</strong>.',
   },
   settings: {
     gasesIncluded: 'allGases',
@@ -101,8 +101,8 @@ export default {
   },
   getData: (params) => {
     return getCarbonFlux(params).then((flux) => {
-      if (!flux || !flux.length) return []
-      return flux
+      if (!flux || !flux.length) return [];
+      return flux;
     });
   },
   getDataURL: (params) => [getCarbonFlux({ ...params, download: true })],

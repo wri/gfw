@@ -1,40 +1,34 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
-
 
 // get list data
 const getData = (state) => state.data;
 const getSettings = (state) => state.settings;
 const getColors = (state) => state.colors;
-const getIndicator = (state) => state.indicator;
 const getLocationName = (state) => state.locationLabel;
 const getSentences = (state) => state.sentences;
 
-export const parseData = createSelector(
-  [getData],
-  (data) => {
-    if (isEmpty(data)) return null;
-    return data
-  }
-);
-
 export const parseConfig = createSelector(
-  [parseData, getColors, getSettings],
+  [getData, getColors, getSettings],
   (data, colors) => {
-    const  {
-      fluxCarbon: {
-        emissions,
-        netCarbonFlux,
-        removals
-      }
+    const {
+      carbonFlux: { emissions, netCarbonFlux, removals },
     } = colors;
     if (!data) return null;
-    const { removals: removalsValue, emissions: emissionsValue }  = data[0];
+
+    const { flux: fluxValue } = data[0];
+    const maxValue =
+      Math.abs(
+        Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
+      ) * 1.5;
+
     return {
       height: 250,
+      stackOffset: 'sign',
       margin: {
-        bottom: 40
+        bottom: 40,
       },
       yAxis: {
         hide: true,
@@ -42,66 +36,81 @@ export const parseConfig = createSelector(
       },
       xAxis: {
         type: 'number',
-        domain: [-300, 300],
+        domain: [-maxValue, maxValue],
+        allowDecimals: false,
+        ticks: [-maxValue, -maxValue / 2, 0, maxValue / 2, maxValue],
+        tickFormatter: (value) => format('.1s')(value),
         label: {
           value: 'GtCO2/year',
-          fontSize: "14px",
-          position: "bottom"
+          fontSize: '14px',
+          position: 'bottom',
         },
       },
-      yKey: 'name',
       xKeys: {
         bars: {
           emissions: {
-            value: [0, emissionsValue],
-            x: 0,
             fill: emissions,
             background: false,
             stackId: 2,
+            labelList: {
+              position: 'insideRight',
+              value: 'EMISSIONS',
+            },
+            // labelList: {
+            //   content: (prs) => {
+            //     const { index, y } = prs;
+            //     return (
+            //       <g>
+            //         <text x="50%" y={y - 10} textAnchor="middle" fill="#000">
+            //           EMISSIONS
+            //         </text>
+            //       </g>
+            //     );
+            //   }
+            // }
+            // }
+          },
+          removals: {
+            fill: removals,
+            background: false,
+            stackId: 2,
+            labelList: {
+              position: 'insideRight',
+              value: 'REMOVALS',
+            },
           },
           flux: {
             fill: netCarbonFlux,
             background: false,
-          },
-          removals: {
-            value: -[removalsValue, 0],
-            x: (removalsValue / 2),
-            fill: removals,
-            background: false,
-            stackId: 2,
-            shape: ({ y, width, height, fill }) => {
-              return (
-                <g>
-                  <rect
-                    x={width / 2}
-                    y={y}
-                    width={width}
-                    height={height}
-                    fill={fill}
-                  />
-                </g>
-              );
+            labelList: {
+              position: fluxValue < 0 ? 'insideRight' : 'insideLeft',
+              value: 'NET CARBON FLUX',
             },
-            // transform: (props) => console.log(props, 'props') ||`translate(${-((removalsValue + emissionsValue))}, 0)`
           },
         },
       },
       referenceLine: { x: 0, stroke: '#606060', strokeWidth: 2 },
-      // xAxis: {
-      //   tickFormatter: yearTicksFormatter,
-      // },
       tooltip: [
         {
-          key: 'flux',
-          unit: 'GtCO2/year',
+          label: 'Carbon flux (tCO2/year)',
+        },
+        {
+          key: 'emissions',
+          label: 'Emissions',
           unitFormat: (value) => format('.3s')(value),
           color: emissions,
         },
         {
-          key: 'emissions',
-          unit: 'GtCO2/year',
+          key: 'removals',
+          label: 'Removals',
           unitFormat: (value) => format('.3s')(value),
-          color: emissions,
+          color: removals,
+        },
+        {
+          key: 'flux',
+          label: 'Net',
+          unitFormat: (value) => format('.3s')(value),
+          color: netCarbonFlux,
         },
       ],
     };
@@ -109,23 +118,40 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getSettings, getIndicator, getSentences, getLocationName],
-  (data, settings, indicator, sentences, locationName) => {
+  [getData, getSentences, getLocationName],
+  (data, sentences, locationName) => {
     if (!data || isEmpty(data)) return null;
 
     const { initial } = sentences;
     // if multiple sentences - implement logic
 
+    const startYear = 2001;
+    const endYear = 2020;
+    const { emissions, removals, flux } = data[0];
+
     const params = {
+      startYear,
+      endYear,
       location: locationName,
-      // return emissions, removals and flux (and other values)
+      totalEmissions: formatNumber({
+        num: emissions / (endYear - startYear),
+        unit: 'tCO2',
+      }),
+      totalRemovals: formatNumber({
+        num: removals / (endYear - startYear),
+        unit: 'tCO2',
+      }),
+      totalFlux: formatNumber({
+        num: flux / (endYear - startYear),
+        unit: 'tCO2',
+      }),
     };
-    return { initial, params };
+    return { sentence: initial, params };
   }
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  data: getData,
   config: parseConfig,
   sentence: parseSentence,
 });
