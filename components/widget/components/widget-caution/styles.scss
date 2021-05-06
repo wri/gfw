@@ -8,3 +8,17 @@
   color: $slate-light;
   font-weight: 500;
 }
+
+.caution-link {
+  width: fit-content;
+  margin-bottom: rem(30px);
+  color: $green-gfw;
+}
+
+a:hover {
+  color: darken($green-gfw, 10%);
+}
+
+a:visited {
+  color: darken($green-gfw, 10%);
+}

@@ -69,9 +69,9 @@ export default {
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
     text:
-      'The methods behind this data have changed over time {read more here}, be cautious comparing old and new data especially before/after 2015.',
+      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}',
     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-    linkText: 'read more here',
+    linkText: 'Read more here',
     link:
       'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
   },

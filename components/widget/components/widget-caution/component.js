@@ -28,7 +28,7 @@ class WidgetCaution extends PureComponent {
         <div className="c-widget-caution">
           {htmlTextArray[0]}
           <a
-            className="breadcrumb-link"
+            className="caution-link"
             rel="noopener noreferrer"
             href={link}
             target="_blank"
