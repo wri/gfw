@@ -15,10 +15,7 @@
   color: $green-gfw;
 }
 
-a:hover {
-  color: darken($green-gfw, 10%);
-}
-
+a:hover,
 a:visited {
   color: darken($green-gfw, 10%);
 }
