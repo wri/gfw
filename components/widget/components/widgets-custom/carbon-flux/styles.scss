@@ -1,0 +1,12 @@
+@import '~styles/settings.scss';
+
+.c-carbon-flux-image-component {
+  display: flex;
+  justify-content: space-evenly;
+
+  .image {
+    max-width: 150px;
+    height: auto;
+    padding: 20px;
+  }
+}

@@ -18,7 +18,6 @@ export const parseConfig = createSelector(
     } = colors;
     if (!data) return null;
 
-    const { flux: fluxValue } = data[0];
     const maxValue =
       Math.abs(
         Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
@@ -53,20 +52,22 @@ export const parseConfig = createSelector(
             background: false,
             stackId: 2,
             labelList: {
-              // value: 'EMISSIONS',
               content: (props) => {
-                const { x, y, width, height, value } = props;
-                const yPosition = Math.ceil(height / 2 + (height / 2.5))
-                const xPosition = x + (width + (width / 4))
-                console.log(props, 'content')
-
+                // eslint-disable-next-line react/prop-types
+                const { x, y, width, height, offset } = props;
                 return (
-                  <g transform={`translate( 45)`}>
-                   <text x={x + width} y={y} textAnchor="middle" fill="#000">
-                     EMISSIONS
-                   </text>
+                  <g transform={`translate(0 ${height / 2 + offset})`}>
+                    <text
+                      x={x + width + offset}
+                      y={y}
+                      textAnchor="start"
+                      fill="#000"
+                      fontSize={screen.width > 300 ? 16 : 10}
+                    >
+                      EMISSIONS
+                    </text>
                   </g>
-                )
+                );
               },
             },
           },
@@ -76,16 +77,21 @@ export const parseConfig = createSelector(
             stackId: 2,
             labelList: {
               content: (props) => {
-                // XXX: Work from here
-                const { x, y, offset, width, height, value } = props;
-                console.log('removals', props);
+                // eslint-disable-next-line react/prop-types
+                const { x, y, offset, width, height } = props;
                 return (
-                  <g transform={`translate(0 ${(height / 2) + offset})`}>
-                   <text x={(x + width) - offset} y={y} textAnchor="end" fill="#000">
-                     REMOVALS
-                   </text>
+                  <g transform={`translate(0 ${height / 2 + offset})`}>
+                    <text
+                      x={x + width - offset}
+                      y={y}
+                      textAnchor="end"
+                      fill="#000"
+                      fontSize={screen.width > 300 ? 16 : 10}
+                    >
+                      REMOVALS
+                    </text>
                   </g>
-                )
+                );
               },
             },
           },
@@ -94,15 +100,21 @@ export const parseConfig = createSelector(
             background: false,
             labelList: {
               content: (props) => {
-                const { x, y, width, height, value } = props;
-                const xPosition = x + (width + (width / 4))
+                // eslint-disable-next-line react/prop-types
+                const { x, y, width, height, offset } = props;
                 return (
-                  <g transform="translate(-36 45)">
-                   <text x={xPosition} y={y} textAnchor="middle" fill="#000">
-                   NET CARBON FLUX
-                   </text>
+                  <g transform={`translate(0 ${height / 2 + offset})`}>
+                    <text
+                      x={x + width - offset}
+                      y={y}
+                      textAnchor="end"
+                      fill="#000"
+                      fontSize={screen.width > 300 ? 16 : 10}
+                    >
+                      NET CARBON FLUX
+                    </text>
                   </g>
-                )
+                );
               },
             },
           },

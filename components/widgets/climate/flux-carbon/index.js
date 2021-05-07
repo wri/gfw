@@ -89,6 +89,7 @@ export default {
     initial:
       'Between {startYear} and {endYear}, forests in {location} emitted {totalEmissions}<strong>tCO2e/year</strong>, and removed {totalRemovals}<strong>tCO2e/year</strong>. This represents a net carbon flux of {totalFlux}<strong>tCO2e/year</strong>.',
   },
+  customComponent: 'CarbonFlux',
   settings: {
     gasesIncluded: 'allGases',
     threshold: 30,

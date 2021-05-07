@@ -56,6 +56,7 @@ class Widget extends PureComponent {
     geostore: PropTypes.object,
     settingsBtnConfig: PropTypes.object,
     status: PropTypes.string,
+    customComponent: PropTypes.string,
   };
 
   state = {
@@ -110,6 +111,7 @@ class Widget extends PureComponent {
       geostore,
       settingsBtnConfig,
       status,
+      customComponent,
     } = this.props;
 
     const { main } = colors || {};
@@ -157,6 +159,7 @@ class Widget extends PureComponent {
           shouldSettingsOpen={this.state.shouldSettingsOpen}
           toggleSettingsMenu={toggleSettingsMenu}
         />
+
         <WidgetBody
           widget={widget}
           chartType={chartType}
@@ -182,6 +185,7 @@ class Widget extends PureComponent {
           parseInteraction={parseInteraction}
           toggleSettingsMenu={toggleSettingsMenu}
           settingsBtnConfig={settingsBtnConfig}
+          customComponent={customComponent}
         />
         {sentence && data && (
           <WidgetFooter
