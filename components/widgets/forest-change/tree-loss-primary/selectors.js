@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import groupBy from 'lodash/groupBy';
 import { formatNumber } from 'utils/format';
 import {
   yearTicksFormatter,
@@ -8,7 +9,6 @@ import {
 } from 'components/widgets/utils/data';
 
 // get list data
-const getLoss = (state) => state.data && state.data.loss;
 const getExtent = (state) => state.data && state.data.extent;
 const getPrimaryLoss = (state) => state.data && state.data.primaryLoss;
 const getAdminLoss = (state) => state.data && state.data.adminLoss;
@@ -19,17 +19,24 @@ const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
 const getTitle = (state) => state.title;
 
+const sumByYear = (data) => {
+  const groupedByYear = groupBy(data, 'year');
+  const summedByYear = Object.entries(groupedByYear);
+  return summedByYear.map(([yearKey, valArr]) => ({
+    area: sumBy(valArr, 'area'),
+    year: parseInt(yearKey, 10),
+  }));
+};
+
 const parseData = createSelector(
-  [getAdminLoss, getPrimaryLoss, getLoss, getExtent, getSettings],
-  (adminLoss, primaryLoss, allLoss, extent, settings) => {
+  [getAdminLoss, getPrimaryLoss, getExtent, getSettings],
+  (adminLossData, primaryLossData, extentData, settings) => {
     if (
-      !extent ||
-      !adminLoss ||
-      isEmpty(adminLoss) ||
-      !primaryLoss ||
-      isEmpty(primaryLoss) ||
-      isEmpty(allLoss) ||
-      !allLoss
+      !extentData ||
+      !adminLossData ||
+      isEmpty(adminLossData) ||
+      !primaryLossData ||
+      isEmpty(primaryLossData)
     ) {
       return null;
     }
@@ -37,21 +44,21 @@ const parseData = createSelector(
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
       area: 0,
-      biomassLoss: 0,
-      bound1: null,
-      emissions: 0,
       percentage: 0,
     };
+
+    const primaryLoss = sumByYear(primaryLossData);
+    const adminLoss = sumByYear(adminLossData);
+
     const initalLossArr = primaryLoss.find((d) => d.year === 2002);
-    const initalLoss = initalLossArr
-      ? initalLossArr.umd_tree_cover_loss__ha
-      : 0;
+    const initalLoss = initalLossArr ? initalLossArr.area : 0;
     const totalAdminLoss =
       sumBy(
         adminLoss.filter((d) => d.year >= startYear && d.year <= endYear),
         'area'
       ) || 0;
 
+    const extent = (extentData.length && sumBy(extentData, 'extent')) || 0;
     let initalExtent = extent - initalLoss || 0;
     const initalExtent2001 = extent - initalLoss || 0;
 
@@ -70,7 +77,6 @@ const parseData = createSelector(
         initalExtent2001,
         totalLoss: totalAdminLoss,
         area: d.area || 0,
-        emissions: d.emissions || 0,
         extentRemainingHa: initalExtent,
         extentRemaining: (100 * initalExtent) / initalExtent2001,
       };
