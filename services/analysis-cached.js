@@ -465,7 +465,6 @@ export const getExtent = (params) => {
       url: getDownloadUrl(url),
     };
   }
-
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {

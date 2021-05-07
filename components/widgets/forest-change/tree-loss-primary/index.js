@@ -147,7 +147,7 @@ export default {
             adminLoss: adminLoss.data.data,
             loss: loss.data.data,
             primaryLoss: primaryLoss.data.data,
-            extent: (loss.data.data && extent.data.data[0].extent) || 0,
+            extent: (loss.data.data && extent.data.data) || [],
           };
         }
         const { startYear, endYear, range } = getYearsRangeFromMinMax(

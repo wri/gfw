@@ -163,15 +163,17 @@ export const parseSentence = createSelector(
     getIndicator,
     getSentences,
   ],
-  (data, extent, settings, locationLabel, indicator, sentences) => {
+  (data, extentData, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
     const { initial, withInd } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
+    const totalExtent =
+      (extentData && extentData.length && sumBy(extentData, 'extent')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
-      (totalLoss && extent && (totalLoss / extent) * 100) || 0;
+      (totalLoss && totalExtent && (totalLoss / totalExtent) * 100) || 0;
 
     const sentence = indicator ? withInd : initial;
 
