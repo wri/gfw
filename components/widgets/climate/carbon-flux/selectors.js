@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
-
 // get list data
 const getData = (state) => state.data;
 const getSettings = (state) => state.settings;
@@ -11,18 +10,35 @@ const getIndicator = (state) => state.indicator;
 const getLocationName = (state) => state.locationLabel;
 const getSentences = (state) => state.sentences;
 
+export const parseData = createSelector(
+  [getData, getSettings],
+  (totalData, settings) => {
+    if (!totalData) return null;
+    const { startYear, endYear } = settings;
+
+    // TODO: return as object
+    return [
+      totalData.length &&
+        Object.keys(totalData[0]).reduce((result, k) => {
+          result[k] = totalData[0][k] / (endYear - startYear);
+          return result;
+        }, {}),
+    ];
+  }
+);
+
 export const parseConfig = createSelector(
-  [getData, getColors, getSettings],
+  [parseData, getColors],
   (data, colors) => {
+    if (!data || isEmpty(data)) return null;
     const {
       carbonFlux: { emissions, netCarbonFlux, removals },
     } = colors;
-    if (!data) return null;
 
     const maxValue =
       Math.abs(
         Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
-      ) * 1.5;
+      ) * 1.2;
 
     const { flux: netFluxData } = data[0];
 
@@ -41,9 +57,9 @@ export const parseConfig = createSelector(
         domain: [-maxValue, maxValue],
         allowDecimals: false,
         ticks: [-maxValue, -maxValue / 2, 0, maxValue / 2, maxValue],
-        tickFormatter: (value) => format('.1s')(value),
+        tickFormatter: (value) => format('.2r')(value * 1e-9),
         label: {
-          value: 'GtCO2/year',
+          value: 'GtCO\u2082e/year',
           fontSize: '14px',
           position: 'bottom',
         },
@@ -126,24 +142,24 @@ export const parseConfig = createSelector(
       referenceLine: { x: 0, stroke: '#606060', strokeWidth: 2 },
       tooltip: [
         {
-          label: 'Carbon flux (tCO2/year)',
+          label: 'Carbon flux (per year)',
         },
         {
           key: 'emissions',
           label: 'Emissions',
-          unitFormat: (value) => format('.3s')(value),
+          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
           color: emissions,
         },
         {
           key: 'removals',
           label: 'Removals',
-          unitFormat: (value) => format('.3s')(value),
+          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
           color: removals,
         },
         {
           key: 'flux',
           label: 'Net',
-          unitFormat: (value) => format('.3s')(value),
+          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
           color: netCarbonFlux,
         },
       ],
@@ -168,15 +184,15 @@ export const parseSentence = createSelector(
       endYear,
       location: locationName,
       totalEmissions: formatNumber({
-        num: emissions / (endYear - startYear),
+        num: emissions,
         unit: 'tCO2',
       }),
       totalRemovals: formatNumber({
-        num: removals / (endYear - startYear),
+        num: removals,
         unit: 'tCO2',
       }),
       totalFlux: formatNumber({
-        num: flux / (endYear - startYear),
+        num: flux,
         unit: 'tCO2',
       }),
     };
@@ -188,7 +204,7 @@ export const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: getData,
+  data: parseData,
   config: parseConfig,
   sentence: parseSentence,
 });
