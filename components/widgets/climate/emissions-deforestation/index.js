@@ -84,7 +84,7 @@ export default {
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
-  metaKey: 'widget_carbon_emissions_tree_cover_loss',
+  metaKey: 'widget_gfw_forest_carbon_emissions',
   dataType: 'loss',
   colors: 'climate',
   sortOrder: {
