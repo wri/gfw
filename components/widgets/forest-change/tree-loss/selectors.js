@@ -21,8 +21,7 @@ const getSentence = (state) => state && state.sentence;
 const parseData = createSelector(
   [getLoss, getExtent, getSettings],
   (data, extentData, settings) => {
-    if (!data || isEmpty(data) || !extentData || isEmpty(extentData))
-      return null;
+    if (!data || isEmpty(data) || !extentData) return null;
     const { startYear, endYear } = settings;
 
     const extent = (extentData.length && extentData[0]?.extent) || 0;

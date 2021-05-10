@@ -49,7 +49,7 @@ const getOTFAnalysis = async (params) => {
         area: d.area__ha,
         year: d.umd_tree_cover_loss__year,
       })),
-      extent: extent?.data?.area__ha,
+      extent: extent?.data?.[0]?.area__ha,
       settings: {
         startYear,
         endYear,
@@ -194,7 +194,6 @@ export default {
         })
       );
     }
-
     return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
