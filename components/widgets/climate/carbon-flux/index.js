@@ -15,11 +15,9 @@ import {
   CARBON_EMISSIONS,
 } from 'data/layers';
 
-import treeLoss from 'components/widgets/forest-change/tree-loss';
 import getWidgetProps from './selectors';
 
 export default {
-  ...treeLoss,
   widget: 'carbonFlux',
   title: 'Forest-related greenhouse gas emissions in {location}',
   large: true,
