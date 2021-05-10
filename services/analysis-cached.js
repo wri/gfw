@@ -140,8 +140,6 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     ];
 
   if (typeof datasetId === 'undefined') {
-    // eslint-disable-next-line no-console
-    console.error('getRequestUrl: datasetID is undefined');
     return null;
   }
 
