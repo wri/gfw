@@ -138,6 +138,13 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
+
+  if (typeof datasetId === 'undefined') {
+    // eslint-disable-next-line no-console
+    console.error('getRequestUrl: datasetID is undefined');
+    return null;
+  }
+
   return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
 };
 
@@ -316,12 +323,19 @@ export const getLoss = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'change',
-    })}${query}`
+    `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -359,12 +373,18 @@ export const getEmissions = (params) => {
   const { forestType, landCategory, ifl, download, byDriver } = params || {};
   const { emissions, emissionsByDriver } = SQL_QUERIES;
   const query = byDriver ? emissionsByDriver : emissions;
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'change',
-    })}${query}`
+    `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -400,13 +420,20 @@ export const getEmissions = (params) => {
 // disaggregated loss for child of location
 export const getLossGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'change',
-      grouped: true,
-    })}${SQL_QUERIES.loss}`
+    `${requestUrl}${SQL_QUERIES.loss}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
@@ -441,12 +468,19 @@ export const getLossGrouped = (params) => {
 // summed extent for single location
 export const getExtent = (params) => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.extent}`
+    `${requestUrl}${SQL_QUERIES.extent}`
       .replace(/{extentYear}/g, extentYear)
       .replace(
         /{select_location}/g,
@@ -480,13 +514,20 @@ export const getExtent = (params) => {
 // disaggregated extent for child of location
 export const getExtentGrouped = (params) => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.extent}`
+    `${requestUrl}${SQL_QUERIES.extent}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
@@ -521,12 +562,19 @@ export const getExtentGrouped = (params) => {
 // summed gain for single location
 export const getGain = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.gain}`
+    `${requestUrl}${SQL_QUERIES.gain}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -560,13 +608,20 @@ export const getGain = (params) => {
 // disaggregated gain for child of location
 export const getGainGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.gain}`
+    `${requestUrl}${SQL_QUERIES.gain}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
@@ -603,12 +658,19 @@ export const getAreaIntersection = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.areaIntersection}`
+    `${requestUrl}${SQL_QUERIES.areaIntersection}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -652,13 +714,20 @@ export const getAreaIntersectionGrouped = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.areaIntersection}`
+    `${requestUrl}${SQL_QUERIES.areaIntersection}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
@@ -712,11 +781,18 @@ export const fetchHistoricalAlerts = (params) => {
     dataset,
   } = params || {};
   const { alertsDaily, alertsWeekly } = SQL_QUERIES;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    datasetType: frequency,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      datasetType: frequency,
-    })}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+    `${requestUrl}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -755,12 +831,19 @@ export const fetchHistoricalAlerts = (params) => {
 export const fetchHistoricalGladAlerts = (params) => {
   const { forestType, landCategory, ifl, download, startDate, endDate } =
     params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'daily',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'glad',
-      datasetType: 'daily',
-    })}${SQL_QUERIES.gladDaily}`
+    `${requestUrl}${SQL_QUERIES.gladDaily}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -798,12 +881,19 @@ export const fetchHistoricalGladAlerts = (params) => {
 
 export const fetchGladAlerts = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'weekly',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'glad',
-      datasetType: 'weekly',
-    })}${SQL_QUERIES.glad}`
+    `${requestUrl}${SQL_QUERIES.glad}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -866,10 +956,19 @@ export const fetchGLADLatest = () => {
 
 export const fetchVIIRSAlerts = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset,
+    datasetType: 'weekly',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
-      SQL_QUERIES.fires
-    }`
+    `${requestUrl}${SQL_QUERIES.fires}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -904,13 +1003,20 @@ export const fetchVIIRSAlerts = (params) => {
 
 export const fetchVIIRSAlertsGrouped = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset,
+    datasetType: 'weekly',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset,
-      datasetType: 'weekly',
-      grouped: true,
-    })}${SQL_QUERIES.firesGrouped}`
+    `${requestUrl}${SQL_QUERIES.firesGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
@@ -950,10 +1056,19 @@ export const fetchFiresWithin = (params) => {
   const { forestType, landCategory, ifl, download, dataset, weeks } =
     params || {};
   const filterYear = moment().subtract(weeks, 'weeks').year();
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset,
+    datasetType: 'weekly',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
-      SQL_QUERIES.firesWithin
-    }`
+    `${requestUrl}${SQL_QUERIES.firesWithin}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1005,13 +1120,20 @@ export const fetchVIIRSLatest = () =>
 // whrc biomass grouped by location
 export const getBiomassStockGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.biomassStockGrouped}`
+    `${requestUrl}${SQL_QUERIES.biomassStockGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
@@ -1046,12 +1168,19 @@ export const getBiomassStockGrouped = (params) => {
 // whrc biomass
 export const getBiomassStock = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.biomassStock}`
+    `${requestUrl}${SQL_QUERIES.biomassStock}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1113,9 +1242,13 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
-    SQL_QUERIES.getLocationPolynameWhitelist
-  }`
+  const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = `${requestUrl}${SQL_QUERIES.getLocationPolynameWhitelist}`
     .replace(/{select_location}/g, getLocationSelect({ ...params, cast: true }))
     .replace(/{location}/g, getLocationSelect(params))
     .replace(
