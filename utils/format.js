@@ -9,7 +9,7 @@ export const formatUSD = (value, minimize = true) =>
 export const formatNumber = ({ num, unit, precision }) => {
   if (unit === '') return format('.2f')(num);
   let p = unit === '%' ? '2' : '3';
-  if (unit === 'tCO2') return format('.3s')(num);
+  if (unit === 'tCO2') return `${format('.3s')(num)}tCO\u2082e`;
   if (precision && Number.isInteger(precision)) p = Math.abs(precision);
   let numFormat = unit === '%' ? `.${p}r` : `.${p}s`;
   if (unit === 'counts') numFormat = ',.0f';

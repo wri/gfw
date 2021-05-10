@@ -27,12 +27,6 @@ export default {
   chartType: 'composedChart',
   settingsConfig: [
     {
-      key: 'gasesIncluded',
-      label: 'Greenhouse gases included',
-      type: 'select',
-      border: true,
-    },
-    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -91,11 +85,9 @@ export default {
   },
   customComponent: 'CarbonFlux',
   settings: {
-    gasesIncluded: 'allGases',
     threshold: 30,
     startYear: 2001,
-    endYear: 2019, // or 2020
-    unit: 'co2Gain',
+    endYear: 2020,
   },
   whitelists: {
     adm0: biomassLossIsos,
