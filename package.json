@@ -105,7 +105,7 @@
     "jszip": "^3.2.2",
     "jszip-utils": "^0.1.0",
     "layer-manager": "^3.0.8",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "lottie-web": "^5.7.3",
     "luma.gl": "7.3.2",
     "mapbox-gl": "^1.11.1",
