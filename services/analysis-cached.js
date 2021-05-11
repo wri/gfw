@@ -140,7 +140,8 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     ];
 
   if (typeof datasetId === 'undefined') {
-    return null;
+    // TODO: Figure out why widgets are stale on loading, when not requesting info
+    // return null;
   }
 
   return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
