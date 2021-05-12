@@ -81,7 +81,7 @@ export const parseConfig = createSelector(
                       y={y}
                       textAnchor="start"
                       fill="#000"
-                      fontSize={screen.width > 300 ? 16 : 10}
+                      fontSize={14}
                     >
                       EMISSIONS
                     </text>
@@ -105,7 +105,7 @@ export const parseConfig = createSelector(
                       y={y}
                       textAnchor="end"
                       fill="#000"
-                      fontSize={screen.width > 300 ? 16 : 10}
+                      fontSize={14}
                     >
                       REMOVALS
                     </text>
@@ -128,7 +128,7 @@ export const parseConfig = createSelector(
                       y={y}
                       textAnchor="end"
                       fill="#000"
-                      fontSize={screen.width > 300 ? 16 : 10}
+                      fontSize={14}
                     >
                       {netFluxData > 0 ? 'NET EMISSIONS' : 'NET REMOVALS'}
                     </text>
