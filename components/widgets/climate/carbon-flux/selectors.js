@@ -40,7 +40,11 @@ export const parseConfig = createSelector(
         Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
       ) * 1.2;
 
-    const { flux: netFluxData } = data[0];
+    const {
+      emissions: emissionsData,
+      removals: removalsData,
+      flux: netFluxData,
+    } = data[0];
 
     return {
       height: 250,
@@ -54,7 +58,7 @@ export const parseConfig = createSelector(
       },
       xAxis: {
         type: 'number',
-        domain: [-maxValue, maxValue],
+        domain: [-maxValue - 100000000, maxValue + 100000000],
         allowDecimals: false,
         ticks: [-maxValue, -maxValue / 2, 0, maxValue / 2, maxValue],
         tickFormatter: (value) => format('.2r')(value * 1e-9),
@@ -77,9 +81,13 @@ export const parseConfig = createSelector(
                 return (
                   <g transform={`translate(0 ${height / 2 + offset})`}>
                     <text
-                      x={x + width + offset}
+                      x={
+                        emissionsData > 0
+                          ? x + width + offset
+                          : x + width - offset
+                      }
                       y={y}
-                      textAnchor="start"
+                      textAnchor={emissionsData > 0 ? 'start' : 'end'}
                       fill="#000"
                       fontSize={14}
                     >
@@ -101,9 +109,13 @@ export const parseConfig = createSelector(
                 return (
                   <g transform={`translate(0 ${height / 2 + offset})`}>
                     <text
-                      x={x + width - offset}
+                      x={
+                        removalsData > 0
+                          ? x + width + offset
+                          : x + width - offset
+                      }
                       y={y}
-                      textAnchor="end"
+                      textAnchor={removalsData > 0 ? 'start' : 'end'}
                       fill="#000"
                       fontSize={14}
                     >
@@ -124,9 +136,13 @@ export const parseConfig = createSelector(
                 return (
                   <g transform={`translate(0 ${height / 2 + offset})`}>
                     <text
-                      x={x + width - offset}
+                      x={
+                        netFluxData > 0
+                          ? x + width + offset
+                          : x + width - offset
+                      }
                       y={y}
-                      textAnchor="end"
+                      textAnchor={netFluxData > 0 ? 'start' : 'end'}
                       fill="#000"
                       fontSize={14}
                     >
