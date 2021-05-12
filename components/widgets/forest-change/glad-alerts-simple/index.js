@@ -1,4 +1,3 @@
-import { all, spread } from 'axios';
 import moment from 'moment';
 import tropicalIsos from 'data/tropical-isos.json';
 
@@ -16,7 +15,7 @@ import {
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
 // function for retreiving glad alerts from tables
-import { fetchGladAlertsSum, fetchGLADLatest } from 'services/analysis-cached';
+import { fetchGladAlertsSum } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -97,58 +96,68 @@ export default {
   },
   getData: (params) => {
     const { GLAD } = params.GFW_META.datasets;
-    const defaultStartDate = GLAD?.defaultStartDate
-    const defaultEndDate = GLAD?.defaultEndDate
+    const defaultStartDate = GLAD?.defaultStartDate;
+    const defaultEndDate = GLAD?.defaultEndDate;
     if (shouldQueryPrecomputedTables(params)) {
-      return fetchGladAlertsSum({ ...params, startDate: defaultStartDate, endDate: defaultEndDate}).then(
-        (alerts) => {
-          const gladsData = alerts && alerts.data.data;
-          let data = {};
-          if (gladsData && GLAD) {
-            data = {
-              alerts: gladsData,
-              settings: {
-                startDate: defaultStartDate,
-                endDate: defaultEndDate
-              },
-              options: {
-                minDate: '2015-01-01',
-                maxDate: defaultEndDate,
-              },
-            };
-          }
-          return data;
-        })
+      return fetchGladAlertsSum({
+        ...params,
+        startDate: defaultStartDate,
+        endDate: defaultEndDate,
+      }).then((alerts) => {
+        const gladsData = alerts && alerts.data.data;
+        let data = {};
+        if (gladsData && GLAD) {
+          data = {
+            alerts: gladsData,
+            settings: {
+              startDate: defaultStartDate,
+              endDate: defaultEndDate,
+            },
+            options: {
+              minDate: '2015-01-01',
+              maxDate: defaultEndDate,
+            },
+          };
+        }
+        return data;
+      });
     }
     return fetchAnalysisEndpoint({
-        ...params,
-        params,
-        name: 'glad-alerts',
-        slug: 'glad-alerts',
-        version: 'v1',
-        aggregate: true,
-        aggregateBy: 'days',
-      }).then((alertsResponse) => {
-        const alerts = alertsResponse.data.data.attributes.value;
-        const { downloadUrls } = alertsResponse.data.data.attributes;
-        return {
-          alerts:
-            alerts &&
-            alerts.map((d) => ({
-              ...d,
-              alerts: d.count,
-            })),
-          latest: defaultEndDate,
-          settings: { defaultEndDate },
-          downloadUrls,
-        };
-      })
+      ...params,
+      params,
+      name: 'glad-alerts',
+      slug: 'glad-alerts',
+      version: 'v1',
+      aggregate: true,
+      aggregateBy: 'days',
+    }).then((alertsResponse) => {
+      const alerts = alertsResponse.data.data.attributes.value;
+      const { downloadUrls } = alertsResponse.data.data.attributes;
+      return {
+        alerts:
+          alerts &&
+          alerts.map((d) => ({
+            ...d,
+            alerts: d.count,
+          })),
+        latest: defaultEndDate,
+        settings: { defaultEndDate },
+        downloadUrls,
+      };
+    });
   },
   getDataURL: (params) => {
     const { GLAD } = params.GFW_META.datasets;
-    const defaultStartDate = GLAD?.defaultStartDate
-    const defaultEndDate = GLAD?.defaultEndDate
-    return [fetchGladAlertsSum({ ...params, startDate: defaultStartDate, endDate: defaultEndDate, download: true})]
+    const defaultStartDate = GLAD?.defaultStartDate;
+    const defaultEndDate = GLAD?.defaultEndDate;
+    return [
+      fetchGladAlertsSum({
+        ...params,
+        startDate: defaultStartDate,
+        endDate: defaultEndDate,
+        download: true,
+      }),
+    ];
   },
   getWidgetProps,
   parseInteraction: (payload) => {

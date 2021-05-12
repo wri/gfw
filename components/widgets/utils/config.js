@@ -386,7 +386,7 @@ export const getStatements = ({
       : null,
     dataType === 'glad' && type === 'country'
       ? translateText(
-          'Caution: GLAD alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image. Learn more here.'
+          'GLAD alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image. Learn more here.'
         )
       : null,
     ...(indicatorStatements || []),
