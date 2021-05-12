@@ -19,7 +19,7 @@ import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import firesOTF from 'components/widgets/fires/fires';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
-import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical';
+import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical-weekly';
 import firesAlertsHistoricalDaily from 'components/widgets/fires/fires-alerts-historical-daily';
 import firesRanked from 'components/widgets/fires/fires-ranked';
 import firesAlertsSimple from 'components/widgets/fires/fire-alerts-simple';

@@ -19,9 +19,28 @@ class WidgetCaution extends PureComponent {
   }
 
   render() {
-    const { caution } = this.props;
+    const {
+      caution: { text, link, linkText },
+    } = this.props;
+    if (this.isVisible() && linkText) {
+      const htmlTextArray = text && linkText && text.split(`{${linkText}}`);
+      return (
+        <div className="c-widget-caution">
+          {htmlTextArray[0]}
+          <a
+            className="caution-link"
+            rel="noopener noreferrer"
+            href={link}
+            target="_blank"
+          >
+            {linkText}
+          </a>
+          {htmlTextArray[1]}
+        </div>
+      );
+    }
     if (this.isVisible()) {
-      return <div className="c-widget-caution">{caution.text}</div>;
+      return <div className="c-widget-caution">{text}</div>;
     }
 
     return null;

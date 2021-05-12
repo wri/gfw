@@ -63,6 +63,7 @@ export const fetchDatasets = createThunkAction(
               isMultiSelectorLayer,
               isLossLayer,
               isLossDriverLayer,
+              isKbaLayer,
             } = info || {};
             const { iso, applicationConfig } = defaultLayer || {};
             const { global, selectorConfig } = applicationConfig || {};
@@ -79,6 +80,10 @@ export const fetchDatasets = createThunkAction(
             } else if (isLossDriverLayer) {
               statementConfig = {
                 type: 'lossDriverLayer',
+              };
+            } else if (isKbaLayer) {
+              statementConfig = {
+                type: 'kbaLayer',
               };
             } else if (global && !!iso.length && iso[0]) {
               statementConfig = {

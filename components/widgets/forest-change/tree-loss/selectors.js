@@ -20,9 +20,12 @@ const getSentence = (state) => state && state.sentence;
 
 const parseData = createSelector(
   [getLoss, getExtent, getSettings],
-  (data, extent, settings) => {
-    if (!data || isEmpty(data)) return null;
+  (data, extentData, settings) => {
+    if (!data || isEmpty(data) || !extentData) return null;
     const { startYear, endYear } = settings;
+
+    const extent = (extentData.length && extentData[0]?.extent) || 0;
+
     return data
       .filter((d) => d.year >= startYear && d.year <= endYear)
       .map((d) => {
@@ -99,7 +102,15 @@ const parseSentence = createSelector(
     getIndicator,
     getSentence,
   ],
-  (data, extent, settings, tropical, locationLabel, indicator, sentences) => {
+  (
+    data,
+    extentData,
+    settings,
+    tropical,
+    locationLabel,
+    indicator,
+    sentences
+  ) => {
     if (!data) return null;
     const {
       initial,
@@ -109,6 +120,7 @@ const parseSentence = createSelector(
       co2Emissions,
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
+    const extent = (extentData.length && extentData[0]?.extent) || 0;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
