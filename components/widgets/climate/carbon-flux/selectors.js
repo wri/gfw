@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 const getData = (state) => state.data;
 const getSettings = (state) => state.settings;
 const getColors = (state) => state.colors;
+const getIndicator = (state) => state.indicator;
 const getLocationName = (state) => state.locationLabel;
 const getSentences = (state) => state.sentences;
 
@@ -22,6 +23,8 @@ export const parseConfig = createSelector(
       Math.abs(
         Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
       ) * 1.5;
+
+    const { flux: netFluxData } = data[0];
 
     return {
       height: 250,
@@ -111,7 +114,7 @@ export const parseConfig = createSelector(
                       fill="#000"
                       fontSize={screen.width > 300 ? 16 : 10}
                     >
-                      NET CARBON FLUX
+                      {netFluxData > 0 ? 'NET EMISSIONS' : 'NET REMOVALS'}
                     </text>
                   </g>
                 );
@@ -149,18 +152,18 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getSentences, getLocationName],
-  (data, sentences, locationName) => {
+  [getData, getSentences, getIndicator, getLocationName],
+  (data, sentences, indicator, locationName) => {
     if (!data || isEmpty(data)) return null;
 
-    const { initial } = sentences;
-    // if multiple sentences - implement logic
+    const { initial, withIndicator } = sentences;
 
     const startYear = 2001;
     const endYear = 2020;
     const { emissions, removals, flux } = data[0];
 
     const params = {
+      indicator: indicator && indicator.label,
       startYear,
       endYear,
       location: locationName,
@@ -177,7 +180,10 @@ export const parseSentence = createSelector(
         unit: 'tCO2',
       }),
     };
-    return { sentence: initial, params };
+    return {
+      sentence: indicator ? withIndicator : initial,
+      params,
+    };
   }
 );
 
