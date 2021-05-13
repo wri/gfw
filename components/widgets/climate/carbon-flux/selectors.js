@@ -161,20 +161,20 @@ export const parseConfig = createSelector(
           label: 'Carbon flux (per year)',
         },
         {
-          key: 'emissions',
-          label: 'Emissions',
-          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
-          color: emissions,
-        },
-        {
           key: 'removals',
           label: 'Removals',
           unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
           color: removals,
         },
         {
+          key: 'emissions',
+          label: 'Emissions',
+          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
+          color: emissions,
+        },
+        {
           key: 'flux',
-          label: 'Net',
+          label: netFluxData > 0 ? 'Net emissions' : 'Net removals',
           unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
           color: netCarbonFlux,
         },
