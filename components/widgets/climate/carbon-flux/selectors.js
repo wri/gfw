@@ -20,7 +20,7 @@ export const parseData = createSelector(
     return [
       totalData.length &&
         Object.keys(totalData[0]).reduce((result, k) => {
-          result[k] = totalData[0][k] / (endYear - startYear);
+          result[k] = totalData[0][k] / (endYear - startYear + 1);
           return result;
         }, {}),
     ];
@@ -191,15 +191,14 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getSentences, getIndicator, getLocationName],
-  (data, sentences, indicator, locationName) => {
+  [getData, getSentences, getIndicator, getLocationName, getSettings],
+  (data, sentences, indicator, locationName, settings) => {
     if (!data || isEmpty(data)) return null;
 
     const { initial, withIndicator } = sentences;
+    const { startYear, endYear } = settings;
 
-    const startYear = 2001;
-    const endYear = 2020;
-    const yearTotal = endYear - startYear;
+    const yearTotal = endYear - startYear + 1;
     const { emissions, removals, flux } = data[0];
 
     const params = {
