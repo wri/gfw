@@ -34,9 +34,9 @@
     "ramp": [ "#EDD093", "#BFBC35", "#007F53", "#123A33"],
     "carbon": ["#895122", "#898522", "#892227"],
     "carbonFlux": {
-      "emissions": "#895122",
-      "netCarbonFlux": "#898522",
-      "removals": "#892227"
+      "emissions": "#892227",
+      "netCarbonFlux": "#895122",
+      "removals": "#898522"
     },
     "loss": {
       "main": "#DF511E",

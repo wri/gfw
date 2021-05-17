@@ -2,8 +2,7 @@ import { getCarbonFlux } from 'services/analysis-cached';
 
 // import OTFAnalysis from 'services/otf-analysis';
 
-import biomassLossIsos from 'data/biomass-isos.json';
-
+// TODO: carbon flux layer&dataset
 import {
   POLITICAL_BOUNDARIES_DATASET,
   CARBON_EMISSIONS_DATASET,
@@ -19,11 +18,12 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'carbonFlux',
-  title: 'Forest-related greenhouse gas emissions in {location}',
+  // TODO: global title
+  title: 'Forest-related greenhouse gas fluxes in {location}',
   large: true,
   categories: ['climate'],
-  types: ['country', 'aoi', 'use', 'wdpa'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['global', 'country', 'aoi', 'use', 'wdpa'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   settingsConfig: [
     {
@@ -72,12 +72,13 @@ export default {
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
   metaKey: 'gfw_widget_forest_carbon_net_flux',
-  dataType: 'loss',
+  dataType: 'flux',
   colors: 'climate',
   sortOrder: {
     climate: 2,
   },
   sentences: {
+    // TODO: global sentence
     initial:
       'Between {startYear} and {endYear}, forests in {location} emitted {totalEmissions}<strong>tCO2e/year</strong>, and removed {totalRemovals}<strong>tCO2e/year</strong>. This represents a net carbon flux of {totalFlux}<strong>tCO2e/year</strong>.',
     withIndicator:
@@ -89,9 +90,7 @@ export default {
     startYear: 2001,
     endYear: 2020,
   },
-  whitelists: {
-    adm0: biomassLossIsos,
-  },
+  whitelists: {},
   getData: (params) => {
     return getCarbonFlux(params).then((flux) => {
       if (!flux || !flux.length) return [];
