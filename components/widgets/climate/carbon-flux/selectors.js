@@ -35,16 +35,20 @@ export const parseConfig = createSelector(
       carbonFlux: { emissions, netCarbonFlux, removals },
     } = colors;
 
-    const maxValue =
+    const maxValue = Math.ceil(
       Math.abs(
         Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
-      ) * 1.2;
+        ) * 1.2
+      );
 
     const {
       emissions: emissionsData,
       removals: removalsData,
       flux: netFluxData,
     } = data[0];
+
+    const ticks = 6;
+
 
     return {
       height: 250,
@@ -60,7 +64,10 @@ export const parseConfig = createSelector(
         type: 'number',
         domain: [-maxValue - 100000000, maxValue + 100000000],
         allowDecimals: false,
-        ticks: [-maxValue, -maxValue / 2, 0, maxValue / 2, maxValue],
+        // TODO: 0.5 interval ticks
+        ticks: Array.from({ length: ticks + 1 }, (v, k) =>
+          Math.ceil((2 * k * maxValue) / ticks - maxValue)
+        ),
         tickFormatter: (value) => format('.2r')(value * 1e-9),
         label: {
           value: 'GtCO\u2082e/year',
@@ -192,6 +199,7 @@ export const parseSentence = createSelector(
 
     const startYear = 2001;
     const endYear = 2020;
+    const yearTotal = endYear - startYear;
     const { emissions, removals, flux } = data[0];
 
     const params = {
@@ -200,15 +208,15 @@ export const parseSentence = createSelector(
       endYear,
       location: locationName,
       totalEmissions: formatNumber({
-        num: emissions,
+        num: emissions / yearTotal,
         unit: 'tCO2',
       }),
       totalRemovals: formatNumber({
-        num: removals,
+        num: removals / yearTotal,
         unit: 'tCO2',
       }),
       totalFlux: formatNumber({
-        num: flux,
+        num: flux / yearTotal,
         unit: 'tCO2',
       }),
     };
