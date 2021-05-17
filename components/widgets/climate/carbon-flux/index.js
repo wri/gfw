@@ -5,13 +5,13 @@ import { getCarbonFlux } from 'services/analysis-cached';
 // TODO: carbon flux layer&dataset
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  CARBON_EMISSIONS_DATASET,
+  CARBON_FLUX_DATASET,
 } from 'data/datasets';
 
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  CARBON_EMISSIONS,
+  CARBON_FLUX,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -64,8 +64,8 @@ export default {
       boundary: true,
     },
     {
-      dataset: CARBON_EMISSIONS_DATASET,
-      layers: [CARBON_EMISSIONS],
+      dataset: CARBON_FLUX_DATASET,
+      layers: [CARBON_FLUX],
     },
   ],
   pendingKeys: ['threshold'],
