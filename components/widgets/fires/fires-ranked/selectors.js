@@ -201,7 +201,9 @@ export const parseSentence = createSelector(
     const topRegionCount = data[0].counts || 0;
     const topRegionVariance = data[0].significance || 0;
     const topRegionDensity = data[0].density || 0;
-    const topRegionPerc = (100 * topRegionCount) / sumBy(data, 'counts');
+    const topRegionPerc =
+      topRegionCount === 0 ? 0 : (100 * topRegionCount) / sumBy(data, 'counts');
+
     const timeFrame = optionsSelected.weeks;
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
