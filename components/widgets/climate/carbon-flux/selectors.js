@@ -32,7 +32,7 @@ export const parseConfig = createSelector(
   (data, colors) => {
     if (!data || isEmpty(data)) return null;
     const {
-      carbonFlux: { emissions, netCarbonFlux, removals },
+      carbonFlux: { emissions, netEmissions, removals, netRemovals },
     } = colors;
 
     const maxValue = Math.ceil(
@@ -134,7 +134,7 @@ export const parseConfig = createSelector(
             },
           },
           flux: {
-            fill: netCarbonFlux,
+            fill: netFluxData > 0 ? netEmissions : netRemovals,
             background: false,
             labelList: {
               content: (props) => {
@@ -183,7 +183,7 @@ export const parseConfig = createSelector(
           key: 'flux',
           label: netFluxData > 0 ? 'Net emissions' : 'Net removals',
           unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
-          color: netCarbonFlux,
+          color: netFluxData > 0 ? netEmissions : netRemovals,
         },
       ],
     };
