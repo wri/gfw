@@ -23,6 +23,8 @@ const SQL_QUERIES = {
     'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  extentGlobal:
+    'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE}',
   gain:
     'SELECT {select_location}, SUM("umd_tree_cover_gain_2000-2012__ha") AS "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
@@ -466,8 +468,8 @@ export const getLossGrouped = (params) => {
 
 // summed extent for single location
 export const getExtent = (params) => {
-  const { forestType, landCategory, ifl, download, extentYear } = params || {};
-
+  const { forestType, landCategory, ifl, download, extentYear, type } =
+    params || {};
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -477,9 +479,10 @@ export const getExtent = (params) => {
   if (!requestUrl) {
     return new Promise(() => {});
   }
-
+  const rawQuery =
+    type === 'global' ? SQL_QUERIES.extentGlobal : SQL_QUERIES.extent;
   const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.extent}`
+    `${requestUrl}${rawQuery}`
       .replace(/{extentYear}/g, extentYear)
       .replace(
         /{select_location}/g,
@@ -535,7 +538,6 @@ export const getExtentGrouped = (params) => {
       .replace(/{extentYear}/g, extentYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
-
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {

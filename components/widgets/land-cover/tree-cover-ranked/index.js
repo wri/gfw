@@ -101,7 +101,7 @@ export default {
       adm2: null,
     };
     const getAdminLevel = () => {
-      let adminKey = 'adm0';
+      let adminKey = 'iso';
       if (adm2) adminKey = 'adm2';
       else if (adm1) adminKey = 'adm1';
       return adminKey;
