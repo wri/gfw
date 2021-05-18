@@ -538,7 +538,6 @@ export const getExtentGrouped = (params) => {
       .replace(/{extentYear}/g, extentYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
-
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
