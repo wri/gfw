@@ -127,11 +127,16 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 // build the base query for the query with the correct dataset id
 const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   let typeByLevel = type;
-  if (type === 'country' || type === 'global') {
+
+  if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
+  }
+
+  if (type === 'global') {
+    typeByLevel = typeByGrouped.global[grouped ? 'grouped' : 'default'];
   }
 
   const datasetId =
