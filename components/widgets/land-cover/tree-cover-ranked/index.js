@@ -100,6 +100,12 @@ export default {
       adm1: adm1 && !adm2 ? null : adm1,
       adm2: null,
     };
+    const getAdminLevel = () => {
+      let adminKey = 'iso';
+      if (adm2) adminKey = 'adm2';
+      else if (adm1) adminKey = 'adm1';
+      return adminKey;
+    };
     return getExtentGrouped({ ...rest, ...parentLocation }).then((response) => {
       const { data } = response.data;
       let mappedData = [];
@@ -108,7 +114,7 @@ export default {
           const area = item.total_area || 0;
           const extent = item.extent || 0;
           return {
-            id: item.iso,
+            id: item[getAdminLevel()],
             extent,
             area,
             percentage: extent ? (100 * extent) / area : 0,

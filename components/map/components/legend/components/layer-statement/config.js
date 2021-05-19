@@ -14,6 +14,9 @@ export default {
     statementPlain: 'This layer is only available for ',
     statementHighlight: 'certain countries.',
   },
+  kbaLayer: {
+    statementPlain: 'non-commercial use only',
+  },
   lossDriverLayer: {
     statementHighlight: 'Hover for details on drivers classes.',
     tooltipDesc: `Commodity driven deforestation: Large-scale deforestation linked primarily to commercial agricultural expansion.\n

@@ -5,48 +5,51 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
-import { GFW_API } from 'utils/apis';
+import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
-  loss:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
-  lossGrouped:
-    'SELECT umd_tree_cover_loss__year, SUM(whrc_aboveground_biomass_loss__Mg) as whrc_aboveground_biomass_loss__Mg, SUM(whrc_aboveground_co2_emissions__Mg) AS whrc_aboveground_co2_emissions__Mg, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+  loss:
+    'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  emissions:
+    'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  emissionsByDriver:
+    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   extent:
-    'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
-  extentGrouped:
-    'SELECT {location}, SUM(umd_tree_cover_extent_{extentYear}__ha) as umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  extentGlobal:
+    'SELECT SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE}',
   gain:
-    'SELECT SUM(umd_tree_cover_gain_2000-2012__ha) as umd_tree_cover_gain_2000-2012__ha, SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE}',
-  gainGrouped:
-    'SELECT {location}, SUM(umd_tree_cover_gain_2000-2012__ha) as umd_tree_cover_gain_2000-2012__ha, SUM(umd_tree_cover_extent_2000__ha) as umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM("umd_tree_cover_gain_2000-2012__ha") AS "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
-    'SELECT {location}, SUM(area__ha) as area__ha, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY area__ha DESC',
+    'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  gladDaily: `SELECT {location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   fires:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesGrouped:
-    'SELECT {location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
-    'SELECT {location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
+    'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE}',
+    'SELECT {select_location}, {polynames} FROM data {WHERE}',
   alertsWeekly:
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year, confidence__cat ORDER BY alert__year DESC, alert__week DESC',
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date, confidence__cat ORDER BY alert__date DESC",
   biomassStock:
-    'SELECT SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
+    'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
-    'SELECT {location}, SUM(whrc_aboveground_biomass_stock_2000__Mg) AS whrc_aboveground_biomass_stock_2000__Mg, SUM(whrc_aboveground_co2_stock_2000__Mg) AS whrc_aboveground_co2_stock_2000__Mg, SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -126,26 +129,55 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 // build the base query for the query with the correct dataset id
 const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   let typeByLevel = type;
-  if (type === 'country' || type === 'global') {
+
+  if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
 
+  if (type === 'global') {
+    typeByLevel = typeByGrouped.global[grouped ? 'grouped' : 'default'];
+  }
+
   const datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
-  return `${GFW_API}/query/${datasetId}?sql=`;
+
+  if (typeof datasetId === 'undefined') {
+    // TODO: Figure out why widgets are stale on loading, when not requesting info
+    // return null;
+  }
+
+  return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
+};
+
+const getDownloadUrl = (url) => {
+  try {
+    const queryUrl = new URL(url);
+    queryUrl.pathname = queryUrl.pathname.replace('query', 'download/csv');
+    return queryUrl.toString();
+  } catch {
+    return null; // invalid url, front end should deal with this
+  }
 };
 
 // build {select} from location params
-const getLocationSelect = ({ type, adm0, adm1, adm2, grouped }) => {
+const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast }) => {
   if (type === 'wdpa') return 'wdpa_protected_area__id';
   if (['geostore', 'use'].includes(type)) return 'geostore__id';
-  if (grouped) return `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
-  return `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
+
+  let locationString = `iso${adm1 ? ', adm1{castTemplate}' : ''}${
+    adm2 ? ', adm2{castTemplate}' : ''
+  }`;
+  const castString = cast ? '::integer' : '';
+  if (grouped)
+    locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
+      adm1 ? ', adm2{castTemplate}' : ''
+    }`;
+  return locationString.replace(/{castTemplate}/g, castString);
 };
 
 // build {where} statement for query
@@ -172,11 +204,11 @@ export const getWHEREQuery = (params) => {
 
       /* TODO
        perform better casting / allow to configure types:
-       as for example wdpa_protected_area__id needs to be a string,
-       even that it evaluates as a number.
+       AS for example wdpa_protected_area__id needs to be a string,
+       even that it evaluates AS a number.
        Note that the postgres tables will allow us to cast at the query level.
       */
-      const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
+      // const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
       let isNumericValue = !!(
         typeof value === 'number' ||
         (!isNaN(value) && !['adm0', 'confidence'].includes(p))
@@ -186,6 +218,8 @@ export const getWHEREQuery = (params) => {
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') paramKey = 'umd_tree_cover_density__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
+      if (p === 'adm1' && type === 'country') paramKey = 'adm1::integer';
+      if (p === 'adm2' && type === 'country') paramKey = 'adm2::integer';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') {
         paramKey = 'wdpa_protected_area__id';
@@ -197,7 +231,7 @@ export const getWHEREQuery = (params) => {
           isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
         }${
         isPolyname && !tableKey.includes('is__')
-          ? `${tableKey} <> ${zeroString}`
+          ? `${tableKey} IS NOT NULL`
           : ''
       }${
         isPolyname &&
@@ -295,15 +329,25 @@ export const getLoss = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'change',
-    })}${query}`.replace(
-      '{WHERE}',
-      getWHEREQuery({ ...params, dataset: 'annual' })
-    )
+    `${requestUrl}${query}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
   if (download) {
@@ -312,7 +356,7 @@ export const getLoss = (params) => {
       name: `treecover_loss${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -324,8 +368,56 @@ export const getLoss = (params) => {
         bound1: d.tsc_tree_cover_loss_drivers__type,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
-        emissions: d.whrc_aboveground_co2_emissions__Mg,
-        biomassLoss: d.whrc_aboveground_biomass_loss__Mg,
+        emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+// summed loss for single location
+export const getEmissions = (params) => {
+  const { forestType, landCategory, ifl, download, byDriver } = params || {};
+  const { emissions, emissionsByDriver } = SQL_QUERIES;
+  const query = byDriver ? emissionsByDriver : emissions;
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${query}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `Forest_related_GHG_emissions${
+        byDriver ? '_by_dominant_driver' : ''
+      }${indicator ? `_in_${snakeCase(indicator.label)}` : ''}`,
+      url: getDownloadUrl(url),
+    };
+  }
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        bound1: d.tsc_tree_cover_loss_drivers__type,
+        year: d.umd_tree_cover_loss__year,
+        allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
+        co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
+        nonCo2Gases: d.gfw_gross_emissions_co2e_non_co2__Mg,
       })),
     },
   }));
@@ -334,14 +426,25 @@ export const getLoss = (params) => {
 // disaggregated loss for child of location
 export const getLossGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'change',
-      grouped: true,
-    })}${SQL_QUERIES.lossGrouped}`
+    `${requestUrl}${SQL_QUERIES.loss}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -351,7 +454,7 @@ export const getLossGrouped = (params) => {
       name: `treecover_loss_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -362,8 +465,7 @@ export const getLossGrouped = (params) => {
         ...d,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
-        emissions: d.whrc_aboveground_co2_emissions__Mg,
-        biomassLoss: d.whrc_aboveground_biomass_loss__Mg,
+        emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
       })),
     },
   }));
@@ -371,14 +473,27 @@ export const getLossGrouped = (params) => {
 
 // summed extent for single location
 export const getExtent = (params) => {
-  const { forestType, landCategory, ifl, download, extentYear } = params || {};
+  const { forestType, landCategory, ifl, download, extentYear, type } =
+    params || {};
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+  const rawQuery =
+    type === 'global' ? SQL_QUERIES.extentGlobal : SQL_QUERIES.extent;
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.extent}`
+    `${requestUrl}${rawQuery}`
       .replace(/{extentYear}/g, extentYear)
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -388,10 +503,9 @@ export const getExtent = (params) => {
       name: `treecover_extent_${extentYear}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
-
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
@@ -407,25 +521,35 @@ export const getExtent = (params) => {
 // disaggregated extent for child of location
 export const getExtentGrouped = (params) => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.extentGrouped}`
+    `${requestUrl}${SQL_QUERIES.extent}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace(/{extentYear}/g, extentYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
-
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
       name: `treecover_extent_${extentYear}_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -444,15 +568,25 @@ export const getExtentGrouped = (params) => {
 // summed gain for single location
 export const getGain = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.gain}`.replace(
-      '{WHERE}',
-      getWHEREQuery({ ...params, dataset: 'annual' })
-    )
+    `${requestUrl}${SQL_QUERIES.gain}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
   if (download) {
@@ -461,7 +595,7 @@ export const getGain = (params) => {
       name: `treecover_gain_2000-2012${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -480,14 +614,25 @@ export const getGain = (params) => {
 // disaggregated gain for child of location
 export const getGainGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.gainGrouped}`
+    `${requestUrl}${SQL_QUERIES.gain}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -497,7 +642,7 @@ export const getGainGrouped = (params) => {
       name: `treecover_gain_2000-2012_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -519,16 +664,28 @@ export const getAreaIntersection = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.areaIntersection}`
+    `${requestUrl}${SQL_QUERIES.areaIntersection}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
         /{intersection}/g,
-        intersectionPolyname.tableKey || intersectionPolyname.tableKeys.annual
+        `, ${intersectionPolyname.tableKey}` ||
+          `, ${intersectionPolyname.tableKeys.annual}`
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -539,7 +696,7 @@ export const getAreaIntersection = (params) => {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -563,19 +720,30 @@ export const getAreaIntersectionGrouped = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.areaIntersection}`
+    `${requestUrl}${SQL_QUERIES.areaIntersection}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace(
         /{intersection}/g,
         intersectionPolyname
-          ? intersectionPolyname.tableKey ||
-              intersectionPolyname.tableKeys.annual
+          ? `, ${intersectionPolyname.tableKey}` ||
+              `, ${intersectionPolyname.tableKeys.annual}`
           : ''
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -587,7 +755,7 @@ export const getAreaIntersectionGrouped = (params) => {
       name: `treecover_extent_in_${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }_by_region__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -619,11 +787,22 @@ export const fetchHistoricalAlerts = (params) => {
     dataset,
   } = params || {};
   const { alertsDaily, alertsWeekly } = SQL_QUERIES;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    datasetType: frequency,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      datasetType: frequency,
-    })}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+    `${requestUrl}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery(params))
       .replace(/{dateFilter}/g, getDatesFilter(params))
@@ -637,7 +816,7 @@ export const fetchHistoricalAlerts = (params) => {
       name: `${dataset}_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
   return apiRequest.get(url).then((response) => ({
@@ -658,12 +837,23 @@ export const fetchHistoricalAlerts = (params) => {
 export const fetchHistoricalGladAlerts = (params) => {
   const { forestType, landCategory, ifl, download, startDate, endDate } =
     params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'daily',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'glad',
-      datasetType: 'daily',
-    })}${SQL_QUERIES.gladDaily}`
+    `${requestUrl}${SQL_QUERIES.gladDaily}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
       .replace('{startDate}', startDate)
@@ -676,7 +866,7 @@ export const fetchHistoricalGladAlerts = (params) => {
       name: `glad_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -697,12 +887,23 @@ export const fetchHistoricalGladAlerts = (params) => {
 
 export const fetchGladAlerts = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'weekly',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'glad',
-      datasetType: 'weekly',
-    })}${SQL_QUERIES.glad}`
+    `${requestUrl}${SQL_QUERIES.glad}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
@@ -713,7 +914,7 @@ export const fetchGladAlerts = (params) => {
       name: `glad_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -761,10 +962,23 @@ export const fetchGLADLatest = () => {
 
 export const fetchVIIRSAlerts = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset,
+    datasetType: 'weekly',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
-      SQL_QUERIES.fires
-    }`
+    `${requestUrl}${SQL_QUERIES.fires}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
   );
@@ -775,7 +989,7 @@ export const fetchVIIRSAlerts = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -795,14 +1009,25 @@ export const fetchVIIRSAlerts = (params) => {
 
 export const fetchVIIRSAlertsGrouped = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset,
+    datasetType: 'weekly',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset,
-      datasetType: 'weekly',
-      grouped: true,
-    })}${SQL_QUERIES.firesGrouped}`
+    `${requestUrl}${SQL_QUERIES.firesGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace(/{dateFilter}/g, getWeeksFilter(params))
       .replace(
         '{WHERE}',
@@ -816,7 +1041,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -837,10 +1062,23 @@ export const fetchFiresWithin = (params) => {
   const { forestType, landCategory, ifl, download, dataset, weeks } =
     params || {};
   const filterYear = moment().subtract(weeks, 'weeks').year();
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset,
+    datasetType: 'weekly',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
-      SQL_QUERIES.firesWithin
-    }`
+    `${requestUrl}${SQL_QUERIES.firesWithin}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
       .replace('{alert__year}', filterYear)
@@ -852,7 +1090,7 @@ export const fetchFiresWithin = (params) => {
       name: `${dataset || 'viirs'}_fire_alerts${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -888,14 +1126,25 @@ export const fetchVIIRSLatest = () =>
 // whrc biomass grouped by location
 export const getBiomassStockGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-      grouped: true,
-    })}${SQL_QUERIES.biomassStockGrouped}`
+    `${requestUrl}${SQL_QUERIES.biomassStockGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -905,7 +1154,7 @@ export const getBiomassStockGrouped = (params) => {
       name: `whrc_biomass_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -925,12 +1174,23 @@ export const getBiomassStockGrouped = (params) => {
 // whrc biomass
 export const getBiomassStock = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'annual',
-      datasetType: 'summary',
-    })}${SQL_QUERIES.biomassStock}`
+    `${requestUrl}${SQL_QUERIES.biomassStock}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -941,7 +1201,7 @@ export const getBiomassStock = (params) => {
       name: `whrc_biomass_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: url.replace('query', 'download'),
+      url: getDownloadUrl(url),
     };
   }
 
@@ -969,9 +1229,9 @@ const buildPolynameSelects = (nonTable, dataset) => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value} as ${
-        p.value
-      }${isLast ? '' : ', '}`
+      `${!nonTable ? p.tableKey || p.tableKeys[dataset] : p.value}, ${
+        !nonTable ? p.tableKey || p.tableKeys[dataset] : p.value
+      } AS ${p.value}${isLast ? '' : ', '}`
     );
   });
   return polyString;
@@ -988,9 +1248,14 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
-    SQL_QUERIES.getLocationPolynameWhitelist
-  }`
+  const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = `${requestUrl}${SQL_QUERIES.getLocationPolynameWhitelist}`
+    .replace(/{select_location}/g, getLocationSelect({ ...params, cast: true }))
     .replace(/{location}/g, getLocationSelect(params))
     .replace(
       '{polynames}',

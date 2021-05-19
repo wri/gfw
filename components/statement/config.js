@@ -9,6 +9,9 @@ export default {
     statementPlain: 'This layer is only available for ',
     statementHighlight: 'certain countries.',
   },
+  kbaLayer: {
+    statementPlain: 'non-commercial use only',
+  },
   lossByDriver: {
     statementPlain: '',
     statementHighlight: 'permanent drivers',

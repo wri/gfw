@@ -7,6 +7,8 @@ export const FOREST_GAIN_DATASET = 'tree-cover-gain';
 export const FOREST_EXTENT_DATASET = 'tree-cover';
 export const BIOMASS_LOSS_DATASET =
   'carbon-dioxide-emissions-from-tree-cover-loss';
+export const CARBON_EMISSIONS_DATASET = 'carbon-emissions';
+
 export const SOIL_CARBON_DENSITY_DATASET = 'soil-carbon-density';
 export const TREE_BIOMASS_DENSITY_DATASET = 'tree-biomass-density';
 export const PROJECTED_CARBON_STORAGE_FOREST_REGROWTH_DATASET =

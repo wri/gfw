@@ -35,8 +35,12 @@ export default {
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
-    text: '2020 data coming soon for this area.',
-    visible: [],
+    text:
+      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
+    visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+    linkText: 'Read more here',
+    link:
+      'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
   },
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -147,7 +151,7 @@ export default {
             adminLoss: adminLoss.data.data,
             loss: loss.data.data,
             primaryLoss: primaryLoss.data.data,
-            extent: (loss.data.data && extent.data.data[0].extent) || 0,
+            extent: (loss.data.data && extent.data.data) || [],
           };
         }
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
