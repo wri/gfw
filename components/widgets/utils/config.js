@@ -373,6 +373,11 @@ export const getStatements = ({
           'these estimates do not take tree cover gain into account'
         )
       : null,
+    dataType === 'flux'
+      ? translateText(
+          'these estimates account for tree cover gain through 2012'
+        )
+      : null,
     dataType === 'nlcd_landcover'
       ? translateText(
           '*raw NLCD categories have been re-classed to match IPCC categories'
