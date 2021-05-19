@@ -85,7 +85,7 @@ export default {
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
   metaKey: 'widget_gfw_forest_carbon_emissions',
-  dataType: 'loss',
+  dataType: 'flux',
   colors: 'climate',
   sortOrder: {
     climate: 2,
