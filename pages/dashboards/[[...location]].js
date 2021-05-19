@@ -6,7 +6,6 @@ import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
-import { getCountriesProvider } from 'services/country';
 
 import PageLayout from 'wrappers/page';
 import Dashboards from 'layouts/dashboards';
@@ -31,7 +30,9 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ req }) => {
+  const { params } = req;
+
   const [type] = params?.location || [];
 
   if (type && !ALLOWED_TYPES.includes(type)) {
@@ -88,20 +89,20 @@ export const getStaticProps = async ({ params }) => {
   }
 };
 
-export const getStaticPaths = async () => {
-  const countryData = await getCountriesProvider();
-  const { rows: countries } = countryData?.data || {};
-  const countryPaths = countries.map((c) => ({
-    params: {
-      location: ['country', c.iso],
-    },
-  }));
+// export const getStaticPaths = async () => {
+//   const countryData = await getCountriesProvider();
+//   const { rows: countries } = countryData?.data || {};
+//   const countryPaths = countries.map((c) => ({
+//     params: {
+//       location: ['country', c.iso],
+//     },
+//   }));
 
-  return {
-    paths: ['/dashboards/global/', ...countryPaths] || [],
-    fallback: true,
-  };
-};
+//   return {
+//     paths: ['/dashboards/global/', ...countryPaths] || [],
+//     fallback: true,
+//   };
+// };
 
 const DashboardsPage = (props) => {
   const dispatch = useDispatch();
