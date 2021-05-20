@@ -9,6 +9,7 @@ const getColors = (state) => state.colors;
 const getIndicator = (state) => state.indicator;
 const getLocationName = (state) => state.locationLabel;
 const getSentences = (state) => state.sentences;
+const getAdminLevel = (state) => state.adminLevel;
 
 export const parseData = createSelector(
   [getData, getSettings],
@@ -38,22 +39,40 @@ export const parseConfig = createSelector(
     const maxValue = Math.ceil(
       Math.abs(
         Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
-        ) * 1.2
+      ) * 1.2
+    );
+
+    const maxValueDigits = maxValue.toString().length - 2;
+
+    // format numbers operate with array
+    const tickFormatter = (value) =>
+      format('.2r')(value * `1e-${maxValueDigits}`);
+
+    // make ticks multiple of 0.5
+    const tick = Math.ceil(tickFormatter(maxValue) / 0.5) * 0.5;
+
+    // calculate ticks array
+    const range = (start, stop, step) =>
+      Array.from(
+        { length: (stop - start) / step + 1 },
+        (_, i) => start + i * step
       );
+    const ticks = Array.from(range(-tick, tick, 0.5)).map(
+      (t) => t * `1e+${maxValueDigits}`
+    );
 
     const {
       emissions: emissionsData,
-      removals: removalsData,
       flux: netFluxData,
+      removals: removalsData
     } = data[0];
-
-    const ticks = 6;
-
 
     return {
       height: 250,
       stackOffset: 'sign',
       margin: {
+        left: 70,
+        right: 70,
         bottom: 40,
       },
       yAxis: {
@@ -62,12 +81,9 @@ export const parseConfig = createSelector(
       },
       xAxis: {
         type: 'number',
-        domain: [-maxValue - 100000000, maxValue + 100000000],
+        domain: [ticks[0], ticks[ticks.length - 1]],
         allowDecimals: false,
-        // TODO: 0.5 interval ticks
-        ticks: Array.from({ length: ticks + 1 }, (v, k) =>
-          Math.ceil((2 * k * maxValue) / ticks - maxValue)
-        ),
+        ticks,
         tickFormatter: (value) => format('.2r')(value * 1e-9),
         label: {
           value: 'GtCO\u2082e/year',
@@ -191,11 +207,23 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getSentences, getIndicator, getLocationName, getSettings],
-  (data, sentences, indicator, locationName, settings) => {
+  [
+    getData,
+    getSentences,
+    getIndicator,
+    getLocationName,
+    getSettings,
+    getAdminLevel,
+  ],
+  (data, sentences, indicator, locationName, settings, adminLevel) => {
     if (!data || isEmpty(data)) return null;
 
-    const { initial, withIndicator } = sentences;
+    const {
+      globalInitial,
+      globalWithIndicator,
+      initial,
+      withIndicator,
+    } = sentences;
     const { startYear, endYear } = settings;
 
     const yearTotal = endYear - startYear + 1;
@@ -205,7 +233,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       startYear,
       endYear,
-      location: locationName,
+      location: locationName === 'global' ? 'the world' : locationName,
       totalEmissions: formatNumber({
         num: emissions / yearTotal,
         unit: 'tCO2',
@@ -219,8 +247,20 @@ export const parseSentence = createSelector(
         unit: 'tCO2',
       }),
     };
+
+    let sentence;
+
+    switch (adminLevel) {
+      case 'adm0':
+      case 'adm1':
+      case 'adm2':
+        sentence = indicator ? withIndicator : initial;
+        break;
+      default:
+        sentence = indicator ? globalWithIndicator : globalInitial;
+    }
     return {
-      sentence: indicator ? withIndicator : initial,
+      sentence,
       params,
     };
   }

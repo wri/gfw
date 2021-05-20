@@ -19,7 +19,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'carbonFlux',
   // TODO: global title
-  title: 'Forest-related greenhouse gas fluxes in {location}',
+  title: ' Forest-related greenhouse gas fluxes in {location}',
   large: true,
   categories: ['climate'],
   types: ['global', 'country', 'aoi', 'use', 'wdpa'],
@@ -79,6 +79,10 @@ export default {
   },
   sentences: {
     // TODO: global sentence
+    globalInitial:
+      'Between {startYear} and {endYear}, global forests emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a net carbon flux of {totalFlux}<b>/year</b>.',
+    globalWithIndicator:
+      'Between {startYear} and {endYear}, global forests within {indicator} emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a net carbon flux of {totalFlux}<b>/year</b>.',
     initial:
       'Between {startYear} and {endYear}, forests in {location} emitted {totalEmissions}<strong>tCO2e/year</strong>, and removed {totalRemovals}<strong>tCO2e/year</strong>. This represents a net carbon flux of {totalFlux}<strong>tCO2e/year</strong>.',
     withIndicator:
