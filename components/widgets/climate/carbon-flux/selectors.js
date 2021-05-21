@@ -64,7 +64,7 @@ export const parseConfig = createSelector(
     const {
       emissions: emissionsData,
       flux: netFluxData,
-      removals: removalsData
+      removals: removalsData,
     } = data[0];
 
     return {
@@ -233,7 +233,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       startYear,
       endYear,
-      location: locationName === 'global' ? 'the world' : locationName,
+      location: locationName,
       totalEmissions: formatNumber({
         num: emissions / yearTotal,
         unit: 'tCO2',
