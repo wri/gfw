@@ -68,6 +68,7 @@ export default {
   },
   settings: {
     gasesIncluded: 'allGases',
+    includesGainPixels: true,
     tscDriverGroup: 'all',
     highlighted: false,
     threshold: 30,

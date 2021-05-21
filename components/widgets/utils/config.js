@@ -358,6 +358,7 @@ export const getStatements = ({
           )
         : null
     );
+  const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
     extentYear && dataType !== 'lossPrimary' && dataType !== 'fires'
       ? translateText('{extentYear} tree cover extent', { extentYear })
@@ -366,16 +367,14 @@ export const getStatements = ({
       ? translateText('2001 primary forest extent remaining')
       : null,
     threshold || threshold === 0
-      ? translateText('>{threshold}% tree canopy', { threshold })
+      ? translateText('>{threshold}% tree canopy{carbonGain}', {
+          threshold,
+          carbonGain,
+        })
       : null,
     dataType === 'loss'
       ? translateText(
           'these estimates do not take tree cover gain into account'
-        )
-      : null,
-    dataType === 'flux'
-      ? translateText(
-          'these estimates account for tree cover gain through 2012'
         )
       : null,
     dataType === 'nlcd_landcover'
