@@ -98,9 +98,8 @@ export default {
   },
   settings: {
     gasesIncluded: 'allGases',
+    includesGainPixels: true,
     threshold: 30,
-    startYear: 2001,
-    endYear: 2018,
   },
   whitelists: {
     adm0: biomassLossIsos,
