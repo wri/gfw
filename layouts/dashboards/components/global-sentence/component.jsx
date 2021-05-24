@@ -2,6 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import DynamicSentence from 'components/ui/dynamic-sentence';
+import Loader from 'components/ui/loader';
 
 import './styles.scss';
 
@@ -9,6 +10,7 @@ import SENTENCES from 'data/dashboard-summary-sentence';
 
 class GlobalSentence extends PureComponent {
   static propTypes = {
+    loading: PropTypes.bool,
     locationNames: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     category: PropTypes.string,
@@ -64,10 +66,13 @@ class GlobalSentence extends PureComponent {
   }
 
   render() {
+    const { loading } = this.props;
+
     return (
       <div className="c-widgets dashboard-widgets global-dashboard-sentence">
         <div className="c-widget c-dashboard-sentence-widget">
-          <DynamicSentence sentence={this.getSentence()} />
+          {loading && <Loader className="widget-loader" />}
+          {!loading && <DynamicSentence sentence={this.getSentence()} />}
         </div>
       </div>
     );
