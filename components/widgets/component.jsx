@@ -58,7 +58,7 @@ class Widgets extends PureComponent {
       handleClickWidget,
     } = this.props;
     const hasWidgets = !isEmpty(widgets);
-    console.log('props', this.props);
+
     return (
       <div
         className={cx(
