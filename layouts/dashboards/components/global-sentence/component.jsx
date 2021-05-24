@@ -27,7 +27,6 @@ class GlobalSentence extends PureComponent {
 
   getSentence() {
     const { location, category, locationNames } = this.props;
-
     if (!location || !category) {
       return { sentence: '', props: {} };
     }
@@ -52,6 +51,9 @@ class GlobalSentence extends PureComponent {
       }),
       ...(locationNames?.adm2?.label && {
         adm2: locationNames?.adm2?.label,
+      }),
+      ...(locationNames?.adm0?.label && {
+        area: locationNames?.adm0?.label,
       }),
     };
 
