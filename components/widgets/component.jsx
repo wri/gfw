@@ -8,7 +8,6 @@ import { trackEvent } from 'utils/analytics';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Widget from 'components/widget';
-
 import './styles.scss';
 
 class Widgets extends PureComponent {
@@ -59,7 +58,7 @@ class Widgets extends PureComponent {
       handleClickWidget,
     } = this.props;
     const hasWidgets = !isEmpty(widgets);
-
+    console.log('props', this.props);
     return (
       <div
         className={cx(
