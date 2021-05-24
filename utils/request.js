@@ -22,7 +22,7 @@ export const apiRequest = create({
   baseURL: GFW_API_URL,
   ...(ENVIRONMENT === 'staging' && {
     headers: {
-      [`${ENVIRONMENT}-api-key`]: DATA_API_KEY,
+      'x-api-key': DATA_API_KEY,
     },
   }),
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
