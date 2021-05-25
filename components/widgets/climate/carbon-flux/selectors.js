@@ -36,19 +36,24 @@ export const parseConfig = createSelector(
       carbonFlux: { emissions, netEmissions, removals, netRemovals },
     } = colors;
 
+    const {
+      emissions: emissionsData,
+      flux: netFluxData,
+      removals: removalsData,
+    } = data[0];
+
     const maxValue = Math.ceil(
-      Math.abs(
-        Object.values(data[0]).reduce((a, b) => (data[a] > data[b] ? b : a))
-      ) * 1.2
+      Math.max(...Object.values(data[0]).map((d) => Math.abs(d))) * 1.2 // * 1.2 to increase maxValue a bit as it's just used for ticks and domain
     );
 
-    const maxValueDigits = maxValue.toString().length - 2;
+    // get number digits (just to be able to operate with them)
+    const maxValueDigits = maxValue.toString().length - 1;
 
-    // format numbers operate with array
+    // format numbers to operate with array (it's just to make operations more simple, it'll get changed back after operations)
     const tickFormatter = (value) =>
       format('.2r')(value * `1e-${maxValueDigits}`);
 
-    // make ticks multiple of 0.5
+    // make ticks multiple of 0.5 (client request a step of 0.5 within ticks)
     const tick = Math.ceil(tickFormatter(maxValue) / 0.5) * 0.5;
 
     // calculate ticks array
@@ -57,22 +62,17 @@ export const parseConfig = createSelector(
         { length: (stop - start) / step + 1 },
         (_, i) => start + i * step
       );
+
     const ticks = Array.from(range(-tick, tick, 0.5)).map(
       (t) => t * `1e+${maxValueDigits}`
     );
-
-    const {
-      emissions: emissionsData,
-      flux: netFluxData,
-      removals: removalsData,
-    } = data[0];
 
     return {
       height: 250,
       stackOffset: 'sign',
       margin: {
-        left: 70,
-        right: 70,
+        left: window.innerWidth > 300 ? 85 : 98, // margin adapted to not cutt off label
+        right: 85,
         bottom: 40,
       },
       yAxis: {
@@ -87,7 +87,7 @@ export const parseConfig = createSelector(
         tickFormatter: (value) => format('.2r')(value * 1e-9),
         label: {
           value: 'GtCO\u2082e/year',
-          fontSize: '14px',
+          fontSize: 14,
           position: 'bottom',
         },
       },
@@ -112,7 +112,7 @@ export const parseConfig = createSelector(
                       y={y}
                       textAnchor={emissionsData > 0 ? 'start' : 'end'}
                       fill="#000"
-                      fontSize={14}
+                      fontSize={window.innerWidth > 300 ? 14 : 10}
                     >
                       EMISSIONS
                     </text>
@@ -140,7 +140,7 @@ export const parseConfig = createSelector(
                       y={y}
                       textAnchor={removalsData > 0 ? 'start' : 'end'}
                       fill="#000"
-                      fontSize={14}
+                      fontSize={window.innerWidth > 300 ? 14 : 10}
                     >
                       REMOVALS
                     </text>
@@ -167,7 +167,7 @@ export const parseConfig = createSelector(
                       y={y}
                       textAnchor={netFluxData > 0 ? 'start' : 'end'}
                       fill="#000"
-                      fontSize={14}
+                      fontSize={window.innerWidth > 300 ? 14 : 10}
                     >
                       {netFluxData > 0 ? 'NET EMISSIONS' : 'NET REMOVALS'}
                     </text>
