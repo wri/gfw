@@ -4,7 +4,6 @@ import wriAPISerializer from 'wri-json-api-serializer';
 import {
   GFW_API,
   GFW_STAGING_API,
-  GFW_DATA_API,
   GFW_TILES_API,
   CARTO_API,
   MAPBOX_API,
@@ -12,25 +11,17 @@ import {
 } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
 
 const isServer = typeof window === 'undefined';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_API_URL,
-  ...(ENVIRONMENT === 'staging' && {
-    headers: {
-      'x-api-key': DATA_API_KEY,
-    },
-  }),
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const dataRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_DATA_API,
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
@@ -67,6 +58,16 @@ export const mapboxRequest = create({
 });
 
 export const cancelToken = () => CancelToken.source();
+
+export const handleProxyOrigin = () => {
+  if (ENVIRONMENT === 'staging') {
+    return 'https://staging.globalforestwatch.org/';
+  }
+  if (ENVIRONMENT === 'preproduction') {
+    return 'https://preproduction.globalforestwatch.org/';
+  }
+  return 'https://www.globalforestwatch.org';
+};
 
 export default create({
   timeout: 30 * 1000,

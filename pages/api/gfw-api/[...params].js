@@ -4,19 +4,17 @@ import { ObjectToQueryString } from 'utils/url';
 
 import { handleProxyOrigin } from 'utils/request';
 
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+import { GFW_API, GFW_STAGING_API } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
-const GFW_API_URL =
-  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
 
 export default async function userHandler(req, res) {
   const {
     query: { params, ...queryParams },
     method,
   } = req;
-
   if (method === 'GET') {
     try {
       const queryString = ObjectToQueryString(queryParams);
@@ -40,7 +38,7 @@ export default async function userHandler(req, res) {
       if (err?.response?.status && err.response.status === 403) {
         res.status(404).end('unauthorized');
       }
-      res.status(500).end('error getting data');
+      res.status(500).end(JSON.stringify(err));
     }
   } else {
     res.setHeader('Allow', ['GET', 'PUT']);

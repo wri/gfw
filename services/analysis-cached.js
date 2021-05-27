@@ -5,10 +5,7 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
-
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+import { GFW_DATA_API_PROXY } from 'utils/apis';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -151,7 +148,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     // return null;
   }
 
-  return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
+  return `${GFW_DATA_API_PROXY}/dataset/${datasetId}/latest/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {
