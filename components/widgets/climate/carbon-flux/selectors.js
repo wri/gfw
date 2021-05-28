@@ -96,6 +96,7 @@ export const parseConfig = createSelector(
           emissions: {
             fill: emissions,
             background: false,
+            isAnimationActive: false,
             stackId: 2,
             labelList: {
               content: (props) => {
@@ -125,6 +126,7 @@ export const parseConfig = createSelector(
             fill: removals,
             background: false,
             stackId: 2,
+            isAnimationActive: false,
             labelList: {
               content: (props) => {
                 // eslint-disable-next-line react/prop-types
@@ -152,6 +154,7 @@ export const parseConfig = createSelector(
           flux: {
             fill: netFluxData > 0 ? netEmissions : netRemovals,
             background: false,
+            isAnimationActive: false,
             labelList: {
               content: (props) => {
                 // eslint-disable-next-line react/prop-types
