@@ -2,7 +2,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
-// get list data
+
+const getTitle = (state) => state.title;
 const getData = (state) => state.data;
 const getSettings = (state) => state.settings;
 const getColors = (state) => state.colors;
@@ -269,8 +270,16 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
+  }
+);
+
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
 });
