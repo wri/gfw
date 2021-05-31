@@ -25,20 +25,23 @@
     .dyno-toggle-active {
       padding-left: 20px;
       cursor: pointer;
+      &.-open svg {
+        transform: rotate(180deg);
+      }
     }
 
   }
 
   .dyno-basemap {
-    margin: 15px;
-
     &--cta {
       display: flex;
       align-items: center;
+      width: 100%;
+      padding: 10px 15px;
       text-align: left;
       cursor: pointer;
       &:hover {
-        background: red;
+        background: $grey-light;
       }
     }
 

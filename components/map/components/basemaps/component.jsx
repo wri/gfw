@@ -23,7 +23,6 @@ const DYNO_BASEMAPS = [
 const getActiveBasemap = (basemaps, id) => find(basemaps, { id });
 
 const MapLegendBasemaps = ({ className, basemaps, ...props }) => {
-  console.log('props', props);
   const [open, setOpen] = useState(false);
   const [dynoActive, setDynoActive] = useState(false);
   const [activeDyno, setActiveDyno] = useState('planet');
@@ -35,12 +34,13 @@ const MapLegendBasemaps = ({ className, basemaps, ...props }) => {
       <header className="header">
         <button
           className="show-dyno-basemap-btn"
+          title={`${dynoActive ? 'Disable' : 'Enable'} basemap`}
           onClick={() => setDynoActive(!dynoActive)}
         >
           <Checkbox className="dyno-basemap-checkbox" value={dynoActive} />
         </button>
         <span className="active-basemap-title">{getActiveBasemap(DYNO_BASEMAPS, activeDyno).label}</span>
-        <button className="dyno-toggle-active" onClick={toggleOpen}>
+        <button className={cx('dyno-toggle-active', !open ? '-closed' : '-open')} onClick={toggleOpen} title={`${open ? 'Hide' : 'Show'} basemaps`}>
           <Icon icon={arrowDown} />
         </button>
       </header>
