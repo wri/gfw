@@ -1,7 +1,5 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
-import orderBy from 'lodash/orderBy';
-
 import {
   getBasemaps,
   // getBasemap,

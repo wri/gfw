@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -24,8 +24,11 @@ const getActiveBasemap = (basemaps, id) => find(basemaps, { id });
 
 const MapLegendBasemaps = ({ className, basemaps, ...props }) => {
   console.log('props', props);
+  const [open, setOpen] = useState(false);
   const [dynoActive, setDynoActive] = useState(false);
   const [activeDyno, setActiveDyno] = useState('planet');
+
+  const toggleOpen = () => setOpen(!open);
 
   return (
     <div className={cx('c-map-legend-basemaps', className)}>
@@ -37,21 +40,29 @@ const MapLegendBasemaps = ({ className, basemaps, ...props }) => {
           <Checkbox className="dyno-basemap-checkbox" value={dynoActive} />
         </button>
         <span className="active-basemap-title">{getActiveBasemap(DYNO_BASEMAPS, activeDyno).label}</span>
-        <Icon icon={arrowDown} />
+        <button className="dyno-toggle-active" onClick={toggleOpen}>
+          <Icon icon={arrowDown} />
+        </button>
       </header>
-      <section className="dyno-basemaps">
-        <ul>
-          {basemaps.map(basemap => {
-            return (
-              <li className="dyno-basemap">
-                <img src={basemap.image} alt={basemap.label} className="dyno-basemap--thumbnail" />
-                <span className="dyno-basemap--title">{basemap.label}</span>
-                {basemap.description && <p className="dyno-basemap--description">{basemap.description}</p>}
-              </li>
-            )
-          })}
-        </ul>
-      </section>
+      {open && (
+        <section className="dyno-basemaps">
+          <ul>
+            {basemaps.map(basemap => {
+              return (
+                <li className="dyno-basemap">
+                  <button className="dyno-basemap--cta" aria-label={`Activate ${basemap.label}`}>
+                    <img src={basemap.image} alt={basemap.label} className="dyno-basemap--thumbnail" />
+                    <div className="dyno-basemap--content">
+                      <span className="dyno-basemap--title">{basemap.label}</span>
+                      {basemap.description && <p className="dyno-basemap--description">{basemap.description}</p>}
+                    </div>
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      )}
     </div>
   );
 };

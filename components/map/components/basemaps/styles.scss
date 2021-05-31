@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-map-legend-basemaps {
-
+  flex: 0;
   .header {
     display: flex;
     align-items: center;
@@ -22,5 +22,47 @@
       fill: $greyish-brown;
     }
 
+    .dyno-toggle-active {
+      padding-left: 20px;
+      cursor: pointer;
+    }
+
   }
+
+  .dyno-basemap {
+    margin: 15px;
+
+    &--cta {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+      &:hover {
+        background: red;
+      }
+    }
+
+    &--content {
+      display: flex;
+      flex-flow: column;
+    }
+
+    &--thumbnail {
+      width: 40px;
+      height: 40px;
+      margin: 0 10px 0 0;
+    }
+
+    &--title {
+      color: #333333;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    &--description {
+      color: $hot-grey;
+      font-size: 12px;
+    }
+  }
+
 }
