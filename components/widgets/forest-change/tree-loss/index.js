@@ -19,7 +19,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 const MIN_YEAR = 2001;
 
 const getGlobalLocation = (params) => ({
@@ -49,7 +49,7 @@ const getOTFAnalysis = async (params) => {
         area: d.area__ha,
         year: d.umd_tree_cover_loss__year,
       })),
-      extent: extent?.data?.area__ha,
+      extent: extent?.data?.[0]?.area__ha,
       settings: {
         startYear,
         endYear,
@@ -67,6 +67,14 @@ export default {
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  caution: {
+    text:
+      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
+    visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+    linkText: 'Read more here',
+    link:
+      'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
+  },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -138,7 +146,7 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    co2Emissions: 'and {emissions} of CO\u2082 emissions',
+    co2Emissions: 'and {emissions} of CO\u2082e emissions',
   },
   settings: {
     threshold: 30,
@@ -164,7 +172,7 @@ export default {
           if (loss && loss.data && extent && extent.data) {
             data = {
               loss: loss.data.data,
-              extent: (loss.data.data && extent.data.data[0].extent) || 0,
+              extent: (loss.data.data && extent.data.data) || 0,
             };
           }
 
@@ -186,7 +194,6 @@ export default {
         })
       );
     }
-
     return getOTFAnalysis(params);
   },
   getDataURL: (params) => {

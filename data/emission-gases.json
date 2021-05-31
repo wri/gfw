@@ -1,0 +1,15 @@
+[
+  {
+    "label": "All gases",
+    "value": "allGases"
+  },
+  {
+    "label": "CO\u2082 emissions only",
+    "value": "co2Only"
+  },
+  {
+    "label": "Non-CO\u2082 emissions",
+    "value": "nonCo2Gases",
+    "infoText": "Includes methane (CH\u2084) and nitrous oxide (N\u2082O)"
+  }
+]

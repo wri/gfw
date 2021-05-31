@@ -12,11 +12,13 @@ class Widget extends PureComponent {
   static propTypes = {
     widget: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    type: PropTypes.string,
     active: PropTypes.bool,
     embed: PropTypes.bool,
     large: PropTypes.bool,
     colors: PropTypes.object,
     simple: PropTypes.bool,
+    caution: PropTypes.object,
     datasets: PropTypes.array,
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
@@ -54,6 +56,7 @@ class Widget extends PureComponent {
     geostore: PropTypes.object,
     settingsBtnConfig: PropTypes.object,
     status: PropTypes.string,
+    customComponent: PropTypes.string,
   };
 
   state = {
@@ -64,7 +67,9 @@ class Widget extends PureComponent {
     const {
       title,
       widget,
+      caution,
       colors,
+      type,
       active,
       large,
       embed,
@@ -106,11 +111,12 @@ class Widget extends PureComponent {
       geostore,
       settingsBtnConfig,
       status,
+      customComponent,
     } = this.props;
+
     const { main } = colors || {};
     const toggleSettingsMenu = () =>
       this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
-
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
@@ -153,6 +159,7 @@ class Widget extends PureComponent {
           shouldSettingsOpen={this.state.shouldSettingsOpen}
           toggleSettingsMenu={toggleSettingsMenu}
         />
+
         <WidgetBody
           widget={widget}
           chartType={chartType}
@@ -178,11 +185,15 @@ class Widget extends PureComponent {
           parseInteraction={parseInteraction}
           toggleSettingsMenu={toggleSettingsMenu}
           settingsBtnConfig={settingsBtnConfig}
+          customComponent={customComponent}
         />
         {sentence && data && (
           <WidgetFooter
             showAttributionLink={showAttributionLink}
             statements={statements}
+            type={type}
+            locationType={location?.locationType}
+            caution={caution}
             simple={simple}
           />
         )}

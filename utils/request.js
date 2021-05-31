@@ -3,6 +3,7 @@ import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
   GFW_API,
+  GFW_STAGING_API,
   GFW_DATA_API,
   GFW_TILES_API,
   CARTO_API,
@@ -10,11 +11,14 @@ import {
   RESOURCE_WATCH_API,
 } from 'utils/apis';
 
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
+
 const isServer = typeof window === 'undefined';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_API,
+  baseURL: GFW_API_URL,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
@@ -38,7 +42,7 @@ export const rwRequest = create({
 
 export const apiAuthRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_API,
+  baseURL: GFW_API_URL,
   headers: {
     'content-type': 'application/json',
     Authorization: `Bearer ${!isServer && localStorage.getItem('userToken')}`,

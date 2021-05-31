@@ -9,6 +9,7 @@ import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
+import { formatNumber } from 'utils/format';
 
 import {
   stdDevData,
@@ -113,7 +114,7 @@ export const parseList = createSelector(
 
       const counts = adm.currentYearCounts;
       const locationAreaData =
-        areas.find((el) => el[matchKey] === adm.id) || {};
+        areas.find((el) => el[matchKey] === locationId) || {};
 
       const locationArea = locationAreaData.area__ha || null;
       // Density in counts per Mha
@@ -200,7 +201,9 @@ export const parseSentence = createSelector(
     const topRegionCount = data[0].counts || 0;
     const topRegionVariance = data[0].significance || 0;
     const topRegionDensity = data[0].density || 0;
-    const topRegionPerc = (100 * topRegionCount) / sumBy(data, 'counts');
+    const topRegionPerc =
+      topRegionCount === 0 ? 0 : (100 * topRegionCount) / sumBy(data, 'counts');
+
     const timeFrame = optionsSelected.weeks;
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
@@ -226,10 +229,10 @@ export const parseSentence = createSelector(
         color: statusColor,
       },
       topRegion,
-      topRegionCount: format(',')(topRegionCount),
-      topRegionPerc: topRegionPerc ? `${format('.2r')(topRegionPerc)}%` : '0%',
+      topRegionCount: formatNumber({ num: topRegionCount, unit: 'counts' }),
+      topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
       topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
-      location: locationName,
+      location: locationName === 'global' ? 'globally' : locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`,
       component:
         unit === 'significance'

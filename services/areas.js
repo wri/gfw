@@ -3,75 +3,84 @@ import { trackEvent } from 'utils/analytics';
 
 const REQUEST_URL = '/v2/area';
 
-export const getArea = id =>
-  apiRequest.get(`${REQUEST_URL}/${id}`).then(areaResponse => {
+export const getArea = (id) =>
+  apiRequest.get(`${REQUEST_URL}/${id}`).then((areaResponse) => {
     const { data: area } = areaResponse.data;
     const admin = area.attributes && area.attributes.admin;
     const iso = area.attributes && area.attributes.iso;
 
     return {
       id: area.id,
-      ...area.attributes,
-      ...iso && iso.country && {
-        admin: {
-          adm0: iso.country,
-          adm1: iso.region,
-          adm2: iso.subregion,
-          ...admin
-        }
-      }
+      ...{
+        ...area.attributes,
+        use: {},
+      },
+      ...(iso &&
+        iso.country && {
+          admin: {
+            adm0: iso.country,
+            adm1: iso.region,
+            adm2: iso.subregion,
+            ...admin,
+          },
+        }),
     };
   });
 
 export const getAreas = () =>
-  apiAuthRequest.get(REQUEST_URL).then(areasResponse => {
+  apiAuthRequest.get(REQUEST_URL).then((areasResponse) => {
     const { data: areas } = areasResponse.data;
 
-    return areas.map(area => {
+    return areas.map((area) => {
       const admin = area.attributes && area.attributes.admin;
       const iso = area.attributes && area.attributes.iso;
 
       return {
         id: area.id,
         ...area.attributes,
-        ...iso && iso.country && {
-          admin: {
-            adm0: iso.country,
-            adm1: iso.region,
-            adm2: iso.subregion,
-            ...admin
-          }
+        ...{
+          ...area.attributes,
+          use: {},
         },
-        userArea: true
+        ...(iso &&
+          iso.country && {
+            admin: {
+              adm0: iso.country,
+              adm1: iso.region,
+              adm2: iso.subregion,
+              ...admin,
+            },
+          }),
+        userArea: true,
       };
     });
   });
 
-export const saveArea = data =>
+export const saveArea = (data) =>
   apiAuthRequest({
     method: data.id ? 'PATCH' : 'POST',
     url: data.id ? `${REQUEST_URL}/${data.id}` : REQUEST_URL,
-    data
-  }).then(areaResponse => {
+    data,
+  }).then((areaResponse) => {
     const { data: area } = areaResponse.data;
     trackEvent({
       category: 'User AOIs',
       action: data.id ? 'User edits aoi' : 'User saves aoi',
-      label: area.id
-    })
+      label: area.id,
+    });
 
     return {
       id: area.id,
       ...area.attributes,
-      userArea: true
+      userArea: true,
     };
   });
 
-export const deleteArea = id => {
+export const deleteArea = (id) => {
   trackEvent({
     category: 'User AOIs',
     action: 'User deletes aoi',
-    label: id
-  })
+    label: id,
+  });
   return apiAuthRequest.delete(`${REQUEST_URL}/${id}`);
 };

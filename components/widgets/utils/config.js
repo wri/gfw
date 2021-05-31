@@ -234,7 +234,7 @@ export const getWidgetDatasets = ({
         }),
         ...(threshold && {
           params: {
-            thresh: threshold,
+            threshold,
             visibility: true,
           },
         }),
@@ -358,6 +358,7 @@ export const getStatements = ({
           )
         : null
     );
+  const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
     extentYear && dataType !== 'lossPrimary' && dataType !== 'fires'
       ? translateText('{extentYear} tree cover extent', { extentYear })
@@ -366,7 +367,10 @@ export const getStatements = ({
       ? translateText('2001 primary forest extent remaining')
       : null,
     threshold || threshold === 0
-      ? translateText('>{threshold}% tree canopy', { threshold })
+      ? translateText('>{threshold}% tree canopy{carbonGain}', {
+          threshold,
+          carbonGain,
+        })
       : null,
     dataType === 'loss'
       ? translateText(

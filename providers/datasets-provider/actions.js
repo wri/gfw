@@ -18,6 +18,15 @@ const byVocabulary = (dataset) =>
     (o) => o.name === 'layer_manager_ver' && o.tags.includes('3.0')
   );
 
+const handleFeatureEnvLock = (env) => {
+  const currEnv = process.env.NEXT_PUBLIC_FEATURE_ENV;
+  const MIXED_ENV = 'preproduction-staging';
+  if (env === MIXED_ENV && currEnv !== 'production') {
+    return true;
+  }
+  return env === currEnv;
+};
+
 export const fetchDatasets = createThunkAction(
   'fetchDatasets',
   () => (dispatch) => {
@@ -29,8 +38,7 @@ export const fetchDatasets = createThunkAction(
             (d) =>
               d.published &&
               d.layer.length &&
-              (d.env === 'production' ||
-                d.env === process.env.NEXT_PUBLIC_FEATURE_ENV)
+              (d.env === 'production' || handleFeatureEnvLock(d.env))
           )
           .filter(byVocabulary)
           .map((d) => {
@@ -42,8 +50,7 @@ export const fetchDatasets = createThunkAction(
               (layer &&
                 layer.find(
                   (l) =>
-                    (l.env === 'production' ||
-                      l.env === process.env.NEXT_PUBLIC_FEATURE_ENV) &&
+                    (l.env === 'production' || handleFeatureEnvLock(l.env)) &&
                     l.applicationConfig &&
                     l.applicationConfig.default
                 )) ||
@@ -56,6 +63,7 @@ export const fetchDatasets = createThunkAction(
               isMultiSelectorLayer,
               isLossLayer,
               isLossDriverLayer,
+              isKbaLayer,
             } = info || {};
             const { iso, applicationConfig } = defaultLayer || {};
             const { global, selectorConfig } = applicationConfig || {};
@@ -72,6 +80,10 @@ export const fetchDatasets = createThunkAction(
             } else if (isLossDriverLayer) {
               statementConfig = {
                 type: 'lossDriverLayer',
+              };
+            } else if (isKbaLayer) {
+              statementConfig = {
+                type: 'kbaLayer',
               };
             } else if (global && !!iso.length && iso[0]) {
               statementConfig = {
@@ -111,7 +123,7 @@ export const fetchDatasets = createThunkAction(
                     .filter(
                       (l) =>
                         (l.env === 'production' ||
-                          l.env === process.env.NEXT_PUBLIC_FEATURE_ENV) &&
+                          handleFeatureEnvLock(l.env)) &&
                         l.published
                     )
                     .map((l, i) => {
@@ -202,8 +214,9 @@ export const fetchDatasets = createThunkAction(
                             ...p,
                             ...(p.key.includes('thresh') && {
                               sentence:
+                                p.sentence ||
                                 'Displaying {name} with {selector} canopy density',
-                              options: thresholdOptions,
+                              options: p.options || thresholdOptions,
                             }),
                             ...(p.min &&
                               p.max && {
@@ -213,6 +226,11 @@ export const fetchDatasets = createThunkAction(
                                   label: o + p.min,
                                   value: o + p.min,
                                 })),
+                              }),
+                            ...(p.sentence &&
+                              p.options && {
+                                sentence: p.sentence,
+                                options: p.options,
                               }),
                           })),
                         }),

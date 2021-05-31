@@ -16,6 +16,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ComposedChart,
+  LabelList,
 } from 'recharts';
 
 import ChartToolTip from '../components/chart-tooltip';
@@ -80,6 +81,7 @@ class CustomComposedChart extends PureComponent {
       unitFormat,
       height,
       margin,
+      stackOffset,
       referenceLine,
     } = config;
 
@@ -90,7 +92,6 @@ class CustomComposedChart extends PureComponent {
     let rightMargin = 0;
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
-
     return (
       <div
         className={cx('c-composed-chart', className)}
@@ -107,6 +108,7 @@ class CustomComposedChart extends PureComponent {
                 bottom: 0,
               }
             }
+            stackOffset={!!stackOffset && stackOffset}
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -240,6 +242,11 @@ class CustomComposedChart extends PureComponent {
                     )}
                   {...bars[key]}
                 >
+                  {bars[key].labelList && (
+                    <LabelList key={key} {...bars[key].labelList}>
+                      {bars[key].labelList.value}
+                    </LabelList>
+                  )}
                   {bars[key].itemColor &&
                     data.map((item) => (
                       <Cell key={`c_${item.color}`} fill={item.color} />

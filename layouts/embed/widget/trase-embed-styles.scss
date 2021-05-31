@@ -50,6 +50,14 @@ $trase-font-family-2: 'Merriweather';
 // READ COMMENT FROM TOP
 .l-embed-widget-page {
   &.-trase {
+    .embed-widget {
+      overflow: visible;
+
+      .c-composed-chart {
+        overflow: visible;
+      }
+    }
+
     .c-widget-header {
       .options {
         display: none;

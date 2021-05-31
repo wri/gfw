@@ -5,35 +5,40 @@ import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import {
   yearTicksFormatter,
-  zeroFillYears
+  zeroFillYears,
 } from 'components/widgets/utils/data';
 
 // get list data
-const getLoss = state => state.data && state.data.loss;
-const getExtent = state => state.data && state.data.extent;
-const getSettings = state => state.settings;
-const getIsTropical = state => state.isTropical;
-const getLocationLabel = state => state.locationLabel;
-const getIndicator = state => state.indicator;
-const getColors = state => state.colors;
-const getSentence = state => state && state.sentence;
+const getLoss = (state) => state.data && state.data.loss;
+const getExtent = (state) => state.data && state.data.extent;
+const getSettings = (state) => state.settings;
+const getIsTropical = (state) => state.isTropical;
+const getLocationLabel = (state) => state.locationLabel;
+const getIndicator = (state) => state.indicator;
+const getColors = (state) => state.colors;
+const getSentence = (state) => state && state.sentence;
 
 const parseData = createSelector(
   [getLoss, getExtent, getSettings],
-  (data, extent, settings) => {
-    if (!data || isEmpty(data)) return null;
+  (data, extentData, settings) => {
+    if (!data || isEmpty(data) || !extentData) return null;
     const { startYear, endYear } = settings;
-    return data.filter(d => d.year >= startYear && d.year <= endYear).map(d => {
-      const percentageLoss = (d.area && d.area && d.area / extent * 100) || 0;
 
-      return {
-        ...d,
-        area: d.area || 0,
-        emissions: d.emissions || 0,
-        percentage: percentageLoss > 100 ? 100 : percentageLoss
-      };
+    const extent = (extentData.length && extentData[0]?.extent) || 0;
 
-    });
+    return data
+      .filter((d) => d.year >= startYear && d.year <= endYear)
+      .map((d) => {
+        const percentageLoss =
+          (d.area && d.area && (d.area / extent) * 100) || 0;
+
+        return {
+          ...d,
+          area: d.area || 0,
+          emissions: d.emissions || 0,
+          percentage: percentageLoss > 100 ? 100 : percentageLoss,
+        };
+      });
   }
 );
 
@@ -42,50 +47,49 @@ const zeroFillData = createSelector(
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear, yearsRange } = settings;
-    const years = yearsRange && yearsRange.map(yearObj => yearObj.value);
+    const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
       area: 0,
-      biomassLoss: 0,
       bound1: null,
       emissions: 0,
-      percentage: 0
+      percentage: 0,
     };
     return zeroFillYears(data, startYear, endYear, years, fillObj);
   }
 );
 
-const parseConfig = createSelector([getColors], colors => ({
+const parseConfig = createSelector([getColors], (colors) => ({
   height: 250,
   xKey: 'year',
   yKeys: {
     bars: {
       area: {
         fill: colors.main,
-        background: false
-      }
-    }
+        background: false,
+      },
+    },
   },
   xAxis: {
-    tickFormatter: yearTicksFormatter
+    tickFormatter: yearTicksFormatter,
   },
   unit: 'ha',
   tooltip: [
     {
-      key: 'year'
+      key: 'year',
     },
     {
       key: 'area',
       label: 'Tree cover loss',
-      unitFormat: value => formatNumber({ num: value, unit: 'ha' }),
-      color: colors.main
+      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      color: colors.main,
     },
     {
       key: 'percentage',
-      unitFormat: value => formatNumber({ num: value, unit: '%' }),
+      unitFormat: (value) => formatNumber({ num: value, unit: '%' }),
       label: 'Percentage of tree cover',
-      color: 'transparent'
-    }
-  ]
+      color: 'transparent',
+    },
+  ],
 }));
 
 const parseSentence = createSelector(
@@ -96,23 +100,32 @@ const parseSentence = createSelector(
     getIsTropical,
     getLocationLabel,
     getIndicator,
-    getSentence
+    getSentence,
   ],
-  (data, extent, settings, tropical, locationLabel, indicator, sentences) => {
+  (
+    data,
+    extentData,
+    settings,
+    tropical,
+    locationLabel,
+    indicator,
+    sentences
+  ) => {
     if (!data) return null;
     const {
       initial,
       withIndicator,
       noLoss,
       noLossWithIndicator,
-      co2Emissions
+      co2Emissions,
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
+    const extent = (extentData.length && extentData[0]?.extent) || 0;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
-      (totalLoss && extent && totalLoss / extent * 100) || 0;
+      (totalLoss && extent && (totalLoss / extent) * 100) || 0;
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
@@ -130,12 +143,12 @@ const parseSentence = createSelector(
       loss: formatNumber({ num: totalLoss, unit: 'ha' }),
       percent: `${format('.2r')(percentageLoss)}%`,
       emissions: `${format('.3s')(totalEmissions)}t`,
-      extentYear
+      extentYear,
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -143,5 +156,5 @@ const parseSentence = createSelector(
 export default createStructuredSelector({
   data: zeroFillData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

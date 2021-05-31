@@ -4,12 +4,12 @@ import ReactGA from 'react-ga';
 import TwitterConvTrkr from 'react-twitter-conversion-tracker';
 
 import ReactPixel from 'utils/facebook';
-import { getAgreedCookies } from 'utils/cookies';
+// import { getAgreedCookies } from 'utils/cookies';
 
 const isServer = typeof window !== 'undefined';
 
 export const initAnalytics = () => {
-  if (isServer && getAgreedCookies()) {
+  if (isServer) {
     window.ANALYTICS_INITIALIZED = true;
     ReactGA.initialize(process.env.NEXT_PUBLIC_ANALYTICS_PROPERTY_ID);
     ReactPixel.init(process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID);

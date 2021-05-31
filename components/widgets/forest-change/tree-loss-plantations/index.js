@@ -17,7 +17,7 @@ import {
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2013;
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2020;
 
 export default {
   widget: 'treeLossPlantations',
@@ -67,7 +67,7 @@ export default {
     forestChange: 2,
   },
   sentence:
-    'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO<sub>2</sub> emissions.',
+    'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO\u2082e emissions.',
   whitelists: {
     indicators: ['plantations'],
     checkStatus: true,

@@ -16,7 +16,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'treeCoverLocated',
   title: {
-    global: 'Global Location of forest',
+    global: 'Global location of forest',
     initial: 'Location of forest in {location}',
   },
   categories: ['summary', 'land-cover'],
