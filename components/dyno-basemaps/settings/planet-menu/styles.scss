@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.c-planet-menu {
+  display: flex;
+  flex-direction: column;
+
+  h6 {
+    font-size: 11px;
+    color: $grey;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  .planet-selector .select-wrapper {
+    min-width: 60px;
+  }
+
+  .menu-row {
+    > div {
+      &:first-child {
+        padding-right: 8px;
+      }
+
+      &:last-child {
+        padding-left: 8px;
+      }
+    }
+  }
+}

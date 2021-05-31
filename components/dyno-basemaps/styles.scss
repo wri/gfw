@@ -66,6 +66,17 @@
       color: $hot-grey;
       font-size: 12px;
     }
+
+    &.active {
+      .dyno-basemap--thumbnail {
+        border: 2px solid $green-gfw;
+      }
+    }
+  }
+
+  .dyno-basemap-settings {
+    padding: 10px 15px;
+    background: $grey-light;
   }
 
 }

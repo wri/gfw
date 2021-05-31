@@ -37,7 +37,7 @@ export default {
     url: `/api/planet-tiles/{name}/gmap/{z}/{x}/{y}/?proc={color}`,
   },
   satellite: {
-    label: 'Satellite',
+    label: 'google',
     description: 'Highest resolution imagery 1-3 years old (global).',
     value: 'satellite',
     color: '#131620',
