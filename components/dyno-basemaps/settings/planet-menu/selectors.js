@@ -14,7 +14,7 @@ const COLOR_OPTIONS = [
   },
 ];
 
-const selectBasemapSelected = (state) => state?.map?.settings?.basemap?.name;
+const selectBasemapSelected = (state) => state?.map?.settings?.basemap?.label;
 const selectBasemapColorSelected = (state) =>
   state?.map?.settings?.basemap?.color;
 
@@ -33,7 +33,11 @@ export const getPeriodSelected = createSelector(
   [getPeriodOptions, selectBasemapSelected],
   (periodOptions, selected) => {
     if (isEmpty(periodOptions)) return null;
-    return periodOptions?.find((r) => r.value === selected);
+    const index = periodOptions?.findIndex((r) => r.value === selected);
+    if (index === -1) {
+      return 0;
+    }
+    return index;
   }
 );
 

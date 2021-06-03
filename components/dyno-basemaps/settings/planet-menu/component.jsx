@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 
 import Dropdown from 'components/ui/dropdown';
 
+import Timeframe from 'components/ui/timeframe';
+
 import './styles.scss';
 
 export const PlanetMenu = ({
@@ -12,22 +14,8 @@ export const PlanetMenu = ({
   colorSelected,
 }) => (
   <div className="c-planet-menu">
-    {/* <Column width={[6.5 / 12]}>
-      <h6>period</h6>
-      <Dropdown
-        className="landsat-selector"
-        theme="theme-dropdown-native theme-dropdown-native-button-green"
-        value={periodSelected?.value}
-        options={periodOptions}
-        onChange={(value) =>
-          onSelectBasemap({
-            value: 'planet',
-            name: value,
-            color: colorSelected,
-          })}
-        native
-      />
-    </Column> */}
+    <h6>period</h6>
+    <Timeframe selected={periodSelected} periods={periodOptions} />
     <h6>image type</h6>
     <Dropdown
       theme="theme-dropdown-native theme-dropdown-native-button-green"
@@ -45,7 +33,7 @@ export const PlanetMenu = ({
 
 PlanetMenu.propTypes = {
   periodOptions: PropTypes.array,
-  periodSelected: PropTypes.object,
+  periodSelected: PropTypes.number,
   colorOptions: PropTypes.array,
   colorSelected: PropTypes.string,
   onSelectBasemap: PropTypes.func,

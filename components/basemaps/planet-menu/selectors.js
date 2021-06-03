@@ -21,11 +21,15 @@ const selectBasemapColorSelected = (state) =>
 export const getPeriodOptions = createSelector(
   [getPlanetBasemaps],
   (planetBasemaps) => {
+    console.log('yo', planetBasemaps);
     if (isEmpty(planetBasemaps)) return null;
-    return planetBasemaps?.map(({ period, name } = {}) => ({
+    console.log('planet basemaps', planetBasemaps);
+    const r = planetBasemaps?.map(({ period, name } = {}) => ({
       label: period,
       value: name,
     }));
+    console.log('periods', JSON.stringify(planetBasemaps));
+    return r;
   }
 );
 
