@@ -8,14 +8,14 @@ import './styles.scss';
 
 export const PlanetMenu = ({
   periodOptions,
-  periodSelected,
+  periodSelectedIndex,
   onSelectBasemap,
   colorOptions,
   colorSelected,
 }) => (
   <div className="c-planet-menu">
     <h6>period</h6>
-    <Timeframe selected={periodSelected} periods={periodOptions} />
+    <Timeframe selected={periodSelectedIndex} periods={periodOptions} />
     <h6>image type</h6>
     <Dropdown
       theme="theme-dropdown-native theme-dropdown-native-button-green"
@@ -33,7 +33,7 @@ export const PlanetMenu = ({
 
 PlanetMenu.propTypes = {
   periodOptions: PropTypes.array,
-  periodSelected: PropTypes.number,
+  periodSelectedIndex: PropTypes.number,
   colorOptions: PropTypes.array,
   colorSelected: PropTypes.string,
   onSelectBasemap: PropTypes.func,

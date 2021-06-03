@@ -14,7 +14,9 @@ const COLOR_OPTIONS = [
   },
 ];
 
-const selectBasemapSelected = (state) => state?.map?.settings?.basemap?.label;
+const selectBasemapSelected = (state) => {
+  return state?.map?.settings?.basemap?.name;
+};
 const selectBasemapColorSelected = (state) =>
   state?.map?.settings?.basemap?.color;
 
@@ -33,11 +35,21 @@ export const getPeriodSelected = createSelector(
   [getPeriodOptions, selectBasemapSelected],
   (periodOptions, selected) => {
     if (isEmpty(periodOptions)) return null;
-    const index = periodOptions?.findIndex((r) => r.value === selected);
-    if (index === -1) {
+    const period = periodOptions?.find((r) => r.value === selected);
+    if (!period) return periodOptions[0];
+    return period;
+  }
+);
+
+export const getPeriodSelectedIndex = createSelector(
+  [getPeriodOptions, selectBasemapSelected],
+  (periodOptions, selected) => {
+    if (isEmpty(periodOptions)) return null;
+    const periodIndex = periodOptions?.findIndex((r) => r.value === selected);
+    if (periodIndex === -1) {
       return 0;
     }
-    return index;
+    return periodIndex;
   }
 );
 
@@ -51,6 +63,7 @@ export const getColorSelected = createSelector(
 export default createStructuredSelector({
   periodOptions: getPeriodOptions,
   periodSelected: getPeriodSelected,
+  periodSelectedIndex: getPeriodSelectedIndex,
   colorOptions: getColorOptions,
   colorSelected: getColorSelected,
 });

@@ -65,6 +65,10 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize) {
         buttonWidth,
       });
       setOffset(-Math.abs(newOffset));
+
+      if (selectedIndex !== activeIndex) {
+        setActiveIndex(selectedIndex);
+      }
     }
   }, [ref, tileRefs, data, dotSize, selectedIndex]);
 
