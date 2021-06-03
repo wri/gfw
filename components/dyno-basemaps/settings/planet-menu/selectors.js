@@ -24,10 +24,12 @@ export const getPeriodOptions = createSelector(
   [getPlanetBasemaps],
   (planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
-    return planetBasemaps?.map(({ period, name } = {}) => ({
-      label: period,
-      value: name,
-    }));
+    return planetBasemaps
+      ?.map(({ period, name } = {}) => ({
+        label: period,
+        value: name,
+      }))
+      .reverse();
   }
 );
 
