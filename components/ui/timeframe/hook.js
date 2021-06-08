@@ -31,7 +31,7 @@ const getVisibleLabels = (bound, tiles) => {
   return [0, 0];
 };
 
-function useTimeline(ref, tileRefs, data, selectedIndex, dotSize) {
+function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
   const [timeline, setTimeline] = useState({
     tileWidth: 0,
     dataWidth: 0,
@@ -93,6 +93,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize) {
     if (dir === 'prev' && offset === startOffset) {
       if (activeIndex !== 0) {
         setActiveIndex(activeIndex - 1);
+        onChange(data[activeIndex - 1]);
         return;
       }
       return;
@@ -101,6 +102,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize) {
     if (dir === 'next' && Math.abs(offset) === endOffset) {
       if (activeIndex !== data.length - 1 && activeIndex < data.length - 1) {
         setActiveIndex(activeIndex + 1);
+        onChange(data[activeIndex + 1]);
         return;
       }
       return;
@@ -122,6 +124,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize) {
         setOffset(calcOffset);
       }
       setActiveIndex(newIndex);
+      onChange(data[newIndex]);
       return;
     }
 
@@ -141,6 +144,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize) {
       moveTimeline('prev', false);
     }
     setActiveIndex(index);
+    onChange(data[index]);
   }
 
   return [timeline, activeIndex, offset, labels, setSelected, moveTimeline];

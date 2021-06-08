@@ -8,120 +8,14 @@ import useTimeline from './hook';
 
 import './styles.scss';
 
-const data = [
-  {
-    label: 'Apr 2021',
-    year: 2021,
-    month: 'Apr',
-    value: 'planet_medres_normalized_analytic_2021-04_mosaic',
-  },
-  {
-    label: 'Mar 2021',
-    year: 2021,
-    month: 'Mar',
-    value: 'planet_medres_normalized_analytic_2021-03_mosaic',
-  },
-  {
-    label: 'Feb 2021',
-    year: 2021,
-    month: 'Feb',
-    value: 'planet_medres_normalized_analytic_2021-02_mosaic',
-  },
-  {
-    label: 'Jan 2021',
-    year: 2021,
-    month: 'Jan',
-    value: 'planet_medres_normalized_analytic_2021-01_mosaic',
-  },
-  {
-    label: 'Dec 2020',
-    year: 2020,
-    month: 'Dec',
-    value: 'planet_medres_normalized_analytic_2020-12_mosaic',
-  },
-  {
-    label: 'Nov 2020',
-    year: 2020,
-    month: 'Nov',
-    value: 'planet_medres_normalized_analytic_2020-11_mosaic',
-  },
-  {
-    label: 'Oct 2020',
-    year: 2020,
-    month: 'Oct',
-    value: 'planet_medres_normalized_analytic_2020-10_mosaic',
-  },
-  {
-    label: 'Sep 2020',
-    year: 2020,
-    month: 'Sep',
-    value: 'planet_medres_normalized_analytic_2020-09_mosaic',
-  },
-  {
-    label: 'Jun 2020 - Sep 2020',
-    year: 2020,
-    month: 'Jun/Sep',
-    value: 'planet_medres_normalized_analytic_2020-06_2020-08_mosaic',
-  },
-  {
-    label: 'Dec 2019 - Jun 2020',
-    year: '2019/2020',
-    month: 'Dec/Jun',
-    value: 'planet_medres_normalized_analytic_2019-12_2020-05_mosaic',
-  },
-  {
-    label: 'Jun 2019 - Dec 2019',
-    year: 2019,
-    month: 'Jun/Dec',
-    value: 'planet_medres_normalized_analytic_2019-06_2019-11_mosaic',
-  },
-  {
-    label: 'Dec 2018 - Jun 2019',
-    year: '2018/2019',
-    month: 'Dec-Jun',
-    value: 'planet_medres_normalized_analytic_2018-12_2019-05_mosaic',
-  },
-  {
-    label: 'Jun 2018 - Dec 2018',
-    year: 2018,
-    month: 'June-Dec',
-    value: 'planet_medres_normalized_analytic_2018-06_2018-11_mosaic',
-  },
-  {
-    label: 'Dec 2017 - Jun 2018',
-    year: '2017/2018',
-    month: 'Dec/Jun',
-    value: 'planet_medres_normalized_analytic_2017-12_2018-05_mosaic',
-  },
-  {
-    label: 'Jun 2017 - Dec 2017',
-    year: 2017,
-    month: 'Jun/Dec',
-    value: 'planet_medres_normalized_analytic_2017-06_2017-11_mosaic',
-  },
-  {
-    label: 'Dec 2016 - Jun 2017',
-    year: '2016/2017',
-    month: 'Dec/Jun',
-    value: 'planet_medres_normalized_analytic_2016-12_2017-05_mosaic',
-  },
-  {
-    label: 'Jun 2016 - Dec 2016',
-    year: 2016,
-    month: 'Jun/Dec',
-    value: 'planet_medres_normalized_analytic_2016-06_2016-11_mosaic',
-  },
-  {
-    label: 'Dec 2015 - Jun 2016',
-    year: '2015/2016',
-    month: 'Dec/Jun',
-    value: 'planet_medres_normalized_analytic_2015-12_2016-05_mosaic',
-  },
-].reverse();
-
 const DOT_SIZE = 12;
 
-const TimeSlider = ({ dotSize = DOT_SIZE, selected = 0, periods = [] }) => {
+const TimeSlider = ({
+  dotSize = DOT_SIZE,
+  selected = 0,
+  periods = [],
+  onChange,
+}) => {
   const ref = useRef();
   const tileRefs = useRef([]);
 
@@ -132,7 +26,7 @@ const TimeSlider = ({ dotSize = DOT_SIZE, selected = 0, periods = [] }) => {
     labels,
     setSelected,
     moveTimeline,
-  ] = useTimeline(ref, tileRefs, periods, selected, dotSize);
+  ] = useTimeline(ref, tileRefs, periods, selected, dotSize, onChange);
 
   const [styles, setAnim] = useSpring(() => ({
     from: { transform: `translateX(0px)` },
@@ -218,6 +112,7 @@ TimeSlider.propTypes = {
   dotSize: PropTypes.number,
   selected: PropTypes.number,
   periods: PropTypes.arrayOf(PropTypes.object),
+  onChange: PropTypes.func.isRequired,
 };
 
 export default TimeSlider;

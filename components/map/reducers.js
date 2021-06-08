@@ -87,6 +87,17 @@ const setMapSettings = (state, { payload }) => ({
   },
 });
 
+const setMapBasemap = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    basemap: {
+      ...state.settings.basemap,
+      ...payload,
+    },
+  },
+});
+
 const setMapInteractions = (state, { payload }) => {
   const interactions = payload?.features?.reduce(
     (obj, { layer, id, geometry, ...data }) => ({
@@ -140,6 +151,7 @@ const clearMapInteractions = (state) => ({
 });
 
 export default {
+  [actions.setMapBasemap]: setMapBasemap,
   [actions.setMapLoading]: setMapLoading,
   [actions.setMapSettings]: setMapSettings,
   [actions.setMapInteractions]: setMapInteractions,

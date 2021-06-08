@@ -13,29 +13,27 @@ import './styles.scss';
 
 const DynoBasemaps = ({
   className,
+  planetPeriods,
   basemaps,
   activeBasemap,
-  setMapSettings,
+  setMapBasemap,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
 
   const handleToggleActive = () => {
-    setMapSettings({
-      basemap: {
-        value: activeBasemap.active ? 'default' : activeBasemap.value,
-      },
+    setMapBasemap({
+      value: activeBasemap.active ? 'default' : activeBasemap.value,
     });
   };
 
   const handleSetDynoBasemap = (value) => {
-    setMapSettings({
-      basemap: {
-        value,
-        ...(value === 'planet' && {
-          color: 'rgb',
-        }),
-      },
+    setMapBasemap({
+      value,
+      ...(value === 'planet' && {
+        color: 'rgb',
+        name: planetPeriods[planetPeriods.length - 1].value,
+      }),
     });
   };
 
@@ -104,7 +102,10 @@ const DynoBasemaps = ({
                   {activeBasemap &&
                     activeBasemap.active &&
                     activeBasemap.value === basemap.value && (
-                      <BasemapSettings basemap={activeBasemap} />
+                      <BasemapSettings
+                        setMapBasemap={setMapBasemap}
+                        basemap={activeBasemap}
+                      />
                     )}
                 </li>
               );
@@ -118,7 +119,8 @@ const DynoBasemaps = ({
 
 DynoBasemaps.propTypes = {
   className: PropTypes.string,
-  setMapSettings: PropTypes.func.isRequired,
+  planetPeriods: PropTypes.arrayOf(PropTypes.object),
+  setMapBasemap: PropTypes.func.isRequired,
   basemaps: PropTypes.arrayOf(PropTypes.object),
   activeBasemap: PropTypes.object,
 };

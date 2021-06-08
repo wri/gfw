@@ -11,23 +11,21 @@ import {
   // getActiveDatasetsFromState,
 } from 'components/map/selectors';
 
-export const getDynoBasemaps = createSelector(
-  [getBasemaps],
-  (basemaps) => {
-    const out = [];
-    Object.keys(basemaps).forEach(key => {
-      if (!basemaps[key].static) {
-        out.push(basemaps[key]);
-      }
-    });
-    return out;
-  }
-);
+import { getPeriodOptions } from './settings/planet-menu/selectors';
+
+export const getDynoBasemaps = createSelector([getBasemaps], (basemaps) => {
+  const out = [];
+  Object.keys(basemaps).forEach((key) => {
+    if (!basemaps[key].static) {
+      out.push(basemaps[key]);
+    }
+  });
+  return out;
+});
 
 export const getActiveDynoBasemap = createSelector(
   [getDynoBasemaps, getBasemap],
   (basemaps, activeBasemap) => {
-
     if (!basemaps || !activeBasemap) {
       return null;
     }
@@ -38,15 +36,15 @@ export const getActiveDynoBasemap = createSelector(
     if (dynoBasemap) {
       return {
         ...dynoBasemap,
-        active: true
-      }
+        active: true,
+      };
     }
 
     if (defaultBasemap) {
       return {
         ...defaultBasemap,
-        active: false
-      }
+        active: false,
+      };
     }
 
     return null;
@@ -55,5 +53,6 @@ export const getActiveDynoBasemap = createSelector(
 
 export const getBasemapProps = createStructuredSelector({
   activeBasemap: getActiveDynoBasemap,
-  basemaps: getDynoBasemaps
+  planetPeriods: getPeriodOptions,
+  basemaps: getDynoBasemaps,
 });
