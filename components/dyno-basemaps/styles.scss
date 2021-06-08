@@ -2,6 +2,7 @@
 
 .c-map-legend-basemaps {
   flex: 0;
+
   .header {
     display: flex;
     align-items: center;
@@ -25,11 +26,11 @@
     .dyno-toggle-active {
       padding-left: 20px;
       cursor: pointer;
+
       &.-open svg {
         transform: rotate(180deg);
       }
     }
-
   }
 
   .dyno-basemap {
@@ -40,9 +41,16 @@
       padding: 10px 15px;
       text-align: left;
       cursor: pointer;
+
       &:hover {
         background: $grey-light;
       }
+    }
+
+    &.active .dyno-basemap--cta {
+      user-select: none;
+      background: initial;
+      cursor: default;
     }
 
     &--content {
@@ -57,7 +65,7 @@
     }
 
     &--title {
-      color: #333333;
+      color: $slate-light;
       text-transform: uppercase;
       font-size: 10px;
     }
@@ -78,5 +86,4 @@
     padding: 10px 15px;
     background: $grey-light;
   }
-
 }
