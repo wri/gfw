@@ -146,10 +146,10 @@ const TimeSlider = ({ dotSize = DOT_SIZE, selected = 0, periods = [] }) => {
     <>
       <section className="c-timeframe">
         <span className="year-label year-label-start">
-          {data[labels[0]].year}
+          {periods[labels[0]].year}
         </span>
         <span className="year-label year-label-end">
-          {data[labels[1]].year}
+          {periods[labels[1]].year}
         </span>
         <button
           className="prev"
@@ -168,7 +168,7 @@ const TimeSlider = ({ dotSize = DOT_SIZE, selected = 0, periods = [] }) => {
               ...styles,
             }}
           >
-            {data.map((d, i) => (
+            {periods.map((d, i) => (
               <li
                 key={i}
                 ref={(el) => {

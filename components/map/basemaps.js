@@ -35,6 +35,13 @@ export default {
     labelsGroup: 'labels-dark',
     mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
     url: `/api/planet-tiles/{name}/gmap/{z}/{x}/{y}/?proc={color}`,
+    settings: [
+      {
+        type: 'timeseries',
+        default: 'latest',
+        // getData: () => { ...fetch }
+      }
+    ]
   },
   satellite: {
     label: 'google',
