@@ -22,7 +22,7 @@ export const PlanetMenu = ({
     />
     <h6>image type</h6>
     <Dropdown
-      theme="theme-dropdown-native theme-dropdown-native-button-green"
+      theme="theme-dropdown-native theme-dropdown-native-button-green theme-dropdown-full-width"
       value={colorSelected}
       options={colorOptions}
       onChange={(color) => setMapBasemap({ color })}
