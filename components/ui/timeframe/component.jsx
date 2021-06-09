@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { Tooltip } from 'react-tippy';
 
 import Icon from './right.svg';
 
@@ -19,23 +18,31 @@ const TimeSlider = ({
 }) => {
   const ref = useRef();
   const tileRefs = useRef([]);
-
+  const [initialized, setInitialized] = useState(false);
+  const [previousOffset, setPreviousOffset] = useState(null);
   const [
     timeline,
     activeIndex,
     offset,
     labels,
     setSelected,
-    moveTimeline,
+    moveTimeline
   ] = useTimeline(ref, tileRefs, periods, selected, dotSize, onChange);
 
   const [styles, setAnim] = useSpring(() => ({
-    from: { transform: `translateX(0px)` },
+    from: { transform: `translateX(0px)` }
   }));
 
   useEffect(() => {
-    setAnim({ transform: `translateX(${offset}px)` });
-  }, [offset, setAnim, activeIndex]);
+    if (offset !== null) {
+      setAnim({
+        transform: `translateX(${-Math.abs(offset)}px)`,
+        immediate: !initialized || previousOffset === 0
+      });
+      setInitialized(true);
+      setPreviousOffset(offset);
+    }
+  }, [offset, initialized, setAnim]);
 
   return (
     <>
@@ -75,26 +82,32 @@ const TimeSlider = ({
                   width: `${timeline.tileWidth}px`,
                 }}
               >
-                <Tooltip
-                  open={activeIndex === i}
-                  title={d.label}
-                  position="bottom"
+                <span
+                  label={d.label}
+                  role="button"
+                  tabIndex={0}
+                  area-label="Select timeframe"
+                  className={`timeline-position ${activeIndex === i ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelected(i);
+                  }}
+                  style={{
+                    width: `${dotSize}px`,
+                    height: `${dotSize}px`,
+                  }}
                 >
-                  <span
-                    label={d.label}
-                    role="button"
-                    tabIndex={0}
-                    area-label="Select timeframe"
-                    className={`${activeIndex === i ? 'active' : ''}`}
-                    onClick={() => {
-                      setSelected(i);
-                    }}
-                    style={{
-                      width: `${dotSize}px`,
-                      height: `${dotSize}px`,
-                    }}
-                  />
-                </Tooltip>
+                  {activeIndex === i && (
+                    <span
+                      className={
+                        `label
+                        ${i === 0 ? 'x-start' : ''}
+                        ${i === periods.length - 1 ? 'x-end' : ''}`
+                      }
+                    >
+                      {d.label}
+                    </span>
+                  )}
+                </span>
               </li>
             ))}
           </animated.ol>

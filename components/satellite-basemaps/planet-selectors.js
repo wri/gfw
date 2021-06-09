@@ -33,10 +33,10 @@ export const getPlanetBasemaps = createSelector(
         const year = monthDiff === 1 ? format(startDate, 'yyyy') : format(endDate, 'yyyy');
         const period =
           monthDiff === 1
-            ? `${format(startDate, 'MMM yyyy')}`
-            : `${format(startDate, 'MMM yyyy')} - ${format(
+            ? `${format(startDate, 'MMM')}`
+            : `${format(startDate, 'MMM')} - ${format(
                 endDate,
-                'MMM yyyy'
+                'MMM'
               )}`;
 
         return {

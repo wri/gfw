@@ -6,7 +6,7 @@
   justify-content: space-between;
   width: inherit;
   height: 40px;
-  margin: 10px 0;
+  margin: 10px 0 15px 0;
 
   .year-label {
     position: absolute;
@@ -69,7 +69,7 @@
     align-items: center;
     justify-content: center;
 
-    span {
+    .timeline-position {
       position: relative;
       width: 12px;
       height: 12px;
@@ -95,6 +95,13 @@
         width: 8px;
         height: 8px;
       }
+
+      .tooltip-label {
+        display: block;
+        width: 12px;
+        height: 12px;
+      }
+
     }
   }
 
@@ -103,12 +110,21 @@
     position: absolute;
     font-size: 11px;
     white-space: nowrap;
-    bottom: -15px;
+    bottom: -18px;
     background: none;
     width: auto;
     height: auto;
     box-shadow: none;
     left: 50%;
     transform: translateX(-50%);
+    &.x-start {
+      right: 0;
+    }
+    &.x-end {
+      left: unset;
+      transform: translateX(0);
+      right: 0;
+    }
   }
 }
+
