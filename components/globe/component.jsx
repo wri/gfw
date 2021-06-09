@@ -95,8 +95,8 @@ class GlobeComponent extends React.Component {
           this.handleClick(userData);
           if (userData?.title) {
             trackEvent({
-              category: 'Globe Open modal',
-              action: 'click_pin',
+              category: 'Open modal',
+              action: 'click globe pin',
               label: userData.title,
             });
           }
