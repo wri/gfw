@@ -1,13 +1,16 @@
 import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 
-import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import { fetchFires, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesAlertsCumulative',
-  title: 'Cumulative Fire Alerts in {location}',
+  title: {
+    default: 'Cumulative Fire Alerts in {location}',
+    burnedArea: 'Cumulative Burned Area in {location}',
+  },
   large: true,
   categories: ['summary', 'fires'],
   settingsConfig: [
@@ -65,6 +68,10 @@ export default {
     confidence: 'h',
   },
   sentences: {
+    allBurn:
+      'In {location}, {area} of land has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
+    allBurnWithInd:
+      'In {location}, {area} of land within {indicator} has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
     allAlerts:
       'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
     highConfidence:
@@ -284,7 +291,7 @@ export default {
     ],
   },
   getData: (params) =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
+    all([fetchFires(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));
@@ -309,6 +316,6 @@ export default {
         );
       })
     ),
-  getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
+  getDataURL: (params) => [fetchFires({ ...params, download: true })],
   getWidgetProps,
 };

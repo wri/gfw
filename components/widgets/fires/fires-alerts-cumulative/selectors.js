@@ -20,6 +20,7 @@ import {
 const getAlerts = (state) => state.data && state.data.alerts;
 const getLatest = (state) => state.data && state.data.latest;
 const getColors = (state) => state.colors || null;
+const getTitle = (state) => state.title || null;
 const getCompareYear = (state) => state.settings.compareYear || null;
 const getAllYears = (state) =>
   state.data &&
@@ -244,17 +245,23 @@ export const parseConfig = createSelector(
     endIndex
   ) => {
     if (!currentData) return null;
+    // @TODO: This could be abstracted to settings/dataset properties
+    const isBurnedArea = dataset === 'modis_burned_area';
+    const datasetUnit = isBurnedArea ? '' : 'alerts';
+    const datasetName = isBurnedArea ? 'MODIS' : dataset.toUpperCase();
 
     const tooltip = [
       {
         key: 'count',
         labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
-        unit: ` ${dataset.toUpperCase()} alerts`,
+        unit: ` ${datasetName} ${datasetUnit}`,
         color: colors.main,
         nullValue: 'No data available',
         unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+          Number.isInteger(value) && !isBurnedArea
+            ? format(',')(value)
+            : `${format('.3s')(value)}ha`,
       },
     ];
     const compareYearsLines = {};
@@ -278,11 +285,13 @@ export const parseConfig = createSelector(
 
             return date.format('MMM DD YYYY');
           },
-          unit: ` ${dataset.toUpperCase()} alerts`,
+          unit: ` ${datasetName} ${datasetUnit}`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
           unitFormat: (value) =>
-            Number.isInteger(value) ? format(',')(value) : value,
+            Number.isInteger(value) && !isBurnedArea
+              ? format(',')(value)
+              : `${format('.3s')(value)}ha`,
         });
         compareYearsLines[year] = {
           stroke:
@@ -321,13 +330,13 @@ export const parseConfig = createSelector(
         return Array.isArray(sorted)
           ? [
               {
-                label: 'Fire alerts',
+                label: isBurnedArea ? 'Burned area' : 'Fire alerts',
               },
               ...sorted,
             ]
           : [
               {
-                label: 'Fire alerts',
+                label: isBurnedArea ? 'Burned area' : 'Fire alerts',
               },
             ];
       },
@@ -420,6 +429,8 @@ export const parseSentence = createSelector(
   ) => {
     if (!data) return null;
     const {
+      allBurnWithInd,
+      allBurn,
       highConfidence,
       allAlerts,
       highConfidenceWithInd,
@@ -487,6 +498,9 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
+    const isBurnedArea = dataset === 'modis_burned_area';
+    const datasetName = isBurnedArea ? 'MODIS' : dataset.toUpperCase();
+
     let sentence =
       confidence && confidence.value === 'h' ? highConfidence : allAlerts;
     if (indicator) {
@@ -494,6 +508,9 @@ export const parseSentence = createSelector(
         confidence && confidence.value === 'h'
           ? highConfidenceWithInd
           : allAlertsWithInd;
+    }
+    if (isBurnedArea) {
+      sentence = indicator ? allBurnWithInd : allBurn;
     }
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
@@ -508,9 +525,15 @@ export const parseSentence = createSelector(
         value: maxTotal ? format(',')(maxTotal) : 0,
         color: colors.main,
       },
-      dataset: dataset.toUpperCase(),
+      dataset: datasetName,
       count: {
         value: totalCurrentYear ? format(',')(totalCurrentYear) : 0,
+        color: colors.main,
+      },
+      area: {
+        value: totalCurrentYear
+          ? `${format('.2s')(totalCurrentYear)}ha`
+          : '0ha',
         color: colors.main,
       },
       status: {
@@ -522,9 +545,17 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getDataset],
+  (title, dataset) => {
+    return dataset === 'modis_burned_area' ? title.burnedArea : title.default;
+  }
+);
+
 export default createStructuredSelector({
   originalData: parseData,
   data: parseBrushedData,
   config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
 });

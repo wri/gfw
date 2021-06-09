@@ -20,7 +20,7 @@ export default {
   widget: 'firesAlertsStats',
   title: {
     default: 'Weekly Fire Alerts in {location}',
-    burnedArea: 'Weekly Burned Areas in {location}',
+    burnedArea: 'Weekly Burned Area in {location}',
   },
   large: true,
   categories: ['summary', 'fires'],
