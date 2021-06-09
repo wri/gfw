@@ -34,6 +34,8 @@ const SQL_QUERIES = {
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
+  burnedAreas:
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
@@ -64,6 +66,14 @@ const ALLOWED_PARAMS = {
   ],
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
+  modis_burned_area: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'confidence',
+  ],
 };
 
 //
@@ -135,7 +145,10 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
-
+  console.log(
+    'ds key',
+    `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
+  );
   const datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
@@ -991,6 +1004,53 @@ export const fetchGLADLatest = () => {
           })
         )
     );
+};
+
+export const fetchFires = (params) => {
+  const { forestType, landCategory, ifl, download, dataset } = params || {};
+  const queryString =
+    dataset === 'modis_burned_area'
+      ? SQL_QUERIES.burnedAreas
+      : SQL_QUERIES.fires;
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset,
+      datasetType: 'weekly',
+    })}${queryString}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
+  );
+  const fileName =
+    dataset === 'modis_burned_area'
+      ? dataset
+      : `${dataset || 'viirs'}_fire_alerts`;
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `${fileName}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha,
+      })),
+    },
+  }));
 };
 
 export const fetchVIIRSAlerts = (params) => {
