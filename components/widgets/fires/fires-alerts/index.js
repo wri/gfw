@@ -18,7 +18,10 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'firesAlertsStats',
-  title: 'Weekly Fire Alerts in {location}',
+  title: {
+    default: 'Weekly Fire Alerts in {location}',
+    burnedArea: 'Weekly Burned Areas in {location}',
+  },
   large: true,
   categories: ['summary', 'fires'],
   settingsConfig: [

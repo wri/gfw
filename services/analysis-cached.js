@@ -145,10 +145,6 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
-  console.log(
-    'ds key',
-    `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
-  );
   const datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`

@@ -22,6 +22,7 @@ const getLatest = (state) => state.data && state.data.latest;
 const getColors = (state) => state.colors || null;
 const getCompareYear = (state) => state.settings.compareYear || null;
 const getDataset = (state) => state.settings.dataset || null;
+const getTitle = (state) => state.title;
 const getStartIndex = (state) => state.settings.startIndex || 0;
 const getEndIndex = (state) => state.settings.endIndex || null;
 const getSentences = (state) => state.sentences || null;
@@ -500,9 +501,17 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getDataset],
+  (title, dataset) => {
+    return dataset === 'modis_burned_area' ? title.burnedArea : title.default;
+  }
+);
+
 export default createStructuredSelector({
   originalData: parseData,
   data: parseBrushedData,
   config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
 });
