@@ -25,8 +25,9 @@ export const getPeriodOptions = createSelector(
   (planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
     return planetBasemaps
-      ?.map(({ period, name, year } = {}) => ({
-        label: period,
+      ?.map(({ label, period, name, year } = {}) => ({
+        label,
+        period,
         year,
         value: name,
       }))

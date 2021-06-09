@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { Tooltip } from 'react-tippy';
+import Tip from 'components/ui/tip';
 
 import Icon from './right.svg';
 
@@ -96,6 +98,15 @@ const TimeSlider = ({
                     height: `${dotSize}px`,
                   }}
                 >
+                  <Tooltip
+                    trigger="mouseenter"
+                    position="top"
+                    theme="tip"
+                    html={<Tip text={d.period} className="tooltip-dark" />}
+                    distance={5}
+                  >
+                    <span className="tooltip-item" />
+                  </Tooltip>
                   {activeIndex === i && (
                     <span
                       className={

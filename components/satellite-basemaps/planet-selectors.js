@@ -30,8 +30,17 @@ export const getPlanetBasemaps = createSelector(
         const startDate = cleanPlanetDate(first_acquired);
         const endDate = cleanPlanetDate(last_acquired);
         const monthDiff = differenceInMonths(endDate, startDate);
-        const year = monthDiff === 1 ? format(startDate, 'yyyy') : format(endDate, 'yyyy');
+        const year = format(startDate, 'yyyy');
+
         const period =
+          monthDiff === 1
+            ? `${format(startDate, 'MMM yyyy')}`
+            : `${format(startDate, 'MMM yyyy')} - ${format(
+                endDate,
+                'MMM yyyy'
+              )}`;
+
+        const label =
           monthDiff === 1
             ? `${format(startDate, 'MMM')}`
             : `${format(startDate, 'MMM')} - ${format(
@@ -42,6 +51,7 @@ export const getPlanetBasemaps = createSelector(
         return {
           name,
           period,
+          label,
           year,
           sortOrder: Date(startDate),
         };

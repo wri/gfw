@@ -105,6 +105,14 @@
     }
   }
 
+  .tooltip-item {
+    width: 12px;
+    height: 12px;
+    display: block;
+    z-index: 3;
+    position: relative;
+  }
+
   .label {
     color: $grey;
     position: absolute;
