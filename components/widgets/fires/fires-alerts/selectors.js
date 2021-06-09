@@ -234,19 +234,27 @@ export const parseConfig = createSelector(
   ],
   (legend, colors, latest, maxminYear, compareYear, dataset, indexes) => {
     const { startIndex, endIndex } = indexes;
+    // @TODO: This could be abstracted to settings/dataset properties
+    const isBurnedArea = dataset === 'modis_burned_area';
+    const datasetUnit = isBurnedArea ? '' : 'alerts';
+    const datasetName = isBurnedArea ? 'MODIS' : dataset.toUpperCase();
 
     const tooltip = [
       {
-        label: 'Fire alerts in the week of:',
+        label: `${
+          isBurnedArea ? 'Burned areas' : 'Fire alerts'
+        } in the week of:`,
       },
       {
         key: 'count',
         labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
-        unit: ` ${dataset.toUpperCase()} alerts`,
+        unit: ` ${datasetName} ${datasetUnit}`,
         color: colors.main,
         unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+          Number.isInteger(value) && !isBurnedArea
+            ? format(',')(value)
+            : `${format('.3s')(value)}ha`,
       },
     ];
 
@@ -261,11 +269,13 @@ export const parseConfig = createSelector(
 
           return date.format('MMM DD YYYY');
         },
-        unit: ` ${dataset.toUpperCase()} alerts`,
+        unit: ` ${datasetName} ${datasetUnit}`,
         color: '#49b5e3',
         nullValue: 'No data available',
         unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+          Number.isInteger(value) && !isBurnedArea
+            ? format(',')(value)
+            : `${format('.3s')(value)}ha`,
       });
     }
 
@@ -365,6 +375,8 @@ export const parseSentence = createSelector(
     const {
       defaultSentence,
       seasonSentence,
+      allBurn,
+      allBurnWithInd,
       highConfidence,
       allAlerts,
       highConfidenceWithInd,
@@ -394,9 +406,16 @@ export const parseSentence = createSelector(
     const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
 
     const earliestMinDate = minWeeks[0]?.date;
-    const sortedPeakWeeks = sortedWeeks.filter(
-      (d) => d.mean > halfMax && d.date && d.date > earliestMinDate
-    );
+    const earliestMinIndex = sortedWeeks
+      .map((el) => el.date)
+      .indexOf(earliestMinDate);
+
+    // Reorder the array so that we can ignore seasons that wrap around
+    const firstHalf = sortedWeeks.slice(0, earliestMinIndex);
+    const secondHalf = sortedWeeks.slice(earliestMinIndex);
+    const reorderedWeeks = secondHalf.concat(firstHalf);
+
+    const sortedPeakWeeks = reorderedWeeks.filter((d) => d.mean > halfMax);
 
     const seasonStartDate =
       sortedPeakWeeks.length > 0 && sortedPeakWeeks[0]?.date;
@@ -431,7 +450,11 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
+    const isBurnedArea = dataset === 'modis_burned_area';
+    const datasetName = isBurnedArea ? 'MODIS' : dataset.toUpperCase();
+
     const initialSentence = seasonStartDate ? seasonSentence : defaultSentence;
+
     let sentence =
       confidence && confidence.value === 'h'
         ? initialSentence + highConfidence
@@ -441,6 +464,11 @@ export const parseSentence = createSelector(
         confidence && confidence.value === 'h'
           ? highConfidenceWithInd
           : allAlertsWithInd;
+    }
+    if (isBurnedArea) {
+      sentence = indicator
+        ? initialSentence + allBurnWithInd
+        : initialSentence + allBurn;
     }
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
@@ -453,9 +481,13 @@ export const parseSentence = createSelector(
       start_date: moment(firstDate.date).format('Do of MMMM YYYY'),
       end_date: moment(lastDate.date).format('Do of MMMM YYYY'),
       dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
-      dataset: dataset.toUpperCase(),
+      dataset: datasetName,
       count: {
         value: total ? format(',')(total) : 0,
+        color: colors.main,
+      },
+      area: {
+        value: total ? `${format('.2s')(total)}ha` : '0ha',
         color: colors.main,
       },
       status: {

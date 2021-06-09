@@ -2,7 +2,7 @@ import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 import moment from 'moment';
 
-import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import { fetchFires, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -90,15 +90,21 @@ export default {
   sentences: {
     defaultSentence: 'In {location} there ',
     seasonSentence:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There ',
+      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. ',
+    allBurn:
+      'Fires burned {area} of land between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}.',
+    allBurnWithInd:
+      'Fires burned {area} of land within {indicator} between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}.',
+    highConfidenceBurnWithInd:
+      'There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
     allAlerts:
-      'were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidence:
-      'were {count} {dataset} fire alerts reported between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
     allAlertsWithInd:
-      'were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidenceWithInd:
-      'were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
   },
   whitelists: {
     adm0: [
@@ -310,7 +316,7 @@ export default {
     ],
   },
   getData: (params) =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
+    all([fetchFires(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));
@@ -339,6 +345,6 @@ export default {
         );
       })
     ),
-  getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
+  getDataURL: (params) => [fetchFires({ ...params, download: true })],
   getWidgetProps,
 };
