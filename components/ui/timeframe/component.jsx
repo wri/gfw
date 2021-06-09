@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { Tooltip } from 'react-tippy';
 
 import Icon from './right.svg';
 
@@ -74,23 +75,26 @@ const TimeSlider = ({
                   width: `${timeline.tileWidth}px`,
                 }}
               >
-                <span
-                  role="button"
-                  tabIndex={0}
-                  area-label="Select timeframe"
-                  className={`${activeIndex === i ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelected(i);
-                  }}
-                  style={{
-                    width: `${dotSize}px`,
-                    height: `${dotSize}px`,
-                  }}
+                <Tooltip
+                  open={activeIndex === i}
+                  title={d.label}
+                  position="bottom"
                 >
-                  {activeIndex === i && (
-                    <span className="label">{d.label}</span>
-                  )}
-                </span>
+                  <span
+                    label={d.label}
+                    role="button"
+                    tabIndex={0}
+                    area-label="Select timeframe"
+                    className={`${activeIndex === i ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelected(i);
+                    }}
+                    style={{
+                      width: `${dotSize}px`,
+                      height: `${dotSize}px`,
+                    }}
+                  />
+                </Tooltip>
               </li>
             ))}
           </animated.ol>
