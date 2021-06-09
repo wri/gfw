@@ -12,6 +12,7 @@ const selectLocationPayload = (state) =>
 const selectMenuSection = (state) => state.mapMenu?.settings?.menuSection;
 const getDrawGeostoreId = (state) => state.draw && state.draw.geostoreId;
 
+
 // SELECTORS
 export const getEmbed = createSelector(
   [selectLocation],

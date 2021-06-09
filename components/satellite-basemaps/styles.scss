@@ -23,7 +23,7 @@
       fill: $greyish-brown;
     }
 
-    .dyno-toggle-active {
+    .satellite-toggle-active {
       padding-left: 20px;
       cursor: pointer;
 
@@ -33,7 +33,7 @@
     }
   }
 
-  .dyno-basemap {
+  .satellite-basemap {
     &--cta {
       display: flex;
       align-items: center;
@@ -47,7 +47,7 @@
       }
     }
 
-    &.active .dyno-basemap--cta {
+    &.active .satellite-basemap--cta {
       user-select: none;
       background: initial;
       cursor: default;
@@ -76,13 +76,13 @@
     }
 
     &.active {
-      .dyno-basemap--thumbnail {
+      .satellite-basemap--thumbnail {
         border: 2px solid $green-gfw;
       }
     }
   }
 
-  .dyno-basemap-settings {
+  .satellite-basemap-settings {
     padding: 10px 15px;
     background: $grey-light;
   }

@@ -2,21 +2,16 @@ import { createStructuredSelector, createSelector } from 'reselect';
 
 import find from 'lodash/find';
 
-import {
-  getBasemaps,
-  getBasemap,
-  // getMapLabels,
-  // getMapZoom,
-  // getMapRoads,
-  // getActiveDatasetsFromState,
-} from 'components/map/selectors';
+import { getBasemaps, getBasemap } from 'components/map/selectors';
 
 import { getPeriodOptions } from './settings/planet-menu/selectors';
+
+import { getSelectedYear } from './settings/landsat-menu/selectors';
 
 export const getDynoBasemaps = createSelector([getBasemaps], (basemaps) => {
   const out = [];
   Object.keys(basemaps).forEach((key) => {
-    if (!basemaps[key].static) {
+    if (!basemaps[key].baseStyle) {
       out.push(basemaps[key]);
     }
   });
@@ -51,8 +46,10 @@ export const getActiveDynoBasemap = createSelector(
   }
 );
 
+
 export const getBasemapProps = createStructuredSelector({
   activeBasemap: getActiveDynoBasemap,
   planetPeriods: getPeriodOptions,
+  landsatYear: getSelectedYear,
   basemaps: getDynoBasemaps,
 });

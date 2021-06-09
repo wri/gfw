@@ -12,7 +12,6 @@ import { getDayRange } from './utils';
 import basemaps from './basemaps';
 
 // map state
-const getMapSettings = (state) => state.map?.settings || {};
 const selectMapLoading = (state) => state.map && state.map.loading;
 const selectGeostoreLoading = (state) =>
   state.geostore && state.geostore.loading;
@@ -28,6 +27,7 @@ export const selectGeostore = (state) => state.geostore && state.geostore.data;
 const selectLocation = (state) => state.location && state.location.payload;
 
 // CONSTS
+export const getMapSettings = (state) => state.map?.settings || {};
 export const getBasemaps = () => basemaps;
 
 // SELECTORS

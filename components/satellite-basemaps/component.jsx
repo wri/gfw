@@ -11,9 +11,10 @@ import BasemapSettings from './basemap-settings';
 
 import './styles.scss';
 
-const DynoBasemaps = ({
+const SatelliteBasemaps = ({
   className,
   planetPeriods,
+  landsatYear,
   basemaps,
   activeBasemap,
   setMapBasemap,
@@ -24,16 +25,26 @@ const DynoBasemaps = ({
   const handleToggleActive = () => {
     setMapBasemap({
       value: activeBasemap.active ? 'default' : activeBasemap.value,
+      ...(activeBasemap.value === 'planet' && {
+        color: 'rgb',
+        name: planetPeriods[planetPeriods.length - 1].value,
+      }),
+      ...(activeBasemap.value === 'landsat' && {
+        year: landsatYear
+      })
     });
   };
 
-  const handleSetDynoBasemap = (value) => {
+  const handleSetSatelliteBasemap = (value) => {
     setMapBasemap({
       value,
       ...(value === 'planet' && {
         color: 'rgb',
         name: planetPeriods[planetPeriods.length - 1].value,
       }),
+      ...(value === 'landsat' && {
+        year: landsatYear
+      })
     });
   };
 
@@ -41,14 +52,14 @@ const DynoBasemaps = ({
     <div className={cx('c-map-legend-basemaps', className)}>
       <header className="header">
         <button
-          className="show-dyno-basemap-btn"
+          className="show-satellite-basemap-btn"
           title={`${activeBasemap.active ? 'Disable' : 'Enable'} ${
             activeBasemap.label
           } satellite imagery`}
           onClick={handleToggleActive}
         >
           <Checkbox
-            className="dyno-basemap-checkbox"
+            className="satellite-basemap-checkbox"
             value={activeBasemap.active}
           />
         </button>
@@ -58,7 +69,7 @@ const DynoBasemaps = ({
           SATELLITE IMAGERY
         </span>
         <button
-          className={cx('dyno-toggle-active', !open ? '-closed' : '-open')}
+          className={cx('satellite-toggle-active', !open ? '-closed' : '-open')}
           onClick={toggleOpen}
           title={`${open ? 'Hide' : 'Show'} basemaps`}
         >
@@ -66,34 +77,35 @@ const DynoBasemaps = ({
         </button>
       </header>
       {open && (
-        <section className="dyno-basemaps">
+        <section className="satellite-basemaps">
           <ul>
             {basemaps.map((basemap) => {
               return (
                 <li
+                  key={`satellite-basemap-${basemap.value}`}
                   className={cx(
-                    'dyno-basemap',
+                    'satellite-basemap',
                     activeBasemap && activeBasemap.value === basemap.value
                       ? 'active'
                       : ''
                   )}
                 >
                   <button
-                    className="dyno-basemap--cta"
+                    className="satellite-basemap--cta"
                     aria-label={`Activate ${basemap.label}`}
-                    onClick={() => handleSetDynoBasemap(basemap.value)}
+                    onClick={() => handleSetSatelliteBasemap(basemap.value)}
                   >
                     <img
                       src={basemap.image}
                       alt={basemap.label}
-                      className="dyno-basemap--thumbnail"
+                      className="satellite-basemap--thumbnail"
                     />
-                    <div className="dyno-basemap--content">
-                      <span className="dyno-basemap--title">
+                    <div className="satellite-basemap--content">
+                      <span className="satellite-basemap--title">
                         {basemap.label}
                       </span>
                       {basemap.description && (
-                        <p className="dyno-basemap--description">
+                        <p className="satellite-basemap--description">
                           {basemap.description}
                         </p>
                       )}
@@ -117,12 +129,13 @@ const DynoBasemaps = ({
   );
 };
 
-DynoBasemaps.propTypes = {
+SatelliteBasemaps.propTypes = {
   className: PropTypes.string,
   planetPeriods: PropTypes.arrayOf(PropTypes.object),
+  landsatYear: PropTypes.number.isRequired,
   setMapBasemap: PropTypes.func.isRequired,
   basemaps: PropTypes.arrayOf(PropTypes.object),
   activeBasemap: PropTypes.object,
 };
 
-export default DynoBasemaps;
+export default SatelliteBasemaps;
