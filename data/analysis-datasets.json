@@ -57,5 +57,18 @@
   "MODIS_WDPA_WHITELIST": "wdpa_protected_areas__modis__whitelist",
   "VIIRS_WDPA_DAILY": "wdpa_protected_areas__viirs__daily_alerts",
   "VIIRS_WDPA_WEEKLY": "wdpa_protected_areas__viirs__weekly_alerts",
-  "VIIRS_WDPA_WHITELIST": "wdpa_protected_areas__viirs__whitelist"
+  "VIIRS_WDPA_WHITELIST": "wdpa_protected_areas__viirs__whitelist",
+
+  "MODIS_BURNED_AREA_ADM0_WHITELIST": "gadm__modis__iso_whitelist",
+  "MODIS_BURNED_AREA_ADM0_WEEKLY": "gadm__modis__iso_weekly_alerts",
+  "MODIS_BURNED_AREA_ADM1_WHITELIST": "gadm__modis__adm1_whitelist",
+  "MODIS_BURNED_AREA_ADM1_WEEKLY": "gadm__modis__adm1_weekly_alerts",
+  "MODIS_BURNED_AREA_ADM2_WHITELIST": "gadm__modis__adm2_whitelist",
+  "MODIS_BURNED_AREA_ADM2_DAILY": "gadm__modis__adm2_daily_alerts",
+  "MODIS_BURNED_AREA_ADM2_WEEKLY": "gadm__modis__adm2_weekly_alerts",
+  "MODIS_BURNED_AREA_GEOSTORE_DAILY": "geostore__modis__daily_alerts",
+  "MODIS_BURNED_AREA_GEOSTORE_WEEKLY": "geostore__modis__weekly_alerts",
+  "MODIS_BURNED_AREA_WDPA_DAILY": "wdpa_protected_areas__modis__daily_alerts",
+  "MODIS_BURNED_AREA_WDPA_WEEKLY": "wdpa_protected_areas__modis__weekly_alerts",
+  "MODIS_BURNED_AREA_WDPA_WHITELIST": "wdpa_protected_areas__modis__whitelist"
 }
