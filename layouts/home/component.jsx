@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { InView } from 'react-intersection-observer';
 import YouTube from 'react-youtube';
 import Link from 'next/link';
 import cx from 'classnames';
@@ -18,12 +19,21 @@ import mailIcon from 'assets/icons/mail.svg?sprite';
 import config from './config';
 import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
+import bgImageWebP from './assets/home-bg.webp';
 
 import './styles.scss';
 
 const HomePage = ({ summary, uses, apps, news }) => {
   const [showVideo, setShowVideo] = useState(false);
+  const [showSectionNews, setShowSectionNews] = useState(false);
   const summaryEl = useRef(null);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowVideo(true);
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="l-home-page">
@@ -32,32 +42,34 @@ const HomePage = ({ summary, uses, apps, news }) => {
         title="Forest Monitoring Designed for Action"
         description="Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests."
         bgImage={bgImage}
+        webP={bgImageWebP}
         large
       >
         <>
-          <div className={cx('home-video', { show: showVideo })}>
-            <YouTube
-              videoId="0XsJNU75Si0"
-              opts={{
-                height: '100%',
-                width: '100%',
-                playerVars: {
-                  autoplay: 1,
-                  autohide: 1,
-                  loop: 1,
-                  modestbranding: 1,
-                  rel: 0,
-                  showinfo: 0,
-                  controls: 0,
-                  disablekb: 1,
-                  enablejsapi: 0,
-                  iv_load_policy: 3,
-                },
-              }}
-              onPlay={() => setTimeout(() => setShowVideo(true), 300)}
-              onEnd={() => setShowVideo(false)}
-            />
-          </div>
+          {showVideo && (
+            <div className={cx('home-video', { show: showVideo })}>
+              <YouTube
+                videoId="0XsJNU75Si0"
+                opts={{
+                  height: '100%',
+                  width: '100%',
+                  playerVars: {
+                    autoplay: 1,
+                    autohide: 1,
+                    loop: 1,
+                    modestbranding: 1,
+                    rel: 0,
+                    showinfo: 0,
+                    controls: 0,
+                    disablekb: 1,
+                    enablejsapi: 0,
+                    iv_load_policy: 3,
+                  },
+                }}
+                onEnd={() => setShowVideo(false)}
+              />
+            </div>
+          )}
           {showVideo && (
             <Button
               className="stop-video-btn"
@@ -219,12 +231,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
           </Carousel>
         )}
       </div>
-      <div
-        className="section-news"
-        style={{
-          backgroundImage: `url(${newsImage})`,
-        }}
-      >
+      <div className="section-news">
         <Row>
           <Column>
             <h3 className="news-title">New on Global Forest Watch</h3>
@@ -293,6 +300,17 @@ const HomePage = ({ summary, uses, apps, news }) => {
             </Link>
           </Column>
         </Row>
+        <InView
+          as="div"
+          rootMargin="400px"
+          onChange={(inView) => !showSectionNews && setShowSectionNews(inView)}
+        >
+          {showSectionNews && (
+            <picture>
+              <img src={newsImage} alt="New on Global Forest Watch" />
+            </picture>
+          )}
+        </InView>
       </div>
     </div>
   );
