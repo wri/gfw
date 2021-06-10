@@ -541,6 +541,10 @@ export const parseSentence = createSelector(
         value: status,
         color: statusColor,
       },
+      maxArea: {
+        value: maxTotal ? `${format('.2s')(maxTotal)}ha` : '0ha',
+        color: colors.main,
+      },
     };
     return { sentence, params };
   }

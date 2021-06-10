@@ -69,9 +69,9 @@ export default {
   },
   sentences: {
     allBurn:
-      'In {location}, {area} of land has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
+      'In {location}, {area} of land has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}.',
     allBurnWithInd:
-      'In {location}, {area} of land within {indicator} has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
+      'In {location}, {area} of land within {indicator} has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}.',
     allAlerts:
       'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
     highConfidence:
