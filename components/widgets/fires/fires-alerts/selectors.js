@@ -239,6 +239,7 @@ export const parseConfig = createSelector(
     const isBurnedArea = dataset === 'modis_burned_area';
     const datasetUnit = isBurnedArea ? '' : 'alerts';
     const datasetName = isBurnedArea ? 'MODIS' : dataset.toUpperCase();
+    const yAxisUnit = isBurnedArea ? 'ha' : '';
 
     const tooltip = [
       {
@@ -281,7 +282,7 @@ export const parseConfig = createSelector(
     }
 
     return {
-      ...getChartConfig(colors, moment(latest)),
+      ...getChartConfig(colors, moment(latest), {}, yAxisUnit),
       xAxis: {
         tickCount: 12,
         interval: 4,
