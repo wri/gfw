@@ -11,6 +11,7 @@ const getIndicator = (state) => state.indicator;
 const getLocationName = (state) => state.locationLabel;
 const getSentences = (state) => state.sentences;
 const getAdminLevel = (state) => state.adminLevel;
+const getIsSimple = (state) => state.pathname.includes('map');
 
 export const parseData = createSelector(
   [getData, getSettings],
@@ -30,8 +31,8 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [parseData, getColors],
-  (data, colors) => {
+  [parseData, getColors, getIsSimple],
+  (data, colors, simple) => {
     if (!data || isEmpty(data)) return null;
     const {
       carbonFlux: { emissions, netEmissions, removals, netRemovals },
@@ -71,11 +72,26 @@ export const parseConfig = createSelector(
     return {
       height: 250,
       stackOffset: 'sign',
-      margin: {
-        left: window.innerWidth > 300 ? 85 : 98, // margin adapted to not cutt off label
-        right: 85,
-        bottom: 40,
-      },
+      simpleNeedsAxis: true,
+      clearMargins: true,
+      ...(simple && {
+        simpleLegend: [
+          { value: 'REMOVALS', type: 'circle', color: removals },
+          { value: 'EMISSIONS', type: 'circle', color: emissions },
+          {
+            value: 'FLUX',
+            type: 'circle',
+            color: netFluxData > 0 ? netEmissions : netRemovals,
+          },
+        ],
+      }),
+      ...(!simple && {
+        margin: {
+          left: window.innerWidth > 300 ? 85 : 98, // margin adapted to not cut off label
+          right: 85,
+          bottom: 40,
+        },
+      }),
       yAxis: {
         hide: true,
         type: 'category',
@@ -99,86 +115,92 @@ export const parseConfig = createSelector(
             background: false,
             isAnimationActive: false,
             stackId: 2,
-            labelList: {
-              content: (props) => {
-                // eslint-disable-next-line react/prop-types
-                const { x, y, width, height, offset } = props;
-                return (
-                  <g transform={`translate(0 ${height / 2 + offset})`}>
-                    <text
-                      x={
-                        emissionsData > 0
-                          ? x + width + offset
-                          : x + width - offset
-                      }
-                      y={y}
-                      textAnchor={emissionsData > 0 ? 'start' : 'end'}
-                      fill="#000"
-                      fontSize={window.innerWidth > 300 ? 14 : 10}
-                    >
-                      EMISSIONS
-                    </text>
-                  </g>
-                );
+            ...(!simple && {
+              labelList: {
+                content: (props) => {
+                  // eslint-disable-next-line react/prop-types
+                  const { x, y, width, height, offset } = props;
+                  return (
+                    <g transform={`translate(0 ${height / 2 + offset})`}>
+                      <text
+                        x={
+                          emissionsData > 0
+                            ? x + width + offset
+                            : x + width - offset
+                        }
+                        y={y}
+                        textAnchor={emissionsData > 0 ? 'start' : 'end'}
+                        fill="#000"
+                        fontSize={window.innerWidth > 300 ? 14 : 10}
+                      >
+                        EMISSIONS
+                      </text>
+                    </g>
+                  );
+                },
               },
-            },
+            }),
           },
           removals: {
             fill: removals,
             background: false,
             stackId: 2,
             isAnimationActive: false,
-            labelList: {
-              content: (props) => {
-                // eslint-disable-next-line react/prop-types
-                const { x, y, offset, width, height } = props;
-                return (
-                  <g transform={`translate(0 ${height / 2 + offset})`}>
-                    <text
-                      x={
-                        removalsData > 0
-                          ? x + width + offset
-                          : x + width - offset
-                      }
-                      y={y}
-                      textAnchor={removalsData > 0 ? 'start' : 'end'}
-                      fill="#000"
-                      fontSize={window.innerWidth > 300 ? 14 : 10}
-                    >
-                      REMOVALS
-                    </text>
-                  </g>
-                );
+            ...(!simple && {
+              labelList: {
+                content: (props) => {
+                  // eslint-disable-next-line react/prop-types
+                  const { x, y, offset, width, height } = props;
+                  return (
+                    <g transform={`translate(0 ${height / 2 + offset})`}>
+                      <text
+                        x={
+                          removalsData > 0
+                            ? x + width + offset
+                            : x + width - offset
+                        }
+                        y={y}
+                        textAnchor={removalsData > 0 ? 'start' : 'end'}
+                        fill="#000"
+                        fontSize={window.innerWidth > 300 ? 14 : 10}
+                      >
+                        REMOVALS
+                      </text>
+                    </g>
+                  );
+                },
               },
-            },
+            }),
           },
           flux: {
             fill: netFluxData > 0 ? netEmissions : netRemovals,
             background: false,
             isAnimationActive: false,
-            labelList: {
-              content: (props) => {
-                // eslint-disable-next-line react/prop-types
-                const { x, y, width, height, offset } = props;
-                return (
-                  <g transform={`translate(0 ${height / 2 + offset})`}>
-                    <text
-                      x={
-                        netFluxData > 0
-                          ? x + width + offset
-                          : x + width - offset
-                      }
-                      y={y}
-                      textAnchor={netFluxData > 0 ? 'start' : 'end'}
-                      fill="#000"
-                      fontSize={window.innerWidth > 300 ? 14 : 10}
-                    >
-                      {netFluxData > 0 ? 'NET EMISSIONS' : 'NET REMOVALS'}
-                    </text>
-                  </g>
-                );
+            ...(!simple && {
+              labelList: {
+                content: (props) => {
+                  // eslint-disable-next-line react/prop-types
+                  const { x, y, width, height, offset } = props;
+                  return (
+                    <g transform={`translate(0 ${height / 2 + offset})`}>
+                      <text
+                        x={
+                          netFluxData > 0
+                            ? x + width + offset
+                            : x + width - offset
+                        }
+                        y={y}
+                        textAnchor={netFluxData > 0 ? 'start' : 'end'}
+                        fill="#000"
+                        fontSize={window.innerWidth > 300 ? 14 : 10}
+                      >
+                        {netFluxData > 0 ? 'NET EMISSIONS' : 'NET REMOVALS'}
+                      </text>
+                    </g>
+                  );
+                },
               },
-            },
+            }),
           },
         },
       },
