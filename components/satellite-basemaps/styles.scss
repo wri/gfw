@@ -8,24 +8,27 @@
     align-items: center;
     padding: 0 15px;
     height: 41px;
-    background: $grey-light;
+    background: $slate-dark;
 
     .active-basemap-title {
-      flex: 1;
-      padding: 0 0 0 10px;
-      color: $greyish-brown;
+      color: $white;
       font-size: 11px;
       text-transform: uppercase;
     }
 
     .c-icon {
       width: 8px;
-      fill: $greyish-brown;
+      fill: $white;
     }
 
     .satellite-toggle-active {
       padding-left: 20px;
       cursor: pointer;
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      align-items: center;
 
       &.-open svg {
         transform: rotate(180deg);

@@ -30,8 +30,8 @@ const SatelliteBasemaps = ({
         name: planetPeriods[planetPeriods.length - 1].value,
       }),
       ...(activeBasemap.value === 'landsat' && {
-        year: landsatYear
-      })
+        year: landsatYear,
+      }),
     });
   };
 
@@ -43,8 +43,8 @@ const SatelliteBasemaps = ({
         name: planetPeriods[planetPeriods.length - 1].value,
       }),
       ...(value === 'landsat' && {
-        year: landsatYear
-      })
+        year: landsatYear,
+      }),
     });
   };
 
@@ -63,16 +63,16 @@ const SatelliteBasemaps = ({
             value={activeBasemap.active}
           />
         </button>
-        <span className="active-basemap-title">
-          {activeBasemap.label}
-          {' '}
-          SATELLITE IMAGERY
-        </span>
         <button
           className={cx('satellite-toggle-active', !open ? '-closed' : '-open')}
           onClick={toggleOpen}
-          title={`${open ? 'Hide' : 'Show'} basemaps`}
+          title={`${open ? 'Hide' : 'Show'} satellite basemaps`}
         >
+          <span className="active-basemap-title">
+            {activeBasemap.label}
+            {' '}
+            SATELLITE IMAGERY
+          </span>
           <Icon icon={arrowDown} />
         </button>
       </header>
@@ -85,7 +85,9 @@ const SatelliteBasemaps = ({
                   key={`satellite-basemap-${basemap.value}`}
                   className={cx(
                     'satellite-basemap',
-                    activeBasemap && activeBasemap.value === basemap.value
+                    activeBasemap &&
+                      activeBasemap.value === basemap.value &&
+                      activeBasemap.active
                       ? 'active'
                       : ''
                   )}
@@ -113,6 +115,7 @@ const SatelliteBasemaps = ({
                   </button>
                   {activeBasemap &&
                     activeBasemap.active &&
+                    activeBasemap.hasSettings &&
                     activeBasemap.value === basemap.value && (
                       <BasemapSettings
                         setMapBasemap={setMapBasemap}
