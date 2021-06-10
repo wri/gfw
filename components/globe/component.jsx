@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import orbitControl from 'three-orbit-controls';
+
+import { trackEvent } from 'utils/analytics';
+
 import markerFellow from 'assets/icons/markers/marker_fellow.png';
 import markerGrantee from 'assets/icons/markers/marker_grantee.png';
 import earthImage from './img/earth-image.jpg';
@@ -85,10 +88,18 @@ class GlobeComponent extends React.Component {
 
         this.camera.updateMatrixWorld();
         raycaster.setFromCamera(mouse, this.camera);
+
         const intersects = raycaster.intersectObjects(this.scene.children);
         if (intersects && intersects.length > 1) {
           const userData = intersects[0].object.data;
           this.handleClick(userData);
+          if (userData?.title) {
+            trackEvent({
+              category: 'Open modal',
+              action: 'click globe pin',
+              label: userData.title,
+            });
+          }
           document.body.style.cursor = 'default';
         }
       },
