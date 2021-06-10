@@ -35,7 +35,7 @@ const SQL_QUERIES = {
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreas:
-    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS burn_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
@@ -1021,16 +1021,17 @@ export const fetchFires = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
   );
-  const fileName =
-    dataset === 'modis_burned_area'
-      ? dataset
-      : `${dataset || 'viirs'}_fire_alerts`;
   if (download) {
+    const fileName =
+      dataset === 'modis_burned_area'
+        ? dataset
+        : `${dataset || 'viirs'}_fire_alerts`;
+    const unit = dataset === 'modis_burned_area' ? 'ha' : 'count';
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
       name: `${fileName}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__count`,
+      }__${unit}`,
       url: getDownloadUrl(url),
     };
   }
@@ -1042,8 +1043,7 @@ export const fetchFires = (params) => {
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
         count: d.alert__count,
-        alerts: d.alert__count,
-        area_ha: d.alert_area__ha,
+        area_ha: d.burn_area__ha,
       })),
     },
   }));

@@ -39,7 +39,7 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
-      count: d.alert__count,
+      count: d.alert__count || d.area_ha,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
@@ -49,12 +49,11 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some((item) => item.alerts > 0),
+          [year]: next.some((item) => item.count > 0),
         };
       },
       {}
     );
-
     const dataYears = Object.keys(hasAlertsByYears).filter(
       (key) => hasAlertsByYears[key] === true
     );
@@ -101,19 +100,20 @@ export const getData = createSelector(
 );
 
 export const getStats = createSelector([getData, getLatest], (data, latest) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
 });
 
 export const getDates = createSelector([getStats], (data) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getDatesData(data);
 });
 
 export const getMaxMinDates = createSelector(
   [getData, getDates],
   (data, currentData) => {
-    if (!data || !currentData) return {};
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return {};
     const minYear = min(data.map((d) => d.year));
     const maxYear = max(data.map((d) => d.year));
 
@@ -127,7 +127,7 @@ export const getMaxMinDates = createSelector(
 export const getStartEndIndexes = createSelector(
   [getStartIndex, getEndIndex, getDates],
   (startIndex, endIndex, currentData) => {
-    if (!currentData) {
+    if (!currentData || isEmpty(currentData)) {
       return {
         startIndex,
         endIndex,
@@ -147,7 +147,8 @@ export const getStartEndIndexes = createSelector(
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYear],
   (data, currentData, maxminYear, compareYear) => {
-    if (!data || !currentData) return null;
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return null;
 
     return currentData.map((d) => {
       const yearDifference = maxminYear.max - d.year;
@@ -175,7 +176,7 @@ export const parseData = createSelector(
 export const parseBrushedData = createSelector(
   [parseData, getStartEndIndexes],
   (data, indexes) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
 
     const { startIndex, endIndex } = indexes;
 
@@ -189,7 +190,7 @@ export const parseBrushedData = createSelector(
 export const getLegend = createSelector(
   [parseBrushedData, getColors, getCompareYear],
   (data, colors, compareYear) => {
-    if (!data) return {};
+    if (!data || isEmpty(data)) return {};
 
     const first = data[0];
     const end = data[data.length - 1];
@@ -373,7 +374,7 @@ export const parseSentence = createSelector(
     lang,
     indicator
   ) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
     const {
       defaultSentence,
       seasonSentence,

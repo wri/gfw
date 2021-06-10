@@ -50,7 +50,7 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
-      count: d.alert__count,
+      count: d.alert__count || d.area_ha,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
@@ -60,7 +60,7 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some((item) => item.alerts > 0),
+          [year]: next.some((item) => item.count > 0),
         };
       },
       {}
@@ -121,19 +121,20 @@ export const getData = createSelector(
 );
 
 export const getStats = createSelector([getData], (data) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getCumulativeStatsData(data);
 });
 
 export const getDates = createSelector([getStats], (data) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getDatesData(data);
 });
 
 export const getMaxMinDates = createSelector(
   [getData, getDates],
   (data, currentData) => {
-    if (!data || !currentData) return {};
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return {};
     const minYear = min(data.map((d) => d.year));
     const maxYear = max(data.map((d) => d.year));
 
@@ -147,7 +148,8 @@ export const getMaxMinDates = createSelector(
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYears],
   (data, currentData, maxminYear, compareYears) => {
-    if (!data || !currentData) return null;
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return null;
 
     return currentData.map((d) => {
       const yearDifference = maxminYear.max - d.year;
@@ -179,7 +181,7 @@ export const parseData = createSelector(
 export const parseBrushedData = createSelector(
   [parseData, getStartIndex, getEndIndex],
   (data, startIndex, endIndex) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -191,7 +193,7 @@ export const parseBrushedData = createSelector(
 export const getLegend = createSelector(
   [parseBrushedData, getColors, getCompareYears, getMaxMinDates],
   (data, colors, compareYears, maxminYear) => {
-    if (!data) return {};
+    if (!data || isEmpty(data)) return {};
     const end = data[data.length - 1];
     const yearsArray =
       compareYears && compareYears.filter((y) => y !== maxminYear.max).sort();
@@ -244,7 +246,7 @@ export const parseConfig = createSelector(
     startIndex,
     endIndex
   ) => {
-    if (!currentData) return null;
+    if (!currentData || isEmpty(currentData)) return null;
     // @TODO: This could be abstracted to settings/dataset properties
     const isBurnedArea = dataset === 'modis_burned_area';
     const datasetUnit = isBurnedArea ? '' : 'alerts';
@@ -428,7 +430,7 @@ export const parseSentence = createSelector(
     options,
     indicator
   ) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
     const {
       allBurnWithInd,
       allBurn,
