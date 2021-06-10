@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { InView } from 'react-intersection-observer';
 import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
 import Dotdotdot from 'react-dotdotdot';
@@ -26,14 +25,7 @@ class Card extends PureComponent {
 
   state = {
     selectorValue: {},
-    showImagePreview: false,
   };
-
-  handleShowPreview(inView) {
-    if (!this.state.showImagePreview) {
-      this.setState({ showImagePreview: inView });
-    }
-  }
 
   // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -53,7 +45,7 @@ class Card extends PureComponent {
       tagColor,
       selector,
     } = data || {};
-    const { selectorValue, showImagePreview } = this.state;
+    const { selectorValue } = this.state;
 
     return (
       <div className={cx('c-card', className, theme, { active })}>
@@ -62,28 +54,24 @@ class Card extends PureComponent {
             <p>{tag}</p>
           </span>
         )}
-        <InView as="div" onChange={(inView) => this.handleShowPreview(inView)}>
-          {showImagePreview && (
-            <>
-              {image && (
-                <picture className="image">
-                  {webPImage && <source srcSet={webPImage} type="image/webp" />}
-                  <source srcSet={image} type="image/png" />
-                  <img src={image} alt={title} />
-                </picture>
-              )}
-
-              {(img1x || img2x) && (
-                <img
-                  className="image"
-                  srcSet={`${img1x} 2x, ${img2x} 1x`}
-                  src={`${img1x} 1x`}
-                  alt={title}
-                />
-              )}
-            </>
+        <>
+          {image && (
+            <picture className="image">
+              {webPImage && <source srcSet={webPImage} type="image/webp" />}
+              <source srcSet={image} type="image/png" />
+              <img src={image} alt={title} />
+            </picture>
           )}
-        </InView>
+
+          {(img1x || img2x) && (
+            <img
+              className="image"
+              srcSet={`${img1x} 2x, ${img2x} 1x`}
+              src={`${img1x} 1x`}
+              alt={title}
+            />
+          )}
+        </>
         <div
           className={cx(
             'body',
