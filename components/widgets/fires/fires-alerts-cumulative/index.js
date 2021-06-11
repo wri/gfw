@@ -291,11 +291,7 @@ export default {
     ],
   },
   getData: (params) =>
-    all([
-      // @TODO: remove version key before merge
-      fetchFires({ ...params, version: 'v20210609' }),
-      fetchVIIRSLatest(params),
-    ]).then(
+    all([fetchFires(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));

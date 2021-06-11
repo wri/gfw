@@ -156,7 +156,7 @@ const getRequestUrl = ({
     ];
 
   if (typeof datasetId === 'undefined') {
-    // TODO: Figure out why widgets are stale on loading, when not requesting info
+    // @TODO: Figure out why widgets are stale on loading, when not requesting info
     // return null;
   }
   return `${GFW_DATA_API_PROXY}/dataset/${datasetId}/${
@@ -1009,8 +1009,7 @@ export const fetchGLADLatest = () => {
 };
 
 export const fetchFires = (params) => {
-  const { forestType, landCategory, ifl, download, dataset, version } =
-    params || {};
+  const { forestType, landCategory, ifl, download, dataset } = params || {};
   const isBurnedArea = dataset === 'modis_burned_area';
   // @TODO: this is not elegant, remove and find a better way
   if (isBurnedArea) delete params.confidence;
@@ -1022,7 +1021,7 @@ export const fetchFires = (params) => {
       ...params,
       dataset,
       datasetType: 'weekly',
-      version,
+      version: isBurnedArea ? 'v20210609' : 'latest',
     })}${queryString}`
       .replace(
         /{select_location}/g,
