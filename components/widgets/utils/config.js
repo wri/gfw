@@ -358,6 +358,7 @@ export const getStatements = ({
           )
         : null
     );
+  // @TODO: Extract this to widget configs
   const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
     extentYear && dataType !== 'lossPrimary' && dataType !== 'fires'
@@ -385,6 +386,11 @@ export const getStatements = ({
     dataType === 'glad' && type === 'country'
       ? translateText(
           'Caution: GLAD alerts from the last six months are preliminary. Revisions are made as unconfirmed alerts are removed from the data and alert totals are finalized six months after posting.'
+        )
+      : null,
+    dataType === 'fires' && settings?.dataset === 'modis_burned_area'
+      ? translateText(
+          'Caution: Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.'
         )
       : null,
     ...(indicatorStatements || []),

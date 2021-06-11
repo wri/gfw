@@ -11,12 +11,6 @@ export default {
     default: 'Cumulative Fire Alerts in {location}',
     burnedArea: 'Cumulative Burned Area in {location}',
   },
-  // @TODO: only on burned area dataset
-  caution: {
-    text:
-      'Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.',
-    visible: ['country', 'wdpa', 'aoi'],
-  },
   large: true,
   categories: ['summary', 'fires'],
   settingsConfig: [
