@@ -1008,21 +1008,15 @@ export const fetchGLADLatest = () => {
     );
 };
 
-export const fetchFires = (params) => {
+export const fetchBurnedArea = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
-  const isBurnedArea = dataset === 'modis_burned_area';
-  // @TODO: this is not elegant, remove and find a better way
-  if (isBurnedArea) delete params.confidence;
-  const queryString = isBurnedArea
-    ? SQL_QUERIES.burnedAreas
-    : SQL_QUERIES.fires;
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
       dataset,
       datasetType: 'weekly',
-      version: isBurnedArea ? 'v20210609' : 'latest',
-    })}${queryString}`
+      version: 'v20210609',
+    })}${SQL_QUERIES.burnedAreas}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1031,15 +1025,11 @@ export const fetchFires = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
   );
   if (download) {
-    const fileName = isBurnedArea
-      ? dataset
-      : `${dataset || 'viirs'}_fire_alerts`;
-    const unit = isBurnedArea ? 'ha' : 'count';
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `${fileName}${
+      name: `modis_burned_area${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__${unit}`,
+      }__ha`,
       url: getDownloadUrl(url),
     };
   }
@@ -1050,8 +1040,6 @@ export const fetchFires = (params) => {
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
-        count: d.alert__count,
-        area_ha: d.burn_area__ha,
       })),
     },
   }));
