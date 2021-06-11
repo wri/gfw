@@ -35,7 +35,7 @@ const SQL_QUERIES = {
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreas:
-    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS burn_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} AND umd_tree_cover_density__threshold = 30 GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
@@ -137,7 +137,15 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 };
 
 // build the base query for the query with the correct dataset id
-const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
+const getRequestUrl = ({
+  type,
+  adm1,
+  adm2,
+  dataset,
+  datasetType,
+  grouped,
+  version,
+}) => {
   let typeByLevel = type;
   if (type === 'country' || type === 'global') {
     if (!adm1) typeByLevel = 'adm0';
@@ -154,8 +162,7 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     // TODO: Figure out why widgets are stale on loading, when not requesting info
     // return null;
   }
-
-  return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
+  return `${GFW_API}/dataset/${datasetId}/${version || 'latest'}/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {
@@ -1003,7 +1010,8 @@ export const fetchGLADLatest = () => {
 };
 
 export const fetchFires = (params) => {
-  const { forestType, landCategory, ifl, download, dataset } = params || {};
+  const { forestType, landCategory, ifl, download, dataset, version } =
+    params || {};
   const queryString =
     dataset === 'modis_burned_area'
       ? SQL_QUERIES.burnedAreas
@@ -1013,6 +1021,7 @@ export const fetchFires = (params) => {
       ...params,
       dataset,
       datasetType: 'weekly',
+      version,
     })}${queryString}`
       .replace(
         /{select_location}/g,
