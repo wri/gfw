@@ -32,7 +32,7 @@ const SQL_QUERIES = {
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreas:
-    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} AND umd_tree_cover_density__threshold = 30 GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} AND umd_tree_cover_density__threshold = 30 GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
@@ -1011,10 +1011,12 @@ export const fetchGLADLatest = () => {
 export const fetchFires = (params) => {
   const { forestType, landCategory, ifl, download, dataset, version } =
     params || {};
-  const queryString =
-    dataset === 'modis_burned_area'
-      ? SQL_QUERIES.burnedAreas
-      : SQL_QUERIES.fires;
+  const isBurnedArea = dataset === 'modis_burned_area';
+  // @TODO: this is not elegant, remove and find a better way
+  if (isBurnedArea) delete params.confidence;
+  const queryString = isBurnedArea
+    ? SQL_QUERIES.burnedAreas
+    : SQL_QUERIES.fires;
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -1030,11 +1032,10 @@ export const fetchFires = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
   );
   if (download) {
-    const fileName =
-      dataset === 'modis_burned_area'
-        ? dataset
-        : `${dataset || 'viirs'}_fire_alerts`;
-    const unit = dataset === 'modis_burned_area' ? 'ha' : 'count';
+    const fileName = isBurnedArea
+      ? dataset
+      : `${dataset || 'viirs'}_fire_alerts`;
+    const unit = isBurnedArea ? 'ha' : 'count';
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
       name: `${fileName}${
