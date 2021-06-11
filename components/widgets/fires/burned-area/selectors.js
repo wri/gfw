@@ -4,16 +4,16 @@ import moment from 'moment';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
+import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
-import maxBy from 'lodash/maxBy';
 import min from 'lodash/min';
-import findLastIndex from 'lodash/findLastIndex';
 
-import { getColorPalette } from 'components/widgets/utils/colors';
 import {
-  getCumulativeStatsData,
+  getStatsData,
   getDatesData,
+  getPeriodVariance,
   getChartConfig,
 } from 'components/widgets/utils/data';
 
@@ -21,27 +21,16 @@ const getAlerts = (state) => state.data && state.data.alerts;
 const getLatest = (state) => state.data && state.data.latest;
 const getColors = (state) => state.colors || null;
 const getCompareYear = (state) => state.settings.compareYear || null;
-const getAllYears = (state) =>
-  state.data &&
-  state.data.options &&
-  state.data.options.compareYear.map((y) => y.value);
 const getDataset = (state) => state.settings.dataset || null;
 const getStartIndex = (state) => state.settings.startIndex || 0;
 const getEndIndex = (state) => state.settings.endIndex || null;
 const getSentences = (state) => state.sentences || null;
 const getLocationName = (state) => state.locationLabel;
+const getLang = (state) => state.lang || null;
 const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
 
-export const getCompareYears = createSelector(
-  [getCompareYear, getAllYears],
-  (compareYear, allYears) => {
-    if (!compareYear || !allYears) return null;
-    if (compareYear === 'all') return allYears;
-
-    return allYears.filter((y) => y === compareYear);
-  }
-);
+const MINGAP = 4;
 
 export const getData = createSelector(
   [getAlerts, getLatest],
@@ -49,7 +38,7 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
-      count: d.alert__count,
+      count: d.burn_area__ha,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
@@ -64,7 +53,6 @@ export const getData = createSelector(
       },
       {}
     );
-
     const dataYears = Object.keys(hasAlertsByYears).filter(
       (key) => hasAlertsByYears[key] === true
     );
@@ -85,7 +73,9 @@ export const getData = createSelector(
 
     const yearLengths = {};
     years.forEach((y) => {
-      if (moment(`${y}-12-31`).isoWeek() === 1) {
+      if (lastWeek.year === y) {
+        yearLengths[y] = lastWeek.isoWeek;
+      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
         yearLengths[y] = moment(`${y}-12-31`).subtract(1, 'week').isoWeek();
       } else {
         yearLengths[y] = moment(`${y}-12-31`).isoWeek();
@@ -95,33 +85,22 @@ export const getData = createSelector(
     const zeroFilledData = [];
 
     years.forEach((d) => {
-      let acc = 0;
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
-        const weekData = yearDataByWeek[i]
-          ? yearDataByWeek[i][0]
-          : { count: 0, week: i, year: parseInt(d, 10) };
-        acc += weekData.count;
-        if (parseInt(d, 10) === lastWeek.year && i > lastWeek.isoWeek) {
-          zeroFilledData.push({
-            ...weekData,
-            count: null,
-          });
-        } else {
-          zeroFilledData.push({
-            ...weekData,
-            count: acc,
-          });
-        }
+        zeroFilledData.push(
+          yearDataByWeek[i]
+            ? yearDataByWeek[i][0]
+            : { count: 0, week: i, year: parseInt(d, 10) }
+        );
       }
     });
     return zeroFilledData;
   }
 );
 
-export const getStats = createSelector([getData], (data) => {
+export const getStats = createSelector([getData, getLatest], (data, latest) => {
   if (!data || isEmpty(data)) return null;
-  return getCumulativeStatsData(data);
+  return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
 });
 
 export const getDates = createSelector([getStats], (data) => {
@@ -144,9 +123,29 @@ export const getMaxMinDates = createSelector(
   }
 );
 
+export const getStartEndIndexes = createSelector(
+  [getStartIndex, getEndIndex, getDates],
+  (startIndex, endIndex, currentData) => {
+    if (!currentData || isEmpty(currentData)) {
+      return {
+        startIndex,
+        endIndex,
+      };
+    }
+
+    const start = startIndex;
+    const end = endIndex || currentData.length - 1;
+
+    return {
+      startIndex: start,
+      endIndex: end,
+    };
+  }
+);
+
 export const parseData = createSelector(
-  [getData, getDates, getMaxMinDates, getCompareYears],
-  (data, currentData, maxminYear, compareYears) => {
+  [getData, getDates, getMaxMinDates, getCompareYear],
+  (data, currentData, maxminYear, compareYear) => {
     if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
       return null;
 
@@ -154,21 +153,17 @@ export const parseData = createSelector(
       const yearDifference = maxminYear.max - d.year;
       const { week } = d;
 
-      if (compareYears) {
-        const compareYearData = compareYears.reduce((acc, year) => {
-          const compareWeek = data.find(
-            (dt) => dt.year === year - yearDifference && dt.week === week
-          );
+      if (compareYear) {
+        const parsedCompareYear = compareYear - yearDifference;
 
-          return {
-            ...acc,
-            [year]: compareWeek ? compareWeek.count : null,
-          };
-        }, {});
+        const compareWeek = data.find(
+          (dt) => dt.year === parsedCompareYear && dt.week === week
+        );
 
         return {
           ...d,
-          ...compareYearData,
+          compareYear: parsedCompareYear,
+          compareCount: compareWeek ? compareWeek.count : null,
         };
       }
 
@@ -178,9 +173,11 @@ export const parseData = createSelector(
 );
 
 export const parseBrushedData = createSelector(
-  [parseData, getStartIndex, getEndIndex],
-  (data, startIndex, endIndex) => {
+  [parseData, getStartEndIndexes],
+  (data, indexes) => {
     if (!data || isEmpty(data)) return null;
+
+    const { startIndex, endIndex } = indexes;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -190,23 +187,27 @@ export const parseBrushedData = createSelector(
 );
 
 export const getLegend = createSelector(
-  [parseBrushedData, getColors, getCompareYears, getMaxMinDates],
-  (data, colors, compareYears, maxminYear) => {
+  [parseBrushedData, getColors, getCompareYear],
+  (data, colors, compareYear) => {
     if (!data || isEmpty(data)) return {};
+
+    const first = data[0];
     const end = data[data.length - 1];
-    const yearsArray =
-      compareYears && compareYears.filter((y) => y !== maxminYear.max).sort();
+
     return {
       current: {
-        label: `${moment(end.date).format('YYYY')}`,
+        label: `${moment(first.date).format('MMM YYYY')}–${moment(
+          end.date
+        ).format('MMM YYYY')}`,
         color: colors.main,
       },
-      ...(yearsArray && {
+      ...(compareYear && {
         compare: {
-          label:
-            yearsArray.length > 1
-              ? `${yearsArray[0]}-${yearsArray[yearsArray.length - 1]}`
-              : `${yearsArray}`,
+          label: `${moment(first.date)
+            .set('year', first.compareYear)
+            .format('MMM YYYY')}–${moment(end.date)
+            .set('year', end.compareYear)
+            .format('MMM YYYY')}`,
           color: '#49b5e3',
         },
       }),
@@ -224,79 +225,51 @@ export const getLegend = createSelector(
 
 export const parseConfig = createSelector(
   [
-    getDates,
     getLegend,
     getColors,
     getLatest,
     getMaxMinDates,
-    getCompareYears,
+    getCompareYear,
     getDataset,
-    getStartIndex,
-    getEndIndex,
+    getStartEndIndexes,
   ],
-  (
-    currentData,
-    legend,
-    colors,
-    latest,
-    maxminYear,
-    compareYears,
-    dataset,
-    startIndex,
-    endIndex
-  ) => {
-    if (!currentData || isEmpty(currentData)) return null;
+  (legend, colors, latest, maxminYear, compareYear, dataset, indexes) => {
+    const { startIndex, endIndex } = indexes;
+
     const tooltip = [
+      {
+        label: 'Burned area in the week of:',
+      },
       {
         key: 'count',
         labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
-        unit: ` ${dataset.toUpperCase()} alert`,
+        unit: ` MODIS burned area`,
         color: colors.main,
-        nullValue: 'No data available',
-        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
+        unitFormat: (value) => `${format('.3s')(value)}ha`,
       },
     ];
-    const compareYearsLines = {};
-    if (compareYears && compareYears.length > 0) {
-      const colorRange = getColorPalette(
-        colors.compareYearRamp,
-        compareYears.length
-      );
-      const yearsArray = compareYears
-        .filter((y) => y !== maxminYear.max)
-        .sort()
-        .reverse();
-      yearsArray.forEach((year, i) => {
-        tooltip.push({
-          key: year,
-          labelKey: 'date',
-          labelFormat: (value) => {
-            const date = moment(value);
-            const yearDifference = maxminYear.max - date.year();
-            date.set('year', year - yearDifference);
 
-            return date.format('MMM DD YYYY');
-          },
-          unit: ` ${dataset.toUpperCase()} alerts`,
-          color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
-          nullValue: 'No data available',
-          unitFormat: (value) => Number.isInteger(value) && format(',')(value),
-        });
-        compareYearsLines[year] = {
-          stroke:
-            compareYears.length === 1 ? colors.compareYear : colorRange[i],
-          isAnimationActive: false,
-        };
+    if (compareYear) {
+      tooltip.push({
+        key: 'compareCount',
+        labelKey: 'date',
+        labelFormat: (value) => {
+          const date = moment(value);
+          const yearDifference = maxminYear.max - date.year();
+          date.set('year', compareYear - yearDifference);
+
+          return date.format('MMM DD YYYY');
+        },
+        unit: ` MODIS burned area`,
+        color: '#49b5e3',
+        nullValue: 'No data available',
+        unitFormat: (value) => `${format('.3s')(value)}ha`,
       });
     }
-    const presentDayIndex = findLastIndex(
-      currentData,
-      (d) => typeof d.count === 'number'
-    );
-    const presentDay = currentData[presentDayIndex].date;
+
     return {
-      ...getChartConfig(colors, moment(latest), compareYearsLines, ''),
+      ...getChartConfig(colors, moment(latest), {}, 'ha'),
       xAxis: {
         tickCount: 12,
         interval: 4,
@@ -304,44 +277,14 @@ export const parseConfig = createSelector(
         tickFormatter: (t) => moment(t).format('MMM'),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
-          endIndex - startIndex < 12 && {
+          endIndex - startIndex < 10 && {
             tickCount: 5,
             interval: 0,
             tickFormatter: (t) => moment(t).format('MMM-DD'),
           }),
       },
       legend,
-      tooltip: [...tooltip],
-      tooltipParseData: ({ settings, values }) => {
-        const sorted =
-          settings &&
-          values &&
-          settings.sort((a, b) => values[a.key] - values[b.key]).reverse();
-        return Array.isArray(sorted)
-          ? [
-              {
-                label: 'Fire alerts',
-              },
-              ...sorted,
-            ]
-          : [
-              {
-                label: 'Fire alerts',
-              },
-            ];
-      },
-      referenceLine: {
-        x: presentDay,
-        stroke: '#CCC',
-        strokeWidth: 2,
-        strokeDasharray: '20 5',
-        label: {
-          position: 'top',
-          value: 'Latest data',
-          fill: '#333',
-          fontSize: 11,
-        },
-      },
+      tooltip,
       brush: {
         width: '100%',
         height: 60,
@@ -351,10 +294,11 @@ export const parseConfig = createSelector(
           left: 48,
           bottom: 12,
         },
-        minimumGap: 4,
         dataKey: 'date',
         startIndex,
         endIndex,
+        minimumGap: MINGAP,
+        maximumGap: 0,
         config: {
           margin: {
             top: 5,
@@ -372,7 +316,6 @@ export const parseConfig = createSelector(
                 stroke: '#49b5e3',
                 isAnimationActive: false,
               },
-              ...(Object.keys(compareYearsLines).length, compareYearsLines),
             },
           },
           xAxis: {
@@ -400,9 +343,9 @@ export const parseSentence = createSelector(
     getSentences,
     getDataset,
     getLocationName,
-    getStartIndex,
-    // getEndIndex,
+    getStartEndIndexes,
     getOptionsSelected,
+    getLang,
     getIndicator,
   ],
   (
@@ -412,110 +355,111 @@ export const parseSentence = createSelector(
     sentences,
     dataset,
     location,
-    startIndex,
-    // endIndex //broken?
+    indexes,
     options,
+    lang,
     indicator
   ) => {
     if (!data || isEmpty(data)) return null;
     const {
-      highConfidence,
-      allAlerts,
-      highConfidenceWithInd,
-      allAlertsWithInd,
+      defaultSentence,
+      seasonSentence,
+      allBurn,
+      allBurnWithInd,
     } = sentences;
-    const { confidence } = options;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
+    const { startIndex, endIndex } = indexes;
     const start = startIndex;
-    const latestYear = maxBy(data, 'year').year;
-    const lastDate =
-      maxBy(
-        data.filter((d) => d.year === latestYear && d.count !== null),
-        'date'
-      ) || {};
+    const end = endIndex || data.length - 1;
+
+    const lastDate = data[end] || {};
     const firstDate = data[start] || {};
 
     const slicedData = data.filter(
       (el) => el.date >= firstDate.date && el.date <= lastDate.date
     );
+    const variance = getPeriodVariance(slicedData, raw_data);
 
-    const maxWeek = maxBy(raw_data, 'count');
-    const maxTotal = maxWeek.count;
-    const maxYear = maxWeek.year;
-    const maxCountCurrentYear =
-      slicedData.length > 0 ? slicedData[slicedData.length - 1] : [];
-    const totalCurrentYear =
-      maxCountCurrentYear && maxCountCurrentYear.count
-        ? maxCountCurrentYear.count
-        : 0;
-    const mean =
-      maxCountCurrentYear && maxCountCurrentYear.mean
-        ? maxCountCurrentYear.mean
-        : 0;
-    const stdDev =
-      maxCountCurrentYear && maxCountCurrentYear.stdDev
-        ? maxCountCurrentYear.stdDev
-        : 0;
+    const maxMean = max(data.map((d) => d.mean));
+    const minMean = min(data.map((d) => d.mean));
+    const halfMax = (maxMean - minMean) * 0.5;
 
+    const sortedWeeks = orderBy(data, 'date');
+
+    const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
+
+    const earliestMinDate = minWeeks[0]?.date;
+    const earliestMinIndex = sortedWeeks
+      .map((el) => el.date)
+      .indexOf(earliestMinDate);
+
+    // Reorder the array so that we can ignore seasons that wrap around
+    const firstHalf = sortedWeeks.slice(0, earliestMinIndex);
+    const secondHalf = sortedWeeks.slice(earliestMinIndex);
+    const reorderedWeeks = secondHalf.concat(firstHalf);
+
+    const sortedPeakWeeks = reorderedWeeks.filter((d) => d.mean > halfMax);
+
+    const seasonStartDate =
+      sortedPeakWeeks.length > 0 && sortedPeakWeeks[0]?.date;
+
+    const seasonMonth = moment(seasonStartDate).format('MMMM');
+    const seasonDay = parseInt(moment(seasonStartDate).format('D'), 10);
+
+    let seasonStatement = `late ${seasonMonth}`;
+    if (seasonDay <= 10) {
+      seasonStatement = `early ${seasonMonth}`;
+    } else if (seasonDay > 10 && seasonDay <= 20) {
+      seasonStatement = `mid-${seasonMonth}`;
+    }
+
+    const total = sumBy(slicedData, 'count');
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
     const { date } = lastDate || {};
 
     let status = 'unusually low';
-    if (totalCurrentYear > 2 * stdDev + mean) {
+    if (variance > 2) {
       status = 'unusually high';
       statusColor = colorRange[0];
-    } else if (
-      totalCurrentYear <= 2 * stdDev + mean &&
-      totalCurrentYear > 1 * stdDev + mean
-    ) {
+    } else if (variance <= 2 && variance > 1) {
       status = 'high';
       statusColor = colorRange[2];
-    } else if (
-      totalCurrentYear <= 1 * stdDev + mean &&
-      totalCurrentYear > -1 * stdDev + mean
-    ) {
+    } else if (variance <= 1 && variance > -1) {
       status = 'normal';
       statusColor = colorRange[4];
-    } else if (
-      totalCurrentYear <= -1 * stdDev + mean &&
-      totalCurrentYear > -2 * stdDev + mean
-    ) {
+    } else if (variance <= -1 && variance > -2) {
       status = 'low';
       statusColor = colorRange[6];
     }
 
-    let sentence =
-      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
-    if (indicator) {
-      sentence =
-        confidence && confidence.value === 'h'
-          ? highConfidenceWithInd
-          : allAlertsWithInd;
-    }
+    const initialSentence = seasonStartDate ? seasonSentence : defaultSentence;
+
+    const sentence = indicator
+      ? initialSentence + allBurnWithInd
+      : initialSentence + allBurn;
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       location,
       indicator: indicatorLabel,
       date: formattedData,
-      latestYear,
-      dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
-      maxYear,
-      maxTotal: {
-        value: maxTotal ? format(',')(maxTotal) : 0,
-        color: colors.main,
-      },
-      dataset: dataset.toUpperCase(),
-      count: {
-        value: totalCurrentYear ? format(',')(totalCurrentYear) : 0,
+      fires_season_start: seasonStatement,
+      fire_season_length: sortedPeakWeeks.length,
+      start_date: moment(firstDate.date).format('Do of MMMM YYYY'),
+      end_date: moment(lastDate.date).format('Do of MMMM YYYY'),
+      dataset_start_year: 2001,
+      dataset: 'MODIS',
+      area: {
+        value: total ? `${format('.2s')(total)}ha` : '0ha',
         color: colors.main,
       },
       status: {
         value: status,
         color: statusColor,
       },
+      lang,
     };
     return { sentence, params };
   }
