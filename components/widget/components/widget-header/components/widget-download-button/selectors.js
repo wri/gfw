@@ -10,6 +10,12 @@ const getGladAlertsDownloadUrls = state =>
   state.widgets.data.gladAlerts &&
   state.widgets.data.gladAlerts.downloadUrls;
 
+const getMapSettings = state => {
+  const { settings } = state.map;
+  const { center, zoom, pitch, bearing, bbox } = settings;
+  return { center, zoom, pitch, bearing, bbox };
+}
+
 export const checkGeostoreSize = createSelector(
   [selectGeostoreSize, getDataLocation],
   (areaHa, location) => {
@@ -23,5 +29,6 @@ export const checkGeostoreSize = createSelector(
 
 export default createStructuredSelector({
   gladAlertsDownloadUrls: getGladAlertsDownloadUrls,
-  areaTooLarge: checkGeostoreSize
+  areaTooLarge: checkGeostoreSize,
+  mapSettings: getMapSettings
 });

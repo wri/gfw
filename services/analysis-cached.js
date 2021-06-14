@@ -931,6 +931,7 @@ export const fetchGladAlerts = (params) => {
 
 export const fetchGladAlertsSum = (params) => {
   const { forestType, landCategory, ifl, startDate, endDate, download } = params || {};
+
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -1157,7 +1158,7 @@ export const fetchVIIRSLatest = () =>
     .catch(() => ({
       date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
     }));
-  
+
 export const fetchVIIRSAlertsSum = (params) => {
   const { forestType, landCategory, startDate, endDate, download, dataset } = params || {};
   const url = encodeURI(

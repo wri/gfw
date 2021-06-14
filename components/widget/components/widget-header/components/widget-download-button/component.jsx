@@ -38,6 +38,8 @@ class WidgetDownloadButton extends PureComponent {
     widget: PropTypes.string,
     areaTooLarge: PropTypes.bool,
     status: PropTypes.string,
+    mapSettings: PropTypes.object,
+    meta: PropTypes.object,
   };
 
   generateZipFromURL = async () => {
@@ -51,9 +53,11 @@ class WidgetDownloadButton extends PureComponent {
       metaKey,
       getDataURL,
       location,
+      mapSettings,
+      meta,
     } = this.props;
 
-    const params = { ...location, ...settings };
+    const params = { ...location, ...settings, GFW_META: meta, mapSettings };
     let files = [];
 
     if (getDataURL) {

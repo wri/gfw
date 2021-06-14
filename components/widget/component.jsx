@@ -56,6 +56,7 @@ class Widget extends PureComponent {
     geostore: PropTypes.object,
     settingsBtnConfig: PropTypes.object,
     status: PropTypes.string,
+    meta: PropTypes.object,
   };
 
   state = {
@@ -110,6 +111,7 @@ class Widget extends PureComponent {
       geostore,
       settingsBtnConfig,
       status,
+      meta,
     } = this.props;
 
     const { main } = colors || {};
@@ -135,6 +137,7 @@ class Widget extends PureComponent {
           title={title}
           large={large}
           datasets={datasets}
+          meta={meta}
           active={active}
           embed={embed}
           settingsConfig={settingsConfig}
