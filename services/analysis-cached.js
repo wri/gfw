@@ -35,6 +35,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} AND umd_tree_cover_density__threshold >= 0 GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
+  burnedAreaGrouped:
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burned_area__ha FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week',
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
@@ -1024,6 +1026,52 @@ export const fetchBurnedArea = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
   );
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `modis_burned_area${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+      })),
+    },
+  }));
+};
+
+export const fetchBurnedAreaGrouped = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    datasetType: 'weekly',
+    grouped: true,
+    version: 'v20210609',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.burnedAreaGrouped}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
+      .replace(/{dateFilter}/g, getWeeksFilter(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, grouped: true }))
+  );
+
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
