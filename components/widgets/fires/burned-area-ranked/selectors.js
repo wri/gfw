@@ -272,30 +272,33 @@ export const parseConfig = createSelector(
   [getColors, getUnit],
   (colors, unit) => {
     const colorRange = colors.ramp;
-    if (unit !== 'significance') return {};
     return {
-      legend: {
-        uhigh: {
-          label: 'Unusually high',
-          color: colorRange[0],
+      showStickUnit: unit !== 'alert_density',
+      showLegendUnit: unit === 'alert_density',
+      ...(unit === 'significance' && {
+        legend: {
+          uhigh: {
+            label: 'Unusually high',
+            color: colorRange[0],
+          },
+          high: {
+            label: 'High',
+            color: colorRange[2],
+          },
+          average: {
+            label: 'Normal',
+            color: colorRange[4],
+          },
+          low: {
+            label: 'Low',
+            color: colorRange[6],
+          },
+          ulow: {
+            label: 'Unusually low',
+            color: colorRange[8],
+          },
         },
-        high: {
-          label: 'High',
-          color: colorRange[2],
-        },
-        average: {
-          label: 'Normal',
-          color: colorRange[4],
-        },
-        low: {
-          label: 'Low',
-          color: colorRange[6],
-        },
-        ulow: {
-          label: 'Unusually low',
-          color: colorRange[8],
-        },
-      },
+      }),
     };
   }
 );

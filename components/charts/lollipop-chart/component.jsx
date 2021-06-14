@@ -68,7 +68,7 @@ class LollipopChart extends PureComponent {
       simple,
     } = this.props;
     const { unit } = settings;
-    const { legend } = config || {};
+    const { legend, showStickUnit, showLegendUnit } = config || {};
 
     const unitsConfig = settingsConfig.find((conf) => conf.key === 'unit');
     const selectedUnitConfig =
@@ -103,7 +103,7 @@ class LollipopChart extends PureComponent {
         {!simple && legend && <Legend config={legend} simple={simple} />}
         <div className="unit-legend">
           {`${selectedUnitConfig.label || ''} ${
-            formatUnit.trim() === 'alerts/Mha' ? `(${formatUnit.trim()})` : ''
+            showLegendUnit ? `(${formatUnit.trim()})` : ''
           }`}
         </div>
         <div className="custom-xAxis">
@@ -216,8 +216,7 @@ class LollipopChart extends PureComponent {
                           {formatNumber({
                             num: item.value,
                             unit: formatUnit,
-                            returnUnit:
-                              selectedUnitConfig.value !== 'alert_density',
+                            returnUnit: showStickUnit,
                           })}
                         </div>
                       </div>
