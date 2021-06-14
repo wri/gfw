@@ -3,11 +3,19 @@
 .c-mini-legend {
   background-color: $white;
   box-shadow: 0 1px 3px 0 rgba($black, 0.25);
-  padding: rem(10px);
-  padding-bottom: rem(5px);
   max-width: rem(400px);
+  z-index: 5;
 
-  ul {
+  .mini-legend-items {
+    padding: rem(10px);
+    padding-bottom: rem(5px);
+  }
+
+  .satellite-basemaps-wrapper .c-map-legend-basemaps .header {
+    padding-left: rem(10px);
+  }
+
+  .mini-legend-layers {
     font-size: rem(13px);
     font-weight: 400;
     color: $slate;
