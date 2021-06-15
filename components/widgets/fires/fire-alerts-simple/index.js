@@ -314,11 +314,13 @@ export default {
     const { VIIRS } = params.GFW_META.datasets;
     const defaultStartDate = VIIRS?.defaultStartDate;
     const defaultEndDate = VIIRS?.defaultEndDate;
+    const startDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
     if (shouldQueryPrecomputedTables(params)) {
       return fetchVIIRSAlertsSum({
         ...params,
-        startDate: defaultStartDate,
-        endDate: defaultEndDate,
+        startDate,
+        endDate,
       }).then((alerts) => {
         const firesData = alerts && alerts.data.data;
         let data = {};
@@ -326,8 +328,8 @@ export default {
           data = {
             alerts: firesData,
             settings: {
-              startDate: defaultStartDate,
-              endDate: defaultEndDate,
+              startDate,
+              endDate,
             },
             options: {
               minDate: '2000-01-01',
