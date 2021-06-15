@@ -156,6 +156,12 @@ export default {
         startDate: defaultStartDate,
         endDate: defaultEndDate,
         download: true,
+        staticStatement: {
+          // append: true, If active, we will utalise the old location select logic with our statement
+          download: { // Only apply to "download" endpoint
+            statement: 'latitude, longitude'
+          }
+        }
       }),
     ];
   },

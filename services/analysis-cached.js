@@ -162,19 +162,32 @@ const getDownloadUrl = (url) => {
 };
 
 // build {select} from location params
-const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast }) => {
-  if (type === 'wdpa') return 'wdpa_protected_area__id';
-  if (['geostore', 'use'].includes(type)) return 'geostore__id';
+
+const handleStaticLocStmt = (payload, download, staticStatement) => {
+  if (download && staticStatement?.download?.statement) {
+    if (staticStatement.append) {
+      return `${staticStatement.download.statement},${payload}`;
+    }
+    return staticStatement.download.statement;
+  }
+  return payload;
+}
+
+const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast, download, staticStatement }) => {
+  if (type === 'wdpa') return handleStaticLocStmt('wdpa_protected_area__id', download, staticStatement);
+  if (['geostore', 'use'].includes(type)) return handleStaticLocStmt('geostore__id', download, staticStatement);
 
   let locationString = `iso${adm1 ? ', adm1{castTemplate}' : ''}${
     adm2 ? ', adm2{castTemplate}' : ''
   }`;
   const castString = cast ? '::integer' : '';
-  if (grouped)
-    locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
+  if (grouped) {
+       locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
       adm1 ? ', adm2{castTemplate}' : ''
     }`;
-  return locationString.replace(/{castTemplate}/g, castString);
+  }
+
+  return handleStaticLocStmt(locationString.replace(/{castTemplate}/g, castString), download, staticStatement)
 };
 
 // build {where} statement for query
@@ -945,7 +958,6 @@ export const fetchGladAlertsSum = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
 
-  // Todo, get latlon
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
