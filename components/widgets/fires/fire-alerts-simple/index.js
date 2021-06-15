@@ -375,16 +375,4 @@ export default {
     }),
   ],
   getWidgetProps,
-  // parseInteraction: (payload) => {
-  //   if (payload) {
-  //     const startDate = moment().year(payload.year).day(payload.day);
-  //     return {
-  //       startDate: startDate.format('YYYY-MM-DD'),
-  //       endDate: endDate.format('YYYY-MM-DD'),
-  //       updateLayer: true,
-  //       ...payload,
-  //     };
-  //   }
-  //   return {};
-  // },
 };
