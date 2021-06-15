@@ -38,8 +38,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
-  firesDailySum:
-    `SELECT {select_location}, confidence_cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence_cat`,
+  firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -129,11 +128,20 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 };
 
 // build the base query for the query with the correct dataset id
-const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped, download, staticStatement  }) => {
+const getRequestUrl = ({
+  type,
+  adm1,
+  adm2,
+  dataset,
+  datasetType,
+  grouped,
+  download,
+  staticStatement,
+}) => {
   let typeByLevel = type;
 
   if (download && staticStatement?.download?.table) {
-    return `${GFW_API}/dataset/${staticStatement.download.table}?sql=`
+    return `${GFW_API}/dataset/${staticStatement.download.table}?sql=`;
   }
 
   if (type === 'country' || type === 'global') {
@@ -176,23 +184,42 @@ const handleStaticLocStmt = (payload, download, staticStatement) => {
     return staticStatement.download.statement;
   }
   return payload;
-}
+};
 
-const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast, download, staticStatement }) => {
-  if (type === 'wdpa') return handleStaticLocStmt('wdpa_protected_area__id', download, staticStatement);
-  if (['geostore', 'use'].includes(type)) return handleStaticLocStmt('geostore__id', download, staticStatement);
+const getLocationSelect = ({
+  type,
+  adm0,
+  adm1,
+  adm2,
+  grouped,
+  cast,
+  download,
+  staticStatement,
+}) => {
+  if (type === 'wdpa')
+    return handleStaticLocStmt(
+      'wdpa_protected_area__id',
+      download,
+      staticStatement
+    );
+  if (['geostore', 'use'].includes(type))
+    return handleStaticLocStmt('geostore__id', download, staticStatement);
 
   let locationString = `iso${adm1 ? ', adm1{castTemplate}' : ''}${
     adm2 ? ', adm2{castTemplate}' : ''
   }`;
   const castString = cast ? '::integer' : '';
   if (grouped) {
-       locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
+    locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
       adm1 ? ', adm2{castTemplate}' : ''
     }`;
   }
 
-  return handleStaticLocStmt(locationString.replace(/{castTemplate}/g, castString), download, staticStatement)
+  return handleStaticLocStmt(
+    locationString.replace(/{castTemplate}/g, castString),
+    download,
+    staticStatement
+  );
 };
 
 // build {where} statement for query
@@ -948,7 +975,8 @@ export const fetchGladAlerts = (params) => {
 };
 
 export const fetchGladAlertsSum = (params) => {
-  const { forestType, landCategory, ifl, startDate, endDate, download } = params || {};
+  const { forestType, landCategory, ifl, startDate, endDate, download } =
+    params || {};
 
   const url = encodeURI(
     `${getRequestUrl({
@@ -956,7 +984,10 @@ export const fetchGladAlertsSum = (params) => {
       dataset: 'glad',
       datasetType: 'daily',
     })}${SQL_QUERIES.gladDailySum}`
-      .replace(/{select_location}/g, getLocationSelect({...params, cast: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
@@ -983,8 +1014,7 @@ export const fetchGladAlertsSum = (params) => {
         area_ha: d.alert_area__ha,
       })),
     },
-  })
-  );
+  }));
 };
 
 // Latest Dates for Alerts
@@ -1177,35 +1207,46 @@ export const fetchVIIRSLatest = () =>
     }));
 
 export const fetchVIIRSAlertsSum = (params) => {
-  const { forestType, landCategory, startDate, endDate, download, dataset } = params || {};
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    startDate,
+    endDate,
+    download,
+    dataset,
+  } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
       dataset,
       datasetType: 'daily',
     })}${SQL_QUERIES.firesDailySum}`
-      .replace(/{select_location}/g, getLocationSelect({...params, cast: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
   );
-  // TODO: THIS NEEDS UPDATING
-  // if (download) {
-  //   const indicator = getIndicator(forestType, landCategory, ifl);
-  //   return {
-  //     name: `daily_${dataset}_alerts${
-  //       indicator ? `_in_${snakeCase(indicator.label)}` : ''
-  //     }__count`,
-  //     url: url.replace('query', 'download'),
-  //   };
-  // }
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `daily_${dataset}_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download'),
+    };
+  }
 
   return apiRequest.get(url).then((response) => ({
     data: {
       data: response.data.data.map((d) => ({
         ...d,
-        confirmed: d.confidence__cat === 'h',
+        confirmed: d.confidence__cat.includes('h'),
         count: d.alert__count,
         alerts: d.alert__count,
       })),
