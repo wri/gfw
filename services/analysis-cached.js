@@ -141,7 +141,7 @@ const getRequestUrl = ({
   let typeByLevel = type;
 
   if (download && staticStatement?.download?.table) {
-    return `${GFW_API}/dataset/${staticStatement.download.table}?sql=`;
+    return `${GFW_API}/dataset/${staticStatement.download.table}/latest/download/csv?sql=`;
   }
 
   if (type === 'country' || type === 'global') {
