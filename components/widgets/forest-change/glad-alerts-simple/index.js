@@ -155,11 +155,13 @@ export default {
         ...params,
         startDate: defaultStartDate,
         endDate: defaultEndDate,
+        dataset: 'nasa_viirs_fire_alerts',
         download: true,
         staticStatement: {
           // append: true, If active, we will utalise the old location select logic with our statement
           download: { // Only apply to "download" endpoint
-            statement: 'latitude, longitude'
+            statement: 'latitude, longitude',
+            table: 'nasa_viirs_fire_alerts'
           }
         }
       }),

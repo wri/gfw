@@ -129,8 +129,13 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 };
 
 // build the base query for the query with the correct dataset id
-const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
+const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped, download, staticStatement  }) => {
   let typeByLevel = type;
+
+  if (download && staticStatement?.download?.table) {
+    return `${GFW_API}/dataset/${staticStatement.download.table}?sql=`
+  }
+
   if (type === 'country' || type === 'global') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
