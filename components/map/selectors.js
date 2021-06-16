@@ -43,6 +43,11 @@ export const getMapViewport = createSelector([getMapSettings], (settings) => {
   };
 });
 
+export const getMapLatLng = createSelector(
+  [getMapSettings],
+  (settings) => settings.center
+);
+
 export const getMapZoom = createSelector(
   [getMapSettings],
   (settings) => settings.zoom
