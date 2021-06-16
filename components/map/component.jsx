@@ -219,7 +219,6 @@ class MapComponent extends Component {
   setBasemap = () => {
     const { basemap } = this.props;
     const BASEMAP_GROUPS = ['basemap'];
-
     if (this.map) {
       const { layers, metadata } = this.map.getStyle();
       const basemapGroups = Object.keys(metadata['mapbox:groups']).filter(

@@ -3,7 +3,7 @@
 .c-map-legend-basemaps {
   flex: 0;
 
-  .header {
+  > .header {
     display: flex;
     align-items: center;
     padding: 0 15px;
@@ -68,9 +68,15 @@
     }
 
     &--title {
+      display: flex;
+      align-items: center;
       color: $slate-light;
       text-transform: uppercase;
       font-size: 10px;
+
+      > button {
+        margin-left: 5px;
+      }
     }
 
     &--description {

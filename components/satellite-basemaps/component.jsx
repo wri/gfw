@@ -2,8 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import arrowDown from 'assets/icons/arrow-down.svg?sprite';
+import infoIcon from 'assets/icons/info.svg?sprite';
 
 import Checkbox from 'components/ui/checkbox';
 
@@ -17,7 +19,9 @@ const SatelliteBasemaps = ({
   landsatYear,
   basemaps,
   activeBasemap,
+  setMainMapSettings,
   setMapBasemap,
+  setModalMetaSettings,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
@@ -33,6 +37,11 @@ const SatelliteBasemaps = ({
         year: landsatYear,
       }),
     });
+    setMainMapSettings({
+      showRecentImagery: activeBasemap.active
+        ? false
+        : activeBasemap.value === 'recentImagery',
+    });
   };
 
   const handleSetSatelliteBasemap = (value) => {
@@ -46,6 +55,9 @@ const SatelliteBasemaps = ({
         year: landsatYear,
       }),
     });
+    setMainMapSettings({
+      showRecentImagery: value === 'recentImagery',
+    });
   };
 
   return (
@@ -55,7 +67,9 @@ const SatelliteBasemaps = ({
           className="show-satellite-basemap-btn"
           title={`${activeBasemap.active ? 'Disable' : 'Enable'} ${
             activeBasemap.label
-          } satellite imagery`}
+          } ${
+            activeBasemap.value !== 'recentImagery' ? 'satellite imagery' : ''
+          }`}
           onClick={handleToggleActive}
         >
           <Checkbox
@@ -71,7 +85,7 @@ const SatelliteBasemaps = ({
           <span className="active-basemap-title">
             {activeBasemap.label}
             {' '}
-            SATELLITE IMAGERY
+            {activeBasemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
           </span>
           <Icon icon={arrowDown} />
         </button>
@@ -105,6 +119,16 @@ const SatelliteBasemaps = ({
                     <div className="satellite-basemap--content">
                       <span className="satellite-basemap--title">
                         {basemap.label}
+                        {basemap.value === 'recentImagery' && (
+                          <Button
+                            className="info-btn"
+                            theme="theme-button-tiny theme-button-grey-filled square"
+                            onClick={() =>
+                              setModalMetaSettings('recent_satellite_imagery')}
+                          >
+                            <Icon icon={infoIcon} />
+                          </Button>
+                        )}
                       </span>
                       {basemap.description && (
                         <p className="satellite-basemap--description">
@@ -136,9 +160,11 @@ SatelliteBasemaps.propTypes = {
   className: PropTypes.string,
   planetPeriods: PropTypes.arrayOf(PropTypes.object),
   landsatYear: PropTypes.number.isRequired,
+  setMainMapSettings: PropTypes.func.isRequired,
   setMapBasemap: PropTypes.func.isRequired,
   basemaps: PropTypes.arrayOf(PropTypes.object),
   activeBasemap: PropTypes.object,
+  setModalMetaSettings: PropTypes.func.isRequired,
 };
 
 export default SatelliteBasemaps;

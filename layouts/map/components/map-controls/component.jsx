@@ -427,10 +427,7 @@ class MapControlsButtons extends PureComponent {
         {isDesktop ? (
           <Fragment>
             {!hidePanels && (
-              <div className="map-actions">
-                {this.renderRecentImageryTooltip()}
-                {this.renderBasemapsTooltip()}
-              </div>
+              <div className="map-actions">{this.renderBasemapsTooltip()}</div>
             )}
             <div className="map-tour-map-controls">
               <div className="controls-wrapper">

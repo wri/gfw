@@ -30,6 +30,7 @@ class RecentImageryContainer extends PureComponent {
     if (this.getDataSource) {
       this.getDataSource.cancel();
     }
+
     this.getDataSource = cancelToken();
     if (active) {
       getRecentImageryData({

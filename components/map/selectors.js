@@ -64,7 +64,7 @@ export const getBasemapFromState = createSelector(
 );
 
 export const getBasemap = createSelector(
-  [getBasemapFromState],
+  [getBasemapFromState, getBasemaps],
   (basemapState) => {
     const basemap = {
       ...basemaps[basemapState?.value],
@@ -78,7 +78,10 @@ export const getBasemap = createSelector(
         }
       });
     }
-    return { ...basemap, url };
+    return {
+      ...basemap,
+      ...(url && { url }),
+    };
   }
 );
 

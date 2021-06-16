@@ -68,4 +68,17 @@ export default {
     availableYears: [2017, 2016, 2015, 2014, 2013],
     defaultYear: 2017,
   },
+  recentImagery: {
+    label: 'Recent satellite imagery',
+    description:
+      'Latest satellite imagery available from Sentinel-2 and Landsat 8',
+    value: 'recentImagery',
+    backgroundColor: '#A2DFFF',
+    baseStyle: false,
+    image: defaultImage,
+    hasSettings: true,
+    basemapGroup: 'basemap-light',
+    labelsGroup: 'labels-light',
+    mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
+  },
 };
