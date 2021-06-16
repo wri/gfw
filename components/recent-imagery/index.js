@@ -62,7 +62,15 @@ class RecentImageryContainer extends PureComponent {
       !!activeTile.url &&
       (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
 
-    if (!isEqual(prevProps.zoom, zoom) || !isEqual(prevProps.center, center)) {
+    const modifiedTileSettings =
+      !isEqual(settings.date, prevProps.settings.date) ||
+      !isEqual(settings.weeks, prevProps.settings.weeks) ||
+      !isEqual(settings.bands, prevProps.settings.band);
+
+    const modifiedMapPosition =
+      !isEqual(prevProps.zoom, zoom) || !isEqual(prevProps.center, center);
+
+    if (modifiedTileSettings || modifiedMapPosition) {
       this.handleUpdateTiles(prevProps);
     }
 
