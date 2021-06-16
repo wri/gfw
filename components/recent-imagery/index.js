@@ -65,7 +65,7 @@ class RecentImageryContainer extends PureComponent {
     const modifiedTileSettings =
       !isEqual(settings.date, prevProps.settings.date) ||
       !isEqual(settings.weeks, prevProps.settings.weeks) ||
-      !isEqual(settings.bands, prevProps.settings.band);
+      !isEqual(settings.band, prevProps.settings.band);
 
     const modifiedMapPosition =
       !isEqual(prevProps.zoom, zoom) || !isEqual(prevProps.center, center);
