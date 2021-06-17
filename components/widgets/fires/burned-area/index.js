@@ -8,12 +8,12 @@ import { fetchBurnedArea, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FIRES_VIIRS_DATASET,
+  BURNED_AREA_MODIS_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FIRES_ALERTS_VIIRS,
+  BURNED_AREA_MODIS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -63,8 +63,8 @@ export default {
     },
     // fires
     {
-      dataset: FIRES_VIIRS_DATASET,
-      layers: [FIRES_ALERTS_VIIRS],
+      dataset: BURNED_AREA_MODIS_DATASET,
+      layers: [BURNED_AREA_MODIS],
     },
   ],
   visible: ['dashboard', 'analysis'],

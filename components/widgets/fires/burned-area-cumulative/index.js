@@ -5,6 +5,16 @@ import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulat
 
 import { fetchBurnedArea, fetchVIIRSLatest } from 'services/analysis-cached';
 
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  BURNED_AREA_MODIS_DATASET,
+} from 'data/datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  BURNED_AREA_MODIS,
+} from 'data/layers';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -40,6 +50,18 @@ export default {
       type: 'compare-select',
       clearable: true,
       border: true,
+    },
+  ],
+  datasets: [
+    {
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
+      boundary: true,
+    },
+    // fires
+    {
+      dataset: BURNED_AREA_MODIS_DATASET,
+      layers: [BURNED_AREA_MODIS],
     },
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory'],
