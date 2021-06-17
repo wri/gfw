@@ -37,13 +37,15 @@ export default async function userHandler(req, res) {
       res.setHeader('content-type', 'application/json');
       res.send(apiData?.data);
     } catch (err) {
-      if (err?.response?.status && err.response.status === 403) {
-        res.status(404).end('unauthorized');
+      if (!err?.response) {
+        res.status(500).end('unknown error');
       }
-      res.status(500).end('error getting data');
+      res
+        .status(parseInt(err?.response?.status, 10))
+        .end(err?.response?.data?.message || 'unauthorized');
     }
   } else {
-    res.setHeader('Allow', ['GET', 'PUT']);
+    res.setHeader('Allow', ['GET']);
     res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

@@ -20,6 +20,11 @@ export const apiRequest = create({
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
+export const gfwApiRequest = create({
+  timeout: 30 * 1000,
+  baseURL: GFW_API_URL,
+});
+
 export const dataRequest = create({
   timeout: 30 * 1000,
   transformResponse: [(data) => JSON.parse(data)?.data],

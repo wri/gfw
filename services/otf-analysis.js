@@ -1,6 +1,6 @@
 import has from 'lodash/has';
 
-import { apiRequest } from 'utils/request';
+import { gfwApiRequest } from 'utils/request';
 import { GFW_DATA_API_PROXY } from 'utils/apis';
 
 import otfData from 'data/otf-data';
@@ -100,7 +100,7 @@ class OTFAnalysis {
         key: dep,
         request: new Promise((resolve) =>
           resolve(
-            apiRequest.get(this.buildQuery(sumFields, groupFields, filters))
+            gfwApiRequest.get(this.buildQuery(sumFields, groupFields, filters))
           )
         ),
       });
