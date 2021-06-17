@@ -8,7 +8,6 @@ import { trackEvent } from 'utils/analytics';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Widget from 'components/widget';
-
 import './styles.scss';
 
 class Widgets extends PureComponent {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { InView } from 'react-intersection-observer';
-import YouTube from 'react-youtube';
+// import YouTube from 'react-youtube';
 import Link from 'next/link';
 import cx from 'classnames';
 
@@ -24,16 +24,16 @@ import bgImageWebP from './assets/home-bg.webp';
 import './styles.scss';
 
 const HomePage = ({ summary, uses, apps, news }) => {
-  const [showVideo, setShowVideo] = useState(false);
+  // const [showVideo, setShowVideo] = useState(false);
   const [showSectionNews, setShowSectionNews] = useState(false);
   const summaryEl = useRef(null);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowVideo(true);
-    }, 5000);
-    return () => clearTimeout(timeout);
-  }, []);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setShowVideo(true);
+  //   }, 5000);
+  //   return () => clearTimeout(timeout);
+  // }, []);
 
   return (
     <div className="l-home-page">
@@ -46,38 +46,6 @@ const HomePage = ({ summary, uses, apps, news }) => {
         large
       >
         <>
-          {showVideo && (
-            <div className={cx('home-video', { show: showVideo })}>
-              <YouTube
-                videoId="0XsJNU75Si0"
-                opts={{
-                  height: '100%',
-                  width: '100%',
-                  playerVars: {
-                    autoplay: 1,
-                    autohide: 1,
-                    loop: 1,
-                    modestbranding: 1,
-                    rel: 0,
-                    showinfo: 0,
-                    controls: 0,
-                    disablekb: 1,
-                    enablejsapi: 0,
-                    iv_load_policy: 3,
-                  },
-                }}
-                onEnd={() => setShowVideo(false)}
-              />
-            </div>
-          )}
-          {showVideo && (
-            <Button
-              className="stop-video-btn"
-              onClick={() => setShowVideo(false)}
-            >
-              STOP VIDEO
-            </Button>
-          )}
           <Link href="/subscribe">
             <a className="subscribe-btn">
               <Button round className="subscribe-icon">

@@ -395,8 +395,12 @@
       top: 0;
       left: 0;
       z-index: -1;
+      display: flex;
+      width: 100%;
+      height: 100%;
 
       img {
+        object-fit: cover;
         width: 100%;
         height: 100%;
       }

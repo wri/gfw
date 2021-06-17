@@ -17,6 +17,7 @@ import {
   ResponsiveContainer,
   ComposedChart,
   LabelList,
+  Legend,
 } from 'recharts';
 
 import ChartToolTip from '../components/chart-tooltip';
@@ -83,6 +84,8 @@ class CustomComposedChart extends PureComponent {
       margin,
       stackOffset,
       referenceLine,
+      simpleNeedsAxis = false,
+      simpleLegend,
     } = config;
 
     const isVertical = !!xKeys;
@@ -92,10 +95,11 @@ class CustomComposedChart extends PureComponent {
     let rightMargin = 0;
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
+
     return (
       <div
         className={cx('c-composed-chart', className)}
-        style={{ height: simple ? 100 : height || 250 }}
+        style={{ height: simple ? 110 : height || 250 }}
       >
         <ResponsiveContainer width="99%">
           <ComposedChart
@@ -144,7 +148,7 @@ class CustomComposedChart extends PureComponent {
               interval="preserveStartEnd"
               {...xAxis}
             />
-            {!simple && (
+            {(!simple || simpleNeedsAxis) && (
               <YAxis
                 dataKey={yKey || ''}
                 tickLine={!isVertical}
@@ -173,7 +177,7 @@ class CustomComposedChart extends PureComponent {
                 {...yAxis}
               />
             )}
-            {!simple && rightYAxis && (
+            {(!simple || simpleNeedsAxis) && rightYAxis && (
               <YAxis
                 orientation="right"
                 dataKey={yKey || ''}
@@ -212,8 +216,20 @@ class CustomComposedChart extends PureComponent {
               />
             )}
 
+            {simpleLegend && (
+              <Legend
+                iconSize={5}
+                verticalAlign="top"
+                payload={simpleLegend}
+                wrapperStyle={{
+                  fontSize: 10,
+                }}
+              />
+            )}
+
             <Tooltip
               simple={simple}
+              offset={100}
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
