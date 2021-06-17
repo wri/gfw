@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
+import has from 'lodash/has';
 import { trackEvent } from 'utils/analytics';
 
 import WidgetComponent from './component';
@@ -19,6 +20,7 @@ class WidgetContainer extends Component {
     geostore: PropTypes.object,
     meta: PropTypes.object,
     status: PropTypes.string,
+    maxDownloadSize: PropTypes.object,
   };
 
   static defaultProps = {
@@ -31,6 +33,7 @@ class WidgetContainer extends Component {
   state = {
     loading: false,
     error: false,
+    downloadDisabled: false,
   };
 
   _mounted = false;
@@ -46,7 +49,6 @@ class WidgetContainer extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { location, settings, refetchKeys, status, meta } = this.props;
     const { error } = this.state;
-
     const hasLocationChanged =
       location && !isEqual(location, prevProps.location);
     const hasErrorChanged =
@@ -68,6 +70,19 @@ class WidgetContainer extends Component {
     this._mounted = false;
   }
 
+  handleMaxRowSize(data) {
+    const { maxDownloadSize = null } = this.props;
+    if (!maxDownloadSize) return { downloadDisabled: false };
+
+    const { key, maxSize } = maxDownloadSize;
+    if (has(data, key) && Array.isArray(data[key]) && maxSize) {
+      return {
+        downloadDisabled: data[key].length > maxSize,
+      };
+    }
+    return { downloadDisabled: false };
+  }
+
   handleGetWidgetData = (params) => {
     if (params?.type) {
       const { getData, setWidgetData, geostore } = this.props;
@@ -80,7 +95,11 @@ class WidgetContainer extends Component {
           setWidgetData(data);
           setTimeout(() => {
             if (this._mounted) {
-              this.setState({ loading: false, error: false });
+              this.setState({
+                ...this.handleMaxRowSize(data),
+                loading: false,
+                error: false,
+              });
             }
           }, 200);
         })

@@ -14,6 +14,7 @@ class Widget extends PureComponent {
     title: PropTypes.string.isRequired,
     type: PropTypes.string,
     active: PropTypes.bool,
+    downloadDisabled: PropTypes.bool,
     embed: PropTypes.bool,
     large: PropTypes.bool,
     colors: PropTypes.object,
@@ -71,6 +72,7 @@ class Widget extends PureComponent {
       colors,
       type,
       active,
+      downloadDisabled,
       large,
       embed,
       simple,
@@ -139,6 +141,7 @@ class Widget extends PureComponent {
           datasets={datasets}
           meta={meta}
           active={active}
+          disableDownload={downloadDisabled}
           embed={embed}
           settingsConfig={settingsConfig}
           metaKey={metaKey}

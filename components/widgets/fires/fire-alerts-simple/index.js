@@ -362,6 +362,10 @@ export default {
       };
     });
   },
+  maxDownloadSize: {
+    maxSize: 1e5,
+    key: 'alerts',
+  },
   getDataURL: (params) => [
     fetchVIIRSAlertsSum({
       ...params,

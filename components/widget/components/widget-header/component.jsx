@@ -21,8 +21,10 @@ class WidgetHeader extends PureComponent {
     embed: PropTypes.bool,
     simple: PropTypes.bool,
     active: PropTypes.bool,
+    disableDownload: PropTypes.bool,
     metaKey: PropTypes.string,
     settingsConfig: PropTypes.array,
+    settings: PropTypes.object,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowMap: PropTypes.func,
@@ -40,6 +42,7 @@ class WidgetHeader extends PureComponent {
       title,
       loading,
       active,
+      disableDownload,
       embed,
       large,
       datasets,
@@ -58,7 +61,8 @@ class WidgetHeader extends PureComponent {
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
-    const showDownloadBtn = !embed && getDataURL && status !== 'pending';
+    const showDownloadBtn =
+      !disableDownload || (!embed && getDataURL && status !== 'pending');
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
 
