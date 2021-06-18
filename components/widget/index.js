@@ -33,6 +33,7 @@ class WidgetContainer extends Component {
   state = {
     loading: false,
     error: false,
+    maxSize: null,
     downloadDisabled: false,
   };
 
@@ -74,13 +75,14 @@ class WidgetContainer extends Component {
     const { maxDownloadSize = null } = this.props;
     if (!maxDownloadSize) return { downloadDisabled: false };
 
-    const { key, maxSize } = maxDownloadSize;
+    const { key, maxSize = null } = maxDownloadSize;
     if (has(data, key) && Array.isArray(data[key]) && maxSize) {
       return {
+        maxSize,
         downloadDisabled: data[key].length > maxSize,
       };
     }
-    return { downloadDisabled: false };
+    return { downloadDisabled: false, maxSize };
   }
 
   handleGetWidgetData = (params) => {

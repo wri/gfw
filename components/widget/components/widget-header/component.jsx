@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
-
+import { format } from 'd3-format';
 import WidgetMapButton from './components/widget-map-button';
 import WidgetSettingsButton from './components/widget-settings-button';
 import WidgetInfoButton from './components/widget-info-button';
@@ -16,6 +16,7 @@ class WidgetHeader extends PureComponent {
     title: PropTypes.string.isRequired,
     widget: PropTypes.string,
     large: PropTypes.bool,
+    maxSize: PropTypes.number,
     datasets: PropTypes.array,
     loading: PropTypes.bool,
     embed: PropTypes.bool,
@@ -43,6 +44,7 @@ class WidgetHeader extends PureComponent {
       loading,
       active,
       disableDownload,
+      maxSize,
       embed,
       large,
       datasets,
@@ -61,8 +63,7 @@ class WidgetHeader extends PureComponent {
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
-    const showDownloadBtn =
-      !disableDownload || (!embed && getDataURL && status !== 'pending');
+    const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
 
@@ -95,7 +96,18 @@ class WidgetHeader extends PureComponent {
           <div className="small-options">
             {showDownloadBtn && (
               <WidgetDownloadButton
-                disabled={widget === 'gladAlerts' || widget === 'gladRanked'}
+                disabled={
+                  disableDownload ||
+                  widget === 'gladAlerts' ||
+                  widget === 'gladRanked'
+                }
+                disabledMessage={
+                  disableDownload
+                    ? `Reduce the number of alerts to less than ${format(',')(
+                        maxSize
+                      )} to download`
+                    : null
+                }
                 {...this.props}
               />
             )}

@@ -24,6 +24,7 @@ const isServer = typeof window === 'undefined';
 class WidgetDownloadButton extends PureComponent {
   static propTypes = {
     disabled: PropTypes.bool,
+    disabledMessage: PropTypes.string,
     getDataURL: PropTypes.func,
     gladAlertsDownloadUrls: PropTypes.object,
     settings: PropTypes.object,
@@ -214,7 +215,7 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const { areaTooLarge, disabled } = this.props;
+    const { areaTooLarge, disabled, disabledMessage } = this.props;
 
     let tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
@@ -226,6 +227,14 @@ class WidgetDownloadButton extends PureComponent {
         'Your area is too large for downloading data! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).';
     }
 
+    if (disabled && !disabledMessage) {
+      tooltipText = 'Temporarily unavailable';
+    }
+
+    if (disabled && disabledMessage) {
+      tooltipText = disabledMessage;
+    }
+
     return (
       <Button
         className={cx('c-widget-download-button', {
@@ -235,7 +244,7 @@ class WidgetDownloadButton extends PureComponent {
           'theme-button-grey-filled theme-button-xsmall': this.props.simple,
         })}
         onClick={this.onClickDownloadBtn}
-        tooltip={{ text: disabled ? 'Temporarily unavailable' : tooltipText }}
+        tooltip={{ text: tooltipText }}
         disabled={areaTooLarge || disabled}
       >
         <Icon icon={downloadIcon} className="download-icon" />
