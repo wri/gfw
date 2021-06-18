@@ -92,8 +92,14 @@ export const getAdminStats = (params) =>
             : 0;
 
         const data = {
-          totalArea: extent.reduce((total, d) => total + d.total_area, 0) || 0,
-          extent: extent.reduce((total, d) => total + d.extent, 0) || 0,
+          totalArea:
+            extent && extent.length
+              ? extent.reduce((total, d) => total + d.total_area, 0)
+              : 0,
+          extent:
+            extent && extent.length
+              ? extent.reduce((total, d) => total + d.extent, 0)
+              : 0,
           plantationsExtent:
             plantationsExtent && plantationsExtent.length
               ? plantationsExtent.reduce((total, d) => total + d.extent, 0)
