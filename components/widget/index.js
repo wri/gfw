@@ -2,6 +2,7 @@ import { createElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
+import sumBy from 'lodash/sumBy';
 import pick from 'lodash/pick';
 import has from 'lodash/has';
 import { trackEvent } from 'utils/analytics';
@@ -74,12 +75,12 @@ class WidgetContainer extends Component {
   handleMaxRowSize(data) {
     const { maxDownloadSize = null } = this.props;
     if (!maxDownloadSize) return { downloadDisabled: false };
-
-    const { key, maxSize = null } = maxDownloadSize;
+    const { key, subKey, maxSize } = maxDownloadSize;
     if (has(data, key) && Array.isArray(data[key]) && maxSize) {
       return {
-        maxSize,
-        downloadDisabled: data[key].length > maxSize,
+        downloadDisabled: subKey
+          ? sumBy(data[key], subKey) > maxSize
+          : sumBy(data, key) > maxSize,
       };
     }
     return { downloadDisabled: false, maxSize };

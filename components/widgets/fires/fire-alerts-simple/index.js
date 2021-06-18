@@ -365,6 +365,7 @@ export default {
   maxDownloadSize: {
     maxSize: 1e5,
     key: 'alerts',
+    subKey: 'alert__count',
   },
   getDataURL: (params) => [
     fetchVIIRSAlertsSum({
