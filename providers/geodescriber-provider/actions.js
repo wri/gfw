@@ -92,14 +92,16 @@ export const getAdminStats = (params) =>
             : 0;
 
         const data = {
-          totalArea: (extent[0] && extent[0].total_area) || 0,
-          extent: (extent[0] && extent[0].extent) || 0,
+          totalArea: extent.reduce((total, d) => total + d.total_area, 0) || 0,
+          extent: extent.reduce((total, d) => total + d.extent, 0) || 0,
           plantationsExtent:
             plantationsExtent && plantationsExtent.length
-              ? plantationsExtent[0].extent
+              ? plantationsExtent.reduce((total, d) => total + d.extent, 0)
               : 0,
           primaryExtent:
-            primaryExtent && primaryExtent.length ? primaryExtent[0].extent : 0,
+            primaryExtent && primaryExtent.length
+              ? primaryExtent.reduce((total, d) => total + d.extent, 0)
+              : 0,
           totalLoss: {
             area: summedLoss || 0,
             year: latestYear || 0,
