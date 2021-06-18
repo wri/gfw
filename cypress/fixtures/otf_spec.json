@@ -2059,7 +2059,7 @@
     }
   },
   {
-    "url": "https://production-api.globalforestwatch.org/query/cf00c4da-aac0-4071-bd23-73f647844031?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
+    "url": "https://api.resourcewatch.org/query/cf00c4da-aac0-4071-bd23-73f647844031?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
       "data": [],
@@ -2081,7 +2081,7 @@
     }
   },
   {
-    "url": "https://production-api.globalforestwatch.org/query/f3ea601e-8aee-4616-a448-3ce43c4c6aa8?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
+    "url": "https://api.resourcewatch.org/query/f3ea601e-8aee-4616-a448-3ce43c4c6aa8?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
       "data": [],
@@ -2103,7 +2103,7 @@
     }
   },
   {
-    "url": "https://production-api.globalforestwatch.org/query/254cb7f6-e396-49b7-9966-06ce5d94c00a?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
+    "url": "https://api.resourcewatch.org/query/254cb7f6-e396-49b7-9966-06ce5d94c00a?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
       "data": [],
@@ -2125,7 +2125,7 @@
     }
   },
   {
-    "url": "https://production-api.globalforestwatch.org/query/64d80e29-2e7f-4b9c-bef2-dde2241d363e?sql=SELECT geostore__id, gfw_plantation__type as plantations, ifl_intact_forest_landscape__year as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
+    "url": "https://api.resourcewatch.org/query/64d80e29-2e7f-4b9c-bef2-dde2241d363e?sql=SELECT geostore__id, gfw_plantation__type as plantations, ifl_intact_forest_landscape__year as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
       "data": [],

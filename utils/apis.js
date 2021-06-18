@@ -1,5 +1,5 @@
-export const GFW_API = 'https://production-api.globalforestwatch.org';
-export const GFW_STAGING_API = 'https://staging-api.globalforestwatch.org';
+export const GFW_API = 'https://api.resourcewatch.org';
+export const GFW_STAGING_API = 'https://staging-api.resourcewatch.org';
 export const GFW_DATA_API = 'https://data-api.globalforestwatch.org';
 export const GFW_STAGING_DATA_API =
   'https://staging-data-api.globalforestwatch.org';

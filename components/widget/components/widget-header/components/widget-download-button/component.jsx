@@ -81,7 +81,7 @@ class WidgetDownloadButton extends PureComponent {
         ),
       }),
       date_downloaded: moment().format('YYYY-MM-DD'),
-      metadata: `https://production-api.globalforestwatch.org/v1/gfw-metadata/${metaKey}`,
+      metadata: `https://api.resourcewatch.org/v1/gfw-metadata/${metaKey}`,
       link: !isServer && window.location.href,
     };
 
