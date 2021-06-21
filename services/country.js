@@ -1,3 +1,5 @@
+import { all, spread } from 'axios';
+
 import { cartoRequest } from 'utils/request';
 import { getGadm36Id } from 'utils/gadm';
 
@@ -17,6 +19,8 @@ const SQL_QUERIES = {
   getCountriesLatLng:
     'SELECT latitude_average, longitude_average, alpha_3_code as iso FROM country_list_iso_3166_codes_latitude_longitude',
 };
+
+const convertToOptions = countries => countries.map(c => ({ label: c.name, value: c.iso }));
 
 export const getCountriesProvider = () => {
   const url = `/sql?q=${SQL_QUERIES.getCountries}`;
@@ -54,3 +58,26 @@ export const getRanking = ({ adm0, token }) => {
   const url = `/sql?q=${SQL_QUERIES.getRanking}`.replace('{adm0}', adm0);
   return cartoRequest.get(url, { cancelToken: token });
 };
+
+export const getCountryLinksSerialized = async () => {
+  const response = await getCountryLinksProvider();
+  if (response.data && response.data.rows.length) {
+    const data = {};
+    response.data.rows.forEach((d) => {
+      data[d.iso] = JSON.parse(d.external_links);
+    });
+    return data;
+  }
+  return {};
+}
+
+export const getCategorisedCountries = (asOptions = false) => all([getCountriesProvider(), getFAOCountriesProvider()]).then(
+  spread((gadm36Countries, faoCountries) => {
+    return {
+      gadmCountries: asOptions ? convertToOptions(gadm36Countries.data.rows) : gadm36Countries.data.rows,
+      faoCountries: asOptions ? convertToOptions(faoCountries.data.rows) : faoCountries.data.rows,
+      countries: asOptions ? convertToOptions(gadm36Countries.data.rows) : gadm36Countries.data.rows
+    }
+  })
+)
+

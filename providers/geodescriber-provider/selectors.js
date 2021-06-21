@@ -1,30 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
 
 import { selectActiveLang } from 'utils/lang';
 import { getDataLocation, buildFullLocationName } from 'utils/location';
 
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
-import tropicalIsos from 'data/tropical-isos.json';
-
-const adminSentences = {
-  default:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
-  withLoss:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
-  globalInitial:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover.',
-  withPlantationLoss:
-    'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
-  countrySpecific: {
-    IDN:
-      'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ of emissions.',
-  },
-  co2Emissions: ', equivalent to {emissions} of CO\u2082e of emissions.',
-  end: '.',
-};
+import { parseSentence } from 'services/sentences';
 
 export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
@@ -132,108 +114,12 @@ export const getGeodescriberTitleFull = createSelector(
 
 export const getAdminDescription = createSelector(
   [getAdminsSelected, selectGeodescriber, getDataLocation],
-  (locationNames, data, locationObj) => {
-    if (
-      !['global', 'country'].includes(locationObj.type) ||
-      isEmpty(data) ||
-      isEmpty(locationNames)
-    ) {
-      return {};
-    }
-    const {
-      withLoss,
-      withPlantationLoss,
-      globalInitial,
-      countrySpecific,
-      co2Emissions,
-      end,
-    } = adminSentences;
-    const {
-      extent,
-      plantationsExtent,
-      primaryExtent,
-      totalArea,
-      totalLoss,
-      plantationsLoss,
-      primaryLoss,
-    } = data || {};
-    const { area, emissions, year } = totalLoss || {};
-    const { area: areaPlantations, emissions: emissionsPlantations } =
-      plantationsLoss || {};
-    const { area: areaPrimary, emissions: emissionsPrimary } =
-      primaryLoss || {};
-
-    const extentFormatted =
-      extent < 1 ? format('.3r')(extent) : format('.3s')(extent);
-    const naturalForest =
-      extent - plantationsExtent < 1
-        ? format('.3r')(extent - plantationsExtent)
-        : format('.3s')(extent - plantationsExtent);
-    const primaryForest =
-      primaryExtent < 1
-        ? format('.3r')(primaryExtent)
-        : format('.3s')(primaryExtent);
-    const percentageCover =
-      extent && totalArea ? format('.2r')((extent / totalArea) * 100) : 0;
-    const percentageNatForest = format('.2r')(
-      ((extent - plantationsExtent) / totalArea) * 100
-    );
-    const percentagePrimaryForest = format('.2r')(
-      (primaryExtent / totalArea) * 100
-    );
-    const naturalLoss = format('.3s')((area || 0) - (areaPlantations || 0));
-    const emissionsNaturalForest = format('.3s')(
-      (emissions || 0) - (emissionsPlantations || 0)
-    );
-    const emissionsFormatted = format('.3s')(emissions);
-    const emissionsPrimaryFormatted = format('.3s')(emissionsPrimary || 0);
-    const primaryLossFormatted = format('.3s')(areaPrimary || 0);
-    const loss = format('.3s')(area || 0);
-    const location = locationNames && locationNames.label;
-    const { adm0 } = locationObj || {};
-
-    const params = {
-      extent: `${extentFormatted}ha`,
-      naturalForest: `${naturalForest}ha`,
-      primaryForest: `${primaryForest}ha`,
-      location: location || 'the world',
-      percentage: `${percentageCover}%`,
-      percentageNatForest: `${percentageNatForest}%`,
-      percentagePrimaryForest: `${percentagePrimaryForest}%`,
-      loss: `${loss}ha`,
-      emissions: `${emissionsNaturalForest}t`,
-      emissionsTreeCover: `${emissionsFormatted}t`,
-      emissionsPrimary: `${emissionsPrimaryFormatted}t`,
-      year,
-      treeCoverLoss: `${loss}ha`,
-      primaryLoss: `${primaryLossFormatted}ha`,
-      naturalLoss: `${naturalLoss}ha`,
-    };
-
-    let sentence = adminSentences.default;
-    if (extent > 0 && totalLoss.area) {
-      sentence = areaPlantations && location ? withPlantationLoss : withLoss;
-    }
-    sentence = tropicalIsos.includes(adm0)
-      ? sentence + co2Emissions
-      : sentence + end;
-    if (!location) sentence = globalInitial;
-    if (adm0 in countrySpecific) {
-      sentence = countrySpecific[adm0];
-    }
-
-    return {
-      sentence,
-      params,
-    };
-  }
-);
+  (locationNames, data, locationObj) => parseSentence(data, locationNames, locationObj));
 
 export const getGeodescriberDescription = createSelector(
   [selectGeodescriber, getDataLocation, getAdminDescription],
   (geodescriber, location, adminSentence) => {
     if (isEmpty(geodescriber)) return {};
-
     // if not an admin we can use geodescriber
     if (!['global', 'country'].includes(location.type)) {
       return {
