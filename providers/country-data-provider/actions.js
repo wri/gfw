@@ -1,15 +1,15 @@
 import { createAction, createThunkAction } from 'redux/actions';
 import { parseGadm36Id } from 'utils/gadm';
-import { all, spread } from 'axios';
 import uniqBy from 'lodash/uniqBy';
 
 import {
-  getCountriesProvider,
-  getFAOCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCountryLinksProvider,
+  getCategorisedCountries,
 } from 'services/country';
+
+export const setCountriesSSR = createAction('setCountriesSSR');
 
 export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
@@ -27,18 +27,16 @@ export const getCountries = createThunkAction(
   'getCountries',
   () => (dispatch) => {
     dispatch(setCountriesLoading(true));
-    all([getCountriesProvider(), getFAOCountriesProvider()])
-      .then(
-        spread((gadm36Countries, faoCountries) => {
-          dispatch(setGadmCountries(gadm36Countries.data.rows));
-          dispatch(setFAOCountries(faoCountries.data.rows));
-          dispatch(setCountries(gadm36Countries.data.rows));
-          dispatch(setCountriesLoading(false));
-        })
-      )
-      .catch(() => {
-        dispatch(setCountriesLoading(false));
-      });
+    getCategorisedCountries().then((
+      { gadmCountries,  faoCountries, countries }
+    ) => {
+      dispatch(setGadmCountries(gadmCountries));
+      dispatch(setFAOCountries(faoCountries));
+      dispatch(setCountries(countries));
+      dispatch(setCountriesLoading(false));
+    }).catch(() => {
+      dispatch(setCountriesLoading(false));
+    });
   }
 );
 

@@ -44,7 +44,7 @@ const testConfig = [
     spec: {
       test: (sheet) => {
         cy.visit(sheet.visit, {
-          timeout: 100000,
+          timeout: 500000,
           retryOnStatusCodeFailure: true,
         });
         // Agree cookies
@@ -59,4 +59,4 @@ const testConfig = [
 ];
 
 // Title, config, lock = if true, fixtures will be locked even in recording mode
-initSpecFile('OTF spec', testConfig, false);
+initSpecFile('OTF spec', testConfig, true);

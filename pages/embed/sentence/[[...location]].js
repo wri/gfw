@@ -1,13 +1,8 @@
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import uniqBy from 'lodash/uniqBy';
 
-import useRouter from 'utils/router';
-import { decodeQueryParams } from 'utils/url';
 import { parseGadm36Id } from 'utils/gadm';
-import { parseStringWithVars } from 'utils/strings';
 
 import { getLocationData } from 'services/location';
 import {
@@ -18,12 +13,7 @@ import {
   getCountryLinksSerialized,
 } from 'services/country';
 
-import PageLayout from 'wrappers/page';
-import Dashboards from 'layouts/dashboards';
-
-import DashboardsUrlProvider from 'providers/dashboards-url-provider';
-
-import { setCountriesSSR } from 'providers/country-data-provider/actions';
+import LayoutEmbed from 'wrappers/embed';
 
 import {
   getSentenceData,
@@ -31,17 +21,7 @@ import {
   handleSSRLocationObjects,
 } from 'services/sentences';
 
-import { setGeodescriberSSR } from 'providers/geodescriber-provider/actions';
-import { setMapSettings } from 'components/map/actions';
-import { setModalMetaSettings } from 'components/modals/meta/actions';
-import { setDashboardPrompts } from 'components/prompts/dashboard-prompts/actions';
-
-import {
-  setWidgetsSettings,
-  setWidgetsCategory,
-  setShowMap,
-  setActiveWidget,
-} from 'components/widgets/actions';
+import DynamicSentence from 'components/ui/dynamic-sentence';
 
 const notFoundProps = {
   error: 404,
@@ -66,18 +46,17 @@ export const getServerSideProps = async ({ params }) => {
     // get global data
     const data = await getSentenceData();
     const parsedSentence = parseSentence(data);
-    const description = parseStringWithVars(
-      parsedSentence.sentence,
-      parsedSentence.params
-    );
     return {
       props: {
         title: 'Global Deforestation Rates & Statistics by Country | GFW',
         location: params?.location,
+        locationNames: null,
+        locationObj: null,
         globalSentence: parsedSentence,
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
-        description,
+        description:
+          'Explore interactive global tree cover loss charts by country. Analyze global forest data and trends, including land use change, deforestation rates and forest fires.',
       },
     };
   }
@@ -93,11 +72,11 @@ export const getServerSideProps = async ({ params }) => {
     }
 
     const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+    const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
     const noIndex = !['country'].includes(type);
     const [locationType, adm0, lvl1, lvl2] = params?.location;
     const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
     const adm2 = lvl2 ? parseInt(lvl2, 10) : null;
-
     const data = await getSentenceData({
       type: locationType === 'aoi' ? 'country' : locationType,
       adm0,
@@ -144,24 +123,13 @@ export const getServerSideProps = async ({ params }) => {
 
     const parsedSentence = parseSentence(data, locationNames, locationObj);
 
-    const handleSSRLocation = {
-      adm0,
-      adm1,
-      adm2,
-      type: locationType,
-    };
-
-    const description = parseStringWithVars(
-      parsedSentence.sentence,
-      parsedSentence.params
-    );
-
     return {
       props: {
         title,
         description,
+        locationNames,
+        locationObj,
         globalSentence: parsedSentence,
-        handleSSRLocation,
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
         noIndex,
@@ -183,7 +151,7 @@ export const getServerSideProps = async ({ params }) => {
     };
   }
 };
-
+//
 // export const getStaticPaths = async () => {
 //   const countryData = await getCountriesProvider();
 //   const { rows: countries } = countryData?.data || {};
@@ -194,103 +162,79 @@ export const getServerSideProps = async ({ params }) => {
 //   }));
 //
 //   return {
-//     paths: ['/dashboards/global/', ...countryPaths] || [],
+//     paths: ['/embed/sentence/', ...countryPaths] || [],
 //     fallback: true,
 //   };
 // };
 
-const DashboardsPage = (props) => {
-  const dispatch = useDispatch();
-  const [ready, setReady] = useState(false);
-  const { query, asPath, isFallback } = useRouter();
-  const fullPathname = asPath?.split('?')?.[0];
-  const {
-    globalSentence,
-    handleSSRLocation,
-    geodescriber,
-    countryData,
-  } = props;
+const getSentenceClientSide = async (
+  locationNames = null,
+  locationObj = null
+) => {
+  const data = await getSentenceData();
+  let parsedSentence;
+  if (locationNames && locationObj) {
+    parsedSentence = parseSentence(data, locationNames, locationObj);
+  } else {
+    parsedSentence = parseSentence(data);
+  }
+  return parsedSentence;
+};
+
+const SentenceEmbed = (props) => {
+  const { geodescriber, globalSentence, locationNames, locationObj } = props;
+  const [sentence, setSentence] = useState(null);
 
   useEffect(() => {
-    const {
-      map,
-      modalMeta,
-      dashboardPrompts,
-      category,
-      areaOfInterestModal,
-      showMap,
-      widget,
-      ...widgets
-    } = decodeQueryParams(query) || {};
-
-    if (map) {
-      dispatch(setMapSettings(map));
-    }
-
-    if (modalMeta) {
-      dispatch(setModalMetaSettings(modalMeta));
-    }
-
-    if (dashboardPrompts) {
-      dispatch(setDashboardPrompts(dashboardPrompts));
-    }
-
-    if (widgets) {
-      dispatch(setWidgetsSettings(widgets));
-    }
-
-    if (category) {
-      dispatch(setWidgetsCategory(category));
-    }
-
-    if (showMap) {
-      dispatch(setShowMap(showMap));
-    }
-
-    if (widget) {
-      dispatch(setActiveWidget(widget));
-    }
-
-    // SSR Specifics
-    if (geodescriber) {
-      dispatch(setGeodescriberSSR(JSON.parse(geodescriber)));
-    }
-
-    if (countryData) {
-      dispatch(setCountriesSSR(JSON.parse(countryData)));
-    }
-  }, [fullPathname, isFallback]);
-
-  // when setting the query params from the URL we need to make sure we don't render the map
-  // on the server otherwise the DOM will be out of sync
-  useEffect(() => {
-    if (!ready) {
-      setReady(true);
-    }
-  });
+    let mounted = true;
+    getSentenceClientSide(locationNames, locationObj).then((payload) => {
+      if (mounted) {
+        setSentence(payload);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
   return (
-    <PageLayout {...props}>
-      <Head>
-        <link
-          rel="canonical"
-          href={`https://www.globalforestwatch.org${fullPathname}`}
-        />
-      </Head>
-      <DashboardsUrlProvider />
-      <Dashboards
-        ssrLocation={handleSSRLocation}
-        globalSentence={globalSentence}
+    <LayoutEmbed {...props} noIndex>
+      <DynamicSentence
+        className="sentence"
+        testId="sentence"
+        sentence={{
+          ...(!sentence
+            ? {
+                params: {},
+                sentence: 'Loading dynamic sentence...',
+              }
+            : sentence),
+        }}
       />
-    </PageLayout>
+      <DynamicSentence
+        className="sentence"
+        testId="sentence-ssr"
+        sentence={{
+          params: {
+            ...globalSentence.params,
+            SSR: 'SSR Generated:',
+          },
+          sentence: `{SSR} ${globalSentence.sentence}`,
+        }}
+      />
+      <pre data-test="sentence-payload">
+        {JSON.stringify(JSON.parse(geodescriber), null, 2)}
+      </pre>
+    </LayoutEmbed>
   );
 };
 
-DashboardsPage.propTypes = {
+SentenceEmbed.propTypes = {
   title: PropTypes.string,
+  locationNames: PropTypes.object,
+  locationObj: PropTypes.object,
   globalSentence: PropTypes.object,
-  handleSSRLocation: PropTypes.object,
   geodescriber: PropTypes.string,
   countryData: PropTypes.string,
 };
 
-export default DashboardsPage;
+export default SentenceEmbed;

@@ -130,6 +130,7 @@
     "react-final-form": "^6.3.5",
     "react-ga": "^2.7.0",
     "react-html-parser": "2.0.2",
+    "react-intersection-observer": "^8.31.1",
     "react-joyride": "^2.2.1",
     "react-map-gl": "^5.2.7",
     "react-modal": "^3.11.2",

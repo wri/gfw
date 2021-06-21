@@ -9,6 +9,7 @@ const CustomComponent = ({ type }) => {
   };
 
   const Component = customOptions[type];
+
   return (
     <div className="c-custom-component">
       <Component />
