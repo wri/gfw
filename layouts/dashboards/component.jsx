@@ -34,6 +34,7 @@ import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
 import PendingDashboard from './components/pending-dashboard';
+import GlobalSentence from './components/global-sentence';
 
 import './styles.scss';
 
@@ -176,6 +177,7 @@ class DashboardsPage extends PureComponent {
               checkActive
             />
           )}
+          <GlobalSentence />
           {isPendingDashboard && (
             <PendingDashboard
               className="pending-message"

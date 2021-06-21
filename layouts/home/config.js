@@ -7,10 +7,15 @@ import journalists from './assets/journalists.jpg';
 import company from './assets/company.jpg';
 
 import card1 from './assets/card-0.png';
+import card1Webp from './assets/card-0.webp';
 import card2 from './assets/card-1.png';
+import card2Webp from './assets/card-1.webp';
 import card3 from './assets/card-2.png';
+import card3Webp from './assets/card-2.webp';
 import card4 from './assets/card-3.png';
+import card4Webp from './assets/card-3.webp';
 import card5 from './assets/card-4.png';
+import card5Webp from './assets/card-4.webp';
 
 import forestWatcherImage from './assets/forestwatcher@2x.jpg';
 import proImage from './assets/pro-bg@2x.png';
@@ -29,6 +34,7 @@ export default {
         },
       ],
       image: card1,
+      webPImage: card1Webp,
     },
     {
       title: 'Be the first to see new tropical deforestation',
@@ -42,6 +48,7 @@ export default {
         },
       ],
       image: card2,
+      webPImage: card2Webp,
     },
     {
       title: 'Quick global and country stats',
@@ -54,6 +61,7 @@ export default {
         },
       ],
       image: card3,
+      webPImage: card3Webp,
     },
     {
       title: 'Forest insights',
@@ -66,6 +74,7 @@ export default {
         },
       ],
       image: card4,
+      webPImage: card4Webp,
     },
     {
       title: 'A suite of tools',
@@ -78,6 +87,7 @@ export default {
         },
       ],
       image: card5,
+      webPImage: card5Webp,
     },
   ],
   uses: [
