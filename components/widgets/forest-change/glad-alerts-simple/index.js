@@ -98,11 +98,13 @@ export default {
     const { GLAD } = params.GFW_META.datasets;
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
+    const startDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
     if (shouldQueryPrecomputedTables(params)) {
       return fetchGladAlertsSum({
         ...params,
-        startDate: defaultStartDate,
-        endDate: defaultEndDate,
+        startDate,
+        endDate,
       }).then((alerts) => {
         const gladsData = alerts && alerts.data.data;
         let data = {};
@@ -110,8 +112,8 @@ export default {
           data = {
             alerts: gladsData,
             settings: {
-              startDate: defaultStartDate,
-              endDate: defaultEndDate,
+              startDate,
+              endDate,
             },
             options: {
               minDate: '2015-01-01',
