@@ -81,6 +81,7 @@ class WidgetContainer extends Component {
         downloadDisabled: subKey
           ? sumBy(data[key], subKey) > maxSize
           : sumBy(data, key) > maxSize,
+        maxSize,
       };
     }
     return { downloadDisabled: false, maxSize };

@@ -103,9 +103,9 @@ class WidgetHeader extends PureComponent {
                 }
                 disabledMessage={
                   disableDownload
-                    ? `Reduce the number of alerts to less than ${format(',')(
-                        maxSize
-                      )} to download`
+                    ? `Reduce the total number of alerts to less than ${format(
+                        ','
+                      )(maxSize)} to download`
                     : null
                 }
                 {...this.props}
