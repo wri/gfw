@@ -18,7 +18,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-export default {
+const defaultConfig = {
   ...firesAlertsStats,
   widget: 'burnedAreaStats',
   title: 'Weekly Burned Area in {location}',
@@ -115,3 +115,15 @@ export default {
   getDataURL: (params) => [fetchBurnedArea({ ...params, download: true })],
   getWidgetProps,
 };
+
+export default {
+  widget: 'burnedAreaStats',
+  proxy: true,
+  initialWidget: defaultConfig,
+  refetchKeys: ['dataset'],
+  getWidget: ({ dataset }) => { // called when settings changes
+    if (dataset === 'modis_burned_area') return defaultConfig;
+    if (dataset === 'modis') return firesAlertsStats;
+    return defaultConfig;
+  },
+}

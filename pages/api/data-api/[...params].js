@@ -21,7 +21,6 @@ export default async function userHandler(req, res) {
     try {
       const queryString = ObjectToQueryString(queryParams);
       const URL = `${GFW_API_URL}/${params.join('/')}${queryString}`;
-
       const apiData = await axios.get(URL, {
         headers: {
           'content-type': 'application/json',

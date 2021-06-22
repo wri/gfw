@@ -23,6 +23,7 @@ class Widgets extends PureComponent {
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
     setWidgetSettings: PropTypes.func.isRequired,
+    setProxyWidget: PropTypes.func.isRequired,
     setWidgetInteractionByKey: PropTypes.func.isRequired,
     setActiveWidget: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func.isRequired,
@@ -35,6 +36,14 @@ class Widgets extends PureComponent {
     noDataMessage: PropTypes.string,
     geostore: PropTypes.object,
   };
+
+  handleChangeProxy(w, change) {
+    const { setProxyWidget } = this.props;
+    if (Object.keys(change).some(r => w.proxyOn.indexOf(r) >= 0) && w.getWidget) {
+      const proxy = w.getWidget(change);
+      setProxyWidget({ proxy: proxy.widget });
+    }
+  }
 
   render() {
     const {
@@ -90,6 +99,10 @@ class Widgets extends PureComponent {
                   payload,
                 })}
               handleChangeSettings={(change) => {
+                if (w.proxy) {
+                  this.handleChangeProxy(w, change);
+                  return;
+                }
                 setWidgetSettings({
                   widget: w.widget,
                   change: {

@@ -17,6 +17,12 @@ const isServer = typeof window === 'undefined';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
+  baseURL: GFW_API_URL,
+  ...(ENVIRONMENT === 'staging' && {
+    headers: {
+      'x-api-key': process.env.NEXT_PUBLIC_DATA_API_KEY,
+    }
+  })
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 

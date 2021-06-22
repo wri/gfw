@@ -199,7 +199,7 @@ export const getLegend = createSelector(
         label: `${moment(first.date).format('MMM YYYY')}–${moment(
           end.date
         ).format('MMM YYYY')}`,
-        color: colors.main,
+        color: colors?.main,
       },
       ...(compareYear && {
         compare: {
@@ -245,7 +245,7 @@ export const parseConfig = createSelector(
         labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ` MODIS burned area`,
-        color: colors.main,
+        color: colors?.main,
         unitFormat: (value) => `${format('.3s')(value)}ha`,
       },
     ];

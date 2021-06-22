@@ -42,6 +42,7 @@ import {
   setShowMap,
   setActiveWidget,
 } from 'components/widgets/actions';
+import { getUrlParams } from '~/providers/dashboards-url-provider/selectors';
 
 const notFoundProps = {
   error: 404,

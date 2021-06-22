@@ -43,6 +43,36 @@ const buildLocationDict = (locations) =>
     )) ||
   {};
 
+
+const handleWidgetProxy = raw => {
+  if (raw?.proxy) {
+    return {
+      ...raw.initialWidget,
+      getWidget: raw.getWidget,
+      proxyOn: raw.refetchKeys,
+      proxy: true,
+      refetchKeys: [
+        ...raw.refetchKeys,
+        ...raw.initialWidget.refetchKeys
+      ]
+    };
+  }
+  return raw;
+}
+
+const handleProxyColors = raw => {
+  const w = raw.initialWidget;
+  return {
+    ...raw,
+    ...(w.colors && {
+      initialWidget: {
+        ...w,
+        colors: colors[w.colors],
+      }
+    })
+  }
+}
+
 export const selectLocation = (state) =>
   state.location && state.location.payload;
 export const selectIsTrase = (state) => state.location?.query?.trase;
@@ -221,12 +251,16 @@ export const filterWidgetsByLocation = createSelector(
       ...(w.colors && {
         colors: colors[w.colors],
       }),
+      ...(w.proxy && {
+        ...handleProxyColors(w)
+      })
     }));
 
     if (embed && widget) return widgets.filter((w) => w.widget === widget);
     const layerIds = layers && layers.map((l) => l.id);
 
-    return widgets.filter((w) => {
+    return widgets.filter((rawWidget) => {
+      const w = handleWidgetProxy(rawWidget);
       const {
         types,
         admins,
@@ -316,7 +350,10 @@ export const filterWidgetsByLocation = createSelector(
 
 export const getWidgetCategories = createSelector(
   [filterWidgetsByLocation],
-  (widgets) => flatMap(widgets.map((w) => w.categories))
+  (widgets) => flatMap(widgets.map((rawWidget) => {
+    const w = handleWidgetProxy(rawWidget);
+    return w.categories
+  }))
 );
 
 export const getActiveCategory = createSelector(
@@ -341,14 +378,20 @@ export const filterWidgetsByCategory = createSelector(
   (widgets, category, showAnalysis, embed, widget) => {
     if (isEmpty(widgets)) return null;
 
-    if (embed && widget) return widgets.filter((w) => w.widget === widget);
+    if (embed && widget) return widgets.filter((rawWidget) => {
+      const w = handleWidgetProxy(rawWidget);
+      return w.widget === widget;
+    });
 
     if (showAnalysis) {
       return sortBy(widgets, 'sortOrder.summary');
     }
 
     return sortBy(
-      widgets.filter((w) => w.categories.includes(category)),
+      widgets.filter((rawWidget) => {
+        const w = handleWidgetProxy(rawWidget);
+        return w.categories.includes(category)
+      }),
       `sortOrder[${camelCase(category)}]`
     );
   }
@@ -392,7 +435,8 @@ export const getWidgets = createSelector(
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
 
-    return widgets.map((w, index) => {
+    return widgets.map((rawWidget, index) => {
+      const w = handleWidgetProxy(rawWidget);
       const {
         settings: defaultSettings,
         widget,
