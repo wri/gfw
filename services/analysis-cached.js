@@ -7,6 +7,8 @@ import moment from 'moment';
 
 import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 
+const isServer = typeof window === 'undefined';
+
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
@@ -146,7 +148,8 @@ const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
     // return null;
   }
 
-  return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
+  const endpoint = isServer ? GFW_API : '/api/gfw-api';
+  return `${endpoint}/dataset/${datasetId}/latest/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {

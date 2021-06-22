@@ -1,4 +1,4 @@
-import { apiRequest } from 'utils/request';
+import { apiRequest, dataProgressRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
@@ -57,7 +57,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   }
 
   return apiRequest
-    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
+    .get(`/api/gfw-api/${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data?.data || {};
 
@@ -70,7 +70,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) =>
-  apiRequest({
+  dataProgressRequest({
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     data: {

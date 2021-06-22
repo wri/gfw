@@ -18,13 +18,19 @@ const isServer = typeof window === 'undefined';
 
 export const apiRequest = create({
   timeout: 30 * 1000,
+  baseURL: isServer ? GFW_API_URL : undefined,
+  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+});
+
+export const dataProgressRequest = create({
+  timeout: 30 * 1000,
   baseURL: GFW_API_URL,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const dataRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_DATA_API,
+  baseURL: isServer ? GFW_API_URL : null,
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
