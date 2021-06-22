@@ -4,6 +4,8 @@ import moment from 'moment';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
+import burnedAreaStats from 'components/widgets/fires/burned-area';
+
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FIRES_VIIRS_DATASET,
@@ -16,7 +18,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-export default {
+const defaultConfig = {
   widget: 'firesAlertsStats',
   title: 'Weekly Fire Alerts in {location}',
   large: true,
@@ -340,4 +342,18 @@ export default {
     ),
   getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
   getWidgetProps,
+};
+
+export default {
+  widget: 'fireAlertStats',
+  proxy: true,
+  refetchKeys: ['dataset'],
+  getWidget: (props) => {
+    // called when settings changes
+    if (!props || !props.dataset) return defaultConfig;
+    if (props.dataset === 'modis_burned_area') return defaultConfig;
+    if (props.dataset === 'modis' || props.dataset === 'viirs')
+      return burnedAreaStats;
+    return defaultConfig;
+  },
 };

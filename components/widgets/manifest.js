@@ -19,13 +19,13 @@ import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import firesOTF from 'components/widgets/fires/fires';
 import firesWithin from 'components/widgets/fires/fires-within';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
-import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
-import burnedArea from 'components/widgets/fires/burned-area';
+// import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
+// import burnedArea from 'components/widgets/fires/burned-area';
 import burnedAreaCumulative from 'components/widgets/fires/burned-area-cumulative';
 import burnedAreaRanked from 'components/widgets/fires/burned-area-ranked';
 import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical-weekly';
 import firesAlertsHistoricalDaily from 'components/widgets/fires/fires-alerts-historical-daily';
-import firesRanked from 'components/widgets/fires/fires-ranked';
+// import firesRanked from 'components/widgets/fires/fires-ranked';
 
 // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -74,12 +74,12 @@ export default {
   // fires
   firesWithin,
   firesAlerts,
-  firesAlertsCumulative,
-  burnedArea,
+  // firesAlertsCumulative,
+  // burnedArea,
   burnedAreaCumulative,
   burnedAreaRanked,
   firesAlertsHistorical,
-  firesRanked,
+  // firesRanked,
   firesAlertsHistoricalDaily,
   firesOTF,
 
