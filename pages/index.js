@@ -1,4 +1,6 @@
 import PageLayout from 'wrappers/page';
+import SeoSearchBox from 'wrappers/seo/searchBox';
+
 import Home from 'layouts/home';
 
 import { getNewsArticles } from 'services/news';
@@ -8,6 +10,10 @@ const HomePage = (props) => (
     title="Forest Monitoring, Land Use & Deforestation Trends | Global Forest Watch"
     description="Global Forest Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
   >
+    <SeoSearchBox
+      title="Forest Monitoring, Land Use & Deforestation Trends | Global Forest Watch"
+      description="Global Forest Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
+    />
     <Home {...props} />
   </PageLayout>
 );
