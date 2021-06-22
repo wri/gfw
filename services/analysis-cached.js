@@ -164,9 +164,7 @@ const getRequestUrl = ({
     // @TODO: Figure out why widgets are stale on loading, when not requesting info
     // return null;
   }
-  return `${GFW_API}/dataset/${datasetId}/${
-    version || 'latest'
-  }/query?sql=`;
+  return `${GFW_API}/dataset/${datasetId}/${version || 'latest'}/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {
@@ -1021,7 +1019,6 @@ export const fetchBurnedArea = (params) => {
       ...params,
       dataset,
       datasetType: 'weekly',
-      version: 'v20210609',
     })}${SQL_QUERIES.burnedAreas}`
       .replace(
         /{select_location}/g,
@@ -1058,7 +1055,6 @@ export const fetchBurnedAreaGrouped = (params) => {
     ...params,
     datasetType: 'weekly',
     grouped: true,
-    version: 'v20210609',
   });
 
   if (!requestUrl) {
