@@ -44,33 +44,24 @@ const buildLocationDict = (locations) =>
   {};
 
 
-const handleWidgetProxy = raw => {
+const handleWidgetProxy = (raw, settings) => {
   if (raw?.proxy) {
+    const currentSettings = settings[raw.widget];
+    const useWidget = raw.getWidget(currentSettings);
     return {
-      ...raw.initialWidget,
-      getWidget: raw.getWidget,
+      ...useWidget,
+      ...raw,
       proxyOn: raw.refetchKeys,
-      proxy: true,
+      ...(useWidget.colors && {
+        colors: colors[useWidget.colors]
+      }),
       refetchKeys: [
         ...raw.refetchKeys,
-        ...raw.initialWidget.refetchKeys
+        ...useWidget.refetchKeys
       ]
     };
   }
   return raw;
-}
-
-const handleProxyColors = raw => {
-  const w = raw.initialWidget;
-  return {
-    ...raw,
-    ...(w.colors && {
-      initialWidget: {
-        ...w,
-        colors: colors[w.colors],
-      }
-    })
-  }
 }
 
 export const selectLocation = (state) =>
@@ -234,6 +225,7 @@ export const filterWidgetsByLocation = createSelector(
     selectActiveWidget,
     getActiveLayersWithDates,
     selectAnalysis,
+    selectWidgetSettings,
   ],
   (
     location,
@@ -242,7 +234,8 @@ export const filterWidgetsByLocation = createSelector(
     embed,
     widget,
     layers,
-    showAnalysis
+    showAnalysis,
+    settings
   ) => {
     const { adminLevel, type, areaId } = location;
 
@@ -250,9 +243,6 @@ export const filterWidgetsByLocation = createSelector(
       ...w,
       ...(w.colors && {
         colors: colors[w.colors],
-      }),
-      ...(w.proxy && {
-        ...handleProxyColors(w)
       })
     }));
 
@@ -260,7 +250,7 @@ export const filterWidgetsByLocation = createSelector(
     const layerIds = layers && layers.map((l) => l.id);
 
     return widgets.filter((rawWidget) => {
-      const w = handleWidgetProxy(rawWidget);
+      const w = handleWidgetProxy(rawWidget, settings);
       const {
         types,
         admins,
@@ -349,9 +339,9 @@ export const filterWidgetsByLocation = createSelector(
 );
 
 export const getWidgetCategories = createSelector(
-  [filterWidgetsByLocation],
-  (widgets) => flatMap(widgets.map((rawWidget) => {
-    const w = handleWidgetProxy(rawWidget);
+  [filterWidgetsByLocation, selectWidgetSettings],
+  (widgets, settings) => flatMap(widgets.map((rawWidget) => {
+    const w = handleWidgetProxy(rawWidget, settings);
     return w.categories
   }))
 );
@@ -374,12 +364,13 @@ export const filterWidgetsByCategory = createSelector(
     selectAnalysis,
     selectEmbed,
     selectActiveWidget,
+    selectWidgetSettings,
   ],
-  (widgets, category, showAnalysis, embed, widget) => {
+  (widgets, category, showAnalysis, embed, widget, settings) => {
     if (isEmpty(widgets)) return null;
 
     if (embed && widget) return widgets.filter((rawWidget) => {
-      const w = handleWidgetProxy(rawWidget);
+      const w = handleWidgetProxy(rawWidget, settings);
       return w.widget === widget;
     });
 
@@ -389,7 +380,7 @@ export const filterWidgetsByCategory = createSelector(
 
     return sortBy(
       widgets.filter((rawWidget) => {
-        const w = handleWidgetProxy(rawWidget);
+        const w = handleWidgetProxy(rawWidget, settings);
         return w.categories.includes(category)
       }),
       `sortOrder[${camelCase(category)}]`
@@ -436,7 +427,7 @@ export const getWidgets = createSelector(
     const { polynamesWhitelist, status } = locationData || {};
 
     return widgets.map((rawWidget, index) => {
-      const w = handleWidgetProxy(rawWidget);
+      const w = handleWidgetProxy(rawWidget, widgetSettings);
       const {
         settings: defaultSettings,
         widget,

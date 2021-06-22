@@ -28,13 +28,6 @@ const setActiveWidget = (state, { payload }) => ({
   showMap: true,
 });
 
-const setProxyWidget = (state, { payload }) => {
-  return {
-    ...state,
-    activeWidget: payload.proxy,
-    showMap: true,
-  };
-}
 
 const setShowMap = (state, { payload }) => ({
   ...state,
@@ -81,7 +74,6 @@ const setWidgetsLoading = (state, { payload }) => ({
 });
 
 export default {
-  [actions.setProxyWidget]: setProxyWidget,
   [actions.setWidgetsData]: setWidgetsData,
   [actions.setShowMap]: setShowMap,
   [actions.setWidgetsCategory]: setWidgetsCategory,

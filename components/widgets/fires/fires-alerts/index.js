@@ -316,7 +316,6 @@ export default {
         const years = uniq(data.map((d) => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
-
         return (
           {
             alerts: data,

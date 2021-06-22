@@ -12,7 +12,6 @@ export const setWidgetInteractionByKey = createAction(
   'setWidgetInteractionByKey'
 );
 export const setWidgetsSettings = createAction('setWidgetsSettings');
-export const setProxyWidget = createAction('setProxyWidget');
 export const setActiveWidget = createAction('setActiveWidget');
 export const setShowMap = createAction('setShowMap');
 export const setWidgetsLoading = createAction('setWidgetsLoading');

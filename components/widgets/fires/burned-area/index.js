@@ -119,11 +119,11 @@ const defaultConfig = {
 export default {
   widget: 'burnedAreaStats',
   proxy: true,
-  initialWidget: defaultConfig,
   refetchKeys: ['dataset'],
-  getWidget: ({ dataset }) => { // called when settings changes
-    if (dataset === 'modis_burned_area') return defaultConfig;
-    if (dataset === 'modis') return firesAlertsStats;
+  getWidget: (props) => { // called when settings changes
+    if (!props || !props.dataset) return defaultConfig;
+    if (props.dataset === 'modis_burned_area') return defaultConfig;
+    if (props.dataset === 'modis') return firesAlertsStats;
     return defaultConfig;
   },
 }
