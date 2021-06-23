@@ -11,10 +11,9 @@ import plusIcon from 'assets/icons/plus.svg?sprite';
 import minusIcon from 'assets/icons/minus.svg?sprite';
 import shareIcon from 'assets/icons/share.svg?sprite';
 import fullscreenIcon from 'assets/icons/fit-zoom.svg?sprite';
-import printIcon from 'assets/icons/print.svg?sprite';
 import helpIocn from 'assets/icons/help.svg?sprite';
 import searchIcon from 'assets/icons/search.svg?sprite';
-import globeIcon from 'assets/icons/globe.svg?sprite';
+import settingsIcon from 'assets/icons/settings.svg?sprite';
 import satelliteIcon from 'assets/icons/satellite.svg?sprite';
 
 import Basemaps from 'components/basemaps';
@@ -167,43 +166,6 @@ class MapControlsButtons extends PureComponent {
     );
   };
 
-  renderBasemapsBtn = () => {
-    const { showBasemaps, activeBasemap } = this.props;
-
-    return (
-      <Button
-        className={cx('map-control wide', 'map-tool-btn basemaps-btn', {
-          active: showBasemaps,
-        })}
-        theme="theme-button-map-control"
-        onClick={this.toggleBasemaps}
-        tooltip={
-          !showBasemaps
-            ? { text: 'Map Settings', hideOnClick: false }
-            : undefined
-        }
-      >
-        {activeBasemap ? (
-          <div className="basemaps-btn-content">
-            <img
-              className="basemaps-btn-img"
-              src={activeBasemap.image}
-              alt={activeBasemap.value}
-            />
-            <div className="basemaps-btn-label-wrapper">
-              <span className="basemaps-btn-label">{activeBasemap.label}</span>
-            </div>
-          </div>
-        ) : (
-          <Icon
-            icon={globeIcon}
-            className={cx('globe-icon', { '-active': showBasemaps })}
-          />
-        )}
-      </Button>
-    );
-  };
-
   renderRecentImageryTooltip = () => {
     const { showRecentImagery, setMainMapSettings } = this.props;
 
@@ -241,7 +203,6 @@ class MapControlsButtons extends PureComponent {
         position="top-end"
         useContext
         interactive
-        arrow
         animateFill={false}
         open={showBasemaps}
         onRequestClose={this.onBasemapsRequestClose}
@@ -253,9 +214,7 @@ class MapControlsButtons extends PureComponent {
             isDesktop={this.props.isDesktop}
           />
         )}
-      >
-        {this.renderBasemapsBtn()}
-      </Tooltip>
+      />
     );
   };
 
@@ -366,22 +325,41 @@ class MapControlsButtons extends PureComponent {
     );
   }
 
-  renderPrintButton = () => (
-    <Button
-      className="map-control"
-      theme="theme-button-map-control"
-      tooltip={{ text: 'Print (not yet available)' }}
-      onClick={() =>
-        trackEvent({
-          category: 'Map settings',
-          action: 'Other buttons',
-          label: 'Print map',
-        })}
-      disabled
-    >
-      <Icon icon={printIcon} className="print-icon" />
-    </Button>
-  );
+  // <Tooltip
+  //       className="basemaps-tooltip"
+  //       theme="light"
+  //       position="top-end"
+  //       useContext
+  //       interactive
+  //       arrow
+  //       animateFill={false}
+  //       open={showBasemaps}
+  //       onRequestClose={this.onBasemapsRequestClose}
+  //       html={(
+  //         <Basemaps
+  //           className="basemaps-panel"
+  //           onClose={this.toggleBasemaps}
+  //           ref={this.setBasemapsRef}
+  //           isDesktop={this.props.isDesktop}
+  //         />
+  //       )}
+  //     />
+
+  renderMapOptions() {
+    return (
+      <Button
+        className="map-control"
+        theme="theme-button-map-control"
+        tooltip={{ text: 'Map settings' }}
+        useContext
+        interactive
+        onClick={this.toggleBasemaps}
+        onRequestClose={this.onBasemapsRequestClose}
+      >
+        <Icon icon={settingsIcon} className="settings-icon" />
+      </Button>
+    );
+  }
 
   renderMapTourBtn = () => (
     <Button
@@ -420,7 +398,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   render() {
-    const { className, isDesktop, hidePanels } = this.props;
+    const { className, isDesktop, showBasemaps, hidePanels } = this.props;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
@@ -434,7 +412,7 @@ class MapControlsButtons extends PureComponent {
                 {this.renderZoomButtons()}
                 {this.renderShowPanelsButton()}
                 {this.renderShareButton()}
-                {this.renderPrintButton()}
+                {this.renderMapOptions(showBasemaps)}
                 {this.renderMapTourBtn()}
               </div>
               {this.renderMapPosition()}
@@ -474,7 +452,6 @@ MapControlsButtons.propTypes = {
   datasets: PropTypes.array,
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
-  activeBasemap: PropTypes.object,
   metaModalOpen: PropTypes.bool,
 };
 
