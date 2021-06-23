@@ -69,7 +69,7 @@ export default {
     defaultYear: 2017,
   },
   recentImagery: {
-    label: 'Recent satellite imagery',
+    label: 'landsat 8 / sentinel 2',
     description:
       'Latest satellite imagery available from Sentinel-2 and Landsat 8',
     value: 'recentImagery',
