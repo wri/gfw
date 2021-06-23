@@ -33,12 +33,17 @@ $summary-color: #aaa;
 
   .image {
     height: rem(220px);
+    display: flex;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
     z-index: 2;
     width: 100%;
+
+    img {
+      object-fit: cover;
+    }
   }
 
   .body {

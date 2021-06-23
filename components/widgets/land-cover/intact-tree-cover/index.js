@@ -100,9 +100,9 @@ export default {
         let extent = 0;
         let data = {};
         if (iflExtent.length && adminExtent.length) {
-          totalArea = adminExtent[0].total_area;
-          totalExtent = adminExtent[0].extent;
-          extent = iflExtent[0].extent;
+          totalArea = adminExtent.reduce((total, d) => total + d.total_area, 0);
+          totalExtent = adminExtent.reduce((total, d) => total + d.extent, 0);
+          extent = iflExtent.reduce((total, d) => total + d.extent, 0);
           data = {
             totalArea,
             totalExtent,
