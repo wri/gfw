@@ -28,7 +28,7 @@ export default {
   },
   planet: {
     label: 'Planet',
-    description: 'Monthly high resolution basemaps (tropics).',
+    description: 'Monthly high resolution basemaps (tropics)',
     value: 'planet',
     color: '#131620',
     baseStyle: false,
@@ -41,7 +41,7 @@ export default {
   },
   satellite: {
     label: 'google',
-    description: 'Highest resolution imagery 1-3 years old (global).',
+    description: 'Highest resolution imagery 1-3 years old (global)',
     value: 'satellite',
     color: '#131620',
     baseStyle: false,
@@ -54,7 +54,7 @@ export default {
   },
   landsat: {
     label: 'landsat',
-    description: 'Coarse resolution imagery (global).',
+    description: 'Coarse resolution imagery (global)',
     value: 'landsat',
     color: '#0C0045',
     baseStyle: false,
