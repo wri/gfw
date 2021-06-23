@@ -26,7 +26,8 @@ const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
 const getAdm1 = (state) => state.adm1;
 const getLocation = (state) => state.location || null;
-const getLocationsMeta = (state) => state.childData;
+const getLocationsMeta = (state) =>
+  state.adm0 ? state.locationData : state.childData;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
@@ -101,7 +102,7 @@ export const getStatsByAdmin = createSelector(
 export const parseList = createSelector(
   [getStatsByAdmin, getAreas, getLocationsMeta, getLocation, getAdm1],
   (data, areas, meta, location, adm1) => {
-    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
+    if (isEmpty(data) || isEmpty(areas)) {
       return null;
     }
     // Now we have partial data, we iterate through and calculate
@@ -131,9 +132,10 @@ export const parseList = createSelector(
         path: (region && region.path) || '',
       };
     });
-    return matchKey === 'iso'
-      ? mappedData.filter((d) => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
-      : mappedData;
+    const filteredData = mappedData.filter((d) => d.label);
+    return matchKey === 'iso' && location.value !== 'global'
+      ? filteredData.filter((d) => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
+      : filteredData;
   }
 );
 
@@ -157,8 +159,7 @@ export const parseData = createSelector(
           ? b.stdDev
           : minValue + (b.limit * (maxValue - minValue)) / 100,
     }));
-
-    return sortBy(
+    const sortedData = sortBy(
       data.map((d) => ({
         ...d,
         value: d[value], // value === 'density' ? d[value] : d.counts,
@@ -167,6 +168,7 @@ export const parseData = createSelector(
       })),
       value
     ).reverse();
+    return sortedData;
   }
 );
 
