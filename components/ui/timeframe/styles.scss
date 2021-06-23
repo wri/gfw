@@ -26,19 +26,21 @@
 
   button {
     position: absolute;
-    height: 100%;
     border: none;
-    background: $grey-light;
     z-index: 3;
     cursor: pointer;
+    height: 30px;
+    background: $grey-light;
 
     &.prev {
       left: 0;
+      padding-bottom: 10px;
       transform: rotate(180deg);
     }
 
     &.next {
       right: 0;
+      padding-top: 10px;
     }
   }
 
@@ -101,7 +103,6 @@
         width: 12px;
         height: 12px;
       }
-
     }
   }
 
@@ -125,9 +126,11 @@
     box-shadow: none;
     left: 50%;
     transform: translateX(-50%);
+
     &.x-start {
       right: 0;
     }
+
     &.x-end {
       left: unset;
       transform: translateX(0);
@@ -135,4 +138,3 @@
     }
   }
 }
-

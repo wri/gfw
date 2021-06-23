@@ -40,7 +40,10 @@ const getVisibleLabels = (bound, tiles) => {
     }
   });
   if (matches.length) {
-    return [parseInt(matches[0], 10), parseInt(matches[matches.length - 1], 10)];
+    return [
+      parseInt(matches[0], 10),
+      parseInt(matches[matches.length - 1], 10),
+    ];
   }
   return [0, 0];
 };
@@ -89,7 +92,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
           timeline.tileWidth,
           data.length,
           ref,
-          tileRefs,
+          tileRefs
         );
         setOffset(initialOffset);
         setInitialized(true);
@@ -97,7 +100,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
       return () => clearTimeout(timeout);
     }
     return () => {};
-  }, [timeline, initialized])
+  }, [timeline, initialized]);
 
   useEffect(() => {
     if (ref.current) {
@@ -109,7 +112,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
           );
           setLabels(visibleLabels);
         }
-      }, 10);
+      }, 1000);
       return () => clearTimeout(timeout);
     }
     return () => {};
@@ -157,14 +160,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
     onChange(data[index]);
   }
 
-  return [
-    timeline,
-    activeIndex,
-    offset,
-    labels,
-    setSelected,
-    moveTimeline,
-  ];
+  return [timeline, activeIndex, offset, labels, setSelected, moveTimeline];
 }
 
 export default useTimeline;

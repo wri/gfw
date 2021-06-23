@@ -28,18 +28,18 @@ const TimeSlider = ({
     offset,
     labels,
     setSelected,
-    moveTimeline
+    moveTimeline,
   ] = useTimeline(ref, tileRefs, periods, selected, dotSize, onChange);
 
   const [styles, setAnim] = useSpring(() => ({
-    from: { transform: `translateX(0px)` }
+    from: { transform: `translateX(0px)` },
   }));
 
   useEffect(() => {
     if (offset !== null) {
       setAnim({
         transform: `translateX(${-Math.abs(offset)}px)`,
-        immediate: !initialized || previousOffset === 0
+        immediate: !initialized || previousOffset === 0,
       });
       setInitialized(true);
       setPreviousOffset(offset);
@@ -89,7 +89,9 @@ const TimeSlider = ({
                   role="button"
                   tabIndex={0}
                   area-label="Select timeframe"
-                  className={`timeline-position ${activeIndex === i ? 'active' : ''}`}
+                  className={`timeline-position ${
+                    activeIndex === i ? 'active' : ''
+                  }`}
                   onClick={() => {
                     setSelected(i);
                   }}
@@ -107,17 +109,13 @@ const TimeSlider = ({
                   >
                     <span className="tooltip-item" />
                   </Tooltip>
-                  {activeIndex === i && (
-                    <span
-                      className={
-                        `label
-                        ${i === 0 ? 'x-start' : ''}
-                        ${i === periods.length - 1 ? 'x-end' : ''}`
-                      }
-                    >
-                      {d.label}
-                    </span>
-                  )}
+                  <span
+                    className={`label
+                      ${i === 0 ? 'x-start' : ''}
+                      ${i === periods.length - 1 ? 'x-end' : ''}`}
+                  >
+                    {d.label}
+                  </span>
                 </span>
               </li>
             ))}

@@ -20,7 +20,6 @@ const selectPlanetBasemaps = (state) => {
 const cleanPlanetDate = (dateStr) =>
   new Date(dateStr.substring(0, 10).replace(/-/g, '/'));
 
-
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   (planetBasemaps) => {
@@ -43,10 +42,7 @@ export const getPlanetBasemaps = createSelector(
         const label =
           monthDiff === 1
             ? `${format(startDate, 'MMM')}`
-            : `${format(startDate, 'MMM')} - ${format(
-                endDate,
-                'MMM'
-              )}`;
+            : `${format(startDate, 'MMM')}/${format(endDate, 'MMM')}`;
 
         return {
           name,
