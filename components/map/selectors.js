@@ -24,6 +24,7 @@ const selectMapData = (state) => state.map && state.map.data;
 const selectDatasets = (state) => state.datasets && state.datasets.data;
 const selectLatest = (state) => state.latest && state.latest.data;
 export const selectGeostore = (state) => state.geostore && state.geostore.data;
+const getLocation = (state) => state.location;
 const selectLocation = (state) => state.location && state.location.payload;
 
 // CONSTS
@@ -69,12 +70,21 @@ export const getBasemapFromState = createSelector(
 );
 
 export const getBasemap = createSelector(
-  [getBasemapFromState, getBasemaps],
-  (basemapState) => {
-    const basemap = {
+  [getBasemapFromState, getLocation],
+  (basemapState, location) => {
+    const isDashboard = location.pathname.includes('/dashboards/');
+
+    let basemap = {
       ...basemaps[basemapState?.value],
       ...basemapState,
     };
+
+    if (isDashboard && basemapState.value !== 'default') {
+      if (basemapState.value !== 'planet') {
+        basemap = basemaps.default;
+      }
+    }
+
     let url = basemap && basemap.url;
     if (url) {
       Object.keys(basemap).forEach((key) => {

@@ -8,29 +8,42 @@ import { getPeriodOptions } from './settings/planet-menu/selectors';
 
 import { getSelectedYear } from './settings/landsat-menu/selectors';
 
-export const getDynoBasemaps = createSelector([getBasemaps], (basemaps) => {
-  const out = [];
-  Object.keys(basemaps).forEach((key) => {
-    if (!basemaps[key].baseStyle) {
-      out.push(basemaps[key]);
-    }
-  });
-  return out;
-});
+const getLocation = (state) => state.location && state.location;
+
+export const getDynoBasemaps = createSelector(
+  [getLocation, getBasemaps],
+  (location, basemaps) => {
+    const isDashboard = location.pathname.includes('/dashboards/');
+    const out = [];
+    Object.keys(basemaps).forEach((key) => {
+      if (isDashboard && key !== 'planet') return;
+      if (!basemaps[key].baseStyle) {
+        out.push(basemaps[key]);
+      }
+    });
+    return out;
+  }
+);
 
 export const getActiveDynoBasemap = createSelector(
-  [getDynoBasemaps, getBasemap],
-  (basemaps, activeBasemap) => {
+  [getLocation, getDynoBasemaps, getBasemap],
+  (location, basemaps, activeBasemap) => {
+    const isDashboard = location.pathname.includes('/dashboards/');
     if (!basemaps || !activeBasemap) {
       return null;
     }
 
-    const defaultBasemap = find(basemaps, { label: 'Planet' });
-    const dynoBasemap = find(basemaps, { label: activeBasemap.label });
+    const defaultBasemap = find(basemaps, { value: 'planet' });
+
+    const dynoBasemap = find(basemaps, { value: activeBasemap.value });
 
     if (dynoBasemap) {
       return {
         ...dynoBasemap,
+        ...(isDashboard &&
+          dynoBasemap.value !== 'planet' && {
+            ...defaultBasemap,
+          }),
         active: true,
       };
     }
@@ -45,7 +58,6 @@ export const getActiveDynoBasemap = createSelector(
     return null;
   }
 );
-
 
 export const getBasemapProps = createStructuredSelector({
   activeBasemap: getActiveDynoBasemap,

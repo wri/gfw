@@ -27,6 +27,7 @@ const SatelliteBasemaps = ({
   const toggleOpen = () => setOpen(!open);
 
   const handleToggleActive = () => {
+    setOpen(!activeBasemap.active);
     setMapBasemap({
       value: activeBasemap.active ? 'default' : activeBasemap.value,
       ...(activeBasemap.value === 'planet' && {
