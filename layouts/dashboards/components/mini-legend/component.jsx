@@ -11,15 +11,30 @@ import Tip from 'components/ui/tip';
 import SatelliteBasemaps from 'components/satellite-basemaps';
 
 import linkIcon from 'assets/icons/link.svg?sprite';
+
+import { LegendItemButtonOpacity, Icons } from 'vizzuality-components';
+
 import './styles.scss';
 
 class MiniLegend extends PureComponent {
+  handleOpacity(layer, opacity) {
+    const { datasets, setMapSettings } = this.props;
+    setMapSettings({
+      datasets: datasets.map((dataset) => {
+        if (dataset.dataset === layer.dataset) {
+          return { ...dataset, opacity };
+        }
+        return dataset;
+      }),
+    });
+  }
+
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { layers, activeDatasets, setMainMapView, className } = this.props;
-
     return layers && layers.length ? (
       <div className={cx('c-mini-legend', className)}>
+        <Icons />
         <div className="mini-legend-items">
           <ul className="mini-legend-layers">
             {layers.map((l) => {
@@ -49,6 +64,25 @@ class MiniLegend extends PureComponent {
                       </p>
                     )}
                   </div>
+                  <LegendItemButtonOpacity
+                    className="-plain"
+                    activeLayer={l}
+                    defaultStyle={{ fill: 'rgb(153, 153, 153)' }}
+                    focusStyle={{ fill: 'rgb(153, 153, 153)' }}
+                    enabledStyle={{ fill: l.color }}
+                    disabledStyle={{ fill: 'rgb(153, 153, 153)' }}
+                    handleStyle={{
+                      backgroundColor: '#fff',
+                      borderRadius: '4px',
+                      border: 0,
+                      boxShadow: 'rgba(0, 0, 0, 0.29) 0px 1px 2px 0px',
+                    }}
+                    trackStyle={[
+                      { backgroundColor: '#97be32' },
+                      { backgroundColor: '#d6d6d9' },
+                    ]}
+                    onChangeOpacity={(_, op) => this.handleOpacity(l, op)}
+                  />
                 </li>
               );
             })}
@@ -88,6 +122,8 @@ MiniLegend.propTypes = {
   setMainMapView: PropTypes.func,
   className: PropTypes.string,
   activeDatasets: PropTypes.array,
+  datasets: PropTypes.array,
+  setMapSettings: PropTypes.func,
 };
 
 export default MiniLegend;
