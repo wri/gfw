@@ -32,6 +32,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
+  gladDailyDownload: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesGrouped:
@@ -175,7 +176,6 @@ const getDownloadUrl = (url) => {
 };
 
 // build {select} from location params
-
 const handleStaticLocStmt = (payload, download, staticStatement) => {
   if (download && staticStatement?.download?.statement) {
     if (staticStatement.append) {
@@ -975,15 +975,46 @@ export const fetchGladAlerts = (params) => {
 };
 
 export const fetchGladAlertsSum = (params) => {
-  const { forestType, landCategory, ifl, startDate, endDate, download } =
-    params || {};
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    startDate,
+    endDate,
+    download,
+    geostoreId,
+  } = params || {};
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'daily',
+  })}${download ? SQL_QUERIES.gladDailyDownload : SQL_QUERIES.gladDailySum}`;
+
+  if (download) {
+    const url = encodeURI(
+      baseUrl
+        .replace('{startDate}', startDate)
+        .replace('{endDate}', endDate)
+        // @TODO Some forestType, LandCategory keys dont match
+        .replace(
+          '{WHERE}',
+          getWHEREQuery({ forestType, landCategory, dataset: 'glad' })
+        )
+        .replace('{geostoreOrigin}', 'rw')
+        .replace('{geostoreId}', geostoreId)
+    );
+
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `daily_glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: url.replace('query', 'download'),
+    };
+  }
 
   const url = encodeURI(
-    `${getRequestUrl({
-      ...params,
-      dataset: 'glad',
-      datasetType: 'daily',
-    })}${SQL_QUERIES.gladDailySum}`
+    baseUrl
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -993,16 +1024,6 @@ export const fetchGladAlertsSum = (params) => {
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
-
-  if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
-    return {
-      name: `daily_glad_alerts${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__count`,
-      url: url.replace('query', 'download'),
-    };
-  }
 
   return apiRequest.get(url).then((response) => ({
     data: {
