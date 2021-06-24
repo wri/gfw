@@ -1,4 +1,3 @@
-import moment from 'moment';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import {
@@ -148,21 +147,29 @@ export default {
       };
     });
   },
+  maxDownloadSize: {
+    maxSize: 1e5,
+    key: 'alerts',
+    subKey: 'alert__count',
+  },
   getDataURL: (params) => {
     const { GLAD } = params.GFW_META.datasets;
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
+    const startDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
+    const geostoreId = params?.geostore?.hash;
     return [
       fetchGladAlertsSum({
         ...params,
-        startDate: defaultStartDate,
-        endDate: defaultEndDate,
+        startDate,
+        endDate,
+        geostoreId,
         download: true,
         staticStatement: {
           // append: true, If active, we will utalise the old location select logic with our statement
           download: {
             // Only apply to "download" endpoint
-            statement: 'latitude, longitude, alert__date',
             table: 'umd_glad_landsat_alerts',
           },
         },
@@ -170,16 +177,4 @@ export default {
     ];
   },
   getWidgetProps,
-  parseInteraction: (payload) => {
-    if (payload) {
-      const startDate = moment().year(payload.year).week(payload.week);
-      return {
-        startDate: startDate.format('YYYY-MM-DD'),
-        endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),
-        updateLayer: true,
-        ...payload,
-      };
-    }
-    return {};
-  },
 };

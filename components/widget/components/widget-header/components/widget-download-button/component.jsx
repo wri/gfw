@@ -40,6 +40,7 @@ class WidgetDownloadButton extends PureComponent {
     areaTooLarge: PropTypes.bool,
     status: PropTypes.string,
     mapSettings: PropTypes.object,
+    geostore: PropTypes.object,
     meta: PropTypes.object,
   };
 
@@ -55,10 +56,16 @@ class WidgetDownloadButton extends PureComponent {
       getDataURL,
       location,
       mapSettings,
+      geostore,
       meta,
     } = this.props;
-
-    const params = { ...location, ...settings, GFW_META: meta, mapSettings };
+    const params = {
+      ...location,
+      ...settings,
+      GFW_META: meta,
+      mapSettings,
+      geostore,
+    };
     let files = [];
 
     if (getDataURL) {

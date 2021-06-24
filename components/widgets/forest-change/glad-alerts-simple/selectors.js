@@ -14,7 +14,7 @@ const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
 
 export const parseData = createSelector([selectAlerts], (data) => {
-  if (isEmpty(data)) return null;
+  if (!data || isEmpty(data)) return null;
   const otherAlertsData = data.filter((d) => d.confirmed === false);
   const confimedAlertsData = data.filter((d) => d.confirmed === true);
 
@@ -92,7 +92,7 @@ export const parseConfig = createSelector(
 export const parseSentence = createSelector(
   [parseData, getSettings, selectSentences, getIndicator, getLocationName],
   (data, settings, sentences, indicator, location) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
 
     const startDate = settings.startDate;
     const endDate = settings.endDate;
