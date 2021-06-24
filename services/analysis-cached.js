@@ -129,13 +129,12 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 // build the base query for the query with the correct dataset id
 const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
   let typeByLevel = type;
-  if (type === 'country' || type === 'global') {
+  if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
-    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
-
+  typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   const datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
@@ -717,8 +716,10 @@ export const getAreaIntersection = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
         /{intersection}/g,
-        `, ${intersectionPolyname.tableKey}` ||
-          `, ${intersectionPolyname.tableKeys.annual}`
+        intersectionPolyname?.tableKey
+          ? `, ${intersectionPolyname.tableKey}` ||
+              `, ${intersectionPolyname.tableKeys.annual}`
+          : ''
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -753,7 +754,6 @@ export const getAreaIntersectionGrouped = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
-
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -774,7 +774,7 @@ export const getAreaIntersectionGrouped = (params) => {
       )
       .replace(
         /{intersection}/g,
-        intersectionPolyname
+        intersectionPolyname?.tableKey
           ? `, ${intersectionPolyname.tableKey}` ||
               `, ${intersectionPolyname.tableKeys.annual}`
           : ''
