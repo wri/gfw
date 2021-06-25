@@ -24,10 +24,6 @@ class GeodescriberProvider extends PureComponent {
     if (!loading && !['global', 'country'].includes(location.type) && geojson) {
       this.handleGetGeodescriber();
     }
-
-    if (!loading && ['global', 'country'].includes(location.type)) {
-      this.handleGetAdminGeodescriber();
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -46,7 +42,8 @@ class GeodescriberProvider extends PureComponent {
     if (
       !loading &&
       ['global', 'country'].includes(location.type) &&
-      !isEqual(location, prevLocation)
+      !isEqual(location, prevLocation) &&
+      prevProps?.location?.pathname !== ''
     ) {
       this.handleGetAdminGeodescriber();
     }
@@ -70,7 +67,6 @@ class GeodescriberProvider extends PureComponent {
     const { getAdminGeodescriber, location } = this.props;
     this.cancelAdminGeodescriberFetch();
     this.adminGeodescriberFetch = CancelToken.source();
-
     getAdminGeodescriber({
       ...location,
       token: this.adminGeodescriberFetch.token,

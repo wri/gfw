@@ -8,7 +8,7 @@ export const getDatasets = () =>
     .get(
       `/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&env=production${
         featureEnv ? `,${featureEnv},preproduction-staging` : ''
-      }&${featureEnv === 'staging' ? `refresh${new Date()}` : ''}}`
+      }${featureEnv === 'staging' ? `&refresh=${new Date()}` : ''}`
     )
     .then((res) => res?.data);
 

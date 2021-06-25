@@ -59,6 +59,7 @@ class Widget extends PureComponent {
     settingsBtnConfig: PropTypes.object,
     status: PropTypes.string,
     meta: PropTypes.object,
+    customComponent: PropTypes.string,
   };
 
   state = {
@@ -116,6 +117,7 @@ class Widget extends PureComponent {
       settingsBtnConfig,
       status,
       meta,
+      customComponent,
     } = this.props;
 
     const { main } = colors || {};
@@ -166,6 +168,7 @@ class Widget extends PureComponent {
           shouldSettingsOpen={this.state.shouldSettingsOpen}
           toggleSettingsMenu={toggleSettingsMenu}
         />
+
         <WidgetBody
           widget={widget}
           chartType={chartType}
@@ -191,6 +194,7 @@ class Widget extends PureComponent {
           parseInteraction={parseInteraction}
           toggleSettingsMenu={toggleSettingsMenu}
           settingsBtnConfig={settingsBtnConfig}
+          customComponent={customComponent}
         />
         {sentence && data && (
           <WidgetFooter

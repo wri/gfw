@@ -7,6 +7,7 @@ import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import RefreshButton from 'components/ui/refresh-button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
+import CustomComponent from 'components/widget/components/widgets-custom';
 import WidgetComposedChart from 'components/widget/components/widget-composed-chart';
 import WidgetHorizontalBarChart from 'components/widget/components/widget-horizontal-bar-chart';
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
@@ -43,6 +44,7 @@ class WidgetBody extends PureComponent {
     simple: PropTypes.bool,
     chartType: PropTypes.string,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    customComponent: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     rawData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     locationName: PropTypes.string,
@@ -62,6 +64,7 @@ class WidgetBody extends PureComponent {
       sentence,
       data,
       rawData,
+      customComponent,
       chartType,
       handleRefetchData,
       handleDataHighlight,
@@ -70,6 +73,7 @@ class WidgetBody extends PureComponent {
     const hasData = !isEmpty(data);
     const hasRawData = !isEmpty(rawData);
     const hasSentence = !isEmpty(sentence);
+    const hasCustomComponent = !isEmpty(customComponent);
     const Component = chartOptions[chartType];
 
     return (
@@ -95,6 +99,11 @@ class WidgetBody extends PureComponent {
             handleMouseOut={() => handleDataHighlight(false)}
           />
         )}
+        {!error &&
+          hasData &&
+          !metaLoading &&
+          hasRawData &&
+          hasCustomComponent && <CustomComponent type={customComponent} />}
         {!error && hasData && !metaLoading && hasRawData && Component && (
           <Component {...this.props} />
         )}

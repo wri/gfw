@@ -22,6 +22,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsByDriver:
     'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+  carbonFlux:
+    'SELECT SUM("gfw_net_flux_co2e__Mg") AS "gfw_net_flux_co2e__Mg", SUM("gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg") AS "gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg", SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", TRUE AS "includes_gain_pixels" FROM data {WHERE}',
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
@@ -145,13 +147,12 @@ const getRequestUrl = ({
     return `${GFW_API}/dataset/${staticStatement.download.table}/latest/download/csv?sql=`;
   }
 
-  if (type === 'country' || type === 'global') {
+  if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
-    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
-
+  typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   const datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
@@ -465,6 +466,44 @@ export const getEmissions = (params) => {
   }));
 };
 
+// summed loss for single location
+export const getCarbonFlux = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+  const { carbonFlux } = SQL_QUERIES;
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset: 'annual',
+      datasetType: 'summary',
+    })}${carbonFlux}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `Forest_related_net_carbon_flux${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then(({ data: { data } }) =>
+    data.map((d) => ({
+      removals:
+        -d.gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg || 0,
+      emissions: d.gfw_gross_emissions_co2e_all_gases__Mg || 0,
+      flux: d.gfw_net_flux_co2e__Mg || 0,
+    }))
+  );
+};
+
 // disaggregated loss for child of location
 export const getLossGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
@@ -726,8 +765,10 @@ export const getAreaIntersection = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
         /{intersection}/g,
-        `, ${intersectionPolyname.tableKey}` ||
-          `, ${intersectionPolyname.tableKeys.annual}`
+        intersectionPolyname?.tableKey
+          ? `, ${intersectionPolyname.tableKey}` ||
+              `, ${intersectionPolyname.tableKeys.annual}`
+          : ''
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -762,7 +803,6 @@ export const getAreaIntersectionGrouped = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
-
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -783,7 +823,7 @@ export const getAreaIntersectionGrouped = (params) => {
       )
       .replace(
         /{intersection}/g,
-        intersectionPolyname
+        intersectionPolyname?.tableKey
           ? `, ${intersectionPolyname.tableKey}` ||
               `, ${intersectionPolyname.tableKeys.annual}`
           : ''
@@ -1068,19 +1108,10 @@ export const fetchGLADLatest = () => {
 
 export const fetchVIIRSAlerts = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
-
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset,
-    datasetType: 'weekly',
-  });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
   const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.fires}`
+    `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+      SQL_QUERIES.fires
+    }`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1168,19 +1199,10 @@ export const fetchFiresWithin = (params) => {
   const { forestType, landCategory, ifl, download, dataset, weeks } =
     params || {};
   const filterYear = moment().subtract(weeks, 'weeks').year();
-
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset,
-    datasetType: 'weekly',
-  });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
   const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.firesWithin}`
+    `${getRequestUrl({ ...params, dataset, datasetType: 'weekly' })}${
+      SQL_QUERIES.firesWithin
+    }`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1402,13 +1424,9 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-  const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
-  const url = `${requestUrl}${SQL_QUERIES.getLocationPolynameWhitelist}`
+  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
+    SQL_QUERIES.getLocationPolynameWhitelist
+  }`
     .replace(/{select_location}/g, getLocationSelect({ ...params, cast: true }))
     .replace(/{location}/g, getLocationSelect(params))
     .replace(

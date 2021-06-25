@@ -32,6 +32,7 @@ class Card extends PureComponent {
     const { className, theme, data, active, clamp } = this.props;
     const {
       image,
+      webPImage,
       img1x,
       img2x,
       imageCredit,
@@ -53,20 +54,24 @@ class Card extends PureComponent {
             <p>{tag}</p>
           </span>
         )}
-        {image && (
-          <div
-            className="image"
-            style={{ backgroundImage: `url('${image}')` }}
-          />
-        )}
-        {(img1x || img2x) && (
-          <img
-            className="image"
-            srcSet={`${img1x} 2x, ${img2x} 1x`}
-            src={`${img1x} 1x`}
-            alt={title}
-          />
-        )}
+        <>
+          {image && (
+            <picture className="image">
+              {webPImage && <source srcSet={webPImage} type="image/webp" />}
+              <source srcSet={image} type="image/png" />
+              <img src={image} alt={title} />
+            </picture>
+          )}
+
+          {(img1x || img2x) && (
+            <img
+              className="image"
+              srcSet={`${img1x} 2x, ${img2x} 1x`}
+              src={`${img1x} 1x`}
+              alt={title}
+            />
+          )}
+        </>
         <div
           className={cx(
             'body',

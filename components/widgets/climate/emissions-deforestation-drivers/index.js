@@ -61,13 +61,14 @@ export default {
       layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER],
     },
   ],
-  metaKey: '',
+  metaKey: 'widget_forest_carbon_emissions_by_driver',
   colors: 'climate',
   sortOrder: {
     climate: 3,
   },
   settings: {
     gasesIncluded: 'allGases',
+    includesGainPixels: true,
     tscDriverGroup: 'all',
     highlighted: false,
     threshold: 30,

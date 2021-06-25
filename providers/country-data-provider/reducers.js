@@ -28,6 +28,11 @@ const mapLocations = (locations) => {
   return sortBy(locationsMapped, 'label');
 };
 
+const setCountriesSSR = (state, { payload }) => ({
+  ...state,
+  ...payload,
+});
+
 const setCountriesLoading = (state, { payload }) => ({
   ...state,
   isCountriesLoading: payload,
@@ -75,6 +80,7 @@ const setCountryLinks = (state, { payload }) => ({
 });
 
 export default {
+  [actions.setCountriesSSR]: setCountriesSSR,
   [actions.setCountriesLoading]: setCountriesLoading,
   [actions.setRegionsLoading]: setRegionsLoading,
   [actions.setSubRegionsLoading]: setSubRegionsLoading,

@@ -36,7 +36,6 @@ class CountryDataProvider extends PureComponent {
     } = this.props;
     const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
     const hasRegionChanged = adm0 && adm1 && adm1 !== prevProps.location.adm1;
-
     if (hasCountryChanged) {
       this.handleCountryLinksFetch();
       this.handleRegionFetch(adm0);
@@ -95,8 +94,8 @@ class CountryDataProvider extends PureComponent {
 }
 
 CountryDataProvider.propTypes = {
-  location: PropTypes.object.isRequired,
   getCountries: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
   getCountryLinks: PropTypes.func.isRequired,

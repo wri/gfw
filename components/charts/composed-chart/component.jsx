@@ -16,6 +16,8 @@ import {
   Tooltip,
   ResponsiveContainer,
   ComposedChart,
+  LabelList,
+  Legend,
 } from 'recharts';
 
 import ChartToolTip from '../components/chart-tooltip';
@@ -80,7 +82,10 @@ class CustomComposedChart extends PureComponent {
       unitFormat,
       height,
       margin,
+      stackOffset,
       referenceLine,
+      simpleNeedsAxis = false,
+      simpleLegend,
     } = config;
 
     const isVertical = !!xKeys;
@@ -94,7 +99,7 @@ class CustomComposedChart extends PureComponent {
     return (
       <div
         className={cx('c-composed-chart', className)}
-        style={{ height: simple ? 100 : height || 250 }}
+        style={{ height: simple ? 110 : height || 250 }}
       >
         <ResponsiveContainer width="99%">
           <ComposedChart
@@ -107,6 +112,7 @@ class CustomComposedChart extends PureComponent {
                 bottom: 0,
               }
             }
+            stackOffset={!!stackOffset && stackOffset}
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -142,7 +148,7 @@ class CustomComposedChart extends PureComponent {
               interval="preserveStartEnd"
               {...xAxis}
             />
-            {!simple && (
+            {(!simple || simpleNeedsAxis) && (
               <YAxis
                 dataKey={yKey || ''}
                 tickLine={!isVertical}
@@ -171,7 +177,7 @@ class CustomComposedChart extends PureComponent {
                 {...yAxis}
               />
             )}
-            {!simple && rightYAxis && (
+            {(!simple || simpleNeedsAxis) && rightYAxis && (
               <YAxis
                 orientation="right"
                 dataKey={yKey || ''}
@@ -210,8 +216,20 @@ class CustomComposedChart extends PureComponent {
               />
             )}
 
+            {simpleLegend && (
+              <Legend
+                iconSize={5}
+                verticalAlign="top"
+                payload={simpleLegend}
+                wrapperStyle={{
+                  fontSize: 10,
+                }}
+              />
+            )}
+
             <Tooltip
               simple={simple}
+              offset={100}
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
@@ -240,6 +258,11 @@ class CustomComposedChart extends PureComponent {
                     )}
                   {...bars[key]}
                 >
+                  {bars[key].labelList && (
+                    <LabelList key={key} {...bars[key].labelList}>
+                      {bars[key].labelList.value}
+                    </LabelList>
+                  )}
                   {bars[key].itemColor &&
                     data.map((item) => (
                       <Cell key={`c_${item.color}`} fill={item.color} />
