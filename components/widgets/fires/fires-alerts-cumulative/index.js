@@ -315,7 +315,7 @@ const defaultConfig = {
 };
 
 export default {
-  widget: 'fireAlertCumulative',
+  widget: 'firesAlertsCumulative',
   proxy: true,
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
