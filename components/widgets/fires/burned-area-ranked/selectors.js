@@ -136,9 +136,10 @@ export const parseList = createSelector(
         path: (region && region.path) || '',
       };
     });
+    const filteredData = mappedData.filter((d) => d.label);
     return matchKey === 'iso' && location.value !== 'global'
-      ? mappedData.filter((d) => d.area > 1e6) // At least one fire per MHa at iso level
-      : mappedData;
+      ? filteredData.filter((d) => d.area > 1e6 && d.counts > 0) // At least one fire per MHa at iso level
+      : filteredData;
   }
 );
 

@@ -18,13 +18,16 @@ import {
 
 import getWidgetProps from './selectors';
 
-export default {
-  ...firesRanked,
+const defaultConfig = {
   widget: 'burnedAreaRanked',
   title: {
     default: 'Regions with the most burned area in {location}',
     global: 'Global regions with the most burned area',
   },
+  categories: ['fires'],
+  large: true,
+  types: ['global', 'country'],
+  admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -42,6 +45,11 @@ export default {
       border: true,
     },
     {
+      key: 'dataset',
+      label: 'fires dataset',
+      type: 'select',
+    },
+    {
       key: 'unit',
       label: 'unit',
       type: 'select',
@@ -56,6 +64,13 @@ export default {
       noSort: true,
     },
   ],
+  chartType: 'lollipop',
+  colors: 'fires',
+  sortOrder: {
+    summary: 6,
+    fires: 3,
+    global: 100,
+  },
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -138,4 +153,20 @@ export default {
     ];
   },
   getWidgetProps,
+};
+
+export default {
+  widget: 'firesRanked',
+  proxy: true,
+  refetchKeys: ['dataset'],
+  getWidget: (widgetSettings) => {
+    // called when settings changes
+    if (!widgetSettings || !widgetSettings.dataset) {
+      return defaultConfig;
+    }
+    if (widgetSettings.dataset === 'modis_burned_area') {
+      return firesRanked;
+    }
+    return defaultConfig;
+  },
 };
