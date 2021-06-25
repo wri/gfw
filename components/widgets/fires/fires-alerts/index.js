@@ -311,8 +311,8 @@ const defaultConfig = {
       'ZWE',
     ],
   },
-  getData: (params) =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
+  getData: (params) => {
+    return all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));
@@ -339,7 +339,8 @@ const defaultConfig = {
           } || {}
         );
       })
-    ),
+    );
+  },
   getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
   getWidgetProps,
 };
@@ -348,12 +349,14 @@ export default {
   widget: 'fireAlertStats',
   proxy: true,
   refetchKeys: ['dataset'],
-  getWidget: (props) => {
+  getWidget: (widgetSettings) => {
     // called when settings changes
-    if (!props || !props.dataset) return defaultConfig;
-    if (props.dataset === 'modis_burned_area') return defaultConfig;
-    if (props.dataset === 'modis' || props.dataset === 'viirs')
+    if (!widgetSettings || !widgetSettings.dataset) {
+      return defaultConfig;
+    }
+    if (widgetSettings.dataset === 'modis_burned_area') {
       return burnedAreaStats;
+    }
     return defaultConfig;
   },
 };

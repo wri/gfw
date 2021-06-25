@@ -55,6 +55,7 @@ export default {
   preventRenderKeys: ['startIndex', 'endIndex'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
+  colors: 'fires',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -296,8 +297,8 @@ export default {
       'ZWE',
     ],
   },
-  getData: (params) =>
-    all([fetchBurnedArea(params), fetchVIIRSLatest(params)]).then(
+  getData: (params) => {
+    return all([fetchBurnedArea(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));
@@ -325,7 +326,8 @@ export default {
           } || {}
         );
       })
-    ),
+    );
+  },
   getDataURL: (params) => [fetchBurnedArea({ ...params, download: true })],
   getWidgetProps,
 };
