@@ -39,7 +39,7 @@ const SQL_QUERIES = {
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreaGrouped:
-    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burned_area__ha FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week',
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burned_area__ha FROM data {WHERE} {dateFilter} GROUP BY {location}, alert__year, alert__week',
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
   nonGlobalDatasets:
@@ -149,12 +149,12 @@ const getRequestUrl = ({
   version,
 }) => {
   let typeByLevel = type;
-  if (type === 'country' || type === 'global') {
+  if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
-    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
+  typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   const datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
@@ -284,7 +284,7 @@ export const getDatesFilter = ({ startDate }) => {
 };
 
 // build complex WHERE filter for dates (VIIRS/GLAD)
-export const getWeeksFilter = ({ weeks, latest }) => {
+export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
   const latestYear = latest
     ? moment(latest).year()
     : moment().subtract(1, 'weeks').year();
@@ -319,7 +319,7 @@ export const getWeeksFilter = ({ weeks, latest }) => {
     };
   });
 
-  return weekFilters.reduce((acc, d, i) => {
+  const weeksFilterString = weekFilters.reduce((acc, d, i) => {
     const yi = d.startYear || '';
     const wi = d.startWeek || '';
     const yf = d.endYear || '';
@@ -331,6 +331,7 @@ export const getWeeksFilter = ({ weeks, latest }) => {
       wi < wf ? 'AND' : 'OR'
     } (alert__year = ${yf} AND alert__week <= ${wf}))`;
   }, '');
+  return `${isFirst ? '' : 'AND'} (${weeksFilterString})`;
 };
 
 //
@@ -736,8 +737,10 @@ export const getAreaIntersection = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
         /{intersection}/g,
-        `, ${intersectionPolyname.tableKey}` ||
-          `, ${intersectionPolyname.tableKeys.annual}`
+        intersectionPolyname?.tableKey
+          ? `, ${intersectionPolyname.tableKey}` ||
+              `, ${intersectionPolyname.tableKeys.annual}`
+          : ''
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -772,7 +775,6 @@ export const getAreaIntersectionGrouped = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
-
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -793,7 +795,7 @@ export const getAreaIntersectionGrouped = (params) => {
       )
       .replace(
         /{intersection}/g,
-        intersectionPolyname
+        intersectionPolyname?.tableKey
           ? `, ${intersectionPolyname.tableKey}` ||
               `, ${intersectionPolyname.tableKeys.annual}`
           : ''
@@ -1060,7 +1062,9 @@ export const fetchBurnedAreaGrouped = (params) => {
   if (!requestUrl) {
     return new Promise(() => {});
   }
-
+  const whereStr = getWHEREQuery({ ...params, grouped: true }) || 'WHERE';
+  const isFirst = whereStr === 'WHERE';
+  const weeksFilterStr = getWeeksFilter({ ...params, isFirst });
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.burnedAreaGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
@@ -1068,8 +1072,8 @@ export const fetchBurnedAreaGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
-      .replace(/{dateFilter}/g, getWeeksFilter(params))
-      .replace('{WHERE}', getWHEREQuery({ ...params, grouped: true }))
+      .replace('{WHERE}', whereStr)
+      .replace(/{dateFilter}/g, weeksFilterStr)
   );
 
   if (download) {
@@ -1144,7 +1148,10 @@ export const fetchVIIRSAlertsGrouped = (params) => {
   if (!requestUrl) {
     return new Promise(() => {});
   }
-
+  const whereStr =
+    getWHEREQuery({ ...params, dataset: 'viirs', grouped: true }) || 'WHERE';
+  const isFirst = whereStr === 'WHERE';
+  const weeksFilterStr = getWeeksFilter({ ...params, isFirst });
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.firesGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
@@ -1152,13 +1159,9 @@ export const fetchVIIRSAlertsGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
-      .replace(/{dateFilter}/g, getWeeksFilter(params))
-      .replace(
-        '{WHERE}',
-        getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
-      )
+      .replace('{WHERE}', whereStr)
+      .replace(/{dateFilter}/g, weeksFilterStr)
   );
-
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {

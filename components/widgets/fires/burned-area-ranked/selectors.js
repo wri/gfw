@@ -104,7 +104,7 @@ export const getStatsByAdmin = createSelector(
 export const parseList = createSelector(
   [getStatsByAdmin, getAreas, getLocationsMeta, getLocation, getAdm1],
   (data, areas, meta, location, adm1) => {
-    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
+    if (isEmpty(data) || isEmpty(areas)) {
       return null;
     }
     // Now we have partial data, we iterate through and calculate
@@ -136,8 +136,8 @@ export const parseList = createSelector(
         path: (region && region.path) || '',
       };
     });
-    return matchKey === 'iso'
-      ? mappedData.filter((d) => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
+    return matchKey === 'iso' && location.value !== 'global'
+      ? mappedData.filter((d) => d.area > 1e6) // At least one fire per MHa at iso level
       : mappedData;
   }
 );
