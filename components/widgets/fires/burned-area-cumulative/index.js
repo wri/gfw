@@ -1,8 +1,6 @@
 import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 
-import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
-
 import { fetchBurnedArea, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import {
@@ -18,9 +16,9 @@ import {
 import getWidgetProps from './selectors';
 
 export default {
-  ...firesAlertsCumulative,
   widget: 'burnedAreaCumulative',
   title: 'Cumulative Burned Area in {location}',
+  large: true,
   categories: ['summary', 'fires'],
   settingsConfig: [
     {
@@ -64,10 +62,20 @@ export default {
       layers: [BURNED_AREA_MODIS],
     },
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
+  preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
-  types: ['country'],
+  types: ['country', 'wdpa', 'aoi'],
+  admins: ['adm0', 'adm1', 'adm2'],
+  chartType: 'composedChart',
+  hideLayers: true,
+  dataType: 'fires',
+  colors: 'fires',
   metaKey: 'widget_fire_alert_location',
+  sortOrder: {
+    summary: 100,
+    fires: 2,
+  },
   settings: {
     dataset: 'modis_burned_area',
   },

@@ -156,7 +156,7 @@ const defaultConfig = {
 };
 
 export default {
-  widget: 'firesRanked',
+  widget: 'burnedAreaRanked',
   proxy: true,
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {

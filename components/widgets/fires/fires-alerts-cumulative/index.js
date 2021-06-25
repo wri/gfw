@@ -2,10 +2,11 @@ import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import burnedAreaCumulative from 'components/widgets/fires/burned-area-cumulative';
 
 import getWidgetProps from './selectors';
 
-export default {
+const defaultConfig = {
   widget: 'firesAlertsCumulative',
   title: 'Cumulative Fire Alerts in {location}',
   large: true,
@@ -311,4 +312,20 @@ export default {
     ),
   getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
   getWidgetProps,
+};
+
+export default {
+  widget: 'fireAlertCumulative',
+  proxy: true,
+  refetchKeys: ['dataset'],
+  getWidget: (widgetSettings) => {
+    // called when settings changes
+    if (!widgetSettings || !widgetSettings.dataset) {
+      return defaultConfig;
+    }
+    if (widgetSettings.dataset === 'modis_burned_area') {
+      return burnedAreaCumulative;
+    }
+    return defaultConfig;
+  },
 };
