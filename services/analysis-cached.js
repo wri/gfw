@@ -42,6 +42,7 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -1015,15 +1016,8 @@ export const fetchGladAlerts = (params) => {
 };
 
 export const fetchGladAlertsSum = (params) => {
-  const {
-    forestType,
-    landCategory,
-    ifl,
-    startDate,
-    endDate,
-    download,
-    geostoreId,
-  } = params || {};
+  const { forestType, landCategory, startDate, endDate, download, geostoreId } =
+    params || {};
   const baseUrl = `${getRequestUrl({
     ...params,
     dataset: 'glad',
@@ -1044,11 +1038,8 @@ export const fetchGladAlertsSum = (params) => {
         .replace('{geostoreId}', geostoreId)
     );
 
-    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `daily_glad_alerts${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__count`,
+      name: 'daily_glad_alerts__count',
       url: url.replace('query', 'download'),
     };
   }
@@ -1250,21 +1241,13 @@ export const fetchVIIRSLatest = () =>
     }));
 
 export const fetchVIIRSAlertsSum = (params) => {
-  const {
-    forestType,
-    landCategory,
-    ifl,
-    startDate,
-    endDate,
-    download,
-    dataset,
-  } = params || {};
+  const { startDate, endDate, download, dataset } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
       dataset,
       datasetType: 'daily',
-    })}${SQL_QUERIES.firesDailySum}`
+    })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1276,11 +1259,8 @@ export const fetchVIIRSAlertsSum = (params) => {
   );
 
   if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `daily_${dataset}_alerts${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__count`,
+      name: `daily_${dataset}_alerts__count`,
       url: url.replace('query', 'download'),
     };
   }
