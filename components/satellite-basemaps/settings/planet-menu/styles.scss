@@ -5,6 +5,9 @@
   flex-direction: column;
 
   h6 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 11px;
     color: $grey;
     font-weight: 500;

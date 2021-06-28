@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 // Simple algo to check if one rect is present in another rect.
 const isHidden = (r1, r2) => r2.left >= r1.right || r2.right <= r1.left;
@@ -49,6 +49,9 @@ const getVisibleLabels = (bound, tiles) => {
 };
 
 function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
+  const prevSelectedIndex = useRef();
+  const isManualInput = useRef(false);
+
   const [initialized, setInitialized] = useState(false);
   const [timeline, setTimeline] = useState({
     tileWidth: 0,
@@ -56,10 +59,14 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
     buttonWidth: 0,
     offset: 0,
   });
-  const [activeIndex, setActiveIndex] = useState(selectedIndex);
 
   const [labels, setLabels] = useState([0, 0]);
   const [offset, setOffset] = useState(null);
+
+  function reCalcOffset(index) {
+    const newOffset = Math.abs(index * timeline.tileWidth);
+    setOffset(newOffset > timeline.endOffset ? timeline.endOffset : newOffset);
+  }
 
   useEffect(() => {
     if (
@@ -82,7 +89,7 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
         buttonWidth,
       });
     }
-  }, [ref, tileRefs, data, dotSize, selectedIndex]);
+  }, [ref, tileRefs, data, dotSize]);
 
   useEffect(() => {
     if (!initialized && timeline.tileWidth && timeline.dataWidth) {
@@ -100,7 +107,31 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
       return () => clearTimeout(timeout);
     }
     return () => {};
-  }, [timeline, initialized]);
+  }, [timeline, selectedIndex, initialized]);
+
+  useEffect(() => {
+    if (
+      !prevSelectedIndex.current ||
+      (selectedIndex !== prevSelectedIndex.current && !isManualInput.current)
+    ) {
+      reCalcOffset(selectedIndex);
+      prevSelectedIndex.current = selectedIndex;
+    }
+  }, [selectedIndex, prevSelectedIndex]);
+
+  // useEffect(() => {
+  //   if (initialized) {
+  //     const newOffset = handleOffset(
+  //       selectedIndex,
+  //       timeline.tileWidth,
+  //       data.length,
+  //       ref,
+  //       tileRefs
+  //     );
+  //     console.log('offset', newOffset);
+  //     setOffset(0);
+  //   }
+  // }, [selectedIndex, initialized])
 
   useEffect(() => {
     if (ref.current) {
@@ -116,51 +147,53 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
       return () => clearTimeout(timeout);
     }
     return () => {};
-  }, [ref, tileRefs, activeIndex]);
-
-  useEffect(() => {
-    const { tileWidth } = timeline;
-    const timeout = setTimeout(() => {
-      const next = tileRefs?.current[activeIndex + 1];
-      const prev = tileRefs?.current[activeIndex - 1];
-
-      // Check if we need to move offset, as in (next/prev item is not visible on screen)
-      const rectOffset = ref.current.getBoundingClientRect();
-      if (next && isHidden(rectOffset, next.getBoundingClientRect())) {
-        const calcOffset = offset + tileWidth;
-        setOffset(calcOffset);
-      }
-      if (prev && isHidden(rectOffset, prev.getBoundingClientRect())) {
-        const calcOffset = offset - tileWidth;
-        setOffset(calcOffset);
-      }
-    }, 10);
-    return () => clearTimeout(timeout);
-  }, [activeIndex]);
+  }, [ref, tileRefs, selectedIndex]);
 
   function moveTimeline(dir) {
     if (dir === 'prev') {
-      if (activeIndex !== 0) {
-        setActiveIndex(activeIndex - 1);
-        onChange(data[activeIndex - 1]);
+      if (selectedIndex !== 0) {
+        onChange(data[selectedIndex - 1]);
         return;
       }
       return;
     }
     if (dir === 'next') {
-      if (activeIndex !== data.length - 1 && activeIndex < data.length - 1) {
-        setActiveIndex(activeIndex + 1);
-        onChange(data[activeIndex + 1]);
+      if (
+        selectedIndex !== data.length - 1 &&
+        selectedIndex < data.length - 1
+      ) {
+        onChange(data[selectedIndex + 1]);
       }
     }
   }
 
   function setSelected(index) {
-    setActiveIndex(index);
+    isManualInput.current = true;
+    const isNext = index > selectedIndex;
+    const isPrev = index < selectedIndex;
+
+    // setActiveIndex(index);
+    const next = tileRefs?.current[index + 1];
+    const prev = tileRefs?.current[index - 1];
+
+    // Check if we need to move offset, as in (next/prev item is not visible on screen)
+    const rectOffset = ref.current.getBoundingClientRect();
+    if (isNext && next && isHidden(rectOffset, next.getBoundingClientRect())) {
+      const calcOffset = offset + timeline.tileWidth;
+      setOffset(calcOffset);
+    }
+
+    if (isPrev && prev && isHidden(rectOffset, prev.getBoundingClientRect())) {
+      const calcOffset = offset - timeline.tileWidth;
+      setOffset(calcOffset);
+    }
     onChange(data[index]);
+    setTimeout(() => {
+      isManualInput.current = false;
+    }, 1000);
   }
 
-  return [timeline, activeIndex, offset, labels, setSelected, moveTimeline];
+  return [timeline, offset, labels, setSelected, moveTimeline, reCalcOffset];
 }
 
 export default useTimeline;

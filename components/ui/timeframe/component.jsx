@@ -22,14 +22,14 @@ const TimeSlider = ({
   const tileRefs = useRef([]);
   const [initialized, setInitialized] = useState(false);
   const [previousOffset, setPreviousOffset] = useState(null);
-  const [
-    timeline,
-    activeIndex,
-    offset,
-    labels,
-    setSelected,
-    moveTimeline,
-  ] = useTimeline(ref, tileRefs, periods, selected, dotSize, onChange);
+  const [timeline, offset, labels, setSelected, moveTimeline] = useTimeline(
+    ref,
+    tileRefs,
+    periods,
+    selected,
+    dotSize,
+    onChange
+  );
 
   const [styles, setAnim] = useSpring(() => ({
     from: { transform: `translateX(0px)` },
@@ -90,7 +90,7 @@ const TimeSlider = ({
                   tabIndex={0}
                   area-label="Select timeframe"
                   className={`timeline-position ${
-                    activeIndex === i ? 'active' : ''
+                    selected === i ? 'active' : ''
                   }`}
                   onClick={() => {
                     setSelected(i);

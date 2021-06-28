@@ -6,6 +6,10 @@ import Timeframe from 'components/ui/timeframe';
 
 import './styles.scss';
 
+function periodsAsSelect(periods) {
+  return periods.map((p) => ({ label: p.period, value: p.value }));
+}
+
 export const PlanetMenu = ({
   periodOptions,
   periodSelectedIndex,
@@ -14,7 +18,16 @@ export const PlanetMenu = ({
   colorSelected,
 }) => (
   <div className="c-planet-menu">
-    <h6>period</h6>
+    <h6>
+      period
+      <Dropdown
+        theme="theme-dropdown-native theme-dropdown-native-button-green theme-dropdown-native-inline-label"
+        value={periodOptions[periodSelectedIndex].value}
+        options={periodsAsSelect(periodOptions)}
+        onChange={(value) => setMapBasemap({ name: value })}
+        native
+      />
+    </h6>
     <Timeframe
       selected={periodSelectedIndex}
       periods={periodOptions}

@@ -30,6 +30,7 @@ import './themes/dropdown-dark-round.scss';
 import './themes/dropdown-dark-squared.scss';
 import './themes/dropdown-no-border.scss';
 import './themes/dropdown-full-width.scss';
+import './themes/dropdown-native-label-inline.scss';
 
 class Dropdown extends PureComponent {
   static propTypes = {
