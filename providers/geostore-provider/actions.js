@@ -1,6 +1,8 @@
 import { createAction, createThunkAction } from 'redux/actions';
 import { getGeostore, saveGeostore } from 'services/geostore';
 
+import { tropicsIntersection } from 'utils/intersections';
+
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
 export const clearGeostore = createAction('clearGeostore');
@@ -14,7 +16,7 @@ export const fetchGeostore = createThunkAction(
       getGeostore({ type, adm0, adm1, adm2, token })
         .then((geostore) => {
           if (geostore) {
-            dispatch(setGeostore(geostore));
+            dispatch(setGeostore(tropicsIntersection(params, geostore)));
           }
         })
         .catch(() => {

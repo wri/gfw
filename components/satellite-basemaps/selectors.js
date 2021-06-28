@@ -9,6 +9,7 @@ import { getPeriodOptions } from './settings/planet-menu/selectors';
 import { getSelectedYear } from './settings/landsat-menu/selectors';
 
 const getLocation = (state) => state.location && state.location;
+const isTropics = (state) => state?.geostore?.data?.tropics || false;
 
 export const getDynoBasemaps = createSelector(
   [getLocation, getBasemaps],
@@ -26,8 +27,8 @@ export const getDynoBasemaps = createSelector(
 );
 
 export const getActiveDynoBasemap = createSelector(
-  [getLocation, getDynoBasemaps, getBasemap],
-  (location, basemaps, activeBasemap) => {
+  [getLocation, getDynoBasemaps, getBasemap, isTropics],
+  (location, basemaps, activeBasemap, tropics) => {
     const isDashboard = location.pathname.includes('/dashboards/');
     if (!basemaps || !activeBasemap) {
       return null;
@@ -51,7 +52,7 @@ export const getActiveDynoBasemap = createSelector(
     if (defaultBasemap) {
       return {
         ...defaultBasemap,
-        active: false,
+        active: tropics || false,
       };
     }
 
