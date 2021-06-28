@@ -23,6 +23,7 @@ class WidgetHeader extends PureComponent {
     simple: PropTypes.bool,
     active: PropTypes.bool,
     disableDownload: PropTypes.bool,
+    filterSelected: PropTypes.bool,
     metaKey: PropTypes.string,
     settingsConfig: PropTypes.array,
     settings: PropTypes.object,
@@ -44,6 +45,7 @@ class WidgetHeader extends PureComponent {
       loading,
       active,
       disableDownload,
+      filterSelected,
       maxSize,
       embed,
       large,
@@ -66,6 +68,14 @@ class WidgetHeader extends PureComponent {
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
+    let disabledMessageString = null;
+    if (disableDownload) {
+      disabledMessageString = filterSelected
+        ? `Remove Forest Type and Land Category filters to download.`
+        : `To download, reduce the total number of alerts to less than ${format(
+            ','
+          )(maxSize)} by narrowing the date range.`;
+    }
 
     return (
       <div className={cx('c-widget-header', { simple })}>
@@ -101,13 +111,7 @@ class WidgetHeader extends PureComponent {
                   widget === 'gladAlerts' ||
                   widget === 'gladRanked'
                 }
-                disabledMessage={
-                  disableDownload
-                    ? `Reduce the total number of alerts to less than ${format(
-                        ','
-                      )(maxSize)} to download`
-                    : null
-                }
+                disabledMessage={disabledMessageString}
                 {...this.props}
               />
             )}

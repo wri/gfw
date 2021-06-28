@@ -36,6 +36,7 @@ class WidgetContainer extends Component {
     error: false,
     maxSize: null,
     downloadDisabled: false,
+    filterSelected: false,
   };
 
   _mounted = false;
@@ -73,15 +74,18 @@ class WidgetContainer extends Component {
   }
 
   handleMaxRowSize(data) {
-    const { maxDownloadSize = null } = this.props;
+    const { maxDownloadSize = null, settings } = this.props;
     if (!maxDownloadSize) return { downloadDisabled: false };
     const { key, subKey, maxSize } = maxDownloadSize;
+    const filterSelected = !!settings?.forestType || !!settings?.landCategory;
     if (has(data, key) && Array.isArray(data[key]) && maxSize) {
+      const exceedsMaxSize = subKey
+        ? sumBy(data[key], subKey) > maxSize
+        : sumBy(data, key) > maxSize;
       return {
-        downloadDisabled: subKey
-          ? sumBy(data[key], subKey) > maxSize
-          : sumBy(data, key) > maxSize,
+        downloadDisabled: filterSelected || exceedsMaxSize,
         maxSize,
+        filterSelected,
       };
     }
     return { downloadDisabled: false, maxSize };

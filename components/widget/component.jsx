@@ -15,6 +15,7 @@ class Widget extends PureComponent {
     type: PropTypes.string,
     active: PropTypes.bool,
     downloadDisabled: PropTypes.bool,
+    filterSelected: PropTypes.bool,
     maxSize: PropTypes.number,
     embed: PropTypes.bool,
     large: PropTypes.bool,
@@ -75,6 +76,7 @@ class Widget extends PureComponent {
       type,
       active,
       downloadDisabled,
+      filterSelected,
       maxSize,
       large,
       embed,
@@ -146,6 +148,7 @@ class Widget extends PureComponent {
           meta={meta}
           active={active}
           disableDownload={downloadDisabled}
+          filterSelected={filterSelected}
           maxSize={maxSize}
           embed={embed}
           settingsConfig={settingsConfig}
