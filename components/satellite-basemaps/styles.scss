@@ -3,6 +3,8 @@
 .c-map-legend-basemaps {
   flex: 0;
 
+  .caveat { font-style: italic; }
+
   > .header {
     display: flex;
     align-items: center;

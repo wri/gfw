@@ -20,7 +20,7 @@ function handleTitle(basemap) {
       {' '}
       {basemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
       {' '}
-      {basemap?.caveat && <sup className="caveat">{basemap.caveat}</sup>}
+      {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
     </>
   );
 }
