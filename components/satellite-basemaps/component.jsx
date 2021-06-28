@@ -13,6 +13,18 @@ import BasemapSettings from './basemap-settings';
 
 import './styles.scss';
 
+function handleTitle(basemap) {
+  return (
+    <>
+      {basemap.label}
+      {' '}
+      {basemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
+      {' '}
+      {basemap?.caveat && <sup className="caveat">{basemap.caveat}</sup>}
+    </>
+  );
+}
+
 const SatelliteBasemaps = ({
   className,
   planetPeriods,
@@ -66,11 +78,7 @@ const SatelliteBasemaps = ({
       <header className="header">
         <button
           className="show-satellite-basemap-btn"
-          title={`${activeBasemap.active ? 'Disable' : 'Enable'} ${
-            activeBasemap.label
-          } ${
-            activeBasemap.value !== 'recentImagery' ? 'satellite imagery' : ''
-          }`}
+          title={handleTitle(activeBasemap)}
           onClick={handleToggleActive}
         >
           <Checkbox
@@ -84,9 +92,7 @@ const SatelliteBasemaps = ({
           title={`${open ? 'Hide' : 'Show'} satellite basemaps`}
         >
           <span className="active-basemap-title">
-            {activeBasemap.label}
-            {' '}
-            {activeBasemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
+            {handleTitle(activeBasemap)}
           </span>
           <Icon icon={arrowDown} />
         </button>
@@ -120,12 +126,12 @@ const SatelliteBasemaps = ({
                     <div className="satellite-basemap--content">
                       <span className="satellite-basemap--title">
                         {basemap.label}
-                        {basemap.value === 'recentImagery' && (
+                        {basemap.infoModal && (
                           <Button
                             className="info-btn"
                             theme="theme-button-tiny theme-button-grey-filled square"
                             onClick={() =>
-                              setModalMetaSettings('recent_satellite_imagery')}
+                              setModalMetaSettings(basemap.infoModal)}
                           >
                             <Icon icon={infoIcon} />
                           </Button>
