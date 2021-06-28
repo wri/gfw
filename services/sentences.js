@@ -104,14 +104,24 @@ export const getSentenceData = (params = GLOBAL_LOCATION) =>
             : 0;
 
         const data = {
-          totalArea: (extent[0] && extent[0].total_area) || 0,
-          extent: (extent[0] && extent[0].extent) || 0,
+          totalArea:
+            extent && extent.length && extent[0].total_area
+              ? sumBy(extent, 'total_area')
+              : 0,
+          extent:
+            extent && extent.length && extent[0].extent
+              ? sumBy(extent, 'extent')
+              : 0,
           plantationsExtent:
-            plantationsExtent && plantationsExtent.length
-              ? plantationsExtent[0].extent
+            plantationsExtent &&
+            plantationsExtent.length &&
+            plantationsExtent[0].extent
+              ? sumBy(plantationsExtent, 'extent')
               : 0,
           primaryExtent:
-            primaryExtent && primaryExtent.length ? primaryExtent[0].extent : 0,
+            primaryExtent && primaryExtent.length && primaryExtent[0].extent
+              ? sumBy(primaryExtent, 'extent')
+              : 0,
           totalLoss: {
             area: summedLoss || 0,
             year: latestYear || 0,
