@@ -36,7 +36,7 @@ export default {
   chartType: 'pieChart',
   dataType: 'fires',
   categories: ['summary', 'fires'],
-  types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
+  types: ['country', 'wdpa', 'aoi', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   adm0: [
     'AFG',
