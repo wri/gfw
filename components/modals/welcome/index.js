@@ -14,6 +14,8 @@ import { selectShowMapPrompts } from 'components/prompts/map-prompts/selectors';
 
 import {
   GLAD_DEFORESTATION_ALERTS_DATASET,
+  GLAD_S2_DEFORESTATION_ALERTS_DATASET,
+  RADD_DEFORESTATION_ALERTS_DATASET,
   FIRES_VIIRS_DATASET,
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_GAIN_DATASET,
@@ -23,6 +25,8 @@ import {
 
 import {
   GLAD_ALERTS,
+  GLAD_S2_ALERTS,
+  RADD_ALERTS,
   PLACES_TO_WATCH,
   FIRES_ALERTS_VIIRS,
   POLITICAL_BOUNDARIES,
@@ -48,16 +52,28 @@ const welcomeCards = [
     map: {
       datasets: [
         {
-          dataset: FIRES_VIIRS_DATASET,
+          dataset: GLAD_S2_DEFORESTATION_ALERTS_DATASET,
           opacity: 1,
           visibility: true,
-          layers: [FIRES_ALERTS_VIIRS],
+          layers: [GLAD_S2_ALERTS],
         },
         {
           dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
           opacity: 1,
           visibility: true,
           layers: [GLAD_ALERTS],
+        },
+        {
+          dataset: RADD_DEFORESTATION_ALERTS_DATASET,
+          opacity: 1,
+          visibility: true,
+          layers: [RADD_ALERTS],
+        },
+        {
+          dataset: FIRES_VIIRS_DATASET,
+          opacity: 1,
+          visibility: true,
+          layers: [FIRES_ALERTS_VIIRS],
         },
         {
           dataset: POLITICAL_BOUNDARIES_DATASET,
