@@ -15,6 +15,7 @@ import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGfwProvider from 'providers/mygfw-provider';
+import MetaProvider from 'providers/meta-provider';
 
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
@@ -203,6 +204,7 @@ class DashboardsPage extends PureComponent {
         {widgetAnchor && (
           <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
         )}
+        <MetaProvider />
         <DatasetsProvider />
         <LatestProvider />
         <CountryDataProvider />

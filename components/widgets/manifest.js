@@ -12,17 +12,16 @@ import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plan
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-drivers';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 import glads from 'components/widgets/forest-change/glads';
-import gladAlerts from 'components/widgets/forest-change/glad-alerts';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
 
 // fires
 import firesOTF from 'components/widgets/fires/fires';
-import firesWithin from 'components/widgets/fires/fires-within';
 import firesAlerts from 'components/widgets/fires/fires-alerts';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
 import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical-weekly';
 import firesAlertsHistoricalDaily from 'components/widgets/fires/fires-alerts-historical-daily';
 import firesRanked from 'components/widgets/fires/fires-ranked';
+import firesAlertsSimple from 'components/widgets/fires/fire-alerts-simple';
 
 // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -65,17 +64,16 @@ export default {
   treeLossTsc,
   treeCoverGainSimple,
   glads,
-  gladAlerts,
   gladRanked,
 
   // fires
-  firesWithin,
   firesAlerts,
   firesAlertsCumulative,
   firesAlertsHistorical,
   firesRanked,
   firesAlertsHistoricalDaily,
   firesOTF,
+  firesAlertsSimple,
 
   // land cover
   treeCover,

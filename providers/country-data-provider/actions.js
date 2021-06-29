@@ -27,16 +27,16 @@ export const getCountries = createThunkAction(
   'getCountries',
   () => (dispatch) => {
     dispatch(setCountriesLoading(true));
-    getCategorisedCountries().then((
-      { gadmCountries,  faoCountries, countries }
-    ) => {
-      dispatch(setGadmCountries(gadmCountries));
-      dispatch(setFAOCountries(faoCountries));
-      dispatch(setCountries(countries));
-      dispatch(setCountriesLoading(false));
-    }).catch(() => {
-      dispatch(setCountriesLoading(false));
-    });
+    getCategorisedCountries()
+      .then(({ gadmCountries, faoCountries, countries }) => {
+        dispatch(setGadmCountries(gadmCountries));
+        dispatch(setFAOCountries(faoCountries));
+        dispatch(setCountries(countries));
+        dispatch(setCountriesLoading(false));
+      })
+      .catch(() => {
+        dispatch(setCountriesLoading(false));
+      });
   }
 );
 

@@ -30,7 +30,7 @@ const mapLocations = (locations) => {
 
 const setCountriesSSR = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
 const setCountriesLoading = (state, { payload }) => ({

@@ -10,6 +10,7 @@ import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
+// Oscar see here!
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
@@ -32,12 +33,16 @@ const SQL_QUERIES = {
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
+  gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
+  gladDailyDownload: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   firesWithin:
-    'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
+    'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
+  firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -127,8 +132,22 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 };
 
 // build the base query for the query with the correct dataset id
-const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
+const getRequestUrl = ({
+  type,
+  adm1,
+  adm2,
+  dataset,
+  datasetType,
+  grouped,
+  download,
+  staticStatement,
+}) => {
   let typeByLevel = type;
+
+  if (download && staticStatement?.download?.table) {
+    return `${GFW_API}/dataset/${staticStatement.download.table}/latest/download/csv?sql=`;
+  }
+
   if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
@@ -166,19 +185,50 @@ const getDownloadUrl = (url) => {
 };
 
 // build {select} from location params
-const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast }) => {
-  if (type === 'wdpa') return 'wdpa_protected_area__id';
-  if (['geostore', 'use'].includes(type)) return 'geostore__id';
+const handleStaticLocStmt = (payload, download, staticStatement) => {
+  if (download && staticStatement?.download?.statement) {
+    if (staticStatement.append) {
+      return `${staticStatement.download.statement},${payload}`;
+    }
+    return staticStatement.download.statement;
+  }
+  return payload;
+};
+
+const getLocationSelect = ({
+  type,
+  adm0,
+  adm1,
+  adm2,
+  grouped,
+  cast,
+  download,
+  staticStatement,
+}) => {
+  if (type === 'wdpa')
+    return handleStaticLocStmt(
+      'wdpa_protected_area__id',
+      download,
+      staticStatement
+    );
+  if (['geostore', 'use'].includes(type))
+    return handleStaticLocStmt('geostore__id', download, staticStatement);
 
   let locationString = `iso${adm1 ? ', adm1{castTemplate}' : ''}${
     adm2 ? ', adm2{castTemplate}' : ''
   }`;
   const castString = cast ? '::integer' : '';
-  if (grouped)
+  if (grouped) {
     locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
       adm1 ? ', adm2{castTemplate}' : ''
     }`;
-  return locationString.replace(/{castTemplate}/g, castString);
+  }
+
+  return handleStaticLocStmt(
+    locationString.replace(/{castTemplate}/g, castString),
+    download,
+    staticStatement
+  );
 };
 
 // build {where} statement for query
@@ -972,6 +1022,60 @@ export const fetchGladAlerts = (params) => {
   }));
 };
 
+export const fetchGladAlertsSum = (params) => {
+  const { forestType, landCategory, startDate, endDate, download, geostoreId } =
+    params || {};
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'daily',
+  })}${download ? SQL_QUERIES.gladDailyDownload : SQL_QUERIES.gladDailySum}`;
+
+  if (download) {
+    const url = encodeURI(
+      baseUrl
+        .replace('{startDate}', startDate)
+        .replace('{endDate}', endDate)
+        // @TODO Some forestType, LandCategory keys dont match
+        .replace(
+          '{WHERE}',
+          getWHEREQuery({ forestType, landCategory, dataset: 'glad' })
+        )
+        .replace('{geostoreOrigin}', 'rw')
+        .replace('{geostoreId}', geostoreId)
+    );
+
+    return {
+      name: 'daily_glad_alerts__count',
+      url: url.replace('query', 'download'),
+    };
+  }
+
+  const url = encodeURI(
+    baseUrl
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.is__confirmed_alert,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha,
+      })),
+    },
+  }));
+};
+
 // Latest Dates for Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
@@ -1142,6 +1246,43 @@ export const fetchVIIRSLatest = () =>
     .catch(() => ({
       date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
     }));
+
+export const fetchVIIRSAlertsSum = (params) => {
+  const { startDate, endDate, download, dataset } = params || {};
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset,
+      datasetType: 'daily',
+    })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
+  );
+
+  if (download) {
+    return {
+      name: `daily_${dataset}_alerts__count`,
+      url: url.replace('query', 'download'),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.confidence__cat.includes('h'),
+        count: d.alert__count,
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
 
 // Climate fetches
 

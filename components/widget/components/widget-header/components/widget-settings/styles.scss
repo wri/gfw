@@ -1,6 +1,7 @@
 @import '~styles/settings.scss';
 
 $settings-items-margin: rem(25px);
+$dd-font-size: rem(13px);
 
 .c-widget-settings {
   width: rem(290px);
@@ -54,6 +55,20 @@ $settings-items-margin: rem(25px);
 
     .dd__wrapper {
       max-width: rem(85px);
+    }
+  }
+
+  .datepicker {
+    .label {
+      display: flex;
+      font-weight: 400;
+      font-size: $dd-font-size;
+      margin-bottom: rem(5px);
+    }
+
+    .datepicker-selector {
+      display: flex;
+      justify-content: space-between;
     }
   }
 

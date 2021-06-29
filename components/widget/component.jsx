@@ -14,6 +14,9 @@ class Widget extends PureComponent {
     title: PropTypes.string.isRequired,
     type: PropTypes.string,
     active: PropTypes.bool,
+    downloadDisabled: PropTypes.bool,
+    filterSelected: PropTypes.bool,
+    maxSize: PropTypes.number,
     embed: PropTypes.bool,
     large: PropTypes.bool,
     colors: PropTypes.object,
@@ -56,6 +59,7 @@ class Widget extends PureComponent {
     geostore: PropTypes.object,
     settingsBtnConfig: PropTypes.object,
     status: PropTypes.string,
+    meta: PropTypes.object,
     customComponent: PropTypes.string,
   };
 
@@ -71,6 +75,9 @@ class Widget extends PureComponent {
       colors,
       type,
       active,
+      downloadDisabled,
+      filterSelected,
+      maxSize,
       large,
       embed,
       simple,
@@ -111,6 +118,7 @@ class Widget extends PureComponent {
       geostore,
       settingsBtnConfig,
       status,
+      meta,
       customComponent,
     } = this.props;
 
@@ -137,7 +145,11 @@ class Widget extends PureComponent {
           title={title}
           large={large}
           datasets={datasets}
+          meta={meta}
           active={active}
+          disableDownload={downloadDisabled}
+          filterSelected={filterSelected}
+          maxSize={maxSize}
           embed={embed}
           settingsConfig={settingsConfig}
           metaKey={metaKey}
@@ -167,6 +179,7 @@ class Widget extends PureComponent {
           metaLoading={metaLoading}
           error={error}
           simple={simple}
+          location={location}
           locationName={locationLabelFull}
           active={active}
           data={data}
