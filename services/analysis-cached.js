@@ -153,8 +153,15 @@ const getRequestUrl = ({
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
   }
-  typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
-  const datasetId =
+
+  let datasetId = typeByLevel;
+
+  try {
+    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
+  } catch (_) {
+    //
+  }
+  datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];

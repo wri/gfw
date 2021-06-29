@@ -27,7 +27,7 @@ const getIndicator = (state) => state.indicator;
 const getAdm1 = (state) => state.adm1;
 const getLocation = (state) => state.location || null;
 const getLocationsMeta = (state) =>
-  state.adm0 ? state.locationData : state.childData;
+  state.location === 'global' ? state.locationData : state.childData;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
@@ -102,7 +102,7 @@ export const getStatsByAdmin = createSelector(
 export const parseList = createSelector(
   [getStatsByAdmin, getAreas, getLocationsMeta, getLocation, getAdm1],
   (data, areas, meta, location, adm1) => {
-    if (isEmpty(data) || isEmpty(areas)) {
+    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
       return null;
     }
     // Now we have partial data, we iterate through and calculate
