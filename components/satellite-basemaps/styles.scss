@@ -46,6 +46,13 @@
     }
   }
 
+  > .satellite-basemaps h4 {
+    color: $slate;
+    font-size: 12px;
+    padding: 10px 15px;
+    font-weight: 500;
+  }
+
   .satellite-basemap {
     &--cta {
       display: flex;

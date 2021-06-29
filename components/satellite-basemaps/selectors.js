@@ -63,9 +63,9 @@ export const getActiveDynoBasemap = createSelector(
         settings: mapBasemapSettings,
         ...(dynoBasemap &&
           dynoBasemap?.value === 'planet' && {
-            planetPeriod: planetPeriods.find(
-              (p) => p.value === mapBasemapSettings.name
-            ),
+            planetPeriod: planetPeriods?.length
+              ? planetPeriods.find((p) => p.value === mapBasemapSettings.name)
+              : null,
           }),
         active: true,
       };

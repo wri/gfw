@@ -19,8 +19,6 @@ function handleTitle(basemap) {
       <span>
         {basemap.label}
         {' '}
-        {basemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
-        {' '}
         {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
       </span>
       {basemap.value === 'planet' &&
@@ -111,6 +109,7 @@ const SatelliteBasemaps = ({
       </header>
       {open && (
         <section className="satellite-basemaps">
+          <h4>SATELLITE IMAGERY</h4>
           <ul>
             {basemaps.map((basemap) => {
               return (
