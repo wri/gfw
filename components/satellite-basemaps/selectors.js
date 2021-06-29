@@ -76,7 +76,7 @@ export const getActiveDynoBasemap = createSelector(
         ...defaultBasemap,
         settings: mapBasemapSettings,
         ...(defaultBasemap.value === 'planet' && {
-          planetPeriod: planetPeriods[0],
+          planetPeriod: planetPeriods?.length ? planetPeriods[0] : null,
         }),
         active: tropics || false,
       };
