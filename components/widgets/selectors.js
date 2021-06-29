@@ -50,8 +50,10 @@ const handleWidgetProxy = (widgets, settings) => {
       const currentSettings = settings[raw.widget];
       const useWidget = raw.getWidget(currentSettings);
       return {
-        ...useWidget,
         ...raw,
+        ...useWidget,
+        widget: raw.widget,
+        datasets: useWidget?.datasets || raw?.datasets,
         proxying: useWidget.widget,
         settings: {
           ...useWidget.settings,
