@@ -66,6 +66,7 @@ export default {
     {
       dataset: BURNED_AREA_MODIS_DATASET,
       layers: [BURNED_AREA_MODIS],
+      maxzoom: 9,
     },
   ],
   hideLayers: true,
