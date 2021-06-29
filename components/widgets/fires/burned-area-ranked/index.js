@@ -25,6 +25,7 @@ const defaultConfig = {
     global: 'Global regions with the most burned area',
   },
   categories: ['fires'],
+  dataType: 'fires',
   large: true,
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],

@@ -19,6 +19,7 @@ export default {
   widget: 'burnedAreaCumulative',
   title: 'Cumulative Burned Area in {location}',
   large: true,
+  dataType: 'fires',
   categories: ['summary', 'fires'],
   settingsConfig: [
     {
@@ -69,7 +70,6 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   hideLayers: true,
-  dataType: 'fires',
   colors: 'fires',
   metaKey: 'widget_fire_alert_location',
   sortOrder: {

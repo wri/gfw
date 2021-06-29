@@ -20,6 +20,7 @@ export default {
   widget: 'burnedAreaStats',
   title: 'Weekly Burned Area in {location}',
   large: true,
+  dataType: 'fires',
   categories: ['summary', 'fires'],
   settingsConfig: [
     {

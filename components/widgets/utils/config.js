@@ -396,7 +396,7 @@ export const getStatements = ({
       : null,
     dataType === 'fires' && settings?.dataset === 'modis_burned_area'
       ? translateText(
-          'Caution: Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.'
+          'Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times | Data availability is limited by the data provider and data may be delayed by up to two months.'
         )
       : null,
     ...(indicatorStatements || []),
