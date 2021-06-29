@@ -43,7 +43,7 @@ const isServer = typeof window === 'undefined';
 
 class DashboardsPage extends PureComponent {
   static propTypes = {
-    handleSSRLocation: PropTypes.object,
+    ssrLocation: PropTypes.object,
     showMapMobile: PropTypes.bool,
     setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
@@ -138,7 +138,7 @@ class DashboardsPage extends PureComponent {
       showMapMobile,
       links,
       widgetAnchor,
-      handleSSRLocation,
+      ssrLocation,
       setWidgetsCategory,
       activeArea,
       clearScrollTo,
@@ -157,7 +157,7 @@ class DashboardsPage extends PureComponent {
         <div className="content-panel">
           <Header
             className="header"
-            handleSSRLocation={handleSSRLocation}
+            handleSSRLocation={ssrLocation}
             globalSentence={globalSentence}
           />
           {links && !!links.length && (
@@ -178,7 +178,7 @@ class DashboardsPage extends PureComponent {
               checkActive
             />
           )}
-          <GlobalSentence />
+          <GlobalSentence handleSSRLocation={ssrLocation} />
           {isPendingDashboard && (
             <PendingDashboard
               className="pending-message"
