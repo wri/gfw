@@ -20,7 +20,8 @@ const SQL_QUERIES = {
     'SELECT latitude_average, longitude_average, alpha_3_code as iso FROM country_list_iso_3166_codes_latitude_longitude',
 };
 
-const convertToOptions = countries => countries.map(c => ({ label: c.name, value: c.iso }));
+const convertToOptions = (countries) =>
+  countries.map((c) => ({ label: c.name, value: c.iso }));
 
 export const getCountriesProvider = () => {
   const url = `/sql?q=${SQL_QUERIES.getCountries}`;
@@ -69,15 +70,21 @@ export const getCountryLinksSerialized = async () => {
     return data;
   }
   return {};
-}
+};
 
-export const getCategorisedCountries = (asOptions = false) => all([getCountriesProvider(), getFAOCountriesProvider()]).then(
-  spread((gadm36Countries, faoCountries) => {
-    return {
-      gadmCountries: asOptions ? convertToOptions(gadm36Countries.data.rows) : gadm36Countries.data.rows,
-      faoCountries: asOptions ? convertToOptions(faoCountries.data.rows) : faoCountries.data.rows,
-      countries: asOptions ? convertToOptions(gadm36Countries.data.rows) : gadm36Countries.data.rows
-    }
-  })
-)
-
+export const getCategorisedCountries = (asOptions = false) =>
+  all([getCountriesProvider(), getFAOCountriesProvider()]).then(
+    spread((gadm36Countries, faoCountries) => {
+      return {
+        gadmCountries: asOptions
+          ? convertToOptions(gadm36Countries.data.rows)
+          : gadm36Countries.data.rows,
+        faoCountries: asOptions
+          ? convertToOptions(faoCountries.data.rows)
+          : faoCountries.data.rows,
+        countries: asOptions
+          ? convertToOptions(gadm36Countries.data.rows)
+          : gadm36Countries.data.rows,
+      };
+    })
+  );

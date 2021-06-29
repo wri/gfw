@@ -42,7 +42,8 @@ class GeodescriberProvider extends PureComponent {
     if (
       !loading &&
       ['global', 'country'].includes(location.type) &&
-      !isEqual(location, prevLocation) && prevProps?.location?.pathname !== ""
+      !isEqual(location, prevLocation) &&
+      prevProps?.location?.pathname !== ''
     ) {
       this.handleGetAdminGeodescriber();
     }

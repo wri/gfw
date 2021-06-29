@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
+import moment from 'moment';
 import Dropdown from 'components/ui/dropdown';
 import Switch from 'components/ui/switch';
+import Datepicker from 'components/ui/datepicker';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
 import './styles.scss';
@@ -14,6 +15,7 @@ class WidgetSettings extends PureComponent {
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func.isRequired,
     loading: PropTypes.bool,
+    embed: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
   };
 
@@ -36,7 +38,18 @@ class WidgetSettings extends PureComponent {
       loading,
       placeholder,
       clearable,
+      minDate,
+      maxDate,
     } = option;
+
+    const { embed } = this.props;
+
+    const popperSettings = {
+      ...(embed &&
+        type === 'datepicker' && {
+          popperPlacement: 'left-start',
+        }),
+    };
 
     switch (type) {
       case 'switch':
@@ -79,7 +92,6 @@ class WidgetSettings extends PureComponent {
         return (
           <div className={cx('widget-settings-selector', type)}>
             <span className="label">{label}</span>
-
             <Dropdown
               theme={cx('theme-select-light', {
                 'theme-dropdown-button': type === 'mini-select',
@@ -93,7 +105,43 @@ class WidgetSettings extends PureComponent {
             />
           </div>
         );
-
+      case 'datepicker':
+        return (
+          <div className={cx('widget-settings-selector', type)}>
+            <div className="datepicker-selector">
+              <div>
+                <span className="label">From</span>
+                <Datepicker
+                  {...popperSettings}
+                  selected={new Date(startValue)}
+                  onChange={(change) =>
+                    handleChangeSettings({
+                      [startKey]: moment(change).format('YYYY-MM-DD'),
+                    })}
+                  minDate={new Date(minDate)}
+                  maxDate={new Date(maxDate)}
+                  isOutsideRange={(d) =>
+                    d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate))}
+                />
+              </div>
+              <div>
+                <span className="label">To</span>
+                <Datepicker
+                  {...popperSettings}
+                  selected={new Date(endValue)}
+                  onChange={(change) =>
+                    handleChangeSettings({
+                      [endKey]: moment(change).format('YYYY-MM-DD'),
+                    })}
+                  minDate={new Date(minDate)}
+                  maxDate={new Date(maxDate)}
+                  isOutsideRange={(d) =>
+                    d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate))}
+                />
+              </div>
+            </div>
+          </div>
+        );
       default:
         return (
           options &&
@@ -134,8 +182,8 @@ class WidgetSettings extends PureComponent {
         {settingsConfig &&
           settingsConfig.map(
             (option) =>
-              option.options &&
-              !!option.options.length && (
+              ((option.options && !!option.options.length) ||
+                option.type === 'datepicker') && (
                 <div
                   key={option.key}
                   className={cx('settings-option', { border: option.border })}

@@ -2,7 +2,6 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import DynamicSentence from 'components/ui/dynamic-sentence';
-import Loader from 'components/ui/loader';
 
 import './styles.scss';
 
@@ -10,26 +9,28 @@ import SENTENCES from 'data/dashboard-summary-sentence';
 
 class GlobalSentence extends PureComponent {
   static propTypes = {
-    loading: PropTypes.bool,
+    handleSSRLocation: PropTypes.object,
     locationNames: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     category: PropTypes.string,
   };
 
   getLocationType() {
-    const { location } = this.props;
-    if (location.type === 'country') {
-      if (location.adm2) return 'adm2';
-      if (location.adm1) return 'adm1';
+    const { location, handleSSRLocation } = this.props;
+    const useLocation = !location ? handleSSRLocation : location;
+
+    if (useLocation.type === 'country') {
+      if (useLocation.adm2) return 'adm2';
+      if (useLocation.adm1) return 'adm1';
       return 'country';
     }
-    if (location.type === 'global') return 'global';
+    if (useLocation.type === 'global') return 'global';
     return 'area';
   }
 
   getSentence() {
-    const { location, category, locationNames } = this.props;
-    if (!location || !category) {
+    const { location, category, locationNames, handleSSRLocation } = this.props;
+    if ((!location && !handleSSRLocation) || !category) {
       return { sentence: '', props: {} };
     }
 
@@ -44,7 +45,9 @@ class GlobalSentence extends PureComponent {
       };
     }
 
-    const sentenceProps = {
+    let sentenceProps;
+
+    sentenceProps = {
       ...(locationNames?.adm0?.label && {
         location: locationNames?.adm0?.label,
       }),
@@ -59,6 +62,18 @@ class GlobalSentence extends PureComponent {
       }),
     };
 
+    if (
+      !locationNames?.adm0 &&
+      !locationNames?.adm1 &&
+      !locationNames?.adm2 &&
+      handleSSRLocation
+    ) {
+      sentenceProps = {
+        ...handleSSRLocation,
+        area: handleSSRLocation?.label,
+      };
+    }
+
     return {
       sentence,
       params: sentenceProps,
@@ -66,13 +81,10 @@ class GlobalSentence extends PureComponent {
   }
 
   render() {
-    const { loading } = this.props;
-
     return (
       <div className="c-widgets dashboard-widgets global-dashboard-sentence">
         <div className="c-widget c-dashboard-sentence-widget">
-          {loading && <Loader className="widget-loader" />}
-          {!loading && <DynamicSentence sentence={this.getSentence()} />}
+          <DynamicSentence sentence={this.getSentence()} />
         </div>
       </div>
     );

@@ -2,7 +2,9 @@ import { createElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
+import sumBy from 'lodash/sumBy';
 import pick from 'lodash/pick';
+import has from 'lodash/has';
 import { trackEvent } from 'utils/analytics';
 
 import WidgetComponent from './component';
@@ -17,7 +19,9 @@ class WidgetContainer extends Component {
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
     geostore: PropTypes.object,
+    meta: PropTypes.object,
     status: PropTypes.string,
+    maxDownloadSize: PropTypes.object,
   };
 
   static defaultProps = {
@@ -30,22 +34,24 @@ class WidgetContainer extends Component {
   state = {
     loading: false,
     error: false,
+    maxSize: null,
+    downloadDisabled: false,
+    filterSelected: false,
   };
 
   _mounted = false;
 
   componentDidMount() {
     this._mounted = true;
-    const { location, settings, status } = this.props;
+    const { location, settings, meta, status } = this.props;
     const params = { ...location, ...settings, status };
 
-    this.handleGetWidgetData(params);
+    this.handleGetWidgetData({ ...params, GFW_META: meta });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location, settings, refetchKeys, status } = this.props;
+    const { location, settings, refetchKeys, status, meta } = this.props;
     const { error } = this.state;
-
     const hasLocationChanged =
       location && !isEqual(location, prevProps.location);
     const hasErrorChanged =
@@ -59,12 +65,30 @@ class WidgetContainer extends Component {
     // refetch data if error, settings, or location changes
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings, status };
-      this.handleGetWidgetData(params);
+      this.handleGetWidgetData({ ...params, GFW_META: meta });
     }
   }
 
   componentWillUnmount() {
     this._mounted = false;
+  }
+
+  handleMaxRowSize(data) {
+    const { maxDownloadSize = null, settings } = this.props;
+    if (!maxDownloadSize) return { downloadDisabled: false };
+    const { key, subKey, maxSize } = maxDownloadSize;
+    const filterSelected = !!settings?.forestType || !!settings?.landCategory;
+    if (has(data, key) && Array.isArray(data[key]) && maxSize) {
+      const exceedsMaxSize = subKey
+        ? sumBy(data[key], subKey) > maxSize
+        : sumBy(data, key) > maxSize;
+      return {
+        downloadDisabled: filterSelected || exceedsMaxSize,
+        maxSize,
+        filterSelected,
+      };
+    }
+    return { downloadDisabled: false, maxSize };
   }
 
   handleGetWidgetData = (params) => {
@@ -78,7 +102,11 @@ class WidgetContainer extends Component {
           setWidgetData(data);
           setTimeout(() => {
             if (this._mounted) {
-              this.setState({ loading: false, error: false });
+              this.setState({
+                ...this.handleMaxRowSize(data),
+                loading: false,
+                error: false,
+              });
             }
           }, 200);
         })
@@ -94,9 +122,9 @@ class WidgetContainer extends Component {
   };
 
   handleRefetchData = () => {
-    const { settings, location, widget } = this.props;
+    const { settings, location, widget, meta } = this.props;
     const params = { ...location, ...settings };
-    this.handleGetWidgetData(params);
+    this.handleGetWidgetData({ ...params, GFW_META: meta });
     trackEvent({
       category: 'Refetch data',
       action: 'Data failed to fetch, user clicks to refetch',

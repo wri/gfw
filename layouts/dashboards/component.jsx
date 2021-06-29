@@ -15,6 +15,7 @@ import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGfwProvider from 'providers/mygfw-provider';
+import MetaProvider from 'providers/meta-provider';
 
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
@@ -42,7 +43,7 @@ const isServer = typeof window === 'undefined';
 
 class DashboardsPage extends PureComponent {
   static propTypes = {
-    handleSSRLocation: PropTypes.object,
+    ssrLocation: PropTypes.object,
     showMapMobile: PropTypes.bool,
     setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
@@ -137,7 +138,7 @@ class DashboardsPage extends PureComponent {
       showMapMobile,
       links,
       widgetAnchor,
-      handleSSRLocation,
+      ssrLocation,
       setWidgetsCategory,
       activeArea,
       clearScrollTo,
@@ -156,7 +157,7 @@ class DashboardsPage extends PureComponent {
         <div className="content-panel">
           <Header
             className="header"
-            handleSSRLocation={handleSSRLocation}
+            handleSSRLocation={ssrLocation}
             globalSentence={globalSentence}
           />
           {links && !!links.length && (
@@ -177,7 +178,7 @@ class DashboardsPage extends PureComponent {
               checkActive
             />
           )}
-          <GlobalSentence />
+          <GlobalSentence handleSSRLocation={ssrLocation} />
           {isPendingDashboard && (
             <PendingDashboard
               className="pending-message"
@@ -203,6 +204,7 @@ class DashboardsPage extends PureComponent {
         {widgetAnchor && (
           <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
         )}
+        <MetaProvider />
         <DatasetsProvider />
         <LatestProvider />
         <CountryDataProvider />
