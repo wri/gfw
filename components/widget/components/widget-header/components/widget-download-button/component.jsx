@@ -234,8 +234,8 @@ class WidgetDownloadButton extends PureComponent {
         'Your area is too large for downloading data! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).';
     }
 
-    if (disabled && !disabledMessage) {
-      tooltipText = 'Temporarily unavailable';
+    if (disabled) {
+      tooltipText = disabledMessage || 'Temporarily unavailable';
     }
 
     if (disabled && disabledMessage) {

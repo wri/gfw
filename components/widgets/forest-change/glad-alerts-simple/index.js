@@ -132,8 +132,8 @@ export default {
       aggregate: true,
       aggregateBy: 'days',
     }).then((alertsResponse) => {
-      const alerts = alertsResponse.data.data.attributes.value;
-      const { downloadUrls } = alertsResponse.data.data.attributes;
+      const alerts = alertsResponse?.data?.data?.attributes?.value;
+      const { downloadUrls } = alertsResponse?.data?.data?.attributes;
       return {
         alerts:
           alerts &&
