@@ -16,11 +16,20 @@ import './styles.scss';
 function handleTitle(basemap) {
   return (
     <>
-      {basemap.label}
-      {' '}
-      {basemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
-      {' '}
-      {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
+      <span>
+        {basemap.label}
+        {' '}
+        {basemap.value !== 'recentImagery' ? 'SATELLITE IMAGERY' : ''}
+        {' '}
+        {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
+      </span>
+      {basemap.value === 'planet' &&
+        basemap.active &&
+        basemap?.planetPeriod?.period && (
+          <span className="title-active-value">
+            {basemap.planetPeriod.period}
+          </span>
+        )}
     </>
   );
 }
@@ -79,7 +88,9 @@ const SatelliteBasemaps = ({
       <header className="header">
         <button
           className="show-satellite-basemap-btn"
-          title={handleTitle(activeBasemap)}
+          title={`${activeBasemap.active ? 'Disable' : 'Enable'} ${
+            activeBasemap.label
+          }`}
           onClick={handleToggleActive}
         >
           <Checkbox

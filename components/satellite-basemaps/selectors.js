@@ -10,6 +10,7 @@ import { getSelectedYear } from './settings/landsat-menu/selectors';
 
 const getLocation = (state) => state.location && state.location;
 const isTropics = (state) => state?.geostore?.data?.tropics || false;
+const getMapBasemapSettings = (state) => state?.map?.settings?.basemap;
 
 export const getDynoBasemaps = createSelector(
   [getLocation, getBasemaps],
@@ -27,8 +28,22 @@ export const getDynoBasemaps = createSelector(
 );
 
 export const getActiveDynoBasemap = createSelector(
-  [getLocation, getDynoBasemaps, getBasemap, isTropics],
-  (location, basemaps, activeBasemap, tropics) => {
+  [
+    getLocation,
+    getDynoBasemaps,
+    getBasemap,
+    isTropics,
+    getPeriodOptions,
+    getMapBasemapSettings,
+  ],
+  (
+    location,
+    basemaps,
+    activeBasemap,
+    tropics,
+    planetPeriods,
+    mapBasemapSettings
+  ) => {
     const isDashboard = location.pathname.includes('/dashboards/');
     if (!basemaps || !activeBasemap) {
       return null;
@@ -45,6 +60,13 @@ export const getActiveDynoBasemap = createSelector(
           dynoBasemap.value !== 'planet' && {
             ...defaultBasemap,
           }),
+        settings: mapBasemapSettings,
+        ...(dynoBasemap &&
+          dynoBasemap?.value === 'planet' && {
+            planetPeriod: planetPeriods.find(
+              (p) => p.value === mapBasemapSettings.name
+            ),
+          }),
         active: true,
       };
     }
@@ -52,6 +74,10 @@ export const getActiveDynoBasemap = createSelector(
     if (defaultBasemap) {
       return {
         ...defaultBasemap,
+        settings: mapBasemapSettings,
+        ...(defaultBasemap.value === 'planet' && {
+          planetPeriod: planetPeriods[0],
+        }),
         active: tropics || false,
       };
     }

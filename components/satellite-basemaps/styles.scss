@@ -5,6 +5,11 @@
 
   .caveat { font-style: italic; }
 
+  .title-active-value {
+    color: $grey;
+    padding: 0 15px 0 0;
+  }
+
   > .header {
     display: flex;
     align-items: center;
@@ -13,6 +18,9 @@
     background: $slate-dark;
 
     .active-basemap-title {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
       color: $white;
       font-size: 11px;
       text-transform: uppercase;
