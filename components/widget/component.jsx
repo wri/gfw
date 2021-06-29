@@ -179,6 +179,7 @@ class Widget extends PureComponent {
           metaLoading={metaLoading}
           error={error}
           simple={simple}
+          location={location}
           locationName={locationLabelFull}
           active={active}
           data={data}

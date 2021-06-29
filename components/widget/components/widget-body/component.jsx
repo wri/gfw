@@ -37,6 +37,7 @@ const chartOptions = {
 class WidgetBody extends PureComponent {
   static propTypes = {
     widget: PropTypes.string,
+    location: PropTypes.object,
     settings: PropTypes.object,
     loading: PropTypes.bool,
     metaLoading: PropTypes.bool,

@@ -4,6 +4,13 @@ import isEmpty from 'lodash/isEmpty';
 
 export const selectLocation = (state) => state.location;
 
+export const isMapPage = (location) =>
+  location.pathname && location.pathname.includes('map');
+export const isDashboardPage = (location) =>
+  location.pathname && location.pathname.includes('dashboard');
+export const isEmbedPage = (location) =>
+  location.pathname && location.pathname.includes('embed');
+
 export const getAllAreas = (state) =>
   state && state.areas && sortBy(state.areas.data, 'name');
 

@@ -10,6 +10,8 @@ import {
   FIRES_ALERTS_VIIRS,
 } from 'data/layers';
 
+import { isMapPage } from 'utils/location';
+
 // function for OTF analysis
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
@@ -300,7 +302,9 @@ export default {
   settingsBtnConfig: {
     text: '+ Select an intersection',
     shouldShowButton: (props) =>
-      !props.settings.forestType && !props.settings.landCategory,
+      !props.settings.forestType &&
+      !props.settings.landCategory &&
+      !isMapPage(props?.location),
   },
   // where should we see this widget
   whitelists: {
