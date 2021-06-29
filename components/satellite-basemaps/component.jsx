@@ -57,7 +57,8 @@ const SatelliteBasemaps = ({
     });
   };
 
-  const handleSetSatelliteBasemap = (value) => {
+  const handleSetSatelliteBasemap = (e, value) => {
+    e.stopPropagation();
     setMapBasemap({
       value,
       ...(value === 'planet' && {
@@ -116,7 +117,7 @@ const SatelliteBasemaps = ({
                   <button
                     className="satellite-basemap--cta"
                     aria-label={`Activate ${basemap.label}`}
-                    onClick={() => handleSetSatelliteBasemap(basemap.value)}
+                    onClick={(e) => handleSetSatelliteBasemap(e, basemap.value)}
                   >
                     <img
                       src={basemap.image}
@@ -130,8 +131,10 @@ const SatelliteBasemaps = ({
                           <Button
                             className="info-btn"
                             theme="theme-button-tiny theme-button-grey-filled square"
-                            onClick={() =>
-                              setModalMetaSettings(basemap.infoModal)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setModalMetaSettings(basemap.infoModal);
+                            }}
                           >
                             <Icon icon={infoIcon} />
                           </Button>
