@@ -25,7 +25,8 @@ const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
 const getAdm1 = (state) => state.adm1;
 const getLocation = (state) => state.location || null;
-const getLocationsMeta = (state) => state.childData;
+const getLocationsMeta = (state) =>
+  state.location === 'global' ? state.locationData : state.childData;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
