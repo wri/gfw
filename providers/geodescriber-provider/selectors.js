@@ -114,7 +114,9 @@ export const getGeodescriberTitleFull = createSelector(
 
 export const getAdminDescription = createSelector(
   [getAdminsSelected, selectGeodescriber, getDataLocation],
-  (locationNames, data, locationObj) => parseSentence(data, locationNames, locationObj));
+  (locationNames, data, locationObj) =>
+    parseSentence(data, locationNames, locationObj)
+);
 
 export const getGeodescriberDescription = createSelector(
   [selectGeodescriber, getDataLocation, getAdminDescription],

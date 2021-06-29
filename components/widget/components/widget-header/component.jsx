@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
-
+import { format } from 'd3-format';
 import WidgetMapButton from './components/widget-map-button';
 import WidgetSettingsButton from './components/widget-settings-button';
 import WidgetInfoButton from './components/widget-info-button';
@@ -16,13 +16,17 @@ class WidgetHeader extends PureComponent {
     title: PropTypes.string.isRequired,
     widget: PropTypes.string,
     large: PropTypes.bool,
+    maxSize: PropTypes.number,
     datasets: PropTypes.array,
     loading: PropTypes.bool,
     embed: PropTypes.bool,
     simple: PropTypes.bool,
     active: PropTypes.bool,
+    disableDownload: PropTypes.bool,
+    filterSelected: PropTypes.bool,
     metaKey: PropTypes.string,
     settingsConfig: PropTypes.array,
+    settings: PropTypes.object,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowMap: PropTypes.func,
@@ -31,7 +35,7 @@ class WidgetHeader extends PureComponent {
     getDataURL: PropTypes.func,
     status: PropTypes.string,
     shouldSettingsOpen: PropTypes.bool,
-    toggleSettingsMenu: PropTypes.func
+    toggleSettingsMenu: PropTypes.func,
   };
 
   render() {
@@ -40,6 +44,9 @@ class WidgetHeader extends PureComponent {
       title,
       loading,
       active,
+      disableDownload,
+      filterSelected,
+      maxSize,
       embed,
       large,
       datasets,
@@ -54,13 +61,21 @@ class WidgetHeader extends PureComponent {
       getDataURL,
       status,
       shouldSettingsOpen,
-      toggleSettingsMenu
+      toggleSettingsMenu,
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
+    let disabledMessageString = null;
+    if (disableDownload) {
+      disabledMessageString = filterSelected
+        ? `Remove Forest Type and Land Category filters to download.`
+        : `To download, reduce the total number of alerts to less than ${format(
+            ','
+          )(maxSize)} by narrowing the date range.`;
+    }
 
     return (
       <div className={cx('c-widget-header', { simple })}>
@@ -78,6 +93,7 @@ class WidgetHeader extends PureComponent {
               settingsConfig={settingsConfig}
               loading={loading}
               title={title}
+              embed={embed}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}
@@ -90,7 +106,12 @@ class WidgetHeader extends PureComponent {
           <div className="small-options">
             {showDownloadBtn && (
               <WidgetDownloadButton
-                disabled={widget === 'gladAlerts' || widget === 'gladRanked'}
+                disabled={
+                  disableDownload ||
+                  widget === 'gladAlerts' ||
+                  widget === 'gladRanked'
+                }
+                disabledMessage={disabledMessageString}
                 {...this.props}
               />
             )}
