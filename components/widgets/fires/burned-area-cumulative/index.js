@@ -50,6 +50,12 @@ export default {
       clearable: true,
       border: true,
     },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density',
+    },
   ],
   datasets: [
     {
@@ -63,7 +69,13 @@ export default {
       layers: [BURNED_AREA_MODIS],
     },
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
+  refetchKeys: [
+    'dataset',
+    'forestType',
+    'landCategory',
+    'confidence',
+    'threshold',
+  ],
   preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
   types: ['country', 'wdpa', 'aoi'],
@@ -78,6 +90,7 @@ export default {
   },
   settings: {
     dataset: 'modis_burned_area',
+    threshold: 30,
   },
   sentences: {
     allBurn:

@@ -42,7 +42,7 @@ const SQL_QUERIES = {
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreas:
-    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} AND umd_tree_cover_density__threshold >= 0 GROUP BY {location}, alert__year, alert__week',
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreaGrouped:
@@ -81,6 +81,7 @@ const ALLOWED_PARAMS = {
     'adm0',
     'adm1',
     'adm2',
+    'threshold',
     'forestType',
     'landCategory',
     'confidence',
@@ -1124,6 +1125,8 @@ export const fetchGLADLatest = () => {
 
 export const fetchBurnedArea = (params) => {
   const { forestType, landCategory, ifl, download, dataset } = params || {};
+  console.log('params', params);
+  console.log('WHERE>>> ', getWHEREQuery({ ...params, dataset }));
   const url = encodeURI(
     `${getRequestUrl({
       ...params,

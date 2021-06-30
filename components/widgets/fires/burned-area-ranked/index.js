@@ -64,6 +64,12 @@ const defaultConfig = {
       border: true,
       noSort: true,
     },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density',
+    },
   ],
   chartType: 'lollipop',
   colors: 'fires',
@@ -84,7 +90,7 @@ const defaultConfig = {
       layers: [BURNED_AREA_MODIS],
     },
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'weeks'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'weeks', 'threshold'],
   metaKey: '',
   sentences: {
     initial:
@@ -121,6 +127,7 @@ const defaultConfig = {
     dataset: 'modis_burned_area',
     layerStartDate: null,
     layerEndDate: null,
+    threshold: 30,
   },
   getData: (params) =>
     fetchMODISLatest(params)

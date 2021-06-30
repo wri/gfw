@@ -51,8 +51,14 @@ export default {
       clearable: true,
       border: true,
     },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density',
+    },
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'threshold'],
   preventRenderKeys: ['startIndex', 'endIndex'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
@@ -80,6 +86,7 @@ export default {
   },
   settings: {
     dataset: 'modis_burned_area',
+    threshold: 30,
   },
   sentences: {
     defaultSentence: 'In {location} there ',
