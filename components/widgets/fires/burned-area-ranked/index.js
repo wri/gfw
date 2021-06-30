@@ -172,7 +172,7 @@ export default {
     if (!widgetSettings || !widgetSettings.dataset) {
       return defaultConfig;
     }
-    if (widgetSettings.dataset === 'modis_burned_area') {
+    if (widgetSettings.dataset !== 'modis_burned_area') {
       return firesRanked;
     }
     return defaultConfig;

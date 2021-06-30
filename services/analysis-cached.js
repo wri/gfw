@@ -44,7 +44,7 @@ const SQL_QUERIES = {
   burnedAreas:
     'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
-    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} {dateFilter} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreaGrouped:
     'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burned_area__ha FROM data {WHERE} {dateFilter} GROUP BY {location}, alert__year, alert__week',
   firesWithin:

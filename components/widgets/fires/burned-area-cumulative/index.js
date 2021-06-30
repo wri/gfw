@@ -2,6 +2,7 @@ import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 
 import { fetchBurnedArea, fetchMODISLatest } from 'services/analysis-cached';
+import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -15,7 +16,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-export default {
+const defaultConfig = {
   widget: 'burnedAreaCumulative',
   title: 'Cumulative Burned Area in {location}',
   large: true,
@@ -126,4 +127,20 @@ export default {
     ),
   getDataURL: (params) => [fetchBurnedArea({ ...params, download: true })],
   getWidgetProps,
+};
+
+export default {
+  widget: 'burnedAreaCumulative',
+  proxy: true,
+  refetchKeys: ['dataset'],
+  getWidget: (widgetSettings) => {
+    // called when settings changes
+    if (!widgetSettings || !widgetSettings.dataset) {
+      return defaultConfig;
+    }
+    if (widgetSettings.dataset !== 'modis_burned_area') {
+      return firesAlertsCumulative;
+    }
+    return defaultConfig;
+  },
 };
