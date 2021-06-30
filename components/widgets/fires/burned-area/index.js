@@ -22,6 +22,7 @@ export default {
   large: true,
   dataType: 'fires',
   categories: ['summary', 'fires'],
+  types: ['country', 'wdpa', 'aoi'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -78,7 +79,6 @@ export default {
   ],
   hideLayers: true,
   visible: ['dashboard', 'analysis'],
-  types: ['country'],
   metaKey: '',
   sortOrder: {
     summary: 100,
