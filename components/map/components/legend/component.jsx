@@ -127,12 +127,6 @@ const MapLegend = ({
                   <LegendItemTypeGradient />
                 </LegendItemTypes>
 
-                {statementConfig && (
-                  <LayerStatement
-                    className="layer-statement"
-                    {...statementConfig}
-                  />
-                )}
                 {activeLayer &&
                   paramsSelectorConfig &&
                   params &&
@@ -194,6 +188,12 @@ const MapLegend = ({
                     layers={lg.layers}
                     onToggle={onToggleLayer}
                     onInfoClick={onChangeInfo}
+                  />
+                )}
+                {statementConfig && (
+                  <LayerStatement
+                    className="layer-statement"
+                    {...statementConfig}
                   />
                 )}
                 {moreInfo && (
