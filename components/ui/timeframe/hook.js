@@ -134,19 +134,16 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
   // }, [selectedIndex, initialized])
 
   useEffect(() => {
-    if (ref.current) {
-      const timeout = setTimeout(() => {
-        if (ref.current) {
-          const visibleLabels = getVisibleLabels(
-            ref.current.getBoundingClientRect(),
-            tileRefs.current
-          );
-          setLabels(visibleLabels);
-        }
-      }, 1000);
-      return () => clearTimeout(timeout);
-    }
-    return () => {};
+    const timeout = setTimeout(() => {
+      if (ref.current) {
+        const visibleLabels = getVisibleLabels(
+          ref.current.getBoundingClientRect(),
+          tileRefs.current
+        );
+        setLabels(visibleLabels);
+      }
+    }, 1000);
+    return () => clearTimeout(timeout);
   }, [ref, tileRefs, selectedIndex]);
 
   function moveTimeline(dir) {
