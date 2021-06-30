@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 import {
   fetchBurnedAreaGrouped,
-  fetchVIIRSLatest,
+  fetchMODISLatest,
   getAreaIntersectionGrouped,
 } from 'services/analysis-cached';
 import firesRanked from 'components/widgets/fires/fires-ranked';
@@ -123,7 +123,7 @@ const defaultConfig = {
     layerEndDate: null,
   },
   getData: (params) =>
-    fetchVIIRSLatest(params)
+    fetchMODISLatest(params)
       .then((response) => (response && response.date) || null)
       .then((latest) =>
         all([
@@ -145,7 +145,7 @@ const defaultConfig = {
         return null;
       }),
   getDataURL: async (params) => {
-    const latestResponse = await fetchVIIRSLatest(params);
+    const latestResponse = await fetchMODISLatest(params);
     const latest = (latestResponse && latestResponse.date) || null;
 
     return [

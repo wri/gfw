@@ -1,4 +1,9 @@
-import { apiRequest, tilesRequest, cartoRequest } from 'utils/request';
+import {
+  apiRequest,
+  tilesRequest,
+  cartoRequest,
+  dataApiRequest,
+} from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
@@ -1334,6 +1339,21 @@ export const fetchVIIRSLatest = () =>
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 
+      return {
+        date,
+      };
+    })
+    .catch(() => ({
+      date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
+    }));
+
+export const fetchMODISLatest = () =>
+  dataApiRequest
+    .get('dataset/umd_modis_burned_areas/latest')
+    .then(({ data }) => {
+      const dates =
+        data && data?.metadata && data?.metadata?.content_date_range;
+      const { max: date } = dates;
       return {
         date,
       };

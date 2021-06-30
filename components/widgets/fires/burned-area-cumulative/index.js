@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 
-import { fetchBurnedArea, fetchVIIRSLatest } from 'services/analysis-cached';
+import { fetchBurnedArea, fetchMODISLatest } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -86,7 +86,7 @@ export default {
       'In {location}, {area} of land within {indicator} has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}.',
   },
   getData: (params) =>
-    all([fetchBurnedArea(params), fetchVIIRSLatest(params)]).then(
+    all([fetchBurnedArea(params), fetchMODISLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));

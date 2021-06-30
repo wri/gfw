@@ -8,10 +8,14 @@ import {
   CARTO_API,
   MAPBOX_API,
   RESOURCE_WATCH_API,
+  GFW_DATA_API,
+  GFW_STAGING_DATA_API,
 } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
+const GFW_DATA_API_URL =
+  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const isServer = typeof window === 'undefined';
 
@@ -21,8 +25,8 @@ export const apiRequest = create({
   ...(ENVIRONMENT === 'staging' && {
     headers: {
       'x-api-key': process.env.NEXT_PUBLIC_DATA_API_KEY,
-    }
-  })
+    },
+  }),
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
@@ -40,6 +44,12 @@ export const tilesRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_TILES_API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+});
+
+export const dataApiRequest = create({
+  timeout: 30 * 1000,
+  baseURL: GFW_DATA_API_URL,
+  transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
 export const rwRequest = create({
