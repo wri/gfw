@@ -51,6 +51,32 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
+// @todo : check AOI area label
+function getLabel(location, countryData) {
+  let country;
+  if (location.adm0) {
+    country = countryData?.countries.find((c) => c.value === location.adm0)
+      ?.label;
+  }
+
+  if (location.adm2) {
+    const adm2Label = countryData?.subRegions.find(
+      (c) => c.value === location.adm2
+    )?.label;
+    return `${adm2Label}, ${country}`;
+  }
+  if (location.adm1) {
+    const adm1Label = countryData?.regions.find(
+      (c) => c.value === location.adm1
+    )?.label;
+    return `${adm1Label}, ${country}`;
+  }
+  if (location.adm0) {
+    return country;
+  }
+  return 'global';
+}
+
 export const getServerSideProps = async ({ params }) => {
   const [type] = params?.location || [];
 
@@ -143,12 +169,14 @@ export const getServerSideProps = async ({ params }) => {
     );
 
     const parsedSentence = parseSentence(data, locationNames, locationObj);
+    const label = getLabel({ adm0, adm1, adm2 }, countryData);
 
     const handleSSRLocation = {
       adm0,
       adm1,
       adm2,
       type: locationType,
+      label: label || null,
     };
 
     const description = parseStringWithVars(
