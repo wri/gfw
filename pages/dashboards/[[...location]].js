@@ -51,6 +51,7 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
+// @todo : check AOI area label
 function getLabel(location, countryData) {
   let country;
   if (location.adm0) {
@@ -168,13 +169,14 @@ export const getServerSideProps = async ({ params }) => {
     );
 
     const parsedSentence = parseSentence(data, locationNames, locationObj);
+    const label = getLabel({ adm0, adm1, adm2 }, countryData);
 
     const handleSSRLocation = {
       adm0,
       adm1,
       adm2,
       type: locationType,
-      label: getLabel({ adm0, adm1, adm2 }, countryData),
+      label: label || null,
     };
 
     const description = parseStringWithVars(
