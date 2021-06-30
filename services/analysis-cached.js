@@ -1124,9 +1124,14 @@ export const fetchGLADLatest = () => {
 };
 
 export const fetchBurnedArea = (params) => {
-  const { forestType, landCategory, ifl, download, dataset } = params || {};
-  console.log('params', params);
-  console.log('WHERE>>> ', getWHEREQuery({ ...params, dataset }));
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    dataset,
+    firesThreshold: threshold,
+  } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -1138,7 +1143,7 @@ export const fetchBurnedArea = (params) => {
         getLocationSelect({ ...params, cast: true })
       )
       .replace(/{location}/g, getLocationSelect(params))
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset, threshold }))
   );
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -1162,7 +1167,8 @@ export const fetchBurnedArea = (params) => {
 };
 
 export const fetchBurnedAreaGrouped = (params) => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, firesThreshold: threshold } =
+    params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1173,7 +1179,8 @@ export const fetchBurnedAreaGrouped = (params) => {
   if (!requestUrl) {
     return new Promise(() => {});
   }
-  const whereStr = getWHEREQuery({ ...params, grouped: true }) || 'WHERE';
+  const whereStr =
+    getWHEREQuery({ ...params, threshold, grouped: true }) || 'WHERE';
   const isFirst = whereStr === 'WHERE';
   const weeksFilterStr = getWeeksFilter({ ...params, isFirst });
   const url = encodeURI(

@@ -53,13 +53,14 @@ export default {
       border: true,
     },
     {
-      key: 'threshold',
+      key: 'firesThreshold',
       label: 'canopy density',
       type: 'mini-select',
       metaKey: 'widget_canopy_density',
+      noSort: true,
     },
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'threshold'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'firesThreshold'],
   preventRenderKeys: ['startIndex', 'endIndex'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
@@ -86,7 +87,7 @@ export default {
   },
   settings: {
     dataset: 'modis_burned_area',
-    threshold: 30,
+    firesThreshold: 0,
   },
   sentences: {
     defaultSentence: 'In {location} there ',

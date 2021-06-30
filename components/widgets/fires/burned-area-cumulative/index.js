@@ -52,10 +52,11 @@ const defaultConfig = {
       border: true,
     },
     {
-      key: 'threshold',
+      key: 'firesThreshold',
       label: 'canopy density',
       type: 'mini-select',
       metaKey: 'widget_canopy_density',
+      noSort: true,
     },
   ],
   datasets: [
@@ -75,7 +76,7 @@ const defaultConfig = {
     'forestType',
     'landCategory',
     'confidence',
-    'threshold',
+    'firesThreshold',
   ],
   preventRenderKeys: ['startIndex', 'endIndex'],
   visible: ['dashboard', 'analysis'],
@@ -91,7 +92,7 @@ const defaultConfig = {
   },
   settings: {
     dataset: 'modis_burned_area',
-    threshold: 30,
+    firesThreshold: 0,
   },
   sentences: {
     allBurn:
