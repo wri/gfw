@@ -7,7 +7,6 @@ import sortBy from 'lodash/sortBy';
 
 import { selectActiveLang, getMapboxLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
-import { getPeriodOptions } from 'components/satellite-basemaps/settings/planet-menu/selectors';
 
 import { getDayRange } from './utils';
 import basemaps from './basemaps';
@@ -27,11 +26,11 @@ const selectLatest = (state) => state.latest && state.latest.data;
 export const selectGeostore = (state) => state.geostore && state.geostore.data;
 const getLocation = (state) => state.location;
 const selectLocation = (state) => state.location && state.location.payload;
-const isTropics = (state) => state?.geostore?.data?.tropics || false;
 
 // CONSTS
 export const getMapSettings = (state) => state.map?.settings || {};
 export const getBasemaps = () => basemaps;
+export const isTropics = (state) => state?.geostore?.data?.tropics || false;
 
 // SELECTORS
 export const getMapViewport = createSelector([getMapSettings], (settings) => {
@@ -72,8 +71,8 @@ export const getBasemapFromState = createSelector(
 );
 
 export const getBasemap = createSelector(
-  [getBasemapFromState, getLocation, getPeriodOptions, isTropics],
-  (basemapState, location, planetPeriods, tropics) => {
+  [getBasemapFromState, getLocation],
+  (basemapState, location) => {
     const isDashboard = location.pathname.includes('/dashboards/');
 
     let basemap = {
@@ -85,14 +84,6 @@ export const getBasemap = createSelector(
       if (basemapState.value !== 'planet') {
         basemap = basemaps.default;
       }
-    }
-
-    if (basemapState.value !== 'planet' && tropics) {
-      basemap = {
-        ...basemaps.planet,
-        color: 'rgb',
-        name: planetPeriods[planetPeriods.length - 1].value,
-      };
     }
 
     let url = basemap && basemap.url;

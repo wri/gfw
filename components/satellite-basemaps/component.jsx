@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -41,9 +41,22 @@ const SatelliteBasemaps = ({
   setMainMapSettings,
   setMapBasemap,
   setModalMetaSettings,
+  isTropics,
 }) => {
   const [open, setOpen] = useState(false);
+  const [defaultSatSet, setDefaultSatSet] = useState(false);
   const toggleOpen = () => setOpen(!open);
+
+  useEffect(() => {
+    if (isTropics && !defaultSatSet) {
+      setMapBasemap({
+        value: 'planet',
+        color: 'rgb',
+        name: planetPeriods[planetPeriods.length - 1].value,
+      });
+      setDefaultSatSet(true);
+    }
+  }, [isTropics, defaultSatSet]);
 
   const handleToggleActive = () => {
     setOpen(!activeBasemap.active);
@@ -178,6 +191,7 @@ const SatelliteBasemaps = ({
 
 SatelliteBasemaps.propTypes = {
   className: PropTypes.string,
+  isTropics: PropTypes.bool,
   planetPeriods: PropTypes.arrayOf(PropTypes.object),
   landsatYear: PropTypes.number.isRequired,
   setMainMapSettings: PropTypes.func.isRequired,

@@ -35,6 +35,7 @@ export const getActiveDynoBasemap = createSelector(
     isTropics,
     getPeriodOptions,
     getMapBasemapSettings,
+    getBasemaps,
   ],
   (
     location,
@@ -48,9 +49,7 @@ export const getActiveDynoBasemap = createSelector(
     if (!basemaps || !activeBasemap) {
       return null;
     }
-
     const defaultBasemap = find(basemaps, { value: 'planet' });
-
     const dynoBasemap = find(basemaps, { value: activeBasemap.value });
 
     if (dynoBasemap) {
@@ -78,7 +77,7 @@ export const getActiveDynoBasemap = createSelector(
         ...(defaultBasemap.value === 'planet' && {
           planetPeriod: planetPeriods?.length ? planetPeriods[0] : null,
         }),
-        active: tropics || false,
+        active: false,
       };
     }
 
@@ -91,4 +90,5 @@ export const getBasemapProps = createStructuredSelector({
   planetPeriods: getPeriodOptions,
   landsatYear: getSelectedYear,
   basemaps: getDynoBasemaps,
+  isTropics,
 });
