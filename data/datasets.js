@@ -3,6 +3,9 @@ export const RIVER_BASINS_BOUNDARIES_DATASET = 'river-basins';
 export const FOREST_LOSS_DATASET_2020 = 'tree-cover-loss-2020';
 export const FOREST_LOSS_DATASET = 'tree-cover-loss';
 export const GLAD_DEFORESTATION_ALERTS_DATASET = 'glad-deforestation-alerts';
+export const GLAD_S2_DEFORESTATION_ALERTS_DATASET =
+  'glad-s2-deforestation-alerts';
+export const RADD_DEFORESTATION_ALERTS_DATASET = 'radd-deforestation-alerts';
 export const FOREST_GAIN_DATASET = 'tree-cover-gain';
 export const FOREST_EXTENT_DATASET = 'tree-cover';
 export const BIOMASS_LOSS_DATASET =
