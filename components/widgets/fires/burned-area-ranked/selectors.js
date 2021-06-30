@@ -5,7 +5,6 @@ import sortBy from 'lodash/sortBy';
 import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
 import mean from 'lodash/mean';
-import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
@@ -33,13 +32,13 @@ const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 const getTitle = (state) => state.title;
 
-const VIIRS_START_YEAR = 2012;
+const MODIS_START_YEAR = 2001;
 
 export const getYears = createSelector([getLatestDate], (latest) => {
   const latestYear = moment(latest).year();
 
   const years = [];
-  for (let i = VIIRS_START_YEAR; i <= latestYear; i += 1) {
+  for (let i = MODIS_START_YEAR; i <= latestYear; i += 1) {
     years.push(i);
   }
   return years;
@@ -71,7 +70,9 @@ export const getStatsByAdmin = createSelector(
         if (startWeek < endWeek) {
           countsArray = years.map((year) => {
             const filteredYear = adminAlerts.filter((el) => el.year === year);
-            return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
+            return filteredYear.length > 0
+              ? sumBy(filteredYear, 'burned_area__ha')
+              : 0;
           });
         } else {
           // i.e. the period goes into previous year
@@ -82,7 +83,9 @@ export const getStatsByAdmin = createSelector(
                 (el.year === year && el.week <= endWeek) ||
                 (el.year === year - 1 && el.week > startWeek)
             );
-            return filteredYear.length > 0 ? sumBy(filteredYear, 'count') : 0;
+            return filteredYear.length > 0
+              ? sumBy(filteredYear, 'burned_area__ha')
+              : 0;
           });
         }
         const stdDevCounts = stdDevData(countsArray);
@@ -102,7 +105,7 @@ export const getStatsByAdmin = createSelector(
 export const parseList = createSelector(
   [getStatsByAdmin, getAreas, getLocationsMeta, getLocation, getAdm1],
   (data, areas, meta, location, adm1) => {
-    if (isEmpty(data) || isEmpty(areas) || isEmpty(meta)) {
+    if (isEmpty(data) || isEmpty(areas)) {
       return null;
     }
     // Now we have partial data, we iterate through and calculate
@@ -112,14 +115,16 @@ export const parseList = createSelector(
     const mappedData = data.map((adm) => {
       const locationId = matchKey === 'iso' ? adm.id : parseInt(adm.id, 10);
       const region = meta[locationId];
-
+      // Area per Mha
       const counts = adm.currentYearCounts;
       const locationAreaData =
         areas.find((el) => el[matchKey] === locationId) || {};
 
       const locationArea = locationAreaData.area__ha || null;
       // Density in counts per Mha
-      const density = locationArea ? (1e6 * counts) / locationArea : 0;
+      const density = locationArea
+        ? (100 * adm.currentYearCounts) / locationArea
+        : 0;
       const { significance } = adm;
 
       return {
@@ -134,7 +139,7 @@ export const parseList = createSelector(
     });
     const filteredData = mappedData.filter((d) => d.label);
     return matchKey === 'iso' && location.value !== 'global'
-      ? filteredData.filter((d) => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
+      ? filteredData.filter((d) => d.area > 1e6 && d.counts > 0) // At least one fire per MHa at iso level
       : filteredData;
   }
 );
@@ -142,10 +147,10 @@ export const parseList = createSelector(
 export const parseData = createSelector(
   [parseList, getUnit, getColors],
   (data, unit, colors) => {
-    if (isEmpty(data)) return null;
+    if (!data || isEmpty(data)) return null;
     const value = {
-      alert_density: 'density',
-      counts: 'counts',
+      burn_proportion: 'density',
+      total_burn: 'counts',
       significance: 'significance',
     }[unit];
 
@@ -159,7 +164,8 @@ export const parseData = createSelector(
           ? b.stdDev
           : minValue + (b.limit * (maxValue - minValue)) / 100,
     }));
-    const sortedData = sortBy(
+
+    return sortBy(
       data.map((d) => ({
         ...d,
         value: d[value], // value === 'density' ? d[value] : d.counts,
@@ -168,7 +174,6 @@ export const parseData = createSelector(
       })),
       value
     ).reverse();
-    return sortedData;
   }
 );
 
@@ -231,9 +236,9 @@ export const parseSentence = createSelector(
         color: statusColor,
       },
       topRegion,
-      topRegionCount: formatNumber({ num: topRegionCount, unit: 'counts' }),
+      topRegionCount: formatNumber({ num: topRegionCount, unit: 'ha' }),
       topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
-      topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
+      topRegionDensity: formatNumber({ num: topRegionDensity, unit: '%' }),
       location: locationName === 'global' ? 'globally' : locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`,
       component:
@@ -241,23 +246,23 @@ export const parseSentence = createSelector(
           ? {
               key: 'significant',
               fine: false,
-              tooltip: `'Significance' is a measure of how much the number of recorded fire alerts in the last ${
+              tooltip: `'Significance' is a measure of how much burned area recorded in the last ${
                 timeFrame && timeFrame.label
-              } varies from the expected value when considering the same period over all available historic data. Positive values indicate higher than expected, negative values indicate lower than expected, and values between ±1.0 are considered to be within the 'normal' range.`,
+              } varies from the expected value when considering the same period over all available historic data. Positive values indicate more than expected, negative values indicate less than expected, and values between ±1.0 are considered to be within the 'normal' range.`,
             }
           : {},
     };
     let sentence = indicator ? withInd : initial;
-    if (unit === 'alert_density') {
+    if (unit === 'burn_proportion') {
       sentence = indicator ? densityWithInd : densityInitial;
-    } else if (unit === 'counts') {
+    } else if (unit === 'total_burn') {
       sentence = indicator ? countsWithInd : countsInitial;
     }
     if (locationName === 'global') {
       sentence = indicator ? withIndGlobal : initialGlobal;
-      if (unit === 'alert_density') {
+      if (unit === 'burn_proportion') {
         sentence = indicator ? densityWithIndGlobal : densityInitialGlobal;
-      } else if (unit === 'counts') {
+      } else if (unit === 'total_burn') {
         sentence = indicator ? countsWithIndGlobal : countsInitialGlobal;
       }
     }

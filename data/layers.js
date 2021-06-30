@@ -10,6 +10,7 @@ export const RIVER_BASINS_BOUNDARIES = 'river-basin-boundaries';
 export const BIOMASS_LOSS = 'carbon-dioxide-emissions-from-tree-cover-loss';
 export const CARBON_EMISSIONS = 'carbon-emissions-2001-2020';
 export const CARBON_FLUX = 'net-carbon-flux-2001-2020';
+export const BURNED_AREA_MODIS = 'burned-area-modis';
 export const SOIL_CARBON_DENSITY = 'soil-carbon-density';
 export const TREE_BIOMASS_DENSITY = 'tree-biomass-density';
 export const BIODIVERSITY_HOTSPOTS_2016 = 'biodiversity-hot-spots-2016';

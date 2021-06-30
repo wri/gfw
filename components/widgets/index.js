@@ -79,7 +79,6 @@ class WidgetsContainer extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { getWidgetsData, activeWidget, embed, location } = this.props;
-
     if (location.type === 'global' && prevProps.location?.type !== 'global') {
       getWidgetsData();
     }

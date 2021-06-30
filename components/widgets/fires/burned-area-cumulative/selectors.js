@@ -49,10 +49,11 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
-      count: d.alert__count,
+      count: d.burn_area__ha,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
+
     const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
       (acc, next) => {
@@ -251,10 +252,10 @@ export const parseConfig = createSelector(
         key: 'count',
         labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
-        unit: ` ${dataset.toUpperCase()} alert`,
+        unit: ` MODIS burned area`,
         color: colors.main,
         nullValue: 'No data available',
-        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
+        unitFormat: (value) => `${format('.3s')(value)}ha`,
       },
     ];
     const compareYearsLines = {};
@@ -278,10 +279,10 @@ export const parseConfig = createSelector(
 
             return date.format('MMM DD YYYY');
           },
-          unit: ` ${dataset.toUpperCase()} alerts`,
+          unit: ` MODIS burned area`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
-          unitFormat: (value) => Number.isInteger(value) && format(',')(value),
+          unitFormat: (value) => `${format('.3s')(value)}ha`,
         });
         compareYearsLines[year] = {
           stroke:
@@ -296,7 +297,7 @@ export const parseConfig = createSelector(
     );
     const presentDay = currentData[presentDayIndex].date;
     return {
-      ...getChartConfig(colors, moment(latest), compareYearsLines, ''),
+      ...getChartConfig(colors, moment(latest), compareYearsLines, 'ha'),
       xAxis: {
         tickCount: 12,
         interval: 4,
@@ -320,13 +321,13 @@ export const parseConfig = createSelector(
         return Array.isArray(sorted)
           ? [
               {
-                label: 'Fire alerts',
+                label: 'Burned area',
               },
               ...sorted,
             ]
           : [
               {
-                label: 'Fire alerts',
+                label: 'Burned area',
               },
             ];
       },
@@ -418,13 +419,7 @@ export const parseSentence = createSelector(
     indicator
   ) => {
     if (!data || isEmpty(data)) return null;
-    const {
-      highConfidence,
-      allAlerts,
-      highConfidenceWithInd,
-      allAlertsWithInd,
-    } = sentences;
-    const { confidence } = options;
+    const { allBurnWithInd, allBurn } = sentences;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const start = startIndex;
@@ -486,14 +481,7 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
-    let sentence =
-      confidence && confidence.value === 'h' ? highConfidence : allAlerts;
-    if (indicator) {
-      sentence =
-        confidence && confidence.value === 'h'
-          ? highConfidenceWithInd
-          : allAlertsWithInd;
-    }
+    const sentence = indicator ? allBurnWithInd : allBurn;
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
@@ -501,20 +489,26 @@ export const parseSentence = createSelector(
       indicator: indicatorLabel,
       date: formattedData,
       latestYear,
-      dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
+      dataset_start_year: 2001,
       maxYear,
       maxTotal: {
         value: maxTotal ? format(',')(maxTotal) : 0,
         color: colors.main,
       },
-      dataset: dataset.toUpperCase(),
-      count: {
-        value: totalCurrentYear ? format(',')(totalCurrentYear) : 0,
+      dataset: 'MODIS',
+      area: {
+        value: totalCurrentYear
+          ? `${format('.2s')(totalCurrentYear)}ha`
+          : '0ha',
         color: colors.main,
       },
       status: {
         value: status,
         color: statusColor,
+      },
+      maxArea: {
+        value: maxTotal ? `${format('.2s')(maxTotal)}ha` : '0ha',
+        color: colors.main,
       },
     };
     return { sentence, params };

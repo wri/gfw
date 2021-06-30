@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 import { Desktop, Mobile } from 'gfw-components';
 
@@ -67,7 +68,7 @@ class LollipopChart extends PureComponent {
       simple,
     } = this.props;
     const { unit } = settings;
-    const { legend } = config || {};
+    const { legend, showStickUnit, showLegendUnit } = config || {};
 
     const unitsConfig = settingsConfig.find((conf) => conf.key === 'unit');
     const selectedUnitConfig =
@@ -75,6 +76,7 @@ class LollipopChart extends PureComponent {
       unitsConfig.options &&
       unitsConfig.options.find((opt) => opt.value === unit);
 
+    // unit in legend
     let formatUnit = unit;
     if (selectedUnitConfig) {
       formatUnit =
@@ -96,13 +98,12 @@ class LollipopChart extends PureComponent {
 
     const allNegative = !data.some((item) => item.value > 0);
     const allPositive = !data.some((item) => item.value < 0);
-
     return (
       <div className={cx('c-lollipop-chart', className)}>
         {!simple && legend && <Legend config={legend} simple={simple} />}
         <div className="unit-legend">
           {`${selectedUnitConfig.label || ''} ${
-            formatUnit !== '' ? `(${formatUnit.trim()})` : ''
+            showLegendUnit ? `(${formatUnit.trim()})` : ''
           }`}
         </div>
         <div className="custom-xAxis">
@@ -212,7 +213,11 @@ class LollipopChart extends PureComponent {
                                 }
                           }
                         >
-                          {this.customFormat({ num: item.value, roundTo: 2 })}
+                          {formatNumber({
+                            num: item.value,
+                            unit: formatUnit,
+                            returnUnit: showStickUnit,
+                          })}
                         </div>
                       </div>
                     </div>

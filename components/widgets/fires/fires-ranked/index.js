@@ -31,6 +31,11 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
+    },
+    {
+      key: 'dataset',
+      label: 'fires dataset',
+      type: 'select',
       border: true,
     },
     {

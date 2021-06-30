@@ -1,13 +1,9 @@
 import has from 'lodash/has';
 
-import { apiRequest } from 'utils/request';
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+import { gfwApiRequest } from 'utils/request';
+import { GFW_DATA_API_PROXY } from 'utils/apis';
 
 import otfData from 'data/otf-data';
-
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const DATA_API =
-  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 // Perform a OTF(on the fly) analysis for un-cached widgets
 // https://data-api.globalforestwatch.org/#tag/Analysis
@@ -19,7 +15,7 @@ class OTFAnalysis {
       );
     }
 
-    this.endpoint = `${DATA_API}/analysis/`;
+    this.endpoint = `${GFW_DATA_API_PROXY}/analysis/`;
     this.path = 'zonal';
     this.dataInstances = [];
     this.geostoreId = geostoreId;
@@ -104,7 +100,7 @@ class OTFAnalysis {
         key: dep,
         request: new Promise((resolve) =>
           resolve(
-            apiRequest.get(this.buildQuery(sumFields, groupFields, filters))
+            gfwApiRequest.get(this.buildQuery(sumFields, groupFields, filters))
           )
         ),
       });

@@ -10,12 +10,22 @@
   {
     "label": "Alert Density",
     "value": "alert_density",
-    "unit": " alerts/Mha"
+    "unit": "alerts/Mha"
+  },
+  {
+    "label": "Proportion",
+    "value": "burn_proportion",
+    "unit": "%"
   },
   {
     "label": "Total Alerts",
     "value": "counts",
-    "unit": " alerts"
+    "unit": "counts"
+  },
+  {
+    "label": "Total Area",
+    "value": "total_burn",
+    "unit": "ha"
   },
   {
     "label": "Significance",
