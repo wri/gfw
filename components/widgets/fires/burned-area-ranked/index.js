@@ -91,7 +91,7 @@ const defaultConfig = {
     },
   ],
   refetchKeys: ['dataset', 'forestType', 'landCategory', 'weeks', 'threshold'],
-  metaKey: '',
+  metaKey: 'umd_modis_burned_areas',
   sentences: {
     initial:
       'In the last {timeframe} in {location}, the region with the most {significant} burned area was {topRegion}, with {topRegionCount} land area burned. This represents {topRegionPerc} of the total area burned in {location} and is {status} compared to the same period going back to <b>2001</b>.',

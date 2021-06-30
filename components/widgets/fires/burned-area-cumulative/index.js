@@ -84,7 +84,7 @@ const defaultConfig = {
   chartType: 'composedChart',
   hideLayers: true,
   colors: 'fires',
-  metaKey: 'widget_fire_alert_location',
+  metaKey: 'umd_modis_burned_areas',
   sortOrder: {
     summary: 100,
     fires: 2,

@@ -79,7 +79,7 @@ export default {
   ],
   hideLayers: true,
   visible: ['dashboard', 'analysis'],
-  metaKey: '',
+  metaKey: 'umd_modis_burned_areas',
   sortOrder: {
     summary: 100,
     fires: 1,
