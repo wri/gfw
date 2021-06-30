@@ -48,7 +48,6 @@ const welcomeCards = [
   {
     label: 'Explore recent deforestation and fire alerts',
     thumbnail: MapWelcomeImage1,
-    promptKey: 'recentImagery',
     map: {
       datasets: [
         {
