@@ -65,7 +65,7 @@ class RecentImageryContainer extends PureComponent {
     const modifiedTileSettings =
       !isEqual(settings.date, prevProps.settings.date) ||
       !isEqual(settings.weeks, prevProps.settings.weeks) ||
-      !isEqual(settings.band, prevProps.settings.band);
+      !isEqual(settings.bands, prevProps.settings.bands);
 
     const modifiedMapPosition =
       !isEqual(prevProps.zoom, zoom) || !isEqual(prevProps.center, center);
@@ -125,7 +125,7 @@ class RecentImageryContainer extends PureComponent {
       bands: settings.bands,
       token: this.getDataSource.token,
     });
-  }, 3000);
+  }, 4000);
 
   setTile = debounce(() => {
     const { datasets, activeTile, recentImageryDataset } = this.props;
