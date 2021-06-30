@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const SearchBoxSeo = ({ title, description }) => {
   const NAME = title;
-  // const IMAGE = 'https://add-image-URL';
-  // const LOGO = "https://example.com/logo-URL.png";
+  const IMAGE = 'https://www.globalforestwatch.org/assets/card-2.png';
+  const LOGO = 'https://www.globalforestwatch.org/assets/gfw.png';
   const URL = 'https://www.globalforestwatch.org/';
   const SEARCH_TARGET =
     'https://www.globalforestwatch.org/search/?query={search_term_string}';
@@ -24,8 +24,8 @@ const SearchBoxSeo = ({ title, description }) => {
         '@type': 'Organization',
         name: NAME,
         description,
-        // "image": IMAGE,
-        // "logo": LOGO,
+        image: IMAGE,
+        logo: LOGO,
         url: URL,
         telephone: '+12027297600',
         sameAs: [
