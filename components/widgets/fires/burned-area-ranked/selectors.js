@@ -270,10 +270,10 @@ export const parseSentence = createSelector(
         sentence = indicator ? countsWithIndGlobal : countsInitialGlobal;
       }
     }
-    if (thresh && thresh > 0) sentence += thresholdStatement;
-    else {
-      sentence += '.';
-    }
+    sentence =
+      thresh && thresh > 0
+        ? sentence + thresholdStatement
+        : sentence.concat('.');
     return { sentence, params };
   }
 );

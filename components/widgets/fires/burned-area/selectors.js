@@ -366,7 +366,10 @@ export const parseSentence = createSelector(
       seasonSentence,
       allBurn,
       allBurnWithInd,
+      thresholdStatement,
     } = sentences;
+    const thresh = options?.firesThreshold?.value;
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const { startIndex, endIndex } = indexes;
@@ -436,14 +439,20 @@ export const parseSentence = createSelector(
 
     const initialSentence = seasonStartDate ? seasonSentence : defaultSentence;
 
-    const sentence = indicator
+    let sentence = indicator
       ? initialSentence + allBurnWithInd
       : initialSentence + allBurn;
+
+    sentence =
+      thresh && thresh > 0
+        ? sentence + thresholdStatement
+        : sentence.concat('.');
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       location,
       indicator: indicatorLabel,
+      thresh: `${thresh}%`,
       date: formattedData,
       fires_season_start: seasonStatement,
       fire_season_length: sortedPeakWeeks.length,
