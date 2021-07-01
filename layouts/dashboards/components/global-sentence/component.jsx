@@ -34,10 +34,12 @@ class GlobalSentence extends PureComponent {
       return { sentence: '', props: {} };
     }
 
+    const useCat =
+      typeof window === 'undefined' ? handleSSRLocation.category : category;
     let sentence;
 
     try {
-      sentence = SENTENCES[this.getLocationType()][category];
+      sentence = SENTENCES[this.getLocationType()][useCat];
     } catch (_i) {
       return {
         sentence: null,
