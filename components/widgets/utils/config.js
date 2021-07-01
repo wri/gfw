@@ -200,80 +200,74 @@ export const getWidgetDatasets = ({
   dataset,
 }) =>
   datasets &&
-  datasets
-    .filter((d) => dataset !== 'modis' || d.boundary)
-    .map((d) => ({
-      ...d,
-      opacity: 1,
-      visibility: true,
-      ...(!d.boundary && {
-        layers:
-          extentYear && !Array.isArray(d.layers)
-            ? [d.layers[extentYear]]
-            : d.layers,
-        ...(((startYear && endYear) || year) && {
+  datasets.map((d) => ({
+    ...d,
+    opacity: 1,
+    visibility: true,
+    ...(!d.boundary && {
+      layers:
+        extentYear && !Array.isArray(d.layers)
+          ? [d.layers[extentYear]]
+          : d.layers,
+      ...(((startYear && endYear) || year) && {
+        timelineParams: {
+          startDate: `${startYear || year}-01-01`,
+          endDate: `${endYear || year}-12-31`,
+          trimEndDate: `${endYear || year}-12-31`,
+        },
+      }),
+      ...(weeks && {
+        timelineParams: {
+          startDate: moment(latestDate || undefined)
+            .subtract(weeks, 'weeks')
+            .format('YYYY-MM-DD'),
+          endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
+          trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
+          startDateAbsolute:
+            dataset === 'viirs' &&
+            moment(latestDate).diff(
+              moment(latestDate || undefined).subtract(weeks, 'weeks'),
+              'days'
+            ) > 90
+              ? moment(latestDate).subtract(90, 'days').format('YYYY-MM-DD')
+              : moment(latestDate || undefined)
+                  .subtract(weeks, 'weeks')
+                  .format('YYYY-MM-DD'),
+          endDateAbsolute: latestDate,
+        },
+      }),
+      ...(threshold && {
+        params: {
+          threshold,
+          visibility: true,
+        },
+      }),
+      ...(startDateAbsolute &&
+        endDateAbsolute && {
           timelineParams: {
-            startDate: `${startYear || year}-01-01`,
-            endDate: `${endYear || year}-12-31`,
-            trimEndDate: `${endYear || year}-12-31`,
-          },
-        }),
-        ...(weeks && {
-          timelineParams: {
-            startDate: moment(latestDate || undefined)
-              .subtract(weeks, 'weeks')
-              .format('YYYY-MM-DD'),
-            endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
-            trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
             startDateAbsolute:
               dataset === 'viirs' &&
-              moment(latestDate).diff(
-                moment(latestDate || undefined).subtract(weeks, 'weeks'),
-                'days'
-              ) > 90
-                ? moment(latestDate).subtract(90, 'days').format('YYYY-MM-DD')
-                : moment(latestDate || undefined)
-                    .subtract(weeks, 'weeks')
-                    .format('YYYY-MM-DD'),
-            endDateAbsolute: latestDate,
+              moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') >
+                90
+                ? moment(endDateAbsolute)
+                    .subtract(90, 'days')
+                    .format('YYYY-MM-DD')
+                : startDateAbsolute,
+            endDateAbsolute,
+            startDate:
+              dataset === 'viirs' &&
+              moment(endDateAbsolute).diff(moment(startDateAbsolute), 'days') >
+                90
+                ? moment(endDateAbsolute)
+                    .subtract(90, 'days')
+                    .format('YYYY-MM-DD')
+                : startDateAbsolute,
+            endDate: endDateAbsolute,
+            trimEndDate: endDateAbsolute,
           },
         }),
-        ...(threshold && {
-          params: {
-            threshold,
-            visibility: true,
-          },
-        }),
-        ...(startDateAbsolute &&
-          endDateAbsolute && {
-            timelineParams: {
-              startDateAbsolute:
-                dataset === 'viirs' &&
-                moment(endDateAbsolute).diff(
-                  moment(startDateAbsolute),
-                  'days'
-                ) > 90
-                  ? moment(endDateAbsolute)
-                      .subtract(90, 'days')
-                      .format('YYYY-MM-DD')
-                  : startDateAbsolute,
-              endDateAbsolute,
-              startDate:
-                dataset === 'viirs' &&
-                moment(endDateAbsolute).diff(
-                  moment(startDateAbsolute),
-                  'days'
-                ) > 90
-                  ? moment(endDateAbsolute)
-                      .subtract(90, 'days')
-                      .format('YYYY-MM-DD')
-                  : startDateAbsolute,
-              endDate: endDateAbsolute,
-              trimEndDate: endDateAbsolute,
-            },
-          }),
-      }),
-    }));
+    }),
+  }));
 
 export const getPolynameDatasets = ({ optionsSelected, settings }) => {
   const { ifl, forestType, landCategory } = settings;
