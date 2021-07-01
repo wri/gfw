@@ -77,8 +77,16 @@ function getLabel(location, countryData) {
   return 'global';
 }
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params, query, req }) => {
   const [type] = params?.location || [];
+
+  let basePath = null;
+
+  try {
+    basePath = new URL(`http:${req?.url}`).pathname;
+  } catch (_) {
+    // ignore
+  }
 
   if (type && !ALLOWED_TYPES.includes(type)) {
     return {
@@ -99,6 +107,8 @@ export const getServerSideProps = async ({ params }) => {
     return {
       props: {
         title: 'Global Deforestation Rates & Statistics by Country | GFW',
+        category: query?.category || null,
+        basePath,
         location: params?.location,
         globalSentence: parsedSentence,
         geodescriber: JSON.stringify(data),
@@ -176,6 +186,7 @@ export const getServerSideProps = async ({ params }) => {
       adm1,
       adm2,
       type: locationType,
+      category: query?.category || null,
       label: label || null,
     };
 
@@ -188,6 +199,8 @@ export const getServerSideProps = async ({ params }) => {
       props: {
         title,
         description,
+        category: query?.category || null,
+        basePath,
         globalSentence: parsedSentence,
         handleSSRLocation,
         geodescriber: JSON.stringify(data),
@@ -296,12 +309,15 @@ const DashboardsPage = (props) => {
       setReady(true);
     }
   });
+
   return (
     <PageLayout {...props}>
       <Head>
         <link
           rel="canonical"
-          href={`https://www.globalforestwatch.org${fullPathname}`}
+          href={`https://www.globalforestwatch.org${props.basePath || ''}${
+            props?.category ? `?category=${props.category}` : ''
+          }`}
         />
       </Head>
       <DashboardsUrlProvider />
@@ -315,6 +331,8 @@ const DashboardsPage = (props) => {
 
 DashboardsPage.propTypes = {
   title: PropTypes.string,
+  category: PropTypes.string,
+  basePath: PropTypes.string,
   globalSentence: PropTypes.object,
   handleSSRLocation: PropTypes.object,
   geodescriber: PropTypes.string,
