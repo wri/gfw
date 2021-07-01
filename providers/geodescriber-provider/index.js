@@ -20,8 +20,7 @@ class GeodescriberProvider extends PureComponent {
 
   componentDidMount() {
     const { location, loading, geojson } = this.props;
-
-    if (!loading && !['global', 'country'].includes(location.type) && geojson) {
+    if (!loading && !['global'].includes(location.type) && geojson) {
       this.handleGetGeodescriber();
     }
   }
@@ -32,7 +31,7 @@ class GeodescriberProvider extends PureComponent {
 
     if (
       !loading &&
-      !['global', 'country'].includes(location.type) &&
+      !['global'].includes(location.type) &&
       geojson &&
       !isEqual(geojson, prevGeojosn)
     ) {
@@ -41,7 +40,7 @@ class GeodescriberProvider extends PureComponent {
 
     if (
       !loading &&
-      ['global', 'country'].includes(location.type) &&
+      ['global'].includes(location.type) &&
       !isEqual(location, prevLocation) &&
       prevProps?.location?.pathname !== ''
     ) {
