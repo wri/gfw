@@ -187,7 +187,7 @@ export const parseSentence = createSelector(
     getSentences,
     getColors,
   ],
-  (data, unit, optionsSelected, indicator, locationName, sentences, colors) => {
+  (data, unit, options, indicator, locationName, sentences, colors) => {
     if (!data || !unit || !locationName) return null;
 
     const {
@@ -212,8 +212,8 @@ export const parseSentence = createSelector(
     const topRegionPerc =
       topRegionCount === 0 ? 0 : (100 * topRegionCount) / sumBy(data, 'counts');
 
-    const timeFrame = optionsSelected.weeks;
-    const thresh = optionsSelected?.firesThreshold?.value;
+    const timeFrame = options?.weeks;
+    const thresh = options?.firesThreshold?.value;
 
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
