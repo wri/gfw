@@ -102,7 +102,7 @@ class LollipopChart extends PureComponent {
       <div className={cx('c-lollipop-chart', className)}>
         {!simple && legend && <Legend config={legend} simple={simple} />}
         <div className="unit-legend">
-          {`${selectedUnitConfig.label || ''} ${
+          {`${selectedUnitConfig?.label || ''} ${
             showLegendUnit ? `(${formatUnit.trim()})` : ''
           }`}
         </div>
