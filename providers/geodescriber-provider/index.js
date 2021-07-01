@@ -20,23 +20,22 @@ class GeodescriberProvider extends PureComponent {
   };
 
   componentDidMount() {
-    const { location, loading, embed, geojson } = this.props;
-    if (
-      !loading &&
-      (!['global', 'country'].includes(location.type) || embed) &&
-      geojson
-    ) {
+    const { location, loading, geojson } = this.props;
+    const allowedLocationTypes = this.getAllowedLocationTypes();
+
+    if (!loading && !allowedLocationTypes.includes(location.type) && geojson) {
       this.handleGetGeodescriber();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { loading, geojson, location, embed } = this.props;
+    const { loading, geojson, location } = this.props;
     const { geojson: prevGeojosn, location: prevLocation } = prevProps;
+    const allowedLocationTypes = this.getAllowedLocationTypes();
 
     if (
       !loading &&
-      (!['global', 'country'].includes(location.type) || embed) &&
+      !allowedLocationTypes.includes(location.type) &&
       geojson &&
       !isEqual(geojson, prevGeojosn)
     ) {
@@ -52,6 +51,15 @@ class GeodescriberProvider extends PureComponent {
       this.handleGetAdminGeodescriber();
     }
   }
+
+  getAllowedLocationTypes = () => {
+    const { embed } = this.props;
+    let types = ['global'];
+    if (!embed) {
+      types = [...types, 'country'];
+    }
+    return types;
+  };
 
   handleGetGeodescriber = () => {
     const { geojson, getGeodescriber } = this.props;
