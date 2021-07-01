@@ -288,6 +288,7 @@ export default {
     },
     {
       key: 'dataset',
+      whitelist: ['viirs', 'modis'],
       label: 'fires dataset',
       type: 'select',
     },
