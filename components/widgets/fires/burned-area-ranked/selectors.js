@@ -187,7 +187,7 @@ export const parseSentence = createSelector(
     getSentences,
     getColors,
   ],
-  (data, unit, optionsSelected, indicator, locationName, sentences, colors) => {
+  (data, unit, options, indicator, locationName, sentences, colors) => {
     if (!data || !unit || !locationName) return null;
 
     const {
@@ -203,6 +203,7 @@ export const parseSentence = createSelector(
       densityWithIndGlobal,
       countsInitialGlobal,
       countsWithIndGlobal,
+      thresholdStatement,
     } = sentences;
     const topRegion = data[0].label;
     const topRegionCount = data[0].counts || 0;
@@ -211,7 +212,9 @@ export const parseSentence = createSelector(
     const topRegionPerc =
       topRegionCount === 0 ? 0 : (100 * topRegionCount) / sumBy(data, 'counts');
 
-    const timeFrame = optionsSelected.weeks;
+    const timeFrame = options?.weeks;
+    const thresh = options?.firesThreshold?.value;
+
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
 
@@ -235,6 +238,7 @@ export const parseSentence = createSelector(
         value: status,
         color: statusColor,
       },
+      thresh: `${thresh}%`,
       topRegion,
       topRegionCount: formatNumber({ num: topRegionCount, unit: 'ha' }),
       topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
@@ -266,6 +270,10 @@ export const parseSentence = createSelector(
         sentence = indicator ? countsWithIndGlobal : countsInitialGlobal;
       }
     }
+    sentence =
+      thresh && thresh > 0
+        ? sentence + thresholdStatement
+        : sentence.concat('.');
     return { sentence, params };
   }
 );

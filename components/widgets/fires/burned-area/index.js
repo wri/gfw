@@ -92,11 +92,13 @@ export default {
   sentences: {
     defaultSentence: 'In {location} there ',
     seasonSentence:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. ',
+      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks',
     allBurn:
-      'Fires burned {area} of land between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}.',
+      'Fires burned {area} of land between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}',
     allBurnWithInd:
-      'Fires burned {area} of land within {indicator} between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}.',
+      'Fires burned {area} of land within {indicator} between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}',
+    thresholdStatement:
+      ', considering land with {thresh} tree canopy or greater.',
   },
   whitelists: {
     adm0: [

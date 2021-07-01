@@ -96,9 +96,11 @@ const defaultConfig = {
   },
   sentences: {
     allBurn:
-      'In {location}, {area} of land has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}.',
+      'In {location}, {area} of land has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}',
     allBurnWithInd:
-      'In {location}, {area} of land within {indicator} has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}.',
+      'In {location}, {area} of land within {indicator} has burned so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxArea}',
+    thresholdStatement:
+      ', considering land with {thresh} tree canopy or greater.',
   },
   getData: (params) =>
     all([fetchBurnedArea(params), fetchMODISLatest(params)]).then(

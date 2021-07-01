@@ -399,10 +399,8 @@ export const parseSentence = createSelector(
     parseData,
     getColors,
     getSentences,
-    getDataset,
     getLocationName,
     getStartIndex,
-    // getEndIndex,
     getOptionsSelected,
     getIndicator,
   ],
@@ -411,15 +409,15 @@ export const parseSentence = createSelector(
     data,
     colors,
     sentences,
-    dataset,
     location,
     startIndex,
-    // endIndex //broken?
     options,
     indicator
   ) => {
     if (!data || isEmpty(data)) return null;
-    const { allBurnWithInd, allBurn } = sentences;
+    const { allBurnWithInd, allBurn, thresholdStatement } = sentences;
+    const thresh = options?.firesThreshold?.value;
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const start = startIndex;
@@ -481,12 +479,16 @@ export const parseSentence = createSelector(
       statusColor = colorRange[6];
     }
 
-    const sentence = indicator ? allBurnWithInd : allBurn;
-
+    let sentence = indicator ? allBurnWithInd : allBurn;
+    sentence =
+      thresh && thresh > 0
+        ? sentence + thresholdStatement
+        : sentence.concat('.');
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       location,
       indicator: indicatorLabel,
+      thresh: `${thresh}%`,
       date: formattedData,
       latestYear,
       dataset_start_year: 2001,
@@ -495,7 +497,6 @@ export const parseSentence = createSelector(
         value: maxTotal ? format(',')(maxTotal) : 0,
         color: colors.main,
       },
-      dataset: 'MODIS',
       area: {
         value: totalCurrentYear
           ? `${format('.2s')(totalCurrentYear)}ha`
