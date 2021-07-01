@@ -203,6 +203,7 @@ export const parseSentence = createSelector(
       densityWithIndGlobal,
       countsInitialGlobal,
       countsWithIndGlobal,
+      thresholdStatement,
     } = sentences;
     const topRegion = data[0].label;
     const topRegionCount = data[0].counts || 0;
@@ -212,6 +213,8 @@ export const parseSentence = createSelector(
       topRegionCount === 0 ? 0 : (100 * topRegionCount) / sumBy(data, 'counts');
 
     const timeFrame = optionsSelected.weeks;
+    const thresh = optionsSelected?.firesThreshold?.value;
+
     const colorRange = colors.ramp;
     let statusColor = colorRange[8];
 
@@ -235,6 +238,7 @@ export const parseSentence = createSelector(
         value: status,
         color: statusColor,
       },
+      thresh: `${thresh}%`,
       topRegion,
       topRegionCount: formatNumber({ num: topRegionCount, unit: 'ha' }),
       topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
@@ -265,6 +269,10 @@ export const parseSentence = createSelector(
       } else if (unit === 'total_burn') {
         sentence = indicator ? countsWithIndGlobal : countsInitialGlobal;
       }
+    }
+    if (thresh && thresh > 0) sentence += thresholdStatement;
+    else {
+      sentence += '.';
     }
     return { sentence, params };
   }
