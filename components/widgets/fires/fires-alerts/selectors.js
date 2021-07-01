@@ -149,17 +149,26 @@ export const parseData = createSelector(
     if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
       return null;
 
-    return currentData.map((d) => {
-      const yearDifference = maxminYear.max - d.year;
-      const { week } = d;
+    // @TODO: better compare year parsing
+    const { year: startYear, week: startWeek } = currentData[0];
+    const yearDifference = maxminYear.max - startYear;
 
+    const compareStartYear = compareYear - yearDifference;
+    const weekFound = !!data.find(
+      (el) => el.year === compareStartYear && el.week === startWeek
+    );
+
+    const findWeek = weekFound ? startWeek : 1;
+    const findYear = weekFound ? compareStartYear : compareStartYear + 1;
+
+    const compareStartIndex = data.findIndex(
+      (el) => el.year === findYear && el.week === findWeek
+    );
+
+    const parsedData = currentData.map((d, i) => {
       if (compareYear) {
         const parsedCompareYear = compareYear - yearDifference;
-
-        const compareWeek = data.find(
-          (dt) => dt.year === parsedCompareYear && dt.week === week
-        );
-
+        const compareWeek = data[compareStartIndex + i];
         return {
           ...d,
           compareYear: parsedCompareYear,
@@ -169,6 +178,7 @@ export const parseData = createSelector(
 
       return d;
     });
+    return parsedData;
   }
 );
 
