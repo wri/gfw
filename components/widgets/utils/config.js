@@ -202,7 +202,8 @@ export const getWidgetDatasets = ({
   return (
     datasets &&
     datasets
-      .filter((d) => !d.boundary)
+      // @modis if dataset is modis, remove it from map
+      .filter((d) => dataset !== 'modis' || d.boundary)
       .map((d) => ({
         ...d,
         opacity: 1,
