@@ -53,12 +53,7 @@ const handleWidgetProxy = (widgets, settings) => {
         ...raw,
         ...useWidget,
         widget: raw.widget,
-        datasets: useWidget?.datasets || raw?.datasets,
         proxying: useWidget.widget,
-        settings: {
-          ...useWidget.settings,
-          ...currentSettings,
-        },
         proxyOn: raw.refetchKeys,
         refetchKeys: [...raw.refetchKeys, ...useWidget.refetchKeys],
       };

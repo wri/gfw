@@ -3,6 +3,7 @@ import uniq from 'lodash/uniq';
 import moment from 'moment';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import { debug } from 'utils/debugger';
 
 import burnedAreaStats from 'components/widgets/fires/burned-area';
 
@@ -312,6 +313,7 @@ const defaultConfig = {
     ],
   },
   getData: (params) => {
+    debug('getData firesAlertsStats', params, 'green');
     return all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;

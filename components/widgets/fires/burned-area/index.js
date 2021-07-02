@@ -3,6 +3,7 @@ import uniq from 'lodash/uniq';
 import moment from 'moment';
 
 import { fetchBurnedArea, fetchMODISLatest } from 'services/analysis-cached';
+import { debug } from 'utils/debugger';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -310,6 +311,8 @@ export default {
     ],
   },
   getData: (params) => {
+    debug('getData, burnedAreaStats', params, 'blue');
+
     return all([fetchBurnedArea(params), fetchMODISLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
