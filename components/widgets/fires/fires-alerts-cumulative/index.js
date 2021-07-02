@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
-
+import moment from 'moment';
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
@@ -304,6 +304,12 @@ export default {
                   value: y,
                 })),
               ],
+            },
+            settings: {
+              startDateAbsolute: moment(latestDate)
+                .add(-3, 'month')
+                .format('YYYY-MM-DD'),
+              endDateAbsolute: latestDate,
             },
           } || {}
         );

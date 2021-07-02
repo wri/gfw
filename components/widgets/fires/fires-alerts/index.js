@@ -3,7 +3,6 @@ import uniq from 'lodash/uniq';
 import moment from 'moment';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
-import { debug } from 'utils/debugger';
 
 import burnedAreaStats from 'components/widgets/fires/burned-area';
 
@@ -313,7 +312,6 @@ const defaultConfig = {
     ],
   },
   getData: (params) => {
-    debug('getData firesAlertsStats', params, 'green');
     return all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
@@ -333,10 +331,10 @@ const defaultConfig = {
                 })),
             },
             settings: {
-              startDateAbsolute:
-                params.startDateAbsolute ||
-                moment(latestDate).subtract(1, 'year').format('YYYY-MM-DD'),
-              endDateAbsolute: params.endDateAbsolute || latestDate,
+              startDateAbsolute: moment(latestDate)
+                .add(-3, 'month')
+                .format('YYYY-MM-DD'),
+              endDateAbsolute: latestDate,
             },
           } || {}
         );
