@@ -71,7 +71,6 @@ class WidgetSettingsButton extends PureComponent {
         offset={-95}
         trigger="click"
         interactive
-        onClickOutside={() => console.log('clicked outside')}
         onRequestClose={() => {
           const isTargetOnTooltip = isParent(
             this.widgetSettingsRef,

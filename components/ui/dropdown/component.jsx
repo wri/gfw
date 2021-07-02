@@ -138,7 +138,6 @@ class Dropdown extends PureComponent {
       selectorIcon,
       layout,
     } = this.props;
-    console.log('is open', isOpen);
     const dropdown = (
       <Downshift
         itemToString={(i) => i && i.label}
