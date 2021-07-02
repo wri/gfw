@@ -316,7 +316,6 @@ export default {
         const years = uniq(data.map((d) => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
-
         return (
           {
             alerts: data,
@@ -330,10 +329,10 @@ export default {
                 })),
             },
             settings: {
-              startDateAbsolute:
-                params.startDateAbsolute ||
-                moment(latestDate).subtract(1, 'year').format('YYYY-MM-DD'),
-              endDateAbsolute: params.endDateAbsolute || latestDate,
+              startDateAbsolute: moment(latestDate)
+                .add(-3, 'month')
+                .format('YYYY-MM-DD'),
+              endDateAbsolute: latestDate,
             },
           } || {}
         );

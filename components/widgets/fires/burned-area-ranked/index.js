@@ -6,16 +6,6 @@ import {
 } from 'services/analysis-cached';
 import firesRanked from 'components/widgets/fires/fires-ranked';
 
-import {
-  POLITICAL_BOUNDARIES_DATASET,
-  BURNED_AREA_MODIS_DATASET,
-} from 'data/datasets';
-import {
-  DISPUTED_POLITICAL_BOUNDARIES,
-  POLITICAL_BOUNDARIES,
-  BURNED_AREA_MODIS,
-} from 'data/layers';
-
 import getWidgetProps from './selectors';
 
 const defaultConfig = {
@@ -79,18 +69,6 @@ const defaultConfig = {
     fires: 3,
     global: 100,
   },
-  datasets: [
-    {
-      dataset: POLITICAL_BOUNDARIES_DATASET,
-      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
-      boundary: true,
-    },
-    // fires
-    {
-      dataset: BURNED_AREA_MODIS_DATASET,
-      layers: [BURNED_AREA_MODIS],
-    },
-  ],
   refetchKeys: [
     'dataset',
     'forestType',

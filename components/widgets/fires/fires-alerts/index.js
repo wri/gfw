@@ -331,10 +331,10 @@ const defaultConfig = {
                 })),
             },
             settings: {
-              startDateAbsolute:
-                params.startDateAbsolute ||
-                moment(latestDate).subtract(1, 'year').format('YYYY-MM-DD'),
-              endDateAbsolute: params.endDateAbsolute || latestDate,
+              startDateAbsolute: moment(latestDate)
+                .add(-3, 'month')
+                .format('YYYY-MM-DD'),
+              endDateAbsolute: latestDate,
             },
           } || {}
         );

@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
-import moment from 'moment';
 import { format } from 'd3-format';
+import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import orderBy from 'lodash/orderBy';

@@ -17,6 +17,8 @@ class WidgetHeader extends PureComponent {
     widget: PropTypes.string,
     large: PropTypes.bool,
     maxSize: PropTypes.number,
+    proxy: PropTypes.bool,
+    proxyOn: PropTypes.array,
     datasets: PropTypes.array,
     loading: PropTypes.bool,
     embed: PropTypes.bool,
@@ -48,6 +50,8 @@ class WidgetHeader extends PureComponent {
       filterSelected,
       maxSize,
       embed,
+      proxy,
+      proxyOn,
       large,
       datasets,
       simple,
@@ -94,6 +98,8 @@ class WidgetHeader extends PureComponent {
               loading={loading}
               title={title}
               embed={embed}
+              proxy={proxy}
+              proxyOn={proxyOn}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}

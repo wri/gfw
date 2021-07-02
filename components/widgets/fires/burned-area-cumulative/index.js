@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
-
+import moment from 'moment';
 import { fetchBurnedArea, fetchMODISLatest } from 'services/analysis-cached';
 import firesAlertsCumulative from 'components/widgets/fires/fires-alerts-cumulative';
 
@@ -123,6 +123,12 @@ const defaultConfig = {
                   value: y,
                 })),
               ],
+            },
+            settings: {
+              startDateAbsolute: moment(latestDate)
+                .add(-3, 'month')
+                .format('YYYY-MM-DD'),
+              endDateAbsolute: latestDate,
             },
           } || {}
         );

@@ -82,12 +82,12 @@ class WidgetsContainer extends PureComponent {
     if (location.type === 'global' && prevProps.location?.type !== 'global') {
       getWidgetsData();
     }
-
     // if widget is active and layers or params change push to map
     if (!embed && activeWidget) {
       const { settings, datasets } = activeWidget || {};
       const { settings: prevSettings, datasets: prevDatasets } =
         prevProps.activeWidget || {};
+
       const mapSettingsChanged =
         settings &&
         intersection(mapSyncKeys, Object.keys(settings)).length &&
@@ -96,11 +96,14 @@ class WidgetsContainer extends PureComponent {
         activeWidget,
         prevProps.activeWidget
       );
+      const widgetSettingsChanged = !isEqual(prevSettings, settings);
+
       const datasetsChanged = !isEqual(datasets, prevDatasets);
       if (
-        datasets &&
-        datasetsChanged &&
-        (mapSettingsChanged || activeWidgetChanged)
+        (datasets &&
+          datasetsChanged &&
+          (mapSettingsChanged || activeWidgetChanged)) ||
+        widgetSettingsChanged
       ) {
         this.syncWidgetWithMap();
       } else if (
