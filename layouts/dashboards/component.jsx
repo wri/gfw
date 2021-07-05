@@ -5,7 +5,6 @@ import isEqual from 'lodash/isEqual';
 
 import { Mobile, Desktop } from 'gfw-components';
 import { trackEvent } from 'utils/analytics';
-
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -16,6 +15,8 @@ import AreasProvider from 'providers/areas-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGfwProvider from 'providers/mygfw-provider';
 import MetaProvider from 'providers/meta-provider';
+
+import dashboardLinksSSR from 'data/dashboard-menu-ssr';
 
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
@@ -176,6 +177,17 @@ class DashboardsPage extends PureComponent {
                 },
               }))}
               checkActive
+            />
+          )}
+          {isServer && ssrLocation && (
+            <SubNavMenu
+              className="nav ssr-rendered"
+              theme="theme-subnav-dark"
+              links={dashboardLinksSSR.map((l) => ({
+                ...l,
+                active: ssrLocation.category === l.category,
+                onClick: () => {},
+              }))}
             />
           )}
           <GlobalSentence handleSSRLocation={ssrLocation} />
