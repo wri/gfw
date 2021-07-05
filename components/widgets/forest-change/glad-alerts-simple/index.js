@@ -127,29 +127,30 @@ export default {
         return data;
       });
     }
-    return fetchAnalysisEndpoint({
+    const data = fetchAnalysisEndpoint({
       ...params,
       params,
       name: 'glad-alerts',
       slug: 'glad-alerts',
       version: 'v1',
       aggregate: true,
-      aggregateBy: 'days',
+      aggregateBy: 'day',
     }).then((alertsResponse) => {
       const alerts = alertsResponse?.data?.data?.attributes?.value;
-      const { downloadUrls } = alertsResponse?.data?.data?.attributes;
       return {
-        alerts:
-          alerts &&
-          alerts.map((d) => ({
-            ...d,
-            alerts: d.count,
-          })),
+        alerts: [
+          {
+            count:
+              (alerts && alerts.reduce((total, d) => total + d.count, 0)) || 0,
+            is_confirmed: false,
+          },
+          { count: 0, is_confirmed: true },
+        ],
         latest: defaultEndDate,
         settings: { defaultEndDate },
-        downloadUrls,
       };
     });
+    return data;
   },
   maxDownloadSize: {
     maxSize: 1e5,
