@@ -16,7 +16,10 @@ class WidgetSettings extends PureComponent {
     handleChangeSettings: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     embed: PropTypes.bool,
+    proxy: PropTypes.bool,
+    proxyOn: PropTypes.array,
     getTooltipContentProps: PropTypes.func.isRequired,
+    toggleWidgetSettings: PropTypes.func,
   };
 
   renderOption = (option) => {
@@ -42,13 +45,23 @@ class WidgetSettings extends PureComponent {
       maxDate,
     } = option;
 
-    const { embed } = this.props;
+    const { embed, proxy, proxyOn, toggleWidgetSettings } = this.props;
 
     const popperSettings = {
       ...(embed &&
         type === 'datepicker' && {
           popperPlacement: 'left-start',
         }),
+    };
+
+    const propagateChange = (change) => {
+      if (proxy && proxyOn?.length) {
+        const changeKey = Object.keys(change);
+        if (proxyOn.some((r) => changeKey.includes(r))) {
+          toggleWidgetSettings();
+        }
+      }
+      handleChangeSettings(change);
     };
 
     switch (type) {
@@ -60,7 +73,7 @@ class WidgetSettings extends PureComponent {
             label={label}
             value={value && value.value}
             options={options}
-            onChange={(change) => handleChangeSettings({ [key]: change })}
+            onChange={(change) => propagateChange({ [key]: change })}
             disabled={loading}
           />
         );
@@ -73,7 +86,7 @@ class WidgetSettings extends PureComponent {
               value={startValue}
               options={startOptions}
               onChange={(change) =>
-                handleChangeSettings({ [startKey]: change && change.value })}
+                propagateChange({ [startKey]: change && change.value })}
               disabled={loading}
             />
             <span className="text-separator">to</span>
@@ -82,7 +95,7 @@ class WidgetSettings extends PureComponent {
               value={endValue}
               options={endOptions}
               onChange={(change) =>
-                handleChangeSettings({ [endKey]: change && change.value })}
+                propagateChange({ [endKey]: change && change.value })}
               disabled={loading}
             />
           </div>
@@ -100,7 +113,7 @@ class WidgetSettings extends PureComponent {
               options={options}
               clearable={clearable}
               onChange={(change) =>
-                handleChangeSettings({ [key]: change && change.value })}
+                propagateChange({ [key]: change && change.value })}
               noSelectedValue={placeholder}
             />
           </div>
@@ -115,7 +128,7 @@ class WidgetSettings extends PureComponent {
                   {...popperSettings}
                   selected={new Date(startValue)}
                   onChange={(change) =>
-                    handleChangeSettings({
+                    propagateChange({
                       [startKey]: moment(change).format('YYYY-MM-DD'),
                     })}
                   minDate={new Date(minDate)}
@@ -130,7 +143,7 @@ class WidgetSettings extends PureComponent {
                   {...popperSettings}
                   selected={new Date(endValue)}
                   onChange={(change) =>
-                    handleChangeSettings({
+                    propagateChange({
                       [endKey]: moment(change).format('YYYY-MM-DD'),
                     })}
                   minDate={new Date(minDate)}
@@ -155,7 +168,7 @@ class WidgetSettings extends PureComponent {
               value={value}
               options={options}
               onChange={(change) =>
-                handleChangeSettings({ [key]: change && change.value })}
+                propagateChange({ [key]: change && change.value })}
               disabled={loading}
               clearable={clearable}
               infoAction={metaKey ? () => handleShowInfo(metaKey) : null}

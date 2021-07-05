@@ -93,11 +93,11 @@ class GlobeComponent extends React.Component {
         if (intersects && intersects.length > 1) {
           const userData = intersects[0].object.data;
           this.handleClick(userData);
-          if (userData?.title) {
+          if (userData?.title || userData?.iso) {
             trackEvent({
               category: 'Open modal',
               action: 'click globe pin',
-              label: userData.title,
+              label: userData.title || userData.iso,
             });
           }
           document.body.style.cursor = 'default';

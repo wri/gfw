@@ -1,15 +1,28 @@
 import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 import moment from 'moment';
-import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+
+import { fetchBurnedArea, fetchMODISLatest } from 'services/analysis-cached';
+
+import {
+  POLITICAL_BOUNDARIES_DATASET,
+  BURNED_AREA_MODIS_DATASET,
+} from 'data/datasets';
+import {
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+  BURNED_AREA_MODIS,
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'firesAlertsCumulative',
-  title: 'Cumulative Fire Alerts in {location}',
+  widget: 'burnedAreaStats',
+  title: 'Weekly Burned Area in {location}',
   large: true,
+  dataType: 'fires',
   categories: ['summary', 'fires'],
+  types: ['country', 'wdpa', 'aoi'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -34,45 +47,58 @@ export default {
     {
       key: 'compareYear',
       label: 'Compare with the same period in',
-      placeholder: 'None',
       type: 'compare-select',
+      placeholder: 'None',
       clearable: true,
       border: true,
     },
     {
-      key: 'confidence',
-      label: 'Confidence level',
-      type: 'select',
-      clearable: false,
+      key: 'firesThreshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density',
+      noSort: true,
     },
   ],
-  refetchKeys: ['dataset', 'forestType', 'landCategory', 'confidence'],
+  refetchKeys: ['dataset', 'forestType', 'landCategory', 'firesThreshold'],
   preventRenderKeys: ['startIndex', 'endIndex'],
-  visible: ['dashboard', 'analysis'],
-  types: ['country', 'wdpa', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
-  hideLayers: true,
-  dataType: 'fires',
   colors: 'fires',
-  metaKey: 'widget_fire_alert_location',
+  datasets: [
+    {
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
+      boundary: true,
+    },
+    // fires
+    {
+      dataset: BURNED_AREA_MODIS_DATASET,
+      layers: [BURNED_AREA_MODIS],
+      maxzoom: 9,
+    },
+  ],
+  hideLayers: true,
+  visible: ['dashboard', 'analysis'],
+  metaKey: 'umd_modis_burned_areas',
   sortOrder: {
     summary: 100,
-    fires: 2,
+    fires: 1,
   },
   settings: {
-    dataset: 'viirs',
-    confidence: 'h',
+    dataset: 'modis_burned_area',
+    firesThreshold: 0,
   },
   sentences: {
-    allAlerts:
-      'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
-    highConfidence:
-      'In {location} there have been {count} {dataset} fire alerts reported so far in {latestYear} considering <b>high confidence alerts</b> only. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
-    allAlertsWithInd:
-      'In {location} there have been {count} {dataset} fire alerts reported within {indicator} so far in {latestYear}. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
-    highConfidenceWithInd:
-      'In {location} there have been {count} {dataset} fire alerts reported within {indicator} so far in {latestYear} considering <b>high confidence alerts</b> only. This total is {status} compared to the total for previous years going back to {dataset_start_year}. The most fires recorded in a year was {maxYear}, with {maxTotal}.',
+    defaultSentence: 'In {location} there ',
+    seasonSentence:
+      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks',
+    allBurn:
+      'Fires burned {area} of land between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}',
+    allBurnWithInd:
+      'Fires burned {area} of land within {indicator} between {start_date} and {end_date}, when data were most recently available. The area burned during this time period is {status} compared to the area burned in previous years going back to {dataset_start_year}',
+    thresholdStatement:
+      ', considering land with {thresh} tree canopy or greater.',
   },
   whitelists: {
     adm0: [
@@ -283,27 +309,24 @@ export default {
       'ZWE',
     ],
   },
-  getData: (params) =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
+  getData: (params) => {
+    return all([fetchBurnedArea(params), fetchMODISLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
-        const allYears = years.filter((y) => y !== maxYear);
-
         return (
           {
             alerts: data,
             latest: latestDate,
             options: {
-              compareYear: [
-                { label: 'All', value: 'all' },
-                ...allYears.map((y) => ({
+              compareYear: years
+                .filter((y) => y !== maxYear)
+                .map((y) => ({
                   label: y,
                   value: y,
                 })),
-              ],
             },
             settings: {
               startDateAbsolute: moment(latestDate)
@@ -314,7 +337,8 @@ export default {
           } || {}
         );
       })
-    ),
-  getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
+    );
+  },
+  getDataURL: (params) => [fetchBurnedArea({ ...params, download: true })],
   getWidgetProps,
 };

@@ -22,7 +22,7 @@ export const fetchGfwMeta = createThunkAction(
                 defaultStartDate: moment(gladLatest?.attributes.updatedAt)
                   .add(-7, 'days')
                   .format('YYYY-MM-DD'),
-                  defaultEndDate: gladLatest?.attributes.updatedAt,
+                defaultEndDate: gladLatest?.attributes.updatedAt,
               }),
             },
             VIIRS: {
@@ -31,7 +31,7 @@ export const fetchGfwMeta = createThunkAction(
                 defaultStartDate: moment(viirsLatest?.date)
                   .add(-7, 'days')
                   .format('YYYY-MM-DD'),
-                  defaultEndDate: viirsLatest?.date,
+                defaultEndDate: viirsLatest?.date,
               }),
             },
           },

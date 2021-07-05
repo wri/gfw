@@ -7,6 +7,8 @@ import './styles.scss';
 
 import SENTENCES from 'data/dashboard-summary-sentence';
 
+const isServer = typeof window === 'undefined';
+
 class GlobalSentence extends PureComponent {
   static propTypes = {
     handleSSRLocation: PropTypes.object,
@@ -17,7 +19,7 @@ class GlobalSentence extends PureComponent {
 
   getLocationType() {
     const { location, handleSSRLocation } = this.props;
-    const useLocation = !location ? handleSSRLocation : location;
+    const useLocation = isServer ? handleSSRLocation : location;
 
     if (useLocation.type === 'country') {
       if (useLocation.adm2) return 'adm2';
@@ -34,10 +36,11 @@ class GlobalSentence extends PureComponent {
       return { sentence: '', props: {} };
     }
 
+    const useCat = isServer ? handleSSRLocation.category : category;
     let sentence;
 
     try {
-      sentence = SENTENCES[this.getLocationType()][category];
+      sentence = SENTENCES[this.getLocationType()][useCat];
     } catch (_i) {
       return {
         sentence: null,
@@ -62,14 +65,10 @@ class GlobalSentence extends PureComponent {
       }),
     };
 
-    if (
-      !locationNames?.adm0 &&
-      !locationNames?.adm1 &&
-      !locationNames?.adm2 &&
-      handleSSRLocation
-    ) {
+    if (isServer && handleSSRLocation) {
       sentenceProps = {
         ...handleSSRLocation,
+        location: handleSSRLocation?.label,
         area: handleSSRLocation?.label,
       };
     }
