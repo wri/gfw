@@ -13,7 +13,13 @@ const renderString = ({ suffix, type, linkText, value }) => {
     valueString = formatNumber({ num: value, unit: suffix });
   } else if (type === 'link' && value && linkText) {
     valueString = (
-      <a href={value} alt="Read More" target="_blank" rel="noopener noreferrer">
+      <a
+        className="table-link"
+        href={value}
+        alt="Read More"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {linkText}
       </a>
     );
@@ -42,7 +48,9 @@ const DataTable = ({
               :
             </div>
             <div
-              className={d?.type === 'link' && d?.linkText ? 'link' : 'value'}
+              className={
+                d?.type === 'link' && d?.linkText ? 'table-link' : 'value'
+              }
             >
               {renderString(d)}
             </div>
