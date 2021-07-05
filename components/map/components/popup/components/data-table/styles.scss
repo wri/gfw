@@ -13,11 +13,15 @@
       width: 100%;
       margin-bottom: 10px;
 
-      .values {
+      .value {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+      }
+
+      .link a {
+        color: $green-gfw;
       }
 
       .label {
