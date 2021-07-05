@@ -315,9 +315,9 @@ const DashboardsPage = (props) => {
       <Head>
         <link
           rel="canonical"
-          href={`https://www.globalforestwatch.org${props.basePath || ''}${
-            props?.category ? `?category=${props.category}` : ''
-          }`}
+          href={`https://www.globalforestwatch.org${
+            props?.basePath || ''
+          }${`?category=${props?.category || 'global'}`}`}
         />
       </Head>
       <DashboardsUrlProvider />
