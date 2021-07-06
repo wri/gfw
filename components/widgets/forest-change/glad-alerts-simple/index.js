@@ -12,11 +12,11 @@ import {
 
 import { isMapPage } from 'utils/location';
 
-// function for OTF analysis
-import { fetchAnalysisEndpoint } from 'services/analysis';
-
 // function for retreiving glad alerts from tables
-import { fetchGladAlertsSum } from 'services/analysis-cached';
+import {
+  fetchGladAlertsSum,
+  fetchGladAlertsSumOTF,
+} from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -127,30 +127,47 @@ export default {
         return data;
       });
     }
-    const data = fetchAnalysisEndpoint({
+    const geostoreId = params?.geostore?.hash;
+    return fetchGladAlertsSumOTF({
       ...params,
-      params,
-      name: 'glad-alerts',
-      slug: 'glad-alerts',
-      version: 'v1',
-      aggregate: true,
-      aggregateBy: 'day',
-    }).then((alertsResponse) => {
-      const alerts = alertsResponse?.data?.data?.attributes?.value;
-      return {
-        alerts: [
-          {
-            count:
-              (alerts && alerts.reduce((total, d) => total + d.count, 0)) || 0,
-            is_confirmed: false,
+      startDate,
+      endDate,
+      geostoreId,
+      staticStatement: {
+        // overrides tables and/or sql
+        table: 'umd_glad_landsat_alerts',
+      },
+    }).then((alerts) => {
+      const gladsData = alerts && alerts.data.data;
+      let data = {};
+      if (gladsData && GLAD) {
+        data = {
+          alerts: [
+            {
+              alerts: gladsData
+                ? gladsData.filter((d) => d.confirmed === false).length
+                : 0,
+              confirmed: false,
+            },
+            {
+              alerts: gladsData
+                ? gladsData.filter((d) => d.confirmed === true).length
+                : 0,
+              confirmed: true,
+            },
+          ],
+          settings: {
+            startDate,
+            endDate,
           },
-          { count: 0, is_confirmed: true },
-        ],
-        latest: defaultEndDate,
-        settings: { defaultEndDate },
-      };
+          options: {
+            minDate: '2015-01-01',
+            maxDate: defaultEndDate,
+          },
+        };
+      }
+      return data;
     });
-    return data;
   },
   maxDownloadSize: {
     maxSize: 1e5,
@@ -172,11 +189,10 @@ export default {
         geostoreId,
         download: true,
         staticStatement: {
+          // overrides tables and/or sql
           // append: true, If active, we will utalise the old location select logic with our statement
-          download: {
-            // Only apply to "download" endpoint
-            table: 'umd_glad_landsat_alerts',
-          },
+          // If download===true, apply to "download" endpoint
+          table: 'umd_glad_landsat_alerts',
         },
       }),
     ];
