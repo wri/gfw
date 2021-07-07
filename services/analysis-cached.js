@@ -205,11 +205,11 @@ const getDownloadUrl = (url) => {
 
 // build {select} from location params
 const handleStaticLocStmt = (payload, download, staticStatement) => {
-  if (download && staticStatement?.download?.statement) {
+  if (staticStatement?.statement) {
     if (staticStatement.append) {
-      return `${staticStatement.download.statement},${payload}`;
+      return `${staticStatement.statement},${payload}`;
     }
-    return staticStatement.download.statement;
+    return staticStatement.statement;
   }
   return payload;
 };
