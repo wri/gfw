@@ -23,7 +23,7 @@ class Select extends PureComponent {
     options: PropTypes.array,
     required: PropTypes.bool,
     multiple: PropTypes.bool,
-    selectInput: PropTypes.bool
+    selectInput: PropTypes.bool,
   };
 
   render() {
@@ -36,15 +36,15 @@ class Select extends PureComponent {
       hidden,
       required,
       multiple,
-      selectInput
+      selectInput,
     } = this.props;
 
     const parsedOptions =
       !isEmpty(options) && !options[0].label && !options[0].value
-        ? options.map(o => ({
-          label: o,
-          value: o.replace(/( )+|(\/)+/g, '_')
-        }))
+        ? options.map((o) => ({
+            label: o,
+            value: o.replace(/( )+|(\/)+/g, '_'),
+          }))
         : options;
     const allOptions = parsedOptions || [];
     const optionWithPlaceholder = placeholder
@@ -68,14 +68,17 @@ class Select extends PureComponent {
             required={required}
           >
             {multiple && (
-              <p className="label sublabel">Select all that apply; select multiple by holding shift/selecting other options.</p>
+              <p className="label sublabel">
+                Select all that apply; select multiple by holding
+                shift/selecting other options.
+              </p>
             )}
             <select
               className={cx('c-form-select', { multiple })}
               {...input}
               multiple={multiple}
             >
-              {optionWithPlaceholder.map(option => (
+              {optionWithPlaceholder.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>

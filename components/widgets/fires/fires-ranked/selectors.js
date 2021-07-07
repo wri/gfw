@@ -26,7 +26,8 @@ const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
 const getAdm1 = (state) => state.adm1;
 const getLocation = (state) => state.location || null;
-const getLocationsMeta = (state) => state.childData;
+const getLocationsMeta = (state) =>
+  state.location === 'global' ? state.locationData : state.childData;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
@@ -131,9 +132,10 @@ export const parseList = createSelector(
         path: (region && region.path) || '',
       };
     });
-    return matchKey === 'iso'
-      ? mappedData.filter((d) => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
-      : mappedData;
+    const filteredData = mappedData.filter((d) => d.label);
+    return matchKey === 'iso' && location.value !== 'global'
+      ? filteredData.filter((d) => d.area > 1e6 && d.density > 1) // At least one fire per MHa at iso level
+      : filteredData;
   }
 );
 
@@ -157,8 +159,7 @@ export const parseData = createSelector(
           ? b.stdDev
           : minValue + (b.limit * (maxValue - minValue)) / 100,
     }));
-
-    return sortBy(
+    const sortedData = sortBy(
       data.map((d) => ({
         ...d,
         value: d[value], // value === 'density' ? d[value] : d.counts,
@@ -167,6 +168,7 @@ export const parseData = createSelector(
       })),
       value
     ).reverse();
+    return sortedData;
   }
 );
 
@@ -267,30 +269,33 @@ export const parseConfig = createSelector(
   [getColors, getUnit],
   (colors, unit) => {
     const colorRange = colors.ramp;
-    if (unit !== 'significance') return {};
     return {
-      legend: {
-        uhigh: {
-          label: 'Unusually high',
-          color: colorRange[0],
+      showStickUnit: unit !== 'alert_density',
+      showLegendUnit: unit === 'alert_density',
+      ...(unit === 'significance' && {
+        legend: {
+          uhigh: {
+            label: 'Unusually high',
+            color: colorRange[0],
+          },
+          high: {
+            label: 'High',
+            color: colorRange[2],
+          },
+          average: {
+            label: 'Normal',
+            color: colorRange[4],
+          },
+          low: {
+            label: 'Low',
+            color: colorRange[6],
+          },
+          ulow: {
+            label: 'Unusually low',
+            color: colorRange[8],
+          },
         },
-        high: {
-          label: 'High',
-          color: colorRange[2],
-        },
-        average: {
-          label: 'Normal',
-          color: colorRange[4],
-        },
-        low: {
-          label: 'Low',
-          color: colorRange[6],
-        },
-        ulow: {
-          label: 'Unusually low',
-          color: colorRange[8],
-        },
-      },
+      }),
     };
   }
 );

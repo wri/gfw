@@ -2,13 +2,19 @@ import { createStructuredSelector, createSelector } from 'reselect';
 
 import { getDataLocation } from 'utils/location';
 
-const selectGeostoreSize = state =>
+const selectGeostoreSize = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.areaHa;
-const getGladAlertsDownloadUrls = state =>
+const getGladAlertsDownloadUrls = (state) =>
   state.widgets &&
   state.widgets.data &&
   state.widgets.data.gladAlerts &&
   state.widgets.data.gladAlerts.downloadUrls;
+
+const getMapSettings = (state) => {
+  const { settings } = state.map;
+  const { center, zoom, pitch, bearing, bbox } = settings;
+  return { center, zoom, pitch, bearing, bbox };
+};
 
 export const checkGeostoreSize = createSelector(
   [selectGeostoreSize, getDataLocation],
@@ -23,5 +29,6 @@ export const checkGeostoreSize = createSelector(
 
 export default createStructuredSelector({
   gladAlertsDownloadUrls: getGladAlertsDownloadUrls,
-  areaTooLarge: checkGeostoreSize
+  areaTooLarge: checkGeostoreSize,
+  mapSettings: getMapSettings,
 });

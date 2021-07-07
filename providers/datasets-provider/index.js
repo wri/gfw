@@ -26,4 +26,5 @@ reducerRegistry.registerModule('datasets', {
   reducers,
   initialState,
 });
+
 export default connect(null, actions)(DatasetsProvider);

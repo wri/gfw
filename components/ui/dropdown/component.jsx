@@ -80,9 +80,11 @@ class Dropdown extends PureComponent {
     multiple: PropTypes.bool,
     onChange: PropTypes.func,
     selectorIcon: PropTypes.func,
+    onClickOutside: PropTypes.func,
   };
 
   stateReducer = (state, changes) => {
+    const { onClickOutside } = this.props;
     switch (changes.type) {
       case Downshift.stateChangeTypes.clickItem: {
         return {
@@ -91,6 +93,12 @@ class Dropdown extends PureComponent {
           isOpen: false,
           selectedItem: { ...changes.selectedItem },
         };
+      }
+      case Downshift.stateChangeTypes.blurInput: {
+        if (onClickOutside) {
+          onClickOutside(changes);
+        }
+        return changes;
       }
       default:
         return changes;
@@ -130,7 +138,6 @@ class Dropdown extends PureComponent {
       selectorIcon,
       layout,
     } = this.props;
-
     const dropdown = (
       <Downshift
         itemToString={(i) => i && i.label}

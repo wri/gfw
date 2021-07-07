@@ -1,16 +1,21 @@
-import { apiRequest, tilesRequest, cartoRequest } from 'utils/request';
+import {
+  apiRequest,
+  tilesRequest,
+  cartoRequest,
+  dataApiRequest,
+} from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+import { GFW_STAGING_DATA_API, GFW_DATA_API } from 'utils/apis';
+
+const VIIRS_START_YEAR = 2012;
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
-
-const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
   lossTsc:
@@ -32,12 +37,20 @@ const SQL_QUERIES = {
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
+  gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
+  gladDailyDownload: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
+  burnedAreas:
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burn_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   firesGrouped:
-    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY {location}, alert__year, alert__week, confidence__cat',
+    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} {dateFilter} GROUP BY {location}, alert__year, alert__week, confidence__cat',
+  burnedAreaGrouped:
+    'SELECT {select_location}, alert__year, alert__week, SUM(burned_area__ha) AS burned_area__ha FROM data {WHERE} {dateFilter} GROUP BY {location}, alert__year, alert__week',
   firesWithin:
-    'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY {location}, alert__year, alert__week, confidence__cat ORDER BY alert__week DESC, alert__year DESC',
+    'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
+  firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
@@ -64,6 +77,15 @@ const ALLOWED_PARAMS = {
   ],
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
+  modis_burned_area: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+    'confidence',
+  ],
 };
 
 //
@@ -127,26 +149,46 @@ export const getIndicator = (activeForestType, activeLandCategory, ifl) => {
 };
 
 // build the base query for the query with the correct dataset id
-const getRequestUrl = ({ type, adm1, adm2, dataset, datasetType, grouped }) => {
+const getRequestUrl = ({
+  type,
+  adm1,
+  adm2,
+  dataset,
+  datasetType,
+  grouped,
+  version,
+  download,
+  staticStatement,
+}) => {
   let typeByLevel = type;
-  if (type === 'country' || type === 'global') {
+
+  if (download && staticStatement?.download?.table) {
+    return `${GFW_API}/dataset/${staticStatement.download.table}/latest/download/csv?sql=`;
+  }
+
+  if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
     if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
-    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   }
 
-  const datasetId =
+  let datasetId = typeByLevel;
+
+  try {
+    typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
+  } catch (_) {
+    //
+  }
+  datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
 
   if (typeof datasetId === 'undefined') {
-    // TODO: Figure out why widgets are stale on loading, when not requesting info
+    // @TODO: Figure out why widgets are stale on loading, when not requesting info
     // return null;
   }
-
-  return `${GFW_API}/dataset/${datasetId}/latest/query?sql=`;
+  return `${GFW_API}/dataset/${datasetId}/${version || 'latest'}/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {
@@ -160,19 +202,50 @@ const getDownloadUrl = (url) => {
 };
 
 // build {select} from location params
-const getLocationSelect = ({ type, adm0, adm1, adm2, grouped, cast }) => {
-  if (type === 'wdpa') return 'wdpa_protected_area__id';
-  if (['geostore', 'use'].includes(type)) return 'geostore__id';
+const handleStaticLocStmt = (payload, download, staticStatement) => {
+  if (download && staticStatement?.download?.statement) {
+    if (staticStatement.append) {
+      return `${staticStatement.download.statement},${payload}`;
+    }
+    return staticStatement.download.statement;
+  }
+  return payload;
+};
+
+const getLocationSelect = ({
+  type,
+  adm0,
+  adm1,
+  adm2,
+  grouped,
+  cast,
+  download,
+  staticStatement,
+}) => {
+  if (type === 'wdpa')
+    return handleStaticLocStmt(
+      'wdpa_protected_area__id',
+      download,
+      staticStatement
+    );
+  if (['geostore', 'use'].includes(type))
+    return handleStaticLocStmt('geostore__id', download, staticStatement);
 
   let locationString = `iso${adm1 ? ', adm1{castTemplate}' : ''}${
     adm2 ? ', adm2{castTemplate}' : ''
   }`;
   const castString = cast ? '::integer' : '';
-  if (grouped)
+  if (grouped) {
     locationString = `iso${adm0 ? ', adm1{castTemplate}' : ''}${
       adm1 ? ', adm2{castTemplate}' : ''
     }`;
-  return locationString.replace(/{castTemplate}/g, castString);
+  }
+
+  return handleStaticLocStmt(
+    locationString.replace(/{castTemplate}/g, castString),
+    download,
+    staticStatement
+  );
 };
 
 // build {where} statement for query
@@ -266,7 +339,7 @@ export const getDatesFilter = ({ startDate }) => {
 };
 
 // build complex WHERE filter for dates (VIIRS/GLAD)
-export const getWeeksFilter = ({ weeks, latest }) => {
+export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
   const latestYear = latest
     ? moment(latest).year()
     : moment().subtract(1, 'weeks').year();
@@ -301,7 +374,7 @@ export const getWeeksFilter = ({ weeks, latest }) => {
     };
   });
 
-  return weekFilters.reduce((acc, d, i) => {
+  const weeksFilterString = weekFilters.reduce((acc, d, i) => {
     const yi = d.startYear || '';
     const wi = d.startWeek || '';
     const yf = d.endYear || '';
@@ -313,6 +386,7 @@ export const getWeeksFilter = ({ weeks, latest }) => {
       wi < wf ? 'AND' : 'OR'
     } (alert__year = ${yf} AND alert__week <= ${wf}))`;
   }, '');
+  return `${isFirst ? '' : 'AND'} (${weeksFilterString})`;
 };
 
 //
@@ -538,6 +612,7 @@ export const getExtent = (params) => {
       url: getDownloadUrl(url),
     };
   }
+
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
@@ -717,8 +792,10 @@ export const getAreaIntersection = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
         /{intersection}/g,
-        `, ${intersectionPolyname.tableKey}` ||
-          `, ${intersectionPolyname.tableKeys.annual}`
+        intersectionPolyname?.tableKey
+          ? `, ${intersectionPolyname.tableKey}` ||
+              `, ${intersectionPolyname.tableKeys.annual}`
+          : ''
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -753,7 +830,6 @@ export const getAreaIntersectionGrouped = (params) => {
   const intersectionPolyname = forestTypes
     .concat(landCategories)
     .find((o) => [forestType, landCategory].includes(o.value));
-
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -774,7 +850,7 @@ export const getAreaIntersectionGrouped = (params) => {
       )
       .replace(
         /{intersection}/g,
-        intersectionPolyname
+        intersectionPolyname?.tableKey
           ? `, ${intersectionPolyname.tableKey}` ||
               `, ${intersectionPolyname.tableKeys.annual}`
           : ''
@@ -965,6 +1041,60 @@ export const fetchGladAlerts = (params) => {
   }));
 };
 
+export const fetchGladAlertsSum = (params) => {
+  const { forestType, landCategory, startDate, endDate, download, geostoreId } =
+    params || {};
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'glad',
+    datasetType: 'daily',
+  })}${download ? SQL_QUERIES.gladDailyDownload : SQL_QUERIES.gladDailySum}`;
+
+  if (download) {
+    const url = encodeURI(
+      baseUrl
+        .replace('{startDate}', startDate)
+        .replace('{endDate}', endDate)
+        // @TODO Some forestType, LandCategory keys dont match
+        .replace(
+          '{WHERE}',
+          getWHEREQuery({ forestType, landCategory, dataset: 'glad' })
+        )
+        .replace('{geostoreOrigin}', 'rw')
+        .replace('{geostoreId}', geostoreId)
+    );
+
+    return {
+      name: 'daily_glad_alerts__count',
+      url: url.replace('query', 'download'),
+    };
+  }
+
+  const url = encodeURI(
+    baseUrl
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.is__confirmed_alert,
+        count: d.alert__count,
+        alerts: d.alert__count,
+        area_ha: d.alert_area__ha,
+      })),
+    },
+  }));
+};
+
 // Latest Dates for Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
@@ -991,6 +1121,98 @@ export const fetchGLADLatest = () => {
           })
         )
     );
+};
+
+export const fetchBurnedArea = (params) => {
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    dataset,
+    firesThreshold: threshold,
+  } = params || {};
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset,
+      datasetType: 'weekly',
+    })}${SQL_QUERIES.burnedAreas}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset, threshold }))
+  );
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `modis_burned_area${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+      })),
+    },
+  }));
+};
+
+export const fetchBurnedAreaGrouped = (params) => {
+  const { forestType, landCategory, ifl, download, firesThreshold: threshold } =
+    params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    datasetType: 'weekly',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+  const whereStr =
+    getWHEREQuery({ ...params, threshold, grouped: true }) || 'WHERE';
+  const isFirst = whereStr === 'WHERE';
+  const weeksFilterStr = getWeeksFilter({ ...params, isFirst });
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.burnedAreaGrouped}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: true })
+      )
+      .replace('{WHERE}', whereStr)
+      .replace(/{dateFilter}/g, weeksFilterStr)
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `modis_burned_area${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+      })),
+    },
+  }));
 };
 
 export const fetchVIIRSAlerts = (params) => {
@@ -1044,7 +1266,10 @@ export const fetchVIIRSAlertsGrouped = (params) => {
   if (!requestUrl) {
     return new Promise(() => {});
   }
-
+  const whereStr =
+    getWHEREQuery({ ...params, dataset: 'viirs', grouped: true }) || 'WHERE';
+  const isFirst = whereStr === 'WHERE';
+  const weeksFilterStr = getWeeksFilter({ ...params, isFirst });
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.firesGrouped}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
@@ -1052,13 +1277,9 @@ export const fetchVIIRSAlertsGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: true })
       )
-      .replace(/{dateFilter}/g, getWeeksFilter(params))
-      .replace(
-        '{WHERE}',
-        getWHEREQuery({ ...params, dataset: 'viirs', grouped: true })
-      )
+      .replace('{WHERE}', whereStr)
+      .replace(/{dateFilter}/g, weeksFilterStr)
   );
-
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
@@ -1135,6 +1356,58 @@ export const fetchVIIRSLatest = () =>
     .catch(() => ({
       date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
     }));
+
+export const fetchMODISLatest = () =>
+  dataApiRequest
+    .get('dataset/umd_modis_burned_areas/latest')
+    .then(({ data }) => {
+      const dates =
+        data && data?.metadata && data?.metadata?.content_date_range;
+      const { max: date } = dates;
+      return {
+        date,
+      };
+    })
+    .catch(() => ({
+      date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
+    }));
+
+export const fetchVIIRSAlertsSum = (params) => {
+  const { startDate, endDate, download, dataset } = params || {};
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset,
+      datasetType: 'daily',
+    })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
+  );
+
+  if (download) {
+    return {
+      name: `daily_${dataset}_alerts__count`,
+      url: url.replace('query', 'download'),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.confidence__cat.includes('h'),
+        count: d.alert__count,
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
 
 // Climate fetches
 

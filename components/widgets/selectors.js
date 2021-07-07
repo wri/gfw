@@ -11,6 +11,7 @@ import qs from 'query-string';
 import { translateText, selectActiveLang } from 'utils/lang';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getGFWMeta } from 'providers/meta-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation, locationLevelToStr } from 'utils/location';
@@ -43,6 +44,24 @@ const buildLocationDict = (locations) =>
     )) ||
   {};
 
+const handleWidgetProxy = (widgets, settings) => {
+  return Object.values(widgets).map((raw) => {
+    if (raw?.proxy) {
+      const currentSettings = settings[raw.widget];
+      const useWidget = raw.getWidget(currentSettings);
+      return {
+        ...raw,
+        ...useWidget,
+        widget: raw.widget,
+        proxying: useWidget.widget,
+        proxyOn: raw.refetchKeys,
+        refetchKeys: [...raw.refetchKeys, ...useWidget.refetchKeys],
+      };
+    }
+    return raw;
+  });
+};
+
 export const selectLocation = (state) =>
   state.location && state.location.payload;
 export const selectIsTrase = (state) => state.location?.query?.trase;
@@ -70,7 +89,8 @@ export const selectLoadingFilterData = (state) =>
 export const selectLoadingMeta = (state) =>
   state.geostore &&
   state.geodescriber &&
-  (state.geostore.loading || state.geodescriber.loading);
+  state.meta &&
+  (state.geostore.loading || state.geodescriber.loading || state.meta.loading);
 export const selectCountryData = (state) => state.countryData;
 export const selectPolynameWhitelist = (state) =>
   state.whitelists && state.whitelists.data;
@@ -204,6 +224,7 @@ export const filterWidgetsByLocation = createSelector(
     selectActiveWidget,
     getActiveLayersWithDates,
     selectAnalysis,
+    selectWidgetSettings,
   ],
   (
     location,
@@ -212,11 +233,12 @@ export const filterWidgetsByLocation = createSelector(
     embed,
     widget,
     layers,
-    showAnalysis
+    showAnalysis,
+    settings
   ) => {
     const { adminLevel, type, areaId } = location;
-
-    const widgets = Object.values(allWidgets).map((w) => ({
+    const handleProxyWidget = handleWidgetProxy(allWidgets, settings);
+    const widgets = handleProxyWidget.map((w) => ({
       ...w,
       ...(w.colors && {
         colors: colors[w.colors],
@@ -316,7 +338,12 @@ export const filterWidgetsByLocation = createSelector(
 
 export const getWidgetCategories = createSelector(
   [filterWidgetsByLocation],
-  (widgets) => flatMap(widgets.map((w) => w.categories))
+  (widgets) =>
+    flatMap(
+      widgets.map((w) => {
+        return w.categories;
+      })
+    )
 );
 
 export const getActiveCategory = createSelector(
@@ -341,14 +368,19 @@ export const filterWidgetsByCategory = createSelector(
   (widgets, category, showAnalysis, embed, widget) => {
     if (isEmpty(widgets)) return null;
 
-    if (embed && widget) return widgets.filter((w) => w.widget === widget);
+    if (embed && widget)
+      return widgets.filter((w) => {
+        return w.widget === widget;
+      });
 
     if (showAnalysis) {
       return sortBy(widgets, 'sortOrder.summary');
     }
 
     return sortBy(
-      widgets.filter((w) => w.categories.includes(category)),
+      widgets.filter((w) => {
+        return w.categories.includes(category);
+      }),
       `sortOrder[${camelCase(category)}]`
     );
   }
@@ -391,7 +423,6 @@ export const getWidgets = createSelector(
 
     const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
-
     return widgets.map((w, index) => {
       const {
         settings: defaultSettings,
@@ -401,7 +432,6 @@ export const getWidgets = createSelector(
         title: titleTemplate,
         dataType,
       } = w || {};
-
       const active =
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
 
@@ -598,4 +628,5 @@ export const getWidgetsProps = () =>
     modalClosing: selectModalClosing,
     noDataMessage: getNoDataMessage,
     geostore: selectGeostore,
+    meta: getGFWMeta,
   });

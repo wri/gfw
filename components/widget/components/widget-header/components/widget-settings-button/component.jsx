@@ -19,6 +19,9 @@ class WidgetSettingsButton extends PureComponent {
     settingsConfig: PropTypes.array,
     loading: PropTypes.bool,
     active: PropTypes.bool,
+    embed: PropTypes.bool,
+    proxy: PropTypes.bool,
+    proxyOn: PropTypes.array,
     preventCloseSettings: PropTypes.bool,
     handleChangeSettings: PropTypes.func.isRequired,
     handleShowInfo: PropTypes.func.isRequired,
@@ -37,6 +40,10 @@ class WidgetSettingsButton extends PureComponent {
     }
   }
 
+  toggleWidgetSettings = () => {
+    this.setState({ tooltipOpen: !this.state.tooltipOpen });
+  };
+
   render() {
     const {
       settingsConfig,
@@ -45,11 +52,15 @@ class WidgetSettingsButton extends PureComponent {
       handleChangeSettings,
       handleShowInfo,
       widget,
+      proxy,
+      proxyOn,
+      embed,
       active,
       shouldSettingsOpen,
       toggleSettingsMenu,
     } = this.props;
     const { tooltipOpen } = this.state;
+
     return (
       <Tooltip
         className={cx('c-widget-settings-button', {
@@ -77,8 +88,8 @@ class WidgetSettingsButton extends PureComponent {
           trackEvent({
             category: 'Widget Settings',
             action: 'User opens settings menu',
-            label: widget
-          })
+            label: widget,
+          });
         }}
         arrow
         useContext
@@ -88,8 +99,12 @@ class WidgetSettingsButton extends PureComponent {
             ref={(node) => {
               this.widgetSettingsRef = node;
             }}
+            embed={embed}
             settingsConfig={settingsConfig}
             loading={loading}
+            toggleWidgetSettings={this.toggleWidgetSettings}
+            proxy={proxy}
+            proxyOn={proxyOn}
             handleChangeSettings={handleChangeSettings}
             handleShowInfo={handleShowInfo}
             showYears={shouldSettingsOpen}

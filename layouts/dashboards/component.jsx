@@ -5,7 +5,6 @@ import isEqual from 'lodash/isEqual';
 
 import { Mobile, Desktop } from 'gfw-components';
 import { trackEvent } from 'utils/analytics';
-
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -15,6 +14,9 @@ import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
 import LocationProvider from 'providers/location-provider';
 import MyGfwProvider from 'providers/mygfw-provider';
+import MetaProvider from 'providers/meta-provider';
+
+// import dashboardLinksSSR from 'data/dashboard-menu-ssr';
 
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
@@ -42,11 +44,13 @@ const isServer = typeof window === 'undefined';
 
 class DashboardsPage extends PureComponent {
   static propTypes = {
+    ssrLocation: PropTypes.object,
     showMapMobile: PropTypes.bool,
     setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     setWidgetsCategory: PropTypes.func,
+    globalSentence: PropTypes.object,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     embed: PropTypes.bool,
@@ -135,12 +139,13 @@ class DashboardsPage extends PureComponent {
       showMapMobile,
       links,
       widgetAnchor,
+      ssrLocation,
       setWidgetsCategory,
       activeArea,
       clearScrollTo,
+      globalSentence,
       embed,
     } = this.props;
-
     const { status, location } = activeArea || {};
 
     const isPendingDashboard =
@@ -151,7 +156,11 @@ class DashboardsPage extends PureComponent {
     return (
       <div className="l-dashboards-page">
         <div className="content-panel">
-          <Header className="header" />
+          <Header
+            className="header"
+            handleSSRLocation={ssrLocation}
+            globalSentence={globalSentence}
+          />
           {links && !!links.length && (
             <SubNavMenu
               className="nav"
@@ -170,7 +179,7 @@ class DashboardsPage extends PureComponent {
               checkActive
             />
           )}
-          <GlobalSentence />
+          <GlobalSentence handleSSRLocation={ssrLocation} />
           {isPendingDashboard && (
             <PendingDashboard
               className="pending-message"
@@ -196,6 +205,7 @@ class DashboardsPage extends PureComponent {
         {widgetAnchor && (
           <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
         )}
+        <MetaProvider />
         <DatasetsProvider />
         <LatestProvider />
         <CountryDataProvider />

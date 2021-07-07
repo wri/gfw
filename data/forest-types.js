@@ -49,6 +49,7 @@ export default [
       glad: 'is__ifl_intact_forest_landscape_2016',
       viirs: 'is__ifl_intact_forest_landscape_2016',
       modis: 'is__ifl_intact_forest_landscape_2016',
+      modis_burned_area: 'is__ifl_intact_forest_landscape_2016',
     },
     metaKey: 'intact_forest_landscapes_change',
     global: true,

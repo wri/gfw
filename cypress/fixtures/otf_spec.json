@@ -1,2026 +1,661 @@
 [
   {
-    "url": "https://wri-01.carto.com/api/v2/sql?q=SELECT iso, name_engli as name FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY name",
+    "url": "https://production-api.globalforestwatch.org/query/f3ea601e-8aee-4616-a448-3ce43c4c6aa8?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
-      "rows": [
-        {
-          "iso": "AFG",
-          "name": "Afghanistan"
-        },
-        {
-          "iso": "XAD",
-          "name": "Akrotiri and Dhekelia"
-        },
-        {
-          "iso": "ALA",
-          "name": "Åland"
-        },
-        {
-          "iso": "ALB",
-          "name": "Albania"
-        },
-        {
-          "iso": "DZA",
-          "name": "Algeria"
-        },
-        {
-          "iso": "ASM",
-          "name": "American Samoa"
-        },
-        {
-          "iso": "AND",
-          "name": "Andorra"
-        },
-        {
-          "iso": "AGO",
-          "name": "Angola"
-        },
-        {
-          "iso": "AIA",
-          "name": "Anguilla"
-        },
-        {
-          "iso": "ATA",
-          "name": "Antarctica"
-        },
-        {
-          "iso": "ATG",
-          "name": "Antigua and Barbuda"
-        },
-        {
-          "iso": "ARG",
-          "name": "Argentina"
-        },
-        {
-          "iso": "ARM",
-          "name": "Armenia"
-        },
-        {
-          "iso": "ABW",
-          "name": "Aruba"
-        },
-        {
-          "iso": "AUS",
-          "name": "Australia"
-        },
-        {
-          "iso": "AUT",
-          "name": "Austria"
-        },
-        {
-          "iso": "AZE",
-          "name": "Azerbaijan"
-        },
-        {
-          "iso": "BHS",
-          "name": "Bahamas"
-        },
-        {
-          "iso": "BHR",
-          "name": "Bahrain"
-        },
-        {
-          "iso": "BGD",
-          "name": "Bangladesh"
-        },
-        {
-          "iso": "BRB",
-          "name": "Barbados"
-        },
-        {
-          "iso": "BLR",
-          "name": "Belarus"
-        },
-        {
-          "iso": "BEL",
-          "name": "Belgium"
-        },
-        {
-          "iso": "BLZ",
-          "name": "Belize"
-        },
-        {
-          "iso": "BEN",
-          "name": "Benin"
-        },
-        {
-          "iso": "BMU",
-          "name": "Bermuda"
-        },
-        {
-          "iso": "BTN",
-          "name": "Bhutan"
-        },
-        {
-          "iso": "BOL",
-          "name": "Bolivia"
-        },
-        {
-          "iso": "BES",
-          "name": "Bonaire, Saint Eustatius and Saba"
-        },
-        {
-          "iso": "BIH",
-          "name": "Bosnia and Herzegovina"
-        },
-        {
-          "iso": "BWA",
-          "name": "Botswana"
-        },
-        {
-          "iso": "BVT",
-          "name": "Bouvet Island"
-        },
-        {
-          "iso": "BRA",
-          "name": "Brazil"
-        },
-        {
-          "iso": "IOT",
-          "name": "British Indian Ocean Territory"
-        },
-        {
-          "iso": "VGB",
-          "name": "British Virgin Islands"
-        },
-        {
-          "iso": "BRN",
-          "name": "Brunei"
-        },
-        {
-          "iso": "BGR",
-          "name": "Bulgaria"
-        },
-        {
-          "iso": "BFA",
-          "name": "Burkina Faso"
-        },
-        {
-          "iso": "BDI",
-          "name": "Burundi"
-        },
-        {
-          "iso": "KHM",
-          "name": "Cambodia"
-        },
-        {
-          "iso": "CMR",
-          "name": "Cameroon"
-        },
-        {
-          "iso": "CAN",
-          "name": "Canada"
-        },
-        {
-          "iso": "CPV",
-          "name": "Cape Verde"
-        },
-        {
-          "iso": "CYM",
-          "name": "Cayman Islands"
-        },
-        {
-          "iso": "CAF",
-          "name": "Central African Republic"
-        },
-        {
-          "iso": "TCD",
-          "name": "Chad"
-        },
-        {
-          "iso": "CHL",
-          "name": "Chile"
-        },
-        {
-          "iso": "CHN",
-          "name": "China"
-        },
-        {
-          "iso": "CXR",
-          "name": "Christmas Island"
-        },
-        {
-          "iso": "XCL",
-          "name": "Clipperton Island"
-        },
-        {
-          "iso": "CCK",
-          "name": "Cocos Islands"
-        },
-        {
-          "iso": "COL",
-          "name": "Colombia"
-        },
-        {
-          "iso": "COM",
-          "name": "Comoros"
-        },
-        {
-          "iso": "COK",
-          "name": "Cook Islands"
-        },
-        {
-          "iso": "CRI",
-          "name": "Costa Rica"
-        },
-        {
-          "iso": "CIV",
-          "name": "Côte d'Ivoire"
-        },
-        {
-          "iso": "HRV",
-          "name": "Croatia"
-        },
-        {
-          "iso": "CUB",
-          "name": "Cuba"
-        },
-        {
-          "iso": "CUW",
-          "name": "Curaçao"
-        },
-        {
-          "iso": "CYP",
-          "name": "Cyprus"
-        },
-        {
-          "iso": "CZE",
-          "name": "Czech Republic"
-        },
-        {
-          "iso": "COD",
-          "name": "Democratic Republic of the Congo"
-        },
-        {
-          "iso": "DNK",
-          "name": "Denmark"
-        },
-        {
-          "iso": "DJI",
-          "name": "Djibouti"
-        },
-        {
-          "iso": "DMA",
-          "name": "Dominica"
-        },
-        {
-          "iso": "DOM",
-          "name": "Dominican Republic"
-        },
-        {
-          "iso": "TLS",
-          "name": "East Timor"
-        },
-        {
-          "iso": "ECU",
-          "name": "Ecuador"
-        },
-        {
-          "iso": "EGY",
-          "name": "Egypt"
-        },
-        {
-          "iso": "SLV",
-          "name": "El Salvador"
-        },
-        {
-          "iso": "GNQ",
-          "name": "Equatorial Guinea"
-        },
-        {
-          "iso": "ERI",
-          "name": "Eritrea"
-        },
-        {
-          "iso": "EST",
-          "name": "Estonia"
-        },
-        {
-          "iso": "ETH",
-          "name": "Ethiopia"
-        },
-        {
-          "iso": "FLK",
-          "name": "Falkland Islands"
-        },
-        {
-          "iso": "FRO",
-          "name": "Faroe Islands"
-        },
-        {
-          "iso": "FJI",
-          "name": "Fiji"
-        },
-        {
-          "iso": "FIN",
-          "name": "Finland"
-        },
-        {
-          "iso": "FRA",
-          "name": "France"
-        },
-        {
-          "iso": "GUF",
-          "name": "French Guiana"
-        },
-        {
-          "iso": "PYF",
-          "name": "French Polynesia"
-        },
-        {
-          "iso": "ATF",
-          "name": "French Southern Territories"
-        },
-        {
-          "iso": "GAB",
-          "name": "Gabon"
-        },
-        {
-          "iso": "GMB",
-          "name": "Gambia"
-        },
-        {
-          "iso": "GEO",
-          "name": "Georgia"
-        },
-        {
-          "iso": "DEU",
-          "name": "Germany"
-        },
-        {
-          "iso": "GHA",
-          "name": "Ghana"
-        },
-        {
-          "iso": "GIB",
-          "name": "Gibraltar"
-        },
-        {
-          "iso": "GRC",
-          "name": "Greece"
-        },
-        {
-          "iso": "GRL",
-          "name": "Greenland"
-        },
-        {
-          "iso": "GRD",
-          "name": "Grenada"
-        },
-        {
-          "iso": "GLP",
-          "name": "Guadeloupe"
-        },
-        {
-          "iso": "GUM",
-          "name": "Guam"
-        },
-        {
-          "iso": "GTM",
-          "name": "Guatemala"
-        },
-        {
-          "iso": "GGY",
-          "name": "Guernsey"
-        },
-        {
-          "iso": "GIN",
-          "name": "Guinea"
-        },
-        {
-          "iso": "GNB",
-          "name": "Guinea-Bissau"
-        },
-        {
-          "iso": "GUY",
-          "name": "Guyana"
-        },
-        {
-          "iso": "HTI",
-          "name": "Haiti"
-        },
-        {
-          "iso": "HMD",
-          "name": "Heard Island and McDonald Islands"
-        },
-        {
-          "iso": "HND",
-          "name": "Honduras"
-        },
-        {
-          "iso": "HKG",
-          "name": "Hong Kong"
-        },
-        {
-          "iso": "HUN",
-          "name": "Hungary"
-        },
-        {
-          "iso": "ISL",
-          "name": "Iceland"
-        },
-        {
-          "iso": "IND",
-          "name": "India"
-        },
-        {
-          "iso": "IDN",
-          "name": "Indonesia"
-        },
-        {
-          "iso": "IRN",
-          "name": "Iran"
-        },
-        {
-          "iso": "IRQ",
-          "name": "Iraq"
-        },
-        {
-          "iso": "IRL",
-          "name": "Ireland"
-        },
-        {
-          "iso": "IMN",
-          "name": "Isle of Man"
-        },
-        {
-          "iso": "ISR",
-          "name": "Israel"
-        },
-        {
-          "iso": "ITA",
-          "name": "Italy"
-        },
-        {
-          "iso": "JAM",
-          "name": "Jamaica"
-        },
-        {
-          "iso": "JPN",
-          "name": "Japan"
-        },
-        {
-          "iso": "JEY",
-          "name": "Jersey"
-        },
-        {
-          "iso": "JOR",
-          "name": "Jordan"
-        },
-        {
-          "iso": "KAZ",
-          "name": "Kazakhstan"
-        },
-        {
-          "iso": "KEN",
-          "name": "Kenya"
-        },
-        {
-          "iso": "KIR",
-          "name": "Kiribati"
-        },
-        {
-          "iso": "XKO",
-          "name": "Kosovo"
-        },
-        {
-          "iso": "KWT",
-          "name": "Kuwait"
-        },
-        {
-          "iso": "KGZ",
-          "name": "Kyrgyzstan"
-        },
-        {
-          "iso": "LAO",
-          "name": "Laos"
-        },
-        {
-          "iso": "LVA",
-          "name": "Latvia"
-        },
-        {
-          "iso": "LBN",
-          "name": "Lebanon"
-        },
-        {
-          "iso": "LSO",
-          "name": "Lesotho"
-        },
-        {
-          "iso": "LBR",
-          "name": "Liberia"
-        },
-        {
-          "iso": "LBY",
-          "name": "Libya"
-        },
-        {
-          "iso": "LIE",
-          "name": "Liechtenstein"
-        },
-        {
-          "iso": "LTU",
-          "name": "Lithuania"
-        },
-        {
-          "iso": "LUX",
-          "name": "Luxembourg"
-        },
-        {
-          "iso": "MAC",
-          "name": "Macao"
-        },
-        {
-          "iso": "MKD",
-          "name": "Macedonia"
-        },
-        {
-          "iso": "MDG",
-          "name": "Madagascar"
-        },
-        {
-          "iso": "MWI",
-          "name": "Malawi"
-        },
-        {
-          "iso": "MYS",
-          "name": "Malaysia"
-        },
-        {
-          "iso": "MDV",
-          "name": "Maldives"
-        },
-        {
-          "iso": "MLI",
-          "name": "Mali"
-        },
-        {
-          "iso": "MLT",
-          "name": "Malta"
-        },
-        {
-          "iso": "MHL",
-          "name": "Marshall Islands"
-        },
-        {
-          "iso": "MTQ",
-          "name": "Martinique"
-        },
-        {
-          "iso": "MRT",
-          "name": "Mauritania"
-        },
-        {
-          "iso": "MUS",
-          "name": "Mauritius"
-        },
-        {
-          "iso": "MYT",
-          "name": "Mayotte"
-        },
-        {
-          "iso": "MEX",
-          "name": "Mexico"
-        },
-        {
-          "iso": "FSM",
-          "name": "Micronesia"
-        },
-        {
-          "iso": "MDA",
-          "name": "Moldova"
-        },
-        {
-          "iso": "MCO",
-          "name": "Monaco"
-        },
-        {
-          "iso": "MNG",
-          "name": "Mongolia"
-        },
-        {
-          "iso": "MNE",
-          "name": "Montenegro"
-        },
-        {
-          "iso": "MSR",
-          "name": "Montserrat"
-        },
-        {
-          "iso": "MAR",
-          "name": "Morocco"
-        },
-        {
-          "iso": "MOZ",
-          "name": "Mozambique"
-        },
-        {
-          "iso": "MMR",
-          "name": "Myanmar"
-        },
-        {
-          "iso": "NAM",
-          "name": "Namibia"
-        },
-        {
-          "iso": "NRU",
-          "name": "Nauru"
-        },
-        {
-          "iso": "NPL",
-          "name": "Nepal"
-        },
-        {
-          "iso": "NLD",
-          "name": "Netherlands"
-        },
-        {
-          "iso": "NCL",
-          "name": "New Caledonia"
-        },
-        {
-          "iso": "NZL",
-          "name": "New Zealand"
-        },
-        {
-          "iso": "NIC",
-          "name": "Nicaragua"
-        },
-        {
-          "iso": "NER",
-          "name": "Niger"
-        },
-        {
-          "iso": "NGA",
-          "name": "Nigeria"
-        },
-        {
-          "iso": "NIU",
-          "name": "Niue"
-        },
-        {
-          "iso": "NFK",
-          "name": "Norfolk Island"
-        },
-        {
-          "iso": "XNC",
-          "name": "Northern Cyprus"
-        },
-        {
-          "iso": "MNP",
-          "name": "Northern Mariana Islands"
-        },
-        {
-          "iso": "PRK",
-          "name": "North Korea"
-        },
-        {
-          "iso": "NOR",
-          "name": "Norway"
-        },
-        {
-          "iso": "OMN",
-          "name": "Oman"
-        },
-        {
-          "iso": "PAK",
-          "name": "Pakistan"
-        },
-        {
-          "iso": "PLW",
-          "name": "Palau"
-        },
-        {
-          "iso": "PSE",
-          "name": "Palestina"
-        },
-        {
-          "iso": "PAN",
-          "name": "Panama"
-        },
-        {
-          "iso": "PNG",
-          "name": "Papua New Guinea"
-        },
-        {
-          "iso": "PRY",
-          "name": "Paraguay"
-        },
-        {
-          "iso": "PER",
-          "name": "Peru"
-        },
-        {
-          "iso": "PHL",
-          "name": "Philippines"
-        },
-        {
-          "iso": "PCN",
-          "name": "Pitcairn Islands"
-        },
-        {
-          "iso": "POL",
-          "name": "Poland"
-        },
-        {
-          "iso": "PRT",
-          "name": "Portugal"
-        },
-        {
-          "iso": "PRI",
-          "name": "Puerto Rico"
-        },
-        {
-          "iso": "QAT",
-          "name": "Qatar"
-        },
-        {
-          "iso": "COG",
-          "name": "Republic of Congo"
-        },
-        {
-          "iso": "REU",
-          "name": "Reunion"
-        },
-        {
-          "iso": "ROU",
-          "name": "Romania"
-        },
-        {
-          "iso": "RUS",
-          "name": "Russia"
-        },
-        {
-          "iso": "RWA",
-          "name": "Rwanda"
-        },
-        {
-          "iso": "BLM",
-          "name": "Saint-Barthélemy"
-        },
-        {
-          "iso": "SHN",
-          "name": "Saint Helena"
-        },
-        {
-          "iso": "KNA",
-          "name": "Saint Kitts and Nevis"
-        },
-        {
-          "iso": "LCA",
-          "name": "Saint Lucia"
-        },
-        {
-          "iso": "MAF",
-          "name": "Saint-Martin"
-        },
-        {
-          "iso": "SPM",
-          "name": "Saint Pierre and Miquelon"
-        },
-        {
-          "iso": "VCT",
-          "name": "Saint Vincent and the Grenadines"
-        },
-        {
-          "iso": "WSM",
-          "name": "Samoa"
-        },
-        {
-          "iso": "SMR",
-          "name": "San Marino"
-        },
-        {
-          "iso": "STP",
-          "name": "Sao Tome and Principe"
-        },
-        {
-          "iso": "SAU",
-          "name": "Saudi Arabia"
-        },
-        {
-          "iso": "SEN",
-          "name": "Senegal"
-        },
-        {
-          "iso": "SRB",
-          "name": "Serbia"
-        },
-        {
-          "iso": "SYC",
-          "name": "Seychelles"
-        },
-        {
-          "iso": "SLE",
-          "name": "Sierra Leone"
-        },
-        {
-          "iso": "SGP",
-          "name": "Singapore"
-        },
-        {
-          "iso": "SXM",
-          "name": "Sint Maarten"
-        },
-        {
-          "iso": "SVK",
-          "name": "Slovakia"
-        },
-        {
-          "iso": "SVN",
-          "name": "Slovenia"
-        },
-        {
-          "iso": "SLB",
-          "name": "Solomon Islands"
-        },
-        {
-          "iso": "SOM",
-          "name": "Somalia"
-        },
-        {
-          "iso": "ZAF",
-          "name": "South Africa"
-        },
-        {
-          "iso": "SGS",
-          "name": "South Georgia and the South Sandwich Islands"
-        },
-        {
-          "iso": "KOR",
-          "name": "South Korea"
-        },
-        {
-          "iso": "SSD",
-          "name": "South Sudan"
-        },
-        {
-          "iso": "ESP",
-          "name": "Spain"
-        },
-        {
-          "iso": "LKA",
-          "name": "Sri Lanka"
-        },
-        {
-          "iso": "SDN",
-          "name": "Sudan"
-        },
-        {
-          "iso": "SUR",
-          "name": "Suriname"
-        },
-        {
-          "iso": "SJM",
-          "name": "Svalbard and Jan Mayen"
-        },
-        {
-          "iso": "SWZ",
-          "name": "Swaziland"
-        },
-        {
-          "iso": "SWE",
-          "name": "Sweden"
-        },
-        {
-          "iso": "CHE",
-          "name": "Switzerland"
-        },
-        {
-          "iso": "SYR",
-          "name": "Syria"
-        },
-        {
-          "iso": "TJK",
-          "name": "Tajikistan"
-        },
-        {
-          "iso": "TZA",
-          "name": "Tanzania"
-        },
-        {
-          "iso": "THA",
-          "name": "Thailand"
-        },
-        {
-          "iso": "TGO",
-          "name": "Togo"
-        },
-        {
-          "iso": "TKL",
-          "name": "Tokelau"
-        },
-        {
-          "iso": "TON",
-          "name": "Tonga"
-        },
-        {
-          "iso": "TTO",
-          "name": "Trinidad and Tobago"
-        },
-        {
-          "iso": "TUN",
-          "name": "Tunisia"
-        },
-        {
-          "iso": "TUR",
-          "name": "Turkey"
-        },
-        {
-          "iso": "TKM",
-          "name": "Turkmenistan"
-        },
-        {
-          "iso": "TCA",
-          "name": "Turks and Caicos Islands"
-        },
-        {
-          "iso": "TUV",
-          "name": "Tuvalu"
-        },
-        {
-          "iso": "UGA",
-          "name": "Uganda"
-        },
-        {
-          "iso": "UKR",
-          "name": "Ukraine"
-        },
-        {
-          "iso": "ARE",
-          "name": "United Arab Emirates"
-        },
-        {
-          "iso": "GBR",
-          "name": "United Kingdom"
-        },
-        {
-          "iso": "USA",
-          "name": "United States"
-        },
-        {
-          "iso": "UMI",
-          "name": "United States Minor Outlying Islands"
-        },
-        {
-          "iso": "URY",
-          "name": "Uruguay"
-        },
-        {
-          "iso": "UZB",
-          "name": "Uzbekistan"
-        },
-        {
-          "iso": "VUT",
-          "name": "Vanuatu"
-        },
-        {
-          "iso": "VAT",
-          "name": "Vatican City"
-        },
-        {
-          "iso": "VEN",
-          "name": "Venezuela"
-        },
-        {
-          "iso": "VNM",
-          "name": "Vietnam"
-        },
-        {
-          "iso": "VIR",
-          "name": "Virgin Islands, U.S."
-        },
-        {
-          "iso": "WLF",
-          "name": "Wallis and Futuna"
-        },
-        {
-          "iso": "ESH",
-          "name": "Western Sahara"
-        },
-        {
-          "iso": "YEM",
-          "name": "Yemen"
-        },
-        {
-          "iso": "ZMB",
-          "name": "Zambia"
-        },
-        {
-          "iso": "ZWE",
-          "name": "Zimbabwe"
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/f3ea601e-8aee-4616-a448-3ce43c4c6aa8/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/f3ea601e-8aee-4616-a448-3ce43c4c6aa8",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
         }
-      ],
-      "time": 0.008,
-      "fields": {
-        "iso": {
-          "type": "string",
-          "pgtype": "text"
-        },
-        "name": {
-          "type": "string",
-          "pgtype": "text"
-        }
-      },
-      "total_rows": 252
+      }
     }
   },
   {
-    "url": "https://wri-01.carto.com/api/v2/sql?q=SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics",
+    "url": "https://production-api.globalforestwatch.org/query/254cb7f6-e396-49b7-9966-06ce5d94c00a?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
-      "rows": [
-        {
-          "iso": "NGA",
-          "name": "Nigeria"
-        },
-        {
-          "iso": "ESP",
-          "name": "Spain"
-        },
-        {
-          "iso": "SAU",
-          "name": "Saudi Arabia"
-        },
-        {
-          "iso": "WLF",
-          "name": "Wallis and Futuna"
-        },
-        {
-          "iso": "LBR",
-          "name": "Liberia"
-        },
-        {
-          "iso": "KOR",
-          "name": "Republic of Korea"
-        },
-        {
-          "iso": "CYP",
-          "name": "Cyprus"
-        },
-        {
-          "iso": "PYF",
-          "name": "French Polynesia"
-        },
-        {
-          "iso": "KHM",
-          "name": "Cambodia"
-        },
-        {
-          "iso": "COL",
-          "name": "Colombia"
-        },
-        {
-          "iso": "NPL",
-          "name": "Nepal"
-        },
-        {
-          "iso": "MNG",
-          "name": "Mongolia"
-        },
-        {
-          "iso": "SYC",
-          "name": "Seychelles"
-        },
-        {
-          "iso": "ITA",
-          "name": "Italy"
-        },
-        {
-          "iso": "SDN",
-          "name": "Sudan"
-        },
-        {
-          "iso": "VGB",
-          "name": "British Virgin Islands"
-        },
-        {
-          "iso": "GMB",
-          "name": "Gambia"
-        },
-        {
-          "iso": "BMU",
-          "name": "Bermuda"
-        },
-        {
-          "iso": "CRI",
-          "name": "Costa Rica"
-        },
-        {
-          "iso": "UGA",
-          "name": "Uganda"
-        },
-        {
-          "iso": "TKL",
-          "name": "Tokelau"
-        },
-        {
-          "iso": "ARG",
-          "name": "Argentina"
-        },
-        {
-          "iso": "BEL",
-          "name": "Belgium"
-        },
-        {
-          "iso": "BGD",
-          "name": "Bangladesh"
-        },
-        {
-          "iso": "CYM",
-          "name": "Cayman Islands"
-        },
-        {
-          "iso": "WSM",
-          "name": "Samoa"
-        },
-        {
-          "iso": "RWA",
-          "name": "Rwanda"
-        },
-        {
-          "iso": "ATG",
-          "name": "Antigua and Barbuda"
-        },
-        {
-          "iso": "MRT",
-          "name": "Mauritania"
-        },
-        {
-          "iso": "TTO",
-          "name": "Trinidad and Tobago"
-        },
-        {
-          "iso": "ERI",
-          "name": "Eritrea"
-        },
-        {
-          "iso": "MCO",
-          "name": "Monaco"
-        },
-        {
-          "iso": "URY",
-          "name": "Uruguay"
-        },
-        {
-          "iso": "ANT",
-          "name": "Netherlands Antilles"
-        },
-        {
-          "iso": "YEM",
-          "name": "Yemen"
-        },
-        {
-          "iso": "ETH",
-          "name": "Ethiopia"
-        },
-        {
-          "iso": "BWA",
-          "name": "Botswana"
-        },
-        {
-          "iso": "SHN",
-          "name": "Saint Helena"
-        },
-        {
-          "iso": "KIR",
-          "name": "Kiribati"
-        },
-        {
-          "iso": "AND",
-          "name": "Andorra"
-        },
-        {
-          "iso": "GGY",
-          "name": "Guernsey"
-        },
-        {
-          "iso": "BHR",
-          "name": "Bahrain"
-        },
-        {
-          "iso": "GUM",
-          "name": "Guam"
-        },
-        {
-          "iso": "COM",
-          "name": "Comoros"
-        },
-        {
-          "iso": "FRA",
-          "name": "France"
-        },
-        {
-          "iso": "VIR",
-          "name": "United States Virgin Islands"
-        },
-        {
-          "iso": "COG",
-          "name": "Congo"
-        },
-        {
-          "iso": "TLS",
-          "name": "Timor-Leste"
-        },
-        {
-          "iso": "BRA",
-          "name": "Brazil"
-        },
-        {
-          "iso": "MYT",
-          "name": "Mayotte"
-        },
-        {
-          "iso": "GIN",
-          "name": "Guinea"
-        },
-        {
-          "iso": "LBN",
-          "name": "Lebanon"
-        },
-        {
-          "iso": "KAZ",
-          "name": "Kazakhstan"
-        },
-        {
-          "iso": "LAO",
-          "name": "Lao People's Democratic Republic"
-        },
-        {
-          "iso": "CHL",
-          "name": "Chile"
-        },
-        {
-          "iso": "CUB",
-          "name": "Cuba"
-        },
-        {
-          "iso": "MHL",
-          "name": "Marshall Islands"
-        },
-        {
-          "iso": "BRB",
-          "name": "Barbados"
-        },
-        {
-          "iso": "AFG",
-          "name": "Afghanistan"
-        },
-        {
-          "iso": "SSD",
-          "name": "South Sudan"
-        },
-        {
-          "iso": "JOR",
-          "name": "Jordan"
-        },
-        {
-          "iso": "TUV",
-          "name": "Tuvalu"
-        },
-        {
-          "iso": "NIC",
-          "name": "Nicaragua"
-        },
-        {
-          "iso": "SVK",
-          "name": "Slovakia"
-        },
-        {
-          "iso": "ZWE",
-          "name": "Zimbabwe"
-        },
-        {
-          "iso": "UKR",
-          "name": "Ukraine"
-        },
-        {
-          "iso": "SYR",
-          "name": "Syrian Arab Republic"
-        },
-        {
-          "iso": "LBY",
-          "name": "Libya"
-        },
-        {
-          "iso": "NOR",
-          "name": "Norway"
-        },
-        {
-          "iso": "CHN",
-          "name": "China"
-        },
-        {
-          "iso": "ARE",
-          "name": "United Arab Emirates"
-        },
-        {
-          "iso": "ABW",
-          "name": "Aruba"
-        },
-        {
-          "iso": "AUS",
-          "name": "Australia"
-        },
-        {
-          "iso": "MDA",
-          "name": "Moldova, Republic of"
-        },
-        {
-          "iso": "AIA",
-          "name": "Anguilla"
-        },
-        {
-          "iso": "NCL",
-          "name": "New Caledonia"
-        },
-        {
-          "iso": "NLD",
-          "name": "Netherlands"
-        },
-        {
-          "iso": "MNP",
-          "name": "Northern Mariana Islands"
-        },
-        {
-          "iso": "GNB",
-          "name": "Guinea-Bissau"
-        },
-        {
-          "iso": "GNQ",
-          "name": "Equatorial Guinea"
-        },
-        {
-          "iso": "SVN",
-          "name": "Slovenia"
-        },
-        {
-          "iso": "SEN",
-          "name": "Senegal"
-        },
-        {
-          "iso": "SGP",
-          "name": "Singapore"
-        },
-        {
-          "iso": "CAF",
-          "name": "Central African Republic"
-        },
-        {
-          "iso": "PAN",
-          "name": "Panama"
-        },
-        {
-          "iso": "IRN",
-          "name": "Iran  (Islamic Republic of)"
-        },
-        {
-          "iso": "KNA",
-          "name": "Saint Kitts and Nevis"
-        },
-        {
-          "iso": "NIU",
-          "name": "Niue"
-        },
-        {
-          "iso": "GLP",
-          "name": "Guadeloupe"
-        },
-        {
-          "iso": "TUR",
-          "name": "Turkey"
-        },
-        {
-          "iso": "TCA",
-          "name": "Turks and Caicos Islands"
-        },
-        {
-          "iso": "ROU",
-          "name": "Romania"
-        },
-        {
-          "iso": "PER",
-          "name": "Peru"
-        },
-        {
-          "iso": "ISR",
-          "name": "Israel"
-        },
-        {
-          "iso": "GBR",
-          "name": "U.K. of Great Britain and Northern Ireland"
-        },
-        {
-          "iso": "JAM",
-          "name": "Jamaica"
-        },
-        {
-          "iso": "AZE",
-          "name": "Azerbaijan"
-        },
-        {
-          "iso": "MAR",
-          "name": "Morocco"
-        },
-        {
-          "iso": "CIV",
-          "name": "Côte d'Ivoire"
-        },
-        {
-          "iso": "LKA",
-          "name": "Sri Lanka"
-        },
-        {
-          "iso": "TKM",
-          "name": "Turkmenistan"
-        },
-        {
-          "iso": "TZA",
-          "name": "United Republic of Tanzania"
-        },
-        {
-          "iso": "RUS",
-          "name": "Russian Federation"
-        },
-        {
-          "iso": "IMN",
-          "name": "Isle of Man"
-        },
-        {
-          "iso": "GRL",
-          "name": "Greenland"
-        },
-        {
-          "iso": "MSR",
-          "name": "Montserrat"
-        },
-        {
-          "iso": "GRC",
-          "name": "Greece"
-        },
-        {
-          "iso": "BIH",
-          "name": "Bosnia and Herzegovina"
-        },
-        {
-          "iso": "LUX",
-          "name": "Luxembourg"
-        },
-        {
-          "iso": "TGO",
-          "name": "Togo"
-        },
-        {
-          "iso": "VAT",
-          "name": "Vatican City"
-        },
-        {
-          "iso": "BDI",
-          "name": "Burundi"
-        },
-        {
-          "iso": "MDV",
-          "name": "Maldives"
-        },
-        {
-          "iso": "HUN",
-          "name": "Hungary"
-        },
-        {
-          "iso": "FIN",
-          "name": "Finland"
-        },
-        {
-          "iso": "NRU",
-          "name": "Nauru"
-        },
-        {
-          "iso": "ZAF",
-          "name": "South Africa"
-        },
-        {
-          "iso": "COK",
-          "name": "Cook Islands"
-        },
-        {
-          "iso": "HRV",
-          "name": "Croatia"
-        },
-        {
-          "iso": "IDN",
-          "name": "Indonesia"
-        },
-        {
-          "iso": "STP",
-          "name": "Sao Tome and Principe"
-        },
-        {
-          "iso": "BLM",
-          "name": "Saint Barthelemy"
-        },
-        {
-          "iso": "MYS",
-          "name": "Malaysia"
-        },
-        {
-          "iso": "SWE",
-          "name": "Sweden"
-        },
-        {
-          "iso": "BTN",
-          "name": "Bhutan"
-        },
-        {
-          "iso": "TCD",
-          "name": "Chad"
-        },
-        {
-          "iso": "SOM",
-          "name": "Somalia"
-        },
-        {
-          "iso": "TJK",
-          "name": "Tajikistan"
-        },
-        {
-          "iso": "UZB",
-          "name": "Uzbekistan"
-        },
-        {
-          "iso": "OMN",
-          "name": "Oman"
-        },
-        {
-          "iso": "KWT",
-          "name": "Kuwait"
-        },
-        {
-          "iso": "SWZ",
-          "name": "Swaziland"
-        },
-        {
-          "iso": "PNG",
-          "name": "Papua New Guinea"
-        },
-        {
-          "iso": "ZMB",
-          "name": "Zambia"
-        },
-        {
-          "iso": "MKD",
-          "name": "The former Yugoslav Republic of Macedonia"
-        },
-        {
-          "iso": "BGR",
-          "name": "Bulgaria"
-        },
-        {
-          "iso": "LVA",
-          "name": "Latvia"
-        },
-        {
-          "iso": "BFA",
-          "name": "Burkina Faso"
-        },
-        {
-          "iso": "VCT",
-          "name": "Saint Vincent and the Grenadines"
-        },
-        {
-          "iso": "PRK",
-          "name": "Dem People's Rep of Korea"
-        },
-        {
-          "iso": "FJI",
-          "name": "Fiji"
-        },
-        {
-          "iso": "ECU",
-          "name": "Ecuador"
-        },
-        {
-          "iso": "SLB",
-          "name": "Solomon Islands"
-        },
-        {
-          "iso": "GUY",
-          "name": "Guyana"
-        },
-        {
-          "iso": "SPM",
-          "name": "Saint Pierre and Miquelon"
-        },
-        {
-          "iso": "ISL",
-          "name": "Iceland"
-        },
-        {
-          "iso": "MUS",
-          "name": "Mauritius"
-        },
-        {
-          "iso": "DOM",
-          "name": "Dominican Republic"
-        },
-        {
-          "iso": "GHA",
-          "name": "Ghana"
-        },
-        {
-          "iso": "MDG",
-          "name": "Madagascar"
-        },
-        {
-          "iso": "PRY",
-          "name": "Paraguay"
-        },
-        {
-          "iso": "PCN",
-          "name": "Pitcairn"
-        },
-        {
-          "iso": "IRL",
-          "name": "Ireland"
-        },
-        {
-          "iso": "JPN",
-          "name": "Japan"
-        },
-        {
-          "iso": "AGO",
-          "name": "Angola"
-        },
-        {
-          "iso": "LTU",
-          "name": "Lithuania"
-        },
-        {
-          "iso": "IND",
-          "name": "India"
-        },
-        {
-          "iso": "VUT",
-          "name": "Vanuatu"
-        },
-        {
-          "iso": "USA",
-          "name": "United States of America"
-        },
-        {
-          "iso": "GRD",
-          "name": "Grenada"
-        },
-        {
-          "iso": "COD",
-          "name": "Democratic Republic of the Congo"
-        },
-        {
-          "iso": "FSM",
-          "name": "Micronesia (Federated States of)"
-        },
-        {
-          "iso": "MMR",
-          "name": "Myanmar"
-        },
-        {
-          "iso": "SMR",
-          "name": "San Marino"
-        },
-        {
-          "iso": "NAM",
-          "name": "Namibia"
-        },
-        {
-          "iso": "NER",
-          "name": "Niger"
-        },
-        {
-          "iso": "BHS",
-          "name": "Bahamas"
-        },
-        {
-          "iso": "LCA",
-          "name": "Saint Lucia"
-        },
-        {
-          "iso": "DEU",
-          "name": "Germany"
-        },
-        {
-          "iso": "PRI",
-          "name": "Puerto Rico"
-        },
-        {
-          "iso": "NFK",
-          "name": "Norfolk Island"
-        },
-        {
-          "iso": "POL",
-          "name": "Poland"
-        },
-        {
-          "iso": "DZA",
-          "name": "Algeria"
-        },
-        {
-          "iso": "TON",
-          "name": "Tonga"
-        },
-        {
-          "iso": "VEN",
-          "name": "Venezuela"
-        },
-        {
-          "iso": "MNE",
-          "name": "Montenegro"
-        },
-        {
-          "iso": "FRO",
-          "name": "Faroe Islands"
-        },
-        {
-          "iso": "DMA",
-          "name": "Dominica"
-        },
-        {
-          "iso": "EST",
-          "name": "Estonia"
-        },
-        {
-          "iso": "LIE",
-          "name": "Liechtenstein"
-        },
-        {
-          "iso": "ARM",
-          "name": "Armenia"
-        },
-        {
-          "iso": "MEX",
-          "name": "Mexico"
-        },
-        {
-          "iso": "ESH",
-          "name": "Western Sahara"
-        },
-        {
-          "iso": "CAN",
-          "name": "Canada"
-        },
-        {
-          "iso": "KEN",
-          "name": "Kenya"
-        },
-        {
-          "iso": "SUR",
-          "name": "Suriname"
-        },
-        {
-          "iso": "MTQ",
-          "name": "Martinique"
-        },
-        {
-          "iso": "JEY",
-          "name": "Jersey"
-        },
-        {
-          "iso": "TUN",
-          "name": "Tunisia"
-        },
-        {
-          "iso": "DNK",
-          "name": "Denmark"
-        },
-        {
-          "iso": "VNM",
-          "name": "Viet Nam"
-        },
-        {
-          "iso": "BOL",
-          "name": "Bolivia"
-        },
-        {
-          "iso": "MWI",
-          "name": "Malawi"
-        },
-        {
-          "iso": "SLV",
-          "name": "El Salvador"
-        },
-        {
-          "iso": "EGY",
-          "name": "Egypt"
-        },
-        {
-          "iso": "CZE",
-          "name": "Czech Republic"
-        },
-        {
-          "iso": "GTM",
-          "name": "Guatemala"
-        },
-        {
-          "iso": "CPV",
-          "name": "Cape Verde"
-        },
-        {
-          "iso": "MAF",
-          "name": "Saint Martin"
-        },
-        {
-          "iso": "CHE",
-          "name": "Switzerland"
-        },
-        {
-          "iso": "ASM",
-          "name": "American Samoa"
-        },
-        {
-          "iso": "MOZ",
-          "name": "Mozambique"
-        },
-        {
-          "iso": "LSO",
-          "name": "Lesotho"
-        },
-        {
-          "iso": "BEN",
-          "name": "Benin"
-        },
-        {
-          "iso": "MLI",
-          "name": "Mali"
-        },
-        {
-          "iso": "FLK",
-          "name": "Falkland Islands (Malvinas)"
-        },
-        {
-          "iso": "BRN",
-          "name": "Brunei Darussalam"
-        },
-        {
-          "iso": "QAT",
-          "name": "Qatar"
-        },
-        {
-          "iso": "GAB",
-          "name": "Gabon"
-        },
-        {
-          "iso": "SRB",
-          "name": "Serbia"
-        },
-        {
-          "iso": "GUF",
-          "name": "French Guiana"
-        },
-        {
-          "iso": "PLW",
-          "name": "Palau"
-        },
-        {
-          "iso": "GIB",
-          "name": "Gibraltar"
-        },
-        {
-          "iso": "THA",
-          "name": "Thailand"
-        },
-        {
-          "iso": "MLT",
-          "name": "Malta"
-        },
-        {
-          "iso": "IRQ",
-          "name": "Iraq"
-        },
-        {
-          "iso": "GEO",
-          "name": "Georgia"
-        },
-        {
-          "iso": "ALB",
-          "name": "Albania"
-        },
-        {
-          "iso": "DJI",
-          "name": "Djibouti"
-        },
-        {
-          "iso": "KGZ",
-          "name": "Kyrgyzstan"
-        },
-        {
-          "iso": "PAK",
-          "name": "Pakistan"
-        },
-        {
-          "iso": "REU",
-          "name": "Réunion"
-        },
-        {
-          "iso": "PHL",
-          "name": "Philippines"
-        },
-        {
-          "iso": "PRT",
-          "name": "Portugal"
-        },
-        {
-          "iso": "CMR",
-          "name": "Cameroon"
-        },
-        {
-          "iso": "SJM",
-          "name": "Svalbard and Jan Mayen"
-        },
-        {
-          "iso": "HND",
-          "name": "Honduras"
-        },
-        {
-          "iso": "HTI",
-          "name": "Haiti"
-        },
-        {
-          "iso": "BLR",
-          "name": "Belarus"
-        },
-        {
-          "iso": "NZL",
-          "name": "New Zealand"
-        },
-        {
-          "iso": "AUT",
-          "name": "Austria"
-        },
-        {
-          "iso": "PSE",
-          "name": "West Bank"
-        },
-        {
-          "iso": "BLZ",
-          "name": "Belize"
-        },
-        {
-          "iso": "SLE",
-          "name": "Sierra Leone"
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/254cb7f6-e396-49b7-9966-06ce5d94c00a/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/254cb7f6-e396-49b7-9966-06ce5d94c00a",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
         }
-      ],
-      "time": 0.006,
-      "fields": {
-        "iso": {
-          "type": "string",
-          "pgtype": "text"
-        },
-        "name": {
-          "type": "string",
-          "pgtype": "text"
-        }
-      },
-      "total_rows": 234
+      }
     }
   },
   {
-    "url": "https://wri-01.carto.com/api/v2/sql?q=SELECT iso, external_links FROM external_links_gfw WHERE forest_atlas is true",
+    "url": "https://production-api.globalforestwatch.org/query/cf00c4da-aac0-4071-bd23-73f647844031?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
     "method": "GET",
     "data": {
-      "rows": [
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/cf00c4da-aac0-4071-bd23-73f647844031/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/cf00c4da-aac0-4071-bd23-73f647844031",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "url": "https://production-api.globalforestwatch.org/query/64d80e29-2e7f-4b9c-bef2-dde2241d363e?sql=SELECT geostore__id, gfw_plantation__type as plantations, ifl_intact_forest_landscape__year as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '6d5cfdf69bf468fc9b22c420e3c52d20'",
+    "method": "GET",
+    "data": {
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/64d80e29-2e7f-4b9c-bef2-dde2241d363e/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/64d80e29-2e7f-4b9c-bef2-dde2241d363e",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/6d5cfdf69bf468fc9b22c420e3c52d20?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30",
+    "method": "GET",
+    "data": {
+      "data": {
+        "area__ha": 2518319.945460699
+      },
+      "status": "success"
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/6d5cfdf69bf468fc9b22c420e3c52d20?geostore_origin=rw&sum=area__ha&group_by=is__umd_tree_cover_gain&filters=is__umd_tree_cover_gain",
+    "method": "GET",
+    "data": {
+      "data": [
         {
-          "iso": "CMR",
-          "external_links": "[{  \"title\": \"Interactive Forest Atlas of Cameroon\",  \"url\": \"http://cmr.forest-atlas.org/\"}]"
+          "is__umd_tree_cover_gain": "1",
+          "area__ha": 63454.24558303631
+        }
+      ],
+      "status": "success"
+    }
+  },
+  {
+    "url": "https://production-api.globalforestwatch.org/query/cf00c4da-aac0-4071-bd23-73f647844031?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '211fca3fbea311473797cc967bc7a073'",
+    "method": "GET",
+    "data": {
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/cf00c4da-aac0-4071-bd23-73f647844031/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/cf00c4da-aac0-4071-bd23-73f647844031",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "url": "https://production-api.globalforestwatch.org/query/64d80e29-2e7f-4b9c-bef2-dde2241d363e?sql=SELECT geostore__id, gfw_plantation__type as plantations, ifl_intact_forest_landscape__year as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '211fca3fbea311473797cc967bc7a073'",
+    "method": "GET",
+    "data": {
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/64d80e29-2e7f-4b9c-bef2-dde2241d363e/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/64d80e29-2e7f-4b9c-bef2-dde2241d363e",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "url": "https://production-api.globalforestwatch.org/query/f3ea601e-8aee-4616-a448-3ce43c4c6aa8?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '211fca3fbea311473797cc967bc7a073'",
+    "method": "GET",
+    "data": {
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/f3ea601e-8aee-4616-a448-3ce43c4c6aa8/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/f3ea601e-8aee-4616-a448-3ce43c4c6aa8",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "url": "https://production-api.globalforestwatch.org/query/254cb7f6-e396-49b7-9966-06ce5d94c00a?sql=SELECT geostore__id, gfw_plantation__type as plantations, is__ifl_intact_forest_landscape_2016 as ifl, is__umd_regional_primary_forest_2001 as primary_forest, is__gmw_mangroves_2016 as mangroves_2016, is__gfw_mining as mining, wdpa_protected_area__iucn_cat as wdpa, is__birdlife_key_biodiversity_area as kba, is__birdlife_alliance_for_zero_extinction_site as aze, is__landmark_land_right as landmark, is__peatland as idn_mys_peatlands, is__idn_forest_moratorium as idn_forest_moratorium, is__gfw_oil_palm as oil_palm, is__gfw_wood_fiber as wood_fiber, is__gfw_managed_forest as managed_forests FROM data WHERE         geostore__id = '211fca3fbea311473797cc967bc7a073'",
+    "method": "GET",
+    "data": {
+      "data": [],
+      "meta": {
+        "cloneUrl": {
+          "http_method": "POST",
+          "url": "/v1/dataset/254cb7f6-e396-49b7-9966-06ce5d94c00a/clone",
+          "body": {
+            "dataset": {
+              "datasetUrl": "/v1/query/tsv/254cb7f6-e396-49b7-9966-06ce5d94c00a",
+              "application": [
+                "your",
+                "apps"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2019-12-31",
+    "method": "GET",
+    "data": {
+      "data": {
+        "area__ha": 1143.2711199193054
+      },
+      "status": "success"
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&group_by=umd_tree_cover_loss__year&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2019-12-31",
+    "method": "GET",
+    "data": {
+      "data": [
+        {
+          "umd_tree_cover_loss__year": 2001,
+          "area__ha": 42.81004591916666
         },
         {
-          "iso": "CAF",
-          "external_links": "[{ \"title\": \"Interactive Forest Atlas of Central African Republic\",  \"url\": \"http://caf.forest-atlas.org/\"}]"
+          "umd_tree_cover_loss__year": 2002,
+          "area__ha": 16.62304974520833
         },
         {
-          "iso": "LBR",
-          "external_links": "[{  \"title\": \"Interactive Forest Atlas of Liberia\",  \"url\": \"https://lbr.forest-atlas.org/\"}]"
+          "umd_tree_cover_loss__year": 2003,
+          "area__ha": 22.08816199020833
         },
         {
-          "iso": "MDG",
-          "external_links": "[{  \"title\": \"Interactive Forest Atlas of Madagascar\",  \"url\": \"http://mdg.forest-atlas.org\"}]"
+          "umd_tree_cover_loss__year": 2004,
+          "area__ha": 52.29808801118055
         },
         {
-          "iso": "GEO",
-          "external_links": "[{  \"title\": \"Interactive Forest Atlas of Georgia\",  \"url\": \"http://geo.forest-atlas.org\"}]"
+          "umd_tree_cover_loss__year": 2005,
+          "area__ha": 60.116234694999996
         },
         {
-          "iso": "GAB",
-          "external_links": "[{  \"title\": \"Interactive Forest Atlas for Gabon\",  \"url\": \"http://gab.forest-atlas.org/\"}]"
+          "umd_tree_cover_loss__year": 2006,
+          "area__ha": 37.26902933743055
         },
         {
-          "iso": "COG",
-          "external_links": "[{  \"title\": \"Interactive Forest Atlas of Congo\",  \"url\": \"http://cog.forest-atlas.org/\"}, {  \"title\": \"OSFAC\",  \"url\": \"http://osfac.net/index.php?lang=en\"}]"
+          "umd_tree_cover_loss__year": 2007,
+          "area__ha": 8.045859694027778
         },
         {
-          "iso": "COD",
-          "external_links": "[{\"title\": \"Interactive Forest Atlas for Democratic Republic of Congo\",  \"url\": \"http://cod.forest-atlas.org/\"}, {  \"title\": \"Moabi\",  \"url\": \"http://drc.moabi.org/\"}, {  \"title\": \"National Forest Monitoring System: DRC\",  \"url\": \"http://www.rdc-snsf.org/\"}, {  \"title\": \"OSFAC\",  \"url\": \"http://osfac.net/index.php?lang=en\"}]"
+          "umd_tree_cover_loss__year": 2008,
+          "area__ha": 3.4156951531249997
         },
         {
+          "umd_tree_cover_loss__year": 2009,
+          "area__ha": 9.336233418541665
+        },
+        {
+          "umd_tree_cover_loss__year": 2010,
+          "area__ha": 34.00514285777778
+        },
+        {
+          "umd_tree_cover_loss__year": 2011,
+          "area__ha": 1.442182397986111
+        },
+        {
+          "umd_tree_cover_loss__year": 2012,
+          "area__ha": 9.336233418541665
+        },
+        {
+          "umd_tree_cover_loss__year": 2013,
+          "area__ha": 8.956711734861111
+        },
+        {
+          "umd_tree_cover_loss__year": 2014,
+          "area__ha": 0.3036173469444444
+        },
+        {
+          "umd_tree_cover_loss__year": 2015,
+          "area__ha": 2.277130102083333
+        },
+        {
+          "umd_tree_cover_loss__year": 2016,
+          "area__ha": 35.37142091902778
+        },
+        {
+          "umd_tree_cover_loss__year": 2017,
+          "area__ha": 8.653094387916665
+        },
+        {
+          "umd_tree_cover_loss__year": 2018,
+          "area__ha": 25.124335459652777
+        },
+        {
+          "umd_tree_cover_loss__year": 2019,
+          "area__ha": 14.801345663541666
+        }
+      ],
+      "status": "success"
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha",
+    "method": "GET",
+    "data": {
+      "data": {
+        "area__ha": 2085.3957474879167
+      },
+      "status": "success"
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30",
+    "method": "GET",
+    "data": {
+      "data": {
+        "area__ha": 1143.2711199193054
+      },
+      "status": "success"
+    }
+  },
+  {
+    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&sum=alert__count&group_by=umd_glad_alerts__isoweek",
+    "method": "GET",
+    "data": {
+      "data": [
+        {
+          "umd_glad_alerts__isoweek": 31,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 34,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 37,
+          "alert__count": 6,
+          "area__ha": 0.45542602041666663,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 39,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 41,
+          "alert__count": 37,
+          "area__ha": 2.808460459236111,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 42,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 46,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 48,
+          "alert__count": 3,
+          "area__ha": 0.22771301020833332,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 50,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2015
+        },
+        {
+          "umd_glad_alerts__isoweek": 27,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 28,
+          "alert__count": 3,
+          "area__ha": 0.22771301020833332,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 29,
+          "alert__count": 13,
+          "area__ha": 0.9867563775694443,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 30,
+          "alert__count": 13,
+          "area__ha": 0.9867563775694443,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 32,
+          "alert__count": 9,
+          "area__ha": 0.6831390306249999,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 33,
+          "alert__count": 16,
+          "area__ha": 1.2144693877777777,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 34,
+          "alert__count": 5,
+          "area__ha": 0.3795216836805555,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 35,
+          "alert__count": 18,
+          "area__ha": 1.3662780612499998,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 36,
+          "alert__count": 15,
+          "area__ha": 1.1385650510416665,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 37,
+          "alert__count": 9,
+          "area__ha": 0.6831390306249999,
+          "umd_glad_alerts__year": 2016
+        },
+        {
+          "umd_glad_alerts__isoweek": 24,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2017
+        },
+        {
+          "umd_glad_alerts__isoweek": 28,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2017
+        },
+        {
+          "umd_glad_alerts__isoweek": 30,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2017
+        },
+        {
+          "umd_glad_alerts__isoweek": 34,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2017
+        },
+        {
+          "umd_glad_alerts__isoweek": 26,
+          "alert__count": 5,
+          "area__ha": 0.3795216836805555,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 27,
+          "alert__count": 4,
+          "area__ha": 0.3036173469444444,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 30,
+          "alert__count": 21,
+          "area__ha": 1.5939910714583332,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 33,
+          "alert__count": 10,
+          "area__ha": 0.759043367361111,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 34,
+          "alert__count": 11,
+          "area__ha": 0.8349477040972222,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 36,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 40,
+          "alert__count": 37,
+          "area__ha": 2.808460459236111,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 41,
+          "alert__count": 3,
+          "area__ha": 0.22771301020833332,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 43,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2018
+        },
+        {
+          "umd_glad_alerts__isoweek": 16,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 23,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 24,
+          "alert__count": 5,
+          "area__ha": 0.3795216836805555,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 25,
+          "alert__count": 1,
+          "area__ha": 0.0759043367361111,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 26,
+          "alert__count": 6,
+          "area__ha": 0.45542602041666663,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 28,
+          "alert__count": 4,
+          "area__ha": 0.3036173469444444,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 29,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 31,
+          "alert__count": 4,
+          "area__ha": 0.3036173469444444,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 32,
+          "alert__count": 3,
+          "area__ha": 0.22771301020833332,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 34,
+          "alert__count": 16,
+          "area__ha": 1.2144693877777777,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 36,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 37,
+          "alert__count": 3,
+          "area__ha": 0.22771301020833332,
+          "umd_glad_alerts__year": 2019
+        },
+        {
+          "umd_glad_alerts__isoweek": 18,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 22,
+          "alert__count": 5,
+          "area__ha": 0.3795216836805555,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 25,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 26,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 29,
+          "alert__count": 26,
+          "area__ha": 1.9735127551388887,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 32,
+          "alert__count": 6,
+          "area__ha": 0.45542602041666663,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 33,
+          "alert__count": 5,
+          "area__ha": 0.3795216836805555,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 37,
+          "alert__count": 62,
+          "area__ha": 4.706068877638889,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 38,
+          "alert__count": 5,
+          "area__ha": 0.3795216836805555,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 42,
+          "alert__count": 2,
+          "area__ha": 0.1518086734722222,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 46,
+          "alert__count": 79,
+          "area__ha": 5.9964426021527775,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+          "umd_glad_alerts__isoweek": 50,
+          "alert__count": 67,
+          "area__ha": 5.085590561319444,
+          "umd_glad_alerts__year": 2020
+        },
+        {
+<<<<<<< HEAD
           "iso": "GNQ",
           "external_links": "[{  \"title\": \"Interactive Forest Atlas of Equatorial Guinea\",  \"url\": \"http://gnq.forest-atlas.org/\"}]"
         }
@@ -2164,119 +799,15 @@
         {
           "is__umd_tree_cover_gain": "1",
           "area__ha": 63454.2455830363
+=======
+          "umd_glad_alerts__isoweek": 1,
+          "alert__count": 11,
+          "area__ha": 0.8349477040972222,
+          "umd_glad_alerts__year": 2021
+>>>>>>> develop
         }
       ],
       "status": "success"
     }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&group_by=umd_tree_cover_loss__year&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2019-12-31",
-    "method": "GET",
-    "data": {
-      "data": [
-      {
-      "umd_tree_cover_loss__year": 2001,
-      "area__ha": 42.81004591916666
-      },
-      {
-      "umd_tree_cover_loss__year": 2002,
-      "area__ha": 16.62304974520833
-      },
-      {
-      "umd_tree_cover_loss__year": 2003,
-      "area__ha": 22.08816199020833
-      },
-      {
-      "umd_tree_cover_loss__year": 2004,
-      "area__ha": 52.29808801118055
-      },
-      {
-      "umd_tree_cover_loss__year": 2005,
-      "area__ha": 60.116234694999996
-      },
-      {
-      "umd_tree_cover_loss__year": 2006,
-      "area__ha": 37.26902933743055
-      },
-      {
-      "umd_tree_cover_loss__year": 2007,
-      "area__ha": 8.045859694027778
-      },
-      {
-      "umd_tree_cover_loss__year": 2008,
-      "area__ha": 3.4156951531249997
-      },
-      {
-      "umd_tree_cover_loss__year": 2009,
-      "area__ha": 9.336233418541665
-      },
-      {
-      "umd_tree_cover_loss__year": 2010,
-      "area__ha": 34.00514285777778
-      },
-      {
-      "umd_tree_cover_loss__year": 2011,
-      "area__ha": 1.442182397986111
-      },
-      {
-      "umd_tree_cover_loss__year": 2012,
-      "area__ha": 9.336233418541665
-      },
-      {
-      "umd_tree_cover_loss__year": 2013,
-      "area__ha": 8.956711734861111
-      },
-      {
-      "umd_tree_cover_loss__year": 2014,
-      "area__ha": 0.3036173469444444
-      },
-      {
-      "umd_tree_cover_loss__year": 2015,
-      "area__ha": 2.277130102083333
-      },
-      {
-      "umd_tree_cover_loss__year": 2016,
-      "area__ha": 35.37142091902778
-      },
-      {
-      "umd_tree_cover_loss__year": 2017,
-      "area__ha": 8.653094387916665
-      },
-      {
-      "umd_tree_cover_loss__year": 2018,
-      "area__ha": 25.124335459652777
-      },
-      {
-      "umd_tree_cover_loss__year": 2019,
-      "area__ha": 14.801345663541666
-      }
-      ],
-      "status": "success"
-      }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2019-12-31",
-    "method": "GET",
-    "data": {
-      "data": {
-      "area__ha": 1143.2711199193054
-      },
-      "status": "success"
-      }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha",
-    "method": "GET",
-    "data": {"data":{"area__ha":2085.3957474879167},"status":"success"}
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30",
-    "method": "GET",
-    "data": {"data":{"area__ha":1143.2711199193054},"status":"success"}
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&sum=alert__count&group_by=umd_glad_alerts__isoweek",
-    "method": "GET",
-    "data": {"data":[{"umd_glad_alerts__isoweek":31,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":34,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":37,"alert__count":6,"area__ha":0.45542602041666663,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":39,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":41,"alert__count":37,"area__ha":2.808460459236111,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":42,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":46,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":48,"alert__count":3,"area__ha":0.22771301020833332,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":50,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2015},{"umd_glad_alerts__isoweek":27,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":28,"alert__count":3,"area__ha":0.22771301020833332,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":29,"alert__count":13,"area__ha":0.9867563775694443,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":30,"alert__count":13,"area__ha":0.9867563775694443,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":32,"alert__count":9,"area__ha":0.6831390306249999,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":33,"alert__count":16,"area__ha":1.2144693877777777,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":34,"alert__count":5,"area__ha":0.3795216836805555,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":35,"alert__count":18,"area__ha":1.3662780612499998,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":36,"alert__count":15,"area__ha":1.1385650510416665,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":37,"alert__count":9,"area__ha":0.6831390306249999,"umd_glad_alerts__year":2016},{"umd_glad_alerts__isoweek":24,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2017},{"umd_glad_alerts__isoweek":28,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2017},{"umd_glad_alerts__isoweek":30,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2017},{"umd_glad_alerts__isoweek":34,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2017},{"umd_glad_alerts__isoweek":26,"alert__count":5,"area__ha":0.3795216836805555,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":27,"alert__count":4,"area__ha":0.3036173469444444,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":30,"alert__count":21,"area__ha":1.5939910714583332,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":33,"alert__count":10,"area__ha":0.759043367361111,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":34,"alert__count":11,"area__ha":0.8349477040972222,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":36,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":40,"alert__count":37,"area__ha":2.808460459236111,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":41,"alert__count":3,"area__ha":0.22771301020833332,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":43,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2018},{"umd_glad_alerts__isoweek":16,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":23,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":24,"alert__count":5,"area__ha":0.3795216836805555,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":25,"alert__count":1,"area__ha":0.0759043367361111,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":26,"alert__count":6,"area__ha":0.45542602041666663,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":28,"alert__count":4,"area__ha":0.3036173469444444,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":29,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":31,"alert__count":4,"area__ha":0.3036173469444444,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":32,"alert__count":3,"area__ha":0.22771301020833332,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":34,"alert__count":16,"area__ha":1.2144693877777777,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":36,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":37,"alert__count":3,"area__ha":0.22771301020833332,"umd_glad_alerts__year":2019},{"umd_glad_alerts__isoweek":18,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":22,"alert__count":5,"area__ha":0.3795216836805555,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":25,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":26,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":29,"alert__count":26,"area__ha":1.9735127551388887,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":32,"alert__count":9,"area__ha":0.6831390306249999,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":33,"alert__count":10,"area__ha":0.759043367361111,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":37,"alert__count":62,"area__ha":4.706068877638889,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":38,"alert__count":5,"area__ha":0.3795216836805555,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":42,"alert__count":2,"area__ha":0.1518086734722222,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":46,"alert__count":79,"area__ha":5.9964426021527775,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":50,"alert__count":67,"area__ha":5.085590561319444,"umd_glad_alerts__year":2020},{"umd_glad_alerts__isoweek":1,"alert__count":11,"area__ha":0.8349477040972222,"umd_glad_alerts__year":2021}],"status":"success"}
   }
 ]

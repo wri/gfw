@@ -94,3 +94,13 @@ export const encodeQueryParams = (params, options) => {
 
   return stringify(encodedParams, options);
 };
+
+export const ObjectToQueryString = (params) => {
+  if (!params || isEmpty(params)) {
+    return '';
+  }
+  const queryString = Object.keys(params)
+    .map((key) => `${key}=${encodeURIComponent(params[key])}`)
+    .join('&');
+  return `?${queryString}`;
+};

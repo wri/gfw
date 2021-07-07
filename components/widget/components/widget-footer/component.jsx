@@ -27,6 +27,7 @@ class WidgetFooter extends PureComponent {
       showAttributionLink,
     } = this.props;
     const statementsMapped = statements && statements.join(' | ');
+    // TODO: add statement link
     return (
       <div className={cx('c-widget-footer', { simple })}>
         {caution && (

@@ -38,7 +38,7 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
-      count: d.alert__count,
+      count: d.alert__count || d.area_ha,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
@@ -48,12 +48,11 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some((item) => item.alerts > 0),
+          [year]: next.some((item) => item.count > 0),
         };
       },
       {}
     );
-
     const dataYears = Object.keys(hasAlertsByYears).filter(
       (key) => hasAlertsByYears[key] === true
     );
@@ -100,19 +99,20 @@ export const getData = createSelector(
 );
 
 export const getStats = createSelector([getData, getLatest], (data, latest) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
 });
 
 export const getDates = createSelector([getStats], (data) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getDatesData(data);
 });
 
 export const getMaxMinDates = createSelector(
   [getData, getDates],
   (data, currentData) => {
-    if (!data || !currentData) return {};
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return {};
     const minYear = min(data.map((d) => d.year));
     const maxYear = max(data.map((d) => d.year));
 
@@ -126,7 +126,7 @@ export const getMaxMinDates = createSelector(
 export const getStartEndIndexes = createSelector(
   [getStartIndex, getEndIndex, getDates],
   (startIndex, endIndex, currentData) => {
-    if (!currentData) {
+    if (!currentData || isEmpty(currentData)) {
       return {
         startIndex,
         endIndex,
@@ -146,19 +146,29 @@ export const getStartEndIndexes = createSelector(
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYear],
   (data, currentData, maxminYear, compareYear) => {
-    if (!data || !currentData) return null;
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return null;
 
-    return currentData.map((d) => {
-      const yearDifference = maxminYear.max - d.year;
-      const { week } = d;
+    // @TODO: better compare year parsing
+    const { year: startYear, week: startWeek } = currentData[0];
+    const yearDifference = maxminYear.max - startYear;
 
+    const compareStartYear = compareYear - yearDifference;
+    const weekFound = !!data.find(
+      (el) => el.year === compareStartYear && el.week === startWeek
+    );
+
+    const findWeek = weekFound ? startWeek : 1;
+    const findYear = weekFound ? compareStartYear : compareStartYear + 1;
+
+    const compareStartIndex = data.findIndex(
+      (el) => el.year === findYear && el.week === findWeek
+    );
+
+    const parsedData = currentData.map((d, i) => {
       if (compareYear) {
         const parsedCompareYear = compareYear - yearDifference;
-
-        const compareWeek = data.find(
-          (dt) => dt.year === parsedCompareYear && dt.week === week
-        );
-
+        const compareWeek = data[compareStartIndex + i];
         return {
           ...d,
           compareYear: parsedCompareYear,
@@ -168,13 +178,14 @@ export const parseData = createSelector(
 
       return d;
     });
+    return parsedData;
   }
 );
 
 export const parseBrushedData = createSelector(
   [parseData, getStartEndIndexes],
   (data, indexes) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
 
     const { startIndex, endIndex } = indexes;
 
@@ -188,7 +199,7 @@ export const parseBrushedData = createSelector(
 export const getLegend = createSelector(
   [parseBrushedData, getColors, getCompareYear],
   (data, colors, compareYear) => {
-    if (!data) return {};
+    if (!data || isEmpty(data)) return {};
 
     const first = data[0];
     const end = data[data.length - 1];
@@ -234,7 +245,6 @@ export const parseConfig = createSelector(
   ],
   (legend, colors, latest, maxminYear, compareYear, dataset, indexes) => {
     const { startIndex, endIndex } = indexes;
-
     const tooltip = [
       {
         label: 'Fire alerts in the week of:',
@@ -245,8 +255,7 @@ export const parseConfig = createSelector(
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
-        unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
       },
     ];
 
@@ -264,13 +273,12 @@ export const parseConfig = createSelector(
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: '#49b5e3',
         nullValue: 'No data available',
-        unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
       });
     }
 
     return {
-      ...getChartConfig(colors, moment(latest)),
+      ...getChartConfig(colors, moment(latest), {}, ''),
       xAxis: {
         tickCount: 12,
         interval: 4,
@@ -361,7 +369,7 @@ export const parseSentence = createSelector(
     lang,
     indicator
   ) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
     const {
       defaultSentence,
       seasonSentence,
@@ -394,9 +402,16 @@ export const parseSentence = createSelector(
     const minWeeks = sortedWeeks.filter((d) => d.mean <= minMean);
 
     const earliestMinDate = minWeeks[0]?.date;
-    const sortedPeakWeeks = sortedWeeks.filter(
-      (d) => d.mean > halfMax && d.date && d.date > earliestMinDate
-    );
+    const earliestMinIndex = sortedWeeks
+      .map((el) => el.date)
+      .indexOf(earliestMinDate);
+
+    // Reorder the array so that we can ignore seasons that wrap around
+    const firstHalf = sortedWeeks.slice(0, earliestMinIndex);
+    const secondHalf = sortedWeeks.slice(earliestMinIndex);
+    const reorderedWeeks = secondHalf.concat(firstHalf);
+
+    const sortedPeakWeeks = reorderedWeeks.filter((d) => d.mean > halfMax);
 
     const seasonStartDate =
       sortedPeakWeeks.length > 0 && sortedPeakWeeks[0]?.date;
@@ -432,6 +447,7 @@ export const parseSentence = createSelector(
     }
 
     const initialSentence = seasonStartDate ? seasonSentence : defaultSentence;
+
     let sentence =
       confidence && confidence.value === 'h'
         ? initialSentence + highConfidence

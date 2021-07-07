@@ -1,7 +1,7 @@
-import { apiRequest } from 'utils/request';
+import { gfwApiRequest } from 'utils/request';
 
 export const getGeodescriberByGeoJson = ({ geojson, token, template }) =>
-  apiRequest({
+  gfwApiRequest({
     method: 'post',
     url: `/geodescriber/geom?template=${template ? 'true' : 'false'}&app=gfw`,
     data: {
@@ -11,7 +11,7 @@ export const getGeodescriberByGeoJson = ({ geojson, token, template }) =>
   });
 
 export const getGeodescriberByGeostore = async ({ geostore, token }) => {
-  const geostoreResponse = await apiRequest(`/v2/geostore/${geostore}`);
+  const geostoreResponse = await gfwApiRequest(`/v2/geostore/${geostore}`);
   const { geojson } = geostoreResponse?.data?.data?.attributes || {};
 
   return getGeodescriberByGeoJson({ geojson, token });
