@@ -18,7 +18,6 @@ const GFW_DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const isServer = typeof window === 'undefined';
-
 export const apiRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_API_URL,
