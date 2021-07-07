@@ -36,7 +36,8 @@ class GlobalSentence extends PureComponent {
       return { sentence: '', props: {} };
     }
 
-    const useCat = isServer ? handleSSRLocation.category : category;
+    const useCat =
+      isServer && handleSSRLocation ? handleSSRLocation?.category : category;
     let sentence;
 
     try {
