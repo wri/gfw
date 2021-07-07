@@ -48,7 +48,7 @@ export const getEmissions = ({ threshold, adm0, download }) =>
 
 export const getCumulative = ({ download, ...params }) =>
   range(2015, 2019).map((year) => {
-    const url = `https://production-api.globalforestwatch.org/v1/query/?sql=${SQL_QUERIES.cummulative}`;
+    const url = `https://api.resourcewatch.org/v1/query/?sql=${SQL_QUERIES.cummulative}`;
     const newUrl = url.replace('{iso}', params.adm0).replace('{year}', year);
 
     if (download) {

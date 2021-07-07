@@ -3,7 +3,6 @@ const asSlug = (s) => s.trim().toLowerCase().replace(/\s/g, '_');
 function initSpec(title, testConfig, locked = false) {
   describe(title, () => {
     const xhrData = [];
-
     after(() => {
       // In record mode, save gathered XHR data to local JSON file
       if (Cypress.env('RECORD') && !locked) {
@@ -79,15 +78,9 @@ function initSpec(title, testConfig, locked = false) {
       describe(testGroup.title, () => {
         const { spec } = testGroup;
         testGroup.tests.forEach((test) => {
-          if (test.only) {
-            it.only(test.description, () => {
-              spec.test(test);
-            });
-          } else {
-            it(test.description, () => {
-              spec.test(test);
-            });
-          }
+          it(test.description, () => {
+            spec.test(test);
+          });
         });
       });
     });
