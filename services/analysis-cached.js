@@ -38,7 +38,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
-  gladDailyDownload: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   fires:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} GROUP BY {location}, alert__year, alert__week, confidence__cat',
   burnedAreas:
@@ -157,13 +157,15 @@ const getRequestUrl = ({
   datasetType,
   grouped,
   version,
-  download,
   staticStatement,
+  download,
 }) => {
   let typeByLevel = type;
 
-  if (download && staticStatement?.download?.table) {
-    return `${GFW_API}/dataset/${staticStatement.download.table}/latest/download/csv?sql=`;
+  if (staticStatement?.table) {
+    return `${GFW_API}/dataset/${staticStatement.table}/latest/${
+      download ? 'download/csv' : 'query'
+    }?sql=`;
   }
 
   if (type === 'country') {
@@ -203,11 +205,11 @@ const getDownloadUrl = (url) => {
 
 // build {select} from location params
 const handleStaticLocStmt = (payload, download, staticStatement) => {
-  if (download && staticStatement?.download?.statement) {
+  if (staticStatement?.statement) {
     if (staticStatement.append) {
-      return `${staticStatement.download.statement},${payload}`;
+      return `${staticStatement.statement},${payload}`;
     }
-    return staticStatement.download.statement;
+    return staticStatement.statement;
   }
   return payload;
 };
@@ -1048,7 +1050,7 @@ export const fetchGladAlertsSum = (params) => {
     ...params,
     dataset: 'glad',
     datasetType: 'daily',
-  })}${download ? SQL_QUERIES.gladDailyDownload : SQL_QUERIES.gladDailySum}`;
+  })}${download ? SQL_QUERIES.gladDailyOTF : SQL_QUERIES.gladDailySum}`;
 
   if (download) {
     const url = encodeURI(
@@ -1090,6 +1092,31 @@ export const fetchGladAlertsSum = (params) => {
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha,
+      })),
+    },
+  }));
+};
+
+export const fetchGladAlertsSumOTF = (params) => {
+  const { startDate, endDate, geostoreId } = params || {};
+
+  const url = encodeURI(
+    `${getRequestUrl({
+      ...params,
+      dataset: 'glad',
+      datasetType: 'daily',
+      download: false,
+    })}${SQL_QUERIES.gladDailyOTF}`
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{geostoreOrigin}', 'rw')
+      .replace('{geostoreId}', geostoreId)
+  );
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confirmed: d.umd_glad_landsat_alerts__confidence === 'high',
       })),
     },
   }));

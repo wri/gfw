@@ -49,7 +49,6 @@ class WidgetDownloadButton extends PureComponent {
       title,
       settings,
       parentData,
-      locationData,
       childData,
       adminLevel: intAdminLevel,
       metaKey,
@@ -66,6 +65,8 @@ class WidgetDownloadButton extends PureComponent {
       mapSettings,
       geostore,
     };
+    let { locationData } = this.props;
+
     let files = [];
 
     if (getDataURL) {
@@ -118,6 +119,11 @@ class WidgetDownloadButton extends PureComponent {
     if (adminLevel === 'adm2') {
       parentAdminLevel = 'adm1';
     }
+    if (location.type === 'geostore') {
+      parentAdminLevel = null;
+      adminLevel = 'geostore';
+      childAdminLevel = null;
+    }
 
     const parentLocationMetadataFile =
       !isEmpty(parentData) &&
@@ -131,9 +137,10 @@ class WidgetDownloadButton extends PureComponent {
         )
         .join('\n');
 
-    const locationMetadataFile =
+    let locationMetadataFile =
       !isEmpty(locationData) &&
       adminLevel !== 'global' &&
+      location.type !== 'geostore' &&
       [`name,${adminLevel}${adminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
           Object.values(locationData).map(
@@ -142,8 +149,25 @@ class WidgetDownloadButton extends PureComponent {
         )
         .join('\n');
 
+    if (location.type === 'geostore') {
+      locationData = locationData[location.adm0];
+      locationMetadataFile =
+        !isEmpty(locationData) &&
+        [`name,${adminLevel}${adminLevel !== 'iso' ? '__id' : ''}`]
+          .concat(
+            Object.entries(locationData).map(
+              (entry) =>
+                `"${entry[0]}","${
+                  entry[1] && typeof entry[1] !== 'object' ? entry[1] : ''
+                }"`
+            )
+          )
+          .join('\n');
+    }
+
     const childLocationMetadataFile =
       !isEmpty(childData) &&
+      location.type !== 'geostore' &&
       [`name,${childAdminLevel}${childAdminLevel !== 'iso' ? '__id' : ''}`]
         .concat(
           Object.values(childData).map(
@@ -181,13 +205,13 @@ class WidgetDownloadButton extends PureComponent {
       zip.file(filename, urlToPromise(url), { binary: true });
     });
     zip.file('metadata.csv', metadataFile);
-    if (parentLocationMetadataFile) {
+    if (parentAdminLevel && parentLocationMetadataFile) {
       zip.file(`${parentAdminLevel}_metadata.csv`, parentLocationMetadataFile);
     }
     if (locationMetadataFile) {
       zip.file(`${adminLevel}_metadata.csv`, locationMetadataFile);
     }
-    if (childLocationMetadataFile) {
+    if (childAdminLevel && childLocationMetadataFile) {
       zip.file(`${childAdminLevel}_metadata.csv`, childLocationMetadataFile);
     }
     zip.generateAsync({ type: 'blob' }).then((content) => {
