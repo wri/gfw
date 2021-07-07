@@ -1,7 +1,7 @@
 import has from 'lodash/has';
 
 import { gfwApiRequest } from 'utils/request';
-import { GFW_DATA_API_PROXY } from 'utils/apis';
+import { GFW_DATA_API } from 'utils/apis';
 
 import otfData from 'data/otf-data';
 
@@ -15,7 +15,7 @@ class OTFAnalysis {
       );
     }
 
-    this.endpoint = `${GFW_DATA_API_PROXY}/analysis/`;
+    this.endpoint = `${GFW_DATA_API}/analysis/`;
     this.path = 'zonal';
     this.dataInstances = [];
     this.geostoreId = geostoreId;

@@ -28,7 +28,6 @@ const setActiveWidget = (state, { payload }) => ({
   showMap: true,
 });
 
-
 const setShowMap = (state, { payload }) => ({
   ...state,
   showMap: payload,

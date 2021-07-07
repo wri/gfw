@@ -1099,7 +1099,7 @@ export const fetchGladAlertsSum = (params) => {
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
-  const url = '/glad-alerts/latest';
+  const url = 'glad-alerts/latest';
   return apiRequest
     .get(url)
     .then((response) => {

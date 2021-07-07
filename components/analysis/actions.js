@@ -69,7 +69,7 @@ export const getAnalysis = createThunkAction(
       )
       .catch((error) => {
         const slugUrl = error.config.url.split('/')[4];
-        const slug = slugUrl.split('?')[0];
+        const slug = slugUrl ? slugUrl.split('?')[0] : null;
         const layerName =
           endpoints.find((e) => e.slug === slug)?.name || 'selected data';
         const { response } = error;
