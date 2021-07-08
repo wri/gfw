@@ -1,0 +1,140 @@
+@import '~styles/settings.scss';
+
+.c-timeframe {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  width: inherit;
+  height: 40px;
+  margin: 10px 0 15px 0;
+
+  .year-label {
+    position: absolute;
+    top: -7px;
+    font-size: 12px;
+    color: $grey;
+    z-index: 4;
+
+    &.year-label-start {
+      left: 30px;
+    }
+
+    &.year-label-end {
+      right: 30px;
+    }
+  }
+
+  button {
+    position: absolute;
+    border: none;
+    z-index: 3;
+    cursor: pointer;
+    height: 30px;
+    background: $grey-light;
+
+    &.prev {
+      left: 0;
+      padding-bottom: 10px;
+      transform: rotate(180deg);
+    }
+
+    &.next {
+      right: 0;
+      padding-top: 10px;
+    }
+  }
+
+  .timeframe {
+    position: relative;
+    height: 100%;
+    color: $white;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .line {
+    position: absolute;
+    width: 75%;
+    background: $green-gfw;
+    height: 5px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
+
+  li {
+    position: relative;
+    float: left;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .timeline-position {
+      position: relative;
+      width: 12px;
+      height: 12px;
+      background: $white;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.29);
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        background: $green-gfw;
+        width: 2px;
+        height: 2px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+      }
+
+      &.active::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+      }
+
+      .tooltip-label {
+        display: block;
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+
+  .tooltip-item {
+    width: 12px;
+    height: 12px;
+    display: block;
+    z-index: 3;
+    position: relative;
+  }
+
+  .label {
+    color: $grey;
+    position: absolute;
+    font-size: 11px;
+    white-space: nowrap;
+    bottom: -18px;
+    background: none;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &.x-start {
+      right: 0;
+    }
+
+    &.x-end {
+      left: unset;
+      transform: translateX(0);
+      right: 0;
+    }
+  }
+}

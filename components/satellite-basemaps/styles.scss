@@ -1,0 +1,120 @@
+@import '~styles/settings.scss';
+
+.c-map-legend-basemaps {
+  flex: 0;
+
+  .caveat { font-style: italic; }
+
+  .title-active-value {
+    color: $grey;
+    padding: 0 15px 0 0;
+  }
+
+  > .header {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    height: 41px;
+    background: $slate-dark;
+
+    .active-basemap-title {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      color: $white;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .c-icon {
+      width: 8px;
+      fill: $white;
+    }
+
+    .satellite-toggle-active {
+      padding-left: 20px;
+      cursor: pointer;
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      align-items: center;
+
+      &.-open svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  > .satellite-basemaps {
+    max-height: calc(100vh - 310px);
+    overflow-y: scroll;
+
+    h4 {
+      color: $slate;
+      font-size: 12px;
+      padding: 10px 15px;
+      font-weight: 500;
+    }
+  }
+
+  .satellite-basemap {
+    &--cta {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 10px 15px;
+      text-align: left;
+      cursor: pointer;
+
+      &:hover {
+        background: $grey-light;
+      }
+    }
+
+    &.active .satellite-basemap--cta {
+      user-select: none;
+      background: initial;
+      cursor: default;
+    }
+
+    &--content {
+      display: flex;
+      flex-flow: column;
+    }
+
+    &--thumbnail {
+      width: 40px;
+      height: 40px;
+      margin: 0 10px 0 0;
+    }
+
+    &--title {
+      display: flex;
+      align-items: center;
+      color: $slate-light;
+      text-transform: uppercase;
+      font-size: 10px;
+
+      > button {
+        margin-left: 5px;
+      }
+    }
+
+    &--description {
+      color: $hot-grey;
+      font-size: 12px;
+    }
+
+    &.active {
+      .satellite-basemap--thumbnail {
+        border: 2px solid $green-gfw;
+      }
+    }
+  }
+
+  .satellite-basemap-settings {
+    padding: 10px 15px;
+    background: $grey-light;
+  }
+}

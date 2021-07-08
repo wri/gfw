@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import MapLegend from 'components/map/components/legend';
+import SatelliteBasemaps from 'components/satellite-basemaps';
 import Analysis from 'components/analysis';
 import SubNavMenu from 'components/subnav-menu';
 
@@ -67,6 +68,7 @@ class DataAnalysisMenu extends PureComponent {
           checkActive
         />
         {!hidden && !showAnalysis && <MapLegend className="map-legend" />}
+        {!hidden && !showAnalysis && <SatelliteBasemaps />}
         {!hidden && showAnalysis && <Analysis className="map-analysis" />}
       </div>
     );

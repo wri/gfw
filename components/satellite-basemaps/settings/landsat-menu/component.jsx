@@ -8,17 +8,17 @@ export const LandsatMenu = ({
   year,
   defaultYear,
   availableYears,
-  onSelectBasemap,
+  setMapBasemap
 }) => (
-  <div className="c-landsat-menu">
+  <div className="c-planet-menu">
     <h6>period</h6>
     <Dropdown
       className="landsat-selector"
-      theme="theme-dropdown-native theme-dropdown-native-button-green"
+      theme="theme-dropdown-native theme-dropdown-native-button-green theme-dropdown-full-width"
       value={year || defaultYear}
-      options={availableYears?.map((y) => ({ label: y, value: y }))}
+      options={availableYears}
       onChange={(value) =>
-        onSelectBasemap({
+        setMapBasemap({
           value: 'landsat',
           year: parseInt(value, 10),
         })}
@@ -30,8 +30,8 @@ export const LandsatMenu = ({
 LandsatMenu.propTypes = {
   year: PropTypes.number,
   defaultYear: PropTypes.number,
-  availableYears: PropTypes.array,
-  onSelectBasemap: PropTypes.func,
+  availableYears: PropTypes.arrayOf(PropTypes.object),
+  setMapBasemap: PropTypes.func,
 };
 
 export default LandsatMenu;

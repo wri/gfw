@@ -13,6 +13,7 @@ import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
 import LocationProvider from 'providers/location-provider';
+import PlanetBasemapsProvider from 'providers/planet-provider';
 import MyGfwProvider from 'providers/mygfw-provider';
 import MetaProvider from 'providers/meta-provider';
 
@@ -214,6 +215,7 @@ class DashboardsPage extends PureComponent {
         <GeodescriberProvider />
         <AreasProvider />
         <LocationProvider />
+        <PlanetBasemapsProvider />
         <MyGfwProvider />
         {!embed && (
           <Desktop>

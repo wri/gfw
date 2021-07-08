@@ -2,15 +2,21 @@ import { createStructuredSelector, createSelector } from 'reselect';
 
 import {
   getLayerGroups,
-  getActiveDatasetsFromState
+  getMapSettings,
+  getActiveDatasetsFromState,
 } from 'components/map/selectors';
 
-const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
+const getLegendLayerGroups = createSelector([getLayerGroups], (groups) => {
   if (!groups) return null;
-  return groups.filter(g => !g.isBoundary && !g.isRecentImagery);
+  return groups.filter((g) => !g.isBoundary && !g.isRecentImagery);
+});
+
+const getMapDatasets = createSelector([getMapSettings], (settings) => {
+  return settings?.datasets;
 });
 
 export const getMiniLegendProps = createStructuredSelector({
   layers: getLegendLayerGroups,
-  activeDatasets: getActiveDatasetsFromState
+  datasets: getMapDatasets,
+  activeDatasets: getActiveDatasetsFromState,
 });

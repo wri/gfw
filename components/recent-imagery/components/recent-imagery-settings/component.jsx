@@ -8,19 +8,15 @@ import cx from 'classnames';
 
 import { Slider } from 'vizzuality-components';
 
-import Icon from 'components/ui/icon';
 // import Slider from 'components/ui/slider';
 import Loader from 'components/ui/loader';
 import Dropdown from 'components/ui/dropdown';
-import Button from 'components/ui/button';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
 import RefreshButton from 'components/ui/refresh-button';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
-import closeIcon from 'assets/icons/close.svg?sprite';
-import infoIcon from 'assets/icons/info.svg?sprite';
 
 import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
@@ -46,8 +42,6 @@ class RecentImagerySettings extends PureComponent {
       setRecentImagerySettings,
       setRecentImageryLoading,
       resetRecentImageryData,
-      setModalMetaSettings,
-      onClickClose,
       error,
     } = this.props;
     const selected = this.state.selected || activeTile || {};
@@ -60,21 +54,6 @@ class RecentImagerySettings extends PureComponent {
         )}
       >
         <div className="top-section">
-          <div className="recent-menu">
-            <div className="title">Recent satellite imagery</div>
-            <div className="recent-actions">
-              <Button
-                className="info-btn"
-                theme="theme-button-tiny theme-button-grey-filled square"
-                onClick={() => setModalMetaSettings('recent_satellite_imagery')}
-              >
-                <Icon icon={infoIcon} />
-              </Button>
-              <button className="close-btn" onClick={onClickClose}>
-                <Icon icon={closeIcon} className="icon-close" />
-              </button>
-            </div>
-          </div>
           <div className="dates">
             <div className="title">ACQUISITION DATE</div>
             <div className="buttons">
@@ -245,10 +224,8 @@ RecentImagerySettings.propTypes = {
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
   setRecentImageryLoading: PropTypes.func,
-  setModalMetaSettings: PropTypes.func,
   resetRecentImageryData: PropTypes.func,
   loading: PropTypes.bool,
-  onClickClose: PropTypes.func,
   error: PropTypes.bool,
 };
 

@@ -4,16 +4,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: $white;
-  min-width: 290px;
 
   .top-section {
-    padding: rem(20px) $mobile-gutter rem(40px);
     width: 100%;
-
-    @media screen and (min-width: $screen-m) {
-      padding: rem(20px) $desktop-gutter rem(30px);
-    }
 
     .recent-menu {
       display: none;
@@ -110,11 +103,6 @@
     height: rem(300px);
     border-top: 1px solid rgba(#9e9e9e, 0.3);
     z-index: 1;
-    padding: rem(20px) $mobile-gutter;
-
-    @media screen and (min-width: $screen-m) {
-      padding: rem(20px) $desktop-gutter;
-    }
 
     .header {
       position: relative;
@@ -122,6 +110,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: rem(20px);
+      margin-top: rem(30px);
       z-index: 2;
 
       .description {

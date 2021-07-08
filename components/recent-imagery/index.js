@@ -30,6 +30,7 @@ class RecentImageryContainer extends PureComponent {
     if (this.getDataSource) {
       this.getDataSource.cancel();
     }
+
     this.getDataSource = cancelToken();
     if (active) {
       getRecentImageryData({
@@ -48,15 +49,12 @@ class RecentImageryContainer extends PureComponent {
       dataStatus,
       activeTile,
       sources,
-      dates,
       settings,
-      getRecentImageryData,
+      zoom,
+      center,
       getMoreTiles,
-      positionInsideTile,
-      position,
       loadingMoreTiles,
       resetRecentImageryData,
-      error,
     } = this.props;
 
     const isNewTile =
@@ -64,30 +62,26 @@ class RecentImageryContainer extends PureComponent {
       !!activeTile.url &&
       (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
 
-    // get data if activated or new props
-    if (
-      (active &&
-        (active !== prevProps.active ||
-          (!positionInsideTile &&
-            !isEqual(positionInsideTile, prevProps.positionInsideTile)) ||
-          !isEqual(settings.date, prevProps.settings.date) ||
-          !isEqual(settings.weeks, prevProps.settings.weeks) ||
-          !isEqual(settings.bands, prevProps.settings.bands))) ||
-      (!error && !isEqual(error, prevProps.error))
-    ) {
-      if (this.getDataSource) {
-        this.getDataSource.cancel(
-          'Cancelling duplicate fetch for recent imagery'
-        );
-      }
-      this.getDataSource = cancelToken();
-      getRecentImageryData({
-        ...position,
-        start: dates.start,
-        end: dates.end,
-        bands: settings.bands,
-        token: this.getDataSource.token,
-      });
+    const modifiedTileSettings =
+      !isEqual(settings.date, prevProps.settings.date) ||
+      !isEqual(settings.weeks, prevProps.settings.weeks) ||
+      !isEqual(settings.bands, prevProps.settings.bands);
+
+    const modifiedMapPosition =
+      !isEqual(prevProps.zoom, zoom) || !isEqual(prevProps.center, center);
+
+    if (modifiedTileSettings || modifiedMapPosition) {
+      this.handleUpdateTiles(prevProps);
+    }
+
+    // if new tile update on map
+    if (active && isNewTile) {
+      this.setTile();
+    }
+
+    if (!active && active !== prevProps.active) {
+      this.removeTile();
+      resetRecentImageryData();
     }
 
     // get the rest of the tiles
@@ -104,17 +98,34 @@ class RecentImageryContainer extends PureComponent {
         bands: settings.bands,
       });
     }
-
-    // if new tile update on map
-    if (active && isNewTile) {
-      this.setTile();
-    }
-
-    if (!active && active !== prevProps.active) {
-      this.removeTile();
-      resetRecentImageryData();
-    }
   };
+
+  handleUpdateTiles = debounce(() => {
+    const {
+      active,
+      dates,
+      settings,
+      getRecentImageryData,
+      position,
+    } = this.props;
+    // get data if activated or new props
+    if (this.getDataSource) {
+      this.getDataSource.cancel(
+        'Cancelling duplicate fetch for recent imagery'
+      );
+    }
+
+    if (!active) return;
+
+    this.getDataSource = cancelToken();
+    getRecentImageryData({
+      ...position,
+      start: dates.start,
+      end: dates.end,
+      bands: settings.bands,
+      token: this.getDataSource.token,
+    });
+  }, 4000);
 
   setTile = debounce(() => {
     const { datasets, activeTile, recentImageryDataset } = this.props;
@@ -167,7 +178,6 @@ RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
   dataStatus: PropTypes.object,
   activeTile: PropTypes.object,
-  positionInsideTile: PropTypes.bool,
   sources: PropTypes.array,
   dates: PropTypes.object,
   settings: PropTypes.object,
@@ -178,7 +188,9 @@ RecentImageryContainer.propTypes = {
   recentImageryDataset: PropTypes.object,
   resetRecentImageryData: PropTypes.func,
   setRecentImagerySettings: PropTypes.func,
-  error: PropTypes.bool,
+  zoom: PropTypes.object,
+  center: PropTypes.object,
+  // error: PropTypes.bool,
 };
 
 reducerRegistry.registerModule('recentImagery', {

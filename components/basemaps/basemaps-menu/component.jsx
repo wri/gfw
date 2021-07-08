@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Row, Column, Desktop } from 'gfw-components';
 
 import BasemapButton from '../basemap-button';
-import LandsatMenu from '../landsat-menu';
-import PlanetMenu from '../planet-menu';
 
 import './styles.scss';
 
@@ -16,7 +14,7 @@ export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
           <h4>Map styles</h4>
         </Desktop>
       </Column>
-      {Object.values(basemaps).map((item) => (
+      {Object.values(basemaps).filter(b => b.baseStyle).map((item) => (
         <Column key={item.value} width={[1 / 3]} className="btn-col">
           <BasemapButton
             {...item}
@@ -25,20 +23,6 @@ export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
           />
         </Column>
       ))}
-      {activeBasemap?.value === 'landsat' && (
-        <div className="basemap-submenu -landsat">
-          <Column>
-            <LandsatMenu {...activeBasemap} onSelectBasemap={onSelectBasemap} />
-          </Column>
-        </div>
-      )}
-      {activeBasemap?.value === 'planet' && (
-        <div className="basemap-submenu -planet">
-          <Column>
-            <PlanetMenu {...activeBasemap} onSelectBasemap={onSelectBasemap} />
-          </Column>
-        </div>
-      )}
     </Row>
   </div>
 );
