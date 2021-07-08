@@ -40,6 +40,7 @@ export default {
     {
       key: 'dataset',
       label: 'fires dataset',
+      whitelist: ['viirs', 'modis'],
       type: 'select',
     },
     {

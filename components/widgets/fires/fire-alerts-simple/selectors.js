@@ -75,7 +75,14 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getDataset, getSettings, selectSentences, getIndicator, getLocationName],
+  [
+    parseData,
+    getDataset,
+    getSettings,
+    selectSentences,
+    getIndicator,
+    getLocationName,
+  ],
   (data, dataset, settings, sentences, indicator, location) => {
     if (!data) return null;
     const startDate = settings.startDate;

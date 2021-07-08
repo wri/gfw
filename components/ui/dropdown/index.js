@@ -148,6 +148,13 @@ class DropdownContainer extends PureComponent {
     });
   };
 
+  onClickOutside = () => {
+    const { native } = this.props;
+    if (!native) {
+      this.setState({ isOpen: false });
+    }
+  };
+
   render() {
     const { isOpen, showGroup, inputValue, highlightedIndex } = this.state;
 
@@ -165,6 +172,7 @@ class DropdownContainer extends PureComponent {
       buildInputProps: this.buildInputProps,
       handleSelectGroup: this.handleSelectGroup,
       items: this.getGroupedItems(),
+      onClickOutside: this.onClickOutside,
     });
   }
 }
@@ -177,6 +185,7 @@ DropdownContainer.propTypes = {
   groupKey: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
+  native: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, null)(DropdownContainer);

@@ -59,7 +59,7 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some((item) => item.alerts > 0),
+          [year]: next.some((item) => item.count > 0),
         };
       },
       {}
@@ -120,19 +120,20 @@ export const getData = createSelector(
 );
 
 export const getStats = createSelector([getData], (data) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getCumulativeStatsData(data);
 });
 
 export const getDates = createSelector([getStats], (data) => {
-  if (!data) return null;
+  if (!data || isEmpty(data)) return null;
   return getDatesData(data);
 });
 
 export const getMaxMinDates = createSelector(
   [getData, getDates],
   (data, currentData) => {
-    if (!data || !currentData) return {};
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return {};
     const minYear = min(data.map((d) => d.year));
     const maxYear = max(data.map((d) => d.year));
 
@@ -146,7 +147,8 @@ export const getMaxMinDates = createSelector(
 export const parseData = createSelector(
   [getData, getDates, getMaxMinDates, getCompareYears],
   (data, currentData, maxminYear, compareYears) => {
-    if (!data || !currentData) return null;
+    if (!data || isEmpty(data) || !currentData || isEmpty(currentData))
+      return null;
 
     return currentData.map((d) => {
       const yearDifference = maxminYear.max - d.year;
@@ -178,7 +180,7 @@ export const parseData = createSelector(
 export const parseBrushedData = createSelector(
   [parseData, getStartIndex, getEndIndex],
   (data, startIndex, endIndex) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -190,7 +192,7 @@ export const parseBrushedData = createSelector(
 export const getLegend = createSelector(
   [parseBrushedData, getColors, getCompareYears, getMaxMinDates],
   (data, colors, compareYears, maxminYear) => {
-    if (!data) return {};
+    if (!data || isEmpty(data)) return {};
     const end = data[data.length - 1];
     const yearsArray =
       compareYears && compareYears.filter((y) => y !== maxminYear.max).sort();
@@ -243,18 +245,16 @@ export const parseConfig = createSelector(
     startIndex,
     endIndex
   ) => {
-    if (!currentData) return null;
-
+    if (!currentData || isEmpty(currentData)) return null;
     const tooltip = [
       {
         key: 'count',
         labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
-        unit: ` ${dataset.toUpperCase()} alerts`,
+        unit: ` ${dataset.toUpperCase()} alert`,
         color: colors.main,
         nullValue: 'No data available',
-        unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
       },
     ];
     const compareYearsLines = {};
@@ -281,8 +281,7 @@ export const parseConfig = createSelector(
           unit: ` ${dataset.toUpperCase()} alerts`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
-          unitFormat: (value) =>
-            Number.isInteger(value) ? format(',')(value) : value,
+          unitFormat: (value) => Number.isInteger(value) && format(',')(value),
         });
         compareYearsLines[year] = {
           stroke:
@@ -297,7 +296,7 @@ export const parseConfig = createSelector(
     );
     const presentDay = currentData[presentDayIndex].date;
     return {
-      ...getChartConfig(colors, moment(latest), compareYearsLines),
+      ...getChartConfig(colors, moment(latest), compareYearsLines, ''),
       xAxis: {
         tickCount: 12,
         interval: 4,
@@ -418,7 +417,7 @@ export const parseSentence = createSelector(
     options,
     indicator
   ) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
     const {
       highConfidence,
       allAlerts,

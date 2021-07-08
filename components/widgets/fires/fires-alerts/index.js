@@ -4,6 +4,8 @@ import moment from 'moment';
 
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
 
+import burnedAreaStats from 'components/widgets/fires/burned-area';
+
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FIRES_VIIRS_DATASET,
@@ -16,7 +18,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-export default {
+const defaultConfig = {
   widget: 'firesAlertsStats',
   title: 'Weekly Fire Alerts in {location}',
   large: true,
@@ -90,15 +92,15 @@ export default {
   sentences: {
     defaultSentence: 'In {location} there ',
     seasonSentence:
-      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. There ',
+      'In {location} the peak fire season typically begins in {fires_season_start} and lasts around {fire_season_length} weeks. ',
     allAlerts:
-      'were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidence:
-      'were {count} {dataset} fire alerts reported between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
     allAlertsWithInd:
-      'were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date}. This is {status} compared to previous years going back to {dataset_start_year}.',
     highConfidenceWithInd:
-      'were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
+      'There were {count} {dataset} fire alerts reported within {indicator} between {start_date} and {end_date} considering <b>high confidence alerts</b> only. This is {status} compared to previous years going back to {dataset_start_year}.',
   },
   whitelists: {
     adm0: [
@@ -309,14 +311,13 @@ export default {
       'ZWE',
     ],
   },
-  getData: (params) =>
-    all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
+  getData: (params) => {
+    return all([fetchVIIRSAlerts(params), fetchVIIRSLatest(params)]).then(
       spread((alerts, latest) => {
         const { data } = alerts.data;
         const years = uniq(data.map((d) => d.year));
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
-
         return (
           {
             alerts: data,
@@ -330,15 +331,32 @@ export default {
                 })),
             },
             settings: {
-              startDateAbsolute:
-                params.startDateAbsolute ||
-                moment(latestDate).subtract(1, 'year').format('YYYY-MM-DD'),
-              endDateAbsolute: params.endDateAbsolute || latestDate,
+              startDateAbsolute: moment(latestDate)
+                .add(-3, 'month')
+                .format('YYYY-MM-DD'),
+              endDateAbsolute: latestDate,
             },
           } || {}
         );
       })
-    ),
+    );
+  },
   getDataURL: (params) => [fetchVIIRSAlerts({ ...params, download: true })],
   getWidgetProps,
+};
+
+export default {
+  widget: 'fireAlertStats',
+  proxy: true,
+  refetchKeys: ['dataset'],
+  getWidget: (widgetSettings) => {
+    // called when settings changes
+    if (!widgetSettings || !widgetSettings.dataset) {
+      return defaultConfig;
+    }
+    if (widgetSettings.dataset === 'modis_burned_area') {
+      return burnedAreaStats;
+    }
+    return defaultConfig;
+  },
 };

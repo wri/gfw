@@ -31,15 +31,15 @@ const testConfig = [
         sentence:
           'As of {year}, {percentage} of Area in Acre, Brazil was tree cover.',
       },
-      {
-        slug: 'default',
-        description: 'Rio Branco shape Testing OTF glad',
-        visit:
-          '/map/geostore/211fca3fbea311473797cc967bc7a073/?analysis=eyJzaG93RHJhdyI6dHJ1ZX0%3D&mainMap=eyJzaG93QW5hbHlzaXMiOnRydWV9&map=eyJjZW50ZXIiOnsibGF0IjotOS43ODk4NTQ0NDk2NjE2NjYsImxuZyI6LTY3LjgxNDg0NzUzNTk3NzM0fSwiem9vbSI6MTMuMzM2NDc1NzEyMzY5Nzc2LCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImdsYWQtZGVmb3Jlc3RhdGlvbi1hbGVydHMiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiZGVmb3Jlc3RhdGlvbi1hbGVydHMtZ2xhZCJdLCJ0aW1lbGluZVBhcmFtcyI6eyJzdGFydERhdGUiOiIyMDE1LTAxLTAxIiwiZW5kRGF0ZSI6IjIwMTUtMTItMzEiLCJ0cmltRW5kRGF0ZSI6IjIwMTUtMTItMzEifX0seyJkYXRhc2V0IjoicG9saXRpY2FsLWJvdW5kYXJpZXMiLCJsYXllcnMiOlsiZGlzcHV0ZWQtcG9saXRpY2FsLWJvdW5kYXJpZXMiLCJwb2xpdGljYWwtYm91bmRhcmllcyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&mapMenu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiZm9yZXN0Q2hhbmdlIn0%3D',
-        test: 'sentence-gladAlerts',
-        sentence:
-          'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
-      },
+      // {
+      //   slug: 'default',
+      //   description: 'Rio Branco shape Testing OTF glad',
+      //   visit:
+      //     '/map/geostore/211fca3fbea311473797cc967bc7a073/?analysis=eyJzaG93RHJhdyI6dHJ1ZX0%3D&mainMap=eyJzaG93QW5hbHlzaXMiOnRydWV9&map=eyJjZW50ZXIiOnsibGF0IjotOS43ODk4NTQ0NDk2NjE2NjYsImxuZyI6LTY3LjgxNDg0NzUzNTk3NzM0fSwiem9vbSI6MTMuMzM2NDc1NzEyMzY5Nzc2LCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImdsYWQtZGVmb3Jlc3RhdGlvbi1hbGVydHMiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiZGVmb3Jlc3RhdGlvbi1hbGVydHMtZ2xhZCJdLCJ0aW1lbGluZVBhcmFtcyI6eyJzdGFydERhdGUiOiIyMDE1LTAxLTAxIiwiZW5kRGF0ZSI6IjIwMTUtMTItMzEiLCJ0cmltRW5kRGF0ZSI6IjIwMTUtMTItMzEifX0seyJkYXRhc2V0IjoicG9saXRpY2FsLWJvdW5kYXJpZXMiLCJsYXllcnMiOlsiZGlzcHV0ZWQtcG9saXRpY2FsLWJvdW5kYXJpZXMiLCJwb2xpdGljYWwtYm91bmRhcmllcyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&mapMenu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiZm9yZXN0Q2hhbmdlIn0%3D',
+      //   test: 'sentence-gladAlerts',
+      //   sentence:
+      //     'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+      // },
     ],
     spec: {
       test: (sheet) => {

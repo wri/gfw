@@ -22,7 +22,7 @@ const WidgetEmbedPage = ({ widget, trase }) => (
     <ModalMeta />
     <CountryDataProvider />
     <WhitelistsProvider />
-    <GeodescriberProvider />
+    <GeodescriberProvider embed />
     <AreasProvider />
     <GeostoreProvider />
     <LocationProvider />

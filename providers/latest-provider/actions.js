@@ -29,7 +29,13 @@ export const getLatest = createThunkAction(
 
                 const { bands, metadata } = latestResponse;
                 // if response is from the meta endpoint (prioritise this)
-                if (metadata && metadata.content_date) {
+                if (
+                  metadata &&
+                  metadata.content_date_range &&
+                  metadata.content_date_range.max
+                ) {
+                  date = metadata.content_date_range.max;
+                } else if (metadata && metadata.content_date) {
                   date = metadata.content_date;
                 }
                 // if the response is from the stats endpoint, get bands key

@@ -38,12 +38,14 @@ class MiniLegend extends PureComponent {
         <div className="mini-legend-items">
           <ul className="mini-legend-layers">
             {layers.map((l) => {
-              const { layers: subLayers, params: stateParams, name } = l || {};
+              const { layers: subLayers, params: stateParams, name, layerId } =
+                l || {};
               const params =
                 stateParams ||
                 (subLayers && subLayers[0] && subLayers[0].timelineParams);
               const { startDateAbsolute, endDateAbsolute } = params || {};
               const isVIIRS = name && lowerCase(name).includes('viirs');
+              const isMODISBurnedArea = layerId === 'burned-area-modis';
 
               return (
                 <li key={l.name}>
@@ -57,7 +59,7 @@ class MiniLegend extends PureComponent {
                         )} - ${moment(endDateAbsolute).format('MMM DD YYYY')}`}
                       </p>
                     )}
-                    {isVIIRS && (
+                    {(isVIIRS || isMODISBurnedArea) && (
                       <p className="time-range-disclaimer">
                         *a maximum of 3 months of fires data can be shown on the
                         map

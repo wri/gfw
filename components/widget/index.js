@@ -96,7 +96,6 @@ class WidgetContainer extends Component {
       const { getData, setWidgetData, geostore } = this.props;
       this.cancelWidgetDataFetch();
       this.widgetDataFetch = CancelToken.source();
-
       this.setState({ loading: true, error: false });
       getData({ ...params, geostore, token: this.widgetDataFetch.token })
         .then((data) => {

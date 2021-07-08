@@ -37,6 +37,8 @@ class Widget extends PureComponent {
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
     sentence: PropTypes.object,
+    proxy: PropTypes.bool,
+    proxyOn: PropTypes.array,
     handleShowMap: PropTypes.func,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
@@ -119,6 +121,8 @@ class Widget extends PureComponent {
       settingsBtnConfig,
       status,
       meta,
+      proxy,
+      proxyOn,
       customComponent,
     } = this.props;
 
@@ -153,6 +157,8 @@ class Widget extends PureComponent {
           embed={embed}
           settingsConfig={settingsConfig}
           metaKey={metaKey}
+          proxy={proxy}
+          proxyOn={proxyOn}
           simple={simple}
           status={status}
           handleShowMap={handleShowMap}
