@@ -15,6 +15,7 @@ import ContextualSentence from './components/contextual-sentence';
 class Popup extends Component {
   static propTypes = {
     showPopup: PropTypes.bool,
+    isDashboard: PropTypes.bool,
     clearMapInteractions: PropTypes.func,
     setMapInteractionSelected: PropTypes.func,
     latitude: PropTypes.number,
@@ -126,7 +127,17 @@ class Popup extends Component {
   };
 
   render() {
-    const { showPopup, latitude, longitude, clearMapInteractions } = this.props;
+    const {
+      showPopup,
+      latitude,
+      longitude,
+      clearMapInteractions,
+      selected,
+      isDashboard,
+    } = this.props;
+    const { isBoundary } = selected || {};
+
+    if (showPopup && isBoundary && isDashboard) return null;
 
     return showPopup ? (
       <MapPopup
