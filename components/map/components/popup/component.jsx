@@ -83,10 +83,6 @@ class Popup extends Component {
 
     const hasManyInteractions = interactionsOptions?.length > 1;
     const { isAoi, isBoundary, isPoint, isLayer } = selected || {};
-    const { isDashboard } = this.props;
-
-    // Don't show analysis on dashboards
-    if (isBoundary && isDashboard) return null;
 
     return (
       <div className="popup-body">
@@ -131,7 +127,17 @@ class Popup extends Component {
   };
 
   render() {
-    const { showPopup, latitude, longitude, clearMapInteractions } = this.props;
+    const {
+      showPopup,
+      latitude,
+      longitude,
+      clearMapInteractions,
+      selected,
+      isDashboard,
+    } = this.props;
+    const { isBoundary } = selected || {};
+
+    if (showPopup && isBoundary && isDashboard) return null;
 
     return showPopup ? (
       <MapPopup
