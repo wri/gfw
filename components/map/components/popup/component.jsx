@@ -15,6 +15,7 @@ import ContextualSentence from './components/contextual-sentence';
 class Popup extends Component {
   static propTypes = {
     showPopup: PropTypes.bool,
+    isDashboard: PropTypes.bool,
     clearMapInteractions: PropTypes.func,
     setMapInteractionSelected: PropTypes.func,
     latitude: PropTypes.number,
@@ -82,6 +83,10 @@ class Popup extends Component {
 
     const hasManyInteractions = interactionsOptions?.length > 1;
     const { isAoi, isBoundary, isPoint, isLayer } = selected || {};
+    const { isDashboard } = this.props;
+
+    // Don't show analysis on dashboards
+    if (isBoundary && isDashboard) return null;
 
     return (
       <div className="popup-body">

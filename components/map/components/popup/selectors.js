@@ -9,6 +9,9 @@ import {
 const getLatitude = (state) => state?.map?.data?.interactions?.latlng?.lat;
 const getLongitude = (state) => state?.map?.data?.interactions?.latlng?.lng;
 
+const getIsDashboard = (state) =>
+  state?.location?.pathname.includes('dashboards');
+
 export const getShowPopup = createSelector(
   [getLatitude, getLongitude, getInteractionSelected],
   (lat, lng, interaction) => lat && lng && !interaction?.data?.cluster
@@ -47,6 +50,7 @@ export const getInteractionWithContext = createSelector(
 );
 
 export const getPopupProps = createStructuredSelector({
+  isDashboard: getIsDashboard,
   latitude: getLatitude,
   longitude: getLongitude,
   showPopup: getShowPopup,
