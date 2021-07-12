@@ -27,7 +27,7 @@ export default {
     mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
   },
   planet: {
-    label: 'Planet',
+    label: 'Planet satellite imagery',
     description: 'Monthly high resolution basemaps (tropics)',
     value: 'planet',
     color: '#131620',
@@ -42,7 +42,7 @@ export default {
     url: `/api/planet-tiles/{name}/gmap/{z}/{x}/{y}/?proc={color}`,
   },
   satellite: {
-    label: 'google',
+    label: 'Google satellite imagery',
     description: 'Highest resolution imagery 1-3 years old (global)',
     value: 'satellite',
     color: '#131620',
@@ -56,7 +56,7 @@ export default {
     url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
   },
   landsat: {
-    label: 'landsat',
+    label: 'Landsat satellite imagery',
     description: 'Coarse resolution imagery (global)',
     value: 'landsat',
     color: '#0C0045',
