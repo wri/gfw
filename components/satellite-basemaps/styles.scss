@@ -19,8 +19,10 @@
 
     .active-basemap-title {
       display: flex;
+      flex-flow: column;
+      align-items: flex-start;
+      gap: 2px;
       flex: 1;
-      justify-content: space-between;
       color: $white;
       font-size: 11px;
       text-transform: uppercase;
@@ -32,7 +34,7 @@
     }
 
     .satellite-toggle-active {
-      padding-left: 20px;
+      padding-left: 15px;
       cursor: pointer;
       flex: 1;
       display: flex;
