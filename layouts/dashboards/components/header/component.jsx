@@ -159,7 +159,7 @@ class Header extends PureComponent {
     const { locationNames, adm0s, handleSSRLocation } = this.props;
 
     return {
-      value: locationNames?.adm0 || handleSSRLocation.adm0,
+      value: locationNames?.adm0 || handleSSRLocation?.adm0,
       options:
         adm0s?.length > 0 ? adm0s : handleSSRLocation?.countryData?.countries,
     };
@@ -169,7 +169,7 @@ class Header extends PureComponent {
     const { locationNames, adm1s, handleSSRLocation } = this.props;
 
     return {
-      value: locationNames?.adm1 || handleSSRLocation.adm1,
+      value: locationNames?.adm1 || handleSSRLocation?.adm1,
       options:
         adm1s?.length > 0 ? adm1s : handleSSRLocation?.countryData?.regions,
     };
@@ -179,7 +179,7 @@ class Header extends PureComponent {
     const { locationNames, adm2s, handleSSRLocation } = this.props;
 
     return {
-      value: locationNames?.adm2 || handleSSRLocation.adm2,
+      value: locationNames?.adm2 || handleSSRLocation?.adm2,
       options:
         adm2s?.length > 0 ? adm2s : handleSSRLocation?.countryData?.subRegions,
     };
