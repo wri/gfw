@@ -187,7 +187,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
       adm2,
       countryData,
       type: locationType,
-      category: query?.category || null,
+      category: query?.category || 'summary',
       label: label || null,
     };
 
@@ -200,7 +200,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
       props: {
         title,
         description,
-        category: query?.category || null,
+        category: query?.category || 'summary',
         basePath,
         globalSentence: parsedSentence,
         handleSSRLocation,
