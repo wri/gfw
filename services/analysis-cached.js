@@ -24,6 +24,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissions:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  emissionsLossOTF:
+    'SELECT umd_tree_cover_loss__year, SUM(area__ha), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} AND umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}',
   emissionsByDriver:
     'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   carbonFlux:
@@ -490,6 +492,47 @@ export const getEmissions = (params) => {
         allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
         co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
         nonCo2Gases: d.gfw_gross_emissions_co2e_non_co2__Mg,
+      })),
+    },
+  }));
+};
+
+export const getEmissionsLossOTF = (params) => {
+  const { download, threshold, geostoreId, startYear, endYear } = params || {};
+  const { emissionsLossOTF } = SQL_QUERIES;
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${emissionsLossOTF}`
+      .replace('{geostoreOrigin}', 'rw')
+      .replace('{geostoreId}', geostoreId)
+      .replace('{threshold}', threshold)
+      .replace('{startYear}', startYear)
+      .replace('{endYear}', endYear)
+  );
+
+  if (download) {
+    return {
+      name: 'Forest_related_GHG_emissions',
+      url: getDownloadUrl(url),
+    };
+  }
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        allGases: d.gfw_forest_carbon_gross_emissions__Mg_CO2e,
+        loss: d.area__ha,
       })),
     },
   }));
