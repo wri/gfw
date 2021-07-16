@@ -6,12 +6,16 @@ import { getCarbonFlux, getCarbonFluxOTF } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   CARBON_FLUX_DATASET,
+  CARBON_REMOVALS_DATASET,
+  CARBON_EMISSIONS_DATASET,
 } from 'data/datasets';
 
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   CARBON_FLUX,
+  CARBON_REMOVALS,
+  CARBON_EMISSIONS,
 } from 'data/layers';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -70,6 +74,14 @@ export default {
     {
       dataset: CARBON_FLUX_DATASET,
       layers: [CARBON_FLUX],
+    },
+    {
+      dataset: CARBON_REMOVALS_DATASET,
+      layers: [CARBON_REMOVALS],
+    },
+    {
+      dataset: CARBON_EMISSIONS_DATASET,
+      layers: [CARBON_EMISSIONS],
     },
   ],
   pendingKeys: ['threshold'],
