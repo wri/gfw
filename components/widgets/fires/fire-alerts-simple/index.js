@@ -377,11 +377,8 @@ export default {
       download: true,
       staticStatement: {
         // append: true, If active, we will utalise the old location select logic with our statement
-        download: {
-          // Only apply to "download" endpoint
-          statement: 'latitude, longitude, alert__date',
-          table: 'nasa_viirs_fire_alerts',
-        },
+        statement: 'latitude, longitude, alert__date',
+        table: 'nasa_viirs_fire_alerts',
       },
     }),
   ],
