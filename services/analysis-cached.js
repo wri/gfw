@@ -599,9 +599,9 @@ export const getCarbonFluxOTF = (params) => {
 
   return apiRequest.get(url).then(({ data: { data } }) =>
     data.map((d) => ({
-      removals: -d.gfw_forest_carbon_net_flux__Mg_CO2e || 0,
+      removals: -d.gfw_forest_carbon_gross_removals__Mg_CO2e || 0,
       emissions: d.gfw_forest_carbon_gross_emissions__Mg_CO2e || 0,
-      flux: d.gfw_forest_carbon_gross_removals__Mg_CO2e || 0,
+      flux: d.gfw_forest_carbon_net_flux__Mg_CO2e || 0,
     }))
   );
 };
