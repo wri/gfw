@@ -5,11 +5,13 @@ import { getPlanetBasemaps } from '../../planet-selectors';
 
 const COLOR_OPTIONS = [
   {
-    label: 'Natural color',
-    value: 'rgb',
+    label: 'Visual',
+    imageType: 'visual',
+    value: '',
   },
   {
-    label: 'False color (NIR)',
+    label: 'Analytic',
+    imageType: 'analytic',
     value: 'cir',
   },
 ];
@@ -25,10 +27,11 @@ export const getPeriodOptions = createSelector(
   (planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
     return planetBasemaps
-      ?.map(({ label, period, name, year } = {}) => ({
+      ?.map(({ label, period, name, imageType, year } = {}) => ({
         label,
         period,
         year,
+        imageType,
         value: name,
       }))
       .reverse();
@@ -61,7 +64,8 @@ export const getColorOptions = createSelector([], () => COLOR_OPTIONS);
 
 export const getColorSelected = createSelector(
   [getColorOptions, selectBasemapColorSelected],
-  (options, selected) => options.find((o) => o.value === selected)?.value
+  (options, selected) =>
+    options.find((o) => o.imageType === selected)?.imageType
 );
 
 export default createStructuredSelector({

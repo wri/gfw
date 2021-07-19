@@ -8,10 +8,7 @@ const selectPlanetBasemaps = (state) => {
   // const activeType = state?.map?.settings?.basemap?.color;
   // This can be either rgb<string> hex value <#xxx> or nir<string>
   // const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
-  const imageType = 'analytic';
-  const planetBasemaps = state.planet?.data;
-  // XXX: Filter planet basemaps based on active image type
-  return planetBasemaps?.filter((bm) => bm.name.includes(imageType));
+  return state.planet?.data;
 };
 
 // ES6 provision, replace the hyphens with slashes forces UTC to be calculated from timestamp
@@ -31,6 +28,13 @@ export const getPlanetBasemaps = createSelector(
         const monthDiff = differenceInMonths(endDate, startDate);
         const year = format(startDate, 'yyyy');
 
+        let imageType = null;
+        if (name.includes('visual')) {
+          imageType = 'visual';
+        } else if (name.includes('analytic')) {
+          imageType = 'analytic';
+        }
+
         const period =
           monthDiff === 1
             ? `${format(startDate, 'MMM yyyy')}`
@@ -49,6 +53,7 @@ export const getPlanetBasemaps = createSelector(
           period,
           label,
           year,
+          imageType,
           sortOrder: Date(startDate),
         };
       }),
