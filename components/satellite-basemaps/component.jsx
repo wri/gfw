@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { trackEvent } from 'utils/analytics';
+
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
+
 import arrowDown from 'assets/icons/arrow-down.svg?sprite';
 import infoIcon from 'assets/icons/info.svg?sprite';
 
@@ -55,6 +58,11 @@ const SatelliteBasemaps = ({
         name: planetPeriods[planetPeriods.length - 1].value,
       });
       setDefaultSatSet(true);
+      trackEvent({
+        category: 'basemaps',
+        action: 'auto_select_planet',
+        label: 'Select planet basemap',
+      });
     }
   }, [isTropics, defaultSatSet]);
 
@@ -75,6 +83,11 @@ const SatelliteBasemaps = ({
         ? false
         : activeBasemap.value === 'recentImagery',
     });
+    trackEvent({
+      category: 'basemaps',
+      action: activeBasemap.value,
+      label: 'Toggle basemap',
+    });
   };
 
   const handleSetSatelliteBasemap = (e, value) => {
@@ -91,6 +104,11 @@ const SatelliteBasemaps = ({
     });
     setMainMapSettings({
       showRecentImagery: value === 'recentImagery',
+    });
+    trackEvent({
+      category: 'basemaps',
+      action: value,
+      label: 'Select basemap',
     });
   };
 
