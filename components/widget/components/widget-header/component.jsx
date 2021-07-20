@@ -71,11 +71,13 @@ class WidgetHeader extends PureComponent {
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL && status !== 'pending';
-    const disableDownloadBtn = disableDownload || status !== 'saved'
-    console.log(disableDownloadBtn, disableDownload, status)
+    const disableDownloadBtn = disableDownload || status !== 'saved';
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
-    let disabledMessageString = status === 'unsaved' ? 'Save area in My GFW to access downloads.': 'Download unavailable.';
+    let disabledMessageString =
+      status === 'unsaved'
+        ? 'Save area in My GFW to access downloads.'
+        : 'Download unavailable.';
     if (disableDownload) {
       disabledMessageString = filterSelected
         ? `Remove Forest Type and Land Category filters to download.`

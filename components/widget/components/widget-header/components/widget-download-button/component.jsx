@@ -150,7 +150,9 @@ class WidgetDownloadButton extends PureComponent {
         .join('\n');
 
     if (location.type === 'geostore') {
-      locationData = locationData[location.adm0];
+      locationData = locationData
+        ? locationData[location.adm0]
+        : { [`${title || 'Selected Area'}`]: location.adm0 };
       locationMetadataFile =
         !isEmpty(locationData) &&
         [`name,${adminLevel}${adminLevel !== 'iso' ? '__id' : ''}`]
@@ -247,11 +249,10 @@ class WidgetDownloadButton extends PureComponent {
 
   render() {
     const { areaTooLarge, disabled, disabledMessage } = this.props;
-
     let tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
-        ? 'Download the data. Please add .csv to the filename if extension is missing.'
-        : 'Download the data.';
+        ? 'Download data. Please add .csv to the filename if extension is missing.'
+        : 'Download data.';
 
     if (areaTooLarge) {
       tooltipText =
