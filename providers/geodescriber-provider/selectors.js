@@ -12,6 +12,9 @@ export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
 export const selectGeodescriber = (state) =>
   state.geodescriber && state.geodescriber.data;
+
+export const selectWdpaLocation = (state) => state?.geostore?.data?.location;
+
 export const selectLoading = (state) =>
   state.geodescriber && state.geodescriber.loading;
 export const selectCountryData = (state) =>
@@ -68,8 +71,14 @@ export const getAdminLocationName = createSelector(
 );
 
 export const getGeodescriberTitle = createSelector(
-  [selectGeodescriber, getDataLocation, getAdminLocationName, getActiveArea],
-  (geodescriber, location, adminTitle, activeArea) => {
+  [
+    selectGeodescriber,
+    selectWdpaLocation,
+    getDataLocation,
+    getAdminLocationName,
+    getActiveArea,
+  ],
+  (geodescriber, wdpaLocation, location, adminTitle, activeArea) => {
     if (isEmpty(geodescriber)) return {};
 
     if (
@@ -79,6 +88,13 @@ export const getGeodescriberTitle = createSelector(
     ) {
       return {
         sentence: activeArea.name,
+      };
+    }
+
+    if (location.type === 'wdpa' && wdpaLocation) {
+      return {
+        sentence: wdpaLocation,
+        params: geodescriber,
       };
     }
 
