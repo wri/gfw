@@ -90,11 +90,9 @@ export const getGeodescriberTitle = createSelector(
         sentence: activeArea.name,
       };
     }
-
     if (location.type === 'wdpa' && wdpaLocation) {
       return {
-        sentence: wdpaLocation,
-        params: geodescriber,
+        sentence: wdpaLocation?.name,
       };
     }
 
@@ -113,11 +111,13 @@ export const getGeodescriberTitle = createSelector(
 );
 
 export const getGeodescriberTitleFull = createSelector(
-  [getGeodescriberTitle],
-  (title) => {
+  [getGeodescriberTitle, selectWdpaLocation],
+  (title, wdpaLocation) => {
     if (isEmpty(title)) return null;
-
     let { sentence } = title;
+    if (location.type === 'wdpa' && wdpaLocation) {
+      return sentence;
+    }
     if (title.params) {
       Object.keys(title.params).forEach((p) => {
         sentence = sentence.replace(`{${p}}`, title.params[p]);
@@ -134,11 +134,32 @@ export const getAdminDescription = createSelector(
 );
 
 export const getGeodescriberDescription = createSelector(
-  [selectGeodescriber, getDataLocation, getAdminDescription],
-  (geodescriber, location, adminSentence) => {
+  [
+    selectGeodescriber,
+    getDataLocation,
+    selectWdpaLocation,
+    getAdminDescription,
+  ],
+  (geodescriber, location, wdpaLocation, adminSentence) => {
     if (isEmpty(geodescriber)) return {};
+    if (location.type === 'wdpa' && wdpaLocation) {
+      const status = wdpaLocation?.status;
+      const marine = wdpaLocation?.marine;
+      const status_year = wdpaLocation?.status_yr;
+      return {
+        sentence: `{name} is a{marine}protected area given {status} ${
+          status_year ? 'status in {status_year}.' : 'status.'
+        }`,
+        params: {
+          status: status ? String(status).toLowerCase() : 'unknown',
+          status_year,
+          marine: marine === 2 ? 'marine' : ' ',
+          name: wdpaLocation?.name,
+        },
+      };
+    }
     // if not an admin we can use geodescriber
-    if (!['global', 'country', 'wdpa'].includes(location.type)) {
+    if (!['global', 'country'].includes(location.type)) {
       return {
         sentence: geodescriber.description,
         params: geodescriber.description_params,
