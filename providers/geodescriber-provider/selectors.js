@@ -153,7 +153,7 @@ export const getGeodescriberDescription = createSelector(
         params: {
           status: status ? String(status).toLowerCase() : 'unknown',
           status_year,
-          marine: marine === 2 ? 'marine' : ' ',
+          marine: marine === 2 ? ' marine ' : ' ',
           name: wdpaLocation?.name,
         },
       };
