@@ -18,7 +18,6 @@ const getWDPAGeostore = ({ id, token }) =>
       token,
     }).then((geostore) => {
       const { gfw_geojson, gfw_area__ha, gfw_bbox } = geostore;
-
       return {
         id: data?.[0]?.gfw_geostore_id,
         geojson: gfw_geojson,
@@ -60,7 +59,6 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
     .get(`${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data?.data || {};
-
       return {
         ...geostore,
         id: geostore?.hash,

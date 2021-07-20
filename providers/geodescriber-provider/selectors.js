@@ -90,7 +90,6 @@ export const getGeodescriberTitle = createSelector(
       };
     }
 
-    // if an admin we need to calculate the params
     return {
       sentence: adminTitle,
     };
@@ -123,7 +122,7 @@ export const getGeodescriberDescription = createSelector(
   (geodescriber, location, adminSentence) => {
     if (isEmpty(geodescriber)) return {};
     // if not an admin we can use geodescriber
-    if (!['global', 'country'].includes(location.type)) {
+    if (!['global', 'country', 'wdpa'].includes(location.type)) {
       return {
         sentence: geodescriber.description,
         params: geodescriber.description_params,
@@ -138,6 +137,7 @@ export const getGeodescriberDescription = createSelector(
 export const getGeodescriberProps = createStructuredSelector({
   loading: selectLoading,
   location: getDataLocation,
+  geodescriber: selectGeodescriber,
   geojson: selectGeojson,
   lang: selectActiveLang,
 });
