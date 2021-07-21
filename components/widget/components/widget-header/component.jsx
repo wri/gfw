@@ -79,7 +79,11 @@ class WidgetHeader extends PureComponent {
       status === 'unsaved'
         ? 'Save area in My GFW to access downloads.'
         : 'Download unavailable.';
-    if (disableDownload) {
+
+    if (showDownloadBtn && status === 'pending') {
+      disabledMessageString =
+        'Download will be available soon, please check back in 12-24 hours.';
+    } else if (disableDownload) {
       disabledMessageString = filterSelected
         ? `Remove Forest Type and Land Category filters to download.`
         : `To download, reduce the total number of alerts to less than ${format(
