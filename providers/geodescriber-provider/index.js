@@ -44,9 +44,8 @@ class GeodescriberProvider extends PureComponent {
 
     if (
       !loading &&
-      ['global', 'country'].includes(location.type) &&
-      !isEqual(location, prevLocation) &&
-      prevProps?.location?.pathname !== ''
+      ['global', 'country', 'wdpa'].includes(location.type) &&
+      !isEqual(location, prevLocation)
     ) {
       this.handleGetAdminGeodescriber();
     }
@@ -54,7 +53,7 @@ class GeodescriberProvider extends PureComponent {
 
   getAllowedLocationTypes = () => {
     const { embed } = this.props;
-    let types = ['global'];
+    let types = ['global', 'wdpa'];
     if (!embed) {
       types = [...types, 'country'];
     }
@@ -65,7 +64,6 @@ class GeodescriberProvider extends PureComponent {
     const { geojson, getGeodescriber } = this.props;
     this.cancelGeodescriberFetch();
     this.geodescriberFetch = CancelToken.source();
-
     if (geojson) {
       getGeodescriber({
         geojson,
@@ -79,6 +77,7 @@ class GeodescriberProvider extends PureComponent {
     const { getAdminGeodescriber, location } = this.props;
     this.cancelAdminGeodescriberFetch();
     this.adminGeodescriberFetch = CancelToken.source();
+
     getAdminGeodescriber({
       ...location,
       token: this.adminGeodescriberFetch.token,

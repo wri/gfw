@@ -9,7 +9,7 @@ const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
 const getWDPAGeostore = ({ id, token }) =>
   getDatasetQuery({
     dataset: 'wdpa_protected_areas',
-    sql: `SELECT gfw_geostore_id FROM data WHERE wdpaid = '${id}'`,
+    sql: `SELECT gfw_geostore_id, name, marine::int, status, status_yr FROM data WHERE wdpaid = '${id}'`,
     token,
   }).then((data) =>
     getDatasetGeostore({
@@ -18,9 +18,9 @@ const getWDPAGeostore = ({ id, token }) =>
       token,
     }).then((geostore) => {
       const { gfw_geojson, gfw_area__ha, gfw_bbox } = geostore;
-
       return {
         id: data?.[0]?.gfw_geostore_id,
+        location: data?.[0],
         geojson: gfw_geojson,
         areaHa: gfw_area__ha,
         bbox: gfw_bbox,
@@ -60,7 +60,6 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
     .get(`${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data?.data || {};
-
       return {
         ...geostore,
         id: geostore?.hash,
