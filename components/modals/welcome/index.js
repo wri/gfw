@@ -86,7 +86,7 @@ const welcomeCards = [
         // @planet We have to do this in a static fashion for now
         // An option would be to fetch the options on compilation time at a later stage
         name: 'planet_medres_normalized_analytic_2021-05_mosaic',
-        color: 'rgb',
+        color: '',
       },
     },
     mainMap: {

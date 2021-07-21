@@ -22,19 +22,28 @@ const selectBasemapSelected = (state) => {
 const selectBasemapColorSelected = (state) =>
   state?.map?.settings?.basemap?.color;
 
+const selectBasemapImageTypeSelected = (state) =>
+  state?.map?.settings?.basemap?.color === '' ? 'visual' : 'analytic';
+
 export const getPeriodOptions = createSelector(
-  [getPlanetBasemaps],
-  (planetBasemaps) => {
+  [selectBasemapImageTypeSelected, getPlanetBasemaps],
+  (selected, planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
-    return planetBasemaps
-      ?.map(({ label, period, name, imageType, year } = {}) => ({
-        label,
-        period,
-        year,
-        imageType,
-        value: name,
-      }))
+    const periodOptions = planetBasemaps
+      ?.map(
+        ({ label, period, name, imageType, sortOrder, year, proc } = {}) => ({
+          label,
+          period,
+          year,
+          imageType,
+          sortOrder,
+          proc,
+          value: name,
+        })
+      )
+      .filter((bm) => bm.imageType === selected)
       .reverse();
+    return periodOptions;
   }
 );
 
@@ -64,8 +73,9 @@ export const getColorOptions = createSelector([], () => COLOR_OPTIONS);
 
 export const getColorSelected = createSelector(
   [getColorOptions, selectBasemapColorSelected],
-  (options, selected) =>
-    options.find((o) => o.imageType === selected)?.imageType
+  (options, selected) => {
+    return options.find((o) => o.value === selected)?.value;
+  }
 );
 
 export default createStructuredSelector({

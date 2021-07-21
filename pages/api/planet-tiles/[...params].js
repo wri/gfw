@@ -10,7 +10,7 @@ export default async function userHandler(req, res) {
       const tile = await axios.get(
         `https://tiles.planet.com/basemaps/v1/planet-tiles/${params?.join(
           '/'
-        )}.png?proc=${proc || 'rgb'}&api_key=${
+        )}.png?proc=${proc || ''}&api_key=${
           process.env.NEXT_PUBLIC_PLANET_API_KEY
         }`,
         {
