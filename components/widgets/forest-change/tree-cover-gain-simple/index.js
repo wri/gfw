@@ -93,5 +93,8 @@ export default {
 
     return getOTFAnalysis(params);
   },
+  getDataURL: (params) => {
+    return [getGain({ ...params, download: true })];
+  },
   getWidgetProps,
 };
