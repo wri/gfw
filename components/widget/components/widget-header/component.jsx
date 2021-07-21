@@ -70,10 +70,11 @@ class WidgetHeader extends PureComponent {
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
-    const showDownloadBtn = !embed && getDataURL && status !== 'pending';
-    const disableDownloadBtn = disableDownload || status !== 'saved';
+    const showDownloadBtn = !embed && getDataURL; // Show everywhere
+    const disableDownloadBtn = disableDownload || status !== 'saved'; // Disable everywhere
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
+
     let disabledMessageString =
       status === 'unsaved'
         ? 'Save area in My GFW to access downloads.'
