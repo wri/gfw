@@ -36,6 +36,12 @@ export const gfwApiRequest = create({
 
 export const dataRequest = create({
   timeout: 30 * 1000,
+  baseURL: GFW_DATA_API_URL,
+  ...(ENVIRONMENT === 'staging' && {
+    headers: {
+      'x-api-key': process.env.NEXT_PUBLIC_DATA_API_KEY,
+    },
+  }),
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 

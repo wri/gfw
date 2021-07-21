@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import upperFirst from 'lodash/upperFirst';
 
 import { trackEvent } from 'utils/analytics';
 
@@ -59,9 +60,9 @@ const SatelliteBasemaps = ({
       });
       setDefaultSatSet(true);
       trackEvent({
-        category: 'basemaps',
-        action: 'auto_select_planet',
-        label: 'Select planet basemap',
+        category: 'Map data',
+        action: 'Basemap changed',
+        label: 'Auto select planet isTropics',
       });
     }
   }, [isTropics, defaultSatSet]);
@@ -84,9 +85,9 @@ const SatelliteBasemaps = ({
         : activeBasemap.value === 'recentImagery',
     });
     trackEvent({
-      category: 'basemaps',
-      action: activeBasemap.value,
-      label: 'Toggle basemap',
+      category: 'Map data',
+      action: 'Basemap changed',
+      label: upperFirst(activeBasemap.value),
     });
   };
 
@@ -106,9 +107,9 @@ const SatelliteBasemaps = ({
       showRecentImagery: value === 'recentImagery',
     });
     trackEvent({
-      category: 'basemaps',
-      action: value,
-      label: 'Select basemap',
+      category: 'Map data',
+      action: 'Basemap changed',
+      label: upperFirst(value),
     });
   };
 
