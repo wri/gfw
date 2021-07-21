@@ -196,7 +196,7 @@ export const getLocationData = createSelector(
 
     const status = ['global', 'country', 'wdpa'].includes(locationObj.type)
       ? 'saved'
-      : (currentLocation && currentLocation.status) || 'pending';
+      : (currentLocation && currentLocation.status) || 'unsaved';
 
     return {
       parent,
