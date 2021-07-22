@@ -1,4 +1,4 @@
-import { getCarbonFlux } from 'services/analysis-cached';
+import { getCarbonFlux, getCarbonFluxOTF } from 'services/analysis-cached';
 
 // import OTFAnalysis from 'services/otf-analysis';
 
@@ -6,13 +6,19 @@ import { getCarbonFlux } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   CARBON_FLUX_DATASET,
+  CARBON_REMOVALS_DATASET,
+  CARBON_EMISSIONS_DATASET,
 } from 'data/datasets';
 
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   CARBON_FLUX,
+  CARBON_REMOVALS,
+  CARBON_EMISSIONS,
 } from 'data/layers';
+
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
@@ -24,7 +30,7 @@ export default {
   },
   large: true,
   categories: ['climate'],
-  types: ['global', 'country', 'aoi', 'use', 'wdpa'],
+  types: ['geostore', 'global', 'country', 'aoi', 'use', 'wdpa'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   settingsConfig: [
@@ -69,6 +75,14 @@ export default {
       dataset: CARBON_FLUX_DATASET,
       layers: [CARBON_FLUX],
     },
+    {
+      dataset: CARBON_REMOVALS_DATASET,
+      layers: [CARBON_REMOVALS],
+    },
+    {
+      dataset: CARBON_EMISSIONS_DATASET,
+      layers: [CARBON_EMISSIONS],
+    },
   ],
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
@@ -98,7 +112,22 @@ export default {
   },
   whitelists: {},
   getData: (params) => {
-    return getCarbonFlux(params).then((flux) => {
+    if (shouldQueryPrecomputedTables(params)) {
+      return getCarbonFlux(params).then((flux) => {
+        if (!flux || !flux.length) return [];
+        return flux;
+      });
+    }
+    // use OTF
+    const geostoreId = params?.geostore?.hash;
+    return getCarbonFluxOTF({
+      ...params,
+      geostoreId,
+      staticStatement: {
+        // overrides tables and/or sql
+        table: 'gfw_forest_carbon_net_flux',
+      },
+    }).then((flux) => {
       if (!flux || !flux.length) return [];
       return flux;
     });

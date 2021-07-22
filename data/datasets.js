@@ -11,6 +11,7 @@ export const FOREST_EXTENT_DATASET = 'tree-cover';
 export const BIOMASS_LOSS_DATASET =
   'carbon-dioxide-emissions-from-tree-cover-loss';
 export const CARBON_EMISSIONS_DATASET = 'carbon-emissions';
+export const CARBON_REMOVALS_DATASET = 'carbon-removals';
 export const CARBON_FLUX_DATASET = 'net-carbon-flux';
 export const BURNED_AREA_MODIS_DATASET = 'burned-area-modis';
 
