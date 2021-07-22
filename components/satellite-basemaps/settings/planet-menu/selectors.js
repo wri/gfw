@@ -25,22 +25,43 @@ const selectBasemapColorSelected = (state) =>
 const selectBasemapImageTypeSelected = (state) =>
   state?.map?.settings?.basemap?.color === '' ? 'visual' : 'analytic';
 
+const serializePlanetTile = ({
+  label,
+  period,
+  name,
+  imageType,
+  sortOrder,
+  year,
+  proc,
+} = {}) => ({
+  label,
+  period,
+  year,
+  imageType,
+  sortOrder,
+  proc,
+  value: name,
+});
+
+// Returns the opposite default option, used when switching image types
+const getDefaultPeriodOption = createSelector(
+  [selectBasemapImageTypeSelected, getPlanetBasemaps],
+  (selected, planetBasemaps) => {
+    if (isEmpty(planetBasemaps)) return null;
+    const oppositeImage = selected === 'visual' ? 'analytic' : 'visual';
+    const periodOptions = planetBasemaps
+      .map((tile) => serializePlanetTile(tile))
+      .filter((bm) => bm.imageType === oppositeImage);
+    return periodOptions[0];
+  }
+);
+
 export const getPeriodOptions = createSelector(
   [selectBasemapImageTypeSelected, getPlanetBasemaps],
   (selected, planetBasemaps) => {
     if (isEmpty(planetBasemaps)) return null;
     const periodOptions = planetBasemaps
-      ?.map(
-        ({ label, period, name, imageType, sortOrder, year, proc } = {}) => ({
-          label,
-          period,
-          year,
-          imageType,
-          sortOrder,
-          proc,
-          value: name,
-        })
-      )
+      ?.map((tile) => serializePlanetTile(tile))
       .filter((bm) => bm.imageType === selected)
       .reverse();
     return periodOptions;
@@ -48,8 +69,8 @@ export const getPeriodOptions = createSelector(
 );
 
 export const getPeriodSelected = createSelector(
-  [getPeriodOptions, selectBasemapSelected],
-  (periodOptions, selected) => {
+  [selectBasemapSelected, getPeriodOptions],
+  (selected, periodOptions) => {
     if (isEmpty(periodOptions)) return null;
     const period = periodOptions?.find((r) => r.value === selected);
     if (!period) return periodOptions[0];
@@ -84,4 +105,5 @@ export default createStructuredSelector({
   periodSelectedIndex: getPeriodSelectedIndex,
   colorOptions: getColorOptions,
   colorSelected: getColorSelected,
+  defaultPeriodOption: getDefaultPeriodOption,
 });

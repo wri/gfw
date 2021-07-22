@@ -12,6 +12,7 @@ function periodsAsSelect(periods) {
 
 export const PlanetMenu = ({
   periodOptions,
+  defaultPeriodOption,
   periodSelectedIndex,
   setMapBasemap,
   colorOptions,
@@ -38,7 +39,8 @@ export const PlanetMenu = ({
       theme="theme-dropdown-native theme-dropdown-native-button-green theme-dropdown-full-width"
       value={colorSelected}
       options={colorOptions}
-      onChange={(color) => setMapBasemap({ color })}
+      onChange={(color) =>
+        setMapBasemap({ color, name: defaultPeriodOption?.value })}
       native
     />
   </div>
@@ -46,6 +48,7 @@ export const PlanetMenu = ({
 
 PlanetMenu.propTypes = {
   periodOptions: PropTypes.array,
+  defaultPeriodOption: PropTypes.object,
   periodSelectedIndex: PropTypes.number,
   colorOptions: PropTypes.array,
   colorSelected: PropTypes.string,
