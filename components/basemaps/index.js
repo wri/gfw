@@ -51,7 +51,7 @@ class BasemapsContainer extends React.Component {
       }),
       ...(value === 'planet' && {
         name: this.handlePlanetName(name, color),
-        color: color || 'rgb',
+        color: color || '',
       }),
     };
 

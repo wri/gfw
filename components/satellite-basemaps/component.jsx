@@ -50,12 +50,11 @@ const SatelliteBasemaps = ({
   const [open, setOpen] = useState(false);
   const [defaultSatSet, setDefaultSatSet] = useState(false);
   const toggleOpen = () => setOpen(!open);
-
   useEffect(() => {
     if (isTropics && !defaultSatSet) {
       setMapBasemap({
         value: 'planet',
-        color: 'rgb',
+        color: '',
         name: planetPeriods[planetPeriods.length - 1].value,
       });
       setDefaultSatSet(true);
@@ -72,8 +71,9 @@ const SatelliteBasemaps = ({
     setMapBasemap({
       value: activeBasemap.active ? 'default' : activeBasemap.value,
       ...(activeBasemap.value === 'planet' && {
-        color: 'rgb',
+        color: '',
         name: planetPeriods[planetPeriods.length - 1].value,
+        imageType: planetPeriods[planetPeriods.length - 1].imageType,
       }),
       ...(activeBasemap.value === 'landsat' && {
         year: landsatYear,
@@ -96,8 +96,9 @@ const SatelliteBasemaps = ({
     setMapBasemap({
       value,
       ...(value === 'planet' && {
-        color: 'rgb',
+        color: '',
         name: planetPeriods[planetPeriods.length - 1].value,
+        imageType: planetPeriods[planetPeriods.length - 1].imageType,
       }),
       ...(value === 'landsat' && {
         year: landsatYear,

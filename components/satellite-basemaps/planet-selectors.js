@@ -5,13 +5,8 @@ import sortBy from 'lodash/sortBy';
 import { format, differenceInMonths } from 'date-fns';
 
 const selectPlanetBasemaps = (state) => {
-  // const activeType = state?.map?.settings?.basemap?.color;
   // This can be either rgb<string> hex value <#xxx> or nir<string>
-  // const imageType = activeType !== 'cir' ? 'visual' : 'analytic';
-  const imageType = 'analytic';
-  const planetBasemaps = state.planet?.data;
-  // XXX: Filter planet basemaps based on active image type
-  return planetBasemaps?.filter((bm) => bm.name.includes(imageType));
+  return state.planet?.data;
 };
 
 // ES6 provision, replace the hyphens with slashes forces UTC to be calculated from timestamp
@@ -23,13 +18,22 @@ const cleanPlanetDate = (dateStr) =>
 export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   (planetBasemaps) => {
-    if (isEmpty(planetBasemaps)) return null;
+    if (!planetBasemaps || isEmpty(planetBasemaps)) return null;
     return sortBy(
       planetBasemaps.map(({ name, first_acquired, last_acquired } = {}) => {
         const startDate = cleanPlanetDate(first_acquired);
         const endDate = cleanPlanetDate(last_acquired);
         const monthDiff = differenceInMonths(endDate, startDate);
         const year = format(startDate, 'yyyy');
+
+        let imageType = null;
+        let proc = '';
+        if (name.includes('visual')) {
+          imageType = 'visual';
+        } else if (name.includes('analytic')) {
+          imageType = 'analytic';
+          proc = 'cir';
+        }
 
         const period =
           monthDiff === 1
@@ -49,6 +53,8 @@ export const getPlanetBasemaps = createSelector(
           period,
           label,
           year,
+          proc,
+          imageType,
           sortOrder: Date(startDate),
         };
       }),
