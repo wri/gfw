@@ -5,12 +5,12 @@ import { getPlanetBasemaps } from '../../planet-selectors';
 
 const COLOR_OPTIONS = [
   {
-    label: 'Visual',
+    label: 'Natural Color',
     imageType: 'visual',
     value: '',
   },
   {
-    label: 'Analytic',
+    label: 'False color (NIR)',
     imageType: 'analytic',
     value: 'cir',
   },
