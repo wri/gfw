@@ -5,7 +5,7 @@ import { getPlanetBasemaps } from '../../planet-selectors';
 
 const COLOR_OPTIONS = [
   {
-    label: 'Natural Color',
+    label: 'Natural color',
     imageType: 'visual',
     value: '',
   },
