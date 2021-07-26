@@ -35,6 +35,7 @@ class Widgets extends PureComponent {
     noDataMessage: PropTypes.string,
     geostore: PropTypes.object,
     meta: PropTypes.object,
+    authenticated: PropTypes.bool,
   };
 
   render() {
@@ -58,6 +59,7 @@ class Widgets extends PureComponent {
       geostore,
       meta,
       handleClickWidget,
+      authenticated,
     } = this.props;
     const hasWidgets = !isEmpty(widgets);
 
@@ -79,6 +81,7 @@ class Widgets extends PureComponent {
               key={w.widget}
               {...w}
               large={w.large}
+              authenticated={authenticated}
               active={activeWidget && activeWidget.widget === w.widget}
               embed={embed}
               simple={simple}

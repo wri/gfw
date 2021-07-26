@@ -2,12 +2,15 @@ import { createThunkAction } from 'redux/actions';
 import { FORM_ERROR } from 'final-form';
 
 import { saveArea, deleteArea } from 'services/areas';
+
 import {
   setArea,
   setAreas,
   viewArea,
   clearArea,
 } from 'providers/areas-provider/actions';
+
+import { getWidgetsData } from 'components/widgets/actions';
 
 export const saveAreaOfInterest = createThunkAction(
   'saveAreaOfInterest',
@@ -88,6 +91,12 @@ export const saveAreaOfInterest = createThunkAction(
         dispatch(setArea({ ...area, userArea: true }));
         if (viewAfterSave) {
           dispatch(viewArea({ areaId: area.id }));
+        }
+        if (
+          location.payload.type === 'geostore' ||
+          location.payload.type === 'aoi'
+        ) {
+          dispatch(getWidgetsData());
         }
       })
       .catch((error) => {

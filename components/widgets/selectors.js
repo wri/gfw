@@ -62,6 +62,8 @@ const handleWidgetProxy = (widgets, settings) => {
   });
 };
 
+const isAuthenticated = (state) => state?.myGfw?.data?.loggedIn || false;
+
 export const selectLocation = (state) =>
   state.location && state.location.payload;
 export const selectIsTrase = (state) => state.location?.query?.trase;
@@ -620,6 +622,7 @@ export const getWidgetsProps = () =>
   createStructuredSelector({
     loadingData: selectLoadingFilterData,
     loadingMeta: selectLoadingMeta,
+    authenticated: isAuthenticated,
     widgets: getWidgets,
     activeWidget: getActiveWidget,
     location: getDataLocation,
