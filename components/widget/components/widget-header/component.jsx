@@ -38,6 +38,7 @@ class WidgetHeader extends PureComponent {
     status: PropTypes.string,
     shouldSettingsOpen: PropTypes.bool,
     toggleSettingsMenu: PropTypes.func,
+    authenticated: PropTypes.bool,
   };
 
   render() {
@@ -64,6 +65,7 @@ class WidgetHeader extends PureComponent {
       preventCloseSettings,
       getDataURL,
       status,
+      authenticated,
 
       shouldSettingsOpen,
       toggleSettingsMenu,
@@ -80,10 +82,10 @@ class WidgetHeader extends PureComponent {
         ? 'Save area in My GFW to access downloads.'
         : 'Download unavailable.';
 
-    if (showDownloadBtn && status === 'pending') {
+    if (showDownloadBtn && status === 'pending' && authenticated) {
       disabledMessageString =
         'Download will be available soon, please check back in 12-24 hours.';
-    } else if (disableDownload) {
+    } else if (disableDownload && authenticated) {
       disabledMessageString = filterSelected
         ? `Remove Forest Type and Land Category filters to download.`
         : `To download, reduce the total number of alerts to less than ${format(

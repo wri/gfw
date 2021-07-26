@@ -63,6 +63,7 @@ class Widget extends PureComponent {
     status: PropTypes.string,
     meta: PropTypes.object,
     customComponent: PropTypes.string,
+    authenticated: PropTypes.bool,
   };
 
   state = {
@@ -124,6 +125,7 @@ class Widget extends PureComponent {
       proxy,
       proxyOn,
       customComponent,
+      authenticated,
     } = this.props;
 
     const { main } = colors || {};
@@ -149,6 +151,7 @@ class Widget extends PureComponent {
           title={title}
           large={large}
           datasets={datasets}
+          authenticated={authenticated}
           meta={meta}
           active={active}
           disableDownload={downloadDisabled}
