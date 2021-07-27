@@ -73,7 +73,7 @@ export const getPeriodSelected = createSelector(
   (selected, periodOptions) => {
     if (isEmpty(periodOptions)) return null;
     const period = periodOptions?.find((r) => r.value === selected);
-    if (!period) return periodOptions[0];
+    if (!period) return periodOptions[periodOptions.length - 1];
     return period;
   }
 );
@@ -84,7 +84,7 @@ export const getPeriodSelectedIndex = createSelector(
     if (isEmpty(periodOptions)) return null;
     const periodIndex = periodOptions?.findIndex((r) => r.value === selected);
     if (periodIndex === -1) {
-      return 0;
+      return periodOptions.length - 1;
     }
     return periodIndex;
   }
