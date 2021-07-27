@@ -72,11 +72,18 @@ class MapControlsButtons extends PureComponent {
     }
   };
 
-  toggleBasemaps = () => {
+  toggleBasemaps = (track = false) => {
     const { setMainMapSettings, showBasemaps, showRecentImagery } = this.props;
     setMainMapSettings({ showBasemaps: !showBasemaps });
     if (showRecentImagery) {
       setMainMapSettings({ showRecentImagery: false });
+    }
+    if (track) {
+      trackEvent({
+        category: 'Open Modal',
+        action: 'Click to Open',
+        label: 'Imagery caret',
+      });
     }
   };
 
@@ -353,7 +360,7 @@ class MapControlsButtons extends PureComponent {
         tooltip={{ text: 'Map settings' }}
         useContext
         interactive
-        onClick={this.toggleBasemaps}
+        onClick={() => this.toggleBasemaps(true)}
         onRequestClose={this.onBasemapsRequestClose}
       >
         <Icon icon={settingsIcon} className="settings-icon" />
