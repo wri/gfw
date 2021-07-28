@@ -263,7 +263,6 @@ export const fetchDatasets = createThunkAction(
               ),
           };
         });
-        console.log('parsedDatasets', parsedDatasets);
         dispatch(setDatasets(sortBy(parsedDatasets, 'menuPosition')));
       })
       .catch(() => {
