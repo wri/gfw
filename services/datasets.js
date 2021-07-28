@@ -3,7 +3,7 @@ import { rwRequest, dataRequest } from 'utils/request';
 export const getDatasets = () =>
   rwRequest
     .get(
-      `/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&env=production`
+      `/dataset?application=gfw&includes=metadata,vocabulary,layer&env=production&published=true&page[size]=9999`
     )
     .then((res) => res?.data);
 
