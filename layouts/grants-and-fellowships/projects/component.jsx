@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Element as ScrollEl, scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Search, NoContent, Desktop, Row, Column } from 'gfw-components';
 
 import Globe from 'components/globe';
+import Button from 'components/ui/button';
 import Card from 'components/ui/card';
 import ItemsList from 'components/items-list';
 
@@ -14,10 +15,24 @@ import { getProjectsProps } from './selectors';
 
 import './styles.scss';
 
+function getPaginatedData(data, pagination) {
+  if (data.length === pagination.items) {
+    return data;
+  }
+  return data.slice(0, pagination.items);
+}
+
 const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [customFilter, setCustomFilter] = useState([]);
+
+  const [paginate, setPaginate] = useState({ items: 6, offset: 6, page: 1 });
+  const [paginatedProjects, setPaginatedProjects] = useState([]);
+
+  useEffect(() => {
+    setPaginatedProjects(getPaginatedData(allProjects, paginate));
+  }, [paginate]);
 
   const props = getProjectsProps({
     projects: allProjects,
@@ -116,7 +131,7 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
         </Row>
         <ScrollEl name="project-cards" className="project-cards">
           <Row>
-            {projects?.map((d) => {
+            {paginatedProjects?.map((d) => {
               const isFellow = d?.categories?.includes('Fellow');
 
               return (
@@ -144,6 +159,16 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
               );
             })}
           </Row>
+          <Button
+            className="load-more"
+            onClick={() =>
+              setPaginate({
+                ...paginate,
+                items: paginate.items + paginate.offset,
+              })}
+          >
+            Load more projects
+          </Button>
           {!projects?.length && (
             <NoContent
               className="no-projects"
