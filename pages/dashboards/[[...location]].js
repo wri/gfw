@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { parse } from 'cookie';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -79,6 +80,12 @@ function getLabel(location, countryData) {
 
 export const getServerSideProps = async ({ params, query, req }) => {
   const [type] = params?.location || [];
+  let userToken = null;
+  try {
+    userToken = parse(req.headers.cookie)['gfw-token'];
+  } catch (_) {
+    // ignore
+  }
 
   let basePath = null;
 
@@ -119,7 +126,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
   }
 
   try {
-    const locationData = await getLocationData(params?.location);
+    const locationData = await getLocationData(params?.location, userToken);
     const { locationName } = locationData || {};
 
     if (!locationName) {

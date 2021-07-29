@@ -4,6 +4,14 @@ const isServer = typeof window === 'undefined';
 
 const CALLBACK_URL = 'https://www.globalforestwatch.org/my-gfw/';
 
+function setServerCookie(token) {
+  fetch('/api/set-cookie', { method: 'POST', body: JSON.stringify({ token }) });
+}
+
+function removeServerCookie() {
+  fetch('/api/set-cookie', { method: 'GET' });
+}
+
 export const setUserToken = (token) => {
   if (!isServer) {
     let serializedToken = token;
@@ -25,6 +33,7 @@ export const login = (formData) =>
     if (response.status < 400 && response.data) {
       const { data: userData } = response.data;
       setUserToken(userData.token);
+      setServerCookie(userData.token);
     }
 
     return response;
@@ -63,6 +72,7 @@ export const logout = () =>
   apiAuthRequest.get('/auth/logout').then((response) => {
     if (response.status < 400 && !isServer) {
       localStorage.removeItem('userToken');
+      removeServerCookie();
       window.location.reload();
     }
   });

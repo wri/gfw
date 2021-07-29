@@ -86,6 +86,7 @@
     "axios": "^0.21.1",
     "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
+    "cookie": "^0.4.1",
     "d3-ease": "^1.0.5",
     "d3-format": "1.2.1",
     "d3-scale": "^3.2.1",
