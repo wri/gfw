@@ -12,13 +12,23 @@ import decodeLayersConfig from './config';
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
 
-const ENV = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const handleFeatureEnvLock = (env) => {
+  const currEnv = process.env.NEXT_PUBLIC_FEATURE_ENV;
+  const MIXED_ENV = 'preproduction-staging';
+  if (env === MIXED_ENV && currEnv !== 'production') {
+    return true;
+  }
+  if (currEnv === 'preproduction') {
+    return ['preproduction', 'production'].includes(env);
+  }
+  return env === currEnv;
+};
+
 const byVocabulary = (dataset) =>
   dataset.vocabulary &&
   dataset.vocabulary.some(
     (o) => o.name === 'layer_manager_ver' && o.tags.includes('3.0')
-  ) &&
-  dataset.vocabulary.some((o) => o.name === 'gfw_env' && o.tags.includes(ENV));
+  );
 
 export const fetchDatasets = createThunkAction(
   'fetchDatasets',
@@ -27,8 +37,9 @@ export const fetchDatasets = createThunkAction(
     getDatasets()
       .then((datasets) => {
         const filterDatasets = datasets.filter(
-          (d) => d.published && d.layer.length && d.env === 'production'
+          (d) => d.published && d.layer.length && handleFeatureEnvLock(d.env)
         );
+
         const byVocabularyDatasets = filterDatasets.filter(byVocabulary);
 
         const parsedDatasets = byVocabularyDatasets.map((d) => {
@@ -40,7 +51,7 @@ export const fetchDatasets = createThunkAction(
             (layer &&
               layer.find(
                 (l) =>
-                  l.env === 'production' &&
+                  handleFeatureEnvLock(d.env) &&
                   l.applicationConfig &&
                   l.applicationConfig.default
               )) ||
@@ -109,7 +120,7 @@ export const fetchDatasets = createThunkAction(
               layer &&
               sortBy(
                 layer
-                  .filter((l) => l.env === 'production' && l.published)
+                  .filter((l) => handleFeatureEnvLock(d.env) && l.published)
                   .map((l, i) => {
                     const { layerConfig, legendConfig } = l;
                     const { position, confirmedOnly, multiConfig } =
