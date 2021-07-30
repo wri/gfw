@@ -51,27 +51,20 @@ class TimelineContainer extends PureComponent {
   };
 
   async fetchMinDate() {
-    const { latestUrl, step, interval } = this.props;
+    const { latestUrl, step, interval, handleChange } = this.props;
     if (latestUrl) {
       const latest = await getLatestDate(latestUrl);
+
       if (latest) {
         const min = moment(new Date(latest)).format('YYYY-MM-DD');
         const max = moment(new Date(latest))
           .add(step, interval)
           .format('YYYY-MM-DD');
-        this.setState({
-          shouldSet: true,
-          minDate: min,
-          startDateAbsolute: min,
-          maxDate: max,
-          endDateAbsolute: max,
-          maxRange: step,
-          // This is to update the timeline?
-          dateRange: {
-            min: 1,
-            max: step,
-            default: 1,
-          },
+
+        handleChange([min, max, max], this.props.activeLayer, true, {
+          min: 1,
+          max: step,
+          default: 1,
         });
       }
     }
@@ -83,7 +76,7 @@ class TimelineContainer extends PureComponent {
 
   handleOnDateChange = (date, position, absolute) => {
     const { handleChange } = this.props;
-
+    this.setState({ shouldSet: false });
     const newRange = dateRange(this.props, date, position, absolute);
     handleChange(newRange, this.props.activeLayer, absolute);
 
@@ -97,9 +90,7 @@ class TimelineContainer extends PureComponent {
   render() {
     return createElement(TimelineComponent, {
       ...this.props,
-      ...(this.state.shouldSet && {
-        ...this.state,
-      }),
+      ...this.state,
       handleOnDateChange: this.handleOnDateChange,
     });
   }
