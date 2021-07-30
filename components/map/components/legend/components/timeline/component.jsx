@@ -24,7 +24,7 @@ const Timeline = (props) => {
     endDateAbsolute,
     description,
   } = props;
-
+  console.log('max range', maxRange);
   return (
     <div className={`c-timeline ${className || ''}`}>
       {description && <p className="description">{description}</p>}
