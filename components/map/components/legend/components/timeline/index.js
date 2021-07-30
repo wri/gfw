@@ -40,32 +40,18 @@ const mapStateToProps = (
 };
 
 class TimelineContainer extends PureComponent {
-  state = {
-    shouldSet: false,
-    minDate: null,
-    startDateAbsolute: null,
-    maxDate: null,
-    endDateAbsolute: null,
-    maxRange: null,
-    dateRange: null,
-  };
 
   async fetchMinDate() {
-    const { latestUrl, step, interval, handleChange } = this.props;
+    const { latestUrl, dateRange, interval, handleChange } = this.props;
     if (latestUrl) {
       const latest = await getLatestDate(latestUrl);
-
+      console.log('prosp', this.props);
       if (latest) {
-        const min = moment(new Date(latest)).format('YYYY-MM-DD');
-        const max = moment(new Date(latest))
-          .add(step, interval)
-          .format('YYYY-MM-DD');
-
-        handleChange([min, max, max], this.props.activeLayer, true, {
-          min: 1,
-          max: step,
-          default: 1,
-        });
+        const min = moment(new Date(latest)).add(-Math.abs(parseInt(dateRange.default, 10)), dateRange.interval).format('YYYY-MM-DD');
+        const max = moment(new Date(latest)).format('YYYY-MM-DD');
+        console.log('min', min)
+        console.log('max', max);
+        handleChange([min, max, max], this.props.activeLayer, true);
       }
     }
   }
@@ -91,6 +77,7 @@ class TimelineContainer extends PureComponent {
     return createElement(TimelineComponent, {
       ...this.props,
       ...this.state,
+      dyno: true,
       handleOnDateChange: this.handleOnDateChange,
     });
   }

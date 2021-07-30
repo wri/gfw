@@ -14,6 +14,7 @@ const Timeline = (props) => {
     minDate,
     maxDate,
     startDate,
+    endDate,
     trimEndDate,
     handleOnDateChange,
     dateFormat,
@@ -23,6 +24,7 @@ const Timeline = (props) => {
     startDateAbsolute,
     endDateAbsolute,
     description,
+    dyno = false,
   } = props;
 
   return (
@@ -31,25 +33,43 @@ const Timeline = (props) => {
       {dateFormat === 'YYYY-MM-DD' && interval !== 'years' && (
         <div className="date-pickers">
           From
-          <Datepicker
-            selected={new Date(maxRange ? startDateAbsolute : startDate)}
-            onChange={(date) => handleOnDateChange(moment(date), 0, !!maxRange)}
-            minDate={new Date(minDate)}
-            maxDate={maxRange ? new Date(maxDate) : new Date(trimEndDate)}
-            isOutsideRange={(d) =>
-              d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
-              d.isBefore(moment(minDate))}
-          />
+          {dyno && (
+            <Datepicker
+              selected={new Date(startDate)}
+              minDate={new Date(minDate)}
+              maxDate={new Date(maxDate)}
+            />
+          )}
+          {!dyno && (
+            <Datepicker
+              selected={new Date(maxRange ? startDateAbsolute : startDate)}
+              onChange={(date) => handleOnDateChange(moment(date), 0, !!maxRange)}
+              minDate={new Date(minDate)}
+              maxDate={maxRange ? new Date(maxDate) : new Date(trimEndDate)}
+              isOutsideRange={(d) =>
+                d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
+                d.isBefore(moment(minDate))}
+            />
+          )}
           to
-          <Datepicker
-            selected={new Date(maxRange ? endDateAbsolute : trimEndDate)}
-            onChange={(date) => handleOnDateChange(moment(date), 2, !!maxRange)}
-            minDate={maxRange ? new Date(minDate) : new Date(startDate)}
-            maxDate={new Date(maxDate)}
-            isOutsideRange={(d) =>
-              d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
-              d.isBefore(moment(minDate))}
-          />
+          {dyno && (
+            <Datepicker
+              selected={new Date(endDate)}
+              minDate={new Date(minDate)}
+              maxDate={new Date(maxDate)}
+            />
+          )}
+          {!dyno && (
+            <Datepicker
+              selected={new Date(maxRange ? endDateAbsolute : trimEndDate)}
+              onChange={(date) => handleOnDateChange(moment(date), 2, !!maxRange)}
+              minDate={maxRange ? new Date(minDate) : new Date(startDate)}
+              maxDate={new Date(maxDate)}
+              isOutsideRange={(d) =>
+                d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
+                d.isBefore(moment(minDate))}
+            />
+          )}
         </div>
       )}
       <div className="range-slider">
