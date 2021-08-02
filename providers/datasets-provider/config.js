@@ -118,15 +118,18 @@ const decodes = {
     // Finally, 5th and 6th bits are RADD
     // Bits are either: 00 (0, no alerts), 01 (1, low conf), or 10 (2, high conf)
     // e.g. 00 10 01 00 --> no GLAD-L, high conf GLAD-S2, low conf RADD
-
     float agreementValue = alpha * 255.;
     
     float r = color.r * 255.;
     float g = color.g * 255.;
     float b = color.b * 255.;
 
-    float day = r * 255. + g;
-    float confidence = floor(b / 100.) - 1.;
+    // BROKEN in the channel
+    // float day = r * 255. + g;
+    // float confidence = floor(b / 100.) - 1.;
+
+    float confidence = 1.;
+    float day = 1500.;
 
     if (
       day > 0. &&
@@ -134,6 +137,7 @@ const decodes = {
       day <= endDayIndex &&
       agreementValue > 0.
     ) {
+
       // get intensity
       float intensity = mod(confidence, 100.) * 50.;
       if (intensity > 255.) {
@@ -144,22 +148,22 @@ const decodes = {
 
         color.r = 237. / 255.;
         color.g = 164. / 255.;
-        color.b = 194.;
-        alpha = intensity / 255.;
+        color.b = 194. / 255.;
+        alpha = 1.; //intensity / 255.;
       } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
         // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
 
         color.r = 220. / 255.;
         color.g = 102. / 255.;
         color.b = 153. / 255.;
-        alpha = intensity / 255.;
+        alpha = 1.; //intensity / 255.;
       } else {
-        // MULTIPLE: >0 and not 2**(2+n)
+        // MULTIPLE ALERTS: >0 and not 2**(2+n)
 
         color.r = 201. / 255.;
         color.g = 42. / 255.;
         color.b = 109. / 255.;
-        alpha = intensity / 255.;
+        alpha = 1.; //intensity / 255.;
 
       }
     } else {
@@ -213,6 +217,7 @@ const decodes = {
     float g = color.g * 255.;
     float b = color.b * 255.;
 
+    // **** CHECK THIS
     // 1461 = days from 2019/01/01 to 2014/12/31
     float day = (r * 255.) + g - 1461.;
     float confidence = floor(b / 100.) - 1.;
