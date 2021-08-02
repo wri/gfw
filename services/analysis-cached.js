@@ -3,6 +3,7 @@ import {
   tilesRequest,
   cartoRequest,
   dataApiRequest,
+  dataRequest
 } from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -10,12 +11,11 @@ import DATASETS from 'data/analysis-datasets.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
-import { GFW_STAGING_DATA_API, GFW_DATA_API } from 'utils/apis';
+import { GFW_DATA_API_PROXY } from 'utils/apis';
 
 const VIIRS_START_YEAR = 2012;
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+const GFW_API = GFW_DATA_API_PROXY;
 
 const SQL_QUERIES = {
   lossTsc:
@@ -435,7 +435,7 @@ export const getLoss = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
       data: response.data.data.map((d) => ({
