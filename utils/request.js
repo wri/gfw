@@ -2,15 +2,13 @@ import { CancelToken, create } from 'axios';
 import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
-  GFW_API,
-  GFW_STAGING_API,
   GFW_TILES_API,
   CARTO_API,
   MAPBOX_API,
   RESOURCE_WATCH_API,
   GFW_DATA_API,
   GFW_STAGING_DATA_API,
-  GFW_API_PROXY
+  GFW_API_PROXY,
 } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
@@ -21,14 +19,12 @@ const GFW_DATA_API_URL =
 const isServer = typeof window === 'undefined';
 export const apiRequest = create({
   timeout: 30 * 1000,
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const dataRequest = create({
   timeout: 30 * 1000,
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
-
 
 export const gfwApiRequest = create({
   timeout: 30 * 1000,

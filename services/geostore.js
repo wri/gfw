@@ -57,7 +57,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   }
 
   return gfwApiRequest
-    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
+    .get(`api/gfw-api/${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data?.data || {};
       return {
@@ -75,7 +75,7 @@ export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
     data: {
       geojson,
     },
-    url: '/geostore',
+    url: 'api/gfw-api/geostore',
     onUploadProgress,
     onDownloadProgress,
   });
