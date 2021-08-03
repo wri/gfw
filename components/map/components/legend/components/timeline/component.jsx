@@ -11,20 +11,14 @@ import './styles.scss';
 const Timeline = (props) => {
   const {
     className,
-    minDate,
-    maxDate,
-    startDate,
-    endDate,
-    trimEndDate,
     handleOnDateChange,
     dateFormat,
     interval,
     activeLayer,
     maxRange,
-    startDateAbsolute,
-    endDateAbsolute,
     description,
-    dyno = false,
+    from,
+    to,
   } = props;
 
   return (
@@ -33,41 +27,26 @@ const Timeline = (props) => {
       {dateFormat === 'YYYY-MM-DD' && interval !== 'years' && (
         <div className="date-pickers">
           From
-          {dyno && (
+          {from && (
             <Datepicker
-              selected={new Date(startDate)}
-              minDate={new Date(minDate)}
-              maxDate={new Date(maxDate)}
-            />
-          )}
-          {!dyno && (
-            <Datepicker
-              selected={new Date(maxRange ? startDateAbsolute : startDate)}
-              onChange={(date) => handleOnDateChange(moment(date), 0, !!maxRange)}
-              minDate={new Date(minDate)}
-              maxDate={maxRange ? new Date(maxDate) : new Date(trimEndDate)}
+              selected={from.selected}
+              onChange={(date) =>
+                handleOnDateChange(moment(date), 0, !!maxRange)}
+              minDate={from.min}
+              maxDate={from.max}
               isOutsideRange={(d) =>
-                d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
-                d.isBefore(moment(minDate))}
+                d.isAfter(moment(from.max)) || d.isBefore(moment(from.min))}
             />
           )}
           to
-          {dyno && (
+          {to && (
             <Datepicker
-              selected={new Date(endDate)}
-              minDate={new Date(minDate)}
-              maxDate={new Date(maxDate)}
-            />
-          )}
-          {!dyno && (
-            <Datepicker
-              selected={new Date(maxRange ? endDateAbsolute : trimEndDate)}
-              onChange={(date) => handleOnDateChange(moment(date), 2, !!maxRange)}
-              minDate={maxRange ? new Date(minDate) : new Date(startDate)}
-              maxDate={new Date(maxDate)}
-              isOutsideRange={(d) =>
-                d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
-                d.isBefore(moment(minDate))}
+              selected={to.selected}
+              onChange={(date) =>
+                handleOnDateChange(moment(date), 2, !!maxRange)}
+              minDate={to.min}
+              maxDate={to.max}
+              isOutsideRange={(d) => d.isAfter(to.max) || d.isBefore(to.min)}
             />
           )}
         </div>
@@ -138,6 +117,8 @@ Timeline.propTypes = {
   interval: PropTypes.string,
   activeLayer: PropTypes.object,
   maxRange: PropTypes.number,
+  from: PropTypes.object,
+  to: PropTypes.object,
 };
 
 export default Timeline;
