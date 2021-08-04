@@ -175,92 +175,100 @@ const decodes = {
     // Then there's the Alpha band, which encodes an intensity for each of the bands. 
     // From most-significant bit to least-significant bit, 5 bits encode the intensity (from 0-31, so lower max than the 8-bit band) for GLAD, GLAD-S2, and RADD in that order. Thus the last (least-significant) bit is unused.
     
-    // Define Functions
-    float decodeConfidence(float bandValue) {
-      float highConfDays = bandValue - 30000.;
-      float lowConfDays = bandValue - 20000.;
-      if (sign(highConfDays) == 1.){
-        return 1.;
-      }
-      else if (sign(lowConfDays) == 1.) {
-        return 0.;
-      }
-      return -1.;
-    }
-
-    float getDays(float bandValue, float confidenceLevel) {
-      if (confidenceLevel < -0.){
-
-        float confidenceNumber = 10000. * (confidenceLevel + 2.);
-        float days = bandValue - confidenceNumber;
-        return days;
-      }
-      return 0.;
-    }
-
-    float highConfCount = 0.;
-    float alertCount = 0.;
+    int highConfCount = 0;
+    int alertCount = 0;
+    float upperLimit = 30000.;
+    float lowerLimit = 20000.;
 
     // GLAD L
     float gladL = color.r * 255.;
     if (gladL > 0.){
-      float confGladL = decodeConfidence(gladL);
-      float dayGladL = getDays(gladL, confGladL);
+      float highConfDaysGL = gladL - upperLimit;
+      float lowConfDaysGL = gladL - lowerLimit;
+      int dayGladLHighConf = 0;
+      float dayGladL = 0.;
+      if (sign(highConfDaysGL) == 1.){
+        dayGladL = gladL - upperLimit;
+        dayGladLHighConf = 1;
+      }
+      else if (sign(lowConfDaysGL) == 1.) {
+        dayGladL = gladL - lowerLimit;
+      }
       if (
         dayGladL > 0. &&
         dayGladL >= startDayIndex &&
-        dayGladL <= endDayIndex &&
+        dayGladL <= endDayIndex
       ) {
-        alertCount += 1.;
-        highConfCount += confGladL;
+        alertCount += 1;
+        highConfCount += dayGladLHighConf;
       }
     }
 
     // GLAD S2
+    float gladS2 = color.g * 255.;
     if (gladS2 > 0.){
-      float confGladS2 = decodeConfidence(gladS2);
-      float dayGladS2 = getDays(gladS2, confGladS2);
+      float highConfDaysGS2 = gladS2 - upperLimit;
+      float lowConfDaysGS2 = gladS2 - lowerLimit;
+      int dayGladS2HighConf = 0;
+      float dayGladS2 = 0.;
+      if (sign(highConfDaysGS2) == 1.){
+        dayGladS2 = gladS2 - upperLimit;
+        dayGladS2HighConf = 1;
+      }
+      else if (sign(lowConfDaysGS2) == 1.){
+        dayGladS2 = gladS2 - lowerLimit;
+      }
       if (
         dayGladS2 > 0. &&
         dayGladS2 >= startDayIndex &&
-        dayGladS2 <= endDayIndex &&
+        dayGladS2 <= endDayIndex
       ) {
-        alertCount += 1.;
-        highConfCount += confGladS2;
+        alertCount += 1;
+        highConfCount += dayGladS2HighConf;
       }
     }
 
     // RADD
+    float radd = color.b * 255.;
     if (radd > 0.){
-      float confRadd = decodeConfidence(radd);
-      float dayRadd = getDays(radd, confRadd);
+      float highConfDaysR = radd - upperLimit;
+      float lowConfDaysR = radd - lowerLimit;
+      int dayRaddHighConf = 0;
+      float dayRadd = 0.;
+      if (sign(highConfDaysR) == 1.){
+        dayRadd = radd - upperLimit;
+        dayRaddHighConf = 1;
+      }
+      else if (sign(lowConfDaysR) == 1.) {
+        dayRadd = radd - lowerLimit;
+      }
       if (
         dayRadd > 0. &&
         dayRadd >= startDayIndex &&
-        dayRadd <= endDayIndex &&
+        dayRadd <= endDayIndex
       ) {
-        alertCount += 1.;
-        highConfCount += confRadd;
+        alertCount += 1;
+        highConfCount += dayRaddHighConf;
       }
     }
        
     alpha = 0.;
-    if (alertCount == 1.) {
-      // ONE ALERT: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
+    if (alertCount == 1) {
+      // ONE ALERT
 
       color.r = 237. / 255.;
       color.g = 164. / 255.;
       color.b = 194. / 255.;
       alpha = 1.;
-    } else if (alertCount == 1. && highConfCount == 1.){
-      // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
+    } else if (alertCount == 1 && highConfCount == 1){
+      // ONE HIGH CONF ALERT:
 
       color.r = 220. / 255.;
       color.g = 102. / 255.;
       color.b = 153. / 255.;
       alpha = 1.;
-    } else if (alertCount == 1. > 0.) {
-      // MULTIPLE ALERTS: >0 and not 2**(2+n)
+    } else if (alertCount > 1) {
+      // MULTIPLE ALERTS
 
       color.r = 201. / 255.;
       color.g = 42. / 255.;
