@@ -15,7 +15,7 @@ import { FOREST_GAIN, FOREST_LOSS } from 'data/layers';
 
 const gainID = FOREST_GAIN;
 const lossID = FOREST_LOSS;
-const MAX_YEAR = 2020;
+const DOWNLOAD_VERSION = '20200331';
 
 const selectLocation = (state) => state.location && state.location.payload;
 const selectData = (state) => state.analysis && state.analysis.data;
@@ -85,7 +85,7 @@ export const getCountryDownloadLink = createSelector(
   [selectLocation],
   (location) =>
     location.type === 'country'
-      ? `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${MAX_YEAR}/${
+      ? `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${DOWNLOAD_VERSION}/${
           location.adm0 || 'global'
         }.xlsx`
       : null
