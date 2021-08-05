@@ -1,5 +1,3 @@
-export const GFW_API_PROXY = '/api/gfw-api';
-export const GFW_DATA_API_PROXY = '/api/data-api';
 export const GFW_API = 'https://api.resourcewatch.org';
 export const GFW_STAGING_API = 'https://staging-api.resourcewatch.org';
 

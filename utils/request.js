@@ -8,27 +8,54 @@ import {
   RESOURCE_WATCH_API,
   GFW_DATA_API,
   GFW_STAGING_DATA_API,
-  GFW_API_PROXY,
+  GFW_API,
+  GFW_STAGING_API,
 } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API_URL = GFW_API_PROXY;
+const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
 const GFW_DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
 
 const isServer = typeof window === 'undefined';
 export const apiRequest = create({
+  ...(isServer && {
+    baseURL: GFW_API_URL,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: '/api/gfw-api',
+  }),
   timeout: 30 * 1000,
 });
 
 export const dataRequest = create({
   timeout: 30 * 1000,
-  transformResponse: [(data) => JSON.parse(data)?.data],
+  ...(isServer && {
+    baseURL: GFW_DATA_API,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: '/api/data-api',
+  }),
 });
 
 export const gfwApiRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_API_URL,
+  ...(isServer && {
+    baseURL: GFW_API_URL,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: '/api/gfw-api',
+  }),
 });
 
 export const tilesRequest = create({
@@ -51,7 +78,7 @@ export const rwRequest = create({
 
 export const apiAuthRequest = create({
   timeout: 30 * 1000,
-  baseURL: GFW_API_URL,
+  baseURL: GFW_API,
   headers: {
     'content-type': 'application/json',
     Authorization: `Bearer ${!isServer && localStorage.getItem('userToken')}`,
