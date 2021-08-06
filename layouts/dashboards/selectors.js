@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import upperFirst from 'lodash/upperFirst';
 
+import { encodeQueryParams } from 'utils/url';
+
 import {
   filterWidgetsByLocation,
   getWidgetCategories,
@@ -48,6 +50,13 @@ export const getLinks = createSelector(
       (p) => p && p.length
     );
 
+    function formatQuery(category) {
+      return encodeQueryParams({
+        ...location.query,
+        category: category.value,
+      });
+    }
+
     if (!widgetCats) {
       return CATEGORIES.map((category) => ({
         label: category.label,
@@ -57,7 +66,7 @@ export const getLinks = createSelector(
         as: `${location.pathname.replace(
           '[[...location]]',
           serializePayload.join('/')
-        )}?category=${category.value}`,
+        )}?${formatQuery(category)}`,
       }));
     }
 
@@ -70,7 +79,7 @@ export const getLinks = createSelector(
         as: `${location.pathname.replace(
           '[[...location]]',
           serializePayload.join('/')
-        )}?category=${category.value}`,
+        )}?${formatQuery(category)}`,
         active: activeCategory === category.value,
       })
     );
