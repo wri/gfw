@@ -7,6 +7,7 @@ import {
   getActiveCategory,
 } from 'components/widgets/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
+import { encodeQueryParams } from 'utils/url';
 
 import CATEGORIES from 'data/categories.json';
 
@@ -42,17 +43,30 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getLinks = createSelector(
-  [getWidgetCategories, getActiveCategory],
-  (widgetCats, activeCategory) => {
+  [getWidgetCategories, getActiveCategory, selectLocation],
+  (widgetCats, activeCategory, location) => {
     if (!widgetCats) {
       return null;
+    }
+
+    const serializePayload = Object.values(location.payload).filter(p => p && p.length);
+    function formatQuery(category) {
+      return encodeQueryParams({
+        ...location.query,
+        category: category.value
+      })
     }
 
     return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
       (category) => ({
         label: category.label,
         category: category.value,
-        active: activeCategory === category.value,
+        href: location.pathname,
+        as: `${location.pathname.replace(
+          '[[...location]]',
+          serializePayload.join('/')
+        )}?${formatQuery(category)}`,
+        active: activeCategory === category.value
       })
     );
   }

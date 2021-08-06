@@ -168,14 +168,14 @@ class DashboardsPage extends PureComponent {
               theme="theme-subnav-dark"
               links={links.map((l) => ({
                 ...l,
-                onClick: () => {
-                  setWidgetsCategory(l.category);
-                  trackEvent({
-                    category: 'Dashboards page',
-                    action: 'View',
-                    label: l.category,
-                  });
-                },
+                // onClick: () => {
+                //   setWidgetsCategory(l.category);
+                //   trackEvent({
+                //     category: 'Dashboards page',
+                //     action: 'View',
+                //     label: l.category,
+                //   });
+                // },
               }))}
               checkActive
             />
