@@ -7,7 +7,6 @@ import {
   getActiveCategory,
 } from 'components/widgets/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
-import { encodeQueryParams } from 'utils/url';
 
 import CATEGORIES from 'data/categories.json';
 
@@ -45,16 +44,21 @@ export const getNoWidgetsMessage = createSelector(
 export const getLinks = createSelector(
   [getWidgetCategories, getActiveCategory, selectLocation],
   (widgetCats, activeCategory, location) => {
-    if (!widgetCats) {
-      return null;
-    }
+    const serializePayload = Object.values(location.payload).filter(
+      (p) => p && p.length
+    );
 
-    const serializePayload = Object.values(location.payload).filter(p => p && p.length);
-    function formatQuery(category) {
-      return encodeQueryParams({
-        ...location.query,
-        category: category.value
-      })
+    if (!widgetCats) {
+      return CATEGORIES.map((category) => ({
+        label: category.label,
+        category: category.value,
+        href: location.pathname,
+        shallow: true,
+        as: `${location.pathname.replace(
+          '[[...location]]',
+          serializePayload.join('/')
+        )}?category=${category.value}`,
+      }));
     }
 
     return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
@@ -62,11 +66,12 @@ export const getLinks = createSelector(
         label: category.label,
         category: category.value,
         href: location.pathname,
+        shallow: true,
         as: `${location.pathname.replace(
           '[[...location]]',
           serializePayload.join('/')
-        )}?${formatQuery(category)}`,
-        active: activeCategory === category.value
+        )}?category=${category.value}`,
+        active: activeCategory === category.value,
       })
     );
   }

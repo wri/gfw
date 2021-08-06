@@ -66,6 +66,10 @@ const isAuthenticated = (state) => state?.myGfw?.data?.loggedIn || false;
 
 export const selectLocation = (state) =>
   state.location && state.location.payload;
+
+export const getCategory = (state) =>
+  state.location && state?.location?.query?.category;
+
 export const selectIsTrase = (state) => state.location?.query?.trase;
 export const selectRouteType = (state) =>
   state.location && state.location.pathname;
@@ -627,6 +631,7 @@ export const getWidgetsProps = () =>
     activeWidget: getActiveWidget,
     location: getDataLocation,
     emebd: selectEmbed,
+    category: getCategory,
     simple: selectSimple,
     modalClosing: selectModalClosing,
     noDataMessage: getNoDataMessage,

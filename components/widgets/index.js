@@ -60,9 +60,11 @@ class WidgetsContainer extends PureComponent {
   static propTypes = {
     getWidgetsData: PropTypes.func,
     location: PropTypes.object,
+    category: PropTypes.string,
     activeWidget: PropTypes.object,
     setMapSettings: PropTypes.func,
     embed: PropTypes.bool,
+    setWidgetsCategory: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
   };
 
@@ -117,7 +119,7 @@ class WidgetsContainer extends PureComponent {
   }
 
   syncWidgetWithMap = () => {
-    const { activeWidget, setMapSettings } = this.props;
+    const { activeWidget, setMapSettings, setWidgetsCategory } = this.props;
     const { datasets, settings, optionsSelected } = activeWidget || {};
     const widgetDatasets =
       datasets &&
@@ -130,7 +132,7 @@ class WidgetsContainer extends PureComponent {
     if (widgetDatasets) {
       allDatasets = [...allDatasets, ...widgetDatasets];
     }
-
+    setWidgetsCategory(this.props?.category || 'summary');
     setMapSettings({
       datasets: allDatasets,
     });
