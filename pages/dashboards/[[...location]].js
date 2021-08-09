@@ -83,6 +83,10 @@ export const getServerSideProps = async ({ params, query, req }) => {
   let userToken = null;
   try {
     userToken = parse(req.headers.cookie)['gfw-token'];
+    // XXX: FB/Google token hack
+    if (userToken?.endsWith('#')) {
+      userToken = userToken.replace(/#$/, '');
+    }
   } catch (_) {
     // ignore
   }
