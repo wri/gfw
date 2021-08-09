@@ -186,10 +186,6 @@ const getRequestUrl = ({
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
 
-  if (typeof datasetId === 'undefined') {
-    // @TODO: Figure out why widgets are stale on loading, when not requesting info
-    // return null;
-  }
   return `/dataset/${datasetId}/${version || 'latest'}/query?sql=`;
 };
 
@@ -1255,7 +1251,7 @@ export const fetchBurnedArea = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1304,7 +1300,7 @@ export const fetchBurnedAreaGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1339,7 +1335,7 @@ export const fetchVIIRSAlerts = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1390,7 +1386,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1430,7 +1426,7 @@ export const fetchFiresWithin = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1483,7 +1479,7 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
       .replace('{geostoreId}', geostoreId)
   );
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1520,7 +1516,7 @@ export const fetchVIIRSAlertsSum = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     data: {
       data: response?.data.map((d) => ({
         ...d,
@@ -1569,7 +1565,7 @@ export const getBiomassStockGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     ...response,
     data: {
       data: response?.data.map((d) => ({
@@ -1616,7 +1612,7 @@ export const getBiomassStock = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataApiRequest.get(url).then((response) => ({
     ...response,
     data: {
       data: response?.data.map((d) => ({
