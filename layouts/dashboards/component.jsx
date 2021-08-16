@@ -50,7 +50,6 @@ class DashboardsPage extends PureComponent {
     setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    setWidgetsCategory: PropTypes.func,
     globalSentence: PropTypes.object,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
@@ -141,7 +140,6 @@ class DashboardsPage extends PureComponent {
       links,
       widgetAnchor,
       ssrLocation,
-      setWidgetsCategory,
       activeArea,
       clearScrollTo,
       globalSentence,
@@ -166,17 +164,7 @@ class DashboardsPage extends PureComponent {
             <SubNavMenu
               className="nav"
               theme="theme-subnav-dark"
-              links={links.map((l) => ({
-                ...l,
-                onClick: () => {
-                  setWidgetsCategory(l.category);
-                  trackEvent({
-                    category: 'Dashboards page',
-                    action: 'View',
-                    label: l.category,
-                  });
-                },
-              }))}
+              links={links}
               checkActive
             />
           )}
