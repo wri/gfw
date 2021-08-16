@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-const SearchBoxSeo = ({ title, description }) => {
-  const NAME = title;
+const SearchBoxSeo = ({ description }) => {
+  const NAME = 'Global Forest Watch';
   const IMAGE = 'https://www.globalforestwatch.org/assets/card-2.png';
   const LOGO = 'https://www.globalforestwatch.org/assets/gfw.png';
   const URL = 'https://www.globalforestwatch.org/';
@@ -65,7 +65,6 @@ const SearchBoxSeo = ({ title, description }) => {
 };
 
 SearchBoxSeo.propTypes = {
-  title: PropTypes.string,
   description: PropTypes.string,
 };
 

@@ -75,8 +75,8 @@ export const useConfig = {
 };
 
 export const aoiConfig = {
-  adm0: (params) =>
-    getArea(params.adm0).then((area) => {
+  adm0: (params, userToken = null) =>
+    getArea(params.adm0, userToken).then((area) => {
       const { name, ...props } = area;
 
       if (name) {
@@ -122,7 +122,7 @@ export const config = {
   use: useConfig,
 };
 
-export const getLocationData = async (params) => {
+export const getLocationData = async (params, userToken = null) => {
   const location = {
     type: params?.[0],
     adm0: params?.[1],
@@ -135,7 +135,7 @@ export const getLocationData = async (params) => {
   else if (location.adm1) getLocationDataFunc = config[location.type].adm1;
   else if (location.adm0) getLocationDataFunc = config[location.type].adm0;
 
-  const locationData = await getLocationDataFunc(location);
+  const locationData = await getLocationDataFunc(location, userToken);
 
   return locationData;
 };

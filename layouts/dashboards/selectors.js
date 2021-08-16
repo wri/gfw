@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import upperFirst from 'lodash/upperFirst';
 
+import { encodeQueryParams } from 'utils/url';
+
 import {
   filterWidgetsByLocation,
   getWidgetCategories,
@@ -42,16 +44,42 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getLinks = createSelector(
-  [getWidgetCategories, getActiveCategory],
-  (widgetCats, activeCategory) => {
+  [getWidgetCategories, getActiveCategory, selectLocation],
+  (widgetCats, activeCategory, location) => {
+    const serializePayload = Object.values(location.payload).filter(
+      (p) => p && p.length
+    );
+
+    function formatQuery(category) {
+      return encodeQueryParams({
+        ...location.query,
+        category: category.value,
+      });
+    }
+
     if (!widgetCats) {
-      return null;
+      return CATEGORIES.map((category) => ({
+        label: category.label,
+        category: category.value,
+        href: location.pathname,
+        shallow: true,
+        as: `${location.pathname.replace(
+          '[[...location]]',
+          serializePayload.join('/')
+        )}?${formatQuery(category)}`,
+      }));
     }
 
     return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
       (category) => ({
         label: category.label,
         category: category.value,
+        href: location.pathname,
+        shallow: true,
+        as: `${location.pathname.replace(
+          '[[...location]]',
+          serializePayload.join('/')
+        )}?${formatQuery(category)}`,
         active: activeCategory === category.value,
       })
     );

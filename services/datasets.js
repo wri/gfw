@@ -1,14 +1,25 @@
 import { rwRequest, dataRequest } from 'utils/request';
 
-// Feature env will always be "null" on production
-const featureEnv = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const environmentString = () => {
+  const env = process.env.NEXT_PUBLIC_FEATURE_ENV;
+  let envString = 'production';
+  if (env === 'preproduction') {
+    envString += ',preproduction';
+  }
+  if (env === 'staging') {
+    return 'staging';
+  }
+  return envString;
+};
 
 export const getDatasets = () =>
   rwRequest
     .get(
-      `/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&env=production${
-        featureEnv ? `,${featureEnv},preproduction-staging` : ''
-      }${featureEnv === 'staging' ? `&refresh=${new Date()}` : ''}`
+      `/dataset?application=gfw&includes=metadata,vocabulary,layer&published=true&page[size]=9999&env=${environmentString()}${
+        environmentString() === 'staging'
+          ? `&filterIncludesByEnv=true&refresh=${new Date()}`
+          : ''
+      }`
     )
     .then((res) => res?.data);
 

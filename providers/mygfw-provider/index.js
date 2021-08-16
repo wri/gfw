@@ -6,7 +6,7 @@ import { withRouter } from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 import reducerRegistry from 'redux/registry';
 
-import { setUserToken } from 'services/user';
+import { setUserToken, setServerCookie } from 'services/user';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -30,6 +30,8 @@ class MyGFWProvider extends PureComponent {
 
     if (urlToken) {
       setUserToken(urlToken);
+      setServerCookie(urlToken);
+
       delete query.token;
       push(
         `${asPath?.split('?')?.[0]}${

@@ -16,14 +16,6 @@ import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 
-import {
-  getStaticProps as getProps,
-  getStaticPaths as getPaths,
-} from '../../map/[[...location]]';
-
-export const getStaticProps = getProps;
-export const getStaticPaths = getPaths;
-
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
