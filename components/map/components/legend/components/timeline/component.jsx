@@ -19,6 +19,7 @@ const Timeline = (props) => {
     description,
     from,
     to,
+    dynamic,
   } = props;
 
   return (
@@ -59,9 +60,19 @@ const Timeline = (props) => {
             timelineParams: {
               ...activeLayer.timelineParams,
               ...(maxRange && {
-                minDate: activeLayer.timelineParams.startDateAbsolute,
-                maxDate: activeLayer.timelineParams.endDateAbsolute,
+                minDate: from?.min
+                  ? from.min
+                  : activeLayer.timelineParams.startDateAbsolute,
+                maxDate: to?.max
+                  ? to.max
+                  : activeLayer.timelineParams.endDateAbsolute,
               }),
+              ...(dynamic &&
+                from.selected &&
+                to.selected && {
+                  startDate: from.selected,
+                  endDate: to.selected,
+                }),
               ...(!maxRange && {
                 marks: props.marks,
               }),
@@ -119,6 +130,7 @@ Timeline.propTypes = {
   maxRange: PropTypes.number,
   from: PropTypes.object,
   to: PropTypes.object,
+  dynamic: PropTypes.bool,
 };
 
 export default Timeline;

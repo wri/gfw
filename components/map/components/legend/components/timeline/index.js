@@ -45,6 +45,7 @@ class TimelineContainer extends PureComponent {
   state = {
     from: null,
     to: null,
+    dynamic: false,
   };
 
   componentDidMount() {
@@ -107,6 +108,7 @@ class TimelineContainer extends PureComponent {
             moment(trimEndDate).isAfter(latest) ? latest : trimEndDate
           ),
         },
+        dynamic: true,
       });
     } else {
       this.setState({
@@ -141,7 +143,6 @@ class TimelineContainer extends PureComponent {
     return createElement(TimelineComponent, {
       ...this.props,
       ...this.state,
-      dyno: true,
       handleOnDateChange: this.handleOnDateChange,
     });
   }
