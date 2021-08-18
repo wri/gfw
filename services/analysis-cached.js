@@ -39,7 +39,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, gfw_integrated_alerts__confidence FROM data {WHERE} AND gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}' GROUP BY {location}, gfw_integrated_alerts__confidence`,
+  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1122,7 +1122,9 @@ export const fetchGladAlerts = (params) => {
 
 export const fetchIntegratedAlerts = (params) => {
   // Params
-  const { startDate, endDate, download } = params || {};
+  const { startDate, endDate, download, deforestationAlertsDataset } =
+    params || {};
+  console.log('deforestationAlertsDataset', deforestationAlertsDataset);
   // Construct base url for fetch
   const baseUrl = `${getRequestUrl({
     ...params,
@@ -1137,6 +1139,20 @@ export const fetchIntegratedAlerts = (params) => {
     // No download yet
   }
 
+  const datasetMapping = {
+    all: 'gfw_integrated_alerts',
+    glad_l: 'umd_glad_landsat_alerts',
+    glad_s2: 'umd_glad_sentinel2_alerts',
+    radd: 'wur_radd_alerts',
+  };
+
+  const dateString = datasetMapping[deforestationAlertsDataset].concat(
+    '__date'
+  );
+  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
+    '__confidence'
+  );
+
   // Replace base url params and encode
   const url = encodeURI(
     baseUrl
@@ -1145,6 +1161,8 @@ export const fetchIntegratedAlerts = (params) => {
         getLocationSelect({ ...params, cast: true })
       )
       .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{dateString}/g, dateString)
+      .replace(/{confidenceString}/g, confidenceString)
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
@@ -1155,7 +1173,7 @@ export const fetchIntegratedAlerts = (params) => {
     data: {
       data: response.data.data.map((d) => ({
         ...d,
-        confidence: d.gfw_integrated_alerts__confidence,
+        confidence: d[confidenceString],
         alerts: d.alert__count,
       })),
     },

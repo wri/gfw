@@ -23,10 +23,14 @@ export default {
   widget: 'integratedDeforestationAlerts',
   title: 'Integrated Deforestation alerts in {location}',
   sentence: {
-    default:
+    initial:
       'There were {total} {individual alerts} reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     withInd:
       'There were {total} {individual alerts} reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+    singleSystem:
+      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts.',
+    singleSystemWithInd:
+      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
@@ -56,7 +60,7 @@ export default {
   },
   pendingKeys: [],
   refetchKeys: [
-    'dataset',
+    'deforestationAlertsDataset',
     'forestType',
     'landCategory',
     'startDate',

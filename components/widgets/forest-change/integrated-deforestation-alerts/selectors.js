@@ -12,13 +12,16 @@ const selectSentences = (state) => state.sentence;
 const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
+const getOptionsSelected = (state) => state.optionsSelected;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
   // Get counts from each confidence category ['high', 'highest', 'nominal']
   const highAlertsData = data.filter((d) => d.confidence === 'high');
   const highestAlertsData = data.filter((d) => d.confidence === 'highest');
-  const lowAlertsData = data.filter((d) => d.confidence === 'nominal');
+  const lowAlertsData = data.filter((d) =>
+    ['nominal', 'low'].includes(d.confidence)
+  );
 
   // Extract alert count from alerts key (default to 0 if not found)
   const highAlerts = highAlertsData.length ? highAlertsData[0].alerts : 0;
@@ -43,10 +46,10 @@ export const parseData = createSelector([selectAlerts], (data) => {
 });
 
 export const parseConfig = createSelector(
-  [parseData, selectColors, getIndicator],
-  (data, colors, indicator) => {
+  [parseData, selectColors, getIndicator, getSettings],
+  (data, colors, indicator, settings) => {
     if (isEmpty(data)) return null;
-
+    const { deforestationAlertsDataset } = settings;
     const {
       highAlertCount,
       highestAlertCount,
@@ -71,22 +74,32 @@ export const parseConfig = createSelector(
     const highestColour = colors.integratedHighest;
     const lowColour = colors.integratedLow;
     const parsedData = [
+      ...(deforestationAlertsDataset === 'all'
+        ? [
+            {
+              label: highestAlertsLabel,
+              value: highestAlertCount,
+              color: highestColour,
+              percentage: highestAlertPercentage,
+              unit: 'counts',
+            },
+          ]
+        : []),
       {
-        label: highestAlertsLabel,
-        value: highestAlertCount,
-        color: highestColour,
-        percentage: highestAlertPercentage,
-        unit: 'counts',
-      },
-      {
-        label: highAlertsLabel,
+        label:
+          deforestationAlertsDataset === 'all'
+            ? highAlertsLabel
+            : 'High confidence alerts',
         value: highAlertCount,
         color: highColour,
         percentage: highAlertPercentage,
         unit: 'counts',
       },
       {
-        label: lowAlertsLabel,
+        label:
+          deforestationAlertsDataset === 'all'
+            ? lowAlertsLabel
+            : 'Other alerts',
         value: lowAlertCount,
         color: lowColour,
         percentage: lowAlertPercentage,
@@ -98,21 +111,30 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getSettings, selectSentences, getIndicator, getLocationName],
-  (data, settings, sentences, indicator, location) => {
+  [
+    parseData,
+    getSettings,
+    selectSentences,
+    getIndicator,
+    getLocationName,
+    getOptionsSelected,
+  ],
+  (data, settings, sentences, indicator, location, options) => {
     if (!data || isEmpty(data)) return null;
-
     const {
       totalAlertCount,
       highAlertPercentage,
       highestAlertPercentage,
     } = data;
+    const { deforestationAlertsDataset } = options;
+    const { label: system, value: systemSlug } = deforestationAlertsDataset;
     const startDate = settings.startDate;
     const endDate = settings.endDate;
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
     const params = {
       indicator: indicator && indicator.label,
+      system,
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
       highConfPerc:
         highAlertPercentage === 0
@@ -125,15 +147,21 @@ export const parseSentence = createSelector(
       location,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
-      component: {
-        key: 'individual alerts',
-        fine: true,
-        tooltip:
-          'An individual alert may include one or more detections made by any of the the GLAD-Landsat, GLAD-S2, or RADD alert systems. While each individual system may have high or low confidence in a detection, agreement between systems is considered to represent overall confidence.',
-      },
+      ...(systemSlug === 'all' && {
+        component: {
+          key: 'individual alerts',
+          fine: true,
+          tooltip:
+            'An individual alert may include one or more detections made by any of the the GLAD-Landsat, GLAD-S2, or RADD alert systems. While each individual system may have high or low confidence in a detection, agreement between systems is considered to represent overall confidence.',
+        },
+      }),
     };
+    const { initial, withInd, singleSystem, singleSystemWithInd } = sentences;
+    let sentence = indicator ? withInd : initial;
+    if (systemSlug !== 'all')
+      sentence = indicator ? singleSystemWithInd : singleSystem;
     return {
-      sentence: indicator ? sentences.withInd : sentences.default,
+      sentence,
       params,
     };
   }
