@@ -39,6 +39,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, gfw_integrated_alerts__confidence FROM data {WHERE} AND gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}' GROUP BY {location}, gfw_integrated_alerts__confidence`,
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -175,7 +176,8 @@ const getRequestUrl = ({
   if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
-    if (adm2 || datasetType === 'daily') typeByLevel = 'adm2';
+    if (adm2 || (datasetType === 'daily' && dataset !== 'integrated_alerts'))
+      typeByLevel = 'adm2';
   }
 
   let datasetId = typeByLevel;
@@ -1113,6 +1115,49 @@ export const fetchGladAlerts = (params) => {
         count: d.alert__count,
         alerts: d.alert__count,
         area_ha: d.alert_area__ha,
+      })),
+    },
+  }));
+};
+
+export const fetchIntegratedAlerts = (params) => {
+  // Params
+  const { startDate, endDate, download } = params || {};
+  // Construct base url for fetch
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'integrated_alerts',
+    datasetType: 'daily',
+    // version override necessary here (no 'latest' defined)
+    version: 'v20210813',
+    // Refernces the base SQL from the SQL_QUERIES object
+  })}${SQL_QUERIES.integratedAlertsDaily}`;
+
+  if (download) {
+    // No download yet
+  }
+
+  // Replace base url params and encode
+  const url = encodeURI(
+    baseUrl
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  // Light initial Parsing
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        date: d.gfw_integrated_alerts__date,
+        confidence: d.gfw_integrated_alerts__confidence,
+        count: d.alert__count,
       })),
     },
   }));

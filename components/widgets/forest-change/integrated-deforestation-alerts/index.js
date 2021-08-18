@@ -13,7 +13,7 @@ import {
 import { isMapPage } from 'utils/location';
 
 // imported functions for retreiving glad alerts from tables
-import { fetchIntegratedGladAlerts } from 'services/analysis-cached';
+import { fetchIntegratedAlerts } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -107,11 +107,11 @@ export default {
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
       // function reference to parse fetch
-      return fetchIntegratedGladAlerts({
+      return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
-        startDate,
-        endDate,
+        startDate: '2021-01-01',
+        endDate: '2021-01-10',
         // once fetch resolves... then do the following. Usually, some basic parsing
       }).then((alerts) => {
         const gladsData = alerts && alerts.data.data;
@@ -189,7 +189,7 @@ export default {
     const endDate = params?.endDate || defaultEndDate;
     const geostoreId = params?.geostore?.hash;
     return [
-      fetchIntegratedGladAlerts({
+      fetchIntegratedAlerts({
         ...params,
         startDate,
         endDate,
