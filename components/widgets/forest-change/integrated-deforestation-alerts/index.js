@@ -12,11 +12,8 @@ import {
 
 import { isMapPage } from 'utils/location';
 
-// function for retreiving glad alerts from tables
-import {
-  fetchGladAlertsSum,
-  fetchGladAlertsSumOTF,
-} from 'services/analysis-cached';
+// imported functions for retreiving glad alerts from tables
+import { fetchIntegratedGladAlerts } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -98,16 +95,24 @@ export default {
     dataset: 'glad',
   },
   getData: (params) => {
+    // Gets pre-fetched GLAD-related metadata from the state...
     const { GLAD } = params.GFW_META.datasets;
+
+    // extract relevant metadata
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+
+    // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
-      return fetchGladAlertsSum({
+      // function reference to parse fetch
+      return fetchIntegratedGladAlerts({
+        // widget settings passed to the fetch function from the config above as well as the state
         ...params,
         startDate,
         endDate,
+        // once fetch resolves... then do the following. Usually, some basic parsing
       }).then((alerts) => {
         const gladsData = alerts && alerts.data.data;
         let data = {};
@@ -127,47 +132,49 @@ export default {
         return data;
       });
     }
-    const geostoreId = params?.geostore?.hash;
-    return fetchGladAlertsSumOTF({
-      ...params,
-      startDate,
-      endDate,
-      geostoreId,
-      staticStatement: {
-        // overrides tables and/or sql
-        table: 'umd_glad_landsat_alerts',
-      },
-    }).then((alerts) => {
-      const gladsData = alerts && alerts.data.data;
-      let data = {};
-      if (gladsData && GLAD) {
-        data = {
-          alerts: [
-            {
-              alerts: gladsData
-                ? gladsData.filter((d) => d.confirmed === false).length
-                : 0,
-              confirmed: false,
-            },
-            {
-              alerts: gladsData
-                ? gladsData.filter((d) => d.confirmed === true).length
-                : 0,
-              confirmed: true,
-            },
-          ],
-          settings: {
-            startDate,
-            endDate,
-          },
-          options: {
-            minDate: '2015-01-01',
-            maxDate: defaultEndDate,
-          },
-        };
-      }
-      return data;
-    });
+    return null;
+    // // No OTF yet
+    // const geostoreId = params?.geostore?.hash;
+    // return fetchGladAlertsSumOTF({
+    //   ...params,
+    //   startDate,
+    //   endDate,
+    //   geostoreId,
+    //   staticStatement: {
+    //     // overrides tables and/or sql
+    //     table: 'umd_glad_landsat_alerts',
+    //   },
+    // }).then((alerts) => {
+    //   const gladsData = alerts && alerts.data.data;
+    //   let data = {};
+    //   if (gladsData && GLAD) {
+    //     data = {
+    //       alerts: [
+    //         {
+    //           alerts: gladsData
+    //             ? gladsData.filter((d) => d.confirmed === false).length
+    //             : 0,
+    //           confirmed: false,
+    //         },
+    //         {
+    //           alerts: gladsData
+    //             ? gladsData.filter((d) => d.confirmed === true).length
+    //             : 0,
+    //           confirmed: true,
+    //         },
+    //       ],
+    //       settings: {
+    //         startDate,
+    //         endDate,
+    //       },
+    //       options: {
+    //         minDate: '2015-01-01',
+    //         maxDate: defaultEndDate,
+    //       },
+    //     };
+    //   }
+    //   return data;
+    // });
   },
   maxDownloadSize: {
     maxSize: 1e5,
@@ -182,7 +189,7 @@ export default {
     const endDate = params?.endDate || defaultEndDate;
     const geostoreId = params?.geostore?.hash;
     return [
-      fetchGladAlertsSum({
+      fetchIntegratedGladAlerts({
         ...params,
         startDate,
         endDate,
