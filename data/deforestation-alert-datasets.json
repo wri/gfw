@@ -1,0 +1,28 @@
+[
+  {
+    "label": "All alerts",
+    "value": "all",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": "Integrated alerts combine GLAD-Landsat, GLAD-S2, and RADD deforestation alerts"
+  },
+  {
+    "label": "GLAD",
+    "value": "glad_l",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": ""
+  },{
+    "label": "GLAD-S2",
+    "value": "glad_s2",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": ""
+  },{
+    "label": "RADD",
+    "value": "radd",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": ""
+  }
+]

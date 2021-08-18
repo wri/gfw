@@ -2,12 +2,12 @@ import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET,
+  // GLAD_DEFORESTATION_ALERTS_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  GLAD_ALERTS,
+  // GLAD_ALERTS,
 } from 'data/layers';
 
 import { isMapPage } from 'utils/location';
@@ -21,7 +21,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'integratedDeforestationAlerts',
-  title: 'TEST Integrated Deforestation alerts in {location}',
+  title: 'Integrated Deforestation alerts in {location}',
   sentence: {
     default:
       'There were {total} {individual alerts} reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
@@ -36,25 +36,32 @@ export default {
   source: 'gadm',
   dataType: 'glad',
   categories: ['summary', 'forest-change'],
-  types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['country'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
+  admins: ['adm0'], // Only available for BRA, COD isos (no  'adm1', 'adm2')
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    {
-      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: [GLAD_ALERTS],
-    },
+    // // Replace with with 8bit Integrated Deforestation Layer when ready
+    // {
+    //   dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
+    //   layers: [GLAD_ALERTS],
+    // },
   ],
   sortOrder: {
     summary: 999,
     forestChange: 999,
   },
   pendingKeys: [],
-  refetchKeys: ['forestType', 'landCategory', 'startDate', 'endDate'],
+  refetchKeys: [
+    'dataset',
+    'forestType',
+    'landCategory',
+    'startDate',
+    'endDate',
+  ],
   settingsConfig: [
     {
       key: 'forestType',
@@ -78,6 +85,11 @@ export default {
       startKey: 'startDate',
       type: 'datepicker',
     },
+    {
+      key: 'deforestationAlertsDataset',
+      label: 'Alert type',
+      type: 'select',
+    },
   ],
   settingsBtnConfig: {
     text: '+ Select an intersection',
@@ -92,7 +104,7 @@ export default {
   },
   // initial settings
   settings: {
-    dataset: 'glad',
+    deforestationAlertsDataset: 'all',
   },
   getData: (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
