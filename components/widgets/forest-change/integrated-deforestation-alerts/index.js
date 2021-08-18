@@ -24,9 +24,9 @@ export default {
   title: 'TEST Integrated Deforestation alerts in {location}',
   sentence: {
     default:
-      'There were {total} alerts reported in {location} between {startDate} and {endDate} of which {high_conf_perc} were high confidence alerts detected by a single system and {highest_conf_perc} were alerts detected by multiple systems.',
+      'There were {total} {individual alerts} reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     withInd:
-      'There were {total} alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {high_conf_perc} were high confidence alerts detected by a single system and {highest_conf_perc} were alerts detected by multiple systems.',
+      'There were {total} {individual alerts} reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,

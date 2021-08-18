@@ -60,8 +60,8 @@ export const parseConfig = createSelector(
       : 'Detection from one alert system';
 
     const highAlertsLabel = indicator
-      ? `Detection from one alert system (High-confidence) in ${indicator.label}`
-      : 'Detection from one alert system (High-confidence)';
+      ? `Detection from one alert system (with high-confidence) in ${indicator.label}`
+      : 'Detection from one alert system (with high-confidence)';
 
     const highestAlertsLabel = indicator
       ? `Detection from multiple alert systems in ${indicator.label}`
@@ -102,29 +102,35 @@ export const parseSentence = createSelector(
   (data, settings, sentences, indicator, location) => {
     if (!data || isEmpty(data)) return null;
 
+    const {
+      totalAlertCount,
+      highAlertPercentage,
+      highestAlertPercentage,
+    } = data;
     const startDate = settings.startDate;
     const endDate = settings.endDate;
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
     const params = {
       indicator: indicator && indicator.label,
+      total: formatNumber({ num: totalAlertCount, unit: ',' }),
+      highConfPerc:
+        highAlertPercentage === 0
+          ? 'none'
+          : `${formatNumber({ num: highAlertPercentage, unit: '%' })}`,
+      highestConfPerc:
+        highestAlertPercentage === 0
+          ? 'none'
+          : `${formatNumber({ num: highestAlertPercentage, unit: '%' })}`,
       location,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
       component: {
-        key: 'high confidence alerts',
-        fine: false,
+        key: 'individual alerts',
+        fine: true,
         tooltip:
-          'GLAD alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image.',
+          'An individual alert may include one or more detections made by any of the the GLAD-Landsat, GLAD-S2, or RADD alert systems. While each individual system may have high or low confidence in a detection, agreement between systems is considered to represent overall confidence.',
       },
-      count: formatNumber({ num: data.totalAlertCount, unit: ',' }),
-      highConfidencePercentage:
-        data.highConfidenceAlertCount === 0
-          ? 'none'
-          : formatNumber({
-              num: data.highConfidenceAlertPercentage,
-              unit: '%',
-            }),
     };
     return {
       sentence: indicator ? sentences.withInd : sentences.default,
