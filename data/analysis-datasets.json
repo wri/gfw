@@ -11,6 +11,7 @@
   "ANNUAL_GEOSTORE_CHANGE": "geostore__tcl__change",
   "ANNUAL_GEOSTORE_SUMMARY": "geostore__tcl__summary",
   "ANNUAL_GEOSTORE_WHITELIST": "geostore__tcl__whitelist",
+  "GLAD_ADM0_DAILY": "gadm__integrated_alerts__iso_daily_alerts",
   "GLAD_ADM0_WEEKLY": "gadm__glad__iso_weekly_alerts",
   "GLAD_ADM0_SUMMARY": "gadm__glad__iso_summary",
   "GLAD_ADM0_WHITELIST": "gadm__glad__iso_whitelist",
@@ -67,6 +68,7 @@
   "MODIS_BURNED_AREA_ADM2_DAILY": "gadm__burned_areas__adm2_daily_alerts",
   "MODIS_BURNED_AREA_ADM2_WEEKLY": "gadm__burned_areas__adm2_weekly_alerts",
   "MODIS_BURNED_AREA_WDPA_WEEKLY": "wdpa_protected_areas__burned_areas__weekly_alerts",
-  "MODIS_BURNED_AREA_GEOSTORE_WEEKLY": "geostore__burned_areas__weekly_alerts"
+  "MODIS_BURNED_AREA_GEOSTORE_WEEKLY": "geostore__burned_areas__weekly_alerts",
+
 
 }
