@@ -1155,9 +1155,8 @@ export const fetchIntegratedAlerts = (params) => {
     data: {
       data: response.data.data.map((d) => ({
         ...d,
-        date: d.gfw_integrated_alerts__date,
         confidence: d.gfw_integrated_alerts__confidence,
-        count: d.alert__count,
+        alerts: d.alert__count,
       })),
     },
   }));

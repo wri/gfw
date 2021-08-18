@@ -15,22 +15,30 @@ const getLocationName = (state) => state.locationLabel;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
-  const otherAlertsData = data.filter((d) => d.confirmed === false);
-  const confimedAlertsData = data.filter((d) => d.confirmed === true);
+  // Get counts from each confidence category ['high', 'highest', 'nominal']
+  const highAlertsData = data.filter((d) => d.confidence === 'high');
+  const highestAlertsData = data.filter((d) => d.confidence === 'highest');
+  const lowAlertsData = data.filter((d) => d.confidence === 'nominal');
 
-  const otherAlerts = otherAlertsData.length ? otherAlertsData[0].alerts : 0;
-  const highConfidenceAlerts = confimedAlertsData.length
-    ? confimedAlertsData[0].alerts
+  // Extract alert count from alerts key (default to 0 if not found)
+  const highAlerts = highAlertsData.length ? highAlertsData[0].alerts : 0;
+  const highestAlerts = highestAlertsData.length
+    ? highestAlertsData[0].alerts
     : 0;
+  const lowAlerts = lowAlertsData.length ? lowAlertsData[0].alerts : 0;
 
-  const totalAlerts = otherAlerts + highConfidenceAlerts;
+  // Total alerts
+  const totalAlerts = highAlerts + highestAlerts + lowAlerts;
 
+  // Return parsed data structure including percentage
   return {
     totalAlertCount: totalAlerts,
-    otherAlertCount: otherAlerts,
-    otherAlertPercentage: (100 * otherAlerts) / totalAlerts,
-    highConfidenceAlertCount: highConfidenceAlerts,
-    highConfidenceAlertPercentage: (100 * highConfidenceAlerts) / totalAlerts,
+    highAlertCount: highAlerts,
+    highestAlertCount: highestAlerts,
+    lowAlertCount: lowAlerts,
+    highAlertPercentage: (100 * highAlerts) / totalAlerts,
+    highestAlertPercentage: (100 * highestAlerts) / totalAlerts,
+    lowAlertPercentage: (100 * lowAlerts) / totalAlerts,
   };
 });
 
@@ -40,33 +48,48 @@ export const parseConfig = createSelector(
     if (isEmpty(data)) return null;
 
     const {
-      otherAlertCount,
-      otherAlertPercentage,
-      highConfidenceAlertCount,
-      highConfidenceAlertPercentage,
+      highAlertCount,
+      highestAlertCount,
+      lowAlertCount,
+      highAlertPercentage,
+      highestAlertPercentage,
+      lowAlertPercentage,
     } = data;
-    const alertsLabel = indicator
-      ? `Other alerts in ${indicator.label}`
-      : 'Other alerts';
-    const highConfidenceAlertsLabel = indicator
-      ? `High confidence alerts in ${indicator.label}`
-      : 'High confidence alerts';
+    const lowAlertsLabel = indicator
+      ? `Detection from one alert system in ${indicator.label}`
+      : 'Detection from one alert system';
 
-    const highConfidenceColour = colors.main;
-    const otherColour = colors.gladOther; // hslShift(mainColour)
+    const highAlertsLabel = indicator
+      ? `Detection from one alert system (High-confidence) in ${indicator.label}`
+      : 'Detection from one alert system (High-confidence)';
+
+    const highestAlertsLabel = indicator
+      ? `Detection from multiple alert systems in ${indicator.label}`
+      : 'Detection from multiple alert systems';
+
+    const highColour = colors.integratedHigh;
+    const highestColour = colors.integratedHighest;
+    const lowColour = colors.integratedLow;
     const parsedData = [
       {
-        label: highConfidenceAlertsLabel,
-        value: highConfidenceAlertCount,
-        color: highConfidenceColour,
-        percentage: highConfidenceAlertPercentage,
+        label: highestAlertsLabel,
+        value: highestAlertCount,
+        color: highestColour,
+        percentage: highestAlertPercentage,
         unit: 'counts',
       },
       {
-        label: alertsLabel,
-        value: otherAlertCount,
-        color: otherColour,
-        percentage: otherAlertPercentage,
+        label: highAlertsLabel,
+        value: highAlertCount,
+        color: highColour,
+        percentage: highAlertPercentage,
+        unit: 'counts',
+      },
+      {
+        label: lowAlertsLabel,
+        value: lowAlertCount,
+        color: lowColour,
+        percentage: lowAlertPercentage,
         unit: 'counts',
       },
     ];
