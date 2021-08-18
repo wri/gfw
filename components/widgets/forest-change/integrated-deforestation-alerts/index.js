@@ -114,11 +114,11 @@ export default {
         endDate: '2021-01-10',
         // once fetch resolves... then do the following. Usually, some basic parsing
       }).then((alerts) => {
-        const gladsData = alerts && alerts.data.data;
+        const integratedAlertsData = alerts && alerts.data.data;
         let data = {};
-        if (gladsData && GLAD) {
+        if (integratedAlertsData && GLAD) {
           data = {
-            alerts: gladsData,
+            alerts: integratedAlertsData,
             settings: {
               startDate,
               endDate,
