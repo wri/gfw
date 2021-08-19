@@ -81,15 +81,14 @@ class TimelineContainer extends PureComponent {
       startDateAbsolute,
       endDateAbsolute,
       startDate,
-      dateRange,
+      // dateRange,
     } = this.props;
     if (latestUrl) {
       const latest = await getLatestDate(latestUrl);
       const calcMin = new Date(
-        moment(new Date(latest))
-          .add(-Math.abs(parseInt(dateRange.default, 10)), dateRange.interval)
-          .format('YYYY-MM-DD')
+        moment(new Date(latest)).subtract(2, 'years').format('YYYY-MM-DD')
       );
+      // .add(-Math.abs(parseInt(dateRange.default, 10)), dateRange.interval).format('YYYY-MM-DD')
 
       this.setState({
         from: {
@@ -160,7 +159,7 @@ TimelineContainer.propTypes = {
   endDateAbsolute: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  dateRange: PropTypes.string,
+  // dateRange: PropTypes.string,
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);
