@@ -8139,10 +8139,10 @@ gettext-parser@^1.3.1:
     encoding "^0.1.12"
     safe-buffer "^5.1.1"
 
-gfw-components@^1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.7.4.tgz#878ccc442a650ae8e42e3024164c2340888db202"
-  integrity sha512-1ytu8pD8qnJfcjYuTPu7aNl10uKl3hq7VqDG9tx7YPi1h2zDa9XxgltOjHP2ODfV8U0E5NE1We1ytGmHLRmXnw==
+gfw-components@^1.7.6:
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.7.6.tgz#3089eca1dab24352dfffbd43d289d07c220bb286"
+  integrity sha512-rNHEqxMx8SUo5CnOYNvTCwaVnkyrTjYM2IDCruReaQlZThd3lkkfALceuJ0W5d51/ez58vZUnJaDEC8kiZad7Q==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
