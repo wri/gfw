@@ -57,7 +57,7 @@ export const getLinks = createSelector(
       });
     }
 
-    if (!widgetCats) {
+    if (!widgetCats || widgetCats?.length === 0) {
       return CATEGORIES.map((category) => ({
         label: category.label,
         category: category.value,

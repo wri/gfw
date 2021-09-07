@@ -239,6 +239,15 @@ export const getServerSideProps = async ({ params, query, req }) => {
   }
 };
 
+function getCanonical(props, query) {
+  const category = isServer ? props.category : query.category;
+  const shouldShowCat = category !== 'summary';
+  const path = `https://www.globalforestwatch.org${
+    isServer ? props?.basePath : window.location.pathname.slice(0, -1)
+  }`;
+  return `${path}${shouldShowCat ? `?category=${category}` : ''}`;
+}
+
 const DashboardsPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
@@ -312,16 +321,7 @@ const DashboardsPage = (props) => {
   return (
     <PageLayout {...props}>
       <Head>
-        <link
-          rel="canonical"
-          href={`https://www.globalforestwatch.org${
-            isServer ? props?.basePath : window.location.pathname.slice(0, -1)
-          }${
-            props.category
-              ? `?category=${isServer ? props?.category : query.category}`
-              : ''
-          }`}
-        />
+        <link rel="canonical" href={getCanonical(props, query)} />
       </Head>
       <DashboardsUrlProvider />
       <Dashboards
