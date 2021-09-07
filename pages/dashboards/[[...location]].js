@@ -52,6 +52,8 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
+const isServer = typeof window === 'undefined';
+
 // @todo : check AOI area label
 function getLabel(location, countryData) {
   let country;
@@ -312,8 +314,12 @@ const DashboardsPage = (props) => {
       <Head>
         <link
           rel="canonical"
-          href={`https://www.globalforestwatch.org${props?.basePath || ''}${
-            props.category ? `?category=${props?.category}` : ''
+          href={`https://www.globalforestwatch.org${
+            isServer ? props?.basePath : window.location.pathname.slice(0, -1)
+          }${
+            props.category
+              ? `?category=${isServer ? props?.category : query.category}`
+              : ''
           }`}
         />
       </Head>
