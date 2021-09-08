@@ -9,6 +9,8 @@ import isEqual from 'lodash/isEqual';
 import TimelineComponent from './component';
 import { getMarks } from './selectors';
 
+// @todo keeping this here for now as this is just a proof of concept
+// If we decide this should go ahead in the future for more layers, lets make a service that deals with it
 const getLatestDate = (url) => {
   return fetch(url)
     .then((response) => response.json())
@@ -71,57 +73,81 @@ class TimelineContainer extends PureComponent {
     }
   }
 
-  async handleTimelineDates() {
+  getSelectedStartDateFromLatest(dynamicMin) {
+    const { startDate, startDateAbsolute } = this.props;
+
+    if (moment(startDateAbsolute).isAfter(startDate)) {
+      // We still allow dynamic start date, as its still in the limit of latest
+      if (moment(startDate).isAfter(dynamicMin)) {
+        return new Date(startDate);
+      }
+      // Fallback to absolute start date
+      return new Date(dynamicMin);
+    }
+
+    return new Date(startDate);
+  }
+
+  async handleLatestUrlDates() {
+    const { latestUrl, trimEndDate } = this.props;
+    const latest = await getLatestDate(latestUrl);
+
+    // Max min date, we subtract two years from it
+    // @todo add this to the widget config to allow a larger dynamic date range
+    const calcMin = new Date(
+      moment(new Date(latest)).subtract(2, 'years').format('YYYY-MM-DD')
+    );
+
+    this.setState({
+      from: {
+        min: calcMin,
+        max: new Date(latest),
+        selected: this.getSelectedStartDateFromLatest(calcMin),
+      },
+      to: {
+        min: calcMin,
+        max: new Date(latest),
+        selected: new Date(
+          moment(trimEndDate).isAfter(latest) ? latest : trimEndDate
+        ),
+      },
+      dynamic: true,
+    });
+  }
+
+  handleWidgetConfigDates() {
     const {
-      latestUrl,
       minDate,
+      startDate,
       maxDate,
-      maxRange,
-      trimEndDate,
       startDateAbsolute,
       endDateAbsolute,
-      startDate,
-      // dateRange,
+      maxRange,
+      trimEndDate,
     } = this.props;
-    if (latestUrl) {
-      const latest = await getLatestDate(latestUrl);
-      const calcMin = new Date(
-        moment(new Date(latest)).subtract(2, 'years').format('YYYY-MM-DD')
-      );
-      // .add(-Math.abs(parseInt(dateRange.default, 10)), dateRange.interval).format('YYYY-MM-DD')
 
-      this.setState({
-        from: {
-          min: calcMin,
-          max: new Date(latest),
-          selected: new Date(
-            moment(startDateAbsolute).isBefore(calcMin)
-              ? calcMin
-              : startDateAbsolute
-          ),
-        },
-        to: {
-          min: calcMin,
-          max: new Date(latest),
-          selected: new Date(
-            moment(trimEndDate).isAfter(latest) ? latest : trimEndDate
-          ),
-        },
-        dynamic: true,
-      });
+    this.setState({
+      from: {
+        min: new Date(minDate),
+        max: new Date(maxRange ? maxDate : trimEndDate),
+        selected: new Date(maxRange ? startDateAbsolute : startDate),
+      },
+      to: {
+        min: new Date(maxRange ? minDate : startDate),
+        max: new Date(maxDate),
+        selected: new Date(maxRange ? endDateAbsolute : trimEndDate),
+      },
+    });
+  }
+
+  async handleTimelineDates() {
+    const { latestUrl } = this.props;
+    if (latestUrl) {
+      // Dynamic fetch based on URL within layer config
+      await this.handleLatestUrlDates();
     } else {
-      this.setState({
-        from: {
-          min: new Date(minDate),
-          max: new Date(maxRange ? maxDate : trimEndDate),
-          selected: new Date(maxRange ? startDateAbsolute : startDate),
-        },
-        to: {
-          min: new Date(maxRange ? minDate : startDate),
-          max: new Date(maxDate),
-          selected: new Date(maxRange ? endDateAbsolute : trimEndDate),
-        },
-      });
+      // dates based on timeline conf within layer config
+      this.handleWidgetConfigDates();
     }
   }
 
