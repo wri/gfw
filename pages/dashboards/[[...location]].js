@@ -52,6 +52,8 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
+const isServer = typeof window === 'undefined';
+
 // @todo : check AOI area label
 function getLabel(location, countryData) {
   let country;
@@ -237,6 +239,15 @@ export const getServerSideProps = async ({ params, query, req }) => {
   }
 };
 
+function getCanonical(props, query) {
+  const category = isServer ? props.category : query.category;
+  const shouldShowCat = category !== 'summary';
+  const path = `https://www.globalforestwatch.org${
+    isServer ? props?.basePath : window.location.pathname.slice(0, -1)
+  }`;
+  return `${path}${shouldShowCat ? `?category=${category}` : ''}`;
+}
+
 const DashboardsPage = (props) => {
   const dispatch = useDispatch();
   const [ready, setReady] = useState(false);
@@ -310,12 +321,7 @@ const DashboardsPage = (props) => {
   return (
     <PageLayout {...props}>
       <Head>
-        <link
-          rel="canonical"
-          href={`https://www.globalforestwatch.org${props?.basePath || ''}${
-            props.category ? `?category=${props?.category}` : ''
-          }`}
-        />
+        <link rel="canonical" href={getCanonical(props, query)} />
       </Head>
       <DashboardsUrlProvider />
       <Dashboards
