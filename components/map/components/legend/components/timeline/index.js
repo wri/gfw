@@ -1,4 +1,4 @@
-import { createElement, PureComponent } from 'react';
+import { createElement, PureComponent, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { trackEvent } from 'utils/analytics';
@@ -50,6 +50,11 @@ class TimelineContainer extends PureComponent {
     dynamic: false,
   };
 
+  constructor(props) {
+    super(props);
+    this.initialStartDate = createRef();
+  }
+
   componentDidMount() {
     this.handleTimelineDates();
   }
@@ -74,7 +79,17 @@ class TimelineContainer extends PureComponent {
   }
 
   getSelectedStartDateFromLatest(dynamicMin, latest) {
-    const { startDate } = this.props;
+    const { startDate, dateRange: configuredRange } = this.props;
+
+    if (this.initialStartDate.current === null) {
+      const defaultSelected = new Date(
+        moment(new Date(latest))
+          .subtract(configuredRange.default, configuredRange.interval)
+          .format('YYYY-MM-DD')
+      );
+      this.initialStartDate.current = defaultSelected;
+      return defaultSelected;
+    }
 
     if (
       moment(startDate).isAfter(latest) ||
@@ -87,13 +102,15 @@ class TimelineContainer extends PureComponent {
   }
 
   async handleLatestUrlDates() {
-    const { latestUrl, trimEndDate } = this.props;
+    const { latestUrl, trimEndDate, dateRange: configuredRange } = this.props;
     const latest = await getLatestDate(latestUrl);
 
     // Max min date, we subtract two years from it
     // @todo add this to the widget config to allow a larger dynamic date range
     const calcMin = new Date(
-      moment(new Date(latest)).subtract(2, 'years').format('YYYY-MM-DD')
+      moment(new Date(latest))
+        .subtract(configuredRange.max, configuredRange.interval)
+        .format('YYYY-MM-DD')
     );
 
     this.setState({
@@ -183,7 +200,11 @@ TimelineContainer.propTypes = {
   endDateAbsolute: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  // dateRange: PropTypes.string,
+  dateRange: PropTypes.shape({
+    default: PropTypes.number,
+    max: PropTypes.number,
+    interval: PropTypes.string,
+  }),
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);
