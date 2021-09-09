@@ -73,15 +73,13 @@ class TimelineContainer extends PureComponent {
     }
   }
 
-  getSelectedStartDateFromLatest(dynamicMin) {
-    const { startDate, startDateAbsolute } = this.props;
+  getSelectedStartDateFromLatest(dynamicMin, latest) {
+    const { startDate } = this.props;
 
-    if (moment(startDateAbsolute).isAfter(startDate)) {
-      // We still allow dynamic start date, as its still in the limit of latest
-      if (moment(startDate).isAfter(dynamicMin)) {
-        return new Date(startDate);
-      }
-      // Fallback to absolute start date
+    if (
+      moment(startDate).isAfter(latest) ||
+      moment(startDate).isBefore(dynamicMin)
+    ) {
       return new Date(dynamicMin);
     }
 
@@ -102,7 +100,7 @@ class TimelineContainer extends PureComponent {
       from: {
         min: calcMin,
         max: new Date(latest),
-        selected: this.getSelectedStartDateFromLatest(calcMin),
+        selected: this.getSelectedStartDateFromLatest(calcMin, latest),
       },
       to: {
         min: calcMin,
