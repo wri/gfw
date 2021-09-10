@@ -1131,7 +1131,7 @@ export const fetchIntegratedAlerts = (params) => {
     dataset: 'integrated_alerts',
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
-    version: 'v20210813',
+    version: 'v20210907',
     // Refernces the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsDaily}`;
 
