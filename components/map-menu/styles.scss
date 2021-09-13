@@ -27,6 +27,7 @@
 
   .menu-panel {
     padding-bottom: rem(50px);
+    padding-top: rem(40px);
     z-index: 3;
 
     @media screen and (min-width: $screen-m) {
