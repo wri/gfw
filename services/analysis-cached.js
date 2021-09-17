@@ -176,7 +176,11 @@ const getRequestUrl = ({
   if (type === 'country') {
     if (!adm1) typeByLevel = 'adm0';
     if (adm1) typeByLevel = 'adm1';
-    if (adm2 || (datasetType === 'daily' && dataset !== 'integrated_alerts'))
+    if (
+      adm2 ||
+      (datasetType === 'daily' &&
+        !['integrated_alerts', 'glad_alerts'].includes(dataset))
+    )
       typeByLevel = 'adm2';
   }
 
@@ -187,6 +191,7 @@ const getRequestUrl = ({
   } catch (_) {
     //
   }
+
   datasetId =
     DATASETS[
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
@@ -1124,7 +1129,6 @@ export const fetchIntegratedAlerts = (params) => {
   // Params
   const { startDate, endDate, download, deforestationAlertsDataset } =
     params || {};
-  console.log('deforestationAlertsDataset', deforestationAlertsDataset);
   // Construct base url for fetch
   const baseUrl = `${getRequestUrl({
     ...params,
@@ -1149,6 +1153,60 @@ export const fetchIntegratedAlerts = (params) => {
   const dateString = datasetMapping[deforestationAlertsDataset].concat(
     '__date'
   );
+  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
+    '__confidence'
+  );
+
+  // Replace base url params and encode
+  const url = encodeURI(
+    baseUrl
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{dateString}/g, dateString)
+      .replace(/{confidenceString}/g, confidenceString)
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  // Light initial Parsing
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confidence: d[confidenceString],
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
+
+export const fetchGladAlertsDaily = (params) => {
+  // Params
+  const { startDate, endDate, download, deforestationAlertsDataset } =
+    params || {};
+  // Construct base url for fetch
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'glad_alerts',
+    datasetType: 'daily',
+    // version override necessary here (no 'latest' defined)
+    version: 'v20210907',
+    // Refernces the base SQL from the SQL_QUERIES object
+  })}${SQL_QUERIES.integratedAlertsDaily}`;
+
+  if (download) {
+    // No download yet
+  }
+
+  const datasetMapping = {
+    glad_l: 'umd_glad_landsat_alerts',
+  };
+
+  const dateString = `alert`.concat('__date');
   const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
     '__confidence'
   );

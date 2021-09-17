@@ -13,7 +13,10 @@ import {
 import { isMapPage } from 'utils/location';
 
 // imported functions for retreiving glad alerts from tables
-import { fetchIntegratedAlerts } from 'services/analysis-cached';
+import {
+  fetchIntegratedAlerts,
+  fetchGladAlertsDaily,
+} from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -41,7 +44,7 @@ export default {
   dataType: 'glad',
   categories: ['summary', 'forest-change'],
   types: ['country'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
-  admins: ['adm0'], // Only available for BRA, COD isos (no  'adm1', 'adm2')
+  admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -119,34 +122,62 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+    const alertSystem = params?.deforestationAlertsDataset;
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
       // function reference to parse fetch
-      return fetchIntegratedAlerts({
-        // widget settings passed to the fetch function from the config above as well as the state
-        ...params,
-        startDate: '2021-01-01',
-        endDate: '2021-01-10',
-        // once fetch resolves... then do the following. Usually, some basic parsing
-      }).then((alerts) => {
-        const integratedAlertsData = alerts && alerts.data.data;
-        let data = {};
-        if (integratedAlertsData && GLAD) {
-          data = {
-            alerts: integratedAlertsData,
-            settings: {
-              startDate,
-              endDate,
-            },
-            options: {
-              minDate: '2015-01-01',
-              maxDate: defaultEndDate,
-            },
-          };
-        }
-        return data;
-      });
+      if (alertSystem === 'glad_l') {
+        return fetchGladAlertsDaily({
+          // widget settings passed to the fetch function from the config above as well as the state
+          ...params,
+          startDate: '2021-01-01',
+          endDate: '2021-01-10',
+          // once fetch resolves... then do the following. Usually, some basic parsing
+        }).then((alerts) => {
+          const integratedAlertsData = alerts && alerts.data.data;
+          let data = {};
+          if (integratedAlertsData && GLAD) {
+            data = {
+              alerts: integratedAlertsData,
+              settings: {
+                startDate,
+                endDate,
+              },
+              options: {
+                minDate: '2015-01-01',
+                maxDate: defaultEndDate,
+              },
+            };
+          }
+          return data;
+        });
+      } 
+        return fetchIntegratedAlerts({
+          // widget settings passed to the fetch function from the config above as well as the state
+          ...params,
+          startDate: '2021-01-01',
+          endDate: '2021-01-10',
+          // once fetch resolves... then do the following. Usually, some basic parsing
+        }).then((alerts) => {
+          const integratedAlertsData = alerts && alerts.data.data;
+          let data = {};
+          if (integratedAlertsData && GLAD) {
+            data = {
+              alerts: integratedAlertsData,
+              settings: {
+                startDate,
+                endDate,
+              },
+              options: {
+                minDate: '2015-01-01',
+                maxDate: defaultEndDate,
+              },
+            };
+          }
+          return data;
+        });
+      
     }
     return null;
     // // No OTF yet
