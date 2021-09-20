@@ -19,6 +19,7 @@ import {
 } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
+import { handleGladMeta } from 'utils/gfw-meta';
 
 import getWidgetProps from './selectors';
 
@@ -97,12 +98,13 @@ export default {
   settings: {
     dataset: 'glad',
   },
-  getData: (params) => {
-    const { GLAD } = params.GFW_META.datasets;
+  getData: async (params) => {
+    const GLAD = await handleGladMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+
     if (shouldQueryPrecomputedTables(params)) {
       return fetchGladAlertsSum({
         ...params,
@@ -174,8 +176,8 @@ export default {
     key: 'alerts',
     subKey: 'alert__count',
   },
-  getDataURL: (params) => {
-    const { GLAD } = params.GFW_META.datasets;
+  getDataURL: async (params) => {
+    const GLAD = await handleGladMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;

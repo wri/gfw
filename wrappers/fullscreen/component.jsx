@@ -42,7 +42,7 @@ const FullScreenWrapper = ({
         metaTags={metaTags}
       />
       <div className="l-fullscreen-page">
-        <Header fullScreen />
+        <Header slim />
         <div className={cx('content-wrapper', { '-error': error })}>
           {isFallback && <Loader />}
           {!isFallback && error && (

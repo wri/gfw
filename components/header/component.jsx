@@ -9,12 +9,13 @@ import config from './config';
 
 import './styles.scss';
 
-const Header = ({ setModalContactUsOpen, fullScreen }) => {
+const Header = ({ setModalContactUsOpen, fullScreen, slim }) => {
   const { push, pushQuery, asPath, query } = useRouter();
 
   return (
     <HeaderComponent
       className="c-header"
+      slim={slim}
       navMain={config.navMain}
       NavLinkComponent={({ children: headerChildren, className, ...props }) =>
         props.href ? (
@@ -39,6 +40,7 @@ Header.propTypes = {
   setSearchQuery: PropTypes.func,
   fullScreen: PropTypes.bool,
   href: PropTypes.string,
+  slim: PropTypes.bool,
 };
 
 export default Header;
