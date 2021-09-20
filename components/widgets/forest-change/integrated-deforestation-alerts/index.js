@@ -10,6 +10,8 @@ import {
   // GLAD_ALERTS,
 } from 'data/layers';
 
+import { handleGladMeta } from 'utils/gfw-meta';
+
 import { gte, lte, eq } from 'utils/sql';
 import OTF from 'services/otfv2';
 
@@ -118,7 +120,7 @@ export default {
   },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
-    const { GLAD } = params.GFW_META.datasets;
+    const GLAD = await handleGladMeta(params);
 
     // extract relevant metadata
     const defaultStartDate = GLAD?.defaultStartDate;
