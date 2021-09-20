@@ -10,6 +10,9 @@ import {
   // GLAD_ALERTS,
 } from 'data/layers';
 
+import { gte, lte, eq } from 'utils/sql';
+import OTF from 'services/otfv2';
+
 import { isMapPage } from 'utils/location';
 
 // imported functions for retreiving glad alerts from tables
@@ -113,7 +116,7 @@ export default {
   settings: {
     deforestationAlertsDataset: 'all',
   },
-  getData: (params) => {
+  getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
     const { GLAD } = params.GFW_META.datasets;
 
@@ -152,76 +155,68 @@ export default {
           }
           return data;
         });
-      } 
-        return fetchIntegratedAlerts({
-          // widget settings passed to the fetch function from the config above as well as the state
-          ...params,
-          startDate: '2021-01-01',
-          endDate: '2021-01-10',
-          // once fetch resolves... then do the following. Usually, some basic parsing
-        }).then((alerts) => {
-          const integratedAlertsData = alerts && alerts.data.data;
-          let data = {};
-          if (integratedAlertsData && GLAD) {
-            data = {
-              alerts: integratedAlertsData,
-              settings: {
-                startDate,
-                endDate,
-              },
-              options: {
-                minDate: '2015-01-01',
-                maxDate: defaultEndDate,
-              },
-            };
-          }
-          return data;
-        });
-      
+      }
+      return fetchIntegratedAlerts({
+        // widget settings passed to the fetch function from the config above as well as the state
+        ...params,
+        startDate: '2021-01-01',
+        endDate: '2021-01-10',
+        // once fetch resolves... then do the following. Usually, some basic parsing
+      }).then((alerts) => {
+        const integratedAlertsData = alerts && alerts.data.data;
+        let data = {};
+        if (integratedAlertsData && GLAD) {
+          data = {
+            alerts: integratedAlertsData,
+            settings: {
+              startDate,
+              endDate,
+            },
+            options: {
+              minDate: '2015-01-01',
+              maxDate: defaultEndDate,
+            },
+          };
+        }
+        return data;
+      });
     }
-    return null;
-    // // No OTF yet
-    // const geostoreId = params?.geostore?.hash;
-    // return fetchGladAlertsSumOTF({
-    //   ...params,
-    //   startDate,
-    //   endDate,
-    //   geostoreId,
-    //   staticStatement: {
-    //     // overrides tables and/or sql
-    //     table: 'umd_glad_landsat_alerts',
-    //   },
-    // }).then((alerts) => {
-    //   const gladsData = alerts && alerts.data.data;
-    //   let data = {};
-    //   if (gladsData && GLAD) {
-    //     data = {
-    //       alerts: [
-    //         {
-    //           alerts: gladsData
-    //             ? gladsData.filter((d) => d.confirmed === false).length
-    //             : 0,
-    //           confirmed: false,
-    //         },
-    //         {
-    //           alerts: gladsData
-    //             ? gladsData.filter((d) => d.confirmed === true).length
-    //             : 0,
-    //           confirmed: true,
-    //         },
-    //       ],
-    //       settings: {
-    //         startDate,
-    //         endDate,
-    //       },
-    //       options: {
-    //         minDate: '2015-01-01',
-    //         maxDate: defaultEndDate,
-    //       },
-    //     };
-    //   }
-    //   return data;
-    // });
+
+    const geostoreId = params?.geostore?.hash;
+
+    // OTF analysis
+    const OtfAnalysis = new OTF('/dataset/gfw_integrated_alerts/latest/query');
+
+    OtfAnalysis.select('count(*)');
+
+    OtfAnalysis.where([
+      { gfw_integrated_alerts__date: gte`${startDate}` },
+      { gfw_integrated_alerts__date: lte`${endDate}` },
+    ]);
+
+    OtfAnalysis.groupBy([
+      'gfw_integrated_alerts__confidence',
+      { geostore_origin: eq`rw` },
+      { geostore_id: eq`${geostoreId}` },
+    ]);
+
+    const otfData = await OtfAnalysis.fetch();
+
+    // return OtfAnalysis.fetch();
+    return {
+      alerts: {
+        // otfdata response here
+        count: otfData?.count || 0,
+      },
+      settings: {
+        startDate,
+        endDate,
+      },
+      options: {
+        minDate: '2015-01-01',
+        maxDate: defaultEndDate,
+      },
+    };
   },
   maxDownloadSize: {
     maxSize: 1e5,
