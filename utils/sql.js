@@ -5,6 +5,16 @@ const TOKENS = {
   neq: '!=',
 };
 
+function serializeValue(value) {
+  if (value.match(/\d{4}-\d{2}-\d{2}/)) {
+    return `'${value}'`;
+  }
+  if (isNaN(value)) {
+    return `'${value}'`;
+  }
+  return value;
+}
+
 function parseToken(strings, values, token) {
   let str = '';
   strings.forEach((string, i) => {
@@ -14,7 +24,7 @@ function parseToken(strings, values, token) {
       str += string;
     }
   });
-  return `${TOKENS[token]} ${str}`;
+  return `${TOKENS[token]} ${serializeValue(str)}`;
 }
 
 export function gte(strings, ...values) {

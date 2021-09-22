@@ -7,10 +7,13 @@ class OTF {
         ? GFW_STAGING_DATA_API
         : GFW_DATA_API;
     this.url = `${this.endpoint}${url}`;
-
+    this.table = 'data';
     this.selectStmt = null;
     this.whereStmt = null;
     this.groupByStmt = null;
+
+    this.geostoreId = null;
+    this.geostoreOrigin = 'rw';
 
     this.limitStmt = null;
     this.offsetStmt = null;
@@ -18,6 +21,10 @@ class OTF {
 
   select(statement) {
     this.selectStmt = statement;
+  }
+
+  setTable(table) {
+    this.table = table;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -34,6 +41,11 @@ class OTF {
     });
 
     return statementStr;
+  }
+
+  geostore({ id, origin = 'rw' }) {
+    this.geostoreId = id;
+    this.origin = origin;
   }
 
   where(statement) {
@@ -56,6 +68,7 @@ class OTF {
     let query = '';
 
     query += `SELECT ${this.selectStmt} `;
+    query += `FROM ${this.table} `;
     query += `WHERE ${this.whereStmt} `;
 
     if (this.groupByStmt) {
@@ -75,9 +88,15 @@ class OTF {
 
   async fetch() {
     const sql = this.build();
-    const request = await fetch(`${this.url}?sql=${sql}`);
-    const response = await request.json();
-    return response;
+    try {
+      const request = await fetch(
+        `${this.url}?sql=${sql}&geostore_id=${this.geostoreId}&geostore_origin=${this.geostoreOrigin}`
+      );
+      const response = await request.json();
+      return response;
+    } catch (e) {
+      return null;
+    }
   }
 }
 

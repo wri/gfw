@@ -12,7 +12,7 @@ import {
 
 import { handleGladMeta } from 'utils/gfw-meta';
 
-import { gte, lte, eq } from 'utils/sql';
+import { gte, lte } from 'utils/sql';
 import OTF from 'services/otfv2';
 
 import { isMapPage } from 'utils/location';
@@ -196,19 +196,21 @@ export default {
       { gfw_integrated_alerts__date: lte`${endDate}` },
     ]);
 
-    OtfAnalysis.groupBy([
-      'gfw_integrated_alerts__confidence',
-      { geostore_origin: eq`rw` },
-      { geostore_id: eq`${geostoreId}` },
-    ]);
+    OtfAnalysis.groupBy(['gfw_integrated_alerts__confidence']);
+
+    OtfAnalysis.geostore({
+      id: geostoreId,
+      origin: 'rw',
+    });
 
     const otfData = await OtfAnalysis.fetch();
+    const [high, highest, nominal] = otfData?.data || [];
 
-    // return OtfAnalysis.fetch();
     return {
       alerts: {
-        // otfdata response here
-        count: otfData?.count || 0,
+        highCount: high?.count || 0,
+        highestCount: highest?.count || 0,
+        nominalCount: nominal?.count || 0,
       },
       settings: {
         startDate,
