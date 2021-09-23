@@ -59,16 +59,16 @@ export const parseConfig = createSelector(
       lowAlertPercentage,
     } = data;
     const lowAlertsLabel = indicator
-      ? `Detection from one alert system in ${indicator.label}`
-      : 'Detection from one alert system';
+      ? `Detection by a single alert system in ${indicator.label}`
+      : 'Detection by a single alert system';
 
     const highAlertsLabel = indicator
-      ? `Detection from one alert system (with high-confidence) in ${indicator.label}`
-      : 'Detection from one alert system (with high-confidence)';
+      ? `High confidence detection by a single alert system in ${indicator.label}`
+      : 'High confidence detection by a single alert system';
 
     const highestAlertsLabel = indicator
-      ? `Detection from multiple alert systems in ${indicator.label}`
-      : 'Detection from multiple alert systems';
+      ? `Highest confidence detection by multiple alert systems in ${indicator.label}`
+      : 'Highest confidence detection by multiple alert systems';
 
     const highColour = colors.integratedHigh;
     const highestColour = colors.integratedHighest;
@@ -147,14 +147,30 @@ export const parseSentence = createSelector(
       location,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
-      ...(systemSlug === 'all' && {
+      ...((systemSlug === 'glad_l' && {
         component: {
-          key: 'individual alerts',
+          key: 'high confidence alerts',
           fine: true,
           tooltip:
-            'An individual alert may include one or more detections made by any of the the GLAD-Landsat, GLAD-S2, or RADD alert systems. While each individual system may have high or low confidence in a detection, agreement between systems is considered to represent overall confidence.',
+            'Alerts are classified as high confidence when a second satelite pass has also identified the pixel as an alert. Most of the alerts that remain unclassified have not had another satelite pass, due to the 8-day revisit time or cloud cover.',
         },
-      }),
+      }) ||
+        (systemSlug === 'glad_s2' && {
+          component: {
+            key: 'high confidence alerts',
+            fine: true,
+            tooltip:
+              'Alerts are classified as high confidence when at least two or four subsequent observations are labeled as forest loss.',
+          },
+        }) ||
+        (systemSlug === 'radd' && {
+          component: {
+            key: 'high confidence alerts',
+            fine: true,
+            tooltip:
+              'Alerts are marked as high confidence when they reach a probability threshold of 97.5% across multiple images in a 90-day window.',
+          },
+        })),
     };
     const { initial, withInd, singleSystem, singleSystemWithInd } = sentences;
     let sentence = indicator ? withInd : initial;

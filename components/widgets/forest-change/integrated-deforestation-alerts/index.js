@@ -32,13 +32,13 @@ export default {
   title: 'Integrated Deforestation alerts in {location}',
   sentence: {
     initial:
-      'There were {total} {individual alerts} reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     withInd:
-      'There were {total} {individual alerts} reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+      'There were {total} deforestation alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     singleSystem:
-      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts.',
+      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate} of which {highConfPerc} were {high confidence alerts}.',
     singleSystemWithInd:
-      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts.',
+      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were {high confidence alerts}.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
@@ -46,7 +46,7 @@ export default {
   colors: 'loss',
   chartType: 'pieChart',
   source: 'gadm',
-  dataType: 'glad',
+  dataType: 'integration_alerts',
   categories: ['summary', 'forest-change'],
   types: ['country'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
   admins: ['adm0', 'adm1', 'adm2'],
@@ -136,8 +136,8 @@ export default {
         return fetchGladAlertsDaily({
           // widget settings passed to the fetch function from the config above as well as the state
           ...params,
-          startDate: '2021-01-01',
-          endDate: '2021-01-10',
+          startDate,
+          endDate,
           // once fetch resolves... then do the following. Usually, some basic parsing
         }).then((alerts) => {
           const integratedAlertsData = alerts && alerts.data.data;
@@ -161,8 +161,8 @@ export default {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
-        startDate: '2021-01-01',
-        endDate: '2021-01-10',
+        startDate,
+        endDate,
         // once fetch resolves... then do the following. Usually, some basic parsing
       }).then((alerts) => {
         const integratedAlertsData = alerts && alerts.data.data;
