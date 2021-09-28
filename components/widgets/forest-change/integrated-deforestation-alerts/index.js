@@ -227,6 +227,7 @@ export default {
   //   key: 'alerts',
   //   subKey: 'alert__count',
   // },
+  // Downloads
   getDataURL: (params) => {
     const { GLAD } = params.GFW_META.datasets;
     const defaultStartDate = GLAD?.defaultStartDate;

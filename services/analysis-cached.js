@@ -40,6 +40,7 @@ const SQL_QUERIES = {
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
+  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}'`,
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1127,10 +1128,16 @@ export const fetchGladAlerts = (params) => {
 
 export const fetchIntegratedAlerts = (params) => {
   // Params
-  const { startDate, endDate, download, deforestationAlertsDataset } =
-    params || {};
+  const {
+    startDate,
+    endDate,
+    download,
+    deforestationAlertsDataset,
+    geostoreId,
+  } = params || {};
+
   // Construct base url for fetch
-  const baseUrl = `${getRequestUrl({
+  let baseUrl = `${getRequestUrl({
     ...params,
     dataset: 'integrated_alerts',
     datasetType: 'daily',
@@ -1140,7 +1147,17 @@ export const fetchIntegratedAlerts = (params) => {
   })}${SQL_QUERIES.integratedAlertsDaily}`;
 
   if (download) {
-    // No download yet
+    baseUrl = `${getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'v20210907',
+      // Refernces the base SQL from the SQL_QUERIES object
+    })}${SQL_QUERIES.integratedAlertsDailyDownload}`;
+
+    // Replace original url with its download representation
+    baseUrl = getDownloadUrl(baseUrl);
   }
 
   const datasetMapping = {
@@ -1158,7 +1175,7 @@ export const fetchIntegratedAlerts = (params) => {
   );
 
   // Replace base url params and encode
-  const url = encodeURI(
+  let url = encodeURI(
     baseUrl
       .replace(
         /{select_location}/g,
@@ -1171,6 +1188,11 @@ export const fetchIntegratedAlerts = (params) => {
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
+
+  // For download, we need geostore params in our URL
+  if (download) {
+    url = `${url}&geostore_origin=rw&geostore_id=${geostoreId}`;
+  }
 
   // Light initial Parsing
   return apiRequest.get(url).then((response) => ({
