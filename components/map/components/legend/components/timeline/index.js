@@ -168,7 +168,6 @@ class TimelineContainer extends PureComponent {
 
   handleOnDateChange = (date, position, absolute) => {
     const { handleChange } = this.props;
-    this.setState({ shouldSet: false });
     const newRange = dateRangeUtil(this.props, date, position, absolute);
     handleChange(newRange, this.props.activeLayer, absolute);
 
