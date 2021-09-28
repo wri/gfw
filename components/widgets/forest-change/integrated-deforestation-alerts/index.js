@@ -105,6 +105,7 @@ export default {
   ],
   settingsBtnConfig: {
     text: '+ Select an intersection',
+    theme: 'theme-button-medium theme-button-light theme-full-width',
     shouldShowButton: (props) =>
       !props.settings.forestType &&
       !props.settings.landCategory &&
