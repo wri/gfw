@@ -235,6 +235,18 @@ export default {
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const geostoreId = params?.geostore?.hash;
+    const alertSystem = params?.deforestationAlertsDataset;
+    let table = 'gfw_integrated_alerts';
+    if (alertSystem === 'glad_l') {
+      table = 'umd_glad_landsat_alerts';
+    }
+    if (alertSystem === 'glad_l') {
+      table = 'umd_glad_sentinel2_alerts';
+    }
+    if (alertSystem === 'radd') {
+      table = 'wur_radd_alerts';
+    }
+
     return [
       fetchIntegratedAlerts({
         ...params,
@@ -242,11 +254,12 @@ export default {
         endDate,
         geostoreId,
         download: true,
+        alertSystem,
         staticStatement: {
           // overrides tables and/or sql
           // append: true, If active, we will utalise the old location select logic with our statement
           // If download===true, apply to "download" endpoint
-          table: 'umd_glad_landsat_alerts',
+          table,
         },
       }),
     ];
