@@ -222,11 +222,11 @@ export default {
       },
     };
   },
-  maxDownloadSize: {
-    maxSize: 1e5,
-    key: 'alerts',
-    subKey: 'alert__count',
-  },
+  // maxDownloadSize: {
+  //   maxSize: 1e5,
+  //   key: 'alerts',
+  //   subKey: 'alert__count',
+  // },
   getDataURL: (params) => {
     const { GLAD } = params.GFW_META.datasets;
     const defaultStartDate = GLAD?.defaultStartDate;
