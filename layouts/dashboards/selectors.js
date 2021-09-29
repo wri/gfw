@@ -51,10 +51,13 @@ export const getLinks = createSelector(
     );
 
     function formatQuery(category) {
-      return encodeQueryParams({
+      const encodedQueryString = encodeQueryParams({
         ...location.query,
-        category: category.value,
+        ...(category.value !== 'summary' && {
+          category: category.value,
+        }),
       });
+      return encodedQueryString.length > 0 ? `?${encodedQueryString}` : '';
     }
 
     if (!widgetCats || widgetCats?.length === 0) {
@@ -66,22 +69,24 @@ export const getLinks = createSelector(
         as: `${location.pathname.replace(
           '[[...location]]',
           serializePayload.join('/')
-        )}?${formatQuery(category)}`,
+        )}${formatQuery(category)}`,
       }));
     }
 
     return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
-      (category) => ({
-        label: category.label,
-        category: category.value,
-        href: location.pathname,
-        shallow: true,
-        as: `${location.pathname.replace(
-          '[[...location]]',
-          serializePayload.join('/')
-        )}?${formatQuery(category)}`,
-        active: activeCategory === category.value,
-      })
+      (category) => {
+        return {
+          label: category.label,
+          category: category.value,
+          href: location.pathname,
+          shallow: true,
+          as: `${location.pathname.replace(
+            '[[...location]]',
+            serializePayload.join('/')
+          )}${formatQuery(category)}`,
+          active: activeCategory === category.value,
+        };
+      }
     );
   }
 );

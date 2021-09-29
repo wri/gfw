@@ -257,6 +257,7 @@ const DashboardsPage = (props) => {
     globalSentence,
     handleSSRLocation,
     geodescriber,
+    basePath,
     countryData,
   } = props;
 
@@ -325,6 +326,7 @@ const DashboardsPage = (props) => {
       </Head>
       <DashboardsUrlProvider />
       <Dashboards
+        basePath={basePath}
         ssrLocation={handleSSRLocation}
         globalSentence={globalSentence}
       />
