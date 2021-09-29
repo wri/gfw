@@ -2,6 +2,8 @@ import { createAction, createThunkAction } from 'redux/actions';
 
 import { getShortenUrl } from 'services/bitly';
 
+import { saveAreaOfInterest } from 'components/forms/area-of-interest/actions';
+
 export const setShareData = createAction('setShareData');
 export const setShareUrl = createAction('setShareUrl');
 export const setShareSelected = createAction('setShareSelected');
@@ -35,3 +37,7 @@ export const setShareModal = createThunkAction(
       });
   }
 );
+
+export const setShareAoi = createThunkAction('shareModalSaveAoi', (params) => (dispatch) => {
+  dispatch(saveAreaOfInterest({ ...params }))
+});

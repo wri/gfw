@@ -12,6 +12,9 @@ import Select from 'components/forms/components/select';
 import Checkbox from 'components/forms/components/checkbox';
 import Error from 'components/forms/components/error';
 import Submit from 'components/forms/components/submit';
+
+import Toggle from 'components/ui/toggle';
+
 import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
 import MapGeostore from 'components/map-geostore';
@@ -65,7 +68,16 @@ class AreaOfInterestForm extends PureComponent {
     webhookSuccess: false,
     testingWebhook: false,
     deleted: false,
+    publicArea: false
   };
+
+  componentDidMount() {
+    const { initialValues } = this.props;
+    const { publicArea } = this.state;
+    if (initialValues?.public && initialValues.public !== publicArea) {
+      this.setState({ publicArea: initialValues.public });
+    }
+  }
 
   testWebhook = (url) => {
     this.setState({
@@ -128,13 +140,14 @@ class AreaOfInterestForm extends PureComponent {
       webhookSuccess,
       testingWebhook,
       deleted,
+      publicArea
     } = this.state;
 
     return (
       <Fragment>
         <Form
           onSubmit={(values) =>
-            saveAreaOfInterest({ ...initialValues, ...values, viewAfterSave })}
+            saveAreaOfInterest({ ...initialValues, ...values, publicArea, viewAfterSave })}
           initialValues={initialValues}
           render={({
             handleSubmit,
@@ -269,6 +282,20 @@ class AreaOfInterestForm extends PureComponent {
                       placeholder="Select a language"
                       required
                     />
+                    <div className="public-area-field">
+                      <span tabIndex={0} role="button" onClick={() => this.setState({ publicArea: !publicArea })}>
+                        <Toggle
+                          theme="toggle-large"
+                          value={publicArea}
+                          onToggle={(value, event) => {
+                            event.preventDefault();
+                            this.setState({ publicArea: !publicArea })
+                          }}
+                        />
+                        Make this area public
+                      </span>
+                      <p>You need to make your area public before sharing; public areas can be viewed by anyone with the URL; private areas can only be viewed by the area's creator.</p>
+                    </div>
                     <Error
                       valid={valid}
                       submitFailed={submitFailed}

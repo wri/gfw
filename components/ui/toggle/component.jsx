@@ -15,7 +15,7 @@ class Toggle extends PureComponent {
         aria-checked={value && value.toString()}
         className={`c-toggle ${value ? '-active' : ''} ${theme || ''}`}
         style={{ backgroundColor: value && color ? color : null }}
-        onClick={() => onToggle(!value)}
+        onClick={(e) => onToggle(!value, e)}
       />
     );
   }
