@@ -68,7 +68,7 @@ class AreaOfInterestForm extends PureComponent {
     webhookSuccess: false,
     testingWebhook: false,
     deleted: false,
-    publicArea: false
+    publicArea: false,
   };
 
   componentDidMount() {
@@ -140,14 +140,19 @@ class AreaOfInterestForm extends PureComponent {
       webhookSuccess,
       testingWebhook,
       deleted,
-      publicArea
+      publicArea,
     } = this.state;
 
     return (
       <Fragment>
         <Form
           onSubmit={(values) =>
-            saveAreaOfInterest({ ...initialValues, ...values, publicArea, viewAfterSave })}
+            saveAreaOfInterest({
+              ...initialValues,
+              ...values,
+              publicArea,
+              viewAfterSave,
+            })}
           initialValues={initialValues}
           render={({
             handleSubmit,
@@ -283,18 +288,27 @@ class AreaOfInterestForm extends PureComponent {
                       required
                     />
                     <div className="public-area-field">
-                      <span tabIndex={0} role="button" onClick={() => this.setState({ publicArea: !publicArea })}>
+                      <span
+                        tabIndex={0}
+                        role="button"
+                        onClick={() =>
+                          this.setState({ publicArea: !publicArea })}
+                      >
                         <Toggle
                           theme="toggle-large"
                           value={publicArea}
                           onToggle={(value, event) => {
                             event.preventDefault();
-                            this.setState({ publicArea: !publicArea })
+                            this.setState({ publicArea: !publicArea });
                           }}
                         />
                         Make this area public
                       </span>
-                      <p>You need to make your area public before sharing; public areas can be viewed by anyone with the URL; private areas can only be viewed by the area's creator.</p>
+                      <p>
+                        You need to make your area public before sharing; public
+                        areas can be viewed by anyone with the URL; private
+                        areas can only be viewed by the area&apos;s creator.
+                      </p>
                     </div>
                     <Error
                       valid={valid}
