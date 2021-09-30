@@ -40,10 +40,10 @@ const SQL_QUERIES = {
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
-  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'`,
-  integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'`,
-  integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'`,
-  integratedAlertsDownloadRadd: `SELECT latitude, longitude, wur_radd_alerts__date, wur_radd_alerts__confidence FROM data WHERE wur_radd_alerts__date >= '{startDate}' AND wur_radd_alerts__date <= '{endDate}'`,
+  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDownloadRadd: `SELECT latitude, longitude, wur_radd_alerts__date, wur_radd_alerts__confidence FROM data WHERE wur_radd_alerts__date >= '{startDate}' AND wur_radd_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1138,73 +1138,13 @@ export const fetchIntegratedAlerts = (params) => {
     deforestationAlertsDataset,
     geostoreId,
     alertSystem,
+    forestType,
+    landCategory,
+    ifl,
   } = params || {};
 
-  // Construct base url for fetch
-  let baseUrl = `${getRequestUrl({
-    ...params,
-    dataset: 'integrated_alerts',
-    datasetType: 'daily',
-    // version override necessary here (no 'latest' defined)
-    version: 'v20210907',
-    // Refernces the base SQL from the SQL_QUERIES object
-  })}${SQL_QUERIES.integratedAlertsDaily}`;
-
-  if (download && alertSystem === 'all') {
-    baseUrl = `${getRequestUrl({
-      ...params,
-      dataset: 'integrated_alerts',
-      datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
-      version: 'v20210907',
-      // Refernces the base SQL from the SQL_QUERIES object
-    })}${SQL_QUERIES.integratedAlertsDailyDownload}`;
-
-    // Replace original url with its download representation
-    baseUrl = getDownloadUrl(baseUrl);
-  }
-
-  if (download && alertSystem === 'glad_l') {
-    baseUrl = `${getRequestUrl({
-      ...params,
-      dataset: 'integrated_alerts',
-      datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
-      version: 'v20210907',
-      // Refernces the base SQL from the SQL_QUERIES object
-    })}${SQL_QUERIES.integratedAlertsDownloadGladL}`;
-
-    // Replace original url with its download representation
-    baseUrl = getDownloadUrl(baseUrl);
-  }
-
-  if (download && alertSystem === 'glad_s2') {
-    baseUrl = `${getRequestUrl({
-      ...params,
-      dataset: 'integrated_alerts',
-      datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
-      version: 'v20210907',
-      // Refernces the base SQL from the SQL_QUERIES object
-    })}${SQL_QUERIES.integratedAlertsDownloadGladS}`;
-
-    // Replace original url with its download representation
-    baseUrl = getDownloadUrl(baseUrl);
-  }
-
-  if (download && alertSystem === 'radd') {
-    baseUrl = `${getRequestUrl({
-      ...params,
-      dataset: 'integrated_alerts',
-      datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
-      version: 'v20210907',
-      // Refernces the base SQL from the SQL_QUERIES object
-    })}${SQL_QUERIES.integratedAlertsDownloadRadd}`;
-
-    // Replace original url with its download representation
-    baseUrl = getDownloadUrl(baseUrl);
-  }
+  let requestUrl;
+  let query = SQL_QUERIES.integratedAlertsDaily;
 
   const datasetMapping = {
     all: 'gfw_integrated_alerts',
@@ -1220,9 +1160,62 @@ export const fetchIntegratedAlerts = (params) => {
     '__confidence'
   );
 
-  // Replace base url params and encode
-  let url = encodeURI(
-    baseUrl
+  if (!download) {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'all') {
+    query = SQL_QUERIES.integratedAlertsDailyDownload;
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'glad_l') {
+    query = SQL_QUERIES.integratedAlertsDownloadGladL;
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'glad_s2') {
+    query = SQL_QUERIES.integratedAlertsDownloadGladS;
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'radd') {
+    query = SQL_QUERIES.integratedAlertsDownloadRadd;
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: true })
@@ -1230,14 +1223,21 @@ export const fetchIntegratedAlerts = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
       .replace(/{confidenceString}/g, confidenceString)
-      .replace('{startDate}', startDate)
-      .replace('{endDate}', endDate)
+      .replace(/{startDate}/g, startDate)
+      .replace(/{endDate}/g, endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+      .replace(/{geostoreOrigin}/g, 'rw')
+      .replace(/{geostoreId}/g, geostoreId)
   );
 
-  // For download, we need geostore params in our URL
   if (download) {
-    url = `${url}&geostore_origin=rw&geostore_id=${geostoreId}`;
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: getDownloadUrl(url),
+    };
   }
 
   // Light initial Parsing
