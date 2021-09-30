@@ -63,6 +63,7 @@ class WidgetsContainer extends PureComponent {
     category: PropTypes.string,
     activeWidget: PropTypes.object,
     setMapSettings: PropTypes.func,
+    setActiveWidget: PropTypes.func,
     embed: PropTypes.bool,
     setWidgetsCategory: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
@@ -84,12 +85,19 @@ class WidgetsContainer extends PureComponent {
       getWidgetsData,
       activeWidget,
       embed,
-      category,
       location,
+      category,
+      setActiveWidget,
     } = this.props;
+
+    if (!isEqual(category, prevProps.category)) {
+      setActiveWidget(null);
+    }
+
     if (location.type === 'global' && prevProps.location?.type !== 'global') {
       getWidgetsData();
     }
+
     // if widget is active and layers or params change push to map
     if (!embed && activeWidget) {
       const { settings, datasets } = activeWidget || {};
@@ -105,7 +113,6 @@ class WidgetsContainer extends PureComponent {
         prevProps.activeWidget
       );
       const widgetSettingsChanged = !isEqual(prevSettings, settings);
-      const categoryChanged = !isEqual(prevProps?.category, category);
       const datasetsChanged = !isEqual(datasets, prevDatasets);
 
       if (
@@ -114,7 +121,7 @@ class WidgetsContainer extends PureComponent {
           (mapSettingsChanged || activeWidgetChanged)) ||
         widgetSettingsChanged
       ) {
-        this.syncWidgetWithMap(categoryChanged);
+        this.syncWidgetWithMap();
       } else if (
         !datasets &&
         activeWidgetChanged &&
@@ -125,7 +132,7 @@ class WidgetsContainer extends PureComponent {
     }
   }
 
-  syncWidgetWithMap = (categoryChanged = false) => {
+  syncWidgetWithMap = () => {
     const { activeWidget, setMapSettings, setWidgetsCategory } = this.props;
     const { datasets, settings, optionsSelected } = activeWidget || {};
     const widgetDatasets =
@@ -140,11 +147,7 @@ class WidgetsContainer extends PureComponent {
       allDatasets = [...allDatasets, ...widgetDatasets];
     }
 
-    // XXX: If user changes category on dashboards, reset active widget + set new category
-    // otherwise user is changing active layer on current dashboard, so no need to sync
-    if (categoryChanged) {
-      setWidgetsCategory(this.props?.category || 'summary');
-    }
+    setWidgetsCategory(this.props?.category || 'summary');
 
     setMapSettings({
       datasets: allDatasets,
