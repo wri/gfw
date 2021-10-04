@@ -274,6 +274,7 @@ export const fetchDatasets = createThunkAction(
               ),
           };
         });
+
         dispatch(setDatasets(sortBy(parsedDatasets, 'menuPosition')));
       })
       .catch(() => {
