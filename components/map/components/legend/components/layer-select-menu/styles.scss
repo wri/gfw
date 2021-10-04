@@ -1,0 +1,77 @@
+@import '~styles/settings';
+
+.c-layer-select-menu {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+
+  .selector {
+    position: relative;
+    padding: 10px;
+    border: 1px solid $border;
+  }
+
+  button {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    font-size: rem(17px);
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    .citation {
+      padding: 10px 0 0 0;
+      font-size: 11px;
+      color: #666;
+    }
+  }
+
+  .icon-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.reverse {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+
+  .options {
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    width: 101%;
+    z-index: 9999;
+    background: $white;
+    border: 1px solid $border;
+  }
+
+  .layer-options {
+    display: flex;
+    flex-flow: column;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid $border;
+
+    p {
+      font-size: rem(14px);
+    }
+
+    .citation {
+      padding: 5px 0 0 0;
+      font-size: 11px;
+      color: #666;
+    }
+
+    &:last-child {
+      border: 1px solid transparent;
+    }
+
+    &:hover {
+      background: $grey-light;
+    }
+  }
+}
