@@ -3,29 +3,37 @@ import { trackEvent } from 'utils/analytics';
 
 const REQUEST_URL = '/v2/area';
 
-export const getArea = (id) =>
-  apiRequest.get(`${REQUEST_URL}/${id}`).then((areaResponse) => {
-    const { data: area } = areaResponse.data;
-    const admin = area.attributes && area.attributes.admin;
-    const iso = area.attributes && area.attributes.iso;
-
-    return {
-      id: area.id,
-      ...{
-        ...area.attributes,
-        use: {},
-      },
-      ...(iso &&
-        iso.country && {
-          admin: {
-            adm0: iso.country,
-            adm1: iso.region,
-            adm2: iso.subregion,
-            ...admin,
-          },
+export const getArea = (id, userToken = null) =>
+  apiRequest
+    .get(`${REQUEST_URL}/${id}`, {
+      headers: {
+        ...(userToken && {
+          Authorization: `Bearer ${userToken}`,
         }),
-    };
-  });
+      },
+    })
+    .then((areaResponse) => {
+      const { data: area } = areaResponse.data;
+      const admin = area.attributes && area.attributes.admin;
+      const iso = area.attributes && area.attributes.iso;
+
+      return {
+        id: area.id,
+        ...{
+          ...area.attributes,
+          use: {},
+        },
+        ...(iso &&
+          iso.country && {
+            admin: {
+              adm0: iso.country,
+              adm1: iso.region,
+              adm2: iso.subregion,
+              ...admin,
+            },
+          }),
+      };
+    });
 
 export const getAreas = () =>
   apiAuthRequest.get(REQUEST_URL).then((areasResponse) => {

@@ -50,13 +50,13 @@ class DashboardsPage extends PureComponent {
     setShowMap: PropTypes.func.isRequired,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    setWidgetsCategory: PropTypes.func,
     globalSentence: PropTypes.object,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     embed: PropTypes.bool,
     clearScrollTo: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
+    basePath: PropTypes.string,
   };
 
   state = {
@@ -135,13 +135,24 @@ class DashboardsPage extends PureComponent {
     );
   };
 
+  handleNavigationLinks() {
+    const { links, basePath } = this.props;
+    if (isServer && basePath) {
+      return links.map((l) => ({
+        ...l,
+        href: basePath,
+        as: `/dashboards${basePath}${l.as}`,
+      }));
+    }
+    return links;
+  }
+
   render() {
     const {
       showMapMobile,
       links,
       widgetAnchor,
       ssrLocation,
-      setWidgetsCategory,
       activeArea,
       clearScrollTo,
       globalSentence,
@@ -166,17 +177,7 @@ class DashboardsPage extends PureComponent {
             <SubNavMenu
               className="nav"
               theme="theme-subnav-dark"
-              links={links.map((l) => ({
-                ...l,
-                onClick: () => {
-                  setWidgetsCategory(l.category);
-                  trackEvent({
-                    category: 'Dashboards page',
-                    action: 'View',
-                    label: l.category,
-                  });
-                },
-              }))}
+              links={this.handleNavigationLinks()}
               checkActive
             />
           )}

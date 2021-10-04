@@ -668,5 +668,15 @@
     "source": "/howto/webinars/webinar-small-grants-fund.html",
     "destination": "/help/faqs/grants-fellowships/",
     "permanent": true
+  },
+  {
+    "source": "/partners",
+    "destination": "/about",
+    "permanent": true
+  },
+  {
+    "source": "/partners/",
+    "destination": "/about",
+    "permanent": true
   }
 ]
