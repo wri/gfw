@@ -120,7 +120,7 @@ const decodes = {
     // e.g. 00 10 01 00 --> no GLAD-L, high conf GLAD-S2, low conf RADD
 
     float agreementValue = alpha * 255.;
-    
+
     float r = color.r * 255.;
     float g = color.g * 255.;
     float b = color.b * 255.;
@@ -141,13 +141,18 @@ const decodes = {
       if (intensity > 255.) {
         intensity = 255.;
       }
+      // get high and highest confidence alerts
+      float confidenceValue = 0.;
+      if (confirmedOnly > 0.) {
+        confidenceValue = 255.;
+      }
       if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
         // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
 
         color.r = 237. / 255.;
         color.g = 164. / 255.;
         color.b = 194. / 255.;
-        alpha = intensity / 255.;
+        alpha = (intensity - confidenceValue) / 255.;
       } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
         // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
 
@@ -172,9 +177,9 @@ const decodes = {
     // The Red, Green, and Blue bands are GLAD, GLAD-S2 and RADD, respectively.
     // They are 16-bit unsigned, abbbb where a is the confirmation status (2 for unconfirmed, 3 for confirmed)
     // bbbb is the number of days past Dec. 31, 2014 (with 1 being January 1st, 2015).
-    // Then there's the Alpha band, which encodes an intensity for each of the bands. 
+    // Then there's the Alpha band, which encodes an intensity for each of the bands.
     // From most-significant bit to least-significant bit, 5 bits encode the intensity (from 0-31, so lower max than the 8-bit band) for GLAD, GLAD-S2, and RADD in that order. Thus the last (least-significant) bit is unused.
-    
+
     int highConfCount = 0;
     int alertCount = 0;
     float upperLimit = 30000.;
@@ -251,7 +256,7 @@ const decodes = {
         highConfCount += dayRaddHighConf;
       }
     }
-       
+
     alpha = 0.;
     if (alertCount == 1) {
       // ONE ALERT
