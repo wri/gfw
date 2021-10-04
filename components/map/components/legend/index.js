@@ -107,7 +107,7 @@ class Legend extends PureComponent {
     }
   };
 
-  onChangeTimeline = (dates, currentLayer, absolute) => {
+  onChangeTimeline = (dates, currentLayer, absolute, timelineParams = null) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
       datasets: activeDatasets.map((l) => {
@@ -115,6 +115,9 @@ class Legend extends PureComponent {
         if (l.layers.indexOf(currentLayer.id) > -1) {
           dataset.timelineParams = {
             ...dataset.timelineParams,
+            ...(timelineParams && {
+              ...timelineParams,
+            }),
           };
           if (absolute) {
             dataset.timelineParams.startDateAbsolute = dates[0];
