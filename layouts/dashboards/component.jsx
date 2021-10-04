@@ -56,6 +56,7 @@ class DashboardsPage extends PureComponent {
     embed: PropTypes.bool,
     clearScrollTo: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
+    basePath: PropTypes.string,
   };
 
   state = {
@@ -134,6 +135,18 @@ class DashboardsPage extends PureComponent {
     );
   };
 
+  handleNavigationLinks() {
+    const { links, basePath } = this.props;
+    if (isServer && basePath) {
+      return links.map((l) => ({
+        ...l,
+        href: basePath,
+        as: `/dashboards${basePath}${l.as}`,
+      }));
+    }
+    return links;
+  }
+
   render() {
     const {
       showMapMobile,
@@ -164,7 +177,7 @@ class DashboardsPage extends PureComponent {
             <SubNavMenu
               className="nav"
               theme="theme-subnav-dark"
-              links={links}
+              links={this.handleNavigationLinks()}
               checkActive
             />
           )}
