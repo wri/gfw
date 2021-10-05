@@ -22,6 +22,10 @@
 }
 
 .c-datepicker-portal {
+  .react-datepicker {
+    background-color: $white;
+  }
+
   .react-datepicker-popper {
     z-index: 10000;
   }
@@ -72,6 +76,13 @@
     .react-datepicker__day-names,
     .react-datepicker__week {
       display: flex;
+    }
+
+    .react-datepicker__day-name,
+    .react-datepicker__day {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .react-datepicker__day-name,

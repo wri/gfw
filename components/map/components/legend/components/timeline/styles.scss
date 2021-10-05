@@ -11,6 +11,7 @@
 
   .date-pickers {
     display: flex;
+    z-index: 999;
     margin: rem(5px) 0 rem(10px);
     align-items: center;
 
