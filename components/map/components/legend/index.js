@@ -46,7 +46,12 @@ class Legend extends PureComponent {
       if (ds.dataset === layer.dataset) {
         return {
           ...ds,
-          layers: [layer.id, ...(layer?.gladLOnly ? ['gladLOnly'] : [])],
+          layers: [
+            layer.id,
+            ...(layer?.gladLOnly ? ['gladLOnly'] : []),
+            ...(layer?.gladSOnly ? ['gladSOnly'] : []),
+            ...(layer?.raddOnly ? ['raddOnly'] : []),
+          ],
         };
       }
       return ds;

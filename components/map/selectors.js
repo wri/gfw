@@ -308,6 +308,8 @@ export const getDatasetsWithConfig = createSelector(
                 ...(layers && {
                   confirmedOnly: layers.includes('confirmedOnly') ? 1 : 0,
                   gladLOnly: layers.includes('gladLOnly') ? 1 : 0,
+                  gladSOnly: layers.includes('gladSOnly') ? 1 : 0,
+                  raddOnly: layers.includes('raddOnly') ? 1 : 0,
                 }),
                 ...(maxDate && {
                   endDate: maxDate,
