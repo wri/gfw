@@ -248,7 +248,10 @@ class Header extends PureComponent {
                 theme="theme-button-clear"
                 className="private-area-notice"
                 tooltipPosition="bottom"
-                tooltip={{ text: 'You need to make your area public before sharing; public areas can be viewed by anyone with the URL; private areas can only be viewed by the area\'s creator.' }}
+                tooltip={{
+                  text:
+                    "You need to make your area public before sharing. Public areas can be viewed by anyone with the URL; private areas can only be viewed by the area's creator.",
+                }}
               >
                 <Icon icon={hiddenIcon} />
                 Private area

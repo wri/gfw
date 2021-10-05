@@ -27,11 +27,11 @@ class Share extends PureComponent {
     setShareSelected: PropTypes.func,
     handleFocus: PropTypes.func,
     handleCopyToClipboard: PropTypes.func,
-    setShareAoi: PropTypes.func
+    setShareAoi: PropTypes.func,
   };
 
   state = {
-    publicArea: false
+    publicArea: false,
   };
 
   togglePublicAoi() {
@@ -57,12 +57,12 @@ class Share extends PureComponent {
       area,
       handleFocus,
       setShareSelected,
-      handleCopyToClipboard
+      handleCopyToClipboard,
     } = this.props;
     const { publicArea } = this.state;
     const { title, shareUrl, embedUrl, embedSettings } = data || {};
     const { width, height } = embedSettings || {};
-    const shouldRenderShare = area && area.public || !area;
+    const shouldRenderShare = (area && area.public) || !area;
 
     const inputValue =
       selected === 'embed'
@@ -75,7 +75,11 @@ class Share extends PureComponent {
       <div className="c-share">
         {area && !area.public && (
           <div className="public-area-field">
-            <span tabIndex={0} role="button" onClick={() => this.togglePublicAoi()}>
+            <span
+              tabIndex={0}
+              role="button"
+              onClick={() => this.togglePublicAoi()}
+            >
               <Toggle
                 theme="toggle-large"
                 value={publicArea}
@@ -132,7 +136,7 @@ class Share extends PureComponent {
                 {copied ? 'COPIED!' : 'COPY'}
               </Button>
             </div>
-        )}
+          )}
         </div>
         {shouldRenderShare && (
           <div className="social-container">
@@ -165,7 +169,11 @@ class Share extends PureComponent {
           </div>
         )}
         {!shouldRenderShare && (
-          <p className="share-notice">You need to make your area public before sharing; public areas can be viewed by anyone with the URL; private areas can only be viewed by the area&apos;s creator.</p>
+          <p className="share-notice">
+            You need to make your area public before sharing. Public areas can
+            be viewed by anyone with the URL; private areas can only be viewed
+            by the area&apos;s creator.
+          </p>
         )}
       </div>
     );

@@ -305,7 +305,7 @@ class AreaOfInterestForm extends PureComponent {
                         Make this area public
                       </span>
                       <p>
-                        You need to make your area public before sharing; public
+                        You need to make your area public before sharing. Public
                         areas can be viewed by anyone with the URL; private
                         areas can only be viewed by the area&apos;s creator.
                       </p>
