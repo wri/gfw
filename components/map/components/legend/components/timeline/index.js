@@ -156,8 +156,8 @@ class TimelineContainer extends PureComponent {
   }
 
   async handleTimelineDates() {
-    const { latestUrl } = this.props;
-    if (latestUrl && latestUrl.startsWith('http')) {
+    const { latestUrl, dateRange: configuredRange } = this.props;
+    if (latestUrl && latestUrl.startsWith('http') && configuredRange) {
       // Dynamic fetch based on URL within layer config
       await this.handleLatestUrlDates();
     } else {
