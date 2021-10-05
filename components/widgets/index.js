@@ -63,6 +63,7 @@ class WidgetsContainer extends PureComponent {
     category: PropTypes.string,
     activeWidget: PropTypes.object,
     setMapSettings: PropTypes.func,
+    setActiveWidget: PropTypes.func,
     embed: PropTypes.bool,
     setWidgetsCategory: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
@@ -80,10 +81,23 @@ class WidgetsContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { getWidgetsData, activeWidget, embed, location } = this.props;
+    const {
+      getWidgetsData,
+      activeWidget,
+      embed,
+      location,
+      category,
+      setActiveWidget,
+    } = this.props;
+
+    if (!isEqual(category, prevProps.category)) {
+      setActiveWidget(null);
+    }
+
     if (location.type === 'global' && prevProps.location?.type !== 'global') {
       getWidgetsData();
     }
+
     // if widget is active and layers or params change push to map
     if (!embed && activeWidget) {
       const { settings, datasets } = activeWidget || {};
@@ -99,8 +113,8 @@ class WidgetsContainer extends PureComponent {
         prevProps.activeWidget
       );
       const widgetSettingsChanged = !isEqual(prevSettings, settings);
-
       const datasetsChanged = !isEqual(datasets, prevDatasets);
+
       if (
         (datasets &&
           datasetsChanged &&
@@ -132,7 +146,9 @@ class WidgetsContainer extends PureComponent {
     if (widgetDatasets) {
       allDatasets = [...allDatasets, ...widgetDatasets];
     }
+
     setWidgetsCategory(this.props?.category || 'summary');
+
     setMapSettings({
       datasets: allDatasets,
     });
