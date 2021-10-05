@@ -146,6 +146,50 @@ const decodes = {
       if (confirmedOnly > 0.) {
         confidenceValue = 255.;
       }
+
+      // // glad l
+      // if (gladLOnly > 0. && agreementValue == 64.) {
+      //   // glad only and low confidence
+      //   color.r = 237. / 255.;
+      //   color.g = 164. / 255.;
+      //   color.b = 194. / 255.;
+      //   alpha = (intensity - confidenceValue) / 255.;
+      // } else if (gladLOnly > 0. && agreementValue == 128.){
+      //   // glad only and high confidence
+      //   color.r = 220. / 255.;
+      //   color.g = 102. / 255.;
+      //   color.b = 153. / 255.;
+      //   alpha = intensity / 255.;
+      // }
+
+      // if (gladSOnly > 0. && agreementValue == 16.) {
+      //   // glad  s only and low confidence
+      //   color.r = 237. / 255.;
+      //   color.g = 164. / 255.;
+      //   color.b = 194. / 255.;
+      //   alpha = (intensity - confidenceValue) / 255.;
+      // } else if (gladSOnly > 0. && agreementValue == 32.){
+      //   // glad s only and high confidence
+      //   color.r = 220. / 255.;
+      //   color.g = 102. / 255.;
+      //   color.b = 153. / 255.;
+      //   alpha = intensity / 255.;
+      // }
+
+      // if (raddOnly > 0. && agreementValue == 4.) {
+      //   // glad  s only and low confidence
+      //   color.r = 237. / 255.;
+      //   color.g = 164. / 255.;
+      //   color.b = 194. / 255.;
+      //   alpha = (intensity - confidenceValue) / 255.;
+      // } else if (raddOnly > 0. && agreementValue == 8.){
+      //   // glad s only and high confidence
+      //   color.r = 220. / 255.;
+      //   color.g = 102. / 255.;
+      //   color.b = 153. / 255.;
+      //   alpha = intensity / 255.;
+      // }
+
       if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
         // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
 
