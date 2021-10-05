@@ -15,8 +15,9 @@
     position: relative;
     display: flex;
     flex-flow: column;
+    padding-right: 30px;
     width: 100%;
-    font-size: rem(17px);
+    font-size: rem(14px);
     text-align: left;
     text-transform: uppercase;
     cursor: pointer;
@@ -64,6 +65,15 @@
       padding: 5px 0 0 0;
       font-size: 11px;
       color: #666;
+    }
+
+    &.active {
+      opacity: 0.5;
+
+      button {
+        user-select: none;
+        cursor: default;
+      }
     }
 
     &:last-child {

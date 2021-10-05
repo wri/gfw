@@ -39,7 +39,12 @@ class LayerSelectMenu extends PureComponent {
             <ul className="options">
               {layers.map((l) =>
                 l.isSelector || l.default ? (
-                  <li className="layer-options" key={l.id}>
+                  <li
+                    className={`layer-options ${
+                      l.id === activeLayer.id ? 'active' : ''
+                    }`}
+                    key={`${l.id}-${l.name}`}
+                  >
                     <button onClick={() => this.handleClickLayer(l)}>
                       <p>{l.name}</p>
                       <span className="citation">{l.citation}</span>
