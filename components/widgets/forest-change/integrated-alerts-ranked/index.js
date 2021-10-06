@@ -3,12 +3,12 @@ import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET,
+  // GLAD_DEFORESTATION_ALERTS_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  GLAD_ALERTS,
+  // GLAD_ALERTS,
 } from 'data/layers';
 
 import {
@@ -21,7 +21,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'integratedAlertsRanked',
-  title: 'TEST Location of integrated deforestation Alerts in {location}',
+  title: 'Location of integrated deforestation Alerts in {location}',
   categories: ['forest-change'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
@@ -41,6 +41,11 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+    },
+    {
+      key: 'deforestationAlertsDataset',
+      label: 'Alert type',
+      type: 'select',
     },
     {
       key: 'weeks',
@@ -64,7 +69,13 @@ export default {
     },
   ],
   pendingKeys: ['extentYear', 'threshold'],
-  refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
+  refetchKeys: [
+    'forestType',
+    'landCategory',
+    'deforestationAlertsDataset',
+    'extentYear',
+    'threshold',
+  ],
   chartType: 'rankedList',
   metaKey: 'widget_deforestation_alert_location',
   colors: 'loss',
@@ -74,11 +85,11 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // GLAD
-    {
-      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: [GLAD_ALERTS],
-    },
+    // Replace with 8bits integrated deforestation layer when ready
+    // {
+    //   dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
+    //   layers: [GLAD_ALERTS],
+    // },
   ],
   sortOrder: {
     summary: 6,
@@ -86,9 +97,13 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, {count} GLAD alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.',
+      'In the last {timeframe} in {location}, {count} deforestation alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all deforestation alerts.',
     withInd:
-      'In the last {timeframe} in {location}, {count} GLAD alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.',
+      'In the last {timeframe} in {location}, {count} deforestation alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all deforestation alerts.',
+    singleSystem:
+      'In the last {timefrane} in {location}, {count} {system} alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all {system} alerts.',
+    singleSystemWithInd:
+      'In the last {timeframe} in {location}, {count} {systme} alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all {system} alerts.',
   },
   settings: {
     threshold: 30,
@@ -99,6 +114,7 @@ export default {
     page: 0,
     ifl: 2016,
     dataset: 'glad',
+    deforestationAlertsDataset: 'all',
   },
   whitelists: {
     adm0: tropicalIsos,
@@ -113,6 +129,7 @@ export default {
         const { data } = alerts.data;
         const areas = extent.data.data;
         const latestDate = latest.attributes && latest.attributes.updatedAt;
+        // const alertSystem = params?.deforestationAlertsDataset;
 
         return data && extent && latest
           ? {
