@@ -40,6 +40,27 @@ class Legend extends PureComponent {
     setMapSettings({ datasets: newActiveDatasets });
   };
 
+  onSelectLayer = (layer) => {
+    const { setMapSettings, activeDatasets } = this.props;
+    const newActiveDatasets = activeDatasets.map((ds) => {
+      if (ds.dataset === layer.dataset) {
+        return {
+          ...ds,
+          layers: [
+            layer.id,
+            ...(layer?.gladLOnly ? ['gladLOnly'] : []),
+            ...(layer?.gladSOnly ? ['gladSOnly'] : []),
+            ...(layer?.raddOnly ? ['raddOnly'] : []),
+          ],
+        };
+      }
+      return ds;
+    });
+    setMapSettings({
+      datasets: newActiveDatasets,
+    });
+  };
+
   onToggleLayer = (layer, enable) => {
     const { activeDatasets, setMapSettings } = this.props;
     const { dataset } = layer;
@@ -197,6 +218,7 @@ class Legend extends PureComponent {
       onChangeOrder: this.onChangeOrder,
       onToggleLayer: this.onToggleLayer,
       onChangeLayer: this.onChangeLayer,
+      onSelectLayer: this.onSelectLayer,
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,

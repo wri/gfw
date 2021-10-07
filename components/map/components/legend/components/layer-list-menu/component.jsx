@@ -13,31 +13,29 @@ class LayerListMenu extends PureComponent {
 
     return (
       <div className={`c-layer-list-menu ${className || ''}`}>
-        {layers.map(
-          (l, i) =>
-            (!l.default ? (
-              <div className="layer-toggle" key={l.id}>
-                <LayerToggle
-                  tabIndex={i}
-                  data={{ ...l, layer: l.id }}
-                  onToggle={onToggle}
-                  onInfoClick={() => onInfoClick(l.metadata)}
-                  small
-                />
-                {l.nestedLegend &&
-                  l.active && (
-                  <div className="nested-legend">
-                    <LegendItemTypes activeLayer={l} />
-                  </div>
-                )}
-                {l.legendDesc && (
-                  <p className="layer-description">{l.legendDesc}</p>
-                )}
-                {l.moreInfo && (
-                  <LayerMoreInfo className="more-info" {...l.moreInfo} />
-                )}
-              </div>
-            ) : null)
+        {layers.map((l, i) =>
+          !l.default && !l.isSelector ? (
+            <div className="layer-toggle" key={l.id}>
+              <LayerToggle
+                tabIndex={i}
+                data={{ ...l, layer: l.id }}
+                onToggle={onToggle}
+                onInfoClick={() => onInfoClick(l.metadata)}
+                small
+              />
+              {l.nestedLegend && l.active && (
+                <div className="nested-legend">
+                  <LegendItemTypes activeLayer={l} />
+                </div>
+              )}
+              {l.legendDesc && (
+                <p className="layer-description">{l.legendDesc}</p>
+              )}
+              {l.moreInfo && (
+                <LayerMoreInfo className="more-info" {...l.moreInfo} />
+              )}
+            </div>
+          ) : null
         )}
       </div>
     );
@@ -48,7 +46,7 @@ LayerListMenu.propTypes = {
   className: PropTypes.string,
   layers: PropTypes.array,
   onToggle: PropTypes.func,
-  onInfoClick: PropTypes.func
+  onInfoClick: PropTypes.func,
 };
 
 export default LayerListMenu;

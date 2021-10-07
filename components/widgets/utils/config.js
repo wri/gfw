@@ -398,6 +398,11 @@ export const getStatements = ({
           'GLAD alerts become "high confidence" when loss is detected in multiple Landsat images. Only a small percentage of recent alerts will be "high confidence" because it can take weeks or even months for another cloud free image. Learn more here.'
         )
       : null,
+    dataType === 'integration_alerts'
+      ? translateText(
+          'Note: area does not necessarily correspond to area of tree cover loss.'
+        )
+      : null,
     dataType === 'fires' && settings?.dataset === 'modis_burned_area'
       ? translateText(
           'Caution: Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.'

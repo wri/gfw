@@ -111,6 +111,223 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  integratedAlerts8Bit: `
+    // First 6 bits Alpha channel used to individual alert confidence
+    // First two bits (leftmost) are GLAD-L
+    // Next, 3rd and 4th bits are GLAD-S2
+    // Finally, 5th and 6th bits are RADD
+    // Bits are either: 00 (0, no alerts), 01 (1, low conf), or 10 (2, high conf)
+    // e.g. 00 10 01 00 --> no GLAD-L, high conf GLAD-S2, low conf RADD
+
+    float agreementValue = alpha * 255.;
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    float day = r * 255. + g;
+    // float confidence = floor(b / 100.) - 1.;
+
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex &&
+      agreementValue > 0.
+    ) {
+
+      // get intensity
+      // float intensity = mod(confidence, 100.) * 50.;
+      float intensity = 255.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      // get high and highest confidence alerts
+      float confidenceValue = 0.;
+      if (confirmedOnly > 0.) {
+        confidenceValue = 255.;
+      }
+
+      // glad l alerts only
+      if (gladLOnly > 0.) {
+        if (agreementValue == 64.) {
+          color.r = 237. / 255.;
+          color.g = 164. / 255.;
+          color.b = 194. / 255.;
+          alpha = (intensity - confidenceValue) / 255.;
+        } else if (agreementValue == 128.){
+          // glad only and high confidence
+          color.r = 220. / 255.;
+          color.g = 102. / 255.;
+          color.b = 153. / 255.;
+          alpha = intensity / 255.;
+        } else {
+          alpha = 0.;
+        }
+        // glad s alerts only
+      } else if (gladSOnly > 0.) {
+        if (agreementValue == 16.) {
+            color.r = 237. / 255.;
+            color.g = 164. / 255.;
+            color.b = 194. / 255.;
+            alpha = (intensity - confidenceValue) / 255.;
+        } else if (agreementValue == 32.) {
+          color.r = 220. / 255.;
+          color.g = 102. / 255.;
+          color.b = 153. / 255.;
+          alpha = intensity / 255.;
+        } else {
+          alpha = 0.;
+        }
+        // radd alerts only
+      } else if (raddOnly > 0.) {
+        if (agreementValue == 4.) {
+          color.r = 237. / 255.;
+          color.g = 164. / 255.;
+          color.b = 194. / 255.;
+          alpha = (intensity - confidenceValue) / 255.;
+        } else if (agreementValue == 8.) {
+          color.r = 220. / 255.;
+          color.g = 102. / 255.;
+          color.b = 153. / 255.;
+          alpha = intensity / 255.;
+        } else {
+          alpha = 0.;
+        }
+      }  else if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
+        // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
+
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
+        alpha = (intensity - confidenceValue) / 255.;
+      } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
+        // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
+
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      } else {
+        // MULTIPLE ALERTS: >0 and not 2**(2+n)
+
+        color.r = 201. / 255.;
+        color.g = 42. / 255.;
+        color.b = 109. / 255.;
+        alpha = intensity / 255.;
+
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
+  integratedAlerts16Bit: `
+    // The Red, Green, and Blue bands are GLAD, GLAD-S2 and RADD, respectively.
+    // They are 16-bit unsigned, abbbb where a is the confirmation status (2 for unconfirmed, 3 for confirmed)
+    // bbbb is the number of days past Dec. 31, 2014 (with 1 being January 1st, 2015).
+    // Then there's the Alpha band, which encodes an intensity for each of the bands.
+    // From most-significant bit to least-significant bit, 5 bits encode the intensity (from 0-31, so lower max than the 8-bit band) for GLAD, GLAD-S2, and RADD in that order. Thus the last (least-significant) bit is unused.
+
+    int highConfCount = 0;
+    int alertCount = 0;
+    float upperLimit = 30000.;
+    float lowerLimit = 20000.;
+
+    // GLAD L
+    float gladL = color.r * 255.;
+    if (gladL > 0.){
+      float highConfDaysGL = gladL - upperLimit;
+      float lowConfDaysGL = gladL - lowerLimit;
+      int dayGladLHighConf = 0;
+      float dayGladL = 0.;
+      if (sign(highConfDaysGL) == 1.){
+        dayGladL = gladL - upperLimit;
+        dayGladLHighConf = 1;
+      }
+      else if (sign(lowConfDaysGL) == 1.) {
+        dayGladL = gladL - lowerLimit;
+      }
+      if (
+        dayGladL > 0. &&
+        dayGladL >= startDayIndex &&
+        dayGladL <= endDayIndex
+      ) {
+        alertCount += 1;
+        highConfCount += dayGladLHighConf;
+      }
+    }
+
+    // GLAD S2
+    float gladS2 = color.g * 255.;
+    if (gladS2 > 0.){
+      float highConfDaysGS2 = gladS2 - upperLimit;
+      float lowConfDaysGS2 = gladS2 - lowerLimit;
+      int dayGladS2HighConf = 0;
+      float dayGladS2 = 0.;
+      if (sign(highConfDaysGS2) == 1.){
+        dayGladS2 = gladS2 - upperLimit;
+        dayGladS2HighConf = 1;
+      }
+      else if (sign(lowConfDaysGS2) == 1.){
+        dayGladS2 = gladS2 - lowerLimit;
+      }
+      if (
+        dayGladS2 > 0. &&
+        dayGladS2 >= startDayIndex &&
+        dayGladS2 <= endDayIndex
+      ) {
+        alertCount += 1;
+        highConfCount += dayGladS2HighConf;
+      }
+    }
+
+    // RADD
+    float radd = color.b * 255.;
+    if (radd > 0.){
+      float highConfDaysR = radd - upperLimit;
+      float lowConfDaysR = radd - lowerLimit;
+      int dayRaddHighConf = 0;
+      float dayRadd = 0.;
+      if (sign(highConfDaysR) == 1.){
+        dayRadd = radd - upperLimit;
+        dayRaddHighConf = 1;
+      }
+      else if (sign(lowConfDaysR) == 1.) {
+        dayRadd = radd - lowerLimit;
+      }
+      if (
+        dayRadd > 0. &&
+        dayRadd >= startDayIndex &&
+        dayRadd <= endDayIndex
+      ) {
+        alertCount += 1;
+        highConfCount += dayRaddHighConf;
+      }
+    }
+
+    alpha = 0.;
+    if (alertCount == 1) {
+      // ONE ALERT
+
+      color.r = 237. / 255.;
+      color.g = 164. / 255.;
+      color.b = 194. / 255.;
+      alpha = 1.;
+    } else if (alertCount == 1 && highConfCount == 1){
+      // ONE HIGH CONF ALERT:
+
+      color.r = 220. / 255.;
+      color.g = 102. / 255.;
+      color.b = 153. / 255.;
+      alpha = 1.;
+    } else if (alertCount > 1) {
+      // MULTIPLE ALERTS
+
+      color.r = 201. / 255.;
+      color.g = 42. / 255.;
+      color.b = 109. / 255.;
+      alpha = 1.;
+    }
+    `,
   GLADs: `
     // values for creating power scale, domain (input), and range (output)
     float confidenceValue = 0.;
@@ -157,6 +374,7 @@ const decodes = {
     float g = color.g * 255.;
     float b = color.b * 255.;
 
+    // **** CHECK THIS
     // 1461 = days from 2019/01/01 to 2014/12/31
     float day = (r * 255.) + g - 1461.;
     float confidence = floor(b / 100.) - 1.;
@@ -647,6 +865,8 @@ export default {
   treeCover: decodes.treeCover,
   treeCoverLoss: decodes.treeCoverLoss,
   treeLossByDriver: decodes.treeLossByDriver,
+  integratedAlerts8Bit: decodes.integratedAlerts8Bit,
+  integratedAlerts16Bit: decodes.integratedAlerts16Bit,
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
   RADDsCoverage: decodes.RADDsCoverage,
