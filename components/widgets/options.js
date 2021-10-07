@@ -11,6 +11,7 @@ import tscDriverGroup from 'data/tsc-loss-groups.json';
 import type from 'data/types.json';
 import weeks from 'data/weeks.json';
 import dataset from 'data/fires-datasets.json';
+import deforestationAlertsDataset from 'data/deforestation-alert-datasets.json';
 import confidence from 'data/confidence.json';
 import bioTypes from 'data/biodiversity-int.json';
 import ifl from 'data/ifl.json';
@@ -30,6 +31,7 @@ export default {
   bioTypes,
   weeks,
   dataset,
+  deforestationAlertsDataset,
   confidence,
   variable,
   source,

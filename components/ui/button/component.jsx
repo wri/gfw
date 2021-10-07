@@ -20,6 +20,7 @@ import './themes/button-map-control.scss'; // eslint-disable-line
 import './themes/button-dashed.scss'; // eslint-disable-line
 import './themes/button-dark-round.scss'; // eslint-disable-line
 import './themes/button-inline.scss'; //eslint-disable-line
+import './themes/button-full-width.scss'; //eslint-disable-line
 
 const Button = (props) => {
   const {

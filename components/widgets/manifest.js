@@ -14,6 +14,7 @@ import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gai
 import glads from 'components/widgets/forest-change/glads';
 import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import gladAlertsSimple from 'components/widgets/forest-change/glad-alerts-simple';
+import integratedDeforestationAlerts from 'components/widgets/forest-change/integrated-deforestation-alerts';
 
 // fires
 import firesAlerts from 'components/widgets/fires/fires-alerts';
@@ -66,6 +67,7 @@ export default {
   glads,
   gladRanked,
   gladAlertsSimple,
+  integratedDeforestationAlerts,
 
   // fires
   firesAlerts,
