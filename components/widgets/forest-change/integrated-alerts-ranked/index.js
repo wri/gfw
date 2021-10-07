@@ -161,27 +161,6 @@ export default {
     // OTF HERE
     return null;
   },
-  getDataOld: (params) =>
-    all([
-      fetchGladAlerts({ ...params, grouped: true }),
-      fetchGLADLatest(params),
-      getExtentGrouped(params),
-    ]).then(
-      spread((alerts, latest, extent) => {
-        const { data } = alerts.data;
-        const areas = extent.data.data;
-        const latestDate = latest.attributes && latest.attributes.updatedAt;
-        // const alertSystem = params?.deforestationAlertsDataset;
-        return data && extent && latest
-          ? {
-              alerts: data,
-              extent: areas,
-              latest: latestDate,
-              settings: { latestDate },
-            }
-          : {};
-      })
-    ),
   getDataURL: (params) => [
     fetchGladAlerts({ ...params, download: true }),
     getExtentGrouped({ ...params, download: true }),
