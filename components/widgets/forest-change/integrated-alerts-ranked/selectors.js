@@ -31,22 +31,26 @@ export const parseList = createSelector(
   ],
   (data, latest, extent, settings, adm1, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
-    const latestWeek = moment(latest).isoWeek();
-    const latestYear = moment(latest).year();
-    const alertsByDate = data.filter(
-      (d) =>
-        d.year &&
-        d.week &&
-        moment()
-          .year(d.year)
-          .isoWeek(d.week)
-          .isAfter(
-            moment()
-              .isoWeek(latestWeek)
-              .year(latestYear)
-              .subtract(settings.weeks, 'weeks')
-          )
-    );
+
+    // XXX: We dont have week + year in data?
+    // const latestWeek = moment(latest).isoWeek();
+    // const latestYear = moment(latest).year();
+    // const alertsByDate = latest && settings?.weeks ? data.filter(
+    //   (d) =>
+    //     d.year &&
+    //     d.week &&
+    //     moment()
+    //       .year(d.year)
+    //       .isoWeek(d.week)
+    //       .isAfter(
+    //         moment()
+    //           .isoWeek(latestWeek)
+    //           .year(latestYear)
+    //           .subtract(settings.weeks, 'weeks')
+    //       )
+    // ) : data;
+    const alertsByDate = data;
+
     const groupKey = adm1 ? 'adm2' : 'adm1';
     const groupedAlerts = groupBy(alertsByDate, groupKey);
     const totalCounts = sumBy(alertsByDate, 'alerts');
@@ -64,7 +68,6 @@ export const parseList = createSelector(
           counts && totalCounts ? (counts / totalCounts) * 100 : 0;
         const countsPerHa =
           counts && regionExtent ? counts / regionExtent.extent : 0;
-
         return {
           id: k,
           color: colors.main,

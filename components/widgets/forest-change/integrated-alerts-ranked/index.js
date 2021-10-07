@@ -11,11 +11,16 @@ import {
   // GLAD_ALERTS,
 } from 'data/layers';
 
+import { handleGladMeta } from 'utils/gfw-meta';
+
 import {
   getExtentGrouped,
+  getIntegratedAlertsRanked,
   fetchGladAlerts,
   fetchGLADLatest,
 } from 'services/analysis-cached';
+
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
@@ -119,7 +124,44 @@ export default {
   whitelists: {
     adm0: tropicalIsos,
   },
-  getData: (params) =>
+  getData: async (params) => {
+    // Gets pre-fetched GLAD-related metadata from the state...
+    const GLAD = await handleGladMeta(params);
+
+    // extract relevant metadata
+    const defaultStartDate = GLAD?.defaultStartDate;
+    const defaultEndDate = GLAD?.defaultEndDate;
+    const startDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
+    const geostoreId = params?.geostore?.hash;
+    const alertSystem = params?.deforestationAlertsDataset;
+
+    if (shouldQueryPrecomputedTables(params)) {
+      return all([
+        getIntegratedAlertsRanked({ ...params, startDate, grouped: true, endDate, geostoreId }),
+        fetchGLADLatest(params),
+        getExtentGrouped(params)
+      ]).then(spread((alerts, latest, extent) => {
+        const { data } = alerts.data;
+        const areas = extent.data.data;
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
+
+        // const alertSystem = params?.deforestationAlertsDataset;
+        return data && extent && latest
+          ? {
+              alerts: data,
+              extent: areas,
+              latest: latestDate,
+              settings: { latestDate },
+            }
+          : {};
+      }))
+    }
+
+    // OTF HERE
+    return null;
+  },
+  getDataOld: (params) =>
     all([
       fetchGladAlerts({ ...params, grouped: true }),
       fetchGLADLatest(params),
@@ -130,7 +172,6 @@ export default {
         const areas = extent.data.data;
         const latestDate = latest.attributes && latest.attributes.updatedAt;
         // const alertSystem = params?.deforestationAlertsDataset;
-
         return data && extent && latest
           ? {
               alerts: data,
