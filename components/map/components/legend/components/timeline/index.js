@@ -140,7 +140,6 @@ class TimelineContainer extends PureComponent {
       maxRange,
       trimEndDate,
     } = this.props;
-
     this.setState({
       from: {
         min: new Date(minDate),
@@ -156,14 +155,14 @@ class TimelineContainer extends PureComponent {
   }
 
   async handleTimelineDates() {
-    const { latestUrl, dateRange: configuredRange } = this.props;
-    if (latestUrl && latestUrl.startsWith('http') && configuredRange) {
-      // Dynamic fetch based on URL within layer config
-      await this.handleLatestUrlDates();
-    } else {
-      // dates based on timeline conf within layer config
-      this.handleWidgetConfigDates();
-    }
+    // const { latestUrl, dateRange: configuredRange } = this.props;
+    // if (latestUrl && latestUrl.startsWith('http') && configuredRange) {
+    //   // Dynamic fetch based on URL within layer config
+    //   await this.handleLatestUrlDates();
+    // } else {
+    //   // dates based on timeline conf within layer config
+    // }
+    this.handleWidgetConfigDates();
   }
 
   handleOnDateChange = (date, position, absolute) => {
