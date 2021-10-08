@@ -115,7 +115,6 @@ export const getMaxMinDates = createSelector(
       return {};
     const minYear = min(data.map((d) => d.year));
     const maxYear = max(data.map((d) => d.year));
-
     return {
       min: minYear,
       max: maxYear,

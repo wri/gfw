@@ -17,6 +17,8 @@ const Timeline = (props) => {
     activeLayer,
     maxRange,
     description,
+    minDate,
+    maxDate,
     from,
     to,
     dynamic,
@@ -33,8 +35,8 @@ const Timeline = (props) => {
               selected={from.selected}
               onChange={(date) =>
                 handleOnDateChange(moment(date), 0, !!maxRange)}
-              minDate={from.min}
-              maxDate={from.max}
+              minDate={new Date(minDate)}
+              maxDate={new Date(maxDate)}
               isOutsideRange={(d) =>
                 d.isAfter(moment(from.max)) || d.isBefore(moment(from.min))}
             />
@@ -45,8 +47,8 @@ const Timeline = (props) => {
               selected={to.selected}
               onChange={(date) =>
                 handleOnDateChange(moment(date), 2, !!maxRange)}
-              minDate={to.min}
-              maxDate={to.max}
+              minDate={new Date(minDate)}
+              maxDate={new Date(maxDate)}
               isOutsideRange={(d) => d.isAfter(to.max) || d.isBefore(to.min)}
             />
           )}
@@ -62,10 +64,8 @@ const Timeline = (props) => {
               ...(maxRange && {
                 minDate: from?.min
                   ? from.min
-                  : activeLayer.timelineParams.startDateAbsolute,
-                maxDate: to?.max
-                  ? to.max
-                  : activeLayer.timelineParams.endDateAbsolute,
+                  : activeLayer.timelineParams.startDate,
+                maxDate: to?.max ? to.max : activeLayer.timelineParams.endDate,
               }),
               ...(dynamic &&
                 from.selected &&
