@@ -1,8 +1,8 @@
 import { createElement, PureComponent, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { trackEvent } from 'utils/analytics';
-import { dateRange as dateRangeUtil } from 'utils/date-range';
+// import { trackEvent } from "utils/analytics";
+// import { dateRange as dateRangeUtil } from "utils/date-range";
 import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 
@@ -137,90 +137,89 @@ class TimelineContainer extends PureComponent {
       endDate,
       maxDate,
       maxRange,
-      trimEndDate,
       rangeInterval,
     } = this.props;
 
-    const {
-      from
-    } = this.state;
-
     let minDateDynamic = minDate;
+    let maxDateDynamic = maxDate;
 
     if (maxRange) {
-      const fromMaxRangeReached = moment(maxDate).diff(moment(minDate), rangeInterval, maxRange);
+      const fromMaxRangeReached = moment(maxDate).diff(
+        moment(minDate),
+        rangeInterval,
+        maxRange
+      );
+
       if (fromMaxRangeReached > maxRange) {
-        const default3MonthsBack = moment(endDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD');
-        minDateDynamic = from?.min || default3MonthsBack;
+        const default3MonthsBack = moment(endDate)
+          .subtract(maxRange, rangeInterval)
+          .format('YYYY-MM-DD');
+        minDateDynamic = default3MonthsBack;
+      }
+
+      const toMaxDateReached = moment(maxDate).diff(
+        moment(endDate),
+        rangeInterval,
+        maxRange
+      );
+
+      if (toMaxDateReached > maxRange) {
+        maxDateDynamic = endDate;
       }
     }
-
 
     this.setState({
       from: {
         min: new Date(minDateDynamic),
-        max: new Date(maxRange ? maxDate : trimEndDate),
+        max: new Date(maxDateDynamic),
         selected: new Date(startDate),
       },
       to: {
         min: new Date(minDateDynamic),
-        max: new Date(maxDate),
+        max: new Date(maxDateDynamic),
         selected: new Date(endDate),
       },
     });
   }
 
   handleOnDateChange(date, position, hasMaxRange) {
-    const { handleChange, maxDate, minDate, rangeInterval, maxRange} = this.props;
+    const { handleChange, rangeInterval, maxRange } = this.props;
     const { from, to } = this.state;
 
     const getPosition = position === 0 ? 'from' : 'to';
 
-    let newRange = null;
+    let fromDate;
+    let toDate;
 
     if (hasMaxRange && getPosition === 'from') {
-      const outsideOfRange = moment(date).isBefore(from.min);
-      if (outsideOfRange) {
-        newRange = [
-          moment(date).format('YYYY-MM-DD'),
-          moment(date).add(maxRange, rangeInterval).format('YYYY-MM-DD')
-        ]
+      const outsideMinRange = moment(date).isBefore(from.min);
+      if (outsideMinRange) {
+        fromDate = moment(date).format('YYYY-MM-DD');
+        toDate = moment(date).add(maxRange, rangeInterval).format('YYYY-MM-DD');
       } else {
-        newRange = [
-          moment(date).format('YYYY-MM-DD'),
-          moment(to.max).format('YYYY-MM-DD')
-        ]
+        fromDate = moment(date).format('YYYY-MM-DD');
+        toDate = moment(to.max).format('YYYY-MM-DD');
       }
     }
 
     if (hasMaxRange && getPosition === 'to') {
       const outsideOfRange = moment(date).isAfter(to.max);
       if (outsideOfRange) {
-        newRange = [
-          moment(date).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
-          moment(date).format('YYYY-MM-DD')
-        ]
+        fromDate = moment(date)
+          .subtract(maxRange, rangeInterval)
+          .format('YYYY-MM-DD');
+        toDate = moment(date).format('YYYY-MM-DD');
       } else {
-        newRange = [
-          moment(from.min).format('YYYY-MM-DD'),
-          moment(date).format('YYYY-MM-DD')
-        ]
+        fromDate = moment(from.min).format('YYYY-MM-DD');
+        toDate = moment(date).format('YYYY-MM-DD');
       }
     }
 
-    console.log('new range', newRange);
-
-    handleChange(newRange, this.props.activeLayer, false);
+    const newRange = [fromDate, toDate];
+    handleChange(newRange, this.props.activeLayer, hasMaxRange);
   }
 
   async handleTimelineDates() {
-    const { latestUrl, dateRange: configuredRange } = this.props;
-    if (latestUrl && latestUrl.startsWith('http') && configuredRange) {
-      // Dynamic fetch based on URL within layer config
-      // await this.handleLatestUrlDates();
-    } else {
-      // dates based on timeline conf within layer config
-    }
     this.handleWidgetConfigDates();
   }
 
@@ -240,9 +239,8 @@ TimelineContainer.propTypes = {
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
   maxRange: PropTypes.string,
+  rangeInterval: PropTypes.number,
   trimEndDate: PropTypes.string,
-  startDateAbsolute: PropTypes.string,
-  endDateAbsolute: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
   dateRange: PropTypes.shape({

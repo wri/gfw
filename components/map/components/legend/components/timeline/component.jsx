@@ -64,10 +64,8 @@ const Timeline = (props) => {
               ...(maxRange && {
                 minDate: from?.min
                   ? from.min
-                  : activeLayer.timelineParams.startDateAbsolute,
-                maxDate: to?.max
-                  ? to.max
-                  : activeLayer.timelineParams.endDateAbsolute,
+                  : activeLayer.timelineParams.startDate,
+                maxDate: to?.max ? to.max : activeLayer.timelineParams.endDate,
               }),
               ...(dynamic &&
                 from.selected &&
