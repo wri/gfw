@@ -134,54 +134,101 @@ class TimelineContainer extends PureComponent {
     const {
       minDate,
       startDate,
+      endDate,
       maxDate,
-      startDateAbsolute,
-      endDateAbsolute,
       maxRange,
       trimEndDate,
+      rangeInterval,
     } = this.props;
+
+    const {
+      from
+    } = this.state;
+
+    let minDateDynamic = minDate;
+
+    if (maxRange) {
+      const fromMaxRangeReached = moment(maxDate).diff(moment(minDate), rangeInterval, maxRange);
+      if (fromMaxRangeReached > maxRange) {
+        const default3MonthsBack = moment(endDate).subtract(maxRange, rangeInterval).format('YYYY-MM-DD');
+        minDateDynamic = from?.min || default3MonthsBack;
+      }
+    }
+
+
     this.setState({
       from: {
-        min: new Date(minDate),
+        min: new Date(minDateDynamic),
         max: new Date(maxRange ? maxDate : trimEndDate),
-        selected: new Date(maxRange ? startDateAbsolute : startDate),
+        selected: new Date(startDate),
       },
       to: {
-        min: new Date(maxRange ? minDate : startDate),
+        min: new Date(minDateDynamic),
         max: new Date(maxDate),
-        selected: new Date(maxRange ? endDateAbsolute : trimEndDate),
+        selected: new Date(endDate),
       },
     });
+  }
+
+  handleOnDateChange(date, position, hasMaxRange) {
+    const { handleChange, maxDate, minDate, rangeInterval, maxRange} = this.props;
+    const { from, to } = this.state;
+
+    const getPosition = position === 0 ? 'from' : 'to';
+
+    let newRange = null;
+
+    if (hasMaxRange && getPosition === 'from') {
+      const outsideOfRange = moment(date).isBefore(from.min);
+      if (outsideOfRange) {
+        newRange = [
+          moment(date).format('YYYY-MM-DD'),
+          moment(date).add(maxRange, rangeInterval).format('YYYY-MM-DD')
+        ]
+      } else {
+        newRange = [
+          moment(date).format('YYYY-MM-DD'),
+          moment(to.max).format('YYYY-MM-DD')
+        ]
+      }
+    }
+
+    if (hasMaxRange && getPosition === 'to') {
+      const outsideOfRange = moment(date).isAfter(to.max);
+      if (outsideOfRange) {
+        newRange = [
+          moment(date).subtract(maxRange, rangeInterval).format('YYYY-MM-DD'),
+          moment(date).format('YYYY-MM-DD')
+        ]
+      } else {
+        newRange = [
+          moment(from.min).format('YYYY-MM-DD'),
+          moment(date).format('YYYY-MM-DD')
+        ]
+      }
+    }
+
+    console.log('new range', newRange);
+
+    handleChange(newRange, this.props.activeLayer, false);
   }
 
   async handleTimelineDates() {
-    // const { latestUrl, dateRange: configuredRange } = this.props;
-    // if (latestUrl && latestUrl.startsWith('http') && configuredRange) {
-    //   // Dynamic fetch based on URL within layer config
-    //   await this.handleLatestUrlDates();
-    // } else {
-    //   // dates based on timeline conf within layer config
-    // }
+    const { latestUrl, dateRange: configuredRange } = this.props;
+    if (latestUrl && latestUrl.startsWith('http') && configuredRange) {
+      // Dynamic fetch based on URL within layer config
+      // await this.handleLatestUrlDates();
+    } else {
+      // dates based on timeline conf within layer config
+    }
     this.handleWidgetConfigDates();
   }
-
-  handleOnDateChange = (date, position, absolute) => {
-    const { handleChange } = this.props;
-    const newRange = dateRangeUtil(this.props, date, position, absolute);
-    handleChange(newRange, this.props.activeLayer, absolute);
-
-    trackEvent({
-      category: 'Map legend',
-      action: `User changes date range for ${this.props.activeLayer.id}`,
-      label: `${newRange[0]}:${newRange[2]}`,
-    });
-  };
 
   render() {
     return createElement(TimelineComponent, {
       ...this.props,
       ...this.state,
-      handleOnDateChange: this.handleOnDateChange,
+      handleOnDateChange: this.handleOnDateChange.bind(this),
     });
   }
 }
