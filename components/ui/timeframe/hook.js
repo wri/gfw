@@ -119,20 +119,6 @@ function useTimeline(ref, tileRefs, data, selectedIndex, dotSize, onChange) {
     }
   }, [selectedIndex, prevSelectedIndex]);
 
-  // useEffect(() => {
-  //   if (initialized) {
-  //     const newOffset = handleOffset(
-  //       selectedIndex,
-  //       timeline.tileWidth,
-  //       data.length,
-  //       ref,
-  //       tileRefs
-  //     );
-  //     console.log('offset', newOffset);
-  //     setOffset(0);
-  //   }
-  // }, [selectedIndex, initialized])
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (ref.current) {

@@ -3,21 +3,28 @@ import * as actions from './actions';
 export const initialState = {
   loading: true,
   error: false,
-  data: []
+  meta: null,
+  data: [],
 };
 
 const setDatasetsLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
 const setDatasets = (state, { payload }) => ({
   ...state,
   data: payload,
-  loading: false
+  loading: false,
+});
+
+const setDatasetMetadata = (state, { payload }) => ({
+  ...state,
+  meta: payload,
 });
 
 export default {
   [actions.setDatasets]: setDatasets,
-  [actions.setDatasetsLoading]: setDatasetsLoading
+  [actions.setDatasetMetadata]: setDatasetMetadata,
+  [actions.setDatasetsLoading]: setDatasetsLoading,
 };

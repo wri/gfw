@@ -136,6 +136,7 @@ const MapLegend = ({
                     className="sub-layer-menu"
                     layers={lg.layers}
                     onSelectLayer={onSelectLayer}
+                    onInfoClick={onChangeInfo}
                   />
                 )}
 

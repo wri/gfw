@@ -6,6 +6,24 @@
   font-size: 12px;
   color: $slate;
 
+  &.dynamic-content {
+    max-height: calc(100vh - 40px);
+    overflow: scroll;
+    text-align: left;
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+  }
+
   &.tooltip-dark {
     background-color: $slate;
     color: $white;
