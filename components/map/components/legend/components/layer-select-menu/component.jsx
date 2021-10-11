@@ -23,6 +23,9 @@ class LayerSelectMenu extends PureComponent {
     const { className, layers } = this.props;
     const { menuActive } = this.state;
     const activeLayer = layers && layers.find((l) => l.active);
+    const layerList = layers.filter((l) => l.isSelector || l.default);
+
+    if (layerList.length <= 1) return null;
 
     return (
       <div className={`c-layer-select-menu ${className || ''}`}>
