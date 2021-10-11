@@ -1373,9 +1373,63 @@ export const fetchGladAlertsDaily = (params) => {
     dataset: 'glad_alerts',
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
-    version: 'v20210907',
+    version: 'latest',
     // Refernces the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsDaily}`;
+
+  if (download) {
+    // No download yet
+  }
+
+  const datasetMapping = {
+    glad_l: 'umd_glad_landsat_alerts',
+  };
+
+  const dateString = `alert`.concat('__date');
+  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
+    '__confidence'
+  );
+
+  // Replace base url params and encode
+  const url = encodeURI(
+    baseUrl
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{dateString}/g, dateString)
+      .replace(/{confidenceString}/g, confidenceString)
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  // Light initial Parsing
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confidence: d[confidenceString],
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
+
+export const fetchGladAlertsDailyRanked = (params) => {
+  // Params
+  const { startDate, endDate, download, deforestationAlertsDataset } =
+    params || {};
+  // Construct base url for fetch
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'glad_alerts',
+    datasetType: 'daily',
+    // version override necessary here (no 'latest' defined)
+    version: 'latest',
+    // Refernces the base SQL from the SQL_QUERIES object
+  })}${SQL_QUERIES.integratedAlertsRanked}`;
 
   if (download) {
     // No download yet

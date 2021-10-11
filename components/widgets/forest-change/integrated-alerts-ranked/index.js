@@ -17,6 +17,7 @@ import {
   getExtentGrouped,
   getIntegratedAlertsRanked,
   fetchGLADLatest,
+  fetchGladAlertsDaily,
 } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -136,6 +137,36 @@ export default {
     const alertSystem = params?.deforestationAlertsDataset;
 
     if (shouldQueryPrecomputedTables(params)) {
+      if (alertSystem === 'glad_l') {
+        return all([
+          fetchGladAlertsDaily({
+            ...params,
+            startDate,
+            grouped: true,
+            endDate,
+            alertSystem,
+            geostoreId,
+          }),
+          fetchGLADLatest(params),
+          getExtentGrouped(params),
+        ]).then(
+          spread((alerts, latest, extent) => {
+            const { data } = alerts.data;
+            const areas = extent.data.data;
+            const latestDate = latest.attributes && latest.attributes.updatedAt;
+
+            // const alertSystem = params?.deforestationAlertsDataset;
+            return data && extent && latest
+              ? {
+                  alerts: data,
+                  extent: areas,
+                  latest: latestDate,
+                  settings: { latestDate },
+                }
+              : {};
+          })
+        );
+      }
       return all([
         getIntegratedAlertsRanked({
           ...params,
