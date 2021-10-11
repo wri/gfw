@@ -11,17 +11,18 @@ import './styles.scss';
 const Timeline = (props) => {
   const {
     className,
+    minDate,
+    maxDate,
+    startDate,
+    trimEndDate,
     handleOnDateChange,
     dateFormat,
     interval,
     activeLayer,
     maxRange,
+    startDateAbsolute,
+    endDateAbsolute,
     description,
-    minDate,
-    maxDate,
-    from,
-    to,
-    dynamic,
   } = props;
 
   return (
@@ -30,28 +31,25 @@ const Timeline = (props) => {
       {dateFormat === 'YYYY-MM-DD' && interval !== 'years' && (
         <div className="date-pickers">
           From
-          {from && (
-            <Datepicker
-              selected={from.selected}
-              onChange={(date) =>
-                handleOnDateChange(moment(date), 0, !!maxRange)}
-              minDate={new Date(minDate)}
-              maxDate={new Date(maxDate)}
-              isOutsideRange={(d) =>
-                d.isAfter(moment(from.max)) || d.isBefore(moment(from.min))}
-            />
-          )}
+          <Datepicker
+            selected={new Date(maxRange ? startDateAbsolute : startDate)}
+            onChange={(date) => handleOnDateChange(moment(date), 0, !!maxRange)}
+            minDate={new Date(minDate)}
+            maxDate={maxRange ? new Date(maxDate) : new Date(trimEndDate)}
+            isOutsideRange={(d) =>
+              d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
+              d.isBefore(moment(minDate))}
+          />
           to
-          {to && (
-            <Datepicker
-              selected={to.selected}
-              onChange={(date) =>
-                handleOnDateChange(moment(date), 2, !!maxRange)}
-              minDate={new Date(minDate)}
-              maxDate={new Date(maxDate)}
-              isOutsideRange={(d) => d.isAfter(to.max) || d.isBefore(to.min)}
-            />
-          )}
+          <Datepicker
+            selected={new Date(maxRange ? endDateAbsolute : trimEndDate)}
+            onChange={(date) => handleOnDateChange(moment(date), 2, !!maxRange)}
+            minDate={maxRange ? new Date(minDate) : new Date(startDate)}
+            maxDate={new Date(maxDate)}
+            isOutsideRange={(d) =>
+              d.isAfter(moment(maxRange ? maxDate : trimEndDate)) ||
+              d.isBefore(moment(minDate))}
+          />
         </div>
       )}
       <div className="range-slider">
@@ -62,17 +60,9 @@ const Timeline = (props) => {
             timelineParams: {
               ...activeLayer.timelineParams,
               ...(maxRange && {
-                minDate: from?.min
-                  ? from.min
-                  : activeLayer.timelineParams.startDate,
-                maxDate: to?.max ? to.max : activeLayer.timelineParams.endDate,
+                minDate: activeLayer.timelineParams.startDateAbsolute,
+                maxDate: activeLayer.timelineParams.endDateAbsolute,
               }),
-              ...(dynamic &&
-                from.selected &&
-                to.selected && {
-                  startDate: from.selected,
-                  endDate: to.selected,
-                }),
               ...(!maxRange && {
                 marks: props.marks,
               }),
@@ -128,9 +118,6 @@ Timeline.propTypes = {
   interval: PropTypes.string,
   activeLayer: PropTypes.object,
   maxRange: PropTypes.number,
-  from: PropTypes.object,
-  to: PropTypes.object,
-  dynamic: PropTypes.bool,
 };
 
 export default Timeline;
