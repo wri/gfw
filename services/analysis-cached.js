@@ -40,6 +40,7 @@ const SQL_QUERIES = {
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
+  integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
   integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1252,6 +1253,116 @@ export const fetchIntegratedAlerts = (params) => {
   }));
 };
 
+export const getIntegratedAlertsRanked = (params) => {
+  const {
+    startDate,
+    endDate,
+    alertSystem,
+    download,
+    deforestationAlertsDataset,
+    forestType,
+    landCategory,
+    ifl,
+  } = params || {};
+  let requestUrl;
+  const query = SQL_QUERIES.integratedAlertsRanked;
+
+  const datasetMapping = {
+    all: 'gfw_integrated_alerts',
+    glad_l: 'umd_glad_landsat_alerts',
+    glad_s2: 'umd_glad_sentinel2_alerts',
+    radd: 'wur_radd_alerts',
+  };
+
+  const alertTypeColumn = datasetMapping[deforestationAlertsDataset].concat(
+    '__date'
+  );
+
+  if (!download) {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'all') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'glad_l') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'glad_s2') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'radd') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${query}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{alertTypeColumn}/g, alertTypeColumn)
+      .replace(/{startDate}/g, startDate)
+      .replace(/{endDate}/g, endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        count: d.alert__count,
+        area_ha: d.alert_area__ha,
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
+
 export const fetchGladAlertsDaily = (params) => {
   // Params
   const { startDate, endDate, download, deforestationAlertsDataset } =
@@ -1262,9 +1373,63 @@ export const fetchGladAlertsDaily = (params) => {
     dataset: 'glad_alerts',
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
-    version: 'v20210907',
+    version: 'latest',
     // Refernces the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsDaily}`;
+
+  if (download) {
+    // No download yet
+  }
+
+  const datasetMapping = {
+    glad_l: 'umd_glad_landsat_alerts',
+  };
+
+  const dateString = `alert`.concat('__date');
+  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
+    '__confidence'
+  );
+
+  // Replace base url params and encode
+  const url = encodeURI(
+    baseUrl
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{dateString}/g, dateString)
+      .replace(/{confidenceString}/g, confidenceString)
+      .replace('{startDate}', startDate)
+      .replace('{endDate}', endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  // Light initial Parsing
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        confidence: d[confidenceString],
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
+
+export const fetchGladAlertsDailyRanked = (params) => {
+  // Params
+  const { startDate, endDate, download, deforestationAlertsDataset } =
+    params || {};
+  // Construct base url for fetch
+  const baseUrl = `${getRequestUrl({
+    ...params,
+    dataset: 'glad_alerts',
+    datasetType: 'daily',
+    // version override necessary here (no 'latest' defined)
+    version: 'latest',
+    // Refernces the base SQL from the SQL_QUERIES object
+  })}${SQL_QUERIES.integratedAlertsRanked}`;
 
   if (download) {
     // No download yet
