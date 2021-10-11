@@ -3,12 +3,12 @@ import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  // GLAD_DEFORESTATION_ALERTS_DATASET,
+  GLAD_DEFORESTATION_ALERTS_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  // GLAD_ALERTS,
+  GLAD_ALERTS,
 } from 'data/layers';
 
 import { handleGladMeta } from 'utils/gfw-meta';
@@ -16,7 +16,6 @@ import { handleGladMeta } from 'utils/gfw-meta';
 import {
   getExtentGrouped,
   getIntegratedAlertsRanked,
-  fetchGladAlerts,
   fetchGLADLatest,
 } from 'services/analysis-cached';
 
@@ -91,10 +90,10 @@ export default {
       boundary: true,
     },
     // Replace with 8bits integrated deforestation layer when ready
-    // {
-    //   dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-    //   layers: [GLAD_ALERTS],
-    // },
+    {
+      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
+      layers: [GLAD_ALERTS],
+    },
   ],
   sortOrder: {
     summary: 6,
@@ -138,32 +137,74 @@ export default {
 
     if (shouldQueryPrecomputedTables(params)) {
       return all([
-        getIntegratedAlertsRanked({ ...params, startDate, grouped: true, endDate, geostoreId }),
+        getIntegratedAlertsRanked({
+          ...params,
+          startDate,
+          grouped: true,
+          endDate,
+          alertSystem,
+          geostoreId,
+        }),
         fetchGLADLatest(params),
-        getExtentGrouped(params)
-      ]).then(spread((alerts, latest, extent) => {
-        const { data } = alerts.data;
-        const areas = extent.data.data;
-        const latestDate = latest.attributes && latest.attributes.updatedAt;
+        getExtentGrouped(params),
+      ]).then(
+        spread((alerts, latest, extent) => {
+          const { data } = alerts.data;
+          const areas = extent.data.data;
+          const latestDate = latest.attributes && latest.attributes.updatedAt;
 
-        // const alertSystem = params?.deforestationAlertsDataset;
-        return data && extent && latest
-          ? {
-              alerts: data,
-              extent: areas,
-              latest: latestDate,
-              settings: { latestDate },
-            }
-          : {};
-      }))
+          // const alertSystem = params?.deforestationAlertsDataset;
+          return data && extent && latest
+            ? {
+                alerts: data,
+                extent: areas,
+                latest: latestDate,
+                settings: { latestDate },
+              }
+            : {};
+        })
+      );
     }
 
     // OTF HERE
     return null;
   },
-  getDataURL: (params) => [
-    fetchGladAlerts({ ...params, download: true }),
-    getExtentGrouped({ ...params, download: true }),
-  ],
+  getDataURL: (params) => {
+    const { GLAD } = params.GFW_META.datasets;
+    const defaultStartDate = GLAD?.defaultStartDate;
+    const defaultEndDate = GLAD?.defaultEndDate;
+    const startDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
+    const geostoreId = params?.geostore?.hash;
+    const alertSystem = params?.deforestationAlertsDataset;
+    let table = 'gfw_integrated_alerts';
+    if (alertSystem === 'glad_l') {
+      table = 'umd_glad_landsat_alerts';
+    }
+    if (alertSystem === 'glad_l') {
+      table = 'umd_glad_sentinel2_alerts';
+    }
+    if (alertSystem === 'radd') {
+      table = 'wur_radd_alerts';
+    }
+
+    return [
+      getIntegratedAlertsRanked({
+        ...params,
+        startDate,
+        endDate,
+        grouped: true,
+        download: true,
+        geostoreId,
+        alertSystem,
+        staticStatement: {
+          // overrides tables and/or sql
+          // append: true, If active, we will utalise the old location select logic with our statement
+          // If download===true, apply to "download" endpoint
+          table,
+        },
+      }),
+    ];
+  },
   getWidgetProps,
 };

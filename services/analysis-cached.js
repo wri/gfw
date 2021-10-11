@@ -40,12 +40,12 @@ const SQL_QUERIES = {
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
+  integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
   integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadRadd: `SELECT latitude, longitude, wur_radd_alerts__date, wur_radd_alerts__confidence FROM data WHERE wur_radd_alerts__date >= '{startDate}' AND wur_radd_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
-  integratedAlertsRanked: `SELECT {select_location}, gfw_integrated_alerts__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}' GROUP BY {location}, gfw_integrated_alerts__date ORDER BY gfw_integrated_alerts__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   fires:
@@ -509,83 +509,6 @@ export const getEmissions = (params) => {
     },
   }));
 };
-
-export const getIntegratedAlertsRanked = (params) => {
-  const {
-    startDate,
-    endDate,
-    download,
-    deforestationAlertsDataset,
-    geostoreId,
-    alertSystem,
-    forestType,
-    landCategory,
-    ifl,
-  } = params || {};
-  let requestUrl;
-  let query = SQL_QUERIES.integratedAlertsRanked;
-
-  const datasetMapping = {
-    all: 'gfw_integrated_alerts',
-    glad_l: 'umd_glad_landsat_alerts',
-    glad_s2: 'umd_glad_sentinel2_alerts',
-    radd: 'wur_radd_alerts',
-  };
-
-  const dateString = datasetMapping[deforestationAlertsDataset].concat(
-    '__date'
-  );
-  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
-    '__confidence'
-  );
-
-  if (!download) {
-    requestUrl = getRequestUrl({
-      ...params,
-      dataset: 'integrated_alerts',
-      datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
-      version: 'latest',
-    });
-  }
-
-
-  const url = encodeURI(
-    `${requestUrl}${query}`
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
-      )
-      .replace(/{location}/g, getLocationSelect(params))
-      .replace(/{dateString}/g, dateString)
-      .replace(/{confidenceString}/g, confidenceString)
-      .replace(/{startDate}/g, startDate)
-      .replace(/{endDate}/g, endDate)
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
-  );
-
-  // data: {
-  //   data: response.data.data.map((d) => ({
-  //     ...d,
-  //     week: parseInt(d.alert__week, 10),
-  //     year: parseInt(d.alert__year, 10),
-  //     count: d.alert__count,
-  //     alerts: d.alert__count,
-  //     area_ha: d.alert_area__ha,
-  //   })),
-  // },
-
-  return apiRequest.get(url).then((response) => ({
-    data: {
-      data: response.data.data.map((d) => ({
-        ...d,
-        count: d.alert__count,
-        area_ha: d.alert_area__ha,
-        alerts: d.alert__count
-      })),
-    },
-  }));
-}
 
 export const getEmissionsLossOTF = (params) => {
   const { download, threshold, geostoreId, startYear, endYear } = params || {};
@@ -1324,6 +1247,116 @@ export const fetchIntegratedAlerts = (params) => {
       data: response.data.data.map((d) => ({
         ...d,
         confidence: d[confidenceString],
+        alerts: d.alert__count,
+      })),
+    },
+  }));
+};
+
+export const getIntegratedAlertsRanked = (params) => {
+  const {
+    startDate,
+    endDate,
+    alertSystem,
+    download,
+    deforestationAlertsDataset,
+    forestType,
+    landCategory,
+    ifl,
+  } = params || {};
+  let requestUrl;
+  const query = SQL_QUERIES.integratedAlertsRanked;
+
+  const datasetMapping = {
+    all: 'gfw_integrated_alerts',
+    glad_l: 'umd_glad_landsat_alerts',
+    glad_s2: 'umd_glad_sentinel2_alerts',
+    radd: 'wur_radd_alerts',
+  };
+
+  const alertTypeColumn = datasetMapping[deforestationAlertsDataset].concat(
+    '__date'
+  );
+
+  if (!download) {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'all') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'glad_l') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'glad_s2') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  if (download && alertSystem === 'radd') {
+    requestUrl = getRequestUrl({
+      ...params,
+      dataset: 'integrated_alerts',
+      datasetType: 'daily',
+      // version override necessary here (no 'latest' defined)
+      version: 'latest',
+    });
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${query}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: true })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{alertTypeColumn}/g, alertTypeColumn)
+      .replace(/{startDate}/g, startDate)
+      .replace(/{endDate}/g, endDate)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `glad_alerts${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__count`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        count: d.alert__count,
+        area_ha: d.alert_area__ha,
         alerts: d.alert__count,
       })),
     },
