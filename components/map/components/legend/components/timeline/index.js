@@ -9,7 +9,15 @@ import { getMarks } from './selectors';
 
 const mapStateToProps = (
   state,
-  { maxDate, minDate, startDate, endDate, trimEndDate, ...props }
+  {
+    maxDate,
+    minDate,
+    startDate,
+    endDate,
+    trimEndDate,
+    dynamicTimeline,
+    ...props
+  }
 ) => {
   const dates = {
     maxDate,
@@ -17,9 +25,10 @@ const mapStateToProps = (
     startDate,
     endDate,
     trimEndDate,
+    dynamicTimeline,
   };
   return {
-    marks: getMarks({ dates }),
+    marks: getMarks({ dates, dynamicTimeline }),
     ...props,
   };
 };
