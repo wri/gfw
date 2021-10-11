@@ -200,42 +200,7 @@ export default {
     // OTF HERE
     return null;
   },
-  getDataURL: (params) => {
-    const { GLAD } = params.GFW_META.datasets;
-    const defaultStartDate = GLAD?.defaultStartDate;
-    const defaultEndDate = GLAD?.defaultEndDate;
-    const startDate = params?.startDate || defaultStartDate;
-    const endDate = params?.endDate || defaultEndDate;
-    const geostoreId = params?.geostore?.hash;
-    const alertSystem = params?.deforestationAlertsDataset;
-    let table = 'gfw_integrated_alerts';
-    if (alertSystem === 'glad_l') {
-      table = 'umd_glad_landsat_alerts';
-    }
-    if (alertSystem === 'glad_l') {
-      table = 'umd_glad_sentinel2_alerts';
-    }
-    if (alertSystem === 'radd') {
-      table = 'wur_radd_alerts';
-    }
-
-    return [
-      getIntegratedAlertsRanked({
-        ...params,
-        startDate,
-        endDate,
-        grouped: true,
-        download: true,
-        geostoreId,
-        alertSystem,
-        staticStatement: {
-          // overrides tables and/or sql
-          // append: true, If active, we will utalise the old location select logic with our statement
-          // If download===true, apply to "download" endpoint
-          table,
-        },
-      }),
-    ];
-  },
+  // Void no download
+  getDataURL: () => [],
   getWidgetProps,
 };

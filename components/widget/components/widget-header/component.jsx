@@ -127,7 +127,8 @@ class WidgetHeader extends PureComponent {
                 disabled={
                   disableDownloadBtn ||
                   widget === 'gladAlerts' ||
-                  widget === 'gladRanked'
+                  widget === 'gladRanked' ||
+                  widget === 'integratedAlertsRanked'
                 }
                 disabledMessage={disabledMessageString}
                 {...this.props}
