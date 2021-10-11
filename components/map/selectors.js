@@ -213,6 +213,7 @@ export const getDatasetsWithConfig = createSelector(
         visibility,
         opacity,
         bbox,
+        citation = null,
       } = layerConfig || {};
 
       return {
@@ -236,6 +237,7 @@ export const getDatasetsWithConfig = createSelector(
           return handleDynamicTimeline(
             l,
             datasetMetadata,
+            timelineParams,
             (dynamicTimeline) => {
               const maxDate = latestDates[id];
               const { latestFormat } = l.params || {};
@@ -252,6 +254,9 @@ export const getDatasetsWithConfig = createSelector(
 
               const timelineConfig = {
                 ...timelineConfigInit,
+                ...(dynamicTimeline && {
+                  ...dynamicTimeline,
+                }),
                 ...(maxRange &&
                   rangeInterval &&
                   timelineConfigInit && {
@@ -265,11 +270,9 @@ export const getDatasetsWithConfig = createSelector(
                       .format('YYYY-MM-DD'),
                   }),
                 maxRange,
+                dynamicTimeline: dynamicTimeline !== null,
                 minRange,
-                rangeInterval,
-                ...(dynamicTimeline && {
-                  ...dynamicTimeline,
-                }),
+                rangeInterval
               };
 
               const layerParams = {
@@ -286,10 +289,7 @@ export const getDatasetsWithConfig = createSelector(
                       .subtract(defaultRange || maxRange, rangeInterval)
                       .format('YYYY-MM-DD'),
                     endDateAbsolute: maxDate || l.params.endDate,
-                  }),
-                ...(dynamicTimeline && {
-                  ...dynamicTimeline,
-                }),
+                  })
               };
 
               const out = {
@@ -297,6 +297,9 @@ export const getDatasetsWithConfig = createSelector(
                 visibility,
                 opacity,
                 bbox,
+                ...(citation && {
+                  citation
+                }),
                 color: d.color,
                 active: layers && layers.length && layers.includes(l.id),
                 ...(!isEmpty(layerParams) && {

@@ -95,6 +95,7 @@ Timeline.propTypes = {
   description: PropTypes.string,
   isPlaying: PropTypes.bool,
   handleTogglePlay: PropTypes.func,
+  dynamic: PropTypes.bool,
   min: PropTypes.number,
   max: PropTypes.number,
   start: PropTypes.number,

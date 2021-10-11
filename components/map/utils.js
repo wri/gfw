@@ -31,7 +31,7 @@ export const getDayRange = (params) => {
   };
 };
 
-export const handleDynamicTimeline = (l, dsMetadata, callback) => {
+export const handleDynamicTimeline = (l, dsMetadata, timelineParams, callback) => {
   const hasLatest = l.dataset === 'integrated-deforestation-alerts-8bit';
   const range = {
     default: 549,
@@ -55,9 +55,9 @@ export const handleDynamicTimeline = (l, dsMetadata, callback) => {
       .format('YYYY-MM-DD');
 
     return callback({
-      startDate,
       minDate,
       maxDate,
+      startDate: timelineParams?.startDate || startDate,
       startDateAbsolute: startDate,
       endDateAbsolute: maxDate,
     });
