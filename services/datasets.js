@@ -23,6 +23,21 @@ export const getDatasets = () =>
     )
     .then((res) => res?.data);
 
+export const getDatasetMeta = () => {
+  const metaData = {};
+
+  fetch('https://api.resourcewatch.org/glad-alerts/latest')
+    .then((res) => res.json())
+    .then((data) => {
+      const latestDate = data?.data[0]?.attributes?.date;
+      metaData['https://api.resourcewatch.org/glad-alerts/latest'] = latestDate;
+    });
+
+  return new Promise((resolve) => {
+    return resolve(metaData);
+  });
+};
+
 export const getDatasetQuery = ({ dataset, version = 'latest', sql, token }) =>
   dataRequest
     .get(`/dataset/${dataset}/${version}/query?sql=${sql}`, {

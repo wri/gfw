@@ -1,4 +1,6 @@
+import moment from 'moment';
 import { differenceInDays } from 'date-fns';
+import has from 'lodash/has';
 
 export const getDayRange = (params) => {
   const { startDate, endDate, minDate, maxDate, weeks } = params || {};
@@ -27,4 +29,39 @@ export const getDayRange = (params) => {
     endDayIndex,
     numberOfDays,
   };
+};
+
+export const handleDynamicTimeline = (l, dsMetadata, callback) => {
+  const hasLatest = l.dataset === 'integrated-deforestation-alerts-8bit';
+  const range = {
+    default: 549,
+    interval: 'days',
+    max: 730,
+    min: 1,
+  };
+
+  if (
+    hasLatest &&
+    has(dsMetadata, 'https://api.resourcewatch.org/glad-alerts/latest')
+  ) {
+    const latestDate =
+      dsMetadata['https://api.resourcewatch.org/glad-alerts/latest'];
+    const maxDate = moment(latestDate).format('YYYY-MM-DD');
+    const minDate = moment(maxDate)
+      .subtract(range.max, range.interval)
+      .format('YYYY-MM-DD');
+    const startDate = moment(latestDate)
+      .subtract(range.default, range.interval)
+      .format('YYYY-MM-DD');
+
+    return callback({
+      startDate,
+      minDate,
+      maxDate,
+      startDateAbsolute: startDate,
+      endDateAbsolute: maxDate,
+    });
+  }
+
+  return callback(null);
 };

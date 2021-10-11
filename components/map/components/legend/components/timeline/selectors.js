@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import range from 'lodash/range';
 
-const getDates = state => state.dates;
+const getDates = (state) => state.dates;
 
-export const getMarks = createSelector(getDates, dates => {
+export const getMarks = createSelector(getDates, (dates) => {
   if (!dates) return null;
   const { minDate, maxDate } = dates;
   const numOfYears = moment(maxDate).diff(minDate, 'years');
@@ -17,11 +17,11 @@ export const getMarks = createSelector(getDates, dates => {
     maxDays + 1,
     maxDays / (numOfYears > 6 ? 6 : numOfYears)
   );
+
   const marks = {};
-  ticks.forEach(r => {
-    marks[Math.floor(r)] = moment(minDate)
-      .add(r, 'days')
-      .format('YYYY');
+  ticks.forEach((r) => {
+    marks[Math.floor(r)] = moment(minDate).add(r, 'days').format('YYYY');
   });
+
   return marks;
 });
