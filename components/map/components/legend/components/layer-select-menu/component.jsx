@@ -14,7 +14,7 @@ import './styles.scss';
 
 class LayerSelectMenu extends PureComponent {
   state = {
-    menuActive: false
+    menuActive: false,
   };
 
   handleClickLayer(layer) {
@@ -30,13 +30,12 @@ class LayerSelectMenu extends PureComponent {
     const layerList = layers.filter((l) => l.isSelector || l.default);
 
     if (layerList.length <= 1) return null;
-
     return (
       <div className={`c-layer-select-menu ${className || ''}`}>
         <div className="selector">
           <button onClick={() => this.setState({ menuActive: !menuActive })}>
             {activeLayer.name}
-            <span className="citation">{activeLayer.description}</span>
+            <span className="citation">{activeLayer.citation}</span>
             <Icon
               icon={arrowDownIcon}
               className={`icon-arrow ${menuActive ? 'reverse' : ''}`}
@@ -60,25 +59,33 @@ class LayerSelectMenu extends PureComponent {
                           hideOnClick
                           position="top"
                           animation="none"
-                          html={<Tip className="dynamic-content" html={l.description} />}
+                          html={(
+                            <Tip
+                              className="dynamic-content"
+                              html={l.description}
+                            />
+                          )}
                           onShow={() =>
                             trackEvent({
                               category: 'Open modal',
                               action: 'Hover modal button',
-                              label: `${l.layer}: ${l?.applicationConfig?.metadata || l.description}`
-                          })}
+                              label: `${l.layer}: ${
+                                l?.applicationConfig?.metadata || l.description
+                              }`,
+                            })}
                         >
                           <Button
                             className="theme-button-tiny theme-button-grey-filled square info-button"
-                            onClick={l?.applicationConfig?.metadata && (() => onInfoClick(l.applicationConfig.metadata))}
+                            onClick={
+                              l?.applicationConfig?.metadata &&
+                              (() => onInfoClick(l.applicationConfig.metadata))
+                            }
                           >
                             <Icon icon={helpIcon} />
                           </Button>
                         </Tooltip>
                       </p>
-                      <span className="citation">
-                        {l.citation}
-                      </span>
+                      <span className="citation">{l.citation}</span>
                     </button>
                   </li>
                 ) : null
