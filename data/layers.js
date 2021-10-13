@@ -16,6 +16,7 @@ export const SOIL_CARBON_DENSITY = 'soil-carbon-density';
 export const TREE_BIOMASS_DENSITY = 'tree-biomass-density';
 export const BIODIVERSITY_HOTSPOTS_2016 = 'biodiversity-hot-spots-2016';
 export const GLAD_ALERTS = 'deforestation-alerts-glad';
+export const INTEGRATED_ALERTS = 'integrated-deforestation-alerts-8bit';
 export const GLAD_S2_ALERTS = 'deforestation-alerts-glad-s2';
 export const RADD_ALERTS = 'deforestation-alerts-radd';
 export const BIODIVERSITY_INTACTNESS = 'biodiversity-intactness-2016';
