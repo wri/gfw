@@ -10,7 +10,7 @@ import './styles.scss';
 class LayerListMenu extends PureComponent {
   render() {
     const { className, layers, onToggle, onInfoClick } = this.props;
-
+    const activeLayer = layers && layers.find((l) => l.active);
     return (
       <div className={`c-layer-list-menu ${className || ''}`}>
         {layers.map((l, i) =>
@@ -18,7 +18,14 @@ class LayerListMenu extends PureComponent {
             <div className="layer-toggle" key={l.id}>
               <LayerToggle
                 tabIndex={i}
-                data={{ ...l, layer: l.id }}
+                data={{
+                  ...l,
+                  layer: l.id,
+                  ...(l.id === 'confirmedOnly' &&
+                    activeLayer?.highConfInfo && {
+                      description: activeLayer.highConfInfo,
+                    }),
+                }}
                 onToggle={onToggle}
                 onInfoClick={() => onInfoClick(l.metadata)}
                 small
