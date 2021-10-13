@@ -8,6 +8,9 @@ import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   INTEGRATED_ALERTS,
+  INTEGRATED_ALERTS_GLADS,
+  INTEGRATED_ALERTS_RADD,
+  INTEGRATED_ALERTS_GLAD,
 } from 'data/layers';
 
 import { handleGladMeta } from 'utils/gfw-meta';
@@ -56,10 +59,15 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // // Replace with with 8bit Integrated Deforestation Layer when ready
+    // all alert systems
     {
       dataset: INTEGRATED_DEFORESTATION_ALERTS,
-      layers: [INTEGRATED_ALERTS],
+      layers: [
+        INTEGRATED_ALERTS,
+        INTEGRATED_ALERTS_GLADS,
+        INTEGRATED_ALERTS_RADD,
+        INTEGRATED_ALERTS_GLAD,
+      ],
     },
   ],
   sortOrder: {
