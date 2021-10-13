@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { trackEvent } from 'utils/analytics';
+import compact from 'lodash/compact';
 
 import twitterIcon from 'assets/icons/twitter.svg?sprite';
 import facebookIcon from 'assets/icons/facebook.svg?sprite';
 
 import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
+import Toggle from 'components/ui/toggle';
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
 import Modal from 'components/modal';
@@ -19,12 +21,32 @@ class Share extends PureComponent {
     selected: PropTypes.string,
     copied: PropTypes.bool,
     data: PropTypes.object,
+    area: PropTypes.object,
     loading: PropTypes.bool,
     setShareOpen: PropTypes.func,
     setShareSelected: PropTypes.func,
     handleFocus: PropTypes.func,
     handleCopyToClipboard: PropTypes.func,
+    setShareAoi: PropTypes.func,
   };
+
+  state = {
+    publicArea: false,
+  };
+
+  togglePublicAoi() {
+    const { setShareAoi, area } = this.props;
+    this.setState({ publicArea: true });
+    setShareAoi({
+      ...area,
+      publicArea: true,
+      alerts: compact([
+        area?.fireAlerts ? 'fireAlerts' : false,
+        area?.deforestationAlerts ? 'deforestationAlerts' : false,
+        area?.monthlySummary ? 'monthlySummary' : false,
+      ]),
+    });
+  }
 
   getContent() {
     const {
@@ -32,12 +54,15 @@ class Share extends PureComponent {
       loading,
       copied,
       data,
+      area,
       handleFocus,
       setShareSelected,
       handleCopyToClipboard,
     } = this.props;
+    const { publicArea } = this.state;
     const { title, shareUrl, embedUrl, embedSettings } = data || {};
     const { width, height } = embedSettings || {};
+    const shouldRenderShare = (area && area.public) || !area;
 
     const inputValue =
       selected === 'embed'
@@ -48,8 +73,24 @@ class Share extends PureComponent {
 
     return (
       <div className="c-share">
+        {area && !area.public && (
+          <div className="public-area-field">
+            <span
+              tabIndex={0}
+              role="button"
+              onClick={() => this.togglePublicAoi()}
+            >
+              <Toggle
+                theme="toggle-large"
+                value={publicArea}
+                onToggle={() => this.togglePublicAoi()}
+              />
+              Make this area public
+            </span>
+          </div>
+        )}
         <div className="actions">
-          {embedUrl ? (
+          {shouldRenderShare && embedUrl ? (
             <Switch
               className="share-switch-tab"
               theme="theme-switch-light"
@@ -70,65 +111,77 @@ class Share extends PureComponent {
               ? 'Click and paste HTML to embed in website'
               : 'Click and paste link in email or IM'}
           </p>
-          <div className="input-container">
-            <div className="input">
-              {loading && selected !== 'embed' && (
-                <Loader className="input-loader" />
-              )}
-              <input
-                ref={(input) => {
-                  this.textInput = input;
-                }}
-                type="text"
-                value={!loading ? inputValue : ''}
-                readOnly
-                onClick={handleFocus}
-              />
+          {shouldRenderShare && (
+            <div className="input-container">
+              <div className="input">
+                {loading && selected !== 'embed' && (
+                  <Loader className="input-loader" />
+                )}
+                <input
+                  ref={(input) => {
+                    this.textInput = input;
+                  }}
+                  type="text"
+                  value={!loading ? inputValue : ''}
+                  readOnly
+                  onClick={handleFocus}
+                />
+              </div>
+              <Button
+                theme="theme-button-medium"
+                className="input-button"
+                onClick={() => handleCopyToClipboard(this.textInput)}
+                disabled={loading}
+              >
+                {copied ? 'COPIED!' : 'COPY'}
+              </Button>
             </div>
+          )}
+        </div>
+        {shouldRenderShare && (
+          <div className="social-container">
             <Button
-              theme="theme-button-medium"
-              className="input-button"
-              onClick={() => handleCopyToClipboard(this.textInput)}
-              disabled={loading}
+              extLink={`https://twitter.com/intent/tweet?text=${title}&via=globalforests&url=${shareUrl}`}
+              className="social-button"
+              theme="theme-button-light theme-button-grey  square"
+              onClick={() =>
+                trackEvent({
+                  category: 'Share',
+                  action: 'Share social',
+                  label: shareUrl,
+                })}
             >
-              {copied ? 'COPIED!' : 'COPY'}
+              <Icon icon={twitterIcon} className="twitter-icon" />
+            </Button>
+            <Button
+              extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
+              theme="theme-button-light theme-button-grey square"
+              className="social-button"
+              onClick={() =>
+                trackEvent({
+                  category: 'Share',
+                  action: 'Share social',
+                  label: shareUrl,
+                })}
+            >
+              <Icon icon={facebookIcon} className="facebook-icon" />
             </Button>
           </div>
-        </div>
-        <div className="social-container">
-          <Button
-            extLink={`https://twitter.com/intent/tweet?text=${title}&via=globalforests&url=${shareUrl}`}
-            className="social-button"
-            theme="theme-button-light theme-button-grey  square"
-            onClick={() =>
-              trackEvent({
-                category: 'Share',
-                action: 'Share social',
-                label: shareUrl,
-              })}
-          >
-            <Icon icon={twitterIcon} className="twitter-icon" />
-          </Button>
-          <Button
-            extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
-            theme="theme-button-light theme-button-grey square"
-            className="social-button"
-            onClick={() =>
-              trackEvent({
-                category: 'Share',
-                action: 'Share social',
-                label: shareUrl,
-              })}
-          >
-            <Icon icon={facebookIcon} className="facebook-icon" />
-          </Button>
-        </div>
+        )}
+        {!shouldRenderShare && (
+          <p className="share-notice">
+            You need to make your area public before sharing. Public areas can
+            be viewed by anyone with the URL; private areas can only be viewed
+            by the area&apos;s creator.
+          </p>
+        )}
       </div>
     );
   }
 
   render() {
     const { open, setShareOpen, data } = this.props;
+
     return (
       <Modal
         open={open}

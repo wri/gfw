@@ -14,6 +14,7 @@ import DynamicSentence from 'components/ui/dynamic-sentence';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 
 import editIcon from 'assets/icons/edit.svg?sprite';
+import hiddenIcon from 'assets/icons/hidden.svg?sprite';
 import dashboardIcon from 'assets/icons/dashboard.svg?sprite';
 import tagIcon from 'assets/icons/tag.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
@@ -241,23 +242,39 @@ class Header extends PureComponent {
       <div className={cx('c-dashboards-header', className)}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
         {showMetaControls && (
-          <div className="share-buttons">
-            <Button
-              className="area-share theme-button-small"
-              onClick={() => {
-                if (activeArea && !activeArea.userArea) {
-                  setAreaOfInterestModalSettings(true);
-                } else {
-                  setShareModal(shareData);
-                }
-              }}
-            >
-              {shareMeta}
-            </Button>
-            {this.renderAreaActions({
-              isCountryDashboard,
-              isAreaAndCountryDashboard,
-            })}
+          <div className="meta-controls">
+            {activeArea.userArea && !activeArea.public && (
+              <Button
+                theme="theme-button-clear"
+                className="private-area-notice"
+                tooltipPosition="bottom"
+                tooltip={{
+                  text:
+                    "You need to make your area public before sharing. Public areas can be viewed by anyone with the URL; private areas can only be viewed by the area's creator.",
+                }}
+              >
+                <Icon icon={hiddenIcon} />
+                Private area
+              </Button>
+            )}
+            <div className="share-buttons">
+              <Button
+                className="area-share theme-button-small"
+                onClick={() => {
+                  if (activeArea && !activeArea.userArea) {
+                    setAreaOfInterestModalSettings(true);
+                  } else {
+                    setShareModal({ ...shareData, areaId: activeArea?.id });
+                  }
+                }}
+              >
+                {shareMeta}
+              </Button>
+              {this.renderAreaActions({
+                isCountryDashboard,
+                isAreaAndCountryDashboard,
+              })}
+            </div>
           </div>
         )}
         <div className="row">

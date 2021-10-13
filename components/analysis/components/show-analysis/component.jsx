@@ -149,6 +149,7 @@ class ShowAnalysis extends PureComponent {
                         (window.location.href.includes('embed')
                           ? window.location.href
                           : window.location.href.replace('/map', '/embed/map')),
+                      areaId: activeArea?.id,
                     })}
                   tooltip={{ text: 'Share analysis' }}
                 >
