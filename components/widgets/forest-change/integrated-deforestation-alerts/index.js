@@ -2,12 +2,12 @@ import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  // GLAD_DEFORESTATION_ALERTS_DATASET,
+  INTEGRATED_DEFORESTATION_ALERTS,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  // GLAD_ALERTS,
+  INTEGRATED_ALERTS,
 } from 'data/layers';
 
 import { handleGladMeta } from 'utils/gfw-meta';
@@ -48,7 +48,7 @@ export default {
   source: 'gadm',
   dataType: 'integration_alerts',
   categories: ['summary', 'forest-change'],
-  types: ['country'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
+  types: ['country', 'geostore', 'wdpa', 'aoi', 'use'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {
@@ -57,10 +57,10 @@ export default {
       boundary: true,
     },
     // // Replace with with 8bit Integrated Deforestation Layer when ready
-    // {
-    //   dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-    //   layers: [GLAD_ALERTS],
-    // },
+    {
+      dataset: INTEGRATED_DEFORESTATION_ALERTS,
+      layers: [INTEGRATED_ALERTS],
+    },
   ],
   sortOrder: {
     summary: 999,
