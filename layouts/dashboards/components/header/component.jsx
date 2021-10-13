@@ -243,7 +243,7 @@ class Header extends PureComponent {
         {loading && <Loader className="loader" theme="theme-loader-light" />}
         {showMetaControls && (
           <div className="meta-controls">
-            {activeArea.userArea && !activeArea.public && (
+            {activeArea?.userArea && !activeArea.public && (
               <Button
                 theme="theme-button-clear"
                 className="private-area-notice"
