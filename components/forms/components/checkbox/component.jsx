@@ -18,12 +18,22 @@ class Checkbox extends PureComponent {
     label: PropTypes.string,
     name: PropTypes.string,
     options: PropTypes.array,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    formState: PropTypes.array,
+    children: PropTypes.func,
   };
 
   render() {
-    const { name, label, validate, options, hidden, required } = this.props;
-
+    const {
+      name,
+      label,
+      validate,
+      options,
+      hidden,
+      required,
+      formState,
+      children,
+    } = this.props;
     return (
       <Field
         name={name}
@@ -41,23 +51,34 @@ class Checkbox extends PureComponent {
           >
             <div className="c-form-checkbox">
               {options &&
-                options.map(option => {
+                options.map((option) => {
                   const id = uniqueId(`checkbox-${option.value}-`);
                   return (
-                    <div key={option.value} className="checkbox-option">
-                      <Field
-                        name={name}
-                        id={id}
-                        component="input"
-                        type="checkbox"
-                        // undefined := don't overwrite value prop
-                        // this turns the values array into a single value
-                        value={options.length > 1 ? option.value : undefined}
-                      />
-                      <label className="checkbox-label" htmlFor={id}>
-                        <span />
-                        {option.label}
-                      </label>
+                    <div
+                      key={option.value}
+                      className={`checkbox-option ${
+                        option?.multiInput ? 'sub-options' : ''
+                      }`}
+                    >
+                      <span>
+                        <Field
+                          name={name}
+                          id={id}
+                          component="input"
+                          type="checkbox"
+                          // undefined := don't overwrite value prop
+                          // this turns the values array into a single value
+                          value={options.length > 1 ? option.value : undefined}
+                        />
+                        <label className="checkbox-label" htmlFor={id}>
+                          <span />
+                          {option.label}
+                        </label>
+                      </span>
+                      {option?.multiInput &&
+                        children &&
+                        formState.indexOf(option.value) > -1 &&
+                        children(option)}
                     </div>
                   );
                 })}
