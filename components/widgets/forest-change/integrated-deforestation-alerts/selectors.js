@@ -24,9 +24,10 @@ export const parseData = createSelector([selectAlerts], (data) => {
       highestAlertCount: data?.highestCount || 0,
       lowAlertCount: data?.nominalCount || 0,
       highAlertPercentage: (100 * (data?.highCount || 0)) / data?.sum || 0,
-      highestAlertPercentage: (100 * (data?.highestCount || 0)) / data?.sum || 0,
+      highestAlertPercentage:
+        (100 * (data?.highestCount || 0)) / data?.sum || 0,
       lowAlertPercentage: (100 * (data?.nominalCount || 0)) / data?.sum || 0,
-    }
+    };
   }
 
   // Get counts from each confidence category ['high', 'highest', 'nominal']
@@ -132,7 +133,7 @@ export const parseSentence = createSelector(
     getLocationName,
     getOptionsSelected,
   ],
-  (data, settings, sentences, indicator, location, options) => {
+  (data, settings, sentences, indicator, currentLabel, options) => {
     if (!data || isEmpty(data)) return null;
     const {
       totalAlertCount,
@@ -146,6 +147,7 @@ export const parseSentence = createSelector(
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
     const params = {
+      location: currentLabel === 'global' ? 'globally' : currentLabel,
       indicator: indicator && indicator.label,
       system,
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
@@ -157,7 +159,6 @@ export const parseSentence = createSelector(
         highestAlertPercentage === 0
           ? 'none'
           : `${formatNumber({ num: highestAlertPercentage, unit: '%' })}`,
-      location,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
       ...((systemSlug === 'glad_l' && {
