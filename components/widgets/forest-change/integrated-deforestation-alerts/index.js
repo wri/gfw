@@ -215,8 +215,10 @@ export default {
     const otfData = await OtfAnalysis.fetch();
     const [high, highest, nominal] = otfData?.data || [];
 
-    return {
-      alerts: {
+    return   {
+      alerts:  {
+        otf: true,
+        sum: (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0),
         highCount: high?.count || 0,
         highestCount: highest?.count || 0,
         nominalCount: nominal?.count || 0,
@@ -231,11 +233,11 @@ export default {
       },
     };
   },
-  // maxDownloadSize: {
-  //   maxSize: 1e5,
-  //   key: 'alerts',
-  //   subKey: 'alert__count',
-  // },
+  maxDownloadSize: {
+    maxSize: 1e5,
+    key: 'alerts',
+    subKey: 'alert__count',
+  },
   // Downloads
   getDataURL: (params) => {
     const { GLAD } = params.GFW_META.datasets;

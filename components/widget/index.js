@@ -78,6 +78,7 @@ class WidgetContainer extends Component {
     if (!maxDownloadSize) return { downloadDisabled: false };
     const { key, subKey, maxSize } = maxDownloadSize;
     const filterSelected = !!settings?.forestType || !!settings?.landCategory;
+
     if (has(data, key) && Array.isArray(data[key]) && maxSize) {
       const exceedsMaxSize = subKey
         ? sumBy(data[key], subKey) > maxSize
