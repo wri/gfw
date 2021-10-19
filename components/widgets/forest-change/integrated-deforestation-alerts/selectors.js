@@ -16,6 +16,19 @@ const getOptionsSelected = (state) => state.optionsSelected;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
+
+  if (data?.otf) {
+    return {
+      totalAlertCount: data?.sum || 0,
+      highAlertCount: data?.highCount || 0,
+      highestAlertCount: data?.highestCount || 0,
+      lowAlertCount: data?.nominalCount || 0,
+      highAlertPercentage: (100 * (data?.highCount || 0)) / data?.sum || 0,
+      highestAlertPercentage: (100 * (data?.highestCount || 0)) / data?.sum || 0,
+      lowAlertPercentage: (100 * (data?.nominalCount || 0)) / data?.sum || 0,
+    }
+  }
+
   // Get counts from each confidence category ['high', 'highest', 'nominal']
   const highAlertsData = data.filter((d) => d.confidence === 'high');
   const highestAlertsData = data.filter((d) => d.confidence === 'highest');
