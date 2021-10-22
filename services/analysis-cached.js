@@ -560,6 +560,7 @@ export const getCarbonFlux = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
+      version: 'v20210820',
     })}${carbonFlux}`
       .replace(
         /{select_location}/g,
@@ -597,6 +598,7 @@ export const getCarbonFluxOTF = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
+      version: 'v20210820',
     })}${carbonFluxOTF}`
       .replace('{geostoreOrigin}', 'rw')
       .replace('{geostoreId}', geostoreId)
