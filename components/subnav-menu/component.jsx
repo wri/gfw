@@ -58,7 +58,7 @@ class SubNavMenu extends PureComponent {
                       activeClassName="active"
                       activeShallow={link.activeShallow}
                     >
-                      <a className="text -paragraph-5 -color-8">
+                      <a className={`text -paragraph-5 -color-8 ${link.active ? 'active' : ''}`}>
                         {link.icon && <Icon icon={link.icon} />}
                         <span>{link.label}</span>
                       </a>

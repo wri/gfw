@@ -7,6 +7,19 @@ $input-button-width: rem(100px);
     min-width: rem(320px);
   }
 
+  .public-area-field {
+    padding-bottom: 20px;
+
+    span {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: $slate-light;
+      font-size: rem(15px);
+    }
+  }
+
   .subtitle {
     font-size: 13px;
     text-align: left;
@@ -28,6 +41,15 @@ $input-button-width: rem(100px);
     line-height: rem(30px);
     width: 100%;
     margin-bottom: rem(10px);
+  }
+
+  .share-notice {
+    background: $grey-light;
+    color: $slate-dark;
+    border: 1px solid $grey-dark;
+    text-align: center;
+    padding: 17px 20px;
+    border-radius: 5px;
   }
 
   .input-container {

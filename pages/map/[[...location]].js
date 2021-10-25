@@ -1,3 +1,4 @@
+import { parse } from 'cookie';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -5,7 +6,6 @@ import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
-import { getCountriesProvider } from 'services/country';
 
 import FullscreenLayout from 'wrappers/fullscreen';
 import Map from 'layouts/map';
@@ -28,8 +28,18 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ req, params }) => {
   const [type] = params?.location || [];
+  let userToken = null;
+  try {
+    userToken = parse(req.headers.cookie)['gfw-token'];
+    // XXX: FB/Google token hack
+    if (userToken?.endsWith('#')) {
+      userToken = userToken.replace(/#$/, '');
+    }
+  } catch (_) {
+    // ignore
+  }
 
   if (type && !ALLOWED_TYPES.includes(type)) {
     return {
@@ -48,7 +58,7 @@ export const getStaticProps = async ({ params }) => {
   }
 
   try {
-    const locationData = await getLocationData(params?.location);
+    const locationData = await getLocationData(params?.location, userToken);
     const { locationName } = locationData || {};
 
     if (!locationName) {
@@ -95,24 +105,24 @@ export const getStaticProps = async ({ params }) => {
   }
 };
 
-export const getStaticPaths = async () => {
-  const countryData = await getCountriesProvider();
-  const { rows: countries } = countryData?.data || {};
-  const countryPaths = countries.map((c) => ({
-    params: {
-      location: ['country', c.iso],
-    },
-  }));
+// export const getStaticPaths = async () => {
+//   const countryData = await getCountriesProvider();
+//   const { rows: countries } = countryData?.data || {};
+//   const countryPaths = countries.map((c) => ({
+//     params: {
+//       location: ['country', c.iso],
+//     },
+//   }));
 
-  return {
-    paths: [
-      { params: { location: [] } },
-      { params: { location: ['global'] } },
-      ...countryPaths,
-    ],
-    fallback: true,
-  };
-};
+//   return {
+//     paths: [
+//       { params: { location: [] } },
+//       { params: { location: ['global'] } },
+//       ...countryPaths,
+//     ],
+//     fallback: true,
+//   };
+// };
 
 const MapPage = (props) => {
   const dispatch = useDispatch();

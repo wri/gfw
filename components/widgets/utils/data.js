@@ -445,6 +445,17 @@ export const zeroFillYears = (data, startYear, endYear, years, fillObj) => {
   return zeroFilledData;
 };
 
+export const getWeeksRange = (weeks) => {
+  const endDate = moment().format('YYYY-MM-DD');
+  const startDate = moment(endDate)
+    .subtract(weeks, 'weeks')
+    .format('YYYY-MM-DD');
+  return {
+    startDate,
+    endDate,
+  };
+};
+
 export const getColorBuckets = (colors) => [
   {
     limit: 20,

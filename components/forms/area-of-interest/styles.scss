@@ -146,4 +146,24 @@
     width: rem(200px);
     margin-top: rem(30px);
   }
+
+  .public-area-field {
+    padding-bottom: 30px;
+
+    span {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+      color: $slate-light;
+      font-size: rem(15px);
+      font-weight: 500;
+    }
+
+    p {
+      padding-top: 10px;
+      color: #a8a8a8;
+    }
+  }
 }

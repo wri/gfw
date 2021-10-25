@@ -1,0 +1,96 @@
+@import '~styles/settings';
+
+.c-layer-select-menu {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+
+  .selector {
+    position: relative;
+    padding: 10px;
+    border: 1px solid $border;
+  }
+
+  button {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    padding-right: 30px;
+    width: 100%;
+    font-size: rem(14px);
+    text-align: left;
+    cursor: pointer;
+
+    .citation {
+      padding: 10px 0 0 0;
+      font-size: 10px;
+      line-height: 13px;
+      color: #666;
+    }
+  }
+
+  .icon-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.reverse {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+
+  .options {
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    width: 101%;
+    z-index: 9999;
+    background: $white;
+    border: 1px solid $border;
+  }
+
+  .layer-options {
+    display: flex;
+    flex-flow: column;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid $border;
+
+    p {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      font-size: rem(14px);
+    }
+
+    .citation {
+      padding: 5px 30px 0 0;
+      line-height: 13px;
+      font-size: 10px;
+      color: #666;
+    }
+
+    &.active {
+      opacity: 0.5;
+
+      button {
+        user-select: none;
+        cursor: default;
+      }
+    }
+
+    button {
+      padding-right: 0;
+    }
+
+    &:last-child {
+      border: 1px solid transparent;
+    }
+
+    &:hover {
+      background: $grey-light;
+    }
+  }
+}

@@ -8,6 +8,9 @@ import {
   CARBON_FLUX_DATASET,
   CARBON_REMOVALS_DATASET,
   CARBON_EMISSIONS_DATASET,
+  CARBON_FLUX_DATASET_TEST,
+  CARBON_REMOVALS_DATASET_TEST,
+  CARBON_EMISSIONS_DATASET_TEST,
 } from 'data/datasets';
 
 import {
@@ -16,6 +19,9 @@ import {
   CARBON_FLUX,
   CARBON_REMOVALS,
   CARBON_EMISSIONS,
+  CARBON_FLUX_TEST,
+  CARBON_REMOVALS_TEST,
+  CARBON_EMISSIONS_TEST,
 } from 'data/layers';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -82,6 +88,18 @@ export default {
     {
       dataset: CARBON_EMISSIONS_DATASET,
       layers: [CARBON_EMISSIONS],
+    },
+    {
+      dataset: CARBON_FLUX_DATASET_TEST,
+      layers: [CARBON_FLUX_TEST],
+    },
+    {
+      dataset: CARBON_REMOVALS_DATASET_TEST,
+      layers: [CARBON_REMOVALS_TEST],
+    },
+    {
+      dataset: CARBON_EMISSIONS_DATASET_TEST,
+      layers: [CARBON_EMISSIONS_TEST],
     },
   ],
   pendingKeys: ['threshold'],

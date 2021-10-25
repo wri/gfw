@@ -45,17 +45,10 @@ export const dataRequest = create({
   }),
 });
 
-export const gfwApiRequest = create({
+// Always point to production
+export const gfwGeostoreRequest = create({
   timeout: 30 * 1000,
-  ...(isServer && {
-    baseURL: GFW_API_URL,
-    headers: {
-      'x-api-key': DATA_API_KEY,
-    },
-  }),
-  ...(!isServer && {
-    baseURL: '/api/gfw-api',
-  }),
+  baseURL: GFW_API,
 });
 
 export const tilesRequest = create({

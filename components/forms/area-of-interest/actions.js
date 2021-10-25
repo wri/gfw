@@ -27,6 +27,7 @@ export const saveAreaOfInterest = createThunkAction(
     use,
     application,
     viewAfterSave,
+    publicArea,
     geostore: geostoreId,
   }) => (dispatch, getState) => {
     const { location, geostore } = getState();
@@ -80,7 +81,7 @@ export const saveAreaOfInterest = createThunkAction(
         webhookUrl,
       }),
       tags: tags || [],
-      public: true,
+      public: publicArea,
       ...((isCountry || type === 'wdpa') && {
         status: 'saved',
       }),

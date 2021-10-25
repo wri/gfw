@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import upperFirst from 'lodash/upperFirst';
 
+import { encodeQueryParams } from 'utils/url';
+
 import {
   filterWidgetsByLocation,
   getWidgetCategories,
@@ -42,18 +44,49 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getLinks = createSelector(
-  [getWidgetCategories, getActiveCategory],
-  (widgetCats, activeCategory) => {
-    if (!widgetCats) {
-      return null;
+  [getWidgetCategories, getActiveCategory, selectLocation],
+  (widgetCats, activeCategory, location) => {
+    const serializePayload = Object.values(location.payload).filter(
+      (p) => p && p.length
+    );
+
+    function formatQuery(category) {
+      const encodedQueryString = encodeQueryParams({
+        ...location.query,
+        ...(category.value !== 'summary' && {
+          category: category.value,
+        }),
+      });
+      return encodedQueryString.length > 0 ? `?${encodedQueryString}` : '';
+    }
+
+    if (!widgetCats || widgetCats?.length === 0) {
+      return CATEGORIES.map((category) => ({
+        label: category.label,
+        category: category.value,
+        href: location.pathname,
+        shallow: true,
+        as: `${location.pathname.replace(
+          '[[...location]]',
+          serializePayload.join('/')
+        )}${formatQuery(category)}`,
+      }));
     }
 
     return CATEGORIES.filter((c) => widgetCats.includes(c.value)).map(
-      (category) => ({
-        label: category.label,
-        category: category.value,
-        active: activeCategory === category.value,
-      })
+      (category) => {
+        return {
+          label: category.label,
+          category: category.value,
+          href: location.pathname,
+          shallow: true,
+          as: `${location.pathname.replace(
+            '[[...location]]',
+            serializePayload.join('/')
+          )}${formatQuery(category)}`,
+          active: activeCategory === category.value,
+        };
+      }
     );
   }
 );

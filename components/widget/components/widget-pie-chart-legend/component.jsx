@@ -26,7 +26,10 @@ class WidgetPieChart extends PureComponent {
       <div className="c-pie-chart-legend-widget">
         {settings && showSettingsBtn && toggleSettingsMenu && (
           <Button
-            theme="theme-button-small theme-button-light"
+            theme={
+              settingsBtnConfig?.theme ||
+              'theme-button-small theme-button-light'
+            }
             className="pie-contextual-settings-btn"
             onClick={() => toggleSettingsMenu()}
           >

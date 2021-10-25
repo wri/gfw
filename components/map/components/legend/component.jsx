@@ -21,6 +21,7 @@ import SentenceSelector from 'components/sentence-selector';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
+import LayerSelectMenu from './components/layer-select-menu';
 import LayerSelectorMenu from './components/layer-selector-menu';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
@@ -36,6 +37,7 @@ const MapLegend = ({
   onChangeTimeline,
   onChangeThreshold,
   onToggleLayer,
+  onSelectLayer,
   onChangeLayer,
   onChangeParam,
   onChangeDecodeParam,
@@ -72,6 +74,7 @@ const MapLegend = ({
             } = lg || {};
 
             const activeLayer = layers && layers.find((l) => l.active);
+
             const {
               params,
               paramsSelectorConfig,
@@ -80,6 +83,7 @@ const MapLegend = ({
               moreInfo,
               timelineParams,
             } = activeLayer || {};
+
             return (
               <LegendListItem
                 index={i}
@@ -126,6 +130,15 @@ const MapLegend = ({
                   <LegendItemTypeProportional />
                   <LegendItemTypeGradient />
                 </LegendItemTypes>
+
+                {isMultiLayer && (
+                  <LayerSelectMenu
+                    className="sub-layer-menu"
+                    layers={lg.layers}
+                    onSelectLayer={onSelectLayer}
+                    onInfoClick={onChangeInfo}
+                  />
+                )}
 
                 {activeLayer &&
                   paramsSelectorConfig &&
@@ -225,6 +238,7 @@ MapLegend.propTypes = {
   onChangeTimeline: PropTypes.func,
   onChangeThreshold: PropTypes.func,
   onToggleLayer: PropTypes.func,
+  onSelectLayer: PropTypes.func,
   onChangeParam: PropTypes.func,
   onChangeDecodeParam: PropTypes.func,
   onChangeLayer: PropTypes.func,

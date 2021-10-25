@@ -164,7 +164,8 @@ export const checkGeostoreSize = createSelector(
   [selectGeostoreSize, getDataLocation],
   (areaHa, location) => {
     if (['aoi', 'geostore'].includes(location.type)) {
-      return areaHa > 100000000;
+      const ONE_BILLION_H = 1000000000;
+      return areaHa > ONE_BILLION_H;
     }
 
     return false;

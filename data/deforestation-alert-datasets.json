@@ -1,0 +1,28 @@
+[
+  {
+    "label": "All alerts",
+    "value": "all",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": "Integrated alerts combine GLAD-Landsat, GLAD-S2, and RADD deforestation alerts"
+  },
+  {
+    "label": "GLAD-L",
+    "value": "glad_l",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": "Identifies areas of likely tree cover loss in near-real time"
+  },{
+    "label": "GLAD-S2",
+    "value": "glad_s2",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": "Identifies areas of primary forest loss in near real time using Sentinel-2 imagery"
+  },{
+    "label": "RADD",
+    "value": "radd",
+    "unit": "alerts",
+    "metaKey": null,
+    "infoText": "Near real-time forest disturbance alerts in primary humid tropical forests using Sentinel-1’s cloud-penetrating radar sensors"
+  }
+]

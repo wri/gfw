@@ -8,7 +8,7 @@ import sortBy from 'lodash/sortBy';
 import { selectActiveLang, getMapboxLang } from 'utils/lang';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
-import { getDayRange } from './utils';
+import { getDayRange, handleDynamicTimeline } from './utils';
 import basemaps from './basemaps';
 
 // map state
@@ -44,6 +44,8 @@ export const getMapViewport = createSelector([getMapSettings], (settings) => {
     transitionDuration: 500,
   };
 });
+
+export const getDatasetMetadata = (state) => state.datasets?.meta;
 
 export const getMapLatLng = createSelector(
   [getMapSettings],
@@ -190,8 +192,13 @@ export const getActiveDatasets = createSelector(
 
 // parse active datasets to add config from url
 export const getDatasetsWithConfig = createSelector(
-  [getActiveDatasets, getActiveDatasetsFromState, selectLatest],
-  (datasets, activeDatasetsState, latestDates) => {
+  [
+    getActiveDatasets,
+    getActiveDatasetsFromState,
+    selectLatest,
+    getDatasetMetadata,
+  ],
+  (datasets, activeDatasetsState, latestDates, datasetMetadata) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
     return datasets.map((d) => {
@@ -206,6 +213,7 @@ export const getDatasetsWithConfig = createSelector(
         visibility,
         opacity,
         bbox,
+        citation = null,
       } = layerConfig || {};
 
       return {
@@ -226,118 +234,144 @@ export const getDatasetsWithConfig = createSelector(
             timelineConfig: timelineConfigInit,
             id,
           } = l;
-          const maxDate = latestDates[id];
-          const { latestFormat } = l.params || {};
-          const maxDateFormatted = latestFormat
-            ? moment(maxDate).format(latestFormat)
-            : maxDate;
+          return handleDynamicTimeline(
+            l,
+            datasetMetadata,
+            timelineParams,
+            (dynamicTimeline) => {
+              const maxDate = latestDates[id];
+              const { latestFormat } = l.params || {};
+              const maxDateFormatted = latestFormat
+                ? moment(maxDate).format(latestFormat)
+                : maxDate;
 
-          const {
-            min: minRange,
-            max: maxRange,
-            interval: rangeInterval,
-            default: defaultRange,
-          } = (timelineConfigInit && timelineConfigInit.dateRange) || {};
+              const {
+                min: minRange,
+                max: maxRange,
+                interval: rangeInterval,
+                default: defaultRange,
+              } = (timelineConfigInit && timelineConfigInit.dateRange) || {};
 
-          const timelineConfig = {
-            ...timelineConfigInit,
-            ...(maxRange &&
-              rangeInterval &&
-              timelineConfigInit && {
-                startDate: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(defaultRange || maxRange, rangeInterval)
-                  .format('YYYY-MM-DD'),
-                startDateAbsolute: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(defaultRange || maxRange, rangeInterval)
-                  .format('YYYY-MM-DD'),
-              }),
-            maxRange,
-            minRange,
-            rangeInterval,
-          };
+              const timelineConfig = {
+                ...timelineConfigInit,
+                ...(dynamicTimeline && {
+                  ...dynamicTimeline,
+                }),
+                ...(maxRange &&
+                  rangeInterval &&
+                  timelineConfigInit && {
+                    startDate: moment(maxDate || timelineConfigInit.maxDate)
+                      .subtract(defaultRange || maxRange, rangeInterval)
+                      .format('YYYY-MM-DD'),
+                    startDateAbsolute: moment(
+                      maxDate || timelineConfigInit.maxDate
+                    )
+                      .subtract(defaultRange || maxRange, rangeInterval)
+                      .format('YYYY-MM-DD'),
+                  }),
+                maxRange,
+                dynamicTimeline: dynamicTimeline !== null,
+                minRange,
+                rangeInterval
+              };
 
-          const layerParams = {
-            ...l.params,
-            ...(maxRange &&
-              rangeInterval &&
-              timelineConfigInit && {
-                startDate: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(defaultRange || maxRange, rangeInterval)
-                  .format('YYYY-MM-DD'),
-                startDateAbsolute: moment(maxDate || timelineConfigInit.maxDate)
-                  .subtract(defaultRange || maxRange, rangeInterval)
-                  .format('YYYY-MM-DD'),
-                endDateAbsolute: maxDate || l.params.endDate,
-              }),
-          };
+              const layerParams = {
+                ...l.params,
+                ...(maxRange &&
+                  rangeInterval &&
+                  timelineConfigInit && {
+                    startDate: moment(maxDate || timelineConfigInit.maxDate)
+                      .subtract(defaultRange || maxRange, rangeInterval)
+                      .format('YYYY-MM-DD'),
+                    startDateAbsolute: moment(
+                      maxDate || timelineConfigInit.maxDate
+                    )
+                      .subtract(defaultRange || maxRange, rangeInterval)
+                      .format('YYYY-MM-DD'),
+                    endDateAbsolute: maxDate || l.params.endDate,
+                  })
+              };
 
-          return {
-            ...l,
-            visibility,
-            opacity,
-            bbox,
-            color: d.color,
-            active: layers && layers.length && layers.includes(l.id),
-            ...(!isEmpty(layerParams) && {
-              params: {
-                ...layerParams,
-                ...(maxDate && {
-                  endDate: maxDate,
+              const out = {
+                ...l,
+                visibility,
+                opacity,
+                bbox,
+                ...(citation && {
+                  citation
                 }),
-                ...params,
-                ...(maxDateFormatted && {
-                  date: maxDateFormatted,
+                color: d.color,
+                active: layers && layers.length && layers.includes(l.id),
+                ...(!isEmpty(layerParams) && {
+                  params: {
+                    ...layerParams,
+                    ...(maxDate && {
+                      endDate: maxDate,
+                    }),
+                    ...params,
+                    ...(maxDateFormatted && {
+                      date: maxDateFormatted,
+                    }),
+                    ...(hasParamsTimeline && {
+                      ...timelineParams,
+                    }),
+                    ...(maxDate && {
+                      maxDate,
+                    }),
+                  },
                 }),
-                ...(hasParamsTimeline && {
-                  ...timelineParams,
+                ...(!isEmpty(l.sqlParams) && {
+                  sqlParams: {
+                    ...l.sqlParams,
+                    ...sqlParams,
+                  },
                 }),
-                ...(maxDate && {
-                  maxDate,
+                ...(l.decodeFunction && {
+                  decodeParams: {
+                    ...l.decodeParams,
+                    ...(layers && {
+                      confirmedOnly: layers.includes('confirmedOnly') ? 1 : 0,
+                      gladLOnly: layers.includes('gladLOnly') ? 1 : 0,
+                      gladSOnly: layers.includes('gladSOnly') ? 1 : 0,
+                      raddOnly: layers.includes('raddOnly') ? 1 : 0,
+                    }),
+                    ...(maxDate && {
+                      endDate: maxDate,
+                    }),
+                    ...decodeParams,
+                    ...(hasDecodeTimeline && {
+                      ...timelineParams,
+                    }),
+                    ...(maxDate && {
+                      maxDate,
+                    }),
+                  },
                 }),
-              },
-            }),
-            ...(!isEmpty(l.sqlParams) && {
-              sqlParams: {
-                ...l.sqlParams,
-                ...sqlParams,
-              },
-            }),
-            ...(l.decodeFunction && {
-              decodeParams: {
-                ...l.decodeParams,
-                ...(layers && {
-                  confirmedOnly: layers.includes('confirmedOnly') ? 1 : 0,
+                ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
+                  timelineParams: {
+                    ...timelineConfig,
+                    ...(l.hasParamsTimeline && {
+                      ...layerParams,
+                    }),
+                    ...(l.hasDecodeTimeline && {
+                      ...l.decodeParams,
+                    }),
+                    ...(maxDate && {
+                      endDate: maxDate,
+                      maxDate,
+                      trimEndDate: maxDate,
+                    }),
+                    ...timelineParams,
+                    ...(dynamicTimeline && {
+                      ...dynamicTimeline,
+                    }),
+                  },
                 }),
-                ...(maxDate && {
-                  endDate: maxDate,
-                }),
-                ...decodeParams,
-                ...(hasDecodeTimeline && {
-                  ...timelineParams,
-                }),
-                ...(maxDate && {
-                  maxDate,
-                }),
-              },
-            }),
-            ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
-              timelineParams: {
-                ...timelineConfig,
-                ...(l.hasParamsTimeline && {
-                  ...layerParams,
-                }),
-                ...(l.hasDecodeTimeline && {
-                  ...l.decodeParams,
-                }),
-                ...(maxDate && {
-                  endDate: maxDate,
-                  maxDate,
-                  trimEndDate: maxDate,
-                }),
-                ...timelineParams,
-              },
-            }),
-          };
+              };
+
+              return out;
+            }
+          );
         }),
       };
     });

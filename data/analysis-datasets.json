@@ -67,6 +67,13 @@
   "MODIS_BURNED_AREA_ADM2_DAILY": "gadm__burned_areas__adm2_daily_alerts",
   "MODIS_BURNED_AREA_ADM2_WEEKLY": "gadm__burned_areas__adm2_weekly_alerts",
   "MODIS_BURNED_AREA_WDPA_WEEKLY": "wdpa_protected_areas__burned_areas__weekly_alerts",
-  "MODIS_BURNED_AREA_GEOSTORE_WEEKLY": "geostore__burned_areas__weekly_alerts"
+  "MODIS_BURNED_AREA_GEOSTORE_WEEKLY": "geostore__burned_areas__weekly_alerts",
+
+  "INTEGRATED_ALERTS_ADM0_DAILY": "gadm__integrated_alerts__iso_daily_alerts",
+  "INTEGRATED_ALERTS_ADM1_DAILY": "gadm__integrated_alerts__adm1_daily_alerts",
+  "INTEGRATED_ALERTS_ADM2_DAILY": "gadm__integrated_alerts__adm2_daily_alerts",
+  "GLAD_ALERTS_ADM0_DAILY": "gadm__glad__iso_daily_alerts",
+  "GLAD_ALERTS_ADM1_DAILY": "gadm__glad__adm1_daily_alerts",
+  "GLAD_ALERTS_ADM2_DAILY": "gadm__glad__adm2_daily_alerts"
 
 }
