@@ -111,7 +111,7 @@ const decodes = {
       alpha = 0.;
     }
   `,
-  integratedAlerts8Bit: `
+  integratedAlerts8Bitprevious: `
     // First 6 bits Alpha channel used to individual alert confidence
     // First two bits (leftmost) are GLAD-L
     // Next, 3rd and 4th bits are GLAD-S2
@@ -126,6 +126,116 @@ const decodes = {
     float b = color.b * 255.;
 
     float day = r * 255. + g;
+    // float confidence = floor(b / 100.) - 1.;
+
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex &&
+      agreementValue > 0.
+    ) {
+
+      // get intensity
+      // float intensity = mod(confidence, 100.) * 50.;
+      float intensity = 255.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      // get high and highest confidence alerts
+      float confidenceValue = 0.;
+      if (confirmedOnly > 0.) {
+        confidenceValue = 255.;
+      }
+
+      // glad l alerts only
+      if (gladLOnly > 0.) {
+        if (agreementValue == 64.) {
+          color.r = 237. / 255.;
+          color.g = 164. / 255.;
+          color.b = 194. / 255.;
+          alpha = (intensity - confidenceValue) / 255.;
+        } else if (agreementValue == 128.){
+          // glad only and high confidence
+          color.r = 220. / 255.;
+          color.g = 102. / 255.;
+          color.b = 153. / 255.;
+          alpha = intensity / 255.;
+        } else {
+          alpha = 0.;
+        }
+        // glad s alerts only
+      } else if (gladSOnly > 0.) {
+        if (agreementValue == 16.) {
+            color.r = 237. / 255.;
+            color.g = 164. / 255.;
+            color.b = 194. / 255.;
+            alpha = (intensity - confidenceValue) / 255.;
+        } else if (agreementValue == 32.) {
+          color.r = 220. / 255.;
+          color.g = 102. / 255.;
+          color.b = 153. / 255.;
+          alpha = intensity / 255.;
+        } else {
+          alpha = 0.;
+        }
+        // radd alerts only
+      } else if (raddOnly > 0.) {
+        if (agreementValue == 4.) {
+          color.r = 237. / 255.;
+          color.g = 164. / 255.;
+          color.b = 194. / 255.;
+          alpha = (intensity - confidenceValue) / 255.;
+        } else if (agreementValue == 8.) {
+          color.r = 220. / 255.;
+          color.g = 102. / 255.;
+          color.b = 153. / 255.;
+          alpha = intensity / 255.;
+        } else {
+          alpha = 0.;
+        }
+      }  else if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
+        // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
+
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
+        alpha = (intensity - confidenceValue) / 255.;
+      } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
+        // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
+
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      } else {
+        // MULTIPLE ALERTS: >0 and not 2**(2+n)
+
+        color.r = 201. / 255.;
+        color.g = 42. / 255.;
+        color.b = 109. / 255.;
+        alpha = intensity / 255.;
+
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
+  integratedAlerts8Bit: `
+  // First 6 bits Alpha channel used to individual alert confidence
+    // First two bits (leftmost) are GLAD-L
+    // Next, 3rd and 4th bits are GLAD-S2
+    // Finally, 5th and 6th bits are RADD
+    // Bits are either: 00 (0, no alerts), 01 (1, low conf), or 10 (2, high conf)
+    // e.g. 00 10 01 00 --> no GLAD-L, high conf GLAD-S2, low conf RADD
+
+    float agreementValue = alpha * 255.;
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    // float day = r * 255. + g;
+    float day = 1500.;
     // float confidence = floor(b / 100.) - 1.;
 
     if (
