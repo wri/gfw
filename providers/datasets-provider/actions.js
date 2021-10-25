@@ -90,7 +90,7 @@ export const fetchDatasets = createThunkAction(
               };
             } else if (isMosaicLandscapes) {
               statementConfig = {
-                type: 'MosaicLandscapes',
+                type: 'mosaicLandscapes',
               };
             } else if (global && !!iso.length && iso[0]) {
               statementConfig = {
