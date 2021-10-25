@@ -15,6 +15,9 @@ export const BIOMASS_LOSS_DATASET =
 export const CARBON_EMISSIONS_DATASET = 'carbon-emissions';
 export const CARBON_REMOVALS_DATASET = 'carbon-removals';
 export const CARBON_FLUX_DATASET = 'net-carbon-flux';
+export const CARBON_EMISSIONS_DATASET_TEST = 'carbon-emissions-test';
+export const CARBON_REMOVALS_DATASET_TEST = 'carbon-removals test';
+export const CARBON_FLUX_DATASET_TEST = 'net-carbon-flux-test';
 export const BURNED_AREA_MODIS_DATASET = 'burned-area-modis';
 
 export const SOIL_CARBON_DENSITY_DATASET = 'soil-carbon-density';
