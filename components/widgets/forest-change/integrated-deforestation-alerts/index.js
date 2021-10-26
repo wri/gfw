@@ -32,6 +32,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'integratedDeforestationAlerts',
+  published: false,
   title: 'Integrated Deforestation alerts in {location}',
   sentence: {
     initial:
@@ -215,8 +216,8 @@ export default {
     const otfData = await OtfAnalysis.fetch();
     const [high, highest, nominal] = otfData?.data || [];
 
-    return   {
-      alerts:  {
+    return {
+      alerts: {
         otf: true,
         sum: (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0),
         highCount: high?.count || 0,
