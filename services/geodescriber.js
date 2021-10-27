@@ -1,5 +1,6 @@
 import { gfwApiRequest } from 'utils/request';
 
+// gfwApiRequest === local/api/gfw-api
 export const getGeodescriberByGeoJson = ({ geojson, token, template }) =>
   gfwApiRequest({
     method: 'post',
