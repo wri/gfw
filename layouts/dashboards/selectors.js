@@ -56,6 +56,9 @@ export const getLinks = createSelector(
         ...(category.value !== 'summary' && {
           category: category.value,
         }),
+        ...(category.value === 'summary' && {
+          category: undefined,
+        }),
       });
       return encodedQueryString.length > 0 ? `?${encodedQueryString}` : '';
     }
