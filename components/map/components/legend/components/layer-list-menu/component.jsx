@@ -40,7 +40,6 @@ class LayerListMenu extends PureComponent {
     const { className, layers, onToggle, onInfoClick } = this.props;
     const activeLayer = layers && layers.find((l) => l.active);
     const filteredLayers = this.filterLayerListMenu();
-    console.log('filtered layers', filteredLayers);
     return (
       <div className={`c-layer-list-menu ${className || ''}`}>
         {filteredLayers.map((l, i) => (
