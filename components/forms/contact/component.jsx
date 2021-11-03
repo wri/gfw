@@ -38,7 +38,6 @@ class ContactForm extends PureComponent {
       .then(() => {})
       .catch((error) => {
         const { errors } = error.response && error.response.data;
-
         return {
           [FORM_ERROR]:
             (errors && error.length && errors[0].detail) ||
@@ -49,7 +48,6 @@ class ContactForm extends PureComponent {
 
   render() {
     const { resetForm, initialValues } = this.props;
-
     return (
       <Form onSubmit={this.sendContactForm} initialValues={initialValues}>
         {({
@@ -63,7 +61,6 @@ class ContactForm extends PureComponent {
           form: { reset },
         }) => {
           const activeTopic = topics.find((t) => t.value === values.topic);
-
           return (
             <div className="c-contact-form">
               {submitSucceeded ? (
