@@ -19,6 +19,7 @@ import { gte, lte } from 'utils/sql';
 import OTF from 'services/otfv2';
 
 import { isMapPage } from 'utils/location';
+import { handleAlertSystem } from 'components/widgets/utils/alertSystem';
 
 // imported functions for retreiving glad alerts from tables
 import {
@@ -131,14 +132,13 @@ export default {
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
     const GLAD = await handleGladMeta(params);
+    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     // extract relevant metadata
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
-    const alertSystem = params?.deforestationAlertsDataset;
-
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
       // function reference to parse fetch
@@ -196,17 +196,32 @@ export default {
 
     const geostoreId = params?.geostore?.hash;
 
+    // Default all integrated alerts
+    let dataset = 'gfw_integrated_alerts';
+
+    if (alertSystem === 'glad_l') {
+      dataset = 'umd_glad_landsat_alerts';
+    }
+
+    if (alertSystem === 'glad_s') {
+      dataset = 'umd_glad_sentinel2_alerts';
+    }
+
+    if (alertSystem === 'radd') {
+      dataset = 'wur_radd_alerts';
+    }
+
     // OTF analysis
-    const OtfAnalysis = new OTF('/dataset/gfw_integrated_alerts/latest/query');
+    const OtfAnalysis = new OTF(`/dataset/${dataset}/latest/query`);
 
     OtfAnalysis.select('count(*)');
 
     OtfAnalysis.where([
-      { gfw_integrated_alerts__date: gte`${startDate}` },
-      { gfw_integrated_alerts__date: lte`${endDate}` },
+      { [`${dataset}__date`]: gte`${startDate}` },
+      { [`${dataset}__date`]: lte`${endDate}` },
     ]);
 
-    OtfAnalysis.groupBy(['gfw_integrated_alerts__confidence']);
+    OtfAnalysis.groupBy([`${dataset}__confidence`]);
 
     OtfAnalysis.geostore({
       id: geostoreId,
