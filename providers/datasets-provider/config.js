@@ -234,9 +234,9 @@ const decodes = {
     float g = color.g * 255.;
     float b = color.b * 255.;
 
-    // float day = r * 255. + g;
-    float day = 1500.;
-    // float confidence = floor(b / 100.) - 1.;
+    float day = r * 255. + g;
+    float confidence = floor(b / 100.) - 1.;
+    float intensity = mod(confidence, 100.);
 
     if (
       day > 0. &&
@@ -244,10 +244,6 @@ const decodes = {
       day <= endDayIndex &&
       agreementValue > 0.
     ) {
-
-      // get intensity
-      // float intensity = mod(confidence, 100.) * 50.;
-      float intensity = 255.;
       if (intensity > 255.) {
         intensity = 255.;
       }
