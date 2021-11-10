@@ -26,7 +26,7 @@ export const getDatasets = () =>
 export const getDatasetMeta = () => {
   const metaData = {};
 
-  fetch('https://api.resourcewatch.org/glad-alerts/latest')
+  fetch('https://api.resourcewatch.org/v1/glad-alerts/latest')
     .then((res) => res.json())
     .then((data) => {
       const latestDate = data?.data[0]?.attributes?.date;

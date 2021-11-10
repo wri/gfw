@@ -1,3 +1,5 @@
+// https://www.khronos.org/files/opengles_shading_language.pdf
+
 const decodes = {
   treeCover: `
     // values for creating power scale, domain (input), and range (output)
@@ -236,14 +238,16 @@ const decodes = {
 
     float day = r * 255. + g;
     float confidence = floor(b / 100.) - 1.;
-    float intensity = mod(confidence, 100.);
+    // float intensity = mod(b, 100.);
+    float intensity = 255.; //this is temporal above one does not work
 
     if (
       day > 0. &&
       day >= startDayIndex &&
       day <= endDayIndex &&
       agreementValue > 0.
-    ) {
+    )
+    {
       if (intensity > 255.) {
         intensity = 255.;
       }
@@ -253,59 +257,13 @@ const decodes = {
         confidenceValue = 255.;
       }
 
-      // glad l alerts only
-      if (gladLOnly > 0.) {
-        if (agreementValue == 64.) {
-          color.r = 237. / 255.;
-          color.g = 164. / 255.;
-          color.b = 194. / 255.;
-          alpha = (intensity - confidenceValue) / 255.;
-        } else if (agreementValue == 128.){
-          // glad only and high confidence
-          color.r = 220. / 255.;
-          color.g = 102. / 255.;
-          color.b = 153. / 255.;
-          alpha = intensity / 255.;
-        } else {
-          alpha = 0.;
-        }
-        // glad s alerts only
-      } else if (gladSOnly > 0.) {
-        if (agreementValue == 16.) {
-            color.r = 237. / 255.;
-            color.g = 164. / 255.;
-            color.b = 194. / 255.;
-            alpha = (intensity - confidenceValue) / 255.;
-        } else if (agreementValue == 32.) {
-          color.r = 220. / 255.;
-          color.g = 102. / 255.;
-          color.b = 153. / 255.;
-          alpha = intensity / 255.;
-        } else {
-          alpha = 0.;
-        }
-        // radd alerts only
-      } else if (raddOnly > 0.) {
-        if (agreementValue == 4.) {
-          color.r = 237. / 255.;
-          color.g = 164. / 255.;
-          color.b = 194. / 255.;
-          alpha = (intensity - confidenceValue) / 255.;
-        } else if (agreementValue == 8.) {
-          color.r = 220. / 255.;
-          color.g = 102. / 255.;
-          color.b = 153. / 255.;
-          alpha = intensity / 255.;
-        } else {
-          alpha = 0.;
-        }
-      }  else if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
+      if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
         // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
 
         color.r = 237. / 255.;
         color.g = 164. / 255.;
         color.b = 194. / 255.;
-        alpha = (intensity - confidenceValue) / 255.;
+        alpha = intensity / 255.;
       } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
         // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
 
@@ -320,7 +278,6 @@ const decodes = {
         color.g = 42. / 255.;
         color.b = 109. / 255.;
         alpha = intensity / 255.;
-
       }
     } else {
       alpha = 0.;
