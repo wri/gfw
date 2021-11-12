@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sumBy from 'lodash/sumBy';
 import { formatNumber } from 'utils/format';
 
 import moment from 'moment';
@@ -19,6 +20,7 @@ export const parseData = createSelector([selectAlerts], (data) => {
 
   if (data?.otf) {
     return {
+      alertSystem: data?.alertSystem || 'all',
       totalAlertCount: data?.sum || 0,
       highAlertCount: data?.highCount || 0,
       highestAlertCount: data?.highestCount || 0,
@@ -31,9 +33,11 @@ export const parseData = createSelector([selectAlerts], (data) => {
   }
 
   // Get counts from each confidence category ['high', 'highest', 'nominal']
-  const highAlertsData = data.filter((d) => d.confidence === 'high');
-  const highestAlertsData = data.filter((d) => d.confidence === 'highest');
-  const lowAlertsData = data.filter((d) =>
+  const highAlertsData = data.allAlerts.filter((d) => d.confidence === 'high');
+  const highestAlertsData = data.allAlerts.filter(
+    (d) => d.confidence === 'highest'
+  );
+  const lowAlertsData = data.allAlerts.filter((d) =>
     ['nominal', 'low'].includes(d.confidence)
   );
 
@@ -47,8 +51,12 @@ export const parseData = createSelector([selectAlerts], (data) => {
   // Total alerts
   const totalAlerts = highAlerts + highestAlerts + lowAlerts;
 
+  const totalArea = sumBy(data.allAlerts, 'alert_area__ha');
+
   // Return parsed data structure including percentage
   return {
+    alertSystem: data?.alertSystem || 'all',
+    totalArea,
     totalAlertCount: totalAlerts,
     highAlertCount: highAlerts,
     highestAlertCount: highestAlerts,
@@ -61,10 +69,10 @@ export const parseData = createSelector([selectAlerts], (data) => {
 
 export const parseConfig = createSelector(
   [parseData, selectColors, getIndicator, getSettings],
-  (data, colors, indicator, settings) => {
+  (data, colors, indicator) => {
     if (isEmpty(data)) return null;
-    const { deforestationAlertsDataset } = settings;
     const {
+      alertSystem = 'all',
       highAlertCount,
       highestAlertCount,
       lowAlertCount,
@@ -72,6 +80,7 @@ export const parseConfig = createSelector(
       highestAlertPercentage,
       lowAlertPercentage,
     } = data;
+
     const lowAlertsLabel = indicator
       ? `Detection by a single alert system in ${indicator.label}`
       : 'Detection by a single alert system';
@@ -88,7 +97,7 @@ export const parseConfig = createSelector(
     const highestColour = colors.integratedHighest;
     const lowColour = colors.integratedLow;
     const parsedData = [
-      ...(deforestationAlertsDataset === 'all'
+      ...(alertSystem === 'all'
         ? [
             {
               label: highestAlertsLabel,
@@ -101,19 +110,14 @@ export const parseConfig = createSelector(
         : []),
       {
         label:
-          deforestationAlertsDataset === 'all'
-            ? highAlertsLabel
-            : 'High confidence alerts',
+          alertSystem === 'all' ? highAlertsLabel : 'High confidence alerts',
         value: highAlertCount,
         color: highColour,
         percentage: highAlertPercentage,
         unit: 'counts',
       },
       {
-        label:
-          deforestationAlertsDataset === 'all'
-            ? lowAlertsLabel
-            : 'Other alerts',
+        label: alertSystem === 'all' ? lowAlertsLabel : 'Other alerts',
         value: lowAlertCount,
         color: lowColour,
         percentage: lowAlertPercentage,
@@ -135,21 +139,29 @@ export const parseSentence = createSelector(
   ],
   (data, settings, sentences, indicator, currentLabel, options) => {
     if (!data || isEmpty(data)) return null;
+
     const {
+      alertSystem = 'all',
+      totalArea,
       totalAlertCount,
       highAlertPercentage,
       highestAlertPercentage,
     } = data;
+
     const { deforestationAlertsDataset } = options;
     const { label: system, value: systemSlug } = deforestationAlertsDataset;
     const startDate = settings.startDate;
     const endDate = settings.endDate;
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
+
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
       indicator: indicator && indicator.label,
       system,
+      totalArea: !totalArea
+        ? ' '
+        : `covering a total of ${formatNumber({ num: totalArea, unit: 'ha' })}`,
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
       highConfPerc:
         highAlertPercentage === 0
@@ -166,7 +178,7 @@ export const parseSentence = createSelector(
           key: 'high confidence alerts',
           fine: true,
           tooltip:
-            'Alerts are classified as high confidence when a second satelite pass has also identified the pixel as an alert. Most of the alerts that remain unclassified have not had another satelite pass, due to the 8-day revisit time or cloud cover.',
+            'Alerts are classified as high confidence when a second satellite pass has also identified the pixel as an alert. Most of the alerts that remain unclassified have not had another satelite pass, due to the 8-day revisit time or cloud cover.',
         },
       }) ||
         (systemSlug === 'glad_s2' && {
@@ -186,13 +198,37 @@ export const parseSentence = createSelector(
           },
         })),
     };
+
     const { initial, withInd, singleSystem, singleSystemWithInd } = sentences;
     let sentence = indicator ? withInd : initial;
-    if (systemSlug !== 'all')
+
+    if (indicator && systemSlug !== 'all') {
       sentence = indicator ? singleSystemWithInd : singleSystem;
+    }
+
+    // Take alert system into account
+    if (!indicator) {
+      sentence = alertSystem === 'all' ? initial : singleSystem;
+    }
+
     return {
       sentence,
-      params,
+      params: {
+        ...params,
+        ...(system === 'All alerts' &&
+          alertSystem === 'radd' && {
+            system: 'RADD',
+          }),
+        ...(system === 'All alerts' &&
+          alertSystem === 'glad_l' && {
+            system: 'GLAD-L',
+          }),
+        ...(system === 'All alerts' &&
+          alertSystem === 'glad_s' && {
+            system: 'GLAD-S2',
+          }),
+        highConfidenceAlerts: 'high confidence alerts',
+      },
     };
   }
 );
