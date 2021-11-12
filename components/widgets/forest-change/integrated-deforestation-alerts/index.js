@@ -22,10 +22,7 @@ import { isMapPage } from 'utils/location';
 import { handleAlertSystem } from 'components/widgets/utils/alertSystem';
 
 // imported functions for retreiving glad alerts from tables
-import {
-  fetchIntegratedAlerts,
-  fetchGladAlertsDaily,
-} from 'services/analysis-cached';
+import { fetchIntegratedAlerts } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -37,13 +34,13 @@ export default {
   title: 'Integrated Deforestation alerts in {location}',
   sentence: {
     initial:
-      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     withInd:
-      'There were {total} deforestation alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+      'There were {total} deforestation alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     singleSystem:
-      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate} of which {highConfPerc} were {high confidence alerts}.',
+      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
     singleSystemWithInd:
-      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate} of which {highConfPerc} were {high confidence alerts}.',
+      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
@@ -141,36 +138,10 @@ export default {
     const endDate = params?.endDate || defaultEndDate;
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
-      // function reference to parse fetch
-      if (alertSystem === 'glad_l') {
-        return fetchGladAlertsDaily({
-          // widget settings passed to the fetch function from the config above as well as the state
-          ...params,
-          startDate,
-          endDate,
-          // once fetch resolves... then do the following. Usually, some basic parsing
-        }).then((alerts) => {
-          const integratedAlertsData = alerts && alerts.data.data;
-          let data = {};
-          if (integratedAlertsData && GLAD) {
-            data = {
-              alerts: integratedAlertsData,
-              settings: {
-                startDate,
-                endDate,
-              },
-              options: {
-                minDate: '2015-01-01',
-                maxDate: defaultEndDate,
-              },
-            };
-          }
-          return data;
-        });
-      }
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
+        alertSystem,
         startDate,
         endDate,
         // once fetch resolves... then do the following. Usually, some basic parsing
@@ -179,7 +150,10 @@ export default {
         let data = {};
         if (integratedAlertsData && GLAD) {
           data = {
-            alerts: integratedAlertsData,
+            alerts: {
+              allAlerts: integratedAlertsData,
+              alertSystem,
+            },
             settings: {
               startDate,
               endDate,
@@ -234,6 +208,7 @@ export default {
     return {
       alerts: {
         otf: true,
+        alertSystem,
         sum: (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0),
         highCount: high?.count || 0,
         highestCount: highest?.count || 0,
@@ -263,6 +238,7 @@ export default {
     const endDate = params?.endDate || defaultEndDate;
     const geostoreId = params?.geostore?.hash;
     const alertSystem = params?.deforestationAlertsDataset;
+
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
       table = 'umd_glad_landsat_alerts';
