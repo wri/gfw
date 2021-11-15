@@ -138,6 +138,7 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
       return fetchIntegratedAlerts({
