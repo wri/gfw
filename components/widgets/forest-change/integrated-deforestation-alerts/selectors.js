@@ -174,6 +174,7 @@ export const parseSentence = createSelector(
 
     const { deforestationAlertsDataset } = options;
     const { label: system, value: systemSlug } = deforestationAlertsDataset;
+
     const startDate = settings.startDate;
     const endDate = settings.endDate;
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
