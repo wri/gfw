@@ -2,6 +2,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import filter from 'lodash/filter';
 import { formatNumber } from 'utils/format';
 
 import moment from 'moment';
@@ -18,8 +19,11 @@ const getOptionsSelected = (state) => state.optionsSelected;
 export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
 
+  const confidence = data?.confidence || false;
+
   if (data?.otf) {
     return {
+      confidence,
       alertSystem: data?.alertSystem || 'all',
       totalAlertCount: data?.sum || 0,
       highAlertCount: data?.highCount || 0,
@@ -49,12 +53,26 @@ export const parseData = createSelector([selectAlerts], (data) => {
   const lowAlerts = lowAlertsData.length ? lowAlertsData[0].alerts : 0;
 
   // Total alerts
-  const totalAlerts = highAlerts + highestAlerts + lowAlerts;
+  let totalAlerts;
+  let totalArea;
 
-  const totalArea = sumBy(data.allAlerts, 'alert_area__ha');
+  if (!confidence) {
+    totalAlerts = highAlerts + highestAlerts + lowAlerts;
+    totalArea = sumBy(data.allAlerts, 'alert_area__ha');
+  } else {
+    totalAlerts = highAlerts + highestAlerts;
+    totalArea = sumBy(
+      filter(
+        data.allAlerts,
+        (f) => f.confidence === 'high' || f.confidence === 'highest'
+      ),
+      'alert_area__ha'
+    );
+  }
 
   // Return parsed data structure including percentage
   return {
+    confidence,
     alertSystem: data?.alertSystem || 'all',
     totalArea,
     totalAlertCount: totalAlerts,
@@ -73,6 +91,7 @@ export const parseConfig = createSelector(
     if (isEmpty(data)) return null;
     const {
       alertSystem = 'all',
+      confidence,
       highAlertCount,
       highestAlertCount,
       lowAlertCount,
@@ -116,13 +135,17 @@ export const parseConfig = createSelector(
         percentage: highAlertPercentage,
         unit: 'counts',
       },
-      {
-        label: alertSystem === 'all' ? lowAlertsLabel : 'Other alerts',
-        value: lowAlertCount,
-        color: lowColour,
-        percentage: lowAlertPercentage,
-        unit: 'counts',
-      },
+      ...(!confidence
+        ? [
+            {
+              label: alertSystem === 'all' ? lowAlertsLabel : 'Other alerts',
+              value: lowAlertCount,
+              color: lowColour,
+              percentage: lowAlertPercentage,
+              unit: 'counts',
+            },
+          ]
+        : []),
     ];
     return parsedData;
   }
@@ -142,6 +165,7 @@ export const parseSentence = createSelector(
 
     const {
       alertSystem = 'all',
+      confidence,
       totalArea,
       totalAlertCount,
       highAlertPercentage,
@@ -199,7 +223,13 @@ export const parseSentence = createSelector(
         })),
     };
 
-    const { initial, withInd, singleSystem, singleSystemWithInd } = sentences;
+    const {
+      initial,
+      withInd,
+      singleSystem,
+      singleSystemWithInd,
+      highConf,
+    } = sentences;
     let sentence = indicator ? withInd : initial;
 
     if (indicator && systemSlug !== 'all') {
@@ -211,10 +241,18 @@ export const parseSentence = createSelector(
       sentence = alertSystem === 'all' ? initial : singleSystem;
     }
 
+    if (confidence) {
+      sentence = highConf;
+    }
+
     return {
       sentence,
       params: {
         ...params,
+        ...(system === 'All alerts' &&
+          alertSystem === 'all' && {
+            system: ' ',
+          }),
         ...(system === 'All alerts' &&
           alertSystem === 'radd' && {
             system: 'RADD',

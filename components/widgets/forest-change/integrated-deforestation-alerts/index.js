@@ -41,6 +41,8 @@ export default {
       'There were {total} {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
     singleSystemWithInd:
       'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
+    highConf:
+      'There were {total} high or highest confidence {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea}.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
@@ -153,6 +155,7 @@ export default {
             alerts: {
               allAlerts: integratedAlertsData,
               alertSystem,
+              confidence: params.confirmedOnly === 1,
             },
             settings: {
               startDate,
@@ -209,6 +212,7 @@ export default {
       alerts: {
         otf: true,
         alertSystem,
+        confidence: params.confirmedOnly === 1,
         sum: (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0),
         highCount: high?.count || 0,
         highestCount: highest?.count || 0,
