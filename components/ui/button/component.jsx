@@ -36,6 +36,7 @@ const Button = (props) => {
     background,
     trackingData,
     target,
+    tooltipPosition = 'top'
   } = props;
 
   const handleClick = (e) => {
@@ -111,7 +112,7 @@ const Button = (props) => {
     return (
       <Tooltip
         theme="tip"
-        position="top"
+        position={tooltipPosition}
         arrow
         touchHold
         html={<Tip text={tooltip.text} />}
@@ -139,6 +140,7 @@ Button.propTypes = {
   buttonClicked: PropTypes.func,
   background: PropTypes.string,
   target: PropTypes.string,
+  tooltipPosition: PropTypes.string
 };
 
 export default Button;

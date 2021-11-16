@@ -44,6 +44,10 @@ class WidgetDownloadButton extends PureComponent {
     meta: PropTypes.object,
   };
 
+  state = {
+    disabled: false
+  }
+
   generateZipFromURL = async () => {
     const {
       title,
@@ -218,6 +222,7 @@ class WidgetDownloadButton extends PureComponent {
     }
     zip.generateAsync({ type: 'blob' }).then((content) => {
       saveAs(content, `${title}.zip`);
+      this.setState({ disabled: false });
     });
   };
 
@@ -233,6 +238,11 @@ class WidgetDownloadButton extends PureComponent {
 
   onClickDownloadBtn = () => {
     const { gladAlertsDownloadUrls } = this.props;
+    const { disabled } = this.state;
+
+    if (disabled) return;
+
+    this.setState({ disabled: true });
 
     if (this.isGladAlertsWidget() && this.isCustomShape()) {
       const csvFile = `${GFW_API}${gladAlertsDownloadUrls.csv}`;
@@ -245,10 +255,16 @@ class WidgetDownloadButton extends PureComponent {
       action: 'Download widget',
       label: this.props.widget,
     });
+
+    setTimeout(() => {
+      this.setState({ disabled: false });
+    }, 2000);
   };
 
   render() {
     const { areaTooLarge, disabled, disabledMessage } = this.props;
+    const { disabled: localDisabled } = this.state;
+
     let tooltipText =
       this.isGladAlertsWidget() && this.isCustomShape()
         ? 'Download data. Please add .csv to the filename if extension is missing.'
@@ -277,7 +293,7 @@ class WidgetDownloadButton extends PureComponent {
         })}
         onClick={this.onClickDownloadBtn}
         tooltip={{ text: tooltipText }}
-        disabled={areaTooLarge || disabled}
+        disabled={areaTooLarge || disabled || localDisabled}
       >
         <Icon icon={downloadIcon} className="download-icon" />
       </Button>

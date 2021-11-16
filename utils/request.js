@@ -34,6 +34,12 @@ export const gfwApiRequest = create({
   baseURL: GFW_API_URL,
 });
 
+// Always point to production
+export const gfwGeostoreRequest = create({
+  timeout: 30 * 1000,
+  baseURL: GFW_API,
+});
+
 export const dataRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_DATA_API_URL,

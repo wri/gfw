@@ -8,9 +8,10 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import ShareComponent from './component';
 
-const mapStateToProps = ({ share, location }) => ({
+const mapStateToProps = ({ share, location, areas }) => ({
   ...share,
   location,
+  area: share?.data?.areaId ? areas.data.find(area => area.id === share.data.areaId) : null
 });
 
 class ShareContainer extends PureComponent {

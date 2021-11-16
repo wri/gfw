@@ -11,8 +11,6 @@ import {
   GLAD_ALERTS,
 } from 'data/layers';
 
-import { handleGladMeta } from 'utils/gfw-meta';
-
 import {
   getExtentGrouped,
   getIntegratedAlertsRanked,
@@ -21,11 +19,13 @@ import {
 } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
+import { getWeeksRange } from 'components/widgets/utils/data';
 
 import getWidgetProps from './selectors';
 
 export default {
   widget: 'integratedAlertsRanked',
+  published: false,
   title: 'Location of integrated deforestation Alerts in {location}',
   categories: ['forest-change'],
   types: ['country'],
@@ -77,6 +77,7 @@ export default {
   refetchKeys: [
     'forestType',
     'landCategory',
+    'weeks',
     'deforestationAlertsDataset',
     'extentYear',
     'threshold',
@@ -125,14 +126,9 @@ export default {
     adm0: tropicalIsos,
   },
   getData: async (params) => {
-    // Gets pre-fetched GLAD-related metadata from the state...
-    const GLAD = await handleGladMeta(params);
-
     // extract relevant metadata
-    const defaultStartDate = GLAD?.defaultStartDate;
-    const defaultEndDate = GLAD?.defaultEndDate;
-    const startDate = params?.startDate || defaultStartDate;
-    const endDate = params?.endDate || defaultEndDate;
+    const { weeks } = params;
+    const { startDate, endDate } = getWeeksRange(weeks);
     const geostoreId = params?.geostore?.hash;
     const alertSystem = params?.deforestationAlertsDataset;
 

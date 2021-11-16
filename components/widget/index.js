@@ -76,12 +76,25 @@ class WidgetContainer extends Component {
   handleMaxRowSize(data) {
     const { maxDownloadSize = null, settings } = this.props;
     if (!maxDownloadSize) return { downloadDisabled: false };
-    const { key, subKey, maxSize } = maxDownloadSize;
+    const { key, subKey = null, entryKey, maxSize } = maxDownloadSize;
+
     const filterSelected = !!settings?.forestType || !!settings?.landCategory;
-    if (has(data, key) && Array.isArray(data[key]) && maxSize) {
-      const exceedsMaxSize = subKey
-        ? sumBy(data[key], subKey) > maxSize
-        : sumBy(data, key) > maxSize;
+
+    const dataEntry = data[key];
+    let dataKey = key;
+    if (subKey) {
+      dataKey = subKey;
+    }
+
+    if (
+      has(dataEntry, dataKey) &&
+      Array.isArray(dataEntry[dataKey]) &&
+      maxSize
+    ) {
+      const exceedsMaxSize = entryKey
+        ? sumBy(dataEntry[dataKey], entryKey) > maxSize
+        : sumBy(dataEntry, dataKey) > maxSize;
+
       return {
         downloadDisabled: filterSelected || exceedsMaxSize,
         maxSize,

@@ -289,6 +289,7 @@ class AreasTable extends PureComponent {
                           shareUrl:
                             !isServer &&
                             `${window.location.host}/dashboards/aoi/${area.id}`,
+                          areaId: area?.id,
                         })}
                     >
                       <Icon className="link-icon" icon={shareIcon} />

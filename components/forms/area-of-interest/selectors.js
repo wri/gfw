@@ -33,6 +33,7 @@ export const getInitialValues = createSelector(
   [selectUserData, getActiveArea, getGeodescriberTitleFull, selectGeostoreId],
   (userData, area, locationName, geostoreId) => {
     const { email: userEmail, language: userLanguage } = userData;
+
     const {
       fireAlerts,
       deforestationAlerts,

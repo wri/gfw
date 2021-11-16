@@ -12,10 +12,17 @@
     min-height: rem(350px);
   }
 
-  .share-buttons {
+  .meta-controls {
     position: absolute;
     right: rem(20px);
     top: rem(20px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .share-buttons {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -51,6 +58,20 @@
           fill: darken($white, 20%);
         }
       }
+    }
+  }
+
+  .private-area-notice {
+    padding: 0;
+    margin: 0 8px 0 0;
+    color: $grey;
+
+    .button-wrapper {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      text-transform: capitalize;
+      gap: 6px;
     }
   }
 

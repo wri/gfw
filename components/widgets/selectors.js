@@ -29,6 +29,7 @@ import {
 import allWidgets from './manifest';
 
 const isServer = typeof window === 'undefined';
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
 const buildLocationDict = (locations) =>
   (locations &&
@@ -329,6 +330,12 @@ export const filterWidgetsByLocation = createSelector(
           !isEmpty(layerIntersection)) ||
         (!showAnalysis && visible && visible.includes('dashboard'));
 
+      let published = true;
+
+      if (ENVIRONMENT === 'production' && w?.published === false) {
+        published = false;
+      }
+
       return (
         hasLocation &&
         matchesAdminWhitelist &&
@@ -336,7 +343,8 @@ export const filterWidgetsByLocation = createSelector(
         isFAOCountry &&
         isWidgetVisible &&
         notInBlacklist &&
-        isWidgetDataPending
+        isWidgetDataPending &&
+        published
       );
     });
   }

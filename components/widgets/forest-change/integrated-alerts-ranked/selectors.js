@@ -4,7 +4,6 @@ import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
-import moment from 'moment';
 
 // get list data
 const getData = (state) => state.data && state.data.alerts;

@@ -64,6 +64,7 @@ export const fetchDatasets = createThunkAction(
               isSelectorLayer,
               isMultiSelectorLayer,
               isLossLayer,
+              isMosaicLandscapes,
               isLossDriverLayer,
               isKbaLayer,
             } = info || {};
@@ -87,13 +88,16 @@ export const fetchDatasets = createThunkAction(
               statementConfig = {
                 type: 'kbaLayer',
               };
+            } else if (isMosaicLandscapes) {
+              statementConfig = {
+                type: 'mosaicLandscapes',
+              };
             } else if (global && !!iso.length && iso[0]) {
               statementConfig = {
                 type: 'isoLayer',
                 isos: iso,
               };
             }
-
             return {
               id: applicationConfig?.dataset_slug || applicationConfig.slug,
               dataset:

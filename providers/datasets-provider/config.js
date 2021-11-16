@@ -1,3 +1,5 @@
+// https://www.khronos.org/files/opengles_shading_language.pdf
+
 const decodes = {
   treeCover: `
     // values for creating power scale, domain (input), and range (output)
@@ -111,7 +113,7 @@ const decodes = {
       alpha = 0.;
     }
   `,
-  integratedAlerts8Bit: `
+  integratedAlerts8Bitprevious: `
     // First 6 bits Alpha channel used to individual alert confidence
     // First two bits (leftmost) are GLAD-L
     // Next, 3rd and 4th bits are GLAD-S2
@@ -215,6 +217,67 @@ const decodes = {
         color.b = 109. / 255.;
         alpha = intensity / 255.;
 
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
+  integratedAlerts8Bit: `
+  // First 6 bits Alpha channel used to individual alert confidence
+    // First two bits (leftmost) are GLAD-L
+    // Next, 3rd and 4th bits are GLAD-S2
+    // Finally, 5th and 6th bits are RADD
+    // Bits are either: 00 (0, no alerts), 01 (1, low conf), or 10 (2, high conf)
+    // e.g. 00 10 01 00 --> no GLAD-L, high conf GLAD-S2, low conf RADD
+
+    float agreementValue = alpha * 255.;
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    float day = r * 255. + g;
+    float confidence = floor(b / 100.) - 1.;
+    float intensity = mod(b, 100.) * 50.;
+    // float intensity = 255.; //this is temporal above one does not work
+
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex &&
+      agreementValue > 0.
+    )
+    {
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      // get high and highest confidence alerts
+      float confidenceValue = 0.;
+      if (confirmedOnly > 0.) {
+        confidenceValue = 255.;
+      }
+
+      if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
+        // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8
+
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
+        alpha = intensity / 255.;
+      } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
+        // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
+
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      } else {
+        // MULTIPLE ALERTS: >0 and not 2**(2+n)
+
+        color.r = 201. / 255.;
+        color.g = 42. / 255.;
+        color.b = 109. / 255.;
+        alpha = intensity / 255.;
       }
     } else {
       alpha = 0.;
@@ -419,6 +482,21 @@ const decodes = {
     }
   `,
   staticRemap: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      alpha = 1.;
+    }
+
+    color.r = red;
+    color.g = green;
+    color.b = blue;
+  `,
+  newCarbonFlux: `
     float red = color.r;
     float green = color.g;
     float blue = color.b;

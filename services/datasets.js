@@ -31,6 +31,10 @@ export const getDatasetMeta = () => {
     .then((data) => {
       const latestDate = data?.data[0]?.attributes?.date;
       metaData['https://api.resourcewatch.org/glad-alerts/latest'] = latestDate;
+    })
+    .catch(() => {
+      metaData['https://api.resourcewatch.org/glad-alerts/latest'] =
+        '2021-11-12';
     });
 
   return new Promise((resolve) => {

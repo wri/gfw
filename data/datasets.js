@@ -3,6 +3,8 @@ export const RIVER_BASINS_BOUNDARIES_DATASET = 'river-basins';
 export const FOREST_LOSS_DATASET_2020 = 'tree-cover-loss-2020';
 export const FOREST_LOSS_DATASET = 'tree-cover-loss';
 export const GLAD_DEFORESTATION_ALERTS_DATASET = 'glad-deforestation-alerts';
+export const INTEGRATED_DEFORESTATION_ALERTS =
+  'integrated-deforestation-alerts-8bit';
 export const GLAD_S2_DEFORESTATION_ALERTS_DATASET =
   'glad-s2-deforestation-alerts';
 export const RADD_DEFORESTATION_ALERTS_DATASET = 'radd-deforestation-alerts';
@@ -13,6 +15,9 @@ export const BIOMASS_LOSS_DATASET =
 export const CARBON_EMISSIONS_DATASET = 'carbon-emissions';
 export const CARBON_REMOVALS_DATASET = 'carbon-removals';
 export const CARBON_FLUX_DATASET = 'net-carbon-flux';
+export const CARBON_EMISSIONS_DATASET_TEST = 'carbon-emissions-test';
+export const CARBON_REMOVALS_DATASET_TEST = 'carbon-removals test';
+export const CARBON_FLUX_DATASET_TEST = 'net-carbon-flux-test';
 export const BURNED_AREA_MODIS_DATASET = 'burned-area-modis';
 
 export const SOIL_CARBON_DENSITY_DATASET = 'soil-carbon-density';
