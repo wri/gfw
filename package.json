@@ -82,7 +82,7 @@
     "@reduxjs/toolkit": "^1.4.0",
     "@wordpress/api-fetch": "^3.19.1",
     "@zeit/next-sass": "^1.0.1",
-    "aws-sdk": "^2.291.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.21.1",
     "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
