@@ -12,7 +12,7 @@ export default (req, res) =>
     target: GFW_API_URL,
     // In addition, you can use the `pathRewrite` option provided by `next-http-proxy`,
     pathRewrite: {
-      '^/api/gfw-api/': '/',
+      '^/?/api/gfw-api': '/',
     },
     headers: {
       'x-api-key': DATA_API_KEY,

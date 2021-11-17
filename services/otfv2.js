@@ -1,11 +1,6 @@
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
-
 class OTF {
   constructor(url) {
-    this.endpoint =
-      process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging'
-        ? GFW_STAGING_DATA_API
-        : GFW_DATA_API;
+    this.endpoint = '/api/data-api';
     this.url = `${this.endpoint}${url}`;
     this.table = 'data';
     this.selectStmt = null;
