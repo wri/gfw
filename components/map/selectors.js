@@ -272,7 +272,7 @@ export const getDatasetsWithConfig = createSelector(
                 maxRange,
                 dynamicTimeline: dynamicTimeline !== null,
                 minRange,
-                rangeInterval
+                rangeInterval,
               };
 
               const layerParams = {
@@ -289,7 +289,10 @@ export const getDatasetsWithConfig = createSelector(
                       .subtract(defaultRange || maxRange, rangeInterval)
                       .format('YYYY-MM-DD'),
                     endDateAbsolute: maxDate || l.params.endDate,
-                  })
+                  }),
+                ...(dynamicTimeline && {
+                  startDate: dynamicTimeline.startDate,
+                }),
               };
 
               const out = {
@@ -298,7 +301,7 @@ export const getDatasetsWithConfig = createSelector(
                 opacity,
                 bbox,
                 ...(citation && {
-                  citation
+                  citation,
                 }),
                 color: d.color,
                 active: layers && layers.length && layers.includes(l.id),
@@ -501,7 +504,6 @@ export const getActiveLayersWithDates = createSelector(
     return layers.map((l) => {
       const { decodeFunction, decodeParams, params } = l;
       const { startDate, endDate } = decodeParams || {};
-
       return {
         ...l,
         ...(decodeFunction &&
@@ -509,6 +511,7 @@ export const getActiveLayersWithDates = createSelector(
             decodeParams: {
               ...decodeParams,
               ...(startDate && {
+                startDate: params?.startDate || startDate,
                 startYear: moment(startDate).year(),
                 startMonth: moment(startDate).month(),
                 startDay: moment(startDate).dayOfYear(),
@@ -526,6 +529,7 @@ export const getActiveLayersWithDates = createSelector(
             params: {
               ...params,
               ...(params.startDate && {
+                startDate: params.startDate,
                 startYear: moment(params.startDate).year(),
                 startMonth: moment(params.startDate).month(),
                 startDay: moment(params.startDate).dayOfYear(),

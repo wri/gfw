@@ -35,7 +35,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
+  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
   integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
   integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -552,7 +552,7 @@ export const getCarbonFlux = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
-      version: 'v20210820',
+      version: 'latest',
     })}${carbonFlux}`
       .replace(
         /{select_location}/g,
@@ -590,7 +590,7 @@ export const getCarbonFluxOTF = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
-      version: 'v20210820',
+      version: 'latest',
     })}${carbonFluxOTF}`
       .replace('{geostoreOrigin}', 'rw')
       .replace('{geostoreId}', geostoreId)
@@ -1132,7 +1132,6 @@ export const fetchIntegratedAlerts = (params) => {
     startDate,
     endDate,
     download,
-    deforestationAlertsDataset,
     geostoreId,
     alertSystem,
     forestType,
@@ -1146,16 +1145,12 @@ export const fetchIntegratedAlerts = (params) => {
   const datasetMapping = {
     all: 'gfw_integrated_alerts',
     glad_l: 'umd_glad_landsat_alerts',
-    glad_s2: 'umd_glad_sentinel2_alerts',
+    glad_s: 'umd_glad_sentinel2_alerts',
     radd: 'wur_radd_alerts',
   };
 
-  const dateString = datasetMapping[deforestationAlertsDataset].concat(
-    '__date'
-  );
-  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
-    '__confidence'
-  );
+  const dateString = datasetMapping[alertSystem].concat('__date');
+  const confidenceString = datasetMapping[alertSystem].concat('__confidence');
 
   if (!download) {
     requestUrl = getRequestUrl({
@@ -1189,7 +1184,7 @@ export const fetchIntegratedAlerts = (params) => {
     });
   }
 
-  if (download && alertSystem === 'glad_s2') {
+  if (download && alertSystem === 'glad_s') {
     query = SQL_QUERIES.integratedAlertsDownloadGladS;
     requestUrl = getRequestUrl({
       ...params,

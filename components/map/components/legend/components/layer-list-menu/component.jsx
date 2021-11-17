@@ -12,21 +12,20 @@ class LayerListMenu extends PureComponent {
     const { layers } = this.props;
     const activeLayer = layers && layers.find((l) => l.active);
 
+    // @TODO: cleanup handling of geographic coverage
     return layers
       .filter((l) => !l.default && !l.isSelector)
       .filter((l) => {
         if (l.id.includes('geographic-coverage')) {
-          if (
-            activeLayer.id === 'integrated-deforestation-alerts-8bit' ||
-            activeLayer.id === 'integrated-deforestation-alerts-8bit-gladL'
-          ) {
+          if (activeLayer.id === 'integrated-deforestation-alerts-8bit') {
             return l.id === 'glad-deforestation-alerts-geographic-coverage';
           }
-
+          if (activeLayer.id === 'integrated-deforestation-alerts-8bit-gladL') {
+            return l.id === 'glad-l-deforestation-alerts-geographic-coverage';
+          }
           if (activeLayer.id === 'integrated-deforestation-alerts-8bit-radd') {
             return l.id === 'radd-deforestation-alerts-geographic-coverage';
           }
-
           if (activeLayer.id === 'integrated-deforestation-alerts-8bit-gladS') {
             return (
               l.id === 'glad-plus-deforestation-alerts-geographic-coverage'
