@@ -209,15 +209,24 @@ export default {
     const otfData = await OtfAnalysis.fetch();
     const [high, highest, nominal] = otfData?.data || [];
 
+    let sum = 0;
+
+    if (params.confirmedOnly === 1) {
+      sum = (high?.count || 0) + (highest?.count || 0);
+    } else {
+      sum = (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0);
+    }
+
     return {
       alerts: {
         otf: true,
         alertSystem,
         confidence: params.confirmedOnly === 1,
-        sum: (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0),
+        sum,
         highCount: high?.count || 0,
         highestCount: highest?.count || 0,
         nominalCount: nominal?.count || 0,
+        allAlerts: [{ alert__count: sum }],
       },
       settings: {
         startDate,

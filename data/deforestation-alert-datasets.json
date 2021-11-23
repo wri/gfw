@@ -1,6 +1,6 @@
 [
   {
-    "label": "All alerts",
+    "label": "Integrated deforestation alerts",
     "value": "all",
     "unit": "alerts",
     "metaKey": null,

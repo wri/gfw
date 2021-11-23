@@ -20,7 +20,6 @@ export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
 
   const confidence = data?.confidence || false;
-
   if (data?.otf) {
     return {
       confidence,
@@ -250,19 +249,19 @@ export const parseSentence = createSelector(
       sentence,
       params: {
         ...params,
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'all' && {
             system: ' ',
           }),
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'radd' && {
             system: 'RADD',
           }),
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'glad_l' && {
             system: 'GLAD-L',
           }),
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'glad_s' && {
             system: 'GLAD-S2',
           }),

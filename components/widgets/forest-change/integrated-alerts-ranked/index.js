@@ -103,13 +103,13 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, {count} deforestation alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all deforestation alerts.',
+      'In the last {timeframe} in {location}, {count} deforestation alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of integrated deforestation alerts.',
     withInd:
-      'In the last {timeframe} in {location}, {count} deforestation alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all deforestation alerts.',
+      'In the last {timeframe} in {location}, {count} deforestation alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of integrated deforestation alerts.',
     singleSystem:
       'In the last {timefrane} in {location}, {count} {system} alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all {system} alerts.',
     singleSystemWithInd:
-      'In the last {timeframe} in {location}, {count} {systme} alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all {system} alerts.',
+      'In the last {timeframe} in {location}, {count} {system} alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all {system} alerts.',
   },
   settings: {
     threshold: 30,
