@@ -1237,7 +1237,7 @@ export const fetchIntegratedAlerts = (params) => {
     }
 
     if (alertSystem === 'glad_s2') {
-      fileName = 'glad_l_alerts';
+      fileName = 'glad_s_alerts';
     }
 
     if (alertSystem === 'radd') {
