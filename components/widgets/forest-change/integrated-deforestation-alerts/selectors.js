@@ -229,6 +229,7 @@ export const parseSentence = createSelector(
       singleSystem,
       singleSystemWithInd,
       highConf,
+      noReportedAlerts,
     } = sentences;
     let sentence = indicator ? withInd : initial;
 
@@ -243,6 +244,10 @@ export const parseSentence = createSelector(
 
     if (confidence) {
       sentence = highConf;
+    }
+
+    if (totalAlertCount === 0) {
+      sentence = noReportedAlerts;
     }
 
     return {

@@ -43,6 +43,8 @@ export default {
       'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
     highConf:
       'There were {total} high or highest confidence {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea}.',
+    noReportedAlerts:
+      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
