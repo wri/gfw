@@ -1151,7 +1151,7 @@ export const fetchIntegratedAlerts = (params) => {
   const datasetMapping = {
     all: 'gfw_integrated_alerts',
     glad_l: 'umd_glad_landsat_alerts',
-    glad_s: 'umd_glad_sentinel2_alerts',
+    glad_s2: 'umd_glad_sentinel2_alerts',
     radd: 'wur_radd_alerts',
   };
 
@@ -1190,7 +1190,7 @@ export const fetchIntegratedAlerts = (params) => {
     });
   }
 
-  if (download && alertSystem === 'glad_s') {
+  if (download && alertSystem === 'glad_s2') {
     query = SQL_QUERIES.integratedAlertsDownloadGladS;
     requestUrl = getRequestUrl({
       ...params,
@@ -1230,8 +1230,22 @@ export const fetchIntegratedAlerts = (params) => {
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
+    let fileName = 'deforestation_alerts';
+
+    if (alertSystem === 'glad_l') {
+      fileName = 'glad_l_alerts';
+    }
+
+    if (alertSystem === 'glad_s2') {
+      fileName = 'glad_s_alerts';
+    }
+
+    if (alertSystem === 'radd') {
+      fileName = 'radd_alerts';
+    }
+
     return {
-      name: `glad_alerts${
+      name: `${fileName}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__count`,
       url: getDownloadUrl(url),
@@ -1429,7 +1443,7 @@ export const fetchGladAlertsDailyRanked = (params) => {
   })}${SQL_QUERIES.integratedAlertsRanked}`;
 
   if (download) {
-    // No download yet
+    // no download yet
   }
 
   const datasetMapping = {

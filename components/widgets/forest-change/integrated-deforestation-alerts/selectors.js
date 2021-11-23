@@ -171,7 +171,9 @@ export const parseSentence = createSelector(
       highestAlertPercentage,
     } = data;
 
-    const { deforestationAlertsDataset } = options;
+    const {
+      deforestationAlertsDataset = { label: null, value: null },
+    } = options;
     const { label: system, value: systemSlug } = deforestationAlertsDataset;
 
     const startDate = settings.startDate;
