@@ -263,7 +263,7 @@ const decodes = {
         color.r = 237. / 255.;
         color.g = 164. / 255.;
         color.b = 194. / 255.;
-        alpha = intensity / 255.;
+        alpha = (intensity -confidenceValue) / 255.;
       } else if (agreementValue == 8. || agreementValue == 32. || agreementValue ==  128.){
         // ONE HIGH CONF ALERT: 8,32,128 i.e. 2**(2+n) for n<8 and odd
 
