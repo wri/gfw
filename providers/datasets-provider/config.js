@@ -417,9 +417,9 @@ const decodes = {
         color.b = 0.;
         alpha = intensity / 255.;
       } else {
-        color.r = 220. / 255.;
-        color.g = 102. / 255.;
-        color.b = 153. / 255.;
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
         alpha = intensity / 255.;
       }
     } else {
@@ -458,9 +458,9 @@ const decodes = {
         color.b = 0.;
         alpha = intensity / 255.;
       } else {
-        color.r = 220. / 255.;
-        color.g = 102. / 255.;
-        color.b = 153. / 255.;
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
         alpha = intensity / 255.;
       }
     } else {
