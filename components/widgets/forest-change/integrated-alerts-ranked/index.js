@@ -14,6 +14,7 @@ import {
 import {
   getExtentGrouped,
   getIntegratedAlertsRanked,
+  fetchGladAlerts,
   fetchGLADLatest,
   fetchGladAlertsDaily,
 } from 'services/analysis-cached';
@@ -197,6 +198,9 @@ export default {
     return null;
   },
   // Void no download
-  getDataURL: () => [],
+  getDataURL: (params) => [
+    fetchGladAlerts({ ...params, download: true }),
+    getExtentGrouped({ ...params, download: true }),
+  ],
   getWidgetProps,
 };
