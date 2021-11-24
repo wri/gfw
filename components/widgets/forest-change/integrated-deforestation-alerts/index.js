@@ -129,6 +129,7 @@ export default {
   // initial settings
   settings: {
     deforestationAlertsDataset: 'all',
+    canDownloadUnsaved: true,
   },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
