@@ -184,7 +184,7 @@ export default {
       dataset = 'umd_glad_landsat_alerts';
     }
 
-    if (alertSystem === 'glad_s') {
+    if (alertSystem === 'glad_s2') {
       dataset = 'umd_glad_sentinel2_alerts';
     }
 
@@ -261,7 +261,7 @@ export default {
     if (alertSystem === 'glad_l') {
       table = 'umd_glad_landsat_alerts';
     }
-    if (alertSystem === 'glad_l') {
+    if (alertSystem === 'glad_s2') {
       table = 'umd_glad_sentinel2_alerts';
     }
     if (alertSystem === 'radd') {

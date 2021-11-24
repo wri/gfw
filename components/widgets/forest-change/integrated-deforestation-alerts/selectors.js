@@ -269,7 +269,7 @@ export const parseSentence = createSelector(
             system: 'GLAD-L',
           }),
         ...(systemSlug === 'all' &&
-          alertSystem === 'glad_s' && {
+          alertSystem === 'glad_s2' && {
             system: 'GLAD-S2',
           }),
         highConfidenceAlerts: 'high confidence alerts',
