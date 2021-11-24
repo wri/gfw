@@ -41,10 +41,10 @@ const SQL_QUERIES = {
     'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
   integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
-  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
-  integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
-  integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
-  integratedAlertsDownloadRadd: `SELECT latitude, longitude, wur_radd_alerts__date, wur_radd_alerts__confidence FROM data WHERE wur_radd_alerts__date >= '{startDate}' AND wur_radd_alerts__date <= '{endDate}'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDownloadRadd: `SELECT latitude, longitude, wur_radd_alerts__date, wur_radd_alerts__confidence FROM data WHERE wur_radd_alerts__date >= '{startDate}' AND wur_radd_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   gladDaily: `SELECT {select_location}, alert__date, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, alert__date ORDER BY alert__date DESC`,
   gladDailySum: `SELECT {select_location}, is__confirmed_alert, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, is__confirmed_alert`,
   gladDailyOTF: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}' GROUP BY latitude, longitude, umd_glad_landsat_alerts__date&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1143,6 +1143,7 @@ export const fetchIntegratedAlerts = (params) => {
     forestType,
     landCategory,
     ifl,
+    confirmedOnly = 0,
   } = params || {};
 
   let requestUrl;
@@ -1212,6 +1213,25 @@ export const fetchIntegratedAlerts = (params) => {
     });
   }
 
+  let AND_OPERATION = '';
+
+  if (download && confirmedOnly === 1) {
+    AND_OPERATION = ' AND gfw_integrated_alerts__confidence != "nominal"';
+
+    if (alertSystem === 'glad_l') {
+      AND_OPERATION = ' AND umd_glad_landsat_alerts__confidence !== "nominal"';
+    }
+
+    if (alertSystem === 'glad_s2') {
+      AND_OPERATION =
+        ' AND umd_glad_sentinel2_alerts__confidence !== "nominal"';
+    }
+
+    if (alertSystem === 'radd') {
+      AND_OPERATION = ' AND gfw_radd_alerts__confidence !== "nominal"';
+    }
+  }
+
   const url = encodeURI(
     `${requestUrl}${query}`
       .replace(
@@ -1224,6 +1244,7 @@ export const fetchIntegratedAlerts = (params) => {
       .replace(/{startDate}/g, startDate)
       .replace(/{endDate}/g, endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
+      .replace(/{AND_OPERATION}/, AND_OPERATION)
       .replace(/{geostoreOrigin}/g, 'rw')
       .replace(/{geostoreId}/g, geostoreId)
   );
