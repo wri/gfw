@@ -66,14 +66,15 @@ class WidgetHeader extends PureComponent {
       getDataURL,
       status,
       authenticated,
-
+      settings,
       shouldSettingsOpen,
       toggleSettingsMenu,
     } = this.props;
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL; // Show everywhere
-    const disableDownloadBtn = disableDownload || status !== 'saved'; // Disable everywhere
+    const disableDownloadBtn =
+      disableDownload || (status !== 'saved' && !settings?.canDownloadUnsaved); // Disable everywhere
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
 
