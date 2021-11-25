@@ -411,10 +411,10 @@ const decodes = {
       if (intensity > 255.) {
         intensity = 255.;
       }
-      if (day >= numberOfDays - 7. && day <= numberOfDays) {
-        color.r = 219. / 255.;
-        color.g = 168. / 255.;
-        color.b = 0.;
+      if (confidence < 200.) {
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
         alpha = intensity / 255.;
       } else {
         color.r = 220. / 255.;
@@ -452,10 +452,10 @@ const decodes = {
       if (intensity > 255.) {
         intensity = 255.;
       }
-      if (day >= numberOfDays - 7. && day <= numberOfDays) {
-        color.r = 219. / 255.;
-        color.g = 168. / 255.;
-        color.b = 0.;
+      if (confidence < 1.) {
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
         alpha = intensity / 255.;
       } else {
         color.r = 220. / 255.;
