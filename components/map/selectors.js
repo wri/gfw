@@ -348,6 +348,9 @@ export const getDatasetsWithConfig = createSelector(
                     ...(maxDate && {
                       maxDate,
                     }),
+                    ...(dynamicTimeline && {
+                      ...dynamicTimeline,
+                    }),
                   },
                 }),
                 ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
