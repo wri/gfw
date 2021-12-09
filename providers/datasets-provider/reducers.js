@@ -18,13 +18,13 @@ const setDatasets = (state, { payload }) => ({
   loading: false,
 });
 
-const setDatasetMetadata = (state, { payload }) => ({
+const setDatasetsWithMetadata = (state, { payload }) => ({
   ...state,
-  meta: payload,
+  ...payload,
 });
 
 export default {
   [actions.setDatasets]: setDatasets,
-  [actions.setDatasetMetadata]: setDatasetMetadata,
+  [actions.setDatasetsWithMetadata]: setDatasetsWithMetadata,
   [actions.setDatasetsLoading]: setDatasetsLoading,
 };
