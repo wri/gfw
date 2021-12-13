@@ -238,6 +238,7 @@ const decodes = {
 
     float day = r * 255. + g;
     float confidence = floor(b / 100.) - 1.;
+    // float confidence = 255.;
     float intensity = mod(b, 100.) * 50.;
     // float intensity = 255.; //this is temporal above one does not work
 
@@ -439,7 +440,7 @@ const decodes = {
 
     // **** CHECK THIS
     // 1461 = days from 2019/01/01 to 2014/12/31
-    float day = (r * 255.) + g - 1461.;
+    float day = (r * 255.) + g;
     float confidence = floor(b / 100.) - 1.;
     if (
       day > 0. &&
