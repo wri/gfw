@@ -40,7 +40,7 @@ class WidgetCaution extends PureComponent {
       );
     }
     if (this.isVisible()) {
-      return <div className="c-widget-caution">{text}</div>;
+      return <div className="c-widget-caution" dangerouslySetInnerHTML={{__html: text}} />;
     }
 
     return null;
