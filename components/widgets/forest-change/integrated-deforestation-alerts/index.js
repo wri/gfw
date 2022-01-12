@@ -131,10 +131,6 @@ export default {
     deforestationAlertsDataset: 'all',
     canDownloadUnsaved: true,
   },
-  caution: {
-    visible: ['wdpa', 'country', 'aoi'],
-    text: 'GLAD-L alerts won\'t be updated during January 2022 due to maintenance. Stay updated via the <a href="https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I" rel="noreferrer" target="__BLANK">discussion forum</a> or email <a href="mailto:gfw@wri.org">gfw@wri.org</a> with any questions.',
-  },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
     const GLAD = await handleGladMeta(params);
