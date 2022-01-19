@@ -25,11 +25,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.16.2'
-      - name: Download next build from previous step
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: .next
       - name: Cache Cypress binary
         uses: actions/cache@v2
         with:
