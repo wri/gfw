@@ -440,7 +440,8 @@ const decodes = {
 
     // **** CHECK THIS
     // 1461 = days from 2019/01/01 to 2014/12/31
-    float day = (r * 255.) + g;
+    float day = (r * 255.) + g - 1461. ;
+
     float confidence = floor(b / 100.) - 1.;
     if (
       day > 0. &&
@@ -449,7 +450,8 @@ const decodes = {
       confidence >= confidenceValue
     ) {
       // get intensity
-      float intensity = mod(b, 100.) * 50.;
+      // float intensity = mod(b, 100.) * 50.;
+      float intensity = 255.;
       if (intensity > 255.) {
         intensity = 255.;
       }
