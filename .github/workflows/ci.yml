@@ -43,6 +43,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          NEXT_PUBLIC_FEATURE_ENV: preproduction
         with:
           build: yarn install
           start: yarn dev
