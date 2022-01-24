@@ -11,7 +11,8 @@ import decodeLayersConfig from './config';
 
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
-export const setDatasetMetadata = createAction('setDatasetMetadata');
+export const setDatasetsWithMetadata = createAction('setDatasetsWithMetadata');
+
 const handleFeatureEnvLock = (env) => {
   const currEnv = process.env.NEXT_PUBLIC_FEATURE_ENV;
   const MIXED_ENV = 'preproduction-staging';
@@ -286,8 +287,13 @@ export const fetchDatasets = createThunkAction(
             };
           });
 
-          dispatch(setDatasets(sortBy(parsedDatasets, 'menuPosition')));
-          dispatch(setDatasetMetadata(dsMetadata));
+          dispatch(
+            setDatasetsWithMetadata({
+              data: sortBy(parsedDatasets, 'menuPosition'),
+              meta: dsMetadata,
+              loading: false,
+            })
+          );
         })
         .catch(() => {
           dispatch(setDatasetsLoading({ loading: false, error: true }));

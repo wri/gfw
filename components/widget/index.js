@@ -94,7 +94,6 @@ class WidgetContainer extends Component {
       const exceedsMaxSize = entryKey
         ? sumBy(dataEntry[dataKey], entryKey) > maxSize
         : sumBy(dataEntry, dataKey) > maxSize;
-
       return {
         downloadDisabled: filterSelected || exceedsMaxSize,
         maxSize,

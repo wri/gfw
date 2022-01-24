@@ -3,8 +3,10 @@ import { differenceInDays } from 'date-fns';
 import has from 'lodash/has';
 
 export const getDayRange = (params) => {
-  const { startDate, endDate, minDate, maxDate, weeks } = params || {};
-  const minDateTime = new Date(minDate);
+  const { startDate, endDate, minDate, maxDate, weeks, minDateAbsolut = null } =
+    params || {};
+  // If min date absolut, always take its value (dynamic timeline)
+  const minDateTime = new Date(minDateAbsolut || minDate);
   const maxDateTime = new Date(maxDate);
 
   const numberOfDays = differenceInDays(maxDateTime, minDateTime);
@@ -23,7 +25,6 @@ export const getDayRange = (params) => {
   // get start and end day
   const startDayIndex = activeStartDay || rangeStartDate || 0;
   const endDayIndex = activeEndDay || numberOfDays;
-
   return {
     startDayIndex,
     endDayIndex,
@@ -31,7 +32,12 @@ export const getDayRange = (params) => {
   };
 };
 
-export const handleDynamicTimeline = (l, dsMetadata, timelineParams, callback) => {
+export const handleDynamicTimeline = (
+  l,
+  dsMetadata,
+  timelineParams,
+  callback
+) => {
   const hasLatest = l.dataset === 'integrated-deforestation-alerts-8bit';
   const range = {
     default: 549,

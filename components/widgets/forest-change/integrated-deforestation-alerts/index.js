@@ -43,6 +43,8 @@ export default {
       'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
     highConf:
       'There were {total} high or highest confidence {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea}.',
+    noReportedAlerts:
+      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
   metaKey: 'widget_deforestation_graph',
   large: false,
@@ -127,6 +129,7 @@ export default {
   // initial settings
   settings: {
     deforestationAlertsDataset: 'all',
+    canDownloadUnsaved: true,
   },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
@@ -181,7 +184,7 @@ export default {
       dataset = 'umd_glad_landsat_alerts';
     }
 
-    if (alertSystem === 'glad_s') {
+    if (alertSystem === 'glad_s2') {
       dataset = 'umd_glad_sentinel2_alerts';
     }
 
@@ -209,15 +212,24 @@ export default {
     const otfData = await OtfAnalysis.fetch();
     const [high, highest, nominal] = otfData?.data || [];
 
+    let sum = 0;
+
+    if (params.confirmedOnly === 1) {
+      sum = (high?.count || 0) + (highest?.count || 0);
+    } else {
+      sum = (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0);
+    }
+
     return {
       alerts: {
         otf: true,
         alertSystem,
         confidence: params.confirmedOnly === 1,
-        sum: (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0),
+        sum,
         highCount: high?.count || 0,
         highestCount: highest?.count || 0,
         nominalCount: nominal?.count || 0,
+        allAlerts: [{ alert__count: sum }],
       },
       settings: {
         startDate,
@@ -249,7 +261,7 @@ export default {
     if (alertSystem === 'glad_l') {
       table = 'umd_glad_landsat_alerts';
     }
-    if (alertSystem === 'glad_l') {
+    if (alertSystem === 'glad_s2') {
       table = 'umd_glad_sentinel2_alerts';
     }
     if (alertSystem === 'radd') {

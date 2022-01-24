@@ -83,6 +83,7 @@ class WidgetsContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
       getWidgetsData,
+      setWidgetsCategory,
       activeWidget,
       embed,
       location,
@@ -92,6 +93,7 @@ class WidgetsContainer extends PureComponent {
 
     if (!isEqual(category, prevProps.category)) {
       setActiveWidget(null);
+      setWidgetsCategory(category || 'summary');
     }
 
     if (location.type === 'global' && prevProps.location?.type !== 'global') {

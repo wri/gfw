@@ -20,7 +20,6 @@ export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
 
   const confidence = data?.confidence || false;
-
   if (data?.otf) {
     return {
       confidence,
@@ -172,7 +171,9 @@ export const parseSentence = createSelector(
       highestAlertPercentage,
     } = data;
 
-    const { deforestationAlertsDataset } = options;
+    const {
+      deforestationAlertsDataset = { label: null, value: null },
+    } = options;
     const { label: system, value: systemSlug } = deforestationAlertsDataset;
 
     const startDate = settings.startDate;
@@ -230,6 +231,7 @@ export const parseSentence = createSelector(
       singleSystem,
       singleSystemWithInd,
       highConf,
+      noReportedAlerts,
     } = sentences;
     let sentence = indicator ? withInd : initial;
 
@@ -246,24 +248,28 @@ export const parseSentence = createSelector(
       sentence = highConf;
     }
 
+    if (totalAlertCount === 0) {
+      sentence = noReportedAlerts;
+    }
+
     return {
       sentence,
       params: {
         ...params,
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'all' && {
             system: ' ',
           }),
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'radd' && {
             system: 'RADD',
           }),
-        ...(system === 'All alerts' &&
+        ...(systemSlug === 'all' &&
           alertSystem === 'glad_l' && {
             system: 'GLAD-L',
           }),
-        ...(system === 'All alerts' &&
-          alertSystem === 'glad_s' && {
+        ...(systemSlug === 'all' &&
+          alertSystem === 'glad_s2' && {
             system: 'GLAD-S2',
           }),
         highConfidenceAlerts: 'high confidence alerts',

@@ -32,6 +32,13 @@ export const getMapSettings = (state) => state.map?.settings || {};
 export const getBasemaps = () => basemaps;
 export const isTropics = (state) => state?.geostore?.data?.tropics || false;
 
+export const getLatestPlanet = (state) => {
+  if (state?.planet?.data?.length) {
+    return state.planet.data[state.planet.data.length - 1].name;
+  }
+  return null;
+};
+
 // SELECTORS
 export const getMapViewport = createSelector([getMapSettings], (settings) => {
   const { zoom, bearing, pitch, center } = settings;
@@ -73,8 +80,8 @@ export const getBasemapFromState = createSelector(
 );
 
 export const getBasemap = createSelector(
-  [getBasemapFromState, getLocation],
-  (basemapState, location) => {
+  [getBasemapFromState, getLocation, getLatestPlanet],
+  (basemapState, location, planetLatest) => {
     const isDashboard = location.pathname.includes('/dashboards/');
 
     let basemap = {
@@ -86,6 +93,10 @@ export const getBasemap = createSelector(
       if (basemapState.value !== 'planet') {
         basemap = basemaps.default;
       }
+    }
+
+    if (basemap.value === 'planet' && basemap.name === 'latest') {
+      basemap.name = planetLatest;
     }
 
     let url = basemap && basemap.url;
@@ -347,6 +358,9 @@ export const getDatasetsWithConfig = createSelector(
                     }),
                     ...(maxDate && {
                       maxDate,
+                    }),
+                    ...(dynamicTimeline && {
+                      ...dynamicTimeline,
                     }),
                   },
                 }),
