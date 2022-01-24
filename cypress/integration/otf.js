@@ -46,6 +46,8 @@ const testConfig = [
         cy.visit(sheet.visit, {
           timeout: 500000,
           retryOnStatusCodeFailure: true,
+          // https://github.com/cypress-io/cypress/issues/943#issuecomment-730705557
+          headers: { 'Accept-Encoding': 'gzip, deflate' },
         });
         // Agree cookies
         cy.get('.cookies-btn').click();
