@@ -7,6 +7,10 @@
       "url": "/api/__coverage__"
     }
   },
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  },
   "lighthouse": {
     "performance": 0,
     "accessibility": 50,
