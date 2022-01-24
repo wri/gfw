@@ -2,20 +2,22 @@
 
 .c-widget-caution {
   background: $yellow;
-  padding: 6px;
+  padding: 10px;
   border-radius: 5px;
   margin: 0 0 10px 0;
   color: $slate-light;
   font-weight: 500;
-}
 
-.caution-link {
-  width: fit-content;
-  margin-bottom: rem(30px);
-  color: $green-gfw;
-}
+  a, 
+  .caution-link {
+    width: fit-content;
+    margin-bottom: rem(30px);
+    color: $green-gfw;
+  }
 
-a:hover,
-a:visited {
-  color: darken($green-gfw, 10%);
+  a:hover,
+  a:visited {
+    color: darken($green-gfw, 10%);
+  }
+  
 }

@@ -238,6 +238,7 @@ const decodes = {
 
     float day = r * 255. + g;
     float confidence = floor(b / 100.) - 1.;
+    // float confidence = 255.;
     float intensity = mod(b, 100.) * 50.;
     // float intensity = 255.; //this is temporal above one does not work
 
@@ -411,10 +412,10 @@ const decodes = {
       if (intensity > 255.) {
         intensity = 255.;
       }
-      if (day >= numberOfDays - 7. && day <= numberOfDays) {
-        color.r = 219. / 255.;
-        color.g = 168. / 255.;
-        color.b = 0.;
+      if (confidence < 200.) {
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
         alpha = intensity / 255.;
       } else {
         color.r = 220. / 255.;
@@ -439,7 +440,8 @@ const decodes = {
 
     // **** CHECK THIS
     // 1461 = days from 2019/01/01 to 2014/12/31
-    float day = (r * 255.) + g - 1461.;
+    float day = (r * 255.) + g - 1461. ;
+
     float confidence = floor(b / 100.) - 1.;
     if (
       day > 0. &&
@@ -449,13 +451,14 @@ const decodes = {
     ) {
       // get intensity
       float intensity = mod(b, 100.) * 50.;
+      // float intensity = 255.;
       if (intensity > 255.) {
         intensity = 255.;
       }
-      if (day >= numberOfDays - 7. && day <= numberOfDays) {
-        color.r = 219. / 255.;
-        color.g = 168. / 255.;
-        color.b = 0.;
+      if (confidence < 1.) {
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
         alpha = intensity / 255.;
       } else {
         color.r = 220. / 255.;
