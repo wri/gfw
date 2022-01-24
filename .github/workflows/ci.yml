@@ -46,7 +46,6 @@ jobs:
         env:
           NEXT_PUBLIC_FEATURE_ENV: preproduction
         with:
-          build: yarn install
           start: yarn dev
           wait-on-timeout: 120
           wait-on: 'http://localhost:3000'

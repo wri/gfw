@@ -11,6 +11,7 @@
     "runMode": 2,
     "openMode": 0
   },
+  "video": false,
   "lighthouse": {
     "performance": 0,
     "accessibility": 50,

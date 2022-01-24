@@ -137,6 +137,8 @@ const testConfig = [
         cy.visit(sheet.visit, {
           timeout: 100000,
           retryOnStatusCodeFailure: true,
+          // https://github.com/cypress-io/cypress/issues/943#issuecomment-730705557
+          headers: { 'Accept-Encoding': 'gzip, deflate' },
         });
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(2000);
