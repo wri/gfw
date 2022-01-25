@@ -18,6 +18,7 @@ import {
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import SentenceSelector from 'components/sentence-selector';
+import WidgetCaution from 'components/widget/components/widget-caution';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
@@ -70,6 +71,7 @@ const MapLegend = ({
               id,
               layers,
               statementConfig,
+              caution,
               name,
             } = lg || {};
 
@@ -207,6 +209,12 @@ const MapLegend = ({
                   <LayerStatement
                     className="layer-statement"
                     {...statementConfig}
+                  />
+                )}
+                {caution && (
+                  <WidgetCaution
+                    locationType="map"
+                    caution={{ text: caution, visible: ['map', 'dashboard'] }}
                   />
                 )}
                 {moreInfo && (
