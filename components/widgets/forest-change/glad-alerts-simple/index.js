@@ -101,7 +101,7 @@ export default {
   caution: {
     visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
     text:
-      'Due to satellite malfunction, there is a decrease in RADD alerts\' frequency for the time being. <a href="https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I" rel="noreferrer" target="__BLANK">See this discussion forum post</a> for more information.',
+      'GLAD-L alerts won\'t be updated during January 2022 due to maintenance. Stay updated via the <a href="https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I" rel="noreferrer" target="__BLANK">discussion forum</a> or email <a href="mailto:gfw@wri.org">gfw@wri.org</a> with any questions.',
   },
   getData: async (params) => {
     const GLAD = await handleGladMeta(params);
