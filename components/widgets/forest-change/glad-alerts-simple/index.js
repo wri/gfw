@@ -99,7 +99,7 @@ export default {
     dataset: 'glad',
   },
   caution: {
-    visible: ['wdpa', 'country', 'aoi'],
+    visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
     text:
       'Due to satellite malfunction, there is a decrease in RADD alerts\' frequency for the time being. <a href="https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I" rel="noreferrer" target="__BLANK">See this discussion forum post</a> for more information.',
   },

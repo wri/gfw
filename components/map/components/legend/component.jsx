@@ -214,7 +214,16 @@ const MapLegend = ({
                 {caution && (
                   <WidgetCaution
                     locationType="map"
-                    caution={{ text: caution, visible: ['map', 'dashboard'] }}
+                    caution={{
+                      text: caution,
+                      visible: [
+                        'wdpa',
+                        'country',
+                        'aoi',
+                        'geostore',
+                        'dashboard',
+                      ],
+                    }}
                   />
                 )}
                 {moreInfo && (
