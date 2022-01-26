@@ -222,6 +222,7 @@ const MapLegend = ({
                         'aoi',
                         'geostore',
                         'dashboard',
+                        'map',
                       ],
                     }}
                   />
