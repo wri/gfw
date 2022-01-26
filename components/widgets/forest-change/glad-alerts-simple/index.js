@@ -99,7 +99,7 @@ export default {
     dataset: 'glad',
   },
   caution: {
-    visible: ['wdpa', 'country', 'aoi'],
+    visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
     text:
       'GLAD-L alerts won\'t be updated during January 2022 due to maintenance. Stay updated via the <a href="https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I" rel="noreferrer" target="__BLANK">discussion forum</a> or email <a href="mailto:gfw@wri.org">gfw@wri.org</a> with any questions.',
   },
