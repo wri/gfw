@@ -15,6 +15,8 @@ import {
 
 import { handleGladMeta } from 'utils/gfw-meta';
 
+import find from 'lodash/find';
+
 import { gte, lte } from 'utils/sql';
 import OTF from 'services/otfv2';
 
@@ -210,7 +212,13 @@ export default {
     });
 
     const otfData = await OtfAnalysis.fetch();
-    const [high, highest, nominal] = otfData?.data || [];
+    const high = find(otfData?.data, { [`${dataset}__confidence`]: 'high' });
+    const highest = find(otfData?.data, {
+      [`${dataset}__confidence`]: 'highest',
+    });
+    const nominal = find(otfData?.data, {
+      [`${dataset}__confidence`]: 'nominal',
+    });
 
     let sum = 0;
 
