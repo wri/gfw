@@ -77,6 +77,9 @@ class WidgetHeader extends PureComponent {
       disableDownload || (status !== 'saved' && !settings?.canDownloadUnsaved); // Disable everywhere
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
+    const metaInfo = typeof metaKey === 'function' ? metaKey() : metaKey;
+
+    console.log('props', this.props);
 
     let disabledMessageString =
       status === 'unsaved'
@@ -93,7 +96,7 @@ class WidgetHeader extends PureComponent {
             ','
           )(maxSize)} by narrowing the date range.`;
     }
-
+    console.log('meta key', metaInfo);
     return (
       <div className={cx('c-widget-header', { simple })}>
         <div className="title">{title}</div>
@@ -137,7 +140,7 @@ class WidgetHeader extends PureComponent {
             )}
             <WidgetInfoButton
               square={simple}
-              handleOpenInfo={() => handleShowInfo(metaKey)}
+              handleOpenInfo={() => handleShowInfo(metaInfo)}
             />
             {!simple && <WidgetShareButton handleShowShare={handleShowShare} />}
           </div>

@@ -48,7 +48,13 @@ export default {
     noReportedAlerts:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
-  metaKey: 'widget_deforestation_graph',
+  metaKey: (params) => {
+    const { deforestationAlertsDataset } = params;
+    if (deforestationAlertsDataset === 'all') {
+      return 'widget_deforestation_graph';
+    }
+    return 'widget_deforestation_graph';
+  },
   large: false,
   visible: ['dashboard', 'analysis'],
   colors: 'loss',
