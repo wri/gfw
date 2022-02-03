@@ -49,11 +49,20 @@ export default {
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
   metaKey: (params) => {
-    const { deforestationAlertsDataset } = params;
-    if (deforestationAlertsDataset === 'all') {
-      return 'widget_deforestation_graph';
+    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+    let metaKey = 'widget_deforestation_graph';
+    if (alertSystem === 'glad_l') {
+      metaKey = 'widget_deforestation_graph';
     }
-    return 'widget_deforestation_graph';
+
+    if (alertSystem === 'glad_s2') {
+      metaKey = 'widget_deforestation_graph';
+    }
+
+    if (alertSystem === 'radd') {
+      metaKey = 'widget_deforestation_graph';
+    }
+    return metaKey;
   },
   large: false,
   visible: ['dashboard', 'analysis'],
