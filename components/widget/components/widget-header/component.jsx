@@ -77,7 +77,8 @@ class WidgetHeader extends PureComponent {
       disableDownload || (status !== 'saved' && !settings?.canDownloadUnsaved); // Disable everywhere
     const showMapBtn = !embed && !simple && datasets;
     const showSeparator = showSettingsBtn || showMapBtn;
-    const metaInfo = typeof metaKey === 'function' ? metaKey() : metaKey;
+    const metaInfo =
+      typeof metaKey === 'function' ? metaKey(settings) : metaKey;
 
     let disabledMessageString =
       status === 'unsaved'
