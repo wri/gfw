@@ -48,7 +48,22 @@ export default {
     noReportedAlerts:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
-  metaKey: 'widget_deforestation_graph',
+  metaKey: (params) => {
+    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+    let metaKey = 'gfw_integrated_alerts';
+    if (alertSystem === 'glad_l') {
+      metaKey = 'umd_landsat_alerts';
+    }
+
+    if (alertSystem === 'glad_s2') {
+      metaKey = 'umd_glad_sentinel2_alerts';
+    }
+
+    if (alertSystem === 'radd') {
+      metaKey = 'wur_radd_alerts';
+    }
+    return metaKey;
+  },
   large: false,
   visible: ['dashboard', 'analysis'],
   colors: 'loss',

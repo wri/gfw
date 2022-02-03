@@ -76,7 +76,6 @@ const MapLegend = ({
             } = lg || {};
 
             const activeLayer = layers && layers.find((l) => l.active);
-
             const {
               params,
               paramsSelectorConfig,
@@ -85,7 +84,6 @@ const MapLegend = ({
               moreInfo,
               timelineParams,
             } = activeLayer || {};
-
             return (
               <LegendListItem
                 index={i}
