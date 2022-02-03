@@ -79,8 +79,6 @@ class WidgetHeader extends PureComponent {
     const showSeparator = showSettingsBtn || showMapBtn;
     const metaInfo = typeof metaKey === 'function' ? metaKey() : metaKey;
 
-    console.log('props', this.props);
-
     let disabledMessageString =
       status === 'unsaved'
         ? 'Save area in My GFW to access downloads.'
@@ -96,7 +94,7 @@ class WidgetHeader extends PureComponent {
             ','
           )(maxSize)} by narrowing the date range.`;
     }
-    console.log('meta key', metaInfo);
+
     return (
       <div className={cx('c-widget-header', { simple })}>
         <div className="title">{title}</div>
