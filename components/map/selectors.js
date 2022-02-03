@@ -53,6 +53,7 @@ export const getMapViewport = createSelector([getMapSettings], (settings) => {
 });
 
 export const getDatasetMetadata = (state) => state.datasets?.meta;
+export const getLatestMetadata = (state) => state?.latest?.data;
 
 export const getMapLatLng = createSelector(
   [getMapSettings],
@@ -208,8 +209,15 @@ export const getDatasetsWithConfig = createSelector(
     getActiveDatasetsFromState,
     selectLatest,
     getDatasetMetadata,
+    getLatestMetadata,
   ],
-  (datasets, activeDatasetsState, latestDates, datasetMetadata) => {
+  (
+    datasets,
+    activeDatasetsState,
+    latestDates,
+    datasetMetadata,
+    latestMetadata
+  ) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
     return datasets.map((d) => {
@@ -249,6 +257,7 @@ export const getDatasetsWithConfig = createSelector(
             l,
             datasetMetadata,
             timelineParams,
+            latestMetadata,
             (dynamicTimeline) => {
               const maxDate = latestDates[id];
               const { latestFormat } = l.params || {};

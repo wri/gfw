@@ -8,11 +8,11 @@ import { getLatestProps } from './selectors';
 import reducers, { initialState } from './reducers';
 
 class LatestProvider extends PureComponent {
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { getLatest, latestEndpoints } = this.props;
     if (
-      latestEndpoints &&
-      latestEndpoints.length !== prevProps.latestEndpoints.length
+      latestEndpoints
+      // TODO: Figure out how to look for updates, length will be the same!
     ) {
       getLatest(latestEndpoints);
     }
