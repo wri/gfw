@@ -49,20 +49,17 @@ export default {
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
   metaKey: (params) => {
-    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
-    let metaKey = 'widget_deforestation_graph';
-    if (alertSystem === 'glad_l') {
-      metaKey = 'widget_deforestation_graph';
+    const { gladLOnly, gladSOnly, raddOnly } = params;
+    if (gladLOnly === 1) {
+      return 'umd_landsat_alerts';
     }
-
-    if (alertSystem === 'glad_s2') {
-      metaKey = 'widget_deforestation_graph';
+    if (gladSOnly === 1) {
+      return 'umd_glad_sentinel2_alerts';
     }
-
-    if (alertSystem === 'radd') {
-      metaKey = 'widget_deforestation_graph';
+    if (raddOnly === 1) {
+      return 'wur_radd_alerts';
     }
-    return metaKey;
+    return 'gfw_integrated_alerts';
   },
   large: false,
   visible: ['dashboard', 'analysis'],
