@@ -158,6 +158,7 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+    const isAoi = params?.locationType === 'aoi';
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     if (shouldQueryPrecomputedTables(params)) {
@@ -210,16 +211,43 @@ export default {
     }
 
     // OTF analysis
+
+    // If area is saved, point OTF to different dataset
+    if (isAoi) {
+      if (alertSystem === 'glad_l') {
+        dataset = 'geostore__glad__daily_alerts';
+      } else {
+        dataset = 'geostore__integrated_alerts__daily_alerts';
+      }
+    }
+
     const OtfAnalysis = new OTF(`/dataset/${dataset}/latest/query`);
 
-    OtfAnalysis.select('count(*)');
+    if (isAoi) {
+      OtfAnalysis.select(
+        'gfw_integrated_alerts__confidence, SUM(alert__count) as alert__count, SUM(alert_area__ha) as alert_area__ha'
+      );
+    } else {
+      OtfAnalysis.select('count(*)');
+    }
 
-    OtfAnalysis.where([
-      { [`${dataset}__date`]: gte`${startDate}` },
-      { [`${dataset}__date`]: lte`${endDate}` },
-    ]);
+    if (isAoi) {
+      OtfAnalysis.where([
+        { gfw_integrated_alerts__date: gte`${startDate}` },
+        { gfw_integrated_alerts__date: lte`${endDate}` },
+      ]);
+    } else {
+      OtfAnalysis.where([
+        { [`${dataset}__date`]: gte`${startDate}` },
+        { [`${dataset}__date`]: lte`${endDate}` },
+      ]);
+    }
 
-    OtfAnalysis.groupBy([`${dataset}__confidence`]);
+    if (isAoi) {
+      OtfAnalysis.groupBy(['gfw_integrated_alerts__confidence']);
+    } else {
+      OtfAnalysis.groupBy([`${dataset}__confidence`]);
+    }
 
     OtfAnalysis.geostore({
       id: geostoreId,
@@ -227,6 +255,8 @@ export default {
     });
 
     const otfData = await OtfAnalysis.fetch();
+
+    // TODO: This wont work.... for isAoi
     const high = find(otfData?.data, { [`${dataset}__confidence`]: 'high' });
     const highest = find(otfData?.data, {
       [`${dataset}__confidence`]: 'highest',
