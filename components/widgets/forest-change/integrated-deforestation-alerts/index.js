@@ -49,11 +49,17 @@ export default {
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
   metaKey: (params) => {
-    const { deforestationAlertsDataset } = params;
-    if (deforestationAlertsDataset === 'all') {
-      return 'widget_deforestation_graph';
+    const { gladLOnly, gladSOnly, raddOnly } = params;
+    if (gladLOnly === 1) {
+      return 'umd_landsat_alerts';
     }
-    return 'widget_deforestation_graph';
+    if (gladSOnly === 1) {
+      return 'umd_glad_sentinel2_alerts';
+    }
+    if (raddOnly === 1) {
+      return 'wur_radd_alerts';
+    }
+    return 'gfw_integrated_alerts';
   },
   large: false,
   visible: ['dashboard', 'analysis'],
