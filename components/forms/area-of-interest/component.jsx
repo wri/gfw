@@ -159,12 +159,7 @@ class AreaOfInterestForm extends PureComponent {
       <Fragment>
         <Form
           onSubmit={(values) =>
-            this.handleSaveAoi({
-              ...initialValues,
-              ...values,
-              publicArea,
-              viewAfterSave,
-            })}
+            this.handleSaveAoi({ ...initialValues, ...values, publicArea, viewAfterSave })}
           initialValues={initialValues}
           render={({
             handleSubmit,
