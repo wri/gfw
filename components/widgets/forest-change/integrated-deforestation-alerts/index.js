@@ -228,7 +228,7 @@ export default {
         'gfw_integrated_alerts__confidence, SUM(alert__count) as alert__count, SUM(alert_area__ha) as alert_area__ha'
       );
     } else {
-      OtfAnalysis.select('count(*)');
+      OtfAnalysis.select('count(*), SUM(area__ha)');
     }
 
     if (isAoi) {
