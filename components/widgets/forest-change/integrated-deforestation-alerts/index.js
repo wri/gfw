@@ -16,8 +16,9 @@ import {
 import { handleGladMeta } from 'utils/gfw-meta';
 
 import find from 'lodash/find';
+import sumBy from 'lodash/sumBy';
 
-import { gte, lte } from 'utils/sql';
+import { gte, lte, eq } from 'utils/sql';
 import OTF from 'services/otfv2';
 
 import { isMapPage } from 'utils/location';
@@ -159,9 +160,12 @@ export default {
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const isAoi = params?.locationType === 'aoi';
+    const status = params?.status || 'unsaved';
+    const isAnalysis = shouldQueryPrecomputedTables(params);
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
-    if (shouldQueryPrecomputedTables(params)) {
+    // if is otf && geostore is not saved, we do default analysis and not otf
+    if (isAnalysis || (!isAnalysis && status !== 'saved')) {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
@@ -235,6 +239,7 @@ export default {
       OtfAnalysis.where([
         { gfw_integrated_alerts__date: gte`${startDate}` },
         { gfw_integrated_alerts__date: lte`${endDate}` },
+        { geostore_id: eq`${geostoreId}` },
       ]);
     } else {
       OtfAnalysis.where([
@@ -255,7 +260,6 @@ export default {
     });
 
     const otfData = await OtfAnalysis.fetch();
-
     // TODO: This wont work.... for isAoi
     const high = find(otfData?.data, { [`${dataset}__confidence`]: 'high' });
     const highest = find(otfData?.data, {
@@ -264,6 +268,13 @@ export default {
     const nominal = find(otfData?.data, {
       [`${dataset}__confidence`]: 'nominal',
     });
+
+    let totalAreaHa = 0;
+    if (isAoi) {
+      totalAreaHa = sumBy(otfData?.data, 'alert_area__ha');
+    } else {
+      totalAreaHa = sumBy(otfData?.data, 'area__ha');
+    }
 
     let sum = 0;
 
@@ -277,6 +288,7 @@ export default {
       alerts: {
         otf: true,
         alertSystem,
+        totalArea: totalAreaHa,
         confidence: params.confirmedOnly === 1,
         sum,
         highCount: high?.count || 0,
