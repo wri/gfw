@@ -164,8 +164,8 @@ export default {
     const isAnalysis = shouldQueryPrecomputedTables(params);
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
-    // if is otf && geostore is not saved, we do default analysis and not otf
-    if (isAnalysis || (!isAnalysis && status !== 'saved')) {
+    // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
+    if (isAnalysis || (isAoi && !isAnalysis && status !== 'saved')) {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
