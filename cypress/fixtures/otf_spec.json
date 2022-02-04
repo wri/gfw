@@ -941,7 +941,7 @@
           "name": "Sierra Leone"
         }
       ],
-      "time": 0.009,
+      "time": 0.012,
       "fields": {
         "iso": {
           "type": "string",
@@ -953,6 +953,25 @@
         }
       },
       "total_rows": 234
+    }
+  },
+  {
+    "url": "https://wri-01.carto.com/api/v2/sql?q=SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '6d5cfdf69bf468fc9b22c420e3c52d20' ORDER BY name",
+    "method": "GET",
+    "data": {
+      "rows": [],
+      "time": 0.004,
+      "fields": {
+        "id": {
+          "type": "string",
+          "pgtype": "text"
+        },
+        "name": {
+          "type": "string",
+          "pgtype": "text"
+        }
+      },
+      "total_rows": 0
     }
   },
   {
@@ -1969,7 +1988,7 @@
           "name": "Zimbabwe"
         }
       ],
-      "time": 0.006,
+      "time": 0.004,
       "fields": {
         "iso": {
           "type": "string",
@@ -1981,25 +2000,6 @@
         }
       },
       "total_rows": 252
-    }
-  },
-  {
-    "url": "https://wri-01.carto.com/api/v2/sql?q=SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '6d5cfdf69bf468fc9b22c420e3c52d20' ORDER BY name",
-    "method": "GET",
-    "data": {
-      "rows": [],
-      "time": 0.005,
-      "fields": {
-        "id": {
-          "type": "string",
-          "pgtype": "text"
-        },
-        "name": {
-          "type": "string",
-          "pgtype": "text"
-        }
-      },
-      "total_rows": 0
     }
   },
   {
@@ -2044,7 +2044,7 @@
           "external_links": "[{  \"title\": \"Interactive Forest Atlas of Equatorial Guinea\",  \"url\": \"http://gnq.forest-atlas.org/\"}]"
         }
       ],
-      "time": 0.003,
+      "time": 0.007,
       "fields": {
         "iso": {
           "type": "string",
@@ -2059,36 +2059,11 @@
     }
   },
   {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/6d5cfdf69bf468fc9b22c420e3c52d20?geostore_origin=rw&sum=area__ha&group_by=is__umd_tree_cover_gain&filters=is__umd_tree_cover_gain",
-    "method": "GET",
-    "data": {
-      "data": [
-        {
-          "is__umd_tree_cover_gain": 1,
-          "area__ha": 63455.97193
-        }
-      ],
-      "status": "success"
-    }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/6d5cfdf69bf468fc9b22c420e3c52d20?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30",
-    "method": "GET",
-    "data": {
-      "data": [
-        {
-          "area__ha": 2518450.22647
-        }
-      ],
-      "status": "success"
-    }
-  },
-  {
     "url": "https://wri-01.carto.com/api/v2/sql?q=SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '211fca3fbea311473797cc967bc7a073' ORDER BY name",
     "method": "GET",
     "data": {
       "rows": [],
-      "time": 0.006,
+      "time": 0.003,
       "fields": {
         "id": {
           "type": "string",
@@ -2100,131 +2075,6 @@
         }
       },
       "total_rows": 0
-    }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2020-12-31",
-    "method": "GET",
-    "data": {
-      "data": [
-        {
-          "area__ha": 1143.67498
-        }
-      ],
-      "status": "success"
-    }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&group_by=umd_tree_cover_loss__year&filters=umd_tree_cover_density_2000__30&start_date=2001-01-01&end_date=2020-12-31",
-    "method": "GET",
-    "data": {
-      "data": [
-        {
-          "umd_tree_cover_loss__year": 2001,
-          "area__ha": 42.82517
-        },
-        {
-          "umd_tree_cover_loss__year": 2002,
-          "area__ha": 16.62892
-        },
-        {
-          "umd_tree_cover_loss__year": 2003,
-          "area__ha": 22.09596
-        },
-        {
-          "umd_tree_cover_loss__year": 2004,
-          "area__ha": 52.316559999999996
-        },
-        {
-          "umd_tree_cover_loss__year": 2005,
-          "area__ha": 60.13746999999999
-        },
-        {
-          "umd_tree_cover_loss__year": 2006,
-          "area__ha": 37.28219
-        },
-        {
-          "umd_tree_cover_loss__year": 2007,
-          "area__ha": 8.0487
-        },
-        {
-          "umd_tree_cover_loss__year": 2008,
-          "area__ha": 3.4169
-        },
-        {
-          "umd_tree_cover_loss__year": 2009,
-          "area__ha": 9.33953
-        },
-        {
-          "umd_tree_cover_loss__year": 2010,
-          "area__ha": 34.01716
-        },
-        {
-          "umd_tree_cover_loss__year": 2011,
-          "area__ha": 1.44269
-        },
-        {
-          "umd_tree_cover_loss__year": 2012,
-          "area__ha": 9.33953
-        },
-        {
-          "umd_tree_cover_loss__year": 2013,
-          "area__ha": 8.95988
-        },
-        {
-          "umd_tree_cover_loss__year": 2014,
-          "area__ha": 0.30372
-        },
-        {
-          "umd_tree_cover_loss__year": 2015,
-          "area__ha": 2.27793
-        },
-        {
-          "umd_tree_cover_loss__year": 2016,
-          "area__ha": 35.38392
-        },
-        {
-          "umd_tree_cover_loss__year": 2017,
-          "area__ha": 8.65615
-        },
-        {
-          "umd_tree_cover_loss__year": 2018,
-          "area__ha": 25.133210000000002
-        },
-        {
-          "umd_tree_cover_loss__year": 2019,
-          "area__ha": 14.80657
-        },
-        {
-          "umd_tree_cover_loss__year": 2020,
-          "area__ha": 30.903979999999997
-        }
-      ],
-      "status": "success"
-    }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha",
-    "method": "GET",
-    "data": {
-      "data": [
-        {
-          "area__ha": 2086.1324
-        }
-      ],
-      "status": "success"
-    }
-  },
-  {
-    "url": "https://data-api.globalforestwatch.org/analysis/zonal/211fca3fbea311473797cc967bc7a073?geostore_origin=rw&sum=area__ha&filters=umd_tree_cover_density_2000__30",
-    "method": "GET",
-    "data": {
-      "data": [
-        {
-          "area__ha": 1143.67498
-        }
-      ],
-      "status": "success"
     }
   }
 ]
