@@ -27,6 +27,7 @@ export const parseData = createSelector([selectAlerts], (data) => {
       totalAlertCount: data?.sum || 0,
       highAlertCount: data?.highCount || 0,
       highestAlertCount: data?.highestCount || 0,
+      totalArea: data?.totalArea || 0,
       lowAlertCount: data?.nominalCount || 0,
       highAlertPercentage: (100 * (data?.highCount || 0)) / data?.sum || 0,
       highestAlertPercentage:

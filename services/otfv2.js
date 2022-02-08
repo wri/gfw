@@ -86,6 +86,11 @@ class OTF {
     return query;
   }
 
+  getURL() {
+    const sql = this.build();
+    return `${this.url}?sql=${sql}&geostore_id=${this.geostoreId}&geostore_origin=${this.geostoreOrigin}`;
+  }
+
   async fetch() {
     const sql = this.build();
     try {

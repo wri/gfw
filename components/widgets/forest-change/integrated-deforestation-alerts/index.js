@@ -16,8 +16,9 @@ import {
 import { handleGladMeta } from 'utils/gfw-meta';
 
 import find from 'lodash/find';
+import sumBy from 'lodash/sumBy';
 
-import { gte, lte } from 'utils/sql';
+import { gte, lte, eq } from 'utils/sql';
 import OTF from 'services/otfv2';
 
 import { isMapPage } from 'utils/location';
@@ -158,9 +159,13 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+    const isAoi = params?.locationType === 'aoi';
+    const status = params?.status || 'unsaved';
+    const isAnalysis = shouldQueryPrecomputedTables(params);
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
-    if (shouldQueryPrecomputedTables(params)) {
+    // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
+    if (isAnalysis || (isAoi && !isAnalysis && status !== 'saved')) {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
@@ -210,16 +215,44 @@ export default {
     }
 
     // OTF analysis
+
+    // If area is saved, point OTF to different dataset
+    if (isAoi) {
+      if (alertSystem === 'glad_l') {
+        dataset = 'geostore__glad__daily_alerts';
+      } else {
+        dataset = 'geostore__integrated_alerts__daily_alerts';
+      }
+    }
+
     const OtfAnalysis = new OTF(`/dataset/${dataset}/latest/query`);
 
-    OtfAnalysis.select('count(*)');
+    if (isAoi) {
+      OtfAnalysis.select(
+        'gfw_integrated_alerts__confidence, SUM(alert__count) as alert__count, SUM(alert_area__ha) as alert_area__ha'
+      );
+    } else {
+      OtfAnalysis.select('count(*), SUM(area__ha)');
+    }
 
-    OtfAnalysis.where([
-      { [`${dataset}__date`]: gte`${startDate}` },
-      { [`${dataset}__date`]: lte`${endDate}` },
-    ]);
+    if (isAoi) {
+      OtfAnalysis.where([
+        { gfw_integrated_alerts__date: gte`${startDate}` },
+        { gfw_integrated_alerts__date: lte`${endDate}` },
+        { geostore_id: eq`${geostoreId}` },
+      ]);
+    } else {
+      OtfAnalysis.where([
+        { [`${dataset}__date`]: gte`${startDate}` },
+        { [`${dataset}__date`]: lte`${endDate}` },
+      ]);
+    }
 
-    OtfAnalysis.groupBy([`${dataset}__confidence`]);
+    if (isAoi) {
+      OtfAnalysis.groupBy(['gfw_integrated_alerts__confidence']);
+    } else {
+      OtfAnalysis.groupBy([`${dataset}__confidence`]);
+    }
 
     OtfAnalysis.geostore({
       id: geostoreId,
@@ -227,6 +260,7 @@ export default {
     });
 
     const otfData = await OtfAnalysis.fetch();
+    // TODO: This wont work.... for isAoi
     const high = find(otfData?.data, { [`${dataset}__confidence`]: 'high' });
     const highest = find(otfData?.data, {
       [`${dataset}__confidence`]: 'highest',
@@ -234,6 +268,13 @@ export default {
     const nominal = find(otfData?.data, {
       [`${dataset}__confidence`]: 'nominal',
     });
+
+    let totalAreaHa = 0;
+    if (isAoi) {
+      totalAreaHa = sumBy(otfData?.data, 'alert_area__ha');
+    } else {
+      totalAreaHa = sumBy(otfData?.data, 'area__ha');
+    }
 
     let sum = 0;
 
@@ -247,6 +288,7 @@ export default {
       alerts: {
         otf: true,
         alertSystem,
+        totalArea: totalAreaHa,
         confidence: params.confirmedOnly === 1,
         sum,
         highCount: high?.count || 0,
