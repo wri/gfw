@@ -278,7 +278,7 @@ export default {
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const geostoreId = params?.geostore?.hash;
-    const alertSystem = params?.deforestationAlertsDataset;
+    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
