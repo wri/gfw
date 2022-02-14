@@ -199,6 +199,9 @@ export default {
 
     const geostoreId = params?.geostore?.hash;
 
+    // Stop if geostoreId undefined
+    if (geostoreId.length <= 0) return null;
+
     // Default all integrated alerts
     let dataset = 'gfw_integrated_alerts';
 
