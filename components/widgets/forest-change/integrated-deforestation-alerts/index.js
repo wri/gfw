@@ -434,8 +434,8 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
-    const geostoreId = params?.geostore?.hash;
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+    const isWDPA = params?.locationType === 'wdpa';
 
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
@@ -446,6 +446,11 @@ export default {
     }
     if (alertSystem === 'radd') {
       table = 'wur_radd_alerts';
+    }
+
+    let geostoreId = params?.geostore?.hash;
+    if (isWDPA) {
+      geostoreId = params?.geostore?.id;
     }
 
     return [
