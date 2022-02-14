@@ -162,6 +162,7 @@ export const parseSentence = createSelector(
   ],
   (data, settings, sentences, indicator, currentLabel, options) => {
     if (!data || isEmpty(data)) return null;
+    // TODO explore why the getOptionsSelected is returning null
 
     const {
       alertSystem = 'all',
@@ -256,23 +257,21 @@ export const parseSentence = createSelector(
     return {
       sentence,
       params: {
+        // TODO: put back systemSlug === 'all' &&
+        // alertSystem === 'radd,glad_l,glad_s2'
         ...params,
-        ...(systemSlug === 'all' &&
-          alertSystem === 'all' && {
-            system: ' ',
-          }),
-        ...(systemSlug === 'all' &&
-          alertSystem === 'radd' && {
-            system: 'RADD',
-          }),
-        ...(systemSlug === 'all' &&
-          alertSystem === 'glad_l' && {
-            system: 'GLAD-L',
-          }),
-        ...(systemSlug === 'all' &&
-          alertSystem === 'glad_s2' && {
-            system: 'GLAD-S2',
-          }),
+        ...(alertSystem === 'all' && {
+          system: ' ',
+        }),
+        ...(alertSystem === 'radd' && {
+          system: 'RADD',
+        }),
+        ...(alertSystem === 'glad_l' && {
+          system: 'GLAD-L',
+        }),
+        ...(alertSystem === 'glad_s2' && {
+          system: 'GLAD-S2',
+        }),
         highConfidenceAlerts: 'high confidence alerts',
       },
     };
