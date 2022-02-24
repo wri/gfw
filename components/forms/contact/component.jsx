@@ -89,7 +89,7 @@ class ContactForm extends PureComponent {
                   <p className="subtitle">
                     For media inquiries, email
                     {' '}
-                    <a href="mailto:katie.lyons@wri.org">katie.lyons@wri.org</a>
+                    <a href="mailto:Kaitlyn.Thayer@wri.org">Kaitlyn.Thayer@wri.org</a>
                   </p>
                   <form onSubmit={handleSubmit}>
                     <Input
