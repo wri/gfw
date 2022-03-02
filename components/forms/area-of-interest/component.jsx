@@ -264,7 +264,7 @@ class AreaOfInterestForm extends PureComponent {
                     </div>
                     <Checkbox
                       name="alerts"
-                      label="Would you like to recieve alert notifications?"
+                      label="Would you like to receive alert notifications?"
                       options={[
                         {
                           label: 'As soon as fires are detected',

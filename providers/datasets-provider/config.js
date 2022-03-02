@@ -428,6 +428,7 @@ const decodes = {
     }
   `,
   RADDs: `
+  // todo: this decode function would be deprecated when replacing indicidual radd and glads alerts by integrated alerts
   // values for creating power scale, domain (input), and range (output)
     float confidenceValue = 0.;
     if (confirmedOnly > 0.) {
@@ -440,7 +441,52 @@ const decodes = {
 
     // **** CHECK THIS
     // 1461 = days from 2019/01/01 to 2014/12/31
-    float day = (r * 255.) + g - 1461. ;
+    // 1870 = days from 2020/02/14 to 2014/12/31
+    float day = (r * 255.) + g - 1870. ;
+
+    float confidence = floor(b / 100.) - 1.;
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex  &&
+      confidence >= confidenceValue
+    ) {
+      // get intensity
+      float intensity = mod(b, 100.) * 50.;
+      // float intensity = 255.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      if (confidence < 1.) {
+        color.r = 237. / 255.;
+        color.g = 164. / 255.;
+        color.b = 194. / 255.;
+        alpha = intensity / 255.;
+      } else {
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
+  RADDs2yearsTimeline: `
+  // values for creating power scale, domain (input), and range (output)
+    float confidenceValue = 0.;
+    if (confirmedOnly > 0.) {
+      confidenceValue = 1.;
+    }
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    // **** CHECK THIS
+    // 1461 = days from 2019/01/01 to 2014/12/31
+    // 1870 = days from 2020/02/14 to 2014/12/31
+    float day = (r * 255.) + g;
 
     float confidence = floor(b / 100.) - 1.;
     if (
@@ -950,6 +996,7 @@ export default {
   integratedAlerts16Bit: decodes.integratedAlerts16Bit,
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
+  RADDs2yearsTimeline: decodes.RADDs2yearsTimeline,
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
   forestHeight: decodes.forestHeight,

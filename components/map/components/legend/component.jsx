@@ -18,6 +18,7 @@ import {
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import SentenceSelector from 'components/sentence-selector';
+import WidgetCaution from 'components/widget/components/widget-caution';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
@@ -70,11 +71,11 @@ const MapLegend = ({
               id,
               layers,
               statementConfig,
+              caution,
               name,
             } = lg || {};
 
             const activeLayer = layers && layers.find((l) => l.active);
-
             const {
               params,
               paramsSelectorConfig,
@@ -83,7 +84,6 @@ const MapLegend = ({
               moreInfo,
               timelineParams,
             } = activeLayer || {};
-
             return (
               <LegendListItem
                 index={i}
@@ -207,6 +207,22 @@ const MapLegend = ({
                   <LayerStatement
                     className="layer-statement"
                     {...statementConfig}
+                  />
+                )}
+                {caution && (
+                  <WidgetCaution
+                    locationType="map"
+                    caution={{
+                      text: caution,
+                      visible: [
+                        'wdpa',
+                        'country',
+                        'aoi',
+                        'geostore',
+                        'dashboard',
+                        'map',
+                      ],
+                    }}
                   />
                 )}
                 {moreInfo && (
