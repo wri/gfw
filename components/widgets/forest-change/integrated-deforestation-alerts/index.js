@@ -33,7 +33,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'integratedDeforestationAlerts',
-  published: false,
+  published: true,
   title: 'Integrated Deforestation alerts in {location}',
   sentence: {
     initial:
