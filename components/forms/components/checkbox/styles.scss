@@ -7,9 +7,28 @@
     align-items: center;
     margin: rem(20px) 0 rem(20px);
 
+    > span {
+      display: flex;
+      align-items: center;
+    }
+
     label {
       cursor: pointer;
       padding-left: rem(10px);
+    }
+
+    &.sub-options {
+      display: flex;
+      flex-flow: wrap;
+
+      > .c-form-field {
+        margin-bottom: 0;
+        padding: 10px 0 0 35px;
+      }
+
+      .radio-option:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 

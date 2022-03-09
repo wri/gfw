@@ -72,6 +72,9 @@
   "INTEGRATED_ALERTS_ADM0_DAILY": "gadm__integrated_alerts__iso_daily_alerts",
   "INTEGRATED_ALERTS_ADM1_DAILY": "gadm__integrated_alerts__adm1_daily_alerts",
   "INTEGRATED_ALERTS_ADM2_DAILY": "gadm__integrated_alerts__adm2_daily_alerts",
+  "INTEGRATED_ALERTS_WDPA_DAILY":"wdpa_protected_areas__integrated_alerts__daily_alerts",
+  "GLAD_ALERTS_WDPA_DAILY":"wdpa_protected_areas__glad__daily_alerts",
+
   "GLAD_ALERTS_ADM0_DAILY": "gadm__glad__iso_daily_alerts",
   "GLAD_ALERTS_ADM1_DAILY": "gadm__glad__adm1_daily_alerts",
   "GLAD_ALERTS_ADM2_DAILY": "gadm__glad__adm2_daily_alerts"

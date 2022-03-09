@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { differenceInDays } from 'date-fns';
 import has from 'lodash/has';
+import find from 'lodash/find';
 
 export const getDayRange = (params) => {
   const { startDate, endDate, minDate, maxDate, weeks, minDateAbsolut = null } =
@@ -36,22 +37,23 @@ export const handleDynamicTimeline = (
   l,
   dsMetadata,
   timelineParams,
+  latestMetadata,
   callback
 ) => {
-  const hasLatest = l.dataset === 'integrated-deforestation-alerts-8bit';
-  const range = {
-    default: 549,
-    interval: 'days',
-    max: 730,
-    min: 1,
-  };
+  const latestDecode = find(
+    l?.layerConfig?.decode_config,
+    (d) => d?.key === 'endDate' && d?.url
+  );
+  const hasLatest = !!latestDecode && has(latestMetadata, l.id);
 
-  if (
-    hasLatest &&
-    has(dsMetadata, 'https://api.resourcewatch.org/glad-alerts/latest')
-  ) {
-    const latestDate =
-      dsMetadata['https://api.resourcewatch.org/glad-alerts/latest'];
+  if (hasLatest) {
+    const range = {
+      default: latestDecode?.default || 549, // where should timeline default to?,
+      interval: latestDecode?.interval || 'days',
+      max: latestDecode?.max || 730, // 2 years default
+      min: 1,
+    };
+    const latestDate = latestMetadata[l.id];
     const maxDate = moment(latestDate).format('YYYY-MM-DD');
     const minDate = moment(maxDate)
       .subtract(range.max, range.interval)
