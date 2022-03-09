@@ -72,10 +72,26 @@ const MapLegend = ({
               layers,
               statementConfig,
               caution,
+              caution_gladL,
+              caution_radd,
               name,
             } = lg || {};
 
             const activeLayer = layers && layers.find((l) => l.active);
+            const getWarningLabel = () => {
+              switch (activeLayer.id) {
+                case 'integrated-deforestation-alerts-8bit':
+                  return `${caution_gladL}<br /><br />${caution_radd}`;
+                case 'integrated-deforestation-alerts-8bit-gladL':
+                  return caution_gladL;
+                case 'integrated-deforestation-alerts-8bit-radd':
+                  return caution_radd;
+                default:
+                  return null;
+              }
+            };
+            const warningLabel = getWarningLabel();
+
             const {
               params,
               paramsSelectorConfig,
@@ -214,6 +230,22 @@ const MapLegend = ({
                     locationType="map"
                     caution={{
                       text: caution,
+                      visible: [
+                        'wdpa',
+                        'country',
+                        'aoi',
+                        'geostore',
+                        'dashboard',
+                        'map',
+                      ],
+                    }}
+                  />
+                )}
+                {warningLabel && (
+                  <WidgetCaution
+                    locationType="map"
+                    caution={{
+                      text: warningLabel,
                       visible: [
                         'wdpa',
                         'country',
