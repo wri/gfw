@@ -16,8 +16,9 @@ import {
 import { handleGladMeta } from 'utils/gfw-meta';
 
 import find from 'lodash/find';
+import sumBy from 'lodash/sumBy';
 
-import { gte, lte } from 'utils/sql';
+import { gte, lte, eq } from 'utils/sql';
 import OTF from 'services/otfv2';
 
 import { isMapPage } from 'utils/location';
@@ -158,9 +159,13 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+    const isAoi = params?.locationType === 'aoi';
+    const status = params?.status || 'unsaved';
+    const isAnalysis = shouldQueryPrecomputedTables(params);
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
-    if (shouldQueryPrecomputedTables(params)) {
+    // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
+    if (isAnalysis && !isAoi) {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
@@ -194,6 +199,9 @@ export default {
 
     const geostoreId = params?.geostore?.hash;
 
+    // Stop if geostoreId undefined
+    if (geostoreId.length <= 0) return null;
+
     // Default all integrated alerts
     let dataset = 'gfw_integrated_alerts';
 
@@ -210,30 +218,164 @@ export default {
     }
 
     // OTF analysis
+
+    // If area is saved, point OTF to different dataset
+    if (isAoi && status === 'saved') {
+      if (alertSystem === 'glad_l') {
+        dataset = 'geostore__glad__daily_alerts';
+      } else {
+        dataset = 'geostore__integrated_alerts__daily_alerts';
+      }
+    }
+
     const OtfAnalysis = new OTF(`/dataset/${dataset}/latest/query`);
 
-    OtfAnalysis.select('count(*)');
+    if (isAoi && status === 'saved' && alertSystem === 'glad_l') {
+      OtfAnalysis.select(
+        'umd_glad_landsat_alerts__confidence, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha'
+      );
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'glad_s2') {
+      OtfAnalysis.select(
+        'umd_glad_sentinel2_alerts__confidence, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha'
+      );
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'radd') {
+      OtfAnalysis.select(
+        'wur_radd_alerts__confidence, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha'
+      );
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'all') {
+      OtfAnalysis.select(
+        'gfw_integrated_alerts__confidence, SUM(alert__count) as alert__count, SUM(alert_area__ha) as alert_area__ha'
+      );
+    }
+    if (!isAnalysis || (isAoi && status !== 'saved')) {
+      OtfAnalysis.select('count(*), SUM(area__ha)');
+    }
 
-    OtfAnalysis.where([
-      { [`${dataset}__date`]: gte`${startDate}` },
-      { [`${dataset}__date`]: lte`${endDate}` },
-    ]);
+    if (isAoi && status === 'saved' && alertSystem === 'glad_l') {
+      OtfAnalysis.where([
+        { alert__date: gte`${startDate}` },
+        { alert__date: lte`${endDate}` },
+        { geostore__id: eq`${geostoreId}` },
+      ]);
+    }
 
-    OtfAnalysis.groupBy([`${dataset}__confidence`]);
+    if (isAoi && status === 'saved' && alertSystem === 'glad_s2') {
+      OtfAnalysis.where([
+        { umd_glad_sentinel2_alerts__date: gte`${startDate}` },
+        { umd_glad_sentinel2_alerts__date: lte`${endDate}` },
+        { geostore__id: eq`${geostoreId}` },
+      ]);
+    }
 
-    OtfAnalysis.geostore({
-      id: geostoreId,
-      origin: 'rw',
-    });
+    if (isAoi && status === 'saved' && alertSystem === 'radd') {
+      OtfAnalysis.where([
+        { wur_radd_alerts__date: gte`${startDate}` },
+        { wur_radd_alerts__date: lte`${endDate}` },
+        { geostore__id: eq`${geostoreId}` },
+      ]);
+    }
+
+    if (isAoi && status === 'saved' && alertSystem === 'all') {
+      OtfAnalysis.where([
+        { gfw_integrated_alerts__date: gte`${startDate}` },
+        { gfw_integrated_alerts__date: lte`${endDate}` },
+        { geostore__id: eq`${geostoreId}` },
+      ]);
+    }
+
+    if (!isAnalysis || (isAoi && status !== 'saved')) {
+      OtfAnalysis.where([
+        { [`${dataset}__date`]: gte`${startDate}` },
+        { [`${dataset}__date`]: lte`${endDate}` },
+      ]);
+    }
+
+    if (isAoi && status === 'saved' && alertSystem === 'glad_l') {
+      OtfAnalysis.groupBy([' umd_glad_landsat_alerts__confidence']);
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'glad_s2') {
+      OtfAnalysis.groupBy([' umd_glad_sentinel2_alerts__confidence']);
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'radd') {
+      OtfAnalysis.groupBy([' wur_radd_alerts__confidence']);
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'all') {
+      OtfAnalysis.groupBy(['gfw_integrated_alerts__confidence']);
+    }
+    if (!isAnalysis || (isAoi && status !== 'saved')) {
+      OtfAnalysis.groupBy([`${dataset}__confidence`]);
+    }
+
+    // TODO - Change logic for gestoreId and origin
+    if (!isAoi || (isAoi && status !== 'saved')) {
+      OtfAnalysis.geostore({
+        id: geostoreId,
+        origin: 'rw',
+      });
+    }
 
     const otfData = await OtfAnalysis.fetch();
-    const high = find(otfData?.data, { [`${dataset}__confidence`]: 'high' });
-    const highest = find(otfData?.data, {
+
+    let high = find(otfData?.data, { [`${dataset}__confidence`]: 'high' });
+    let highest = find(otfData?.data, {
       [`${dataset}__confidence`]: 'highest',
     });
-    const nominal = find(otfData?.data, {
+    let nominal = find(otfData?.data, {
       [`${dataset}__confidence`]: 'nominal',
     });
+
+    if (isAoi && status === 'saved' && alertSystem === 'glad_l') {
+      high = find(otfData?.data, {
+        [`umd_glad_landsat_alerts__confidence`]: 'high',
+      });
+      highest = find(otfData?.data, {
+        [`umd_glad_landsat_alerts__confidence`]: 'highest',
+      });
+      nominal = find(otfData?.data, {
+        [`umd_glad_landsat_alerts__confidence`]: 'nominal',
+      });
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'glad_s2') {
+      high = find(otfData?.data, {
+        [`umd_glad_sentinel2_alerts__confidence`]: 'high',
+      });
+      highest = find(otfData?.data, {
+        [`umd_glad_sentinel2_alerts__confidence`]: 'highest',
+      });
+      nominal = find(otfData?.data, {
+        [`umd_glad_sentinel2_alerts__confidence`]: 'nominal',
+      });
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'radd') {
+      high = find(otfData?.data, { [`wur_radd_alerts__confidence`]: 'high' });
+      highest = find(otfData?.data, {
+        [`wur_radd_alerts__confidence`]: 'highest',
+      });
+      nominal = find(otfData?.data, {
+        [`wur_radd_alerts__confidence`]: 'nominal',
+      });
+    }
+    if (isAoi && status === 'saved' && alertSystem === 'all') {
+      high = find(otfData?.data, {
+        [`gfw_integrated_alerts__confidence`]: 'high',
+      });
+      highest = find(otfData?.data, {
+        [`gfw_integrated_alerts__confidence`]: 'highest',
+      });
+      nominal = find(otfData?.data, {
+        [`gfw_integrated_alerts__confidence`]: 'nominal',
+      });
+    }
+
+    let totalAreaHa = 0;
+    if (isAoi && status === 'saved') {
+      totalAreaHa = sumBy(otfData?.data, 'alert_area__ha');
+    } else {
+      totalAreaHa = sumBy(otfData?.data, 'area__ha');
+    }
 
     let sum = 0;
 
@@ -243,15 +385,33 @@ export default {
       sum = (high?.count || 0) + (highest?.count || 0) + (nominal?.count || 0);
     }
 
+    if (isAoi && status === 'saved') {
+      sum =
+        (high?.alert__count || 0) +
+        (highest?.alert__count || 0) +
+        (nominal?.alert__count || 0);
+    }
+
+    let highCount = high?.count || 0;
+    let highestCount = highest?.count || 0;
+    let nominalCount = nominal?.count || 0;
+
+    if (isAoi && status === 'saved') {
+      highCount = high?.alert__count || 0;
+      highestCount = highest?.alert__count || 0;
+      nominalCount = nominal?.alert__count || 0;
+    }
+
     return {
       alerts: {
         otf: true,
         alertSystem,
+        totalArea: totalAreaHa,
         confidence: params.confirmedOnly === 1,
         sum,
-        highCount: high?.count || 0,
-        highestCount: highest?.count || 0,
-        nominalCount: nominal?.count || 0,
+        highCount,
+        highestCount,
+        nominalCount,
         allAlerts: [{ alert__count: sum }],
       },
       settings: {
@@ -277,8 +437,8 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
-    const geostoreId = params?.geostore?.hash;
-    const alertSystem = params?.deforestationAlertsDataset;
+    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+    const isWDPA = params?.locationType === 'wdpa';
 
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
@@ -289,6 +449,11 @@ export default {
     }
     if (alertSystem === 'radd') {
       table = 'wur_radd_alerts';
+    }
+
+    let geostoreId = params?.geostore?.hash;
+    if (isWDPA) {
+      geostoreId = params?.geostore?.id;
     }
 
     return [
