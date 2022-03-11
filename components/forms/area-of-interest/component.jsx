@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { languages } from 'utils/lang';
 import request from 'utils/request';
-import without from 'lodash/without';
 
 import { Loader } from 'gfw-components';
 
@@ -127,12 +126,13 @@ class AreaOfInterestForm extends PureComponent {
 
   handleSaveAoi(values) {
     const { saveAreaOfInterest } = this.props;
-    const { alerts } = values;
     const out = { ...values };
-    if (alerts.indexOf('deforestationAlerts') > -1) {
-      out.deforestationAlerts = true;
-      out.alerts = without(alerts, 'deforestationAlerts');
-    }
+    // TODO: What was this?
+    // const { alerts } = values;
+    // if (alerts.indexOf('deforestationAlerts') > -1) {
+    //   out.deforestationAlerts = true;
+    //   out.alerts = without(alerts, 'deforestationAlerts');
+    // }
     saveAreaOfInterest(out);
   }
 
@@ -159,7 +159,12 @@ class AreaOfInterestForm extends PureComponent {
       <Fragment>
         <Form
           onSubmit={(values) =>
-            this.handleSaveAoi({ ...initialValues, ...values, publicArea, viewAfterSave })}
+            this.handleSaveAoi({
+              ...initialValues,
+              ...values,
+              publicArea,
+              viewAfterSave,
+            })}
           initialValues={initialValues}
           render={({
             handleSubmit,
@@ -293,7 +298,7 @@ class AreaOfInterestForm extends PureComponent {
                         if (option.value === 'deforestationAlerts') {
                           return (
                             <Radio
-                              name="deforestationAlertType"
+                              name="deforestationAlertsType"
                               options={[
                                 { label: 'All alerts', value: 'glad-all' },
                                 { label: 'GLAD-L alerts', value: 'glad-l' },

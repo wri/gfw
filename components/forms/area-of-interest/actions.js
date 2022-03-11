@@ -28,6 +28,7 @@ export const saveAreaOfInterest = createThunkAction(
     application,
     viewAfterSave,
     publicArea,
+    deforestationAlertsType,
     geostore: geostoreId,
   }) => (dispatch, getState) => {
     const { location, geostore } = getState();
@@ -49,6 +50,7 @@ export const saveAreaOfInterest = createThunkAction(
       email,
       language,
       deforestationAlerts: alerts.includes('deforestationAlerts'),
+      deforestationAlertsType,
       monthlySummary: alerts.includes('monthlySummary'),
       fireAlerts: alerts.includes('fireAlerts'),
       ...(admin && {
