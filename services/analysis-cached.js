@@ -3,6 +3,7 @@ import {
   tilesRequest,
   cartoRequest,
   dataApiRequest,
+  dataRequest,
 } from 'utils/request';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -1591,6 +1592,31 @@ export const fetchGLADLatest = () => {
     .get(url)
     .then((response) => {
       const { date } = response.data.data[0].attributes;
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'glad-alerts',
+      };
+    })
+    .catch(
+      () =>
+        new Promise((resolve) =>
+          resolve({
+            attributes: { updatedAt: lastFriday },
+            id: null,
+            type: 'glad-alerts',
+          })
+        )
+    );
+};
+
+export const fetchIntegratedLatest = () => {
+  const url = 'dataset/gfw_integrated_alerts/latest';
+  return dataRequest
+    .get(url)
+    .then((response) => {
+      const date = response.data.metadata.last_update;
 
       return {
         attributes: { updatedAt: date },
