@@ -9,6 +9,7 @@ import { Loader } from 'gfw-components';
 import Input from 'components/forms/components/input';
 import InputTags from 'components/forms/components/input-tags';
 import Select from 'components/forms/components/select';
+import Radio from 'components/forms/components/radio';
 import Checkbox from 'components/forms/components/checkbox';
 import Error from 'components/forms/components/error';
 import Submit from 'components/forms/components/submit';
@@ -123,10 +124,21 @@ class AreaOfInterestForm extends PureComponent {
       });
   };
 
+  handleSaveAoi(values) {
+    const { saveAreaOfInterest } = this.props;
+    const out = { ...values };
+    // TODO: What was this?
+    // const { alerts } = values;
+    // if (alerts.indexOf('deforestationAlerts') > -1) {
+    //   out.deforestationAlerts = true;
+    //   out.alerts = without(alerts, 'deforestationAlerts');
+    // }
+    saveAreaOfInterest(out);
+  }
+
   render() {
     const {
       initialValues,
-      saveAreaOfInterest,
       deleteAreaOfInterest,
       clearAfterDelete,
       canDelete,
@@ -147,7 +159,7 @@ class AreaOfInterestForm extends PureComponent {
       <Fragment>
         <Form
           onSubmit={(values) =>
-            saveAreaOfInterest({
+            this.handleSaveAoi({
               ...initialValues,
               ...values,
               publicArea,
@@ -264,6 +276,7 @@ class AreaOfInterestForm extends PureComponent {
                     </div>
                     <Checkbox
                       name="alerts"
+                      formState={alerts}
                       label="Would you like to receive alert notifications?"
                       options={[
                         {
@@ -273,13 +286,31 @@ class AreaOfInterestForm extends PureComponent {
                         {
                           label: 'As soon as forest change is detected',
                           value: 'deforestationAlerts',
+                          multiInput: true,
                         },
                         {
                           label: 'Monthly summary',
                           value: 'monthlySummary',
                         },
                       ]}
-                    />
+                    >
+                      {(option) => {
+                        if (option.value === 'deforestationAlerts') {
+                          return (
+                            <Radio
+                              name="deforestationAlertsType"
+                              options={[
+                                { label: 'All alerts', value: 'glad-all' },
+                                { label: 'GLAD-L alerts', value: 'glad-l' },
+                                { label: 'GLAD-S2 alerts', value: 'glad-s2' },
+                                { label: 'RADD alerts', value: 'glad-radd' },
+                              ]}
+                            />
+                          );
+                        }
+                        return null;
+                      }}
+                    </Checkbox>
                     <Select
                       name="language"
                       label="language"

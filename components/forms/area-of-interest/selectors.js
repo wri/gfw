@@ -53,6 +53,7 @@ export const getInitialValues = createSelector(
         deforestationAlerts ? 'deforestationAlerts' : false,
         monthlySummary ? 'monthlySummary' : false,
       ]),
+      deforestationAlertsType: 'glad-all',
       geostore: geostoreId,
       location,
       ...rest,

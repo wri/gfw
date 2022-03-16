@@ -1604,6 +1604,31 @@ export const fetchGLADLatest = () => {
     );
 };
 
+export const fetchIntegratedLatest = () => {
+  const url = 'dataset/gfw_integrated_alerts/latest';
+  return dataRequest
+    .get(url)
+    .then((response) => {
+      const date = response.data.metadata.last_update;
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'glad-alerts',
+      };
+    })
+    .catch(
+      () =>
+        new Promise((resolve) =>
+          resolve({
+            attributes: { updatedAt: lastFriday },
+            id: null,
+            type: 'glad-alerts',
+          })
+        )
+    );
+};
+
 export const fetchBurnedArea = (params) => {
   const {
     forestType,

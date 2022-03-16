@@ -25,7 +25,7 @@ import getWidgetProps from './selectors';
 
 export default {
   widget: 'integratedAlertsRanked',
-  published: false,
+  published: true,
   title: 'Location of integrated deforestation Alerts in {location}',
   categories: ['forest-change'],
   types: ['country'],
