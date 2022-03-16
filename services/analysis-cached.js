@@ -1166,7 +1166,7 @@ export const fetchIntegratedAlerts = (params) => {
       dataset: alertSystem === 'glad_l' ? 'glad_alerts' : 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
-      version: 'latest',
+      version: alertSystem === 'glad_l' ? 'v20220304' : 'v20220308',
     });
   }
 
@@ -1317,7 +1317,7 @@ export const getIntegratedAlertsRanked = (params) => {
       dataset: 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
-      version: 'latest',
+      version: 'v20220308',
     });
   }
 
@@ -1406,7 +1406,7 @@ export const fetchGladAlertsDaily = (params) => {
     dataset: 'glad_alerts',
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
-    version: 'latest',
+    version: 'v20220304',
     // Refernces the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsDaily}`;
 
@@ -1460,7 +1460,7 @@ export const fetchGladAlertsDailyRanked = (params) => {
     dataset: 'glad_alerts',
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
-    version: 'latest',
+    version: 'v20220304',
     // Refernces the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsRanked}`;
 
