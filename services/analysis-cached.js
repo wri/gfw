@@ -572,8 +572,8 @@ export const getCarbonFlux = (params) => {
     };
   }
 
-  return dataApiRequest.get(url).then(({ data: { data } }) =>
-    data.map((d) => ({
+  return dataApiRequest.get(url).then((data) =>
+    data.data.map((d) => ({
       removals:
         -d.gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg || 0,
       emissions: d.gfw_gross_emissions_co2e_all_gases__Mg || 0,
