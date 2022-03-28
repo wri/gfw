@@ -217,7 +217,7 @@ class Widget extends PureComponent {
             locationType={location?.locationType}
             caution={caution}
             simple={simple}
-            alertSystem={rawData.alerts.alertSystem}
+            alertSystem={rawData?.alerts?.alertSystem}
           />
         )}
       </div>
