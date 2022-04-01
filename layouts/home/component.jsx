@@ -202,7 +202,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
       <div className="section-news">
         <Row>
           <Column>
-            <h3 className="news-title">New on Global Forest Watch</h3>
+            <h3 className="news-title">New from Global Forest Watch</h3>
             <div className="news-carousel">
               {news ? (
                 <>
@@ -275,7 +275,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
         >
           {showSectionNews && (
             <picture>
-              <img src={newsImage} alt="New on Global Forest Watch" />
+              <img src={newsImage} alt="New from Global Forest Watch" />
             </picture>
           )}
         </InView>
