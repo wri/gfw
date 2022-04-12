@@ -1,0 +1,21 @@
+@import '~styles/settings.scss';
+
+.gfr-banner {
+  padding-top: 0 !important;
+  text-align: center;
+
+  .gfr-banner-content {
+    width: 100%;
+    padding: 12px 12px 6px 12px;
+    background: #343a3f;
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 14px;
+  }
+
+  .gfr-logo {
+    margin: 0 auto;
+    width: 330px;
+    max-width: 100%;
+  }
+}
