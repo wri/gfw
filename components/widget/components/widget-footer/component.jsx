@@ -15,6 +15,34 @@ class WidgetFooter extends PureComponent {
     statements: PropTypes.array,
     locationType: PropTypes.string,
     showAttributionLink: PropTypes.bool,
+    alertSystem: PropTypes.string,
+  };
+
+  renderCaution = (caution, alertSystem, type, locationType) => {
+    if (!caution) return null;
+
+    if (caution && Array.isArray(caution)) {
+      return caution.map((c) => {
+        if (c.system === alertSystem || alertSystem === 'all') {
+          return (
+            <WidgetCaution
+              type={type}
+              caution={c}
+              locationType={locationType}
+            />
+          );
+        }
+        return null;
+      });
+    }
+
+    return (
+      <WidgetCaution
+        type={type}
+        caution={caution}
+        locationType={locationType}
+      />
+    );
   };
 
   render() {
@@ -25,18 +53,13 @@ class WidgetFooter extends PureComponent {
       simple,
       locationType,
       showAttributionLink,
+      alertSystem,
     } = this.props;
     const statementsMapped = statements && statements.join(' | ');
     // TODO: add statement link
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {caution && (
-          <WidgetCaution
-            type={type}
-            caution={caution}
-            locationType={locationType}
-          />
-        )}
+        {this.renderCaution(caution, alertSystem, type, locationType)}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}
