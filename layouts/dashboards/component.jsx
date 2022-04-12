@@ -33,6 +33,7 @@ import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
+import GFRBanner from './components/gfr-banner';
 import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
@@ -190,6 +191,7 @@ class DashboardsPage extends PureComponent {
             />
           )}
           <Widgets className="dashboard-widgets" />
+          {this.props.locationType === 'global' && <GFRBanner />}
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Desktop>
