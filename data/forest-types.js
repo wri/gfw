@@ -2,13 +2,13 @@ import {
   TREE_PLANTATIONS_DATASET,
   INTACT_FOREST_LANDSCAPES_DATASET,
   PRIMARY_FOREST_DATASET,
-  MANGROVE_FORESTS_DATASET,
+  // MANGROVE_FORESTS_DATASET,
 } from 'data/datasets';
 import {
   TREE_PLANTATIONS,
   INTACT_FOREST_LANDSCAPES,
   PRIMARY_FOREST,
-  MANGROVE_FORESTS,
+  // MANGROVE_FORESTS,
 } from 'data/layers';
 
 export default [
@@ -77,21 +77,21 @@ export default [
       },
     ],
   },
-  {
-    label: 'Mangrove forests',
-    value: 'mangroves_2016',
-    dataType: 'number',
-    tableKey: 'is__gmw_mangroves_2016',
-    metaKey: 'mangrove_2010_gmw',
-    global: true,
-    datasets: [
-      {
-        dataset: MANGROVE_FORESTS_DATASET,
-        layers: [MANGROVE_FORESTS],
-      },
-    ],
-    hidden: false,
-  },
+  // {
+  //   label: 'Mangrove forests',
+  //   value: 'mangroves_2016',
+  //   dataType: 'number',
+  //   tableKey: 'is__gmw_mangroves_2016',
+  //   metaKey: 'mangrove_2010_gmw',
+  //   global: true,
+  //   datasets: [
+  //     {
+  //       dataset: MANGROVE_FORESTS_DATASET,
+  //       layers: [MANGROVE_FORESTS],
+  //     },
+  //   ],
+  //   hidden: false,
+  // },
   {
     label: 'Tree cover loss driver category',
     value: 'tsc',
