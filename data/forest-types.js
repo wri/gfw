@@ -45,7 +45,7 @@ export default [
     value: 'ifl',
     dataType: 'number',
     tableKeys: {
-      annual: 'ifl_intact_forest_landscape__year',
+      annual: 'is__ifl_intact_forest_landscape_2000',
       glad: 'is__ifl_intact_forest_landscape_2016',
       viirs: 'is__ifl_intact_forest_landscape_2016',
       modis: 'is__ifl_intact_forest_landscape_2016',
