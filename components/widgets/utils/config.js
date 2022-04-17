@@ -75,6 +75,7 @@ export const getSettingsConfig = ({
         endKey,
         options,
         whitelist,
+        blacklist,
         locationType,
         noSort,
       } = o || {};
@@ -107,7 +108,9 @@ export const getSettingsConfig = ({
         ...o,
         ...(parsedOptions && {
           options: parsedOptions.filter(
-            (opt) => !whitelist || whitelist.includes(opt.value)
+            (opt) =>
+              (!whitelist || whitelist.includes(opt.value)) &&
+              (!blacklist || !blacklist.includes(opt.value))
           ),
           value: parsedOptions.find((opt) => opt.value === settings[key]),
           ...(startKey && {
