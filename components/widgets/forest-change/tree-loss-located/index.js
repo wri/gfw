@@ -29,7 +29,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
+      whitelist: ['ifl', 'primary_forest'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
@@ -37,7 +37,7 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      whitelist: ['wdpa'],
+      whitelist: [],
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
