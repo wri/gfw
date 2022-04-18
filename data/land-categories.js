@@ -1,6 +1,6 @@
 import {
   MINING_CONCESSIONS_DATASET,
-  // PROTECTED_AREAS_DATASET,
+  PROTECTED_AREAS_DATASET,
   // TIGER_CONSERVATION_LANDSCAPES_DATASET,
   ALLIANCE_FOR_ZERO_EXSTINCTION_DATASET,
   INDIGENOUS_AND_COMMUNITY_LANDS_DATASET,
@@ -12,7 +12,7 @@ import {
 } from 'data/datasets';
 import {
   MINING_CONCESSIONS,
-  // PROTECTED_AREAS_LAYER,
+  PROTECTED_AREAS_LAYER,
   // TIGER_CONSERVATION_LANDSCAPES,
   ALLIANCE_FOR_ZERO_EXSTINCTION,
   INDIGENOUS_AND_COMMUNITY_LANDS,
@@ -38,21 +38,21 @@ export default [
       },
     ],
   },
-  // {
-  //   label: 'Protected Areas',
-  //   value: 'wdpa',
-  //   dataType: 'keyword',
-  //   metaKey: 'wdpa_protected_areas',
-  //   tableKey: 'wdpa_protected_area__iucn_cat',
-  //   global: true,
-  //   categories: ['Category Ia/b or II', 'Other Category', 'Unkown'],
-  //   datasets: [
-  //     {
-  //       dataset: PROTECTED_AREAS_DATASET,
-  //       layers: [PROTECTED_AREAS_LAYER],
-  //     },
-  //   ],
-  // },
+  {
+    label: 'Protected Areas',
+    value: 'wdpa',
+    dataType: 'keyword',
+    metaKey: 'wdpa_protected_areas',
+    tableKey: 'wdpa_protected_area__iucn_cat',
+    global: true,
+    categories: ['Category Ia/b or II', 'Other Category', 'Unkown'],
+    datasets: [
+      {
+        dataset: PROTECTED_AREAS_DATASET,
+        layers: [PROTECTED_AREAS_LAYER],
+      },
+    ],
+  },
   {
     label: 'Key Biodiversity Areas',
     preserveString: true,
