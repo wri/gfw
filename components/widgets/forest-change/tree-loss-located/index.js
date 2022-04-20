@@ -37,7 +37,7 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      whitelist: ['wdpa'],
+      whitelist: [],
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
