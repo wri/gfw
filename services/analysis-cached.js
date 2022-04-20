@@ -8,6 +8,7 @@ import {
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
+import DATASETS_VERSIONS from 'data/analysis-datasets-versions.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
@@ -203,11 +204,18 @@ const getRequestUrl = ({
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
 
+  const versionFromDictionary =
+    DATASETS_VERSIONS[
+      `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
+    ];
+
   if (typeof datasetId === 'undefined') {
     // @TODO: Figure out why widgets are stale on loading, when not requesting info
     // return null;
   }
-  return `${GFW_API}/dataset/${datasetId}/${version || 'latest'}/query?sql=`;
+  return `${GFW_API}/dataset/${datasetId}/${
+    versionFromDictionary || version || 'latest'
+  }/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {
