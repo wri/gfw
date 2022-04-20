@@ -84,7 +84,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl'],
+      whitelist: ['ifl', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
