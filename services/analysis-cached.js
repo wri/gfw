@@ -314,8 +314,8 @@ export const getWHEREQuery = (params) => {
       if (p === 'threshold')
         paramKey = 'umd_tree_cover_density_2000__threshold';
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
-      if (p === 'adm1' && type === 'country') paramKey = 'adm1::integer';
-      if (p === 'adm2' && type === 'country') paramKey = 'adm2::integer';
+      if (p === 'adm1' && type === 'country') paramKey = 'adm1';
+      if (p === 'adm2' && type === 'country') paramKey = 'adm2';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') {
         paramKey = 'wdpa_protected_area__id';
@@ -441,7 +441,7 @@ export const getLoss = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -490,7 +490,7 @@ export const getEmissions = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -574,7 +574,7 @@ export const getCarbonFlux = (params) => {
     })}${carbonFlux}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -651,7 +651,7 @@ export const getLossGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -698,7 +698,7 @@ export const getExtent = (params) => {
       .replace(/{extentYear}/g, extentYear)
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -746,7 +746,7 @@ export const getExtentGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace(/{extentYear}/g, extentYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -792,7 +792,7 @@ export const getGain = (params) => {
     `${requestUrl}${SQL_QUERIES.gain}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -840,7 +840,7 @@ export const getGainGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -888,7 +888,7 @@ export const getAreaIntersection = (params) => {
     `${requestUrl}${SQL_QUERIES.areaIntersection}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
@@ -947,7 +947,7 @@ export const getAreaIntersectionGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace(
         /{intersection}/g,
@@ -1011,7 +1011,7 @@ export const fetchHistoricalAlerts = (params) => {
     `${requestUrl}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery(params))
@@ -1062,7 +1062,7 @@ export const fetchHistoricalGladAlerts = (params) => {
     `${requestUrl}${SQL_QUERIES.gladDaily}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
@@ -1112,7 +1112,7 @@ export const fetchGladAlerts = (params) => {
     `${requestUrl}${SQL_QUERIES.glad}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
@@ -1246,7 +1246,7 @@ export const fetchIntegratedAlerts = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
@@ -1374,7 +1374,7 @@ export const getIntegratedAlertsRanked = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{alertTypeColumn}/g, alertTypeColumn)
@@ -1437,7 +1437,7 @@ export const fetchGladAlertsDaily = (params) => {
     baseUrl
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
@@ -1491,7 +1491,7 @@ export const fetchGladAlertsDailyRanked = (params) => {
     baseUrl
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
@@ -1546,7 +1546,7 @@ export const fetchGladAlertsSum = (params) => {
     baseUrl
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
@@ -1662,7 +1662,7 @@ export const fetchBurnedArea = (params) => {
     })}${SQL_QUERIES.burnedAreas}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset, threshold }))
@@ -1710,7 +1710,7 @@ export const fetchBurnedAreaGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', whereStr)
       .replace(/{dateFilter}/g, weeksFilterStr)
@@ -1745,7 +1745,7 @@ export const fetchVIIRSAlerts = (params) => {
     }`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
@@ -1797,7 +1797,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', whereStr)
       .replace(/{dateFilter}/g, weeksFilterStr)
@@ -1835,7 +1835,7 @@ export const fetchFiresWithin = (params) => {
     }`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
@@ -1927,7 +1927,7 @@ export const fetchVIIRSAlertsSum = (params) => {
     })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
@@ -1976,7 +1976,7 @@ export const getBiomassStockGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -2022,7 +2022,7 @@ export const getBiomassStock = (params) => {
     `${requestUrl}${SQL_QUERIES.biomassStock}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -2084,7 +2084,7 @@ export const getLocationPolynameWhitelist = (params) => {
   const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
-    .replace(/{select_location}/g, getLocationSelect({ ...params, cast: true }))
+    .replace(/{select_location}/g, getLocationSelect({ ...params, cast: false }))
     .replace(/{location}/g, getLocationSelect(params))
     .replace(
       '{polynames}',
