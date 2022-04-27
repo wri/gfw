@@ -49,6 +49,7 @@ class DashboardsPage extends PureComponent {
     ssrLocation: PropTypes.object,
     showMapMobile: PropTypes.bool,
     setShowMap: PropTypes.func.isRequired,
+    category: PropTypes.string,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     globalSentence: PropTypes.object,
@@ -158,6 +159,7 @@ class DashboardsPage extends PureComponent {
       clearScrollTo,
       globalSentence,
       embed,
+      category,
     } = this.props;
     const { status, location } = activeArea || {};
 
@@ -183,6 +185,24 @@ class DashboardsPage extends PureComponent {
             />
           )}
           <GlobalSentence handleSSRLocation={ssrLocation} />
+          {category &&
+            (category === 'summary' || category === 'forest-change') && (
+              <div className="c-widgets dashboard-widgets global-dashboard-sentence">
+                <div
+                  className="c-widget c-dashboard-sentence-widget"
+                  style={{
+                    borderColor: '#ed4602',
+                    padding: '10px 14px',
+                    fontSize: '16px',
+                    backgroundColor: '#fff9f7',
+                  }}
+                >
+                  The widgets on this page reflect tree cover loss data from
+                  2020. They will be updated to reflect 2021 data in the coming
+                  days. Please check back here for updates.
+                </div>
+              </div>
+            )}
           {isPendingDashboard && (
             <PendingDashboard
               className="pending-message"
