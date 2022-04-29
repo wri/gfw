@@ -81,7 +81,13 @@ export default [
     label: 'Mangrove forests',
     value: 'mangroves_2016',
     dataType: 'number',
-    tableKey: 'is__gmw_global_mangrove_extent_1996',
+    tableKeys: {
+      annual: 'is__gmw_global_mangrove_extent_1996',
+      glad: 'is__gmw_mangroves_2016',
+      viirs: 'is__gmw_mangroves_2016',
+      modis: 'is__gmw_mangroves_2016',
+      modis_burned_area: 'is__gmw_mangroves_2016',
+    },
     metaKey: 'mangrove_2010_gmw',
     global: true,
     datasets: [
