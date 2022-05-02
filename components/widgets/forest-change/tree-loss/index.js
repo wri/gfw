@@ -19,7 +19,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 const MIN_YEAR = 2001;
 
 const getGlobalLocation = (params) => ({
