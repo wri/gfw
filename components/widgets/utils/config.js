@@ -123,7 +123,7 @@ export const getSettingsConfig = ({
           }),
           ...(endKey && {
             endOptions: parsedOptions.filter(
-              (opt) => opt.value <= settings[endKey]
+              (opt) => opt.value >= settings[startKey]
             ),
             endValue: parsedOptions.find(
               (opt) => opt.value === settings[endKey]
