@@ -11,9 +11,14 @@ const GrantsApplySection = () => (
       <Column width={[1, 3 / 4]} className="logo">
         <h2 className="section-title">Small Grants Fund</h2>
         <p className="text -paragraph -color-2 -light -spaced">
-          The Global Forest Watch Small Grants Fund seeks to build the capacity of civil society organizations to effectively use GFW tools and data to reduce illegal or unplanned deforestation. Successful projects translate data into action, applying GFW to overcome challenges in protecting the world’s forests.  
-          <br>
-          For information on the 2023 grant cycle, please click on the links below.  
+          The Global Forest Watch Small Grants Fund seeks to build the capacity
+          of civil society organizations to effectively use GFW tools and data
+          to reduce illegal or unplanned deforestation. Successful projects
+          translate data into action, applying GFW to overcome challenges in
+          protecting the world’s forests.
+          <br />
+          For information on the 2023 grant cycle, please click on the links
+          below.
         </p>
         <ul className="list">
           <li>
@@ -46,19 +51,20 @@ const GrantsApplySection = () => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              2023 Small Grants Fund Applicant Webinar on June 16th at 9:00 AM ET.
+              2023 Small Grants Fund Applicant Webinar on June 16th at 9:00 AM
+              ET.
             </a>
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
           <a
             className="text -paragraph -color-4 -bold"
-           href="https://gfw.smapply.io/prog/2023_small_grants_fund_application/"
-           target="_blank"
-           rel="noopener noreferrer"
-            >
+            href="https://gfw.smapply.io/prog/2023_small_grants_fund_application/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Apply now.
-            </a>
+          </a>
         </p>
       </Column>
       <Column width={[1, 1 / 4]} className="logo">
