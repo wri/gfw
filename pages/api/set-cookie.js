@@ -7,7 +7,11 @@ export default async function cookieHandler(req, res) {
     if (body.token) {
       res.setHeader(
         'Set-Cookie',
-        serialize('gfw-token', body.token, { path: '/', httpOnly: true })
+        serialize('gfw-token', body.token, {
+          path: '/',
+          httpOnly: true,
+          maxAge: 315360000,
+        })
       );
       res.status(200).end('ok');
     }
