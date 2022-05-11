@@ -25,7 +25,7 @@ const GrantsApplySection = () => (
             - Read the 2023&nbsp;
             <a
               className="text -paragraph -color-4 -bold"
-              href="http://s3.amazonaws.com/gfw.blog/Training%20Guides/SGF/Guidelines%20for%20SGF%20Applicants%202021.pdf"
+              href="https://s3.amazonaws.com/gfw.blog/Training+Guides/SGF/Guidelines+for+SGF+Applicants+2023.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -57,13 +57,14 @@ const GrantsApplySection = () => (
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
+          The application for the 2023 grant cycle is open from June 1 - August 1, 2022.
           <a
             className="text -paragraph -color-4 -bold"
             href="https://gfw.smapply.io/prog/2023_small_grants_fund_application/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Apply now.
+            You can apply here starting June 1.
           </a>
         </p>
       </Column>
