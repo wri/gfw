@@ -1255,7 +1255,7 @@ export const fetchIntegratedAlerts = (params) => {
       .replace(/{endDate}/g, endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
       .replace(/{AND_OPERATION}/, AND_OPERATION)
-      .replace(/{geostoreOrigin}/g, 'rw')
+      .replace(/{geostoreOrigin}/g, 'gfw')
       .replace(/{geostoreId}/g, geostoreId)
   );
 
