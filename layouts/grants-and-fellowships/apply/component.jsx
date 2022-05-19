@@ -16,7 +16,8 @@ const GrantsApplySection = () => (
           to reduce illegal or unplanned deforestation. Successful projects
           translate data into action, applying GFW to overcome challenges in
           protecting the world’s forests.
-          <br />
+        </p>
+        <p className="text -paragraph -color-2 -light -spaced">
           For information on the 2023 grant cycle, please click on the links
           below.
         </p>
@@ -57,7 +58,8 @@ const GrantsApplySection = () => (
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
-          The application for the 2023 grant cycle is open from June 1 - August 1, 2022.
+          Applications will be accepted from June 1 - August 1, 2022.
+          <br />
           <a
             className="text -paragraph -color-4 -bold"
             href="https://gfw.smapply.io/prog/2023_small_grants_fund_application/"
