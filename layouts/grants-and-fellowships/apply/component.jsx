@@ -32,6 +32,7 @@ const GrantsApplySection = () => (
             >
               Guidelines for Applicants
             </a>
+            .
           </li>
           <li>
             - Review the&nbsp;
@@ -43,6 +44,7 @@ const GrantsApplySection = () => (
             >
               Small Grants Fund Frequently Asked Questions
             </a>
+            .
           </li>
           <li>
             - Register for the&nbsp;
@@ -59,7 +61,7 @@ const GrantsApplySection = () => (
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
           Applications will be accepted from June 1 - August 1, 2022.
-          <br />
+          {' '}
           <a
             className="text -paragraph -color-4 -bold"
             href="https://gfw.smapply.io/prog/2023_small_grants_fund_application/"
