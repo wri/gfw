@@ -32,7 +32,6 @@ const GrantsApplySection = () => (
             >
               Guidelines for Applicants
             </a>
-            .
           </li>
           <li>
             - Review the&nbsp;
@@ -44,7 +43,6 @@ const GrantsApplySection = () => (
             >
               Small Grants Fund Frequently Asked Questions
             </a>
-            .
           </li>
           <li>
             - Register for the&nbsp;
@@ -55,7 +53,7 @@ const GrantsApplySection = () => (
               rel="noopener noreferrer"
             >
               2023 Small Grants Fund Applicant Webinar on June 16th at 9:00 AM
-              ET.
+              ET
             </a>
           </li>
         </ul>
