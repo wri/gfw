@@ -437,8 +437,8 @@ const decodes = {
       day <= endDayIndex &&
       confidence >= confidenceValue
     ) {
-      // get intensity
-      float intensity = mod(confidence, 100.) * 50.;
+      // get intensity (max value multiplication per request from GFW after median resampling)
+      float intensity = mod(confidence, 100.) *  255.;
       if (intensity > 255.) {
         intensity = 255.;
       }
