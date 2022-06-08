@@ -1,4 +1,5 @@
 import { apiRequest, apiAuthRequest } from 'utils/request';
+import moment from 'moment';
 
 const isServer = typeof window === 'undefined';
 
@@ -19,7 +20,9 @@ export const setUserToken = (token) => {
     if (token?.endsWith('#')) {
       serializedToken = token.replace(/#$/, '');
     }
+    const expirationDate = moment().add(2592000, 'seconds').toDate();
     localStorage.setItem('userToken', serializedToken);
+    localStorage.setItem('userTokenExpirationDate', expirationDate);
     apiAuthRequest.defaults.headers.Authorization = `Bearer ${serializedToken}`;
   }
 };
