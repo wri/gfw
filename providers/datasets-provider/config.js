@@ -269,7 +269,7 @@ const decodes = {
     float day = r * 255. + g;
     float confidence = floor(b / 100.) - 1.;
     // float confidence = 255.;
-    float intensity = mod(b, 100.) * 50.;
+    float intensity = mod(b, 100.) * 200.;
     // float intensity = 255.; //this is temporal above one does not work
 
     if (
@@ -438,7 +438,7 @@ const decodes = {
       confidence >= confidenceValue
     ) {
       // get intensity
-      float intensity = mod(confidence, 100.) * 50.;
+      float intensity = mod(confidence, 100.) * 200.;
       if (intensity > 255.) {
         intensity = 255.;
       }
