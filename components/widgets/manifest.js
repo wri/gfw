@@ -11,6 +11,7 @@ import treeLossLocated from 'components/widgets/forest-change/tree-loss-located'
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-drivers';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
+import treeLossFires from 'components/widgets/forest-change/tree-loss-fires';
 import glads from 'components/widgets/forest-change/glads';
 // import gladRanked from 'components/widgets/forest-change/glad-ranked';
 import integratedAlertsRanked from 'components/widgets/forest-change/integrated-alerts-ranked';
@@ -76,6 +77,7 @@ export default {
   firesAlertsHistorical,
   firesAlertsHistoricalDaily,
   firesAlertsSimple,
+  treeLossFires,
 
   // land cover
   treeCover,

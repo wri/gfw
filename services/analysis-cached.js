@@ -462,6 +462,8 @@ export const getLoss = (params) => {
     };
   }
 
+  console.log('yourstruly1:', url);
+
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
@@ -670,6 +672,14 @@ export const getLossGrouped = (params) => {
       url: getDownloadUrl(url),
     };
   }
+
+  console.log('yourstruly1: ', requestUrl);
+  console.log('yourstruly2: ', SQL_QUERIES);
+  console.log('yourstruly3: ', SQL_QUERIES.loss);
+  console.log('yourstruly4: ', params);
+  console.log('yourstruly5: ', getLocationSelect({ ...params, grouped: true }));
+  console.log('yourstruly6: ', getWHEREQuery({ ...params, dataset: 'annual' }));
+  console.log('yourstruly50: ', url);
 
   return apiRequest.get(url).then((response) => ({
     ...response,
