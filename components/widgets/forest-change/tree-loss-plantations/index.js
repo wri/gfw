@@ -17,7 +17,7 @@ import {
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2013;
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 
 export default {
   widget: 'treeLossPlantations',
