@@ -43,24 +43,24 @@ export default {
   //   link:
   //     'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
   // },
-  caution: [
-    {
-      system: 'glad_l',
-      text:
-        'GLAD-L: alerts updates are paused after Dec 2021. Stay updated via {this discussion forum post}.',
-      visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-      linkText: 'this discussion forum post',
-      link: 'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
-    },
-    {
-      system: 'radd',
-      text:
-        'RADD: due to satellite malfunction, there is a decrease in alert frequency currently. Stay updated via {this discussion forum post}.',
-      visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-      linkText: 'this discussion forum post',
-      link: 'https://groups.google.com/g/globalforestwatch/c/w8--wwyKpgE',
-    },
-  ],
+  // caution: [
+  //   {
+  //     system: 'glad_l',
+  //     text:
+  //       'GLAD-L: alerts updates are paused after Dec 2021. Stay updated via {this discussion forum post}.',
+  //     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  //     linkText: 'this discussion forum post',
+  //     link: 'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
+  //   },
+  //   {
+  //     system: 'radd',
+  //     text:
+  //       'RADD: due to satellite malfunction, there is a decrease in alert frequency currently. Stay updated via {this discussion forum post}.',
+  //     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  //     linkText: 'this discussion forum post',
+  //     link: 'https://groups.google.com/g/globalforestwatch/c/w8--wwyKpgE',
+  //   },
+  // ],
   sentence: {
     initial:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
