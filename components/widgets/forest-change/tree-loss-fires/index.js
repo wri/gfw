@@ -1,4 +1,4 @@
-import { getExtentGrouped, getLossGrouped } from 'services/analysis-cached';
+import { getExtentGrouped, getLossFires } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
 import { all, spread } from 'axios';
 
@@ -22,9 +22,9 @@ const MIN_YEAR = 2001;
 export default {
   widget: 'treeLossFires',
   title: 'Regions with most tree cover loss due to fires',
-  categories: ['summary', 'forest-change'],
-  types: ['country'],
-  admins: ['adm0', 'adm1'],
+  categories: ['fires'],
+  types: ['global', 'country'],
+  admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [
     {
       key: 'forestType',
@@ -113,8 +113,9 @@ export default {
     noLoss: 'There was no tree cover loss identified in {location}.',
   },
   getData: (params) =>
-    all([getExtentGrouped(params), getLossGrouped(params)]).then(
+    all([getExtentGrouped(params), getLossFires(params)]).then(
       spread((extentGrouped, lossGrouped) => {
+        console.log('yourstruly29:');
         let groupKey = 'iso';
         if (params.adm0) groupKey = 'adm1';
         if (params.adm1) groupKey = 'adm2';
@@ -130,10 +131,11 @@ export default {
         }
         const lossData = lossGrouped.data.data;
         let lossMappedData = [];
+        console.log('yourstruly30:', lossData);
         if (lossData && lossData.length) {
-          const lossByRegion = groupBy(lossData, groupKey);
-          lossMappedData = Object.keys(lossByRegion).map((d) => {
-            const regionLoss = lossByRegion[d];
+          const lossFires = groupBy(lossData, groupKey);
+          lossMappedData = Object.keys(lossFires).map((d) => {
+            const regionLoss = lossFires[d];
             return {
               id: groupKey === 'iso' ? d : parseInt(d, 10),
               loss: regionLoss,
@@ -147,7 +149,7 @@ export default {
           {};
 
         return {
-          lossByRegion: lossMappedData,
+          lossFires: lossMappedData,
           extent: extentMappedData,
           settings: {
             startYear,
@@ -161,7 +163,7 @@ export default {
     ),
   getDataURL: (params) => [
     getExtentGrouped({ ...params, download: true }),
-    getLossGrouped({ ...params, download: true }),
+    getLossFires({ ...params, download: true }),
   ],
   getWidgetProps,
 };

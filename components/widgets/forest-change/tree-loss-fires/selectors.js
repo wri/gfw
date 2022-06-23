@@ -7,7 +7,7 @@ import { formatNumber } from 'utils/format';
 import { format } from 'd3-format';
 
 // get list data
-const getLoss = (state) => state.data && state.data.lossByRegion;
+const getLossFires = (state) => state.data && state.data.lossFires;
 const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
 const getIndicator = (state) => state.indicator;
@@ -17,10 +17,13 @@ const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 
 export const mapData = createSelector(
-  [getLoss, getExtent, getSettings, getLocationsMeta],
+  [getLossFires, getExtent, getSettings, getLocationsMeta],
   (data, extent, settings, meta) => {
+    console.log('yourstruly201:', data);
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
+
+    console.log('yourstruly200:', data);
 
     const mappedData = data.map((d) => {
       const region = meta[d.id];
