@@ -526,7 +526,7 @@ const decodes = {
       confidence >= confidenceValue
     ) {
       // get intensity
-      float intensity = mod(b, 100.) * 50.;
+      float intensity = mod(b, 100.) * 200.;
       // float intensity = 255.;
       if (intensity > 255.) {
         intensity = 255.;
