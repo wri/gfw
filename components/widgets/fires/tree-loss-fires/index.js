@@ -1,4 +1,4 @@
-import { getExtentGrouped, getLossFires } from 'services/analysis-cached';
+import { getExtentFires, getLossFires } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
 import { all, spread } from 'axios';
 
@@ -21,7 +21,10 @@ const MIN_YEAR = 2001;
 
 export default {
   widget: 'treeLossFires',
-  title: 'Regions with most tree cover loss due to fires',
+  title: {
+    default: 'Regions with most tree cover loss due to fires in {location}',
+    global: 'Global tree cover loss due to fires',
+  },
   categories: ['fires'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
@@ -37,7 +40,7 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      whitelist: [],
+      blacklist: ['wdpa'],
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
@@ -49,12 +52,12 @@ export default {
       type: 'switch',
       whitelist: ['ha', '%'],
     },
-    {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch',
-      border: true,
-    },
+    // {
+    //   key: 'extentYear',
+    //   label: 'extent year',
+    //   type: 'switch',
+    //   border: true,
+    // },
     {
       key: 'years',
       label: 'years',
@@ -71,9 +74,9 @@ export default {
     },
   ],
   chartType: 'rankedList',
-  colors: 'loss',
+  colors: 'lossFires',
   layers: ['loss'],
-  refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold'],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -86,7 +89,7 @@ export default {
       layers: [FOREST_LOSS],
     },
   ],
-  metaKey: 'widget_tree_cover_loss_location',
+  metaKey: 'widget_tree_cover_loss_fires_location',
   sortOrder: {
     summary: 2,
     forestChange: 3,
@@ -103,19 +106,18 @@ export default {
   },
   sentences: {
     initial:
-      'In {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
-    withIndicator:
-      'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
+      'From {startYear} to {endYear}, {topLocationLabel} had the highest rate of tree cover loss due to fires with an average of {topLocationLoss} lost per year.',
+    // withIndicator:
+    //   'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
     initialPercent:
-      'In {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most relative tree cover loss at {value} compared to an average of {average}.',
-    withIndicatorPercent:
-      'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most relative tree cover loss at {value} compared to an average of {average}.',
-    noLoss: 'There was no tree cover loss identified in {location}.',
+      'From {startYear} to {endYear}, {topLocationLabel} had the highest proportion of fire-related loss with {topLocationPerc} of all tree cover loss attributed to fires.',
+    // withIndicatorPercent:
+    //   'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most relative tree cover loss at {value} compared to an average of {average}.',
+    noLoss: 'There was no tree cover loss from fires identified in {location}.',
   },
   getData: (params) =>
-    all([getExtentGrouped(params), getLossFires(params)]).then(
+    all([getExtentFires(params), getLossFires(params)]).then(
       spread((extentGrouped, lossGrouped) => {
-        console.log('yourstruly29:');
         let groupKey = 'iso';
         if (params.adm0) groupKey = 'adm1';
         if (params.adm1) groupKey = 'adm2';
@@ -131,11 +133,10 @@ export default {
         }
         const lossData = lossGrouped.data.data;
         let lossMappedData = [];
-        console.log('yourstruly30:', lossData);
         if (lossData && lossData.length) {
-          const lossFires = groupBy(lossData, groupKey);
-          lossMappedData = Object.keys(lossFires).map((d) => {
-            const regionLoss = lossFires[d];
+          const lossByRegion = groupBy(lossData, groupKey);
+          lossMappedData = Object.keys(lossByRegion).map((d) => {
+            const regionLoss = lossByRegion[d];
             return {
               id: groupKey === 'iso' ? d : parseInt(d, 10),
               loss: regionLoss,
@@ -149,7 +150,7 @@ export default {
           {};
 
         return {
-          lossFires: lossMappedData,
+          lossByRegion: lossMappedData,
           extent: extentMappedData,
           settings: {
             startYear,
@@ -162,7 +163,7 @@ export default {
       })
     ),
   getDataURL: (params) => [
-    getExtentGrouped({ ...params, download: true }),
+    getExtentFires({ ...params, download: true }),
     getLossFires({ ...params, download: true }),
   ],
   getWidgetProps,

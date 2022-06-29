@@ -216,8 +216,8 @@ const getRequestUrl = ({
     // return null;
   }
   return `${GFW_API}/dataset/${datasetId}/${
-    // version || versionFromDictionary || 'latest'
-    versionFromDictionary || version || 'latest'
+    version || versionFromDictionary || 'latest'
+    // versionFromDictionary || version || 'latest'
   }/query?sql=`;
 };
 
@@ -465,8 +465,6 @@ export const getLoss = (params) => {
     };
   }
 
-  console.log('yourstruly1:', url);
-
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
@@ -691,7 +689,6 @@ export const getLossGrouped = (params) => {
 
 // tree cover loss from fires
 export const getLossFires = (params) => {
-  console.log('yourstruly100');
   const { forestType, landCategory, ifl, download } = params || {};
 
   const requestUrl = getRequestUrl({
@@ -726,23 +723,64 @@ export const getLossFires = (params) => {
     };
   }
 
-  console.log('yourstruly1: ', requestUrl);
-  console.log('yourstruly2: ', SQL_QUERIES);
-  console.log('yourstruly3: ', SQL_QUERIES.loss);
-  console.log('yourstruly4: ', params);
-  console.log('yourstruly5: ', getLocationSelect({ ...params, grouped: true }));
-  console.log('yourstruly6: ', getWHEREQuery({ ...params, dataset: 'annual' }));
-  console.log('yourstruly50: ', url);
-
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
       data: response.data.data.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
-        area: d.umd_tree_cover_loss__ha,
-        areaFires: d.umd_tree_cover_loss_from_fires__ha,
+        areaLoss: d.umd_tree_cover_loss__ha,
+        areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
         // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+// disaggregated extent for tree cover loss from fires
+export const getExtentFires = (params) => {
+  const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20220608',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.extent}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace(/{extentYear}/g, extentYear)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_extent_${extentYear}_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
+        total_area: d.area__ha,
       })),
     },
   }));
