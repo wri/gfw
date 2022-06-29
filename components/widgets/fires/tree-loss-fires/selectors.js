@@ -37,6 +37,9 @@ export const mapData = createSelector(
           d.loss.filter((l) => l.year >= startYear && l.year <= endYear),
           'areaLoss'
         ) || 0;
+      const numberOfYears = d.loss.filter(
+        (l) => l.year >= startYear && l.year <= endYear
+      ).length;
       // const locationExtentById = extent.filter((l) => l.id === d.id);
       // const locationExtent =
       //   locationExtentById &&
@@ -53,6 +56,7 @@ export const mapData = createSelector(
         path: (region && region.path) || '',
         percentage: normalPercentage,
         value: settings.unit === 'ha' ? loss : normalPercentage,
+        numberOfYears,
       };
     });
 
@@ -97,6 +101,7 @@ export const parseSentence = createSelector(
         ? (100 * globalLoss) / globalExtent
         : (locationData && format('.1f')(locationData.percentage)) || 0;
     const lossPercent = loss && locationData ? (100 * loss) / globalLoss : 0;
+
     // const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
     let sentence = settings.unit !== '%' ? initial : initialPercent;
     // let sentence = !indicator ? initialPercent : withIndicatorPercent;
@@ -118,6 +123,12 @@ export const parseSentence = createSelector(
         formatNumber({ num: topRegionData.percentage, unit: '%' }),
       topLocationLoss:
         topRegionData && formatNumber({ num: topRegionData.loss, unit: 'ha' }),
+      topLocationLossAverage:
+        topRegionData &&
+        formatNumber({
+          num: topRegionData.loss / topRegionData.numberOfYears,
+          unit: 'ha',
+        }),
       location:
         location.label === 'global' ? 'globally' : location && location.label,
       // indicator_alt: indicatorName,

@@ -106,7 +106,7 @@ export default {
   },
   sentences: {
     initial:
-      'From {startYear} to {endYear}, {topLocationLabel} had the highest rate of tree cover loss due to fires with an average of {topLocationLoss} lost per year.',
+      'From {startYear} to {endYear}, {topLocationLabel} had the highest rate of tree cover loss due to fires with an average of {topLocationLossAverage} lost per year.',
     // withIndicator:
     //   'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
     initialPercent:
