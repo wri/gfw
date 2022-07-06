@@ -103,6 +103,7 @@ export default {
     startYear: MIN_YEAR,
     endYear: MAX_YEAR,
     ifl: 2000,
+    hidePercentageBar: true,
   },
   sentences: {
     initial:

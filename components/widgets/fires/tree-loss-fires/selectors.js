@@ -55,7 +55,7 @@ export const mapData = createSelector(
         loss,
         path: (region && region.path) || '',
         percentage: normalPercentage,
-        value: settings.unit === 'ha' ? loss : normalPercentage,
+        value: settings.unit === 'ha' ? loss / numberOfYears : normalPercentage,
         numberOfYears,
       };
     });
