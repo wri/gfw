@@ -117,7 +117,7 @@ export default {
     noLoss: 'There was no tree cover loss from fires identified in {location}.',
   },
   getData: (params) =>
-    all([getExtentFires(params), getLossFires(params)]).then(
+    all([getExtentFires(params), getLossFires(params, { grouped: true })]).then(
       spread((extentGrouped, lossGrouped) => {
         let groupKey = 'iso';
         if (params.adm0) groupKey = 'adm1';

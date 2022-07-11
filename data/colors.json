@@ -122,7 +122,8 @@
     "otherColor": "#AAAAAA"
   },
   "lossFires": {
-    "main": "#932155"
+    "main": "#932155",
+    "treeCoverLoss": "#FE6598"
   },
   "employment": {
     "main": "#A878F3",

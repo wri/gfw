@@ -667,7 +667,7 @@ export const getLossGrouped = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_loss_by_region${
+      name: `treecover_loss_from_fires_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
@@ -677,12 +677,7 @@ export const getLossGrouped = (params) => {
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
-        ...d,
-        year: d.umd_tree_cover_loss__year,
-        area: d.umd_tree_cover_loss__ha,
-        emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
-      })),
+      data: response.data.data,
     },
   }));
 };
