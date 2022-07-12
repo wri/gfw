@@ -88,8 +88,8 @@ const defaultConfig = {
   colors: 'fires',
   metaKey: 'umd_modis_burned_areas',
   sortOrder: {
-    summary: 100,
-    fires: 2,
+    summary: 105,
+    fires: 3,
   },
   settings: {
     dataset: 'modis_burned_area',

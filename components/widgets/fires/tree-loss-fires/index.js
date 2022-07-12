@@ -91,8 +91,7 @@ export default {
   ],
   metaKey: 'widget_tree_cover_loss_fires_location',
   sortOrder: {
-    summary: 2,
-    forestChange: 3,
+    fires: 6,
   },
   settings: {
     threshold: 30,
