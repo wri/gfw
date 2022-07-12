@@ -65,7 +65,7 @@ const getOTFAnalysis = async (params) => {
 export default {
   widget: 'treeLossFiresAnnual',
   title: 'Tree cover loss due to fires in {location}',
-  categories: ['fires'],
+  categories: ['summary', 'fires'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   // caution: {
   //   text:
