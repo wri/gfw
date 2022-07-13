@@ -135,8 +135,8 @@ export default {
     },
   ],
   sortOrder: {
-    summary: 0,
-    forestChange: 0,
+    summary: 102,
+    fires: 2,
   },
   sentence: {
     initial:
