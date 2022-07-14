@@ -84,7 +84,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'mangroves_2016'],
+      whitelist: ['ifl', 'primary_forest', 'plantations'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
@@ -96,7 +96,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
-      blacklist: ['wdpa'],
+      // blacklist: ['wdpa'],
     },
     // {
     //   key: 'extentYear',
@@ -140,9 +140,9 @@ export default {
   },
   sentence: {
     initial:
-      'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover from fires and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires--{highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
-    // withIndicator:
-    //   'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover from fires and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires — {highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
+    withIndicator:
+      'From {startYear} to {endYear} in {indicator}, {location} lost {treeCoverLossFires} of tree cover from fires and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires — {highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
     noLoss:
       'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover due to fires.',
     // noLossWithIndicator:
