@@ -32,7 +32,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
+      whitelist: ['ifl', 'primary_forest', 'plantations'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
@@ -40,7 +40,19 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      blacklist: ['wdpa'],
+      // blacklist: ['wdpa'],
+      // whitelist: [
+      //   'wdpa',
+      //   'aze',
+      //   'kba',
+      //   'landmark',
+      //   'idn_forest_moratorium',
+      //   'idn_mys_peatlands',
+      //   'oil_palm',
+      //   'wood_fiber',
+      //   'managed_forests',
+      //   'mining',
+      // ],
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
@@ -107,12 +119,12 @@ export default {
   sentences: {
     initial:
       'From {startYear} to {endYear}, {topLocationLabel} had the highest rate of tree cover loss due to fires with an average of {topLocationLossAverage} lost per year.',
-    // withIndicator:
-    //   'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
+    withIndicator:
+      'From {startYear} to {endYear}, {topLocationLabel} had the highest rate of tree cover loss due to fires in {indicator}, with an average of {topLocationLossAverage} lost per year.',
     initialPercent:
       'From {startYear} to {endYear}, {topLocationLabel} had the highest proportion of fire-related loss with {topLocationPerc} of all tree cover loss attributed to fires.',
-    // withIndicatorPercent:
-    //   'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most relative tree cover loss at {value} compared to an average of {average}.',
+    withIndicatorPercent:
+      'From {startYear} to {endYear}, {topLocationLabel} had the highest proportion of fire-related loss in {indicator} with {topLocationPerc} of all tree cover loss attributed to fires.',
     noLoss: 'There was no tree cover loss from fires identified in {location}.',
   },
   getData: (params) =>

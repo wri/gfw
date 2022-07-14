@@ -85,9 +85,10 @@ export const parseSentence = createSelector(
     const {
       initial,
       initialPercent,
-      // withIndicator,
-      // globalInitial,
-      // globalWithIndicator,
+      withIndicator,
+      globalInitial,
+      globalWithIndicator,
+      withIndicatorPercent,
       noLoss,
     } = sentences;
     const locationData = location && data.find((l) => l.id === location.value);
@@ -102,21 +103,21 @@ export const parseSentence = createSelector(
         : (locationData && format('.1f')(locationData.percentage)) || 0;
     const lossPercent = loss && locationData ? (100 * loss) / globalLoss : 0;
 
-    // const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
-    let sentence = settings.unit !== '%' ? initial : initialPercent;
-    // let sentence = !indicator ? initialPercent : withIndicatorPercent;
-    // if (settings.unit !== '%') {
-    //   sentence = !indicator ? initial : withIndicator;
-    // }
-    // if (location.label === 'global') {
-    //   sentence = !indicator ? globalInitial : globalWithIndicator;
-    // }
+    const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
+    // let sentence = settings.unit !== '%' ? initial : initialPercent;
+    let sentence = !indicator ? initialPercent : withIndicatorPercent;
+    if (settings.unit !== '%') {
+      sentence = !indicator ? initial : withIndicator;
+    }
+    if (location.label === 'global') {
+      sentence = !indicator ? globalInitial : globalWithIndicator;
+    }
     if (loss === 0) sentence = noLoss;
 
     const topRegionData = data[0];
 
     const params = {
-      // indicator: indicatorName,
+      indicator: indicatorName,
       topLocationLabel: topRegionData && topRegionData.label,
       topLocationPerc:
         topRegionData &&
