@@ -6,12 +6,12 @@ import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_LOSS_DATASET,
+  FOREST_LOSS_FIRES_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_LOSS,
+  FOREST_LOSS_FIRES,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -97,8 +97,8 @@ export default {
     },
     // loss
     {
-      dataset: FOREST_LOSS_DATASET,
-      layers: [FOREST_LOSS],
+      dataset: FOREST_LOSS_FIRES_DATASET,
+      layers: [FOREST_LOSS_FIRES],
     },
   ],
   metaKey: 'widget_tree_cover_loss_fires_location',
