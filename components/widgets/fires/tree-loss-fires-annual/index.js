@@ -145,9 +145,8 @@ export default {
       'From {startYear} to {endYear} in {indicator}, {location} lost {treeCoverLossFires} of tree cover from fires and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires — {highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
     noLoss:
       'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover due to fires.',
-    // noLossWithIndicator:
-    //   'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    // co2Emissions: 'and {emissions} of CO\u2082e emissions',
+    noLossWithIndicator:
+      'From {startYear} to {endYear} in {indicator}, {location} lost {treeCoverLossFires} of tree cover due to fires.',
   },
   settings: {
     threshold: 30,

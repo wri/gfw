@@ -11,49 +11,29 @@ import {
 
 // get list data
 const getLoss = (state) => state.data && state.data.loss;
-// const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
-// const getIsTropical = (state) => state.isTropical;
 const getLocationLabel = (state) => state.locationLabel;
-// const getIndicator = (state) => state.indicator;
+const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
 
-const parseData = createSelector(
-  [
-    getLoss,
-    // getExtent,
-    getSettings,
-  ],
-  (
-    data,
-    // extentData,
-    settings
-  ) => {
-    // if (!data || isEmpty(data) || !extentData) return null;
-    if (!data || isEmpty(data)) return null;
-    const { startYear, endYear } = settings;
+const parseData = createSelector([getLoss, getSettings], (data, settings) => {
+  if (!data || isEmpty(data)) return null;
+  const { startYear, endYear } = settings;
 
-    // const extent = (extentData.length && extentData[0]?.extent) || 0;
-
-    return data
-      .filter((d) => d.year >= startYear && d.year <= endYear)
-      .map((d) => {
-        // const percentageLoss =
-        //   (d.area && d.area && (d.area / extent) * 100) || 0;
-
-        return {
-          ...d,
-          area: d.area || 0,
-          emissions: d.emissions || 0,
-          // percentage: percentageLoss > 100 ? 100 : percentageLoss,
-          treeCoverLossFires: d.umd_tree_cover_loss_from_fires__ha,
-          treeCoverLossNotFires:
-            d.umd_tree_cover_loss__ha - d.umd_tree_cover_loss_from_fires__ha,
-        };
-      });
-  }
-);
+  return data
+    .filter((d) => d.year >= startYear && d.year <= endYear)
+    .map((d) => {
+      return {
+        ...d,
+        area: d.area || 0,
+        emissions: d.emissions || 0,
+        treeCoverLossFires: d.umd_tree_cover_loss_from_fires__ha,
+        treeCoverLossNotFires:
+          d.umd_tree_cover_loss__ha - d.umd_tree_cover_loss_from_fires__ha,
+      };
+    });
+});
 
 const zeroFillData = createSelector(
   [parseData, getSettings],
@@ -64,8 +44,6 @@ const zeroFillData = createSelector(
     const fillObj = {
       area: 0,
       bound1: null,
-      emissions: 0,
-      // percentage: 0,
       // umd_tree_cover_loss__ha: 0,
     };
     return zeroFillYears(data, startYear, endYear, years, fillObj);
@@ -113,37 +91,11 @@ const parseConfig = createSelector([getColors], (colors) => ({
 }));
 
 const parseSentence = createSelector(
-  [
-    zeroFillData,
-    // getExtent,
-    getSettings,
-    // getIsTropical,
-    getLocationLabel,
-    // getIndicator,
-    getSentence,
-  ],
-  (
-    data,
-    // extentData,
-    settings,
-    // tropical,
-    locationLabel,
-    // indicator,
-    sentences
-  ) => {
+  [zeroFillData, getSettings, getLocationLabel, getIndicator, getSentence],
+  (data, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const {
-      initial,
-      // withIndicator,
-      noLoss,
-      // noLossWithIndicator,
-    } = sentences;
-    const {
-      startYear,
-      endYear,
-      // extentYear,
-    } = settings;
-    // const extent = (extentData.length && extentData[0]?.extent) || 0;
+    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const { startYear, endYear } = settings;
     const totalLoss =
       (data && data.length && sumBy(data, 'umd_tree_cover_loss__ha')) || 0;
     const treeCoverLossFires =
@@ -162,24 +114,16 @@ const parseSentence = createSelector(
         (highestYearFires.umd_tree_cover_loss_from_fires__ha * 100) /
           highestYearFires.umd_tree_cover_loss__ha) ||
       0;
-    // const totalEmissions =
-    //   (data && data.length && sumBy(data, 'emissions')) || 0;
-    // const percentageLoss =
-    //   (totalLoss && extent && (totalLoss / extent) * 100) || 0;
-    // let sentence = indicator ? withIndicator : initial;
-    let sentence = initial;
+    let sentence = indicator ? withIndicator : initial;
     if (treeCoverLossFires === 0) {
-      sentence = noLoss;
+      sentence = indicator ? noLossWithIndicator : noLoss;
     }
-    // sentence = `${sentence}.`;
 
     const params = {
-      // indicator: indicator && indicator.label,
+      indicator: indicator && indicator.label,
       location: locationLabel,
       startYear,
       endYear,
-      // loss: formatNumber({ num: totalLoss, unit: 'ha' }),
-      // treeCoverLoss: formatNumber({ num: totalLoss, unit: 'ha' }),
       treeCoverLossFires: formatNumber({ num: treeCoverLossFires, unit: 'ha' }),
       treeCoverLossNotFires: formatNumber({
         num: treeCoverLossNotFires,
@@ -193,9 +137,6 @@ const parseSentence = createSelector(
       highestYearFiresPercentageLossFires: `${format('.2r')(
         highestYearFiresPercentageLossFires
       )}%`,
-      // percent: `${format('.2r')(percentageLoss)}%`,
-      // emissions: `${format('.3s')(totalEmissions)}t`,
-      // extentYear,
     };
 
     return {
