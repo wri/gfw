@@ -435,8 +435,6 @@ export const getLoss = (params) => {
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
 
-  console.log('pimenta300-20 getLoss:', params);
-
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -456,8 +454,6 @@ export const getLoss = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
-
-  console.log('pimenta300-1:', url);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
