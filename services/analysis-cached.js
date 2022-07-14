@@ -435,6 +435,8 @@ export const getLoss = (params) => {
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
 
+  console.log('pimenta300-20 getLoss:', params);
+
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -454,6 +456,8 @@ export const getLoss = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
+
+  console.log('pimenta300-1:', url);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -684,6 +688,54 @@ export const getLossGrouped = (params) => {
 
 // tree cover loss from fires
 export const getLossFires = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    version: 'v20220608',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.lossFires}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        areaLoss: d.umd_tree_cover_loss__ha,
+        areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
+        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+export const getLossFiresGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
 
   const requestUrl = getRequestUrl({

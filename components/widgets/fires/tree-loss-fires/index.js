@@ -1,4 +1,4 @@
-import { getExtentFires, getLossFires } from 'services/analysis-cached';
+import { getExtentFires, getLossFiresGrouped } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
 import { all, spread } from 'axios';
 
@@ -116,7 +116,10 @@ export default {
     noLoss: 'There was no tree cover loss from fires identified in {location}.',
   },
   getData: (params) =>
-    all([getExtentFires(params), getLossFires(params, { grouped: true })]).then(
+    all([
+      getExtentFires(params),
+      getLossFiresGrouped(params, { grouped: true }),
+    ]).then(
       spread((extentGrouped, lossGrouped) => {
         let groupKey = 'iso';
         if (params.adm0) groupKey = 'adm1';
@@ -150,7 +153,7 @@ export default {
           {};
 
         return {
-          lossByRegion: lossMappedData,
+          lossFires: lossMappedData,
           extent: extentMappedData,
           settings: {
             startYear,
@@ -164,7 +167,7 @@ export default {
     ),
   getDataURL: (params) => [
     getExtentFires({ ...params, download: true }),
-    getLossFires({ ...params, download: true }),
+    getLossFiresGrouped({ ...params, download: true }),
   ],
   getWidgetProps,
 };

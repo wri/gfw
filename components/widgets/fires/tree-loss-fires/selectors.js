@@ -7,7 +7,7 @@ import { formatNumber } from 'utils/format';
 import { format } from 'd3-format';
 
 // get list data
-const getLoss = (state) => state.data && state.data.lossByRegion;
+const getLoss = (state) => state.data && state.data.lossFires;
 const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
 const getIndicator = (state) => state.indicator;
