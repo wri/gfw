@@ -8,7 +8,6 @@ import { format } from 'd3-format';
 
 // get list data
 const getLoss = (state) => state.data && state.data.lossFires;
-const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
 const getIndicator = (state) => state.indicator;
 const getLocationsMeta = (state) => state.childData;
@@ -19,8 +18,8 @@ const getSentences = (state) => state.sentences;
 const getTitle = (state) => state.title;
 
 export const mapData = createSelector(
-  [getLoss, getExtent, getSettings, getLocationsMeta],
-  (data, extent, settings, meta) => {
+  [getLoss, getSettings, getLocationsMeta],
+  (data, settings, meta) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
 
@@ -40,13 +39,6 @@ export const mapData = createSelector(
       const numberOfYears = d.loss.filter(
         (l) => l.year >= startYear && l.year <= endYear
       ).length;
-      // const locationExtentById = extent.filter((l) => l.id === d.id);
-      // const locationExtent =
-      //   locationExtentById &&
-      //   !!locationExtentById.length &&
-      //   locationExtentById[0].extent;
-      // const percentage =
-      //   loss && locationExtent ? (loss / locationExtent) * 100 : 0;
       const percentage = loss && lossInTotal ? (loss * 100) / lossInTotal : 0;
       const normalPercentage = percentage > 100 ? 100 : percentage;
 
@@ -86,10 +78,7 @@ export const parseSentence = createSelector(
       initial,
       initialPercent,
       withIndicator,
-      globalInitial,
-      globalWithIndicator,
       withIndicatorPercent,
-      noLoss,
     } = sentences;
     const locationData = location && data.find((l) => l.id === location.value);
 
@@ -104,15 +93,10 @@ export const parseSentence = createSelector(
     const lossPercent = loss && locationData ? (100 * loss) / globalLoss : 0;
 
     const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
-    // let sentence = settings.unit !== '%' ? initial : initialPercent;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
       sentence = !indicator ? initial : withIndicator;
     }
-    if (location.label === 'global') {
-      sentence = !indicator ? globalInitial : globalWithIndicator;
-    }
-    if (loss === 0) sentence = noLoss;
 
     const topRegionData = data[0];
 
@@ -132,7 +116,7 @@ export const parseSentence = createSelector(
         }),
       location:
         location.label === 'global' ? 'globally' : location && location.label,
-      // indicator_alt: indicatorName,
+      indicator_alt: indicatorName,
       startYear,
       endYear,
       loss: formatNumber({ num: lossArea, unit: 'ha' }),
