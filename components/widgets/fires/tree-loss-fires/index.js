@@ -125,7 +125,10 @@ export default {
       'From {startYear} to {endYear}, {topLocationLabel} had the highest proportion of fire-related loss with {topLocationPerc} of all tree cover loss attributed to fires.',
     withIndicatorPercent:
       'From {startYear} to {endYear}, {topLocationLabel} had the highest proportion of fire-related loss in {indicator} with {topLocationPerc} of all tree cover loss attributed to fires.',
-    noLoss: 'There was no tree cover loss from fires identified in {location}.',
+    noLoss:
+      'From {startYear} to {endYear}, there was no tree cover loss from fires identified.',
+    noLossIndicator:
+      'From {startYear} to {endYear} in {indicator}, there was no tree cover loss from fires identified.',
   },
   getData: (params) =>
     all([
