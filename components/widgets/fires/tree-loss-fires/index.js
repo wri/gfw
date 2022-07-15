@@ -1,6 +1,5 @@
-import { getExtentFires, getLossFiresGrouped } from 'services/analysis-cached';
+import { getLossFiresGrouped } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
-import { all, spread } from 'axios';
 
 import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
@@ -64,12 +63,6 @@ export default {
       type: 'switch',
       whitelist: ['ha', '%'],
     },
-    // {
-    //   key: 'extentYear',
-    //   label: 'extent year',
-    //   type: 'switch',
-    //   border: true,
-    // },
     {
       key: 'years',
       label: 'years',
@@ -107,7 +100,6 @@ export default {
   },
   settings: {
     threshold: 30,
-    extentYear: 2000,
     unit: 'ha',
     pageSize: 5,
     page: 0,
@@ -131,58 +123,39 @@ export default {
       'From {startYear} to {endYear} in {indicator}, there was no tree cover loss from fires identified.',
   },
   getData: (params) =>
-    all([
-      getExtentFires(params),
-      getLossFiresGrouped(params, { grouped: true }),
-    ]).then(
-      spread((extentGrouped, lossGrouped) => {
-        let groupKey = 'iso';
-        if (params.adm0) groupKey = 'adm1';
-        if (params.adm1) groupKey = 'adm2';
+    getLossFiresGrouped(params, { grouped: true }).then((lossGrouped) => {
+      let groupKey = 'iso';
+      if (params.adm0) groupKey = 'adm1';
+      if (params.adm1) groupKey = 'adm2';
 
-        const extentData = extentGrouped.data.data;
-        let extentMappedData = {};
-        if (extentData && extentData.length) {
-          extentMappedData = extentData.map((d) => ({
-            id: groupKey === 'iso' ? d[groupKey] : parseInt(d[groupKey], 10),
-            extent: d.extent || 0,
-            percentage: d.extent ? (d.extent / d.total) * 100 : 0,
-          }));
-        }
-        const lossData = lossGrouped.data.data;
-        let lossMappedData = [];
-        if (lossData && lossData.length) {
-          const lossByRegion = groupBy(lossData, groupKey);
-          lossMappedData = Object.keys(lossByRegion).map((d) => {
-            const regionLoss = lossByRegion[d];
-            return {
-              id: groupKey === 'iso' ? d : parseInt(d, 10),
-              loss: regionLoss,
-            };
-          });
-        }
+      const lossData = lossGrouped.data.data;
+      let lossMappedData = [];
+      if (lossData && lossData.length) {
+        const lossByRegion = groupBy(lossData, groupKey);
+        lossMappedData = Object.keys(lossByRegion).map((d) => {
+          const regionLoss = lossByRegion[d];
+          return {
+            id: groupKey === 'iso' ? d : parseInt(d, 10),
+            loss: regionLoss,
+          };
+        });
+      }
 
-        const { startYear, endYear, range } =
-          (lossMappedData[0] &&
-            getYearsRangeFromData(lossMappedData[0].loss)) ||
-          {};
+      const { startYear, endYear, range } =
+        (lossMappedData[0] && getYearsRangeFromData(lossMappedData[0].loss)) ||
+        {};
 
-        return {
-          lossFires: lossMappedData,
-          extent: extentMappedData,
-          settings: {
-            startYear,
-            endYear,
-          },
-          options: {
-            years: range,
-          },
-        };
-      })
-    ),
-  getDataURL: (params) => [
-    getExtentFires({ ...params, download: true }),
-    getLossFiresGrouped({ ...params, download: true }),
-  ],
+      return {
+        lossFires: lossMappedData,
+        settings: {
+          startYear,
+          endYear,
+        },
+        options: {
+          years: range,
+        },
+      };
+    }),
+  getDataURL: (params) => [getLossFiresGrouped({ ...params, download: true })],
   getWidgetProps,
 };

@@ -731,6 +731,63 @@ export const getLossFires = (params) => {
   }));
 };
 
+export const getLossFiresOTF = (params) => {
+  const { forestType, landCategory, ifl, download, adm0 } = params || {};
+
+  // const requestUrl = getRequestUrl({
+  //   ...params,
+  //   dataset: 'annual',
+  //   datasetType: 'change',
+  //   version: 'v20220608',
+  // });
+
+  // if (!requestUrl) {
+  //   return new Promise(() => {});
+  // }
+
+  const requestUrl = `${GFW_API}/dataset/umd_tree_cover_loss/latest/query?sql=`;
+
+  let url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.lossFires}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  url = `${url}&geostore_id=${adm0}`;
+
+  // TODO: IMPORTANT: this is very ugly, will do for now
+  url =
+    'https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss/v1.8/query/json?sql=SELECT%20umd_tree_cover_loss__year,%20sum(umd_tree_cover_loss__ha),%20sum(umd_tree_cover_loss_from_fires__ha)%20FROM%20data%20WHERE%20umd_tree_cover_loss__year%20%3E%3D%202001%20AND%20umd_tree_cover_loss__year%20%3C%3D%202020%20AND%20umd_tree_cover_density_2000__threshold%20%3E%3D%2030%20GROUP%20BY%20umd_tree_cover_loss__year';
+  url = `${url}&geostore_id=${adm0}`;
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        areaLoss: d.umd_tree_cover_loss__ha,
+        areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
+        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
 export const getLossFiresGrouped = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
 
@@ -775,55 +832,6 @@ export const getLossFiresGrouped = (params) => {
         areaLoss: d.umd_tree_cover_loss__ha,
         areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
         // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
-      })),
-    },
-  }));
-};
-
-// disaggregated extent for tree cover loss from fires
-export const getExtentFires = (params) => {
-  const { forestType, landCategory, ifl, download, extentYear } = params || {};
-
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset: 'annual',
-    datasetType: 'summary',
-    version: 'v20220608',
-    grouped: true,
-  });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
-  const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.extent}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: false })
-      )
-      .replace(/{extentYear}/g, extentYear)
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
-  );
-
-  if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
-    return {
-      name: `treecover_extent_${extentYear}_by_region${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__ha`,
-      url: getDownloadUrl(url),
-    };
-  }
-
-  return apiRequest.get(url).then((response) => ({
-    ...response,
-    data: {
-      data: response.data.data.map((d) => ({
-        ...d,
-        extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
-        total_area: d.area__ha,
       })),
     },
   }));

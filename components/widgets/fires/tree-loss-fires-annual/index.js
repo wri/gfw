@@ -1,8 +1,4 @@
-import { all, spread } from 'axios';
-
-import { getExtent, getLossFires } from 'services/analysis-cached';
-
-import OTFAnalysis from 'services/otf-analysis';
+import { getLossFires, getLossFiresOTF } from 'services/analysis-cached';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
@@ -28,53 +24,11 @@ const getGlobalLocation = (params) => ({
   adm2: params.type === 'global' ? null : params.adm2,
 });
 
-const getOTFAnalysis = async (params) => {
-  const analysis = new OTFAnalysis(params.geostore.id);
-  analysis.setDates({
-    startDate: params.startDate,
-    endDate: params.endDate,
-  });
-
-  analysis.setData(['loss', 'extent'], params);
-
-  return analysis.getData().then((response) => {
-    const { loss, extent } = response;
-    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
-
-    return {
-      loss: loss.data.map((d) => ({
-        area: d.area__ha,
-        year: d.umd_tree_cover_loss__year,
-      })),
-      extent: extent?.data?.[0]?.area__ha,
-      settings: {
-        startYear,
-        endYear,
-        yearsRange,
-      },
-      options: {
-        yearsRange,
-      },
-    };
-  });
-};
-
 export default {
   widget: 'treeLossFiresAnnual',
   title: 'Tree cover loss due to fires in {location}',
   categories: ['summary', 'fires'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  // caution: {
-  //   text:
-  //     'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
-  //   visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  //   linkText: 'Read more here',
-  //   link:
-  //     'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
-  // },
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
@@ -96,13 +50,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
-      // blacklist: ['wdpa'],
     },
-    // {
-    //   key: 'extentYear',
-    //   label: 'extent year',
-    //   type: 'switch',
-    // },
     {
       key: 'years',
       label: 'years',
@@ -118,9 +66,9 @@ export default {
       metaKey: 'widget_canopy_density',
     },
   ],
-  pendingKeys: ['threshold', 'years', 'extentYear'],
-  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
-  // dataType: 'loss',
+  pendingKeys: ['threshold', 'years'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl'],
+  dataType: 'lossFires',
   metaKey: 'widget_tree_cover_loss_fires',
   datasets: [
     {
@@ -128,7 +76,6 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // loss
     {
       dataset: FOREST_LOSS_FIRES_DATASET,
       layers: [FOREST_LOSS_FIRES],
@@ -150,55 +97,52 @@ export default {
   },
   settings: {
     threshold: 30,
-    extentYear: 2000,
     ifl: 2000,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
 
-    if (shouldQueryPrecomputedTables(params)) {
-      const globalLocation = {
-        adm0: type === 'global' ? null : adm0,
-        adm1: type === 'global' ? null : adm1,
-        adm2: type === 'global' ? null : adm2,
-      };
-      const lossFetch = getLossFires({ ...params, ...globalLocation });
-      return all([lossFetch, getExtent({ ...params, ...globalLocation })]).then(
-        spread((loss, extent) => {
-          let data = {};
-          if (loss && loss.data && extent && extent.data) {
-            data = {
-              loss: loss.data.data,
-              extent: (loss.data.data && extent.data.data) || 0,
-            };
-          }
+    const globalLocation = {
+      adm0: type === 'global' ? null : adm0,
+      adm1: type === 'global' ? null : adm1,
+      adm2: type === 'global' ? null : adm2,
+    };
 
-          const { startYear, endYear, range } = getYearsRangeFromMinMax(
-            MIN_YEAR,
-            MAX_YEAR
-          );
-          return {
-            ...data,
-            settings: {
-              startYear,
-              endYear,
-              yearsRange: range,
-            },
-            options: {
-              years: range,
-            },
-          };
-        })
-      );
+    let lossFetch;
+    if (shouldQueryPrecomputedTables(params)) {
+      lossFetch = getLossFires({ ...params, ...globalLocation });
+    } else {
+      lossFetch = getLossFiresOTF({ ...params, ...globalLocation });
     }
-    return getOTFAnalysis(params);
+
+    return lossFetch.then((loss) => {
+      let data = {};
+      if (loss && loss.data) {
+        data = {
+          loss: loss.data.data,
+        };
+      }
+
+      const { startYear, endYear, range } = getYearsRangeFromMinMax(
+        MIN_YEAR,
+        MAX_YEAR
+      );
+      return {
+        ...data,
+        settings: {
+          startYear,
+          endYear,
+          yearsRange: range,
+        },
+        options: {
+          years: range,
+        },
+      };
+    });
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
-    return [
-      getLossFires({ ...params, ...globalLocation, download: true }),
-      getExtent({ ...params, download: true }),
-    ];
+    return [getLossFires({ ...params, ...globalLocation, download: true })];
   },
   getWidgetProps,
 };
