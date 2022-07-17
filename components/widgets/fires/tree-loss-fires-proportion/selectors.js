@@ -52,7 +52,7 @@ const transformData = createSelector([parseData, getColors], (data, colors) => {
 
   return pieContent.map((item) => {
     const value = data[item.property];
-    const percentage = (100 * value) / data.totalTreeCoverLoss;
+    const percentage = (100 * value) / data.treeCoverLoss;
 
     return {
       ...item,
