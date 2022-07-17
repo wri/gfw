@@ -7,6 +7,7 @@ import { format } from 'd3-format';
 const getLoss = (state) => state.data && state.data.loss;
 const getSettings = (state) => state.settings;
 const getLocationLabel = (state) => state.locationLabel;
+const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
 
@@ -62,20 +63,21 @@ const transformData = createSelector([parseData, getColors], (data, colors) => {
 });
 
 const parseSentence = createSelector(
-  [parseData, getSettings, getLocationLabel, getSentence],
-  (data, settings, locationLabel, sentences) => {
+  [parseData, getSettings, getLocationLabel, getIndicator, getSentence],
+  (data, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const { initial, noLoss } = sentences;
+    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
     const { startYear, endYear } = settings;
     const { treeCoverLoss, treeCoverLossFires } = data;
 
     const lossFiresPercentage = (treeCoverLossFires * 100) / treeCoverLoss;
-    let sentence = initial;
+    let sentence = indicator ? withIndicator : initial;
     if (treeCoverLossFires === 0) {
-      sentence = noLoss;
+      sentence = indicator ? noLossWithIndicator : noLoss;
     }
 
     const params = {
+      indicator: indicator && indicator.label,
       location: locationLabel,
       startYear,
       endYear,

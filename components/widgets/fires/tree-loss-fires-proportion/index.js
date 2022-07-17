@@ -1,8 +1,4 @@
-import { all, spread } from 'axios';
-
-import { getExtent, getLossFires } from 'services/analysis-cached';
-
-import OTFAnalysis from 'services/otf-analysis';
+import { getLossFires, getLossFiresOTF } from 'services/analysis-cached';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
@@ -27,40 +23,6 @@ const getGlobalLocation = (params) => ({
   adm1: params.type === 'global' ? null : params.adm1,
   adm2: params.type === 'global' ? null : params.adm2,
 });
-
-const getOTFAnalysis = async (params) => {
-  const analysis = new OTFAnalysis(params.geostore.id);
-  analysis.setDates({
-    startDate: params.startDate,
-    endDate: params.endDate,
-  });
-
-  analysis.setData(['loss', 'extent'], params);
-
-  return analysis.getData().then((response) => {
-    const { loss, extent } = response;
-    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
-
-    return {
-      loss: loss.data.map((d) => ({
-        area: d.area__ha,
-        year: d.umd_tree_cover_loss__year,
-      })),
-      extent: extent?.data?.[0]?.area__ha,
-      settings: {
-        startYear,
-        endYear,
-        yearsRange,
-      },
-      options: {
-        yearsRange,
-      },
-    };
-  });
-};
 
 export default {
   widget: 'treeLossFiresProportion',
@@ -98,11 +60,6 @@ export default {
       border: true,
       blacklist: ['wdpa'],
     },
-    // {
-    //   key: 'extentYear',
-    //   label: 'extent year',
-    //   type: 'switch',
-    // },
     {
       key: 'years',
       label: 'years',
@@ -118,8 +75,8 @@ export default {
       metaKey: 'widget_canopy_density',
     },
   ],
-  pendingKeys: ['threshold', 'years', 'extentYear'],
-  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
+  pendingKeys: ['threshold', 'years'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl'],
   // dataType: 'loss',
   metaKey: 'widget_tree_cover_loss_fires',
   datasets: [
@@ -136,72 +93,66 @@ export default {
   ],
   sortOrder: {
     summary: 102,
-    fires: 2,
+    fires: 10,
   },
   sentence: {
     initial:
       'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} between {startYear} and {endYear}.',
-    // initial:
-    //   'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover from fires and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires--{highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
-    // withIndicator:
-    //   'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear}',
+    withIndicator:
+      'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} in {indicator} between {startYear} and {endYear}.',
     noLoss:
       'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover due to fires.',
-    // noLossWithIndicator:
-    //   'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    // co2Emissions: 'and {emissions} of CO\u2082e emissions',
+    noLossWithIndicator:
+      'From {startYear} to {endYear}, {location} in {indicator} lost {treeCoverLossFires} of tree cover due to fires.',
   },
   settings: {
     threshold: 30,
-    extentYear: 2000,
     ifl: 2000,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
 
-    if (shouldQueryPrecomputedTables(params)) {
-      const globalLocation = {
-        adm0: type === 'global' ? null : adm0,
-        adm1: type === 'global' ? null : adm1,
-        adm2: type === 'global' ? null : adm2,
-      };
-      const lossFetch = getLossFires({ ...params, ...globalLocation });
-      return all([lossFetch, getExtent({ ...params, ...globalLocation })]).then(
-        spread((loss, extent) => {
-          let data = {};
-          if (loss && loss.data && extent && extent.data) {
-            data = {
-              loss: loss.data.data,
-              extent: (loss.data.data && extent.data.data) || 0,
-            };
-          }
+    const globalLocation = {
+      adm0: type === 'global' ? null : adm0,
+      adm1: type === 'global' ? null : adm1,
+      adm2: type === 'global' ? null : adm2,
+    };
 
-          const { startYear, endYear, range } = getYearsRangeFromMinMax(
-            MIN_YEAR,
-            MAX_YEAR
-          );
-          return {
-            ...data,
-            settings: {
-              startYear,
-              endYear,
-              yearsRange: range,
-            },
-            options: {
-              years: range,
-            },
-          };
-        })
-      );
+    let lossFetch;
+    if (shouldQueryPrecomputedTables(params)) {
+      lossFetch = getLossFires({ ...params, ...globalLocation });
+    } else {
+      lossFetch = getLossFiresOTF({ ...params, ...globalLocation });
     }
-    return getOTFAnalysis(params);
+
+    return lossFetch.then((loss) => {
+      let data = {};
+      if (loss && loss.data) {
+        data = {
+          loss: loss.data.data,
+        };
+      }
+
+      const { startYear, endYear, range } = getYearsRangeFromMinMax(
+        MIN_YEAR,
+        MAX_YEAR
+      );
+      return {
+        ...data,
+        settings: {
+          startYear,
+          endYear,
+          yearsRange: range,
+        },
+        options: {
+          years: range,
+        },
+      };
+    });
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
-    return [
-      getLossFires({ ...params, ...globalLocation, download: true }),
-      getExtent({ ...params, download: true }),
-    ];
+    return [getLossFires({ ...params, ...globalLocation, download: true })];
   },
   getWidgetProps,
 };
