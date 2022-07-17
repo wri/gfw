@@ -4,7 +4,6 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 import { formatNumber } from 'utils/format';
-import { format } from 'd3-format';
 
 // get list data
 const getLoss = (state) => state.data && state.data.lossFires;
@@ -80,18 +79,6 @@ export const parseSentence = createSelector(
       withIndicator,
       withIndicatorPercent,
     } = sentences;
-    const locationData = location && data.find((l) => l.id === location.value);
-
-    const loss = locationData && locationData.loss;
-    const globalLoss = sumBy(data, 'loss') || 0;
-    const globalExtent = sumBy(data, 'extent') || 0;
-    const lossArea = location.label === 'global' ? globalLoss : loss;
-    const areaPercent =
-      location.label === 'global'
-        ? (100 * globalLoss) / globalExtent
-        : (locationData && format('.1f')(locationData.percentage)) || 0;
-    const lossPercent = loss && locationData ? (100 * loss) / globalLoss : 0;
-
     const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
@@ -119,10 +106,6 @@ export const parseSentence = createSelector(
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss: formatNumber({ num: lossArea, unit: 'ha' }),
-      localPercent: formatNumber({ num: areaPercent, unit: '%' }),
-      globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
-      extentYear: settings.extentYear,
     };
 
     return {
