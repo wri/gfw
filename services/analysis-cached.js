@@ -196,7 +196,7 @@ const getRequestUrl = ({
   try {
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   } catch (_) {
-    //
+    return null;
   }
 
   datasetId =
