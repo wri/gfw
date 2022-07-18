@@ -196,7 +196,7 @@ const getRequestUrl = ({
   try {
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   } catch (_) {
-    return null;
+    // return null;
   }
 
   datasetId =
@@ -2086,7 +2086,14 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
+
+  const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = `${requestUrl}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(
