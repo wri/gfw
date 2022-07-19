@@ -196,7 +196,7 @@ const getRequestUrl = ({
   try {
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   } catch (_) {
-    // return null;
+    return null;
   }
 
   datasetId =
@@ -211,7 +211,7 @@ const getRequestUrl = ({
 
   if (typeof datasetId === 'undefined') {
     // @TODO: Figure out why widgets are stale on loading, when not requesting info
-    // return null;
+    return null;
   }
   return `${GFW_API}/dataset/${datasetId}/${
     versionFromDictionary || version || 'latest'
