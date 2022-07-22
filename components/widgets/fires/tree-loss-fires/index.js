@@ -94,7 +94,7 @@ export default {
       layers: [FOREST_LOSS_FIRES],
     },
   ],
-  metaKey: 'widget_tree_cover_loss_fires_location',
+  metaKey: 'umd_tree_cover_loss_from_fires',
   sortOrder: {
     fires: 6,
   },
