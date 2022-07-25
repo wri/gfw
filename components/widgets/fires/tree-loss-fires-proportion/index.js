@@ -28,7 +28,7 @@ export default {
   widget: 'treeLossFiresProportion',
   title: 'Proportion of tree cover loss due to fires in {location}',
   categories: ['fires'],
-  types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   // caution: {
   //   text:
   //     'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
@@ -37,7 +37,7 @@ export default {
   //   link:
   //     'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
   // },
-  admins: ['adm0', 'adm1', 'adm2'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   large: false,
   visible: ['dashboard', 'analysis'],
   chartType: 'pieChart',
