@@ -1,4 +1,4 @@
-import { getLossFires, getLossFiresOTF } from 'services/analysis-cached';
+import { getLossFires, getLossFiresGrouped, getLossFiresOTF } from 'services/analysis-cached';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
@@ -26,10 +26,13 @@ const getGlobalLocation = (params) => ({
 
 export default {
   widget: 'treeLossFiresAnnual',
-  title: 'Tree cover loss due to fires in {location}',
+  title: {
+    default: 'Tree cover loss due to fires in {location}',
+    global: 'Global annual tree cover loss from fires',
+  },
   categories: ['summary', 'fires'],
-  types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
@@ -86,6 +89,10 @@ export default {
     fires: 2,
   },
   sentence: {
+    globalInitial:
+      'From {startYear} to {endYear}, there was a total of {treeCoverLossFires} <b>tree cover lost from fires globally</b> and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires — {highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
+    globalWithIndicator:
+      'From {startYear} to {endYear}, there was a total of {treeCoverLossFires} <b>tree cover lost from fires globally</b> within {indicator} and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires — {highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
     initial:
       'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover from fires and {treeCoverLossNotFires} from all other drivers of loss. The year with the most tree cover loss due to fires during this period was {highestYearFires} with {highestYearFiresLossFires} lost to fires — {highestYearFiresPercentageLossFires} of all tree cover loss for that year.',
     withIndicator:
@@ -110,7 +117,10 @@ export default {
 
     let lossFetch;
     if (shouldQueryPrecomputedTables(params)) {
-      lossFetch = getLossFires({ ...params, ...globalLocation });
+      lossFetch =
+        type === 'global'
+          ? getLossFiresGrouped({ ...params, ...globalLocation })
+          : getLossFires({ ...params, ...globalLocation });
     } else {
       lossFetch = getLossFiresOTF({ ...params, ...globalLocation });
     }
@@ -142,7 +152,11 @@ export default {
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
-    return [getLossFires({ ...params, ...globalLocation, download: true })];
+    return [
+      params.type === 'global'
+        ? getLossFiresGrouped({ ...params, ...globalLocation, download: true })
+        : getLossFires({ ...params, ...globalLocation, download: true }),
+    ];
   },
   getWidgetProps,
 };

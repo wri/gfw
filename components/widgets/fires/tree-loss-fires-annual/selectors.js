@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import groupBy from 'lodash/groupBy';
 import maxBy from 'lodash/maxBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
@@ -11,17 +12,34 @@ import {
 
 // get list data
 const getLoss = (state) => state.data && state.data.loss;
+const getTitle = (state) => state.title;
 const getSettings = (state) => state.settings;
 const getLocationLabel = (state) => state.locationLabel;
 const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
 
-const parseData = createSelector([getLoss, getSettings], (data, settings) => {
-  if (!data || isEmpty(data)) return null;
+const sumByYear = (data) => {
+  const groupedByYear = groupBy(data, 'year');
+  const summedByYear = Object.entries(groupedByYear);
+
+  return summedByYear.map(([yearKey, valArr]) => ({
+    areaLoss: sumBy(valArr, 'areaLoss'),
+    areaLossFires: sumBy(valArr, 'areaLossFires'),
+    umd_tree_cover_loss__ha: sumBy(valArr, 'umd_tree_cover_loss__ha'),
+    umd_tree_cover_loss__year: sumBy(valArr, 'umd_tree_cover_loss__year'),
+    umd_tree_cover_loss_from_fires__ha: sumBy(valArr, 'umd_tree_cover_loss_from_fires__ha'),
+    year: parseInt(yearKey, 10),
+  }));
+};
+
+const parseData = createSelector([getLoss, getSettings], (lossData, settings) => {
+  if (!lossData || isEmpty(lossData)) return null;
   const { startYear, endYear } = settings;
 
-  return data
+  const loss = sumByYear(lossData);
+
+  return loss
     .filter((d) => d.year >= startYear && d.year <= endYear)
     .map((d) => {
       return {
@@ -94,7 +112,7 @@ const parseSentence = createSelector(
   [zeroFillData, getSettings, getLocationLabel, getIndicator, getSentence],
   (data, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const { globalInitial, globalWithIndicator, initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
     const { startYear, endYear } = settings;
     const totalLoss =
       (data && data.length && sumBy(data, 'umd_tree_cover_loss__ha')) || 0;
@@ -117,6 +135,9 @@ const parseSentence = createSelector(
     let sentence = indicator ? withIndicator : initial;
     if (treeCoverLossFires === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
+    }
+    if (locationLabel === 'global') {
+      sentence = indicator ? globalWithIndicator : globalInitial;
     }
 
     const params = {
@@ -146,8 +167,16 @@ const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationLabel],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
+  }
+);
+
 export default createStructuredSelector({
   data: zeroFillData,
   config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
 });
