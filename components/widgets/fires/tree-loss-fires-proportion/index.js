@@ -26,7 +26,10 @@ const getGlobalLocation = (params) => ({
 
 export default {
   widget: 'treeLossFiresProportion',
-  title: 'Proportion of tree cover loss due to fires in {location}',
+  title: {
+    default: 'Proportion of tree cover loss due to fires in {location}',
+    global: 'Global proportion of tree cover loss due to fires',
+  },
   categories: ['fires'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   // caution: {
@@ -96,6 +99,10 @@ export default {
     fires: 10,
   },
   sentence: {
+    globalInitial:
+      'Fires were responsible for {lossFiresPercentage} of tree cover loss globally between {startYear} and {endYear}.',
+    globalWithIndicator:
+      'Fires were responsible for {lossFiresPercentage} of tree cover loss globally in {indicator} between {startYear} and {endYear}.',
     initial:
       'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} between {startYear} and {endYear}.',
     withIndicator:
