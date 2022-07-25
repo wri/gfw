@@ -690,7 +690,7 @@ export const getLossFires = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'change',
-    version: 'v20220608',
+    version: 'v20220721',
   });
 
   if (!requestUrl) {
@@ -795,7 +795,7 @@ export const getLossFiresGrouped = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'change',
-    version: 'v20220608',
+    version: 'v20220721',
     grouped: true,
   });
 
