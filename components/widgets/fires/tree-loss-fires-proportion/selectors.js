@@ -5,6 +5,7 @@ import { format } from 'd3-format';
 
 // get list data
 const getLoss = (state) => state.data && state.data.loss;
+const getTitle = (state) => state.title;
 const getSettings = (state) => state.settings;
 const getLocationLabel = (state) => state.locationLabel;
 const getIndicator = (state) => state.indicator;
@@ -66,7 +67,14 @@ const parseSentence = createSelector(
   [parseData, getSettings, getLocationLabel, getIndicator, getSentence],
   (data, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const {
+      globalInitial,
+      globalWithIndicator,
+      initial,
+      withIndicator,
+      noLoss,
+      noLossWithIndicator,
+    } = sentences;
     const { startYear, endYear } = settings;
     const { treeCoverLoss, treeCoverLossFires } = data;
 
@@ -74,6 +82,9 @@ const parseSentence = createSelector(
     let sentence = indicator ? withIndicator : initial;
     if (treeCoverLossFires === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
+    }
+    if (locationLabel === 'global') {
+      sentence = indicator ? globalWithIndicator : globalInitial;
     }
 
     const params = {
@@ -91,7 +102,15 @@ const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationLabel],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
+  }
+);
+
 export default createStructuredSelector({
   data: transformData,
   sentence: parseSentence,
+  title: parseTitle,
 });
