@@ -72,7 +72,7 @@ export default {
   pendingKeys: ['threshold', 'years'],
   refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl'],
   dataType: 'lossFires',
-  metaKey: 'widget_tree_cover_loss_fires',
+  metaKey: 'umd_tree_cover_loss_from_fires',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
