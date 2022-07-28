@@ -1,4 +1,8 @@
-import { getLossFires, getLossFiresGrouped, getLossFiresOTF } from 'services/analysis-cached';
+import {
+  getLossFires,
+  getLossFiresGrouped,
+  getLossFiresOTF,
+} from 'services/analysis-cached';
 
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
@@ -41,7 +45,6 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'primary_forest', 'plantations'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,

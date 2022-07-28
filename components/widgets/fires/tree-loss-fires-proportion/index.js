@@ -49,7 +49,6 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
@@ -61,7 +60,6 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
-      blacklist: ['wdpa'],
     },
     {
       key: 'years',
