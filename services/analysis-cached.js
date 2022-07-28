@@ -667,7 +667,7 @@ export const getLossGrouped = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_loss_from_fires_by_region${
+      name: `treecover_loss_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
