@@ -78,7 +78,8 @@ const parseSentence = createSelector(
     const { startYear, endYear } = settings;
     const { treeCoverLoss, treeCoverLossFires } = data;
 
-    const lossFiresPercentage = (treeCoverLossFires * 100) / treeCoverLoss;
+    const lossFiresPercentage =
+      treeCoverLossFires > 0 ? (treeCoverLossFires * 100) / treeCoverLoss : 0;
     let sentence = indicator ? withIndicator : initial;
     if (treeCoverLossFires === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;

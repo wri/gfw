@@ -41,12 +41,14 @@ export const mapData = createSelector(
       const percentage = loss && lossInTotal ? (loss * 100) / lossInTotal : 0;
       const normalPercentage = percentage > 100 ? 100 : percentage;
 
+      const valueHa = loss > 0 ? loss / numberOfYears : 0;
+
       return {
         label: (region && region.label) || '',
         loss,
         path: (region && region.path) || '',
         percentage: normalPercentage,
-        value: settings.unit === 'ha' ? loss / numberOfYears : normalPercentage,
+        value: settings.unit === 'ha' ? valueHa : normalPercentage,
         numberOfYears,
       };
     });
@@ -98,7 +100,10 @@ export const parseSentence = createSelector(
       topLocationLossAverage:
         topRegionData &&
         formatNumber({
-          num: topRegionData.loss / topRegionData.numberOfYears,
+          num:
+            topRegionData.loss > 0
+              ? topRegionData.loss / topRegionData.numberOfYears
+              : 0,
           unit: 'ha',
         }),
       location:
