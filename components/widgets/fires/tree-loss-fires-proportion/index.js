@@ -108,9 +108,9 @@ export default {
     withIndicator:
       'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} in {indicator} between {startYear} and {endYear}.',
     noLoss:
-      'From {startYear} to {endYear}, {location} lost {treeCoverLossFires} of tree cover due to fires.',
+      'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} between {startYear} and {endYear}.',
     noLossWithIndicator:
-      'From {startYear} to {endYear}, {location} in {indicator} lost {treeCoverLossFires} of tree cover due to fires.',
+      'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} in {indicator} between {startYear} and {endYear}.',
   },
   settings: {
     threshold: 30,
