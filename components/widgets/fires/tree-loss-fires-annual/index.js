@@ -48,6 +48,7 @@ export default {
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
+      blacklist: ['mangroves_2016'],
     },
     {
       key: 'landCategory',
