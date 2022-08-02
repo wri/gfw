@@ -1,6 +1,6 @@
 import { getLossFires, getLossFiresOTF } from 'services/analysis-cached';
 
-import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
+import { getYearsRangeFromData } from 'components/widgets/utils/data';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
@@ -114,6 +114,8 @@ export default {
   settings: {
     threshold: 30,
     ifl: 2000,
+    startYear: MIN_YEAR,
+    endYear: MAX_YEAR,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
@@ -139,10 +141,9 @@ export default {
         };
       }
 
-      const { startYear, endYear, range } = getYearsRangeFromMinMax(
-        MIN_YEAR,
-        MAX_YEAR
-      );
+      const { startYear, endYear, range } =
+        (data.loss && getYearsRangeFromData([data.loss[0]])) || {};
+
       return {
         ...data,
         settings: {

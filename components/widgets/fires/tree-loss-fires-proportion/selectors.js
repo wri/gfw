@@ -28,6 +28,8 @@ const parseData = createSelector([getLoss, getSettings], (data, settings) => {
       };
     });
 
+  if (isEmpty(parsedData)) return null;
+
   return {
     treeCoverLoss: sumBy(parsedData, 'treeCoverLoss'),
     treeCoverLossFires: sumBy(parsedData, 'treeCoverLossFires'),
