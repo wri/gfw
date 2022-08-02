@@ -43,8 +43,6 @@ export const mapData = createSelector(
 
       const valueHa = loss > 0 ? loss / numberOfYears : 0;
 
-      if (loss === 0) return null;
-
       return {
         label: (region && region.label) || '',
         loss,
