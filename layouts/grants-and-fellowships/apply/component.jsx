@@ -57,16 +57,7 @@ const GrantsApplySection = () => (
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
-          Applications will be accepted from June 1 - August 1, 2022.
-          {' '}
-          <a
-            className="text -paragraph -color-4 -bold"
-            href="https://gfw.smapply.io/prog/2023_small_grants_fund_application/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            You can apply here starting June 1.
-          </a>
+          Applications for the current grant cycle are now closed.
         </p>
       </Column>
       <Column width={[1, 1 / 4]} className="logo">
