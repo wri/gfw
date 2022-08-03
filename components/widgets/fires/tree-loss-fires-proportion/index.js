@@ -142,7 +142,7 @@ export default {
       }
 
       const { startYear, endYear, range } =
-        (data.loss && getYearsRangeFromData([data.loss[0]])) || {};
+        (data.loss && getYearsRangeFromData(data.loss)) || {};
 
       return {
         ...data,
