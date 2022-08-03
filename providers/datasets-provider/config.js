@@ -78,9 +78,9 @@ const decodes = {
   float year = 2000.0 + (color.b * 255.);
   // map to years
   if (year >= startYear && year <= endYear && year >= 2001.) {
-    color.r = 147. / 255.;
-    color.g = (72. - zoom + 34. - 3. * scaleIntensity / zoom) / 255.;
-    color.b = (33. - zoom + 86. - intensity / zoom) / 255.;
+    color.r = 154. / 255.;
+    color.g = (72. - zoom + 91. - 3. * scaleIntensity / zoom) / 255.;
+    color.b = (33. - zoom + 80. - intensity / zoom) / 255.;
   } else {
     alpha = 0.;
   }
