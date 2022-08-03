@@ -173,7 +173,7 @@ export const getIndicator = (forestType, landCategory) => {
       : landCatLabel.toLowerCase();
 
   if (forestType && landCategory) {
-    label = `${forestTypeLabel} in ${landCatLabel}`;
+    label = `${forestTypeLabel} and ${landCatLabel}`;
     value = `${forestType.value}__${landCategory.value}`;
   } else if (landCategory) {
     label = landCatLabel;
