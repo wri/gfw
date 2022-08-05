@@ -79,6 +79,7 @@ const parseData = createSelector(
         area: d.area || 0,
         extentRemainingHa: initalExtent,
         extentRemaining: (100 * initalExtent) / initalExtent2001,
+        hasStar: d.year === 2016,
       };
       return yearData;
     });

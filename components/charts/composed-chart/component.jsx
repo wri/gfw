@@ -54,6 +54,19 @@ class CustomComposedChart extends PureComponent {
     return 0;
   };
 
+  renderLabel = (props, data) => {
+    const { x, y, index } = props;
+
+    const yearIndex = data.findIndex((i) => i.hasStar);
+    if (index !== yearIndex) return null;
+
+    return (
+      <text y={y} x={x}>
+        star
+      </text>
+    );
+  };
+
   render() {
     const {
       className,
@@ -263,6 +276,11 @@ class CustomComposedChart extends PureComponent {
                       {bars[key].labelList.value}
                     </LabelList>
                   )}
+                  <LabelList
+                    key="test"
+                    position="top"
+                    content={(props) => this.renderLabel(props, data)}
+                  />
                   {bars[key].itemColor &&
                     data.map((item) => (
                       <Cell key={`c_${item.color}`} fill={item.color} />
