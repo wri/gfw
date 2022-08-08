@@ -121,6 +121,7 @@ class WidgetHeader extends PureComponent {
               active={active}
               shouldSettingsOpen={shouldSettingsOpen}
               toggleSettingsMenu={toggleSettingsMenu}
+              widget={widget}
             />
           )}
           {showSeparator && <span className="separator" />}
