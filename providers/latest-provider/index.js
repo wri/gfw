@@ -1,23 +1,27 @@
-import { useEffect, useMemo } from 'react';
+import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'redux/registry';
+import isEqual from 'lodash/isEqual';
 
 import * as actions from './actions';
 import { getLatestProps } from './selectors';
 import reducers, { initialState } from './reducers';
 
-const LatestProvider = ({ latestEndpoints, getLatest }) => {
-  const endpoint = useMemo(() => {
-    return latestEndpoints;
-  }, [latestEndpoints]);
+class LatestProvider extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const { getLatest, latestEndpoints } = this.props;
+    const { latestEndpoints: prevLatestEndpoints } = prevProps;
 
-  useEffect(() => {
-    getLatest(endpoint);
-  }, [endpoint]);
+    if (!isEqual(latestEndpoints, prevLatestEndpoints)) {
+      getLatest(latestEndpoints);
+    }
+  }
 
-  return null;
-};
+  render() {
+    return null;
+  }
+}
 
 LatestProvider.propTypes = {
   getLatest: PropTypes.func.isRequired,
