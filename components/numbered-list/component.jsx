@@ -22,7 +22,7 @@ class NumberedList extends PureComponent {
       linksDisabled,
       linksExt,
     } = this.props;
-    const { page, pageSize, unit } = settings;
+    const { page, pageSize, unit, hidePercentageBar } = settings;
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
@@ -47,7 +47,8 @@ class NumberedList extends PureComponent {
         <ul className="list">
           {data.length > 0 &&
             pageData.map((item, index) => {
-              const showBar = item.unit === '%' || unit === '%';
+              const showBar =
+                (item.unit === '%' || unit === '%') && !hidePercentageBar;
               const linkContent = (
                 <div className={cx('list-item', { '-bar': showBar })}>
                   <div className="item-label">

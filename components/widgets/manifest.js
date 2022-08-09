@@ -23,6 +23,9 @@ import burnedAreaRanked from 'components/widgets/fires/burned-area-ranked';
 import firesAlertsHistorical from 'components/widgets/fires/fires-alerts-historical-weekly';
 import firesAlertsHistoricalDaily from 'components/widgets/fires/fires-alerts-historical-daily';
 import firesAlertsSimple from 'components/widgets/fires/fire-alerts-simple';
+import treeLossFires from 'components/widgets/fires/tree-loss-fires';
+import treeCoverLossFiresAnnual from 'components/widgets/fires/tree-loss-fires-annual';
+import treeCoverLossFiresProportion from 'components/widgets/fires/tree-loss-fires-proportion';
 
 // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -76,6 +79,9 @@ export default {
   firesAlertsHistorical,
   firesAlertsHistoricalDaily,
   firesAlertsSimple,
+  treeLossFires,
+  treeCoverLossFiresAnnual,
+  treeCoverLossFiresProportion,
 
   // land cover
   treeCover,

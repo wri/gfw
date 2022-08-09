@@ -260,7 +260,7 @@ export default {
   ],
   sortOrder: {
     summary: 9999,
-    fires: 9999,
+    fires: 6,
   },
   pendingKeys: [],
   refetchKeys: [
