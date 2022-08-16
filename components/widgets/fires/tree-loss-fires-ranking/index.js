@@ -19,7 +19,7 @@ const MAX_YEAR = 2021;
 const MIN_YEAR = 2001;
 
 export default {
-  widget: 'treeLossFires',
+  widget: 'treeLossFiresRanking',
   title: {
     default: 'Regions with most tree cover loss due to fires in {location}',
     global: 'Global tree cover loss due to fires',
