@@ -1,12 +1,13 @@
-const MapBuilderPage = () => null;
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-export async function getStaticProps() {
-  return {
-    redirect: {
-      destination: 'https://mapbuilder.wri.org',
-      permanent: false,
-    },
-  };
-}
+const MapBuilderPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push('https://mapbuilder.wri.org');
+  });
+
+  return null;
+};
 
 export default MapBuilderPage;
