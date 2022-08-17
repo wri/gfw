@@ -18,6 +18,7 @@ const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
 const getTitle = (state) => state.title;
+const getChartDecorationConfig = (state) => state.chartDecorationConfig;
 
 const sumByYear = (data) => {
   const groupedByYear = groupBy(data, 'year');
@@ -29,8 +30,22 @@ const sumByYear = (data) => {
 };
 
 const parseData = createSelector(
-  [getAdminLoss, getPrimaryLoss, getExtent, getSettings],
-  (adminLossData, primaryLossData, extentData, settings) => {
+  [
+    getAdminLoss,
+    getPrimaryLoss,
+    getExtent,
+    getSettings,
+    getChartDecorationConfig,
+    getLocationLabel,
+  ],
+  (
+    adminLossData,
+    primaryLossData,
+    extentData,
+    settings,
+    chartDecorationConfig,
+    locationLabel
+  ) => {
     if (
       !extentData ||
       !adminLossData ||
@@ -40,6 +55,7 @@ const parseData = createSelector(
     ) {
       return null;
     }
+
     const { startYear, endYear, yearsRange } = settings;
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
@@ -70,6 +86,14 @@ const parseData = createSelector(
       fillObj
     );
 
+    const showDecoration = (thisYear) => {
+      const { years: yearsConfig, locations, type } = chartDecorationConfig;
+      if (yearsConfig.includes(thisYear) && locations.includes(locationLabel)) {
+        return type;
+      }
+      return null;
+    };
+
     const parsedData = zeroFilledData.map((d) => {
       if (d.year !== 2001) initalExtent -= d.area;
       const yearData = {
@@ -79,7 +103,7 @@ const parseData = createSelector(
         area: d.area || 0,
         extentRemainingHa: initalExtent,
         extentRemaining: (100 * initalExtent) / initalExtent2001,
-        hasStar: d.year === 2016,
+        decoration: showDecoration(d.year),
       };
       return yearData;
     });

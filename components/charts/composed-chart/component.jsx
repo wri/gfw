@@ -54,17 +54,27 @@ class CustomComposedChart extends PureComponent {
     return 0;
   };
 
+  renderDecoration = (decoration, x, y) => {
+    if (decoration === 'star') {
+      return (
+        <path
+          transform={`translate(${x + 16 * 0.3 + 1}, ${
+            y - 32 * 0.3 - 6
+          }) scale(0.3)`}
+          d="M32 12.408l-11.056-1.607-4.944-10.018-4.944 10.018-11.056 1.607 8 7.798-1.889 11.011 9.889-5.199 9.889 5.199-1.889-11.011 8-7.798z"
+        />
+      );
+    }
+    return null;
+  };
+
   renderLabel = (props, data) => {
     const { x, y, index } = props;
+    const yearIndex = data.findIndex((i) => i.decoration);
 
-    const yearIndex = data.findIndex((i) => i.hasStar);
     if (index !== yearIndex) return null;
 
-    return (
-      <text y={y} x={x}>
-        star
-      </text>
-    );
+    return this.renderDecoration(data[yearIndex].decoration, x, y);
   };
 
   render() {
