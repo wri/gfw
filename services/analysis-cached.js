@@ -677,7 +677,12 @@ export const getLossGrouped = (params) => {
   return apiRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data,
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        area: d.umd_tree_cover_loss__ha,
+        emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
     },
   }));
 };
