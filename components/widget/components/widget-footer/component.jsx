@@ -16,6 +16,7 @@ class WidgetFooter extends PureComponent {
     locationType: PropTypes.string,
     showAttributionLink: PropTypes.bool,
     alertSystem: PropTypes.string,
+    decorationMessage: PropTypes.string,
   };
 
   renderCaution = (caution, alertSystem, type, locationType) => {
@@ -54,11 +55,24 @@ class WidgetFooter extends PureComponent {
       locationType,
       showAttributionLink,
       alertSystem,
+      decorationMessage,
     } = this.props;
     const statementsMapped = statements && statements.join(' | ');
     // TODO: add statement link
     return (
       <div className={cx('c-widget-footer', { simple })}>
+        {/* TODO: Swap this message for new caution */}
+        {decorationMessage && (
+          <p
+            style={{
+              marginBottom: '5px',
+              margin: 0,
+              padding: '10px',
+            }}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: decorationMessage }}
+          />
+        )}
         {this.renderCaution(caution, alertSystem, type, locationType)}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
