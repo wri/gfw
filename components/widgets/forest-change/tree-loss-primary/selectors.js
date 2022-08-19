@@ -128,6 +128,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
   yKeys: {
     bars: {
       area: {
+        isAnimationActive: false,
         fill: colors.primaryForestLoss,
         background: false,
         yAxisId: 'area',
