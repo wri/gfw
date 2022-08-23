@@ -18,6 +18,7 @@ const getLocationLabel = (state) => state.locationLabel;
 const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
+const getChartDecorationConfig = (state) => state.chartDecorationConfig;
 
 const sumByYear = (data) => {
   const groupedByYear = groupBy(data, 'year');
@@ -28,30 +29,45 @@ const sumByYear = (data) => {
     areaLossFires: sumBy(valArr, 'areaLossFires'),
     umd_tree_cover_loss__ha: sumBy(valArr, 'umd_tree_cover_loss__ha'),
     umd_tree_cover_loss__year: sumBy(valArr, 'umd_tree_cover_loss__year'),
-    umd_tree_cover_loss_from_fires__ha: sumBy(valArr, 'umd_tree_cover_loss_from_fires__ha'),
+    umd_tree_cover_loss_from_fires__ha: sumBy(
+      valArr,
+      'umd_tree_cover_loss_from_fires__ha'
+    ),
     year: parseInt(yearKey, 10),
   }));
 };
 
-const parseData = createSelector([getLoss, getSettings], (lossData, settings) => {
-  if (!lossData || isEmpty(lossData)) return null;
-  const { startYear, endYear } = settings;
+const parseData = createSelector(
+  [getLoss, getSettings, getChartDecorationConfig, getLocationLabel],
+  (lossData, settings, chartDecorationConfig, locationLabel) => {
+    if (!lossData || isEmpty(lossData)) return null;
+    const { startYear, endYear } = settings;
 
-  const loss = sumByYear(lossData);
+    const loss = sumByYear(lossData);
 
-  return loss
-    .filter((d) => d.year >= startYear && d.year <= endYear)
-    .map((d) => {
-      return {
-        ...d,
-        area: d.area || 0,
-        emissions: d.emissions || 0,
-        treeCoverLossFires: d.umd_tree_cover_loss_from_fires__ha,
-        treeCoverLossNotFires:
-          d.umd_tree_cover_loss__ha - d.umd_tree_cover_loss_from_fires__ha,
-      };
-    });
-});
+    const showDecoration = (thisYear) => {
+      const { years: yearsConfig, locations, type } = chartDecorationConfig;
+      if (yearsConfig.includes(thisYear) && locations.includes(locationLabel)) {
+        return type;
+      }
+      return null;
+    };
+
+    return loss
+      .filter((d) => d.year >= startYear && d.year <= endYear)
+      .map((d) => {
+        return {
+          ...d,
+          area: d.area || 0,
+          emissions: d.emissions || 0,
+          treeCoverLossFires: d.umd_tree_cover_loss_from_fires__ha,
+          treeCoverLossNotFires:
+            d.umd_tree_cover_loss__ha - d.umd_tree_cover_loss_from_fires__ha,
+          decoration: showDecoration(d.year),
+        };
+      });
+  }
+);
 
 const zeroFillData = createSelector(
   [parseData, getSettings],
@@ -74,11 +90,13 @@ const parseConfig = createSelector([getColors], (colors) => ({
   yKeys: {
     bars: {
       treeCoverLossFires: {
+        isAnimationActive: false,
         fill: colors.main,
         background: false,
         stackId: 1,
       },
       treeCoverLossNotFires: {
+        isAnimationActive: false,
         fill: colors.treeCoverLoss,
         background: false,
         stackId: 1,
@@ -112,7 +130,14 @@ const parseSentence = createSelector(
   [zeroFillData, getSettings, getLocationLabel, getIndicator, getSentence],
   (data, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const { globalInitial, globalWithIndicator, initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const {
+      globalInitial,
+      globalWithIndicator,
+      initial,
+      withIndicator,
+      noLoss,
+      noLossWithIndicator,
+    } = sentences;
     const { startYear, endYear } = settings;
     const totalLoss =
       (data && data.length && sumBy(data, 'umd_tree_cover_loss__ha')) || 0;
