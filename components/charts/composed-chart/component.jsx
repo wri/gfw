@@ -70,11 +70,19 @@ class CustomComposedChart extends PureComponent {
 
   renderLabel = (props, data) => {
     const { x, y, index } = props;
-    const yearIndex = data.findIndex((i) => i.decoration);
+    const yearIndex = data
+      .map((i, iIndex) => ({ ...i, index: iIndex }))
+      .filter((a) => a.decoration);
 
-    if (index !== yearIndex) return null;
-
-    return this.renderDecoration(data[yearIndex].decoration, x, y);
+    return (
+      <g>
+        {yearIndex.map(
+          (starInYear) =>
+            starInYear.index === index &&
+            this.renderDecoration(data[starInYear.index].decoration, x, y)
+        )}
+      </g>
+    );
   };
 
   render() {
