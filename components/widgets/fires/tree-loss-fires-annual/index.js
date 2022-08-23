@@ -108,7 +108,7 @@ export default {
   },
   chartDecorationConfig: {
     type: 'star',
-    message: `Much of Indonesia's 2016 fire-related forest loss figure was actually due to burning in 2015. Burned areas were detected late because of insufficient clear Landsat images at year's end (the same is also true to a lesser extent for 2019 and 2020). We are working to address this issue. The three-year moving average may represent a more relevant picture of the trends due to uncertainty in the year-to-year comparisons.`,
+    message: `Much of Indonesia's 2016 fire-related tree cover loss figure was actually due to burning in 2015. Burned areas were detected late because of insufficient clear Landsat images at year's end (the same is also true to a lesser extent for 2019 and 2020)`,
     locations: [
       'Indonesia',
       'Aceh',
