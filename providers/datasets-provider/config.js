@@ -74,7 +74,7 @@ const decodes = {
   float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
   // a value between 0 and 255
   // multiplier added to increase intensity at global zoom levels
-  alpha = zoom < 13. ? (1.5 * scaleIntensity)/ 255. : color.g;
+  alpha = zoom < 13. ? (scaleIntensity)/ 255. : color.g;
 
   float year = 2000.0 + (color.b * 255.);
   // map to years
