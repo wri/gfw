@@ -64,11 +64,7 @@ class WidgetFooter extends PureComponent {
         {/* TODO: Swap this message for new caution */}
         {decorationMessage && (
           <p
-            style={{
-              marginBottom: '5px',
-              margin: 0,
-              padding: '10px',
-            }}
+            className="c-widget-caution"
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: decorationMessage }}
           />
