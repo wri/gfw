@@ -27,7 +27,7 @@ const getLatestAlerts = ({ location, params }) =>
     fetchHistoricalAlerts({
       ...location,
       ...params,
-      dataset: 'glad',
+      dataset: 'integrated_alerts',
       frequency: 'daily',
     }).catch(() => null),
     fetchHistoricalAlerts({
@@ -261,7 +261,7 @@ class AoICard extends PureComponent {
                           })}
                         </span>
                         {' '}
-                        <p>GLAD alerts</p>
+                        <p>integrated alerts</p>
                       </div>
                     ) : (
                       <ContentLoader width="100" height="15">
