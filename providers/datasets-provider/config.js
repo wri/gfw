@@ -73,14 +73,15 @@ const decodes = {
   // get intensity value mapped to range
   float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
   // a value between 0 and 255
-  alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
+  alpha = zoom < 13. ? (scaleIntensity)/ 255. : color.g;
 
   float year = 2000.0 + (color.b * 255.);
   // map to years
   if (year >= startYear && year <= endYear && year >= 2001.) {
+    // values entered directly, unlike TCL where final color changes with zoom level
     color.r = 154. / 255.;
-    color.g = (72. - zoom + 91. - 3. * scaleIntensity / zoom) / 255.;
-    color.b = (33. - zoom + 80. - intensity / zoom) / 255.;
+    color.g = 91. / 255.;
+    color.b = 80. / 255.;
   } else {
     alpha = 0.;
   }
