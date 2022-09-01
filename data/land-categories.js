@@ -82,7 +82,7 @@ export default [
     dataType: 'keyword',
     preserveString: true,
     metaKey: 'alliance_for_zero_extinction_sites',
-    tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
+    tableKey: 'is__birdlife_alliance_for_zero_extinction_sites',
     global: true,
     datasets: [
       {
