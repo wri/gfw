@@ -29,7 +29,7 @@ export default [
     value: 'mining',
     dataType: 'keyword',
     metaKey: 'gfw_mining',
-    tableKey: 'is__gfw_mining',
+    tableKey: 'is__gfw_mining_concessions',
     global: true,
     datasets: [
       {
