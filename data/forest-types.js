@@ -16,7 +16,7 @@ export default [
     label: 'Plantations',
     value: 'plantations',
     dataType: 'keyword',
-    tableKey: 'gfw_plantation__type',
+    tableKey: 'gfw_planted_forests__type',
     metaKey: 'gfw_plantations',
     global: true,
     categories: [
