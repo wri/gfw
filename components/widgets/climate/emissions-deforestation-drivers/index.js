@@ -95,7 +95,7 @@ export default {
         if (emissions && emissions.data) {
           data = {
             emissions: emissions.data.data.filter(
-              (d) => d.tsc_tree_cover_loss_drivers__type !== 'Unknown'
+              (d) => d.tsc_tree_cover_loss_drivers__driver !== 'Unknown'
             ),
           };
         }

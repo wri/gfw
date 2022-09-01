@@ -108,7 +108,7 @@ export default {
         if (loss && loss.data && extent && extent.data) {
           data = {
             loss: loss.data.data.filter(
-              (d) => d.tsc_tree_cover_loss_drivers__type !== 'Unknown'
+              (d) => d.tsc_tree_cover_loss_drivers__driver !== 'Unknown'
             ),
             extent: (loss.data.data && extent.data.data[0].value) || 0,
           };
