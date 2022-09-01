@@ -16,7 +16,7 @@ export default [
     label: 'Plantations',
     value: 'plantations',
     dataType: 'keyword',
-    tableKey: 'gfw_plantation__type',
+    tableKey: 'gfw_planted_forests__type',
     metaKey: 'gfw_plantations',
     global: true,
     categories: [
@@ -83,10 +83,10 @@ export default [
     dataType: 'number',
     tableKeys: {
       annual: 'is__gmw_global_mangrove_extent_1996',
-      glad: 'is__gmw_mangroves_2016',
-      viirs: 'is__gmw_mangroves_2016',
-      modis: 'is__gmw_mangroves_2016',
-      modis_burned_area: 'is__gmw_mangroves_2016',
+      glad: 'is__gmw_global_mangrove_extent_2016',
+      viirs: 'is__gmw_global_mangrove_extent_2016',
+      modis: 'is__gmw_global_mangrove_extent_2016',
+      modis_burned_area: 'is__gmw_global_mangrove_extent_2016',
     },
     metaKey: 'mangrove_2010_gmw',
     global: true,
