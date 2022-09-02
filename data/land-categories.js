@@ -96,7 +96,7 @@ export default [
     value: 'landmark',
     dataType: 'keyword',
     metaKey: 'landmark_icls_2020',
-    tableKey: 'is__landmark_land_right',
+    tableKey: 'is__landmark_indigenous_and_community_lands',
     global: true,
     datasets: [
       {
