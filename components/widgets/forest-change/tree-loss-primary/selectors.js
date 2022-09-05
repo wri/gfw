@@ -40,6 +40,7 @@ const parseData = createSelector(
     ) {
       return null;
     }
+
     const { startYear, endYear, yearsRange } = settings;
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
