@@ -73,6 +73,8 @@ const SQL_QUERIES = {
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year, confidence__cat ORDER BY alert__year DESC, alert__week DESC',
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date, confidence__cat ORDER BY alert__date DESC",
+  historicalIntegratedAlertsDaily:
+    "SELECT gfw_integrated_alerts__date, SUM(alert__count) AS alert__count, gfw_integrated_alerts__confidence FROM data {WHERE} AND gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}' GROUP BY gfw_integrated_alerts__date, gfw_integrated_alerts__confidence ORDER BY gfw_integrated_alerts__date DESC",
   biomassStock:
     'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
@@ -81,6 +83,14 @@ const SQL_QUERIES = {
 
 const ALLOWED_PARAMS = {
   annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
+  integrated_alerts: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'is__confirmed_alert',
+  ],
   glad: [
     'adm0',
     'adm1',
@@ -1163,7 +1173,11 @@ export const fetchHistoricalAlerts = (params) => {
     endDate,
     dataset,
   } = params || {};
-  const { alertsDaily, alertsWeekly } = SQL_QUERIES;
+  const {
+    alertsDaily,
+    alertsWeekly,
+    historicalIntegratedAlertsDaily,
+  } = SQL_QUERIES;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1174,8 +1188,19 @@ export const fetchHistoricalAlerts = (params) => {
     return new Promise(() => {});
   }
 
+  let queryFrequency;
+  if (frequency === 'daily') {
+    queryFrequency = alertsDaily;
+  } else {
+    queryFrequency = alertsWeekly;
+  }
+
+  if (dataset === 'integrated_alerts') {
+    queryFrequency = historicalIntegratedAlertsDaily;
+  }
+
   const url = encodeURI(
-    `${requestUrl}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+    `${requestUrl}${queryFrequency}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
