@@ -208,7 +208,7 @@ const getRequestUrl = ({
   try {
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   } catch (_) {
-    //
+    return null;
   }
 
   datasetId =
@@ -223,7 +223,7 @@ const getRequestUrl = ({
 
   if (typeof datasetId === 'undefined') {
     // @TODO: Figure out why widgets are stale on loading, when not requesting info
-    // return null;
+    return null;
   }
   return `${GFW_API}/dataset/${datasetId}/${
     version || versionFromDictionary || 'latest'
@@ -2273,7 +2273,14 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
+
+  const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = `${requestUrl}${
     SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(

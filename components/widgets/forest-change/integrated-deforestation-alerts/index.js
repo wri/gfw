@@ -282,8 +282,8 @@ export default {
 
     if (isAoi && status === 'saved' && alertSystem === 'glad_l') {
       OtfAnalysis.where([
-        { alert__date: gte`${startDate}` },
-        { alert__date: lte`${endDate}` },
+        { umd_glad_landsat_alerts__date: gte`${startDate}` },
+        { umd_glad_landsat_alerts__date: lte`${endDate}` },
         { geostore__id: eq`${geostoreId}` },
       ]);
     }
