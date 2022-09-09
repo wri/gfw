@@ -19,7 +19,14 @@ export const parseData = createSelector([selectAlerts], (data) => {
   const otherAlertsData = data.filter((d) => d.confirmed === false);
   const confimedAlertsData = data.filter((d) => d.confirmed === true);
 
-  const otherAlerts = otherAlertsData.length ? otherAlertsData[0].alerts : 0;
+  let otherAlerts = 0;
+  
+  if (otherAlertsData.length) {
+    otherAlertsData.forEach((otherAlert) => {
+      otherAlerts += otherAlert.alerts;
+    })
+  }
+
   const highConfidenceAlerts = confimedAlertsData.length
     ? confimedAlertsData[0].alerts
     : 0;
