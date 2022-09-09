@@ -2034,7 +2034,7 @@ export const fetchFiresWithin = (params) => {
 
 export const fetchVIIRSLatest = () =>
   tilesRequest
-    .get('/nasa_viirs_fire_alerts/latest/max_alert__date')
+    .get('/nasa_viirs_fire_alerts/v20220726/max_alert__date')
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 
