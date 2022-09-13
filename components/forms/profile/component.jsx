@@ -183,6 +183,7 @@ class ProfileForm extends PureComponent {
                           ),
                           { label: 'Other', value: 'Other' },
                         ]}
+                        selectInput={values.howDoYouUse && values.howDoYouUse.includes('Other')}
                       />
                       {/* <Checkbox
                         name="signUpToNewsletter"
