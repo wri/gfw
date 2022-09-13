@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import cx from 'classnames';
+import useRouter from 'utils/router';
 
 import { CookiesBanner } from 'gfw-components';
 
@@ -11,6 +13,8 @@ import './styles.scss';
 const Cookies = () => {
   const [accepted, setAccepted] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const agreedCookies = getAgreedCookies();
@@ -33,7 +37,11 @@ const Cookies = () => {
   return (
     <>
       {open && (
-        <div className="c-cookies">
+        <div
+          className={cx('c-cookies', {
+            'c-cookies--map': router?.asPath.startsWith('/map'),
+          })}
+        >
           <CookiesBanner onAccept={acceptCookies} />
         </div>
       )}
