@@ -59,7 +59,7 @@ export default [
     dataType: 'keyword',
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
-    tableKey: 'is__birdlife_key_biodiversity_area',
+    tableKey: 'is__birdlife_key_biodiversity_areas',
     global: true,
   },
   // {
