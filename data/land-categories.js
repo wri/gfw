@@ -169,7 +169,7 @@ export default [
     value: 'managed_forests',
     dataType: 'keyword',
     metaKey: 'gfw_logging',
-    tableKey: 'is__gfw_managed_forest',
+    tableKey: 'is__gfw_managed_forests',
     global: true,
     datasets: [
       {
