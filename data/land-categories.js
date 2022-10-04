@@ -111,7 +111,7 @@ export default [
     dataType: 'keyword',
     value: 'idn_mys_peatlands',
     metaKey: 'idn_peat_lands',
-    tableKey: 'is__peatland',
+    tableKey: 'is__gfw_peatlands',
     global: false,
     datasets: [
       {
