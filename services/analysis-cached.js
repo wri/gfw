@@ -79,6 +79,10 @@ const SQL_QUERIES = {
     'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  netChangeIso:
+    'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
+  netChange:
+    'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
 };
 
 const ALLOWED_PARAMS = {
@@ -102,6 +106,15 @@ const ALLOWED_PARAMS = {
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis_burned_area: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+    'confidence',
+  ],
+  net_change: [
     'adm0',
     'adm1',
     'adm2',
@@ -337,6 +350,9 @@ export const getWHEREQuery = (params) => {
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') {
         paramKey = 'wdpa_protected_area__id';
+        isNumericValue = false;
+      }
+      if (dataset === 'net_change') {
         isNumericValue = false;
       }
 
@@ -851,6 +867,52 @@ export const getLossFiresGrouped = (params) => {
         areaLoss: d.umd_tree_cover_loss__ha,
         areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
         // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+// Net Change
+export const getNetChange = (params) => {
+  const { forestType, landCategory, ifl, download, adm1 } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'net_change',
+    datasetType: 'umd',
+    version: 'v202209',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const sqlQuery = adm1 ? SQL_QUERIES.netChange : SQL_QUERIES.netChangeIso;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, dataset: 'net_change', cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'net_change' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `net_tree_cover_change_from_height${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
       })),
     },
   }));

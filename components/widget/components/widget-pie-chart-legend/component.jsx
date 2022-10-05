@@ -17,6 +17,7 @@ class WidgetPieChart extends PureComponent {
       simple,
       toggleSettingsMenu,
       settingsBtnConfig,
+      widget,
     } = this.props;
     const showSettingsBtn =
       settingsBtnConfig &&
@@ -52,14 +53,23 @@ class WidgetPieChart extends PureComponent {
             className="cover-pie-chart"
             data={data}
             maxSize={140}
-            tooltip={[
-              {
-                key: 'percentage',
-                unit: '%',
-                labelKey: 'label',
-                unitFormat: (value) => format('.1f')(value),
-              },
-            ]}
+            tooltip={widget === 'netChange' ?
+              [
+                {
+                  key: 'value',
+                  unit: 'ha',
+                  labelKey: 'label',
+                  unitFormat: (value) => format('.3s')(value),
+                },
+              ] :
+              [
+                {
+                  key: 'percentage',
+                  unit: '%',
+                  labelKey: 'label',
+                  unitFormat: (value) => format('.1f')(value),
+                },
+              ]}
             simple={simple}
           />
         </div>
@@ -75,6 +85,7 @@ WidgetPieChart.propTypes = {
   settings: PropTypes.object.isRequired,
   toggleSettingsMenu: PropTypes.func,
   settingsBtnConfig: PropTypes.object,
+  widget: PropTypes.string,
 };
 
 export default WidgetPieChart;
