@@ -43,7 +43,7 @@ export default [
     value: 'wdpa',
     dataType: 'keyword',
     metaKey: 'wdpa_protected_areas',
-    tableKey: 'wdpa_protected_area__iucn_cat',
+    tableKey: 'wdpa_protected_areas__iucn_cat',
     global: true,
     categories: ['Category Ia/b or II', 'Other Category', 'Unkown'],
     datasets: [
