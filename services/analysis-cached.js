@@ -326,7 +326,7 @@ export const getWHEREQuery = (params) => {
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') {
         if (dataset === 'modis_burned_area') {
-          paramKey = 'umd_tree_cover_density__threshold';
+          paramKey = 'umd_tree_cover_density_2000__threshold'; // name changed on 2022-09 from umd_tree_cover_density__threshold to umd_tree_cover_density_2000__threshold and are now equal
         } else {
           paramKey = 'umd_tree_cover_density_2000__threshold';
         }
@@ -2273,16 +2273,13 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-
   const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
 
   if (!requestUrl) {
     return new Promise(() => {});
   }
 
-  const url = `${requestUrl}${
-    SQL_QUERIES.getLocationPolynameWhitelist
-  }`
+  const url = `${requestUrl}${SQL_QUERIES.getLocationPolynameWhitelist}`
     .replace(
       /{select_location}/g,
       getLocationSelect({ ...params, cast: false })
