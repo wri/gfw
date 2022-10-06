@@ -134,5 +134,9 @@
   "biodiversity": {
     "main": "#6d00e1",
     "ramp": ["#6d00e1", "#9d36f7", "#c26dfe", "#dfa4ff", "#eccafc"]
+  },
+  "gainWithinOutsidePlantations": {
+    "withinPlantations": "#A58BF9",
+    "outsidePlantations": "#3F07F5"
   }
 }

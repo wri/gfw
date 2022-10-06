@@ -6,6 +6,7 @@ import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 import faoDeforest from 'components/widgets/forest-change/fao-deforest';
 import faoReforest from 'components/widgets/forest-change/fao-reforest';
 import treeCoverGain from 'components/widgets/forest-change/tree-cover-gain';
+import treeCoverGainOutsidePlantations from 'components/widgets/forest-change/tree-cover-gain-outside-plantations';
 import treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
 import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
@@ -62,6 +63,7 @@ export default {
   faoDeforest,
   faoReforest,
   treeCoverGain,
+  treeCoverGainOutsidePlantations,
   treeGainLocated,
   treeLossLocated,
   treeLossPlantations,
