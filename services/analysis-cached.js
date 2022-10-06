@@ -297,6 +297,7 @@ export const getWHEREQuery = (params) => {
     (p) => (params[p] || p === 'threshold') && allowedParams.includes(p)
   );
   const { type, dataset } = params || {};
+  let comparisonString = ' = ';
   if (paramKeysFiltered && paramKeysFiltered.length) {
     let paramString = 'WHERE ';
     paramKeysFiltered.forEach((p, i) => {
@@ -325,11 +326,12 @@ export const getWHEREQuery = (params) => {
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') {
-        if (dataset === 'modis_burned_area') {
-          paramKey = 'umd_tree_cover_density__threshold';
-        } else {
-          paramKey = 'umd_tree_cover_density_2000__threshold';
-        }
+        // if (dataset === 'modis_burned_area') {
+        //   paramKey = 'umd_tree_cover_density__threshold';
+        // } else {
+        paramKey = 'umd_tree_cover_density_2000__threshold';
+        comparisonString = ' >= ';
+        // }
       }
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
       if (p === 'adm1' && type === 'country') paramKey = 'adm1';
@@ -361,7 +363,9 @@ export const getWHEREQuery = (params) => {
           : ''
       }${
         !isPolyname
-          ? `${paramKey} = ${isNumericValue ? value : `'${value}'`}`
+          ? `${paramKey}${comparisonString}${
+              isNumericValue ? value : `'${value}'`
+            }`
           : ''
       }${isLast ? '' : ' AND '}`;
 
@@ -2273,16 +2277,13 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-
   const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
 
   if (!requestUrl) {
     return new Promise(() => {});
   }
 
-  const url = `${requestUrl}${
-    SQL_QUERIES.getLocationPolynameWhitelist
-  }`
+  const url = `${requestUrl}${SQL_QUERIES.getLocationPolynameWhitelist}`
     .replace(
       /{select_location}/g,
       getLocationSelect({ ...params, cast: false })
