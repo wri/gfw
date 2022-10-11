@@ -29,14 +29,14 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  // caution: {
-  //   text:
-  //     'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
-  //   visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  //   linkText: 'Read more here',
-  //   link:
-  //     'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
-  // },
+  caution: {
+    text:
+      'Would you like to help us understand how to present this data in more helpful ways? {Click here to fill out a survey}',
+    visible: ['country', 'geostore', 'aoi', 'wdpa', 'use', 'dashboard', 'global'],
+    linkText: 'Click here to fill out a survey',
+    link:
+      'https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer',
+  },
   large: false,
   visible: ['dashboard', 'analysis'],
   chartType: 'pieChart',
