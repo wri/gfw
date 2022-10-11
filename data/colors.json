@@ -125,6 +125,13 @@
     "main": "#9A5B50",
     "treeCoverLoss": "#FE6598"
   },
+  "netChange": {
+    "main": "#9A5B50",
+    "stable": "#86B64A",
+    "gain": "#646EA7",
+    "loss": "#A25A94",
+    "disturb": "#FF7F5F"
+  },
   "employment": {
     "main": "#A878F3",
     "ramp": ["#A878F3", "#7C38C5"],

@@ -19,7 +19,7 @@ export const formatNumber = ({ num, unit, precision, returnUnit = true }) => {
     num < thres && num > 0 ? `< ${thres}` : format(numFormat)(num);
   if (unit !== '%' && num < thres && num > 0.01) {
     formattedNum = format('.3r')(num);
-  } else if (unit === 'ha' && num < 1000) {
+  } else if (unit === 'ha' && num < 1000 && num > 0) {
     formattedNum = Math.round(num);
   } else if (num > 0 && num < 0.01 && unit !== '%') {
     formattedNum = '<0.01';

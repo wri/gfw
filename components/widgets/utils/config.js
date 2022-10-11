@@ -201,6 +201,7 @@ export const getWidgetDatasets = ({
   latestDate,
   threshold,
   dataset,
+  adminLevel,
 }) => {
   return (
     datasets &&
@@ -247,6 +248,7 @@ export const getWidgetDatasets = ({
             params: {
               threshold,
               visibility: true,
+              adm_level: adminLevel || 'adm0',
             },
           }),
           ...(startDateAbsolute &&

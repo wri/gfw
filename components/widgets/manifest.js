@@ -52,6 +52,7 @@ import carbonStock from 'components/widgets/climate/carbon-stock';
 import economicImpact from 'components/widgets/land-use/economic-impact';
 import forestryEmployment from 'components/widgets/land-use/forestry-employment';
 import traseCommodities from 'components/widgets/land-use/trase-commodities';
+import netChange from 'components/widgets/forest-change/net-change';
 
 export default {
   // forest change
@@ -71,6 +72,7 @@ export default {
   // gladRanked,
   integratedAlertsRanked,
   integratedDeforestationAlerts,
+  netChange,
 
   // fires
   firesAlerts,
