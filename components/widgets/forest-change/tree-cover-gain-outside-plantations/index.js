@@ -66,13 +66,9 @@ export default {
   },
   sentences: {
     global:
-      'Globally between {startYear} and {endYear}, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'Globally between 2001 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     region:
-      'In {location} between {startYear} and {endYear}, {gainPercent} of tree cover gain occurred outside of plantations.',
-  },
-  settings: {
-    startYear: 2001,
-    endYear: 2020,
+      'In {location} between 2001 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
   },
   getData: (params) => {
     return getTreeCoverGainByPlantationType(params).then((response) => {
