@@ -44,7 +44,7 @@ export default {
   refetchKeys: ['forestType', 'landCategory'],
   chartType: 'pieChart',
   colors: 'gainWithinOutsidePlantations',
-  metaKey: 'widget_tree_cover_gain',
+  metaKey: 'gfw_planted_forests',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -71,7 +71,7 @@ export default {
       'In {location} between {startYear} and {endYear}, {gainPercent} of tree cover gain occurred outside of plantations.',
   },
   settings: {
-    startYear: 2000,
+    startYear: 2001,
     endYear: 2020,
   },
   getData: (params) => {
