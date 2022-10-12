@@ -102,6 +102,7 @@ const MapLegend = ({
             const warningLabel = getWarningLabel();
 
             const {
+              id: layerId,
               params,
               paramsSelectorConfig,
               decodeParams,
@@ -151,7 +152,7 @@ const MapLegend = ({
               >
                 <LegendItemTypes>
                   <LegendItemTypeBasic />
-                  <LegendItemTypeChoropleth />
+                  <LegendItemTypeChoropleth dataset={layerId} />
                   <LegendItemTypeProportional />
                   <LegendItemTypeGradient />
                 </LegendItemTypes>
