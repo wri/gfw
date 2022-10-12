@@ -881,7 +881,7 @@ export const getTreeCoverGainByPlantationType = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20220721',
+    version: 'v20221012',
   });
 
   if (!requestUrl) return new Promise(() => {});
