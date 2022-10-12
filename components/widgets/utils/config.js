@@ -244,11 +244,11 @@ export const getWidgetDatasets = ({
               endDateAbsolute: latestDate,
             },
           }),
-          ...(threshold && {
+          ...((threshold || adminLevel) && {
             params: {
               threshold,
               visibility: true,
-              adm_level: adminLevel || 'adm0',
+              adm_level: adminLevel === 'global' ? 'adm0' : adminLevel || 'adm0',
             },
           }),
           ...(startDateAbsolute &&

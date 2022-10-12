@@ -102,8 +102,8 @@ class WidgetsContainer extends PureComponent {
 
     // if widget is active and layers or params change push to map
     if (!embed && activeWidget) {
-      const { settings, datasets } = activeWidget || {};
-      const { settings: prevSettings, datasets: prevDatasets } =
+      const { settings, datasets, adminLevel } = activeWidget || {};
+      const { settings: prevSettings, datasets: prevDatasets, adminLevel: prevAdminLevel} =
         prevProps.activeWidget || {};
 
       const mapSettingsChanged =
@@ -116,12 +116,13 @@ class WidgetsContainer extends PureComponent {
       );
       const widgetSettingsChanged = !isEqual(prevSettings, settings);
       const datasetsChanged = !isEqual(datasets, prevDatasets);
+      const adminLevelChanged = !isEqual(adminLevel, prevAdminLevel);
 
       if (
         (datasets &&
           datasetsChanged &&
           (mapSettingsChanged || activeWidgetChanged)) ||
-        widgetSettingsChanged
+        widgetSettingsChanged || adminLevelChanged
       ) {
         this.syncWidgetWithMap();
       } else if (
