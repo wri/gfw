@@ -60,7 +60,7 @@ export default {
   },
   sentence: {
     globalInitial:
-      'From 2000 to 2020, the world experienced a {netChangePerc} change in tree cover.',
+      'From 2000 to 2020, the world experienced a net change of {netChange} ({netChangePerc}) change in tree cover.',
     initial:
       'From 2000 to 2020, {location} experienced a net change of {netChange} ({netChangePerc}) change in tree cover.',
     // noLoss:
