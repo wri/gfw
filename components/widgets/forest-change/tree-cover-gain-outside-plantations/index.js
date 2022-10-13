@@ -62,7 +62,7 @@ export default {
   ],
   visible: ['dashboard'],
   sortOrder: {
-    forestChange: 9999,
+    forestChange: 8,
   },
   sentences: {
     global:
