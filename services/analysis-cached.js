@@ -38,7 +38,7 @@ const SQL_QUERIES = {
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT {select_location}, SUM("umd_tree_cover_gain_2000-2012__ha") AS "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
@@ -1093,7 +1093,7 @@ export const getGain = (params) => {
       data: response.data.data.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        gain: d['umd_tree_cover_gain_2000-2012__ha'],
+        gain: d['umd_tree_cover_gain__ha'],
       })),
     },
   }));
@@ -1140,7 +1140,7 @@ export const getGainGrouped = (params) => {
       data: response.data.data.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        gain: d['umd_tree_cover_gain_2000-2012__ha'],
+        gain: d['umd_tree_cover_gain__ha'],
       })),
     },
   }));
