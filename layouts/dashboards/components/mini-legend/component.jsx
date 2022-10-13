@@ -95,8 +95,8 @@ class MiniLegend extends PureComponent {
                         dataset="forest-net-change"
                         activeLayer={{
                             "legendConfig": {
-                              "items": [{"color":"#A3317C","name":"≤-10"},{"color":"#A25A94","name":"≤-5"},{"color":"#B27FAF","name":"≤-2"},{"color":"#C7ACCB","name":"≤-0.5"},{"color":"#EFEDEA","name":"≤0.5"},{"color":"#9DC1D2","name":"≤2"},{"color":"#7B97BB","name":"≤5"},{"color":"#646EA7","name":"≤10"},{"color":"#51449A","name":">10"}],
-                              "type": "choropleth"
+                              "items": [{"color":"#A3317C","name":"-10"},{"color":"#A25A94","name":"-5"},{"color":"#B27FAF","name":"-2"},{"color":"#C7ACCB","name":"-0.5"},{"color":"#EFEDEA","name":"0.5"},{"color":"#9DC1D2","name":"2"},{"color":"#7B97BB","name":"5"},{"color":"#646EA7","name":"10%"},{"color":"#51449A","name":" "}],
+                              "type": "choropleth",
                             }
                           }}
                       />

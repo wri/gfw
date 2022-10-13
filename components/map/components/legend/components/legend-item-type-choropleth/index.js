@@ -28,7 +28,7 @@ class LegendTypeChoropleth extends React.PureComponent {
 
     return (
       <>
-        <div className="c-legend-type-choropleth">
+        <div className={`c-legend-type-choropleth ${dataset}`}>
           <ul>
             {legendConfig.items.map(({ color }, i) => (
               <li
