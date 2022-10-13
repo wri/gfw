@@ -68,7 +68,7 @@ export default {
       'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2001 and 2020. {region} had the most relative tree cover gain at {value} compared to an average of {average}.',
   },
   settings: {
-    threshold: 50,
+    threshold: 0,
     unit: 'ha',
     pageSize: 5,
     page: 0,

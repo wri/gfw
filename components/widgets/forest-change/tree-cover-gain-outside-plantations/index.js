@@ -70,6 +70,9 @@ export default {
     region:
       'In {location} between 2001 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
   },
+  settings: {
+    threshold: 0,
+  },
   getData: (params) => {
     return getTreeCoverGainByPlantationType(params).then((response) => {
       const { data } = (response && response.data) || {};

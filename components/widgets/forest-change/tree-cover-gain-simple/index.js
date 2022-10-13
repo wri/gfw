@@ -42,14 +42,6 @@ export default {
   types: ['geostore', 'aoi', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
   metaKey: 'widget_tree_cover_gain',
-  settingsConfig: [
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
-  ],
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold'],
   datasets: [
@@ -70,7 +62,7 @@ export default {
     forestChange: 7,
   },
   settings: {
-    threshold: 30,
+    threshold: 0,
     extentYear: 2000,
   },
   chartType: 'listLegend',

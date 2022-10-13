@@ -40,12 +40,6 @@ export default {
       clearable: true,
       blacklist: ['wdpa'],
     },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
   ],
   refetchKeys: ['forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
@@ -83,7 +77,7 @@ export default {
       'From 2001 to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
   },
   settings: {
-    threshold: 50,
+    threshold: 0,
     unit: 'ha',
     pageSize: 5,
     page: 0,
