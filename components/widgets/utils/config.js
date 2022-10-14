@@ -376,7 +376,7 @@ export const getStatements = ({
   // @TODO: Extract this to widget configs
   const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
-    extentYear && dataType !== 'lossPrimary' && dataType !== 'fires'
+    extentYear && dataType !== 'lossPrimary' && dataType !== 'fires' && dataType !== 'gain'
       ? translateText('{extentYear} tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'
