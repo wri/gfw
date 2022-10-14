@@ -7,6 +7,7 @@ const getSettings = (state) => state.settings;
 const getColors = (state) => state.colors;
 const getLocation = (state) => state.locationLabel;
 const getSentences = (state) => state.sentences;
+const getIndicator = (state) => state.indicator;
 const getAdminLevel = (state) => state.adminLevel;
 const getTitle = (state) => state.title;
 
@@ -16,15 +17,22 @@ export const parseTitle = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocation, getSentences, getAdminLevel, getSettings],
-  (data, locationName, sentences, adminLevel, settings) => {
+  [getData, getLocation, getSentences, getAdminLevel, getIndicator, getSettings],
+  (data, locationName, sentences, adminLevel, indicator, settings) => {
     if (!data) return null;
 
-    const sentence =
-      adminLevel === 'global' ? sentences.global : sentences.region;
+    const sentence = (() => {
+      switch (adminLevel) {
+        case 'global':
+          return indicator ? sentences.globalWithIndicator : sentences.globalInitial;
+        default:
+          return indicator ? sentences.regionWithIndicator : sentences.regionInitial;
+      }
+    })();
 
     const params = {
       location: locationName,
+      indicator: (indicator && indicator.label),
       startYear: settings.startYear,
       endYear: settings.endYear,
       gainPercent: formatNumber({
