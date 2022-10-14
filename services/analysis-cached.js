@@ -80,7 +80,7 @@ const SQL_QUERIES = {
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType:
-    'SELECT gfw_planted_forests__type as plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type',
+    `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -1093,7 +1093,7 @@ export const getGain = (params) => {
       data: response.data.data.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        gain: d['umd_tree_cover_gain__ha'],
+        gain: d.umd_tree_cover_gain__ha,
       })),
     },
   }));
@@ -1140,7 +1140,7 @@ export const getGainGrouped = (params) => {
       data: response.data.data.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        gain: d['umd_tree_cover_gain__ha'],
+        gain: d.umd_tree_cover_gain__ha,
       })),
     },
   }));

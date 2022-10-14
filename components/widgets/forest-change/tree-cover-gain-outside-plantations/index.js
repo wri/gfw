@@ -83,7 +83,7 @@ export default {
         0
       );
       const areaOutsidePlantations = data.find(
-        (row) => row.plantation_type === null
+        (row) => row.plantation_type === 'Outside of Plantations'
       )?.gain_area_ha;
 
       const areaWithinPlantations = totalArea - areaOutsidePlantations;
