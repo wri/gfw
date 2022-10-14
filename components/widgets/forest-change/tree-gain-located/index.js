@@ -54,6 +54,7 @@ export default {
     },
   ],
   metaKey: 'widget_tree_cover_gain_location',
+  dataType: 'gain',
   sortOrder: {
     forestChange: 6,
   },

@@ -382,7 +382,7 @@ export const getStatements = ({
     dataType === 'lossPrimary'
       ? translateText('2001 primary forest extent remaining')
       : null,
-    threshold || threshold === 0
+    (threshold || threshold === 0) && dataType !== 'gain'
       ? translateText('>{threshold}% tree canopy{carbonGain}', {
           threshold,
           carbonGain,

@@ -45,6 +45,7 @@ export default {
   chartType: 'rankedList',
   colors: 'gain',
   metaKey: 'widget_tree_cover_gain',
+  dataType: 'gain',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,

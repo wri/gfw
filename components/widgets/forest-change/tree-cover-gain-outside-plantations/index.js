@@ -45,6 +45,7 @@ export default {
   chartType: 'pieChart',
   colors: 'gainWithinOutsidePlantations',
   metaKey: 'gfw_planted_forests',
+  dataType: 'gain',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,

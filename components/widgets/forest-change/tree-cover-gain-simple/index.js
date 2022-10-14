@@ -42,6 +42,7 @@ export default {
   types: ['geostore', 'aoi', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
   metaKey: 'widget_tree_cover_gain',
+  dataType: 'gain',
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold'],
   datasets: [
