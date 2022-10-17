@@ -191,7 +191,7 @@ export default {
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
-    if (isAnalysis && !isAoi) {
+    if (isAnalysis) {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
