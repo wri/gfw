@@ -39,6 +39,7 @@ export default {
   widget: 'treeCoverGainSimple',
   title: 'Tree cover gain in {location}',
   categories: ['summary', 'forest-change'],
+  subCategory: 'forest-gain',
   types: ['geostore', 'aoi', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
   metaKey: 'widget_tree_cover_gain',

@@ -11,6 +11,7 @@ export default {
     initial: 'FAO deforestation in {location}'
   },
   categories: ['forest-change'],
+  subCategory: 'forest-loss',
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
   settingsConfig: [

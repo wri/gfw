@@ -23,6 +23,7 @@ export default {
   widget: 'gladRanked',
   title: 'Location of deforestation Alerts in {location}',
   categories: ['forest-change'],
+  subCategory: 'forest-loss',
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [

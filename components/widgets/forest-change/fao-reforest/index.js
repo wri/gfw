@@ -9,6 +9,7 @@ export default {
     initial: 'FAO reforestation in {location}'
   },
   categories: ['forest-change'],
+  subCategory: 'forest-gain',
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
   settingsConfig: [

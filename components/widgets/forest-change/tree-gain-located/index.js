@@ -17,6 +17,7 @@ export default {
   widget: 'treeGainLocated',
   title: 'Location of tree cover gain in {location}',
   categories: ['forest-change'],
+  subCategory: 'forest-gain',
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [
