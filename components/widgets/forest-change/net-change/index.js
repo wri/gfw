@@ -56,8 +56,8 @@ export default {
     },
   ],
   sortOrder: {
-    summary: 9999,
-    forestChange: 9999,
+    summary: -2,
+    forestChange: 1,
   },
   sentence: {
     globalInitial:
