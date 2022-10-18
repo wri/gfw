@@ -42,7 +42,7 @@ export default {
   subCategory: 'forest-gain',
   types: ['geostore', 'aoi', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
-  metaKey: 'widget_tree_cover_gain',
+  metaKey: 'umd_tree_cover_gain_from_height',
   dataType: 'gain',
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold'],
