@@ -45,7 +45,7 @@ export default {
   refetchKeys: ['forestType', 'landCategory'],
   chartType: 'pieChart',
   colors: 'gainWithinOutsidePlantations',
-  metaKey: 'gfw_planted_forests',
+  metaKey: 'widget_tree_cover_gain_outside_plantations',
   dataType: 'gain',
   datasets: [
     {
