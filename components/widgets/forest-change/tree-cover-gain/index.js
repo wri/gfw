@@ -45,7 +45,7 @@ export default {
   refetchKeys: ['forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
   colors: 'gain',
-  metaKey: 'widget_tree_cover_gain',
+  metaKey: 'umd_tree_cover_gain_from_height',
   dataType: 'gain',
   datasets: [
     {
