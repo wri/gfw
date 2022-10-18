@@ -68,16 +68,16 @@ class Widgets extends PureComponent {
     // TODO: Pedro: Shouldn't be here, please refactor
     const forestChangeSubCategories = [
       {
+        id: "net-change",
+        name: "Net Forest Change",
+      },
+      {
         id: "forest-loss",
         name: "Forest Loss",
       },
       {
         id: "forest-gain",
         name: "Forest Gain",
-      },
-      {
-        id: "net-change",
-        name: "Net Forest Change",
       },
     ];
 
