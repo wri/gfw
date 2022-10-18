@@ -38,7 +38,7 @@ export default {
     link:
       'https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer',
   },
-  large: false,
+  large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'pieChart',
   colors: 'netChange',
