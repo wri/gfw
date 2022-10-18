@@ -70,7 +70,7 @@ export default {
   chartType: 'listLegend',
   colors: 'gain',
   sentence:
-    'From 2001 to 2020, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
+    'From 2000 to 2020, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
       return getGain(params).then((response) => {

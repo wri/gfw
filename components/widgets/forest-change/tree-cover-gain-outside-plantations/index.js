@@ -68,13 +68,13 @@ export default {
   },
   sentences: {
     globalInitial:
-      'Globally between 2001 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'Globally between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     globalWithIndicator:
-      'Globally between 2001 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
+      'Globally between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
     regionInitial:
-      'In {location} between 2001 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'In {location} between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     regionWithIndicator:
-      'In {location} between 2001 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
+      'In {location} between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
   },
   settings: {
     threshold: 0,
