@@ -54,7 +54,7 @@ export default {
       layers: [FOREST_GAIN],
     },
   ],
-  metaKey: 'widget_tree_cover_gain_location',
+  metaKey: 'umd_tree_cover_gain_from_height',
   dataType: 'gain',
   sortOrder: {
     forestChange: 6,
