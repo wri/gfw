@@ -43,7 +43,7 @@ export default {
   chartType: 'pieChart',
   colors: 'netChange',
   dataType: 'netChange',
-  metaKey: 'umd_tree_cover_loss_from_fires',
+  metaKey: 'umd_adm0_net_tree_cover_change',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
