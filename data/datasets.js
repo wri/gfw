@@ -10,7 +10,7 @@ export const INTEGRATED_DEFORESTATION_ALERTS =
 export const GLAD_S2_DEFORESTATION_ALERTS_DATASET =
   'glad-s2-deforestation-alerts';
 export const RADD_DEFORESTATION_ALERTS_DATASET = 'radd-deforestation-alerts';
-export const FOREST_GAIN_DATASET = 'tree-cover-gain-2';
+export const FOREST_GAIN_DATASET = 'tree-cover-gain';
 export const FOREST_EXTENT_DATASET = 'tree-cover';
 export const BIOMASS_LOSS_DATASET =
   'carbon-dioxide-emissions-from-tree-cover-loss';
