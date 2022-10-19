@@ -39,17 +39,11 @@ export default {
   widget: 'treeCoverGainSimple',
   title: 'Tree cover gain in {location}',
   categories: ['summary', 'forest-change'],
+  subCategory: 'forest-gain',
   types: ['geostore', 'aoi', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
-  metaKey: 'widget_tree_cover_gain',
-  settingsConfig: [
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
-  ],
+  metaKey: 'umd_tree_cover_gain_from_height',
+  dataType: 'gain',
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold'],
   datasets: [
@@ -70,13 +64,13 @@ export default {
     forestChange: 7,
   },
   settings: {
-    threshold: 30,
+    threshold: 0,
     extentYear: 2000,
   },
   chartType: 'listLegend',
   colors: 'gain',
   sentence:
-    'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
+    'From 2000 to 2020, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
       return getGain(params).then((response) => {

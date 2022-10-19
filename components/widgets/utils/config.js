@@ -201,6 +201,7 @@ export const getWidgetDatasets = ({
   latestDate,
   threshold,
   dataset,
+  adminLevel,
 }) => {
   return (
     datasets &&
@@ -243,10 +244,11 @@ export const getWidgetDatasets = ({
               endDateAbsolute: latestDate,
             },
           }),
-          ...(threshold && {
+          ...((threshold || adminLevel) && {
             params: {
               threshold,
               visibility: true,
+              adm_level: adminLevel === 'global' ? 'adm0' : adminLevel || 'adm0',
             },
           }),
           ...(startDateAbsolute &&
@@ -374,13 +376,13 @@ export const getStatements = ({
   // @TODO: Extract this to widget configs
   const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
-    extentYear && dataType !== 'lossPrimary' && dataType !== 'fires'
+    extentYear && dataType !== 'lossPrimary' && dataType !== 'fires' && dataType !== 'gain'
       ? translateText('{extentYear} tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'
       ? translateText('2001 primary forest extent remaining')
       : null,
-    threshold || threshold === 0
+    (threshold || threshold === 0) && dataType !== 'gain'
       ? translateText('>{threshold}% tree canopy{carbonGain}', {
           threshold,
           carbonGain,
@@ -409,6 +411,11 @@ export const getStatements = ({
     dataType === 'fires' && settings?.dataset === 'modis_burned_area'
       ? translateText(
           'Caution: Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.'
+        )
+      : null,
+    dataType === 'netChange'
+      ? translateText(
+          'Disturbance represents areas that experienced both loss and gain between 2000 and 2020'
         )
       : null,
     ...(indicatorStatements || []),

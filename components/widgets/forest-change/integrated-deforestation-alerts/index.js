@@ -98,6 +98,7 @@ export default {
   source: 'gadm',
   dataType: 'integration_alerts',
   categories: ['summary', 'forest-change'],
+  subCategory: 'forest-loss',
   types: ['country', 'geostore', 'wdpa', 'aoi', 'use'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [

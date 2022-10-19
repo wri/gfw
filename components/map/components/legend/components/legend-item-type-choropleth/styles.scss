@@ -34,6 +34,17 @@
     }
   }
 
+  &.forest-net-change {
+    ul {
+      &:nth-of-type(2) {
+       li {
+        // position: relative;
+        transform: translateX(50%);
+       }
+      }
+    }
+  }
+
   .name {
     display: block;
     font-family: 'Helvetica Neue', Arial, sans-serif;

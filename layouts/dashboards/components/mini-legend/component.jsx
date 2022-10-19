@@ -14,6 +14,8 @@ import linkIcon from 'assets/icons/link.svg?sprite';
 
 import { LegendItemButtonOpacity, Icons } from 'vizzuality-components';
 
+import LegendItemTypeChoropleth from 'components/map/components/legend/components/legend-item-type-choropleth';
+
 import './styles.scss';
 
 class MiniLegend extends PureComponent {
@@ -48,8 +50,9 @@ class MiniLegend extends PureComponent {
               const isMODISBurnedArea = layerId === 'burned-area-modis';
 
               return (
-                <li key={l.name}>
-                  <span style={{ backgroundColor: l.color }} />
+                <li key={l.name} className={l.layer}>
+                  {l.layer !== 'forest-net-change' && 
+                    <span style={{ backgroundColor: l.color }} />}
                   <div>
                     <p>{l.name}</p>
                     {startDateAbsolute && endDateAbsolute && (
@@ -85,6 +88,20 @@ class MiniLegend extends PureComponent {
                     ]}
                     onChangeOpacity={(_, op) => this.handleOpacity(l, op)}
                   />
+                  {/* TODO Pedro: can this be dynamic? */}
+                  {l.layer === 'forest-net-change' && (
+                    <div className='net-change-choropleth'>
+                      <LegendItemTypeChoropleth
+                        dataset="forest-net-change"
+                        activeLayer={{
+                            "legendConfig": {
+                              "items": [{"color":"#A3317C","name":"-10"},{"color":"#A25A94","name":"-5"},{"color":"#B27FAF","name":"-2"},{"color":"#C7ACCB","name":"-0.5"},{"color":"#EFEDEA","name":"0.5"},{"color":"#9DC1D2","name":"2"},{"color":"#7B97BB","name":"5"},{"color":"#646EA7","name":"10%"},{"color":"#51449A","name":" "}],
+                              "type": "choropleth",
+                            }
+                          }}
+                      />
+                    </div>
+                  )}
                 </li>
               );
             })}
