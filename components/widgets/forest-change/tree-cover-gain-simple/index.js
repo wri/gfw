@@ -21,7 +21,7 @@ const getOTFAnalysis = async (params) => {
     startDate: params.startDate,
     endDate: params.endDate,
   });
-  analysis.setData(['gain', 'extent'], params);
+  analysis.setData(['gain'], params);
 
   return analysis.getData().then((response) => {
     const { gain, extent } = response;
