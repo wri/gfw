@@ -33,7 +33,15 @@ export default {
   caution: {
     text:
       'Would you like to help us understand how to present this data in more helpful ways? {Click here to fill out a survey}',
-    visible: ['country', 'geostore', 'aoi', 'wdpa', 'use', 'dashboard', 'global'],
+    visible: [
+      'country',
+      'geostore',
+      'aoi',
+      'wdpa',
+      'use',
+      'dashboard',
+      'global',
+    ],
     linkText: 'Click here to fill out a survey',
     link:
       'https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer',
@@ -95,6 +103,7 @@ export default {
           startYear,
           endYear,
           yearsRange: range,
+          chartHeight: 230,
         },
         options: {
           years: range,
@@ -104,7 +113,7 @@ export default {
   },
   getDataURL: (params) => {
     const globalLocation = getGlobalLocation(params);
-    return [getNetChange({ ...params, ...globalLocation, download: true})];
+    return [getNetChange({ ...params, ...globalLocation, download: true })];
   },
   getWidgetProps,
 };
