@@ -21,12 +21,12 @@ const getOTFAnalysis = async (params) => {
     startDate: params.startDate,
     endDate: params.endDate,
   });
-  analysis.setData(['gain', 'extent'], params);
+  analysis.setData(['gain'], params);
 
   return analysis.getData().then((response) => {
-    const { gain, extent } = response;
+    const { gain } = response;
     const totalGain = gain?.data?.[0]?.area__ha;
-    const totalExtent = extent?.data?.[0]?.area__ha;
+    const totalExtent = params?.geostore?.areaHa || 0;
 
     return {
       gain: totalGain,
