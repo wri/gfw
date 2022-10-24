@@ -46,6 +46,26 @@
     }
   }
 
+  .c-widgets-subcategory-buttons {
+    li {
+      display: inline-block;
+      margin: 0 20px 20px 0;
+    }
+
+    .c-widgets-subcategory-button {
+      display: inline-block;
+      // height: 24px;
+      padding: 0 12px;
+      font-size: 12px;
+      line-height: 24px;
+      background-color: #333;
+      border-radius: 0;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+
   @media screen and (min-width: $screen-m) {
     padding-left: $desktop-gutter;
     padding-right: $desktop-gutter;

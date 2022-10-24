@@ -5,6 +5,8 @@ import isEmpty from 'lodash/isEmpty';
 
 import { trackEvent } from 'utils/analytics';
 
+import { Link as AnchorLink } from 'react-scroll';
+
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Widget from 'components/widget';
@@ -68,16 +70,16 @@ class Widgets extends PureComponent {
     // TODO: Pedro: Shouldn't be here, please refactor
     const forestChangeSubCategories = [
       {
-        id: "net-change",
-        name: "Net Forest Change",
+        id: 'net-change',
+        name: 'Net Forest Change',
       },
       {
-        id: "forest-loss",
-        name: "Forest Loss",
+        id: 'forest-loss',
+        name: 'Forest Loss',
       },
       {
-        id: "forest-gain",
-        name: "Forest Gain",
+        id: 'forest-gain',
+        name: 'Forest Gain',
       },
     ];
 
@@ -140,7 +142,7 @@ class Widgets extends PureComponent {
           preventCloseSettings={modalClosing}
           onClickWidget={handleClickWidget}
         />
-      ))
+      ));
     };
 
     return (
@@ -154,6 +156,25 @@ class Widgets extends PureComponent {
         )}
       >
         {loadingData && <Loader className="widgets-loader large" />}
+
+        {category === 'forest-change' && (
+          <ul className="c-widgets-subcategory-buttons">
+            {forestChangeSubCategories.map((sc) => (
+              <li>
+                <AnchorLink
+                  className="c-widgets-subcategory-button"
+                  to={sc.id}
+                  // spy
+                  smooth
+                  duration={300}
+                  offset={-18}
+                >
+                  {sc.name}
+                </AnchorLink>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {category === 'forest-change' &&
           !loadingData &&
@@ -170,7 +191,7 @@ class Widgets extends PureComponent {
               )}
             >
               <div className="c-widgets-subcategory-title">{sc.name}</div>
-              {renderWidgets(widgets.filter(w => w.subCategory === sc.id))}
+              {renderWidgets(widgets.filter((w) => w.subCategory === sc.id))}
             </div>
           ))}
         {!loadingData &&
