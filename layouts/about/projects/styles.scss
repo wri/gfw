@@ -1,45 +1,35 @@
 @import '~styles/settings.scss';
 
 .l-section-projects {
-  padding: rem(40px) 0;
+  padding: rem(20px) 0;
   border-top: solid 1px $border;
 
   @media screen and (min-width: $screen-m) {
-    padding: rem(40px) 0 0;
+    padding: rem(40px) 0;
   }
 
-  .project-list {
+  h3 {
+    margin-top: rem(20px);
     margin-bottom: rem(30px);
   }
 
-  .project-globe {
-    position: relative;
+  p {
+    margin-bottom: rem(30px);
+    font-size: 18px;
+    line-height: 30px;
   }
 
-  .project-side {
-    position: relative;
+  .help-btn {
+    margin: rem(20px) 0;
+    width: rem(250px);
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(20px);
-    }
-
-    h3 {
-      margin-bottom: rem(30px);
-    }
-
-    p {
-      margin-bottom: rem(30px);
-      font-size: 18px;
-      line-height: 30px;
-    }
-
-    .help-btn {
-      width: rem(250px);
+      margin: rem(40px) 0 0;
     }
   }
 
   .visitors {
-    padding: rem(100px) 0 rem(130px);
+    padding: rem(50px) 0 rem(130px);
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;

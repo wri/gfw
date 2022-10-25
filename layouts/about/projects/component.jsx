@@ -1,43 +1,22 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { Row, Column, Button, Desktop } from 'gfw-components';
 
-import Globe from 'components/globe';
-import ItemsList from 'components/items-list';
 import Icon from 'components/ui/icon';
 import ModalVideo from 'components/modals/video';
 
 import playIcon from 'assets/icons/play.svg?sprite';
 import growth from 'layouts/about/projects/images/growth.png';
 
-import ProjectsModal from './projects-modal';
-
 import './styles.scss';
 
-const AboutProjectsSection = ({ categories, projectsByCategory }) => {
-  const [category, setCategory] = useState('All');
-  const [selectedProject, setSelectedProject] = useState(null);
+const AboutProjectsSection = () => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const selectedProjects = projectsByCategory[category];
 
   return (
     <div className="l-section-projects">
       <Row>
-        <Column width={[1, 1 / 2]} className="project-globe">
-          <Desktop>
-            <Globe
-              autorotate={false}
-              data={selectedProjects}
-              onClick={setSelectedProject}
-            />
-            <ProjectsModal
-              data={selectedProject}
-              onRequestClose={() => setSelectedProject(null)}
-            />
-          </Desktop>
-        </Column>
-        <Column width={[1, 1 / 2]} className="project-side">
+        <Column width={[1]}>
           <h3>WHAT IS GLOBAL FOREST WATCH?</h3>
           <div
             className="video-btn"
@@ -63,14 +42,6 @@ const AboutProjectsSection = ({ categories, projectsByCategory }) => {
             sustainably source commodities, and conduct research at the
             forefront of conservation.
           </p>
-          <Desktop>
-            <ItemsList
-              className="project-list"
-              data={categories}
-              itemSelected={category}
-              onClick={setCategory}
-            />
-          </Desktop>
           <a
             href="https://www.globalforestwatch.org/help/"
             target="_blank"
@@ -92,9 +63,6 @@ const AboutProjectsSection = ({ categories, projectsByCategory }) => {
   );
 };
 
-AboutProjectsSection.propTypes = {
-  projectsByCategory: PropTypes.object,
-  categories: PropTypes.array,
-};
+AboutProjectsSection.propTypes = {};
 
 export default AboutProjectsSection;
