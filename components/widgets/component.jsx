@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import { trackEvent } from 'utils/analytics';
 
-import { Link as AnchorLink } from 'react-scroll';
+import { Link } from 'react-scroll';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -161,16 +161,16 @@ class Widgets extends PureComponent {
           <ul className="c-widgets-subcategory-buttons">
             {forestChangeSubCategories.map((sc) => (
               <li>
-                <AnchorLink
+                <Link
+                  href={`${window.location.href}&scrollTo=${sc.id}`}
                   className="c-widgets-subcategory-button"
                   to={sc.id}
-                  // spy
                   smooth
                   duration={300}
                   offset={-18}
                 >
                   {sc.name}
-                </AnchorLink>
+                </Link>
               </li>
             ))}
           </ul>
