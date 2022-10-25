@@ -19,7 +19,6 @@ const GrantsProjectsSection = ({ projects: allProjects, images }) => {
     projects: allProjects,
     images,
     search,
-    category: 'All',
   });
 
   const { projects } = props || {};
