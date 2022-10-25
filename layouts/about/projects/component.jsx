@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 import { Row, Column, Button, Desktop } from 'gfw-components';
 
@@ -34,6 +35,10 @@ const AboutProjectsSection = () => {
               onRequestClose={() => setVideoModalOpen(false)}
             />
           </div>
+        </Column>
+      </Row>
+      <Row>
+        <Column width={[1, 17 / 36]}>
           <h3>WHO USES GLOBAL FOREST WATCH?</h3>
           <p>
             Thousands of people around the world use GFW every day to monitor
@@ -49,6 +54,22 @@ const AboutProjectsSection = () => {
           >
             <Button className="help-btn">LEARN HOW TO USE GFW</Button>
           </a>
+        </Column>
+        <Column width={[1, 2 / 36]} />
+        <Column width={[1, 17 / 36]}>
+          <h3>HOW DO PEOPLE USE GLOBAL FOREST WATCH?</h3>
+          <p>
+            Click
+            {' '}
+            <Link href="/grants-and-fellowships">
+              <a target="_blank" rel="noopener noreferrer">
+                here
+              </a>
+            </Link>
+            {' '}
+            to learn about how others have used Global Forest Watch in their
+            network.
+          </p>
         </Column>
       </Row>
       <Desktop>
