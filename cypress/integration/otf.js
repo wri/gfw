@@ -50,7 +50,7 @@ const testConfig = [
           headers: { 'Accept-Encoding': 'gzip, deflate' },
         });
         // Agree cookies
-        cy.get('.cookies-btn').click();
+        cy.get('.cookies-button > button').click();
         // Close welcome modal
         cy.get('.modal-close').click();
         cy.wait(1000); // eslint-disable-line
