@@ -1,13 +1,11 @@
 import { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Element as ScrollEl, scroller } from 'react-scroll';
+import { Element as ScrollEl } from 'react-scroll';
 import { useRouter } from 'next/router';
 
-import { Search, NoContent, Desktop, Row, Column } from 'gfw-components';
+import { Search, NoContent, Row, Column } from 'gfw-components';
 
-import Globe from 'components/globe';
 import Card from 'components/ui/card';
-import ItemsList from 'components/items-list';
 
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
@@ -16,19 +14,16 @@ import './styles.scss';
 
 const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('All');
-  const [customFilter, setCustomFilter] = useState([]);
 
   const props = getProjectsProps({
     projects: allProjects,
     images,
     latLngs,
     search,
-    category,
-    customFilter,
+    category: 'All',
   });
 
-  const { projects, categories, globeData } = props || {};
+  const { projects } = props || {};
   const {
     query: { sgfModal, projectId },
     replace,
@@ -40,52 +35,12 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
 
   const setModalOpen = (id) =>
     replace(`${asPath.split('?')?.[0]}?projectId=${id}`);
-  const handleSetCategory = (cat) => {
-    setCategory(cat);
-    setCustomFilter([]);
-  };
-
-  const handleGlobeClick = (d) => {
-    if (!d?.cluster || d?.cluster?.length === 1) {
-      const id = d?.id || (d?.cluster && d?.cluster?.[0]?.id);
-      setModalOpen(id);
-    } else {
-      const projectIds = d.cluster.map((p) => p?.id);
-      setCustomFilter(projectIds);
-      scroller.scrollTo('project-cards', {
-        duration: 800,
-        smooth: true,
-        offset: -50,
-      });
-    }
-  };
 
   return (
     <Fragment>
       <div className="l-grants-projects-section">
-        <Row>
-          <Column width={[1, 7 / 12]} className="project-globe">
-            <Desktop>
-              <ul className="tags">
-                <li>
-                  <span id="grants" /> 
-                  {' '}
-                  <p>Grantees</p>
-                </li>
-                <li>
-                  <span id="fellows" /> 
-                  {' '}
-                  <p>Fellows</p>
-                </li>
-              </ul>
-              <Globe
-                autorotate={false}
-                data={globeData}
-                onClick={handleGlobeClick}
-              />
-            </Desktop>
-          </Column>
-          <Column width={[1, 5 / 12]} className="side">
+        <Row className="projects-header">
+          <Column width={[1]}>
             <h3>MEET THE GRANTEES AND FELLOWS</h3>
             <p className="text -paragraph -color-2 -light -spaced">
               With financial and technical support from GFW, organizations and
@@ -93,14 +48,6 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
               monitor large-scale land-use projects, enforce community land
               rights, defend critical habitat, and influence forest policy.
             </p>
-            {categories?.length && (
-              <ItemsList
-                className="project-list"
-                data={categories}
-                itemSelected={category}
-                onClick={handleSetCategory}
-              />
-            )}
           </Column>
         </Row>
         <Row>
