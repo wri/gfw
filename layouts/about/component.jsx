@@ -76,7 +76,7 @@ const AboutPage = (props) => (
       </Link>
     </Cover>
     <SubnavMenu className="about-links" links={Object.values(sections || {})} />
-    <Projects {...props} />
+    <Projects />
     {sections &&
       Object.keys(sections).map((s) => {
         const section = sections[s];
