@@ -12,13 +12,12 @@ import { getProjectsProps } from './selectors';
 
 import './styles.scss';
 
-const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
+const GrantsProjectsSection = ({ projects: allProjects, images }) => {
   const [search, setSearch] = useState('');
 
   const props = getProjectsProps({
     projects: allProjects,
     images,
-    latLngs,
     search,
     category: 'All',
   });
@@ -111,7 +110,6 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
 GrantsProjectsSection.propTypes = {
   projects: PropTypes.array,
   images: PropTypes.object,
-  latLngs: PropTypes.array,
 };
 
 export default GrantsProjectsSection;

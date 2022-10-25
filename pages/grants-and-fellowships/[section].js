@@ -4,7 +4,6 @@ import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
 import { getSGFProjects } from 'services/projects';
-import { getCountriesLatLng } from 'services/country';
 
 const SECTIONS = ['projects', 'about', 'apply'];
 
@@ -28,14 +27,12 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   if (params?.section === 'projects') {
     const projects = await getSGFProjects();
-    const latLngs = await getCountriesLatLng();
 
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
         section: params?.section,
         projects: projects || [],
-        latLngs: latLngs || [],
       },
     };
   }
