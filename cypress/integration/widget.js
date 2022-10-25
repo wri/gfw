@@ -48,7 +48,7 @@ const testConfig = [
         visit: '/embed/sentence/country/ESP',
         test: 'sentence',
         sentence:
-          'In 2010, Spain had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Spain had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'plantationsAdm1',
@@ -57,7 +57,7 @@ const testConfig = [
         visit: '/embed/sentence/country/ESP/12',
         test: 'sentence',
         sentence:
-          'In 2010, Galicia had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Galicia had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'plantationsAdm2',
@@ -66,7 +66,7 @@ const testConfig = [
         visit: '/embed/sentence/country/ESP/12/1',
         test: 'sentence',
         sentence:
-          'In 2010, A Coruña had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, A Coruña had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'plantationsTropicalIso',
@@ -75,7 +75,7 @@ const testConfig = [
         visit: '/embed/sentence/country/MYS',
         test: 'sentence',
         sentence:
-          'In 2010, Malaysia had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Malaysia had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'plantationsTropicalAdm1',
@@ -84,7 +84,7 @@ const testConfig = [
         visit: '/embed/sentence/country/MYS/14',
         test: 'sentence',
         sentence:
-          'In 2010, Sarawak had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Sarawak had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'plantationsTropicalAdm2',
@@ -93,7 +93,7 @@ const testConfig = [
         visit: '/embed/sentence/country/MYS/14/31',
         test: 'sentence',
         sentence:
-          'In 2010, Tatau had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Tatau had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'lossIso',
@@ -102,7 +102,7 @@ const testConfig = [
         visit: '/embed/sentence/country/GUY',
         test: 'sentence',
         sentence:
-          'In 2010, Guyana had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Guyana had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'lossAdm1',
@@ -111,7 +111,7 @@ const testConfig = [
         visit: '/embed/sentence/country/GUY/2',
         test: 'sentence',
         sentence:
-          'In 2010, Cuyuni-Mazaruni had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Cuyuni-Mazaruni had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'lossAdm2',
@@ -120,7 +120,7 @@ const testConfig = [
         visit: '/embed/sentence/country/GUY/2/8',
         test: 'sentence',
         sentence:
-          'In 2010, Rest of Region 7 had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 8.99Gt of CO₂ emissions.',
+          'In 2010, Rest of Region 7 had 3.79Gha of natural forest, extending over 30% of its land area. In 2021, it lost 23.8Mha of natural forest, equivalent to 9.00Gt of CO₂ emissions.',
       },
       {
         slug: 'globalInitial',
