@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Element as ScrollEl } from 'react-scroll';
 import { useRouter } from 'next/router';
 
 import { Search, NoContent, Row, Column } from 'gfw-components';
@@ -59,43 +58,41 @@ const GrantsProjectsSection = ({ projects: allProjects, images }) => {
             />
           </Column>
         </Row>
-        <ScrollEl name="project-cards" className="project-cards">
-          <Row>
-            {projects?.map((d) => {
-              const isFellow = d?.categories?.includes('Fellow');
+        <Row className="project-cards">
+          {projects?.map((d) => {
+            const isFellow = d?.categories?.includes('Fellow');
 
-              return (
-                <Column
-                  key={d.id}
-                  width={[1, 1 / 2, 1 / 3]}
-                  className="card-container"
-                >
-                  <Card
-                    className="project-card"
-                    data={{
-                      ...d,
-                      tag: isFellow ? 'fellow' : 'grantee',
-                      tagColor: isFellow ? '#f88000' : '#97bd3d',
-                      buttons: [
-                        {
-                          className: 'read-more',
-                          text: 'READ MORE',
-                          onClick: () => setModalOpen(d.id),
-                        },
-                      ],
-                    }}
-                  />
-                </Column>
-              );
-            })}
-          </Row>
-          {!projects?.length && (
-            <NoContent
-              className="no-projects"
-              message="No projects for that search"
-            />
-          )}
-        </ScrollEl>
+            return (
+              <Column
+                key={d.id}
+                width={[1, 1 / 2, 1 / 3]}
+                className="card-container"
+              >
+                <Card
+                  className="project-card"
+                  data={{
+                    ...d,
+                    tag: isFellow ? 'fellow' : 'grantee',
+                    tagColor: isFellow ? '#f88000' : '#97bd3d',
+                    buttons: [
+                      {
+                        className: 'read-more',
+                        text: 'READ MORE',
+                        onClick: () => setModalOpen(d.id),
+                      },
+                    ],
+                  }}
+                />
+              </Column>
+            );
+          })}
+        </Row>
+        {!projects?.length && (
+          <NoContent
+            className="no-projects"
+            message="No projects for that search"
+          />
+        )}
       </div>
       <ProjectsModal
         open={!!selectedProject}
