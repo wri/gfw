@@ -39,7 +39,6 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-      blacklist: ['wdpa'],
     },
   ],
   refetchKeys: ['forestType', 'landCategory'],

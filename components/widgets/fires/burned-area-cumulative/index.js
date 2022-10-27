@@ -37,7 +37,6 @@ const defaultConfig = {
       placeholder: 'All categories',
       clearable: true,
       border: true,
-      blacklist: ['wdpa'],
     },
     {
       key: 'dataset',
