@@ -1,48 +1,69 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
 import Card from 'components/ui/card';
+import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
+
+import CountryDataProvider from 'providers/country-data-provider';
 
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
 import './styles.scss';
 
-const GrantsProjectsSection = ({ projects: allProjects, images }) => {
-  const [search, setSearch] = useState('');
+const GrantsProjectsSection = ({
+  projects: allProjects,
+  images,
+  countries: allCountries,
+}) => {
+  const [country, setCountry] = useState('');
   const [category, setCategory] = useState('All');
-
-  const props = getProjectsProps({
-    projects: allProjects,
-    images,
-    search,
-    category,
-  });
-
-  const { projects, categories } = props || {};
+  const [search, setSearch] = useState('');
 
   const {
-    query: { sgfModal, projectId },
+    query: { modal, projectId },
     replace,
     asPath,
   } = useRouter();
 
-  const selectedProject = projects?.find(
-    (p) => p.id === parseInt(projectId || sgfModal, 10)
+  const { projects, categories, countries } = useMemo(
+    () =>
+      getProjectsProps({
+        projects: allProjects,
+        images,
+        search,
+        category,
+        country,
+      }),
+    [allProjects, images, search, category, country]
+  );
+
+  const selectedProject = useMemo(
+    () => projects?.find((p) => p.id === parseInt(projectId || modal, 10)),
+    [projects, projectId, modal]
+  );
+
+  const countryOptions = useMemo(
+    () => allCountries?.filter(({ value }) => countries.includes(value)),
+    [allCountries, countries]
+  );
+
+  const tags = useMemo(
+    () =>
+      categories?.map(({ label, count }) => ({
+        id: label,
+        name: `${label} (${count})`,
+        active: label === category,
+      })) || [],
+    [categories, category]
   );
 
   const setModalOpen = (id) =>
     replace(`${asPath.split('?')?.[0]}?projectId=${id}`);
-
-  const tags = categories?.map(({ label, count }) => ({
-    id: label,
-    name: `${label} (${count})`,
-    active: label === category,
-  }));
 
   return (
     <Fragment>
@@ -56,6 +77,17 @@ const GrantsProjectsSection = ({ projects: allProjects, images }) => {
               monitor large-scale land-use projects, enforce community land
               rights, defend critical habitat, and influence forest policy.
             </p>
+          </Column>
+        </Row>
+        <Row>
+          <Column className="project-filters">
+            <span className="filters-label">Filter by country</span>
+            <Dropdown
+              options={[{ label: 'All', value: '' }, ...countryOptions]}
+              value={country}
+              onChange={setCountry}
+              native
+            />
           </Column>
         </Row>
         <Row className="project-categories-search">
@@ -94,24 +126,27 @@ const GrantsProjectsSection = ({ projects: allProjects, images }) => {
               </Column>
             );
           })}
+
+          {!projects?.length && (
+            <NoContent
+              className="no-projects"
+              message="No projects for that search"
+            />
+          )}
         </Row>
-        {!projects?.length && (
-          <NoContent
-            className="no-projects"
-            message="No projects for that search"
-          />
-        )}
       </div>
       <ProjectsModal
         open={!!selectedProject}
         data={selectedProject}
         onRequestClose={() => replace(asPath?.split('?')?.[0])}
       />
+      <CountryDataProvider />
     </Fragment>
   );
 };
 
 GrantsProjectsSection.propTypes = {
+  countries: PropTypes.array,
   projects: PropTypes.array,
   images: PropTypes.object,
 };

@@ -19,17 +19,33 @@
     }
   }
 
-  .project-categories-search {
-    margin-bottom: rem(30px);
-  }
-
-  .project-categories {
+  .project-filters {
     display: flex;
-    align-items: center;
+    gap: rem(10px);
     margin-bottom: rem(30px);
 
     @media screen and (min-width: $screen-m) {
-      margin-bottom: 0;
+      margin-bottom: rem(50px);
+    }
+
+    .filters-label {
+      display: flex;
+      align-items: center;
+      font-size: rem(14px);
+    }
+  }
+
+  .project-categories-search {
+    margin-bottom: rem(30px);
+
+    .project-categories {
+      display: flex;
+      align-items: center;
+      margin-bottom: rem(30px);
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: 0;
+      }
     }
   }
 
