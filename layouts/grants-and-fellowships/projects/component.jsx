@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
 import Card from 'components/ui/card';
+import TagsList from 'components/tags-list';
 
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
@@ -13,25 +14,35 @@ import './styles.scss';
 
 const GrantsProjectsSection = ({ projects: allProjects, images }) => {
   const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('All');
 
   const props = getProjectsProps({
     projects: allProjects,
     images,
     search,
+    category,
   });
 
-  const { projects } = props || {};
+  const { projects, categories } = props || {};
+
   const {
     query: { sgfModal, projectId },
     replace,
     asPath,
   } = useRouter();
+
   const selectedProject = projects?.find(
     (p) => p.id === parseInt(projectId || sgfModal, 10)
   );
 
   const setModalOpen = (id) =>
     replace(`${asPath.split('?')?.[0]}?projectId=${id}`);
+
+  const tags = categories?.map(({ label, count }) => ({
+    id: label,
+    name: `${label} (${count})`,
+    active: label === category,
+  }));
 
   return (
     <Fragment>
@@ -47,15 +58,12 @@ const GrantsProjectsSection = ({ projects: allProjects, images }) => {
             </p>
           </Column>
         </Row>
-        <Row>
-          <Column width={[0, 1 / 2, 2 / 3]} />
+        <Row className="project-categories-search">
+          <Column width={[1, 1 / 2, 2 / 3]} className="project-categories">
+            <TagsList title="Categories" tags={tags} onClick={setCategory} />
+          </Column>
           <Column width={[1, 1 / 2, 1 / 3]}>
-            <Search
-              className="project-search"
-              placeholder="Search"
-              input={search}
-              onChange={setSearch}
-            />
+            <Search placeholder="Search" input={search} onChange={setSearch} />
           </Column>
         </Row>
         <Row className="project-cards">

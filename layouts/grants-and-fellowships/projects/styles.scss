@@ -2,6 +2,8 @@
 
 .l-grants-projects-section {
   .projects-header {
+    padding-bottom: 0;
+
     @media screen and (min-width: $screen-m) {
       padding-bottom: rem(20px);
     }
@@ -17,8 +19,18 @@
     }
   }
 
-  .project-search {
+  .project-categories-search {
     margin-bottom: rem(30px);
+  }
+
+  .project-categories {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
   }
 
   .project-cards {
