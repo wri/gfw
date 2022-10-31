@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import useRouter from 'utils/router';
 
 import { Row, Column, Button, Desktop } from 'gfw-components';
 
@@ -26,8 +25,6 @@ const AboutProjectsSection = ({
   const [country, setCountry] = useState('');
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
-  const router = useRouter();
-
   const { countries } = useMemo(
     () =>
       getProjectsProps({
@@ -46,10 +43,11 @@ const AboutProjectsSection = ({
   };
 
   const handleCountryButtonClick = () => {
-    router.push({
-      pathname: '/grants-and-fellowships/projects/',
-      query: { country },
-    });
+    if (!window) return;
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    window
+      .open(`/grants-and-fellowships/projects/?country=${country}`, '_blank')
+      .focus();
   };
 
   return (
@@ -127,6 +125,7 @@ const AboutProjectsSection = ({
                 round
                 size="big"
                 className="country-button"
+                disabled={!country}
                 onClick={handleCountryButtonClick}
               >
                 <Icon icon={arrowDownIcon} />
