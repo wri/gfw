@@ -1,7 +1,8 @@
-import { Fragment, useState, useMemo } from 'react';
+import { Fragment, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
+import omitBy from 'lodash/omitBy';
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
 import Card from 'components/ui/card';
@@ -24,11 +25,11 @@ const GrantsProjectsSection = ({
   const [category, setCategory] = useState('All');
   const [search, setSearch] = useState('');
 
-  const {
-    query: { modal, projectId },
-    replace,
-    asPath,
-  } = useRouter();
+  const { query, replace, asPath } = useRouter();
+
+  const { modal, projectId, country: countryIso } = query;
+
+  useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
 
   const { projects, categories, countries } = useMemo(
     () =>
@@ -62,8 +63,33 @@ const GrantsProjectsSection = ({
     [categories, category]
   );
 
-  const setModalOpen = (id) =>
-    replace(`${asPath.split('?')?.[0]}?projectId=${id}`);
+  const setQueryParams = (params) => {
+    const queryParams = omitBy(
+      { ...query, section: null, ...params },
+      (value) => !value
+    );
+
+    replace(
+      {
+        pathname: asPath.split('?')[0],
+        query: queryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  const handleCountrySelected = (value) => {
+    setQueryParams({ country: value });
+  };
+
+  const setModalOpen = (id) => {
+    setQueryParams({ projectId: id });
+  };
+
+  const handleModalClose = () => {
+    setQueryParams({ projectId: null });
+  };
 
   return (
     <Fragment>
@@ -85,7 +111,7 @@ const GrantsProjectsSection = ({
             <Dropdown
               options={[{ label: 'All', value: '' }, ...countryOptions]}
               value={country}
-              onChange={setCountry}
+              onChange={handleCountrySelected}
               native
             />
           </Column>
@@ -138,7 +164,7 @@ const GrantsProjectsSection = ({
       <ProjectsModal
         open={!!selectedProject}
         data={selectedProject}
-        onRequestClose={() => replace(asPath?.split('?')?.[0])}
+        onRequestClose={handleModalClose}
       />
       <CountryDataProvider />
     </Fragment>
