@@ -10,7 +10,6 @@ import { deburrUpper } from 'utils/strings';
 const getProjects = (state) => state.projects;
 const getCategory = (state) => state.category;
 const getSearch = (state) => state.search;
-const getCustomFilter = (state) => state.customFilter;
 
 const getCategories = createSelector(getProjects, (projects) => {
   if (!projects?.length) return null;
@@ -49,15 +48,15 @@ const getCategoriesList = createSelector(
 );
 
 const getProjectsList = createSelector(
-  [getProjects, getProjectsByCategory, getCategory, getSearch, getCustomFilter],
-  (allProjects, groupedProjects, category, search, filter) => {
+  [getProjects, getProjectsByCategory, getCategory, getSearch],
+  (allProjects, groupedProjects, category, search) => {
     if (!allProjects || !category) return null;
-    if (filter && filter.length) {
-      return allProjects.filter((p) => filter.indexOf(p.id) > -1);
-    }
+
     const projects =
       category === 'All' ? allProjects : groupedProjects[category];
+
     if (!search) return projects;
+
     return projects.filter(
       (p) =>
         deburrUpper(p.title).indexOf(deburrUpper(search)) > -1 ||
