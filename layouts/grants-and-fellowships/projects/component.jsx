@@ -49,7 +49,7 @@ const GrantsProjectsSection = ({
   );
 
   const countryOptions = useMemo(
-    () => allCountries?.filter(({ value }) => countries.includes(value)),
+    () => allCountries?.filter(({ value }) => countries.includes(value)) || [],
     [allCountries, countries]
   );
 
