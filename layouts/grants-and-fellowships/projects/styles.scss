@@ -25,7 +25,13 @@
     margin-bottom: rem(30px);
 
     @media screen and (min-width: $screen-m) {
-      margin-bottom: rem(50px);
+      margin-bottom: rem(54px);
+    }
+
+    .countries-dropdown {
+      z-index: 5;
+      text-align: left;
+      min-width: rem(186px);
     }
 
     .filters-label {

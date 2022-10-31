@@ -16,6 +16,11 @@ $dd-button-height: rem(28px);
         padding: 0;
         right: rem(26px);
       }
+
+      .clear-btn {
+        display: flex;
+        top: 9px;
+      }
     }
 
     &.is-open {

@@ -79,8 +79,8 @@ const GrantsProjectsSection = ({
     );
   };
 
-  const handleCountrySelected = (value) => {
-    setQueryParams({ country: value });
+  const handleCountrySelected = (option) => {
+    setQueryParams({ country: option?.value });
   };
 
   const setModalOpen = (id) => {
@@ -109,10 +109,15 @@ const GrantsProjectsSection = ({
           <Column className="project-filters">
             <span className="filters-label">Filter by country</span>
             <Dropdown
-              options={[{ label: 'All', value: '' }, ...countryOptions]}
+              className="countries-dropdown"
+              options={countryOptions}
               value={country}
               onChange={handleCountrySelected}
-              native
+              theme="theme-dropdown-button"
+              placeholder="Select a country"
+              noSelectedValue="Select a country"
+              clearable
+              searchable
             />
           </Column>
         </Row>
