@@ -70,4 +70,30 @@
       font-weight: 500;
     }
   }
+
+  .country-selector {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    margin-top: rem(40px);
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
+
+    .countries-dropdown {
+      text-align: left;
+      min-width: rem(200px);
+    }
+
+    .country-button {
+      transform: rotate(-90deg);
+
+      .c-icon {
+        width: rem(14px);
+        margin-top: rem(1px);
+      }
+    }
+  }
 }

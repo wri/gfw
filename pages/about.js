@@ -1,7 +1,7 @@
 import PageWrapper from 'wrappers/page';
 import About from 'layouts/about';
 
-import { getImpactProjects } from 'services/projects';
+import { getImpactProjects, getSGFProjects } from 'services/projects';
 
 const AboutPage = (props) => (
   <PageWrapper
@@ -13,11 +13,13 @@ const AboutPage = (props) => (
 );
 
 export const getStaticProps = async () => {
+  const sgfProjects = await getSGFProjects();
   const impactProjects = await getImpactProjects();
 
   return {
     props: {
       impactProjects,
+      sgfProjects,
     },
   };
 };
