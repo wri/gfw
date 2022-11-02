@@ -38,10 +38,6 @@ const AboutProjectsSection = ({
     [allCountries, countries]
   );
 
-  const handleCountrySelected = (option) => {
-    setCountry(option?.value);
-  };
-
   const handleCountryButtonClick = () => {
     if (!window) return;
     // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -111,21 +107,16 @@ const AboutProjectsSection = ({
             <p>You can also choose a country from the list below:</p>
             <div className="country-selector">
               <Dropdown
-                className="countries-dropdown"
+                theme="theme-dropdown-native large country-dropdown"
                 options={countryOptions}
                 value={country}
-                onChange={handleCountrySelected}
-                theme="theme-dropdown-button-big"
-                placeholder="Select a country"
-                noSelectedValue="Select a country"
-                clearable
-                searchable
+                onChange={setCountry}
+                native
               />
               <Button
                 round
                 size="big"
                 className="country-button"
-                disabled={!country}
                 onClick={handleCountryButtonClick}
               >
                 <Icon icon={arrowDownIcon} />
