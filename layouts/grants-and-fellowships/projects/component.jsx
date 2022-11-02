@@ -9,8 +9,6 @@ import Card from 'components/ui/card';
 import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
 
-import CountryDataProvider from 'providers/country-data-provider';
-
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
@@ -51,7 +49,9 @@ const GrantsProjectsSection = ({
   const countryOptions = useMemo(
     () => [
       { label: 'All', value: '' },
-      ...allCountries?.filter(({ value }) => countries.includes(value)),
+      ...allCountries
+        ?.filter(({ iso }) => countries.includes(iso))
+        .map(({ iso, name }) => ({ label: name, value: iso })),
     ],
     [allCountries, countries]
   );
@@ -173,7 +173,6 @@ const GrantsProjectsSection = ({
         data={selectedProject}
         onRequestClose={handleModalClose}
       />
-      <CountryDataProvider />
     </Fragment>
   );
 };
