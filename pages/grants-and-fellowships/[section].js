@@ -17,23 +17,24 @@ const GrantsAndFellowshipsPage = (props) => (
   </PageLayout>
 );
 
-export const getServerSideProps = async ({ params }) => {
-  if (!SECTIONS.includes(params?.section)) {
+export const getServerSideProps = async ({ query }) => {
+  if (!SECTIONS.includes(query?.section)) {
     return {
       notFound: true,
     };
   }
 
-  if (params?.section === 'projects') {
+  if (query?.section === 'projects') {
     const projects = await getSGFProjects();
     const countries = await getCountriesProvider();
 
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
-        section: params?.section,
+        section: query?.section,
         projects: projects || [],
         countries: countries?.data?.rows || [],
+        country: query?.country,
       },
     };
   }
@@ -41,9 +42,9 @@ export const getServerSideProps = async ({ params }) => {
   return {
     props: {
       title: `${capitalize(
-        params?.section
+        query?.section
       )} | Grants & Fellowships | Global Forest Watch`,
-      section: params?.section,
+      section: query?.section,
     },
   };
 };

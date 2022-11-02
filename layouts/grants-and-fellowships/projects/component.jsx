@@ -18,8 +18,9 @@ const GrantsProjectsSection = ({
   projects: allProjects,
   images,
   countries: allCountries,
+  country: countryQueryParam,
 }) => {
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState(countryQueryParam);
   const [category, setCategory] = useState('All');
   const [search, setSearch] = useState('');
 
@@ -184,6 +185,7 @@ const GrantsProjectsSection = ({
 };
 
 GrantsProjectsSection.propTypes = {
+  country: PropTypes.string,
   countries: PropTypes.array,
   projects: PropTypes.array,
   images: PropTypes.object,
