@@ -43,14 +43,6 @@ const AboutProjectsSection = ({
     setCountry(countryOptions[0].value);
   }, [country, countryOptions, setCountry]);
 
-  const handleCountryButtonClick = () => {
-    if (!window) return;
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
-    window
-      .open(`/grants-and-fellowships/projects/?country=${country}`, '_blank')
-      .focus();
-  };
-
   return (
     <>
       <div className="l-section-projects">
@@ -118,14 +110,15 @@ const AboutProjectsSection = ({
                 onChange={setCountry}
                 native
               />
-              <Button
-                round
-                size="big"
-                className="country-button"
-                onClick={handleCountryButtonClick}
+              <a
+                href={`/grants-and-fellowships/projects/?country=${country}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Icon icon={arrowDownIcon} />
-              </Button>
+                <Button round size="big" className="country-button">
+                  <Icon icon={arrowDownIcon} />
+                </Button>
+              </a>
             </div>
           </Column>
         </Row>
