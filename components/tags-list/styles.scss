@@ -1,0 +1,44 @@
+@import '~styles/settings.scss';
+
+.c-tags-list {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-size: 0; // Fixes an issue with unwanted space above the items
+  gap: rem(24px);
+
+  @media screen and (min-width: $screen-m) {
+    flex-wrap: nowrap;
+  }
+
+  h5 {
+    color: $medium-grey;
+    font-size: rem(14px);
+    text-transform: uppercase;
+  }
+
+  .tag {
+    cursor: pointer;
+    padding: rem(5px) rem(14px);
+    font-size: rem(12px);
+    background-color: $slate-light;
+    border-radius: 0;
+    text-transform: uppercase;
+    color: $white;
+    transition: all 0.15s ease-in-out;
+
+    &.active,
+    &:hover {
+      background-color: $green-gfw;
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: rem(24px);
+    gap: rem(8px) rem(16px);
+  }
+}
