@@ -17,15 +17,13 @@ const GrantsAndFellowshipsPage = (props) => (
   </PageLayout>
 );
 
-export const getStaticPaths = async () => {
-  const paths = SECTIONS.map((key) => ({
-    params: { section: key },
-  }));
+export const getServerSideProps = async ({ params }) => {
+  if (!SECTIONS.includes(params?.section)) {
+    return {
+      notFound: true,
+    };
+  }
 
-  return { paths, fallback: false };
-};
-
-export const getStaticProps = async ({ params }) => {
   if (params?.section === 'projects') {
     const projects = await getSGFProjects();
     const countries = await getCountriesProvider();
