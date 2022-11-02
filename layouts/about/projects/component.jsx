@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
@@ -37,6 +37,11 @@ const AboutProjectsSection = ({
     () => allCountries?.filter(({ value }) => countries?.includes(value)) || [],
     [allCountries, countries]
   );
+
+  useEffect(() => {
+    if (country || !countryOptions.length) return;
+    setCountry(countryOptions[0].value);
+  }, [country, countryOptions, setCountry]);
 
   const handleCountryButtonClick = () => {
     if (!window) return;
