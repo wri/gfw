@@ -49,7 +49,10 @@ const GrantsProjectsSection = ({
   );
 
   const countryOptions = useMemo(
-    () => allCountries?.filter(({ value }) => countries.includes(value)) || [],
+    () => [
+      { label: 'All', value: '' },
+      ...allCountries?.filter(({ value }) => countries.includes(value)),
+    ],
     [allCountries, countries]
   );
 
@@ -80,7 +83,7 @@ const GrantsProjectsSection = ({
   };
 
   const handleCountrySelected = (option) => {
-    setQueryParams({ country: option?.value });
+    setQueryParams({ country: option });
   };
 
   const setModalOpen = (id) => {
@@ -110,14 +113,13 @@ const GrantsProjectsSection = ({
             <span className="filters-label">Filter by country</span>
             <Dropdown
               className="countries-dropdown"
+              theme="theme-dropdown-native"
               options={countryOptions}
               value={country}
               onChange={handleCountrySelected}
-              theme="theme-dropdown-button"
-              placeholder="Select a country"
-              noSelectedValue="Select a country"
               clearable
               searchable
+              native
             />
           </Column>
         </Row>
