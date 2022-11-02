@@ -34,7 +34,7 @@ export const getServerSideProps = async ({ query }) => {
         section: query?.section,
         projects: projects || [],
         countries: countries?.data?.rows || [],
-        country: query?.country,
+        country: query?.country || '',
       },
     };
   }
