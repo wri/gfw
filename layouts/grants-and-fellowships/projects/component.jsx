@@ -27,8 +27,6 @@ const GrantsProjectsSection = ({
 
   const { modal, projectId, country: countryIso } = query;
 
-  useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
-
   const { projects, categories, countries } = useMemo(
     () =>
       getProjectsProps({
@@ -65,6 +63,14 @@ const GrantsProjectsSection = ({
       })) || [],
     [categories, category]
   );
+
+  useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
+
+  useEffect(() => {
+    if (!categories.map(({ label }) => label).includes(category)) {
+      setCategory('All');
+    }
+  }, [country]);
 
   const setQueryParams = (params) => {
     const queryParams = omitBy(
