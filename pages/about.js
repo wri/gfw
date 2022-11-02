@@ -2,6 +2,7 @@ import PageWrapper from 'wrappers/page';
 import About from 'layouts/about';
 
 import { getImpactProjects, getSGFProjects } from 'services/projects';
+import { getCountriesProvider } from 'services/country';
 
 const AboutPage = (props) => (
   <PageWrapper
@@ -15,11 +16,13 @@ const AboutPage = (props) => (
 export const getStaticProps = async () => {
   const sgfProjects = await getSGFProjects();
   const impactProjects = await getImpactProjects();
+  const countries = await getCountriesProvider();
 
   return {
     props: {
       impactProjects,
       sgfProjects,
+      countries: countries?.data?.rows,
     },
   };
 };

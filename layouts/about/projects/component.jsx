@@ -12,8 +12,6 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import playIcon from 'assets/icons/play.svg?sprite';
 import growth from 'layouts/about/projects/images/growth.png';
 
-import CountryDataProvider from 'providers/country-data-provider';
-
 import { getProjectsProps } from 'layouts/grants-and-fellowships/projects/selectors';
 
 import './styles.scss';
@@ -34,7 +32,10 @@ const AboutProjectsSection = ({
   );
 
   const countryOptions = useMemo(
-    () => allCountries?.filter(({ value }) => countries?.includes(value)) || [],
+    () =>
+      allCountries
+        ?.filter(({ iso }) => countries.includes(iso))
+        .map(({ iso, name }) => ({ label: name, value: iso })),
     [allCountries, countries]
   );
 
@@ -134,7 +135,6 @@ const AboutProjectsSection = ({
           </div>
         </Desktop>
       </div>
-      <CountryDataProvider />
     </>
   );
 };
