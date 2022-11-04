@@ -9,7 +9,22 @@
   },
   {
     "label": "Forest change",
-    "value": "forest-change"
+    "value": "forest-change",
+    "subcategories":
+      [
+        {
+          "label": "Net Forest Change",
+          "value": "net-change"
+        },
+        {
+          "label": "Forest Loss",
+          "value": "forest-loss"
+        },
+        {
+          "label": "Forest Gain",
+          "value": "forest-gain"
+        }
+      ]
   },
   {
     "label": "Biodiversity",
