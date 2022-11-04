@@ -19,6 +19,8 @@ import MetaProvider from 'providers/meta-provider';
 
 // import dashboardLinksSSR from 'data/dashboard-menu-ssr';
 
+import CATEGORIES from 'data/categories';
+
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
 import ClimateModal from 'components/modals/climate';
@@ -168,6 +170,10 @@ class DashboardsPage extends PureComponent {
       location &&
       !['country', 'wdpa'].includes(location.type);
 
+    const groupBySubcategory =
+      CATEGORIES.find(({ value }) => category === value)?.settings?.dashboard
+        ?.groupBySubcategory || false;
+
     return (
       <div className="l-dashboards-page">
         <div className="content-panel">
@@ -192,10 +198,10 @@ class DashboardsPage extends PureComponent {
               areaId={activeArea && activeArea.id}
             />
           )}
-          <SubCategories />
+          {groupBySubcategory && <SubCategories />}
           <Widgets
             className="dashboard-widgets"
-            groupBySubcategory={category === 'forest-change'}
+            groupBySubcategory={groupBySubcategory}
           />
           {this.props.locationType === 'global' && <GFRBanner />}
         </div>

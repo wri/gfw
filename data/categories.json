@@ -24,7 +24,12 @@
           "label": "Forest Gain",
           "value": "forest-gain"
         }
-      ]
+      ],
+    "settings": {
+      "dashboard": {
+        "groupBySubcategory": true
+      }
+    }
   },
   {
     "label": "Biodiversity",
