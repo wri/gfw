@@ -46,33 +46,6 @@
     }
   }
 
-  .c-widgets-subcategory-buttons {
-    margin-bottom: 1rem;
-
-    li {
-      display: inline-block;
-      margin: 0 20px 20px 0;
-    }
-
-    .c-widgets-subcategory-button {
-      display: inline-block;
-      padding: 0 12px;
-      font-size: 12px;
-      line-height: 24px;
-      background-color: $black;
-      border-radius: 0;
-      text-transform: uppercase;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.15s ease-in-out;
-
-      &:hover,
-      &:active {
-        background-color: $green-gfw;
-      }
-    }
-  }
-
   @media screen and (min-width: $screen-m) {
     padding-left: $desktop-gutter;
     padding-right: $desktop-gutter;
