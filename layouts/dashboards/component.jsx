@@ -33,6 +33,7 @@ import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
+import SubCategories from './components/subcategories';
 import GFRBanner from './components/gfr-banner';
 import Map from './components/map';
 import Header from './components/header';
@@ -43,7 +44,6 @@ import GlobalSentence from './components/global-sentence';
 import './styles.scss';
 
 const isServer = typeof window === 'undefined';
-
 class DashboardsPage extends PureComponent {
   static propTypes = {
     ssrLocation: PropTypes.object,
@@ -55,6 +55,7 @@ class DashboardsPage extends PureComponent {
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     embed: PropTypes.bool,
+    category: PropTypes.string,
     clearScrollTo: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
     basePath: PropTypes.string,
@@ -158,6 +159,7 @@ class DashboardsPage extends PureComponent {
       clearScrollTo,
       globalSentence,
       embed,
+      category,
     } = this.props;
     const { status, location } = activeArea || {};
 
@@ -190,7 +192,11 @@ class DashboardsPage extends PureComponent {
               areaId={activeArea && activeArea.id}
             />
           )}
-          <Widgets className="dashboard-widgets" />
+          <SubCategories />
+          <Widgets
+            className="dashboard-widgets"
+            groupBySubcategory={category === 'forest-change'}
+          />
           {this.props.locationType === 'global' && <GFRBanner />}
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
