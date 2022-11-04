@@ -28,7 +28,7 @@ export default {
   published: true,
   title: 'Location of integrated deforestation Alerts in {location}',
   categories: ['forest-change'],
-  subCategory: 'forest-loss',
+  subcategories: ['forest-loss'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [

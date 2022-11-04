@@ -21,7 +21,7 @@ export default {
     initial: 'Tree cover gain in {location} compared to other areas',
   },
   categories: ['summary', 'forest-change'],
-  subCategory: 'forest-gain',
+  subcategories: ['forest-gain'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [

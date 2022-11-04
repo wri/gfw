@@ -21,7 +21,7 @@ export default {
     region: 'Tree cover gain outside plantations in {location}',
   },
   categories: ['forest-change'],
-  subCategory: 'forest-gain',
+  subcategories: ['forest-gain'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
