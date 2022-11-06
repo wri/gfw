@@ -16,7 +16,7 @@ class Widgets extends PureComponent {
     loadingData: PropTypes.bool,
     loadingMeta: PropTypes.bool,
     widgets: PropTypes.array,
-    category: PropTypes.string,
+    widgetsGroupedBySubcategory: PropTypes.array,
     widgetsData: PropTypes.object,
     simple: PropTypes.bool,
     location: PropTypes.object,
@@ -31,6 +31,7 @@ class Widgets extends PureComponent {
     setMapSettings: PropTypes.func.isRequired,
     handleClickWidget: PropTypes.func.isRequired,
     embed: PropTypes.bool,
+    groupBySubcategory: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object,
     noDataMessage: PropTypes.string,
@@ -43,8 +44,8 @@ class Widgets extends PureComponent {
     const {
       activeWidget,
       className,
-      widgets,
-      category,
+      widgets: allWidgets = [],
+      widgetsGroupedBySubcategory: groupedWidgets = [],
       location,
       loadingData,
       loadingMeta,
@@ -54,6 +55,7 @@ class Widgets extends PureComponent {
       setActiveWidget,
       setModalMetaSettings,
       setShareModal,
+      groupBySubcategory = false,
       embed,
       simple,
       modalClosing,
@@ -63,85 +65,12 @@ class Widgets extends PureComponent {
       handleClickWidget,
       authenticated,
     } = this.props;
-    const hasWidgets = !isEmpty(widgets);
 
-    // TODO: Pedro: Shouldn't be here, please refactor
-    const forestChangeSubCategories = [
-      {
-        id: "net-change",
-        name: "Net Forest Change",
-      },
-      {
-        id: "forest-loss",
-        name: "Forest Loss",
-      },
-      {
-        id: "forest-gain",
-        name: "Forest Gain",
-      },
-    ];
+    const widgetGroups = groupBySubcategory
+      ? groupedWidgets
+      : [{ id: null, label: null, widgets: allWidgets }];
 
-    const renderWidgets = (filteredWidgets) => {
-      return filteredWidgets.map((w) => (
-        <Widget
-          key={w.widget}
-          {...w}
-          large={w.large}
-          authenticated={authenticated}
-          active={activeWidget && activeWidget.widget === w.widget}
-          embed={embed}
-          simple={simple}
-          location={location}
-          geostore={geostore}
-          meta={meta}
-          metaLoading={loadingMeta || loadingData}
-          setWidgetData={(data) => setWidgetsData({ [w.widget]: data })}
-          handleSetInteraction={(payload) =>
-            setWidgetInteractionByKey({
-              key: w.widget,
-              payload,
-            })}
-          handleChangeSettings={(change) => {
-            setWidgetSettings({
-              widget: w.widget,
-              change: {
-                ...change,
-                ...(change.forestType === 'ifl' &&
-                  w.settings &&
-                  w.settings.extentYear && {
-                    extentYear: w.settings.ifl === '2016' ? 2010 : 2000,
-                  }),
-                ...(change.forestType === 'primary_forest' &&
-                  w.settings &&
-                  w.settings.extentYear && {
-                    extentYear: 2000,
-                  }),
-              },
-            });
-          }}
-          handleShowMap={() => {
-            setActiveWidget(w.widget);
-            trackEvent({
-              category: 'Dashboards page',
-              action: 'User views a widget on the map',
-              label: w.widget,
-            });
-          }}
-          handleShowInfo={setModalMetaSettings}
-          handleShowShare={() =>
-            setShareModal({
-              title: 'Share this widget',
-              shareUrl: w.shareUrl,
-              embedUrl: w.embedUrl,
-              embedSettings: !w.large
-                ? { width: 315, height: 460 }
-                : { width: 630, height: 460 },
-            })}
-          preventCloseSettings={modalClosing}
-          onClickWidget={handleClickWidget}
-        />
-      ))
-    };
+    const hasWidgets = !isEmpty(allWidgets) && !isEmpty(widgetGroups);
 
     return (
       <div
@@ -155,28 +84,86 @@ class Widgets extends PureComponent {
       >
         {loadingData && <Loader className="widgets-loader large" />}
 
-        {category === 'forest-change' &&
-          !loadingData &&
-          widgets &&
-          forestChangeSubCategories.map((sc) => (
-            <div
-              id={sc.id}
-              className={cx(
-                'c-widgets',
-                className,
-                { simple },
-                { embed },
-                { 'no-widgets': !hasWidgets }
-              )}
-            >
-              <div className="c-widgets-subcategory-title">{sc.name}</div>
-              {renderWidgets(widgets.filter(w => w.subCategory === sc.id))}
-            </div>
-          ))}
-        {!loadingData &&
-          widgets &&
-          category !== 'forest-change' &&
-          renderWidgets(widgets)}
+        {!loadingData && hasWidgets && (
+          <>
+            {widgetGroups.map(({ id, label, widgets = [] }) => (
+              <div
+                id={id}
+                className={cx(
+                  'c-widgets',
+                  className,
+                  { simple },
+                  { embed },
+                  { 'no-widgets': !hasWidgets }
+                )}
+              >
+                <div className="c-widgets-subcategory-title">{label}</div>
+                {widgets.map((w) => (
+                  <Widget
+                    key={w.widget}
+                    {...w}
+                    large={w.large}
+                    authenticated={authenticated}
+                    active={activeWidget && activeWidget.widget === w.widget}
+                    embed={embed}
+                    simple={simple}
+                    location={location}
+                    geostore={geostore}
+                    meta={meta}
+                    metaLoading={loadingMeta || loadingData}
+                    setWidgetData={(data) =>
+                      setWidgetsData({ [w.widget]: data })}
+                    handleSetInteraction={(payload) =>
+                      setWidgetInteractionByKey({
+                        key: w.widget,
+                        payload,
+                      })}
+                    handleChangeSettings={(change) => {
+                      setWidgetSettings({
+                        widget: w.widget,
+                        change: {
+                          ...change,
+                          ...(change.forestType === 'ifl' &&
+                            w.settings &&
+                            w.settings.extentYear && {
+                              extentYear:
+                                w.settings.ifl === '2016' ? 2010 : 2000,
+                            }),
+                          ...(change.forestType === 'primary_forest' &&
+                            w.settings &&
+                            w.settings.extentYear && {
+                              extentYear: 2000,
+                            }),
+                        },
+                      });
+                    }}
+                    handleShowMap={() => {
+                      setActiveWidget(w.widget);
+                      trackEvent({
+                        category: 'Dashboards page',
+                        action: 'User views a widget on the map',
+                        label: w.widget,
+                      });
+                    }}
+                    handleShowInfo={setModalMetaSettings}
+                    handleShowShare={() =>
+                      setShareModal({
+                        title: 'Share this widget',
+                        shareUrl: w.shareUrl,
+                        embedUrl: w.embedUrl,
+                        embedSettings: !w.large
+                          ? { width: 315, height: 460 }
+                          : { width: 630, height: 460 },
+                      })}
+                    preventCloseSettings={modalClosing}
+                    onClickWidget={handleClickWidget}
+                  />
+                ))}
+              </div>
+            ))}
+          </>
+        )}
+
         {!loadingData && !hasWidgets && !simple && (
           <NoContent
             className="no-widgets-message large"

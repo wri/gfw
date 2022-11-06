@@ -22,7 +22,7 @@ export default {
     global: 'Global Tree cover loss',
   },
   categories: ['forest-change'],
-  subCategory: 'forest-loss',
+  subcategories: ['forest-loss'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [

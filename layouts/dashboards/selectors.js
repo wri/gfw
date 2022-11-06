@@ -33,11 +33,8 @@ export const getWidgetAnchor = createSelector(
     const { scrollTo } = query || {};
     const hasWidget =
       widgets && widgets.length && widgets.find((w) => w.widget === scrollTo);
-    // TODO: Pedro: shouldn't be here also
-    const hasSubcategory =
-      ["net-change", "forest-loss", "forest-gain"].indexOf(scrollTo) >= 0;
 
-    return (hasWidget || hasSubcategory) ? document.getElementById(scrollTo) : null;
+    return hasWidget ? document.getElementById(scrollTo) : null;
   }
 );
 

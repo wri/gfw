@@ -66,7 +66,7 @@ export default {
   widget: 'treeLoss',
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
-  subCategory: 'forest-loss',
+  subcategories: ['forest-loss'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
     text:

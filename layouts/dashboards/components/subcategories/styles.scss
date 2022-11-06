@@ -1,0 +1,17 @@
+@import '~styles/settings.scss';
+
+.subcategories {
+  margin-top: rem(20px);
+  margin-bottom: rem(20px);
+  padding-bottom: 0;
+
+  @media screen and (min-width: $screen-m) {
+    margin-top: rem(2px);
+    margin-bottom: rem(2px);
+  }
+
+  .c-tags-list {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}
