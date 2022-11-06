@@ -32,7 +32,7 @@ export default {
     global: 'Global Primary Forest loss',
   },
   categories: ['summary', 'forest-change'],
-  subCategory: 'forest-loss',
+  subcategories: ['forest-loss'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {

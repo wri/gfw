@@ -19,7 +19,7 @@ export default {
   widget: 'glads',
   title: 'Deforestation alerts for the last week in {location}',
   categories: ['summary', 'forest-change'],
-  subCategory: 'forest-loss',
+  subcategories: ['forest-loss'],
   admins: ['adm0', 'adm1', 'adm2'],
   types: [],
   type: 'loss',

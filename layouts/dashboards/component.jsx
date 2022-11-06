@@ -19,6 +19,8 @@ import MetaProvider from 'providers/meta-provider';
 
 // import dashboardLinksSSR from 'data/dashboard-menu-ssr';
 
+import CATEGORIES from 'data/categories';
+
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
 import ClimateModal from 'components/modals/climate';
@@ -33,6 +35,7 @@ import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
+import SubCategories from './components/subcategories';
 import GFRBanner from './components/gfr-banner';
 import Map from './components/map';
 import Header from './components/header';
@@ -43,7 +46,6 @@ import GlobalSentence from './components/global-sentence';
 import './styles.scss';
 
 const isServer = typeof window === 'undefined';
-
 class DashboardsPage extends PureComponent {
   static propTypes = {
     ssrLocation: PropTypes.object,
@@ -55,6 +57,7 @@ class DashboardsPage extends PureComponent {
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     embed: PropTypes.bool,
+    category: PropTypes.string,
     clearScrollTo: PropTypes.func,
     setDashboardPromptsSettings: PropTypes.func,
     basePath: PropTypes.string,
@@ -158,6 +161,7 @@ class DashboardsPage extends PureComponent {
       clearScrollTo,
       globalSentence,
       embed,
+      category,
     } = this.props;
     const { status, location } = activeArea || {};
 
@@ -165,6 +169,10 @@ class DashboardsPage extends PureComponent {
       status === 'pending' &&
       location &&
       !['country', 'wdpa'].includes(location.type);
+
+    const groupBySubcategory =
+      CATEGORIES.find(({ value }) => category === value)?.settings?.dashboard
+        ?.groupBySubcategory || false;
 
     return (
       <div className="l-dashboards-page">
@@ -190,7 +198,11 @@ class DashboardsPage extends PureComponent {
               areaId={activeArea && activeArea.id}
             />
           )}
-          <Widgets className="dashboard-widgets" />
+          {groupBySubcategory && <SubCategories />}
+          <Widgets
+            className="dashboard-widgets"
+            groupBySubcategory={groupBySubcategory}
+          />
           {this.props.locationType === 'global' && <GFRBanner />}
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>

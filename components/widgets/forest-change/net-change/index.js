@@ -27,7 +27,7 @@ export default {
     global: 'Components of net change in tree cover globally',
   },
   categories: ['summary', 'forest-change'],
-  subCategory: 'net-change',
+  subcategories: ['net-change'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
