@@ -29,7 +29,10 @@ class WidgetPieChart extends PureComponent {
       settingsBtnConfig.shouldShowButton(this.props);
 
     const maxSize =
-      pathname.indexOf('dashboard') >= 0 && chartHeight ? chartHeight : 140;
+      (pathname.indexOf('dashboard') >= 0 || pathname.indexOf('embed')) &&
+      chartHeight
+        ? chartHeight
+        : 140;
 
     return (
       <div className="c-pie-chart-legend-widget">
@@ -80,6 +83,7 @@ class WidgetPieChart extends PureComponent {
                     },
                   ]
             }
+            config={settings}
             simple={simple}
           />
         </div>
