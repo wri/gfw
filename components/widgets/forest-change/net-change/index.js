@@ -76,7 +76,7 @@ export default {
     //   'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} between {startYear} and {endYear}.',
   },
   getData: (params = {}) => {
-    const { adm0, adm1, adm2, type } = params || {};
+    const { adm0, adm1, adm2, type, dashboard, embed } = params || {};
 
     const globalLocation = {
       adm0: type === 'global' ? null : adm0,
@@ -104,6 +104,19 @@ export default {
           endYear,
           yearsRange: range,
           chartHeight: 230,
+          ...((dashboard || embed) && {
+            legend: {
+              style: {
+                display: 'flex',
+                justifyContent: 'center',
+              },
+            },
+            chart: {
+              style: {
+                paddingRight: '14%',
+              },
+            },
+          }),
         },
         options: {
           years: range,
