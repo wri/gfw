@@ -31,6 +31,7 @@ class Widgets extends PureComponent {
     setMapSettings: PropTypes.func.isRequired,
     handleClickWidget: PropTypes.func.isRequired,
     embed: PropTypes.bool,
+    dashboard: PropTypes.bool,
     groupBySubcategory: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object,
@@ -57,6 +58,7 @@ class Widgets extends PureComponent {
       setShareModal,
       groupBySubcategory = false,
       embed,
+      dashboard,
       simple,
       modalClosing,
       noDataMessage,
@@ -106,6 +108,7 @@ class Widgets extends PureComponent {
                     authenticated={authenticated}
                     active={activeWidget && activeWidget.widget === w.widget}
                     embed={embed}
+                    dashboard={dashboard}
                     simple={simple}
                     location={location}
                     geostore={geostore}
