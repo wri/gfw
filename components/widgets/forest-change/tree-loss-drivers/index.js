@@ -11,7 +11,6 @@ import {
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
 
-import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
@@ -20,7 +19,6 @@ const MIN_YEAR = 2001;
 const MAX_YEAR = 2021;
 
 export default {
-  ...treeLoss,
   widget: 'treeLossTsc',
   title: {
     initial: 'Annual tree cover loss by dominant driver in {location}',
@@ -36,6 +34,14 @@ export default {
     link:
       'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
   },
+  categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
+  large: true,
+  visible: ['dashboard', 'analysis'],
+  colors: 'loss',
+  pendingKeys: ['threshold', 'years', 'extentYear'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
+  dataType: 'loss',
   settingsConfig: [
     {
       key: 'tscDriverGroup',
