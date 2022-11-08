@@ -109,11 +109,12 @@ export default {
               style: {
                 display: 'flex',
                 justifyContent: 'center',
+                paddingRight: '5%',
               },
             },
             chart: {
               style: {
-                paddingRight: '14%',
+                paddingRight: '16%',
               },
             },
           }),
