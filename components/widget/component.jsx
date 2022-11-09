@@ -37,6 +37,7 @@ class Widget extends PureComponent {
     originalData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
+    chartSettings: PropTypes.object,
     sentence: PropTypes.object,
     proxy: PropTypes.bool,
     proxyOn: PropTypes.array,
@@ -96,6 +97,7 @@ class Widget extends PureComponent {
       locationLabel,
       locationLabelFull,
       data,
+      chartSettings,
       legendData,
       rawData,
       originalData,
@@ -200,6 +202,7 @@ class Widget extends PureComponent {
           rawData={rawData}
           originalData={originalData}
           settings={settings}
+          chartSettings={chartSettings}
           settingsConfig={settingsConfig}
           preventRenderKeys={preventRenderKeys}
           sentence={sentence}

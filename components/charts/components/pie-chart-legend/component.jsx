@@ -7,8 +7,8 @@ import './styles.scss';
 
 class PieChartLegend extends PureComponent {
   render() {
-    const { data, config = {}, className, simple } = this.props;
-    const { legend } = config;
+    const { data, chartSettings = {}, config, className, simple } = this.props;
+    const { legend } = chartSettings;
 
     let sizeClass = '';
     if (data.length > 5) {
@@ -52,6 +52,7 @@ class PieChartLegend extends PureComponent {
 PieChartLegend.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
+  chartSettings: PropTypes.object,
   simple: PropTypes.bool,
   className: PropTypes.string,
 };

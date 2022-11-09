@@ -4,6 +4,7 @@ export const initialState = {
   loading: true,
   error: false,
   data: {},
+  chartSettings: {},
   settings: {},
   interactions: {},
   category: 'summary',
@@ -20,6 +21,14 @@ const setWidgetsData = (state, { payload }) => ({
   },
   loading: false,
   error: false,
+});
+
+const setWidgetsChartSettings = (state, { payload }) => ({
+  ...state,
+  chartSettings: {
+    ...state.chartSettings,
+    ...payload,
+  },
 });
 
 const setActiveWidget = (state, { payload }) => ({
@@ -73,6 +82,7 @@ const setWidgetsLoading = (state, { payload }) => ({
 
 export default {
   [actions.setWidgetsData]: setWidgetsData,
+  [actions.setWidgetsChartSettings]: setWidgetsChartSettings,
   [actions.setShowMap]: setShowMap,
   [actions.setWidgetsCategory]: setWidgetsCategory,
   [actions.setActiveWidget]: setActiveWidget,

@@ -23,6 +23,7 @@ class Widgets extends PureComponent {
     locationObj: PropTypes.object,
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
+    setWidgetsChartSettings: PropTypes.func.isRequired,
     setWidgetSettings: PropTypes.func.isRequired,
     setWidgetInteractionByKey: PropTypes.func.isRequired,
     setActiveWidget: PropTypes.func.isRequired,
@@ -51,6 +52,7 @@ class Widgets extends PureComponent {
       loadingData,
       loadingMeta,
       setWidgetsData,
+      setWidgetsChartSettings,
       setWidgetSettings,
       setWidgetInteractionByKey,
       setActiveWidget,
@@ -114,8 +116,12 @@ class Widgets extends PureComponent {
                     geostore={geostore}
                     meta={meta}
                     metaLoading={loadingMeta || loadingData}
-                    setWidgetData={(data) =>
-                      setWidgetsData({ [w.widget]: data })}
+                    setWidgetData={(data) => {
+                      setWidgetsData({ [w.widget]: data });
+                    }}
+                    setWidgetChartSettings={(chartSettings) => {
+                      setWidgetsChartSettings({ [w.widget]: chartSettings });
+                    }}
                     handleSetInteraction={(payload) =>
                       setWidgetInteractionByKey({
                         key: w.widget,

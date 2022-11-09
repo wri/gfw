@@ -19,10 +19,10 @@ class CustomPieChart extends PureComponent {
       className,
       tooltip,
       simple,
-      config = {},
+      chartSettings = {},
     } = this.props;
 
-    const { chart } = config;
+    const { chart } = chartSettings;
 
     return (
       <div className={cx('c-pie-chart', className)} style={chart?.style}>
@@ -65,7 +65,7 @@ CustomPieChart.propTypes = {
   className: PropTypes.string,
   simple: PropTypes.bool,
   tooltip: PropTypes.array,
-  config: PropTypes.object,
+  chartSettings: PropTypes.object,
 };
 
 CustomPieChart.defaultProps = {
