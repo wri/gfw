@@ -75,8 +75,28 @@ export default {
     // noLoss:
     //   'Fires were responsible for {lossFiresPercentage} of tree cover loss in {location} between {startYear} and {endYear}.',
   },
+  getChartSettings: (params) => {
+    const { dashboard, embed } = params;
+
+    return {
+      ...((dashboard || embed) && {
+        legend: {
+          style: {
+            display: 'flex',
+            justifyContent: 'center',
+            paddingRight: '5%',
+          },
+        },
+        chart: {
+          style: {
+            paddingRight: '16%',
+          },
+        },
+      }),
+    };
+  },
   getData: (params = {}) => {
-    const { adm0, adm1, adm2, type, dashboard, embed } = params || {};
+    const { adm0, adm1, adm2, type } = params || {};
 
     const globalLocation = {
       adm0: type === 'global' ? null : adm0,
@@ -104,20 +124,6 @@ export default {
           endYear,
           yearsRange: range,
           chartHeight: 230,
-          ...((dashboard || embed) && {
-            legend: {
-              style: {
-                display: 'flex',
-                justifyContent: 'center',
-                paddingRight: '5%',
-              },
-            },
-            chart: {
-              style: {
-                paddingRight: '16%',
-              },
-            },
-          }),
         },
         options: {
           years: range,
