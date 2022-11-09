@@ -38,7 +38,7 @@
     margin-bottom: rem(20px);
   }
 
-  &.small {
+  .small {
     .legend-value {
       padding: 0 0 0 rem(20px);
       font-size: rem(22px);
@@ -46,7 +46,7 @@
     }
   }
 
-  &.x-small {
+  .x-small {
     .legend-item {
       display: flex;
       flex-direction: row;
@@ -60,7 +60,7 @@
     }
   }
 
-  &.simple {
+  .simple {
     &.small {
       .legend-value {
         font-size: rem(18px);

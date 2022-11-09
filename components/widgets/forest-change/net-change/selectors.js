@@ -14,35 +14,42 @@ const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
 
-const parseData = createSelector([getNetChange, getLocationLabel], (data, location) => {
-  if (!data || isEmpty(data)) return null;
+const parseData = createSelector(
+  [getNetChange, getLocationLabel],
+  (data, location) => {
+    if (!data || isEmpty(data)) return null;
 
-  const parsedData = data;
+    const parsedData = data;
 
-  if (isEmpty(parsedData)) return null;
+    if (isEmpty(parsedData)) return null;
 
-  if (location === 'global') {
+    if (location === 'global') {
+      return {
+        change: -2.44,
+        disturb: 307684115.641,
+        gain: 130855151.187,
+        loss: 231428936.133,
+        net: -100573784.946,
+        stable: 3582893990.354,
+        totalArea: sumBy(parsedData, 'gfw_area__ha'),
+      };
+    }
+
     return {
-      change: -2.44,
-      disturb: 307684115.641,
-      gain: 130855151.187,
-      loss: 231428936.133,
-      net: -100573784.946,
-      stable: 3582893990.354,
-      totalArea: sumBy(parsedData, 'gfw_area__ha'),
-    } 
+      change: meanBy(parsedData, 'change'),
+      disturb: sumBy(parsedData, 'disturb'),
+      gain: sumBy(parsedData, 'gain'),
+      loss: sumBy(parsedData, 'loss'),
+      net: sumBy(parsedData, 'net'),
+      stable: sumBy(parsedData, 'stable'),
+      totalArea:
+        sumBy(parsedData, 'disturb') +
+        sumBy(parsedData, 'gain') +
+        sumBy(parsedData, 'loss') +
+        sumBy(parsedData, 'stable'),
+    };
   }
-
-  return {
-    change: meanBy(parsedData, 'change'),
-    disturb: sumBy(parsedData, 'disturb'),
-    gain: sumBy(parsedData, 'gain'),
-    loss: sumBy(parsedData, 'loss'),
-    net: sumBy(parsedData, 'net'),
-    stable: sumBy(parsedData, 'stable'),
-    totalArea: sumBy(parsedData, 'disturb') + sumBy(parsedData, 'gain') + sumBy(parsedData, 'loss') + sumBy(parsedData, 'stable'),
-  };
-});
+);
 
 // Transform data for chart
 const transformData = createSelector([parseData, getColors], (data, colors) => {

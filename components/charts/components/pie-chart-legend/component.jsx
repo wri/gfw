@@ -7,7 +7,9 @@ import './styles.scss';
 
 class PieChartLegend extends PureComponent {
   render() {
-    const { data, config, className, simple } = this.props;
+    const { data, chartSettings = {}, config, className, simple } = this.props;
+    const { legend } = chartSettings;
+
     let sizeClass = '';
     if (data.length > 5) {
       sizeClass = 'x-small';
@@ -16,30 +18,33 @@ class PieChartLegend extends PureComponent {
     }
 
     return (
-      <ul
-        className={cx('c-pie-chart-legend', className, sizeClass, { simple })}
+      <div
+        className={cx('c-pie-chart-legend', className)}
+        style={legend?.style}
       >
-        {data.map((item, index) => {
-          const value = `${formatNumber({
-            num: item[config.key],
-            unit: item.unit ? item.unit : config.unit
-          })}`;
-          return (
-            <li className="legend-item" key={index.toString()}>
-              <div className="legend-title">
-                <span style={{ backgroundColor: item.color }}>{}</span>
-                <p>
-                  {item.label}
-                  {data.length > 5 && ` - ${value}`}
-                </p>
-              </div>
-              <div className="legend-value" style={{ color: item.color }}>
-                {value}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+        <ul className={cx(sizeClass, { simple })}>
+          {data.map((item, index) => {
+            const value = `${formatNumber({
+              num: item[config.key],
+              unit: item.unit ? item.unit : config.unit,
+            })}`;
+            return (
+              <li className="legend-item" key={index.toString()}>
+                <div className="legend-title">
+                  <span style={{ backgroundColor: item.color }}>{}</span>
+                  <p>
+                    {item.label}
+                    {data.length > 5 && ` - ${value}`}
+                  </p>
+                </div>
+                <div className="legend-value" style={{ color: item.color }}>
+                  {value}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 }
@@ -47,16 +52,17 @@ class PieChartLegend extends PureComponent {
 PieChartLegend.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
+  chartSettings: PropTypes.object,
   simple: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 PieChartLegend.defaultProps = {
   config: {
     unit: '',
     key: 'value',
-    format: '.3s'
-  }
+    format: '.3s',
+  },
 };
 
 export default PieChartLegend;
