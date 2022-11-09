@@ -23,6 +23,7 @@ class Widgets extends PureComponent {
     locationObj: PropTypes.object,
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
+    setWidgetsChartSettings: PropTypes.func.isRequired,
     setWidgetSettings: PropTypes.func.isRequired,
     setWidgetInteractionByKey: PropTypes.func.isRequired,
     setActiveWidget: PropTypes.func.isRequired,
@@ -31,6 +32,7 @@ class Widgets extends PureComponent {
     setMapSettings: PropTypes.func.isRequired,
     handleClickWidget: PropTypes.func.isRequired,
     embed: PropTypes.bool,
+    dashboard: PropTypes.bool,
     groupBySubcategory: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object,
@@ -50,6 +52,7 @@ class Widgets extends PureComponent {
       loadingData,
       loadingMeta,
       setWidgetsData,
+      setWidgetsChartSettings,
       setWidgetSettings,
       setWidgetInteractionByKey,
       setActiveWidget,
@@ -57,6 +60,7 @@ class Widgets extends PureComponent {
       setShareModal,
       groupBySubcategory = false,
       embed,
+      dashboard,
       simple,
       modalClosing,
       noDataMessage,
@@ -106,13 +110,18 @@ class Widgets extends PureComponent {
                     authenticated={authenticated}
                     active={activeWidget && activeWidget.widget === w.widget}
                     embed={embed}
+                    dashboard={dashboard}
                     simple={simple}
                     location={location}
                     geostore={geostore}
                     meta={meta}
                     metaLoading={loadingMeta || loadingData}
-                    setWidgetData={(data) =>
-                      setWidgetsData({ [w.widget]: data })}
+                    setWidgetData={(data) => {
+                      setWidgetsData({ [w.widget]: data });
+                    }}
+                    setWidgetChartSettings={(chartSettings) => {
+                      setWidgetsChartSettings({ [w.widget]: chartSettings });
+                    }}
                     handleSetInteraction={(payload) =>
                       setWidgetInteractionByKey({
                         key: w.widget,

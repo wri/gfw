@@ -14,6 +14,7 @@ class WidgetPieChart extends PureComponent {
       data,
       legendData,
       settings,
+      chartSettings,
       simple,
       toggleSettingsMenu,
       settingsBtnConfig,
@@ -29,7 +30,10 @@ class WidgetPieChart extends PureComponent {
       settingsBtnConfig.shouldShowButton(this.props);
 
     const maxSize =
-      pathname.indexOf('dashboard') >= 0 && chartHeight ? chartHeight : 140;
+      (pathname.indexOf('dashboard') >= 0 || pathname.indexOf('embed')) &&
+      chartHeight
+        ? chartHeight
+        : 140;
 
     return (
       <div className="c-pie-chart-legend-widget">
@@ -56,6 +60,7 @@ class WidgetPieChart extends PureComponent {
               ...settings,
             }}
             simple={simple}
+            chartSettings={chartSettings}
           />
           <PieChart
             className="cover-pie-chart"
@@ -80,6 +85,7 @@ class WidgetPieChart extends PureComponent {
                     },
                   ]
             }
+            chartSettings={chartSettings}
             simple={simple}
           />
         </div>
@@ -93,6 +99,7 @@ WidgetPieChart.propTypes = {
   legendData: PropTypes.array,
   simple: PropTypes.bool,
   settings: PropTypes.object.isRequired,
+  chartSettings: PropTypes.object,
   toggleSettingsMenu: PropTypes.func,
   settingsBtnConfig: PropTypes.object,
   widget: PropTypes.string,

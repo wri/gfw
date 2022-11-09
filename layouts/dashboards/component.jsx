@@ -202,6 +202,7 @@ class DashboardsPage extends PureComponent {
           <Widgets
             className="dashboard-widgets"
             groupBySubcategory={groupBySubcategory}
+            dashboard
           />
           {this.props.locationType === 'global' && <GFRBanner />}
         </div>

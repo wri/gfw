@@ -15,6 +15,9 @@ class WidgetContainer extends Component {
     location: PropTypes.object,
     getData: PropTypes.func,
     setWidgetData: PropTypes.func,
+    chartSettings: PropTypes.object,
+    getChartSettings: PropTypes.func,
+    setWidgetChartSettings: PropTypes.func,
     refetchKeys: PropTypes.array,
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
@@ -22,6 +25,9 @@ class WidgetContainer extends Component {
     meta: PropTypes.object,
     status: PropTypes.string,
     maxDownloadSize: PropTypes.object,
+    dashboard: PropTypes.bool,
+    embed: PropTypes.bool,
+    analysis: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -29,6 +35,8 @@ class WidgetContainer extends Component {
     location: {},
     getData: fetch,
     setWidgetData: () => {},
+    getChartSettings: () => {},
+    setWidgetChartSettings: () => {},
   };
 
   state = {
@@ -43,14 +51,42 @@ class WidgetContainer extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const { location, settings, meta, status } = this.props;
-    const params = { ...location, ...settings, status };
+    const {
+      location,
+      settings,
+      chartSettings,
+      meta,
+      status,
+      dashboard,
+      embed,
+      analysis,
+    } = this.props;
+    const params = {
+      ...location,
+      ...settings,
+      ...chartSettings,
+      status,
+      dashboard,
+      embed,
+      analysis,
+    };
 
+    this.handleGetWidgetChartSettings(params);
     this.handleGetWidgetData({ ...params, GFW_META: meta });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location, settings, refetchKeys, status, meta } = this.props;
+    const {
+      location,
+      settings,
+      chartSettings,
+      refetchKeys,
+      status,
+      meta,
+      dashboard,
+      embed,
+      analysis,
+    } = this.props;
     const { error } = this.state;
     const hasLocationChanged =
       location && !isEqual(location, prevProps.location);
@@ -64,7 +100,16 @@ class WidgetContainer extends Component {
 
     // refetch data if error, settings, or location changes
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
-      const params = { ...location, ...settings, status };
+      const params = {
+        ...location,
+        ...settings,
+        ...chartSettings,
+        status,
+        dashboard,
+        embed,
+        analysis,
+      };
+      this.handleGetWidgetChartSettings(params);
       this.handleGetWidgetData({ ...params, GFW_META: meta });
     }
   }
@@ -105,11 +150,25 @@ class WidgetContainer extends Component {
 
   handleGetWidgetData = (params) => {
     if (params?.type) {
-      const { getData, setWidgetData, geostore } = this.props;
+      const {
+        getData,
+        setWidgetData,
+        geostore,
+        dashboard,
+        embed,
+        analysis,
+      } = this.props;
       this.cancelWidgetDataFetch();
       this.widgetDataFetch = CancelToken.source();
       this.setState({ loading: true, error: false });
-      getData({ ...params, geostore, token: this.widgetDataFetch.token })
+      getData({
+        ...params,
+        geostore,
+        token: this.widgetDataFetch.token,
+        dashboard,
+        embed,
+        analysis,
+      })
         .then((data) => {
           setWidgetData(data);
           setTimeout(() => {
@@ -133,10 +192,19 @@ class WidgetContainer extends Component {
     }
   };
 
+  handleGetWidgetChartSettings = (params) => {
+    const { getChartSettings, setWidgetChartSettings } = this.props;
+    setWidgetChartSettings(getChartSettings(params));
+  };
+
   handleRefetchData = () => {
-    const { settings, location, widget, meta } = this.props;
-    const params = { ...location, ...settings };
-    this.handleGetWidgetData({ ...params, GFW_META: meta });
+    const { settings, location, widget, meta, chartSettings } = this.props;
+    const params = { ...location, ...settings, ...chartSettings };
+    this.handleGetWidgetData({
+      ...params,
+      GFW_META: meta,
+    });
+    this.handleGetWidgetChartSettings(params);
     trackEvent({
       category: 'Refetch data',
       action: 'Data failed to fetch, user clicks to refetch',

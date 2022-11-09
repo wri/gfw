@@ -84,6 +84,8 @@ export const selectWidgetInteractions = (state) =>
 export const selectLocationSearch = (state) =>
   state.location && state.location.search;
 export const selectWidgetsData = (state) => state.widgets && state.widgets.data;
+export const selectWidgetsChartSettings = (state) =>
+  state.widgets && state.widgets.chartSettings;
 export const selectGeostore = (state) => state.geostore && state.geostore.data;
 export const selectLoadingFilterData = (state) =>
   state.countryData &&
@@ -407,6 +409,7 @@ export const getWidgets = createSelector(
     getLocationObj,
     getLocationData,
     selectWidgetsData,
+    selectWidgetsChartSettings,
     selectWidgetSettings,
     selectWidgetInteractions,
     selectLocationSearch,
@@ -422,6 +425,7 @@ export const getWidgets = createSelector(
     locationObj,
     locationData,
     widgetsData,
+    widgetsChartSettings,
     widgetSettings,
     interactions,
     search,
@@ -451,6 +455,8 @@ export const getWidgets = createSelector(
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
 
       const rawData = widgetsData && widgetsData[widget];
+      const chartSettings =
+        widgetsChartSettings && widgetsChartSettings[widget];
 
       const { settings: dataSettings } = rawData || {};
 
@@ -554,6 +560,7 @@ export const getWidgets = createSelector(
         locationType: locationObj?.locationType,
         active,
         data: rawData,
+        chartSettings,
         settings,
         interaction: widgetInteraction,
         title: titleTemplate,
