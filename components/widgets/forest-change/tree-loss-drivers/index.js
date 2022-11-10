@@ -91,16 +91,20 @@ export default {
 
     return {
       ...((dashboard || embed) && {
+        size: 'small',
         legend: {
           style: {
             display: 'flex',
             justifyContent: 'center',
-            paddingRight: '5%',
+            paddingLeft: '8%',
           },
         },
         chart: {
           style: {
-            paddingRight: '16%',
+            display: 'flex',
+            height: 'auto',
+            alignItems: 'center',
+            paddingRight: '14%',
           },
         },
       }),
