@@ -8,11 +8,7 @@ import {
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
 
-import {
-  getTreeCoverLossByDriverType,
-  getExtent,
-  getLoss,
-} from 'services/analysis-cached';
+import { getTreeCoverLossByDriverType } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -117,15 +113,13 @@ export default {
       }),
     };
   },
-  getData: (params) => {
-    return getTreeCoverLossByDriverType(params).then((response) => {
+  getData: (params) =>
+    getTreeCoverLossByDriverType(params).then((response) => {
       const { data } = (response && response.data) || {};
       return data;
-    });
-  },
+    }),
   getDataURL: (params) => [
-    getLoss({ ...params, landCategory: 'tsc', lossTsc: true, download: true }),
-    getExtent({ ...params, download: true }),
+    getTreeCoverLossByDriverType({ ...params, download: true }),
   ],
   getWidgetProps,
 };

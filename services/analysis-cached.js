@@ -459,7 +459,7 @@ export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
 //
 
 export const getTreeCoverLossByDriverType = (params) => {
-  const { forestType, landCategory, ifl, download } = params;
+  const { download } = params;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -477,11 +477,8 @@ export const getTreeCoverLossByDriverType = (params) => {
   );
 
   if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `tree_cover_gain_by_plantation_type${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__ha`,
+      name: 'tree_cover_loss_by_driver_type__ha',
       url: getDownloadUrl(url),
     };
   }
