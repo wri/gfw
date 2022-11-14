@@ -79,6 +79,7 @@ export default {
     startYear: 2001,
     endYear: 2021,
     chartHeight: 230,
+    extentYear: 2000,
   },
   sentences: {
     globalInitial:
