@@ -390,7 +390,7 @@ export const funders = [
   },
   {
     img: images('./bef.png'),
-    link: 'https://https://www.bezosearthfund.org/',
+    link: 'https://www.bezosearthfund.org/',
     title: 'Bezos Earth Fund',
   },
 ];
