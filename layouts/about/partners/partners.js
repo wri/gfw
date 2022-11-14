@@ -388,4 +388,9 @@ export const funders = [
     link: 'https://www.usaid.gov/',
     title: 'USAID',
   },
+  {
+    img: images('./bef.png'),
+    link: 'https://https://www.bezosearthfund.org/',
+    title: 'Bezos Earth Fund',
+  },
 ];
