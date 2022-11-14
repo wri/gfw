@@ -9,8 +9,9 @@ const getColors = (state) => state.colors;
 const getSettings = (state) => state.settings;
 const getTitle = (state) => state.title;
 const getSentences = (state) => state.sentences;
-const getLocationName = (state) => state.locationLabel;
+const getCaution = (state) => state.caution;
 const getLocationLabel = (state) => state.locationLabel;
+const getAdm0 = (state) => state.adm0;
 const getSortedCategories = () =>
   tscLossCategories.sort((a, b) => (a.position > b.position ? 1 : -1));
 
@@ -53,27 +54,30 @@ export const parseData = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationLabel],
+  (title, location) => {
+    let selectedTitle = title.initial;
+    if (location === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
 export const parseSentence = createSelector(
   [
     getFilteredData,
     getSentences,
     getSettings,
     getLocationLabel,
-    getLocationName,
     getPermanentCategories,
   ],
-  (
-    filteredData,
-    sentences,
-    settings,
-    locationLabel,
-    location,
-    permanentCategories
-  ) => {
+  (filteredData, sentences, settings, location, permanentCategories) => {
     if (!filteredData) return null;
     const { globalInitial, initial } = sentences;
     const { startYear, endYear } = settings;
-    const sentence = locationLabel === 'global' ? globalInitial : initial;
+    const sentence = location === 'global' ? globalInitial : initial;
 
     const totalLoss = filteredData.reduce(
       (acc, { loss_area_ha }) => acc + loss_area_ha,
@@ -108,19 +112,14 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parseTitle = createSelector(
-  [getTitle, getLocationName],
-  (title, name) => {
-    let selectedTitle = title.initial;
-    if (name === 'global') {
-      selectedTitle = title.global;
-    }
-    return selectedTitle;
-  }
+export const parseCaution = createSelector(
+  [getCaution, getAdm0],
+  (caution, adm0) => (adm0 === 'IDN' ? caution.indonesia : caution.default)
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence,
   title: parseTitle,
+  sentence: parseSentence,
+  caution: parseCaution,
 });
