@@ -326,11 +326,13 @@ export const getWHEREQuery = (params) => {
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') {
-        // if (dataset === 'modis_burned_area') {
-        //   paramKey = 'umd_tree_cover_density__threshold';
+        if (dataset === 'modis_burned_area') {
+          //   paramKey = 'umd_tree_cover_density__threshold';
+          comparisonString = ' >= ';
+        }
         // } else {
         paramKey = 'umd_tree_cover_density_2000__threshold';
-        comparisonString = ' >= ';
+        // comparisonString = ' >= ';
         // }
       }
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
