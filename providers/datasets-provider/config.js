@@ -581,13 +581,13 @@ const decodes = {
     float green = color.g;
     float blue = color.b;
 
-    if (zoom >= 12.) {
+    if (zoom > 12.) {
       if (red == 0. && green == 0. && blue == 0.) {
         alpha = 0.;
       } else {
         alpha = 1.;
       }
-    } 
+    }
 
     color.r = red;
     color.g = green;
@@ -1048,6 +1048,7 @@ export default {
   RADDs2yearsTimeline: decodes.RADDs2yearsTimeline,
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
+  staticRemapGain: decodes.staticRemapGain,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
