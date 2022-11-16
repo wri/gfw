@@ -41,9 +41,9 @@ const getOTFAnalysis = async (params) => {
 export default {
   widget: 'treeCover',
   title: {
-    default: 'Tree cover in {location}',
-    global: 'Global tree cover',
-    withPlantations: 'Forest cover in {location}',
+    default: 'Tree Cover by type in {location}',
+    global: 'Global tree cover by type',
+    withPlantations: 'Forest cover by type in {location}',
   },
   sentence: {
     globalInitial:
