@@ -8,21 +8,21 @@ import './styles.scss';
 class PieChartLegend extends PureComponent {
   render() {
     const { data, chartSettings = {}, config, className, simple } = this.props;
-    const { legend } = chartSettings;
+    const { size, legend } = chartSettings;
 
-    let sizeClass = '';
-    if (data.length > 5) {
-      sizeClass = 'x-small';
-    } else if (data.length > 3 || simple) {
-      sizeClass = 'small';
-    }
+    const sizeClass = (() => {
+      if (size) return size;
+      if (data.length > 5) return 'x-small';
+      if (data.length > 3) return 'small';
+      return '';
+    })();
 
     return (
       <div
         className={cx('c-pie-chart-legend', className)}
         style={legend?.style}
       >
-        <ul className={cx(sizeClass, { simple })}>
+        <ul className={cx({ simple, sizeClass })}>
           {data.map((item, index) => {
             const value = `${formatNumber({
               num: item[config.key],
@@ -34,12 +34,14 @@ class PieChartLegend extends PureComponent {
                   <span style={{ backgroundColor: item.color }}>{}</span>
                   <p>
                     {item.label}
-                    {data.length > 5 && ` - ${value}`}
+                    {sizeClass === 'x-small' && `- ${value}`}
                   </p>
                 </div>
-                <div className="legend-value" style={{ color: item.color }}>
-                  {value}
-                </div>
+                {sizeClass !== 'x-small' && (
+                  <div className="legend-value" style={{ color: item.color }}>
+                    {value}
+                  </div>
+                )}
               </li>
             );
           })}
@@ -52,7 +54,11 @@ class PieChartLegend extends PureComponent {
 PieChartLegend.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
-  chartSettings: PropTypes.object,
+  chartSettings: PropTypes.shape({
+    size: PropTypes.oneOf(['small', 'x-small']),
+    legend: { style: PropTypes.object },
+    chart: { style: PropTypes.object },
+  }),
   simple: PropTypes.bool,
   className: PropTypes.string,
 };
