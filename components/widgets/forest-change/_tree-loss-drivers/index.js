@@ -1,6 +1,3 @@
-import { all, spread } from 'axios';
-import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
-
 import {
   POLITICAL_BOUNDARIES_DATASET,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
@@ -11,20 +8,15 @@ import {
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
 
-import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getExtent, getLoss } from 'services/analysis-cached';
+import { getTreeCoverLossByDriverType } from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
-const MIN_YEAR = 2001;
-const MAX_YEAR = 2021;
-
 export default {
-  ...treeLoss,
   widget: 'treeLossTsc',
   title: {
-    initial: 'Annual tree cover loss by dominant driver in {location}',
-    global: 'Global annual tree cover loss by dominant driver',
+    initial: 'Tree cover loss by dominant driver in {location}',
+    global: 'Global tree cover loss by dominant driver',
   },
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
@@ -43,20 +35,15 @@ export default {
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
     },
   },
+  categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
+  large: true,
+  visible: ['dashboard', 'analysis'],
+  colors: 'loss',
+  pendingKeys: ['threshold'],
+  refetchKeys: ['threshold'],
+  dataType: 'loss',
   settingsConfig: [
-    {
-      key: 'tscDriverGroup',
-      label: 'drivers',
-      type: 'select',
-    },
-    {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      type: 'range-select',
-      border: true,
-    },
     {
       key: 'threshold',
       label: 'canopy density',
@@ -64,7 +51,7 @@ export default {
       metaKey: 'widget_canopy_density',
     },
   ],
-  chartType: 'composedChart',
+  chartType: 'pieChart',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -76,7 +63,6 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // loss tsc
     {
       dataset: TREE_COVER_LOSS_BY_DOMINANT_DRIVER_DATASET,
       layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER],
@@ -89,59 +75,52 @@ export default {
     global: 1,
   },
   settings: {
-    tscDriverGroup: 'all',
-    highlighted: false,
-    extentYear: 2000,
     threshold: 30,
+    startYear: 2001,
+    endYear: 2021,
+    chartHeight: 230,
+    extentYear: 2000,
   },
   sentences: {
-    initial:
-      'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
-    noLoss:
-      'In {location} from {startYear} to {endYear}, <b>no</b> tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
     globalInitial:
-      '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+      '<b>Globally</b> from {startYear} to {endYear}, {lossPercentage} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+    initial:
+      'In {location} from {startYear} to {endYear}, {lossPercentage} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
   },
   whitelists: {
     checkStatus: true,
   },
+  getChartSettings: (params) => {
+    const { dashboard, embed } = params;
+
+    return {
+      ...((dashboard || embed) && {
+        size: 'small',
+        legend: {
+          style: {
+            display: 'flex',
+            justifyContent: 'center',
+            paddingLeft: '8%',
+          },
+        },
+        chart: {
+          style: {
+            display: 'flex',
+            height: 'auto',
+            alignItems: 'center',
+            paddingRight: '14%',
+          },
+        },
+      }),
+    };
+  },
   getData: (params) =>
-    all([
-      getLoss({ ...params, landCategory: 'tsc', lossTsc: true }),
-      getExtent({ ...params }),
-    ]).then(
-      spread((loss, extent) => {
-        let data = {};
-        if (loss && loss.data && extent && extent.data) {
-          data = {
-            loss: loss.data.data.filter(
-              (d) => d.tsc_tree_cover_loss_drivers__type !== 'Unknown'
-            ),
-            extent: (loss.data.data && extent.data.data[0].value) || 0,
-          };
-        }
-
-        const { startYear, endYear, range } = getYearsRangeFromMinMax(
-          MIN_YEAR,
-          MAX_YEAR
-        );
-
-        return {
-          ...data,
-          settings: {
-            startYear,
-            endYear,
-            yearsRange: range,
-          },
-          options: {
-            years: range,
-          },
-        };
-      })
-    ),
+    getTreeCoverLossByDriverType(params).then((response) => {
+      const { data } = (response && response.data) || {};
+      return data;
+    }),
   getDataURL: (params) => [
-    getLoss({ ...params, landCategory: 'tsc', lossTsc: true, download: true }),
-    getExtent({ ...params, download: true }),
+    getTreeCoverLossByDriverType({ ...params, download: true }),
   ],
   getWidgetProps,
 };

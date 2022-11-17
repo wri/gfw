@@ -20,6 +20,7 @@ const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const SQL_QUERIES = {
+  // This Query is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
   treeCoverLossByDriver:
     'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   lossTsc:
@@ -458,6 +459,7 @@ export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
 // data fetches
 //
 
+// This is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
 export const getTreeCoverLossByDriverType = (params) => {
   const { download } = params;
 

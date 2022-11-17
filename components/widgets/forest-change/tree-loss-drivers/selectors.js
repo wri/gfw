@@ -1,103 +1,226 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sum from 'lodash/sum';
+import sumBy from 'lodash/sumBy';
+import entries from 'lodash/entries';
+import groupBy from 'lodash/groupBy';
+import findIndex from 'lodash/findIndex';
+import { format } from 'd3-format';
+import sortBy from 'lodash/sortBy';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 import tscLossCategories from 'data/tsc-loss-categories.json';
-import { formatNumber } from 'utils/format';
 
-const getData = (state) => state.data;
-const getColors = (state) => state.colors;
+// get list data
+const getLoss = (state) => state.data && state.data.loss;
 const getSettings = (state) => state.settings;
-const getTitle = (state) => state.title;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 const getCaution = (state) => state.caution;
-const getLocationLabel = (state) => state.locationLabel;
+const getTitle = (state) => state.title;
 const getAdm0 = (state) => state.adm0;
-const getSortedCategories = () =>
-  tscLossCategories.sort((a, b) => (a.position > b.position ? 1 : -1));
 
-export const getPermanentCategories = createSelector(
-  [getSortedCategories],
-  (sortedCategories) =>
-    sortedCategories.filter((x) => x.permanent).map((el) => el.value.toString())
+export const getPermCats = createSelector([], () =>
+  tscLossCategories.filter((x) => x.permanent).map((el) => el.value.toString())
 );
 
-export const getFilteredData = createSelector(
-  [getData, getSortedCategories],
-  (data, sortedCategories) =>
-    data && data.length
-      ? sortedCategories
-          .map(({ value }) => data.find((item) => item.driver_type === value))
-          .filter((item) => item)
-      : []
-);
+export const mergeDataWithCetagories = createSelector(
+  [getLoss, getPermCats],
+  (data, permCats) => {
+    if (isEmpty(data)) return null;
 
-export const parseData = createSelector(
-  [getFilteredData, getColors],
-  (filteredData, colors) => {
-    if (!filteredData || isEmpty(filteredData)) return null;
-
-    const categoryColors = colors.lossDrivers;
-
-    const totalLoss = filteredData.reduce(
-      (acc, { loss_area_ha }) => acc + loss_area_ha,
-      0
-    );
-
-    return filteredData.map(({ driver_type, loss_area_ha }) => {
-      return {
-        label: driver_type,
-        value: loss_area_ha,
-        color: categoryColors[driver_type],
-        percentage: (loss_area_ha * 100) / totalLoss,
-      };
-    });
+    return data.map((d) => ({
+      ...d,
+      permanent: permCats.includes(d.bound1),
+    }));
   }
 );
 
-export const parseTitle = createSelector(
-  [getTitle, getLocationLabel],
-  (title, location) => {
-    let selectedTitle = title.initial;
-    if (location === 'global') {
-      selectedTitle = title.global;
+export const getFilteredData = createSelector(
+  [mergeDataWithCetagories, getSettings, getPermCats],
+  (data, settings, permCats) => {
+    if (isEmpty(data)) return null;
+    const { startYear, endYear } = settings;
+    const filteredByYear = data.filter(
+      (d) => d.year >= startYear && d.year <= endYear
+    );
+    const permanentData = filteredByYear.filter((d) =>
+      permCats.includes(d.bound1)
+    );
+    return settings.tscDriverGroup === 'permanent'
+      ? permanentData
+      : filteredByYear;
+  }
+);
+
+export const getAllLoss = createSelector(
+  [mergeDataWithCetagories, getSettings],
+  (data, settings) => {
+    if (isEmpty(data)) return null;
+    const { startYear, endYear } = settings;
+    return data.filter((d) => d.year >= startYear && d.year <= endYear);
+  }
+);
+
+export const getDrivers = createSelector(
+  [getFilteredData, getSettings, getPermCats],
+  (data, settings, permCats) => {
+    if (isEmpty(data)) return null;
+    const groupedData = groupBy(sortBy(data, 'area').reverse(), 'bound1');
+    const filteredData = Object.keys(groupedData)
+      .filter((key) => permCats.includes(key))
+      .reduce(
+        (obj, key) => ({
+          ...obj,
+          [key]: groupedData[key],
+        }),
+        {}
+      );
+
+    const groupedLoss =
+      settings.tscDriverGroup === 'permanent' ? filteredData : groupedData;
+    const sortedLoss = !isEmpty(groupedLoss)
+      ? sortBy(
+          Object.keys(groupedLoss).map((k) => {
+            const cat = tscLossCategories.find((c) => c.value.toString() === k);
+            return {
+              driver: k,
+              position: cat && cat.position,
+              area: sumBy(groupedLoss[k], 'area'),
+              permanent: permCats.includes(k),
+            };
+          }),
+          'area'
+        )
+      : permCats.map((x) => ({
+          driver: x.toString(),
+          area: 0.0,
+        }));
+    return sortedLoss;
+  }
+);
+
+// get lists selected
+export const parseData = createSelector([getFilteredData], (data) => {
+  if (isEmpty(data)) return null;
+  const groupedData = groupBy(data, 'year');
+  const x = Object.keys(groupedData).map((y) => {
+    const groupedByBound = groupBy(groupedData[y], 'bound1');
+    const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
+      const areaSum = sumBy(value, 'area');
+      return {
+        ...acc,
+        [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum,
+      };
+    }, {});
+    return {
+      year: y,
+      total: sum(Object.values(datakeys)),
+      ...datakeys,
+    };
+  });
+  return x;
+});
+
+export const parseConfig = createSelector(
+  [getColors, getFilteredData, getDrivers, getSettings],
+  (colors, data, drivers, settings) => {
+    if (isEmpty(data)) return null;
+    const { highlighted } = settings || {};
+    const yKeys = {};
+    const categoryColors = colors.lossDrivers;
+    sortBy(drivers, 'position').forEach((k) => {
+      yKeys[`class_${k.driver}`] = {
+        fill: categoryColors[k.driver],
+        stackId: 1,
+        opacity: !highlighted || (highlighted && k.permanent) ? 1 : 0.3,
+      };
+    });
+    let tooltip = [
+      {
+        key: 'year',
+      },
+      {
+        key: 'total',
+        label: 'Total',
+        unit: 'ha',
+        unitFormat: (value) =>
+          value < 1000 ? Math.round(value) : format('.3s')(value),
+      },
+    ];
+    tooltip = tooltip.concat(
+      sortBy(drivers, 'position')
+        .map((d) => {
+          const tscCat = tscLossCategories.find((c) => c.value === d.driver);
+          const label = tscCat && tscCat.label;
+          return {
+            key: `class_${d.driver}`,
+            label,
+            unit: 'ha',
+            color: categoryColors[d.driver],
+            unitFormat: (value) =>
+              value < 1000 ? Math.round(value) : format('.3s')(value),
+          };
+        })
+        .reverse()
+    );
+    const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
+    if (insertIndex > -1) {
+      tooltip.splice(insertIndex, 0, {
+        key: 'break',
+        label: 'Drivers of permanent deforestation:',
+      });
     }
-    return selectedTitle;
+    return {
+      height: 250,
+      xKey: 'year',
+      yKeys: {
+        bars: yKeys,
+      },
+      xAxis: {
+        tickFormatter: yearTicksFormatter,
+      },
+      unit: 'ha',
+      tooltip,
+    };
   }
 );
 
 export const parseSentence = createSelector(
   [
     getFilteredData,
-    getSentences,
+    getAllLoss,
     getSettings,
-    getLocationLabel,
-    getPermanentCategories,
+    getLocationName,
+    getSentences,
+    getPermCats,
   ],
-  (filteredData, sentences, settings, location, permanentCategories) => {
-    if (!filteredData) return null;
-    const { globalInitial, initial } = sentences;
+  (data, allLoss, settings, locationName, sentences, permCats) => {
+    if (isEmpty(data)) return null;
+    const { initial, globalInitial, noLoss } = sentences;
     const { startYear, endYear } = settings;
-    const sentence = location === 'global' ? globalInitial : initial;
 
-    const totalLoss = filteredData.reduce(
-      (acc, { loss_area_ha }) => acc + loss_area_ha,
-      0
-    );
+    const filteredLoss =
+      data && data.filter((x) => permCats.includes(x.bound1));
 
-    const permanentLoss = filteredData.reduce(
-      (acc, { driver_type, loss_area_ha }) =>
-        permanentCategories.includes(driver_type) ? acc + loss_area_ha : acc,
-      0
-    );
+    const permLoss =
+      (filteredLoss && filteredLoss.length && sumBy(filteredLoss, 'area')) || 0;
+    const totalLoss =
+      (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
+    const permPercent = (permLoss && (permLoss / totalLoss) * 100) || 0;
+
+    let sentence = locationName === 'global' ? globalInitial : initial;
+    if (!permLoss) sentence = noLoss;
 
     const params = {
-      location,
+      location: locationName === 'global' ? 'Globally' : locationName,
       startYear,
       endYear,
-      lossPercentage: formatNumber({
-        num: (permanentLoss * 100) / totalLoss,
-        unit: '%',
-      }),
+      permPercent:
+        permPercent && permPercent < 0.1
+          ? '< 0.1%'
+          : `${format('.2r')(permPercent)}%`,
       component: {
         key: 'deforestation',
         tooltip:
@@ -112,6 +235,17 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    let selectedTitle = title.initial;
+    if (name === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
 export const parseCaution = createSelector(
   [getCaution, getAdm0],
   (caution, adm0) => (adm0 === 'IDN' ? caution.indonesia : caution.default)
@@ -119,7 +253,8 @@ export const parseCaution = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  title: parseTitle,
+  config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
   caution: parseCaution,
 });
