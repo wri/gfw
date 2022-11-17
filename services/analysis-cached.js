@@ -20,6 +20,8 @@ const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const SQL_QUERIES = {
+  treeCoverLossByDriver:
+    'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   lossTsc:
     'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
   loss:
@@ -455,6 +457,41 @@ export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
 //
 // data fetches
 //
+
+export const getTreeCoverLossByDriverType = (params) => {
+  const { download } = params;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20220721',
+  });
+
+  if (!requestUrl) return new Promise(() => {});
+
+  const sqlQuery = SQL_QUERIES.treeCoverLossByDriver;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`.replace('{WHERE}', getWHEREQuery({ ...params }))
+  );
+
+  if (download) {
+    return {
+      name: 'tree_cover_loss_by_driver_type__ha',
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+      })),
+    },
+  }));
+};
 
 // summed loss for single location
 export const getLoss = (params) => {

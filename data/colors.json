@@ -25,7 +25,8 @@
       "Shifting agriculture": "#efd31a",
       "Forestry": "#2FBF71",
       "Wildfire": "#ad6824",
-      "Urbanization": "#B235CC"
+      "Urbanization": "#B235CC",
+      "Unknown": "#555"
     }
   },
   "gain": {
