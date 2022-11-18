@@ -576,7 +576,7 @@ const decodes = {
     color.g = green;
     color.b = blue;
   `,
-  staticRemapGain: `
+  staticRemapAlpha: `
     float red = color.r;
     float green = color.g;
     float blue = color.b;
@@ -1048,7 +1048,7 @@ export default {
   RADDs2yearsTimeline: decodes.RADDs2yearsTimeline,
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
-  staticRemapGain: decodes.staticRemapGain,
+  staticRemapAlpha: decodes.staticRemapAlpha,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,
