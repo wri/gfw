@@ -393,6 +393,11 @@ export const funders = [
     title: 'Norwegian Ministry',
   },
   {
+    img: images('./sv_postkodstiftelsen.png'),
+    link: 'https://postkodstiftelsen.se/en/about-the-postcode-foundation/',
+    title: 'Swedish Postcode Foundation',
+  },
+  {
     img: images('./ukaidhover.png'),
     link:
       'https://www.gov.uk/government/organisations/department-for-international-development',
