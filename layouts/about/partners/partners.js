@@ -324,6 +324,11 @@ export const partnersCollaborators = [
     title: 'RTRS',
   },
   {
+    img: images('./toa.png'),
+    link: 'https://www.todoslosojosenlaamazonia.org/en/',
+    title: 'All Eyes on the Amazon (AEA)',
+  },
+  {
     img: images('./unepwcmchover.png'),
     link: 'http://www.unep-wcmc.org/',
     title: 'UNEP & WCMC',
