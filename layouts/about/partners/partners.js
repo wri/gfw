@@ -294,6 +294,11 @@ export const partnersCollaborators = [
     title: 'Rainforest Foundation UK',
   },
   {
+    img: images('./rfus.png'),
+    link: 'https://www.rainforestfoundation.org/',
+    title: 'Rainforest Foundation US',
+  },
+  {
     img: images('./raisghover.png'),
     link: 'https://raisg.socioambiental.org/',
     title: 'RAISG',
