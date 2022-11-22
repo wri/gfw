@@ -387,6 +387,11 @@ export const funders = [
     title: 'MacArthur Foundation',
   },
   {
+    img: images('./hf.png'),
+    link: 'https://www.hampshirefoundation.org/',
+    title: 'Montpelier and Hampshire Foundations',
+  },
+  {
     img: images('./norwegianministrihover.png'),
     link:
       'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
