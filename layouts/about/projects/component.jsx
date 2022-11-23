@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
@@ -20,7 +20,7 @@ const AboutProjectsSection = ({
   sgfProjects: allProjects,
   countries: allCountries,
 }) => {
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState(null);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   const { countries } = useMemo(
@@ -38,11 +38,6 @@ const AboutProjectsSection = ({
         .map(({ iso, name }) => ({ label: name, value: iso })),
     [allCountries, countries]
   );
-
-  useEffect(() => {
-    if (country || !countryOptions.length) return;
-    setCountry(countryOptions[0].value);
-  }, [country, countryOptions, setCountry]);
 
   return (
     <>
@@ -106,20 +101,29 @@ const AboutProjectsSection = ({
             <div className="country-selector">
               <Dropdown
                 theme="theme-dropdown-native large country-dropdown"
-                options={countryOptions}
+                options={[
+                  { label: 'Select country', value: null, disabled: !!country },
+                  ...countryOptions,
+                ]}
                 value={country}
                 onChange={setCountry}
                 native
               />
-              <a
-                href={`/grants-and-fellowships/projects/?country=${country}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button round size="big" className="country-button">
+              {country ? (
+                <a
+                  href={`/grants-and-fellowships/projects/?country=${country}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button round size="big" className="country-button">
+                    <Icon icon={arrowDownIcon} />
+                  </Button>
+                </a>
+              ) : (
+                <Button round size="big" className="country-button" disabled>
                   <Icon icon={arrowDownIcon} />
                 </Button>
-              </a>
+              )}
             </div>
           </Column>
         </Row>

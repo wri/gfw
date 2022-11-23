@@ -162,7 +162,11 @@ class Dropdown extends PureComponent {
                   options.map(
                     (o) =>
                       o && (
-                        <option key={`${o.value}-${o.label}`} value={o.value}>
+                        <option
+                          key={`${o.value}-${o.label}`}
+                          value={o.value}
+                          disabled={o?.disabled || false}
+                        >
                           {o.label}
                         </option>
                       )
