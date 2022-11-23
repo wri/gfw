@@ -57,9 +57,9 @@ const GrantsProjectsSection = ({
 
   const tags = useMemo(
     () =>
-      categories?.map(({ label, count }) => ({
+      categories?.map(({ label }) => ({
         id: label,
-        name: `${label} (${count})`,
+        name: label,
         active: label === category,
       })) || [],
     [categories, category]
