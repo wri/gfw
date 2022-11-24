@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import omitBy from 'lodash/omitBy';
+import orderBy from 'lodash/orderBy';
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
 import Card from 'components/ui/card';
@@ -28,10 +29,15 @@ const GrantsProjectsSection = ({
 
   const { modal, projectId, country: countryIso } = query;
 
+  const allProjectsOrdered = useMemo(
+    () => orderBy(allProjects, ['year', 'title'], ['desc', 'asc']),
+    [allProjects]
+  );
+
   const { projects, categories, countries } = useMemo(
     () =>
       getProjectsProps({
-        projects: allProjects,
+        projects: allProjectsOrdered,
         images,
         search,
         category,
