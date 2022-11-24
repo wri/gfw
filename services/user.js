@@ -51,7 +51,7 @@ export const updateProfile = (id, data) =>
   apiAuthRequest({
     method: 'PATCH',
     data,
-    url: `/user/${id}`,
+    url: `/v2/user/${id}`,
   });
 
 export const checkLoggedIn = (token) => {
@@ -65,7 +65,7 @@ export const checkLoggedIn = (token) => {
   return apiAuthRequest.get('/auth/check-logged');
 };
 
-export const getProfile = (id) => apiAuthRequest.get(`/user/${id}`);
+export const getProfile = (id) => apiAuthRequest.get(`/v2/user/${id}`);
 
 export const logout = () =>
   apiAuthRequest.get('/auth/logout').then((response) => {
