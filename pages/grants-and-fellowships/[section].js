@@ -4,7 +4,7 @@ import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
 import { getSGFProjects } from 'services/projects';
-import { getCountriesLatLng } from 'services/country';
+import { getCountriesProvider } from 'services/country';
 
 const SECTIONS = ['projects', 'about', 'apply'];
 
@@ -17,25 +17,24 @@ const GrantsAndFellowshipsPage = (props) => (
   </PageLayout>
 );
 
-export const getStaticPaths = async () => {
-  const paths = SECTIONS.map((key) => ({
-    params: { section: key },
-  }));
+export const getServerSideProps = async ({ query }) => {
+  if (!SECTIONS.includes(query?.section)) {
+    return {
+      notFound: true,
+    };
+  }
 
-  return { paths, fallback: false };
-};
-
-export const getStaticProps = async ({ params }) => {
-  if (params?.section === 'projects') {
+  if (query?.section === 'projects') {
     const projects = await getSGFProjects();
-    const latLngs = await getCountriesLatLng();
+    const countries = await getCountriesProvider();
 
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
-        section: params?.section,
+        section: query?.section,
         projects: projects || [],
-        latLngs: latLngs || [],
+        countries: countries?.data?.rows || [],
+        country: query?.country || '',
       },
     };
   }
@@ -43,9 +42,9 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: {
       title: `${capitalize(
-        params?.section
+        query?.section
       )} | Grants & Fellowships | Global Forest Watch`,
-      section: params?.section,
+      section: query?.section,
     },
   };
 };

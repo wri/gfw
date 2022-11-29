@@ -1,91 +1,117 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Element as ScrollEl, scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
 
-import { Search, NoContent, Desktop, Row, Column } from 'gfw-components';
+import omitBy from 'lodash/omitBy';
+import orderBy from 'lodash/orderBy';
+import { Search, NoContent, Row, Column } from 'gfw-components';
 
-import Globe from 'components/globe';
 import Card from 'components/ui/card';
-import ItemsList from 'components/items-list';
+import Dropdown from 'components/ui/dropdown';
+import TagsList from 'components/tags-list';
 
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
 import './styles.scss';
 
-const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
-  const [search, setSearch] = useState('');
+const GrantsProjectsSection = ({
+  projects: allProjects,
+  images,
+  countries: allCountries,
+  country: countryQueryParam,
+}) => {
+  const [country, setCountry] = useState(countryQueryParam);
   const [category, setCategory] = useState('All');
-  const [customFilter, setCustomFilter] = useState([]);
+  const [search, setSearch] = useState('');
 
-  const props = getProjectsProps({
-    projects: allProjects,
-    images,
-    latLngs,
-    search,
-    category,
-    customFilter,
-  });
+  const { query, replace, asPath } = useRouter();
 
-  const { projects, categories, globeData } = props || {};
-  const {
-    query: { sgfModal, projectId },
-    replace,
-    asPath,
-  } = useRouter();
-  const selectedProject = projects?.find(
-    (p) => p.id === parseInt(projectId || sgfModal, 10)
+  const { modal, projectId, country: countryIso } = query;
+
+  const allProjectsOrdered = useMemo(
+    () => orderBy(allProjects, ['year', 'title'], ['desc', 'asc']),
+    [allProjects]
   );
 
-  const setModalOpen = (id) =>
-    replace(`${asPath.split('?')?.[0]}?projectId=${id}`);
-  const handleSetCategory = (cat) => {
-    setCategory(cat);
-    setCustomFilter([]);
+  const { projects, categories, countries } = useMemo(
+    () =>
+      getProjectsProps({
+        projects: allProjectsOrdered,
+        images,
+        search,
+        category,
+        country,
+      }),
+    [allProjects, images, search, category, country]
+  );
+
+  const selectedProject = useMemo(
+    () => projects?.find((p) => p.id === parseInt(projectId || modal, 10)),
+    [projects, projectId, modal]
+  );
+
+  const countryOptions = useMemo(
+    () => [
+      { label: 'All', value: '' },
+      ...allCountries
+        ?.filter(({ iso }) => countries.includes(iso))
+        .map(({ iso, name }) => ({ label: name, value: iso })),
+    ],
+    [allCountries, countries]
+  );
+
+  const tags = useMemo(
+    () =>
+      categories?.map(({ label }) => ({
+        id: label,
+        name: label,
+        active: label === category,
+      })) || [],
+    [categories, category]
+  );
+
+  useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
+
+  useEffect(() => {
+    if (!categories.map(({ label }) => label).includes(category)) {
+      setCategory('All');
+    }
+  }, [country]);
+
+  const setQueryParams = (params) => {
+    const queryParams = omitBy(
+      { ...query, section: null, ...params },
+      (value) => !value
+    );
+
+    replace(
+      {
+        pathname: asPath.split('?')[0],
+        query: queryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
-  const handleGlobeClick = (d) => {
-    if (!d?.cluster || d?.cluster?.length === 1) {
-      const id = d?.id || (d?.cluster && d?.cluster?.[0]?.id);
-      setModalOpen(id);
-    } else {
-      const projectIds = d.cluster.map((p) => p?.id);
-      setCustomFilter(projectIds);
-      scroller.scrollTo('project-cards', {
-        duration: 800,
-        smooth: true,
-        offset: -50,
-      });
-    }
+  const handleCountrySelected = (option) => {
+    setQueryParams({ country: option });
+  };
+
+  const setModalOpen = (id) => {
+    setQueryParams({ projectId: id });
+  };
+
+  const handleModalClose = () => {
+    setQueryParams({ projectId: null });
   };
 
   return (
     <Fragment>
       <div className="l-grants-projects-section">
-        <Row>
-          <Column width={[1, 7 / 12]} className="project-globe">
-            <Desktop>
-              <ul className="tags">
-                <li>
-                  <span id="grants" /> 
-                  {' '}
-                  <p>Grantees</p>
-                </li>
-                <li>
-                  <span id="fellows" /> 
-                  {' '}
-                  <p>Fellows</p>
-                </li>
-              </ul>
-              <Globe
-                autorotate={false}
-                data={globeData}
-                onClick={handleGlobeClick}
-              />
-            </Desktop>
-          </Column>
-          <Column width={[1, 5 / 12]} className="side">
+        <Row className="projects-header">
+          <Column width={[1]}>
             <h3>MEET THE GRANTEES AND FELLOWS</h3>
             <p className="text -paragraph -color-2 -light -spaced">
               With financial and technical support from GFW, organizations and
@@ -93,78 +119,82 @@ const GrantsProjectsSection = ({ projects: allProjects, images, latLngs }) => {
               monitor large-scale land-use projects, enforce community land
               rights, defend critical habitat, and influence forest policy.
             </p>
-            {categories?.length && (
-              <ItemsList
-                className="project-list"
-                data={categories}
-                itemSelected={category}
-                onClick={handleSetCategory}
-              />
-            )}
           </Column>
         </Row>
         <Row>
-          <Column width={[0, 1 / 2, 2 / 3]} />
-          <Column width={[1, 1 / 2, 1 / 3]}>
-            <Search
-              className="project-search"
-              placeholder="Search"
-              input={search}
-              onChange={setSearch}
+          <Column className="project-filters">
+            <span className="filters-label">Filter by country</span>
+            <Dropdown
+              className="countries-dropdown"
+              theme="theme-dropdown-native"
+              options={countryOptions}
+              value={country}
+              onChange={handleCountrySelected}
+              clearable
+              searchable
+              native
             />
           </Column>
         </Row>
-        <ScrollEl name="project-cards" className="project-cards">
-          <Row>
-            {projects?.map((d) => {
-              const isFellow = d?.categories?.includes('Fellow');
+        <Row className="project-categories-search">
+          <Column width={[1, 1 / 2, 2 / 3]} className="project-categories">
+            <TagsList title="Categories" tags={tags} onClick={setCategory} />
+          </Column>
+          <Column width={[1, 1 / 2, 1 / 3]}>
+            <Search placeholder="Search" input={search} onChange={setSearch} />
+          </Column>
+        </Row>
+        <Row className="project-cards">
+          {projects?.map((d) => {
+            const isFellow = d?.categories?.includes('Fellow');
 
-              return (
-                <Column
-                  key={d.id}
-                  width={[1, 1 / 2, 1 / 3]}
-                  className="card-container"
-                >
-                  <Card
-                    className="project-card"
-                    data={{
-                      ...d,
-                      tag: isFellow ? 'fellow' : 'grantee',
-                      tagColor: isFellow ? '#f88000' : '#97bd3d',
-                      buttons: [
-                        {
-                          className: 'read-more',
-                          text: 'READ MORE',
-                          onClick: () => setModalOpen(d.id),
-                        },
-                      ],
-                    }}
-                  />
-                </Column>
-              );
-            })}
-          </Row>
+            return (
+              <Column
+                key={d.id}
+                width={[1, 1 / 2, 1 / 3]}
+                className="card-container"
+              >
+                <Card
+                  className="project-card"
+                  data={{
+                    ...d,
+                    tag: isFellow ? 'fellow' : 'grantee',
+                    tagColor: isFellow ? '#f88000' : '#97bd3d',
+                    buttons: [
+                      {
+                        className: 'read-more',
+                        text: 'READ MORE',
+                        onClick: () => setModalOpen(d.id),
+                      },
+                    ],
+                  }}
+                />
+              </Column>
+            );
+          })}
+
           {!projects?.length && (
             <NoContent
               className="no-projects"
               message="No projects for that search"
             />
           )}
-        </ScrollEl>
+        </Row>
       </div>
       <ProjectsModal
         open={!!selectedProject}
         data={selectedProject}
-        onRequestClose={() => replace(asPath?.split('?')?.[0])}
+        onRequestClose={handleModalClose}
       />
     </Fragment>
   );
 };
 
 GrantsProjectsSection.propTypes = {
+  country: PropTypes.string,
+  countries: PropTypes.array,
   projects: PropTypes.array,
   images: PropTypes.object,
-  latLngs: PropTypes.array,
 };
 
 export default GrantsProjectsSection;
