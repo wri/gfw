@@ -372,6 +372,11 @@ export const funders = [
     title: 'Generation Foundation',
   },
   {
+    img: images('./hf.png'),
+    link: 'https://www.hampshirefoundation.org/',
+    title: 'Montpelier and Hampshire Foundations',
+  },
+  {
     img: images('./idbhover.png'),
     link: 'http://www.iadb.org/en/inter-american-development-bank,2837.html',
     title: 'IDB',
@@ -385,11 +390,6 @@ export const funders = [
     img: images('./macarthurhover.png'),
     link: 'https://www.macfound.org/',
     title: 'MacArthur Foundation',
-  },
-  {
-    img: images('./hf.png'),
-    link: 'https://www.hampshirefoundation.org/',
-    title: 'Montpelier and Hampshire Foundations',
   },
   {
     img: images('./norwegianministrihover.png'),
