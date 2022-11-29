@@ -143,6 +143,11 @@ export const partnersCollaborators = [
     title: 'Airbus',
   },
   {
+    img: images('./toa.png'),
+    link: 'https://www.todoslosojosenlaamazonia.org/en/',
+    title: 'All Eyes on the Amazon (AEA)',
+  },
+  {
     img: images('./astrodigitalhover.png'),
     link: 'https://astrodigital.com/',
     title: 'Astro Digital',
@@ -327,11 +332,6 @@ export const partnersCollaborators = [
     img: images('./rtrshover.png'),
     link: 'http://www.responsiblesoy.org/?lang=en',
     title: 'RTRS',
-  },
-  {
-    img: images('./toa.png'),
-    link: 'https://www.todoslosojosenlaamazonia.org/en/',
-    title: 'All Eyes on the Amazon (AEA)',
   },
   {
     img: images('./unepwcmchover.png'),
