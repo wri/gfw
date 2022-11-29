@@ -1,8 +1,8 @@
 @import '~styles/settings.scss';
 
-$dd-button-height: rem(28px);
+$dd-button-height: rem(40px);
 
-.theme-dropdown-button {
+.theme-dropdown-button-big {
   text-align: center;
 
   .container {
@@ -10,16 +10,28 @@ $dd-button-height: rem(28px);
       border-radius: rem(25px);
       border-color: $green-gfw;
       height: $dd-button-height;
-      padding: 0 rem(10px);
+      padding: 0 rem(16px);
 
       .value {
-        padding: 0;
+        padding: 0 rem(10px);
         right: rem(26px);
       }
 
       .clear-btn {
         display: flex;
-        top: 9px;
+        top: rem(14px);
+        width: rem(20px);
+        height: rem(20px);
+        right: rem(24px);
+
+        .clear-icon {
+          max-width: rem(10px);
+          max-height: rem(10px);
+        }
+      }
+
+      &-menu {
+        top: rem(46px);
       }
     }
 
@@ -28,7 +40,7 @@ $dd-button-height: rem(28px);
         position: absolute;
         width: 0;
         height: 0;
-        margin: 0 9px;
+        margin: 0 rem(9px);
         border-bottom: 7px solid #fff;
         border-left: 7px solid transparent;
         border-left-color: #fff;
@@ -50,14 +62,18 @@ $dd-button-height: rem(28px);
     }
   }
 
-  .arrow-btn .arrow {
-    fill: $green-gfw;
+  .arrow-btn {
+    right: rem(14px);
+
+    .arrow {
+      fill: $green-gfw;
+    }
   }
 
   .label {
     color: $warm-grey;
     font-weight: 500;
-    font-size: 11px;
+    font-size: rem(11px);
     text-transform: uppercase;
   }
 }
