@@ -143,6 +143,11 @@ export const partnersCollaborators = [
     title: 'Airbus',
   },
   {
+    img: images('./toa.png'),
+    link: 'https://www.todoslosojosenlaamazonia.org/en/',
+    title: 'All Eyes on the Amazon (AEA)',
+  },
+  {
     img: images('./astrodigitalhover.png'),
     link: 'https://astrodigital.com/',
     title: 'Astro Digital',
@@ -294,6 +299,11 @@ export const partnersCollaborators = [
     title: 'Rainforest Foundation UK',
   },
   {
+    img: images('./rfus.png'),
+    link: 'https://www.rainforestfoundation.org/',
+    title: 'Rainforest Foundation US',
+  },
+  {
     img: images('./raisghover.png'),
     link: 'https://raisg.socioambiental.org/',
     title: 'RAISG',
@@ -362,6 +372,11 @@ export const funders = [
     title: 'Generation Foundation',
   },
   {
+    img: images('./hf.png'),
+    link: 'https://www.hampshirefoundation.org/',
+    title: 'Hampshire Foundation',
+  },
+  {
     img: images('./idbhover.png'),
     link: 'http://www.iadb.org/en/inter-american-development-bank,2837.html',
     title: 'IDB',
@@ -381,6 +396,11 @@ export const funders = [
     link:
       'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
     title: 'Norwegian Ministry',
+  },
+  {
+    img: images('./sv_postkodstiftelsen.png'),
+    link: 'https://postkodstiftelsen.se/en/about-the-postcode-foundation/',
+    title: 'Swedish Postcode Foundation',
   },
   {
     img: images('./ukaidhover.png'),
