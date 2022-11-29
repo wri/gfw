@@ -374,7 +374,7 @@ export const funders = [
   {
     img: images('./hf.png'),
     link: 'https://www.hampshirefoundation.org/',
-    title: 'Montpelier and Hampshire Foundations',
+    title: 'Hampshire Foundation',
   },
   {
     img: images('./idbhover.png'),
