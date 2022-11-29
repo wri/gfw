@@ -342,6 +342,11 @@ export const partnersCollaborators = [
 
 export const funders = [
   {
+    img: images('./bef.png'),
+    link: 'https://www.bezosearthfund.org/',
+    title: 'Bezos Earth Fund',
+  },
+  {
     img: images('./cargillhover.png'),
     link: 'https://www.cargill.com/',
     title: 'Cargill',
