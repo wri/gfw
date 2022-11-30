@@ -29,7 +29,7 @@ export default [
     value: 'mining',
     dataType: 'keyword',
     metaKey: 'gfw_mining',
-    tableKey: 'is__gfw_mining',
+    tableKey: 'is__gfw_mining_concessions',
     global: true,
     datasets: [
       {
@@ -43,7 +43,7 @@ export default [
     value: 'wdpa',
     dataType: 'keyword',
     metaKey: 'wdpa_protected_areas',
-    tableKey: 'wdpa_protected_area__iucn_cat',
+    tableKey: 'wdpa_protected_areas__iucn_cat',
     global: true,
     categories: ['Category Ia/b or II', 'Other Category', 'Unkown'],
     datasets: [
@@ -59,7 +59,7 @@ export default [
     dataType: 'keyword',
     value: 'kba',
     metaKey: 'key_biodiversity_areas',
-    tableKey: 'is__birdlife_key_biodiversity_area',
+    tableKey: 'is__birdlife_key_biodiversity_areas',
     global: true,
   },
   // {
@@ -82,7 +82,7 @@ export default [
     dataType: 'keyword',
     preserveString: true,
     metaKey: 'alliance_for_zero_extinction_sites',
-    tableKey: 'is__birdlife_alliance_for_zero_extinction_site',
+    tableKey: 'is__birdlife_alliance_for_zero_extinction_sites',
     global: true,
     datasets: [
       {
@@ -96,7 +96,7 @@ export default [
     value: 'landmark',
     dataType: 'keyword',
     metaKey: 'landmark_icls_2020',
-    tableKey: 'is__landmark_land_right',
+    tableKey: 'is__landmark_indigenous_and_community_lands',
     global: true,
     datasets: [
       {
@@ -111,7 +111,7 @@ export default [
     dataType: 'keyword',
     value: 'idn_mys_peatlands',
     metaKey: 'idn_peat_lands',
-    tableKey: 'is__peatland',
+    tableKey: 'is__gfw_peatlands',
     global: false,
     datasets: [
       {
@@ -169,7 +169,7 @@ export default [
     value: 'managed_forests',
     dataType: 'keyword',
     metaKey: 'gfw_logging',
-    tableKey: 'is__gfw_managed_forest',
+    tableKey: 'is__gfw_managed_forests',
     global: true,
     datasets: [
       {
