@@ -24,10 +24,9 @@ const parseData = createSelector(
     if (!data || isEmpty(data) || !extentData) return null;
     const { startYear, endYear } = settings;
 
-    const extent =
-      (extentData && extentData.length && extentData[0].extent) ||
-      extentData ||
-      0;
+    const extent = Array.isArray(extentData)
+      ? extentData[0]?.extent || 0
+      : (!isNaN(extentData) && extentData) || 0;
 
     return data
       .filter((d) => d.year >= startYear && d.year <= endYear)
@@ -123,10 +122,9 @@ const parseSentence = createSelector(
       co2Emissions,
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
-    const extent =
-      (extentData && extentData.length && extentData[0].extent) ||
-      extentData ||
-      0;
+    const extent = Array.isArray(extentData)
+      ? extentData[0]?.extent || 0
+      : (!isNaN(extentData) && extentData) || 0;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && sumBy(data, 'emissions')) || 0;
