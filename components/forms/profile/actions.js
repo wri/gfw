@@ -6,35 +6,66 @@ import { setMyGFW } from 'providers/mygfw-provider/actions';
 
 export const saveProfile = createThunkAction(
   'saveProfile',
-  ({
-    id,
-    signUpForNewsletter,
-    subsector,
-    subsector_otherInput,
-    howDoYouUse,
-    howDoYouUse_otherInput,
-    ...rest
-  }) => (dispatch) => {
-    const postData = {
+  (fields) => (dispatch) => {
+    const {
       id,
-      ...rest,
-      subsector:
-        subsector && subsector.includes('Other')
-          ? `Other: ${subsector_otherInput || ''}`
-          : subsector,
-      howDoYouUse:
-        howDoYouUse && howDoYouUse.includes('Other')
-          ? [
-              ...howDoYouUse.filter((use) => use !== 'Other'),
-              `Other: ${howDoYouUse_otherInput || ''}`,
-            ]
-          : howDoYouUse,
-      signUpForNewsletter:
-        !!signUpForNewsletter &&
-        signUpForNewsletter.length &&
-        signUpForNewsletter.includes('newsletter')
-          ? 'true'
-          : false,
+      signUpForNewsletter,
+      subsector,
+      subsector_otherInput,
+      howDoYouUse,
+      howDoYouUse_otherInput,
+      firstName,
+      lastName,
+      email,
+      country,
+      city,
+      state,
+      sector,
+      company,
+      interests,
+      topics,
+      aoiCity,
+      aoiCountry,
+      aoiState,
+      jobTitle,
+    } = fields;
+
+    const postData = {
+      firstName,
+      lastName,
+      email,
+      applicationData: {
+        gfw: {
+          country,
+          city,
+          state,
+          sector,
+          company,
+          interests,
+          topics,
+          aoiCity,
+          aoiCountry,
+          aoiState,
+          jobTitle,
+          subsector:
+            subsector && subsector.includes('Other')
+              ? `Other: ${subsector_otherInput || ''}`
+              : subsector,
+          howDoYouUse:
+            howDoYouUse && howDoYouUse.includes('Other')
+              ? [
+                  ...howDoYouUse.filter((use) => use !== 'Other'),
+                  `Other: ${howDoYouUse_otherInput || ''}`,
+                ]
+              : howDoYouUse,
+          signUpForNewsletter:
+            !!signUpForNewsletter &&
+            signUpForNewsletter.length &&
+            signUpForNewsletter.includes('newsletter')
+              ? 'true'
+              : false,
+        },
+      },
     };
 
     return updateProfile(id, postData)
@@ -46,6 +77,7 @@ export const saveProfile = createThunkAction(
               loggedIn: true,
               id: response.data.data.id,
               ...attributes,
+              ...attributes.applicationData.gfw,
             })
           );
         }

@@ -24,6 +24,7 @@ export const getUserProfile = createThunkAction(
                     loggedIn: true,
                     id: authResponse.data.id,
                     ...(data && data.attributes),
+                    ...(data && data.attributes.applicationData.gfw),
                   })
                 );
               }
