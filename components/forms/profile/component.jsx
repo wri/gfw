@@ -148,10 +148,9 @@ class ProfileForm extends PureComponent {
                         options={countries}
                         placeholder="Select a country"
                       />
-                      <Input name="aoiCity" label="city" />
                       <Input
-                        name="aoiState"
-                        label="state / department / province"
+                        name="areaOrRegionOfInterest"
+                        label="Other area or region of interest"
                       />
                       <Checkbox
                         name="interests"
@@ -183,7 +182,10 @@ class ProfileForm extends PureComponent {
                           ),
                           { label: 'Other', value: 'Other' },
                         ]}
-                        selectInput={values.howDoYouUse && values.howDoYouUse.includes('Other')}
+                        selectInput={
+                          values.howDoYouUse &&
+                          values.howDoYouUse.includes('Other')
+                        }
                       />
                       {/* <Checkbox
                         name="signUpToNewsletter"

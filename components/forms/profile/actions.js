@@ -24,9 +24,8 @@ export const saveProfile = createThunkAction(
       company,
       interests,
       topics,
-      aoiCity,
       aoiCountry,
-      aoiState,
+      areaOrRegionOfInterest,
       jobTitle,
     } = fields;
 
@@ -43,10 +42,9 @@ export const saveProfile = createThunkAction(
           company,
           interests,
           topics,
-          aoiCity,
           aoiCountry,
-          aoiState,
           jobTitle,
+          areaOrRegionOfInterest,
           subsector:
             subsector && subsector.includes('Other')
               ? `Other: ${subsector_otherInput || ''}`
