@@ -183,7 +183,10 @@ class ProfileForm extends PureComponent {
                           ),
                           { label: 'Other', value: 'Other' },
                         ]}
-                        selectInput={values.howDoYouUse && values.howDoYouUse.includes('Other')}
+                        selectInput={
+                          values.howDoYouUse &&
+                          values.howDoYouUse.includes('Other')
+                        }
                       />
                       {/* <Checkbox
                         name="signUpToNewsletter"
@@ -204,6 +207,11 @@ class ProfileForm extends PureComponent {
                           multiple
                         />
                       )} */}
+                      <Checkbox
+                        name="signUpForTesting"
+                        label="Would you like to help us test new application features?"
+                        options={[{ label: 'Yes', value: 'true' }]}
+                      />
                       <Error
                         valid={valid}
                         submitFailed={submitFailed}

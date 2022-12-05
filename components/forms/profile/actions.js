@@ -28,6 +28,7 @@ export const saveProfile = createThunkAction(
       aoiCountry,
       aoiState,
       jobTitle,
+      signUpForTesting,
     } = fields;
 
     const postData = {
@@ -64,6 +65,7 @@ export const saveProfile = createThunkAction(
             signUpForNewsletter.includes('newsletter')
               ? 'true'
               : false,
+          signUpForTesting: signUpForTesting ? 'true' : false,
         },
       },
     };
