@@ -27,7 +27,7 @@ function handleRedirectFor(urls, url, res) {
 app.prepare().then(() => {
   const server = express();
 
-  server.use(sslRedirect());
+  server.use(sslRedirect(['production'], 301));
 
   server.all('*', (req, res) => {
     // Handle water redirects
