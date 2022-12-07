@@ -8,12 +8,15 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const waterUrls = {};
+const redirectUrls = {};
 
 waterRedirects.forEach((wr) => {
-  waterUrls[wr.source] = wr.destination;
+  redirectUrls[wr.source] = wr.destination;
 });
 
+/**
+ * Handles predefined url redirects.
+ */
 function handleRedirectFor(urls, url, res) {
   try {
     if (urls[url]) {
@@ -24,6 +27,9 @@ function handleRedirectFor(urls, url, res) {
   }
 }
 
+/**
+ * Redirects non-www urls to www urls
+ */
 function handleNonWwwToWwwRedirect(req, res) {
   try {
     const host = req.header('host');
@@ -38,14 +44,21 @@ function handleNonWwwToWwwRedirect(req, res) {
 app.prepare().then(() => {
   const server = express();
 
+  // Redirect from http to https when NODE_ENV is set to `production`.
+  // This will take an effect on the `staging`, `preproduction` and `production` environments.
   server.use(sslRedirect(['production'], 301));
 
   server.all(/.*/, (req, res) => {
+    // Redirect from non-www to www, but only on actual `production`.
+    // Note that we cannot use `NODE_ENV` for this; that environment variable is set to `production`
+    //  in the `staging`, `preproduction` and `production` environments. Instead we need to use
+    //  the `NEXT_PUBLIC_FEATURE_ENV` environment variable.
     if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'production') {
       handleNonWwwToWwwRedirect(req, res);
     }
 
-    handleRedirectFor(waterUrls, req.url, res);
+    // Handle other redirects.
+    handleRedirectFor(redirectUrls, req.url, res);
 
     return handle(req, res);
   });
