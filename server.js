@@ -24,14 +24,26 @@ function handleRedirectFor(urls, url, res) {
   }
 }
 
+function handleNonWwwToWwwRedirect(req, res) {
+  try {
+    const host = req.header('host');
+    if (!host.match(/^www\..*/i)) {
+      res.redirect(301, `https://www.${host}${req.url}`);
+    }
+  } catch (_i) {
+    // Ignore by default
+  }
+}
+
 app.prepare().then(() => {
   const server = express();
 
   server.use(sslRedirect(['production'], 301));
 
-  server.all('*', (req, res) => {
-    // Handle water redirects
+  server.all(/.*/, (req, res) => {
+    handleNonWwwToWwwRedirect(req, res);
     handleRedirectFor(waterUrls, req.url, res);
+
     return handle(req, res);
   });
 
