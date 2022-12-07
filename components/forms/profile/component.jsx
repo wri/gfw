@@ -148,10 +148,9 @@ class ProfileForm extends PureComponent {
                         options={countries}
                         placeholder="Select a country"
                       />
-                      <Input name="aoiCity" label="city" />
                       <Input
-                        name="aoiState"
-                        label="state / department / province"
+                        name="areaOrRegionOfInterest"
+                        label="Other area or region of interest"
                       />
                       <Checkbox
                         name="interests"
