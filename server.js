@@ -41,7 +41,10 @@ app.prepare().then(() => {
   server.use(sslRedirect(['production'], 301));
 
   server.all(/.*/, (req, res) => {
-    handleNonWwwToWwwRedirect(req, res);
+    if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'production') {
+      handleNonWwwToWwwRedirect(req, res);
+    }
+
     handleRedirectFor(waterUrls, req.url, res);
 
     return handle(req, res);
