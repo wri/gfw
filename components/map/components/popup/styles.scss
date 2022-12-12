@@ -3,8 +3,9 @@
 .c-popup {
   font-family: $font-family-1;
   border-radius: 2px;
-  max-width: rem(290px);
+  max-width: rem(360px);
   min-width: rem(200px);
+  max-height: calc(100vh - 100px);
 
   .close-btn {
     position: absolute;
@@ -27,6 +28,8 @@
 
   .popup-body {
     padding: rem(25px);
+    height: 100%;
+    overflow: hidden;
 
     .title {
       font-size: rem(16px);
@@ -46,6 +49,7 @@
   padding: 0 !important;
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
   border-radius: 0 !important;
+  overflow: auto;
 
   .mapboxgl-popup-close-button {
     top: 5px;
