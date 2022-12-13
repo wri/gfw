@@ -1,7 +1,7 @@
 import { createThunkAction } from 'redux/actions';
 import { FORM_ERROR } from 'final-form';
 
-import { updateProfile } from 'services/user';
+import { updateProfile, createProfile } from 'services/user';
 import { setMyGFW } from 'providers/mygfw-provider/actions';
 
 export const saveProfile = createThunkAction(
@@ -24,10 +24,11 @@ export const saveProfile = createThunkAction(
       company,
       interests,
       topics,
-      aoiCity,
       aoiCountry,
-      aoiState,
+      areaOrRegionOfInterest,
       jobTitle,
+      signUpForTesting,
+      isUserProfileFilled,
     } = fields;
 
     const postData = {
@@ -43,10 +44,9 @@ export const saveProfile = createThunkAction(
           company,
           interests,
           topics,
-          aoiCity,
           aoiCountry,
-          aoiState,
           jobTitle,
+          areaOrRegionOfInterest,
           subsector:
             subsector && subsector.includes('Other')
               ? `Other: ${subsector_otherInput || ''}`
@@ -64,11 +64,14 @@ export const saveProfile = createThunkAction(
             signUpForNewsletter.includes('newsletter')
               ? 'true'
               : false,
+          signUpForTesting: signUpForTesting ? 'true' : false,
         },
       },
     };
 
-    return updateProfile(id, postData)
+    const updateOrCreate = isUserProfileFilled ? updateProfile : createProfile;
+
+    return updateOrCreate(id, postData)
       .then((response) => {
         if (response.data && response.data.data) {
           const { attributes } = response.data.data;
@@ -76,6 +79,7 @@ export const saveProfile = createThunkAction(
             setMyGFW({
               loggedIn: true,
               id: response.data.data.id,
+              isUserProfileFilled: true,
               ...attributes,
               ...attributes.applicationData.gfw,
             })

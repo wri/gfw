@@ -1511,7 +1511,7 @@ export const fetchIntegratedAlerts = (params) => {
   if (!download) {
     requestUrl = getRequestUrl({
       ...params,
-      dataset: alertSystem === 'glad_l' ? 'glad_alerts' : 'integrated_alerts',
+      dataset: alertSystem === 'glad_l' ? 'glad' : 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
       version: 'latest',

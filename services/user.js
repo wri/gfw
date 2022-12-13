@@ -47,6 +47,13 @@ export const register = (formData) =>
 export const resetPassword = (formData) =>
   apiRequest.post(`/auth/reset-password?callbackUrl=${CALLBACK_URL}`, formData);
 
+export const createProfile = (id, data) =>
+  apiAuthRequest({
+    method: 'POST',
+    data,
+    url: `/v2/user`,
+  });
+
 export const updateProfile = (id, data) =>
   apiAuthRequest({
     method: 'PATCH',
