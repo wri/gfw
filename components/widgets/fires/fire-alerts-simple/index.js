@@ -348,6 +348,8 @@ export default {
     const geostoreId = params?.geostore?.hash;
     return fetchVIIRSAlertsSumOTF({
       ...params,
+      startDate,
+      endDate,
       geostoreId,
       staticStatement: {
         // append: true, If active, we will utalise the old location select logic with our statement
