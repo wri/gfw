@@ -96,7 +96,7 @@ class AoICard extends PureComponent {
     getLatestAlerts({
       location,
       params: {
-        startDate: moment.utc().subtract(2, 'weeks').format('YYYY-MM-DD'),
+        startDate: moment.utc().subtract(1, 'weeks').format('YYYY-MM-DD'),
         endDate: moment.utc().format('YYYY-MM-DD'),
       },
     })
