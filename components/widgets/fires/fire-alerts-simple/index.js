@@ -373,16 +373,33 @@ export default {
     key: 'alerts',
     subKey: 'alert__count',
   },
-  getDataURL: (params) => [
-    fetchVIIRSAlertsSum({
-      ...params,
-      download: true,
-      staticStatement: {
-        // append: true, If active, we will utalise the old location select logic with our statement
-        statement: 'latitude, longitude, alert__date',
-        table: 'nasa_viirs_fire_alerts',
-      },
-    }),
-  ],
+  getDataURL: (params) => {
+    if (shouldQueryPrecomputedTables(params)) {
+      return [
+        fetchVIIRSAlertsSum({
+          ...params,
+          download: true,
+          // staticStatement: {
+          //   // append: true, If active, we will utalise the old location select logic with our statement
+          //   statement: 'latitude, longitude, alert__date',
+          //   table: 'nasa_viirs_fire_alerts',
+          // },
+        }),
+      ];
+    }
+    const geostoreId = params?.geostore?.hash;
+    return [
+      fetchVIIRSAlertsSumOTF({
+        ...params,
+        geostoreId,
+        download: true,
+        staticStatement: {
+          // append: true, If active, we will utalise the old location select logic with our statement
+          statement: 'latitude, longitude, alert__date',
+          table: 'nasa_viirs_fire_alerts',
+        },
+      }),
+    ];
+  },
   getWidgetProps,
 };
