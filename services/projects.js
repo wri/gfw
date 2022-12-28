@@ -55,11 +55,9 @@ export async function getSGFProjects({
     }),
     getCountriesProvider(),
   ]);
-  console.log('countries', projectsData?.[1]?.data);
 
   const countries = projectsData?.[1]?.data?.rows;
   const projects = projectsData?.[0]?.data?.map((d) => {
-    // const imagesPath = d.image.split('>');
     const itemCountries = countries?.filter(
       (c) => d.acf.country && d.acf.country.indexOf(c.iso) > -1
     );
@@ -77,7 +75,6 @@ export async function getSGFProjects({
       countries: d.acf.country,
       image: d.acf.images?.[0] || null,
       images: d.acf.images || null,
-      imageKey: '',
       blogSentence: d.acf.blog_sentence,
       blogLink: d.acf.hyperlinks_for_blog_sentence,
       latitude: d.acf.latitude_average || null,
