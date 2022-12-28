@@ -6,6 +6,8 @@ import omitBy from 'lodash/omitBy';
 import orderBy from 'lodash/orderBy';
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
+import { getSGFProjectsTab } from 'services/grants-and-fellowships';
+
 import Card from 'components/ui/card';
 import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
@@ -28,6 +30,9 @@ const GrantsProjectsSection = ({
   const { query, replace, asPath } = useRouter();
 
   const { modal, projectId, country: countryIso } = query;
+
+  const projectsTabTexts = useMemo(() => getSGFProjectsTab(), []);
+  console.log({ projectsTabTexts });
 
   const allProjectsOrdered = useMemo(
     () => orderBy(allProjects, ['year', 'title'], ['desc', 'asc']),
@@ -112,12 +117,9 @@ const GrantsProjectsSection = ({
       <div className="l-grants-projects-section">
         <Row className="projects-header">
           <Column width={[1]}>
-            <h3>MEET THE GRANTEES AND FELLOWS</h3>
+            <h3>{projectsTabTexts?.title}</h3>
             <p className="text -paragraph -color-2 -light -spaced">
-              With financial and technical support from GFW, organizations and
-              individuals around the world are using Global Forest Watch to
-              monitor large-scale land-use projects, enforce community land
-              rights, defend critical habitat, and influence forest policy.
+              {projectsTabTexts?.description}
             </p>
           </Column>
         </Row>
