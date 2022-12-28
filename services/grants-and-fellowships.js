@@ -31,12 +31,11 @@ export async function getSGFProjectsTab({
     },
     cancelToken,
   });
-  console.log('GFInfoData', GFInfoData?.data?.[0]);
 
   const projects = GFInfoData?.data?.map((d) => {
     return {
       id: d.id,
-      title: d.acf.title,
+      title: d.acf.projects_title,
       description: d.acf.projects_description,
     };
   });
