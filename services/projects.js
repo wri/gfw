@@ -63,7 +63,7 @@ export async function getSGFProjects({
     );
 
     return {
-      id: d.id,
+      id: parseInt(d.acf.id, 10),
       title: d.title.rendered,
       sector: d.acf.sector,
       summary: d.acf.short_description,
