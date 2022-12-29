@@ -49,6 +49,7 @@ export const getServerSideProps = async ({ query }) => {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
         section: query?.section,
         about: pageTexts?.[0]?.acf?.about_section,
+        header: pageTexts[0],
       },
     };
   }
