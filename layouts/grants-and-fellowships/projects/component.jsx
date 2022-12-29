@@ -6,8 +6,6 @@ import omitBy from 'lodash/omitBy';
 import orderBy from 'lodash/orderBy';
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
-import { getSGFProjectsTab } from 'services/grants-and-fellowships';
-
 import Card from 'components/ui/card';
 import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
@@ -19,6 +17,7 @@ import './styles.scss';
 
 const GrantsProjectsSection = ({
   projects: allProjects,
+  projectsTexts,
   images,
   countries: allCountries,
   country: countryQueryParam,
@@ -30,9 +29,6 @@ const GrantsProjectsSection = ({
   const { query, replace, asPath } = useRouter();
 
   const { modal, projectId, country: countryIso } = query;
-
-  const projectsTabTexts = useMemo(() => getSGFProjectsTab(), []);
-  console.log({ projectsTabTexts });
 
   const allProjectsOrdered = useMemo(
     () => orderBy(allProjects, ['year', 'title'], ['desc', 'asc']),
@@ -117,9 +113,9 @@ const GrantsProjectsSection = ({
       <div className="l-grants-projects-section">
         <Row className="projects-header">
           <Column width={[1]}>
-            <h3>{projectsTabTexts?.title}</h3>
+            <h3>{projectsTexts?.projects_title}</h3>
             <p className="text -paragraph -color-2 -light -spaced">
-              {projectsTabTexts?.description}
+              {projectsTexts?.projects_description}
             </p>
           </Column>
         </Row>
@@ -196,6 +192,7 @@ GrantsProjectsSection.propTypes = {
   country: PropTypes.string,
   countries: PropTypes.array,
   projects: PropTypes.array,
+  projectsTexts: PropTypes.object,
   images: PropTypes.object,
 };
 

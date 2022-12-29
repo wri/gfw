@@ -25,14 +25,12 @@ const GrantsAndFellowshipsPage = (props) => {
     as: `/grants-and-fellowships/${key}`,
     activeShallow: key === props?.section,
   }));
-
+  console.log('Props about', props);
   return (
     <div>
       <Cover
-        title="Grants & Fellowships"
-        description="The Small Grants Fund and Tech Fellowship support civil society organizations
-          and individuals around the world to use Global Forest Watch in their advocacy,
-          research, and field work."
+        title={props?.header?.title?.rendered}
+        description={props?.header?.acf?.header_description}
         bgImage={bgImage}
       />
       <SubnavMenu links={links} />
@@ -44,6 +42,7 @@ const GrantsAndFellowshipsPage = (props) => {
 };
 
 GrantsAndFellowshipsPage.propTypes = {
+  header: PropTypes.object,
   section: PropTypes.string,
 };
 

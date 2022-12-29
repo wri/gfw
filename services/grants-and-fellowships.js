@@ -15,11 +15,7 @@ apiFetch.setFetchHandler(async (options) => {
   });
 });
 
-export async function getSGFProjectsTab({
-  cancelToken,
-  params,
-  allLanguages,
-} = {}) {
+export async function getSGFPage({ cancelToken, params, allLanguages } = {}) {
   const GFInfoData = await apiFetch({
     url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/pages?slug=grants-and-fellowships`,
     params: {
@@ -32,15 +28,5 @@ export async function getSGFProjectsTab({
     cancelToken,
   });
 
-  const projects = GFInfoData?.data?.map((d) => {
-    return {
-      id: d.id,
-      title: d.acf.projects_title,
-      description: d.acf.projects_description,
-    };
-  });
-
-  console.log({ projects });
-
-  return projects;
+  return GFInfoData?.data;
 }

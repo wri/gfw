@@ -3,6 +3,7 @@ import capitalize from 'lodash/capitalize';
 import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
+import { getSGFPage } from 'services/grants-and-fellowships';
 import { getSGFProjects } from 'services/projects';
 import { getCountriesProvider } from 'services/country';
 
@@ -25,9 +26,9 @@ export const getServerSideProps = async ({ query }) => {
   }
 
   if (query?.section === 'projects') {
+    const pageTexts = await getSGFPage();
     const projects = await getSGFProjects();
     const countries = await getCountriesProvider();
-
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
@@ -35,6 +36,19 @@ export const getServerSideProps = async ({ query }) => {
         projects: projects || [],
         countries: countries?.data?.rows || [],
         country: query?.country || '',
+        projectsTexts: pageTexts?.[0]?.acf,
+        header: pageTexts[0],
+      },
+    };
+  }
+
+  if (query?.section === 'about') {
+    const pageTexts = await getSGFPage();
+    return {
+      props: {
+        title: 'Projects | Grants & Fellowships | Global Forest Watch',
+        section: query?.section,
+        about: pageTexts?.[0]?.acf?.about_section,
       },
     };
   }
