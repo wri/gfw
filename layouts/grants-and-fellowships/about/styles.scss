@@ -39,6 +39,11 @@
     font-size: rem(20px);
     color: $green-gfw;
     font-weight: 500;
+    margin-bottom: rem(40px);
+  }
+
+  .section-paragraph {
+    margin-bottom: rem(40px);
   }
 
   .list {
@@ -47,7 +52,7 @@
 
   .icon-list {
     text-align: center;
-    margin-bottom: 0;
+    margin-bottom: rem(40px);
 
     @media screen and (min-width: $screen-m) {
       margin-bottom: rem(40px);

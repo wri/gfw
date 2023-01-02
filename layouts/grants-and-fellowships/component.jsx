@@ -25,7 +25,7 @@ const GrantsAndFellowshipsPage = (props) => {
     as: `/grants-and-fellowships/${key}`,
     activeShallow: key === props?.section,
   }));
-  console.log('Props about', props);
+
   return (
     <div>
       <Cover
