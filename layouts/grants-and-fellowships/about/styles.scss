@@ -23,6 +23,19 @@
       margin-bottom: rem(20px);
     }
 
+    p {
+      color: $slate;
+      font-weight: 300;
+      font-size: rem(18px);
+      line-height: 1.67;
+      margin-bottom: rem(40px);
+    }
+
+    ul {
+      list-style: inside;
+      margin-bottom: rem(40px);
+    }
+
     @media screen and (min-width: $screen-m) {
       &.results {
         margin-bottom: rem(60px);
@@ -42,10 +55,6 @@
     margin-bottom: rem(40px);
   }
 
-  .section-paragraph {
-    margin-bottom: rem(40px);
-  }
-
   .list {
     margin-bottom: rem(20px);
   }
@@ -58,7 +67,7 @@
       margin-bottom: rem(40px);
     }
 
-    svg {
+    img {
       width: 40%;
       height: 40%;
       margin-top: rem(20px);
