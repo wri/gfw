@@ -33,7 +33,7 @@ function handleRedirectFor(urls, url, res) {
 function handleNonWwwToWwwRedirect(req, res) {
   try {
     const host = req.header('host');
-    if (!host.match(/^www\..*/i)) {
+    if (!host.match(/^www\..*/i) && host.match(/^globalforestwatch\..*/i)) {
       res.redirect(301, `https://www.${host}${req.url}`);
     }
   } catch (_i) {
