@@ -19,7 +19,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 const MIN_YEAR = 2001;
 
 const getGlobalLocation = (params) => ({
@@ -66,6 +66,7 @@ export default {
   widget: 'treeLoss',
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
     text:
@@ -96,6 +97,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      blacklist: ['wdpa'],
     },
     {
       key: 'extentYear',

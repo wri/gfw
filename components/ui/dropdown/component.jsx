@@ -20,6 +20,7 @@ import './themes/dropdown-dark.scss';
 import './themes/dropdown-light.scss';
 import './themes/dropdown-button.scss';
 import './themes/dropdown-button-small.scss';
+import './themes/dropdown-button-big.scss';
 import './themes/dropdown-native.scss';
 import './themes/dropdown-native-button.scss';
 import './themes/dropdown-native-button-green.scss';
@@ -161,7 +162,11 @@ class Dropdown extends PureComponent {
                   options.map(
                     (o) =>
                       o && (
-                        <option key={`${o.value}-${o.label}`} value={o.value}>
+                        <option
+                          key={`${o.value}-${o.label}`}
+                          value={o.value}
+                          disabled={o?.disabled || false}
+                        >
                           {o.label}
                         </option>
                       )

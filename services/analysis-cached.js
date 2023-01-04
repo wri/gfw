@@ -8,29 +8,35 @@ import {
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
+import DATASETS_VERSIONS from 'data/analysis-datasets-versions.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
 const VIIRS_START_YEAR = 2012;
 
 const SQL_QUERIES = {
+  // This Query is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
+  treeCoverLossByDriver:
+    'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   loss:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  lossFires:
+    'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(umd_tree_cover_loss_from_fires__ha) AS "umd_tree_cover_loss_from_fires__ha" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissions:
-    'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+    'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsLossOTF:
     'SELECT umd_tree_cover_loss__year, SUM(area__ha), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} AND umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}',
   emissionsByDriver:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_gross_emissions_co2e_non_co2__Mg") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_gross_emissions_co2e_co2_only__Mg") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   carbonFlux:
     'SELECT SUM("gfw_net_flux_co2e__Mg") AS "gfw_net_flux_co2e__Mg", SUM("gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg") AS "gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg", SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", TRUE AS "includes_gain_pixels" FROM data {WHERE}',
   carbonFluxOTF: `SELECT SUM("gfw_forest_carbon_net_flux__Mg_CO2e"), SUM("gfw_forest_carbon_gross_removals__Mg_CO2e"), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} OR is__umd_tree_cover_gain = 'true'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain:
-    'SELECT {select_location}, SUM("umd_tree_cover_gain_2000-2012__ha") AS "umd_tree_cover_gain_2000-2012__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad:
@@ -55,7 +61,7 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
-  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -65,14 +71,29 @@ const SQL_QUERIES = {
     'SELECT alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND ({dateFilter}) GROUP BY alert__week, alert__year, confidence__cat ORDER BY alert__year DESC, alert__week DESC',
   alertsDaily:
     "SELECT alert__date, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY alert__date, confidence__cat ORDER BY alert__date DESC",
+  historicalIntegratedAlertsDaily:
+    "SELECT gfw_integrated_alerts__date, SUM(alert__count) AS alert__count, gfw_integrated_alerts__confidence FROM data {WHERE} AND gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}' GROUP BY gfw_integrated_alerts__date, gfw_integrated_alerts__confidence ORDER BY gfw_integrated_alerts__date DESC",
   biomassStock:
     'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE}',
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
+  netChangeIso:
+    'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
+  netChange:
+    'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
 };
 
 const ALLOWED_PARAMS = {
   annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
+  integrated_alerts: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'is__confirmed_alert',
+  ],
   glad: [
     'adm0',
     'adm1',
@@ -84,6 +105,15 @@ const ALLOWED_PARAMS = {
   viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
   modis_burned_area: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+    'confidence',
+  ],
+  net_change: [
     'adm0',
     'adm1',
     'adm2',
@@ -190,7 +220,7 @@ const getRequestUrl = ({
   try {
     typeByLevel = typeByGrouped[typeByLevel][grouped ? 'grouped' : 'default'];
   } catch (_) {
-    //
+    // return null;
   }
 
   datasetId =
@@ -198,7 +228,19 @@ const getRequestUrl = ({
       `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
     ];
 
-  return `/dataset/${datasetId}/${version || 'latest'}/query?sql=`;
+  const versionFromDictionary =
+    DATASETS_VERSIONS[
+      `${dataset?.toUpperCase()}_${typeByLevel?.toUpperCase()}_${datasetType?.toUpperCase()}`
+    ];
+
+  if (typeof datasetId === 'undefined') {
+    // @TODO: Figure out why widgets are stale on loading, when not requesting info
+    return null;
+  }
+  return `/dataset/${datasetId}/${
+    version || versionFromDictionary || 'latest'
+    // versionFromDictionary || version || 'latest'
+  }/query?sql=`;
 };
 
 const getDownloadUrl = (url) => {
@@ -267,6 +309,7 @@ export const getWHEREQuery = (params) => {
     (p) => (params[p] || p === 'threshold') && allowedParams.includes(p)
   );
   const { type, dataset } = params || {};
+  let comparisonString = ' = ';
   if (paramKeysFiltered && paramKeysFiltered.length) {
     let paramString = 'WHERE ';
     paramKeysFiltered.forEach((p, i) => {
@@ -294,13 +337,26 @@ export const getWHEREQuery = (params) => {
 
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
-      if (p === 'threshold') paramKey = 'umd_tree_cover_density__threshold';
+      if (p === 'threshold') {
+        if (dataset === 'annual') {
+          //   paramKey = 'umd_tree_cover_density__threshold';
+          comparisonString = ' = ';
+        } else {
+          comparisonString = ' >= ';
+        }
+        paramKey = 'umd_tree_cover_density_2000__threshold';
+
+        // }
+      }
       if (p === 'adm0' && type === 'country') paramKey = 'iso';
-      if (p === 'adm1' && type === 'country') paramKey = 'adm1::integer';
-      if (p === 'adm2' && type === 'country') paramKey = 'adm2::integer';
+      if (p === 'adm1' && type === 'country') paramKey = 'adm1';
+      if (p === 'adm2' && type === 'country') paramKey = 'adm2';
       if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
       if (p === 'adm0' && type === 'wdpa') {
         paramKey = 'wdpa_protected_area__id';
+        isNumericValue = false;
+      }
+      if (dataset === 'net_change') {
         isNumericValue = false;
       }
 
@@ -325,7 +381,9 @@ export const getWHEREQuery = (params) => {
           : ''
       }${
         !isPolyname
-          ? `${paramKey} = ${isNumericValue ? value : `'${value}'`}`
+          ? `${paramKey}${comparisonString}${
+              isNumericValue ? value : `'${value}'`
+            }`
           : ''
       }${isLast ? '' : ' AND '}`;
 
@@ -403,6 +461,42 @@ export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
 // data fetches
 //
 
+// This is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
+export const getTreeCoverLossByDriverType = (params) => {
+  const { download } = params;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20220721',
+  });
+
+  if (!requestUrl) return new Promise(() => {});
+
+  const sqlQuery = SQL_QUERIES.treeCoverLossByDriver;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`.replace('{WHERE}', getWHEREQuery({ ...params }))
+  );
+
+  if (download) {
+    return {
+      name: 'tree_cover_loss_by_driver_type__ha',
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+      })),
+    },
+  }));
+};
+
 // summed loss for single location
 export const getLoss = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
@@ -423,7 +517,7 @@ export const getLoss = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -444,7 +538,7 @@ export const getLoss = (params) => {
     data: {
       data: response?.data?.data.map((d) => ({
         ...d,
-        bound1: d.tsc_tree_cover_loss_drivers__type,
+        bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
         emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
@@ -472,7 +566,7 @@ export const getEmissions = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -492,7 +586,7 @@ export const getEmissions = (params) => {
     data: {
       data: response?.data.map((d) => ({
         ...d,
-        bound1: d.tsc_tree_cover_loss_drivers__type,
+        bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
         allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
         co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
@@ -552,11 +646,11 @@ export const getCarbonFlux = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
-      version: 'latest',
+      version: 'v20220721',
     })}${carbonFlux}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -633,7 +727,7 @@ export const getLossGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -661,6 +755,249 @@ export const getLossGrouped = (params) => {
   }));
 };
 
+// tree cover loss from fires
+export const getLossFires = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    version: 'v20220721',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.lossFires}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_from_fires_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        areaLoss: d.umd_tree_cover_loss__ha,
+        areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
+        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+export const getLossFiresOTF = (params) => {
+  const { forestType, landCategory, ifl, download, adm0, geostore } =
+    params || {};
+
+  // const requestUrl = getRequestUrl({
+  //   ...params,
+  //   dataset: 'annual',
+  //   datasetType: 'change',
+  //   version: 'v20220608',
+  // });
+
+  // if (!requestUrl) {
+  //   return new Promise(() => {});
+  // }
+
+  const requestUrl = `/dataset/umd_tree_cover_loss/latest/query?sql=`;
+
+  let url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.lossFires}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  url = `${url}&geostore_id=${adm0}`;
+
+  // TODO: IMPORTANT: this is very ugly, will do for now
+  url =
+    'https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss/v1.8/query/json?sql=SELECT%20umd_tree_cover_loss__year,%20sum(umd_tree_cover_loss__ha),%20sum(umd_tree_cover_loss_from_fires__ha)%20FROM%20data%20WHERE%20umd_tree_cover_loss__year%20%3E%3D%202001%20AND%20umd_tree_cover_loss__year%20%3C%3D%202020%20AND%20umd_tree_cover_density_2000__threshold%20%3E%3D%2030%20GROUP%20BY%20umd_tree_cover_loss__year';
+  url =
+    adm0 === 'river_basins'
+      ? `${url}&geostore_id=${geostore.id}`
+      : `${url}&geostore_id=${adm0}`;
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_from_fires_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        areaLoss: d.umd_tree_cover_loss__ha,
+        areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
+        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+export const getLossFiresGrouped = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'change',
+    version: 'v20220721',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.lossFires}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_from_fires_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+        year: d.umd_tree_cover_loss__year,
+        areaLoss: d.umd_tree_cover_loss__ha,
+        areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
+        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
+      })),
+    },
+  }));
+};
+
+export const getTreeCoverGainByPlantationType = (params) => {
+  const { forestType, landCategory, ifl, download } = params;
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20221012',
+  });
+
+  if (!requestUrl) return new Promise(() => {});
+
+  const sqlQuery = SQL_QUERIES.treeCoverGainByPlantationType;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`.replace('{WHERE}', getWHEREQuery({ ...params }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `tree_cover_gain_by_plantation_type${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+      })),
+    },
+  }));
+};
+
+// Net Change
+export const getNetChange = (params) => {
+  const { forestType, landCategory, ifl, download, adm1 } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'net_change',
+    datasetType: 'umd',
+    version: 'v202209',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const sqlQuery = adm1 ? SQL_QUERIES.netChange : SQL_QUERIES.netChangeIso;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, dataset: 'net_change', cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'net_change' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `net_tree_cover_change_from_height${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return apiRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response.data.data.map((d) => ({
+        ...d,
+      })),
+    },
+  }));
+};
+
 // summed extent for single location
 export const getExtent = (params) => {
   const { forestType, landCategory, ifl, download, extentYear } = params || {};
@@ -680,7 +1017,7 @@ export const getExtent = (params) => {
       .replace(/{extentYear}/g, extentYear)
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -730,7 +1067,7 @@ export const getExtentGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace(/{extentYear}/g, extentYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -776,7 +1113,7 @@ export const getGain = (params) => {
     `${requestUrl}${SQL_QUERIES.gain}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -785,7 +1122,7 @@ export const getGain = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_gain_2000-2012${
+      name: `treecover_gain_2000-2020${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
@@ -798,7 +1135,7 @@ export const getGain = (params) => {
       data: response?.data.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        gain: d['umd_tree_cover_gain_2000-2012__ha'],
+        gain: d.umd_tree_cover_gain__ha,
       })),
     },
   }));
@@ -824,7 +1161,7 @@ export const getGainGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -832,7 +1169,7 @@ export const getGainGrouped = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_gain_2000-2012_by_region${
+      name: `treecover_gain_2000-2020_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
@@ -845,7 +1182,7 @@ export const getGainGrouped = (params) => {
       data: response?.data.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
-        gain: d['umd_tree_cover_gain_2000-2012__ha'],
+        gain: d.umd_tree_cover_gain__ha,
       })),
     },
   }));
@@ -872,7 +1209,7 @@ export const getAreaIntersection = (params) => {
     `${requestUrl}${SQL_QUERIES.areaIntersection}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(
@@ -931,7 +1268,7 @@ export const getAreaIntersectionGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace(
         /{intersection}/g,
@@ -980,7 +1317,11 @@ export const fetchHistoricalAlerts = (params) => {
     endDate,
     dataset,
   } = params || {};
-  const { alertsDaily, alertsWeekly } = SQL_QUERIES;
+  const {
+    alertsDaily,
+    alertsWeekly,
+    historicalIntegratedAlertsDaily,
+  } = SQL_QUERIES;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -991,11 +1332,22 @@ export const fetchHistoricalAlerts = (params) => {
     return new Promise(() => {});
   }
 
+  let queryFrequency;
+  if (frequency === 'daily') {
+    queryFrequency = alertsDaily;
+  } else {
+    queryFrequency = alertsWeekly;
+  }
+
+  if (dataset === 'integrated_alerts') {
+    queryFrequency = historicalIntegratedAlertsDaily;
+  }
+
   const url = encodeURI(
-    `${requestUrl}${frequency === 'daily' ? alertsDaily : alertsWeekly}`
+    `${requestUrl}${queryFrequency}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery(params))
@@ -1046,7 +1398,7 @@ export const fetchHistoricalGladAlerts = (params) => {
     `${requestUrl}${SQL_QUERIES.gladDaily}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
@@ -1096,7 +1448,7 @@ export const fetchGladAlerts = (params) => {
     `${requestUrl}${SQL_QUERIES.glad}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
@@ -1156,7 +1508,7 @@ export const fetchIntegratedAlerts = (params) => {
   if (!download) {
     requestUrl = getRequestUrl({
       ...params,
-      dataset: alertSystem === 'glad_l' ? 'glad_alerts' : 'integrated_alerts',
+      dataset: alertSystem === 'glad_l' ? 'glad' : 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
       version: 'latest',
@@ -1230,7 +1582,7 @@ export const fetchIntegratedAlerts = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
@@ -1239,7 +1591,7 @@ export const fetchIntegratedAlerts = (params) => {
       .replace(/{endDate}/g, endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
       .replace(/{AND_OPERATION}/, AND_OPERATION)
-      .replace(/{geostoreOrigin}/g, 'rw')
+      .replace(/{geostoreOrigin}/g, 'gfw')
       .replace(/{geostoreId}/g, geostoreId)
   );
 
@@ -1358,7 +1710,7 @@ export const getIntegratedAlertsRanked = (params) => {
     `${requestUrl}${query}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{alertTypeColumn}/g, alertTypeColumn)
@@ -1421,7 +1773,7 @@ export const fetchGladAlertsDaily = (params) => {
     baseUrl
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
@@ -1475,7 +1827,7 @@ export const fetchGladAlertsDailyRanked = (params) => {
     baseUrl
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
@@ -1530,7 +1882,7 @@ export const fetchGladAlertsSum = (params) => {
     baseUrl
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
@@ -1646,7 +1998,7 @@ export const fetchBurnedArea = (params) => {
     })}${SQL_QUERIES.burnedAreas}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset, threshold }))
@@ -1694,7 +2046,7 @@ export const fetchBurnedAreaGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', whereStr)
       .replace(/{dateFilter}/g, weeksFilterStr)
@@ -1729,7 +2081,7 @@ export const fetchVIIRSAlerts = (params) => {
     }`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
@@ -1781,7 +2133,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', whereStr)
       .replace(/{dateFilter}/g, weeksFilterStr)
@@ -1819,7 +2171,7 @@ export const fetchFiresWithin = (params) => {
     }`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset }))
@@ -1851,7 +2203,7 @@ export const fetchFiresWithin = (params) => {
 
 export const fetchVIIRSLatest = () =>
   tilesRequest
-    .get('/nasa_viirs_fire_alerts/latest/max_alert__date')
+    .get('/nasa_viirs_fire_alerts/v20220726/max_alert__date')
     .then(({ data }) => {
       const date = data && data.data && data.data.max_date;
 
@@ -1911,7 +2263,7 @@ export const fetchVIIRSAlertsSum = (params) => {
     })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{startDate}', startDate)
@@ -1922,7 +2274,7 @@ export const fetchVIIRSAlertsSum = (params) => {
   if (download) {
     return {
       name: `daily_${dataset}_alerts__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
@@ -1960,7 +2312,7 @@ export const getBiomassStockGrouped = (params) => {
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: true })
+        getLocationSelect({ ...params, grouped: true, cast: false })
       )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
@@ -2006,7 +2358,7 @@ export const getBiomassStock = (params) => {
     `${requestUrl}${SQL_QUERIES.biomassStock}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: true })
+        getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -2065,10 +2417,17 @@ export const getNonGlobalDatasets = () => {
 
 // get a boolean list of forest types and land categories inside a given shape
 export const getLocationPolynameWhitelist = (params) => {
-  const url = `${getRequestUrl({ ...params, datasetType: 'whitelist' })}${
-    SQL_QUERIES.getLocationPolynameWhitelist
-  }`
-    .replace(/{select_location}/g, getLocationSelect({ ...params, cast: true }))
+  const requestUrl = getRequestUrl({ ...params, datasetType: 'whitelist' });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = `${requestUrl}${SQL_QUERIES.getLocationPolynameWhitelist}`
+    .replace(
+      /{select_location}/g,
+      getLocationSelect({ ...params, cast: false })
+    )
     .replace(/{location}/g, getLocationSelect(params))
     .replace(
       '{polynames}',

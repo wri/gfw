@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import uniqueId from 'lodash/uniqueId';
+import Input from 'components/forms/components/input';
 
 import { composeValidators } from 'components/forms/validations';
 
@@ -21,6 +22,7 @@ class Checkbox extends PureComponent {
     required: PropTypes.bool,
     formState: PropTypes.array,
     children: PropTypes.func,
+    selectInput: PropTypes.bool,
   };
 
   render() {
@@ -33,6 +35,7 @@ class Checkbox extends PureComponent {
       required,
       formState,
       children,
+      selectInput,
     } = this.props;
     return (
       <Field
@@ -83,6 +86,15 @@ class Checkbox extends PureComponent {
                   );
                 })}
             </div>
+            {selectInput && (
+              <div className="select-input">
+                <Input
+                  name={`${name}_otherInput`}
+                  label="Other:"
+                  required={required}
+                />
+              </div>
+            )}
           </FieldWrapper>
         )}
       </Field>

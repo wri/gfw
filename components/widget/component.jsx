@@ -30,12 +30,14 @@ class Widget extends PureComponent {
     loading: PropTypes.bool,
     metaLoading: PropTypes.bool,
     error: PropTypes.bool,
+    locationLabel: PropTypes.string,
     locationLabelFull: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     legendData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     originalData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
+    chartSettings: PropTypes.object,
     sentence: PropTypes.object,
     proxy: PropTypes.bool,
     proxyOn: PropTypes.array,
@@ -64,6 +66,7 @@ class Widget extends PureComponent {
     meta: PropTypes.object,
     customComponent: PropTypes.string,
     authenticated: PropTypes.bool,
+    chartDecorationConfig: PropTypes.object,
   };
 
   state = {
@@ -91,8 +94,10 @@ class Widget extends PureComponent {
       loading,
       metaLoading,
       error,
+      locationLabel,
       locationLabelFull,
       data,
+      chartSettings,
       legendData,
       rawData,
       originalData,
@@ -126,6 +131,7 @@ class Widget extends PureComponent {
       proxyOn,
       customComponent,
       authenticated,
+      chartDecorationConfig,
     } = this.props;
 
     const { main } = colors || {};
@@ -196,6 +202,7 @@ class Widget extends PureComponent {
           rawData={rawData}
           originalData={originalData}
           settings={settings}
+          chartSettings={chartSettings}
           settingsConfig={settingsConfig}
           preventRenderKeys={preventRenderKeys}
           sentence={sentence}
@@ -216,7 +223,13 @@ class Widget extends PureComponent {
             type={type}
             locationType={location?.locationType}
             caution={caution}
+            decorationMessage={
+              chartDecorationConfig?.locations.includes(locationLabel)
+                ? chartDecorationConfig?.message
+                : null
+            }
             simple={simple}
+            alertSystem={rawData?.alerts?.alertSystem}
           />
         )}
       </div>

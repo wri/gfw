@@ -16,6 +16,8 @@ import card4 from './assets/card-3.png';
 import card4Webp from './assets/card-3.webp';
 import card5 from './assets/card-4.png';
 import card5Webp from './assets/card-4.webp';
+import card6 from './assets/card-5.png';
+import card6Webp from './assets/card-5.webp';
 
 import forestWatcherImage from './assets/forestwatcher@2x.jpg';
 import proImage from './assets/pro-bg@2x.png';
@@ -63,19 +65,19 @@ export default {
       image: card3,
       webPImage: card3Webp,
     },
-    {
-      title: 'Forest insights',
-      summary:
-        'Read the latest stories and findings about forests from our team of researchers on the GFW blog.',
-      buttons: [
-        {
-          text: 'START LEARNING',
-          extLink: 'https://blog.globalforestwatch.org/',
-        },
-      ],
-      image: card4,
-      webPImage: card4Webp,
-    },
+    // {
+    //   title: 'Forest insights',
+    //   summary:
+    //     'Read the latest stories and findings about forests from our team of researchers on the GFW blog.',
+    //   buttons: [
+    //     {
+    //       text: 'START LEARNING',
+    //       extLink: 'https://blog.globalforestwatch.org/',
+    //     },
+    //   ],
+    //   image: card4,
+    //   webPImage: card4Webp,
+    // },
     {
       title: 'A suite of tools',
       summary:
@@ -88,6 +90,32 @@ export default {
       ],
       image: card5,
       webPImage: card5Webp,
+    },
+    {
+      title: 'Read about the latest updates',
+      summary:
+        'Check out stories on data and tools, GFW users in the field, and findings from our team of researchers on the GFW blog.',
+      buttons: [
+        {
+          text: 'START LEARNING',
+          extLink: 'https://blog.globalforestwatch.org/',
+        },
+      ],
+      image: card4,
+      webPImage: card4Webp,
+    },
+    {
+      title: 'The status of the world’s forests',
+      summary:
+        'Explore in-depth reporting and analysis on trends in tree cover loss and how forests are faring on the Global Forest Review.',
+      buttons: [
+        {
+          text: 'EXPLORE THE GFR',
+          extLink: 'https://research.wri.org/gfr/global-forest-review',
+        },
+      ],
+      image: card6,
+      webPImage: card6Webp,
     },
   ],
   uses: [

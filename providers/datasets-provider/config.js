@@ -55,6 +55,37 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  treeCoverLossFire: `
+  // values for creating power scale, domain (input), and range (output)
+  float domainMin = 0.;
+  float domainMax = 255.;
+  float rangeMin = 0.;
+  float rangeMax = 255.;
+
+  float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+  float intensity = color.r * 255.;
+
+  // get the min, max, and current values on the power scale
+  float minPow = pow(domainMin, exponent - domainMin);
+  float maxPow = pow(domainMax, exponent);
+  float currentPow = pow(intensity, exponent);
+
+  // get intensity value mapped to range
+  float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+  // a value between 0 and 255
+  alpha = zoom < 13. ? (scaleIntensity)/ 255. : color.g;
+
+  float year = 2000.0 + (color.b * 255.);
+  // map to years
+  if (year >= startYear && year <= endYear && year >= 2001.) {
+    // values entered directly, unlike TCL where final color changes with zoom level
+    color.r = 154. / 255.;
+    color.g = 91. / 255.;
+    color.b = 80. / 255.;
+  } else {
+    alpha = 0.;
+  }
+`,
   treeLossByDriver: `
     float year = 2000.0 + (color.b * 255.);
     // map to years
@@ -239,7 +270,7 @@ const decodes = {
     float day = r * 255. + g;
     float confidence = floor(b / 100.) - 1.;
     // float confidence = 255.;
-    float intensity = mod(b, 100.) * 50.;
+    float intensity = mod(b, 100.) * 150.;
     // float intensity = 255.; //this is temporal above one does not work
 
     if (
@@ -408,7 +439,7 @@ const decodes = {
       confidence >= confidenceValue
     ) {
       // get intensity
-      float intensity = mod(confidence, 100.) * 50.;
+      float intensity = mod(confidence, 100.) * 150.;
       if (intensity > 255.) {
         intensity = 255.;
       }
@@ -496,7 +527,7 @@ const decodes = {
       confidence >= confidenceValue
     ) {
       // get intensity
-      float intensity = mod(b, 100.) * 50.;
+      float intensity = mod(b, 100.) * 150.;
       // float intensity = 255.;
       if (intensity > 255.) {
         intensity = 255.;
@@ -544,6 +575,23 @@ const decodes = {
     color.r = red;
     color.g = green;
     color.b = blue;
+  `,
+  staticRemapAlpha: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    if (zoom > 12.) {
+      if (red == 0. && green == 0. && blue == 0.) {
+        alpha = 0.;
+      } else {
+        alpha = 1.;
+      }
+    }
+
+    color.r = red;
+    color.g = green;
+    color.b = blue; 
   `,
   newCarbonFlux: `
     float red = color.r;
@@ -991,6 +1039,7 @@ const decodes = {
 export default {
   treeCover: decodes.treeCover,
   treeCoverLoss: decodes.treeCoverLoss,
+  treeCoverLossFire: decodes.treeCoverLossFire,
   treeLossByDriver: decodes.treeLossByDriver,
   integratedAlerts8Bit: decodes.integratedAlerts8Bit,
   integratedAlerts16Bit: decodes.integratedAlerts16Bit,
@@ -999,6 +1048,7 @@ export default {
   RADDs2yearsTimeline: decodes.RADDs2yearsTimeline,
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
+  staticRemapAlpha: decodes.staticRemapAlpha,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,

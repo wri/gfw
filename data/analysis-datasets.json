@@ -73,10 +73,20 @@
   "INTEGRATED_ALERTS_ADM1_DAILY": "gadm__integrated_alerts__adm1_daily_alerts",
   "INTEGRATED_ALERTS_ADM2_DAILY": "gadm__integrated_alerts__adm2_daily_alerts",
   "INTEGRATED_ALERTS_WDPA_DAILY":"wdpa_protected_areas__integrated_alerts__daily_alerts",
+
+  "INTEGRATED_ALERTS_GEOSTORE_DAILY": "geostore__integrated_alerts__daily_alerts",
+  "INTEGRATED_ALERTS_GEOSTORE_WEEKLY": "geostore__integrated_alerts__weekly_alerts",
+  "INTEGRATED_ALERTS_GEOSTORE_SUMMARY": "geostore__integrated_alerts__summary",
+  "INTEGRATED_ALERTS_GEOSTORE_WHITELIST": "geostore__integrated_alerts__whitelist",
+
   "GLAD_ALERTS_WDPA_DAILY":"wdpa_protected_areas__glad__daily_alerts",
 
   "GLAD_ALERTS_ADM0_DAILY": "gadm__glad__iso_daily_alerts",
   "GLAD_ALERTS_ADM1_DAILY": "gadm__glad__adm1_daily_alerts",
-  "GLAD_ALERTS_ADM2_DAILY": "gadm__glad__adm2_daily_alerts"
+  "GLAD_ALERTS_ADM2_DAILY": "gadm__glad__adm2_daily_alerts",
+
+  "NET_CHANGE_ADM0_UMD": "umd_adm0_net_tree_cover_change_from_height",
+  "NET_CHANGE_ADM1_UMD": "umd_adm1_net_tree_cover_change_from_height",
+  "NET_CHANGE_ADM2_UMD": "umd_adm2_net_tree_cover_change_from_height"
 
 }

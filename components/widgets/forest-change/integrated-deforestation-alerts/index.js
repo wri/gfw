@@ -35,6 +35,32 @@ export default {
   widget: 'integratedDeforestationAlerts',
   published: true,
   title: 'Integrated Deforestation alerts in {location}',
+  // caution: {
+  //   text:
+  //     'GLAD-L: alerts updates are paused after Dec 2021. Stay updated via {this discussion forum post}.',
+  //   visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  //   linkText: 'this discussion forum post',
+  //   link:
+  //     'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
+  // },
+  // caution: [
+  //   {
+  //     system: 'glad_l',
+  //     text:
+  //       'GLAD-L: alerts updates are paused after Dec 2021. Stay updated via {this discussion forum post}.',
+  //     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  //     linkText: 'this discussion forum post',
+  //     link: 'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
+  //   },
+  //   {
+  //     system: 'radd',
+  //     text:
+  //       'RADD: due to satellite malfunction, there is a decrease in alert frequency currently. Stay updated via {this discussion forum post}.',
+  //     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
+  //     linkText: 'this discussion forum post',
+  //     link: 'https://groups.google.com/g/globalforestwatch/c/w8--wwyKpgE',
+  //   },
+  // ],
   sentence: {
     initial:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
@@ -72,6 +98,7 @@ export default {
   source: 'gadm',
   dataType: 'integration_alerts',
   categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
   types: ['country', 'geostore', 'wdpa', 'aoi', 'use'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
@@ -165,7 +192,7 @@ export default {
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
-    if (isAnalysis && !isAoi) {
+    if (isAnalysis) {
       return fetchIntegratedAlerts({
         // widget settings passed to the fetch function from the config above as well as the state
         ...params,
@@ -256,8 +283,8 @@ export default {
 
     if (isAoi && status === 'saved' && alertSystem === 'glad_l') {
       OtfAnalysis.where([
-        { alert__date: gte`${startDate}` },
-        { alert__date: lte`${endDate}` },
+        { umd_glad_landsat_alerts__date: gte`${startDate}` },
+        { umd_glad_landsat_alerts__date: lte`${endDate}` },
         { geostore__id: eq`${geostoreId}` },
       ]);
     }

@@ -19,7 +19,7 @@ import { getEmissions } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2019;
+const MAX_YEAR = 2021;
 
 export default {
   ...emissionsDeforestation,
@@ -28,10 +28,10 @@ export default {
     'Forest-related greenhouse gas emissions in {location} by dominant driver',
   admins: ['adm0', 'adm1'],
   types: ['country', 'aoi', 'wdpa'],
-  caution: {
-    visible: ['wdpa', 'country', 'aoi'],
-    text: '2020 data coming soon.',
-  },
+  // caution: {
+  //   visible: ['wdpa', 'country', 'aoi'],
+  //   text: '2020 data coming soon.',
+  // },
   settingsConfig: [
     {
       key: 'tscDriverGroup',
@@ -95,7 +95,7 @@ export default {
         if (emissions && emissions.data) {
           data = {
             emissions: emissions.data.data.filter(
-              (d) => d.tsc_tree_cover_loss_drivers__type !== 'Unknown'
+              (d) => d.tsc_tree_cover_loss_drivers__driver !== 'Unknown'
             ),
           };
         }

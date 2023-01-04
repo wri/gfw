@@ -23,6 +23,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     }
 
     .dashboard-widgets,
+    .subcategories,
     .pending-message {
       @media screen and (min-width: $screen-xl) {
         padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});

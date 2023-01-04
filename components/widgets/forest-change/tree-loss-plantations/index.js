@@ -17,13 +17,14 @@ import {
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2013;
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 
 export default {
   widget: 'treeLossPlantations',
   title: 'Forest loss in natural forest in {location}',
   large: true,
   categories: ['forest-change'],
+  subcategories: ['forest-loss'],
   types: ['country', 'aoi', 'wdpa'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [

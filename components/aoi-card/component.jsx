@@ -27,7 +27,7 @@ const getLatestAlerts = ({ location, params }) =>
     fetchHistoricalAlerts({
       ...location,
       ...params,
-      dataset: 'glad',
+      dataset: 'integrated_alerts',
       frequency: 'daily',
     }).catch(() => null),
     fetchHistoricalAlerts({
@@ -96,7 +96,7 @@ class AoICard extends PureComponent {
     getLatestAlerts({
       location,
       params: {
-        startDate: moment.utc().subtract(2, 'weeks').format('YYYY-MM-DD'),
+        startDate: moment.utc().subtract(1, 'weeks').format('YYYY-MM-DD'),
         endDate: moment.utc().format('YYYY-MM-DD'),
       },
     })
@@ -261,7 +261,7 @@ class AoICard extends PureComponent {
                           })}
                         </span>
                         {' '}
-                        <p>GLAD alerts</p>
+                        <p>integrated alerts</p>
                       </div>
                     ) : (
                       <ContentLoader width="100" height="15">

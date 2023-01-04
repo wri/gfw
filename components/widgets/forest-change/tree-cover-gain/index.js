@@ -21,6 +21,7 @@ export default {
     initial: 'Tree cover gain in {location} compared to other areas',
   },
   categories: ['summary', 'forest-change'],
+  subcategories: ['forest-gain'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
@@ -38,18 +39,14 @@ export default {
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
-    },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
+      blacklist: ['wdpa'],
     },
   ],
   refetchKeys: ['forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
   colors: 'gain',
-  metaKey: 'widget_tree_cover_gain',
+  metaKey: 'umd_tree_cover_gain_from_height',
+  dataType: 'gain',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -69,20 +66,20 @@ export default {
   },
   sentences: {
     globalInitial:
-      'From 2001 to 2012, {gain} of tree cover was gained {location}.',
+      'From 2000 to 2020, {gain} of tree cover was gained {location}.',
     globalWithIndicator:
-      'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}.',
+      'From 2000 to 2020, {gain} of tree cover was gained within {indicator} {location}.',
     initial:
-      'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} of the global total.',
+      'From 2000 to 2020, {location} gained {gain} of tree cover equal to {gainPercent} of the global total.',
     withIndicator:
-      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of the global total.',
+      'From 2000 to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of the global total.',
     regionInitial:
-      'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
+      'From 2000 to 2020, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
     regionWithIndicator:
-      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
+      'From 2000 to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
   },
   settings: {
-    threshold: 50,
+    threshold: 0,
     unit: 'ha',
     pageSize: 5,
     page: 0,

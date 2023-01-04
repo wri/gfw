@@ -7,7 +7,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 
-// import Checkbox from 'components/forms/components/checkbox';
+import Checkbox from 'components/forms/components/checkbox';
 import Radio from 'components/forms/components/radio';
 
 import Submit from 'components/forms/components/submit';
@@ -17,7 +17,7 @@ import Error from 'components/forms/components/error';
 
 import {
   email as validateEmail,
-  hasValidOption
+  hasValidOption,
 } from 'components/forms/validations';
 
 import { sectors, howDoYouUse, interests } from './config';
@@ -29,14 +29,14 @@ class ProfileForm extends PureComponent {
     initialValues: PropTypes.object,
     countries: PropTypes.array,
     saveProfile: PropTypes.func,
-    source: PropTypes.string
+    source: PropTypes.string,
   };
 
   render() {
     const { initialValues, countries, saveProfile, source } = this.props;
-    const sectorsOptions = Object.keys(sectors).map(s => ({
+    const sectorsOptions = Object.keys(sectors).map((s) => ({
       label: s,
-      value: s
+      value: s,
     }));
 
     return (
@@ -52,7 +52,7 @@ class ProfileForm extends PureComponent {
             submitError,
             submitSucceeded,
             form: { reset },
-            values = {}
+            values = {},
           }) => (
             <form className="c-profile-form" onSubmit={handleSubmit}>
               <div className="row">
@@ -103,19 +103,18 @@ class ProfileForm extends PureComponent {
                         options={sectorsOptions}
                         placeholder="Select a sector"
                         validate={[
-                          value => hasValidOption(value, sectorsOptions)
+                          (value) => hasValidOption(value, sectorsOptions),
                         ]}
                         required
                       />
-                      {values.sector &&
-                        sectors[values.sector] && (
+                      {values.sector && sectors[values.sector] && (
                         <Radio
                           name="subsector"
                           label="Role"
-                          options={sectors[values.sector].map(s => ({
+                          options={sectors[values.sector].map((s) => ({
                             label: s,
                             value: s.replace(/( )+|(\/)+/g, '_'),
-                            radioInput: s === 'Other:'
+                            radioInput: s === 'Other:',
                           }))}
                           selectedOption={values.subsector}
                           required
@@ -149,34 +148,44 @@ class ProfileForm extends PureComponent {
                         options={countries}
                         placeholder="Select a country"
                       />
-                      <Input name="aoiCity" label="city" />
                       <Input
-                        name="aoiState"
-                        label="state / department / province"
+                        name="areaOrRegionOfInterest"
+                        label="Other area or region of interest"
                       />
-                      <Select
+                      <Checkbox
                         name="interests"
                         label="What topics are you interested in?"
-                        options={interests.sort()}
-                        required
                         multiple
-                      />
-                      <Select
-                        name="howDoYouUse"
-                        label="how do you use global forest watch?"
+                        required
                         options={[
                           ...sortBy(
-                            howDoYouUse.map(r => ({
+                            interests.map((r) => ({
                               label: r,
-                              value: r
+                              value: r.replace(/( )+|(\/)+/g, '_'),
                             })),
                             'label'
                           ),
-                          { label: 'Other', value: 'Other' }
                         ]}
-                        selectInput={values.howDoYouUse && values.howDoYouUse.includes('Other')}
+                      />
+                      <Checkbox
+                        name="howDoYouUse"
+                        label="How do you use global forest watch?"
                         multiple
                         required
+                        options={[
+                          ...sortBy(
+                            howDoYouUse.map((r) => ({
+                              label: r,
+                              value: r,
+                            })),
+                            'label'
+                          ),
+                          { label: 'Other', value: 'Other' },
+                        ]}
+                        selectInput={
+                          values.howDoYouUse &&
+                          values.howDoYouUse.includes('Other')
+                        }
                       />
                       {/* <Checkbox
                         name="signUpToNewsletter"
@@ -197,6 +206,11 @@ class ProfileForm extends PureComponent {
                           multiple
                         />
                       )} */}
+                      <Checkbox
+                        name="signUpForTesting"
+                        label="Would you like to help us test new application features?"
+                        options={[{ label: 'Yes', value: 'true' }]}
+                      />
                       <Error
                         valid={valid}
                         submitFailed={submitFailed}

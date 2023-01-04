@@ -81,11 +81,20 @@ const MapLegend = ({
             const getWarningLabel = () => {
               switch (activeLayer.id) {
                 case 'integrated-deforestation-alerts-8bit':
-                  return `${caution_gladL}<br /><br />${caution_radd}`;
+                  if (caution_gladL && caution_radd) {
+                    return `${caution_gladL}<br /><br />${caution_radd}`;
+                  }
+                  return null;
                 case 'integrated-deforestation-alerts-8bit-gladL':
-                  return caution_gladL;
+                  if (caution_gladL) {
+                    return caution_gladL;
+                  }
+                  return null;
                 case 'integrated-deforestation-alerts-8bit-radd':
-                  return caution_radd;
+                  if (caution_radd) {
+                    return caution_radd;
+                  }
+                  return null;
                 default:
                   return null;
               }
@@ -93,6 +102,7 @@ const MapLegend = ({
             const warningLabel = getWarningLabel();
 
             const {
+              id: layerId,
               params,
               paramsSelectorConfig,
               decodeParams,
@@ -142,7 +152,7 @@ const MapLegend = ({
               >
                 <LegendItemTypes>
                   <LegendItemTypeBasic />
-                  <LegendItemTypeChoropleth />
+                  <LegendItemTypeChoropleth dataset={layerId} />
                   <LegendItemTypeProportional />
                   <LegendItemTypeGradient />
                 </LegendItemTypes>

@@ -54,6 +54,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      blacklist: ['wdpa'],
     },
     {
       key: 'years',
@@ -126,7 +127,7 @@ export default {
     threshold: 30,
     includesGainPixels: true,
     startYear: 2001,
-    endYear: 2020,
+    endYear: 2021,
   },
   whitelists: {},
   getData: (params) => {

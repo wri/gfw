@@ -15,6 +15,35 @@ class WidgetFooter extends PureComponent {
     statements: PropTypes.array,
     locationType: PropTypes.string,
     showAttributionLink: PropTypes.bool,
+    alertSystem: PropTypes.string,
+    decorationMessage: PropTypes.string,
+  };
+
+  renderCaution = (caution, alertSystem, type, locationType) => {
+    if (!caution) return null;
+
+    if (caution && Array.isArray(caution)) {
+      return caution.map((c) => {
+        if (c.system === alertSystem || alertSystem === 'all') {
+          return (
+            <WidgetCaution
+              type={type}
+              caution={c}
+              locationType={locationType}
+            />
+          );
+        }
+        return null;
+      });
+    }
+
+    return (
+      <WidgetCaution
+        type={type}
+        caution={caution}
+        locationType={locationType}
+      />
+    );
   };
 
   render() {
@@ -25,18 +54,22 @@ class WidgetFooter extends PureComponent {
       simple,
       locationType,
       showAttributionLink,
+      alertSystem,
+      decorationMessage,
     } = this.props;
     const statementsMapped = statements && statements.join(' | ');
     // TODO: add statement link
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {caution && (
-          <WidgetCaution
-            type={type}
-            caution={caution}
-            locationType={locationType}
+        {/* TODO: Swap this message for new caution */}
+        {decorationMessage && (
+          <p
+            className="c-widget-caution"
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: decorationMessage }}
           />
         )}
+        {this.renderCaution(caution, alertSystem, type, locationType)}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}

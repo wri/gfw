@@ -39,6 +39,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      blacklist: ['wdpa'],
     },
     {
       key: 'unit',

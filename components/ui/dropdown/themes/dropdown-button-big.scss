@@ -1,0 +1,79 @@
+@import '~styles/settings.scss';
+
+$dd-button-height: rem(40px);
+
+.theme-dropdown-button-big {
+  text-align: center;
+
+  .container {
+    .c-selector {
+      border-radius: rem(25px);
+      border-color: $green-gfw;
+      height: $dd-button-height;
+      padding: 0 rem(16px);
+
+      .value {
+        padding: 0 rem(10px);
+        right: rem(26px);
+      }
+
+      .clear-btn {
+        display: flex;
+        top: rem(14px);
+        width: rem(20px);
+        height: rem(20px);
+        right: rem(24px);
+
+        .clear-icon {
+          max-width: rem(10px);
+          max-height: rem(10px);
+        }
+      }
+
+      &-menu {
+        top: rem(46px);
+      }
+    }
+
+    &.is-open {
+      .menu-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        margin: 0 rem(9px);
+        border-bottom: 7px solid #fff;
+        border-left: 7px solid transparent;
+        border-left-color: #fff;
+        border-right: none;
+        transform-origin: 0 0;
+        transform: rotate(-45deg);
+        top: calc(#{$dd-button-height} + #{rem(6px)});
+        left: calc(50% - 14px);
+        border-bottom-color: #fff;
+        box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+        z-index: 3;
+      }
+    }
+
+    .menu {
+      top: calc(#{$dd-button-height} + #{rem(12px)});
+      border: 0;
+      box-shadow: $pop-box-shadow;
+    }
+  }
+
+  .arrow-btn {
+    right: rem(14px);
+
+    .arrow {
+      fill: $green-gfw;
+    }
+  }
+
+  .label {
+    color: $warm-grey;
+    font-weight: 500;
+    font-size: rem(11px);
+    text-transform: uppercase;
+  }
+}

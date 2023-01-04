@@ -1,17 +1,17 @@
 [
   {
     "source": "/help/",
-    "destination": "https://gfw-help-center.herokuapp.com/help/",
+    "destination": "https://gfw-help-center-staging.herokuapp.com/help/",
     "basePath": false
   },
   {
     "source": "/help/:path*/",
-    "destination": "https://gfw-help-center.herokuapp.com/help/:path*/",
+    "destination": "https://gfw-help-center-staging.herokuapp.com/help/:path*/",
     "basePath": false
   },
   {
     "source": "/help/:path*",
-    "destination": "https://gfw-help-center.herokuapp.com/help/:path*",
+    "destination": "https://gfw-help-center-staging.herokuapp.com/help/:path*",
     "basePath": false
   },
   {

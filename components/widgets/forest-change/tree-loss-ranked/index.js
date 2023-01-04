@@ -22,6 +22,7 @@ export default {
     global: 'Global Tree cover loss',
   },
   categories: ['forest-change'],
+  subcategories: ['forest-loss'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
@@ -40,6 +41,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      blacklist: ['wdpa'],
     },
     {
       key: 'unit',

@@ -678,5 +678,10 @@
     "source": "/partners/",
     "destination": "/about",
     "permanent": true
+  },
+  {
+    "source": "/mapbuilder/",
+    "destination": "https://mapbuilder.wri.org/",
+    "permanent": true
   }
 ]

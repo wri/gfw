@@ -102,9 +102,12 @@ class WidgetsContainer extends PureComponent {
 
     // if widget is active and layers or params change push to map
     if (!embed && activeWidget) {
-      const { settings, datasets } = activeWidget || {};
-      const { settings: prevSettings, datasets: prevDatasets } =
-        prevProps.activeWidget || {};
+      const { settings, datasets, adminLevel } = activeWidget || {};
+      const {
+        settings: prevSettings,
+        datasets: prevDatasets,
+        adminLevel: prevAdminLevel,
+      } = prevProps.activeWidget || {};
 
       const mapSettingsChanged =
         settings &&
@@ -116,12 +119,14 @@ class WidgetsContainer extends PureComponent {
       );
       const widgetSettingsChanged = !isEqual(prevSettings, settings);
       const datasetsChanged = !isEqual(datasets, prevDatasets);
+      const adminLevelChanged = !isEqual(adminLevel, prevAdminLevel);
 
       if (
         (datasets &&
           datasetsChanged &&
           (mapSettingsChanged || activeWidgetChanged)) ||
-        widgetSettingsChanged
+        widgetSettingsChanged ||
+        adminLevelChanged
       ) {
         this.syncWidgetWithMap();
       } else if (
@@ -136,11 +141,12 @@ class WidgetsContainer extends PureComponent {
 
   syncWidgetWithMap = () => {
     const { activeWidget, setMapSettings, setWidgetsCategory } = this.props;
-    const { datasets, settings, optionsSelected } = activeWidget || {};
+    const { datasets, settings, optionsSelected, adminLevel } =
+      activeWidget || {};
     const widgetDatasets =
       datasets &&
       datasets.length &&
-      getWidgetDatasets({ datasets, ...settings });
+      getWidgetDatasets({ datasets, ...settings, adminLevel });
 
     const polynameDatasets = getPolynameDatasets({ optionsSelected, settings });
     let allDatasets = [...compact(polynameDatasets)];

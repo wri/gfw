@@ -21,7 +21,7 @@ import treeLoss from 'components/widgets/forest-change/tree-loss';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 
 export default {
   ...treeLoss,
@@ -53,6 +53,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      blacklist: ['wdpa'],
     },
     {
       key: 'years',

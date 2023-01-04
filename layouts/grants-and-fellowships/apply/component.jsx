@@ -11,22 +11,22 @@ const GrantsApplySection = () => (
       <Column width={[1, 3 / 4]} className="logo">
         <h2 className="section-title">Small Grants Fund</h2>
         <p className="text -paragraph -color-2 -light -spaced">
-          The scope of the 2021 Small Grants Fund focuses on three key themes:
-          forest protection, forests and agriculture, and forest policy. The
-          specific objectives for each theme, along with more details on the
-          application process, can be found in the Guidelines for Applicants.
-          Before applying, please carefully review these guidelines along with
-          the Small Grants Fund Frequently Asked Questions. Winning proposals
-          will clearly demonstrate how they intend to use GFW’s suite of tools
-          and data on GFW to curb deforestation within one of these three key
-          themes.
+          The Global Forest Watch Small Grants Fund seeks to build the capacity
+          of civil society organizations to effectively use GFW tools and data
+          to reduce illegal or unplanned deforestation. Successful projects
+          translate data into action, applying GFW to overcome challenges in
+          protecting the world’s forests.
+        </p>
+        <p className="text -paragraph -color-2 -light -spaced">
+          For information on the 2023 grant cycle, please click on the links
+          below.
         </p>
         <ul className="list">
           <li>
-            - Read the 2021&nbsp;
+            - Read the 2023&nbsp;
             <a
               className="text -paragraph -color-4 -bold"
-              href="http://s3.amazonaws.com/gfw.blog/Training%20Guides/SGF/Guidelines%20for%20SGF%20Applicants%202021.pdf"
+              href="https://s3.amazonaws.com/gfw.blog/Training+Guides/SGF/Guidelines+for+SGF+Applicants+2023.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -48,16 +48,16 @@ const GrantsApplySection = () => (
             - Watch a recording of the&nbsp;
             <a
               className="text -paragraph -color-4 -bold"
-              href="https://www.youtube.com/watch?v=lD_2FlY9hoM&feature=youtu.be"
+              href="https://www.youtube.com/watch?v=B6bk7Gl4644"
               target="_blank"
               rel="noopener noreferrer"
             >
-              2021 Small Grants Fund Webinar
+              2023 Small Grants Fund Applicant Webinar
             </a>
           </li>
         </ul>
         <p className="text -paragraph -color-2 -light -spaced">
-          The 2021 Small Grants Fund application is now closed.
+          Applications for the current grant cycle are now closed.
         </p>
       </Column>
       <Column width={[1, 1 / 4]} className="logo">

@@ -431,9 +431,16 @@ class Header extends PureComponent {
                 {location && location.adm0 === 'IDN' && (
                   <Fragment>
                     <p className="disclaimer">
-                      *Primary forest is defined as mature natural humid
-                      tropical forest that has not been completely cleared and
-                      regrown in recent history.
+                      *Much of the primary forest loss in Indonesia according to
+                      the GFW data is actually within areas that Indonesia
+                      classifies as secondary forest and thus outside forest
+                      that Indonesia classifies as primary. This is because the
+                      GFW primary forest definition is not consistent with
+                      Indonesia’s official primary forest definition and
+                      classification. GFW‘s statistics on loss of primary
+                      forests in Indonesia are therefore considerably higher
+                      than the official Indonesian statistics on deforestation
+                      in primary forests.
                     </p>
                   </Fragment>
                 )}

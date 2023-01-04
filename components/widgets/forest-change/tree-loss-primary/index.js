@@ -17,7 +17,7 @@ import {
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -32,6 +32,7 @@ export default {
     global: 'Global Primary Forest loss',
   },
   categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
@@ -54,6 +55,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      blacklist: ['wdpa'],
     },
     {
       key: 'years',
