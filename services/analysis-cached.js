@@ -536,7 +536,7 @@ export const getLoss = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
@@ -584,7 +584,7 @@ export const getEmissions = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
@@ -627,7 +627,7 @@ export const getEmissionsLossOTF = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         allGases: d.gfw_forest_carbon_gross_emissions__Mg_CO2e,
@@ -667,7 +667,7 @@ export const getCarbonFlux = (params) => {
   }
 
   return dataRequest.get(url).then((response) =>
-    response?.data.data.map((d) => ({
+    response?.data?.map((d) => ({
       removals:
         -d.gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg || 0,
       emissions: d.gfw_gross_emissions_co2e_all_gases__Mg || 0,
@@ -699,7 +699,7 @@ export const getCarbonFluxOTF = (params) => {
   }
 
   return dataRequest.get(url).then((response) =>
-    response?.data.data.map((d) => ({
+    response?.data?.map((d) => ({
       removals: -d.gfw_forest_carbon_gross_removals__Mg_CO2e || 0,
       emissions: d.gfw_forest_carbon_gross_emissions__Mg_CO2e || 0,
       flux: d.gfw_forest_carbon_net_flux__Mg_CO2e || 0,
@@ -745,7 +745,7 @@ export const getLossGrouped = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
@@ -1037,7 +1037,7 @@ export const getExtent = (params) => {
     return {
       ...response,
       data: {
-        data: response?.data.data.map((d) => ({
+        data: response?.data?.map((d) => ({
           ...d,
           extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
           total_area: d.area__ha,
@@ -1086,7 +1086,7 @@ export const getExtentGrouped = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
         total_area: d.area__ha,
@@ -1132,7 +1132,7 @@ export const getGain = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         gain: d.umd_tree_cover_gain__ha,
@@ -1179,7 +1179,7 @@ export const getGainGrouped = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         gain: d.umd_tree_cover_gain__ha,
@@ -1235,7 +1235,7 @@ export const getAreaIntersection = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         intersection_area: d.area__ha,
         [forestType || landCategory]:
@@ -1293,7 +1293,7 @@ export const getAreaIntersectionGrouped = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         intersection_area: d.area__ha,
         ...(intersectionPolyname && {
@@ -1368,7 +1368,7 @@ export const fetchHistoricalAlerts = (params) => {
   return dataRequest.get(url).then((response) => ({
     data: {
       frequency,
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10) || null,
         year: parseInt(d.alert__year, 10) || null,
@@ -1418,7 +1418,7 @@ export const fetchHistoricalGladAlerts = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         date: d.alert__date,
         count: d.alert__count,
@@ -1466,7 +1466,7 @@ export const fetchGladAlerts = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -1892,7 +1892,7 @@ export const fetchGladAlertsSum = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.is__confirmed_alert,
         count: d.alert__count,
@@ -1920,7 +1920,7 @@ export const fetchGladAlertsSumOTF = (params) => {
   );
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.umd_glad_landsat_alerts__confidence === 'high',
       })),
@@ -1961,7 +1961,7 @@ export const fetchIntegratedLatest = () => {
   return dataRequest
     .get(url)
     .then((response) => {
-      const date = response.data.metadata.last_update;
+      const date = response.metadata.last_update;
 
       return {
         attributes: { updatedAt: date },
@@ -2015,7 +2015,7 @@ export const fetchBurnedArea = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2064,7 +2064,7 @@ export const fetchBurnedAreaGrouped = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2099,7 +2099,7 @@ export const fetchVIIRSAlerts = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2150,7 +2150,7 @@ export const fetchVIIRSAlertsGrouped = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2190,7 +2190,7 @@ export const fetchFiresWithin = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2243,7 +2243,7 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.confidence__cat.includes('h'),
         count: d.alert__count,
@@ -2280,7 +2280,7 @@ export const fetchVIIRSAlertsSum = (params) => {
 
   return dataRequest.get(url).then((response) => ({
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.confidence__cat.includes('h'),
         count: d.alert__count,
@@ -2330,7 +2330,7 @@ export const getBiomassStockGrouped = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         biomass: d.whrc_aboveground_biomass_stock_2000__Mg,
@@ -2377,7 +2377,7 @@ export const getBiomassStock = (params) => {
   return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response?.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         biomass: d.whrc_aboveground_biomass_stock_2000__Mg,

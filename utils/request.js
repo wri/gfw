@@ -57,6 +57,7 @@ export const dataRequest = create({
   ...(!isServer && {
     baseURL: '/api/data-api',
   }),
+  transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
 // Always point to production
