@@ -2,10 +2,14 @@
 
 .l-grants-about-section {
   .intro {
+    position: relative;
+
     .logo {
-      margin-top: 30px;
+      margin-bottom: 30px;
 
       @media screen and (min-width: $screen-m) {
+        position: absolute;
+        right: 0;
         margin-top: 0;
         float: right;
       }
@@ -34,6 +38,19 @@
     ul {
       list-style: inside;
       margin-bottom: rem(40px);
+
+      li {
+        list-style-type: "- ";
+      }
+
+      a {
+        color: $green-gfw;
+        font-weight: 500;
+
+        &:hover {
+          color: darken($green-gfw, 10%);
+        }
+      }
     }
 
     @media screen and (min-width: $screen-m) {
@@ -52,7 +69,6 @@
     font-size: rem(20px);
     color: $green-gfw;
     font-weight: 500;
-    margin-bottom: rem(40px);
   }
 
   .list {
@@ -60,22 +76,33 @@
   }
 
   .icon-list {
+    width: 100vw;
     text-align: center;
     margin-bottom: rem(40px);
+    margin-left: -20px;
+    margin-right: -20px;
 
     @media screen and (min-width: $screen-m) {
       margin-bottom: rem(40px);
+      margin-left: -20px;
+      margin-right: -20px;
     }
 
     img {
-      width: 40%;
-      height: 40%;
+      width: 37%;
+      height: 37%;
       margin-top: rem(20px);
       margin-bottom: rem(40px);
     }
 
     li {
       margin-bottom: rem(30px);
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.4;
     }
   }
 }

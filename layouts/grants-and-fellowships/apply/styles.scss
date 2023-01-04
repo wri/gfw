@@ -1,26 +1,108 @@
 @import '~styles/settings.scss';
 
 .l-grants-apply-section {
-  color: $slate;
-  font-weight: 300;
-  font-size: rem(18px);
-  line-height: 1.67;
-  margin-bottom: rem(30px);
+  .intro {
+    position: relative;
 
-  .apply-section {
-    margin: rem(40px) 0 rem(80px);
+    .logo {
+      margin-bottom: 30px;
+
+      @media screen and (min-width: $screen-m) {
+        position: absolute;
+        right: 0;
+        margin-top: 0;
+        float: right;
+      }
+    }
   }
 
-  p {
-    margin-bottom: rem(20px);
-  }
-
-  .list {
+  section {
+    color: $slate;
+    font-weight: 300;
+    font-size: rem(18px);
+    line-height: 1.67;
     margin-bottom: rem(40px);
+
+    &.results {
+      margin-bottom: rem(20px);
+    }
+
+    p {
+      color: $slate;
+      font-weight: 300;
+      font-size: rem(18px);
+      line-height: 1.67;
+      margin-bottom: rem(40px);
+    }
+
+    ul {
+      list-style: inside;
+      margin-bottom: rem(40px);
+
+      li {
+        list-style-type: "- ";
+      }
+
+      a {
+        color: $green-gfw;
+        font-weight: 500;
+
+        &:hover {
+          color: darken($green-gfw, 10%);
+        }
+      }
+    }
+
+    @media screen and (min-width: $screen-m) {
+      &.results {
+        margin-bottom: rem(60px);
+      }
+    }
   }
 
   .section-title {
     margin-bottom: rem(10px);
     font-size: rem(35px);
+  }
+
+  .section-subtitle {
+    font-size: rem(20px);
+    color: $green-gfw;
+    font-weight: 500;
+  }
+
+  .list {
+    margin-bottom: rem(20px);
+  }
+
+  .icon-list {
+    width: 100vw;
+    text-align: center;
+    margin-bottom: rem(40px);
+    margin-left: -20px;
+    margin-right: -20px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(40px);
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+
+    img {
+      width: 37%;
+      height: 37%;
+      margin-top: rem(20px);
+      margin-bottom: rem(40px);
+    }
+
+    li {
+      margin-bottom: rem(30px);
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.4;
+    }
   }
 }

@@ -46,9 +46,21 @@ export const getServerSideProps = async ({ query }) => {
     const pageTexts = await getSGFPage();
     return {
       props: {
-        title: 'Projects | Grants & Fellowships | Global Forest Watch',
+        title: 'About | Grants & Fellowships | Global Forest Watch',
         section: query?.section,
         about: pageTexts?.[0]?.acf?.about_section,
+        header: pageTexts[0],
+      },
+    };
+  }
+
+  if (query?.section === 'apply') {
+    const pageTexts = await getSGFPage();
+    return {
+      props: {
+        title: 'Apply | Grants & Fellowships | Global Forest Watch',
+        section: query?.section,
+        apply: pageTexts?.[0]?.acf?.apply_section,
         header: pageTexts[0],
       },
     };

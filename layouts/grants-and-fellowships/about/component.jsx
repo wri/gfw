@@ -17,6 +17,14 @@ const GrantsAboutSection = ({ about }) => {
             key={section.title.split(' ').join('-').toLowerCase()}
           >
             <Row className="intro">
+              {section.image.url && (
+                <Column width={[1, 1 / 4]} className="logo">
+                  <img
+                    src={section.image.url}
+                    alt="Logo Global Forest Watch Small Grant Funds"
+                  />
+                </Column>
+              )}
               <Column width={[1, 3 / 4]}>
                 <h2
                   className="section-title"
@@ -24,42 +32,34 @@ const GrantsAboutSection = ({ about }) => {
                 >
                   {section.title}
                 </h2>
-                {section.content.map((c) => (
-                  <>
-                    <Row className="section">
-                      {c.acf_fc_layout === 'paragraph' && <>{parse(c.text)}</>}
-                      {c.acf_fc_layout === 'subtitle' && (
-                        <h3
-                          className="section-subtitle"
-                          dangerouslySetInnerHTML={{ __html: c.text }}
-                        />
-                      )}
-                    </Row>
+              </Column>
+              {section.content.map((c) => (
+                <>
+                  <Column width={[1, 3 / 4]}>
+                    {c.acf_fc_layout === 'paragraph' && <>{parse(c.text)}</>}
+                    {c.acf_fc_layout === 'subtitle' && (
+                      <h2
+                        className="section-subtitle"
+                        dangerouslySetInnerHTML={{ __html: c.text }}
+                      />
+                    )}
 
                     {c.acf_fc_layout === 'icons' && (
-                      <Row nested className="icon-list">
+                      <Row className="icon-list">
                         {c.item.map((item) => (
                           <Column width={[1, 1 / 3]} key={item.text}>
                             <img
                               src={item.image.url}
                               alt={htmlParser(item.text)}
                             />
-                            <p
-                              dangerouslySetInnerHTML={{ __html: item.text }}
-                            />
+                            {parse(item.text)}
                           </Column>
                         ))}
                       </Row>
                     )}
-                  </>
-                ))}
-              </Column>
-              <Column width={[1, 1 / 4]} className="logo">
-                <img
-                  src={section.image.url}
-                  alt="Logo Global Forest Watch Small Grant Funds"
-                />
-              </Column>
+                  </Column>
+                </>
+              ))}
             </Row>
           </section>
         </>
