@@ -1,4 +1,4 @@
-@import '~styles/settings.scss';
+@import "~styles/settings.scss";
 
 .c-legend-type-choropleth {
   padding: 10px 0 0;
@@ -15,7 +15,7 @@
 
       .label {
         display: block;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
+        font-family: "Helvetica Neue", Arial, sans-serif;
         font-size: 12px;
         text-align: center;
       }
@@ -36,7 +36,7 @@
 
   .name {
     display: block;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 12px;
     text-align: center;
   }
