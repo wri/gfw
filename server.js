@@ -33,7 +33,7 @@ function handleRedirectFor(urls, url, res) {
 function handleNonWwwToWwwRedirect(req, res) {
   try {
     const host = req.header('host');
-    if (!host.match(/^www\..*/i) && host.match(/^globalforestwatch\..*/i)) {
+    if (!host.match(/^www\..*/i)) {
       res.redirect(301, `https://www.${host}${req.url}`);
     }
   } catch (_i) {
@@ -53,7 +53,12 @@ app.prepare().then(() => {
     // Note that we cannot use `NODE_ENV` for this; that environment variable is set to `production`
     //  in the `staging`, `preproduction` and `production` environments. Instead we need to use
     //  the `NEXT_PUBLIC_FEATURE_ENV` environment variable.
-    if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'production') {
+    // Note also that we check if the host contains 'globalforestwatch' to do this only for the
+    //  production app. This way, we can point a test server to production for testing purposes
+    const host = req.header('host');
+    const isHostGFW = host.match(/^globalforestwatch\..*/i);
+
+    if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'production' && isHostGFW) {
       handleNonWwwToWwwRedirect(req, res);
     }
 
