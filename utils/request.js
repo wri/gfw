@@ -49,7 +49,7 @@ export const gfwApiRequest = create({
 export const dataRequest = create({
   timeout: 30 * 1000,
   ...(isServer && {
-    baseURL: GFW_DATA_API,
+    baseURL: GFW_DATA_API_URL,
     headers: {
       'x-api-key': DATA_API_KEY,
     },
@@ -77,12 +77,6 @@ export const tilesRequest = create({
   timeout: 30 * 1000,
   baseURL: GFW_TILES_API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
-});
-
-export const dataApiRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_DATA_API_URL,
-  transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
 export const rwRequest = create({
