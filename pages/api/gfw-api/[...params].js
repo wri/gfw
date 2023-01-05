@@ -1,10 +1,9 @@
 import httpProxyMiddleware from 'next-http-proxy-middleware';
 
-import { GFW_DATA_API, GFW_STAGING_API } from 'utils/apis';
+import { GFW_API } from 'utils/apis';
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
-const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_DATA_API;
+const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const GFW_API_URL = GFW_API;
 
 // https://github.com/stegano/next-http-proxy-middleware/issues/32#issuecomment-1031015850
 export const config = {
@@ -22,7 +21,7 @@ export default (req, res) =>
       '^/?/api/gfw-api': '/',
     },
     headers: {
-      'x-api-key': DATA_API_KEY,
+      'x-api-key': GFW_API_KEY,
     },
     followRedirects: true,
   }).catch(async (error) => {
