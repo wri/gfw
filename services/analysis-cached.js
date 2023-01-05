@@ -1,5 +1,4 @@
 import {
-  apiRequest,
   tilesRequest,
   cartoRequest,
   rwRequest,
@@ -487,10 +486,10 @@ export const getTreeCoverLossByDriverType = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
       })),
     },
@@ -790,10 +789,10 @@ export const getLossFires = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
@@ -851,10 +850,10 @@ export const getLossFiresOTF = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
@@ -900,10 +899,10 @@ export const getLossFiresGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
@@ -942,10 +941,10 @@ export const getTreeCoverGainByPlantationType = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
       })),
     },
@@ -988,10 +987,10 @@ export const getNetChange = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
       })),
     },
@@ -1620,9 +1619,9 @@ export const fetchIntegratedAlerts = (params) => {
   }
 
   // Light initial Parsing
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
         alerts: d.alert__count,
@@ -1729,9 +1728,9 @@ export const getIntegratedAlertsRanked = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         count: d.alert__count,
         area_ha: d.alert_area__ha,
@@ -1784,9 +1783,9 @@ export const fetchGladAlertsDaily = (params) => {
   );
 
   // Light initial Parsing
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
         alerts: d.alert__count,
@@ -1838,9 +1837,9 @@ export const fetchGladAlertsDailyRanked = (params) => {
   );
 
   // Light initial Parsing
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
         alerts: d.alert__count,
@@ -2435,5 +2434,5 @@ export const getLocationPolynameWhitelist = (params) => {
     )
     .replace('{WHERE}', getWHEREQuery(params));
 
-  return apiRequest.get(url);
+  return dataRequest.get(url);
 };
