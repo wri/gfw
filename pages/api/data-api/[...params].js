@@ -7,6 +7,13 @@ const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
 const GFW_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
+// https://github.com/stegano/next-http-proxy-middleware/issues/32#issuecomment-1031015850
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
 export default (req, res) =>
   httpProxyMiddleware(req, res, {
     // You can use the `http-proxy` option
