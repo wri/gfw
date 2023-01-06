@@ -67,7 +67,7 @@ export default {
     basemapGroup: 'basemap-landsat',
     labelsGroup: 'labels-dark',
     mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
-    url: 'https://api.resourcewatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
+    url: '/api/gfw-api/v2/landsat-tiles/{year}/{z}/{x}/{y}',
     availableYears: [2017, 2016, 2015, 2014, 2013],
     defaultYear: 2017,
   },
