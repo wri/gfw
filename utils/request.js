@@ -95,13 +95,21 @@ export const rwRequest = create({
 });
 
 export const apiAuthRequest = create({
+  ...(isServer && {
+    baseURL: GFW_API,
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': DATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: '/api/gfw-api',
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+    },
+  }),
   timeout: 30 * 1000,
-  baseURL: GFW_API,
-  headers: {
-    'content-type': 'application/json',
-    Authorization: `Bearer ${!isServer && localStorage.getItem('userToken')}`,
-  },
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const cartoRequest = create({
