@@ -81,8 +81,16 @@ export const tilesRequest = create({
 });
 
 export const rwRequest = create({
+  ...(isServer && {
+    baseURL: RESOURCE_WATCH_API,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: '/api/gfw-api/v1',
+  }),
   timeout: 30 * 1000,
-  baseURL: RESOURCE_WATCH_API,
   transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
