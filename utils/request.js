@@ -32,20 +32,6 @@ export const apiRequest = create({
   timeout: 30 * 1000,
 });
 
-// @TODO: this will be merged with `apiRequest`
-export const gfwApiRequest = create({
-  ...(isServer && {
-    baseURL: GFW_API_URL,
-    headers: {
-      'x-api-key': DATA_API_KEY,
-    },
-  }),
-  ...(!isServer && {
-    baseURL: '/api/gfw-api',
-  }),
-  timeout: 30 * 1000,
-});
-
 export const dataRequest = create({
   timeout: 30 * 1000,
   ...(isServer && {
