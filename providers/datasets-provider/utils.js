@@ -18,7 +18,11 @@ export const reduceParams = (params) => {
       [key]: paramValue,
       ...(key === 'endDate' &&
         param.url && {
-          latestUrl: param.url,
+          // Remove `data-api.globalforestwatch.org`; we'll be proxying the call through `/api/data-api`
+          latestUrl: param.url.replace(
+            /https?:\/\/data-api.globalforestwatch.org\//,
+            ''
+          ),
         }),
       ...(key === 'date' &&
         param.format && {
