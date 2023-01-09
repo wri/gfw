@@ -20,7 +20,7 @@ export const reduceParams = (params) => {
         param.url && {
           // Remove `data-api.globalforestwatch.org`; we'll be proxying the call through `/api/data-api`
           latestUrl: param.url.replace(
-            /https?:\/\/data-api.globalforestwatch.org\//,
+            /https?:\/\/data-api\.globalforestwatch\.org\//,
             ''
           ),
         }),
