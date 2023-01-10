@@ -242,11 +242,16 @@ const getRequestUrl = ({
   }/query?sql=`;
 };
 
-const getDownloadUrl = (url) => {
+const getDownloadUrl = (pathname) => {
   try {
-    const queryUrl = new URL(url);
-    queryUrl.pathname = queryUrl.pathname.replace('query', 'download/csv');
-    return queryUrl.toString();
+    const downloadUrl = new URL(
+      `${window.location.origin}/api/data-api${pathname}`
+    );
+    downloadUrl.pathname = downloadUrl.pathname.replace(
+      'query',
+      'download/csv'
+    );
+    return downloadUrl.toString();
   } catch {
     return null; // invalid url, front end should deal with this
   }
