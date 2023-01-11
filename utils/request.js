@@ -6,6 +6,7 @@ import {
   CARTO_API,
   MAPBOX_API,
   RESOURCE_WATCH_API,
+  RESOURCE_WATCH_STAGING_API,
   GFW_DATA_API,
   GFW_STAGING_DATA_API,
   GFW_API,
@@ -22,10 +23,13 @@ const GFW_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+const RESOURCE_WATCH_API_URL =
+  ENVIRONMENT === 'staging' ? RESOURCE_WATCH_STAGING_API : RESOURCE_WATCH_API;
 
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const GFW_METADATA_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
+const RESOURCE_WATCH_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 
 const isServer = typeof window === 'undefined';
 
@@ -76,19 +80,18 @@ export const metadataRequest = create({
 export const tilesRequest = create({
   ...defaultRequestConfig,
   baseURL: GFW_TILES_API,
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const rwRequest = create({
   ...defaultRequestConfig,
   ...(isServer && {
-    baseURL: RESOURCE_WATCH_API,
+    baseURL: RESOURCE_WATCH_API_URL,
     headers: {
-      'x-api-key': GFW_API_KEY,
+      'x-api-key': RESOURCE_WATCH_API_KEY,
     },
   }),
   ...(!isServer && {
-    baseURL: `${PROXIES.GFW_API}/v1`,
+    baseURL: PROXIES.RESOURCE_WATCH_API,
   }),
   transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
