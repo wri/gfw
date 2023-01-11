@@ -1,3 +1,5 @@
+import { PROXIES } from 'utils/proxies';
+
 import defaultImage from './images/default.png';
 import darkImage from './images/dark.png';
 import landsatImage from './images/landsat.png';
@@ -39,7 +41,7 @@ export default {
     basemapGroup: 'basemap-dark',
     labelsGroup: 'labels-dark',
     mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
-    url: `/api/planet-tiles/{name}/gmap/{z}/{x}/{y}/?proc={color}`,
+    url: `${PROXIES.PLANET_TILES}/{name}/gmap/{z}/{x}/{y}/?proc={color}`,
   },
   satellite: {
     label: 'Google satellite imagery',
@@ -67,7 +69,7 @@ export default {
     basemapGroup: 'basemap-landsat',
     labelsGroup: 'labels-dark',
     mapStyle: 'mapbox://styles/resourcewatch/ckgrx1ak30npt19o10xxkeqli',
-    url: '/api/gfw-api/v2/landsat-tiles/{year}/{z}/{x}/{y}',
+    url: `${PROXIES.GFW_API}/v2/landsat-tiles/{year}/{z}/{x}/{y}`,
     availableYears: [2017, 2016, 2015, 2014, 2013],
     defaultYear: 2017,
   },

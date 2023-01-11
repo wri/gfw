@@ -1,6 +1,8 @@
+import { PROXIES } from 'utils/proxies';
+
 class OTF {
   constructor(url) {
-    this.endpoint = '/api/data-api';
+    this.endpoint = PROXIES.DATA_API;
     this.url = `${this.endpoint}${url}`;
     this.table = 'data';
     this.selectStmt = null;

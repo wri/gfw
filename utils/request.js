@@ -11,10 +11,11 @@ import {
   GFW_API,
   GFW_STAGING_API,
 } from 'utils/apis';
+import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
-const GFW_DATA_API_URL =
+const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
@@ -28,7 +29,7 @@ export const apiRequest = create({
     },
   }),
   ...(!isServer && {
-    baseURL: '/api/gfw-api',
+    baseURL: PROXIES.GFW_API,
   }),
   timeout: 30 * 1000,
 });
@@ -36,13 +37,13 @@ export const apiRequest = create({
 export const dataRequest = create({
   timeout: 30 * 1000,
   ...(isServer && {
-    baseURL: GFW_DATA_API_URL,
+    baseURL: DATA_API_URL,
     headers: {
       'x-api-key': DATA_API_KEY,
     },
   }),
   ...(!isServer && {
-    baseURL: '/api/data-api',
+    baseURL: PROXIES.DATA_API,
   }),
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
@@ -61,7 +62,7 @@ export const rwRequest = create({
     },
   }),
   ...(!isServer && {
-    baseURL: '/api/gfw-api/v1',
+    baseURL: `${PROXIES.GFW_API}/v1`,
   }),
   timeout: 30 * 1000,
   transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
@@ -76,7 +77,7 @@ export const apiAuthRequest = create({
     },
   }),
   ...(!isServer && {
-    baseURL: '/api/gfw-api',
+    baseURL: PROXIES.GFW_API,
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('userToken')}`,

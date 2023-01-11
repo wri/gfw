@@ -4,6 +4,7 @@ import {
   rwRequest,
   dataRequest,
 } from 'utils/request';
+import { PROXIES } from 'utils/proxies';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
@@ -245,7 +246,7 @@ const getRequestUrl = ({
 const getDownloadUrl = (pathname) => {
   try {
     const downloadUrl = new URL(
-      `${window.location.origin}/api/data-api${pathname}`
+      `${window.location.origin}${PROXIES.DATA_API}${pathname}`
     );
     downloadUrl.pathname = downloadUrl.pathname.replace(
       'query',

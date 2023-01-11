@@ -1,6 +1,7 @@
 import httpProxyMiddleware from 'next-http-proxy-middleware';
 
 import { GFW_API, GFW_STAGING_API } from 'utils/apis';
+import { PROXIES } from 'utils/proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
@@ -19,7 +20,7 @@ export default (req, res) =>
     target: GFW_API_URL,
     // In addition, you can use the `pathRewrite` option provided by `next-http-proxy`,
     pathRewrite: {
-      '^/?/api/gfw-api': '/',
+      [`^/?${PROXIES.GFW_API}`]: '/',
     },
     headers: {
       'x-api-key': GFW_API_KEY,

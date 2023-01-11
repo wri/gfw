@@ -1,5 +1,4 @@
 import request from 'utils/request';
+import { PROXIES } from 'utils/proxies';
 
-const REQUEST_URL = '/api/planet-mosaics/';
-
-export const fetchPlanetBasemaps = () => request.get(REQUEST_URL);
+export const fetchPlanetBasemaps = () => request.get(`${PROXIES.PLANET_API}/`);
