@@ -10,16 +10,21 @@ import {
   GFW_STAGING_DATA_API,
   GFW_API,
   GFW_STAGING_API,
+  GFW_METADATA_API,
+  GFW_STAGING_METADATA_API,
 } from 'utils/apis';
 import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
+const GFW_METADATA_API_URL =
+  ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const GFW_METADATA_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
 
 const isServer = typeof window === 'undefined';
@@ -53,6 +58,19 @@ export const dataRequest = create({
     baseURL: PROXIES.DATA_API,
   }),
   transformResponse: [(data) => JSON.parse(data)?.data],
+});
+
+export const metadataRequest = create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: GFW_METADATA_API_URL,
+    headers: {
+      'x-api-key': GFW_METADATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.METADATA_API,
+  }),
 });
 
 export const tilesRequest = create({
