@@ -26,10 +26,11 @@ const DATA_API_URL =
 const RESOURCE_WATCH_API_URL =
   ENVIRONMENT === 'staging' ? RESOURCE_WATCH_STAGING_API : RESOURCE_WATCH_API;
 
+// At the moment, the API key is the same
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
-const GFW_METADATA_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
-const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
-const RESOURCE_WATCH_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const GFW_METADATA_API_KEY = GFW_API_KEY;
+const DATA_API_KEY = GFW_API_KEY;
+const RESOURCE_WATCH_API_KEY = GFW_API_KEY;
 
 const isServer = typeof window === 'undefined';
 
