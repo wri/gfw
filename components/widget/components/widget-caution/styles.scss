@@ -28,7 +28,6 @@
   border: 1px solid black;
   align-items: center;
   margin-bottom: 10px;
-  font-size: 12px;
 
   .icon {
     display: flex;
@@ -38,6 +37,7 @@
     p {
       margin: 0;
       font-weight: 400;
+      font-size: 12px;
     }
 
     a {
