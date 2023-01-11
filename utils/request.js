@@ -14,14 +14,22 @@ import {
 import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const DATA_API_KEY = process.env.NEXT_PUBLIC_DATA_API_KEY;
 
 const isServer = typeof window === 'undefined';
+
+const defaultRequestConfig = {
+  timeout: 30 * 1000,
+};
+
 export const apiRequest = create({
+  ...defaultRequestConfig,
   ...(isServer && {
     baseURL: GFW_API_URL,
     headers: {
@@ -31,11 +39,10 @@ export const apiRequest = create({
   ...(!isServer && {
     baseURL: PROXIES.GFW_API,
   }),
-  timeout: 30 * 1000,
 });
 
 export const dataRequest = create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
   ...(isServer && {
     baseURL: DATA_API_URL,
     headers: {
@@ -49,12 +56,13 @@ export const dataRequest = create({
 });
 
 export const tilesRequest = create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
   baseURL: GFW_TILES_API,
   // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const rwRequest = create({
+  ...defaultRequestConfig,
   ...(isServer && {
     baseURL: RESOURCE_WATCH_API,
     headers: {
@@ -64,11 +72,11 @@ export const rwRequest = create({
   ...(!isServer && {
     baseURL: `${PROXIES.GFW_API}/v1`,
   }),
-  timeout: 30 * 1000,
   transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const apiAuthRequest = create({
+  ...defaultRequestConfig,
   ...(isServer && {
     baseURL: GFW_API,
     headers: {
@@ -83,21 +91,20 @@ export const apiAuthRequest = create({
       Authorization: `Bearer ${localStorage.getItem('userToken')}`,
     },
   }),
-  timeout: 30 * 1000,
 });
 
 export const cartoRequest = create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
   baseURL: CARTO_API,
 });
 
 export const mapboxRequest = create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
   baseURL: MAPBOX_API,
 });
 
 export const cancelToken = () => CancelToken.source();
 
 export default create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
 });
