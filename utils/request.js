@@ -98,16 +98,6 @@ export const mapboxRequest = create({
 
 export const cancelToken = () => CancelToken.source();
 
-export const handleProxyOrigin = () => {
-  if (ENVIRONMENT === 'staging') {
-    return 'https://staging.globalforestwatch.org/';
-  }
-  if (ENVIRONMENT === 'preproduction') {
-    return 'https://preproduction.globalforestwatch.org/';
-  }
-  return 'https://www.globalforestwatch.org';
-};
-
 export default create({
   timeout: 30 * 1000,
 });
