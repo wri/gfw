@@ -24,7 +24,7 @@ class WidgetCaution extends PureComponent {
 
   render() {
     const {
-      caution: { text, link, linkText, isCaution, color },
+      caution: { text, link, linkText, isCaution, color = '#97be32' },
     } = this.props;
     // TODO: To be removed when all old cautions are removed
     if (this.isVisible() && linkText && isCaution) {

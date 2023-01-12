@@ -75,8 +75,8 @@ class LayerToggle extends PureComponent {
                           icon={warningIcon}
                           style={{
                             fill: a.color,
-                            width: '0.8rem',
-                            height: '0.8rem',
+                            width: '1rem',
+                            height: '1rem',
                           }}
                         />
                       </Button>

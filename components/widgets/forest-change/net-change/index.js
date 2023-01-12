@@ -36,7 +36,6 @@ export default {
       text: `Would you like to **help us understand** how to present this data in more helpful ways? [Click here to fill out a survey](https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer)`,
       // textTooltip: `There's a survey here!`,
       icon: 'warning',
-      color: 'red',
       datasetWhitelist: [''],
       visible: [
         'country',
