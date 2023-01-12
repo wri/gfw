@@ -1,7 +1,7 @@
 name: CI
 on:
   pull_request:
-    branches: 
+    branches:
       - develop
       - master
   push:
@@ -52,6 +52,7 @@ jobs:
         uses: cypress-io/github-action@v2
         env:
           NEXT_PUBLIC_FEATURE_ENV: preproduction
+          NEXT_PUBLIC_GFW_API_KEY: ${{ secrets.GFW_API_KEY }}
         with:
           start: yarn dev
           wait-on-timeout: 120
