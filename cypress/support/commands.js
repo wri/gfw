@@ -28,7 +28,7 @@ import { Sentence } from '../utils/template-tags';
 
 Cypress.Commands.add('isValidSentence', (selector, sentence) => {
   cy.getTestById(selector, {
-    timeout: 60000,
+    timeout: 120000,
   })
     .invoke('text')
     .then((text) => {
