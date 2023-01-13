@@ -48,7 +48,7 @@ const AttributionsContent = ({ narrow = false, isModal = false }) => {
       </div>
       {!narrow && (
         <div className="links">
-          <span>Map data ©2016 Google, INEGI</span>
+          <span>Map data ©2016 Google</span>
           {isModal && (
             <>
               <a
