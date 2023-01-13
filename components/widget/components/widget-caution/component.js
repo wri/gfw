@@ -24,8 +24,11 @@ class WidgetCaution extends PureComponent {
 
   render() {
     const {
-      caution: { text, link, linkText, isCaution, color = '#97be32' },
+      caution: { text, link, linkText, isCaution, color },
     } = this.props;
+
+    const parsedColor = color && color.length ? color : '#97be32';
+
     // TODO: To be removed when all old cautions are removed
     if (this.isVisible() && linkText && isCaution) {
       const htmlTextArray = text && linkText && text.split(`{${linkText}}`);
@@ -55,8 +58,8 @@ class WidgetCaution extends PureComponent {
     }
     if (this.isVisible()) {
       return (
-        <div className="c-widget-alert" style={{ borderColor: color }}>
-          <div className="icon" style={{ fill: color }}>
+        <div className="c-widget-alert" style={{ borderColor: parsedColor }}>
+          <div className="icon" style={{ fill: parsedColor }}>
             <Icon icon={warningIcon} />
           </div>
           <div className="text">
