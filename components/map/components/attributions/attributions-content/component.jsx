@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 import Icon from 'components/ui/icon';
 
@@ -8,6 +9,8 @@ import cartoLogo from 'assets/logos/carto.png';
 import planetLogo from 'assets/logos/planet.png';
 
 const AttributionsContent = ({ narrow = false, isModal = false }) => {
+  const currentYear = useMemo(() => new Date().getFullYear());
+
   return (
     <>
       <div className="logos">
@@ -48,7 +51,12 @@ const AttributionsContent = ({ narrow = false, isModal = false }) => {
       </div>
       {!narrow && (
         <div className="links">
-          <span>Map data ©2016 Google</span>
+          <span>
+            Map data ©
+            {currentYear}
+            {' '}
+            Google
+          </span>
           {isModal && (
             <>
               <a
