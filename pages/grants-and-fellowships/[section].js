@@ -1,4 +1,5 @@
 import capitalize from 'lodash/capitalize';
+import ReactHtmlParser from 'react-html-parser';
 
 import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
@@ -29,11 +30,17 @@ export const getServerSideProps = async ({ query }) => {
     const pageTexts = await getSGFPage();
     const projects = await getSGFProjects();
     const countries = await getCountriesProvider();
+
+    const parsedProjects = projects.map((p) => ({
+      ...p,
+      title: ReactHtmlParser(p.title),
+    }));
+
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
         section: query?.section,
-        projects: projects || [],
+        projects: parsedProjects || [],
         countries: countries?.data?.rows || [],
         country: query?.country || '',
         projectsTexts: pageTexts?.[0]?.acf,
