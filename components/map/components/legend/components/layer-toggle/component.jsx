@@ -74,7 +74,8 @@ class LayerToggle extends PureComponent {
                         <Icon
                           icon={warningIcon}
                           style={{
-                            fill: a.color,
+                            fill:
+                              a.color && a.color.length ? a.color : '#97be32',
                             width: '1rem',
                             height: '1rem',
                           }}
