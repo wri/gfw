@@ -1,10 +1,13 @@
 const next = require('next');
 const express = require('express');
 const sslRedirect = require('heroku-ssl-redirect').default;
+const pino = require('pino-http');
 const waterRedirects = require('./data/water-redirects');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
+const loggerLevel = process.env.LOGGER_LEVEL || 'info';
+
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -43,6 +46,11 @@ function handleNonWwwToWwwRedirect(req, res) {
 
 app.prepare().then(() => {
   const server = express();
+  server.use(
+    pino({
+      level: loggerLevel,
+    })
+  );
 
   // Redirect from http to https when NODE_ENV is set to `production`.
   // This will take an effect on the `staging`, `preproduction` and `production` environments.
