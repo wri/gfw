@@ -222,7 +222,7 @@ class ProfileForm extends PureComponent {
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">
-                        <a href="mailto:gfw@wri-org">Email us </a>
+                        <a href="mailto:gfw@wri.org">Email us </a>
                         to delete your MyGFW account.
                       </p>
                     </div>
