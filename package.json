@@ -3,7 +3,7 @@
   "version": "6.4.5",
   "description": "Global Forest Watch",
   "engines": {
-    "node": "12.16.2"
+    "node": "14.19.0"
   },
   "scripts": {
     "dev": "next",
@@ -97,7 +97,7 @@
     "fast-redux": "^0.7.1",
     "file-saver": "^2.0.2",
     "final-form": "^4.18.7",
-    "gfw-components": "1.8.5",
+    "gfw-components": "1.8.10",
     "heroku-ssl-redirect": "^0.1.1",
     "image-trace-loader": "^1.0.2",
     "imagemin-mozjpeg": "^8.0.0",

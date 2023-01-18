@@ -45,8 +45,8 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   state = {
-    disabled: false
-  }
+    disabled: false,
+  };
 
   generateZipFromURL = async () => {
     const {
@@ -61,6 +61,7 @@ class WidgetDownloadButton extends PureComponent {
       mapSettings,
       geostore,
       meta,
+      status,
     } = this.props;
     const params = {
       ...location,
@@ -68,6 +69,7 @@ class WidgetDownloadButton extends PureComponent {
       GFW_META: meta,
       mapSettings,
       geostore,
+      status,
     };
     let { locationData } = this.props;
 

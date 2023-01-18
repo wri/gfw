@@ -24,7 +24,7 @@ const SQL_QUERIES = {
   treeCoverLossByDriver:
     'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   loss:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFires:
@@ -34,7 +34,7 @@ const SQL_QUERIES = {
   emissionsLossOTF:
     'SELECT umd_tree_cover_loss__year, SUM(area__ha), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} AND umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}',
   emissionsByDriver:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   carbonFlux:
     'SELECT SUM("gfw_net_flux_co2e__Mg") AS "gfw_net_flux_co2e__Mg", SUM("gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg") AS "gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg", SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", TRUE AS "includes_gain_pixels" FROM data {WHERE}',
   carbonFluxOTF: `SELECT SUM("gfw_forest_carbon_net_flux__Mg_CO2e"), SUM("gfw_forest_carbon_gross_removals__Mg_CO2e"), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} OR is__umd_tree_cover_gain = 'true'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -66,7 +66,7 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
-  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -543,7 +543,7 @@ export const getLoss = (params) => {
     data: {
       data: response.data.data.map((d) => ({
         ...d,
-        bound1: d.tsc_tree_cover_loss_drivers__type,
+        bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
         emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
@@ -591,7 +591,7 @@ export const getEmissions = (params) => {
     data: {
       data: response.data.data.map((d) => ({
         ...d,
-        bound1: d.tsc_tree_cover_loss_drivers__type,
+        bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
         allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
         co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
@@ -1511,7 +1511,7 @@ export const fetchIntegratedAlerts = (params) => {
   if (!download) {
     requestUrl = getRequestUrl({
       ...params,
-      dataset: alertSystem === 'glad_l' ? 'glad_alerts' : 'integrated_alerts',
+      dataset: alertSystem === 'glad_l' ? 'glad' : 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
       version: 'latest',
@@ -2277,7 +2277,7 @@ export const fetchVIIRSAlertsSum = (params) => {
   if (download) {
     return {
       name: `daily_${dataset}_alerts__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
