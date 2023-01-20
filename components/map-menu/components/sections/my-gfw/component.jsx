@@ -25,7 +25,7 @@ import logoutIcon from 'assets/icons/logout.svg?sprite';
 import screenImg1x from 'assets/images/aois/aoi-dashboard.png';
 import screenImg2x from 'assets/images/aois/aoi-dashboard@2x.png';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const isServer = typeof window === 'undefined';
 

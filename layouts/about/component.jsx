@@ -20,7 +20,7 @@ import mailIcon from 'assets/icons/mail.svg?sprite';
 import bgImage from './background.jpg';
 import bgImageWebP from './background.webp';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const sections = {
   how: {

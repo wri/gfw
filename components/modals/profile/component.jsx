@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Modal from 'components/modal';
 import ProfileForm from 'components/forms/profile';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const ProfileModal = ({ setProfileModalOpen, profileComplete }) => {
   const {

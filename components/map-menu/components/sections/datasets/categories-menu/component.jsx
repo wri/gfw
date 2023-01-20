@@ -5,7 +5,7 @@ import { Row, Column, Button } from 'gfw-components';
 
 import Icon from 'components/ui/icon';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class CategoriesMenu extends PureComponent {
   render() {
@@ -32,9 +32,7 @@ class CategoriesMenu extends PureComponent {
                   )}
                   <Icon icon={c.icon} />
                 </Button>
-                <span className="category-item-label">
-                  {c.label}
-                </span>
+                <span className="category-item-label">{c.label}</span>
               </div>
             </Column>
           ))}

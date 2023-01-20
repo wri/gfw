@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
-import './styles.scss';
+import './styles.module.scss';
 
 import SENTENCES from 'data/dashboard-summary-sentence';
 

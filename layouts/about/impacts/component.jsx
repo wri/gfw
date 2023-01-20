@@ -10,7 +10,7 @@ import awards1 from 'layouts/about/impacts/images/awards1.png';
 import awards2 from 'layouts/about/impacts/images/awards2.png';
 import awards3 from 'layouts/about/impacts/images/awards3.png';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const awards = [
   {
@@ -20,8 +20,7 @@ const awards = [
   },
   {
     img: awards1,
-    link:
-      'http://www.unglobalpulse.org/big-data-climate-challenge-winners-announced',
+    link: 'http://www.unglobalpulse.org/big-data-climate-challenge-winners-announced',
     title: 'Big data climate challenge',
   },
   {
@@ -31,8 +30,7 @@ const awards = [
   },
   {
     img: awards3,
-    link:
-      'http://www.computerworld.com/article/2977562/data-analytics/world-resources-institute.html',
+    link: 'http://www.computerworld.com/article/2977562/data-analytics/world-resources-institute.html',
     title: 'WRI',
   },
 ];

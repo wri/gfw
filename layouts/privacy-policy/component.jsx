@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Row, Column } from 'gfw-components';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const PrivacyPolicyPage = () => (
   <div className="l-privacy-page">

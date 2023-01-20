@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class WidgetListLegend extends PureComponent {
   render() {

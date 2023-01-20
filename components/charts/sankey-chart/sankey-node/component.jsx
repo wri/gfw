@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 
 import { splitSVGText } from './utils';
 
-import './styles.scss';
+import './styles.module.scss';
 
 function SankeyNode({ x, y, height, index, payload, config }) {
   const width = config.nodeWidth || 140;

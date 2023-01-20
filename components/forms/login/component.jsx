@@ -15,7 +15,7 @@ import { email } from 'components/forms/validations';
 
 import { GFW_API } from 'utils/apis';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const isServer = typeof window === 'undefined';
 
@@ -105,9 +105,8 @@ class LoginForm extends PureComponent {
       },
     };
 
-    const { submit, submitFunc, altView, altLabel, confirmation } = formMeta[
-      showForm
-    ];
+    const { submit, submitFunc, altView, altLabel, confirmation } =
+      formMeta[showForm];
 
     return (
       <Form onSubmit={submitFunc} initialValues={initialValues}>

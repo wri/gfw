@@ -8,7 +8,7 @@ import ContactForm from 'components/forms/contact';
 
 import { setModalContactUsOpen } from './actions';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const ModalContactUs = () => {
   const { query } = useRouter();

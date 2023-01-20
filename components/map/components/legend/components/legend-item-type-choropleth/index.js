@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
+import './styles.module.scss';
 
 class LegendTypeChoropleth extends React.PureComponent {
   static propTypes = {
@@ -68,13 +68,15 @@ class LegendTypeChoropleth extends React.PureComponent {
         </div>
         {/* TODO: Pedro: This is ugly, should be programatic */}
         {dataset === 'forest-net-change' && (
-          <div style={{
+          <div
+            style={{
               display: 'flex',
               alignItems: 'center',
               margin: '.5rem 0 0',
             }}
           >
-            <span style={{
+            <span
+              style={{
                 backgroundColor: '#B2B2B2',
                 height: '0.625rem',
                 width: '0.625rem',
@@ -84,7 +86,9 @@ class LegendTypeChoropleth extends React.PureComponent {
                 marginRight: '0.625rem',
               }}
             />
-            <div><p>&lt;1 ha forest extent</p></div>
+            <div>
+              <p>&lt;1 ha forest extent</p>
+            </div>
           </div>
         )}
       </>

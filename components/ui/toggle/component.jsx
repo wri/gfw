@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.scss';
-import './themes/large.scss';
+import './styles.module.scss';
+import './themes/large.module.scss';
 
 class Toggle extends PureComponent {
   render() {

@@ -5,7 +5,7 @@ import { Row, Column, Loader } from 'gfw-components';
 import AreasTable from '../areas-table';
 import NoAreas from '../no-areas';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const MyGfwAreas = ({ hasAreas, loading }) => (
   <div className="c-mygfw-areas">

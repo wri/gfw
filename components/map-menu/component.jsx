@@ -10,7 +10,7 @@ import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
 import MenuMobile from './components/menu-mobile';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {

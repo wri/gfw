@@ -11,7 +11,7 @@ import Tip from 'components/ui/tip';
 import infoIcon from 'assets/icons/info.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class LayerToggle extends PureComponent {
   render() {
@@ -71,7 +71,7 @@ class LayerToggle extends PureComponent {
                   trackEvent({
                     category: 'Open modal',
                     action: 'Hover modal button',
-                    label: `${layer}: ${metadata || description}`
+                    label: `${layer}: ${metadata || description}`,
                   })}
               >
                 <Button

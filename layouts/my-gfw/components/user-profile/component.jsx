@@ -10,7 +10,7 @@ import ProfileModal from 'components/modals/profile';
 import pencilIcon from 'assets/icons/pencil.svg?sprite';
 import logoutIcon from 'assets/icons/logout.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const UserProfile = ({ userData, setProfileModalOpen }) => {
   const { fullName, email, firstName, lastName } = userData || {};

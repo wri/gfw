@@ -23,7 +23,7 @@ import {
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
-import './styles.scss';
+import './styles.module.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {

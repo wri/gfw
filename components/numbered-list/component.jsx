@@ -7,7 +7,7 @@ import { formatNumber } from 'utils/format';
 
 import Paginate from 'components/paginate';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const isServer = typeof window === 'undefined';
 

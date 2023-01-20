@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Modal from 'components/modal';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const ModalVideo = ({ open, src, onRequestClose }) => (
   <Modal

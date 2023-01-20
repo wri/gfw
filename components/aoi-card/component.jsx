@@ -20,7 +20,7 @@ import tagIcon from 'assets/icons/tag.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import warningIcon from 'assets/icons/warning.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const getLatestAlerts = ({ location, params }) =>
   all([

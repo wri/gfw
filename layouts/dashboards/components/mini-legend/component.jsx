@@ -16,7 +16,7 @@ import { LegendItemButtonOpacity, Icons } from 'vizzuality-components';
 
 import LegendItemTypeChoropleth from 'components/map/components/legend/components/legend-item-type-choropleth';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class MiniLegend extends PureComponent {
   handleOpacity(layer, opacity) {
@@ -40,8 +40,12 @@ class MiniLegend extends PureComponent {
         <div className="mini-legend-items">
           <ul className="mini-legend-layers">
             {layers.map((l) => {
-              const { layers: subLayers, params: stateParams, name, layerId } =
-                l || {};
+              const {
+                layers: subLayers,
+                params: stateParams,
+                name,
+                layerId,
+              } = l || {};
               const params =
                 stateParams ||
                 (subLayers && subLayers[0] && subLayers[0].timelineParams);
@@ -51,8 +55,9 @@ class MiniLegend extends PureComponent {
 
               return (
                 <li key={l.name} className={l.layer}>
-                  {l.layer !== 'forest-net-change' && 
-                    <span style={{ backgroundColor: l.color }} />}
+                  {l.layer !== 'forest-net-change' && (
+                    <span style={{ backgroundColor: l.color }} />
+                  )}
                   <div>
                     <p>{l.name}</p>
                     {startDateAbsolute && endDateAbsolute && (
@@ -90,15 +95,25 @@ class MiniLegend extends PureComponent {
                   />
                   {/* TODO Pedro: can this be dynamic? */}
                   {l.layer === 'forest-net-change' && (
-                    <div className='net-change-choropleth'>
+                    <div className="net-change-choropleth">
                       <LegendItemTypeChoropleth
                         dataset="forest-net-change"
                         activeLayer={{
-                            "legendConfig": {
-                              "items": [{"color":"#A3317C","name":"-10"},{"color":"#A25A94","name":"-5"},{"color":"#B27FAF","name":"-2"},{"color":"#C7ACCB","name":"-0.5"},{"color":"#EFEDEA","name":"0.5"},{"color":"#9DC1D2","name":"2"},{"color":"#7B97BB","name":"5"},{"color":"#646EA7","name":"10%"},{"color":"#51449A","name":" "}],
-                              "type": "choropleth",
-                            }
-                          }}
+                          legendConfig: {
+                            items: [
+                              { color: '#A3317C', name: '-10' },
+                              { color: '#A25A94', name: '-5' },
+                              { color: '#B27FAF', name: '-2' },
+                              { color: '#C7ACCB', name: '-0.5' },
+                              { color: '#EFEDEA', name: '0.5' },
+                              { color: '#9DC1D2', name: '2' },
+                              { color: '#7B97BB', name: '5' },
+                              { color: '#646EA7', name: '10%' },
+                              { color: '#51449A', name: ' ' },
+                            ],
+                            type: 'choropleth',
+                          },
+                        }}
                       />
                     </div>
                   )}

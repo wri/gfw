@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class LegendBasemaps extends PureComponent {
   render() {

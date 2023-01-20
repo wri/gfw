@@ -8,7 +8,7 @@ import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
 import planetLogo from 'assets/logos/planet.png';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const ModalAttributions = ({ open, onRequestClose }) => (
   <Modal

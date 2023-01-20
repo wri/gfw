@@ -6,7 +6,7 @@ import { translateText } from 'utils/lang';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class DynamicSentence extends PureComponent {
   static propTypes = {

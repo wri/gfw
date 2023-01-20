@@ -4,7 +4,7 @@ import sortBy from 'lodash/sortBy';
 
 import SentenceSelector from 'components/sentence-selector';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class LayerSelectorMenu extends PureComponent {
   render() {

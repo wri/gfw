@@ -8,7 +8,7 @@
   color: $slate-light;
   font-weight: 500;
 
-  a, 
+  a,
   .caution-link {
     width: fit-content;
     margin-bottom: rem(30px);
@@ -19,5 +19,4 @@
   a:visited {
     color: darken($green-gfw, 10%);
   }
-  
 }

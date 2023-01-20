@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class DatasetSection extends PureComponent {
   render() {
@@ -23,7 +23,7 @@ class DatasetSection extends PureComponent {
 DatasetSection.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default DatasetSection;

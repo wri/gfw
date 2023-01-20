@@ -7,7 +7,7 @@ import {
 import Component from './component';
 import { getPopupProps } from './selectors';
 
-import './styles.scss';
+import './styles.module.scss';
 
 export default connect(getPopupProps, {
   clearMapInteractions,

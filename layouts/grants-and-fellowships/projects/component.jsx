@@ -13,7 +13,7 @@ import TagsList from 'components/tags-list';
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const GrantsProjectsSection = ({
   projects: allProjects,

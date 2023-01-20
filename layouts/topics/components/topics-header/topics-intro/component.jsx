@@ -7,7 +7,7 @@ import { Desktop, Mobile, Button, Row, Column } from 'gfw-components';
 import Icon from 'components/ui/icon';
 
 import infoIcon from 'assets/icons/info.svg?sprite';
-import './styles.scss';
+import './styles.module.scss';
 
 const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
   const { img1x, img2x, title, text, citation, button } = intro;
@@ -43,8 +43,8 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
                 trackEvent({
                   category: 'Topics pages',
                   action: 'Open citation info button',
-                  label: title
-                })
+                  label: title,
+                });
               }}
             >
               <Icon className="citation-icon" icon={infoIcon} />

@@ -5,7 +5,7 @@ import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class DownloadData extends PureComponent {
   renderDownloadLinks = (downloads) => (

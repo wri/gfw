@@ -10,7 +10,7 @@ import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import PTWProvider from 'providers/ptw-provider';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class Explore extends PureComponent {
   render() {
@@ -23,7 +23,7 @@ class Explore extends PureComponent {
       mapState,
       loading,
       ptwType,
-      setMapPromptsSettings
+      setMapPromptsSettings,
     } = this.props;
     const links = [
       {
@@ -34,9 +34,9 @@ class Explore extends PureComponent {
           trackEvent({
             category: 'Map menu',
             action: 'Select explore category',
-            label: 'Topics'
-          })
-        }
+            label: 'Topics',
+          });
+        },
       },
       {
         label: 'Places to Watch',
@@ -46,9 +46,9 @@ class Explore extends PureComponent {
           trackEvent({
             category: 'Map menu',
             action: 'Select explore category',
-            label: 'Places to watch'
-          })
-        }
+            label: 'Places to watch',
+          });
+        },
       },
       {
         label: 'Stories',
@@ -58,10 +58,10 @@ class Explore extends PureComponent {
           trackEvent({
             category: 'Map menu',
             action: 'Select explore category',
-            label: 'Stories'
-          })
-        }
-      }
+            label: 'Stories',
+          });
+        },
+      },
     ];
 
     return (
@@ -86,22 +86,22 @@ class Explore extends PureComponent {
                       options={[
                         {
                           label: 'All Places to Watch',
-                          value: 'all'
+                          value: 'all',
                         },
                         {
                           label: 'Mongabay reporting',
-                          value: 'mongabay'
+                          value: 'mongabay',
                         },
                         {
                           label: 'Soy',
-                          value: 'soy'
+                          value: 'soy',
                         },
                         {
                           label: 'Oil palm',
-                          value: 'palm'
-                        }
+                          value: 'palm',
+                        },
                       ]}
-                      onChange={value => setMenuSettings({ ptwType: value })}
+                      onChange={(value) => setMenuSettings({ ptwType: value })}
                       native
                     />
                     <PTWProvider />
@@ -113,7 +113,7 @@ class Explore extends PureComponent {
             </div>
             {!loading &&
               data &&
-              data.map(item => (
+              data.map((item) => (
                 <div
                   key={item.slug || item.id}
                   className="column small-12 medium-6"
@@ -124,7 +124,7 @@ class Explore extends PureComponent {
                     clamp={5}
                     data={{
                       ...item,
-                      buttons: item.buttons.map(b => ({
+                      buttons: item.buttons.map((b) => ({
                         ...b,
                         ...(b.text === 'VIEW ON MAP' && {
                           onClick: () => {
@@ -132,16 +132,16 @@ class Explore extends PureComponent {
                             setMapPromptsSettings({
                               open: true,
                               stepIndex: 0,
-                              stepsKey: `topics${item.title}`
+                              stepsKey: `topics${item.title}`,
                             });
                             trackEvent({
                               category: 'Map data',
                               action: 'User loads a topic',
-                              label: item.title
-                            })
-                          }
-                        })
-                      }))
+                              label: item.title,
+                            });
+                          },
+                        }),
+                      })),
                     }}
                     active={isEqual(item.payload.map, mapState)}
                   />
@@ -164,7 +164,7 @@ Explore.propTypes = {
   loading: PropTypes.bool,
   handleViewOnMap: PropTypes.func,
   ptwType: PropTypes.string,
-  setMapPromptsSettings: PropTypes.func
+  setMapPromptsSettings: PropTypes.func,
 };
 
 export default Explore;

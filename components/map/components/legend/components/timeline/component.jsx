@@ -6,7 +6,7 @@ import { trackEvent } from 'utils/analytics';
 
 import Datepicker from 'components/ui/datepicker';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const Timeline = (props) => {
   const {

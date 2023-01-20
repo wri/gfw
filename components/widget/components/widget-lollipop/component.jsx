@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Lollipop from 'components/charts/lollipop-chart';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class WidgetLollipop extends PureComponent {
   render() {

@@ -14,7 +14,7 @@ import planetLogo from 'assets/logos/planet.png';
 
 import AttributionsModal from './attributions-modal';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const MapAttributions = ({ className, viewport, map }) => {
   const width = map._container.clientWidth;

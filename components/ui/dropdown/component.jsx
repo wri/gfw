@@ -15,23 +15,23 @@ import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import Selector from './components/selector';
 import Menu from './components/menu';
 
-import './styles.scss';
-import './themes/dropdown-dark.scss';
-import './themes/dropdown-light.scss';
-import './themes/dropdown-button.scss';
-import './themes/dropdown-button-small.scss';
-import './themes/dropdown-button-big.scss';
-import './themes/dropdown-native.scss';
-import './themes/dropdown-native-button.scss';
-import './themes/dropdown-native-button-green.scss';
-import './themes/dropdown-native-plain.scss';
-import './themes/dropdown-native-inline.scss';
-import './themes/dropdown-native-form.scss';
-import './themes/dropdown-dark-round.scss';
-import './themes/dropdown-dark-squared.scss';
-import './themes/dropdown-no-border.scss';
-import './themes/dropdown-full-width.scss';
-import './themes/dropdown-native-label-inline.scss';
+import './styles.module.scss';
+import './themes/dropdown-dark.module.scss';
+import './themes/dropdown-light.module.scss';
+import './themes/dropdown-button.module.scss';
+import './themes/dropdown-button-small.module.scss';
+import './themes/dropdown-button-big.module.scss';
+import './themes/dropdown-native.module.scss';
+import './themes/dropdown-native-button.module.scss';
+import './themes/dropdown-native-button-green.module.scss';
+import './themes/dropdown-native-plain.module.scss';
+import './themes/dropdown-native-inline.module.scss';
+import './themes/dropdown-native-form.module.scss';
+import './themes/dropdown-dark-round.module.scss';
+import './themes/dropdown-dark-squared.module.scss';
+import './themes/dropdown-no-border.module.scss';
+import './themes/dropdown-full-width.module.scss';
+import './themes/dropdown-native-label-inline.module.scss';
 
 class Dropdown extends PureComponent {
   static propTypes = {

@@ -11,7 +11,7 @@ import Icon from 'components/ui/icon';
 import settingsIcon from 'assets/icons/settings.svg?sprite';
 import WidgetSettings from '../widget-settings';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {

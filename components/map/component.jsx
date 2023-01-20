@@ -24,7 +24,7 @@ import Attributions from './components/attributions';
 import LayerManagerWrapper from './components/layer-manager';
 
 // Styles
-import './styles.scss';
+import './styles.module.scss';
 
 class MapComponent extends Component {
   static propTypes = {

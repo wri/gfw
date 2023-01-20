@@ -20,7 +20,7 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import shareIcon from 'assets/icons/share.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const isServer = typeof window === 'undefined';
 

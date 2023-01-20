@@ -6,18 +6,20 @@ import Icon from 'components/ui/icon';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class VerticalMenu extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     value: PropTypes.string,
-    menu: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string
-    })),
-    onClick: PropTypes.func
-  }
+    menu: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })
+    ),
+    onClick: PropTypes.func,
+  };
 
   render() {
     const {
@@ -29,10 +31,7 @@ class VerticalMenu extends PureComponent {
     } = this.props;
 
     return (
-      <ul
-        className={`c-vertical-menu ${className}`}
-        {...props}
-      >
+      <ul className={`c-vertical-menu ${className}`} {...props}>
         {menu.map(({ label, value }) => (
           <li className="menu-item" key={label}>
             <Button
@@ -46,7 +45,7 @@ class VerticalMenu extends PureComponent {
           </li>
         ))}
       </ul>
-    )
+    );
   }
 }
 

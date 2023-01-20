@@ -32,7 +32,7 @@ import {
 
 import WebhookModal from './webhook-modal';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const confirmations = {
   saved: {

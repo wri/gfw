@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import MenuTile from '../menu-tile';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class MenuMobile extends PureComponent {
   render() {

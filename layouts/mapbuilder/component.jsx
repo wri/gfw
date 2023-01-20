@@ -9,7 +9,7 @@ import { Button, Row, Column, Mobile, Desktop } from 'gfw-components';
 import Cover from 'components/cover';
 import Card from 'components/ui/card';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const HomePage = ({ page, apps: allApps, tutorials }) => {
   const [showAllApps, setShowAllApps] = useState(false);

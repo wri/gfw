@@ -8,7 +8,7 @@ import techLogo from './assets/gfw-tech-fellowship-logo.png';
 
 import { sgfBenefits, fellowshipBenefits, results } from './config';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const GrantsAboutSection = () => (
   <div className="l-grants-about-section">

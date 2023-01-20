@@ -6,7 +6,7 @@ import Footer from 'components/footer';
 
 import TopicsCards from './cards';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const TopicsFooter = ({ cards, topic }) => (
   <div className="c-topics-footer">

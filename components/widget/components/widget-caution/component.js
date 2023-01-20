@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class WidgetCaution extends PureComponent {
   static propTypes = {
@@ -40,7 +40,13 @@ class WidgetCaution extends PureComponent {
       );
     }
     if (this.isVisible()) {
-      return <div className="c-widget-caution" dangerouslySetInnerHTML={{__html: text}} />;
+      // eslint-disable-next-line react/no-danger
+      return (
+        <div
+          className="c-widget-caution"
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+      );
     }
 
     return null;

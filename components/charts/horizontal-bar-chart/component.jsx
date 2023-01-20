@@ -13,7 +13,7 @@ import Paginate from 'components/paginate';
 import ChartToolTip from '../components/chart-tooltip';
 
 import CustomTick from './custom-tick-component';
-import './styles.scss';
+import './styles.module.scss';
 
 class HorizontalBarChart extends PureComponent {
   render() {

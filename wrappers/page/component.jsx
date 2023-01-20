@@ -15,7 +15,7 @@ import Footer from 'components/footer';
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const PageWrapper = ({
   children,

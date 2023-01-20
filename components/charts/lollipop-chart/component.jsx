@@ -9,7 +9,7 @@ import { Desktop, Mobile } from 'gfw-components';
 
 import Legend from 'components/charts/components/chart-legend';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class LollipopChart extends PureComponent {
   interpolate = (num, dataMin, dataMax) =>

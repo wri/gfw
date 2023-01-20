@@ -7,7 +7,7 @@ import NavLink from 'components/nav-link';
 
 import config from './config';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const Header = ({ setModalContactUsOpen, fullScreen, slim }) => {
   const { push, pushQuery, asPath, query } = useRouter();

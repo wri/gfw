@@ -8,7 +8,7 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import infoIcon from 'assets/icons/info.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const Item = (props) => {
   const {
@@ -23,7 +23,14 @@ const Item = (props) => {
     activeValue,
     activeLabel,
   } = props;
-  const { group, groupParent, label, component = null, metaKey, infoText } = item;
+  const {
+    group,
+    groupParent,
+    label,
+    component = null,
+    metaKey,
+    infoText,
+  } = item;
   const isActive =
     (!showGroup && !group) || group === showGroup || groupParent === showGroup;
   const isGroupParentActive = groupParent && showGroup === groupParent;

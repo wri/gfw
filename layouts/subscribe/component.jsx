@@ -4,7 +4,7 @@ import { Row, Column } from 'gfw-components';
 
 import NewsletterForm from 'components/forms/newsletter';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class NewsletterPage extends PureComponent {
   render() {

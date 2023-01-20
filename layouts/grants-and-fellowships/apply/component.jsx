@@ -3,7 +3,7 @@ import { Row, Column } from 'gfw-components';
 import sgfLogo from './assets/gfw-sgf-logo.png';
 import techLogo from './assets/gfw-tech-fellowship-logo.png';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const GrantsApplySection = () => (
   <section className="l-grants-apply-section">

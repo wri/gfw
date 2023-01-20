@@ -4,7 +4,7 @@ import Modal from 'components/modal';
 
 import { setModalClimateOpen, setContactUsOpen } from './actions';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const ModalGFWClimate = () => {
   const {

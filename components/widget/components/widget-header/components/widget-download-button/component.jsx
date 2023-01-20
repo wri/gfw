@@ -15,7 +15,7 @@ import Icon from 'components/ui/icon';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import { GFW_API } from 'utils/apis';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const GLAD_ALERTS_WIDGET = 'gladAlerts';
 

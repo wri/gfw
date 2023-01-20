@@ -14,7 +14,7 @@ import growth from 'layouts/about/projects/images/growth.png';
 
 import { getProjectsProps } from 'layouts/grants-and-fellowships/projects/selectors';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const AboutProjectsSection = ({
   sgfProjects: allProjects,

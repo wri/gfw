@@ -8,7 +8,7 @@ import Icon from './right.svg';
 
 import useTimeline from './hook';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const DOT_SIZE = 12;
 
@@ -88,7 +88,7 @@ const TimeSlider = ({
                   label={d.label}
                   role="button"
                   tabIndex={0}
-                  area-label="Select timeframe"
+                  aria-label="Select timeframe"
                   className={`timeline-position ${
                     selected === i ? 'active' : ''
                   }`}

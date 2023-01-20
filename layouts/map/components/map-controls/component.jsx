@@ -21,7 +21,7 @@ import RecentImagerySettings from 'components/recent-imagery/components/recent-i
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const isServer = typeof window === 'undefined';
 

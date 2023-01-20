@@ -7,7 +7,7 @@ import Icon from 'components/ui/icon';
 
 import satelliteDetailed from 'assets/icons/satellite-detailed.svg?sprite';
 
-import './styles.scss';
+import './styles.module.scss';
 
 const isServer = typeof window === 'undefined';
 

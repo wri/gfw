@@ -11,7 +11,7 @@ import Basemaps from 'components/basemaps';
 import DatasetSection from './dataset-section';
 import CategoriesMenu from './categories-menu';
 
-import './styles.scss';
+import './styles.module.scss';
 
 class Datasets extends PureComponent {
   render() {
