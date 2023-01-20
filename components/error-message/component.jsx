@@ -6,7 +6,7 @@ import Icon from 'components/ui/icon';
 
 import treeImageError from 'assets/icons/error.svg?sprite';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 class Thankyou extends PureComponent {
   static propTypes = {
@@ -18,8 +18,8 @@ class Thankyou extends PureComponent {
     const { title, description } = this.props;
 
     return (
-      <div className="c-error-message">
-        <Icon icon={treeImageError} className="error-tree" />
+      <div className={styles['c-error-message']}>
+        <Icon icon={treeImageError} className={styles['error-tree']} />
         <h1>{title}</h1>
         {description && (
           <>
