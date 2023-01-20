@@ -1,21 +1,20 @@
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
-const withSass = require('@zeit/next-sass');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
-const redirects = require('./data/redirects');
+const redirects = require('./data/redirects.json');
 
 let rewrites;
 
 if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging') {
   // eslint-disable-next-line global-require
-  rewrites = require('./data/rewrites-staging');
+  rewrites = require('./data/rewrites-staging.json');
 } else {
   // eslint-disable-next-line global-require
-  rewrites = require('./data/rewrites');
+  rewrites = require('./data/rewrites.json');
 }
 
 const nextConfig = {
@@ -29,9 +28,9 @@ const nextConfig = {
       }),
     ];
 
-    config.node = {
-      fs: 'empty',
-    };
+    // config.node = {
+    // fs: 'empty',
+    // };
 
     return config;
   },
@@ -41,6 +40,6 @@ const nextConfig = {
 };
 
 module.exports = withPlugins(
-  [[withSass], [optimizedImages], [withBundleAnalyzer]],
+  [[optimizedImages], [withBundleAnalyzer]],
   nextConfig
 );
