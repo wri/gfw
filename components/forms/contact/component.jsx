@@ -71,7 +71,7 @@ class ContactForm extends PureComponent {
                   </h3>
                   <p>Interested in getting news and updates from us?</p>
                   <div className="button-group">
-                    <Link href="/subscribe">
+                    <Link legacyBehavior href="/subscribe">
                       <a>
                         <Button>Subscribe</Button>
                       </a>

@@ -71,7 +71,7 @@ const Button = (props) => {
     );
   } else if (link) {
     button = (
-      <Link href={link}>
+      <Link legacyBehavior href={link}>
         <a>
           <button
             className={cx(

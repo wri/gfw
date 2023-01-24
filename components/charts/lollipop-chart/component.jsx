@@ -235,7 +235,7 @@ class LollipopChart extends PureComponent {
                       </a>
                     )}
                     {item.path && !linksExt && (
-                      <Link {...item.path}>
+                      <Link legacyBehavior {...item.path}>
                         <a className={`${linksDisabled ? 'disabled' : ''}`}>
                           {linkContent}
                         </a>

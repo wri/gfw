@@ -17,13 +17,8 @@ class NavLink extends PureComponent {
   };
 
   render() {
-    const {
-      activeClassName,
-      children,
-      activeShallow,
-      router,
-      ...props
-    } = this.props;
+    const { activeClassName, children, activeShallow, router, ...props } =
+      this.props;
     const { pathname, asPath: oldPath } = router;
     const child = Children.only(children);
     const asPath = oldPath?.split('#')[0];
@@ -38,7 +33,7 @@ class NavLink extends PureComponent {
     const isActive = isActiveLink || isActiveShallow;
 
     return (
-      <Link {...props}>
+      <Link legacyBehavior {...props}>
         {React.cloneElement(child, {
           className: cx(child.props.className, {
             [activeClassName]: isActive,

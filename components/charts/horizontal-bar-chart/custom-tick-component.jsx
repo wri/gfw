@@ -29,7 +29,7 @@ const CustomTick = ({ x, y, index, yAxisDotFill, data, settings }) => {
             {index === 0 ? ' are plantations' : ''}
           </a>
         ) : (
-          <Link {...path}>
+          <Link legacyBehavior {...path}>
             <a>
               {region}
               {' '}

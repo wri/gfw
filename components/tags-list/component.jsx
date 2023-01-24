@@ -22,6 +22,7 @@ const TagsList = ({ title, tags, onClick }) => (
           <span key={id}>
             {link ? (
               <Link
+                legacyBehavior
                 href={link}
                 shallow={shallow}
                 replace={replace}

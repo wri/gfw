@@ -30,6 +30,7 @@ const ModalGFWFires = () => {
         `Welcome to the new home for Global Forest Watch Fires data and insights!
         If you're looking for the Fire Report, `,
         <Link
+          legacyBehavior
           key="link"
           href="/dashboards/[[...location]]"
           as="/dashboards/global?category=fires"

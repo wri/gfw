@@ -87,7 +87,7 @@ const AboutProjectsSection = ({
             <p>
               Click
               {' '}
-              <Link href="/grants-and-fellowships">
+              <Link legacyBehavior href="/grants-and-fellowships">
                 <a target="_blank" rel="noopener noreferrer">
                   here
                 </a>

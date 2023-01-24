@@ -46,7 +46,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
         large
       >
         <>
-          <Link href="/subscribe">
+          <Link legacyBehavior href="/subscribe">
             <a className="subscribe-btn">
               <Button round className="subscribe-icon">
                 <Icon icon={mailIcon} />
@@ -259,7 +259,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
                 <NoContent className="no-news" message="No news available" />
               )}
             </div>
-            <Link href="/my-gfw">
+            <Link legacyBehavior href="/my-gfw">
               <a>
                 <Button className="my-gfw-btn" light>
                   My GFW

@@ -79,7 +79,10 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
           ))}
           <Column width={[1 / 12, 1 / 3, 4.5 / 12]} />
           <Column width={[5 / 6, 1 / 3, 1 / 4]}>
-            <Link href="https://www.globalforestwatch.org/help/mapbuilder/">
+            <Link
+              legacyBehavior
+              href="https://www.globalforestwatch.org/help/mapbuilder/"
+            >
               <a>
                 <Button className="column-btn">get started</Button>
               </a>
@@ -186,7 +189,10 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
           ))}
           <Column width={[1 / 12, 1 / 3, 4.5 / 12]} />
           <Column width={[5 / 6, 1 / 3, 1 / 4]}>
-            <Link href="https://www.globalforestwatch.org/help/mapbuilder/">
+            <Link
+              legacyBehavior
+              href="https://www.globalforestwatch.org/help/mapbuilder/"
+            >
               <a>
                 <Button className="column-btn">view all</Button>
               </a>

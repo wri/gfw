@@ -330,6 +330,7 @@ class ShowAnalysis extends PureComponent {
                   To perform an in-depth analysis of this area please visit the
                   {' '}
                   <Link
+                    legacyBehavior
                     href="/dashboards/[[...location]]"
                     as={`/dashboards/aoi/${activeArea.id}`}
                   >

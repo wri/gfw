@@ -66,7 +66,7 @@ const AboutPage = (props) => (
       bgImage={bgImage}
       webP={bgImageWebP}
     >
-      <Link href="/subscribe">
+      <Link legacyBehavior href="/subscribe">
         <a className="subscribe-btn">
           <Button round className="subscribe-icon">
             <Icon icon={mailIcon} />

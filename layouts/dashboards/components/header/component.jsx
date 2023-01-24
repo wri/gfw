@@ -281,6 +281,7 @@ class Header extends PureComponent {
             <div className="select-container">
               {isAreaDashboard && (
                 <Link
+                  legacyBehavior
                   href="/dashboards/[[...location]]"
                   as="/dashboards/global"
                 >
@@ -302,6 +303,7 @@ class Header extends PureComponent {
               )}
               {isCountryDashboard && !!firstArea && (
                 <Link
+                  legacyBehavior
                   href="/dashboards/[[...location]]"
                   as={`/dashboards/aoi/${firstArea.id}`}
                 >
