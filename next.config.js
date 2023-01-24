@@ -1,5 +1,6 @@
 const withPlugins = require('next-compose-plugins');
-const optimizedImages = require('next-optimized-images');
+// TODO18: Add optimized images again
+// const optimizedImages = require('next-optimized-images');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -40,6 +41,10 @@ const nextConfig = {
 };
 
 module.exports = withPlugins(
-  [[optimizedImages], [withBundleAnalyzer]],
+  [
+    // TODO18: Add optimized images again
+    // [optimizedImages],
+    [withBundleAnalyzer],
+  ],
   nextConfig
 );
