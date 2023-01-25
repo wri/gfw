@@ -26,9 +26,7 @@ const getOTFAnalysis = async (params) => {
 
   return analysis.getData().then((response) => {
     const { gladAlerts } = response;
-    const getLastAlert = gladAlerts?.data
-      ? gladAlerts.data[gladAlerts.data.length - 1]
-      : null;
+    const getLastAlert = gladAlerts ? gladAlerts[gladAlerts.length - 1] : null;
     const latestDate = moment()
       .year(getLastAlert?.umd_glad_alerts__year)
       .week(getLastAlert?.umd_glad_alerts__isoweek)
@@ -36,9 +34,9 @@ const getOTFAnalysis = async (params) => {
 
     return {
       alerts:
-        gladAlerts?.data &&
+        gladAlerts &&
         sortBy(
-          gladAlerts.data.map((d) => ({
+          gladAlerts.map((d) => ({
             week: d.umd_glad_alerts__isoweek,
             year: d.umd_glad_alerts__year,
             count: d.alert__count,

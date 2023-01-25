@@ -194,6 +194,7 @@ class WidgetDownloadButton extends PureComponent {
           }
         });
       });
+
     const filenames = [];
     const zip = new JSZip();
     files.forEach((file, index) => {
@@ -210,8 +211,10 @@ class WidgetDownloadButton extends PureComponent {
       } catch (error) {
         filename = `file ${index + 1}.csv`;
       }
+
       zip.file(filename, urlToPromise(url), { binary: true });
     });
+
     zip.file('metadata.csv', metadataFile);
     if (parentAdminLevel && parentLocationMetadataFile) {
       zip.file(`${parentAdminLevel}_metadata.csv`, parentLocationMetadataFile);

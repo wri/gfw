@@ -1,7 +1,6 @@
 import has from 'lodash/has';
 
-import { gfwApiRequest } from 'utils/request';
-import { GFW_DATA_API } from 'utils/apis';
+import { dataRequest } from 'utils/request';
 
 import otfData from 'data/otf-data';
 
@@ -15,7 +14,7 @@ class OTFAnalysis {
       );
     }
 
-    this.endpoint = `${GFW_DATA_API}/analysis/`;
+    this.endpoint = `/analysis/`;
     this.path = 'zonal';
     this.dataInstances = [];
     this.geostoreId = geostoreId;
@@ -100,7 +99,7 @@ class OTFAnalysis {
         key: dep,
         request: new Promise((resolve) =>
           resolve(
-            gfwApiRequest.get(this.buildQuery(sumFields, groupFields, filters))
+            dataRequest.get(this.buildQuery(sumFields, groupFields, filters))
           )
         ),
       });

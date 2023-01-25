@@ -23,9 +23,10 @@ export const getDatasets = () =>
     )
     .then((res) => res?.data);
 
-export const getDatasetMeta = () => {
-  return fetch('https://api.resourcewatch.org/glad-alerts/latest')
-    .then((res) => res.json())
+export const getDatasetMeta = () =>
+  rwRequest
+    .get('glad-alerts/latest/')
+    .then((res) => res?.data)
     .then((data) => {
       const latestDate = data?.data[0]?.attributes?.date;
       return {
@@ -37,7 +38,6 @@ export const getDatasetMeta = () => {
         'https://api.resourcewatch.org/glad-alerts/latest': '2021-11-12',
       };
     });
-};
 
 export const getDatasetQuery = ({ dataset, version = 'latest', sql, token }) =>
   dataRequest

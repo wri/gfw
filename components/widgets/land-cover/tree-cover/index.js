@@ -26,8 +26,8 @@ const getOTFAnalysis = async (params) => {
 
   return analysis.getData().then((response) => {
     const { areaHa, extent } = response;
-    const totalArea = areaHa?.data?.[0]?.area__ha;
-    const totalCover = extent?.data?.[0]?.area__ha;
+    const totalArea = areaHa?.[0]?.area__ha;
+    const totalCover = extent?.[0]?.area__ha;
 
     return {
       totalArea,
