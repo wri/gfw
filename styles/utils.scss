@@ -1,7 +1,8 @@
-//rem converter
 /* stylelint-disable */
+@use "sass:math";
+
 @function rem($px, $base: 16px) {
-  @return ($px / $base) * 1rem;
+  @return math.div($px, $base) * 1rem;
 }
 
 @keyframes pulse

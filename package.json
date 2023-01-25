@@ -3,13 +3,13 @@
   "version": "6.4.5",
   "description": "Global Forest Watch",
   "engines": {
-    "node": "12.16.2"
+    "node": "18.x"
   },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider next",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
     "postbuild": "next-sitemap",
-    "start": "node server.js -p $PORT",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider node server.js -p $PORT",
     "test": "start-test dev 3000 cy:open",
     "cy:record": "cypress run --env RECORD=1",
     "cy:open": "cypress open",
@@ -70,9 +70,9 @@
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.0.2",
     "start-server-and-test": "^1.10.11",
-    "stylelint": "^13.3.0",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-scss": "^3.16.0"
+    "stylelint": "^14.16.1",
+    "stylelint-config-standard": "^29.0.0",
+    "stylelint-scss": "^4.3.0"
   },
   "dependencies": {
     "@artsy/fresnel": "^1.1.0",
@@ -115,7 +115,6 @@
     "next-compose-plugins": "^2.2.0",
     "next-optimized-images": "^2.6.2",
     "next-sitemap": "^1.2.22",
-    "node-sass": "^4.13.1",
     "postcss-flexbugs-fixes": "^4.2.0",
     "proj4": "^2.5.0",
     "promise.prototype.finally": "^3.1.2",
@@ -155,6 +154,7 @@
     "release": "^6.3.0",
     "reselect": "4.0.0",
     "responsive-loader": "^1.2.0",
+    "sass": "^1.57.1",
     "simple-entity-decode": "^0.0.3",
     "svg-sprite-loader": "4.1.3",
     "three": "^0.125.0",
