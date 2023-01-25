@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
+import ReactHtmlParser from 'react-html-parser';
 
 import Projects from 'layouts/grants-and-fellowships/projects';
 import About from 'layouts/grants-and-fellowships/about';
@@ -29,10 +30,8 @@ const GrantsAndFellowshipsPage = (props) => {
   return (
     <div>
       <Cover
-        title="Grants & Fellowships"
-        description="The Small Grants Fund and Tech Fellowship support civil society organizations
-          and individuals around the world to use Global Forest Watch in their advocacy,
-          research, and field work."
+        title={ReactHtmlParser(props?.header?.title?.rendered)}
+        description={ReactHtmlParser(props?.header?.acf?.header_description)}
         bgImage={bgImage}
       />
       <SubnavMenu links={links} />
@@ -44,6 +43,7 @@ const GrantsAndFellowshipsPage = (props) => {
 };
 
 GrantsAndFellowshipsPage.propTypes = {
+  header: PropTypes.object,
   section: PropTypes.string,
 };
 

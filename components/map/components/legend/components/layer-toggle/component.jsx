@@ -10,6 +10,7 @@ import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
+import warningIcon from 'assets/icons/warning-nofill.svg?sprite';
 
 import './styles.scss';
 
@@ -35,6 +36,7 @@ class LayerToggle extends PureComponent {
       color,
       citation,
       description,
+      alerts,
     } = data;
 
     return (
@@ -58,6 +60,30 @@ class LayerToggle extends PureComponent {
             >
               {name}
             </div>
+            {alerts &&
+              alerts.map(
+                (a) =>
+                  a.textTooltip && (
+                    <Tooltip
+                      theme="tip"
+                      arrow
+                      position="top"
+                      html={<Tip text={a.textTooltip} />}
+                    >
+                      <Button className="theme-button-tiny theme-button-clear square info-button">
+                        <Icon
+                          icon={warningIcon}
+                          style={{
+                            fill:
+                              a.color && a.color.length ? a.color : '#97be32',
+                            width: '1rem',
+                            height: '1rem',
+                          }}
+                        />
+                      </Button>
+                    </Tooltip>
+                  )
+              )}
             {((!metadata && description) ||
               (metadata && typeof metadata === 'string')) && (
               <Tooltip
@@ -71,7 +97,7 @@ class LayerToggle extends PureComponent {
                   trackEvent({
                     category: 'Open modal',
                     action: 'Hover modal button',
-                    label: `${layer}: ${metadata || description}`
+                    label: `${layer}: ${metadata || description}`,
                   })}
               >
                 <Button

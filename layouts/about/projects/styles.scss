@@ -1,45 +1,38 @@
 @import '~styles/settings.scss';
 
 .l-section-projects {
-  padding: rem(40px) 0;
+  padding: rem(30px) 0 0;
   border-top: solid 1px $border;
 
   @media screen and (min-width: $screen-m) {
-    padding: rem(40px) 0 0;
+    padding: rem(50px) 0 0;
   }
 
-  .project-list {
-    margin-bottom: rem(30px);
-  }
-
-  .project-globe {
-    position: relative;
-  }
-
-  .project-side {
-    position: relative;
+  h3 {
+    margin: rem(10px) 0 rem(20px);
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(20px);
-    }
-
-    h3 {
       margin-bottom: rem(30px);
     }
+  }
 
-    p {
-      margin-bottom: rem(30px);
-      font-size: 18px;
-      line-height: 30px;
-    }
+  p {
+    margin-bottom: rem(30px);
+    font-size: 18px;
+    line-height: 30px;
+  }
 
-    .help-btn {
-      width: rem(250px);
+  .help-btn {
+    margin: rem(20px) 0;
+    width: rem(250px);
+
+    @media screen and (min-width: $screen-m) {
+      margin: rem(40px) 0 0;
     }
   }
 
   .visitors {
-    padding: rem(100px) 0 rem(130px);
+    padding: rem(50px) 0 rem(130px);
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: contain;
@@ -75,6 +68,31 @@
       color: $slate-dark;
       font-size: 14px;
       font-weight: 500;
+    }
+  }
+
+  .country-selector {
+    display: flex;
+    align-items: center;
+    gap: rem(10px);
+    margin-top: rem(40px);
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
+
+    .country-dropdown {
+      max-width: rem(160px);
+    }
+
+    .country-button {
+      transform: rotate(-90deg);
+
+      .c-icon {
+        width: rem(14px);
+        margin-top: rem(1px);
+      }
     }
   }
 }

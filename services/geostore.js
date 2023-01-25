@@ -1,4 +1,4 @@
-import { gfwGeostoreRequest } from 'utils/request';
+import { apiRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
@@ -56,7 +56,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
       return false;
   }
 
-  return gfwGeostoreRequest
+  return apiRequest
     .get(`${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data?.data || {};
@@ -69,7 +69,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
-  return gfwGeostoreRequest({
+  return apiRequest({
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     data: {

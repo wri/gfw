@@ -1,11 +1,8 @@
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+import { PROXIES } from 'utils/proxies';
 
 class OTF {
   constructor(url) {
-    this.endpoint =
-      process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging'
-        ? GFW_STAGING_DATA_API
-        : GFW_DATA_API;
+    this.endpoint = PROXIES.DATA_API;
     this.url = `${this.endpoint}${url}`;
     this.table = 'data';
     this.selectStmt = null;

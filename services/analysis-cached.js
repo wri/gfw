@@ -1,10 +1,10 @@
 import {
-  apiRequest,
   tilesRequest,
   cartoRequest,
-  dataApiRequest,
+  rwRequest,
   dataRequest,
 } from 'utils/request';
+import { PROXIES } from 'utils/proxies';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
@@ -12,19 +12,14 @@ import DATASETS_VERSIONS from 'data/analysis-datasets-versions.json';
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
-import { GFW_STAGING_DATA_API, GFW_DATA_API } from 'utils/apis';
-
 const VIIRS_START_YEAR = 2012;
-
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API = ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 const SQL_QUERIES = {
   // This Query is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
   treeCoverLossByDriver:
     'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   lossTsc:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   loss:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFires:
@@ -34,7 +29,7 @@ const SQL_QUERIES = {
   emissionsLossOTF:
     'SELECT umd_tree_cover_loss__year, SUM(area__ha), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} AND umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} GROUP BY umd_tree_cover_loss__year ORDER BY umd_tree_cover_loss__year&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}',
   emissionsByDriver:
-    'SELECT tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__type, umd_tree_cover_loss__year',
+    'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   carbonFlux:
     'SELECT SUM("gfw_net_flux_co2e__Mg") AS "gfw_net_flux_co2e__Mg", SUM("gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg") AS "gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg", SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", TRUE AS "includes_gain_pixels" FROM data {WHERE}',
   carbonFluxOTF: `SELECT SUM("gfw_forest_carbon_net_flux__Mg_CO2e"), SUM("gfw_forest_carbon_gross_removals__Mg_CO2e"), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} OR is__umd_tree_cover_gain = 'true'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -66,7 +61,7 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
-  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
+  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -204,7 +199,7 @@ const getRequestUrl = ({
   let typeByLevel = type;
 
   if (staticStatement?.table) {
-    return `${GFW_API}/dataset/${staticStatement.table}/latest/${
+    return `/dataset/${staticStatement.table}/latest/${
       download ? 'download/csv' : 'query'
     }?sql=`;
   }
@@ -242,17 +237,22 @@ const getRequestUrl = ({
     // @TODO: Figure out why widgets are stale on loading, when not requesting info
     return null;
   }
-  return `${GFW_API}/dataset/${datasetId}/${
+  return `/dataset/${datasetId}/${
     version || versionFromDictionary || 'latest'
     // versionFromDictionary || version || 'latest'
   }/query?sql=`;
 };
 
-const getDownloadUrl = (url) => {
+const getDownloadUrl = (pathname) => {
   try {
-    const queryUrl = new URL(url);
-    queryUrl.pathname = queryUrl.pathname.replace('query', 'download/csv');
-    return queryUrl.toString();
+    const downloadUrl = new URL(
+      `${window.location.origin}${PROXIES.DATA_API}${pathname}`
+    );
+    downloadUrl.pathname = downloadUrl.pathname.replace(
+      'query',
+      'download/csv'
+    );
+    return downloadUrl.toString();
   } catch {
     return null; // invalid url, front end should deal with this
   }
@@ -492,10 +492,10 @@ export const getTreeCoverLossByDriverType = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
       })),
     },
@@ -538,12 +538,12 @@ export const getLoss = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
-        bound1: d.tsc_tree_cover_loss_drivers__type,
+        bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
         emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
@@ -586,12 +586,12 @@ export const getEmissions = (params) => {
       url: getDownloadUrl(url),
     };
   }
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
-        bound1: d.tsc_tree_cover_loss_drivers__type,
+        bound1: d.tsc_tree_cover_loss_drivers__driver,
         year: d.umd_tree_cover_loss__year,
         allGases: d.gfw_gross_emissions_co2e_all_gases__Mg,
         co2Only: d.gfw_gross_emissions_co2e_co2_only__Mg,
@@ -629,10 +629,10 @@ export const getEmissionsLossOTF = (params) => {
       url: getDownloadUrl(url),
     };
   }
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         allGases: d.gfw_forest_carbon_gross_emissions__Mg_CO2e,
@@ -671,8 +671,8 @@ export const getCarbonFlux = (params) => {
     };
   }
 
-  return apiRequest.get(url).then(({ data: { data } }) =>
-    data.map((d) => ({
+  return dataRequest.get(url).then((response) =>
+    response?.data?.map((d) => ({
       removals:
         -d.gfw_gross_cumulative_aboveground_belowground_co2_removals__Mg || 0,
       emissions: d.gfw_gross_emissions_co2e_all_gases__Mg || 0,
@@ -703,8 +703,8 @@ export const getCarbonFluxOTF = (params) => {
     };
   }
 
-  return apiRequest.get(url).then(({ data: { data } }) =>
-    data.map((d) => ({
+  return dataRequest.get(url).then((response) =>
+    response?.data?.map((d) => ({
       removals: -d.gfw_forest_carbon_gross_removals__Mg_CO2e || 0,
       emissions: d.gfw_forest_carbon_gross_emissions__Mg_CO2e || 0,
       flux: d.gfw_forest_carbon_net_flux__Mg_CO2e || 0,
@@ -747,10 +747,10 @@ export const getLossGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         area: d.umd_tree_cover_loss__ha,
@@ -795,10 +795,10 @@ export const getLossFires = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
@@ -824,7 +824,7 @@ export const getLossFiresOTF = (params) => {
   //   return new Promise(() => {});
   // }
 
-  const requestUrl = `${GFW_API}/dataset/umd_tree_cover_loss/latest/query?sql=`;
+  const requestUrl = `/dataset/umd_tree_cover_loss/latest/query?sql=`;
 
   let url = encodeURI(
     `${requestUrl}${SQL_QUERIES.lossFires}`
@@ -840,7 +840,7 @@ export const getLossFiresOTF = (params) => {
 
   // TODO: IMPORTANT: this is very ugly, will do for now
   url =
-    'https://data-api.globalforestwatch.org/dataset/umd_tree_cover_loss/v1.8/query/json?sql=SELECT%20umd_tree_cover_loss__year,%20sum(umd_tree_cover_loss__ha),%20sum(umd_tree_cover_loss_from_fires__ha)%20FROM%20data%20WHERE%20umd_tree_cover_loss__year%20%3E%3D%202001%20AND%20umd_tree_cover_loss__year%20%3C%3D%202020%20AND%20umd_tree_cover_density_2000__threshold%20%3E%3D%2030%20GROUP%20BY%20umd_tree_cover_loss__year';
+    '/dataset/umd_tree_cover_loss/v1.8/query/json?sql=SELECT%20umd_tree_cover_loss__year,%20sum(umd_tree_cover_loss__ha),%20sum(umd_tree_cover_loss_from_fires__ha)%20FROM%20data%20WHERE%20umd_tree_cover_loss__year%20%3E%3D%202001%20AND%20umd_tree_cover_loss__year%20%3C%3D%202020%20AND%20umd_tree_cover_density_2000__threshold%20%3E%3D%2030%20GROUP%20BY%20umd_tree_cover_loss__year';
   url =
     adm0 === 'river_basins'
       ? `${url}&geostore_id=${geostore.id}`
@@ -856,10 +856,10 @@ export const getLossFiresOTF = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
@@ -905,10 +905,10 @@ export const getLossFiresGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
@@ -947,10 +947,10 @@ export const getTreeCoverGainByPlantationType = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
       })),
     },
@@ -993,10 +993,10 @@ export const getNetChange = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
       })),
     },
@@ -1038,16 +1038,18 @@ export const getExtent = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
-    ...response,
-    data: {
-      data: response.data.data.map((d) => ({
-        ...d,
-        extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
-        total_area: d.area__ha,
-      })),
-    },
-  }));
+  return dataRequest.get(url).then((response) => {
+    return {
+      ...response,
+      data: {
+        data: response?.data?.map((d) => ({
+          ...d,
+          extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
+          total_area: d.area__ha,
+        })),
+      },
+    };
+  });
 };
 
 // disaggregated extent for child of location
@@ -1086,10 +1088,10 @@ export const getExtentGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d[`umd_tree_cover_extent_${extentYear}__ha`],
         total_area: d.area__ha,
@@ -1132,10 +1134,10 @@ export const getGain = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         gain: d.umd_tree_cover_gain__ha,
@@ -1179,10 +1181,10 @@ export const getGainGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         gain: d.umd_tree_cover_gain__ha,
@@ -1235,10 +1237,10 @@ export const getAreaIntersection = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         intersection_area: d.area__ha,
         [forestType || landCategory]:
@@ -1293,10 +1295,10 @@ export const getAreaIntersectionGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         intersection_area: d.area__ha,
         ...(intersectionPolyname && {
@@ -1368,10 +1370,10 @@ export const fetchHistoricalAlerts = (params) => {
       url: getDownloadUrl(url),
     };
   }
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
       frequency,
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10) || null,
         year: parseInt(d.alert__year, 10) || null,
@@ -1419,9 +1421,9 @@ export const fetchHistoricalGladAlerts = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         date: d.alert__date,
         count: d.alert__count,
@@ -1467,9 +1469,9 @@ export const fetchGladAlerts = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -1511,7 +1513,7 @@ export const fetchIntegratedAlerts = (params) => {
   if (!download) {
     requestUrl = getRequestUrl({
       ...params,
-      dataset: alertSystem === 'glad_l' ? 'glad_alerts' : 'integrated_alerts',
+      dataset: alertSystem === 'glad_l' ? 'glad' : 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
       version: 'latest',
@@ -1623,9 +1625,9 @@ export const fetchIntegratedAlerts = (params) => {
   }
 
   // Light initial Parsing
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
         alerts: d.alert__count,
@@ -1732,9 +1734,9 @@ export const getIntegratedAlertsRanked = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         count: d.alert__count,
         area_ha: d.alert_area__ha,
@@ -1787,9 +1789,9 @@ export const fetchGladAlertsDaily = (params) => {
   );
 
   // Light initial Parsing
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
         alerts: d.alert__count,
@@ -1841,9 +1843,9 @@ export const fetchGladAlertsDailyRanked = (params) => {
   );
 
   // Light initial Parsing
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
         alerts: d.alert__count,
@@ -1893,9 +1895,9 @@ export const fetchGladAlertsSum = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.is__confirmed_alert,
         count: d.alert__count,
@@ -1921,9 +1923,9 @@ export const fetchGladAlertsSumOTF = (params) => {
       .replace('{geostoreOrigin}', 'rw')
       .replace('{geostoreId}', geostoreId)
   );
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.umd_glad_landsat_alerts__confidence === 'high',
       })),
@@ -1936,7 +1938,7 @@ const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
   const url = 'glad-alerts/latest';
-  return apiRequest
+  return rwRequest
     .get(url)
     .then((response) => {
       const { date } = response.data.data[0].attributes;
@@ -1964,7 +1966,7 @@ export const fetchIntegratedLatest = () => {
   return dataRequest
     .get(url)
     .then((response) => {
-      const date = response.data.metadata.last_update;
+      const date = response.metadata.last_update;
 
       return {
         attributes: { updatedAt: date },
@@ -2016,9 +2018,9 @@ export const fetchBurnedArea = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2065,9 +2067,9 @@ export const fetchBurnedAreaGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2100,9 +2102,9 @@ export const fetchVIIRSAlerts = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2151,9 +2153,9 @@ export const fetchVIIRSAlertsGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2191,9 +2193,9 @@ export const fetchFiresWithin = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
@@ -2219,7 +2221,7 @@ export const fetchVIIRSLatest = () =>
     }));
 
 export const fetchMODISLatest = () =>
-  dataApiRequest
+  dataRequest
     .get('dataset/umd_modis_burned_areas/latest')
     .then(({ data }) => {
       const dates =
@@ -2244,9 +2246,9 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
       .replace('{geostoreId}', geostoreId)
   );
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.confidence__cat.includes('h'),
         count: d.alert__count,
@@ -2277,13 +2279,13 @@ export const fetchVIIRSAlertsSum = (params) => {
   if (download) {
     return {
       name: `daily_${dataset}_alerts__count`,
-      url: url.replace('query', 'download'),
+      url: url.replace('query', 'download/csv'),
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         confirmed: d.confidence__cat.includes('h'),
         count: d.alert__count,
@@ -2330,10 +2332,10 @@ export const getBiomassStockGrouped = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         biomass: d.whrc_aboveground_biomass_stock_2000__Mg,
@@ -2377,10 +2379,10 @@ export const getBiomassStock = (params) => {
     };
   }
 
-  return apiRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      data: response.data.data.map((d) => ({
+      data: response?.data?.map((d) => ({
         ...d,
         extent: d.umd_tree_cover_extent_2000__ha,
         biomass: d.whrc_aboveground_biomass_stock_2000__Mg,
@@ -2438,5 +2440,5 @@ export const getLocationPolynameWhitelist = (params) => {
     )
     .replace('{WHERE}', getWHEREQuery(params));
 
-  return apiRequest.get(url);
+  return dataRequest.get(url);
 };

@@ -248,7 +248,8 @@ export const getWidgetDatasets = ({
             params: {
               threshold,
               visibility: true,
-              adm_level: adminLevel === 'global' ? 'adm0' : adminLevel || 'adm0',
+              adm_level:
+                adminLevel === 'global' ? 'adm0' : adminLevel || 'adm0',
             },
           }),
           ...(startDateAbsolute &&
@@ -376,7 +377,10 @@ export const getStatements = ({
   // @TODO: Extract this to widget configs
   const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
-    extentYear && dataType !== 'lossPrimary' && dataType !== 'fires' && dataType !== 'gain'
+    extentYear &&
+    dataType !== 'lossPrimary' &&
+    dataType !== 'fires' &&
+    dataType !== 'gain'
       ? translateText('{extentYear} tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'

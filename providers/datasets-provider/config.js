@@ -576,6 +576,23 @@ const decodes = {
     color.g = green;
     color.b = blue;
   `,
+  staticRemapAlpha: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    if (zoom > 12.) {
+      if (red == 0. && green == 0. && blue == 0.) {
+        alpha = 0.;
+      } else {
+        alpha = 1.;
+      }
+    }
+
+    color.r = red;
+    color.g = green;
+    color.b = blue; 
+  `,
   newCarbonFlux: `
     float red = color.r;
     float green = color.g;
@@ -1031,6 +1048,7 @@ export default {
   RADDs2yearsTimeline: decodes.RADDs2yearsTimeline,
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
+  staticRemapAlpha: decodes.staticRemapAlpha,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,

@@ -1,4 +1,4 @@
-import { apiRequest } from 'utils/request';
+import { dataRequest } from 'utils/request';
 import { format, subDays } from 'date-fns';
 
 const lastFriday = () => {
@@ -7,7 +7,7 @@ const lastFriday = () => {
 };
 
 export const fetchLatestDate = (url) =>
-  apiRequest.get(url).catch(() => {
+  dataRequest.get(url).catch(() => {
     return new Promise((resolve) =>
       resolve({
         data: {

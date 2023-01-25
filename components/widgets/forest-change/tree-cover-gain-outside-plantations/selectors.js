@@ -17,22 +17,33 @@ export const parseTitle = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocation, getSentences, getAdminLevel, getIndicator, getSettings],
+  [
+    getData,
+    getLocation,
+    getSentences,
+    getAdminLevel,
+    getIndicator,
+    getSettings,
+  ],
   (data, locationName, sentences, adminLevel, indicator, settings) => {
     if (!data) return null;
 
     const sentence = (() => {
       switch (adminLevel) {
         case 'global':
-          return indicator ? sentences.globalWithIndicator : sentences.globalInitial;
+          return indicator
+            ? sentences.globalWithIndicator
+            : sentences.globalInitial;
         default:
-          return indicator ? sentences.regionWithIndicator : sentences.regionInitial;
+          return indicator
+            ? sentences.regionWithIndicator
+            : sentences.regionInitial;
       }
     })();
 
     const params = {
       location: locationName,
-      indicator: (indicator && indicator.label),
+      indicator: indicator && indicator.label,
       startYear: settings.startYear,
       endYear: settings.endYear,
       gainPercent: formatNumber({
