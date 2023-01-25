@@ -1,8 +1,10 @@
 import capitalize from 'lodash/capitalize';
+import ReactHtmlParser from 'react-html-parser';
 
 import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
+import { getSGFPage } from 'services/grants-and-fellowships';
 import { getSGFProjects } from 'services/projects';
 import { getCountriesProvider } from 'services/country';
 
@@ -25,16 +27,48 @@ export const getServerSideProps = async ({ query }) => {
   }
 
   if (query?.section === 'projects') {
+    const pageTexts = await getSGFPage();
     const projects = await getSGFProjects();
     const countries = await getCountriesProvider();
+
+    const parsedProjects = projects.map((p) => ({
+      ...p,
+      title: ReactHtmlParser(p.title),
+    }));
 
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
         section: query?.section,
-        projects: projects || [],
+        projects: parsedProjects || [],
         countries: countries?.data?.rows || [],
         country: query?.country || '',
+        projectsTexts: pageTexts?.[0]?.acf,
+        header: pageTexts[0],
+      },
+    };
+  }
+
+  if (query?.section === 'about') {
+    const pageTexts = await getSGFPage();
+    return {
+      props: {
+        title: 'About | Grants & Fellowships | Global Forest Watch',
+        section: query?.section,
+        about: pageTexts?.[0]?.acf?.about_section,
+        header: pageTexts[0],
+      },
+    };
+  }
+
+  if (query?.section === 'apply') {
+    const pageTexts = await getSGFPage();
+    return {
+      props: {
+        title: 'Apply | Grants & Fellowships | Global Forest Watch',
+        section: query?.section,
+        apply: pageTexts?.[0]?.acf?.apply_section,
+        header: pageTexts[0],
       },
     };
   }

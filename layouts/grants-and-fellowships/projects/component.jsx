@@ -17,6 +17,7 @@ import './styles.scss';
 
 const GrantsProjectsSection = ({
   projects: allProjects,
+  projectsTexts,
   images,
   countries: allCountries,
   country: countryQueryParam,
@@ -112,12 +113,9 @@ const GrantsProjectsSection = ({
       <div className="l-grants-projects-section">
         <Row className="projects-header">
           <Column width={[1]}>
-            <h3>MEET THE GRANTEES AND FELLOWS</h3>
+            <h3>{projectsTexts?.projects_title}</h3>
             <p className="text -paragraph -color-2 -light -spaced">
-              With financial and technical support from GFW, organizations and
-              individuals around the world are using Global Forest Watch to
-              monitor large-scale land-use projects, enforce community land
-              rights, defend critical habitat, and influence forest policy.
+              {projectsTexts?.projects_description}
             </p>
           </Column>
         </Row>
@@ -194,6 +192,7 @@ GrantsProjectsSection.propTypes = {
   country: PropTypes.string,
   countries: PropTypes.array,
   projects: PropTypes.array,
+  projectsTexts: PropTypes.object,
   images: PropTypes.object,
 };
 
