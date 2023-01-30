@@ -38,6 +38,17 @@ We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-
 
 ![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
 
+### Staging, pre-production and review apps
+
+We use [Heroku](https://www.heroku.com/) to deploy our apps. Production is deployed to [globalforestwatch.org](https://www.globalforestwatch.org).  
+
+We have two staging environments: staging and pre-production.  
+The main difference is that staging points to the staging environments of the APIs we access, pre-production points to the production ones. This is set by the `NEXT_PUBLIC_FEATURE_ENV` env variable. 
+
+We also make use of Heroku's [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps) feature.  
+When a pull request is created, a review app is deployed automatically by Heroku with a `NEXT_PUBLIC_FEATURE_ENV` of `preproduction`, and a link to the environment is added automatically to the respective pull request. 
+
+
 ## Releases
 
 We are using github releases to record changes to the app. To help us manage this we are using [Zeit Releases](https://github.com/zeit/release), an npm package for handling github releases, tagging commits (major, minor, patch), and automating semantic release logs. For a more detailed explanation of semantic changelogs see [this post](https://semver.org/).
