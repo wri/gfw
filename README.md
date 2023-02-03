@@ -40,9 +40,9 @@ We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-
 
 ### Staging, pre-production and review apps
 
-We use [Heroku](https://www.heroku.com/) to deploy our apps. Production is deployed to [globalforestwatch.org](https://www.globalforestwatch.org).  
+We use [Heroku](https://www.heroku.com/) to deploy our apps. Production is deployed automatically from `master` to [globalforestwatch.org](https://www.globalforestwatch.org).  
 
-We have two staging environments: staging and pre-production.  
+We have two staging environments: staging and pre-production. Both are deployed automatically from `develop`.  
 The main difference is that staging points to the staging environments of the APIs we access, pre-production points to the production ones. This is set by the `NEXT_PUBLIC_FEATURE_ENV` env variable. 
 
 We also make use of Heroku's [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps) feature.  
