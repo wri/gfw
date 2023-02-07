@@ -51,7 +51,7 @@
     "NEXT_PUBLIC_TWITTER_CONVERSION_ID": {
       "required": true
     },
-    "NEXT_PUBLIC_GFW_API_KEY": {
+    "GFW_API_KEY": {
       "required": true
     }
   }

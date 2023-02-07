@@ -26,7 +26,7 @@ const DATA_API_URL =
 const RESOURCE_WATCH_API_URL = RESOURCE_WATCH_API;
 
 // At the moment, the API key is the same
-const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const { GFW_API_KEY } = process.env;
 const GFW_METADATA_API_KEY = GFW_API_KEY;
 const DATA_API_KEY = GFW_API_KEY;
 const RESOURCE_WATCH_API_KEY = GFW_API_KEY;

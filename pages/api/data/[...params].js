@@ -4,7 +4,7 @@ import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 import { PROXIES } from 'utils/proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const { GFW_API_KEY } = process.env;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
