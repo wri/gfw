@@ -43,7 +43,7 @@ export async function getSGFProjects({
 } = {}) {
   const projectsData = await Promise.all([
     apiFetch({
-      url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects?per_page=100`,
+      url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects?per_page=21`,
       params: {
         ...params,
         _embed: true,
