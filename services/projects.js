@@ -36,6 +36,48 @@ apiFetch.setFetchHandler(async (options) => {
   });
 });
 
+const formatProjects = (projectsData) => {
+  const countries = projectsData?.[1]?.data?.rows;
+  const projects = projectsData?.[0]?.data;
+
+  if (!projects) {
+    return {};
+  }
+
+  return projects.map((project) => {
+    const { title, acf: advancedCustomFields } = project;
+    const itemCountries = countries.filter(
+      (country) =>
+        advancedCustomFields.country &&
+        advancedCustomFields.country.indexOf(country.iso) > -1
+    );
+
+    return {
+      id: parseInt(advancedCustomFields.id, 10),
+      title: title.rendered,
+      sector: advancedCustomFields.sector,
+      summary: advancedCustomFields.short_description,
+      description: advancedCustomFields.long_description,
+      meta: `${advancedCustomFields.year}${
+        itemCountries &&
+        ` - ${itemCountries.map((country) => country.name).join(', ')}`
+      }`,
+      year: advancedCustomFields.year,
+      countries: advancedCustomFields.country,
+      image: advancedCustomFields.images?.[0] || null,
+      images: advancedCustomFields.images || null,
+      blogSentence: advancedCustomFields.blog_sentence,
+      blogLink: advancedCustomFields.hyperlinks_for_blog_sentence,
+      latitude: advancedCustomFields.latitude_average || null,
+      longitude: advancedCustomFields.longitude_average || null,
+      categories: [
+        advancedCustomFields.project_type_1,
+        advancedCustomFields.project_type_2,
+      ],
+    };
+  });
+};
+
 export async function getSGFProjects({
   cancelToken,
   params,
@@ -56,32 +98,7 @@ export async function getSGFProjects({
     getCountriesProvider(),
   ]);
 
-  const countries = projectsData?.[1]?.data?.rows;
-  const projects = projectsData?.[0]?.data?.map((d) => {
-    const itemCountries = countries?.filter(
-      (c) => d.acf.country && d.acf.country.indexOf(c.iso) > -1
-    );
+  const formattedProjects = formatProjects(projectsData);
 
-    return {
-      id: parseInt(d.acf.id, 10),
-      title: d.title.rendered,
-      sector: d.acf.sector,
-      summary: d.acf.short_description,
-      description: d.acf.long_description,
-      meta: `${d.acf.year}${
-        itemCountries && ` - ${itemCountries.map((c) => c.name).join(', ')}`
-      }`,
-      year: d.acf.year,
-      countries: d.acf.country,
-      image: d.acf.images?.[0] || null,
-      images: d.acf.images || null,
-      blogSentence: d.acf.blog_sentence,
-      blogLink: d.acf.hyperlinks_for_blog_sentence,
-      latitude: d.acf.latitude_average || null,
-      longitude: d.acf.longitude_average || null,
-      categories: [d.acf.project_type_1, d.acf.project_type_2],
-    };
-  });
-
-  return projects;
+  return formattedProjects;
 }
