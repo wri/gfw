@@ -11,6 +11,7 @@ const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
 export const config = {
   api: {
     externalResolver: true,
+    bodyParser: false,
   },
 };
 
