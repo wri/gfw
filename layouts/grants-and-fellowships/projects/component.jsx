@@ -9,6 +9,7 @@ import { Search, NoContent, Row, Column } from 'gfw-components';
 import Card from 'components/ui/card';
 import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
+import LoadMoreButton from 'components/load-more';
 
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
@@ -177,6 +178,7 @@ const GrantsProjectsSection = ({
               message="No projects for that search"
             />
           )}
+          <LoadMoreButton onClickHandle={() => {}} />
         </Row>
       </div>
       <ProjectsModal
