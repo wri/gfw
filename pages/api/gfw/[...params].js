@@ -12,6 +12,7 @@ const GFW_API_URL = GFW_API;
 export const config = {
   api: {
     externalResolver: true,
+    bodyParser: false,
   },
 };
 

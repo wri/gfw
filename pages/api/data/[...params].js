@@ -12,6 +12,7 @@ const DATA_API_URL =
 export const config = {
   api: {
     externalResolver: true,
+    bodyParser: false,
   },
 };
 
