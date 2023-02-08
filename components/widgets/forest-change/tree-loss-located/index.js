@@ -23,6 +23,7 @@ export default {
   widget: 'treeLossLocated',
   title: 'Location of tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
   settingsConfig: [

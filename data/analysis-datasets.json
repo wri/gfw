@@ -83,6 +83,10 @@
 
   "GLAD_ALERTS_ADM0_DAILY": "gadm__glad__iso_daily_alerts",
   "GLAD_ALERTS_ADM1_DAILY": "gadm__glad__adm1_daily_alerts",
-  "GLAD_ALERTS_ADM2_DAILY": "gadm__glad__adm2_daily_alerts"
+  "GLAD_ALERTS_ADM2_DAILY": "gadm__glad__adm2_daily_alerts",
+
+  "NET_CHANGE_ADM0_UMD": "umd_adm0_net_tree_cover_change_from_height",
+  "NET_CHANGE_ADM1_UMD": "umd_adm1_net_tree_cover_change_from_height",
+  "NET_CHANGE_ADM2_UMD": "umd_adm2_net_tree_cover_change_from_height"
 
 }

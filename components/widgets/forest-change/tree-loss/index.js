@@ -45,11 +45,11 @@ const getOTFAnalysis = async (params) => {
     );
 
     return {
-      loss: loss.data.map((d) => ({
+      loss: loss.map((d) => ({
         area: d.area__ha,
         year: d.umd_tree_cover_loss__year,
       })),
-      extent: extent?.data?.[0]?.area__ha,
+      extent: extent?.[0]?.area__ha,
       settings: {
         startYear,
         endYear,
@@ -66,6 +66,7 @@ export default {
   widget: 'treeLoss',
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
+  subcategories: ['forest-loss'],
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   caution: {
     text:
@@ -195,6 +196,7 @@ export default {
         })
       );
     }
+
     return getOTFAnalysis(params);
   },
   getDataURL: (params) => {

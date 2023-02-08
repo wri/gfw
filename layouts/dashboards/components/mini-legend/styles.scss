@@ -1,4 +1,4 @@
-@import '~styles/settings.scss';
+@import "~styles/settings.scss";
 
 .c-mini-legend {
   background-color: $white;
@@ -20,7 +20,7 @@
     font-weight: 400;
     color: $slate;
 
-    li {
+    > li {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -56,6 +56,22 @@
         margin-top: 5px;
         font-size: 10px;
         color: rgba($slate, 0.8);
+      }
+
+      &.forest-net-change {
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+
+        .net-change-choropleth {
+          flex-shrink: 0;
+          flex-basis: 100%;
+        }
+
+        .name {
+          height: auto;
+          width: auto;
+          margin-right: 0;
+        }
       }
     }
   }

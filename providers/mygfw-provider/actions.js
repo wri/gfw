@@ -1,6 +1,7 @@
 import { createAction, createThunkAction } from 'redux/actions';
 
 import { checkLoggedIn, getProfile } from 'services/user';
+import { checkUserProfileFilled } from 'utils/user';
 
 const isServer = typeof window === 'undefined';
 
@@ -23,7 +24,9 @@ export const getUserProfile = createThunkAction(
                   setMyGFW({
                     loggedIn: true,
                     id: authResponse.data.id,
+                    isUserProfileFilled: true,
                     ...(data && data.attributes),
+                    ...(data && data.attributes.applicationData.gfw),
                   })
                 );
               }
@@ -32,6 +35,9 @@ export const getUserProfile = createThunkAction(
               dispatch(
                 setMyGFW({
                   loggedIn: true,
+                  isUserProfileFilled: checkUserProfileFilled(
+                    authResponse.data
+                  ),
                   ...authResponse.data,
                 })
               );

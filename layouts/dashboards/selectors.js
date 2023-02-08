@@ -47,7 +47,7 @@ export const getLinks = createSelector(
   [getWidgetCategories, getActiveCategory, selectLocation],
   (widgetCats, activeCategory, location) => {
     const serializePayload = Object.values(location.payload).filter(
-      (p) => p && p.length
+      (p) => p && p.toString().length
     );
 
     function formatQuery(category) {

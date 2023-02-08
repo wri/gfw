@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactHtmlParser from 'react-html-parser';
+import concat from 'lodash/concat';
 
 import WidgetCaution from 'components/widget/components/widget-caution';
 
@@ -11,6 +12,7 @@ class WidgetFooter extends PureComponent {
   static propTypes = {
     type: PropTypes.string,
     simple: PropTypes.bool,
+    alerts: PropTypes.array,
     caution: PropTypes.object,
     statements: PropTypes.array,
     locationType: PropTypes.string,
@@ -49,6 +51,7 @@ class WidgetFooter extends PureComponent {
   render() {
     const {
       statements,
+      alerts,
       caution,
       type,
       simple,
@@ -57,6 +60,12 @@ class WidgetFooter extends PureComponent {
       alertSystem,
       decorationMessage,
     } = this.props;
+
+    // TODO: remove old 'caution'. here for retro-compatibility. 'alerts' is the new system
+    // Adding 'isCaution' property to parse differently later
+    if (caution) caution.isCaution = true;
+    const cautionAndAlerts = concat(caution, alerts).filter((n) => n);
+
     const statementsMapped = statements && statements.join(' | ');
     // TODO: add statement link
     return (
@@ -69,7 +78,7 @@ class WidgetFooter extends PureComponent {
             dangerouslySetInnerHTML={{ __html: decorationMessage }}
           />
         )}
-        {this.renderCaution(caution, alertSystem, type, locationType)}
+        {this.renderCaution(cautionAndAlerts, alertSystem, type, locationType)}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}

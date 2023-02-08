@@ -5,6 +5,12 @@
     border-bottom: solid 1px $border;
   }
 
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   h3 {
     margin: rem(40px) 0 rem(60px);
   }

@@ -6,14 +6,20 @@
     "position": 0
   },
   {
-    "label": "Shifting Agriculture",
-    "value": "Shifting agriculture",
-    "position": 3
-  },
-  {
     "label": "Forestry",
     "value": "Forestry",
+    "position": 1
+  },
+  {
+    "label": "Shifting Agriculture",
+    "value": "Shifting agriculture",
     "position": 2
+  },
+  {
+    "label": "Urbanization",
+    "value": "Urbanization",
+    "permanent": true,
+    "position": 3
   },
   {
     "label": "Wildfire",
@@ -21,9 +27,8 @@
     "position": 4
   },
   {
-    "label": "Urbanization",
-    "value": "Urbanization",
-    "permanent": true,
-    "position": 1
+    "label": "Unknown",
+    "value": "Unknown",
+    "position": 5
   }
 ]

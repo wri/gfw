@@ -17,7 +17,9 @@ const getSettings = (state) => state.settings;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
+const getCaution = (state) => state.caution;
 const getTitle = (state) => state.title;
+const getAdm0 = (state) => state.adm0;
 
 export const getPermCats = createSelector([], () =>
   tscLossCategories.filter((x) => x.permanent).map((el) => el.value.toString())
@@ -244,9 +246,15 @@ export const parseTitle = createSelector(
   }
 );
 
+export const parseCaution = createSelector(
+  [getCaution, getAdm0],
+  (caution, adm0) => (adm0 === 'IDN' ? caution.indonesia : caution.default)
+);
+
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
   sentence: parseSentence,
   title: parseTitle,
+  caution: parseCaution,
 });

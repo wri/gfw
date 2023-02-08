@@ -2,105 +2,131 @@ import { CancelToken, create } from 'axios';
 import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
-  GFW_API,
-  GFW_STAGING_API,
   GFW_TILES_API,
   CARTO_API,
   MAPBOX_API,
   RESOURCE_WATCH_API,
   GFW_DATA_API,
   GFW_STAGING_DATA_API,
+  GFW_API,
+  GFW_STAGING_API,
+  GFW_METADATA_API,
+  GFW_STAGING_METADATA_API,
 } from 'utils/apis';
+import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
-const GFW_DATA_API_URL =
+const GFW_METADATA_API_URL =
+  ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
+const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
+// We never use the `staging-api.resourcewatch.org`.
+const RESOURCE_WATCH_API_URL = RESOURCE_WATCH_API;
+
+// At the moment, the API key is the same
+const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const GFW_METADATA_API_KEY = GFW_API_KEY;
+const DATA_API_KEY = GFW_API_KEY;
+const RESOURCE_WATCH_API_KEY = GFW_API_KEY;
+
 const isServer = typeof window === 'undefined';
-export const apiRequest = create({
+
+const defaultRequestConfig = {
   timeout: 30 * 1000,
-  baseURL: GFW_API_URL,
-  ...(ENVIRONMENT === 'staging' && {
+};
+
+export const apiRequest = create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: GFW_API_URL,
     headers: {
-      'x-api-key': process.env.NEXT_PUBLIC_DATA_API_KEY,
+      'x-api-key': GFW_API_KEY,
     },
   }),
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
-});
-
-export const gfwApiRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_API_URL,
-});
-
-// Always point to production
-export const gfwGeostoreRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_API,
+  ...(!isServer && {
+    baseURL: PROXIES.GFW_API,
+  }),
 });
 
 export const dataRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_DATA_API_URL,
-  ...(ENVIRONMENT === 'staging' && {
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: DATA_API_URL,
     headers: {
-      'x-api-key': process.env.NEXT_PUBLIC_DATA_API_KEY,
+      'x-api-key': DATA_API_KEY,
     },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.DATA_API,
   }),
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
-export const tilesRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_TILES_API,
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+export const metadataRequest = create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: GFW_METADATA_API_URL,
+    headers: {
+      'x-api-key': GFW_METADATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.METADATA_API,
+  }),
 });
 
-export const dataApiRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_DATA_API_URL,
-  transformResponse: [(data) => JSON.parse(data)?.data],
+export const tilesRequest = create({
+  ...defaultRequestConfig,
+  baseURL: GFW_TILES_API,
 });
 
 export const rwRequest = create({
-  timeout: 30 * 1000,
-  baseURL: RESOURCE_WATCH_API,
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: RESOURCE_WATCH_API_URL,
+    headers: {
+      'x-api-key': RESOURCE_WATCH_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.RESOURCE_WATCH_API,
+  }),
   transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
 });
 
 export const apiAuthRequest = create({
-  timeout: 30 * 1000,
-  baseURL: GFW_API_URL,
-  headers: {
-    'content-type': 'application/json',
-    Authorization: `Bearer ${!isServer && localStorage.getItem('userToken')}`,
-  },
-  // transformResponse: [(data) => wriAPISerializer(JSON.parse(data))],
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: GFW_API,
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': GFW_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.GFW_API,
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+    },
+  }),
 });
 
 export const cartoRequest = create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
   baseURL: CARTO_API,
 });
 
 export const mapboxRequest = create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
   baseURL: MAPBOX_API,
 });
 
 export const cancelToken = () => CancelToken.source();
 
-export const handleProxyOrigin = () => {
-  if (ENVIRONMENT === 'staging') {
-    return 'https://staging.globalforestwatch.org/';
-  }
-  if (ENVIRONMENT === 'preproduction') {
-    return 'https://preproduction.globalforestwatch.org/';
-  }
-  return 'https://www.globalforestwatch.org';
-};
-
 export default create({
-  timeout: 30 * 1000,
+  ...defaultRequestConfig,
 });

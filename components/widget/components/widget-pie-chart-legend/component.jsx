@@ -14,14 +14,27 @@ class WidgetPieChart extends PureComponent {
       data,
       legendData,
       settings,
+      chartSettings,
       simple,
       toggleSettingsMenu,
       settingsBtnConfig,
+      widget,
+      location,
     } = this.props;
+    const { pathname } = location;
+    const { chartHeight } = settings;
+
     const showSettingsBtn =
       settingsBtnConfig &&
       settingsBtnConfig.shouldShowButton &&
       settingsBtnConfig.shouldShowButton(this.props);
+
+    const maxSize =
+      (pathname.indexOf('dashboard') >= 0 || pathname.indexOf('embed')) &&
+      chartHeight
+        ? chartHeight
+        : 140;
+
     return (
       <div className="c-pie-chart-legend-widget">
         {settings && showSettingsBtn && toggleSettingsMenu && (
@@ -47,19 +60,32 @@ class WidgetPieChart extends PureComponent {
               ...settings,
             }}
             simple={simple}
+            chartSettings={chartSettings}
           />
           <PieChart
             className="cover-pie-chart"
             data={data}
-            maxSize={140}
-            tooltip={[
-              {
-                key: 'percentage',
-                unit: '%',
-                labelKey: 'label',
-                unitFormat: (value) => format('.1f')(value),
-              },
-            ]}
+            maxSize={maxSize}
+            tooltip={
+              widget === 'netChange'
+                ? [
+                    {
+                      key: 'value',
+                      unit: 'ha',
+                      labelKey: 'label',
+                      unitFormat: (value) => format('.3s')(value),
+                    },
+                  ]
+                : [
+                    {
+                      key: 'percentage',
+                      unit: '%',
+                      labelKey: 'label',
+                      unitFormat: (value) => format('.1f')(value),
+                    },
+                  ]
+            }
+            chartSettings={chartSettings}
             simple={simple}
           />
         </div>
@@ -73,8 +99,11 @@ WidgetPieChart.propTypes = {
   legendData: PropTypes.array,
   simple: PropTypes.bool,
   settings: PropTypes.object.isRequired,
+  chartSettings: PropTypes.object,
   toggleSettingsMenu: PropTypes.func,
   settingsBtnConfig: PropTypes.object,
+  widget: PropTypes.string,
+  location: PropTypes.object,
 };
 
 export default WidgetPieChart;

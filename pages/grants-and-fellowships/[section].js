@@ -1,10 +1,12 @@
 import capitalize from 'lodash/capitalize';
+import ReactHtmlParser from 'react-html-parser';
 
 import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
+import { getSGFPage } from 'services/grants-and-fellowships';
 import { getSGFProjects } from 'services/projects';
-import { getCountriesLatLng } from 'services/country';
+import { getCountriesProvider } from 'services/country';
 
 const SECTIONS = ['projects', 'about', 'apply'];
 
@@ -17,25 +19,56 @@ const GrantsAndFellowshipsPage = (props) => (
   </PageLayout>
 );
 
-export const getStaticPaths = async () => {
-  const paths = SECTIONS.map((key) => ({
-    params: { section: key },
-  }));
+export const getServerSideProps = async ({ query }) => {
+  if (!SECTIONS.includes(query?.section)) {
+    return {
+      notFound: true,
+    };
+  }
 
-  return { paths, fallback: false };
-};
-
-export const getStaticProps = async ({ params }) => {
-  if (params?.section === 'projects') {
+  if (query?.section === 'projects') {
+    const pageTexts = await getSGFPage();
     const projects = await getSGFProjects();
-    const latLngs = await getCountriesLatLng();
+    const countries = await getCountriesProvider();
+
+    const parsedProjects = projects.map((p) => ({
+      ...p,
+      title: ReactHtmlParser(p.title),
+    }));
 
     return {
       props: {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
-        section: params?.section,
-        projects: projects || [],
-        latLngs: latLngs || [],
+        section: query?.section,
+        projects: parsedProjects || [],
+        countries: countries?.data?.rows || [],
+        country: query?.country || '',
+        projectsTexts: pageTexts?.[0]?.acf,
+        header: pageTexts[0],
+      },
+    };
+  }
+
+  if (query?.section === 'about') {
+    const pageTexts = await getSGFPage();
+    return {
+      props: {
+        title: 'About | Grants & Fellowships | Global Forest Watch',
+        section: query?.section,
+        about: pageTexts?.[0]?.acf?.about_section,
+        header: pageTexts[0],
+      },
+    };
+  }
+
+  if (query?.section === 'apply') {
+    const pageTexts = await getSGFPage();
+    return {
+      props: {
+        title: 'Apply | Grants & Fellowships | Global Forest Watch',
+        section: query?.section,
+        apply: pageTexts?.[0]?.acf?.apply_section,
+        header: pageTexts[0],
       },
     };
   }
@@ -43,9 +76,9 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: {
       title: `${capitalize(
-        params?.section
+        query?.section
       )} | Grants & Fellowships | Global Forest Watch`,
-      section: params?.section,
+      section: query?.section,
     },
   };
 };

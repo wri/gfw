@@ -25,7 +25,8 @@
       "Shifting agriculture": "#efd31a",
       "Forestry": "#2FBF71",
       "Wildfire": "#ad6824",
-      "Urbanization": "#B235CC"
+      "Urbanization": "#B235CC",
+      "Unknown": "#555"
     }
   },
   "gain": {
@@ -125,6 +126,13 @@
     "main": "#9A5B50",
     "treeCoverLoss": "#FE6598"
   },
+  "netChange": {
+    "main": "#9A5B50",
+    "stable": "#86B64A",
+    "gain": "#646EA7",
+    "loss": "#A25A94",
+    "disturb": "#FF7F5F"
+  },
   "employment": {
     "main": "#A878F3",
     "ramp": ["#A878F3", "#7C38C5"],
@@ -134,5 +142,9 @@
   "biodiversity": {
     "main": "#6d00e1",
     "ramp": ["#6d00e1", "#9d36f7", "#c26dfe", "#dfa4ff", "#eccafc"]
+  },
+  "gainWithinOutsidePlantations": {
+    "withinPlantations": "#A58BF9",
+    "outsidePlantations": "#3F07F5"
   }
 }

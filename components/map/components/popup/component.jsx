@@ -145,6 +145,7 @@ class Popup extends Component {
         longitude={longitude}
         onClose={clearMapInteractions}
         closeOnClick={false}
+        captureScroll
       >
         <div className="c-popup">{this.renderPopupBody()}</div>
       </MapPopup>

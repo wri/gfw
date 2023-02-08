@@ -16,6 +16,7 @@ import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/select
 import { getActiveLayersWithDates } from 'components/map/selectors';
 import { getDataLocation, locationLevelToStr } from 'utils/location';
 
+import CATEGORIES from 'data/categories.json';
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
 
@@ -83,6 +84,8 @@ export const selectWidgetInteractions = (state) =>
 export const selectLocationSearch = (state) =>
   state.location && state.location.search;
 export const selectWidgetsData = (state) => state.widgets && state.widgets.data;
+export const selectWidgetsChartSettings = (state) =>
+  state.widgets && state.widgets.chartSettings;
 export const selectGeostore = (state) => state.geostore && state.geostore.data;
 export const selectLoadingFilterData = (state) =>
   state.countryData &&
@@ -406,6 +409,7 @@ export const getWidgets = createSelector(
     getLocationObj,
     getLocationData,
     selectWidgetsData,
+    selectWidgetsChartSettings,
     selectWidgetSettings,
     selectWidgetInteractions,
     selectLocationSearch,
@@ -421,6 +425,7 @@ export const getWidgets = createSelector(
     locationObj,
     locationData,
     widgetsData,
+    widgetsChartSettings,
     widgetSettings,
     interactions,
     search,
@@ -450,6 +455,8 @@ export const getWidgets = createSelector(
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
 
       const rawData = widgetsData && widgetsData[widget];
+      const chartSettings =
+        widgetsChartSettings && widgetsChartSettings[widget];
 
       const { settings: dataSettings } = rawData || {};
 
@@ -553,6 +560,7 @@ export const getWidgets = createSelector(
         locationType: locationObj?.locationType,
         active,
         data: rawData,
+        chartSettings,
         settings,
         interaction: widgetInteraction,
         title: titleTemplate,
@@ -612,6 +620,36 @@ export const getWidgets = createSelector(
   }
 );
 
+export const getWidgetsGroupedBySubcategory = createSelector(
+  [getCategory, getWidgets],
+  (category, widgets) => {
+    const subcategories = CATEGORIES.find(({ value }) => value === category)
+      ?.subcategories;
+
+    if (!widgets || !subcategories) return [];
+
+    const groupedWidgets = [];
+
+    groupedWidgets.push({
+      id: null,
+      label: null,
+      widgets: widgets.filter((widget) => !widget.subcategories),
+    });
+
+    subcategories.forEach(({ label, value }) => {
+      groupedWidgets.push({
+        id: value,
+        label,
+        widgets: widgets.filter((widget) =>
+          widget.subcategories?.includes(value)
+        ),
+      });
+    });
+
+    return groupedWidgets.filter((gw) => gw.widgets.length);
+  }
+);
+
 export const getActiveWidget = createSelector(
   [getWidgets, selectActiveWidget, selectAnalysis],
   (widgets, activeWidgetKey, analysis) => {
@@ -636,6 +674,7 @@ export const getWidgetsProps = () =>
     loadingMeta: selectLoadingMeta,
     authenticated: isAuthenticated,
     widgets: getWidgets,
+    widgetsGroupedBySubcategory: getWidgetsGroupedBySubcategory,
     activeWidget: getActiveWidget,
     location: getDataLocation,
     emebd: selectEmbed,

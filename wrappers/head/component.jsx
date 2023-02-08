@@ -6,6 +6,8 @@ import ReactHtmlParser from 'react-html-parser';
 // if the metaTags prop is returned from getStaticProps or getServerSide props
 // we parse it and use in favour of page props
 const Head = ({ title, description, noIndex, metaTags }) => {
+  const isProduction = process.env.NEXT_PUBLIC_FEATURE_ENV === 'production';
+
   return metaTags ? (
     ReactHtmlParser(metaTags)
   ) : (
@@ -20,13 +22,16 @@ const Head = ({ title, description, noIndex, metaTags }) => {
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
       <meta property="og:image" content="/preview.jpg" />
-      {noIndex && <meta name="robots" content="noindex,follow" />}
+      {(!isProduction || noIndex) && (
+        <meta name="robots" content="noindex,follow" />
+      )}
       <meta
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=5"
       />
     </NextHead>
-  )};
+  );
+};
 
 Head.propTypes = {
   title: PropTypes.string,

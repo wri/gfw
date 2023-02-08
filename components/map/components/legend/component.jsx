@@ -71,6 +71,7 @@ const MapLegend = ({
               id,
               layers,
               statementConfig,
+              alerts,
               caution,
               caution_gladL,
               caution_radd,
@@ -102,6 +103,7 @@ const MapLegend = ({
             const warningLabel = getWarningLabel();
 
             const {
+              id: layerId,
               params,
               paramsSelectorConfig,
               decodeParams,
@@ -151,7 +153,7 @@ const MapLegend = ({
               >
                 <LegendItemTypes>
                   <LegendItemTypeBasic />
-                  <LegendItemTypeChoropleth />
+                  <LegendItemTypeChoropleth dataset={layerId} />
                   <LegendItemTypeProportional />
                   <LegendItemTypeGradient />
                 </LegendItemTypes>
@@ -239,6 +241,7 @@ const MapLegend = ({
                     locationType="map"
                     caution={{
                       text: caution,
+                      isCaution: true,
                       visible: [
                         'wdpa',
                         'country',
@@ -250,6 +253,23 @@ const MapLegend = ({
                     }}
                   />
                 )}
+                {alerts &&
+                  alerts.map((a) => (
+                    <WidgetCaution
+                      locationType="map"
+                      caution={{
+                        ...a,
+                        visible: [
+                          'wdpa',
+                          'country',
+                          'aoi',
+                          'geostore',
+                          'dashboard',
+                          'map',
+                        ],
+                      }}
+                    />
+                  ))}
                 {warningLabel && (
                   <WidgetCaution
                     locationType="map"

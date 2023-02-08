@@ -22,6 +22,7 @@ class Widget extends PureComponent {
     large: PropTypes.bool,
     colors: PropTypes.object,
     simple: PropTypes.bool,
+    alerts: PropTypes.array,
     caution: PropTypes.object,
     datasets: PropTypes.array,
     settings: PropTypes.object,
@@ -38,6 +39,7 @@ class Widget extends PureComponent {
     originalData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
+    chartSettings: PropTypes.object,
     sentence: PropTypes.object,
     proxy: PropTypes.bool,
     proxyOn: PropTypes.array,
@@ -79,6 +81,7 @@ class Widget extends PureComponent {
     const {
       title,
       widget,
+      alerts,
       caution,
       colors,
       type,
@@ -99,6 +102,7 @@ class Widget extends PureComponent {
       locationLabel,
       locationLabelFull,
       data,
+      chartSettings,
       legendData,
       rawData,
       originalData,
@@ -204,6 +208,7 @@ class Widget extends PureComponent {
           rawData={rawData}
           originalData={originalData}
           settings={settings}
+          chartSettings={chartSettings}
           settingsConfig={settingsConfig}
           preventRenderKeys={preventRenderKeys}
           sentence={sentence}
@@ -223,6 +228,7 @@ class Widget extends PureComponent {
             statements={statements}
             type={type}
             locationType={location?.locationType}
+            alerts={alerts}
             caution={caution}
             decorationMessage={
               chartDecorationConfig?.locations.includes(locationLabel)
@@ -238,4 +244,6 @@ class Widget extends PureComponent {
   }
 }
 
-export default forwardRef((props, ref) => <Widget forwardRef={ref} {...props} />)
+export default forwardRef((props, ref) => (
+  <Widget forwardRef={ref} {...props} />
+));

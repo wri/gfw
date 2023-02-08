@@ -1,4 +1,4 @@
-@import '~styles/settings.scss';
+@import "~styles/settings.scss";
 
 .c-legend-type-choropleth {
   padding: 10px 0 0;
@@ -15,7 +15,7 @@
 
       .label {
         display: block;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
+        font-family: "Helvetica Neue", Arial, sans-serif;
         font-size: 12px;
         text-align: center;
       }
@@ -34,9 +34,20 @@
     }
   }
 
+  &.forest-net-change {
+    ul {
+      &:nth-of-type(2) {
+        li {
+          // position: relative;
+          transform: translateX(50%);
+        }
+      }
+    }
+  }
+
   .name {
     display: block;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 12px;
     text-align: center;
   }
