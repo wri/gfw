@@ -178,7 +178,11 @@ const GrantsProjectsSection = ({
               message="No projects for that search"
             />
           )}
-          <LoadMoreButton onClickHandle={() => {}} />
+          <LoadMoreButton
+            isLoading={false}
+            isVisible
+            onClickHandle={() => {}}
+          />
         </Row>
       </div>
       <ProjectsModal
