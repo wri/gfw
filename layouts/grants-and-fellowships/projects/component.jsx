@@ -11,8 +11,10 @@ import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
 import LoadMoreButton from 'components/load-more';
 
+import { getSGFProjects } from 'services/projects';
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
+
 
 import './styles.scss';
 
@@ -23,29 +25,33 @@ const GrantsProjectsSection = ({
   countries: allCountries,
   country: countryQueryParam,
 }) => {
+  const [projectsList, setProjects] = useState(allProjects);
   const [country, setCountry] = useState(countryQueryParam);
   const [category, setCategory] = useState('All');
   const [search, setSearch] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setLoading] = useState(false);
+  const [isVisible, setVisible] = useState(true);
 
   const { query, replace, asPath } = useRouter();
 
   const { modal, projectId, country: countryIso } = query;
 
-  const allProjectsOrdered = useMemo(
-    () => orderBy(allProjects, ['year', 'title'], ['desc', 'asc']),
-    [allProjects]
+  const projectsListOrdered = useMemo(
+    () => orderBy(projectsList, ['year', 'title'], ['desc', 'asc']),
+    [projectsList]
   );
 
   const { projects, categories, countries } = useMemo(
     () =>
       getProjectsProps({
-        projects: allProjectsOrdered,
+        projects: projectsListOrdered,
         images,
         search,
         category,
         country,
       }),
-    [allProjects, images, search, category, country]
+    [projectsList, images, search, category, country]
   );
 
   const selectedProject = useMemo(
@@ -80,6 +86,31 @@ const GrantsProjectsSection = ({
       setCategory('All');
     }
   }, [country]);
+
+  useEffect(() => {
+    if (pageNumber > 1) {
+      const getMoreProjects = async () => {
+        try {
+          setLoading(true);
+          const posts = await getSGFProjects({ params: { page: pageNumber } });
+          setLoading(false);
+
+          return posts;
+        } catch (error) {
+          setLoading(false);
+          setVisible(false);
+
+          return [];
+        }
+      };
+
+      getMoreProjects().then((projectItems) => {
+        if (projectItems) {
+          setProjects([...projectsList, ...projectItems]);
+        }
+      });
+    }
+  }, [pageNumber]);
 
   const setQueryParams = (params) => {
     const queryParams = omitBy(
@@ -179,9 +210,9 @@ const GrantsProjectsSection = ({
             />
           )}
           <LoadMoreButton
-            isLoading={false}
-            isVisible
-            onClickHandle={() => {}}
+            isLoading={isLoading}
+            isVisible={isVisible}
+            onClickHandle={() => setPageNumber(pageNumber + 1)}
           />
         </Row>
       </div>
