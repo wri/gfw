@@ -14,7 +14,7 @@ const AboutPage = (props) => (
 );
 
 export const getStaticProps = async () => {
-  const sgfProjects = await getSGFProjects();
+  const { sgfProjects } = await getSGFProjects();
   const impactProjects = await getImpactProjects();
   const countries = await getCountriesProvider();
 

@@ -28,10 +28,10 @@ export const getServerSideProps = async ({ query }) => {
 
   if (query?.section === 'projects') {
     const pageTexts = await getSGFPage();
-    const projects = await getSGFProjects();
+    const { sgfProjects, totalPages } = await getSGFProjects();
     const countries = await getCountriesProvider();
 
-    const parsedProjects = projects.map((p) => ({
+    const parsedProjects = sgfProjects.map((p) => ({
       ...p,
       title: ReactHtmlParser(p.title),
     }));
@@ -45,6 +45,7 @@ export const getServerSideProps = async ({ query }) => {
         country: query?.country || '',
         projectsTexts: pageTexts?.[0]?.acf,
         header: pageTexts[0],
+        totalPages,
       },
     };
   }

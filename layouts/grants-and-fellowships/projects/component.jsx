@@ -15,7 +15,6 @@ import { getSGFProjects } from 'services/projects';
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
-
 import './styles.scss';
 
 const GrantsProjectsSection = ({
@@ -24,6 +23,7 @@ const GrantsProjectsSection = ({
   images,
   countries: allCountries,
   country: countryQueryParam,
+  totalPages,
 }) => {
   const [projectsList, setProjects] = useState(allProjects);
   const [country, setCountry] = useState(countryQueryParam);
@@ -92,10 +92,12 @@ const GrantsProjectsSection = ({
       const getMoreProjects = async () => {
         try {
           setLoading(true);
-          const posts = await getSGFProjects({ params: { page: pageNumber } });
+          const { sgfProjects } = await getSGFProjects({
+            params: { page: pageNumber },
+          });
           setLoading(false);
 
-          return posts;
+          return sgfProjects;
         } catch (error) {
           setLoading(false);
           setVisible(false);
@@ -107,6 +109,10 @@ const GrantsProjectsSection = ({
       getMoreProjects().then((projectItems) => {
         if (projectItems) {
           setProjects([...projectsList, ...projectItems]);
+        }
+
+        if (pageNumber === totalPages) {
+          setVisible(false);
         }
       });
     }
@@ -231,6 +237,7 @@ GrantsProjectsSection.propTypes = {
   projects: PropTypes.array,
   projectsTexts: PropTypes.object,
   images: PropTypes.object,
+  totalPages: PropTypes.number,
 };
 
 export default GrantsProjectsSection;

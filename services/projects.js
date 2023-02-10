@@ -99,6 +99,7 @@ export async function getSGFProjects({
   ]);
 
   const formattedProjects = formatProjects(projectsData);
+  const totalPages = parseInt(projectsData[0].headers['x-wp-totalpages'], 10);
 
-  return formattedProjects;
+  return { sgfProjects: formattedProjects, totalPages };
 }
