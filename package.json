@@ -115,6 +115,7 @@
     "moment": "2.24.0",
     "next": "^10.0.1",
     "next-compose-plugins": "^2.2.0",
+    "next-csrf": "^0.2.1",
     "next-http-proxy-middleware": "^1.0.10",
     "next-optimized-images": "^2.6.2",
     "next-sitemap": "^1.2.22",

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
+import { setupCsrf } from 'utils/csrf';
 import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
@@ -28,81 +29,84 @@ const notFoundProps = {
 
 const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
 
-export const getServerSideProps = async ({ req, params }) => {
-  const [type] = params?.location || [];
-  let userToken = null;
-  try {
-    userToken = parse(req.headers.cookie)['gfw-token'];
-    // XXX: FB/Google token hack
-    if (userToken?.endsWith('#')) {
-      userToken = userToken.replace(/#$/, '');
+export const getServerSideProps = async (context) => {
+  return setupCsrf(async () => {
+    const { req, params } = context;
+    const [type] = params?.location || [];
+    let userToken = null;
+    try {
+      userToken = parse(req.headers.cookie)['gfw-token'];
+      // XXX: FB/Google token hack
+      if (userToken?.endsWith('#')) {
+        userToken = userToken.replace(/#$/, '');
+      }
+    } catch (_) {
+      // ignore
     }
-  } catch (_) {
-    // ignore
-  }
 
-  if (type && !ALLOWED_TYPES.includes(type)) {
-    return {
-      props: notFoundProps,
-    };
-  }
-
-  if (!type || type === 'global') {
-    return {
-      props: {
-        title: 'Interactive World Forest Map & Tree Cover Change Data | GFW',
-        description:
-          'Explore the state of forests worldwide by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
-      },
-    };
-  }
-
-  try {
-    const locationData = await getLocationData(params?.location, userToken);
-    const { locationName } = locationData || {};
-
-    if (!locationName) {
+    if (type && !ALLOWED_TYPES.includes(type)) {
       return {
         props: notFoundProps,
       };
     }
 
-    const title = `${locationName} Interactive Forest Map ${
-      params?.location?.[2] ? '' : '& Tree Cover Change Data '
-    }| GFW`;
-    const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
-    const noIndex = !['country', 'wdpa'].includes(type);
-
-    return {
-      props: {
-        title,
-        description,
-        noIndex,
-      },
-    };
-  } catch (err) {
-    if (type === 'geostore') {
+    if (!type || type === 'global') {
       return {
         props: {
-          title: 'Interactive Forest Map for custom area | GFW',
+          title: 'Interactive World Forest Map & Tree Cover Change Data | GFW',
+          description:
+            'Explore the state of forests worldwide by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
         },
       };
     }
 
-    if (err?.response?.status === 401) {
+    try {
+      const locationData = await getLocationData(params?.location, userToken);
+      const { locationName } = locationData || {};
+
+      if (!locationName) {
+        return {
+          props: notFoundProps,
+        };
+      }
+
+      const title = `${locationName} Interactive Forest Map ${
+        params?.location?.[2] ? '' : '& Tree Cover Change Data '
+      }| GFW`;
+      const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
+      const noIndex = !['country', 'wdpa'].includes(type);
+
       return {
         props: {
-          error: 401,
-          title: 'Area is private | Global Forest Watch',
-          errorTitle: 'Area is private',
+          title,
+          description,
+          noIndex,
         },
       };
-    }
+    } catch (err) {
+      if (type === 'geostore') {
+        return {
+          props: {
+            title: 'Interactive Forest Map for custom area | GFW',
+          },
+        };
+      }
 
-    return {
-      props: notFoundProps,
-    };
-  }
+      if (err?.response?.status === 401) {
+        return {
+          props: {
+            error: 401,
+            title: 'Area is private | Global Forest Watch',
+            errorTitle: 'Area is private',
+          },
+        };
+      }
+
+      return {
+        props: notFoundProps,
+      };
+    }
+  })(context);
 };
 
 // export const getStaticPaths = async () => {

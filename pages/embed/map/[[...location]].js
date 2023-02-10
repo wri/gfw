@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
+import { setupCsrf } from 'utils/csrf';
 import { decodeQueryParams } from 'utils/url';
 
 import MapUrlProvider from 'providers/map-url-provider';
@@ -15,6 +16,10 @@ import { setMenuSettings } from 'components/map-menu/actions';
 import { setAnalysisSettings } from 'components/analysis/actions';
 import { setModalMetaSettings } from 'components/modals/meta/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
+
+export const getServerSideProps = setupCsrf(async () => {
+  return { props: {} };
+});
 
 const MapEmbedPage = (props) => {
   const dispatch = useDispatch();

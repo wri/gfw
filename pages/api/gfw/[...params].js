@@ -1,6 +1,7 @@
 import httpProxyMiddleware from 'next-http-proxy-middleware';
 
 import { GFW_API } from 'utils/apis';
+import { csrf } from 'utils/csrf';
 import { PROXIES } from 'utils/proxies';
 
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
@@ -16,7 +17,7 @@ export const config = {
   },
 };
 
-export default (req, res) =>
+export default csrf((req, res) =>
   httpProxyMiddleware(req, res, {
     // You can use the `http-proxy` option
     target: GFW_API_URL,
@@ -30,4 +31,5 @@ export default (req, res) =>
     followRedirects: true,
   }).catch(async (error) => {
     res.end(error.message);
-  });
+  })
+);

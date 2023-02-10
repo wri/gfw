@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import uniqBy from 'lodash/uniqBy';
 
 import useRouter from 'utils/router';
+import { setupCsrf } from 'utils/csrf';
 import { decodeQueryParams } from 'utils/url';
 import { parseGadm36Id } from 'utils/gadm';
 import { parseStringWithVars } from 'utils/strings';
@@ -80,163 +81,166 @@ function getLabel(location, countryData) {
   return 'global';
 }
 
-export const getServerSideProps = async ({ params, query, req }) => {
-  const [type] = params?.location || [];
-  let userToken = null;
-  try {
-    userToken = parse(req.headers.cookie)['gfw-token'];
-    // XXX: FB/Google token hack
-    if (userToken?.endsWith('#')) {
-      userToken = userToken.replace(/#$/, '');
+export const getServerSideProps = async (context) => {
+  return setupCsrf(async () => {
+    const { params, query, req } = context;
+    const [type] = params?.location || [];
+    let userToken = null;
+    try {
+      userToken = parse(req.headers.cookie)['gfw-token'];
+      // XXX: FB/Google token hack
+      if (userToken?.endsWith('#')) {
+        userToken = userToken.replace(/#$/, '');
+      }
+    } catch (_) {
+      // ignore
     }
-  } catch (_) {
-    // ignore
-  }
 
-  let basePath = null;
+    let basePath = null;
 
-  try {
-    basePath = new URL(`http:${req?.url}`).pathname;
-  } catch (_) {
-    // ignore
-  }
+    try {
+      basePath = new URL(`http:${req?.url}`).pathname;
+    } catch (_) {
+      // ignore
+    }
 
-  if (type && !ALLOWED_TYPES.includes(type)) {
-    return {
-      props: notFoundProps,
-    };
-  }
-
-  let countryData = await getCategorisedCountries(true);
-
-  if (!type || type === 'global') {
-    // get global data
-    const data = await getSentenceData();
-    const parsedSentence = parseSentence(data);
-    const description = parseStringWithVars(
-      parsedSentence.sentence,
-      parsedSentence.params
-    );
-    return {
-      props: {
-        title: 'Global Deforestation Rates & Statistics by Country | GFW',
-        category: query?.category || null,
-        basePath,
-        location: params?.location,
-        globalSentence: parsedSentence,
-        geodescriber: JSON.stringify(data),
-        countryData: JSON.stringify(countryData),
-        description,
-      },
-    };
-  }
-
-  try {
-    const locationData = await getLocationData(params?.location, userToken);
-    const { locationName } = locationData || {};
-
-    if (!locationName) {
+    if (type && !ALLOWED_TYPES.includes(type)) {
       return {
         props: notFoundProps,
       };
     }
 
-    const title = `${locationName} Deforestation Rates & Statistics | GFW`;
-    const noIndex = !['country'].includes(type);
-    const [locationType, adm0, lvl1, lvl2] = params?.location;
-    const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
-    const adm2 = lvl2 ? parseInt(lvl2, 10) : null;
+    let countryData = await getCategorisedCountries(true);
 
-    const data = await getSentenceData({
-      type: locationType === 'aoi' ? 'country' : locationType,
-      adm0,
-      adm1,
-      adm2,
-      threshold: 30,
-      extentYear: 2010,
-    });
-
-    if (adm0) {
-      const regions = await getRegionsProvider({ adm0 });
-      const countryLinks = await getCountryLinksSerialized();
-      countryData = {
-        ...countryData,
-        regions: uniqBy(regions.data.rows).map((row) => ({
-          id: parseGadm36Id(row.id).adm1,
-          value: parseGadm36Id(row.id).adm1,
-          label: row.name,
-          name: row.name,
-        })),
-        countryLinks,
-      };
-    }
-
-    if (adm1) {
-      const subRegions = await getSubRegionsProvider(adm0, adm1);
-      countryData = {
-        ...countryData,
-        subRegions: uniqBy(subRegions.data.rows).map((row) => ({
-          id: parseGadm36Id(row.id).adm2,
-          value: parseGadm36Id(row.id).adm2,
-          label: row.name,
-          name: row.name,
-        })),
-      };
-    }
-
-    const { locationNames, locationObj } = handleSSRLocationObjects(
-      countryData,
-      adm0,
-      adm1,
-      adm2
-    );
-
-    const parsedSentence = parseSentence(data, locationNames, locationObj);
-    const label = getLabel({ adm0, adm1, adm2 }, countryData);
-
-    const handleSSRLocation = {
-      adm0,
-      adm1,
-      adm2,
-      countryData,
-      type: locationType,
-      category: query?.category || 'summary',
-      label: label || null,
-    };
-
-    const description = parseStringWithVars(
-      parsedSentence.sentence,
-      parsedSentence.params
-    );
-
-    return {
-      props: {
-        title,
-        description,
-        category: query?.category || 'summary',
-        basePath,
-        globalSentence: parsedSentence,
-        handleSSRLocation,
-        geodescriber: JSON.stringify(data),
-        countryData: JSON.stringify(countryData),
-        noIndex,
-      },
-    };
-  } catch (err) {
-    if (err?.response?.status === 401) {
+    if (!type || type === 'global') {
+      // get global data
+      const data = await getSentenceData();
+      const parsedSentence = parseSentence(data);
+      const description = parseStringWithVars(
+        parsedSentence.sentence,
+        parsedSentence.params
+      );
       return {
         props: {
-          error: 401,
-          title: 'Area is private | Global Forest Watch',
-          errorTitle: 'Area is private',
+          title: 'Global Deforestation Rates & Statistics by Country | GFW',
+          category: query?.category || null,
+          basePath,
+          location: params?.location || null,
+          globalSentence: parsedSentence,
+          geodescriber: JSON.stringify(data),
+          countryData: JSON.stringify(countryData),
+          description,
         },
       };
     }
 
-    return {
-      props: notFoundProps,
-    };
-  }
+    try {
+      const locationData = await getLocationData(params?.location, userToken);
+      const { locationName } = locationData || {};
+
+      if (!locationName) {
+        return {
+          props: notFoundProps,
+        };
+      }
+
+      const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+      const noIndex = !['country'].includes(type);
+      const [locationType, adm0, lvl1, lvl2] = params?.location;
+      const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
+      const adm2 = lvl2 ? parseInt(lvl2, 10) : null;
+
+      const data = await getSentenceData({
+        type: locationType === 'aoi' ? 'country' : locationType,
+        adm0,
+        adm1,
+        adm2,
+        threshold: 30,
+        extentYear: 2010,
+      });
+
+      if (adm0) {
+        const regions = await getRegionsProvider({ adm0 });
+        const countryLinks = await getCountryLinksSerialized();
+        countryData = {
+          ...countryData,
+          regions: uniqBy(regions.data.rows).map((row) => ({
+            id: parseGadm36Id(row.id).adm1,
+            value: parseGadm36Id(row.id).adm1,
+            label: row.name,
+            name: row.name,
+          })),
+          countryLinks,
+        };
+      }
+
+      if (adm1) {
+        const subRegions = await getSubRegionsProvider(adm0, adm1);
+        countryData = {
+          ...countryData,
+          subRegions: uniqBy(subRegions.data.rows).map((row) => ({
+            id: parseGadm36Id(row.id).adm2,
+            value: parseGadm36Id(row.id).adm2,
+            label: row.name,
+            name: row.name,
+          })),
+        };
+      }
+
+      const { locationNames, locationObj } = handleSSRLocationObjects(
+        countryData,
+        adm0,
+        adm1,
+        adm2
+      );
+
+      const parsedSentence = parseSentence(data, locationNames, locationObj);
+      const label = getLabel({ adm0, adm1, adm2 }, countryData);
+
+      const handleSSRLocation = {
+        adm0,
+        adm1,
+        adm2,
+        countryData,
+        type: locationType,
+        category: query?.category || 'summary',
+        label: label || null,
+      };
+
+      const description = parseStringWithVars(
+        parsedSentence.sentence,
+        parsedSentence.params
+      );
+
+      return {
+        props: {
+          title,
+          description,
+          category: query?.category || 'summary',
+          basePath,
+          globalSentence: parsedSentence,
+          handleSSRLocation,
+          geodescriber: JSON.stringify(data),
+          countryData: JSON.stringify(countryData),
+          noIndex,
+        },
+      };
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        return {
+          props: {
+            error: 401,
+            title: 'Area is private | Global Forest Watch',
+            errorTitle: 'Area is private',
+          },
+        };
+      }
+
+      return {
+        props: notFoundProps,
+      };
+    }
+  })(context);
 };
 
 function getCanonical(props, query) {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { setupCsrf } from 'utils/csrf';
 import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
 
@@ -26,64 +27,60 @@ const errorProps = {
 
 const ALLOWED_TYPES = ['geostore', 'global', 'country', 'aoi'];
 
-export const getStaticProps = async ({ params }) => {
-  const { location, widget } = params || {};
-  const [type] = location || [];
+export const getServerSideProps = async (context) => {
+  return setupCsrf(async () => {
+    const { params } = context;
+    const { location, widget } = params || {};
+    const [type] = location || [];
 
-  if (!type || !widget || !ALLOWED_TYPES.includes(type)) {
-    return {
-      props: errorProps,
-    };
-  }
+    if (!type || !widget || !ALLOWED_TYPES.includes(type)) {
+      return {
+        props: errorProps,
+      };
+    }
 
-  if (type === 'global') {
-    return {
-      props: {
-        widget: widget || '',
-        title: `Global Deforestation Rates & Statistics | GFW`,
-        description: `Explore interactive tree cover loss data charts and analyze global forest trends, including land use change, deforestation rates and forest fires.`,
-      },
-    };
-  }
-
-  const locationData = await getLocationData(location).catch((err) => {
-    if (err?.response?.status === 401) {
+    if (type === 'global') {
       return {
         props: {
-          error: 401,
-          title: 'Area is private | Global Forest Watch',
-          errorTitle: 'Area is private',
+          widget: widget || '',
+          title: `Global Deforestation Rates & Statistics | GFW`,
+          description: `Explore interactive tree cover loss data charts and analyze global forest trends, including land use change, deforestation rates and forest fires.`,
         },
       };
     }
 
+    const locationData = await getLocationData(location).catch((err) => {
+      if (err?.response?.status === 401) {
+        return {
+          props: {
+            error: 401,
+            title: 'Area is private | Global Forest Watch',
+            errorTitle: 'Area is private',
+          },
+        };
+      }
+
+      return {
+        props: errorProps,
+      };
+    });
+
+    const { locationName } = locationData || {};
+
+    if (!locationName) {
+      return {
+        props: errorProps,
+      };
+    }
+
     return {
-      props: errorProps,
+      props: {
+        widget: widget || '',
+        title: `${locationName} Deforestation Rates & Statistics | GFW`,
+        description: `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
+      },
     };
-  });
-
-  const { locationName } = locationData || {};
-
-  if (!locationName) {
-    return {
-      props: errorProps,
-    };
-  }
-
-  return {
-    props: {
-      widget: widget || '',
-      title: `${locationName} Deforestation Rates & Statistics | GFW`,
-      description: `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
-    },
-  };
-};
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
+  })(context)
 };
 
 const WidgetEmbedPage = (props) => {

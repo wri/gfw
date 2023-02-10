@@ -1,6 +1,12 @@
 import PageLayout from 'wrappers/page';
 import MyGfw from 'layouts/my-gfw';
 
+import { setupCsrf } from 'utils/csrf';
+
+export const getServerSideProps = setupCsrf(async () => {
+  return { props: {} };
+});
+
 const MyGfwPage = () => (
   <PageLayout
     title="My GFW | Global Forest Watch"
