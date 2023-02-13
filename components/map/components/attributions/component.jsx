@@ -23,7 +23,7 @@ const MapAttributions = ({ className, viewport, map }) => {
 
   return (
     <>
-      <div className={cx("c-map-attributions", className)}>
+      <div className={cx('c-map-attributions', className)}>
         <AttributionsContent narrow={narrowView} />
         {narrowView && (
           <>

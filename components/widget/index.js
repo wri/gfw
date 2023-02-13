@@ -1,5 +1,6 @@
-import { createElement, Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { InView } from 'react-intersection-observer';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import sumBy from 'lodash/sumBy';
@@ -40,7 +41,7 @@ class WidgetContainer extends Component {
   };
 
   state = {
-    loading: false,
+    loading: true,
     error: false,
     maxSize: null,
     downloadDisabled: false,
@@ -51,42 +52,10 @@ class WidgetContainer extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const {
-      location,
-      settings,
-      chartSettings,
-      meta,
-      status,
-      dashboard,
-      embed,
-      analysis,
-    } = this.props;
-    const params = {
-      ...location,
-      ...settings,
-      ...chartSettings,
-      status,
-      dashboard,
-      embed,
-      analysis,
-    };
-
-    this.handleGetWidgetChartSettings(params);
-    this.handleGetWidgetData({ ...params, GFW_META: meta });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      location,
-      settings,
-      chartSettings,
-      refetchKeys,
-      status,
-      meta,
-      dashboard,
-      embed,
-      analysis,
-    } = this.props;
+    const { location, settings, refetchKeys } = this.props;
     const { error } = this.state;
     const hasLocationChanged =
       location && !isEqual(location, prevProps.location);
@@ -100,17 +69,8 @@ class WidgetContainer extends Component {
 
     // refetch data if error, settings, or location changes
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
-      const params = {
-        ...location,
-        ...settings,
-        ...chartSettings,
-        status,
-        dashboard,
-        embed,
-        analysis,
-      };
-      this.handleGetWidgetChartSettings(params);
-      this.handleGetWidgetData({ ...params, GFW_META: meta });
+      this.handleGetWidgetChartSettings();
+      this.handleGetWidgetData();
     }
   }
 
@@ -148,67 +108,70 @@ class WidgetContainer extends Component {
     return { downloadDisabled: false, maxSize };
   }
 
-  handleGetWidgetData = (params) => {
-    if (params?.type) {
-      const {
-        getData,
-        setWidgetData,
-        geostore,
-        dashboard,
-        embed,
-        analysis,
-      } = this.props;
-      this.cancelWidgetDataFetch();
-      this.widgetDataFetch = CancelToken.source();
-      this.setState({ loading: true, error: false });
-      getData({
-        ...params,
-        geostore,
-        token: this.widgetDataFetch.token,
-        dashboard,
-        embed,
-        analysis,
-      })
-        .then((data) => {
-          setWidgetData(data);
-          setTimeout(() => {
-            if (this._mounted) {
-              this.setState({
-                ...this.handleMaxRowSize(data),
-                loading: false,
-                error: false,
-              });
-            }
-          }, 200);
-        })
-        .catch((error) => {
+  handleGetWidgetData = () => {
+    const { location, settings } = this.props;
+    const params = { ...location, ...settings };
+
+    if (!params?.type) return;
+
+    const {
+      getData,
+      setWidgetData,
+      geostore,
+      dashboard,
+      embed,
+      analysis,
+    } = this.props;
+    this.cancelWidgetDataFetch();
+    this.widgetDataFetch = CancelToken.source();
+    this.setState({ loading: true, error: false });
+    getData({
+      ...params,
+      geostore,
+      token: this.widgetDataFetch.token,
+      dashboard,
+      embed,
+      analysis,
+    })
+      .then((data) => {
+        setWidgetData(data);
+        setTimeout(() => {
           if (this._mounted) {
             this.setState({
-              error: error.message !== `Cancelling ${this.props.widget} fetch`,
+              ...this.handleMaxRowSize(data),
               loading: false,
+              error: false,
             });
           }
-        });
-    }
+        }, 200);
+      })
+      .catch((error) => {
+        if (this._mounted) {
+          this.setState({
+            error: error.message !== `Cancelling ${this.props.widget} fetch`,
+            loading: false,
+          });
+        }
+      });
   };
 
-  handleGetWidgetChartSettings = (params) => {
-    const { getChartSettings, setWidgetChartSettings } = this.props;
-    setWidgetChartSettings(getChartSettings(params));
+  handleGetWidgetChartSettings = () => {
+    const {
+      getChartSettings,
+      setWidgetChartSettings,
+      dashboard,
+      embed,
+    } = this.props;
+    setWidgetChartSettings(getChartSettings({ dashboard, embed }));
   };
 
   handleRefetchData = () => {
-    const { settings, location, widget, meta, chartSettings } = this.props;
-    const params = { ...location, ...settings, ...chartSettings };
-    this.handleGetWidgetData({
-      ...params,
-      GFW_META: meta,
-    });
-    this.handleGetWidgetChartSettings(params);
+    this.handleGetWidgetData();
+    this.handleGetWidgetChartSettings();
     trackEvent({
       category: 'Refetch data',
       action: 'Data failed to fetch, user clicks to refetch',
-      label: `Widget: ${widget}`,
+      label: `Widget: ${this.props.widget}`,
     });
   };
 
@@ -223,12 +186,25 @@ class WidgetContainer extends Component {
   };
 
   render() {
-    return createElement(WidgetComponent, {
+    const widgetProps = {
       ...this.props,
       ...this.state,
       handleRefetchData: this.handleRefetchData,
       handleDataHighlight: this.handleDataHighlight,
-    });
+    };
+
+    return (
+      <InView
+        triggerOnce
+        onChange={(inView) => {
+          if (!inView) return;
+          this.handleGetWidgetChartSettings();
+          this.handleGetWidgetData();
+        }}
+      >
+        {({ ref }) => <WidgetComponent ref={ref} {...widgetProps} />}
+      </InView>
+    );
   }
 }
 
