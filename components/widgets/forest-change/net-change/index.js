@@ -31,7 +31,8 @@ export default {
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
-    text: 'Would you like to help us understand how to present this data in more helpful ways? {Click here to fill out a survey}',
+    text:
+      'Would you like to help us understand how to present this data in more helpful ways? {Click here to fill out a survey}',
     visible: [
       'country',
       'geostore',
@@ -42,7 +43,8 @@ export default {
       'global',
     ],
     linkText: 'Click here to fill out a survey',
-    link: 'https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer',
+    link:
+      'https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer',
   },
   large: true,
   visible: ['dashboard', 'analysis'],
