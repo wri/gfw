@@ -17,7 +17,7 @@ const getSettings = (state) => state.settings;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
-const getCaution = (state) => state.caution;
+const getAlerts = (state) => state.alerts;
 const getTitle = (state) => state.title;
 const getAdm0 = (state) => state.adm0;
 
@@ -246,9 +246,9 @@ export const parseTitle = createSelector(
   }
 );
 
-export const parseCaution = createSelector(
-  [getCaution, getAdm0],
-  (caution, adm0) => (adm0 === 'IDN' ? caution.indonesia : caution.default)
+export const parseAlerts = createSelector(
+  [getAlerts, getAdm0],
+  (alerts, adm0) => (adm0 === 'IDN' ? alerts.indonesia : alerts.default)
 );
 
 export default createStructuredSelector({
@@ -256,5 +256,5 @@ export default createStructuredSelector({
   config: parseConfig,
   sentence: parseSentence,
   title: parseTitle,
-  caution: parseCaution,
+  alerts: parseAlerts,
 });

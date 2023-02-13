@@ -1,32 +1,11 @@
 @import '~styles/settings.scss';
 
-.c-widget-caution {
-  background: $yellow;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 0 0 10px 0;
-  color: $slate-light;
-  font-weight: 500;
-
-  a,
-  .caution-link {
-    width: fit-content;
-    margin-bottom: rem(30px);
-    color: $green-gfw;
-  }
-
-  a:hover,
-  a:visited {
-    color: darken($green-gfw, 10%);
-  }
-}
-
 .c-widget-alert {
   display: flex;
   gap: 10px;
   padding: 10px;
   border: 1px solid black;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
 
   .icon {

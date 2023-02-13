@@ -18,7 +18,7 @@ import {
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import SentenceSelector from 'components/sentence-selector';
-import WidgetCaution from 'components/widget/components/widget-caution';
+import WidgetAlert from 'components/widget/components/widget-alert';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
@@ -72,7 +72,6 @@ const MapLegend = ({
               layers,
               statementConfig,
               alerts,
-              caution,
               caution_gladL,
               caution_radd,
               name,
@@ -236,28 +235,11 @@ const MapLegend = ({
                     {...statementConfig}
                   />
                 )}
-                {caution && (
-                  <WidgetCaution
-                    locationType="map"
-                    caution={{
-                      text: caution,
-                      isCaution: true,
-                      visible: [
-                        'wdpa',
-                        'country',
-                        'aoi',
-                        'geostore',
-                        'dashboard',
-                        'map',
-                      ],
-                    }}
-                  />
-                )}
                 {alerts &&
                   alerts.map((a) => (
-                    <WidgetCaution
+                    <WidgetAlert
                       locationType="map"
-                      caution={{
+                      alert={{
                         ...a,
                         visible: [
                           'wdpa',
@@ -271,9 +253,9 @@ const MapLegend = ({
                     />
                   ))}
                 {warningLabel && (
-                  <WidgetCaution
+                  <WidgetAlert
                     locationType="map"
-                    caution={{
+                    alert={{
                       text: warningLabel,
                       visible: [
                         'wdpa',

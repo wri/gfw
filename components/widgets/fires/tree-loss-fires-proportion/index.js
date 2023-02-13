@@ -32,14 +32,6 @@ export default {
   },
   categories: ['fires'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-  // caution: {
-  //   text:
-  //     'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
-  //   visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  //   linkText: 'Read more here',
-  //   link:
-  //     'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
-  // },
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   large: false,
   visible: ['dashboard', 'analysis'],
