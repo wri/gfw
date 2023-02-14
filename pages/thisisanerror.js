@@ -3,7 +3,7 @@ import { apiRequest } from 'utils/request';
 
 class ThisIsAnError extends PureComponent {
   state = {
-    data: '',
+    data: [],
   };
 
   componentDidMount = () => {
