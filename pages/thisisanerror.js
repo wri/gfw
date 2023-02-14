@@ -1,25 +1,27 @@
-import React, { PureComponent } from 'react';
-import { apiRequest } from 'utils/request';
+export const getServerSideProps = async () => {
+  const getFakeData = await fetch(
+    'https://www.globalforestwatch.org/api/gfw/v2/geostore/admin/IDN/?thresh=0.05'
+  );
 
-class ThisIsAnError extends PureComponent {
-  state = {
-    data: [],
+  const data = await getFakeData.json();
+
+  const parsedData = data.map((d) => d);
+
+  return {
+    props: {
+      fakeData: parsedData,
+    },
   };
+};
 
-  componentDidMount = () => {
-    apiRequest.get('/v2/geostore/admin/IDN/?thresh=0.05').then((response) => {
-      this.setState({ data: response.data.data.id });
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <span>This will be an error:</span>
-        <span>{this.state.data.map((d) => d)}</span>
-      </div>
-    );
-  }
-}
+const ThisIsAnError = (props) => {
+  return (
+    <div>
+      <div>this is an error:</div>
+      {/* eslint-disable-next-line react/prop-types */}
+      <div>{props.fakeData.data.id.map((d) => d)}</div>
+    </div>
+  );
+};
 
 export default ThisIsAnError;
