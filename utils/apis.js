@@ -30,4 +30,4 @@ export const MAPBOX_API = 'https://api.mapbox.com/';
 export const CLIMATE_WATCH_API = 'https://www.climatewatchdata.org/api/v1';
 
 // TRASE API
-export const TRASE_API = 'https://trase.earth/api/v3';
+export const TRASE_API = 'https://supplychains.trase.earth/api/v3';
