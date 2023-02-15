@@ -75,7 +75,7 @@ export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
     data: {
       geojson,
     },
-    url: '/geostore',
+    url: '/geostore/',
     onUploadProgress,
     onDownloadProgress,
   });

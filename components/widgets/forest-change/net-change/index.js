@@ -30,24 +30,6 @@ export default {
   subcategories: ['net-change'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  alerts: [
-    {
-      id: 'netchange-survey-1',
-      text: `Would you like to **help us understand** how to present this data in more helpful ways? [Click here to fill out a survey](https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer)`,
-      // textTooltip: `There's a survey here!`,
-      icon: 'warning',
-      datasetWhitelist: [''],
-      visible: [
-        'country',
-        'geostore',
-        'aoi',
-        'wdpa',
-        'use',
-        'dashboard',
-        'global',
-      ],
-    },
-  ],
   caution: {
     text:
       'Would you like to help us understand how to present this data in more helpful ways? {Click here to fill out a survey}',

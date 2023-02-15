@@ -34,9 +34,21 @@ The app should now be accessible on [http://0.0.0.0:3000](http://0.0.0.0:3000).
 
 ## Developing
 
-We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the staging site. Additionally you can deploy `develop` or feature branches to staging if desired.
+We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment.  
+We merge pull requests into `develop`, which is deployed automatically to both the staging and pre-production servers. In order to release features into production, we merge `develop` into `master`, triggering an automatic deployment to production.
 
 ![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
+
+### Staging, pre-production and review apps
+
+We use [Heroku](https://www.heroku.com/) to deploy our apps. Production is deployed automatically from `master` to [globalforestwatch.org](https://www.globalforestwatch.org).  
+
+We have two staging environments: staging and pre-production. Both are deployed automatically from `develop`.  
+The main difference is that staging points to the staging environments of the APIs we access, pre-production points to the production ones. This is set by the `NEXT_PUBLIC_FEATURE_ENV` env variable. 
+
+We also make use of Heroku's [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps) feature.  
+When a pull request is created, a review app is deployed automatically by Heroku with a `NEXT_PUBLIC_FEATURE_ENV` of `preproduction`, and a link to the environment is added automatically to the respective pull request. 
+
 
 ## Releases
 
