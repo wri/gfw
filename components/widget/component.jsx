@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -10,6 +10,7 @@ import './styles.scss';
 
 class Widget extends PureComponent {
   static propTypes = {
+    forwardRef: PropTypes.func,
     widget: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     type: PropTypes.string,
@@ -72,6 +73,8 @@ class Widget extends PureComponent {
   state = {
     shouldSettingsOpen: false,
   };
+
+  innerRef = React.createRef();
 
   render() {
     const {
@@ -140,6 +143,7 @@ class Widget extends PureComponent {
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
+        ref={this.props.forwardRef}
         id={widget}
         className={cx('c-widget', { large }, { embed }, { simple })}
         style={{
@@ -237,4 +241,6 @@ class Widget extends PureComponent {
   }
 }
 
-export default Widget;
+export default forwardRef((props, ref) => (
+  <Widget forwardRef={ref} {...props} />
+));

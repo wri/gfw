@@ -12,6 +12,7 @@ const GFW_METADATA_API_URL =
 export const config = {
   api: {
     externalResolver: true,
+    bodyParser: false,
   },
 };
 
