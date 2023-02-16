@@ -250,12 +250,19 @@ export const parseSentence = createSelector(
       initial,
       withIndicator,
     } = sentences;
-    const { startYear, endYear } = settings;
+    const { startYear, endYear, sentence: sentenceSettings } = settings;
+    const { netCarbonFlux: netCarbonFluxWording } = sentenceSettings;
 
     const yearTotal = endYear - startYear + 1;
     const { emissions, removals, flux } = data[0];
+    const totalFlux = flux / yearTotal;
+
+    let fluxWording = netCarbonFluxWording.neutral;
+    if (totalFlux > 0) fluxWording = netCarbonFluxWording.positive;
+    if (totalFlux < 0) fluxWording = netCarbonFluxWording.negative;
 
     const params = {
+      netCarbonFluxWording: fluxWording,
       indicator: indicator && indicator.label,
       startYear,
       endYear,
