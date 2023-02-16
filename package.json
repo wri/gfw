@@ -118,7 +118,7 @@
     "next-http-proxy-middleware": "^1.0.10",
     "next-optimized-images": "^2.6.2",
     "next-sitemap": "^1.2.22",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "pino": "6.14.0",
     "pino-http": "7.1.0",
     "postcss-flexbugs-fixes": "^4.2.0",
