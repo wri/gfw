@@ -90,7 +90,35 @@ class MapMenu extends PureComponent {
     }
   };
 
+  verifyMenuSettings = () => {
+    const {
+      menuSection,
+      activeSection,
+      isDesktop,
+      setMenuSettings,
+    } = this.props;
+
+    if (!activeSection) return null;
+    if (!isDesktop || !menuSection) return null;
+
+    const clearMenuSettings = () => {
+      setMenuSettings({ menuSection: null, datasetCategory: null });
+    };
+
+    if (['analysis', 'legend'].includes(menuSection)) {
+      clearMenuSettings();
+    }
+
+    if (menuSection === 'datasets' && !activeSection?.category) {
+      clearMenuSettings();
+    }
+
+    return null;
+  };
+
   render() {
+    this.verifyMenuSettings();
+
     const {
       className,
       datasetSections,
@@ -109,6 +137,7 @@ class MapMenu extends PureComponent {
     const {
       Component,
       label,
+      slug,
       category,
       large,
       icon,
