@@ -116,8 +116,24 @@ class MapMenu extends PureComponent {
     return null;
   };
 
+  syncMapMenuSettings = () => {
+    const { menuSection, setMainMapSettings, isDesktop } = this.props;
+
+    if (isDesktop) return null;
+    if (!['analysis', 'legend'].includes(menuSection)) return null;
+
+    if (menuSection === 'analysis') {
+      setMainMapSettings({ showAnalysis: true });
+    } else {
+      setMainMapSettings({ showAnalysis: false });
+    }
+
+    return null;
+  };
+
   render() {
     this.verifyMenuSettings();
+    this.syncMapMenuSettings();
 
     const {
       className,
@@ -227,6 +243,7 @@ MapMenu.propTypes = {
   isDesktop: PropTypes.bool,
   embed: PropTypes.bool,
   recentActive: PropTypes.bool,
+  setMainMapSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
 };
 
