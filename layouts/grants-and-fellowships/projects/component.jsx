@@ -1,4 +1,4 @@
-import { Fragment, useState, useMemo, useEffect, useCallback } from 'react';
+import { Fragment, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
@@ -36,23 +36,6 @@ const GrantsProjectsSection = ({
   const { query, replace, asPath } = useRouter();
 
   const { modal, projectId, country: countryIso } = query;
-
-  const getMoreProjects = useCallback(async (params) => {
-    try {
-      setLoading(true);
-      const { sgfProjects } = await getSGFProjects({
-        params,
-      });
-      setLoading(false);
-
-      return sgfProjects;
-    } catch (error) {
-      setLoading(false);
-      setVisible(false);
-
-      return [];
-    }
-  }, []);
 
   const projectsListOrdered = useMemo(
     () => orderBy(projectsList, ['year', 'title'], ['desc', 'asc']),
@@ -104,33 +87,6 @@ const GrantsProjectsSection = ({
     }
   }, [country]);
 
-  useEffect(() => {
-    if (pageNumber > 1) {
-      getMoreProjects({ page: pageNumber, per_page: 21 }).then(
-        (projectItems) => {
-          if (projectItems) {
-            setProjects([...projectsList, ...projectItems]);
-          }
-
-          if (pageNumber === totalPages) {
-            setVisible(false);
-          }
-        }
-      );
-    }
-  }, [pageNumber]);
-
-  useEffect(() => {
-    if (search.length >= 3) {
-      getMoreProjects({ search, per_page: 100 }).then((projectItems) => {
-        if (projectItems) {
-          setProjects(projectItems);
-          setVisible(false);
-        }
-      });
-    }
-  }, [search]);
-
   const setQueryParams = (params) => {
     const queryParams = omitBy(
       { ...query, section: null, ...params },
@@ -147,16 +103,92 @@ const GrantsProjectsSection = ({
     );
   };
 
-  const handleCountrySelected = (option) => {
-    setQueryParams({ country: option });
-  };
-
   const setModalOpen = (id) => {
     setQueryParams({ projectId: id });
   };
 
   const handleModalClose = () => {
     setQueryParams({ projectId: null });
+  };
+
+  const getMoreProjects = async (params) => {
+    try {
+      setLoading(true);
+      const { sgfProjects } = await getSGFProjects({
+        params,
+      });
+      setLoading(false);
+
+      return sgfProjects;
+    } catch (error) {
+      setLoading(false);
+      setVisible(false);
+
+      return [];
+    }
+  };
+
+  const handleCountrySelected = (option) => {
+    setQueryParams({ country: option });
+
+    let params = { search: option, per_page: 100 };
+
+    if (option === '') {
+      params = { per_page: 21 };
+    }
+
+    getMoreProjects(params).then((projectItems) => {
+      if (projectItems) {
+        setProjects(projectItems);
+
+        if (option === '') {
+          setVisible(true);
+        }
+
+        if (option !== '') {
+          setVisible(false);
+        }
+      }
+    });
+  };
+
+  const handleOnLoadMore = () => {
+    getMoreProjects({ page: pageNumber + 1, per_page: 21 }).then(
+      (projectItems) => {
+        if (projectItems) {
+          setProjects([...projectsList, ...projectItems]);
+          setPageNumber(pageNumber + 1);
+        }
+
+        if (pageNumber === totalPages - 1) {
+          setVisible(false);
+        }
+      }
+    );
+  };
+
+  const handleSearchOnChange = (searchItem) => {
+    setSearch(searchItem);
+
+    let params = { search: searchItem, per_page: 100 };
+
+    if (searchItem === '') {
+      params = { per_page: 21 };
+    }
+
+    getMoreProjects(params).then((projectItems) => {
+      if (projectItems) {
+        setProjects(projectItems);
+
+        if (searchItem === '') {
+          setVisible(true);
+        }
+
+        if (searchItem !== '') {
+          setVisible(false);
+        }
+      }
+    });
   };
 
   return (
@@ -190,7 +222,11 @@ const GrantsProjectsSection = ({
             <TagsList title="Categories" tags={tags} onClick={setCategory} />
           </Column>
           <Column width={[1, 1 / 2, 1 / 3]}>
-            <Search placeholder="Search" input={search} onChange={setSearch} />
+            <Search
+              placeholder="Search"
+              input={search}
+              onChange={handleSearchOnChange}
+            />
           </Column>
         </Row>
         <Row className="project-cards">
@@ -231,7 +267,7 @@ const GrantsProjectsSection = ({
           <LoadMoreButton
             isLoading={isLoading}
             isVisible={isVisible}
-            onClickHandle={() => setPageNumber(pageNumber + 1)}
+            onClickHandle={handleOnLoadMore}
           />
         </Row>
       </div>
