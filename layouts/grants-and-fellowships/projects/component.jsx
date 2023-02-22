@@ -21,8 +21,9 @@ const GrantsProjectsSection = ({
   projects: allProjects,
   projectsTexts,
   images,
-  countries: allCountries,
+  allCountries,
   country: countryQueryParam,
+  countries,
   totalPages,
 }) => {
   const [projectsList, setProjects] = useState(allProjects);
@@ -42,7 +43,7 @@ const GrantsProjectsSection = ({
     [projectsList]
   );
 
-  const { projects, categories, countries } = useMemo(
+  const { projects, categories } = useMemo(
     () =>
       getProjectsProps({
         projects: projectsListOrdered,
@@ -63,7 +64,7 @@ const GrantsProjectsSection = ({
     () => [
       { label: 'All', value: '' },
       ...allCountries
-        ?.filter(({ iso }) => countries.includes(iso))
+        .filter(({ iso }) => countries.includes(iso))
         .map(({ iso, name }) => ({ label: name, value: iso })),
     ],
     [allCountries, countries]
@@ -82,7 +83,7 @@ const GrantsProjectsSection = ({
   useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
 
   useEffect(() => {
-    if (!categories.map(({ label }) => label).includes(category)) {
+    if (!categories?.map(({ label }) => label).includes(category)) {
       setCategory('All');
     }
   }, [country]);
@@ -283,6 +284,7 @@ const GrantsProjectsSection = ({
 GrantsProjectsSection.propTypes = {
   country: PropTypes.string,
   countries: PropTypes.array,
+  allCountries: PropTypes.array,
   projects: PropTypes.array,
   projectsTexts: PropTypes.object,
   images: PropTypes.object,

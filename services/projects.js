@@ -103,3 +103,23 @@ export async function getSGFProjects({
 
   return { sgfProjects: formattedProjects, totalPages };
 }
+
+export async function getSGFCountries({
+  cancelToken,
+  params,
+  allLanguages,
+} = {}) {
+  const countries = await apiFetch({
+    url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects?&_fields[]=acf.country&per_page=100`,
+    params: {
+      ...params,
+      _embed: true,
+      ...(!allLanguages && {
+        lang: 'en',
+      }),
+    },
+    cancelToken,
+  });
+
+  return countries;
+}

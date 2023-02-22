@@ -5,7 +5,8 @@ import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
 import { getSGFPage } from 'services/grants-and-fellowships';
-import { getSGFProjects } from 'services/projects';
+import { getSGFProjects , getSGFCountries } from 'services/projects';
+
 import { getCountriesProvider } from 'services/country';
 
 const SECTIONS = ['projects', 'about', 'apply'];
@@ -31,11 +32,22 @@ export const getServerSideProps = async ({ query }) => {
     const { sgfProjects, totalPages } = await getSGFProjects({
       params: { per_page: 21 },
     });
-    const countries = await getCountriesProvider();
+    const allCountries = await getCountriesProvider();
+    const countriesArray = await getSGFCountries();
 
-    const parsedProjects = sgfProjects.map((p) => ({
-      ...p,
-      title: ReactHtmlParser(p.title),
+    const countriesIso = countriesArray.data.map((item) => item.acf.country);
+
+    const flattenCountries = countriesIso
+      .map((isoItem) =>
+        isoItem.split(',').map((splittedItem) => splittedItem.trim())
+      )
+      .reduce((acc, curr) => acc.concat(curr), []);
+
+    const uniqCountries = [...new Set(flattenCountries)];
+
+    const parsedProjects = sgfProjects.map((project) => ({
+      ...project,
+      title: ReactHtmlParser(project.title),
     }));
 
     return {
@@ -43,7 +55,8 @@ export const getServerSideProps = async ({ query }) => {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
         section: query?.section,
         projects: parsedProjects || [],
-        countries: countries?.data?.rows || [],
+        allCountries: allCountries?.data?.rows || [],
+        countries: uniqCountries || [],
         country: query?.country || '',
         projectsTexts: pageTexts?.[0]?.acf,
         header: pageTexts[0],
