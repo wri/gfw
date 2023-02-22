@@ -23,7 +23,7 @@ const GrantsProjectsSection = ({
   images,
   allCountries,
   country: countryQueryParam,
-  countries,
+  projectCountries,
   totalPages,
 }) => {
   const [projectsList, setProjects] = useState(allProjects);
@@ -64,10 +64,10 @@ const GrantsProjectsSection = ({
     () => [
       { label: 'All', value: '' },
       ...allCountries
-        .filter(({ iso }) => countries.includes(iso))
+        .filter(({ iso }) => projectCountries.includes(iso))
         .map(({ iso, name }) => ({ label: name, value: iso })),
     ],
-    [allCountries, countries]
+    [allCountries, projectCountries]
   );
 
   const tags = useMemo(
@@ -283,7 +283,7 @@ const GrantsProjectsSection = ({
 
 GrantsProjectsSection.propTypes = {
   country: PropTypes.string,
-  countries: PropTypes.array,
+  projectCountries: PropTypes.array,
   allCountries: PropTypes.array,
   projects: PropTypes.array,
   projectsTexts: PropTypes.object,

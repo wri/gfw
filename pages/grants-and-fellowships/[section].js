@@ -5,7 +5,7 @@ import PageLayout from 'wrappers/page';
 import GrantsAndFellowships from 'layouts/grants-and-fellowships';
 
 import { getSGFPage } from 'services/grants-and-fellowships';
-import { getSGFProjects , getSGFCountries } from 'services/projects';
+import { getSGFProjects, getSGFCountries } from 'services/projects';
 
 import { getCountriesProvider } from 'services/country';
 
@@ -56,7 +56,7 @@ export const getServerSideProps = async ({ query }) => {
         section: query?.section,
         projects: parsedProjects || [],
         allCountries: allCountries?.data?.rows || [],
-        countries: uniqCountries || [],
+        projectCountries: uniqCountries || [],
         country: query?.country || '',
         projectsTexts: pageTexts?.[0]?.acf,
         header: pageTexts[0],

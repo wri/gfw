@@ -49,13 +49,6 @@ const getFilteredProjects = createSelector(
   }
 );
 
-const getCountriesList = createSelector(getProjects, (projects) => {
-  if (!projects?.length) return null;
-  return uniq(
-    flatten(projects.map((p) => p.countries.split(',').map((c) => c.trim())))
-  );
-});
-
 const getCategories = createSelector(getProjectsByCountry, (projects) => {
   if (!projects?.length) return null;
   return [
@@ -95,5 +88,4 @@ const getCategoriesList = createSelector(
 export const getProjectsProps = createStructuredSelector({
   projects: getFilteredProjects,
   categories: getCategoriesList,
-  countries: getCountriesList,
 });
