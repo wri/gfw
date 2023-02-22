@@ -1,4 +1,4 @@
-import { Fragment, useState, useMemo, useEffect } from 'react';
+import { Fragment, useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
@@ -37,6 +37,23 @@ const GrantsProjectsSection = ({
 
   const { modal, projectId, country: countryIso } = query;
 
+  const getMoreProjects = useCallback(async (params) => {
+    try {
+      setLoading(true);
+      const { sgfProjects } = await getSGFProjects({
+        params,
+      });
+      setLoading(false);
+
+      return sgfProjects;
+    } catch (error) {
+      setLoading(false);
+      setVisible(false);
+
+      return [];
+    }
+  }, []);
+
   const projectsListOrdered = useMemo(
     () => orderBy(projectsList, ['year', 'title'], ['desc', 'asc']),
     [projectsList]
@@ -51,7 +68,7 @@ const GrantsProjectsSection = ({
         category,
         country,
       }),
-    [projectsList, images, search, category, country]
+    [projectsList, images, category, country]
   );
 
   const selectedProject = useMemo(
@@ -89,34 +106,30 @@ const GrantsProjectsSection = ({
 
   useEffect(() => {
     if (pageNumber > 1) {
-      const getMoreProjects = async () => {
-        try {
-          setLoading(true);
-          const { sgfProjects } = await getSGFProjects({
-            params: { page: pageNumber },
-          });
-          setLoading(false);
+      getMoreProjects({ page: pageNumber, per_page: 21 }).then(
+        (projectItems) => {
+          if (projectItems) {
+            setProjects([...projectsList, ...projectItems]);
+          }
 
-          return sgfProjects;
-        } catch (error) {
-          setLoading(false);
-          setVisible(false);
-
-          return [];
+          if (pageNumber === totalPages) {
+            setVisible(false);
+          }
         }
-      };
+      );
+    }
+  }, [pageNumber]);
 
-      getMoreProjects().then((projectItems) => {
+  useEffect(() => {
+    if (search.length >= 3) {
+      getMoreProjects({ search, per_page: 100 }).then((projectItems) => {
         if (projectItems) {
-          setProjects([...projectsList, ...projectItems]);
-        }
-
-        if (pageNumber === totalPages) {
+          setProjects(projectItems);
           setVisible(false);
         }
       });
     }
-  }, [pageNumber]);
+  }, [search]);
 
   const setQueryParams = (params) => {
     const queryParams = omitBy(

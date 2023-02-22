@@ -28,7 +28,9 @@ export const getServerSideProps = async ({ query }) => {
 
   if (query?.section === 'projects') {
     const pageTexts = await getSGFPage();
-    const { sgfProjects, totalPages } = await getSGFProjects();
+    const { sgfProjects, totalPages } = await getSGFProjects({
+      params: { per_page: 21 },
+    });
     const countries = await getCountriesProvider();
 
     const parsedProjects = sgfProjects.map((p) => ({
