@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import reducerRegistry from 'redux/registry';
 
 import { setMapSettings } from 'components/map/actions';
+import { setMainMapSettings } from 'layouts/map/actions';
 import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
 
 import * as actions from './actions';
@@ -18,5 +19,6 @@ reducerRegistry.registerModule('mapMenu', {
 export default connect(getMenuProps, {
   ...actions,
   setMapSettings,
+  setMainMapSettings,
   setMapPromptsSettings,
 })(MenuComponent);
