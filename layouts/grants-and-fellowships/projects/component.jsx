@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 
 import omitBy from 'lodash/omitBy';
 import orderBy from 'lodash/orderBy';
+import debounce from 'lodash/debounce';
+
 import { Search, NoContent, Row, Column } from 'gfw-components';
 
 import Card from 'components/ui/card';
@@ -29,7 +31,6 @@ const GrantsProjectsSection = ({
   const [projectsList, setProjects] = useState(allProjects);
   const [country, setCountry] = useState(countryQueryParam);
   const [category, setCategory] = useState('All');
-  const [search, setSearch] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setLoading] = useState(false);
   const [isVisible, setVisible] = useState(true);
@@ -48,7 +49,6 @@ const GrantsProjectsSection = ({
       getProjectsProps({
         projects: projectsListOrdered,
         images,
-        search,
         category,
         country,
       }),
@@ -153,7 +153,7 @@ const GrantsProjectsSection = ({
     });
   };
 
-  const handleOnLoadMore = () => {
+  const handleOnLoadMore = debounce(() => {
     getMoreProjects({ page: pageNumber + 1, per_page: 21 }).then(
       (projectItems) => {
         if (projectItems) {
@@ -166,11 +166,9 @@ const GrantsProjectsSection = ({
         }
       }
     );
-  };
+  }, 100);
 
-  const handleSearchOnChange = (searchItem) => {
-    setSearch(searchItem);
-
+  const handleSearchOnChange = debounce((searchItem) => {
     let params = { search: searchItem, per_page: 100 };
 
     if (searchItem === '') {
@@ -190,7 +188,7 @@ const GrantsProjectsSection = ({
         }
       }
     });
-  };
+  }, 500);
 
   return (
     <Fragment>
@@ -223,11 +221,7 @@ const GrantsProjectsSection = ({
             <TagsList title="Categories" tags={tags} onClick={setCategory} />
           </Column>
           <Column width={[1, 1 / 2, 1 / 3]}>
-            <Search
-              placeholder="Search"
-              input={search}
-              onChange={handleSearchOnChange}
-            />
+            <Search placeholder="Search" onChange={handleSearchOnChange} />
           </Column>
         </Row>
         <Row className="project-cards">
