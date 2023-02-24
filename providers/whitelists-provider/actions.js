@@ -35,23 +35,12 @@ export const getWhitelist = createThunkAction(
     ])
       .then(
         spread((annualResponse, gladResponse, viirsResponse, modisResponse) => {
-          const annual =
-            annualResponse &&
-            annualResponse.data &&
-            annualResponse.data.data[0];
-          const glad =
-            gladResponse && gladResponse.data && gladResponse.data.data[0];
-          const viirs =
-            viirsResponse && viirsResponse.data && viirsResponse.data.data[0];
-          const modis =
-            modisResponse && modisResponse.data && modisResponse.data.data[0];
-
           dispatch(
             setWhitelist({
-              annual: parseWhitelist(annual),
-              glad: parseWhitelist(glad),
-              viirs: parseWhitelist(viirs),
-              modis: parseWhitelist(modis),
+              annual: parseWhitelist(annualResponse?.data?.[0]),
+              glad: parseWhitelist(gladResponse?.data?.[0]),
+              viirs: parseWhitelist(viirsResponse.data?.[0]),
+              modis: parseWhitelist(modisResponse?.data?.[0]),
             })
           );
         })
