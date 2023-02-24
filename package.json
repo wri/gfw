@@ -119,6 +119,8 @@
     "next-optimized-images": "^2.6.2",
     "next-sitemap": "^1.2.22",
     "node-sass": "^4.13.1",
+    "pino": "6.14.0",
+    "pino-http": "7.1.0",
     "postcss-flexbugs-fixes": "^4.2.0",
     "proj4": "^2.5.0",
     "promise.prototype.finally": "^3.1.2",
