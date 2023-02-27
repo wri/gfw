@@ -19,6 +19,14 @@ const defaultConfig = {
   large: true,
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
+  alerts: [
+    {
+      id: 'regions-most-burned-areas-1',
+      text:
+        'Caution: Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.',
+      visible: ['global', 'country', 'adm0', 'adm1', 'dashboard'],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',
