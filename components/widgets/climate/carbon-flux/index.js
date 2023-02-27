@@ -113,13 +113,13 @@ export default {
   },
   sentences: {
     globalInitial:
-      'Between {startYear} and {endYear}, <strong>global</strong> forests emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a net carbon flux of {totalFlux}<b>/year</b>.',
+      'Between {startYear} and {endYear}, <strong>global</strong> forests emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a {netCarbonFluxWording} of {totalFlux}<b>/year</b>.',
     globalWithIndicator:
-      'Between {startYear} and {endYear}, <strong>global</strong> forests within {indicator} emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a net carbon flux of {totalFlux}<b>/year</b>.',
+      'Between {startYear} and {endYear}, <strong>global</strong> forests within {indicator} emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a {netCarbonFluxWording} of {totalFlux}<b>/year</b>.',
     initial:
-      'Between {startYear} and {endYear}, forests in {location} emitted {totalEmissions}<strong>/year</strong>, and removed {totalRemovals}<strong>/year</strong>. This represents a net carbon flux of {totalFlux}<strong>/year</strong>.',
+      'Between {startYear} and {endYear}, forests in {location} emitted {totalEmissions}<strong>/year</strong>, and removed {totalRemovals}<strong>/year</strong>. This represents a {netCarbonFluxWording} of {totalFlux}<strong>/year</strong>.',
     withIndicator:
-      'Between {startYear} and {endYear}, forests within {indicator}, {location} emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a net carbon flux of {totalFlux}<b>/year</b>.',
+      'Between {startYear} and {endYear}, forests within {indicator}, {location} emitted {totalEmissions}<b>/year</b>, and removed {totalRemovals}<b>/year</b>. This represents a {netCarbonFluxWording} of {totalFlux}<b>/year</b>.',
   },
   customComponent: 'CarbonFlux',
   settings: {
@@ -127,6 +127,13 @@ export default {
     includesGainPixels: true,
     startYear: 2001,
     endYear: 2021,
+    sentence: {
+      netCarbonFlux: {
+        positive: 'net carbon source',
+        negative: 'net carbon sink',
+        neutral: 'net carbon flux',
+      },
+    },
   },
   whitelists: {},
   getData: (params) => {
