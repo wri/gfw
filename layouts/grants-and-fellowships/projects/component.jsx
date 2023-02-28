@@ -33,10 +33,10 @@ const GrantsProjectsSection = ({
   const [category, setCategory] = useState('All');
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setLoading] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [isLoadMoreVisible, setLoadMoreVisibility] = useState(true);
 
   const { query, replace, asPath } = useRouter();
-
   const { modal, projectId, country: countryIso } = query;
 
   const getMoreProjects = useCallback(async (params) => {
@@ -56,19 +56,23 @@ const GrantsProjectsSection = ({
     }
   }, []);
 
-  const setMoreProjects = useCallback((projectItems, itemSelected) => {
-    if (projectItems) {
-      setProjects(projectItems);
+  const setMoreProjects = useCallback(
+    (projectItems, itemSelected, itemToCompare = null) => {
+      if (projectItems) {
+        setProjects(projectItems);
 
-      if (itemSelected === '') {
-        setLoadMoreVisibility(true);
-      }
+        if (!itemSelected && !itemToCompare) {
+          setLoadMoreVisibility(true);
+          setPageNumber(1);
+        }
 
-      if (itemSelected !== '') {
-        setLoadMoreVisibility(false);
+        if (itemSelected !== '') {
+          setLoadMoreVisibility(false);
+        }
       }
-    }
-  }, []);
+    },
+    []
+  );
 
   const projectsListOrdered = useMemo(
     () => orderBy(projectsList, ['year', 'title'], ['desc', 'asc']),
@@ -111,7 +115,7 @@ const GrantsProjectsSection = ({
     [categories, category]
   );
 
-  useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
+  useEffect(() => setCountry(countryIso), [countryIso]);
 
   useEffect(() => {
     if (!categories?.map(({ label }) => label).includes(category)) {
@@ -131,6 +135,26 @@ const GrantsProjectsSection = ({
     }
   }, []);
 
+  const createParameters = (itemSelected, itemToCompare) => {
+    let params = { search: itemSelected, per_page: 100 };
+
+    if (itemSelected && itemToCompare) {
+      params = Object.assign(params, {
+        search: `${itemSelected} ${itemToCompare}`,
+      });
+    }
+
+    if (!itemSelected && !itemToCompare) {
+      params = Object.assign(params, { per_page: 21 });
+    }
+
+    if (!itemSelected && itemToCompare) {
+      params = Object.assign(params, { search: itemToCompare });
+    }
+
+    return params;
+  };
+
   const setQueryParams = (params) => {
     const queryParams = omitBy(
       { ...query, section: null, ...params },
@@ -147,16 +171,6 @@ const GrantsProjectsSection = ({
     );
   };
 
-  const handleCountrySelected = (option) => {
-    const params =
-      option === '' ? { per_page: 21 } : { search: option, per_page: 100 };
-
-    setQueryParams({ country: option });
-    getMoreProjects(params).then((projectItems) =>
-      setMoreProjects(projectItems, option)
-    );
-  };
-
   const setModalOpen = (id) => {
     setQueryParams({ projectId: id });
   };
@@ -164,6 +178,24 @@ const GrantsProjectsSection = ({
   const handleModalClose = () => {
     setQueryParams({ projectId: null });
   };
+
+  const handleCountrySelected = (option) => {
+    const params = createParameters(searchKeyword, option);
+
+    setQueryParams({ country: option });
+    getMoreProjects(params).then((projectItems) =>
+      setMoreProjects(projectItems, option, searchKeyword)
+    );
+  };
+
+  const handleSearchOnChange = debounce((searchItem) => {
+    const params = createParameters(searchItem, country);
+
+    setSearchKeyword(searchItem);
+    getMoreProjects(params).then((projectItems) =>
+      setMoreProjects(projectItems, searchItem, country)
+    );
+  }, 500);
 
   const handleOnLoadMore = debounce(() => {
     getMoreProjects({ page: pageNumber + 1, per_page: 21 }).then(
@@ -179,17 +211,6 @@ const GrantsProjectsSection = ({
       }
     );
   }, 100);
-
-  const handleSearchOnChange = debounce((searchItem) => {
-    const params =
-      searchItem === ''
-        ? { per_page: 21 }
-        : { search: searchItem, per_page: 100 };
-
-    getMoreProjects(params).then((projectItems) =>
-      setMoreProjects(projectItems, searchItem)
-    );
-  }, 500);
 
   return (
     <Fragment>
@@ -254,7 +275,7 @@ const GrantsProjectsSection = ({
             );
           })}
 
-          {!projects?.length && (
+          {!projects?.length && !isLoading && (
             <NoContent
               className="no-projects"
               message="No projects for that search"
