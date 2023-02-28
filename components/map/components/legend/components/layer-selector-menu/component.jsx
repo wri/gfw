@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
+import Switch from 'components/ui/switch';
 
 import SentenceSelector from 'components/sentence-selector';
 
@@ -25,25 +26,40 @@ class LayerSelectorMenu extends PureComponent {
 
     return (
       <div className={`c-layer-selector-menu ${className || ''}`}>
-        {groups && !!groups.length && (
-          <div className="menu-wrapper -group">
-            <SentenceSelector
-              options={groups}
-              value={selectedGroup && selectedGroup.value}
-              onChange={(e) => onChange(layerGroup, e)}
-              name={optionName}
-              sentence={groupSentence}
-            />
-          </div>
+        {!toggle && (
+          <>
+            {groups && !!groups.length && (
+              <div className="menu-wrapper -group">
+                <SentenceSelector
+                  options={groups}
+                  value={selectedGroup && selectedGroup.value}
+                  onChange={(e) => onChange(layerGroup, e)}
+                  name={optionName}
+                  sentence={groupSentence}
+                />
+              </div>
+            )}
+            {options && !!options.length && (
+              <div className="menu-wrapper">
+                <SentenceSelector
+                  options={sortBy(options, 'position')}
+                  value={selected}
+                  onChange={(e) => onChange(layerGroup, e)}
+                  name={optionName}
+                  sentence={sentence}
+                />
+              </div>
+            )}
+          </>
         )}
-        {options && !!options.length && (
-          <div className="menu-wrapper">
-            <SentenceSelector
-              options={sortBy(options, 'position')}
-              value={selected}
+        {toggle && (
+          <div className="menu-wrapper - switch">
+            <Switch
+              className="widget-settings-selector"
+              theme="theme-switch-light"
+              value={selected?.value}
+              options={options}
               onChange={(e) => onChange(layerGroup, e)}
-              name={optionName}
-              sentence={sentence}
             />
           </div>
         )}
