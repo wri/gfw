@@ -19,6 +19,7 @@ class LayerSelectorMenu extends PureComponent {
       className,
       sentence,
       groupSentence,
+      toggle,
     } = this.props;
     const optionName = selected?.group || name;
 
@@ -62,6 +63,7 @@ LayerSelectorMenu.propTypes = {
   sentence: PropTypes.string,
   groupSentence: PropTypes.string,
   selectedGroup: PropTypes.object,
+  toggle: PropTypes.bool,
 };
 
 export default LayerSelectorMenu;
