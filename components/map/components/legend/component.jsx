@@ -80,7 +80,7 @@ const MapLegend = ({
 
             const activeLayer = layers && layers.find((l) => l.active);
             const getWarningLabel = () => {
-              switch (activeLayer.id) {
+              switch (activeLayer?.id) {
                 case 'integrated-deforestation-alerts-8bit':
                   if (caution_gladL && caution_radd) {
                     return `${caution_gladL}<br /><br />${caution_radd}`;
