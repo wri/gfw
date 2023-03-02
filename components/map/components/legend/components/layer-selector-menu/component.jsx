@@ -1,12 +1,12 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import sortBy from "lodash/sortBy";
-import Switch from "components/ui/switch";
-import cx from "classnames";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import sortBy from 'lodash/sortBy';
+import Switch from 'components/ui/switch';
+import cx from 'classnames';
 
-import SentenceSelector from "components/sentence-selector";
+import SentenceSelector from 'components/sentence-selector';
 
-import "./styles.scss";
+import './styles.scss';
 
 class LayerSelectorMenu extends PureComponent {
   render() {
@@ -29,23 +29,23 @@ class LayerSelectorMenu extends PureComponent {
     const selectorName = selected?.group || name;
     const selectorOptions = isGroupsSelector
       ? groups
-      : sortBy(options, "position");
+      : sortBy(options, 'position');
     const selectorValue = isGroupsSelector
       ? selectedGroup && selectedGroup.value
       : selected;
     const selectorSentence = isGroupsSelector ? groupSentence : sentence;
 
     return (
-      <div className={`c-layer-selector-menu ${className || ""}`}>
+      <div className={`c-layer-selector-menu ${className || ''}`}>
         <div
-          className={cx("menu-wrapper", {
-            "-group": isGroupsSelector,
-            "-toggle": isToggleSelector,
+          className={cx('menu-wrapper', {
+            '-group': isGroupsSelector,
+            '-toggle': isToggleSelector,
           })}
         >
           {isToggleSelector ? (
             <Switch
-              theme="theme-switch-light"
+              theme="theme-switch-light-alternate"
               value={selected?.value}
               options={options}
               name={selectorName}
