@@ -20,7 +20,7 @@ const handleFeatureEnvLock = (env) => {
     return true;
   }
   if (currEnv === 'preproduction') {
-    return ['preproduction', 'production'].includes(env);
+    return ['preproduction', 'production', 'staging'].includes(env);
   }
   return env === currEnv;
 };

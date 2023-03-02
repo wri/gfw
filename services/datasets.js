@@ -15,7 +15,7 @@ const environmentString = () => {
 export const getDatasets = () =>
   rwRequest
     .get(
-      `/dataset?application=gfw&includes=metadata,vocabulary,layer&published=true&page[size]=9999&env=${environmentString()}${
+      `/dataset?application=gfw&includes=metadata,vocabulary,layer&published=true&page[size]=9999&env=production,preproduction,staging${
         environmentString() === 'staging'
           ? `&filterIncludesByEnv=true&refresh=${new Date()}`
           : ''
