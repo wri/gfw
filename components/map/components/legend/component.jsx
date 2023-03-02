@@ -179,10 +179,11 @@ const MapLegend = ({
                         className="param-selector"
                         {...paramConfig}
                         value={params[paramConfig.key] || paramConfig.default}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           onChangeParam(activeLayer, {
                             [paramConfig.key]: e,
-                          })}
+                          });
+                        }}
                       />
                     ) : null
                   )}
@@ -199,10 +200,11 @@ const MapLegend = ({
                         value={
                           decodeParams[paramConfig.key] || paramConfig.default
                         }
-                        onChange={(e) =>
+                        onChange={(e) => {
                           onChangeDecodeParam(activeLayer, {
                             [paramConfig.key]: parseInt(e, 10),
-                          })}
+                          });
+                        }}
                       />
                     ) : null
                   )}
