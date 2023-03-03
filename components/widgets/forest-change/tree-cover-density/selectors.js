@@ -4,10 +4,10 @@ import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
 const getDensity = (state) => state.data && state.data;
-// const getLocationLabel = (state) => state.locationLabel;
-// const getIndicator = (state) => state.indicator;
+const getLocationLabel = (state) => state.locationLabel;
+const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
-// const getSentence = (state) => state && state.sentence;
+const getSentence = (state) => state && state.sentence;
 
 const parseData = createSelector([getDensity], (densityData) => {
   if (!densityData) {
@@ -59,87 +59,28 @@ const parseConfig = createSelector([getColors], (colors) => ({
   ],
 }));
 
-// const parseSentence = createSelector(
-//   [
-//     parseData,
+const parseSentence = createSelector(
+  [parseData, getLocationLabel, getIndicator, getSentence],
+  (data, locationLabel, indicator, sentences) => {
+    if (!data) return null;
 
-//     getExtent,
-//     getSettings,
-//     getLocationLabel,
-//     getIndicator,
-//     getSentence,
-//   ],
-//   (
-//     data,
-//     filteredData,
-//     extent,
-//     settings,
-//     locationLabel,
-//     indicator,
-//     sentences
-//   ) => {
-//     if (!data) return null;
-//     const {
-//       initial,
-//       withIndicator,
-//       noLoss,
-//       noLossWithIndicator,
-//       globalInitial,
-//       globalWithIndicator,
-//     } = sentences;
-//     const { startYear, endYear } = settings;
+    const { initial, withIndicator } = sentences;
+    const sentence = indicator ? withIndicator : initial;
+    const params = {
+      indicator: indicator && indicator.label,
+      location: locationLabel,
+      percent: formatNumber({ num: data[9].decile, unit: '%' }),
+    };
 
-//     const totalLossPrimary =
-//       filteredData && filteredData.length ? sumBy(filteredData, 'area') : 0;
-
-//     const totalLoss = data && data.length ? data[0].totalLoss : 0;
-//     const percentageLoss =
-//       (totalLoss && extent && (totalLossPrimary / totalLoss) * 100) || 0;
-
-//     const initialExtentData = data.find((d) => d.year === startYear - 1);
-//     const initialExtent =
-//       (initialExtentData && initialExtentData.extentRemaining) || 100;
-
-//     const finalExtentData = data.find((d) => d.year === endYear);
-//     const finalExtent =
-//       (finalExtentData && finalExtentData.extentRemaining) || 0;
-
-//     let sentence = indicator ? withIndicator : initial;
-//     if (totalLoss === 0) {
-//       sentence = indicator ? noLossWithIndicator : noLoss;
-//     }
-//     if (locationLabel === 'global') {
-//       sentence = indicator ? globalWithIndicator : globalInitial;
-//     }
-//     const params = {
-//       indicator: indicator && indicator.label,
-//       location: locationLabel === 'global' ? 'globally' : locationLabel,
-//       startYear,
-//       endYear,
-//       extentDelta: formatNumber({
-//         num: Math.abs(initialExtent - finalExtent),
-//         unit: '%',
-//       }),
-//       loss: formatNumber({ num: totalLossPrimary, unit: 'ha' }),
-//       percent: formatNumber({ num: percentageLoss, unit: '%' }),
-//       component: {
-//         key: 'total tree cover loss',
-//         fine: true,
-//         tooltip:
-//           'Total tree cover loss includes loss in dry and non-tropical primary forests, secondary forests, and tree plantations in addition to humid primary forest loss.',
-//       },
-//     };
-
-//     return {
-//       sentence,
-//       params,
-//     };
-//   }
-// );
+    return {
+      sentence,
+      params,
+    };
+  }
+);
 
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  // sentence: parseSentence,
-  // title: parseTitle,
+  sentence: parseSentence,
 });

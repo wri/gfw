@@ -56,6 +56,8 @@ export default {
   },
   sentence: {
     initial: '{location} had an average tree cover of {percent} in 2020',
+    withIndicator:
+      '{location} in {indicator} had an average tree cover of {percent} in 2020',
   },
   whitelists: {
     indicators: ['primary_forest'],
