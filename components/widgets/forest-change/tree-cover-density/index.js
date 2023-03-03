@@ -16,8 +16,8 @@ export default {
   widget: 'treeCoverDensity',
   title: 'Tree cover density in {location}',
   categories: ['summary', 'land-cover'],
-  types: ['global', 'country', 'wdpa', 'aoi'],
-  admins: ['global', 'adm0', 'adm1', 'adm2'],
+  types: ['country', 'wdpa', 'aoi'],
+  admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
@@ -64,11 +64,6 @@ export default {
     checkStatus: true,
   },
   getData: (params = {}) => {
-    const treeCoverDensity = getTreeCoverDensity(params);
-
-    return treeCoverDensity.then((data) => data);
-  },
-  getDataURL: (params) => {
     const treeCoverDensity = getTreeCoverDensity(params);
 
     return treeCoverDensity.then((data) => data);
