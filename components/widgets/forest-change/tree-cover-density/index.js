@@ -18,18 +18,10 @@ export default {
   categories: ['summary', 'land-cover'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  caution: {
-    text:
-      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
-    visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-    linkText: 'Read more here',
-    link:
-      'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
-  },
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
-  colors: 'loss',
+  colors: 'loss', // TO-DO: Add correct color scheme
   settingsConfig: [
     {
       key: 'landCategory',
@@ -39,24 +31,11 @@ export default {
       clearable: true,
       border: true,
     },
-    {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      type: 'range-select',
-      border: true,
-    },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
   ],
   pendingKeys: ['threshold', 'years'],
-  refetchKeys: ['landCategory', 'threshold'],
+  refetchKeys: ['landCategory'],
   dataType: 'gain',
+  // TO-DO: Add metadata URL
   metaKey: 'widget_primary_forest_loss',
   datasets: [
     {
@@ -64,12 +43,13 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // gain
+    // TO-DO: Add correct layer after delivery from Angel.
     {
       dataset: FOREST_GAIN_DATASET,
       layers: [FOREST_GAIN],
     },
   ],
+  // TO-DO: Add correct sort after Teresa decisions
   sortOrder: {
     summary: -1,
     forestChange: -1,
