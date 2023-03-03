@@ -21,7 +21,7 @@ export default {
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
-  colors: 'loss', // TO-DO: Add correct color scheme
+  colors: 'density',
   settingsConfig: [
     {
       key: 'landCategory',

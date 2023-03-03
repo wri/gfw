@@ -28,7 +28,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
   yKeys: {
     bars: {
       area: {
-        fill: colors.primaryForestLoss,
+        fill: colors.treeCoverDensity,
         background: false,
         yAxisId: 'wri_tropical_tree_cover_extent__ha',
       },
