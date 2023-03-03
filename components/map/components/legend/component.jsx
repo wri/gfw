@@ -71,7 +71,6 @@ const MapLegend = ({
               metadata,
               id,
               layers,
-              statementConfig,
               alerts,
               caution,
               caution_gladL,
@@ -111,6 +110,7 @@ const MapLegend = ({
               decodeParamsSelectorConfig,
               moreInfo,
               timelineParams,
+              statementConfig,
             } = activeLayer || {};
             return (
               <LegendListItem

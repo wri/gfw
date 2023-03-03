@@ -71,34 +71,6 @@ export const fetchDatasets = createThunkAction(
             } = info || {};
             const { iso, applicationConfig } = defaultLayer || {};
             const { global, selectorConfig } = applicationConfig || {};
-
-            // build statement config
-            let statementConfig =
-              defaultLayer.legendConfig && defaultLayer.legendConfig.statement
-                ? { statement: defaultLayer.legendConfig.statement }
-                : null;
-            if (isLossLayer) {
-              statementConfig = {
-                type: 'lossLayer',
-              };
-            } else if (isLossDriverLayer) {
-              statementConfig = {
-                type: 'lossDriverLayer',
-              };
-            } else if (isKbaLayer) {
-              statementConfig = {
-                type: 'kbaLayer',
-              };
-            } else if (isMosaicLandscapes) {
-              statementConfig = {
-                type: 'mosaicLandscapes',
-              };
-            } else if (global && !!iso.length && iso[0]) {
-              statementConfig = {
-                type: 'isoLayer',
-                isos: iso,
-              };
-            }
             return {
               id: applicationConfig?.dataset_slug || applicationConfig.slug,
               dataset:
@@ -120,8 +92,6 @@ export const fetchDatasets = createThunkAction(
                   ...selectorConfig,
                 },
               }),
-              // disclaimer statement config
-              statementConfig,
               // layers config
               layers:
                 layer &&
@@ -178,6 +148,34 @@ export const fetchDatasets = createThunkAction(
                         decode_config && reduceParams(decode_config);
                       const sqlParams =
                         sql_config && reduceSqlParams(sql_config);
+
+                      // build statement config
+                      let statementConfig =
+                        legendConfig && legendConfig.statement
+                          ? { statement: legendConfig.statement }
+                          : null;
+                      if (isLossLayer) {
+                        statementConfig = {
+                          type: 'lossLayer',
+                        };
+                      } else if (isLossDriverLayer) {
+                        statementConfig = {
+                          type: 'lossDriverLayer',
+                        };
+                      } else if (isKbaLayer) {
+                        statementConfig = {
+                          type: 'kbaLayer',
+                        };
+                      } else if (isMosaicLandscapes) {
+                        statementConfig = {
+                          type: 'mosaicLandscapes',
+                        };
+                      } else if (global && !!iso.length && iso[0]) {
+                        statementConfig = {
+                          type: 'isoLayer',
+                          isos: iso,
+                        };
+                      }
 
                       return {
                         ...info,
@@ -280,6 +278,8 @@ export const fetchDatasets = createThunkAction(
                         ...(confirmedOnly && {
                           id: 'confirmedOnly',
                         }),
+                        // disclaimer statement config
+                        statementConfig,
                       };
                     }),
                   'position'
