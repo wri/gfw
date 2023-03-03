@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
@@ -40,25 +41,22 @@ const parseConfig = createSelector([getColors], (colors) => ({
     yAxisId: 'wri_tropical_tree_cover_extent__ha',
   },
   unit: 'ha',
-  // tooltip: [
-  //   {
-  //     key: 'year',
-  //   },
-  //   {
-  //     key: 'extentRemaining',
-  //     unitFormat: (value) =>
-  //       formatNumber({ num: value, unit: '%', precision: 3 }),
-  //     label: 'Primary forest extent remaining',
-  //     color: colors.primaryForestExtent,
-  //     dashline: true,
-  //   },
-  //   {
-  //     key: 'area',
-  //     unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
-  //     label: 'Primary forest loss',
-  //     color: colors.primaryForestLoss,
-  //   },
-  // ],
+  tooltip: [
+    {
+      key: 'decile',
+      unitFormat: (value) =>
+        formatNumber({ num: value, unit: '%', precision: 3 }),
+      label: 'Tree cover density decile',
+      color: colors.primaryForestExtent,
+    },
+    {
+      key: 'area',
+      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      label: 'Tree cover density area',
+      color: colors.primaryForestLoss,
+      dashline: true,
+    },
+  ],
 }));
 
 // const parseSentence = createSelector(
