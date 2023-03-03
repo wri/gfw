@@ -4,6 +4,7 @@ import Toggle from 'react-toggle';
 
 import './react-toggle.scss';
 import './styles.scss';
+import './themes/switch-small.scss';
 import './themes/switch-light.scss';
 import './themes/switch-light-alternate.scss';
 

@@ -45,7 +45,7 @@ class LayerSelectorMenu extends PureComponent {
         >
           {isToggleSelector ? (
             <Switch
-              theme="theme-switch-light-alternate"
+              theme="theme-switch-light-alternate theme-switch-small"
               value={selected?.value}
               options={options}
               name={selectorName}
