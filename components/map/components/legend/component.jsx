@@ -168,6 +168,18 @@ const MapLegend = ({
                   />
                 )}
 
+                {isToggleLayer && selectorLayerConfig && (
+                  <LayerSelectorMenu
+                    className="layer-selector"
+                    layerGroup={lg}
+                    name={name}
+                    multi={isMultiSelectorLayer}
+                    toggle={isToggleLayer}
+                    onChange={onChangeLayer}
+                    {...selectorLayerConfig}
+                  />
+                )}
+
                 {activeLayer &&
                   paramsSelectorConfig &&
                   params &&
@@ -209,6 +221,7 @@ const MapLegend = ({
                     ) : null
                   )}
                 {(isSelectorLayer || isMultiSelectorLayer) &&
+                  !isToggleLayer &&
                   selectorLayerConfig && (
                     <LayerSelectorMenu
                       className="layer-selector"
