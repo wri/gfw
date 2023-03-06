@@ -41,10 +41,7 @@ const GrantsProjectsSection = ({
 
   const getMoreProjects = useCallback(async (params) => {
     try {
-      setLoading(true);
-      const { sgfProjects } = await getSGFProjects({
-        params,
-      });
+      const { sgfProjects } = await getSGFProjects({ params });
       setLoading(false);
 
       return sgfProjects;
@@ -179,9 +176,15 @@ const GrantsProjectsSection = ({
     setQueryParams({ projectId: null });
   };
 
+  const resetProjectsList = () => {
+    setProjects([]);
+    setLoading(true);
+  };
+
   const handleCountrySelected = (option) => {
     const params = createParameters(searchKeyword, option);
 
+    resetProjectsList();
     setQueryParams({ country: option });
     getMoreProjects(params).then((projectItems) =>
       setMoreProjects(projectItems, option, searchKeyword)
@@ -191,11 +194,12 @@ const GrantsProjectsSection = ({
   const handleSearchOnChange = debounce((searchItem) => {
     const params = createParameters(searchItem, country);
 
+    resetProjectsList();
     setSearchKeyword(searchItem);
-    getMoreProjects(params).then((projectItems) =>
-      setMoreProjects(projectItems, searchItem, country)
-    );
-  }, 500);
+    getMoreProjects(params).then((projectItems) => {
+      setMoreProjects(projectItems, searchItem, country);
+    });
+  }, 1000);
 
   const handleOnLoadMore = debounce(() => {
     getMoreProjects({ page: pageNumber + 1, per_page: 21 }).then(
@@ -243,7 +247,11 @@ const GrantsProjectsSection = ({
             <TagsList title="Categories" tags={tags} onClick={setCategory} />
           </Column>
           <Column width={[1, 1 / 2, 1 / 3]}>
-            <Search placeholder="Search" onChange={handleSearchOnChange} />
+            <Search
+              placeholder="Search"
+              onChange={handleSearchOnChange}
+              onSubmit={handleSearchOnChange}
+            />
           </Column>
         </Row>
         <Row className="project-cards">
