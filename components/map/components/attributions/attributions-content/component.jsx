@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { useMemo } from 'react';
 
 import Icon from 'components/ui/icon';
@@ -8,7 +8,7 @@ import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
 import planetLogo from 'assets/logos/planet.png';
 
-const AttributionsContent = ({ narrow = false, isModal = false }) => {
+const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
   const currentYear = useMemo(() => new Date().getFullYear());
 
   return (
@@ -49,46 +49,51 @@ const AttributionsContent = ({ narrow = false, isModal = false }) => {
           />
         </a>
       </div>
-      {!narrow && (
-        <div className="links">
-          <span>
-            Map data ©
-            {currentYear}
-            {' '}
-            Google
-          </span>
-          {isModal && (
-            <>
-              <a
-                href="http://www.openstreetmap.org/copyright"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                © OpenStreetMap
-              </a>
-              <a
-                href="https://www.mapbox.com/map-feedback/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Improve this map
-              </a>
-            </>
-          )}
-          <a href="/terms" rel="noopener noreferrer" target="_blank">
-            Terms of use
-          </a>
-          <a href="/privacy-policy" rel="noopener noreferrer" target="_blank">
-            Privacy policy
-          </a>
-        </div>
-      )}
+      <div className="links">
+        <span>
+          Map data ©
+          {currentYear}
+          {' '}
+          Google
+        </span>
+        <a
+          href="https://www.mapbox.com/about/maps/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          © Mapbox
+        </a>
+        <a
+          href="http://www.openstreetmap.org/copyright"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          © OpenStreetMap
+        </a>
+        <a
+          href="https://www.mapbox.com/map-feedback/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Improve this map
+        </a>
+        {(isDesktop || isModal) && (
+          <>
+            <a href="/terms" rel="noopener noreferrer" target="_blank">
+              Terms of use
+            </a>
+            <a href="/privacy-policy" rel="noopener noreferrer" target="_blank">
+              Privacy policy
+            </a>
+          </>
+        )}
+      </div>
     </>
   );
 };
 
 AttributionsContent.propTypes = {
-  narrow: PropTypes.bool,
+  isDesktop: PropTypes.bool,
   isModal: PropTypes.bool,
 };
 

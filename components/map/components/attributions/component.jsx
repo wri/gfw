@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Button } from 'gfw-components';
+import { Button, Mobile, Desktop } from 'gfw-components';
 
 import Icon from 'components/ui/icon';
 
@@ -12,33 +12,31 @@ import AttributionsModal from './attributions-modal';
 
 import './styles.scss';
 
-const MapAttributions = ({ className, viewport, map }) => {
-  const width = map._container.clientWidth;
+const MapAttributions = ({ className }) => {
   const [attributionsModalOpen, setAttributionsModalOpen] = useState(false);
-  const [narrowView, setNarrowView] = useState(width < 900);
-
-  useEffect(() => {
-    setNarrowView(width < 900);
-  }, [viewport]);
 
   return (
     <>
-      <div className={cx('c-map-attributions', className)}>
-        <AttributionsContent narrow={narrowView} />
-        {narrowView && (
-          <>
-            <Button
-              className="attribution-btn"
-              size="small"
-              round
-              dark
-              onClick={() => setAttributionsModalOpen(true)}
-            >
-              <Icon icon={infoIcon} />
-            </Button>
-          </>
-        )}
-      </div>
+      <Desktop>
+        <div className={cx('c-map-attributions', className)}>
+          <AttributionsContent isDesktop />
+        </div>
+      </Desktop>
+      <Mobile>
+        <div className={cx('c-map-attributions', className, '-mobile')}>
+          <AttributionsContent />
+          <Button
+            className="attribution-btn"
+            size="small"
+            round
+            dark
+            onClick={() => setAttributionsModalOpen(true)}
+          >
+            <Icon icon={infoIcon} />
+          </Button>
+        </div>
+      </Mobile>
+
       <AttributionsModal
         open={attributionsModalOpen}
         onRequestClose={() => setAttributionsModalOpen(false)}
@@ -49,8 +47,6 @@ const MapAttributions = ({ className, viewport, map }) => {
 
 MapAttributions.propTypes = {
   className: PropTypes.string,
-  map: PropTypes.object,
-  viewport: PropTypes.object,
 };
 
 export default MapAttributions;

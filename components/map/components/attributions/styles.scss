@@ -1,9 +1,25 @@
 @import '~styles/settings.scss';
 
 .c-map-attributions {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  &.-mobile {
+    gap: 8px;
+    padding-right: 24px;
+  }
+
+  .logos,
+  .links {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 28px;
+  }
 
   a,
   span {
@@ -39,10 +55,10 @@
   }
 
   .attribution-btn {
+    position: absolute;
+    right: 24px;
+    bottom: 78px;
     opacity: 0.8;
-    margin-left: rem(10px);
-    width: 14px;
-    height: 14px;
     min-width: 14px;
     min-height: 14px;
 

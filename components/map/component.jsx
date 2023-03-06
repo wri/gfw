@@ -426,11 +426,7 @@ class MapComponent extends Component {
                 {/* SCALE */}
                 <Scale className="map-scale" map={map} viewport={viewport} />
                 {/* ATTRIBUTIONS */}
-                <Attributions
-                  className="map-attributions"
-                  map={map}
-                  viewport={viewport}
-                />
+                <Attributions className="map-attributions" />
               </Fragment>
             )}
           </Map>
