@@ -28,7 +28,7 @@ export default {
   },
   categories: ['summary', 'forest-change'],
   subcategories: ['net-change'],
-  types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+  types: ['global', 'country', 'geostore', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   caution: {
     text:
