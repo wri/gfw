@@ -24,7 +24,8 @@ export const formatNumber = ({ num, unit, precision, returnUnit = true }) => {
   } else if (num > 0 && num < 0.01 && unit !== '%') {
     formattedNum = '<0.01';
   }
+
   return `${formattedNum}${
-    returnUnit && unit && unit !== 'counts' ? unit : ''
+    returnUnit && unit && unit !== 'counts' && unit !== 'countsK' ? unit : ''
   }`;
 };
