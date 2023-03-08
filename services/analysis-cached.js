@@ -82,6 +82,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
+  treeCoverByLandCoverClass:
+    'SELECT umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
 };
 
 const ALLOWED_PARAMS = {
@@ -955,6 +957,34 @@ export const getTreeCoverGainByPlantationType = (params) => {
       })),
     },
   }));
+};
+
+export const getTreeCoverByLandCoverClass = (params) => {
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230224',
+  });
+
+  if (!requestUrl) return new Promise(() => {});
+
+  const sqlQuery = SQL_QUERIES.treeCoverByLandCoverClass;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`
+      .replace('{WHERE}', getWHEREQuery({ ...params }))
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{decile}', params?.decile)
+  );
+
+  return dataRequest.get(url).then((response) =>
+    response?.data?.filter(
+      // Unknown values should just be ignored for the widget, they indicate NoData.
+      // See: https://gfw.atlassian.net/wiki/spaces/FLAG/pages/586416133/Widget+Queries+and+Data+Handoff#Schema-Changes
+      ({ umd_global_land_cover__ipcc_class: ipccClass }) => ipccClass !== null
+    )
+  );
 };
 
 // Net Change
