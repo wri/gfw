@@ -6,7 +6,13 @@ export const formatUSD = (value, minimize = true) =>
     .replace('M', minimize ? 'M' : ' million')
     .replace('K', minimize ? 'K' : ' thousand');
 
-export const formatNumber = ({ num, unit, precision, returnUnit = true }) => {
+export const formatNumber = ({
+  num,
+  unit,
+  precision,
+  returnUnit = true,
+  spaceUnit = false,
+}) => {
   if (unit === '') return format('.2f')(num);
   if (unit === ',') return format(',')(num);
   let p = unit === '%' ? '2' : '3';
@@ -25,7 +31,12 @@ export const formatNumber = ({ num, unit, precision, returnUnit = true }) => {
     formattedNum = '<0.01';
   }
 
-  return `${formattedNum}${
-    returnUnit && unit && unit !== 'counts' && unit !== 'countsK' ? unit : ''
-  }`;
+  if (spaceUnit) {
+    // Capture group until first occurrence of a non digit or dot or comma.
+    // and insert a space after the captured group.
+    formattedNum = String(formattedNum).replace(/([\d|.|,]+)/, '$1 ');
+  }
+
+  return `${formattedNum}${returnUnit && unit && unit !== 'counts' && unit !== 'countsK' ? unit : ''
+    }`;
 };
