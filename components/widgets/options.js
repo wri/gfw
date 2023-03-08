@@ -1,6 +1,7 @@
 import forestType from 'data/forest-types';
 import landCategory from 'data/land-categories';
 import threshold from 'data/thresholds.json';
+import decile from 'data/deciles.json';
 import firesThreshold from 'data/fires-thresholds.json';
 import unit from 'data/units.json';
 import gasesIncluded from 'data/emission-gases.json';
@@ -21,6 +22,7 @@ export default {
   forestType: forestType.filter((f) => !f.hidden),
   landCategory: landCategory.filter((l) => !l.hidden),
   threshold,
+  decile,
   firesThreshold,
   unit,
   gasesIncluded,
