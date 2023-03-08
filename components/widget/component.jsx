@@ -20,6 +20,7 @@ class Widget extends PureComponent {
     maxSize: PropTypes.number,
     embed: PropTypes.bool,
     large: PropTypes.bool,
+    autoHeight: PropTypes.bool,
     colors: PropTypes.object,
     simple: PropTypes.bool,
     alerts: PropTypes.array,
@@ -90,6 +91,7 @@ class Widget extends PureComponent {
       filterSelected,
       maxSize,
       large,
+      autoHeight,
       embed,
       simple,
       datasets,
@@ -200,6 +202,9 @@ class Widget extends PureComponent {
           metaLoading={metaLoading}
           error={error}
           simple={simple}
+          large={large}
+          autoHeight={autoHeight}
+          embed={embed}
           location={location}
           locationName={locationLabelFull}
           active={active}

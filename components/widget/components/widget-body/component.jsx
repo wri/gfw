@@ -43,6 +43,9 @@ class WidgetBody extends PureComponent {
     metaLoading: PropTypes.bool,
     error: PropTypes.bool,
     simple: PropTypes.bool,
+    large: PropTypes.bool,
+    autoHeight: PropTypes.bool,
+    embed: PropTypes.bool,
     chartType: PropTypes.string,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     customComponent: PropTypes.string,
@@ -61,6 +64,7 @@ class WidgetBody extends PureComponent {
       metaLoading,
       error,
       simple,
+      autoHeight,
       locationName,
       sentence,
       data,
@@ -78,7 +82,9 @@ class WidgetBody extends PureComponent {
     const Component = chartOptions[chartType];
 
     return (
-      <div className={cx('c-widget-body', { simple })}>
+      <div
+        className={cx('c-widget-body', { simple, '-auto-height': autoHeight })}
+      >
         {(loading || metaLoading) && <Loader className="widget-loader" />}
         {!loading &&
           !metaLoading &&
