@@ -6,7 +6,7 @@ import WidgetHeader from './components/widget-header';
 import WidgetBody from './components/widget-body';
 import WidgetFooter from './components/widget-footer';
 
-import './styles.scss';
+// import './styles.scss';
 
 class Widget extends PureComponent {
   static propTypes = {

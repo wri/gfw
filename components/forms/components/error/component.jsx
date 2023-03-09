@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.scss';
+// import './styles.scss';
 
 class Submit extends PureComponent {
   static propTypes = {
@@ -10,7 +10,7 @@ class Submit extends PureComponent {
     valid: PropTypes.bool,
     submitFailed: PropTypes.bool,
     submitError: PropTypes.string,
-    success: PropTypes.string
+    success: PropTypes.string,
   };
 
   render() {
@@ -18,9 +18,9 @@ class Submit extends PureComponent {
 
     return (
       <div className={cx('c-form-error', className)}>
-        {!submitError &&
-          !valid &&
-          submitFailed && <span>Required fields are empty!</span>}
+        {!submitError && !valid && submitFailed && (
+          <span>Required fields are empty!</span>
+        )}
         {submitError && <span>{submitError}</span>}
         {!submitError && success && <span className="success">{success}</span>}
       </div>

@@ -4,7 +4,7 @@ import { translateText } from 'utils/lang';
 
 import Dropdown from 'components/ui/dropdown';
 
-import './styles.scss';
+// import './styles.scss';
 
 class SentenceSelector extends PureComponent {
   static defaultProps = {

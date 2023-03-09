@@ -20,7 +20,7 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import shareIcon from 'assets/icons/share.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 const isServer = typeof window === 'undefined';
 
@@ -150,7 +150,8 @@ class ShowAnalysis extends PureComponent {
                           ? window.location.href
                           : window.location.href.replace('/map', '/embed/map')),
                       areaId: activeArea?.id,
-                    })}
+                    })
+                  }
                   tooltip={{ text: 'Share analysis' }}
                 >
                   <Icon icon={shareIcon} className="icon-share" />
@@ -193,19 +194,18 @@ class ShowAnalysis extends PureComponent {
               )}
             {!hasLayers && !hasWidgets && !loading && (
               <NoContent>
-                Select a
-                {' '}
+                Select a{' '}
                 <button
                   className="notranslate"
                   onClick={() =>
                     setMenuSettings({
                       menuSection: 'datasets',
                       datasetCategory: 'forestChange',
-                    })}
+                    })
+                  }
                 >
                   forest change
-                </button>
-                {' '}
+                </button>{' '}
                 data layer to analyze.
               </NoContent>
             )}
@@ -226,14 +226,12 @@ class ShowAnalysis extends PureComponent {
                   {showAnalysisDisclaimer && (
                     <>
                       <p>
-                        <b>NOTE:</b>
-                        {' '}
-                        tree cover loss and gain statistics cannot
-                        be compared against each other.
-                        {' '}
+                        <b>NOTE:</b> tree cover loss and gain statistics cannot
+                        be compared against each other.{' '}
                         <button
                           onClick={() =>
-                            this.setState({ disclaimerModalOpen: true })}
+                            this.setState({ disclaimerModalOpen: true })
+                          }
                         >
                           Learn more.
                         </button>
@@ -242,7 +240,8 @@ class ShowAnalysis extends PureComponent {
                         open={this.state.disclaimerModalOpen}
                         title="Comparing Loss and Gain"
                         onRequestClose={() =>
-                          this.setState({ disclaimerModalOpen: false })}
+                          this.setState({ disclaimerModalOpen: false })
+                        }
                         className="c-loss-disclaimer-modal"
                       >
                         <p>
@@ -267,17 +266,14 @@ class ShowAnalysis extends PureComponent {
                           natural or managed forests.
                         </p>
                         <p className="credits">
-                          <strong>Citation:</strong>
-                          {' '}
-                          Hansen, M. C., P. V.
+                          <strong>Citation:</strong> Hansen, M. C., P. V.
                           Potapov, R. Moore, M. Hancher, S. A. Turubanova, A.
                           Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R.
                           Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O.
                           Justice, and J. R. G. Townshend. 2013.
                           “High-Resolution Global Maps of 21st-Century Forest
                           Cover Change.” Science 342 (15 November): 850–53. Data
-                          available on-line from:
-                          {' '}
+                          available on-line from:{' '}
                           <a
                             href="http://earthenginepartners.appspot.com/science-2013-global-forest"
                             target="_blank"
@@ -290,16 +286,14 @@ class ShowAnalysis extends PureComponent {
                         <p className="credits">
                           <strong>
                             Suggested citations for data as displayed on GFW:
-                          </strong>
-                          {' '}
+                          </strong>{' '}
                           Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S.
                           A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman,
                           S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov,
                           L. Chini, C. O. Justice, and J. R. G. Townshend. 2013.
                           “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain
                           Area.” University of Maryland, Google, USGS, and NASA.
-                          Accessed through Global Forest Watch on [date].
-                          {' '}
+                          Accessed through Global Forest Watch on [date].{' '}
                           <a
                             href="https://www.globalforestwatch.org"
                             target="_blank"
@@ -328,8 +322,7 @@ class ShowAnalysis extends PureComponent {
             {activeArea ? (
               <div className="content">
                 <p>
-                  To perform an in-depth analysis of this area please visit the
-                  {' '}
+                  To perform an in-depth analysis of this area please visit the{' '}
                   <Link
                     href="/dashboards/[[...location]]"
                     as={`/dashboards/aoi/${activeArea.id}`}

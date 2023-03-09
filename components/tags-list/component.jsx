@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import cx from 'classnames';
 
-import './styles.scss';
+// import './styles.scss';
 
 const TagsList = ({ title, tags, onClick }) => (
   <div className="c-tags-list">

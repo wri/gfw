@@ -6,7 +6,7 @@ import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 import Button from 'components/ui/button';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetPieChart extends PureComponent {
   render() {

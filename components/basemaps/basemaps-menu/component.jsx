@@ -4,7 +4,7 @@ import { Row, Column, Desktop } from '@worldresources/gfw-components';
 
 import BasemapButton from '../basemap-button';
 
-import './styles.scss';
+// import './styles.scss';
 
 export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
   <div className="c-basemaps-menu">

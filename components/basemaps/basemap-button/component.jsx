@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
-import './styles.scss';
+// import './styles.scss';
 
 export const BasemapButton = (props) => {
   const { image, label, active, onSelectBasemap } = props;

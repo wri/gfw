@@ -7,7 +7,7 @@ import { Desktop, Mobile } from '@worldresources/gfw-components';
 
 import SankeyChart from 'components/charts/sankey-chart';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetSankey extends PureComponent {
   static propTypes = {

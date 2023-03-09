@@ -7,8 +7,8 @@ import cx from 'classnames';
 
 import searchIcon from 'assets/icons/search.svg?sprite';
 import closeIcon from 'assets/icons/close.svg?sprite';
-import './styles.scss';
-import './themes/search-small.scss'; // eslint-disable-line
+// import './styles.scss';
+// import './themes/search-small.scss'; // eslint-disable-line
 
 class Search extends Component {
   constructor(props) {

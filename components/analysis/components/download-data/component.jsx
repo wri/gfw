@@ -5,7 +5,7 @@ import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 class DownloadData extends PureComponent {
   renderDownloadLinks = (downloads) => (
@@ -36,8 +36,7 @@ class DownloadData extends PureComponent {
           !!downloadUrls.length &&
           downloadUrls.map((d) => this.renderDownloadLinks(d))}
         <p className="terms">
-          By downloading data you agree to the
-          {' '}
+          By downloading data you agree to the{' '}
           <a href="/terms" target="_blank">
             GFW Terms of Service
           </a>

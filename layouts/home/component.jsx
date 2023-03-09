@@ -28,7 +28,7 @@ import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
 import bgImageWebP from './assets/home-bg.webp';
 
-import './styles.scss';
+// import './styles.scss';
 
 const HomePage = ({ summary, uses, apps, news }) => {
   // const [showVideo, setShowVideo] = useState(false);

@@ -7,7 +7,7 @@ import Icon from 'components/ui/icon';
 
 import mapIcon from 'assets/icons/map-button.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetMapButton extends PureComponent {
   static propTypes = {

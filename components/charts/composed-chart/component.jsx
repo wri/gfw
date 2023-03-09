@@ -25,7 +25,7 @@ import AxisLabel from './axis-label';
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
-import './styles.scss';
+// import './styles.scss';
 
 const XAxisTickWithoutGap = ({ x, y, payload }) => {
   const { offset, value } = payload;
@@ -254,7 +254,7 @@ class CustomComposedChart extends PureComponent {
                       tickMargin: 0,
                     }
                   : {})}
-                tick={(
+                tick={
                   <CustomTick
                     dataMax={maxYValue}
                     unit={unit || ''}
@@ -266,7 +266,7 @@ class CustomComposedChart extends PureComponent {
                     fill="#555555"
                     vertical={isVertical}
                   />
-                )}
+                }
                 {...yAxis}
                 {...(config?.yAxis?.label && {
                   label: <AxisLabel label={config.yAxis.label} direction="y" />,
@@ -287,7 +287,7 @@ class CustomComposedChart extends PureComponent {
                       tickMargin: 0,
                     }
                   : {})}
-                tick={(
+                tick={
                   <CustomTick
                     dataMax={rightYAxis.maxYValue || maxYValue}
                     unit={rightYAxis.unit || unit || ''}
@@ -299,7 +299,7 @@ class CustomComposedChart extends PureComponent {
                     fill="#555555"
                     vertical={isVertical}
                   />
-                )}
+                }
                 {...rightYAxis}
               />
             )}
@@ -351,7 +351,8 @@ class CustomComposedChart extends PureComponent {
                         {...d}
                         activeIndex={barBackground.activeIndex}
                       />
-                    )}
+                    )
+                  }
                   {...bars[key]}
                 >
                   {bars[key].labelList && (

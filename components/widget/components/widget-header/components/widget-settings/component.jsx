@@ -7,7 +7,7 @@ import Switch from 'components/ui/switch';
 import Datepicker from 'components/ui/datepicker';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetSettings extends PureComponent {
   static propTypes = {
@@ -86,7 +86,8 @@ class WidgetSettings extends PureComponent {
               value={startValue}
               options={startOptions}
               onChange={(change) =>
-                propagateChange({ [startKey]: change && change.value })}
+                propagateChange({ [startKey]: change && change.value })
+              }
               disabled={loading}
             />
             <span className="text-separator">to</span>
@@ -95,7 +96,8 @@ class WidgetSettings extends PureComponent {
               value={endValue}
               options={endOptions}
               onChange={(change) =>
-                propagateChange({ [endKey]: change && change.value })}
+                propagateChange({ [endKey]: change && change.value })
+              }
               disabled={loading}
             />
           </div>
@@ -113,7 +115,8 @@ class WidgetSettings extends PureComponent {
               options={options}
               clearable={clearable}
               onChange={(change) =>
-                propagateChange({ [key]: change && change.value })}
+                propagateChange({ [key]: change && change.value })
+              }
               noSelectedValue={placeholder}
             />
           </div>
@@ -130,11 +133,13 @@ class WidgetSettings extends PureComponent {
                   onChange={(change) =>
                     propagateChange({
                       [startKey]: moment(change).format('YYYY-MM-DD'),
-                    })}
+                    })
+                  }
                   minDate={new Date(minDate)}
                   maxDate={new Date(maxDate)}
                   isOutsideRange={(d) =>
-                    d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate))}
+                    d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate))
+                  }
                 />
               </div>
               <div>
@@ -145,11 +150,13 @@ class WidgetSettings extends PureComponent {
                   onChange={(change) =>
                     propagateChange({
                       [endKey]: moment(change).format('YYYY-MM-DD'),
-                    })}
+                    })
+                  }
                   minDate={new Date(minDate)}
                   maxDate={new Date(maxDate)}
                   isOutsideRange={(d) =>
-                    d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate))}
+                    d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate))
+                  }
                 />
               </div>
             </div>
@@ -168,7 +175,8 @@ class WidgetSettings extends PureComponent {
               value={value}
               options={options}
               onChange={(change) =>
-                propagateChange({ [key]: change && change.value })}
+                propagateChange({ [key]: change && change.value })
+              }
               disabled={loading}
               clearable={clearable}
               infoAction={metaKey ? () => handleShowInfo(metaKey) : null}

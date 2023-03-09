@@ -17,7 +17,7 @@ import id from 'date-fns/locale/id';
 
 import DatepickerHeader from './datepicker-header';
 
-import './styles.scss';
+// import './styles.scss';
 
 registerLocale('fr', fr);
 registerLocale('es_MX', es);

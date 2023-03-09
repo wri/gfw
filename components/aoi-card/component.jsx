@@ -20,7 +20,7 @@ import tagIcon from 'assets/icons/tag.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import warningIcon from 'assets/icons/warning.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 const getLatestAlerts = ({ location, params }) =>
   all([
@@ -259,8 +259,7 @@ class AoICard extends PureComponent {
                             num: glads || 0,
                             unit: 'counts',
                           })}
-                        </span>
-                        {' '}
+                        </span>{' '}
                         <p>integrated alerts</p>
                       </div>
                     ) : (
@@ -284,8 +283,7 @@ class AoICard extends PureComponent {
                             num: fires || 0,
                             unit: 'counts',
                           })}
-                        </span>
-                        {' '}
+                        </span>{' '}
                         <p>VIIRS alerts</p>
                       </Fragment>
                     ) : (

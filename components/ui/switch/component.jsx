@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Toggle from 'react-toggle';
 
-import './react-toggle.scss';
-import './styles.scss';
-import './themes/switch-small.scss';
-import './themes/switch-light.scss';
-import './themes/switch-light-alternate.scss';
+// import './react-toggle.scss';
+// import './styles.scss';
+// import './themes/switch-small.scss';
+// import './themes/switch-light.scss';
+// import './themes/switch-light-alternate.scss';
 
 class Switch extends PureComponent {
   render() {

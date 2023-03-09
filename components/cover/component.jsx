@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import { Row, Column } from '@worldresources/gfw-components';
 
-import './styles.scss';
+// import './styles.scss';
 
 class Cover extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function

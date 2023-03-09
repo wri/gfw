@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Footer as FooterComponent } from '@worldresources/gfw-components';
 
-import './styles.scss';
+// import './styles.scss';
 
 const Footer = ({ setModalContactUsOpen }) => {
   return (
