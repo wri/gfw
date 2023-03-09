@@ -84,6 +84,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   treeCoverByLandCoverClass:
     'SELECT umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
+  tropicalExtent:
+    'SELECT {location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -985,6 +987,51 @@ export const getTreeCoverByLandCoverClass = (params) => {
       ({ umd_global_land_cover__ipcc_class: ipccClass }) => ipccClass !== null
     )
   );
+};
+
+export const getTropicalExtent = (params) => {
+  const { forestType, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230224',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(/{decile}/g, params?.decile)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType);
+    return {
+      name: `tropical_treecover_extent_${extentYear}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => {
+    return {
+      ...response,
+      data: {
+        data: response?.data?.map((d) => ({
+          ...d,
+          extent: d[`tropical_tree_cover_extent_${extentYear}__ha`],
+          total_area: d.area__ha,
+        })),
+      },
+    };
+  });
 };
 
 // Net Change
