@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { getExtent } from 'services/analysis-cached';
+import { getExtent, getTropicalTreeCover } from 'services/analysis-cached';
 import OTFAnalysis from 'services/otf-analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -45,16 +45,36 @@ export default {
     global: 'Global tree cover by type',
     withPlantations: 'Forest cover by type in {location}',
   },
+  alerts: [
+    {
+      id: 'tree-cover-alert-1',
+      // TODO: Add link
+      text:
+        'Datasets used here use different methodologies to measure tree cover. [Read more on our blog](#) for more information.',
+      visible: [
+        'global',
+        'country',
+        'geostore',
+        'aoi',
+        'wdpa',
+        'use',
+        'dashboard',
+      ],
+    },
+  ],
   sentence: {
     globalInitial:
-      'As of {year}, {percentage} of {location} land cover was tree cover.',
+      'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+    // TODO:
     globalWithIndicator:
       'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
-    initial: 'As of {year}, {percentage} of {location}',
-    hasPlantations: ' was natural forest cover.',
-    noPlantations: ' was tree cover.',
-    hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
-    noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
+    initial:
+      'As of {year}, {percentage} of {location} was {threshold} tree cover.',
+
+    // hasPlantations: ' was natural forest cover.',
+    // noPlantations: ' was tree cover.',
+    // hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
+    // noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
   },
   metaKey: 'widget_tree_cover',
   chartType: 'pieChart',
@@ -97,8 +117,8 @@ export default {
     },
     {
       key: 'extentYear',
-      label: 'extent year',
-      type: 'switch',
+      label: 'Tree cover dataset',
+      type: 'select',
       border: true,
     },
     {
@@ -113,37 +133,88 @@ export default {
     extentYear: 2000,
   },
   getData: (params) => {
+    const { extentYear } = params;
+
+    if (extentYear === 2000 || extentYear === 2010) {
+      if (shouldQueryPrecomputedTables(params)) {
+        return all([
+          getExtent(params),
+          getExtent({ ...params, forestType: '', landCategory: '' }),
+          getExtent({ ...params, forestType: 'plantations' }),
+        ]).then(
+          spread((response, adminResponse, plantationsResponse) => {
+            const extent = response.data && response.data.data;
+            const adminExtent = adminResponse.data && adminResponse.data.data;
+            const plantationsExtent =
+              plantationsResponse.data && plantationsResponse.data.data;
+            let totalArea = 0;
+            let totalCover = 0;
+            let cover = 0;
+            let plantations = 0;
+            let data = {};
+            if (extent && extent.length) {
+              // Sum values
+              totalArea = adminExtent.reduce(
+                (total, d) => total + d.total_area,
+                0
+              );
+              cover = extent.reduce((total, d) => total + d.extent, 0);
+              totalCover = adminExtent.reduce(
+                (total, d) => total + d.extent,
+                0
+              );
+              plantations = plantationsExtent.reduce(
+                (total, d) => total + d.extent,
+                0
+              );
+              data = {
+                totalArea,
+                totalCover,
+                cover,
+                plantations,
+              };
+            }
+            return data;
+          })
+        );
+      }
+    }
+
     if (shouldQueryPrecomputedTables(params)) {
       return all([
-        getExtent(params),
-        getExtent({ ...params, forestType: '', landCategory: '' }),
-        getExtent({ ...params, forestType: 'plantations' }),
+        getTropicalTreeCover({
+          ...params,
+          area: 'wri_tropical_tree_cover_extent__ha',
+        }),
+        getTropicalTreeCover({ ...params, area: 'area__ha', threshold: 0 }),
+        getTropicalTreeCover({
+          ...params,
+          area: 'wri_tropical_tree_cover_extent__ha',
+          forestType: 'plantations',
+        }),
       ]).then(
-        spread((response, adminResponse, plantationsResponse) => {
-          const extent = response.data && response.data.data;
-          const adminExtent = adminResponse.data && adminResponse.data.data;
-          const plantationsExtent =
-            plantationsResponse.data && plantationsResponse.data.data;
+        spread((extentResponse, fullExtentResponse, plantationsResponse) => {
+          const extent = extentResponse.data;
+          const fullExtent = fullExtentResponse.data;
+          const plantationsExtent = plantationsResponse.data;
+
           let totalArea = 0;
-          let totalCover = 0;
           let cover = 0;
           let plantations = 0;
           let data = {};
           if (extent && extent.length) {
             // Sum values
-            totalArea = adminExtent.reduce(
-              (total, d) => total + d.total_area,
+            totalArea = fullExtent.reduce((total, d) => total + d.area__ha, 0);
+            cover = extent.reduce(
+              (total, d) => total + d.wri_tropical_tree_cover_extent__ha,
               0
             );
-            cover = extent.reduce((total, d) => total + d.extent, 0);
-            totalCover = adminExtent.reduce((total, d) => total + d.extent, 0);
             plantations = plantationsExtent.reduce(
-              (total, d) => total + d.extent,
+              (total, d) => total + d.wri_tropical_tree_cover_extent__ha,
               0
             );
             data = {
               totalArea,
-              totalCover,
               cover,
               plantations,
             };

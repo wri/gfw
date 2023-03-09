@@ -78,6 +78,8 @@ const SQL_QUERIES = {
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
+  tropicalTreeCoverExtent:
+    'SELECT {select_location}, SUM({area}) AS {area} FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -122,6 +124,7 @@ const ALLOWED_PARAMS = {
     'landCategory',
     'confidence',
   ],
+  tropicalTreeCover: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType'],
 };
 
 //
@@ -349,7 +352,12 @@ export const getWHEREQuery = (params) => {
         } else {
           comparisonString = ' >= ';
         }
-        paramKey = 'umd_tree_cover_density_2000__threshold';
+
+        if (dataset === 'tropicalTreeCover') {
+          paramKey = 'wri_tropical_tree_cover__decile';
+        } else {
+          paramKey = 'umd_tree_cover_density_2000__threshold';
+        }
 
         // }
       }
@@ -955,6 +963,49 @@ export const getTreeCoverGainByPlantationType = (params) => {
       })),
     },
   }));
+};
+
+// summed extent for single location
+export const getTropicalTreeCover = (params) => {
+  const { forestType, landCategory, ifl, download, extentYear, area } =
+    params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230224',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalTreeCoverExtent}`
+      .replace(/{area}/g, area)
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...params, dataset: 'tropicalTreeCover' })
+      )
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_extent_${extentYear}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => response);
 };
 
 // Net Change
