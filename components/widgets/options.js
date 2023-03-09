@@ -7,6 +7,7 @@ import gasesIncluded from 'data/emission-gases.json';
 import variable from 'data/variables.json';
 import period from 'data/periods.json';
 import extentYear from 'data/extent-years.json';
+import treeCoverDatasets from 'data/tree-cover-datasets.json';
 import tscDriverGroup from 'data/tsc-loss-groups.json';
 import type from 'data/types.json';
 import weeks from 'data/weeks.json';
@@ -26,6 +27,7 @@ export default {
   gasesIncluded,
   period,
   extentYear,
+  treeCoverDatasets,
   tscDriverGroup,
   type,
   bioTypes,
