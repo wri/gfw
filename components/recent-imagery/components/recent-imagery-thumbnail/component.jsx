@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/ui/loader';
 
-import './styles.scss';
+// import './styles.scss';
 
 class RecentImageryThumbnail extends PureComponent {
   render() {
@@ -13,7 +13,7 @@ class RecentImageryThumbnail extends PureComponent {
       selected,
       handleClick,
       handleMouseEnter,
-      handleMouseLeave
+      handleMouseLeave,
     } = this.props;
 
     return (
@@ -23,8 +23,8 @@ class RecentImageryThumbnail extends PureComponent {
         }`}
         style={{
           ...(tile.thumbnail && {
-            backgroundImage: `url('${tile.thumbnail}')`
-          })
+            backgroundImage: `url('${tile.thumbnail}')`,
+          }),
         }}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
@@ -44,7 +44,7 @@ RecentImageryThumbnail.propTypes = {
   selected: PropTypes.bool,
   handleClick: PropTypes.func.isRequired,
   handleMouseEnter: PropTypes.func,
-  handleMouseLeave: PropTypes.func
+  handleMouseLeave: PropTypes.func,
 };
 
 export default RecentImageryThumbnail;

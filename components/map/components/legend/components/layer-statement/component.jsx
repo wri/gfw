@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
-import './styles.scss';
+// import './styles.scss';
 
 class LayerStatement extends PureComponent {
   render() {

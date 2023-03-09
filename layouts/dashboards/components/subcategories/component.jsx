@@ -8,7 +8,7 @@ import { encodeQueryParams, decodeQueryParams } from 'utils/url';
 
 import CATEGORIES from 'data/categories.json';
 
-import './styles.scss';
+// import './styles.scss';
 
 const isServer = typeof window === 'undefined';
 

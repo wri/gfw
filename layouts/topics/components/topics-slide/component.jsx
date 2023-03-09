@@ -6,7 +6,7 @@ import { Button, Column, Row } from 'gfw-components';
 import TopicsText from './topics-text';
 import TopicsImage from './topics-image';
 
-import './styles.scss';
+// import './styles.scss';
 
 const TopicsSlide = ({
   isLast,

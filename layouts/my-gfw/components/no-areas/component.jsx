@@ -5,7 +5,7 @@ import Link from 'next/link';
 import DashboardImage from 'assets/images/aois/aoi-dashboard-small.png';
 import DashboardImageLarge from 'assets/images/aois/aoi-dashboard-small@2x.png';
 
-import './styles.scss';
+// import './styles.scss';
 
 const MyGfwNoAreas = () => (
   <div className="c-no-areas">

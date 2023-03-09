@@ -11,7 +11,7 @@ import img2017 from 'layouts/about/history/images/2017.jpg';
 import img2018 from 'layouts/about/history/images/2018.png';
 import img2019 from 'layouts/about/history/images/2019.png';
 
-import './styles.scss';
+// import './styles.scss';
 
 const data = [
   {

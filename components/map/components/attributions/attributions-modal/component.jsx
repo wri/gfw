@@ -4,7 +4,7 @@ import Modal from 'components/modal';
 
 import AttributionsContent from '../attributions-content/component';
 
-import './styles.scss';
+// import './styles.scss';
 
 const ModalAttributions = ({ open, onRequestClose }) => (
   <Modal

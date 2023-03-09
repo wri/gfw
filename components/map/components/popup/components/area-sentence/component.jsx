@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.scss';
+// import './styles.scss';
 
 const AreaSentence = ({ data }) =>
   data?.name ? (

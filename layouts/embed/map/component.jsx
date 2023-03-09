@@ -2,7 +2,7 @@ import MapPage from 'layouts/map';
 
 import gfwLogo from 'assets/logos/gfw.png';
 
-import './styles.scss';
+// import './styles.scss';
 
 const MapEmbedPage = () => (
   <div className="l-embed-map-page">

@@ -5,7 +5,7 @@ import { Row, Column } from 'gfw-components';
 
 import { htmlParser } from 'utils/html-parser';
 
-import './styles.scss';
+// import './styles.scss';
 
 const GrantsAboutSection = ({ about }) => {
   return (

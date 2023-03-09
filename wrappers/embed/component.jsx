@@ -12,7 +12,7 @@ import Head from 'wrappers/head';
 
 import ErrorMessage from 'components/error-message';
 
-import './styles.scss';
+// import './styles.scss';
 
 const EmbedWrapper = ({
   children,

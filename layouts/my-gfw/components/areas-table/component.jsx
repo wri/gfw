@@ -21,7 +21,7 @@ import mapIcon from 'assets/icons/view-map.svg?sprite';
 import editIcon from 'assets/icons/edit.svg?sprite';
 import shareIcon from 'assets/icons/share.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 const isServer = typeof window === 'undefined';
 

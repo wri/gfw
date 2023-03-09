@@ -29,8 +29,8 @@ import LayerMoreInfo from './components/layer-more-info';
 import LegendItemTypeGradient from './components/legend-item-type-gradient';
 import LegendItemTypeChoropleth from './components/legend-item-type-choropleth';
 
-import './styles.scss';
-import './themes/vizzuality-legend.scss';
+// import './styles.scss';
+// import './themes/vizzuality-legend.scss';
 
 const MapLegend = ({
   layerGroups,
