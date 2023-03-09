@@ -11,7 +11,7 @@ import Icon from 'components/ui/icon';
 import settingsIcon from 'assets/icons/settings.svg?sprite';
 import WidgetSettings from '../widget-settings';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
@@ -94,7 +94,7 @@ class WidgetSettingsButton extends PureComponent {
         arrow
         useContext
         open={tooltipOpen}
-        html={(
+        html={
           <WidgetSettings
             ref={(node) => {
               this.widgetSettingsRef = node;
@@ -109,7 +109,7 @@ class WidgetSettingsButton extends PureComponent {
             handleShowInfo={handleShowInfo}
             showYears={shouldSettingsOpen}
           />
-        )}
+        }
       >
         <Button
           theme="theme-button-small square"

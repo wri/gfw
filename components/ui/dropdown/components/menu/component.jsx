@@ -4,9 +4,9 @@ import cx from 'classnames';
 
 import Item from '../item';
 
-import './styles.scss';
+// import './styles.scss';
 
-const Menu = props => {
+const Menu = (props) => {
   const {
     className,
     layout,
@@ -20,15 +20,16 @@ const Menu = props => {
     optionsAction,
     optionsActionKey,
     noItemsFound,
-    handleSelectGroup
+    handleSelectGroup,
   } = props;
 
   return !isOpen ? null : (
-    <div className={cx({
-      'c-selector-menu': true,
-      'selector-overflow-menu': layout === 'overflow-menu',
-      [className]: !!className
-    })}
+    <div
+      className={cx({
+        'c-selector-menu': true,
+        'selector-overflow-menu': layout === 'overflow-menu',
+        [className]: !!className,
+      })}
     >
       {items && items.length ? (
         items.map(
@@ -71,7 +72,7 @@ Menu.propTypes = {
   optionsActionKey: PropTypes.string,
   noItemsFound: PropTypes.string,
   handleSelectGroup: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Menu;

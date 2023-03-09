@@ -7,20 +7,20 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import { trackEvent } from 'utils/analytics';
 
-import './styles.scss';
-import './themes/button-light.scss'; // eslint-disable-line
-import './themes/button-small.scss'; // eslint-disable-line
-import './themes/button-xsmall.scss'; // eslint-disable-line
-import './themes/button-medium.scss'; // eslint-disable-line
-import './themes/button-tiny.scss'; // eslint-disable-line
-import './themes/button-grey.scss'; // eslint-disable-line
-import './themes/button-grey-filled.scss'; // eslint-disable-line
-import './themes/button-clear.scss'; // eslint-disable-line
-import './themes/button-map-control.scss'; // eslint-disable-line
-import './themes/button-dashed.scss'; // eslint-disable-line
-import './themes/button-dark-round.scss'; // eslint-disable-line
-import './themes/button-inline.scss'; //eslint-disable-line
-import './themes/button-full-width.scss'; //eslint-disable-line
+// import './styles.scss';
+// import './themes/button-light.scss'; // eslint-disable-line
+// import './themes/button-small.scss'; // eslint-disable-line
+// import './themes/button-xsmall.scss'; // eslint-disable-line
+// import './themes/button-medium.scss'; // eslint-disable-line
+// import './themes/button-tiny.scss'; // eslint-disable-line
+// import './themes/button-grey.scss'; // eslint-disable-line
+// import './themes/button-grey-filled.scss'; // eslint-disable-line
+// import './themes/button-clear.scss'; // eslint-disable-line
+// import './themes/button-map-control.scss'; // eslint-disable-line
+// import './themes/button-dashed.scss'; // eslint-disable-line
+// import './themes/button-dark-round.scss'; // eslint-disable-line
+// import './themes/button-inline.scss'; //eslint-disable-line
+// import './themes/button-full-width.scss'; //eslint-disable-line
 
 const Button = (props) => {
   const {
@@ -36,7 +36,7 @@ const Button = (props) => {
     background,
     trackingData,
     target,
-    tooltipPosition = 'top'
+    tooltipPosition = 'top',
   } = props;
 
   const handleClick = (e) => {
@@ -140,7 +140,7 @@ Button.propTypes = {
   buttonClicked: PropTypes.func,
   background: PropTypes.string,
   target: PropTypes.string,
-  tooltipPosition: PropTypes.string
+  tooltipPosition: PropTypes.string,
 };
 
 export default Button;

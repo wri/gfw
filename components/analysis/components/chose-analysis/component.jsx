@@ -16,7 +16,7 @@ import polygonIcon from 'assets/icons/polygon.svg?sprite';
 
 import UploadShapeModal from './upload-shape-modal';
 
-import './styles.scss';
+// import './styles.scss';
 
 class ChoseAnalysis extends PureComponent {
   static propTypes = {
@@ -45,12 +45,8 @@ class ChoseAnalysis extends PureComponent {
   };
 
   renderLayerOption = () => {
-    const {
-      boundaries,
-      activeBoundary,
-      selectBoundaries,
-      setMenuSettings,
-    } = this.props;
+    const { boundaries, activeBoundary, selectBoundaries, setMenuSettings } =
+      this.props;
     const selectedBoundaries = activeBoundary || (boundaries && boundaries[0]);
 
     return (
@@ -64,30 +60,28 @@ class ChoseAnalysis extends PureComponent {
           native
         />
         <div className="layer-description">
-          Analysis is also available by default for most data layers under the
-          {' '}
+          Analysis is also available by default for most data layers under the{' '}
           <button
             onClick={() =>
               setMenuSettings({
                 menuSection: 'datasets',
                 datasetCategory: 'landUse',
-              })}
+              })
+            }
           >
             land use
-          </button>
-          {' '}
-          and
-          {' '}
+          </button>{' '}
+          and{' '}
           <button
             onClick={() =>
               setMenuSettings({
                 menuSection: 'datasets',
                 datasetCategory: 'biodiversity',
-              })}
+              })
+            }
           >
             biodiversity
-          </button>
-          {' '}
+          </button>{' '}
           tabs.
         </div>
       </div>
@@ -127,8 +121,8 @@ class ChoseAnalysis extends PureComponent {
             trackEvent({
               category: 'Map analysis',
               action: 'User drawn shape',
-              label: drawing ? 'Cancel' : 'Start'
-            })
+              label: drawing ? 'Cancel' : 'Start',
+            });
           }}
         >
           {drawing ? 'CANCEL' : 'START DRAWING'}
@@ -156,11 +150,7 @@ class ChoseAnalysis extends PureComponent {
           {!hasError && !uploading && (
             <Fragment>
               <p>
-                Drag and drop your
-                {' '}
-                <b>polygon data file</b>
-                {' '}
-                or click here to
+                Drag and drop your <b>polygon data file</b> or click here to
                 upload
               </p>
               <p className="small-text">{'Recommended file size < 1 MB'}</p>
@@ -207,8 +197,7 @@ class ChoseAnalysis extends PureComponent {
             </Button>
           </div>
           <p>
-            By uploading data you agree to the
-            {' '}
+            By uploading data you agree to the{' '}
             <a href="/terms" target="_blank" rel="noopenner nofollower">
               GFW Terms of Service
             </a>

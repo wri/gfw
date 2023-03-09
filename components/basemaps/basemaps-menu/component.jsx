@@ -4,7 +4,7 @@ import { Row, Column, Desktop } from 'gfw-components';
 
 import BasemapButton from '../basemap-button';
 
-import './styles.scss';
+// import './styles.scss';
 
 export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
   <div className="c-basemaps-menu">
@@ -14,15 +14,17 @@ export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
           <h4>Map styles</h4>
         </Desktop>
       </Column>
-      {Object.values(basemaps).filter(b => b.baseStyle).map((item) => (
-        <Column key={item.value} width={[1 / 3]} className="btn-col">
-          <BasemapButton
-            {...item}
-            active={activeBasemap?.value === item?.value}
-            onSelectBasemap={onSelectBasemap}
-          />
-        </Column>
-      ))}
+      {Object.values(basemaps)
+        .filter((b) => b.baseStyle)
+        .map((item) => (
+          <Column key={item.value} width={[1 / 3]} className="btn-col">
+            <BasemapButton
+              {...item}
+              active={activeBasemap?.value === item?.value}
+              onSelectBasemap={onSelectBasemap}
+            />
+          </Column>
+        ))}
     </Row>
   </div>
 );

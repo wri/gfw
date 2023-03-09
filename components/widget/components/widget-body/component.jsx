@@ -19,7 +19,7 @@ import WidgetMapList from 'components/widget/components/widget-map-list';
 import WidgetSankey from 'components/widget/components/widget-sankey';
 import WidgetLollipop from 'components/widget/components/widget-lollipop';
 
-import './styles.scss';
+// import './styles.scss';
 
 const chartOptions = {
   composedChart: WidgetComposedChart,

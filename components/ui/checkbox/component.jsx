@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.scss';
+// import './styles.scss';
 
 class Checkbox extends PureComponent {
   render() {
@@ -17,7 +17,7 @@ class Checkbox extends PureComponent {
 
 Checkbox.propTypes = {
   className: PropTypes.string,
-  value: PropTypes.bool
+  value: PropTypes.bool,
 };
 
 export default Checkbox;

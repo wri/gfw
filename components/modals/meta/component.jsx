@@ -10,7 +10,7 @@ import { Button, NoContent } from 'gfw-components';
 
 import Modal from 'components/modal';
 
-import './styles.scss';
+// import './styles.scss';
 
 class ModalMeta extends PureComponent {
   static propTypes = {
@@ -45,8 +45,8 @@ class ModalMeta extends PureComponent {
       trackEvent({
         category: 'Open modal',
         action: 'Click to open',
-        label: `Metadata: ${metaData && metaData.title}`
-      })
+        label: `Metadata: ${metaData && metaData.title}`,
+      });
     }
   }
 

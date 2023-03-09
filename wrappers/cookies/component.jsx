@@ -8,7 +8,7 @@ import { CookiesBanner } from 'gfw-components';
 import { trackEvent, initAnalytics, trackPage } from 'utils/analytics';
 import { getAgreedCookies, setAgreedCookies } from 'utils/cookies';
 
-import './styles.scss';
+// import './styles.scss';
 
 const Cookies = () => {
   const [accepted, setAccepted] = useState(false);

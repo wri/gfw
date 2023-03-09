@@ -17,7 +17,7 @@ import Map from 'components/ui/map';
 
 import BASEMAPS from 'components/map/basemaps';
 
-import './styles.scss';
+// import './styles.scss';
 
 const DEFAULT_VIEWPORT = {
   zoom: 2,

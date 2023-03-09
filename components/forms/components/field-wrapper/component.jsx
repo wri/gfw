@@ -8,7 +8,7 @@ import Icon from 'components/ui/icon';
 
 import infoIcon from 'assets/icons/info.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 class FieldWrapper extends PureComponent {
   static propTypes = {
@@ -50,15 +50,8 @@ class FieldWrapper extends PureComponent {
   };
 
   render() {
-    const {
-      touched,
-      error,
-      hidden,
-      active,
-      children,
-      collapse,
-      value,
-    } = this.props;
+    const { touched, error, hidden, active, children, collapse, value } =
+      this.props;
 
     return (
       <div

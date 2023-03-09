@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import './styles.scss';
+// import './styles.scss';
 
 class SankeyTooltip extends PureComponent {
   render() {

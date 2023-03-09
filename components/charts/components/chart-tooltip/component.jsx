@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.scss';
+// import './styles.scss';
 
 class ChartTooltip extends PureComponent {
   render() {
@@ -13,10 +13,9 @@ class ChartTooltip extends PureComponent {
 
     return (
       <div>
-        {data &&
-          data.length && (
+        {data && data.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
-            {data.map(d => {
+            {data.map((d) => {
               const label = d.labelFormat
                 ? d.labelFormat(d.label || values[d.labelKey])
                 : d.label || values[d.labelKey];
@@ -33,17 +32,17 @@ class ChartTooltip extends PureComponent {
                   {label && (
                     <div className="data-label">
                       {d.color &&
-                          (d.dashline ? (
-                            <div
-                              className="data-color data-dash"
-                              style={{ borderColor: d.color }}
-                            />
-                          ) : (
-                            <div
-                              className="data-color"
-                              style={{ backgroundColor: d.color }}
-                            />
-                          ))}
+                        (d.dashline ? (
+                          <div
+                            className="data-color data-dash"
+                            style={{ borderColor: d.color }}
+                          />
+                        ) : (
+                          <div
+                            className="data-color"
+                            style={{ backgroundColor: d.color }}
+                          />
+                        ))}
                       {d.key === 'break' ? (
                         <span className="break-label">{d.label}</span>
                       ) : (
@@ -71,7 +70,7 @@ ChartTooltip.propTypes = {
   settings: PropTypes.array,
   parseData: PropTypes.func,
   hideZeros: PropTypes.bool,
-  simple: PropTypes.bool
+  simple: PropTypes.bool,
 };
 
 export default ChartTooltip;

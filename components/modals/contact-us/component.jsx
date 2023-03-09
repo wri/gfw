@@ -8,7 +8,7 @@ import ContactForm from 'components/forms/contact';
 
 import { setModalContactUsOpen } from './actions';
 
-import './styles.scss';
+// import './styles.scss';
 
 const ModalContactUs = () => {
   const { query } = useRouter();
@@ -26,7 +26,8 @@ const ModalContactUs = () => {
           category: 'Open modal',
           action: 'Click to open',
           label: 'Contact Us',
-        })}
+        })
+      }
       title="Contact Us"
       className="c-contact-us-modal"
     >

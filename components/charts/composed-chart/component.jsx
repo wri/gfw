@@ -23,7 +23,7 @@ import {
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
-import './styles.scss';
+// import './styles.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
@@ -198,7 +198,7 @@ class CustomComposedChart extends PureComponent {
                       tickMargin: 0,
                     }
                   : {})}
-                tick={(
+                tick={
                   <CustomTick
                     dataMax={maxYValue}
                     unit={unit || ''}
@@ -210,7 +210,7 @@ class CustomComposedChart extends PureComponent {
                     fill="#555555"
                     vertical={isVertical}
                   />
-                )}
+                }
                 {...yAxis}
               />
             )}
@@ -228,7 +228,7 @@ class CustomComposedChart extends PureComponent {
                       tickMargin: 0,
                     }
                   : {})}
-                tick={(
+                tick={
                   <CustomTick
                     dataMax={rightYAxis.maxYValue || maxYValue}
                     unit={rightYAxis.unit || unit || ''}
@@ -240,7 +240,7 @@ class CustomComposedChart extends PureComponent {
                     fill="#555555"
                     vertical={isVertical}
                   />
-                )}
+                }
                 {...rightYAxis}
               />
             )}
@@ -292,7 +292,8 @@ class CustomComposedChart extends PureComponent {
                         {...d}
                         activeIndex={barBackground.activeIndex}
                       />
-                    )}
+                    )
+                  }
                   {...bars[key]}
                 >
                   {bars[key].labelList && (

@@ -16,7 +16,7 @@ import roadsIcon from 'assets/icons/roads.svg?sprite';
 
 import BasemapsMenu from './basemaps-menu';
 
-import './styles.scss';
+// import './styles.scss';
 
 const Basemaps = ({
   className,
@@ -98,7 +98,8 @@ const Basemaps = ({
             <Dropdown
               className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
-                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-round theme-dropdown-no-border':
+                  !isDesktop,
                 'theme-dropdown-dark-squared': isDesktop,
               })}
               value={selectedBoundaries}
@@ -111,7 +112,8 @@ const Basemaps = ({
             <Dropdown
               className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
-                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-round theme-dropdown-no-border':
+                  !isDesktop,
                 'theme-dropdown-dark-squared': isDesktop,
               })}
               value={labelSelected}
@@ -124,7 +126,8 @@ const Basemaps = ({
             <Dropdown
               className="map-settings-dropdown"
               theme={cx('theme-dropdown-button', {
-                'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                'theme-dropdown-dark-round theme-dropdown-no-border':
+                  !isDesktop,
                 'theme-dropdown-dark-squared': isDesktop,
               })}
               value={roadsSelected}

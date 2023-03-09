@@ -5,7 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 
 import WidgetAlert from 'components/widget/components/widget-alert';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetFooter extends PureComponent {
   static propTypes = {
@@ -62,8 +62,7 @@ class WidgetFooter extends PureComponent {
         )}
         {showAttributionLink && (
           <span>
-            Source:
-            {' '}
+            Source:{' '}
             <a
               target="_blank"
               rel="noopener noreferrer"

@@ -13,7 +13,7 @@ import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
 import Modal from 'components/modal';
 
-import './styles.scss';
+// import './styles.scss';
 
 class Share extends PureComponent {
   static propTypes = {
@@ -149,7 +149,8 @@ class Share extends PureComponent {
                   category: 'Share',
                   action: 'Share social',
                   label: shareUrl,
-                })}
+                })
+              }
             >
               <Icon icon={twitterIcon} className="twitter-icon" />
             </Button>
@@ -162,7 +163,8 @@ class Share extends PureComponent {
                   category: 'Share',
                   action: 'Share social',
                   label: shareUrl,
-                })}
+                })
+              }
             >
               <Icon icon={facebookIcon} className="facebook-icon" />
             </Button>

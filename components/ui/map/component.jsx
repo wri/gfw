@@ -10,7 +10,7 @@ import WebMercatorViewport from 'viewport-mercator-project';
 
 import { easeCubic } from 'd3-ease';
 
-import './styles.scss';
+// import './styles.scss';
 
 const DEFAULT_VIEWPORT = {
   zoom: 2,

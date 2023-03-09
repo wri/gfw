@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import cx from 'classnames';
 import ChartToolTip from '../components/chart-tooltip';
 
-import './styles.scss';
+// import './styles.scss';
 
 class CustomPieChart extends PureComponent {
   render() {

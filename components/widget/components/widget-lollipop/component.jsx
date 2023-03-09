@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Lollipop from 'components/charts/lollipop-chart';
 
-import './styles.scss';
+// import './styles.scss';
 
 class WidgetLollipop extends PureComponent {
   render() {
@@ -27,7 +27,8 @@ class WidgetLollipop extends PureComponent {
         }}
         settingsConfig={settingsConfig}
         handlePageChange={(change) =>
-          handleChangeSettings({ page: settings.page + change })}
+          handleChangeSettings({ page: settings.page + change })
+        }
         linksExt={embed}
       />
     );

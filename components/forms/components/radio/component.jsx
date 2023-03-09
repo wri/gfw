@@ -10,7 +10,7 @@ import { composeValidators } from 'components/forms/validations';
 import FieldWrapper from 'components/forms/components/field-wrapper';
 import Input from 'components/forms/components/input';
 
-import './styles.scss';
+// import './styles.scss';
 
 class Radio extends PureComponent {
   static propTypes = {
@@ -21,25 +21,18 @@ class Radio extends PureComponent {
     label: PropTypes.string,
     name: PropTypes.string,
     options: PropTypes.array,
-    required: PropTypes.bool
+    required: PropTypes.bool,
   };
 
   render() {
-    const {
-      name,
-      label,
-      validate,
-      selectedOption,
-      options,
-      hidden,
-      required
-    } = this.props;
+    const { name, label, validate, selectedOption, options, hidden, required } =
+      this.props;
     const parsedOptions =
       !isEmpty(options) && !options[0].label && !options[0].value
-        ? options.map(o => ({
-          label: o,
-          value: o.replace(/( )+|(\/)+/g, '_')
-        }))
+        ? options.map((o) => ({
+            label: o,
+            value: o.replace(/( )+|(\/)+/g, '_'),
+          }))
         : options;
 
     return (
@@ -58,7 +51,7 @@ class Radio extends PureComponent {
           >
             <div className="c-form-radio">
               {parsedOptions &&
-                parsedOptions.map(option => {
+                parsedOptions.map((option) => {
                   const id = uniqueId(`radio-${option.value}-`);
                   return (
                     <div key={option.value} className="radio-option">
@@ -73,8 +66,7 @@ class Radio extends PureComponent {
                         <span />
                         {option.label}
                       </label>
-                      {selectedOption === option.value &&
-                        option.radioInput && (
+                      {selectedOption === option.value && option.radioInput && (
                         <Input
                           name={`${input.name}_otherInput`}
                           className="radio-input"

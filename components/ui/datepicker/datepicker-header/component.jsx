@@ -9,7 +9,7 @@ import Dropdown from 'components/ui/dropdown';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 const DatepickerHeader = ({
   date,

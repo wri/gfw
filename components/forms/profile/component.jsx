@@ -22,7 +22,7 @@ import {
 
 import { sectors, howDoYouUse, interests } from './config';
 
-import './styles.scss';
+// import './styles.scss';
 
 class ProfileForm extends PureComponent {
   static propTypes = {

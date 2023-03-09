@@ -5,10 +5,10 @@ import NavLink from 'components/nav-link';
 
 import Icon from 'components/ui/icon';
 
-import './styles.scss';
-import './themes/subnav-dark.scss'; // eslint-disable-line
-import './themes/subnav-plain.scss'; // eslint-disable-line
-import './themes/subnav-small-light.scss'; // eslint-disable-line
+// import './styles.scss';
+// import './themes/subnav-dark.scss'; // eslint-disable-line
+// import './themes/subnav-plain.scss'; // eslint-disable-line
+// import './themes/subnav-small-light.scss'; // eslint-disable-line
 
 class SubNavMenu extends PureComponent {
   render() {
@@ -58,7 +58,11 @@ class SubNavMenu extends PureComponent {
                       activeClassName="active"
                       activeShallow={link.activeShallow}
                     >
-                      <a className={`text -paragraph-5 -color-8 ${link.active ? 'active' : ''}`}>
+                      <a
+                        className={`text -paragraph-5 -color-8 ${
+                          link.active ? 'active' : ''
+                        }`}
+                      >
                         {link.icon && <Icon icon={link.icon} />}
                         <span>{link.label}</span>
                       </a>
