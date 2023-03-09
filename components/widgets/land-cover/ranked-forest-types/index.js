@@ -1,4 +1,7 @@
-import { getTreeCoverByLandCoverClass } from 'services/analysis-cached';
+import {
+  getTreeCoverByLandCoverClass,
+  getTropicalExtent
+} from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -60,9 +63,17 @@ export default {
   },
   settings: {
     decile: 30,
+    extentYear: 2020,
   },
   getData: (params) => {
     return getTreeCoverByLandCoverClass(params);
+  },
+  getDataURL: (params) => {
+    return [
+      getTropicalExtent({ ...params, forestType: null, download: true }),
+      getTropicalExtent({ ...params, forestType: 'plantations', download: true }),
+      ...(params?.forestType ? getTropicalExtent({ ...params, download: true }) : []),
+    ];
   },
   getWidgetProps,
 };
