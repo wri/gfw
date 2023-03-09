@@ -17,7 +17,7 @@ import Icons from 'components/icons';
 
 import LegendItemTypeChoropleth from 'components/map/components/legend/components/legend-item-type-choropleth';
 
-import './styles.scss';
+// import './styles.scss';
 
 class MiniLegend extends PureComponent {
   handleOpacity(layer, opacity) {
@@ -41,8 +41,12 @@ class MiniLegend extends PureComponent {
         <div className="mini-legend-items">
           <ul className="mini-legend-layers">
             {layers.map((l) => {
-              const { layers: subLayers, params: stateParams, name, layerId } =
-                l || {};
+              const {
+                layers: subLayers,
+                params: stateParams,
+                name,
+                layerId,
+              } = l || {};
               const params =
                 stateParams ||
                 (subLayers && subLayers[0] && subLayers[0].timelineParams);

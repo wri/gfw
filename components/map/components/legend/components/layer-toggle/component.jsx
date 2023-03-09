@@ -12,7 +12,7 @@ import infoIcon from 'assets/icons/info.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
 import warningIcon from 'assets/icons/warning-nofill.svg?sprite';
 
-import './styles.scss';
+// import './styles.scss';
 
 class LayerToggle extends PureComponent {
   render() {

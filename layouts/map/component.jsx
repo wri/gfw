@@ -30,7 +30,7 @@ import MapMenu from 'components/map-menu';
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
 
-import './styles.scss';
+// import './styles.scss';
 
 class MainMapComponent extends PureComponent {
   static propTypes = {

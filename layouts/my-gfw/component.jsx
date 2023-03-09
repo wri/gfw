@@ -15,7 +15,7 @@ import LocationProvider from 'providers/location-provider';
 import MyGfwHeader from './components/header';
 import Areas from './components/areas';
 
-import './styles.scss';
+// import './styles.scss';
 
 const MyGfwPage = ({ loggedIn, loggingIn }) => (
   <div className="l-my-gfw-page">

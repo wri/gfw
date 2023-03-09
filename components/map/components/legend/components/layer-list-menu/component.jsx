@@ -5,7 +5,7 @@ import LegendItemTypes from 'components/legend/components/legend-item-types';
 import LayerToggle from '../layer-toggle';
 import LayerMoreInfo from '../layer-more-info';
 
-import './styles.scss';
+// import './styles.scss';
 
 class LayerListMenu extends PureComponent {
   filterLayerListMenu() {

@@ -6,7 +6,7 @@ import Tip from 'components/ui/tip';
 
 import cx from 'classnames';
 
-import './styles.scss';
+// import './styles.scss';
 
 class LayerStatement extends PureComponent {
   render() {

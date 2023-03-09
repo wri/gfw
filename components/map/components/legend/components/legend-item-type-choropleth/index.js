@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
+// import './styles.scss';
 
 class LegendTypeChoropleth extends React.PureComponent {
   static propTypes = {

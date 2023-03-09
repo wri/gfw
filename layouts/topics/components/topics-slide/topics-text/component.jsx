@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.scss';
+// import './styles.scss';
 
 const TopicsText = ({ title, subtitle, text, className }) => (
   <div className={cx('c-topics-text', className)}>

@@ -21,7 +21,7 @@ import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-import './styles.scss';
+// import './styles.scss';
 
 class Header extends PureComponent {
   static propTypes = {
@@ -258,8 +258,7 @@ class Header extends PureComponent {
                 className="private-area-notice"
                 tooltipPosition="bottom"
                 tooltip={{
-                  text:
-                    "You need to make your area public before sharing. Public areas can be viewed by anyone with the URL; private areas can only be viewed by the area's creator.",
+                  text: "You need to make your area public before sharing. Public areas can be viewed by anyone with the URL; private areas can only be viewed by the area's creator.",
                 }}
               >
                 <Icon icon={hiddenIcon} />

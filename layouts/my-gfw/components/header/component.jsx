@@ -2,7 +2,7 @@ import { Row, Column } from '@worldresources/gfw-components';
 
 import UserProfile from '../user-profile';
 
-import './styles.scss';
+// import './styles.scss';
 
 const MyGfwHeader = () => (
   <div className="c-mygfw-header">

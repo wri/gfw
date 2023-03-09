@@ -15,7 +15,7 @@ import Checkbox from 'components/ui/checkbox';
 
 import BasemapSettings from './basemap-settings';
 
-import './styles.scss';
+// import './styles.scss';
 
 function handleTitle(basemap) {
   return (

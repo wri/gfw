@@ -1,6 +1,6 @@
 import { Row, Column, ContactUsForm } from '@worldresources/gfw-components';
 
-import './styles.scss';
+// import './styles.scss';
 
 const AboutContactSection = () => (
   <div className="l-section-contact">

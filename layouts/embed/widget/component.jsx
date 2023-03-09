@@ -12,7 +12,7 @@ import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
 import ModalMeta from 'components/modals/meta';
 
-import './styles.scss';
+// import './styles.scss';
 import './trase-embed-styles.scss';
 
 const WidgetEmbedPage = ({ widget, trase }) => (

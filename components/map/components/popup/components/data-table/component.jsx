@@ -4,7 +4,7 @@ import { formatNumber } from 'utils/format';
 
 import Button from 'components/ui/button';
 
-import './styles.scss';
+// import './styles.scss';
 
 const renderString = ({ suffix, type, linkText, value }) => {
   let valueString = value || 'n/a';

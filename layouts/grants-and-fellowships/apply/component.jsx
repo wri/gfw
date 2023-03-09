@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 /* eslint-disable react/no-danger */
 import { Row, Column } from '@worldresources/gfw-components';
 
-import './styles.scss';
+// import './styles.scss';
 
 const GrantsApplySection = ({ apply }) => {
   return (

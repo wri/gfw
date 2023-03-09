@@ -10,7 +10,7 @@ import Icon from 'components/ui/icon';
 import infoIcon from 'assets/icons/info.svg?sprite';
 import { Tooltip } from 'react-tippy';
 
-import './styles.scss';
+// import './styles.scss';
 
 class TopicsImage extends PureComponent {
   componentDidMount() {
@@ -61,15 +61,8 @@ class TopicsImage extends PureComponent {
   };
 
   render() {
-    const {
-      img1x,
-      img2x,
-      description,
-      prompts,
-      animations,
-      leaving,
-      topic,
-    } = this.props;
+    const { img1x, img2x, description, prompts, animations, leaving, topic } =
+      this.props;
 
     return (
       <div className="c-topics-image">

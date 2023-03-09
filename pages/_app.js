@@ -13,7 +13,7 @@ import reducerRegistry from 'redux/registry';
 import 'styles/styles.scss';
 
 // COMPONENTS
-//analysis
+// analysis
 import '../components/analysis/styles.scss';
 import '../components/analysis/components/chose-analysis/styles.scss';
 import '../components/analysis/components/download-data/styles.scss';
@@ -50,10 +50,10 @@ import '../components/cover/styles.scss';
 // error-message
 import '../components/error-message/styles.scss';
 
-//footer
+// footer
 import '../components/footer/styles.scss';
 
-//forms
+// forms
 import '../components/forms/area-of-interest/styles.scss';
 import '../components/forms/area-of-interest/webhook-modal/styles.scss';
 import '../components/forms/components/checkbox/styles.scss';
@@ -69,12 +69,38 @@ import '../components/forms/login/styles.scss';
 import '../components/forms/newsletter/styles.scss';
 import '../components/forms/profile/styles.scss';
 
-//header
+// Header
 import '../components/header/styles.scss';
 
+// Maps
 import '../components/map/styles.scss';
+import '../components/map/components/attributions/attributions-modal/styles.scss';
+import '../components/map/components/attributions/styles.scss';
 
-//map geostore
+import '../components/map/components/basemaps/styles.scss';
+import '../components/map/components/draw/styles.scss';
+
+import '../components/map/components/legend/components/layer-list-menu/styles.scss';
+import '../components/map/components/legend/components/layer-more-info/styles.scss';
+import '../components/map/components/legend/components/layer-select-menu/styles.scss';
+import '../components/map/components/legend/components/layer-statement/styles.scss';
+import '../components/map/components/legend/components/layer-toggle/styles.scss';
+import '../components/map/components/legend/components/legend-item-type-choropleth/styles.scss';
+import '../components/map/components/legend/components/legend-item-type-gradient/styles.scss';
+import '../components/map/components/legend/components/timeline/styles.scss';
+import '../components/map/components/legend/styles.scss';
+import '../components/map/components/legend/themes/vizzuality-legend.scss';
+
+import '../components/map/components/popup/styles.scss';
+import '../components/map/components/popup/components/area-sentence/styles.scss';
+import '../components/map/components/popup/components/article-card/styles.scss';
+import '../components/map/components/popup/components/boundary-sentence/styles.scss';
+import '../components/map/components/popup/components/contextual-sentence/styles.scss';
+import '../components/map/components/popup/components/data-table/styles.scss';
+
+import '../components/map/components/scale/styles.scss';
+
+// map geostore
 import '../components/map-geostore/styles.scss';
 
 // map-menu
@@ -98,9 +124,17 @@ import '../components/numbered-list/styles.scss';
 // paginate
 import '../components/paginate/styles.scss';
 
-// import '../components/prompts/styles.scss';
-// import '../components/recent-imagery/styles.scss';
+// prompts
+import '../components/prompts/prompt-tooltip/styles.scss';
+
+// recent imagery
+import '../components/recent-imagery/components/recent-imagery-settings/styles.scss';
+import '../components/recent-imagery/components/recent-imagery-thumbnail/styles.scss';
+
+// satellite basemaps
 import '../components/satellite-basemaps/styles.scss';
+import '../components/satellite-basemaps/settings/landsat-menu/styles.scss';
+import '../components/satellite-basemaps/settings/planet-menu/styles.scss';
 
 // sentence selector
 import '../components/sentence-selector/styles.scss';
@@ -210,16 +244,74 @@ import '../components/widget/components/widget-pie-chart-legend/styles.scss';
 import '../components/widget/components/widget-sankey/styles.scss';
 import '../components/widget/components/widgets-custom/carbon-flux/styles.scss';
 
-//world map
+// world map
 import '../components/world-map/style.scss';
 
-//LAYOUTS
-import '../layouts/home/styles.scss';
+// LAYOUTS
 import '../layouts/404/styles.scss';
+
+import '../layouts/about/styles.scss';
+import '../layouts/about/contact/styles.scss';
+import '../layouts/about/history/styles.scss';
+import '../layouts/about/how/styles.scss';
+import '../layouts/about/impacts/styles.scss';
+import '../layouts/about/join/styles.scss';
+import '../layouts/about/partners/styles.scss';
+import '../layouts/about/projects/styles.scss';
+
+import '../layouts/dashboards/styles.scss';
+import '../layouts/dashboards/components/gfr-banner/styles.scss';
+import '../layouts/dashboards/components/global-sentence/styles.scss';
+import '../layouts/dashboards/components/header/styles.scss';
+import '../layouts/dashboards/components/map/styles.scss';
+import '../layouts/dashboards/components/map-controls/styles.scss';
+import '../layouts/dashboards/components/mini-legend/styles.scss';
+import '../layouts/dashboards/components/pending-dashboard/styles.scss';
+import '../layouts/dashboards/components/subcategories/styles.scss';
+
+import '../layouts/embed/map/styles.scss';
+import '../layouts/embed/widget/styles.scss';
+import '../layouts/embed/widget/trase-embed-styles.scss';
+
 import '../layouts/error/styles.scss';
+import '../layouts/grants-and-fellowships/about/styles.scss';
+import '../layouts/grants-and-fellowships/apply/styles.scss';
+import '../layouts/grants-and-fellowships/projects/projects-modal/styles.scss';
+import '../layouts/grants-and-fellowships/projects/styles.scss';
+import '../layouts/grants-and-fellowships/styles.scss';
+
+import '../layouts/home/styles.scss';
+
+import '../layouts/map/components/data-analysis-menu/styles.scss';
+import '../layouts/map/components/map-controls/styles.scss';
+import '../layouts/map/styles.scss';
+
+import '../layouts/mapbuilder/styles.scss';
+
+import '../layouts/my-gfw/styles.scss';
+import '../layouts/my-gfw/components/areas/styles.scss';
+import '../layouts/my-gfw/components/areas-table/styles.scss';
+import '../layouts/my-gfw/components/header/styles.scss';
+import '../layouts/my-gfw/components/no-areas/styles.scss';
+import '../layouts/my-gfw/components/user-profile/styles.scss';
+
+import '../layouts/privacy-policy/styles.scss';
+import '../layouts/search/styles.scss';
+import '../layouts/subscribe/styles.scss';
+import '../layouts/terms/styles.scss';
+import '../layouts/thank-you/styles.scss';
+
+import '../layouts/topics/components/topics-footer/styles.scss';
+import '../layouts/topics/components/topics-header/topics-intro/styles.scss';
+import '../layouts/topics/components/topics-header/styles.scss';
+import '../layouts/topics/components/topics-slide/topics-image/styles.scss';
+import '../layouts/topics/components/topics-slide/topics-text/styles.scss';
+import '../layouts/topics/styles.scss';
 
 // WRAPPERS
 import '../wrappers/cookies/styles.scss';
+import '../wrappers/embed/styles.scss';
+import '../wrappers/fullscreen/styles.scss';
 import '../wrappers/page/styles.scss';
 import '../wrappers/static/styles.scss';
 

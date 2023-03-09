@@ -11,7 +11,7 @@ import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
 import Intro from './topics-intro';
 
-import './styles.scss';
+// import './styles.scss';
 
 const TopicsHeader = ({
   topics,

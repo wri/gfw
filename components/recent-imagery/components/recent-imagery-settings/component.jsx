@@ -20,7 +20,7 @@ import BANDS from 'data/bands.json';
 
 import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
-import './styles.scss';
+// import './styles.scss';
 
 class RecentImagerySettings extends PureComponent {
   state = {

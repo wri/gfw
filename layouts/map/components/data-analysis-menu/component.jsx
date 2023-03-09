@@ -7,7 +7,7 @@ import SatelliteBasemaps from 'components/satellite-basemaps';
 import Analysis from 'components/analysis';
 import SubNavMenu from 'components/subnav-menu';
 
-import './styles.scss';
+// import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
   static propTypes = {
