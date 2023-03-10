@@ -1,45 +1,46 @@
-const withPlugins = require('next-compose-plugins');
-const optimizedImages = require('next-optimized-images');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
+// const withPlugins = require('next-compose-plugins');
+// const optimizedImages = require('next-optimized-images');
 
-const redirects = require('./data/redirects.json');
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// });
+// const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
-let rewrites;
+// const redirects = require('./data/redirects');
 
-if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging') {
-  // eslint-disable-next-line global-require
-  rewrites = require('./data/rewrites-staging.json');
-} else {
-  // eslint-disable-next-line global-require
-  rewrites = require('./data/rewrites.json');
-}
+// let rewrites;
 
-const nextConfig = {
-  webpack: (config) => {
-    config.plugins = [
-      ...config.plugins,
-      // mini-css-extract-plugin generates a warning when importing css as modules
-      // https://github.com/zeit/next-plugins/issues/506#issuecomment-589269285
-      new FilterWarningsPlugin({
-        exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
-      }),
-    ];
+// if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging') {
+//   // eslint-disable-next-line global-require
+//   rewrites = require('./data/rewrites-staging');
+// } else {
+//   // eslint-disable-next-line global-require
+//   rewrites = require('./data/rewrites');
+// }
 
-    config.node = {
-      fs: 'empty',
-    };
+// const nextConfig = {
+//   webpack: (config) => {
+//     config.plugins = [
+//       ...config.plugins,
+//       // mini-css-extract-plugin generates a warning when importing css as modules
+//       // https://github.com/zeit/next-plugins/issues/506#issuecomment-589269285
+//       new FilterWarningsPlugin({
+//         exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+//       }),
+//     ];
 
-    return config;
-  },
-  redirects: async () => redirects,
-  rewrites: async () => rewrites,
-  trailingSlash: true,
-};
+//     config.node = {
+//       fs: 'empty',
+//     };
 
-module.exports = withPlugins(
-  [[optimizedImages], [withBundleAnalyzer]],
-  nextConfig
-);
+//     return config;
+//   },
+//   redirects: async () => redirects,
+//   rewrites: async () => rewrites,
+//   trailingSlash: true,
+// };
+
+// module.exports = withPlugins(
+//   [[optimizedImages], [withBundleAnalyzer]],
+//   nextConfig
+// );
