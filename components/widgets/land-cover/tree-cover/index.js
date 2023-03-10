@@ -65,9 +65,9 @@ export default {
   sentence: {
     globalInitial:
       'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
-    // TODO:
-    globalWithIndicator:
-      'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
+    // TODO: with indicators (global and others)
+    // globalWithIndicator:
+    //   'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
     initial:
       'As of {year}, {percentage} of {location} was {threshold} tree cover.',
 
