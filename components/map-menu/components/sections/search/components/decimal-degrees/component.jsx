@@ -5,16 +5,16 @@ import { validateLat, validateLng, validateLatLng } from 'utils/geoms';
 
 import Button from 'components/ui/button';
 
-import './styles.scss';
+// import './styles.scss';
 
 class DecimalDegreeSearch extends PureComponent {
   state = {
     error: false,
     lat: '',
-    lng: ''
+    lng: '',
   };
 
-  handleKeyPress = e => {
+  handleKeyPress = (e) => {
     if (e.keyCode === 13 && !this.state.error) {
       this.handleSubmit();
     }
@@ -24,11 +24,11 @@ class DecimalDegreeSearch extends PureComponent {
     const { lat, lng } = this.state;
     const { setMapSettings } = this.props;
     setMapSettings({
-      center: { lat: parseFloat(lat), lng: parseFloat(lng) }
+      center: { lat: parseFloat(lat), lng: parseFloat(lng) },
     });
   };
 
-  handleSetLocationState = stateObj => {
+  handleSetLocationState = (stateObj) => {
     if (!this.state.error) {
       this.setState(stateObj);
     }
@@ -51,14 +51,14 @@ class DecimalDegreeSearch extends PureComponent {
         <span className="label">Lat:</span>
         <input
           value={lat}
-          onChange={e => this.handleSetLatLng(e.target.value, lng)}
+          onChange={(e) => this.handleSetLatLng(e.target.value, lng)}
           className={cx('coord-input', { error: lat && !validateLat(lat) })}
           onKeyDown={this.handleKeyPress}
         />
         <span className="label">Lng:</span>
         <input
           value={lng}
-          onChange={e => this.handleSetLatLng(lat, e.target.value)}
+          onChange={(e) => this.handleSetLatLng(lat, e.target.value)}
           className={cx('coord-input', { error: lng && !validateLng(lng) })}
           onKeyDown={this.handleKeyPress}
         />
@@ -76,7 +76,7 @@ class DecimalDegreeSearch extends PureComponent {
 }
 
 DecimalDegreeSearch.propTypes = {
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
 };
 
 export default DecimalDegreeSearch;

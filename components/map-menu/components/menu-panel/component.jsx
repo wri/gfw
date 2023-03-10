@@ -10,7 +10,7 @@ import closeIcon from 'assets/icons/close.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import posed, { PoseGroup } from 'react-pose';
 
-import './styles.scss';
+// import './styles.scss';
 
 const PanelMobile = posed.div({
   enter: {
@@ -52,7 +52,8 @@ class MenuPanel extends PureComponent {
             setMenuSettings({
               ...(category && { datasetCategory: '' }),
               ...(isSearch && { searchType: '' }),
-            })}
+            })
+          }
         >
           <Icon icon={arrowIcon} className="icon-return" />
           <span>{isSearch ? label : startCase(category)}</span>

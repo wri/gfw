@@ -17,7 +17,7 @@ import { getSGFProjects } from 'services/projects';
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
-import './styles.scss';
+// import './styles.scss';
 
 const GrantsProjectsSection = ({
   projects: allProjects,

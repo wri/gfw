@@ -10,7 +10,7 @@ import MenuPanel from './components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
 import MenuMobile from './components/menu-mobile';
 
-import './styles.scss';
+// import './styles.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {
@@ -98,12 +98,8 @@ class MapMenu extends PureComponent {
   // Here we verify that the the panel in question does exist on the desktop version, and if not, we
   // switch the user to the more relevant panel.
   verifyMenuSettings = () => {
-    const {
-      menuSection,
-      activeSection,
-      isDesktop,
-      setMenuSettings,
-    } = this.props;
+    const { menuSection, activeSection, isDesktop, setMenuSettings } =
+      this.props;
 
     if (!activeSection) return null;
     if (!isDesktop || !menuSection) return null;
@@ -197,7 +193,8 @@ class MapMenu extends PureComponent {
               menuSection:
                 !isDesktop && recentActive ? 'recent-imagery-collapsed' : '',
               datasetCategory: '',
-            })}
+            })
+          }
           onOpen={() => setMenuSettings({ menuSection: openSection })}
         >
           {Component && (
