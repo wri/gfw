@@ -121,7 +121,6 @@ export const parseSentence = createSelector(
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
     const thresholdLabel = threshold.label;
-    console.log('pimenta5-1:', settings);
     const params = {
       year: settings.extentYear,
       location: locationName,
