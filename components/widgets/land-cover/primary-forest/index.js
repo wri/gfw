@@ -18,7 +18,7 @@ export default {
   widget: 'primaryForest',
   title: 'Primary forest in {location}',
   categories: ['land-cover'],
-  types: ['country', 'geostore'],
+  types: ['country', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
