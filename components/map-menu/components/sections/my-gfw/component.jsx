@@ -25,7 +25,7 @@ import logoutIcon from 'assets/icons/logout.svg?sprite';
 import screenImg1x from 'assets/images/aois/aoi-dashboard.png';
 import screenImg2x from 'assets/images/aois/aoi-dashboard@2x.png';
 
-import './styles.scss';
+// import './styles.scss';
 
 const isServer = typeof window === 'undefined';
 
@@ -123,7 +123,8 @@ class MapMenuMyGFW extends PureComponent {
               stepsKey: 'areaOfInterestTour',
               stepIndex: 0,
               force: true,
-            })}
+            })
+          }
         >
           Learn how
         </Button>
@@ -192,7 +193,8 @@ class MapMenuMyGFW extends PureComponent {
                         ? window.location.href
                         : window.location.href.replace('/map', '/embed/map')),
                     areaId: activeArea?.id,
-                  })}
+                  })
+                }
               >
                 <Icon icon={shareIcon} />
                 Share area
@@ -232,7 +234,8 @@ class MapMenuMyGFW extends PureComponent {
                   onRemove={() =>
                     this.setState({
                       activeTags: activeTags.filter((t) => t !== tag.value),
-                    })}
+                    })
+                  }
                 />
               ))}
             {unselectedTags && !!unselectedTags.length && (
@@ -310,7 +313,8 @@ class MapMenuMyGFW extends PureComponent {
                 }}
                 count={allAreas.length}
                 onClickChange={(increment) =>
-                  this.setState({ pageNum: pageNum + increment })}
+                  this.setState({ pageNum: pageNum + increment })
+                }
               />
             )}
           </Fragment>

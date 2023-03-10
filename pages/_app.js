@@ -105,6 +105,20 @@ import '../components/map-geostore/styles.scss';
 
 // map-menu
 import '../components/map-menu/styles.scss';
+import '../components/map-menu/components/menu-desktop/styles.scss';
+import '../components/map-menu/components/menu-mobile/styles.scss';
+import '../components/map-menu/components/menu-panel/styles.scss';
+import '../components/map-menu/components/menu-tile/styles.scss';
+import '../components/map-menu/components/sections/datasets/categories-menu/styles.scss';
+import '../components/map-menu/components/sections/datasets/dataset-section/styles.scss';
+import '../components/map-menu/components/sections/datasets/styles.scss';
+import '../components/map-menu/components/sections/explore/styles.scss';
+import '../components/map-menu/components/sections/my-gfw/styles.scss';
+import '../components/map-menu/components/sections/search/styles.scss';
+import '../components/map-menu/components/sections/search/components/coords/styles.scss';
+import '../components/map-menu/components/sections/search/components/datasets-locations/styles.scss';
+import '../components/map-menu/components/sections/search/components/decimal-degrees/styles.scss';
+import '../components/map-menu/components/sections/search/components/utm-coords/styles.scss';
 
 // modals
 import '../components/modals/area-of-interest/styles.scss';

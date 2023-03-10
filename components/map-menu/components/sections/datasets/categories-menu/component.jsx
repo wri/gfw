@@ -5,7 +5,7 @@ import { Row, Column, Button } from '@worldresources/gfw-components';
 
 import Icon from 'components/ui/icon';
 
-import './styles.scss';
+// import './styles.scss';
 
 class CategoriesMenu extends PureComponent {
   render() {
@@ -25,7 +25,8 @@ class CategoriesMenu extends PureComponent {
                   round
                   size="large"
                   onClick={() =>
-                    onSelectCategory({ datasetCategory: c.category })}
+                    onSelectCategory({ datasetCategory: c.category })
+                  }
                 >
                   {!!c.layerCount && (
                     <span className="category-btn-count">{c.layerCount}</span>

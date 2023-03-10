@@ -10,7 +10,7 @@ import infoIcon from 'assets/icons/info.svg?sprite';
 import AttributionsContent from './attributions-content';
 import AttributionsModal from './attributions-modal';
 
-import './styles.scss';
+// import './styles.scss';
 
 const MapAttributions = ({ className }) => {
   const [attributionsModalOpen, setAttributionsModalOpen] = useState(false);

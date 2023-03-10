@@ -9,7 +9,7 @@ import ChartToolTip from '../components/chart-tooltip';
 import Sankey from './component';
 import SankeyLink from './sankey-link';
 import SankeyNode from './sankey-node';
-import styles from './styles.scss';
+// import styles from './styles.scss';
 
 function SankeyChart({
   width,

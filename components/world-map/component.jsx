@@ -13,7 +13,7 @@ import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 
 import WORLD_GEOGRAPHIES from 'data/WORLD.topo.json';
-import './style.scss';
+// import './style.scss';
 
 class WorldMap extends React.PureComponent {
   static buildCurves(start, end, arc) {
@@ -136,13 +136,13 @@ class WorldMap extends React.PureComponent {
       <Tooltip
         className={className}
         theme="tip"
-        html={(
+        html={
           <div className="c-world-map-tooltip">
             <p>{text && text.toLowerCase()}</p>
             <p>{items && items[0].value}</p>
             <p>{items && items[0].percentage}</p>
           </div>
-        )}
+        }
         followCursor
         animateFill={false}
         open={!!tooltipConfig}
@@ -155,7 +155,8 @@ class WorldMap extends React.PureComponent {
           <ZoomableGroup center={[0, 0]}>
             <Geographies geography={WORLD_GEOGRAPHIES}>
               {({ geographies, projection }) =>
-                this.renderGeographies(geographies, projection)}
+                this.renderGeographies(geographies, projection)
+              }
             </Geographies>
             {this.renderLines()}
           </ZoomableGroup>

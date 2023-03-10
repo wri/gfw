@@ -10,7 +10,7 @@ import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 
 import bgImage from './background.jpg';
-import './styles.scss';
+// import './styles.scss';
 
 const GRANTS_PAGE_COMPONENTS = {
   projects: Projects,
