@@ -108,6 +108,12 @@ export default {
   pendingKeys: ['threshold', 'extentYear'],
   settingsConfig: [
     {
+      key: 'extentYear',
+      label: 'Tree cover dataset',
+      type: 'select',
+      border: true,
+    },
+    {
       key: 'landCategory',
       label: 'Land Category',
       type: 'select',
@@ -116,14 +122,8 @@ export default {
       border: true,
     },
     {
-      key: 'extentYear',
-      label: 'Tree cover dataset',
-      type: 'select',
-      border: true,
-    },
-    {
       key: 'threshold',
-      label: 'canopy density',
+      label: 'Tree cover',
       type: 'mini-select',
       metaKey: 'widget_canopy_density',
     },
