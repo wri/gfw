@@ -66,15 +66,15 @@ export default {
     globalInitial:
       'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
     // TODO: with indicators (global and others)
-    // globalWithIndicator:
-    //   'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
+    globalWithIndicator:
+      'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
     initial:
       'As of {year}, {percentage} of {location} was {threshold} tree cover.',
 
-    // hasPlantations: ' was natural forest cover.',
-    // noPlantations: ' was tree cover.',
-    // hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
-    // noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
+    hasPlantations: ' was natural forest cover.',
+    noPlantations: ' was tree cover.',
+    hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
+    noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
   },
   metaKey: 'widget_tree_cover',
   chartType: 'pieChart',

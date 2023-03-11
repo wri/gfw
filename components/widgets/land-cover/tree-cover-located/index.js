@@ -1,4 +1,7 @@
-import { getExtentGrouped } from 'services/analysis-cached';
+import {
+  getExtentGrouped,
+  getTropicalTreeCoverGrouped,
+} from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -24,6 +27,12 @@ export default {
   admins: ['global', 'adm0', 'adm1'],
   settingsConfig: [
     {
+      key: 'extentYear',
+      label: 'Tree cover dataset',
+      type: 'select',
+      border: true,
+    },
+    {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
@@ -45,14 +54,8 @@ export default {
       whitelist: ['ha', '%'],
     },
     {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch',
-      border: true,
-    },
-    {
       key: 'threshold',
-      label: 'canopy density',
+      label: 'tree cover',
       type: 'mini-select',
       metaKey: 'widget_canopy_density',
     },
@@ -127,8 +130,36 @@ export default {
       indicator: 'current',
     },
   ],
-  getData: (params) =>
-    getExtentGrouped(params).then((response) => {
+  getData: (params) => {
+    const { extentYear } = params;
+
+    if (extentYear === 2000 || extentYear === 2010) {
+      return getExtentGrouped(params).then((response) => {
+        const { data } = response.data;
+        let mappedData = {};
+        if (data && data.length) {
+          let groupKey = 'iso';
+          if (params.adm0) groupKey = 'adm1';
+          if (params.adm1) groupKey = 'adm2';
+
+          mappedData = data.map((d) => ({
+            id: parseInt(d[groupKey], 10),
+            extent: d.extent || 0,
+            percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
+          }));
+          if (!params.type || params.type === 'global') {
+            mappedData = data.map((d) => ({
+              id: d.iso,
+              extent: d.extent || 0,
+              percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
+            }));
+          }
+        }
+        return mappedData;
+      });
+    }
+
+    return getTropicalTreeCoverGrouped(params).then((response) => {
       const { data } = response.data;
       let mappedData = {};
       if (data && data.length) {
@@ -150,7 +181,8 @@ export default {
         }
       }
       return mappedData;
-    }),
+    });
+  },
   getDataURL: (params) => [getExtentGrouped({ ...params, download: true })],
   getWidgetProps,
 };

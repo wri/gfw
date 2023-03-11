@@ -80,6 +80,8 @@ const SQL_QUERIES = {
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
   tropicalTreeCoverExtent:
     'SELECT {select_location}, SUM({area}) AS {area} FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  tropicalTreeCoverGrouped:
+    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS extent, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS total_area FROM data GROUP BY {location} ORDER BY {location}',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -1008,6 +1010,51 @@ export const getTropicalTreeCover = (params) => {
   return dataRequest.get(url).then((response) => response);
 };
 
+// disaggregated extent for child of location
+export const getTropicalTreeCoverGrouped = (params) => {
+  const { forestType, landCategory, ifl, download, threshold } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230224',
+    // grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalTreeCoverGrouped}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace(/{decile}/g, threshold)
+    // .replace(/{extentYear}/g, extentYear)
+    // .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_extent_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response?.data,
+    },
+  }));
+};
 // Net Change
 export const getNetChange = (params) => {
   const { forestType, landCategory, ifl, download, adm1 } = params || {};
