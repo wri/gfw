@@ -135,39 +135,14 @@ export default {
     const { extentYear } = filteredParams;
     const decile = threshold;
     const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
+    const extentFn = isTropicalTreeCover
+      ? getTropicalExtentGrouped
+      : getExtentGrouped;
 
-    if (!isTropicalTreeCover) {
-      return getExtentGrouped({
-        ...filteredParams,
-        threshold
-      }).then((response) => {
-        const { data } = response.data;
-        let mappedData = {};
-        if (data && data.length) {
-          let groupKey = 'iso';
-          if (filteredParams.adm0) groupKey = 'adm1';
-          if (filteredParams.adm1) groupKey = 'adm2';
-
-          mappedData = data.map((d) => ({
-            id: parseInt(d[groupKey], 10),
-            extent: d.extent || 0,
-            percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
-          }));
-          if (!filteredParams.type || filteredParams.type === 'global') {
-            mappedData = data.map((d) => ({
-              id: d.iso,
-              extent: d.extent || 0,
-              percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
-            }));
-          }
-        }
-        return mappedData;
-      });
-    }
-
-    return getTropicalExtentGrouped({
+    return extentFn({
       ...filteredParams,
-      decile
+      ...decileThreshold,
     }).then((response) => {
       const { data } = response.data;
       let mappedData = {};
