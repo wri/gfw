@@ -1,5 +1,9 @@
 import { all, spread } from 'axios';
-import { getExtent, getTropicalTreeCover } from 'services/analysis-cached';
+import {
+  getExtent,
+  getTropicalExtent,
+  getTropicalTreeCover,
+} from 'services/analysis-cached';
 import OTFAnalysis from 'services/otf-analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -227,20 +231,25 @@ export default {
     return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
-    const urlArr =
-      params.forestType || params.landCategory
-        ? [getExtent({ ...params, download: true })]
-        : [];
+    const { threshold, ...filteredParams } = params;
+    const { extentYear } = filteredParams;
+    const decile = threshold;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const downloadFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
+    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
+    const commonParams = {
+      ...filteredParams,
+      ...decileThreshold,
+      download: true,
+    };
 
-    return urlArr.concat([
-      getExtent({
-        ...params,
-        forestType: null,
-        landCategory: null,
-        download: true,
-      }),
-      getExtent({ ...params, forestType: 'plantations', download: true }),
-    ]);
+    return [
+      downloadFn({ ...commonParams, forestType: null, landCategory: null }),
+      downloadFn({ ...commonParams, forestType: 'plantations' }),
+      ...(filteredParams?.forestType || filteredParams?.landCategory
+        ? downloadFn({ ...commonParams })
+        : []),
+    ];
   },
   getWidgetProps,
 };
