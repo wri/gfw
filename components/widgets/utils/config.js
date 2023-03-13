@@ -70,6 +70,7 @@ export const getSettingsConfig = ({
     .map((o) => {
       const {
         key,
+        label,
         compareKey,
         startKey,
         endKey,
@@ -81,6 +82,9 @@ export const getSettingsConfig = ({
       } = o || {};
       let mergedOptions =
         (dataOptions && dataOptions[key]) || options || allOptions[key];
+      if (key === 'extentYear' && label === 'Tree cover dataset') {
+        mergedOptions = allOptions.treeCoverDatasets;
+      }
       if (key === 'forestType') {
         mergedOptions =
           mergedOptions &&
