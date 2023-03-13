@@ -167,6 +167,19 @@ export default {
       return mappedData;
     });
   },
-  getDataURL: (params) => [getExtentGrouped({ ...params, download: true })],
+  getDataURL: (params) => {
+    const { threshold, ...filteredParams } = params;
+    const { extentYear } = filteredParams;
+    const decile = threshold;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const downloadFn = isTropicalTreeCover
+      ? getTropicalExtentGrouped
+      : getExtentGrouped;
+    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
+
+    return [
+      downloadFn({ ...filteredParams, ...decileThreshold, download: true }),
+    ];
+  },
   getWidgetProps,
 };
