@@ -1,6 +1,6 @@
 import {
   getExtentGrouped,
-  getTropicalTreeCoverGrouped,
+  getTropicalExtentGrouped,
 } from 'services/analysis-cached';
 
 import {
@@ -131,23 +131,29 @@ export default {
     },
   ],
   getData: (params) => {
-    const { extentYear } = params;
+    const { threshold, ...filteredParams } = params;
+    const { extentYear } = filteredParams;
+    const decile = threshold;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
 
-    if (extentYear === 2000 || extentYear === 2010) {
-      return getExtentGrouped(params).then((response) => {
+    if (!isTropicalTreeCover) {
+      return getExtentGrouped({
+        ...filteredParams,
+        threshold
+      }).then((response) => {
         const { data } = response.data;
         let mappedData = {};
         if (data && data.length) {
           let groupKey = 'iso';
-          if (params.adm0) groupKey = 'adm1';
-          if (params.adm1) groupKey = 'adm2';
+          if (filteredParams.adm0) groupKey = 'adm1';
+          if (filteredParams.adm1) groupKey = 'adm2';
 
           mappedData = data.map((d) => ({
             id: parseInt(d[groupKey], 10),
             extent: d.extent || 0,
             percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
           }));
-          if (!params.type || params.type === 'global') {
+          if (!filteredParams.type || filteredParams.type === 'global') {
             mappedData = data.map((d) => ({
               id: d.iso,
               extent: d.extent || 0,
@@ -159,20 +165,23 @@ export default {
       });
     }
 
-    return getTropicalTreeCoverGrouped(params).then((response) => {
+    return getTropicalExtentGrouped({
+      ...filteredParams,
+      decile
+    }).then((response) => {
       const { data } = response.data;
       let mappedData = {};
       if (data && data.length) {
         let groupKey = 'iso';
-        if (params.adm0) groupKey = 'adm1';
-        if (params.adm1) groupKey = 'adm2';
+        if (filteredParams.adm0) groupKey = 'adm1';
+        if (filteredParams.adm1) groupKey = 'adm2';
 
         mappedData = data.map((d) => ({
           id: parseInt(d[groupKey], 10),
           extent: d.extent || 0,
           percentage: d.extent ? (d.extent / d.total_area) * 100 : 0,
         }));
-        if (!params.type || params.type === 'global') {
+        if (!filteredParams.type || filteredParams.type === 'global') {
           mappedData = data.map((d) => ({
             id: d.iso,
             extent: d.extent || 0,

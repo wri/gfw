@@ -89,7 +89,7 @@ const SQL_QUERIES = {
   treeCoverByLandCoverClass:
     'SELECT umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
   tropicalExtent:
-    'SELECT {location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -1030,6 +1030,10 @@ export const getTropicalExtent = (params) => {
 
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace(/{decile}/g, params?.decile)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
@@ -1057,6 +1061,53 @@ export const getTropicalExtent = (params) => {
       },
     };
   });
+};
+
+export const getTropicalExtentGrouped = (params) => {
+  const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230224',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => { });
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace(/{decile}/g, params?.decile)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `tropical_treecover_extent_${extentYear}_by_region${indicator ? `_in_${snakeCase(indicator.label)}` : ''
+        }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response?.data?.map((d) => ({
+        ...d,
+        extent: d[`tropical_tree_cover_extent_${extentYear}_ha`],
+        total_area: d.area__ha,
+      })),
+    },
+  }));
 };
 
 export const getTreeCoverByLandCoverClass = (params) => {
