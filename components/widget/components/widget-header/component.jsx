@@ -73,6 +73,7 @@ class WidgetHeader extends PureComponent {
 
     const showSettingsBtn = !simple && !isEmpty(settingsConfig);
     const showDownloadBtn = !embed && getDataURL; // Show everywhere
+    const showMetaBtn = !!metaKey;
     const disableDownloadBtn =
       disableDownload || (status !== 'saved' && !settings?.canDownloadUnsaved); // Disable everywhere
     const showMapBtn = !embed && !simple && datasets;
@@ -138,10 +139,12 @@ class WidgetHeader extends PureComponent {
                 {...this.props}
               />
             )}
-            <WidgetInfoButton
-              square={simple}
-              handleOpenInfo={() => handleShowInfo(metaInfo)}
-            />
+            {showMetaBtn && (
+              <WidgetInfoButton
+                square={simple}
+                handleOpenInfo={() => handleShowInfo(metaInfo)}
+              />
+            )}
             {!simple && <WidgetShareButton handleShowShare={handleShowShare} />}
           </div>
         </div>
