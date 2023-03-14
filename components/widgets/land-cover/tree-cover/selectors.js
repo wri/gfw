@@ -16,7 +16,6 @@ const getThreshold = (state) => state.optionsSelected.threshold;
 export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
   (whitelist, name) => {
-    console.log('pimenta7-1-5:', whitelist, name);
     const hasPlantations =
       name === 'global'
         ? true
