@@ -228,7 +228,6 @@ const MapLegend = ({
                       layerGroup={lg}
                       name={name}
                       multi={isMultiSelectorLayer}
-                      toggle={isToggleLayer}
                       onChange={onChangeLayer}
                       {...selectorLayerConfig}
                     />
