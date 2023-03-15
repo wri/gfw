@@ -25,42 +25,13 @@ export default {
   categories: ['summary', 'land-cover'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
-  settingsConfig: [
-    {
-      key: 'extentYear',
-      label: 'Tree cover dataset',
-      type: 'select',
-      border: true,
-    },
-    {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true,
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true,
-    },
-    {
-      key: 'unit',
-      label: 'unit',
-      type: 'switch',
-      whitelist: ['ha', '%'],
-    },
-    {
-      key: 'threshold',
-      label: 'tree cover',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
+  refetchKeys: [
+    'extentYear',
+    'forestType',
+    'landCategory',
+    'threshold',
+    'decile',
   ],
-  refetchKeys: ['extentYear', 'forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
   colors: 'extent',
   metaKey: 'widget_forest_location',
@@ -85,6 +56,7 @@ export default {
   },
   settings: {
     threshold: 30,
+    decile: 30,
     extentYear: 2010,
     unit: 'ha',
     pageSize: 5,
@@ -130,10 +102,49 @@ export default {
       indicator: 'current',
     },
   ],
+  getSettingsConfig: (params) => {
+    const { extentYear } = params;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+
+    return [
+      {
+        key: 'extentYear',
+        label: 'Tree cover dataset',
+        type: 'select',
+        border: true,
+      },
+      {
+        key: 'forestType',
+        label: 'Forest Type',
+        type: 'select',
+        placeholder: 'All tree cover',
+        clearable: true,
+      },
+      {
+        key: 'landCategory',
+        label: 'Land Category',
+        type: 'select',
+        placeholder: 'All categories',
+        clearable: true,
+        border: true,
+      },
+      {
+        key: 'unit',
+        label: 'unit',
+        type: 'switch',
+        whitelist: ['ha', '%'],
+      },
+      {
+        key: isTropicalTreeCover ? 'decile' : 'threshold',
+        label: 'tree cover',
+        type: 'mini-select',
+        metaKey: 'widget_canopy_density',
+      },
+    ];
+  },
   getData: (params) => {
-    const { threshold, ...filteredParams } = params;
+    const { threshold, decile, ...filteredParams } = params;
     const { extentYear } = filteredParams;
-    const decile = threshold;
     const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
     const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
     const extentFn = isTropicalTreeCover
@@ -168,9 +179,8 @@ export default {
     });
   },
   getDataURL: (params) => {
-    const { threshold, ...filteredParams } = params;
+    const { threshold, decile, ...filteredParams } = params;
     const { extentYear } = filteredParams;
-    const decile = threshold;
     const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
     const downloadFn = isTropicalTreeCover
       ? getTropicalExtentGrouped
