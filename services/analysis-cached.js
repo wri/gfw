@@ -1099,7 +1099,7 @@ export const getTropicalExtent = (params) => {
       data: {
         data: response?.data?.map((d) => ({
           ...d,
-          extent: d[`tropical_tree_cover_extent_${extentYear}__ha`],
+          extent: d[`tropical_tree_cover_extent_${extentYear}_ha`],
           total_area: d.area__ha,
         })),
       },
