@@ -541,16 +541,6 @@ export const getWidgets = createSelector(
       const landCategory = optionsSelected && optionsSelected.landCategory;
       const indicator = getIndicator(forestType, landCategory);
 
-      const footerStatements = getStatements({
-        forestType,
-        landCategory,
-        settings,
-        datasets,
-        type,
-        dataType,
-        active,
-      });
-
       const { ifl } = settings || {};
 
       const settingsConfigFiltered =
@@ -562,6 +552,25 @@ export const getWidgets = createSelector(
               settings.forestType !== 'primary_forest' &&
               settings.forestType !== 'ifl')
         );
+
+      const settingConfigFilteredKeys =
+        settingsConfigFiltered?.map((scf) => scf.key) || [];
+      const allowedFooterSettings = Object.keys(settings)
+        .filter((key) => settingConfigFilteredKeys.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = settings[key];
+          return obj;
+        }, {});
+
+      const footerStatements = getStatements({
+        forestType,
+        landCategory,
+        datasets,
+        type,
+        dataType,
+        active,
+        settings: allowedFooterSettings,
+      });
 
       const props = {
         ...w,

@@ -356,7 +356,7 @@ export const getStatements = ({
   datasets,
 }) => {
   if (!settings) return null;
-  const { extentYear, threshold } = settings;
+  const { extentYear, threshold, decile } = settings;
 
   const indicators = getNonGlobalIndicator({
     forestType,
@@ -394,6 +394,11 @@ export const getStatements = ({
       ? translateText('>{threshold}% tree canopy{carbonGain}', {
           threshold,
           carbonGain,
+        })
+      : null,
+    decile
+      ? translateText('>{decile}% tree canopy', {
+          decile,
         })
       : null,
     dataType === 'loss'
