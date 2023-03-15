@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { formatNumber } from 'utils/format';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
 const getDensity = (state) => state.data && state.data;
@@ -35,7 +34,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
     },
   },
   xAxis: {
-    tickFormatter: yearTicksFormatter,
+    tickFormatter: (value) => `${value}-${value + 9}`,
   },
   yAxis: {
     yAxisId: 'wri_tropical_tree_cover_extent__ha',
@@ -43,16 +42,9 @@ const parseConfig = createSelector([getColors], (colors) => ({
   unit: 'ha',
   tooltip: [
     {
-      key: 'decile',
-      unitFormat: (value) =>
-        formatNumber({ num: value, unit: '%', precision: 3 }),
-      label: 'Tree cover density decile',
-      color: colors.primaryForestExtent,
-    },
-    {
       key: 'area',
       unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
-      label: 'Tree cover density area',
+      label: 'Land cover',
       color: colors.primaryForestLoss,
       dashline: true,
     },
@@ -64,12 +56,23 @@ const parseSentence = createSelector(
   (data, locationLabel, indicator, sentences) => {
     if (!data) return null;
 
+    const areasSummed = data.reduce((acc, curr) => acc + curr.area, 0);
+    const areaOverTenPercentSummed = data
+      .filter((item) => item.decile > 0)
+      .reduce((acc, curr) => acc + curr.area, 0);
+    const areaOverTenPercentByTotalArea =
+      areaOverTenPercentSummed / areasSummed;
     const { initial, withIndicator } = sentences;
     const sentence = indicator ? withIndicator : initial;
     const params = {
       indicator: indicator && indicator.label,
       location: locationLabel,
-      percent: formatNumber({ num: data[9].decile, unit: '%' }),
+      percent: formatNumber({ num: 10, unit: '%' }),
+      areaOverTenPercent: formatNumber({
+        num: areaOverTenPercentSummed,
+        unit: 'ha',
+      }),
+      area: formatNumber({ num: areaOverTenPercentByTotalArea, unit: 'ha' }),
     };
 
     return {

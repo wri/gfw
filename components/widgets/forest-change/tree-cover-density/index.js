@@ -55,9 +55,10 @@ export default {
     forestChange: -1,
   },
   sentence: {
-    initial: '{location} had an average tree cover of {percent} in 2020',
+    initial:
+      'In 2020, {location} had {areaOverTenPercent} of land above {percent} tree cover, extending over {area} of its land area',
     withIndicator:
-      '{location} in {indicator} had an average tree cover of {percent} in 2020',
+      'In 2020, {indicator} in {location} had {areaOverTenPercent} of land above {percent} tree cover, extending over {area} of its land area.”',
   },
   whitelists: {
     indicators: ['primary_forest'],
