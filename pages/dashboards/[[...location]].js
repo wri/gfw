@@ -81,7 +81,7 @@ function getLabel(location, countryData) {
 }
 
 export const getServerSideProps = async ({ params, query, req }) => {
-  const [type] = params?.location || [];
+  const [type] = {};
   let userToken = null;
   try {
     userToken = parse(req.headers.cookie)['gfw-token'];
