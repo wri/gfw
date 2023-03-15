@@ -87,7 +87,7 @@ const SQL_QUERIES = {
   netChange:
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   tropicalExtent:
-    'SELECT {location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -1074,6 +1074,10 @@ export const getTropicalExtent = (params) => {
 
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace(/{decile}/g, params?.decile)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
