@@ -108,33 +108,39 @@ export default {
     summary: 4,
     landCover: 1,
   },
-  refetchKeys: ['threshold', 'extentYear', 'landCategory'],
-  pendingKeys: ['threshold', 'extentYear'],
-  settingsConfig: [
-    {
-      key: 'extentYear',
-      label: 'Tree cover dataset',
-      type: 'select',
-      border: true,
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true,
-    },
-    {
-      key: 'threshold',
-      label: 'Tree cover',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
-  ],
+  refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
+  pendingKeys: ['threshold', 'decile', 'extentYear'],
   settings: {
     threshold: 30,
+    decile: 30,
     extentYear: 2000,
+  },
+  getSettingsConfig: (params) => {
+    const { extentYear } = params;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+
+    return [
+      {
+        key: 'extentYear',
+        label: 'Tree cover dataset',
+        type: 'select',
+        border: true,
+      },
+      {
+        key: 'landCategory',
+        label: 'Land Category',
+        type: 'select',
+        placeholder: 'All categories',
+        clearable: true,
+        border: true,
+      },
+      {
+        key: isTropicalTreeCover ? 'decile' : 'threshold',
+        label: 'Tree cover',
+        type: 'mini-select',
+        metaKey: 'widget_canopy_density',
+      },
+    ];
   },
   getData: (params) => {
     const { extentYear } = params;
@@ -231,9 +237,8 @@ export default {
     return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
-    const { threshold, ...filteredParams } = params;
+    const { threshold, decile, ...filteredParams } = params;
     const { extentYear } = filteredParams;
-    const decile = threshold;
     const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
     const downloadFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
     const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };

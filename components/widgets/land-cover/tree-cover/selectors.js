@@ -12,6 +12,7 @@ const getSentence = (state) => state.sentence;
 const getTitle = (state) => state.title;
 const getLocationName = (state) => state.locationLabel;
 const getThreshold = (state) => state.optionsSelected.threshold;
+const getDecile = (state) => state.optionsSelected.decile;
 
 export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
@@ -95,6 +96,7 @@ export const parseSentence = createSelector(
     getIndicator,
     getSentence,
     getThreshold,
+    getDecile,
     isoHasPlantations,
   ],
   (
@@ -104,6 +106,7 @@ export const parseSentence = createSelector(
     indicator,
     sentences,
     threshold,
+    decile,
     isoPlantations
   ) => {
     if (!data || !sentences) return null;
@@ -120,7 +123,8 @@ export const parseSentence = createSelector(
     const top = isoPlantations ? cover - plantations : cover;
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
-    const thresholdLabel = threshold.label;
+    const thresholdLabel = threshold?.label;
+    const decileLabel = decile?.label;
     const params = {
       year: settings.extentYear,
       location: locationName,
@@ -131,7 +135,7 @@ export const parseSentence = createSelector(
         data.cover < 1
           ? `${format('.3r')(data.cover)}ha`
           : `t${format('.3s')(data.cover)}ha`,
-      threshold: thresholdLabel,
+      threshold: thresholdLabel || decileLabel,
     };
     let sentence = initial;
     // let sentence = isoPlantations
