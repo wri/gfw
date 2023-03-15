@@ -446,10 +446,11 @@ export const getWidgets = createSelector(
       const {
         settings: defaultSettings,
         widget,
-        settingsConfig,
         pendingKeys,
         title: titleTemplate,
         dataType,
+        settingsConfig: settingsConfigArr,
+        getSettingsConfig: settingsConfigFn,
       } = w || {};
       const active =
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
@@ -513,6 +514,15 @@ export const getWidgets = createSelector(
       };
 
       const dataOptions = rawData && rawData.options;
+
+      const settingsConfig =
+        settingsConfigArr ||
+        (settingsConfigFn &&
+          settingsConfigFn({
+            ...locationObj,
+            ...settings,
+          }));
+
       const settingsConfigParsed = getSettingsConfig({
         settingsConfig,
         dataOptions,
