@@ -1107,6 +1107,54 @@ export const getTropicalExtent = (params) => {
   });
 };
 
+export const getTropicalExtentGrouped = (params) => {
+  const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230224',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace(/{decile}/g, params?.decile)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `tropical_treecover_extent_${extentYear}_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response?.data?.map((d) => ({
+        ...d,
+        extent: d[`tropical_tree_cover_extent_${extentYear}_ha`],
+        total_area: d.area__ha,
+      })),
+    },
+  }));
+};
+
 // Net Change
 export const getNetChange = (params) => {
   const { forestType, landCategory, ifl, download, adm1 } = params || {};
