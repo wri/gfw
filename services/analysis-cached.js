@@ -78,10 +78,6 @@ const SQL_QUERIES = {
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
-  tropicalTreeCoverExtent:
-    'SELECT {select_location}, SUM({area}) AS {area} FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  tropicalTreeCoverGrouped:
-    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS extent, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS total_area FROM data GROUP BY {location} ORDER BY {location}',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -965,95 +961,6 @@ export const getTreeCoverGainByPlantationType = (params) => {
       data: response?.data?.map((d) => ({
         ...d,
       })),
-    },
-  }));
-};
-
-// summed extent for single location
-export const getTropicalTreeCover = (params) => {
-  const { forestType, landCategory, ifl, download, extentYear, area } =
-    params || {};
-
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset: 'annual',
-    datasetType: 'summary',
-    version: 'v20230224',
-  });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
-  const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.tropicalTreeCoverExtent}`
-      .replace(/{area}/g, area)
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, cast: false })
-      )
-      .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace(
-        '{WHERE}',
-        getWHEREQuery({ ...params, dataset: 'tropicalTreeCover' })
-      )
-  );
-
-  if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
-    return {
-      name: `treecover_extent_${extentYear}${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__ha`,
-      url: getDownloadUrl(url),
-    };
-  }
-
-  return dataRequest.get(url).then((response) => response);
-};
-
-// disaggregated extent for child of location
-export const getTropicalTreeCoverGrouped = (params) => {
-  const { forestType, landCategory, ifl, download, threshold } = params || {};
-
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset: 'annual',
-    datasetType: 'summary',
-    version: 'v20230224',
-    // grouped: true,
-  });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
-  const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.tropicalTreeCoverGrouped}`
-      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, grouped: true, cast: false })
-      )
-      .replace(/{decile}/g, threshold)
-    // .replace(/{extentYear}/g, extentYear)
-    // .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
-  );
-
-  if (download) {
-    const indicator = getIndicator(forestType, landCategory, ifl);
-    return {
-      name: `treecover_extent_by_region${
-        indicator ? `_in_${snakeCase(indicator.label)}` : ''
-      }__ha`,
-      url: getDownloadUrl(url),
-    };
-  }
-
-  return dataRequest.get(url).then((response) => ({
-    ...response,
-    data: {
-      data: response?.data,
     },
   }));
 };
