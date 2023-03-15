@@ -85,7 +85,7 @@ const SQL_QUERIES = {
   treeCoverByLandCoverClass:
     'SELECT umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
   tropicalExtent:
-    'SELECT {location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
@@ -1005,6 +1005,10 @@ export const getTropicalExtent = (params) => {
 
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
       .replace(/{location}/g, getLocationSelect({ ...params }))
       .replace(/{decile}/g, params?.decile)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
