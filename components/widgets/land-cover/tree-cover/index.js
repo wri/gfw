@@ -1,9 +1,5 @@
 import { all, spread } from 'axios';
-import {
-  getExtent,
-  getTropicalExtent,
-  getTropicalTreeCover,
-} from 'services/analysis-cached';
+import { getExtent, getTropicalExtent } from 'services/analysis-cached';
 import OTFAnalysis from 'services/otf-analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
@@ -143,88 +139,53 @@ export default {
     ];
   },
   getData: (params) => {
-    const { extentYear } = params;
-
-    if (extentYear === 2000 || extentYear === 2010) {
-      if (shouldQueryPrecomputedTables(params)) {
-        return all([
-          getExtent(params),
-          getExtent({ ...params, forestType: '', landCategory: '' }),
-          getExtent({ ...params, forestType: 'plantations' }),
-        ]).then(
-          spread((response, adminResponse, plantationsResponse) => {
-            const extent = response.data && response.data.data;
-            const adminExtent = adminResponse.data && adminResponse.data.data;
-            const plantationsExtent =
-              plantationsResponse.data && plantationsResponse.data.data;
-            let totalArea = 0;
-            let totalCover = 0;
-            let cover = 0;
-            let plantations = 0;
-            let data = {};
-            if (extent && extent.length) {
-              // Sum values
-              totalArea = adminExtent.reduce(
-                (total, d) => total + d.total_area,
-                0
-              );
-              cover = extent.reduce((total, d) => total + d.extent, 0);
-              totalCover = adminExtent.reduce(
-                (total, d) => total + d.extent,
-                0
-              );
-              plantations = plantationsExtent.reduce(
-                (total, d) => total + d.extent,
-                0
-              );
-              data = {
-                totalArea,
-                totalCover,
-                cover,
-                plantations,
-              };
-            }
-            return data;
-          })
-        );
-      }
-    }
+    const { threshold, decile, ...filteredParams } = params;
+    const { extentYear } = filteredParams;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
+    const extentFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
 
     if (shouldQueryPrecomputedTables(params)) {
       return all([
-        getTropicalTreeCover({
-          ...params,
-          area: 'wri_tropical_tree_cover_extent__ha',
+        extentFn({ ...filteredParams, ...decileThreshold }),
+        extentFn({
+          ...filteredParams,
+          ...decileThreshold,
+          forestType: '',
+          landCategory: '',
         }),
-        getTropicalTreeCover({ ...params, area: 'area__ha', threshold: 0 }),
-        getTropicalTreeCover({
-          ...params,
-          area: 'wri_tropical_tree_cover_extent__ha',
+        extentFn({
+          ...filteredParams,
+          ...decileThreshold,
           forestType: 'plantations',
         }),
       ]).then(
-        spread((extentResponse, fullExtentResponse, plantationsResponse) => {
-          const extent = extentResponse.data;
-          const fullExtent = fullExtentResponse.data;
-          const plantationsExtent = plantationsResponse.data;
+        spread((response, adminResponse, plantationsResponse) => {
+          const extent = response.data && response.data.data;
+          const adminExtent = adminResponse.data && adminResponse.data.data;
+          const plantationsExtent =
+            plantationsResponse.data && plantationsResponse.data.data;
 
           let totalArea = 0;
+          let totalCover = 0;
           let cover = 0;
           let plantations = 0;
           let data = {};
           if (extent && extent.length) {
             // Sum values
-            totalArea = fullExtent.reduce((total, d) => total + d.area__ha, 0);
-            cover = extent.reduce(
-              (total, d) => total + d.wri_tropical_tree_cover_extent__ha,
+            totalArea = adminExtent.reduce(
+              (total, d) => total + d.total_area,
               0
             );
+            cover = extent.reduce((total, d) => total + d.extent, 0);
+            totalCover = adminExtent.reduce((total, d) => total + d.extent, 0);
             plantations = plantationsExtent.reduce(
-              (total, d) => total + d.wri_tropical_tree_cover_extent__ha,
+              (total, d) => total + d.extent,
               0
             );
             data = {
               totalArea,
+              totalCover,
               cover,
               plantations,
             };
