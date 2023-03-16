@@ -1,14 +1,15 @@
 import { apiRequest } from 'utils/request';
 
-export const getGeodescriberByGeoJson = ({ geojson, token, template }) =>
-  apiRequest({
+export const getGeodescriberByGeoJson = ({ geojson, token, template }) => {
+  return apiRequest({
     method: 'post',
     url: `/geodescriber/geom?template=${template ? 'true' : 'false'}&app=gfw`,
     data: {
       geojson,
     },
     cancelToken: token,
-  });
+  }).catch(() => {});
+};
 
 export const getGeodescriberByGeostore = async ({ geostore, token }) => {
   const geostoreResponse = await apiRequest(`/v2/geostore/${geostore}`);
