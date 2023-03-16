@@ -21,6 +21,14 @@ const parseData = createSelector([getDensity], (densityData) => {
   });
 });
 
+const formatXaxis = (value) => {
+  if (value >= 90) {
+    return `${value}-${value + 10}`;
+  }
+
+  return `${value}-${value + 9}`;
+};
+
 const parseConfig = createSelector([getColors], (colors) => ({
   height: 250,
   xKey: 'decile',
@@ -34,7 +42,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
     },
   },
   xAxis: {
-    tickFormatter: (value) => `${value}-${value + 9}`,
+    tickFormatter: formatXaxis,
   },
   yAxis: {
     yAxisId: 'wri_tropical_tree_cover_extent__ha',
