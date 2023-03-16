@@ -83,7 +83,7 @@ const SQL_QUERIES = {
   netChange:
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   tropicalExtent:
-    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} HAVING SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) > 0 ORDER BY {location}',
 };
 
 const ALLOWED_PARAMS = {
