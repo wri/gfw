@@ -209,13 +209,16 @@ export default {
       download: true,
     };
 
-    return [
+    const downloadArray = [
       downloadFn({ ...commonParams, forestType: null, landCategory: null }),
       downloadFn({ ...commonParams, forestType: 'plantations' }),
-      filteredParams?.forestType || filteredParams?.landCategory
-        ? downloadFn({ ...commonParams })
-        : [],
     ];
+
+    if (filteredParams?.landCategory) {
+      downloadArray.push(downloadFn({ ...commonParams }));
+    }
+
+    return downloadArray;
   },
   getWidgetProps,
 };
