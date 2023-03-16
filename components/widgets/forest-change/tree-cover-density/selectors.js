@@ -55,24 +55,27 @@ const parseSentence = createSelector(
   [parseData, getLocationLabel, getIndicator, getSentence],
   (data, locationLabel, indicator, sentences) => {
     if (!data) return null;
-
-    const areasSummed = data.reduce((acc, curr) => acc + curr.area, 0);
-    const areaOverTenPercentSummed = data
-      .filter((item) => item.decile > 0)
-      .reduce((acc, curr) => acc + curr.area, 0);
-    const areaOverTenPercentByTotalArea =
-      areaOverTenPercentSummed / areasSummed;
     const { initial, withIndicator } = sentences;
     const sentence = indicator ? withIndicator : initial;
+
+    const totalArea = data.reduce((acc, curr) => acc + curr.area, 0);
+    const areasOverTenPercent = data
+      .filter((item) => item.decile > 0)
+      .reduce((acc, curr) => acc + curr.area, 0);
+    const areasOverTenPercentByTotalArea = (
+      (areasOverTenPercent / totalArea) *
+      100
+    ).toFixed(1);
+
     const params = {
       indicator: indicator && indicator.label,
       location: locationLabel,
       percent: formatNumber({ num: 10, unit: '%' }),
-      areaOverTenPercent: formatNumber({
-        num: areaOverTenPercentSummed,
+      areasOverTenPercent: formatNumber({
+        num: areasOverTenPercent,
         unit: 'ha',
       }),
-      area: formatNumber({ num: areaOverTenPercentByTotalArea, unit: 'ha' }),
+      areaInPercent: `${areasOverTenPercentByTotalArea}%`,
     };
 
     return {
