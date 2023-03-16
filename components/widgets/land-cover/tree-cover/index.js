@@ -212,9 +212,9 @@ export default {
     return [
       downloadFn({ ...commonParams, forestType: null, landCategory: null }),
       downloadFn({ ...commonParams, forestType: 'plantations' }),
-      ...(filteredParams?.forestType || filteredParams?.landCategory
+      filteredParams?.forestType || filteredParams?.landCategory
         ? downloadFn({ ...commonParams })
-        : []),
+        : [],
     ];
   },
   getWidgetProps,
