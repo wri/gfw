@@ -99,11 +99,14 @@ export default {
   settings: {
     dataset: 'glad',
   },
-  caution: {
-    visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
-    text:
-      'GLAD-L alert updates have been paused due to maintenance. Stay updated via the <a href="https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I" rel="noreferrer" target="__BLANK">discussion forum</a> or email <a href="mailto:gfw@wri.org">gfw@wri.org</a> with any questions.',
-  },
+  alerts: [
+    {
+      id: 'glad-alerts-simple-alert-1',
+      text:
+        'GLAD-L alert updates have been paused due to maintenance. Stay updated via the [discussion forum](https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I) or email [gfw@wri.org](mailto:gfw@wri.org) with any questions.',
+      visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
+    },
+  ],
   getData: async (params) => {
     const GLAD = await handleGladMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
