@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactHtmlParser from 'react-html-parser';
-import concat from 'lodash/concat';
 
-import WidgetCaution from 'components/widget/components/widget-caution';
+import WidgetAlert from 'components/widget/components/widget-alert';
 
 import './styles.scss';
 
@@ -13,7 +12,6 @@ class WidgetFooter extends PureComponent {
     type: PropTypes.string,
     simple: PropTypes.bool,
     alerts: PropTypes.array,
-    caution: PropTypes.object,
     statements: PropTypes.array,
     locationType: PropTypes.string,
     showAttributionLink: PropTypes.bool,
@@ -21,38 +19,23 @@ class WidgetFooter extends PureComponent {
     decorationMessage: PropTypes.string,
   };
 
-  renderCaution = (caution, alertSystem, type, locationType) => {
-    if (!caution) return null;
+  renderAlert = (alerts, alertSystem, type, locationType) => {
+    if (!alerts) return null;
 
-    if (caution && Array.isArray(caution)) {
-      return caution.map((c) => {
-        if (c.system === alertSystem || alertSystem === 'all') {
-          return (
-            <WidgetCaution
-              type={type}
-              caution={c}
-              locationType={locationType}
-            />
-          );
-        }
-        return null;
-      });
-    }
-
-    return (
-      <WidgetCaution
-        type={type}
-        caution={caution}
-        locationType={locationType}
-      />
-    );
+    return alerts.map((alert) => {
+      if (alert.system === alertSystem || alertSystem === 'all') {
+        return (
+          <WidgetAlert type={type} alert={alert} locationType={locationType} />
+        );
+      }
+      return null;
+    });
   };
 
   render() {
     const {
       statements,
       alerts,
-      caution,
       type,
       simple,
       locationType,
@@ -61,24 +44,19 @@ class WidgetFooter extends PureComponent {
       decorationMessage,
     } = this.props;
 
-    // TODO: remove old 'caution'. here for retro-compatibility. 'alerts' is the new system
-    // Adding 'isCaution' property to parse differently later
-    if (caution) caution.isCaution = true;
-    const cautionAndAlerts = concat(caution, alerts).filter((n) => n);
-
     const statementsMapped = statements && statements.join(' | ');
     // TODO: add statement link
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {/* TODO: Swap this message for new caution */}
         {decorationMessage && (
-          <p
-            className="c-widget-caution"
+          <div
+            className="c-widget-alert"
+            style={{ borderColor: '#97be32', color: '#555' }}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: decorationMessage }}
           />
         )}
-        {this.renderCaution(cautionAndAlerts, alertSystem, type, locationType)}
+        {this.renderAlert(alerts, alertSystem, type, locationType)}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}
