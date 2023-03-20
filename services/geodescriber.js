@@ -3,7 +3,7 @@ import { apiRequest } from 'utils/request';
 export const getGeodescriberByGeoJson = ({ geojson, token, template }) => {
   return apiRequest({
     method: 'post',
-    url: `/geodescriber/geom?template=${template ? 'true' : 'false'}&app=gfw`,
+    url: `/geodescriber/geom/?template=${template ? 'true' : 'false'}&app=gfw`,
     data: {
       geojson,
     },
