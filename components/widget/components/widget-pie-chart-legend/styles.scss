@@ -5,10 +5,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 4%;
+  }
 
-    .cover-legend {
-      min-width: 50%;
-    }
+  .cover-legend {
+    min-width: 50%;
   }
 
   .pie-contextual-settings-btn {
