@@ -14,7 +14,7 @@ export const getModalMetaData = createThunkAction(
       dispatch(setModalMetaLoading({ loading: true, error: false }));
       getMetadata(metaKey)
         .then((response) => {
-          dispatch(setModalMetaData(response.data));
+          dispatch(setModalMetaData(response.data.data.metadata));
         })
         .catch(() => {
           dispatch(setModalMetaLoading({ loading: false, error: true }));
