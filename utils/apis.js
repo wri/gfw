@@ -4,8 +4,10 @@ export const GFW_STAGING_API = 'https://staging-api.resourcewatch.org';
 
 // GFW METADATA API
 export const GFW_METADATA_API = 'https://api.resourcewatch.org/v1/gfw-metadata';
+// export const GFW_STAGING_METADATA_API =
+//   'https://staging-api.resourcewatch.org/v1/gfw-metadata';
 export const GFW_STAGING_METADATA_API =
-  'https://staging-api.resourcewatch.org/v1/gfw-metadata';
+  'http://gfw-data-api-elb-metadata-1961717400.us-east-1.elb.amazonaws.com/dataset';
 
 // GFW DATA API
 export const GFW_DATA_API = 'https://data-api.globalforestwatch.org';
