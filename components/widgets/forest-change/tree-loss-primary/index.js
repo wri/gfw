@@ -73,7 +73,8 @@ export default {
   pendingKeys: ['threshold', 'years'],
   refetchKeys: ['landCategory', 'threshold'],
   dataType: 'lossPrimary',
-  metaKey: 'widget_primary_forest_loss',
+  // metaKey: 'widget_primary_forest_loss',
+  metaKey: 'umd_tree_cover_loss',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
