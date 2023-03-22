@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export const LabelX = () => {
+export const XAxisLabel = ({ label }) => {
   return (
     <>
       <foreignObject
@@ -19,14 +20,18 @@ export const LabelX = () => {
             transform: 'translateX(-50%)',
           }}
         >
-          <span style={{ fontSize: '1rem' }}>Tree cover (%)</span>
+          <span style={{ fontSize: '1rem' }}>{label}</span>
         </div>
       </foreignObject>
     </>
   );
 };
 
-export const LabelY = () => {
+XAxisLabel.propTypes = {
+  label: PropTypes.string,
+};
+
+export const YAxisLabel = ({ label }) => {
   return (
     <>
       <foreignObject
@@ -45,9 +50,13 @@ export const LabelY = () => {
             transform: 'rotate(-90deg)',
           }}
         >
-          <span>Land cover (in hectares)</span>
+          <span>{label}</span>
         </div>
       </foreignObject>
     </>
   );
+};
+
+YAxisLabel.propTypes = {
+  label: PropTypes.string,
 };

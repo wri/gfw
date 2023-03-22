@@ -43,9 +43,11 @@ const parseConfig = createSelector([getColors], (colors) => ({
   },
   xAxis: {
     tickFormatter: formatXaxis,
+    label: 'Tree cover (%)',
   },
   yAxis: {
     yAxisId: 'wri_tropical_tree_cover_extent__ha',
+    label: 'Land cover (in hectares)',
   },
   unit: 'ha',
   tooltip: [

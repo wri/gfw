@@ -32,4 +32,12 @@
       }
     }
   }
+
+  svg {
+    overflow: visible;
+  }
+}
+
+.overflow-x-visible {
+  overflow-x: visible !important;
 }
