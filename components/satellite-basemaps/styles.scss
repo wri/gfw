@@ -17,6 +17,11 @@
     height: 41px;
     background: $slate-dark;
 
+    .label-caveat {
+      display: flex;
+      gap: 3px;
+    }
+
     .active-basemap-title {
       display: flex;
       flex-flow: column;

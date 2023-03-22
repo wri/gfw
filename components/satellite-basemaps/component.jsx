@@ -20,9 +20,8 @@ import './styles.scss';
 function handleTitle(basemap) {
   return (
     <>
-      <span>
-        {basemap.label}
-        {' '}
+      <span className="label-caveat">
+        <span className="label">{basemap.label}</span>
         {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
       </span>
       {basemap.value === 'planet' &&
