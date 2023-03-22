@@ -20,6 +20,8 @@ import {
   Legend,
 } from 'recharts';
 
+import { LabelX, LabelY } from './label';
+
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
@@ -184,6 +186,7 @@ class CustomComposedChart extends PureComponent {
               }}
               interval="preserveStartEnd"
               {...xAxis}
+              label={<LabelX />}
             />
             {(!simple || simpleNeedsAxis) && (
               <YAxis
@@ -212,6 +215,7 @@ class CustomComposedChart extends PureComponent {
                   />
                 )}
                 {...yAxis}
+                label={<LabelY />}
               />
             )}
             {(!simple || simpleNeedsAxis) && rightYAxis && (
