@@ -91,6 +91,12 @@
       margin: 0 10px 0 0;
     }
 
+    &--title-info {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     &--title {
       display: flex;
       align-items: center;

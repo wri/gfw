@@ -168,20 +168,24 @@ const SatelliteBasemaps = ({
                       className="satellite-basemap--thumbnail"
                     />
                     <div className="satellite-basemap--content">
-                      <span className="satellite-basemap--title">
-                        {basemap.label}
-                        {basemap.infoModal && (
-                          <Button
-                            className="info-btn"
-                            theme="theme-button-tiny theme-button-grey-filled square"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalMetaSettings(basemap.infoModal);
-                            }}
-                          >
-                            <Icon icon={infoIcon} />
-                          </Button>
-                        )}
+                      <span className="satellite-basemap--title-info">
+                        <span className="satellite-basemap--title">
+                          {basemap.label}
+                        </span>
+                        <span className="satellite-basemap--info">
+                          {basemap.infoModal && (
+                            <Button
+                              className="info-btn"
+                              theme="theme-button-tiny theme-button-grey-filled square"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalMetaSettings(basemap.infoModal);
+                              }}
+                            >
+                              <Icon icon={infoIcon} />
+                            </Button>
+                          )}
+                        </span>
                       </span>
                       {basemap.description && (
                         <p className="satellite-basemap--description">
