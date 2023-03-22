@@ -30,6 +30,11 @@
     }
   }
 
+  .buttons {
+    display: flex;
+    gap: 5px;
+  }
+
   .subtitle {
     font-size: 12px;
     line-height: 1.5;
