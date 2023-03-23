@@ -56,9 +56,8 @@ export default {
   ],
   visible: ['dashboard'],
   sortOrder: {
-    // TODO: Set correct sortOrder
-    summary: -10,
-    landCover: -10,
+    summary: 5,
+    landCover: 2,
   },
   settings: {
     decile: 30,
