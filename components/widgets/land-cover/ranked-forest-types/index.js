@@ -1,6 +1,6 @@
 import {
   getTreeCoverByLandCoverClass,
-  getTropicalExtent
+  getTropicalExtent,
 } from 'services/analysis-cached';
 
 import {
@@ -42,8 +42,7 @@ export default {
   ],
   refetchKeys: ['forestType', 'decile'],
   chartType: 'infoList',
-  // TODO: Add metakey when available
-  // metaKey: '',
+  metaKey: 'wri_trees_in_mosaic_landscapes',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -71,8 +70,14 @@ export default {
   getDataURL: (params) => {
     return [
       getTropicalExtent({ ...params, forestType: null, download: true }),
-      getTropicalExtent({ ...params, forestType: 'plantations', download: true }),
-      ...(params?.forestType ? getTropicalExtent({ ...params, download: true }) : []),
+      getTropicalExtent({
+        ...params,
+        forestType: 'plantations',
+        download: true,
+      }),
+      ...(params?.forestType
+        ? getTropicalExtent({ ...params, download: true })
+        : []),
     ];
   },
   getWidgetProps,
