@@ -36,6 +36,10 @@
     font-size: rem(27px);
     font-weight: 500;
     margin-bottom: rem(20px);
+
+    &--small {
+      font-size: rem(20px);
+    }
   }
 
   .small {

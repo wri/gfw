@@ -17,6 +17,14 @@ class PieChartLegend extends PureComponent {
       return '';
     })();
 
+    const shouldDisplaySmallerValues = data?.some(
+      (item) =>
+        `${formatNumber({
+          num: item[config.key],
+          unit: item.unit ? item.unit : config.unit,
+        })}`?.length > 10
+    );
+
     return (
       <div
         className={cx('c-pie-chart-legend', className)}
@@ -38,7 +46,13 @@ class PieChartLegend extends PureComponent {
                   </p>
                 </div>
                 {sizeClass !== 'x-small' && (
-                  <div className="legend-value" style={{ color: item.color }}>
+                  <div
+                    className={cx({
+                      'legend-value': true,
+                      'legend-value--small': shouldDisplaySmallerValues,
+                    })}
+                    style={{ color: item.color }}
+                  >
                     {value}
                   </div>
                 )}
