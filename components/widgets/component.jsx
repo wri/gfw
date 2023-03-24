@@ -101,7 +101,9 @@ class Widgets extends PureComponent {
                   { 'no-widgets': !hasWidgets }
                 )}
               >
-                <div className="c-widgets-subcategory-title">{label}</div>
+                {label && (
+                  <div className="c-widgets-subcategory-title">{label}</div>
+                )}
                 {widgets.map((w) => (
                   <Widget
                     key={w.widget}

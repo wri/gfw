@@ -62,7 +62,7 @@ class DynamicSentence extends PureComponent {
       });
     }
 
-    formattedSentence = [formattedSentence];
+    formattedSentence = [formattedSentence?.replace('{area}', 'selected area')];
     if (component) {
       const mappedComponent = {
         ...component,
