@@ -13,7 +13,7 @@ import {
   INTEGRATED_ALERTS_GLAD,
 } from 'data/layers';
 
-import { handleIntegratedMeta } from 'utils/gfw-meta';
+import { handleIntegratedMeta, handleGladMeta } from 'utils/gfw-meta';
 
 import find from 'lodash/find';
 import sumBy from 'lodash/sumBy';
@@ -458,8 +458,8 @@ export default {
     entryKey: 'alert__count',
   },
   // Downloads
-  getDataURL: (params) => {
-    const { GLAD } = params.GFW_META.datasets;
+  getDataURL: async (params) => {
+    const GLAD = await handleGladMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
