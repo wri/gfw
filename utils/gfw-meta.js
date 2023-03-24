@@ -54,6 +54,17 @@ export async function handleGladMeta(params) {
   return GLAD;
 }
 
+export async function handleViirsMeta(params) {
+  let VIIRS;
+  if (isEmpty(params?.GFW_META?.datasets)) {
+    const meta = await getGfwMeta();
+    VIIRS = meta?.datasets?.VIIRS;
+  } else {
+    VIIRS = params?.GFW_META?.datasets?.VIIRS;
+  }
+  return VIIRS;
+}
+
 export async function handleIntegratedMeta(params) {
   let INTEGRATED;
   if (isEmpty(params?.GFW_META?.datasets)) {
