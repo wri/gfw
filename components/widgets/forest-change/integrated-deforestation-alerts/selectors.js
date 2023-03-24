@@ -123,7 +123,7 @@ export const parseConfig = createSelector(
               value: highestAlertCount,
               color: highestColour,
               percentage: highestAlertPercentage,
-              unit: 'counts',
+              unit: 'countsK',
             },
           ]
         : []),
@@ -133,7 +133,7 @@ export const parseConfig = createSelector(
         value: highAlertCount,
         color: highColour,
         percentage: highAlertPercentage,
-        unit: 'counts',
+        unit: 'countsK',
       },
       ...(!confidence
         ? [
@@ -142,7 +142,7 @@ export const parseConfig = createSelector(
               value: lowAlertCount,
               color: lowColour,
               percentage: lowAlertPercentage,
-              unit: 'counts',
+              unit: 'countsK',
             },
           ]
         : []),
