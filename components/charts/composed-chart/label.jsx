@@ -46,11 +46,11 @@ export const YAxisLabel = ({ label }) => {
           style={{
             position: 'absolute',
             top: '40%',
-            left: '-7%',
+            left: '-6%',
             transform: 'rotate(-90deg)',
           }}
         >
-          <span>{label}</span>
+          <span style={{ fontSize: '1rem' }}>{label}</span>
         </div>
       </foreignObject>
     </>

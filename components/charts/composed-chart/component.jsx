@@ -27,6 +27,18 @@ import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
 import './styles.scss';
 
+const CustomizedXAxisTick = ({ x, y, payload }) => {
+  const { offset, value } = payload;
+
+  return (
+    <g transform={`translate(${x - offset},${y})`}>
+      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#000">
+        {value}
+      </text>
+    </g>
+  );
+};
+
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
     const { yKeys } = config || {};
@@ -186,11 +198,7 @@ class CustomComposedChart extends PureComponent {
               dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
-              tick={{
-                dy: 8,
-                fontSize: simple ? '10px' : '12px',
-                fill: '#555555',
-              }}
+              tick={<CustomizedXAxisTick />}
               interval="preserveStartEnd"
               {...xAxis}
               {...(config.xAxis.label && {
@@ -359,6 +367,12 @@ CustomComposedChart.propTypes = {
   handleBrush: PropTypes.func,
   backgroundColor: PropTypes.string,
   barBackground: PropTypes.object,
+};
+
+CustomizedXAxisTick.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  payload: PropTypes.object,
 };
 
 export default CustomComposedChart;
