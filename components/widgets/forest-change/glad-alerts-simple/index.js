@@ -19,7 +19,7 @@ import {
 } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
-import { handleGladMeta } from 'utils/gfw-meta';
+import { handleGfwParamsMeta } from 'utils/gfw-meta';
 
 import getWidgetProps from './selectors';
 
@@ -108,7 +108,7 @@ export default {
     },
   ],
   getData: async (params) => {
-    const GLAD = await handleGladMeta(params);
+    const { GLAD } = await handleGfwParamsMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
@@ -186,7 +186,7 @@ export default {
     subKey: 'alert__count',
   },
   getDataURL: async (params) => {
-    const GLAD = await handleGladMeta(params);
+    const { GLAD } = await handleGfwParamsMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
