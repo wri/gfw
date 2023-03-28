@@ -41,19 +41,15 @@ export const YAxisLabel = ({ label }) => {
 
   switch (screenSize) {
     case SCREEN_SIZES.sm:
-      console.log('> sm');
       leftY = '-37%';
       break;
     case SCREEN_SIZES.md:
-      console.log('> md');
       leftY = '-10%';
       break;
     case SCREEN_SIZES.lg:
-      console.log('> lg');
       leftY = '-10%';
       break;
     case SCREEN_SIZES.xl:
-      console.log('> xl');
       leftY = '-10%';
       break;
     default:

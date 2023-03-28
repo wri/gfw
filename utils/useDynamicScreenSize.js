@@ -23,19 +23,13 @@ export function useDynamicScreenSize() {
 
   useEffect(() => {
     const updateMedia = () => {
-      switch (true) {
-        case window.innerWidth < SCREEN_SIZES.sm:
-          setSize(SCREEN_SIZES.sm);
-          break;
-        case window.innerWidth < SCREEN_SIZES.md:
-          setSize(SCREEN_SIZES.md);
-          break;
-        case window.innerWidth < SCREEN_SIZES.lg:
-          setSize(SCREEN_SIZES.lg);
-          break;
-        default:
-          setSize(SCREEN_SIZES.xl);
-      }
+      const sizeChecker = (sizeElement) => window.innerWidth < sizeElement;
+      const findFirstMatchedValue = (obj, fn) =>
+        Object.keys(obj).find((key) => fn(obj[key], key, obj));
+
+      const sizeIndex = findFirstMatchedValue(SCREEN_SIZES, sizeChecker);
+
+      setSize(SCREEN_SIZES[sizeIndex]);
     };
 
     updateMedia();
