@@ -51,8 +51,8 @@ export default {
   ],
   // TO-DO: Add correct sort after Teresa decisions
   sortOrder: {
-    summary: -1,
-    forestChange: -1,
+    summary: 3,
+    landCover: 3,
   },
   sentence: {
     initial:
