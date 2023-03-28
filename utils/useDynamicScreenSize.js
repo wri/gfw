@@ -6,7 +6,7 @@ export interface ScreenSize {
 }
 */
 
-const SIZES = Object.freeze({
+export const SCREEN_SIZES = Object.freeze({
   sm: 640,
   md: 768,
   lg: 1024,
@@ -16,29 +16,33 @@ const SIZES = Object.freeze({
 });
 
 /**
- * using screen sizes from https://tailwindcss.com/docs/screens
+ * using screen SCREEN_SIZES from https://tailwindcss.com/docs/screens
  */
-export function useDynamicScreenSize({ size }) {
-  const [isSizeOrAbove, setSizeOrAbove] = useState(false);
+export function useDynamicScreenSize() {
+  const [size, setSize] = useState('');
 
   useEffect(() => {
-    if (window.innerWidth > SIZES[size]) {
-      setSizeOrAbove(true);
-    } else {
-      setSizeOrAbove(false);
-    }
-
     const updateMedia = () => {
-      if (window.innerWidth > SIZES[size]) {
-        setSizeOrAbove(true);
-      } else {
-        setSizeOrAbove(false);
+      switch (true) {
+        case window.innerWidth < SCREEN_SIZES.sm:
+          setSize(SCREEN_SIZES.sm);
+          break;
+        case window.innerWidth < SCREEN_SIZES.md:
+          setSize(SCREEN_SIZES.md);
+          break;
+        case window.innerWidth < SCREEN_SIZES.lg:
+          setSize(SCREEN_SIZES.lg);
+          break;
+        default:
+          setSize(SCREEN_SIZES.xl);
       }
     };
+
+    updateMedia();
 
     window.addEventListener('resize', updateMedia);
     return () => window.removeEventListener('resize', updateMedia);
   }, [size]);
 
-  return isSizeOrAbove;
+  return size;
 }

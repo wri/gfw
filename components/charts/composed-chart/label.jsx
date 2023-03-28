@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDynamicScreenSize } from '../../../utils/useDynamicScreenSize';
+import {
+  useDynamicScreenSize,
+  SCREEN_SIZES,
+} from '../../../utils/useDynamicScreenSize';
 
 export const XAxisLabel = ({ label }) => {
   return (
@@ -33,7 +36,30 @@ XAxisLabel.propTypes = {
 };
 
 export const YAxisLabel = ({ label }) => {
-  const isMediumOrWider = useDynamicScreenSize({ size: 'sm' });
+  const screenSize = useDynamicScreenSize();
+  let leftY = '';
+
+  switch (screenSize) {
+    case SCREEN_SIZES.sm:
+      console.log('> sm');
+      leftY = '-37%';
+      break;
+    case SCREEN_SIZES.md:
+      console.log('> md');
+      leftY = '-10%';
+      break;
+    case SCREEN_SIZES.lg:
+      console.log('> lg');
+      leftY = '-10%';
+      break;
+    case SCREEN_SIZES.xl:
+      console.log('> xl');
+      leftY = '-10%';
+      break;
+    default:
+      leftY = '-10%';
+      break;
+  }
 
   return (
     <>
@@ -49,11 +75,7 @@ export const YAxisLabel = ({ label }) => {
           style={{
             position: 'absolute',
             top: '40%',
-<<<<<<< HEAD
-            left: '-6%',
-=======
-            left: isMediumOrWider ? '-10%' : '-37%',
->>>>>>> 07baa665c6 (feat(tree-cover-density): calculate Y axis position dynamically)
+            left: leftY,
             transform: 'rotate(-90deg)',
           }}
         >
