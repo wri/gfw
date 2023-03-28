@@ -10,7 +10,7 @@ export const GFW_STAGING_METADATA_API =
 // GFW DATA API
 export const GFW_DATA_API = 'https://data-api.globalforestwatch.org';
 export const GFW_STAGING_DATA_API =
-  'https://staging-data-api.globalforestwatch.org';
+  'http://gfw-data-api-elb-metadata-1961717400.us-east-1.elb.amazonaws.com';
 
 // RESOURCE WATCH API
 export const RESOURCE_WATCH_API = 'https://api.resourcewatch.org/v1';
