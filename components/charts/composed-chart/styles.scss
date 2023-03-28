@@ -114,7 +114,15 @@ $layout-breakpoint-3xl: 1536px;
 @media (min-width: $layout-breakpoint-2xl) {
   .y-label-container {
     .y-label {
-      left: -9%;
+      left: -8%;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-3xl) {
+  .y-label-container {
+    .y-label {
+      left: -6%;
     }
   }
 }
