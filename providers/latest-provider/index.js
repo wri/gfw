@@ -12,7 +12,6 @@ class LatestProvider extends PureComponent {
   componentDidUpdate(prevProps) {
     const { getLatest, latestEndpoints } = this.props;
     const { latestEndpoints: prevLatestEndpoints } = prevProps;
-    console.log('pimenta2:', latestEndpoints, prevLatestEndpoints);
 
     if (!isEqual(latestEndpoints, prevLatestEndpoints)) {
       getLatest(latestEndpoints);
