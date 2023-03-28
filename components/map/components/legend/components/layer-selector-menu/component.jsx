@@ -47,7 +47,7 @@ class LayerSelectorMenu extends PureComponent {
             <Switch
               theme="theme-switch-light-alternate theme-switch-small"
               value={selected?.value}
-              options={options}
+              options={selectorOptions}
               name={selectorName}
               onChange={(e) => onChange(layerGroup, e)}
             />
