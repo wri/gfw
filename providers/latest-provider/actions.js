@@ -29,8 +29,6 @@ export const getLatest = createThunkAction(
 
                 const { bands, metadata } = latestResponse;
                 // if response is from the meta endpoint (prioritise this)
-                console.log('pimenta1-1:', response);
-                console.log('pimenta1-2:', metadata);
                 if (
                   metadata &&
                   metadata.content_date_range &&
