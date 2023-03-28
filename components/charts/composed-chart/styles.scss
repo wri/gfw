@@ -49,39 +49,33 @@ $layout-breakpoint-3xl: 1536px;
   overflow-x: visible !important;
 }
 
-.x-label-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-
-  .x-label {
-    position: absolute;
-    bottom: -15%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    span {
-      font-size: 1rem;
-    }
-  }
-}
-
+.x-label-container,
 .y-label-container {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: visible;
 
+  span {
+    font-size: 1rem;
+  }
+}
+
+.x-label-container {
+  .x-label {
+    position: absolute;
+    bottom: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.y-label-container {
   .y-label {
     position: absolute;
     left: -32%;
     top: 40%;
     transform: rotate(-90deg);
-
-    span {
-      font-size: 1rem;
-    }
   }
 }
 
