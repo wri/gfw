@@ -20,7 +20,7 @@ import {
   Legend,
 } from 'recharts';
 
-import { XAxisLabel, YAxisLabel } from './label';
+import AxisLabel from './axis-label';
 
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
@@ -147,7 +147,7 @@ class CustomComposedChart extends PureComponent {
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
 
-    const hasLabels = config.xAxis.label || config.yAxis.label;
+    const hasLabels = config?.xAxis?.label || config?.yAxis?.label;
 
     return (
       <div
@@ -156,7 +156,7 @@ class CustomComposedChart extends PureComponent {
         })}
         style={{
           height: simple ? 110 : height || 250,
-          paddingLeft: config.yAxis.label ? '1%' : '0',
+          paddingLeft: config?.yAxis?.label ? '1%' : '0',
         }}
       >
         <ResponsiveContainer width="99%">
@@ -202,7 +202,7 @@ class CustomComposedChart extends PureComponent {
               interval="preserveStartEnd"
               {...xAxis}
               {...(config.xAxis.label && {
-                label: <XAxisLabel label={config.xAxis.label} />,
+                label: <AxisLabel label={config.xAxis.label} direction="x" />,
               })}
             />
             {(!simple || simpleNeedsAxis) && (
@@ -232,8 +232,8 @@ class CustomComposedChart extends PureComponent {
                   />
                 )}
                 {...yAxis}
-                {...(config.yAxis.label && {
-                  label: <YAxisLabel label={config.yAxis.label} />,
+                {...(config?.yAxis?.label && {
+                  label: <AxisLabel label={config.yAxis.label} direction="y" />,
                 })}
               />
             )}

@@ -1,5 +1,12 @@
 @import '~styles/settings.scss';
 
+$layout-breakpoint-sm: 640px;
+$layout-breakpoint-md: 760px;
+$layout-breakpoint-lg: 960px;
+$layout-breakpoint-xl: 1024px;
+$layout-breakpoint-2xl: 1280px;
+$layout-breakpoint-3xl: 1536px;
+
 .c-composed-chart {
   width: 100%;
   overflow-x: hidden;
@@ -40,4 +47,80 @@
 
 .overflow-x-visible {
   overflow-x: visible !important;
+}
+
+.x-label-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+
+  .x-label {
+    position: absolute;
+    bottom: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    span {
+      font-size: 1rem;
+    }
+  }
+}
+
+.y-label-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+
+  .y-label {
+    position: absolute;
+    left: -32%;
+    top: 40%;
+    transform: rotate(-90deg);
+
+    span {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-sm) {
+  .y-label-container {
+    .y-label {
+      left: -19%;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-md) {
+  .y-label-container {
+    .y-label {
+      left: -15%;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-lg) {
+  .y-label-container {
+    .y-label {
+      left: -10%;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-xl) {
+  .y-label-container {
+    .y-label {
+      left: -11%;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-2xl) {
+  .y-label-container {
+    .y-label {
+      left: -9%;
+    }
+  }
 }
