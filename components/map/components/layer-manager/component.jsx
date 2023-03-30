@@ -21,7 +21,7 @@ class LayerManagerComponent extends PureComponent {
         ? {
             id: basemap.url,
             name: 'Basemap',
-            layerConfig: {
+            config: {
               type: 'raster',
               source: {
                 type: 'raster',
@@ -32,7 +32,8 @@ class LayerManagerComponent extends PureComponent {
           }
         : null;
 
-    const allLayers = [basemapLayer].concat(layers).filter((l) => l);
+    const allLayers = layers.filter((l) => l);
+
     return (
       <LayerManager
         map={map}
@@ -68,6 +69,9 @@ class LayerManagerComponent extends PureComponent {
           },
         }}
       >
+        {basemapLayer && (
+          <Layer key="basemap" {...basemapLayer} {...basemapLayer?.config} />
+        )}
         {allLayers &&
           allLayers.map((l) => {
             const config = l.config ? l.config : l.layerConfig;
