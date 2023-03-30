@@ -10,7 +10,7 @@ class LayerManagerComponent extends PureComponent {
     layers: PropTypes.array,
     basemap: PropTypes.object,
     setMapLoading: PropTypes.func,
-    map: PropTypes.object
+    map: PropTypes.object,
   };
 
   render() {
@@ -19,20 +19,20 @@ class LayerManagerComponent extends PureComponent {
     const basemapLayer =
       basemap && basemap.url
         ? {
-          id: basemap.url,
-          name: 'Basemap',
-          layerConfig: {
-            type: 'raster',
-            source: {
+            id: basemap.url,
+            name: 'Basemap',
+            layerConfig: {
               type: 'raster',
-              tiles: [basemap.url]
-            }
-          },
-          zIndex: 100
-        }
+              source: {
+                type: 'raster',
+                tiles: [basemap.url],
+              },
+            },
+            zIndex: 100,
+          }
         : null;
 
-    const allLayers = [basemapLayer].concat(layers).filter(l => l);
+    const allLayers = [basemapLayer].concat(layers).filter((l) => l);
     return (
       <LayerManager
         map={map}
@@ -43,33 +43,33 @@ class LayerManagerComponent extends PureComponent {
             const { provider } = source;
 
             fetch('get', provider.url, provider.options, layerModel)
-              .then(response =>
+              .then((response) =>
                 resolve({
                   ...layer,
                   source: {
                     ...omit(layer.source, 'provider'),
                     data: {
                       type: 'FeatureCollection',
-                      features: response.rows.map(r => ({
+                      features: response.rows.map((r) => ({
                         type: 'Feature',
                         properties: r,
                         geometry: {
                           type: 'Point',
-                          coordinates: [r.lon, r.lat]
-                        }
-                      }))
-                    }
-                  }
+                          coordinates: [r.lon, r.lat],
+                        },
+                      })),
+                    },
+                  },
                 })
               )
-              .catch(e => {
+              .catch((e) => {
                 reject(e);
               });
-          }
+          },
         }}
       >
         {allLayers &&
-          allLayers.map(l => {
+          allLayers.map((l) => {
             const config = l.config ? l.config : l.layerConfig;
             return <Layer key={l.id} {...l} {...config} />;
           })}
