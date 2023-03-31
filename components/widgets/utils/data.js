@@ -185,7 +185,7 @@ export const getStatsData = (data, latest) => {
 
   const latestWeek = moment(latest);
 
-  // 52 weeks before, including latestWeek
+  // 52 weeks ago, including latestWeek
   const lastYear = data.filter(
     (item) =>
       item.year === latestWeek.year() ||
