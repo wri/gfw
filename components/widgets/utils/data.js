@@ -183,8 +183,16 @@ export const getStatsData = (data, latest) => {
   const translatedMeans = translateMeans(smoothedMeans, latest);
   const translatedStds = translateMeans(smoothedStds, latest);
 
-  const pastYear = data.slice(-52);
-  const parsedData = pastYear.map((d, i) => {
+  const latestWeek = moment(latest);
+
+  // 52 weeks before, including latestWeek
+  const lastYear = data.filter(
+    (item) =>
+      item.year === latestWeek.year() ||
+      (item.week > latestWeek.isoWeek() && item.year >= 2022)
+  );
+
+  const parsedData = lastYear.map((d, i) => {
     const weekMean = (translatedMeans && translatedMeans[i]) || 0;
     const stdDev = (translatedStds && translatedStds[i]) || 0;
 
@@ -198,6 +206,7 @@ export const getStatsData = (data, latest) => {
       twoMinusStdDev: [weekMean - stdDev * 2, weekMean - stdDev],
     };
   });
+
   return parsedData;
 };
 
