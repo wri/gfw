@@ -20,7 +20,7 @@ export default {
   title: 'Tree cover by land cover class in {location}',
   sentence:
     'In {extentYear}, {location} had {canopyCover} in the following land cover classes:',
-  categories: ['summary', 'land-cover'],
+  categories: ['land-cover'],
   large: true,
   autoHeight: true,
   types: ['country'],
@@ -56,7 +56,6 @@ export default {
   ],
   visible: ['dashboard'],
   sortOrder: {
-    summary: 5,
     landCover: 2,
   },
   settings: {
