@@ -380,8 +380,12 @@ export const getStatements = ({
     extentYear &&
     dataType !== 'lossPrimary' &&
     dataType !== 'fires' &&
-    dataType !== 'gain'
+    dataType !== 'gain' &&
+    dataType !== 'tropicalTreeCover'
       ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    dataType === 'tropicalTreeCover'
+      ? translateText('{extentYear} tropical tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'
       ? translateText('2001 primary forest extent remaining')
