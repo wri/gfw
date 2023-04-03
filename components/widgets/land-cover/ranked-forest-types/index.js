@@ -5,12 +5,12 @@ import {
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_GAIN_DATASET,
+  TROPICAL_TREE_COVER_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_GAIN,
+  TROPICAL_TREE_COVER_METERS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -52,8 +52,8 @@ export default {
       boundary: true,
     },
     {
-      dataset: FOREST_GAIN_DATASET,
-      layers: [FOREST_GAIN],
+      dataset: TROPICAL_TREE_COVER_DATASET,
+      layers: [TROPICAL_TREE_COVER_METERS],
     },
   ],
   visible: ['dashboard'],

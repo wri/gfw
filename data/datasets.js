@@ -54,4 +54,4 @@ export const IND_FOREST_MAMATORIUM_DATASET = 'indonesia-forest-moratorium';
 export const PRIMARY_FOREST_DATASET = 'primary-forests';
 export const MANGROVE_FORESTS_DATASET = 'mangrove-forests';
 export const GFW_STORIES_DATASET = 'mongabay-stories';
-export const TROPICAL_TREE_COVER_DATASET = 'Tropical-tree-cover-STAGING';
+export const TROPICAL_TREE_COVER_DATASET = 'tropical-tree-cover';
