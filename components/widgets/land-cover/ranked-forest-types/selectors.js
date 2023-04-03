@@ -57,7 +57,10 @@ export const parseData = createSelector([getData], (data) => {
       // extentPercent is not needed for the infoList; we'll use it to mitigate percentage
       // sum above 100% later on.
       extentPercent: Number(format('.2r')(extentPercent)),
-      text: `${format('.2r')(extentPercent)}%`,
+      text: `${formatNumber({
+        num: extentPercent,
+        unit: '%',
+      })}`,
       subText: `(${formatNumber({
         num: extentHa,
         unit: 'ha',
