@@ -66,17 +66,18 @@ export const getData = createSelector(
     };
 
     years.forEach((year) => {
-      const yearLength = {};
       const yearDataByWeek = groupBy(groupedByYear[year], 'week');
+      const lastWeekOfYearIso = moment(`${year}-12-31`).isoWeek();
+      const yearLength = { [year]: moment(`${year}-12-31`).isoWeek() };
 
       if (lastWeek.year === year) {
         yearLength[year] = lastWeek.isoWeek;
-      } else if (moment(`${year}-12-31`).isoWeek() === 1) {
+      }
+
+      if (lastWeekOfYearIso === 1) {
         yearLength[year] = moment(`${year}-12-31`)
           .subtract(1, 'week')
           .isoWeek();
-      } else {
-        yearLength[year] = moment(`${year}-12-31`).isoWeek();
       }
 
       for (let i = 1; i <= yearLength[year]; i += 1) {
@@ -84,13 +85,18 @@ export const getData = createSelector(
           ? yearDataByWeek[i].length - 1
           : 0;
 
+        let objectsReduced = { count: 0, week: i, year: parseInt(year, 10) };
+
         for (let index = 0; index <= yearDataLength; index += 1) {
-          formattedData.push(
-            yearDataByWeek[i]
-              ? yearDataByWeek[i][index]
-              : { count: 0, week: i, year: parseInt(year, 10) }
-          );
+          if (yearDataByWeek[i]) {
+            objectsReduced = Object.assign(objectsReduced, {
+              ...yearDataByWeek[i][index],
+              count: objectsReduced.count + yearDataByWeek[i][index].count,
+            });
+          }
         }
+
+        formattedData.push(objectsReduced);
       }
     });
 
@@ -133,9 +139,9 @@ export const getStartEndIndexes = createSelector(
         endIndex,
       };
     }
-
+    // Still need to find how endIndex is populate
+    const end = currentData.length - 1;
     const start = startIndex;
-    const end = endIndex || currentData.length - 1;
 
     return {
       startIndex: start,
