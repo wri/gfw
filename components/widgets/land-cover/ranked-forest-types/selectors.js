@@ -46,7 +46,8 @@ export const parseData = createSelector([getData], (data) => {
     );
 
     const extentPercent =
-      (dataEntry?.wri_tropical_tree_cover_extent__ha * 100) / totalExtent;
+      ((dataEntry?.wri_tropical_tree_cover_extent__ha || 0) * 100) /
+      totalExtent;
 
     const extentHa = dataEntry?.wri_tropical_tree_cover_extent__ha || 0;
 
