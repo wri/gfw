@@ -58,3 +58,7 @@ export const IND_PEAT_LANDS = 'indonesia-peat-lands-2012';
 export const IND_FOREST_MAMATORIUM = 'indonesia-forest-moratorium';
 export const PRIMARY_FOREST = 'primary-forests-2001';
 export const MANGROVE_FORESTS = 'mangrove-forests-1996';
+export const TROPICAL_TREE_COVER_05_HA =
+  'Trees-in-Mosaic-Landscapes-no-threshold_2';
+export const TROPICAL_TREE_COVER_10_M =
+  'Trees-in-Mosaic-Landscapes-with-threshold_2';
