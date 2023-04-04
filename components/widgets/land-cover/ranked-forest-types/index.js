@@ -18,8 +18,12 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'rankedForestTypes',
   title: 'Tree cover by land cover class in {location}',
-  sentence:
-    'In {extentYear}, {location} had {canopyCover} in the following land cover classes:',
+  sentences: {
+    default:
+      'In {extentYear}, {location} had {canopyCover} in the following land cover classes:',
+    withIndicator:
+      'In {extentYear}, {indicator} in {location} had {canopyCover} tree cover in the following land cover classes:',
+  },
   categories: ['land-cover'],
   large: true,
   autoHeight: true,

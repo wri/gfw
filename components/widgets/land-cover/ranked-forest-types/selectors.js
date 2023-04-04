@@ -6,22 +6,25 @@ import maxBy from 'lodash/maxBy';
 import ipccClasses from './ipcc-classes.json';
 
 const getData = (state) => state.data;
+const getIndicator = (state) => state.indicator;
 const getSettings = (state) => state.settings;
 const getLocation = (state) => state.locationLabel;
-const getSentence = (state) => state.sentence;
+const getSentences = (state) => state.sentences;
 
 export const parseSentence = createSelector(
-  [getSentence, getLocation, getSettings, getData],
-  (sentence, location, settings, data) => {
+  [getSentences, getIndicator, getLocation, getSettings, getData],
+  (sentences, indicator, location, settings, data) => {
     // We need to do this, or the widget will be empty instead of showing the
     // "No data in selection for {location}" message
     if (!data?.length) return null;
 
     const { extentYear, decile } = settings;
+    const sentence = indicator ? sentences.withIndicator : sentences.default;
 
     const params = {
       location,
       extentYear,
+      indicator: indicator?.label,
       canopyCover: `>${decile}% tree cover`,
     };
     return {
