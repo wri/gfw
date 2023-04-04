@@ -139,7 +139,7 @@ export const getStartEndIndexes = createSelector(
         endIndex,
       };
     }
-    // Still need to find how endIndex is populate
+
     const end = currentData.length - 1;
     const start = startIndex;
 
