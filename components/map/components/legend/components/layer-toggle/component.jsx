@@ -60,56 +60,58 @@ class LayerToggle extends PureComponent {
             >
               {name}
             </div>
-            {alerts &&
-              alerts.map(
-                (a) =>
-                  a.textTooltip && (
-                    <Tooltip
-                      theme="tip"
-                      arrow
-                      position="top"
-                      html={<Tip text={a.textTooltip} />}
-                    >
-                      <Button className="theme-button-tiny theme-button-clear square info-button">
-                        <Icon
-                          icon={warningIcon}
-                          style={{
-                            fill:
-                              a.color && a.color.length ? a.color : '#97be32',
-                            width: '1rem',
-                            height: '1rem',
-                          }}
-                        />
-                      </Button>
-                    </Tooltip>
-                  )
-              )}
-            {((!metadata && description) ||
-              (metadata && typeof metadata === 'string')) && (
-              <Tooltip
-                theme="tip"
-                arrow
-                hideOnClick
-                position="top"
-                disabled={!description}
-                html={<Tip text={description} />}
-                onShow={() =>
-                  trackEvent({
-                    category: 'Open modal',
-                    action: 'Hover modal button',
-                    label: `${layer}: ${metadata || description}`,
-                  })}
-              >
-                <Button
-                  className={`theme-button-tiny theme-button-grey-filled square info-button ${
-                    !metadata ? '-help' : ''
-                  }`}
-                  onClick={metadata && (() => onInfoClick(metadata))}
+            <div className="buttons">
+              {alerts &&
+                alerts.map(
+                  (a) =>
+                    a.textTooltip && (
+                      <Tooltip
+                        theme="tip"
+                        arrow
+                        position="top"
+                        html={<Tip text={a.textTooltip} />}
+                      >
+                        <Button className="theme-button-tiny theme-button-clear square info-button">
+                          <Icon
+                            icon={warningIcon}
+                            style={{
+                              fill:
+                                a.color && a.color.length ? a.color : '#97be32',
+                              width: '1rem',
+                              height: '1rem',
+                            }}
+                          />
+                        </Button>
+                      </Tooltip>
+                    )
+                )}
+              {((!metadata && description) ||
+                (metadata && typeof metadata === 'string')) && (
+                <Tooltip
+                  theme="tip"
+                  arrow
+                  hideOnClick
+                  position="top"
+                  disabled={!description}
+                  html={<Tip text={description} />}
+                  onShow={() =>
+                    trackEvent({
+                      category: 'Open modal',
+                      action: 'Hover modal button',
+                      label: `${layer}: ${metadata || description}`,
+                    })}
                 >
-                  <Icon icon={metadata ? infoIcon : helpIcon} />
-                </Button>
-              </Tooltip>
-            )}
+                  <Button
+                    className={`theme-button-tiny theme-button-grey-filled square info-button ${
+                      !metadata ? '-help' : ''
+                    }`}
+                    onClick={metadata && (() => onInfoClick(metadata))}
+                  >
+                    <Icon icon={metadata ? infoIcon : helpIcon} />
+                  </Button>
+                </Tooltip>
+              )}
+            </div>
           </div>
           {citation && showSubtitle && (
             <div
