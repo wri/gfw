@@ -22,7 +22,7 @@ class PieChartLegend extends PureComponent {
         `${formatNumber({
           num: item[config.key],
           unit: item.unit ? item.unit : config.unit,
-        })}`?.length > 10
+        })}`?.length > 9
     );
 
     return (
