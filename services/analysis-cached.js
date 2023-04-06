@@ -24,6 +24,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFires:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(umd_tree_cover_loss_from_fires__ha) AS "umd_tree_cover_loss_from_fires__ha" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  lossFiresOTF:
+    'SELECT umd_tree_cover_loss__year, sum(umd_tree_cover_loss__ha), sum(umd_tree_cover_loss_from_fires__ha) FROM data WHERE umd_tree_cover_loss__year >= 2001 AND umd_tree_cover_loss__year <= 2020 AND umd_tree_cover_density_2000__threshold >= 30 GROUP BY umd_tree_cover_loss__year',
   emissions:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsLossOTF:
@@ -813,38 +815,10 @@ export const getLossFiresOTF = (params) => {
   const { forestType, landCategory, ifl, download, adm0, geostore } =
     params || {};
 
-  // const requestUrl = getRequestUrl({
-  //   ...params,
-  //   dataset: 'annual',
-  //   datasetType: 'change',
-  //   version: 'v20220608',
-  // });
-
-  // if (!requestUrl) {
-  //   return new Promise(() => {});
-  // }
-
-  const requestUrl = `/dataset/umd_tree_cover_loss/latest/query?sql=`;
-
-  let url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.lossFires}`
-      .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, cast: false })
-      )
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
-  );
-
-  url = `${url}&geostore_id=${adm0}`;
-
-  // TODO: IMPORTANT: this is very ugly, will do for now
-  url =
-    '/dataset/umd_tree_cover_loss/v1.8/query/json?sql=SELECT%20umd_tree_cover_loss__year,%20sum(umd_tree_cover_loss__ha),%20sum(umd_tree_cover_loss_from_fires__ha)%20FROM%20data%20WHERE%20umd_tree_cover_loss__year%20%3E%3D%202001%20AND%20umd_tree_cover_loss__year%20%3C%3D%202020%20AND%20umd_tree_cover_density_2000__threshold%20%3E%3D%2030%20GROUP%20BY%20umd_tree_cover_loss__year';
-  url =
-    adm0 === 'river_basins'
-      ? `${url}&geostore_id=${geostore.id}`
-      : `${url}&geostore_id=${adm0}`;
+  const geostoreId = geostore.id || adm0;
+  const urlBase = '/dataset/umd_tree_cover_loss/v1.8/query/json?';
+  const sql = `sql=${SQL_QUERIES.lossFiresOTF}`;
+  const url = `${urlBase + sql  }&geostore_id=${geostoreId}`;
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -864,7 +838,6 @@ export const getLossFiresOTF = (params) => {
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
         areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
-        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
       })),
     },
   }));
