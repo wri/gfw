@@ -165,6 +165,7 @@ export const parseConfig = createSelector(
         })
         .reverse()
     );
+
     const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
     if (insertIndex > -1) {
       tooltip.splice(insertIndex, 0, {
@@ -172,6 +173,22 @@ export const parseConfig = createSelector(
         label: 'Drivers of permanent deforestation:',
       });
     }
+
+    const forestryIndex = tooltip.findIndex(
+      (element) => element.key === 'class_Forestry'
+    );
+    const agricultureIndex = tooltip.findIndex(
+      (element) => element.key === 'class_Shifting agriculture'
+    );
+
+    const rearrengedTooltips = [...tooltip];
+
+    delete rearrengedTooltips[forestryIndex];
+    delete rearrengedTooltips[agricultureIndex];
+
+    rearrengedTooltips.splice(2, 0, tooltip[forestryIndex]);
+    rearrengedTooltips.splice(3, 0, tooltip[agricultureIndex]);
+
     return {
       height: 250,
       xKey: 'year',
@@ -182,7 +199,7 @@ export const parseConfig = createSelector(
         tickFormatter: yearTicksFormatter,
       },
       unit: 'ha',
-      tooltip,
+      tooltip: rearrengedTooltips,
     };
   }
 );
