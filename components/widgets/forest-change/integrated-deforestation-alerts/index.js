@@ -224,7 +224,7 @@ export default {
       });
     }
 
-    const geostoreId = params?.geostore?.hash;
+    const { id: geostoreId } = params?.geostore;
 
     // Stop if geostoreId undefined
     if (geostoreId.length <= 0) return null;
