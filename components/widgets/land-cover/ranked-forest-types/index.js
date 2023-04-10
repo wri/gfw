@@ -10,7 +10,7 @@ import {
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  TROPICAL_TREE_COVER_METERS,
+  TROPICAL_TREE_COVER_HECTARE,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -57,7 +57,7 @@ export default {
     },
     {
       dataset: TROPICAL_TREE_COVER_DATASET,
-      layers: [TROPICAL_TREE_COVER_METERS],
+      layers: [TROPICAL_TREE_COVER_HECTARE],
     },
   ],
   visible: ['dashboard'],
