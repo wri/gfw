@@ -10401,9 +10401,9 @@ layer-manager@^1.10.0:
     wri-json-api-serializer "^1.0.1"
 
 layer-manager@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-3.0.8.tgz#c194ad43fa5baa2dabff8c2d99887be2e911e7e3"
-  integrity sha512-/pmjYym//UQ/TsJbNMPLtyjNiSD+wrTFlwu/9j2TFL6ynnXoI5GvFzkLNBVM6+/JHYd3MMEhwf0btiXvdorHmQ==
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-3.0.11.tgz#365069d156af6f64a50e6285c5f23cac65ff34ad"
+  integrity sha512-e6PVUjG27+d1F4b8vqxHaJMVf8dc3v0ToXQE4cdu97KLw6zI1Z1SFlQR3qVnBU+2iOpUDST+INDcNj/aTO++Aw==
   dependencies:
     axios "^0.19.0"
     lodash "^4.17.15"
@@ -11650,7 +11650,7 @@ mri@1.1.0:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
-  integrity sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
+  integrity sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==
 
 ms@2.1.1:
   version "2.1.1"
