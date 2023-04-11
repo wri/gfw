@@ -147,6 +147,7 @@ class CustomComposedChart extends PureComponent {
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
 
+    const barGap = config?.xAxis?.barGap || '10%'; // default is 10%
     const hasLabels = config?.xAxis?.label || config?.yAxis?.label;
 
     return (
@@ -161,6 +162,7 @@ class CustomComposedChart extends PureComponent {
       >
         <ResponsiveContainer width="99%">
           <ComposedChart
+            barCategoryGap={barGap}
             data={data}
             margin={
               margin || {
