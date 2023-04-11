@@ -21,14 +21,6 @@ const parseData = createSelector([getDensity], (densityData) => {
   });
 });
 
-const formatXaxis = (value) => {
-  if (value >= 90) {
-    return `${value}-${value + 10}`;
-  }
-
-  return `${value}-${value + 9}`;
-};
-
 const parseConfig = createSelector([getColors], (colors) => ({
   height: 250,
   xKey: 'decile',
@@ -42,7 +34,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
     },
   },
   xAxis: {
-    tickFormatter: formatXaxis,
+    tickFormatter: (value) => value,
     label: 'Tree cover (%)',
     barGap: 0,
   },

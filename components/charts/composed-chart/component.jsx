@@ -27,7 +27,7 @@ import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
 import './styles.scss';
 
-const CustomizedXAxisTick = ({ x, y, payload }) => {
+const XAxisTickWithoutGap = ({ x, y, payload }) => {
   const { offset, value } = payload;
 
   return (
@@ -147,8 +147,8 @@ class CustomComposedChart extends PureComponent {
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
 
-    const barGap = config?.xAxis?.barGap || '10%'; // default is 10%
-    const hasLabels = config?.xAxis?.label || config?.yAxis?.label;
+    const { barGap = '10%' } = xAxis; // default is 10% according to recharts docs
+    const hasLabels = xAxis?.label || yAxis?.label;
 
     return (
       <div
@@ -200,7 +200,17 @@ class CustomComposedChart extends PureComponent {
               dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
-              tick={<CustomizedXAxisTick />}
+              tick={
+                barGap === 0 ? (
+                  <XAxisTickWithoutGap />
+                ) : (
+                  {
+                    dy: 8,
+                    fontSize: simple ? '10px' : '12px',
+                    fill: '#555555',
+                  }
+                )
+              }
               interval="preserveStartEnd"
               {...xAxis}
               {...(config.xAxis.label && {
@@ -371,7 +381,7 @@ CustomComposedChart.propTypes = {
   barBackground: PropTypes.object,
 };
 
-CustomizedXAxisTick.propTypes = {
+XAxisTickWithoutGap.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   payload: PropTypes.object,
