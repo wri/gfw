@@ -58,7 +58,7 @@ export default {
     initial:
       'In 2020, {location} had {areasOverTenPercent} of land above {percent} tree cover, extending over {areaInPercent} of its land area',
     withIndicator:
-      'In 2020, {indicator} in {location} had {areasOverTenPercent} of land above {percent} tree cover, extending over {areaInPercent} of its land area.”',
+      'In 2020, {indicator} in {location} had {areasOverTenPercent} of land above {percent} tree cover, extending over {areaInPercent} of its land area.',
   },
   getData: (params = {}) => {
     const treeCoverDensity = getTreeCoverDensity(params);
