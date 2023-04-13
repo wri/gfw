@@ -40,14 +40,14 @@ const parseConfig = createSelector([getColors], (colors) => ({
   },
   yAxis: {
     yAxisId: 'wri_tropical_tree_cover_extent__ha',
-    label: 'Land cover (in hectares)',
+    label: 'Land area (in hectares)',
   },
   unit: 'ha',
   tooltip: [
     {
       key: 'area',
       unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
-      label: 'Land cover',
+      label: 'Land area',
       color: colors.primaryForestLoss,
       dashline: true,
     },
