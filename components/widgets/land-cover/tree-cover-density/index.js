@@ -60,10 +60,6 @@ export default {
     withIndicator:
       'In 2020, {indicator} in {location} had {areasOverTenPercent} of land above {percent} tree cover, extending over {areaInPercent} of its land area.”',
   },
-  whitelists: {
-    indicators: ['primary_forest'],
-    checkStatus: true,
-  },
   getData: (params = {}) => {
     const treeCoverDensity = getTreeCoverDensity(params);
 
