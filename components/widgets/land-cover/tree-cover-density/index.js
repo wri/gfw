@@ -15,7 +15,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'treeCoverDensity',
   title: 'Tree cover density in {location}',
-  categories: ['summary', 'land-cover'],
+  categories: ['land-cover'],
   types: ['country', 'wdpa', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,

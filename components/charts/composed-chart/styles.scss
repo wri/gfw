@@ -57,7 +57,7 @@ $layout-breakpoint-3xl: 1536px;
   overflow: visible;
 
   span {
-    font-size: 1rem;
+    font-size: 0.8125rem;
   }
 }
 
@@ -73,56 +73,8 @@ $layout-breakpoint-3xl: 1536px;
 .y-label-container {
   .y-label {
     position: absolute;
-    left: -32%;
+    left: -85px;
     top: 40%;
     transform: rotate(-90deg);
-  }
-}
-
-@media (min-width: $layout-breakpoint-sm) {
-  .y-label-container {
-    .y-label {
-      left: -19%;
-    }
-  }
-}
-
-@media (min-width: $layout-breakpoint-md) {
-  .y-label-container {
-    .y-label {
-      left: -15%;
-    }
-  }
-}
-
-@media (min-width: $layout-breakpoint-lg) {
-  .y-label-container {
-    .y-label {
-      left: -10%;
-    }
-  }
-}
-
-@media (min-width: $layout-breakpoint-xl) {
-  .y-label-container {
-    .y-label {
-      left: -11%;
-    }
-  }
-}
-
-@media (min-width: $layout-breakpoint-2xl) {
-  .y-label-container {
-    .y-label {
-      left: -8%;
-    }
-  }
-}
-
-@media (min-width: $layout-breakpoint-3xl) {
-  .y-label-container {
-    .y-label {
-      left: -6%;
-    }
   }
 }
