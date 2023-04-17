@@ -323,6 +323,11 @@ export default {
     const defaultEndDate = VIIRS?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
+
     if (shouldQueryPrecomputedTables(params)) {
       return fetchVIIRSAlertsSum({
         ...params,
@@ -347,7 +352,7 @@ export default {
         return data;
       });
     }
-    const geostoreId = params?.geostore?.hash;
+
     return fetchVIIRSAlertsSumOTF({
       ...params,
       startDate,
@@ -389,7 +394,11 @@ export default {
         }),
       ];
     }
-    const geostoreId = params?.geostore?.hash;
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
+
     return [
       fetchVIIRSAlertsSumOTF({
         ...params,
