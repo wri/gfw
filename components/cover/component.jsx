@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import { Row, Column } from '@worldresources/gfw-components';
 
-// import './styles.scss';
+import Image from 'next/image';
 
 class Cover extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -19,6 +19,7 @@ class Cover extends PureComponent {
       webP,
       altImageText,
     } = this.props;
+
     return (
       <div className={cx('c-cover', { large }, className)}>
         <Row>
@@ -40,9 +41,14 @@ class Cover extends PureComponent {
         </Row>
         {bgImage && (
           <picture className="picture">
-            {webP && <source srcSet={webP} type="image/webp" />}
-            <source srcSet={bgImage} type="image/jpeg" />
-            <img src={bgImage} alt={altImageText || 'Cover image'} />
+            {webP && <source srcSet={webP.src} type="image/webp" />}
+            <source srcSet={bgImage.src} type="image/jpeg" />
+            <Image
+              src={bgImage}
+              layout="fill"
+              objectFit="cover"
+              alt={altImageText || 'Cover image'}
+            />
           </picture>
         )}
       </div>
