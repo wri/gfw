@@ -85,7 +85,7 @@ export default {
       buttons: [
         {
           text: 'BROWSE OUR APPS',
-          extLink: 'https://developers.globalforestwatch.org',
+          extLink: 'https://www.globalforestwatch.org/help',
         },
       ],
       image: card5,
