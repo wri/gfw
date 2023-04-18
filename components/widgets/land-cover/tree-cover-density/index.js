@@ -49,10 +49,8 @@ export default {
       layers: [TROPICAL_TREE_COVER_METERS, TROPICAL_TREE_COVER_HECTARE],
     },
   ],
-  // TO-DO: Add correct sort after Teresa decisions
   sortOrder: {
-    summary: 3,
-    landCover: 3,
+    landCover: 2.5,
   },
   sentence: {
     initial:
