@@ -2,12 +2,13 @@ import { getTreeCoverDensity } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  FOREST_GAIN_DATASET,
+  TROPICAL_TREE_COVER_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  FOREST_GAIN,
+  TROPICAL_TREE_COVER_METERS,
+  TROPICAL_TREE_COVER_HECTARE,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -43,10 +44,9 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // TO-DO: Add correct layer after delivery from Angel.
     {
-      dataset: FOREST_GAIN_DATASET,
-      layers: [FOREST_GAIN],
+      dataset: TROPICAL_TREE_COVER_DATASET,
+      layers: [TROPICAL_TREE_COVER_METERS, TROPICAL_TREE_COVER_HECTARE],
     },
   ],
   // TO-DO: Add correct sort after Teresa decisions
