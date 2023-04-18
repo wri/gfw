@@ -65,19 +65,6 @@ export default {
       image: card3,
       webPImage: card3Webp,
     },
-    // {
-    //   title: 'Forest insights',
-    //   summary:
-    //     'Read the latest stories and findings about forests from our team of researchers on the GFW blog.',
-    //   buttons: [
-    //     {
-    //       text: 'START LEARNING',
-    //       extLink: 'https://blog.globalforestwatch.org/',
-    //     },
-    //   ],
-    //   image: card4,
-    //   webPImage: card4Webp,
-    // },
     {
       title: 'A suite of tools',
       summary:
