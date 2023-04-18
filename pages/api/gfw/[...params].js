@@ -23,7 +23,8 @@ export default (req, res) =>
     // In addition, you can use the `pathRewrite` option provided by `next-http-proxy`,
     pathRewrite: [
       {
-        [`^/?${PROXIES.GFW_API}`]: '/',
+        patternStr: `^/?${PROXIES.GFW_API}`,
+        replaceStr: '/',
       },
     ],
     headers: {
