@@ -13,7 +13,6 @@ import {
 import Icon from 'components/ui/icon';
 
 import infoIcon from 'assets/icons/info.svg?sprite';
-// import './styles.scss';
 
 const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
   const { img1x, img2x, title, text, citation, button } = intro;

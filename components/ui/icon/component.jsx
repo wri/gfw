@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import './styles.scss';
-
 const Icon = ({ icon, className, style }) => (
   <svg
     className={`c-icon ${className}`}

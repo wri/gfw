@@ -5,8 +5,6 @@ import { Row, Column } from '@worldresources/gfw-components';
 
 import { htmlParser } from 'utils/html-parser';
 
-// import './styles.scss';
-
 const GrantsAboutSection = ({ about }) => {
   return (
     <div className="l-grants-about-section">

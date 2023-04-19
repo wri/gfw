@@ -4,8 +4,6 @@ import ReactHtmlParser from 'react-html-parser';
 
 import treeImage from 'assets/icons/tree-success.png';
 
-// import './styles.scss';
-
 class Thankyou extends PureComponent {
   static propTypes = {
     title: PropTypes.string,

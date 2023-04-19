@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { InView } from 'react-intersection-observer';
-// import YouTube from 'react-youtube';
+
 import Link from 'next/link';
 import cx from 'classnames';
 
@@ -29,19 +29,9 @@ import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
 import bgImageWebP from './assets/home-bg.webp';
 
-// import './styles.scss';
-
 const HomePage = ({ summary, uses, apps, news }) => {
-  // const [showVideo, setShowVideo] = useState(false);
   const [showSectionNews, setShowSectionNews] = useState(false);
   const summaryEl = useRef(null);
-
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setShowVideo(true);
-  //   }, 5000);
-  //   return () => clearTimeout(timeout);
-  // }, []);
 
   return (
     <div className="l-home-page">

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import tree from 'assets/icons/tree.png';
 
-// import './styles.scss';
-
 const NoContent = ({ className, message, icon, children }) => (
   <div className={`c-no-content ${className}`}>
     <p className="message">

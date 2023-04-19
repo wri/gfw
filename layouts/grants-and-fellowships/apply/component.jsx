@@ -3,8 +3,6 @@ import parse from 'html-react-parser';
 /* eslint-disable react/no-danger */
 import { Row, Column } from '@worldresources/gfw-components';
 
-// import './styles.scss';
-
 const GrantsApplySection = ({ apply }) => {
   return (
     <div className="l-grants-apply-section">

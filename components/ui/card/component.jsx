@@ -7,9 +7,6 @@ import cx from 'classnames';
 import Icon from 'components/ui/icon';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-// import './styles.scss';
-// import './themes/card-small.scss';
-// import './themes/card-dark.scss';
 
 class Card extends PureComponent {
   static propTypes = {
