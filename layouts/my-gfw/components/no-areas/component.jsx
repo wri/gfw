@@ -11,8 +11,8 @@ const MyGfwNoAreas = () => (
       <Column width={[1, 5 / 12]}>
         <img
           className="areas-image"
-          srcSet={`${DashboardImageLarge} 2x, ${DashboardImage} 1x`}
-          src={`${DashboardImage} 1x`}
+          srcSet={`${DashboardImageLarge.src} 2x, ${DashboardImage.src} 1x`}
+          src={`${DashboardImage.src} 1x`}
           alt="you have no areas"
         />
       </Column>
