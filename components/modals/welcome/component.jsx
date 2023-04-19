@@ -8,8 +8,6 @@ import Button from 'components/ui/button';
 import Checkbox from 'components/ui/checkbox';
 import Modal from 'components/modal';
 
-// import './styles.scss';
-
 class ModalWelcome extends PureComponent {
   getContent() {
     const {

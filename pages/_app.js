@@ -241,6 +241,7 @@ import '../components/ui/vertical-menu/styles.scss';
 
 // widget
 import '../components/widget/styles.scss';
+import '../components/widgets/styles.scss';
 import '../components/widget/components/widget-body/styles.scss';
 import '../components/widget/components/widget-chart-and-list/styles.scss';
 import '../components/widget/components/widget-chart-list/styles.scss';
@@ -275,6 +276,7 @@ import '../layouts/about/projects/styles.scss';
 import '../layouts/dashboards/styles.scss';
 import '../layouts/dashboards/components/gfr-banner/styles.scss';
 import '../layouts/dashboards/components/global-sentence/styles.scss';
+
 import '../layouts/dashboards/components/header/styles.scss';
 import '../layouts/dashboards/components/map/styles.scss';
 import '../layouts/dashboards/components/map-controls/styles.scss';
@@ -284,6 +286,7 @@ import '../layouts/dashboards/components/subcategories/styles.scss';
 
 import '../layouts/embed/map/styles.scss';
 import '../layouts/embed/widget/styles.scss';
+
 import '../layouts/embed/widget/trase-embed-styles.scss';
 
 import '../layouts/error/styles.scss';
@@ -319,6 +322,8 @@ import '../layouts/topics/components/topics-header/topics-intro/styles.scss';
 import '../layouts/topics/components/topics-header/styles.scss';
 import '../layouts/topics/components/topics-slide/topics-image/styles.scss';
 import '../layouts/topics/components/topics-slide/topics-text/styles.scss';
+import '../layouts/topics/components/topics-slide/styles.scss';
+
 import '../layouts/topics/styles.scss';
 
 // WRAPPERS
