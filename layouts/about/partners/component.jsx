@@ -1,8 +1,8 @@
 import { Row, Column } from 'gfw-components';
 
+import Image from 'next/image';
 import { foundingPartners, partnersCollaborators, funders } from './partners';
 
-// import './styles.scss';
 
 const AboutPartnersSection = () => (
   <section className="l-section-partners">
@@ -18,7 +18,7 @@ const AboutPartnersSection = () => (
             width={[1 / 2, 1 / 3, 1 / 4]}
           >
             <a href={l.link} target="_blank" rel="noopener noreferrer">
-              <img alt={l.title} src={l.img} />
+              <Image alt={l.title} src={l.img} />
             </a>
           </Column>
         ))}
@@ -36,7 +36,7 @@ const AboutPartnersSection = () => (
             width={[1 / 2, 1 / 3, 1 / 4]}
           >
             <a href={l.link} target="_blank" rel="noopener noreferrer">
-              <img alt={l.title} src={l.img} />
+              <Image alt={l.title} src={l.img} />
             </a>
           </Column>
         ))}
@@ -54,7 +54,7 @@ const AboutPartnersSection = () => (
             width={[1 / 2, 1 / 3, 1 / 4]}
           >
             <a href={l.link} target="_blank" rel="noopener noreferrer">
-              <img alt={l.title} src={l.img} />
+              <Image alt={l.title} src={l.img} />
             </a>
           </Column>
         ))}
