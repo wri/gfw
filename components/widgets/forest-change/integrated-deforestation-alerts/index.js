@@ -224,7 +224,10 @@ export default {
       });
     }
 
-    const geostoreId = params?.geostore?.hash;
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
 
     // Stop if geostoreId undefined
     if (geostoreId.length <= 0) return null;
@@ -465,7 +468,6 @@ export default {
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
-    const isWDPA = params?.locationType === 'wdpa';
 
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
@@ -478,10 +480,10 @@ export default {
       table = 'wur_radd_alerts';
     }
 
-    let geostoreId = params?.geostore?.hash;
-    if (isWDPA) {
-      geostoreId = params?.geostore?.id;
-    }
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
 
     return [
       fetchIntegratedAlerts({

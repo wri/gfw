@@ -12,6 +12,10 @@ import './styles.scss';
 const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
   const { img1x, img2x, title, text, citation, button } = intro;
 
+  const redirectTo = (link) => {
+    window.location = link;
+  };
+
   return (
     <div className={cx('c-topics-intro', className)}>
       <Row className="title-row">
@@ -43,8 +47,8 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
                 trackEvent({
                   category: 'Topics pages',
                   action: 'Open citation info button',
-                  label: title
-                })
+                  label: title,
+                });
               }}
             >
               <Icon className="citation-icon" icon={infoIcon} />
@@ -58,7 +62,10 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
           <p className="intro-text">{text}</p>
           <div className="intro-buttons">
             {button && (
-              <Button className="intro-btn" link={button.link}>
+              <Button
+                className="intro-btn"
+                onClick={() => redirectTo(button.link)}
+              >
                 {button.text}
               </Button>
             )}
