@@ -37,7 +37,7 @@ export default {
   refetchKeys: ['landCategory'],
   dataType: 'gain',
   // TO-DO: Add metadata URL
-  metaKey: 'widget_primary_forest_loss',
+  metaKey: 'widget_primary_forest',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
