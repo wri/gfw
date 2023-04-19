@@ -1,14 +1,14 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
-// import './styles.scss';
+import Image from 'next/image';
 
 export const BasemapButton = (props) => {
   const { image, label, active, onSelectBasemap } = props;
 
   return (
     <button className="c-basemap-button" onClick={() => onSelectBasemap(props)}>
-      <img
+      <Image
         src={image}
         alt={label}
         className={cx('basemap-thumb', { '-active': active })}

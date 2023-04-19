@@ -30,11 +30,11 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
             <div className="intro-img">
               <img
                 {...(img2x && {
-                  srcSet: `${img2x} 2x, ${img1x} 1x,`,
-                  src: `${img1x} 1x`,
+                  srcSet: `${img2x.src} 2x, ${img1x.src} 1x,`,
+                  src: `${img1x.src} 1x`,
                 })}
                 {...(!img2x && {
-                  src: img1x,
+                  src: img1x.src,
                 })}
                 alt={title}
               />
@@ -91,11 +91,11 @@ const TopicsIntro = ({ intro = {}, className, handleSkipToTools }) => {
         <div className="intro-img">
           <img
             {...(img2x && {
-              srcSet: `${img2x} 2x, ${img1x} 1x,`,
-              src: `${img1x} 1x`,
+              srcSet: `${img2x.src} 2x, ${img1x.src} 1x,`,
+              src: `${img1x.src} 1x`,
             })}
             {...(!img2x && {
-              src: img1x,
+              src: img1x.src,
             })}
             alt={title}
           />

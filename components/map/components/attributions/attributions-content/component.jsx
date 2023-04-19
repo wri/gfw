@@ -28,13 +28,18 @@ const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
         >
           <img
             className="ee-logo"
-            src={geeLogo}
+            src={geeLogo.src}
             alt="google earth engine"
             width="115"
           />
         </a>
         <a href="https://carto.com/" rel="noopener noreferrer" target="_blank">
-          <img className="carto-logo" src={cartoLogo} alt="carto" width="60" />
+          <img
+            className="carto-logo"
+            src={cartoLogo.src}
+            alt="carto"
+            width="60"
+          />
         </a>
         <a
           href="https://www.planet.com"
@@ -43,7 +48,7 @@ const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
         >
           <img
             className="planet-logo"
-            src={planetLogo}
+            src={planetLogo.src}
             alt="planet"
             width="80"
           />

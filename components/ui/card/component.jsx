@@ -57,7 +57,7 @@ class Card extends PureComponent {
         <>
           {image && (
             <picture className="image">
-              {webPImage && <source srcSet={webPImage} type="image/webp" />}
+              {webPImage && <source srcSet={webPImage.src} type="image/webp" />}
               <source srcSet={image} type="image/png" />
               <img src={image} alt={title} />
             </picture>
@@ -66,8 +66,8 @@ class Card extends PureComponent {
           {(img1x || img2x) && (
             <img
               className="image"
-              srcSet={`${img1x} 2x, ${img2x} 1x`}
-              src={`${img1x} 1x`}
+              srcSet={`${img1x.src} 2x, ${img2x.src} 1x`}
+              src={`${img1x.src} 1x`}
               alt={title}
             />
           )}
@@ -147,8 +147,7 @@ class Card extends PureComponent {
                     selectorValue:
                       selector.options &&
                       selector.options.find((o) => o.value === value),
-                  })
-                }
+                  })}
                 native
               />
               <a
