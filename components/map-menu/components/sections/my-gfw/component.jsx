@@ -370,8 +370,8 @@ class MapMenuMyGFW extends PureComponent {
         {!loading && loggedIn && !(areas && areas.length > 0) && isDesktop && (
           <img
             className={cx('my-gfw-login-image', { '--login': !loggedIn })}
-            src={screenImg1x}
-            srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
+            src={screenImg1x.src}
+            srcSet={`${screenImg1x.src} 1x, ${screenImg2x.src} 2x`}
             alt="aoi screenshot"
           />
         )}

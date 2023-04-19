@@ -341,8 +341,8 @@ class ShowAnalysis extends PureComponent {
               </div>
             )}
             <img
-              src={screensImg1x}
-              srcSet={`${screensImg1x} 1x, ${screensImg2x} 2x`}
+              src={screensImg1x.src}
+              srcSet={`${screensImg1x.src} 1x, ${screensImg2x.src} 2x`}
               alt="aoi screenshots"
             />
           </div>

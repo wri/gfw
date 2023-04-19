@@ -15,7 +15,7 @@ class Thankyou extends PureComponent {
 
     return (
       <div className="c-success-message">
-        <img src={treeImage} alt="success-tree" />
+        <img src={treeImage.src} alt="success-tree" />
         <h1>{title}</h1>
         {description && (
           <>

@@ -23,7 +23,7 @@ class Thankyou extends PureComponent {
       <div className="c-thankyou">
         <div className="message">
           {error && <Icon icon={treeImageError} className="error-tree" />}
-          {!error && <img src={treeImage} alt="thank-you-tree" />}
+          {!error && <img src={treeImage.src} alt="thank-you-tree" />}
           <h1>{title}</h1>
           {description && <p>{ReactHtmlParser(description)}</p>}
         </div>

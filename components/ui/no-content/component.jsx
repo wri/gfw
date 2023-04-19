@@ -7,7 +7,7 @@ const NoContent = ({ className, message, icon, children }) => (
   <div className={`c-no-content ${className}`}>
     <p className="message">
       {children || message}
-      {icon && <img className="message-icon" src={tree} alt="tree" />}
+      {icon && <img className="message-icon" src={tree.src} alt="tree" />}
     </p>
   </div>
 );
