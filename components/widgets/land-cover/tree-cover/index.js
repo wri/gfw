@@ -50,7 +50,7 @@ export default {
       id: 'tree-cover-alert-1',
       // TODO: Add link
       text:
-        'Datasets used here use different methodologies to measure tree cover. [Read more on our blog](#) for more information.',
+        'Datasets used here use different methodologies to measure tree cover as compared to the Tree cover 2000/2010 (UMD) data. Stay tuned for an explainer blog!',
       visible: [
         'global',
         'country',
