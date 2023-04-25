@@ -86,11 +86,6 @@ const LocationProvider = ({ setLocation }) => {
 
 LocationProvider.propTypes = {
   setLocation: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  setMainMapSettings: PropTypes.func,
-  setMenuSettings: PropTypes.func,
-  setAnalysisSettings: PropTypes.func,
-  urlParams: PropTypes.object,
 };
 
 export const reduxModule = {

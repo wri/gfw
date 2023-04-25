@@ -88,7 +88,7 @@ const TimeSlider = ({
                   label={d.label}
                   role="button"
                   tabIndex={0}
-                  area-label="Select timeframe"
+                  aria-label="Select timeframe"
                   className={`timeline-position ${
                     selected === i ? 'active' : ''
                   }`}

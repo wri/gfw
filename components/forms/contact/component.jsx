@@ -17,13 +17,10 @@ import { email } from 'components/forms/validations';
 
 import { topics, tools } from './config';
 
-// import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class ContactForm extends PureComponent {
   static propTypes = {
-    // sendContactForm: PropTypes.func.isRequired,
     resetForm: PropTypes.func,
     initialValues: PropTypes.object,
   };

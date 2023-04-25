@@ -8,8 +8,6 @@ import { validateLatLng } from 'utils/geoms';
 import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
 
-// import './styles.scss';
-
 class UTMCoords extends PureComponent {
   state = {
     error: false,

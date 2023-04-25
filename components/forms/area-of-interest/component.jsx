@@ -32,8 +32,6 @@ import {
 
 import WebhookModal from './webhook-modal';
 
-// import './styles.scss';
-
 const confirmations = {
   saved: {
     title: 'Your area has been saved',
