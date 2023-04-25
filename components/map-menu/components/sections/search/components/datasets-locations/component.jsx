@@ -11,8 +11,6 @@ import LayerToggle from 'components/map/components/legend/components/layer-toggl
 import locationIcon from 'assets/icons/location.svg?sprite';
 import layersIcon from 'assets/icons/layers.svg?sprite';
 
-// import './styles.scss';
-
 class DatasetsLocationsSearch extends PureComponent {
   searchConditions() {
     const { datasets, locations, type } = this.props;

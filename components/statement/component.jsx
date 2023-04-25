@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
-// import './styles.scss';
-
 class Statement extends PureComponent {
   render() {
     const {
@@ -30,7 +28,8 @@ class Statement extends PureComponent {
         onHidden={handleMouseOut}
       >
         <div className={`c-layer-statement ${className || ''}`}>
-          {statementPlain} <span>{statementHighlight}</span>
+          {statementPlain}
+          <span>{statementHighlight}</span>
         </div>
       </Tooltip>
     );

@@ -11,8 +11,6 @@ import Basemaps from 'components/basemaps';
 import DatasetSection from './dataset-section';
 import CategoriesMenu from './categories-menu';
 
-// import './styles.scss';
-
 class Datasets extends PureComponent {
   render() {
     const {
@@ -95,14 +93,15 @@ class Datasets extends PureComponent {
                         </Fragment>
                       );
                     })}
-                    for {datasetCategory && datasetCategory.toLowerCase()}.
+                    for
+                    {datasetCategory && datasetCategory.toLowerCase()}.
                   </p>
                 </div>
               )}
             {subCategories
               ? subCategories.map((subCat) => (
-                  <DatasetSection key={subCat.slug} {...subCat}>
-                    {!isEmpty(subCat.datasets) ? (
+                <DatasetSection key={subCat.slug} {...subCat}>
+                  {!isEmpty(subCat.datasets) ? (
                       subCat.datasets.map((d) => (
                         <LayerToggle
                           key={d.id}
@@ -120,7 +119,7 @@ class Datasets extends PureComponent {
                         message="No datasets available"
                       />
                     )}
-                  </DatasetSection>
+                </DatasetSection>
                 ))
               : datasets &&
                 datasets.map((d, i) => (

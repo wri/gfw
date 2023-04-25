@@ -13,8 +13,6 @@ import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
 import Modal from 'components/modal';
 
-// import './styles.scss';
-
 class Share extends PureComponent {
   static propTypes = {
     open: PropTypes.bool,

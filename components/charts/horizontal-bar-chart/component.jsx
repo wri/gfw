@@ -13,7 +13,6 @@ import Paginate from 'components/paginate';
 import ChartToolTip from '../components/chart-tooltip';
 
 import CustomTick from './custom-tick-component';
-// import './styles.scss';
 
 class HorizontalBarChart extends PureComponent {
   render() {
@@ -52,13 +51,13 @@ class HorizontalBarChart extends PureComponent {
               type="category"
               axisLine={false}
               tickLine={false}
-              tick={
+              tick={(
                 <CustomTick
                   data={pageData}
                   yAxisDotFill={yAxisDotFill}
                   settings={settings}
                 />
-              }
+              )}
             />
             {pageData &&
               pageData.length &&
