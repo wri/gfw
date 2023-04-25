@@ -16,8 +16,8 @@
     "cy:open": "NODE_OPTIONS=--openssl-legacy-provider cypress open",
     "cy:run": "NODE_OPTIONS=--openssl-legacy-provider cypress run",
     "pree2e": "NODE_OPTIONS=--openssl-legacy-provider rm -rf .nyc_output coverage .next || true",
-    "check-coverage-limits": "NODE_OPTIONS=--openssl-legacy-provider nyc report --reporter=text-summary --check-coverage --statements 100",
-    "lint": "NODE_OPTIONS=--openssl-legacy-provider eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** -c .eslintrc.json --ext js,jsx"
+    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
+    "lint": "eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** -c .eslintrc.json --ext js,jsx"
   },
   "repository": {
     "type": "git",
