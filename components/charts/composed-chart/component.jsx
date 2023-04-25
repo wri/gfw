@@ -291,8 +291,7 @@ class CustomComposedChart extends PureComponent {
                         {...d}
                         activeIndex={barBackground.activeIndex}
                       />
-                    )
-                  }
+                    )}
                   {...bars[key]}
                 >
                   {bars[key].labelList && (

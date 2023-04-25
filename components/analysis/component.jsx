@@ -8,8 +8,6 @@ import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
 import ShowAnalysis from 'components/analysis/components/show-analysis';
 
-// import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class AnalysisComponent extends PureComponent {
@@ -137,8 +135,7 @@ class AnalysisComponent extends PureComponent {
                     category: 'Map analysis',
                     action: 'User goes to dashboards',
                     label: location.adm0,
-                  })
-                }
+                  })}
               >
                 DASHBOARD
               </Button>
@@ -184,8 +181,7 @@ class AnalysisComponent extends PureComponent {
                         ? window.location.href
                         : window.location.href.replace('/map', '/embed/map')),
                     areaId: activeArea?.id,
-                  })
-                }
+                  })}
                 tooltip={{ text: 'Share or embed this area' }}
               >
                 Share area

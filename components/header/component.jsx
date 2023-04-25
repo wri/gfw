@@ -20,8 +20,7 @@ const Header = ({ setModalContactUsOpen, fullScreen, slim }) => {
           <NavLink {...props}>
             <a className={className}>{headerChildren}</a>
           </NavLink>
-        ) : null
-      }
+        ) : null}
       openContactUsModal={() => setModalContactUsOpen(true)}
       setQueryToUrl={(search) => push(`/search/?query=${search}`)}
       fullScreen={fullScreen}
@@ -29,8 +28,7 @@ const Header = ({ setModalContactUsOpen, fullScreen, slim }) => {
         pushQuery({
           pathname: `${asPath?.split('?')?.[0]}`,
           query: { ...query, lang },
-        })
-      }
+        })}
     />
   );
 };

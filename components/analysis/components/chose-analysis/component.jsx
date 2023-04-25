@@ -16,8 +16,6 @@ import polygonIcon from 'assets/icons/polygon.svg?sprite';
 
 import UploadShapeModal from './upload-shape-modal';
 
-// import './styles.scss';
-
 class ChoseAnalysis extends PureComponent {
   static propTypes = {
     showDraw: PropTypes.bool,
@@ -66,8 +64,7 @@ class ChoseAnalysis extends PureComponent {
               setMenuSettings({
                 menuSection: 'datasets',
                 datasetCategory: 'landUse',
-              })
-            }
+              })}
           >
             land use
           </button>{' '}
@@ -77,8 +74,7 @@ class ChoseAnalysis extends PureComponent {
               setMenuSettings({
                 menuSection: 'datasets',
                 datasetCategory: 'biodiversity',
-              })
-            }
+              })}
           >
             biodiversity
           </button>{' '}

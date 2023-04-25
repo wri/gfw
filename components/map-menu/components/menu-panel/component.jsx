@@ -50,8 +50,7 @@ class MenuPanel extends PureComponent {
             setMenuSettings({
               ...(category && { datasetCategory: '' }),
               ...(isSearch && { searchType: '' }),
-            })
-          }
+            })}
         >
           <Icon icon={arrowIcon} className="icon-return" />
           <span>{isSearch ? label : startCase(category)}</span>

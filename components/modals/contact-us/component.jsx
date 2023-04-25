@@ -24,8 +24,7 @@ const ModalContactUs = () => {
           category: 'Open modal',
           action: 'Click to open',
           label: 'Contact Us',
-        })
-      }
+        })}
       title="Contact Us"
       className="c-contact-us-modal"
     >

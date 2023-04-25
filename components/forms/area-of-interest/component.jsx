@@ -162,8 +162,7 @@ class AreaOfInterestForm extends PureComponent {
               ...values,
               publicArea,
               viewAfterSave,
-            })
-          }
+            })}
           initialValues={initialValues}
           render={({
             handleSubmit,
@@ -245,8 +244,7 @@ class AreaOfInterestForm extends PureComponent {
                       placeholder="https://my-webhook-url.com"
                       validate={[validateURL]}
                       infoClick={() =>
-                        this.setState({ webhookModalOpen: true })
-                      }
+                        this.setState({ webhookModalOpen: true })}
                       collapse
                     />
                     <div className="webhook-actions">
@@ -323,8 +321,7 @@ class AreaOfInterestForm extends PureComponent {
                         tabIndex={0}
                         role="button"
                         onClick={() =>
-                          this.setState({ publicArea: !publicArea })
-                        }
+                          this.setState({ publicArea: !publicArea })}
                       >
                         <Toggle
                           theme="toggle-large"

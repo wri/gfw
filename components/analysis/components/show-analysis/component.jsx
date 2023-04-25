@@ -148,8 +148,7 @@ class ShowAnalysis extends PureComponent {
                           ? window.location.href
                           : window.location.href.replace('/map', '/embed/map')),
                       areaId: activeArea?.id,
-                    })
-                  }
+                    })}
                   tooltip={{ text: 'Share analysis' }}
                 >
                   <Icon icon={shareIcon} className="icon-share" />
@@ -198,8 +197,7 @@ class ShowAnalysis extends PureComponent {
                     setMenuSettings({
                       menuSection: 'datasets',
                       datasetCategory: 'forestChange',
-                    })
-                  }
+                    })}
                 >
                   forest change
                 </button>{' '}
@@ -227,8 +225,7 @@ class ShowAnalysis extends PureComponent {
                         be compared against each other.{' '}
                         <button
                           onClick={() =>
-                            this.setState({ disclaimerModalOpen: true })
-                          }
+                            this.setState({ disclaimerModalOpen: true })}
                         >
                           Learn more.
                         </button>
@@ -237,8 +234,7 @@ class ShowAnalysis extends PureComponent {
                         open={this.state.disclaimerModalOpen}
                         title="Comparing Loss and Gain"
                         onRequestClose={() =>
-                          this.setState({ disclaimerModalOpen: false })
-                        }
+                          this.setState({ disclaimerModalOpen: false })}
                         className="c-loss-disclaimer-modal"
                       >
                         <p>
