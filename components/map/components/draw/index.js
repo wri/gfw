@@ -4,8 +4,6 @@ import isEqual from 'lodash/isEqual';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { trackEvent } from 'utils/analytics';
 
-// import './styles.scss';
-
 import drawConfig from './config';
 
 class Draw extends PureComponent {

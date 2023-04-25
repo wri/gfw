@@ -3,8 +3,6 @@ import Link from 'next/link';
 
 import cx from 'classnames';
 
-// import './styles.scss';
-
 const TagsList = ({ title, tags, onClick }) => (
   <div className="c-tags-list">
     {title && <h5>{title}</h5>}

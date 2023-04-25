@@ -21,8 +21,6 @@ import RecentImagerySettings from 'components/recent-imagery/components/recent-i
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-// import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class MapControlsButtons extends PureComponent {
@@ -396,9 +394,7 @@ class MapControlsButtons extends PureComponent {
           {format('.2f')(zoom)}
         </span>
         <span className="notranslate">
-          lat, lon: 
-          {' '}
-          {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
+          lat, lon: {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
       </div>
     );

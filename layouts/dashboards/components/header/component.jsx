@@ -21,7 +21,6 @@ import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-// import './styles.scss';
 
 class Header extends PureComponent {
   static propTypes = {

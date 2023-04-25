@@ -5,8 +5,6 @@ import { LegendItemTypes } from 'vizzuality-components/dist/legend';
 import LayerToggle from '../layer-toggle';
 import LayerMoreInfo from '../layer-more-info';
 
-// import './styles.scss';
-
 class LayerListMenu extends PureComponent {
   filterLayerListMenu() {
     const { layers } = this.props;

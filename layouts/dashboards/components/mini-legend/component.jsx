@@ -16,8 +16,6 @@ import { LegendItemButtonOpacity, Icons } from 'vizzuality-components';
 
 import LegendItemTypeChoropleth from 'components/map/components/legend/components/legend-item-type-choropleth';
 
-// import './styles.scss';
-
 class MiniLegend extends PureComponent {
   handleOpacity(layer, opacity) {
     const { datasets, setMapSettings } = this.props;

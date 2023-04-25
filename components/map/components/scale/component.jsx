@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-// import './styles.scss';
-
 class MapScale extends PureComponent {
   render() {
     const {

@@ -9,8 +9,6 @@ import WidgetInfoButton from './components/widget-info-button';
 import WidgetShareButton from './components/widget-share-button';
 import WidgetDownloadButton from './components/widget-download-button';
 
-// import './styles.scss';
-
 class WidgetHeader extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,

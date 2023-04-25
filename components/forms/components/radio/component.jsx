@@ -10,8 +10,6 @@ import { composeValidators } from 'components/forms/validations';
 import FieldWrapper from 'components/forms/components/field-wrapper';
 import Input from 'components/forms/components/input';
 
-// import './styles.scss';
-
 class Radio extends PureComponent {
   static propTypes = {
     type: PropTypes.string,

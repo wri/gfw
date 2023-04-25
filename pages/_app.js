@@ -72,6 +72,9 @@ import '../components/forms/profile/styles.scss';
 // Header
 import '../components/header/styles.scss';
 
+// Load More
+import '../components/load-more/styles.scss';
+
 // Maps
 import '../components/map/styles.scss';
 import '../components/map/components/attributions/attributions-modal/styles.scss';

@@ -4,8 +4,6 @@ import Header from 'components/header';
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
 
-// import './styles.scss';
-
 const ErrorPage = ({ title, description }) => (
   <>
     <Header />

@@ -10,8 +10,6 @@ import ProfileForm from 'components/forms/profile';
 import AreaOfInterestForm from 'components/forms/area-of-interest';
 import Modal from 'components/modal';
 
-// import './styles.scss';
-
 const AreaOfInterestModal = ({
   loading,
   userData,

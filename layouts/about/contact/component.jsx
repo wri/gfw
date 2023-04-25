@@ -1,7 +1,5 @@
 import { Row, Column, ContactUsForm } from 'gfw-components';
 
-// import './styles.scss';
-
 const AboutContactSection = () => (
   <div className="l-section-contact">
     <Row>

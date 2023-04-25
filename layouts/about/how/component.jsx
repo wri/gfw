@@ -4,8 +4,6 @@ import transparency from 'layouts/about/how/images/how-to-1.png';
 import engagement from 'layouts/about/how/images/how-to-2.png';
 import community from 'layouts/about/how/images/how-to-3.png';
 
-// import './styles.scss';
-
 const data = [
   {
     title: 'Transparency',

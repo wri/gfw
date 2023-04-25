@@ -14,8 +14,6 @@ import growth from 'layouts/about/projects/images/growth.png';
 
 import { getProjectsProps } from 'layouts/grants-and-fellowships/projects/selectors';
 
-// import './styles.scss';
-
 const AboutProjectsSection = ({
   sgfProjects: allProjects,
   countries: allCountries,
@@ -85,14 +83,12 @@ const AboutProjectsSection = ({
           <Column width={[1, 17 / 36]}>
             <h3>HOW DO PEOPLE USE GLOBAL FOREST WATCH?</h3>
             <p>
-              Click
-              {' '}
+              Click{' '}
               <Link href="/grants-and-fellowships">
                 <a target="_blank" rel="noopener noreferrer">
                   here
                 </a>
-              </Link>
-              {' '}
+              </Link>{' '}
               to learn about how others have used Global Forest Watch in their
               network.
             </p>

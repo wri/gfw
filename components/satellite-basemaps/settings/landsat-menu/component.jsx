@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 
 import Dropdown from 'components/ui/dropdown';
 
-// import './styles.scss';
-
 export const LandsatMenu = ({
   year,
   defaultYear,

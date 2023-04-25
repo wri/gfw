@@ -6,8 +6,6 @@ import { trackEvent } from 'utils/analytics';
 
 import MenuTile from '../menu-tile';
 
-// import './styles.scss';
-
 class MenuDesktop extends PureComponent {
   render() {
     const { className, datasetSections, searchSections, setMenuSettings } =

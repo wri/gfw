@@ -10,8 +10,6 @@ import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import PTWProvider from 'providers/ptw-provider';
 
-// import './styles.scss';
-
 class Explore extends PureComponent {
   render() {
     const {

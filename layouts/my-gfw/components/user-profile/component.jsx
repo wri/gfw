@@ -10,8 +10,6 @@ import ProfileModal from 'components/modals/profile';
 import pencilIcon from 'assets/icons/pencil.svg?sprite';
 import logoutIcon from 'assets/icons/logout.svg?sprite';
 
-// import './styles.scss';
-
 const UserProfile = ({ userData, setProfileModalOpen }) => {
   const { fullName, email, firstName, lastName } = userData || {};
 
@@ -20,9 +18,7 @@ const UserProfile = ({ userData, setProfileModalOpen }) => {
       {!lastName && fullName && <p className="name">{fullName}</p>}
       {(firstName || lastName) && (
         <p className="name">
-          {firstName} 
-          {' '}
-          {lastName}
+          {firstName} {lastName}
         </p>
       )}
       {email && (

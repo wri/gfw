@@ -8,8 +8,6 @@ import Icon from 'components/ui/icon';
 
 import infoIcon from 'assets/icons/info.svg?sprite';
 
-// import './styles.scss';
-
 class FieldWrapper extends PureComponent {
   static propTypes = {
     touched: PropTypes.bool,

@@ -4,8 +4,6 @@ import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 
-// import './styles.scss';
-
 class MenuTile extends PureComponent {
   render() {
     const {

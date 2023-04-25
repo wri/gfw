@@ -2,10 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Toggle from 'react-toggle';
 
-// import './react-toggle.scss';
-// import './styles.scss';
-// import './themes/switch-light.scss';
-
 class Switch extends PureComponent {
   render() {
     const { theme, label, value, options, onChange, className } = this.props;

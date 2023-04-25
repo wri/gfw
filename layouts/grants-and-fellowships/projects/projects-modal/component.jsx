@@ -5,8 +5,6 @@ import { Carousel } from 'gfw-components';
 
 import Modal from 'components/modal';
 
-// import './styles.scss';
-
 const parseBodyContent = (html, className) => {
   return (
     <div className={className}>

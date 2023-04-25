@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-// import './styles.scss';
-
 class LayerMoreInfo extends PureComponent {
   render() {
     const { className, linkUrl, linkText, text } = this.props;

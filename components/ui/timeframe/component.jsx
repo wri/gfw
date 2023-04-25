@@ -8,8 +8,6 @@ import Icon from './right.svg';
 
 import useTimeline from './hook';
 
-// import './styles.scss';
-
 const DOT_SIZE = 12;
 
 const TimeSlider = ({
