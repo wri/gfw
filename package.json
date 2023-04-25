@@ -162,7 +162,7 @@
     "responsive-loader": "^1.2.0",
     "sass": "^1.58.3",
     "simple-entity-decode": "^0.0.3",
-    "svg-sprite-loader": "4.1.3",
+    "svg-sprite-loader": "6.0.11",
     "three": "^0.125.0",
     "three-orbit-controls": "^82.1.0",
     "turf-area": "^3.0.12",

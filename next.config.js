@@ -4,18 +4,20 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const redirects = require('./data/redirects.json');
-
-let rewrites;
-
-if (process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging') {
-  // eslint-disable-next-line global-require
-  rewrites = require('./data/rewrites-staging.json');
-} else {
-  // eslint-disable-next-line global-require
-  rewrites = require('./data/rewrites.json');
-}
+const rewrites =
+  process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging'
+    ? require('./data/rewrites-staging.json')
+    : require('./data/rewrites.json');
 
 const nextConfig = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      loader: 'svg-sprite-loader',
+    });
+
+    return config;
+  },
   redirects: async () => redirects,
   rewrites: async () => rewrites,
   trailingSlash: true,
