@@ -9,8 +9,6 @@ import { Spring } from 'react-spring/renderprops.cjs';
 import ComposedChart from 'components/charts/composed-chart';
 import SVGBrush from './svg-brush';
 
-// import './styles.scss';
-
 export default class Brush extends PureComponent {
   static propTypes = {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

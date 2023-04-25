@@ -31,9 +31,6 @@ import LayerSelectorMenu from './components/layer-selector-menu';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 
-// import './styles.scss';
-// import './themes/vizzuality-legend.scss';
-
 const MapLegend = ({
   layerGroups,
   onChangeOrder,

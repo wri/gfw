@@ -8,8 +8,6 @@ import Checkbox from 'components/ui/checkbox';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
-// import './styles.scss';
-
 class PromptTooltip extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {

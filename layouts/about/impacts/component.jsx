@@ -18,8 +18,6 @@ import awards1 from 'layouts/about/impacts/images/awards1.png';
 import awards2 from 'layouts/about/impacts/images/awards2.png';
 import awards3 from 'layouts/about/impacts/images/awards3.png';
 
-// import './styles.scss';
-
 const awards = [
   {
     img: awards0,

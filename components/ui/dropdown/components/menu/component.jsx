@@ -4,8 +4,6 @@ import cx from 'classnames';
 
 import Item from '../item';
 
-// import './styles.scss';
-
 const Menu = (props) => {
   const {
     className,

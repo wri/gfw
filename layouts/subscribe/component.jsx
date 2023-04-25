@@ -4,8 +4,6 @@ import { Row, Column } from '@worldresources/gfw-components';
 
 import NewsletterForm from 'components/forms/newsletter';
 
-// import './styles.scss';
-
 class NewsletterPage extends PureComponent {
   render() {
     return (

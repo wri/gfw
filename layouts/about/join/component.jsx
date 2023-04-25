@@ -2,8 +2,6 @@ import { Link as AnchorLink } from 'react-scroll';
 
 import { Row, Column, Button } from '@worldresources/gfw-components';
 
-// import './styles.scss';
-
 const AboutJoinSection = () => (
   <section className="l-section-join">
     <Row>

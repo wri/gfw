@@ -6,8 +6,6 @@ import Icon from 'components/ui/icon';
 
 import treeImageError from 'assets/icons/error.svg?sprite';
 
-// import './styles.scss';
-
 class Thankyou extends PureComponent {
   static propTypes = {
     title: PropTypes.string,

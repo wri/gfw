@@ -8,8 +8,6 @@ import Coords from './components/coords';
 import DecimalDegreeSearch from './components/decimal-degrees';
 import UTMCoords from './components/utm-coords';
 
-// import './styles.scss';
-
 class MapMenuSearch extends PureComponent {
   static propTypes = {
     datasets: PropTypes.array,

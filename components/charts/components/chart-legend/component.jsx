@@ -4,8 +4,6 @@ import cx from 'classnames';
 
 import Button from 'components/ui/button';
 
-// import './styles.scss';
-
 class ChartLegend extends PureComponent {
   render() {
     const { config, className, simple, toggleSettingsMenu } = this.props;

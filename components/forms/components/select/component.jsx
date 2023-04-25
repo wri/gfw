@@ -10,8 +10,6 @@ import Input from 'components/forms/components/input';
 
 import FieldWrapper from 'components/forms/components/field-wrapper';
 
-// import './styles.scss';
-
 class Select extends PureComponent {
   static propTypes = {
     type: PropTypes.string,

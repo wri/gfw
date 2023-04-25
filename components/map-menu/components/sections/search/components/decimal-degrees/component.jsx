@@ -5,8 +5,6 @@ import { validateLat, validateLng, validateLatLng } from 'utils/geoms';
 
 import Button from 'components/ui/button';
 
-// import './styles.scss';
-
 class DecimalDegreeSearch extends PureComponent {
   state = {
     error: false,

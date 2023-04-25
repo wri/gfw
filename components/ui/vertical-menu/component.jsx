@@ -6,8 +6,6 @@ import Icon from 'components/ui/icon';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 
-// import './styles.scss';
-
 class VerticalMenu extends PureComponent {
   static propTypes = {
     className: PropTypes.string,

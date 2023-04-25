@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-// import './styles.scss';
-
 class Checkbox extends PureComponent {
   render() {
     const { className, value, id = 'checkbox' } = this.props;

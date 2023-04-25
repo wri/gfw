@@ -43,8 +43,6 @@ import MapControls from './components/map-controls';
 import PendingDashboard from './components/pending-dashboard';
 import GlobalSentence from './components/global-sentence';
 
-// import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 class DashboardsPage extends PureComponent {
   static propTypes = {

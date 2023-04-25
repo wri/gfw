@@ -5,8 +5,6 @@ import { formatUSD } from 'utils/format';
 import ComposedChart from 'components/charts/composed-chart';
 import NumberedList from 'components/numbered-list';
 
-// import './styles.scss';
-
 class WidgetChartList extends PureComponent {
   render() {
     const { data, config, settings, embed } = this.props;

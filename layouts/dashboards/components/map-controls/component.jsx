@@ -10,8 +10,6 @@ import minusIcon from 'assets/icons/minus.svg?sprite';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
-// import './styles.scss';
-
 class MapControlsButtons extends PureComponent {
   renderZoomButtons = () => {
     const {

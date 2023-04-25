@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/ui/loader';
 
-// import './styles.scss';
-
 class RecentImageryThumbnail extends PureComponent {
   render() {
     const {

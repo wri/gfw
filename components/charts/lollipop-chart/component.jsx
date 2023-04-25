@@ -9,8 +9,6 @@ import { Desktop, Mobile } from '@worldresources/gfw-components';
 
 import Legend from 'components/charts/components/chart-legend';
 
-// import './styles.scss';
-
 class LollipopChart extends PureComponent {
   interpolate = (num, dataMin, dataMax) =>
     (Math.abs(num) * 100) / (dataMax + Math.abs(dataMin) || 1);

@@ -7,8 +7,6 @@ import Icon from 'components/ui/icon';
 
 import satelliteDetailed from 'assets/icons/satellite-detailed.svg?sprite';
 
-// import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class PendingDashboardMessage extends PureComponent {
@@ -61,9 +59,7 @@ class PendingDashboardMessage extends PureComponent {
                   after).
                 </p>
                 <p>
-                  <span>We will send you an email</span>
-                  {' '}
-                  once your dashboard is
+                  <span>We will send you an email</span> once your dashboard is
                   complete.
                 </p>
               </Fragment>

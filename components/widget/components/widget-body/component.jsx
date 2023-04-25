@@ -21,8 +21,6 @@ import WidgetSankey from 'components/widget/components/widget-sankey';
 import WidgetLollipop from 'components/widget/components/widget-lollipop';
 import WidgetInfoList from 'components/widget/components/widget-info-list';
 
-// import './styles.scss';
-
 const chartOptions = {
   composedChart: WidgetComposedChart,
   composedChartAlt: WidgetComposedChartAlt,

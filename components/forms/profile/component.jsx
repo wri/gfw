@@ -22,8 +22,6 @@ import {
 
 import { sectors, howDoYouUse, interests } from './config';
 
-// import './styles.scss';
-
 class ProfileForm extends PureComponent {
   static propTypes = {
     initialValues: PropTypes.object,

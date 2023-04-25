@@ -5,8 +5,6 @@ import ReactHtmlParser from 'react-html-parser';
 
 import WidgetAlert from 'components/widget/components/widget-alert';
 
-// import './styles.scss';
-
 class WidgetFooter extends PureComponent {
   static propTypes = {
     type: PropTypes.string,

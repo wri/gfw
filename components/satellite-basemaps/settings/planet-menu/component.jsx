@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Dropdown from 'components/ui/dropdown';
-
 import Timeframe from 'components/ui/timeframe';
-
-// import './styles.scss';
 
 function periodsAsSelect(periods) {
   return periods.map((p) => ({ label: p.period, value: p.value }));

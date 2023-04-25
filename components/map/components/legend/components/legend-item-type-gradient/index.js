@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-// import './styles.scss';
 
 class LegendItemTypeGradient extends PureComponent {
   static propTypes = {

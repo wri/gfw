@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-// import './styles.scss';
-
 class DatasetSection extends PureComponent {
   render() {
     const { title, subTitle, children } = this.props;

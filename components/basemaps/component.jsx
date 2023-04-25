@@ -22,8 +22,6 @@ import roadsIcon from 'assets/icons/roads.svg?sprite';
 
 import BasemapsMenu from './basemaps-menu';
 
-// import './styles.scss';
-
 const Basemaps = ({
   className,
   labelSelected,

@@ -8,8 +8,6 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import overflowMenuIcon from 'assets/icons/overflow-menu.svg?sprite';
 import closeIcon from 'assets/icons/close.svg?sprite';
 
-// import './styles.scss';
-
 const Selector = (props) => {
   const {
     isOpen,

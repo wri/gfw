@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Row, Column } from '@worldresources/gfw-components';
 
-// import './styles.scss';
-
 const TermsPage = () => (
   <div className="l-terms-page">
     <Row>
@@ -60,8 +58,7 @@ const TermsPage = () => (
                 We are constantly trying to improve Our Services. We may change
                 the features and functions of the Services, including APIs, over
                 time. It is Your responsibility to ensure that Your use of the
-                Services is compatible with the current version.
-                {' '}
+                Services is compatible with the current version.{' '}
               </li>
             </ol>
           </li>
@@ -71,8 +68,7 @@ const TermsPage = () => (
               <li>
                 In order to use many of the Services, You must register for an
                 account. WRI reserves the right to reject any account
-                registration request, in its sole discretion.
-                {' '}
+                registration request, in its sole discretion.{' '}
               </li>
               <li>
                 When You request to open an account in the Global Forest Watch

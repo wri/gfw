@@ -5,8 +5,6 @@ import { Row, Column, Loader } from '@worldresources/gfw-components';
 import AreasTable from '../areas-table';
 import NoAreas from '../no-areas';
 
-// import './styles.scss';
-
 const MyGfwAreas = ({ hasAreas, loading }) => (
   <div className="c-mygfw-areas">
     {loading && <Loader className="mygfw-loader" />}

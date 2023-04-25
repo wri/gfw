@@ -1,14 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link as AnchorLink } from 'react-scroll';
+
 import NavLink from 'components/nav-link';
-
 import Icon from 'components/ui/icon';
-
-// import './styles.scss';
-// import './themes/subnav-dark.scss'; // eslint-disable-line
-// import './themes/subnav-plain.scss'; // eslint-disable-line
-// import './themes/subnav-small-light.scss'; // eslint-disable-line
 
 class SubNavMenu extends PureComponent {
   render() {
