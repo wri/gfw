@@ -55,8 +55,8 @@ class Card extends PureComponent {
           {image && (
             <picture className="image">
               {webPImage && <source srcSet={webPImage.src} type="image/webp" />}
-              <source srcSet={image} type="image/png" />
-              <img src={image} alt={title} />
+              <source srcSet={image.src || image} type="image/png" />
+              <img src={image.src || image} alt={title} />
             </picture>
           )}
 
