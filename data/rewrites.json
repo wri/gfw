@@ -10,23 +10,13 @@
     "basePath": false
   },
   {
-    "source": "/help/:path*",
-    "destination": "https://gfw-help-center.herokuapp.com/help/:path*",
-    "basePath": false
-  },
-  {
-    "source": "/blog",
+    "source": "/blog/",
     "destination": "https://gfw-blog.herokuapp.com/blog",
     "basePath": false
   },
   {
     "source": "/blog/:path*/",
     "destination": "https://gfw-blog.herokuapp.com/blog/:path*/",
-    "basePath": false
-  },
-  {
-    "source": "/blog/:path*",
-    "destination": "https://gfw-blog.herokuapp.com/blog/:path*",
     "basePath": false
   },
   {
