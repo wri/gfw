@@ -8,7 +8,6 @@ import { trackEvent } from 'utils/analytics';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Widget from 'components/widget';
-// import './styles.scss';
 
 class Widgets extends PureComponent {
   static propTypes = {
@@ -129,8 +128,7 @@ class Widgets extends PureComponent {
                       setWidgetInteractionByKey({
                         key: w.widget,
                         payload,
-                      })
-                    }
+                      })}
                     handleChangeSettings={(change) => {
                       setWidgetSettings({
                         widget: w.widget,
@@ -167,8 +165,7 @@ class Widgets extends PureComponent {
                         embedSettings: !w.large
                           ? { width: 315, height: 460 }
                           : { width: 630, height: 460 },
-                      })
-                    }
+                      })}
                     preventCloseSettings={modalClosing}
                     onClickWidget={handleClickWidget}
                   />

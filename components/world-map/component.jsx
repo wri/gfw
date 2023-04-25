@@ -154,8 +154,7 @@ class WorldMap extends React.PureComponent {
           <ZoomableGroup center={[0, 0]}>
             <Geographies geography={WORLD_GEOGRAPHIES}>
               {({ geographies, projection }) =>
-                this.renderGeographies(geographies, projection)
-              }
+                this.renderGeographies(geographies, projection)}
             </Geographies>
             {this.renderLines()}
           </ZoomableGroup>

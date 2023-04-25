@@ -23,8 +23,7 @@ class CategoriesMenu extends PureComponent {
                   round
                   size="large"
                   onClick={() =>
-                    onSelectCategory({ datasetCategory: c.category })
-                  }
+                    onSelectCategory({ datasetCategory: c.category })}
                 >
                   {!!c.layerCount && (
                     <span className="category-btn-count">{c.layerCount}</span>

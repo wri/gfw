@@ -16,8 +16,6 @@ import polygonIcon from 'assets/icons/polygon.svg?sprite';
 
 import UploadShapeModal from './upload-shape-modal';
 
-// import './styles.scss';
-
 class ChoseAnalysis extends PureComponent {
   static propTypes = {
     showDraw: PropTypes.bool,

@@ -10,8 +10,6 @@ import { Button, NoContent } from '@worldresources/gfw-components';
 
 import Modal from 'components/modal';
 
-// import './styles.scss';
-
 class ModalMeta extends PureComponent {
   static propTypes = {
     setModalMetaClosed: PropTypes.func,

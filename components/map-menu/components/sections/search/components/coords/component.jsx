@@ -74,8 +74,7 @@ class UTMCoords extends PureComponent {
           <input
             value={latDeg}
             onChange={(e) =>
-              this.setState({ latDeg: e.target.value, error: false })
-            }
+              this.setState({ latDeg: e.target.value, error: false })}
             onKeyDown={this.handleKeyPress}
             className={cx('coord-input', { error: latDeg && error })}
           />
@@ -83,8 +82,7 @@ class UTMCoords extends PureComponent {
           <input
             value={latMin}
             onChange={(e) =>
-              this.setState({ latMin: e.target.value, error: false })
-            }
+              this.setState({ latMin: e.target.value, error: false })}
             className={cx('coord-input', { error: latMin && error })}
             onKeyDown={this.handleKeyPress}
           />
@@ -92,8 +90,7 @@ class UTMCoords extends PureComponent {
           <input
             value={latSec}
             onChange={(e) =>
-              this.setState({ latSec: e.target.value, error: false })
-            }
+              this.setState({ latSec: e.target.value, error: false })}
             className={cx('coord-input', { error: latSec && error })}
             onKeyDown={this.handleKeyPress}
           />
@@ -119,8 +116,7 @@ class UTMCoords extends PureComponent {
           <input
             value={lngDeg}
             onChange={(e) =>
-              this.setState({ lngDeg: e.target.value, error: false })
-            }
+              this.setState({ lngDeg: e.target.value, error: false })}
             onKeyDown={this.handleKeyPress}
             className={cx('coord-input', { error: lngDeg && error })}
           />
@@ -128,8 +124,7 @@ class UTMCoords extends PureComponent {
           <input
             value={lngMin}
             onChange={(e) =>
-              this.setState({ lngMin: e.target.value, error: false })
-            }
+              this.setState({ lngMin: e.target.value, error: false })}
             className={cx('coord-input', { error: lngMin && error })}
             onKeyDown={this.handleKeyPress}
           />
@@ -137,8 +132,7 @@ class UTMCoords extends PureComponent {
           <input
             value={lngSec}
             onChange={(e) =>
-              this.setState({ lngSec: e.target.value, error: false })
-            }
+              this.setState({ lngSec: e.target.value, error: false })}
             className={cx('coord-input', { error: lngSec && error })}
             onKeyDown={this.handleKeyPress}
           />

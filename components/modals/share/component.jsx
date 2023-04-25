@@ -147,8 +147,7 @@ class Share extends PureComponent {
                   category: 'Share',
                   action: 'Share social',
                   label: shareUrl,
-                })
-              }
+                })}
             >
               <Icon icon={twitterIcon} className="twitter-icon" />
             </Button>
@@ -161,8 +160,7 @@ class Share extends PureComponent {
                   category: 'Share',
                   action: 'Share social',
                   label: shareUrl,
-                })
-              }
+                })}
             >
               <Icon icon={facebookIcon} className="facebook-icon" />
             </Button>

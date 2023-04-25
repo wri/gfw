@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Modal from 'components/modal';
 
-// import './styles.scss';
-
 const UploadShapeModal = ({ open, onRequestClose }) => (
   <Modal
     open={open}

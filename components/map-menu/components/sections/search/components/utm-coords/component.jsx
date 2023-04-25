@@ -50,8 +50,7 @@ class UTMCoords extends PureComponent {
         <input
           value={east}
           onChange={(e) =>
-            this.setState({ east: e.target.value, error: false })
-          }
+            this.setState({ east: e.target.value, error: false })}
           onKeyDown={this.handleKeyPress}
           className={cx('coord-input', { error: east && error })}
         />
@@ -59,8 +58,7 @@ class UTMCoords extends PureComponent {
         <input
           value={north}
           onChange={(e) =>
-            this.setState({ north: e.target.value, error: false })
-          }
+            this.setState({ north: e.target.value, error: false })}
           className={cx('coord-input', { error: north && error })}
           onKeyDown={this.handleKeyPress}
         />
@@ -68,8 +66,7 @@ class UTMCoords extends PureComponent {
         <input
           value={zone}
           onChange={(e) =>
-            this.setState({ zone: e.target.value, error: false })
-          }
+            this.setState({ zone: e.target.value, error: false })}
           className={cx('coord-input', { error: zone && error })}
           onKeyDown={this.handleKeyPress}
         />

@@ -191,8 +191,7 @@ class MapMenu extends PureComponent {
               menuSection:
                 !isDesktop && recentActive ? 'recent-imagery-collapsed' : '',
               datasetCategory: '',
-            })
-          }
+            })}
           onOpen={() => setMenuSettings({ menuSection: openSection })}
         >
           {Component && (

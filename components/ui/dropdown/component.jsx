@@ -187,8 +187,7 @@ class Dropdown extends PureComponent {
                 handleSelectGroup={handleSelectGroup}
               />
             </Selector>
-          )
-        }
+          )}
       </Downshift>
     );
 

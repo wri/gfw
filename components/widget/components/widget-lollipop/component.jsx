@@ -25,8 +25,7 @@ class WidgetLollipop extends PureComponent {
         }}
         settingsConfig={settingsConfig}
         handlePageChange={(change) =>
-          handleChangeSettings({ page: settings.page + change })
-        }
+          handleChangeSettings({ page: settings.page + change })}
         linksExt={embed}
       />
     );

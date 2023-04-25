@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-// import './styles.scss';
-
 class Tip extends PureComponent {
   render() {
     const { text, html, className } = this.props;
@@ -11,9 +9,9 @@ class Tip extends PureComponent {
       return (
         <div
           className={cx('c-tip', className)}
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: html }} // eslint-disable-line
         />
-      ); // eslint-disable-line
+      );
     }
     return <div className={cx('c-tip', className)}>{text}</div>;
   }
