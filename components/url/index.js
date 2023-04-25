@@ -45,7 +45,7 @@ const URL = ({
 };
 
 URL.propTypes = {
-  queryParams: PropTypes.string,
+  queryParams: PropTypes.object,
   options: PropTypes.object,
 };
 
