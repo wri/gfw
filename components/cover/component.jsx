@@ -61,8 +61,8 @@ Cover.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   large: PropTypes.bool,
-  bgImage: PropTypes.string,
-  webP: PropTypes.string,
+  bgImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  webP: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   altImageText: PropTypes.string,
   children: PropTypes.node,
 };
