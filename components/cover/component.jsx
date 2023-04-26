@@ -41,8 +41,8 @@ class Cover extends PureComponent {
         </Row>
         {bgImage && (
           <picture className="picture">
-            {webP && <source srcSet={webP.src} type="image/webp" />}
-            <source srcSet={bgImage.src} type="image/jpeg" />
+            {webP && <source srcSet={webP} type="image/webp" />}
+            <source srcSet={bgImage} type="image/jpeg" />
             <Image
               src={bgImage}
               layout="fill"

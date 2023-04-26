@@ -219,8 +219,8 @@ class AreaOfInterestForm extends PureComponent {
                     />
                     <div className="alerts-image">
                       <img
-                        src={screenImg1x.src}
-                        srcSet={`${screenImg1x.src} 1x, ${screenImg2x.src} 2x`}
+                        src={screenImg1x}
+                        srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
                         alt="area of interest alerts"
                       />
                       <p>

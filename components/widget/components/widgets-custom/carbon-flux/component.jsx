@@ -5,8 +5,8 @@ import Removals from 'assets/icons/widgets/carbon-flux/removals.svg';
 
 export const Component = () => (
   <div className="c-carbon-flux-image-component">
-    <img className="image" src={Removals.src} alt="Removals" />
-    <img className="image" src={Emissions.src} alt="Emissions" />
+    <img className="image" src={Removals} alt="Removals" />
+    <img className="image" src={Emissions} alt="Emissions" />
   </div>
 );
 

@@ -66,11 +66,11 @@ class TopicsImage extends PureComponent {
       <div className="c-topics-image">
         <img
           {...(img2x && {
-            srcSet: `${img2x.src} 2x, ${img1x.src} 1x`,
-            src: `${img1x.src} 1x`,
+            srcSet: `${img2x} 2x, ${img1x} 1x`,
+            src: `${img1x} 1x`,
           })}
           {...(!img2x && {
-            src: img1x.src,
+            src: img1x,
           })}
           alt={description}
         />

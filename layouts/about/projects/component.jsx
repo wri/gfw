@@ -126,7 +126,7 @@ const AboutProjectsSection = ({
         <Desktop>
           <div
             className="visitors"
-            style={{ backgroundImage: `url(${growth.src})` }}
+            style={{ backgroundImage: `url(${growth})` }}
           >
             <h4>
               Since its launch in 2014, over 4 million people have visited
