@@ -58,7 +58,7 @@ const TimeSlider = ({
           style={{ width: `${timeline.buttonWidth}px` }}
           onClick={() => moveTimeline('prev')}
         >
-          <img src={Icon.src} alt="arrow-prev" />
+          <img src={Icon} alt="arrow-prev" />
         </button>
         <div ref={ref} className="timeframe">
           <animated.ol
@@ -125,7 +125,7 @@ const TimeSlider = ({
           style={{ width: `${timeline.buttonWidth}px` }}
           onClick={() => moveTimeline('next')}
         >
-          <img src={Icon.src} alt="arrow-next" />
+          <img src={Icon} alt="arrow-next" />
         </button>
       </section>
     </>

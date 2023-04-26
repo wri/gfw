@@ -160,7 +160,7 @@ const SatelliteBasemaps = ({
                     onClick={(e) => handleSetSatelliteBasemap(e, basemap.value)}
                   >
                     <img
-                      src={basemap.image.src}
+                      src={basemap.image}
                       alt={basemap.label}
                       className="satellite-basemap--thumbnail"
                     />

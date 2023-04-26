@@ -19,9 +19,9 @@ class GFRBanner extends PureComponent {
           </div>
           <div className="gfr-logo">
             <picture>
-              <source srcSet={GFRLogoWebP.src} type="image/webp" />
-              <source srcSet={GFRLogoPNG.src} type="image/png" />
-              <img src={GFRLogoPNG.src} alt="Global Forest Review" />
+              <source srcSet={GFRLogoWebP} type="image/webp" />
+              <source srcSet={GFRLogoPNG} type="image/png" />
+              <img src={GFRLogoPNG} alt="Global Forest Review" />
             </picture>
           </div>
         </a>

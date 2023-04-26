@@ -5,8 +5,6 @@ import { InView } from 'react-intersection-observer';
 import Link from 'next/link';
 import cx from 'classnames';
 
-import Image from 'next/image';
-
 import { Desktop, Mobile, Carousel, Button, Row, Column } from 'gfw-components';
 
 import Cover from 'components/cover';
@@ -127,7 +125,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
                 <Column width={[1, 1 / 2]}>
                   <div
                     className="use-image"
-                    style={{ backgroundImage: `url(${c.img.src})` }}
+                    style={{ backgroundImage: `url(${c.img})` }}
                   >
                     <a
                       className="use-credit"
@@ -179,7 +177,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
                         <div
                           className="app-image"
                           style={{
-                            backgroundImage: `url(${app.background.src})`,
+                            backgroundImage: `url(${app.background})`,
                           }}
                         />
                       </div>
@@ -267,7 +265,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
         >
           {showSectionNews && (
             <picture>
-              <Image src={newsImage} alt="New from Global Forest Watch" />
+              <img src={newsImage} alt="New from Global Forest Watch" />
             </picture>
           )}
         </InView>

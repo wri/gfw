@@ -5,8 +5,6 @@ import { Carousel, Row, Column, Desktop, Mobile } from 'gfw-components';
 
 import Card from 'components/ui/card';
 
-import Image from 'next/image';
-
 import awards0 from 'layouts/about/impacts/images/awards.png';
 import awards1 from 'layouts/about/impacts/images/awards1.png';
 import awards2 from 'layouts/about/impacts/images/awards2.png';
@@ -95,7 +93,7 @@ const AboutImpactsSection = ({ impactProjects }) => (
       {awards.map((l) => (
         <Column className="award-logo" key={l.title} width={[1, 1 / 2, 1 / 4]}>
           <a href={l.link} target="_blank" rel="noopener noreferrer">
-            <Image alt={l.title} src={l.img} />
+            <img alt={l.title} src={l.img} />
           </a>
         </Column>
       ))}

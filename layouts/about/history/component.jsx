@@ -11,8 +11,6 @@ import img2017 from 'layouts/about/history/images/2017.jpg';
 import img2018 from 'layouts/about/history/images/2018.png';
 import img2019 from 'layouts/about/history/images/2019.png';
 
-import Image from 'next/image';
-
 const data = [
   {
     img: img1997,
@@ -105,7 +103,7 @@ const AboutHistorySection = () => (
               <div className="year-card" key={d.title}>
                 <Row>
                   <Column width={[1, 1 / 2]}>
-                    <Image className="image" src={d.img} alt={d.title} />
+                    <img className="image" src={d.img} alt={d.title} />
                   </Column>
                   <Column width={[1, 1 / 2]}>
                     <div className="description">

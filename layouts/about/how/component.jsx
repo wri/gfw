@@ -60,7 +60,7 @@ class AboutHowSection extends PureComponent {
         <div
           className="panel right-panel"
           style={{
-            backgroundImage: `url(${currentData.img.src})`,
+            backgroundImage: `url(${currentData.img})`,
           }}
         />
       </section>

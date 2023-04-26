@@ -1,4 +1,5 @@
 const withPlugins = require('next-compose-plugins');
+const optimizedImages = require('next-optimized-images');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -10,17 +11,15 @@ const rewrites =
     : require('./data/rewrites.json');
 
 const nextConfig = {
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      loader: 'svg-sprite-loader',
-    });
-
-    return config;
-  },
   redirects: async () => redirects,
   rewrites: async () => rewrites,
   trailingSlash: true,
+  images: {
+    disableStaticImages: true,
+  },
 };
 
-module.exports = withPlugins([withBundleAnalyzer], nextConfig);
+module.exports = withPlugins(
+  [[optimizedImages], [withBundleAnalyzer]],
+  nextConfig
+);
