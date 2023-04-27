@@ -44,22 +44,14 @@ export default async function getGfwMeta() {
 }
 
 export async function handleGfwParamsMeta(params) {
-  const paramsMeta = {
-    GLAD: null,
-    VIIRS: null,
-    INTEGRATED: null,
-  };
+  const isMetaParamsEmpty = isEmpty(params?.GFW_META?.datasets);
+  let gfwMetaParams;
 
-  if (isEmpty(params?.GFW_META?.datasets)) {
-    const meta = await getGfwMeta();
-    Object.keys(paramsMeta).forEach((key) => {
-      paramsMeta[key] = meta?.datasets?.[key];
-    });
-  } else {
-    Object.keys(paramsMeta).forEach((key) => {
-      paramsMeta[key] = params?.GFW_META?.datasets?.[key];
-    });
+  if (isMetaParamsEmpty) {
+    gfwMetaParams = await getGfwMeta();
+
+    return gfwMetaParams?.datasets;
   }
 
-  return paramsMeta;
+  return params.GFW_META.datasets;
 }
