@@ -43,35 +43,15 @@ export default async function getGfwMeta() {
   };
 }
 
-export async function handleGladMeta(params) {
-  let GLAD;
-  if (isEmpty(params?.GFW_META?.datasets)) {
-    const meta = await getGfwMeta();
-    GLAD = meta?.datasets?.GLAD;
-  } else {
-    GLAD = params?.GFW_META?.datasets?.GLAD;
-  }
-  return GLAD;
-}
+export async function handleGfwParamsMeta(params) {
+  const isMetaParamsEmpty = isEmpty(params?.GFW_META?.datasets);
+  let gfwMetaParams;
 
-export async function handleViirsMeta(params) {
-  let VIIRS;
-  if (isEmpty(params?.GFW_META?.datasets)) {
-    const meta = await getGfwMeta();
-    VIIRS = meta?.datasets?.VIIRS;
-  } else {
-    VIIRS = params?.GFW_META?.datasets?.VIIRS;
-  }
-  return VIIRS;
-}
+  if (isMetaParamsEmpty) {
+    gfwMetaParams = await getGfwMeta();
 
-export async function handleIntegratedMeta(params) {
-  let INTEGRATED;
-  if (isEmpty(params?.GFW_META?.datasets)) {
-    const meta = await getGfwMeta();
-    INTEGRATED = meta?.datasets?.INTEGRATED;
-  } else {
-    INTEGRATED = params?.GFW_META?.datasets?.INTEGRATED;
+    return gfwMetaParams?.datasets;
   }
-  return INTEGRATED;
+
+  return params.GFW_META.datasets;
 }

@@ -13,7 +13,7 @@ import {
   INTEGRATED_ALERTS_GLAD,
 } from 'data/layers';
 
-import { handleIntegratedMeta, handleGladMeta } from 'utils/gfw-meta';
+import { handleGfwParamsMeta } from 'utils/gfw-meta';
 
 import find from 'lodash/find';
 import sumBy from 'lodash/sumBy';
@@ -178,7 +178,7 @@ export default {
   },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
-    const GLAD = await handleIntegratedMeta(params); // 'true' means getting last update from integrated alerts API in GFW.org
+    const { GLAD } = await handleGfwParamsMeta(params); // 'true' means getting last update from integrated alerts API in GFW.org
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     // extract relevant metadata
@@ -462,7 +462,7 @@ export default {
   },
   // Downloads
   getDataURL: async (params) => {
-    const GLAD = await handleGladMeta(params);
+    const { GLAD } = await handleGfwParamsMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
