@@ -1,6 +1,6 @@
 import tropicalIsos from 'data/tropical-isos.json';
 
-import { handleViirsMeta } from 'utils/gfw-meta';
+import { handleGfwParamsMeta } from 'utils/gfw-meta';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -318,7 +318,7 @@ export default {
     dataset: 'viirs',
   },
   getData: async (params) => {
-    const VIIRS = await handleViirsMeta(params);
+    const { VIIRS } = await handleGfwParamsMeta(params);
     const defaultStartDate = VIIRS?.defaultStartDate;
     const defaultEndDate = VIIRS?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
