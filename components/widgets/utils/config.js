@@ -27,7 +27,7 @@ export const getForestTypes = ({
     .map((f) => ({
       ...f,
       label: f.label.includes('{iflYear}')
-        ? f.label.replace('{iflYear}', settings.ifl || 2016)
+        ? f.label.replace('{iflYear}', settings.ifl || 2000)
         : f.label,
       metaKey:
         f.metaKey === 'primary_forest'
