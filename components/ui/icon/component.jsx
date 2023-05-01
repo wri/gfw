@@ -7,7 +7,7 @@ const Icon = ({ icon, className, style }) => (
     viewBox={icon.viewBox || '0 0 32 32'}
     style={style}
   >
-    <use xlinkHref={`#${icon.id}`} />
+    <use xlinkHref={`#${icon.id || icon}`} />
   </svg>
 );
 
