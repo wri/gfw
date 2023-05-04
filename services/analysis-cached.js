@@ -2208,7 +2208,7 @@ export const fetchMODISLatest = () =>
     }));
 
 export const fetchVIIRSAlertsSumOTF = (params) => {
-  const { startDate, endDate, geostoreId } = params || {};
+  const { startDate, endDate, download, geostoreId } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -2217,6 +2217,13 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
       .replace('{endDate}', endDate)
       .replace('{geostoreId}', geostoreId)
   );
+
+  if (download) {
+    return {
+      name: `fire_alerts`,
+      url: getDownloadUrl(url),
+    };
+  }
 
   return dataRequest.get(url).then((response) => ({
     data: {
@@ -2231,7 +2238,7 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
 };
 
 export const fetchVIIRSAlertsSum = (params) => {
-  const { startDate, endDate, download, dataset } = params || {};
+  const { startDate, endDate, dataset } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -2247,13 +2254,6 @@ export const fetchVIIRSAlertsSum = (params) => {
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
   );
-
-  if (download) {
-    return {
-      name: `daily_${dataset}_alerts__count`,
-      url: url.replace('query', 'download/csv'),
-    };
-  }
 
   return dataRequest.get(url).then((response) => ({
     data: {
