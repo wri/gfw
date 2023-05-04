@@ -33,7 +33,7 @@ const XAxisTickWithoutGap = ({ x, y, payload }) => {
 
   const Tick = () => (
     <g transform={`translate(${x - offset},${y})`}>
-      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#000">
+      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#555555">
         {value}
       </text>
     </g>
@@ -41,7 +41,7 @@ const XAxisTickWithoutGap = ({ x, y, payload }) => {
 
   const ExtraTick = () => (
     <g transform={`translate(${x + offset},${y})`}>
-      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#000">
+      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#555555">
         100
       </text>
     </g>
@@ -180,7 +180,7 @@ class CustomComposedChart extends PureComponent {
         })}
         style={{
           height: simple ? 110 : height || 250,
-          paddingLeft: config?.yAxis?.label ? '1%' : '0',
+          paddingLeft: config?.yAxis?.label ? '3%' : '0',
         }}
       >
         <ResponsiveContainer width="99%">

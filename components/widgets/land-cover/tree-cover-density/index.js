@@ -7,7 +7,6 @@ import {
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  TROPICAL_TREE_COVER_METERS,
   TROPICAL_TREE_COVER_HECTARE,
 } from 'data/layers';
 
@@ -33,9 +32,9 @@ export default {
       border: true,
     },
   ],
-  pendingKeys: ['threshold', 'years'],
+  pendingKeys: [],
   refetchKeys: ['landCategory'],
-  dataType: 'gain',
+  dataType: 'density',
   // TO-DO: Add metadata URL
   metaKey: 'widget_primary_forest',
   datasets: [
@@ -46,7 +45,7 @@ export default {
     },
     {
       dataset: TROPICAL_TREE_COVER_DATASET,
-      layers: [TROPICAL_TREE_COVER_METERS, TROPICAL_TREE_COVER_HECTARE],
+      layers: [TROPICAL_TREE_COVER_HECTARE],
     },
   ],
   sortOrder: {
