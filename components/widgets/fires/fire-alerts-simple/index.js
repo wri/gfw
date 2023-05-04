@@ -158,14 +158,24 @@ export default {
       },
     }).then((alertsResponse) => {
       const alerts = alertsResponse.data.data;
-      return {
-        alerts:
-          alerts &&
-          alerts.map((d) => ({
+      let data = {};
+      if (alerts && VIIRS) {
+        data = {
+          alerts: alerts.map((d) => ({
             ...d,
             alerts: d.count,
           })),
-      };
+          settings: {
+            startDate,
+            endDate,
+          },
+          options: {
+            minDate: '2000-01-01',
+            maxDate: defaultEndDate,
+          },
+        };
+      }
+      return data;
     });
   },
   maxDownloadSize: {
