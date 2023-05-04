@@ -63,7 +63,6 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
-  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -818,7 +817,7 @@ export const getLossFiresOTF = (params) => {
   const geostoreId = geostore.id || adm0;
   const urlBase = '/dataset/umd_tree_cover_loss/v1.8/query/json?';
   const sql = `sql=${SQL_QUERIES.lossFiresOTF}`;
-  const url = `${urlBase + sql  }&geostore_id=${geostoreId}`;
+  const url = `${urlBase + sql}&geostore_id=${geostoreId}`;
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -2238,7 +2237,7 @@ export const fetchVIIRSAlertsSum = (params) => {
       ...params,
       dataset,
       datasetType: 'daily',
-    })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
+    })}${SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
