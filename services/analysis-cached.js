@@ -2199,7 +2199,7 @@ export const fetchMODISLatest = () =>
     .then(({ data }) => {
       const dates =
         data && data?.metadata && data?.metadata?.content_date_range;
-      const { max: date } = dates;
+      const { end_date: date } = dates;
       return {
         date,
       };
