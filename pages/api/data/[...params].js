@@ -16,8 +16,6 @@ export const config = {
   },
 };
 
-console.log('pimenta:', DATA_API_URL)
-
 export default (req, res) =>
   httpProxyMiddleware(req, res, {
     // You can use the `http-proxy` option
