@@ -32,7 +32,7 @@ const XAxisTickWithoutGap = ({ x, y, payload }) => {
   const lastPercentageFromData = 90;
 
   const Tick = () => (
-    <g transform={`translate(${x - offset},${y})`}>
+    <g transform={`translate(${x - offset + 6},${y})`}>
       <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#555555">
         {value}
       </text>
@@ -40,7 +40,7 @@ const XAxisTickWithoutGap = ({ x, y, payload }) => {
   );
 
   const ExtraTick = () => (
-    <g transform={`translate(${x + offset},${y})`}>
+    <g transform={`translate(${x + offset + 6},${y})`}>
       <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#555555">
         100
       </text>
