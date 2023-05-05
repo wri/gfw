@@ -36,7 +36,7 @@ export default {
   refetchKeys: ['landCategory'],
   dataType: 'density',
   // TO-DO: Add metadata URL
-  metaKey: 'widget_primary_forest',
+  metaKey: 'wri_trees_in_mosaic_landscapes',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
