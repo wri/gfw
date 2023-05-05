@@ -2,6 +2,7 @@ import { useState, useRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Portal } from 'react-portal';
 import OutsideClickHandler from 'react-outside-click-handler';
+import moment from 'moment';
 
 import ReactDatePicker, {
   registerLocale,
@@ -50,7 +51,7 @@ const Datepicker = ({ lang, selected, minDate, maxDate, ...props }) => {
     </Portal>
   );
 
-  const selectedUTC = new Date(
+  let selectedUTC = new Date(
     selected.getTime() + selected.getTimezoneOffset() * 60000
   );
   const minDateUTC = new Date(
@@ -59,6 +60,23 @@ const Datepicker = ({ lang, selected, minDate, maxDate, ...props }) => {
   const maxDateUTC = new Date(
     maxDate.getTime() + maxDate.getTimezoneOffset() * 60000
   );
+
+  const selectedMomentDate = moment(selectedUTC);
+  const minMomentDate = moment(minDateUTC);
+  const maxMomentDate = moment(maxDateUTC);
+
+  const diffFromStart = minMomentDate.diff(selectedMomentDate, 'days');
+  const diffFromEnd = maxMomentDate.diff(selectedMomentDate, 'days');
+
+  if (diffFromStart > 0) {
+    // selectedDate is before minDate, hence selectedDate must be minDate minimum
+    selectedUTC = minDateUTC;
+  }
+
+  if (diffFromEnd < 0) {
+    // selectedDate is after maxDate, hence selectedDate must be maxDate maximum
+    selectedUTC = maxDateUTC;
+  }
 
   return (
     <div className="c-datepicker notranslate" ref={inputEl}>

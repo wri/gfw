@@ -18,6 +18,8 @@ import { handleGfwParamsMeta } from 'utils/gfw-meta';
 import find from 'lodash/find';
 import sumBy from 'lodash/sumBy';
 
+import moment from 'moment';
+
 import { gte, lte, eq } from 'utils/sql';
 import OTF from 'services/otfv2';
 
@@ -30,6 +32,21 @@ import { fetchIntegratedAlerts } from 'services/analysis-cached';
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
+
+const setStartDateByAlertSystem = (alertSystem, params, selectedDate) => {
+  const possibleStartDate =
+    alertSystem === 'glad_l' ? '2021-01-01' : '2019-01-01';
+  const possibleStartDateMoment = moment(possibleStartDate);
+  const startDateMoment = params?.startDate
+    ? moment(params?.startDate)
+    : possibleStartDateMoment;
+  const diff = possibleStartDateMoment.diff(startDateMoment, 'days');
+
+  return {
+    startDate: diff > 0 ? possibleStartDate : selectedDate,
+    possibleStartDate,
+  };
+};
 
 export default {
   widget: 'integratedDeforestationAlerts',
@@ -158,12 +175,19 @@ export default {
     // extract relevant metadata
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
-    const startDate = params?.startDate || defaultStartDate;
+    const selectedDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
 
     const isAoi = params?.locationType === 'aoi';
     const status = params?.status || 'unsaved';
     const isAnalysis = shouldQueryPrecomputedTables(params);
+
+    // overriding start date (FLAG-593)
+    const { startDate, possibleStartDate } = setStartDateByAlertSystem(
+      alertSystem,
+      params,
+      selectedDate
+    );
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
@@ -190,7 +214,7 @@ export default {
               endDate,
             },
             options: {
-              minDate: '2015-01-01',
+              minDate: possibleStartDate,
               maxDate: defaultEndDate,
             },
           };
@@ -424,7 +448,7 @@ export default {
         endDate,
       },
       options: {
-        minDate: '2015-01-01',
+        minDate: startDate,
         maxDate: defaultEndDate,
       },
     };
@@ -440,9 +464,16 @@ export default {
     const { GLAD } = await handleGfwParamsMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
-    const startDate = params?.startDate || defaultStartDate;
+    const selectedDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+
+    // overriding start date (FLAG-593)
+    const { startDate } = setStartDateByAlertSystem(
+      alertSystem,
+      params,
+      selectedDate
+    );
 
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
