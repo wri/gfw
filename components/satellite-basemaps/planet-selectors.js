@@ -35,6 +35,8 @@ export const getPlanetBasemaps = createSelector(
           proc = 'cir';
         }
 
+        endDate.setMonth(endDate.getMonth() - 1);
+
         const period =
           monthDiff === 1
             ? `${format(startDate, 'MMM yyyy')}`
