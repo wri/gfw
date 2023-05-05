@@ -26,7 +26,7 @@ const defaultConfig = {
     {
       id: 'cumulative-burned-areas-1',
       text:
-        'Caution: Total burned area is calculated by adding together daily estimates of burned areas. Areas experiencing burns on multiple days during the time period will be counted multiple times. Data availability is limited by the data provider and data may be delayed by up to two months.',
+        'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
       visible: ['country', 'dashboard'],
     },
   ],
