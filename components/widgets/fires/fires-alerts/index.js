@@ -23,6 +23,14 @@ const defaultConfig = {
   title: 'Weekly Fire Alerts in {location}',
   large: true,
   categories: ['summary', 'fires'],
+  alerts: [
+    {
+      id: 'weekly-fire-alerts-1',
+      text: `To include all detected fire alerts, go to the widget settings icon and readjust the confidence level to all.`,
+      icon: 'warning',
+      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',
