@@ -1,9 +1,4 @@
-import {
-  tilesRequest,
-  cartoRequest,
-  rwRequest,
-  dataRequest,
-} from 'utils/request';
+import { tilesRequest, cartoRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -1905,18 +1900,25 @@ export const fetchGladAlertsSumOTF = (params) => {
   }));
 };
 
-// Latest Dates for Alerts
+// Fallback for Latest Dates Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
-  const url = 'glad-alerts/latest';
-  return rwRequest
+  const url = 'dataset/umd_glad_landsat_alerts/latest';
+
+  return dataRequest
     .get(url)
     .then((response) => {
-      const { date } = response.data.data[0].attributes;
+      const {
+        metadata: {
+          content_date_range: { end_date },
+        },
+      } = response.data;
 
       return {
-        attributes: { updatedAt: date },
+        attributes: {
+          updatedAt: end_date,
+        },
         id: null,
         type: 'glad-alerts',
       };

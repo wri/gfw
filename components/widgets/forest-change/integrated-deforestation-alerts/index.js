@@ -186,6 +186,7 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+
     const isAoi = params?.locationType === 'aoi';
     const status = params?.status || 'unsaved';
     const isAnalysis = shouldQueryPrecomputedTables(params);
