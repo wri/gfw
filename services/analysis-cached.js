@@ -1,9 +1,4 @@
-import {
-  tilesRequest,
-  cartoRequest,
-  rwRequest,
-  dataRequest,
-} from 'utils/request';
+import { tilesRequest, cartoRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -63,7 +58,6 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
-  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -818,7 +812,7 @@ export const getLossFiresOTF = (params) => {
   const geostoreId = geostore.id || adm0;
   const urlBase = '/dataset/umd_tree_cover_loss/v1.8/query/json?';
   const sql = `sql=${SQL_QUERIES.lossFiresOTF}`;
-  const url = `${urlBase + sql  }&geostore_id=${geostoreId}`;
+  const url = `${urlBase + sql}&geostore_id=${geostoreId}`;
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -1906,18 +1900,25 @@ export const fetchGladAlertsSumOTF = (params) => {
   }));
 };
 
-// Latest Dates for Alerts
+// Fallback for Latest Dates Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
-  const url = 'glad-alerts/latest';
-  return rwRequest
+  const url = 'dataset/umd_glad_landsat_alerts/latest';
+
+  return dataRequest
     .get(url)
     .then((response) => {
-      const { date } = response.data.data[0].attributes;
+      const {
+        metadata: {
+          content_date_range: { end_date },
+        },
+      } = response.data;
 
       return {
-        attributes: { updatedAt: date },
+        attributes: {
+          updatedAt: end_date,
+        },
         id: null,
         type: 'glad-alerts',
       };
@@ -2209,7 +2210,7 @@ export const fetchMODISLatest = () =>
     }));
 
 export const fetchVIIRSAlertsSumOTF = (params) => {
-  const { startDate, endDate, geostoreId } = params || {};
+  const { startDate, endDate, download, geostoreId } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -2218,6 +2219,13 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
       .replace('{endDate}', endDate)
       .replace('{geostoreId}', geostoreId)
   );
+
+  if (download) {
+    return {
+      name: `fire_alerts`,
+      url: getDownloadUrl(url),
+    };
+  }
 
   return dataRequest.get(url).then((response) => ({
     data: {
@@ -2232,13 +2240,13 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
 };
 
 export const fetchVIIRSAlertsSum = (params) => {
-  const { startDate, endDate, download, dataset } = params || {};
+  const { startDate, endDate, dataset } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
       dataset,
       datasetType: 'daily',
-    })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
+    })}${SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
@@ -2248,13 +2256,6 @@ export const fetchVIIRSAlertsSum = (params) => {
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
   );
-
-  if (download) {
-    return {
-      name: `daily_${dataset}_alerts__count`,
-      url: url.replace('query', 'download/csv'),
-    };
-  }
 
   return dataRequest.get(url).then((response) => ({
     data: {
