@@ -71,19 +71,9 @@ export const parseData = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationName, getWhitelist],
-  (title, name, whitelist) => {
-    let selectedTitle = title.default;
-    if (name === 'global') {
-      selectedTitle = title.global;
-    } else if (
-      whitelist &&
-      whitelist.length &&
-      whitelist.includes('plantations')
-    ) {
-      selectedTitle = title.withPlantations;
-    }
-    return selectedTitle;
+  [getTitle, getLocationName],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
   }
 );
 
