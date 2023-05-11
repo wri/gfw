@@ -19,8 +19,8 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'treeCoverLocated',
   title: {
-    global: 'Global location of forest',
-    initial: 'Location of forest in {location}',
+    global: 'Global location of tree cover',
+    initial: 'Location of tree cover in {location}',
   },
   categories: ['summary', 'land-cover'],
   types: ['global', 'country'],
@@ -136,7 +136,7 @@ export default {
       },
       {
         key: isTropicalTreeCover ? 'decile' : 'threshold',
-        label: 'tree cover',
+        label: 'Tree cover',
         type: 'mini-select',
         metaKey: 'widget_canopy_density',
       },
