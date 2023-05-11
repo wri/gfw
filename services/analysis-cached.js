@@ -993,7 +993,7 @@ export const getTropicalExtent = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory);
     return {
-      name: `tropical_treecover_extent_${extentYear}${
+      name: `tropicaltreecover_extent_${extentYear}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
