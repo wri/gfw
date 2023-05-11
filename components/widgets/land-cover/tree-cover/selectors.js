@@ -101,10 +101,9 @@ export const parseSentence = createSelector(
     if (!data || !sentences) return null;
     const {
       initial,
-      // hasPlantations,
-      // noPlantations,
-      // hasPlantationsInd,
-      // noPlantationsInd,
+      initialWithIndicator,
+      hasPlantations,
+      noPlantations,
       globalInitial,
       globalWithIndicator,
     } = sentences;
@@ -125,16 +124,12 @@ export const parseSentence = createSelector(
           ? `${format('.3r')(data.cover)}ha`
           : `t${format('.3s')(data.cover)}ha`,
       threshold: thresholdLabel || decileLabel,
+      tropical: settings.extentYear === 2020 ? 'tropical ' : ' ',
     };
-    let sentence = initial;
-    // let sentence = isoPlantations
-    //   ? initial + hasPlantations
-    //   : initial + noPlantations;
-    // if (indicator) {
-    //   sentence = isoPlantations
-    //     ? initial + hasPlantationsInd
-    //     : initial + noPlantationsInd;
-    // }
+    let sentence = indicator ? initialWithIndicator : initial;
+    sentence = isoPlantations
+      ? sentence + hasPlantations
+      : sentence + noPlantations;
     if (locationName === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
