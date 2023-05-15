@@ -48,9 +48,8 @@ export default {
   alerts: [
     {
       id: 'tree-cover-alert-1',
-      // TODO: Add link
       text:
-        'Datasets used here use different methodologies to measure tree cover as compared to the Tree cover 2000/2010 (UMD) data. Stay tuned for an explainer blog!',
+        'Datasets used here use different methodologies to measure tree cover as compared to the Tree cover 2000/2010 (UMD) data. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.”',
       visible: [
         'global',
         'country',
