@@ -6,12 +6,14 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_EXTENT_DATASET,
+  TROPICAL_TREE_COVER,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
   TREE_COVER,
+  TROPICAL_TREE_COVER_METERS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -96,8 +98,13 @@ export default {
       boundary: true,
     },
     {
-      dataset: FOREST_EXTENT_DATASET,
+      dataset: {
+        2020: TROPICAL_TREE_COVER,
+        2010: FOREST_EXTENT_DATASET,
+        2000: FOREST_EXTENT_DATASET,
+      },
       layers: {
+        2020: TROPICAL_TREE_COVER_METERS,
         2010: FOREST_EXTENT,
         2000: TREE_COVER,
       },
