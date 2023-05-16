@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
+import cx from 'classnames';
+
 import './styles.scss';
 
 class LayerStatement extends PureComponent {
@@ -25,13 +27,13 @@ class LayerStatement extends PureComponent {
         followCursor
         animateFill={false}
       >
-        <div className={`c-layer-statement ${className || ''}`}>
+        <div className={cx('c-layer-statement', className)}>
           {statementPlain}
           <span>{statementHighlight}</span>
         </div>
       </Tooltip>
     ) : (
-      <div>{statementPlain}</div>
+      <div className={cx('c-layer-statement', className)}>{statementPlain}</div>
     );
   }
 }

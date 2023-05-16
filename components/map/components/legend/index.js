@@ -90,13 +90,10 @@ class Legend extends PureComponent {
   onChangeLayer = (layerGroup, newLayerKey) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      datasets: activeDatasets.map((l) => {
-        const dataset = l;
-        if (l.dataset === layerGroup.dataset) {
-          dataset.layers = [newLayerKey];
-        }
-        return dataset;
-      }),
+      datasets: activeDatasets.map((l) => ({
+        ...l,
+        layers: l.dataset === layerGroup.dataset ? [newLayerKey] : l.layers,
+      })),
     });
     trackEvent({
       category: 'Map data',
