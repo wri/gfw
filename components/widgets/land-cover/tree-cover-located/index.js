@@ -34,7 +34,11 @@ export default {
   ],
   chartType: 'rankedList',
   colors: 'extent',
-  metaKey: 'widget_forest_location',
+  metaKey: {
+    2000: 'widget_tree_cover',
+    2010: 'widget_tree_cover',
+    2020: 'wri_trees_in_mosaic_landscapes',
+  },
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
