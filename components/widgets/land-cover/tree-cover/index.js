@@ -75,7 +75,11 @@ export default {
     hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
     noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
   },
-  metaKey: 'widget_tree_cover',
+  metaKey: {
+    2000: 'widget_tree_cover',
+    2010: 'widget_tree_cover',
+    2020: 'wri_trees_in_mosaic_landscapes',
+  },
   chartType: 'pieChart',
   large: false,
   colors: 'extent',

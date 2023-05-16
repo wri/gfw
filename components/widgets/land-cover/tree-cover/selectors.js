@@ -13,6 +13,7 @@ const getTitle = (state) => state.title;
 const getLocationName = (state) => state.locationLabel;
 const getThreshold = (state) => state.optionsSelected.threshold;
 const getDecile = (state) => state.optionsSelected.decile;
+const getMetaKey = (state) => state.metaKey;
 
 export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
@@ -138,8 +139,14 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseMetaKey = createSelector(
+  [getMetaKey, getSettings],
+  (metaKey, settings) => metaKey[settings.extentYear]
+);
+
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
   title: parseTitle,
+  metaKey: parseMetaKey,
 });
