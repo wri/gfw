@@ -25,6 +25,16 @@ const HomePage = ({ summary, uses, apps, news }) => {
   const [showSectionNews, setShowSectionNews] = useState(false);
   const summaryEl = useRef(null);
 
+  const failPlease = () => {
+    throw new Error('Hi! I have failed on purpose, find me in the JS Errors!');
+  };
+
+  try {
+    failPlease();
+  } catch (e) {
+    console.log(e);
+  }
+
   return (
     <div className="l-home-page">
       <Cover
