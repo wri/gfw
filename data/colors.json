@@ -148,6 +148,7 @@
     "outsidePlantations": "#3F07F5"
   },
   "density": {
+    "main": "#99be3f",
     "treeCoverDensity": "#99be3f"
   }
 }
