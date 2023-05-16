@@ -221,6 +221,10 @@ export const getWidgetDatasets = ({
             extentYear && !Array.isArray(d.layers)
               ? [d.layers[extentYear]]
               : d.layers,
+          dataset:
+            extentYear && typeof d.dataset !== 'string'
+              ? d.dataset[extentYear]
+              : d.dataset,
           ...(((startYear && endYear) || year) && {
             timelineParams: {
               startDate: `${startYear || year}-01-01`,
