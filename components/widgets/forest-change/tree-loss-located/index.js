@@ -148,7 +148,7 @@ export default {
         /* lossItemReference is for reference of startYear, endYear and range. 
           The perfect item should have all the years to set the variables */
         const lossItemReference = lossMappedData.findIndex(({ loss }) =>
-          loss.find(({ umd_tree_cover_loss__year: year }) => year >= 2021)
+          loss.find(({ umd_tree_cover_loss__year: year }) => year >= MAX_YEAR)
         );
 
         const { startYear, endYear, range } = getYearsRangeFromData(
