@@ -65,10 +65,10 @@ const parseSentence = createSelector(
     const areasOverTenPercent = data
       .filter((item) => item.decile > 0)
       .reduce((acc, curr) => acc + curr.area, 0);
-    const areasOverTenPercentByTotalArea = (
-      (areasOverTenPercent / totalArea) *
-      100
-    ).toFixed(1);
+
+    const areasOverTenPercentByTotalArea = totalArea
+      ? ((areasOverTenPercent / totalArea) * 100).toFixed(1)
+      : 0;
 
     const params = {
       indicator: indicator && indicator.label,
