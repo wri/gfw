@@ -4,12 +4,12 @@ import cx from 'classnames';
 
 import './styles.scss';
 
-import ipccForestIcon from 'assets/icons/widgets/ipcc/ipcc-forest.png';
-import ipccGrasslandIcon from 'assets/icons/widgets/ipcc/ipcc-grassland.png';
-import ipccSettlementIcon from 'assets/icons/widgets/ipcc/ipcc-settlement.png';
-import ipccWetlandIcon from 'assets/icons/widgets/ipcc/ipcc-wetland.png';
-import ipccCroplandIcon from 'assets/icons/widgets/ipcc/ipcc-cropland.png';
-import ipccOtherIcon from 'assets/icons/widgets/ipcc/ipcc-other.png';
+import ipccForestIcon from 'assets/icons/widgets/ipcc/ipcc-forest.svg';
+import ipccGrasslandIcon from 'assets/icons/widgets/ipcc/ipcc-grassland.svg';
+import ipccSettlementIcon from 'assets/icons/widgets/ipcc/ipcc-settlement.svg';
+import ipccWetlandIcon from 'assets/icons/widgets/ipcc/ipcc-wetland.svg';
+import ipccCroplandIcon from 'assets/icons/widgets/ipcc/ipcc-cropland.svg';
+import ipccOtherIcon from 'assets/icons/widgets/ipcc/ipcc-other.svg';
 
 const ICONS = {
   ipccForest: ipccForestIcon,
