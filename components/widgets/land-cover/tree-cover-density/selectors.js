@@ -36,7 +36,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
   xAxis: {
     tickFormatter: (value) => value,
     label: 'Tree cover (%)',
-    barGap: 0,
+    barGap: '1%',
   },
   yAxis: {
     yAxisId: 'wri_tropical_tree_cover_extent__ha',

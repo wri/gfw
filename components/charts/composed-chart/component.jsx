@@ -170,7 +170,8 @@ class CustomComposedChart extends PureComponent {
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
 
-    const { barGap = '10%' } = xAxis; // default is 10% according to recharts docs
+    const DEFAULT_BAR_GAP = '10%'; // default is 10% according to recharts docs
+    const { barGap = DEFAULT_BAR_GAP } = xAxis || {};
     const hasLabels = xAxis?.label || yAxis?.label;
 
     return (
@@ -185,7 +186,7 @@ class CustomComposedChart extends PureComponent {
       >
         <ResponsiveContainer width="99%">
           <ComposedChart
-            barCategoryGap={barGap}
+            barCategoryGap={barGap || DEFAULT_BAR_GAP}
             data={data}
             margin={
               margin || {
@@ -224,7 +225,7 @@ class CustomComposedChart extends PureComponent {
               axisLine={false}
               tickLine={false}
               tick={
-                barGap === 0 ? (
+                barGap !== DEFAULT_BAR_GAP ? (
                   <XAxisTickWithoutGap />
                 ) : (
                   {
@@ -236,8 +237,8 @@ class CustomComposedChart extends PureComponent {
               }
               interval="preserveStartEnd"
               {...xAxis}
-              {...(config.xAxis.label && {
-                label: <AxisLabel label={config.xAxis.label} direction="x" />,
+              {...(config?.xAxis?.label && {
+                label: <AxisLabel label={config?.xAxis?.label} direction="x" />,
               })}
             />
             {(!simple || simpleNeedsAxis) && (
