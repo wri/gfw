@@ -996,7 +996,7 @@ export const getTreeCoverByLandCoverClass = (params) => {
 };
 
 export const getTropicalExtent = (params) => {
-  const { forestType, download, extentYear } = params || {};
+  const { forestType, download, extentYear, landCategory, ifl } = params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1021,7 +1021,7 @@ export const getTropicalExtent = (params) => {
   );
 
   if (download) {
-    const indicator = getIndicator(forestType);
+    const indicator = getIndicator(forestType, landCategory, ifl);
     return {
       name: `tropical_treecover_extent_${extentYear}${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
