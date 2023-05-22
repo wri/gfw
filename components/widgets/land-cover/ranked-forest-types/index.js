@@ -84,7 +84,7 @@ export default {
         download: true,
       }),
       ...(params?.forestType
-        ? getTropicalExtent({ ...params, download: true })
+        ? [getTropicalExtent({ ...params, download: true })]
         : []),
     ];
   },
