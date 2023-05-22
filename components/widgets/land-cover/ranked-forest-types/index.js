@@ -73,7 +73,11 @@ export default {
   },
   getDataURL: (params) => {
     return [
-      getTropicalExtent({ ...params, forestType: null, download: true }),
+      getTreeCoverByLandCoverClass({
+        ...params,
+        forestType: null,
+        download: true,
+      }),
       getTropicalExtent({
         ...params,
         forestType: 'plantations',

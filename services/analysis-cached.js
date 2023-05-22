@@ -962,6 +962,8 @@ export const getTreeCoverGainByPlantationType = (params) => {
 };
 
 export const getTreeCoverByLandCoverClass = (params) => {
+  const { forestType, download, extentYear } = params || {};
+
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -979,6 +981,16 @@ export const getTreeCoverByLandCoverClass = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{decile}', params?.decile)
   );
+
+  if (download) {
+    const indicator = getIndicator(forestType);
+    return {
+      name: `tropical_treecover_extent_${extentYear}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
 
   return dataRequest.get(url).then((response) => response?.data);
 };
