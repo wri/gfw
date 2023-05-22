@@ -83,7 +83,7 @@ export default {
         forestType: 'plantations',
         download: true,
       }),
-      ...(params?.forestType
+      ...(params?.forestType && params.forestType !== 'plantations'
         ? [getTropicalExtent({ ...params, download: true })]
         : []),
     ];
