@@ -972,7 +972,7 @@ export const getTropicalExtent = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230224',
+    version: 'v20230502',
   });
 
   if (!requestUrl) {
