@@ -13,7 +13,7 @@ import {
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
   TREE_COVER,
-  TROPICAL_TREE_COVER_METERS,
+  TROPICAL_TREE_COVER_HECTARE,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -55,7 +55,7 @@ export default {
         2000: FOREST_EXTENT_DATASET,
       },
       layers: {
-        2020: TROPICAL_TREE_COVER_METERS,
+        2020: TROPICAL_TREE_COVER_HECTARE,
         2010: FOREST_EXTENT,
         2000: TREE_COVER,
       },
