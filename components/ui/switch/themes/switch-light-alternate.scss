@@ -1,0 +1,67 @@
+@import '~styles/settings.scss';
+
+.theme-switch-light-alternate {
+  .react-toggle {
+    width: 100%;
+
+    .react-toggle-thumb {
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-color: $green-gfw;
+      border-radius: 30px;
+      border: solid 1px $green-gfw;
+      box-shadow: none !important;
+    }
+
+    .react-toggle-track-check {
+      color: $white;
+      z-index: 10;
+    }
+
+    .react-toggle-track-x {
+      color: $slate;
+    }
+
+    &--checked {
+      .react-toggle-thumb {
+        left: 50%;
+      }
+
+      .react-toggle-track-check {
+        color: $slate;
+      }
+
+      .react-toggle-track-x {
+        color: $white;
+        z-index: 10;
+      }
+    }
+  }
+
+  .react-toggle-track {
+    width: 100%;
+    background-color: transparent !important;
+    border: solid 1px $green-gfw;
+
+    > div {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      font-size: 13px;
+      color: $green-gfw;
+    }
+
+    .react-toggle-track-check {
+      left: 0;
+      z-index: 10;
+    }
+
+    .react-toggle-track-x {
+      right: 0;
+    }
+  }
+}
