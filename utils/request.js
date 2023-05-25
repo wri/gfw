@@ -2,7 +2,6 @@ import { CancelToken, create } from 'axios';
 import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
-  GFW_TILES_API,
   CARTO_API,
   MAPBOX_API,
   RESOURCE_WATCH_API,
@@ -76,11 +75,6 @@ export const metadataRequest = create({
   ...(!isServer && {
     baseURL: PROXIES.METADATA_API,
   }),
-});
-
-export const tilesRequest = create({
-  ...defaultRequestConfig,
-  baseURL: GFW_TILES_API,
 });
 
 export const rwRequest = create({
