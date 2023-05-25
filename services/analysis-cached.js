@@ -2053,8 +2053,7 @@ export const getTreeCoverDensity = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    // TO-DO: Validate version before deploy
-    version: 'v20230127',
+    version: 'v20230502',
   });
 
   if (!requestUrl) {
