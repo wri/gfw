@@ -162,7 +162,7 @@ class AoICard extends PureComponent {
         subscribed: fireAlerts,
       },
       {
-        label: 'mothly summary',
+        label: 'monthly summary',
         subscribed: monthlySummary,
       },
     ].filter((s) => s.subscribed);

@@ -31,12 +31,10 @@ export default async function getGfwMeta() {
       },
       VIIRS: {
         ...viirsLatest,
-        ...(viirsLatest?.date && {
-          defaultStartDate: moment(viirsLatest?.date)
-            .add(-7, 'days')
-            .format('YYYY-MM-DD'),
-          defaultEndDate: viirsLatest?.date,
-        }),
+        defaultStartDate: moment(viirsLatest?.date)
+          .add(-7, 'days')
+          .format('YYYY-MM-DD'),
+        defaultEndDate: viirsLatest?.date,
       },
     },
   };
