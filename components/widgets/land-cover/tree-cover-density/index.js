@@ -60,7 +60,7 @@ export default {
   getData: (params = {}) => {
     const treeCoverDensity = getTreeCoverDensity(params);
 
-    return treeCoverDensity.then((data) => data);
+    return treeCoverDensity.then((data) => data).catch(() => null);
   },
   getWidgetProps,
 };

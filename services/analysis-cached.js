@@ -2057,7 +2057,7 @@ export const getTreeCoverDensity = (params) => {
   });
 
   if (!requestUrl) {
-    return new Promise(() => {});
+    return Promise.reject();
   }
 
   const url = encodeURI(
