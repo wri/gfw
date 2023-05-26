@@ -3090,6 +3090,31 @@
     qs "^6.5.2"
     react-native-url-polyfill "^1.1.2"
 
+"@worldresources/gfw-components@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@worldresources/gfw-components/-/gfw-components-2.0.0.tgz#719349bc6e24d7ffe12523b607f01da3c041c9f5"
+  integrity sha512-TwI0hvRuRRZU6RTYI9DKov6Z9zNn7vPd8B0PHO0NkBebtYtKf7ZMzwfSwmIzKqETWGSfW6L7mA8oip+w360Qbw==
+  dependencies:
+    "@artsy/fresnel" "^1.1.0"
+    "@tippyjs/react" "^4.0.2"
+    axios "^0.19.2"
+    classnames "^2.2.6"
+    date-fns "^2.13.0"
+    emotion-rgba "^0.0.8"
+    final-form "^4.19.1"
+    moment "^2.29.3"
+    polished "^3.6.2"
+    query-string "^6.12.0"
+    react-final-form "^6.4.0"
+    react-html-parser "^2.0.2"
+    react-modal "^3.11.2"
+    react-outside-click-handler "^1.3.0"
+    react-slick "^0.25.2"
+    react-tagsinput "^3.19.0"
+    react-toggle "^4.1.1"
+    reflexbox "^4.0.6"
+    reselect "^4.0.0"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -8272,31 +8297,6 @@ gettext-parser@^1.3.1:
   dependencies:
     encoding "^0.1.12"
     safe-buffer "^5.1.1"
-
-gfw-components@1.8.11:
-  version "1.8.11"
-  resolved "https://registry.yarnpkg.com/gfw-components/-/gfw-components-1.8.11.tgz#db5b3882bb286b62f12df0e19d1ffc1e9e086625"
-  integrity sha512-OU+o5wpBUTg0pKE2N4aghNOIUDXYz4umQ8R5m1XRRwa/KG3dOg5nvUS+mDql8nSHCoxXLzpFuy6L2Z1YnihhLw==
-  dependencies:
-    "@artsy/fresnel" "^1.1.0"
-    "@tippyjs/react" "^4.0.2"
-    axios "^0.19.2"
-    classnames "^2.2.6"
-    date-fns "^2.13.0"
-    emotion-rgba "^0.0.8"
-    final-form "^4.19.1"
-    moment "^2.29.3"
-    polished "^3.6.2"
-    query-string "^6.12.0"
-    react-final-form "^6.4.0"
-    react-html-parser "^2.0.2"
-    react-modal "^3.11.2"
-    react-outside-click-handler "^1.3.0"
-    react-slick "^0.25.2"
-    react-tagsinput "^3.19.0"
-    react-toggle "^4.1.1"
-    reflexbox "^4.0.6"
-    reselect "^4.0.0"
 
 gh-got@^6.0.0:
   version "6.0.0"
