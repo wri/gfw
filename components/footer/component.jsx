@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Footer as FooterComponent } from 'gfw-components';
+import { Footer as FooterComponent } from '@worldresources/gfw-components';
 
 import './styles.scss';
 

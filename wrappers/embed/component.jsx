@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useRouter } from 'next/router';
 
-import { Loader, MediaContextProvider, Button } from 'gfw-components';
+import {
+  Loader,
+  MediaContextProvider,
+  Button,
+} from '@worldresources/gfw-components';
 
 import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';

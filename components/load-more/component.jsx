@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Row, Column, Button, Loader } from 'gfw-components';
+import { Row, Column, Button, Loader } from '@worldresources/gfw-components';
 
 import './styles.scss';
 

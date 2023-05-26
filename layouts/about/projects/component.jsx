@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { Row, Column, Button, Desktop } from 'gfw-components';
+import { Row, Column, Button, Desktop } from '@worldresources/gfw-components';
 
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';

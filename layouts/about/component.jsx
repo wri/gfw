@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Button } from 'gfw-components';
+import { Button } from '@worldresources/gfw-components';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';

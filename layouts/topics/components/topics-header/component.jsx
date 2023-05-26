@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { Button, Row, Column } from 'gfw-components';
+import { Button, Row, Column } from '@worldresources/gfw-components';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';

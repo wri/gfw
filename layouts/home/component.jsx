@@ -5,7 +5,14 @@ import { InView } from 'react-intersection-observer';
 import Link from 'next/link';
 import cx from 'classnames';
 
-import { Desktop, Mobile, Carousel, Button, Row, Column } from 'gfw-components';
+import {
+  Desktop,
+  Mobile,
+  Carousel,
+  Button,
+  Row,
+  Column,
+} from '@worldresources/gfw-components';
 
 import Cover from 'components/cover';
 import Icon from 'components/ui/icon';
