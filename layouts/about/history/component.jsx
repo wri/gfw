@@ -1,4 +1,4 @@
-import { Carousel, Row, Column } from 'gfw-components';
+import { Carousel, Row, Column } from '@worldresources/gfw-components';
 
 import img1997 from 'layouts/about/history/images/1997.jpg';
 import img2002 from 'layouts/about/history/images/2002.jpg';

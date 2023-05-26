@@ -2,7 +2,13 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { trackEvent } from 'utils/analytics';
 
-import { Desktop, Mobile, Button, Row, Column } from 'gfw-components';
+import {
+  Desktop,
+  Mobile,
+  Button,
+  Row,
+  Column,
+} from '@worldresources/gfw-components';
 
 import Icon from 'components/ui/icon';
 

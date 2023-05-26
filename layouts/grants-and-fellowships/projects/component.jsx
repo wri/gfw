@@ -6,7 +6,7 @@ import omitBy from 'lodash/omitBy';
 import orderBy from 'lodash/orderBy';
 import debounce from 'lodash/debounce';
 
-import { Search, NoContent, Row, Column } from 'gfw-components';
+import { Search, NoContent, Row, Column } from '@worldresources/gfw-components';
 
 import Card from 'components/ui/card';
 import Dropdown from 'components/ui/dropdown';

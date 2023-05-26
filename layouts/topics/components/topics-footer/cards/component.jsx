@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { Carousel } from 'gfw-components';
+import { Carousel } from '@worldresources/gfw-components';
 import { trackEvent } from 'utils/analytics';
 
 import CountryDataProvider from 'providers/country-data-provider';

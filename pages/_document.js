@@ -3,7 +3,7 @@ import React from 'react';
 import Document, { Html, Main, NextScript, Head } from 'next/document';
 import sprite from 'svg-sprite-loader/runtime/sprite.build';
 
-import { mediaStyles } from 'gfw-components';
+import { mediaStyles } from '@worldresources/gfw-components';
 
 const isProduction = process.env.NEXT_PUBLIC_FEATURE_ENV === 'production';
 

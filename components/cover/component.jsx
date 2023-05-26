@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Row, Column } from 'gfw-components';
+import { Row, Column } from '@worldresources/gfw-components';
 
 import './styles.scss';
 
