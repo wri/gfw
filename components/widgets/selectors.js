@@ -510,6 +510,9 @@ export const getWidgets = createSelector(
         ...(mergedSettings.forestType === 'primary_forest' && {
           extentYear: 2000,
         }),
+        ...(w?.dataType === 'tropicalTreeCover' && {
+          extentYear: w?.settings?.extentYear || '2020',
+        }),
       };
 
       const dataOptions = rawData && rawData.options;
