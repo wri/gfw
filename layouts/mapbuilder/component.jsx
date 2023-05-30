@@ -4,7 +4,13 @@ import ReactHtmlParser from 'react-html-parser';
 
 import Link from 'next/link';
 
-import { Button, Row, Column, Mobile, Desktop } from 'gfw-components';
+import {
+  Button,
+  Row,
+  Column,
+  Mobile,
+  Desktop,
+} from '@worldresources/gfw-components';
 
 import Cover from 'components/cover';
 import Card from 'components/ui/card';

@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 import { trackEvent } from 'utils/analytics';
 
-import { Modal as ModalComponent } from 'gfw-components';
+import { Modal as ModalComponent } from '@worldresources/gfw-components';
 
 const Modal = ({ children, ...props }) => (
   <ModalComponent
     onAfterOpen={() =>
-      props.contentLabel && trackEvent({
+      props.contentLabel &&
+      trackEvent({
         category: 'Open modal',
         action: 'Click to open',
-        label: props.contentLabel
+        label: props.contentLabel,
       })}
     {...props}
   >

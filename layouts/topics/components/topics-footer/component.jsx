@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { Row, Column, Desktop, Mobile } from 'gfw-components';
+import { Row, Column, Desktop, Mobile } from '@worldresources/gfw-components';
 
 import Footer from 'components/footer';
 

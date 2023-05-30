@@ -6,7 +6,7 @@ import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
 import { trackEvent } from 'utils/analytics';
 
-import { Button, NoContent } from 'gfw-components';
+import { Button, NoContent } from '@worldresources/gfw-components';
 
 import Modal from 'components/modal';
 
@@ -45,8 +45,8 @@ class ModalMeta extends PureComponent {
       trackEvent({
         category: 'Open modal',
         action: 'Click to open',
-        label: `Metadata: ${metaData && metaData.title}`
-      })
+        label: `Metadata: ${metaData && metaData.title}`,
+      });
     }
   }
 

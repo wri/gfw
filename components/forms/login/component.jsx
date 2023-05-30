@@ -4,7 +4,7 @@ import { Form } from 'react-final-form';
 import cx from 'classnames';
 import ReactHtmlParser from 'react-html-parser';
 
-import { Row, Column, Button } from 'gfw-components';
+import { Row, Column, Button } from '@worldresources/gfw-components';
 
 import Input from 'components/forms/components/input';
 import Submit from 'components/forms/components/submit';

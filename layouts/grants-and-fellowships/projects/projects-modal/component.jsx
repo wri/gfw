@@ -1,7 +1,7 @@
 import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 
-import { Carousel } from 'gfw-components';
+import { Carousel } from '@worldresources/gfw-components';
 
 import Modal from 'components/modal';
 

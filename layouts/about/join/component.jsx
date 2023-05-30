@@ -1,6 +1,6 @@
 import { Link as AnchorLink } from 'react-scroll';
 
-import { Row, Column, Button } from 'gfw-components';
+import { Row, Column, Button } from '@worldresources/gfw-components';
 
 import './styles.scss';
 

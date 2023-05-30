@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Button, Column, Row } from 'gfw-components';
+import { Button, Column, Row } from '@worldresources/gfw-components';
 
 import TopicsText from './topics-text';
 import TopicsImage from './topics-image';
