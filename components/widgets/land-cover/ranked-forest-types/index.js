@@ -77,12 +77,14 @@ export default {
         download: true,
       }),
       // Adm1 and Adm2 have no data with plantations
-      ...(params?.forestType && !params?.adm1
-        ? getTreeCoverByLandCoverClass({
-            ...params,
-            forestType: 'plantations',
-            download: true,
-          })
+      ...(!params?.adm1
+        ? [
+            getTreeCoverByLandCoverClass({
+              ...params,
+              forestType: 'plantations',
+              download: true,
+            }),
+          ]
         : []),
       ...(params?.forestType && params.forestType !== 'plantations'
         ? [getTreeCoverByLandCoverClass({ ...params, download: true })]
