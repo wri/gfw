@@ -83,7 +83,7 @@ const SQL_QUERIES = {
   netChange:
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   treeCoverByLandCoverClass:
-    'SELECT umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
+    'SELECT {select_location}, umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
   tropicalExtent:
     'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
 };
@@ -977,6 +977,10 @@ export const getTreeCoverByLandCoverClass = (params) => {
 
   const url = encodeURI(
     `${requestUrl}${sqlQuery}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params }))
       .replace(/{location}/g, getLocationSelect(params))
       .replace('{decile}', params?.decile)
