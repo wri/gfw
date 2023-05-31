@@ -70,19 +70,19 @@ export default {
   settings: {
     forestType: 'ifl',
     threshold: 30,
-    extentYear: 2010,
-    ifl: 2016,
+    extentYear: 2000,
+    ifl: 2000,
   },
   refetchKeys: ['landCategory', 'threshold', 'extentYear'],
   sentences: {
     initial:
-      'As of 2016, {percentage} of {location} tree cover was <b>intact forest</b>.',
+      'As of 2000, {percentage} of {location} tree cover was <b>intact forest</b>.',
     withIndicator:
-      'As of 2016, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.',
+      'As of 2000, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.',
     noIntact:
-      'As of 2016, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
+      'As of 2000, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
     noIntactwithIndicator:
-      'As of 2016, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.',
+      'As of 2000, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.',
   },
   whitelists: {
     checkStatus: true,

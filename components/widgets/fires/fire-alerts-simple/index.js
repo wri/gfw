@@ -1,5 +1,7 @@
 import tropicalIsos from 'data/tropical-isos.json';
 
+import { handleGfwParamsMeta } from 'utils/gfw-meta';
+
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FIRES_VIIRS_DATASET,
@@ -40,213 +42,6 @@ export default {
   categories: ['summary', 'fires'],
   types: ['geostore', 'country', 'wdpa', 'aoi', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
-  adm0: [
-    'AFG',
-    'AGO',
-    'ALB',
-    'AND',
-    'ANT',
-    'ARE',
-    'ARG',
-    'ARM',
-    'AUS',
-    'AUT',
-    'AZE',
-    'BDI',
-    'BEL',
-    'BEN',
-    'BFA',
-    'BGD',
-    'BGR',
-    'BHR',
-    'BHS',
-    'BIH',
-    'BLM',
-    'BLR',
-    'BLZ',
-    'BOL',
-    'BRA',
-    'BRB',
-    'BRN',
-    'BTN',
-    'BWA',
-    'CAF',
-    'CAN',
-    'CHE',
-    'CHL',
-    'CHN',
-    'CIV',
-    'CMR',
-    'COD',
-    'COG',
-    'COL',
-    'COM',
-    'CPV',
-    'CRI',
-    'CUB',
-    'CYP',
-    'CZE',
-    'DEU',
-    'DJI',
-    'DMA',
-    'DNK',
-    'DOM',
-    'DZA',
-    'ECU',
-    'EGY',
-    'ERI',
-    'ESP',
-    'EST',
-    'ETH',
-    'FIN',
-    'FJI',
-    'FLK',
-    'FRA',
-    'FSM',
-    'GAB',
-    'GBR',
-    'GEO',
-    'GHA',
-    'GIB',
-    'GIN',
-    'GLP',
-    'GMB',
-    'GNB',
-    'GNQ',
-    'GRC',
-    'GRL',
-    'GTM',
-    'GUF',
-    'GUM',
-    'GUY',
-    'HND',
-    'HRV',
-    'HTI',
-    'HUN',
-    'IDN',
-    'IND',
-    'IRL',
-    'IRN',
-    'IRQ',
-    'ISR',
-    'ITA',
-    'JAM',
-    'JOR',
-    'JPN',
-    'KAZ',
-    'KEN',
-    'KGZ',
-    'KHM',
-    'KIR',
-    'KNA',
-    'KOR',
-    'KWT',
-    'LAO',
-    'LBN',
-    'LBR',
-    'LBY',
-    'LCA',
-    'LIE',
-    'LKA',
-    'LSO',
-    'LTU',
-    'LUX',
-    'LVA',
-    'MAR',
-    'MCO',
-    'MDA',
-    'MDG',
-    'MDV',
-    'MEX',
-    'MHL',
-    'MKD',
-    'MLI',
-    'MLT',
-    'MMR',
-    'MNE',
-    'MNG',
-    'MNP',
-    'MOZ',
-    'MRT',
-    'MSR',
-    'MTQ',
-    'MUS',
-    'MWI',
-    'MYS',
-    'NAM',
-    'NCL',
-    'NER',
-    'NGA',
-    'NIC',
-    'NLD',
-    'NOR',
-    'NPL',
-    'NZL',
-    'OMN',
-    'PAK',
-    'PAN',
-    'PCN',
-    'PER',
-    'PHL',
-    'PNG',
-    'POL',
-    'PRI',
-    'PRK',
-    'PRT',
-    'PRY',
-    'PSE',
-    'PYF',
-    'QAT',
-    'REU',
-    'ROU',
-    'RUS',
-    'RWA',
-    'SAU',
-    'SDN',
-    'SEN',
-    'SGP',
-    'SLB',
-    'SLE',
-    'SLV',
-    'SOM',
-    'SRB',
-    'SSD',
-    'STP',
-    'SUR',
-    'SVK',
-    'SVN',
-    'SWE',
-    'SWZ',
-    'SYR',
-    'TCD',
-    'TGO',
-    'THA',
-    'TJK',
-    'TKL',
-    'TKM',
-    'TLS',
-    'TON',
-    'TTO',
-    'TUN',
-    'TUR',
-    'TUV',
-    'TZA',
-    'UGA',
-    'UKR',
-    'URY',
-    'USA',
-    'UZB',
-    'VAT',
-    'VEN',
-    'VIR',
-    'VNM',
-    'VUT',
-    'WSM',
-    'YEM',
-    'ZAF',
-    'ZMB',
-    'ZWE',
-  ],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -315,12 +110,17 @@ export default {
   settings: {
     dataset: 'viirs',
   },
-  getData: (params) => {
-    const { VIIRS } = params.GFW_META.datasets;
+  getData: async (params) => {
+    const { VIIRS } = await handleGfwParamsMeta(params);
     const defaultStartDate = VIIRS?.defaultStartDate;
     const defaultEndDate = VIIRS?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
+
     if (shouldQueryPrecomputedTables(params)) {
       return fetchVIIRSAlertsSum({
         ...params,
@@ -345,7 +145,7 @@ export default {
         return data;
       });
     }
-    const geostoreId = params?.geostore?.hash;
+
     return fetchVIIRSAlertsSumOTF({
       ...params,
       startDate,
@@ -358,14 +158,24 @@ export default {
       },
     }).then((alertsResponse) => {
       const alerts = alertsResponse.data.data;
-      return {
-        alerts:
-          alerts &&
-          alerts.map((d) => ({
+      let data = {};
+      if (alerts && VIIRS) {
+        data = {
+          alerts: alerts.map((d) => ({
             ...d,
             alerts: d.count,
           })),
-      };
+          settings: {
+            startDate,
+            endDate,
+          },
+          options: {
+            minDate: '2000-01-01',
+            maxDate: defaultEndDate,
+          },
+        };
+      }
+      return data;
     });
   },
   maxDownloadSize: {
@@ -373,24 +183,22 @@ export default {
     key: 'alerts',
     subKey: 'alert__count',
   },
-  getDataURL: (params) => {
-    if (shouldQueryPrecomputedTables(params)) {
-      return [
-        fetchVIIRSAlertsSum({
-          ...params,
-          download: true,
-          // staticStatement: {
-          //   // append: true, If active, we will utalise the old location select logic with our statement
-          //   statement: 'latitude, longitude, alert__date',
-          //   table: 'nasa_viirs_fire_alerts',
-          // },
-        }),
-      ];
-    }
-    const geostoreId = params?.geostore?.hash;
+  getDataURL: async (params) => {
+    const { VIIRS } = await handleGfwParamsMeta(params);
+    const {
+      startDate = VIIRS?.defaultStartDate,
+      endDate = VIIRS?.defaultEndDate,
+    } = params;
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
+
     return [
       fetchVIIRSAlertsSumOTF({
         ...params,
+        startDate,
+        endDate,
         geostoreId,
         download: true,
         staticStatement: {

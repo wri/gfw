@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Search, Desktop, Row, Column, Button, Loader } from 'gfw-components';
+import {
+  Search,
+  Desktop,
+  Row,
+  Column,
+  Button,
+  Loader,
+} from '@worldresources/gfw-components';
 
 import { trackPage } from 'utils/analytics';
 import { getSearchQuery } from 'services/search';

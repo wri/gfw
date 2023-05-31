@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
+import Switch from 'components/ui/switch';
+import cx from 'classnames';
 
 import SentenceSelector from 'components/sentence-selector';
 
@@ -19,33 +21,46 @@ class LayerSelectorMenu extends PureComponent {
       className,
       sentence,
       groupSentence,
+      toggle,
     } = this.props;
-    const optionName = selected?.group || name;
+    const isToggleSelector = !!toggle;
+    const isGroupsSelector = groups && !!groups.length;
+
+    const selectorName = selected?.group || name;
+    const selectorOptions = isGroupsSelector
+      ? groups
+      : sortBy(options, 'position');
+    const selectorValue = isGroupsSelector
+      ? selectedGroup && selectedGroup.value
+      : selected;
+    const selectorSentence = isGroupsSelector ? groupSentence : sentence;
 
     return (
       <div className={`c-layer-selector-menu ${className || ''}`}>
-        {groups && !!groups.length && (
-          <div className="menu-wrapper -group">
-            <SentenceSelector
-              options={groups}
-              value={selectedGroup && selectedGroup.value}
+        <div
+          className={cx('menu-wrapper', {
+            '-group': isGroupsSelector,
+            '-toggle': isToggleSelector,
+          })}
+        >
+          {isToggleSelector ? (
+            <Switch
+              theme="theme-switch-light-alternate theme-switch-small"
+              value={selected?.value}
+              options={selectorOptions}
+              name={selectorName}
               onChange={(e) => onChange(layerGroup, e)}
-              name={optionName}
-              sentence={groupSentence}
             />
-          </div>
-        )}
-        {options && !!options.length && (
-          <div className="menu-wrapper">
+          ) : (
             <SentenceSelector
-              options={sortBy(options, 'position')}
-              value={selected}
+              options={selectorOptions}
+              value={selectorValue}
+              name={selectorName}
+              sentence={selectorSentence}
               onChange={(e) => onChange(layerGroup, e)}
-              name={optionName}
-              sentence={sentence}
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
   }
@@ -62,6 +77,7 @@ LayerSelectorMenu.propTypes = {
   sentence: PropTypes.string,
   groupSentence: PropTypes.string,
   selectedGroup: PropTypes.object,
+  toggle: PropTypes.bool,
 };
 
 export default LayerSelectorMenu;

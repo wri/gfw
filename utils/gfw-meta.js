@@ -10,6 +10,7 @@ export default async function getGfwMeta() {
   const gladLatest = await fetchGLADLatest();
   const integratedLatest = await fetchIntegratedLatest();
   const viirsLatest = await fetchVIIRSLatest();
+
   return {
     datasets: {
       INTEGRATED: {
@@ -23,44 +24,31 @@ export default async function getGfwMeta() {
       },
       GLAD: {
         ...gladLatest?.attributes,
-        ...(gladLatest?.attributes?.updatedAt && {
-          defaultStartDate: moment(gladLatest?.attributes.updatedAt)
-            .add(-7, 'days')
-            .format('YYYY-MM-DD'),
-          defaultEndDate: gladLatest?.attributes.updatedAt,
-        }),
+        defaultStartDate: moment(gladLatest.attributes.updatedAt)
+          .add(-7, 'days')
+          .format('YYYY-MM-DD'),
+        defaultEndDate: gladLatest.attributes.updatedAt,
       },
       VIIRS: {
         ...viirsLatest,
-        ...(viirsLatest?.date && {
-          defaultStartDate: moment(viirsLatest?.date)
-            .add(-7, 'days')
-            .format('YYYY-MM-DD'),
-          defaultEndDate: viirsLatest?.date,
-        }),
+        defaultStartDate: moment(viirsLatest?.date)
+          .add(-7, 'days')
+          .format('YYYY-MM-DD'),
+        defaultEndDate: viirsLatest?.date,
       },
     },
   };
 }
 
-export async function handleGladMeta(params) {
-  let GLAD;
-  if (isEmpty(params?.GFW_META?.datasets)) {
-    const meta = await getGfwMeta();
-    GLAD = meta?.datasets?.GLAD;
-  } else {
-    GLAD = params?.GFW_META?.datasets?.GLAD;
-  }
-  return GLAD;
-}
+export async function handleGfwParamsMeta(params) {
+  const isMetaParamsEmpty = isEmpty(params?.GFW_META?.datasets);
+  let gfwMetaParams;
 
-export async function handleIntegratedMeta(params) {
-  let INTEGRATED;
-  if (isEmpty(params?.GFW_META?.datasets)) {
-    const meta = await getGfwMeta();
-    INTEGRATED = meta?.datasets?.INTEGRATED;
-  } else {
-    INTEGRATED = params?.GFW_META?.datasets?.INTEGRATED;
+  if (isMetaParamsEmpty) {
+    gfwMetaParams = await getGfwMeta();
+
+    return gfwMetaParams?.datasets;
   }
-  return INTEGRATED;
+
+  return params.GFW_META.datasets;
 }

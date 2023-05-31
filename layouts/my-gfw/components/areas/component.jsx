@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { Row, Column, Loader } from 'gfw-components';
+import { Row, Column, Loader } from '@worldresources/gfw-components';
 
 import AreasTable from '../areas-table';
 import NoAreas from '../no-areas';

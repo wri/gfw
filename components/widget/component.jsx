@@ -24,7 +24,6 @@ class Widget extends PureComponent {
     colors: PropTypes.object,
     simple: PropTypes.bool,
     alerts: PropTypes.array,
-    caution: PropTypes.object,
     datasets: PropTypes.array,
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
@@ -83,7 +82,6 @@ class Widget extends PureComponent {
       title,
       widget,
       alerts,
-      caution,
       colors,
       type,
       active,
@@ -234,7 +232,6 @@ class Widget extends PureComponent {
             type={type}
             locationType={location?.locationType}
             alerts={alerts}
-            caution={caution}
             decorationMessage={
               chartDecorationConfig?.locations.includes(locationLabel)
                 ? chartDecorationConfig?.message

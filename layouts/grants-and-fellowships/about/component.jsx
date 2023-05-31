@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 /* eslint-disable react/no-danger */
-import { Row, Column } from 'gfw-components';
+import { Row, Column } from '@worldresources/gfw-components';
 
 import { htmlParser } from 'utils/html-parser';
 

@@ -4,7 +4,7 @@ import ReactFullpage from '@fullpage/react-fullpage';
 import { trackEvent } from 'utils/analytics';
 import upperFirst from 'lodash/upperFirst';
 
-import { Desktop, Mobile, Button } from 'gfw-components';
+import { Desktop, Mobile, Button } from '@worldresources/gfw-components';
 
 import ClimateModal from 'components/modals/climate';
 import FiresModal from 'components/modals/fires';

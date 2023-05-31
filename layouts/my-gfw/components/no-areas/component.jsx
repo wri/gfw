@@ -1,4 +1,4 @@
-import { Row, Column, Button } from 'gfw-components';
+import { Row, Column, Button } from '@worldresources/gfw-components';
 
 import Link from 'next/link';
 

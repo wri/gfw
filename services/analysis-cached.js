@@ -1,9 +1,4 @@
-import {
-  tilesRequest,
-  cartoRequest,
-  rwRequest,
-  dataRequest,
-} from 'utils/request';
+import { cartoRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -24,6 +19,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFires:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(umd_tree_cover_loss_from_fires__ha) AS "umd_tree_cover_loss_from_fires__ha" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  lossFiresOTF:
+    'SELECT umd_tree_cover_loss__year, sum(umd_tree_cover_loss__ha), sum(umd_tree_cover_loss_from_fires__ha) FROM data WHERE umd_tree_cover_loss__year >= 2001 AND umd_tree_cover_loss__year <= 2020 AND umd_tree_cover_density_2000__threshold >= 30 GROUP BY umd_tree_cover_loss__year',
   emissions:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsLossOTF:
@@ -61,7 +58,6 @@ const SQL_QUERIES = {
   firesWithin:
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
-  firesDailyDownload: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
   nonGlobalDatasets:
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
@@ -817,38 +813,10 @@ export const getLossFiresOTF = (params) => {
   const { forestType, landCategory, ifl, download, adm0, geostore } =
     params || {};
 
-  // const requestUrl = getRequestUrl({
-  //   ...params,
-  //   dataset: 'annual',
-  //   datasetType: 'change',
-  //   version: 'v20220608',
-  // });
-
-  // if (!requestUrl) {
-  //   return new Promise(() => {});
-  // }
-
-  const requestUrl = `/dataset/umd_tree_cover_loss/latest/query?sql=`;
-
-  let url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.lossFires}`
-      .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, cast: false })
-      )
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
-  );
-
-  url = `${url}&geostore_id=${adm0}`;
-
-  // TODO: IMPORTANT: this is very ugly, will do for now
-  url =
-    '/dataset/umd_tree_cover_loss/v1.8/query/json?sql=SELECT%20umd_tree_cover_loss__year,%20sum(umd_tree_cover_loss__ha),%20sum(umd_tree_cover_loss_from_fires__ha)%20FROM%20data%20WHERE%20umd_tree_cover_loss__year%20%3E%3D%202001%20AND%20umd_tree_cover_loss__year%20%3C%3D%202020%20AND%20umd_tree_cover_density_2000__threshold%20%3E%3D%2030%20GROUP%20BY%20umd_tree_cover_loss__year';
-  url =
-    adm0 === 'river_basins'
-      ? `${url}&geostore_id=${geostore.id}`
-      : `${url}&geostore_id=${adm0}`;
+  const geostoreId = geostore.id || adm0;
+  const urlBase = '/dataset/umd_tree_cover_loss/v1.8/query/json?';
+  const sql = `sql=${SQL_QUERIES.lossFiresOTF}`;
+  const url = `${urlBase + sql}&geostore_id=${geostoreId}`;
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -868,7 +836,6 @@ export const getLossFiresOTF = (params) => {
         year: d.umd_tree_cover_loss__year,
         areaLoss: d.umd_tree_cover_loss__ha,
         areaLossFires: d.umd_tree_cover_loss_from_fires__ha,
-        // emissions: d.gfw_gross_emissions_co2e_all_gases__Mg,
       })),
     },
   }));
@@ -2024,18 +1991,25 @@ export const fetchGladAlertsSumOTF = (params) => {
   }));
 };
 
-// Latest Dates for Alerts
+// Fallback for Latest Dates Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
 export const fetchGLADLatest = () => {
-  const url = 'glad-alerts/latest';
-  return rwRequest
+  const url = 'dataset/umd_glad_landsat_alerts/latest';
+
+  return dataRequest
     .get(url)
     .then((response) => {
-      const { date } = response.data.data[0].attributes;
+      const {
+        metadata: {
+          content_date_range: { end_date },
+        },
+      } = response.data;
 
       return {
-        attributes: { updatedAt: date },
+        attributes: {
+          updatedAt: end_date,
+        },
         id: null,
         type: 'glad-alerts',
       };
@@ -2298,13 +2272,17 @@ export const fetchFiresWithin = (params) => {
 };
 
 export const fetchVIIRSLatest = () =>
-  tilesRequest
-    .get('/nasa_viirs_fire_alerts/v20220726/max_alert__date')
+  dataRequest
+    .get('dataset/nasa_viirs_fire_alerts/latest/')
     .then(({ data }) => {
-      const date = data && data.data && data.data.max_date;
+      const {
+        metadata: {
+          content_date_range: { end_date },
+        },
+      } = data;
 
       return {
-        date,
+        date: end_date,
       };
     })
     .catch(() => ({
@@ -2317,7 +2295,7 @@ export const fetchMODISLatest = () =>
     .then(({ data }) => {
       const dates =
         data && data?.metadata && data?.metadata?.content_date_range;
-      const { max: date } = dates;
+      const { end_date: date } = dates;
       return {
         date,
       };
@@ -2327,7 +2305,7 @@ export const fetchMODISLatest = () =>
     }));
 
 export const fetchVIIRSAlertsSumOTF = (params) => {
-  const { startDate, endDate, geostoreId } = params || {};
+  const { startDate, endDate, download, geostoreId } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
@@ -2336,6 +2314,13 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
       .replace('{endDate}', endDate)
       .replace('{geostoreId}', geostoreId)
   );
+
+  if (download) {
+    return {
+      name: `fire_alerts`,
+      url: getDownloadUrl(url),
+    };
+  }
 
   return dataRequest.get(url).then((response) => ({
     data: {
@@ -2350,13 +2335,13 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
 };
 
 export const fetchVIIRSAlertsSum = (params) => {
-  const { startDate, endDate, download, dataset } = params || {};
+  const { startDate, endDate, dataset } = params || {};
   const url = encodeURI(
     `${getRequestUrl({
       ...params,
       dataset,
       datasetType: 'daily',
-    })}${download ? SQL_QUERIES.firesDailyDownload : SQL_QUERIES.firesDailySum}`
+    })}${SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
@@ -2366,13 +2351,6 @@ export const fetchVIIRSAlertsSum = (params) => {
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
   );
-
-  if (download) {
-    return {
-      name: `daily_${dataset}_alerts__count`,
-      url: url.replace('query', 'download/csv'),
-    };
-  }
 
   return dataRequest.get(url).then((response) => ({
     data: {

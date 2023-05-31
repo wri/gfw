@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 
-import { Desktop, Mobile } from 'gfw-components';
+import { Desktop, Mobile } from '@worldresources/gfw-components';
 
 import Legend from 'components/charts/components/chart-legend';
 

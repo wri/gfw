@@ -7,15 +7,15 @@ import warningIcon from 'assets/icons/warning-nofill.svg?sprite';
 
 import './styles.scss';
 
-class WidgetCaution extends PureComponent {
+class WidgetAlert extends PureComponent {
   static propTypes = {
-    caution: PropTypes.object,
+    alert: PropTypes.object,
     locationType: PropTypes.string,
   };
 
   isVisible() {
     const {
-      caution: { visible },
+      alert: { visible },
       locationType,
     } = this.props;
     if (visible && locationType && visible.includes(locationType)) return true;
@@ -24,38 +24,11 @@ class WidgetCaution extends PureComponent {
 
   render() {
     const {
-      caution: { text, link, linkText, isCaution, color },
+      alert: { text, color },
     } = this.props;
 
     const parsedColor = color && color.length ? color : '#97be32';
 
-    // TODO: To be removed when all old cautions are removed
-    if (this.isVisible() && linkText && isCaution) {
-      const htmlTextArray = text && linkText && text.split(`{${linkText}}`);
-      return (
-        <div className="c-widget-caution">
-          {htmlTextArray[0]}
-          <a
-            className="caution-link"
-            rel="noopener noreferrer"
-            href={link}
-            target="_blank"
-          >
-            {linkText}
-          </a>
-          {htmlTextArray[1]}
-        </div>
-      );
-    }
-    // TODO: To be removed when all old cautions are removed
-    if (this.isVisible() && isCaution) {
-      return (
-        <div
-          className="c-widget-caution"
-          dangerouslySetInnerHTML={{ __html: text }}
-        />
-      );
-    }
     if (this.isVisible()) {
       return (
         <div className="c-widget-alert" style={{ borderColor: parsedColor }}>
@@ -73,4 +46,4 @@ class WidgetCaution extends PureComponent {
   }
 }
 
-export default WidgetCaution;
+export default WidgetAlert;

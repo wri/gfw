@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
-import { Loader } from 'gfw-components';
+import { Loader } from '@worldresources/gfw-components';
 
 import { checkUserProfileFilled } from 'utils/user';
 

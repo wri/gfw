@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import isEqual from 'lodash/isEqual';
 
-import { Mobile, Desktop } from 'gfw-components';
+import { Mobile, Desktop } from '@worldresources/gfw-components';
 import { trackEvent } from 'utils/analytics';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';

@@ -35,14 +35,13 @@ export default {
   subcategories: ['forest-loss'],
   types: ['global', 'country', 'wdpa', 'aoi'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  caution: {
-    text:
-      'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. {Read more here}.',
-    visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-    linkText: 'Read more here',
-    link:
-      'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
-  },
+  alerts: [
+    {
+      text:
+        'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
+      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+    },
+  ],
   large: true,
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
@@ -104,10 +103,6 @@ export default {
       'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b>.',
     noLossWithIndicator:
       'From {startYear} to {endYear}, <b>{location} lost {loss} of humid primary forest</b> in {indicator}.',
-  },
-  whitelists: {
-    indicators: ['primary_forest'],
-    checkStatus: true,
   },
   settings: {
     threshold: 30,

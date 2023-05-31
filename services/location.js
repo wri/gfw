@@ -106,7 +106,7 @@ export const aoiConfig = {
         const geodescriber = response?.data?.data;
 
         return {
-          locationName: geodescriber.title || 'Area of Interest',
+          locationName: geodescriber?.title || 'Area of Interest',
           geodescriber,
           ...props,
         };

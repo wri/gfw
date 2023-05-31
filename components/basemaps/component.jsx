@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 
-import { Row, Column, Button, Mobile, Desktop } from 'gfw-components';
+import {
+  Row,
+  Column,
+  Button,
+  Mobile,
+  Desktop,
+} from '@worldresources/gfw-components';
 
 import Icon from 'components/ui/icon';
 

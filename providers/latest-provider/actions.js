@@ -32,9 +32,9 @@ export const getLatest = createThunkAction(
                 if (
                   metadata &&
                   metadata.content_date_range &&
-                  metadata.content_date_range.max
+                  metadata.content_date_range.end_date
                 ) {
-                  date = metadata.content_date_range.max;
+                  date = metadata.content_date_range.end_date;
                 } else if (metadata && metadata.content_date) {
                   date = metadata.content_date;
                 }

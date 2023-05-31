@@ -1,15 +1,19 @@
-import { Fragment, useState, useMemo, useEffect } from 'react';
+import { Fragment, useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import omitBy from 'lodash/omitBy';
 import orderBy from 'lodash/orderBy';
-import { Search, NoContent, Row, Column } from 'gfw-components';
+import debounce from 'lodash/debounce';
+
+import { Search, NoContent, Row, Column } from '@worldresources/gfw-components';
 
 import Card from 'components/ui/card';
 import Dropdown from 'components/ui/dropdown';
 import TagsList from 'components/tags-list';
+import LoadMoreButton from 'components/load-more';
 
+import { getSGFProjects } from 'services/projects';
 import ProjectsModal from './projects-modal';
 import { getProjectsProps } from './selectors';
 
@@ -19,32 +23,68 @@ const GrantsProjectsSection = ({
   projects: allProjects,
   projectsTexts,
   images,
-  countries: allCountries,
+  allCountries,
   country: countryQueryParam,
+  projectCountries,
+  totalPages,
 }) => {
+  const [projectsList, setProjects] = useState(allProjects);
   const [country, setCountry] = useState(countryQueryParam);
   const [category, setCategory] = useState('All');
-  const [search, setSearch] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setLoading] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [isLoadMoreVisible, setLoadMoreVisibility] = useState(true);
 
   const { query, replace, asPath } = useRouter();
-
   const { modal, projectId, country: countryIso } = query;
 
-  const allProjectsOrdered = useMemo(
-    () => orderBy(allProjects, ['year', 'title'], ['desc', 'asc']),
-    [allProjects]
+  const getMoreProjects = useCallback(async (params) => {
+    try {
+      const { sgfProjects } = await getSGFProjects({ params });
+      setLoading(false);
+
+      return sgfProjects;
+    } catch (error) {
+      setLoading(false);
+      setLoadMoreVisibility(false);
+
+      return [];
+    }
+  }, []);
+
+  const setMoreProjects = useCallback(
+    (projectItems, itemSelected, itemToCompare = null) => {
+      if (projectItems) {
+        setProjects(projectItems);
+
+        if (!itemSelected && !itemToCompare) {
+          setLoadMoreVisibility(true);
+          setPageNumber(1);
+        }
+
+        if (itemSelected !== '') {
+          setLoadMoreVisibility(false);
+        }
+      }
+    },
+    []
   );
 
-  const { projects, categories, countries } = useMemo(
+  const projectsListOrdered = useMemo(
+    () => orderBy(projectsList, ['year', 'title'], ['desc', 'asc']),
+    [projectsList]
+  );
+
+  const { projects, categories } = useMemo(
     () =>
       getProjectsProps({
-        projects: allProjectsOrdered,
+        projects: projectsListOrdered,
         images,
-        search,
         category,
         country,
       }),
-    [allProjects, images, search, category, country]
+    [projectsList, images, category, country]
   );
 
   const selectedProject = useMemo(
@@ -56,10 +96,10 @@ const GrantsProjectsSection = ({
     () => [
       { label: 'All', value: '' },
       ...allCountries
-        ?.filter(({ iso }) => countries.includes(iso))
+        .filter(({ iso }) => projectCountries.includes(iso))
         .map(({ iso, name }) => ({ label: name, value: iso })),
     ],
-    [allCountries, countries]
+    [allCountries, projectCountries]
   );
 
   const tags = useMemo(
@@ -72,13 +112,45 @@ const GrantsProjectsSection = ({
     [categories, category]
   );
 
-  useEffect(() => setCountry(countryIso), [countryIso, setCountry]);
+  useEffect(() => setCountry(countryIso), [countryIso]);
 
   useEffect(() => {
-    if (!categories.map(({ label }) => label).includes(category)) {
+    if (!categories?.map(({ label }) => label).includes(category)) {
       setCategory('All');
     }
   }, [country]);
+
+  useEffect(() => {
+    const { country: countrySelected } = query;
+    const isCountrySelectedOnFirstLoad = !!countrySelected;
+
+    if (isCountrySelectedOnFirstLoad) {
+      getMoreProjects({
+        search: countrySelected,
+        per_page: 100,
+      }).then((projectItems) => setMoreProjects(projectItems, countrySelected));
+    }
+  }, []);
+
+  const createParameters = (itemSelected, itemToCompare) => {
+    let params = { search: itemSelected, per_page: 100 };
+
+    if (itemSelected && itemToCompare) {
+      params = Object.assign(params, {
+        search: `${itemSelected} ${itemToCompare}`,
+      });
+    }
+
+    if (!itemSelected && !itemToCompare) {
+      params = Object.assign(params, { per_page: 21 });
+    }
+
+    if (!itemSelected && itemToCompare) {
+      params = Object.assign(params, { search: itemToCompare });
+    }
+
+    return params;
+  };
 
   const setQueryParams = (params) => {
     const queryParams = omitBy(
@@ -96,10 +168,6 @@ const GrantsProjectsSection = ({
     );
   };
 
-  const handleCountrySelected = (option) => {
-    setQueryParams({ country: option });
-  };
-
   const setModalOpen = (id) => {
     setQueryParams({ projectId: id });
   };
@@ -107,6 +175,46 @@ const GrantsProjectsSection = ({
   const handleModalClose = () => {
     setQueryParams({ projectId: null });
   };
+
+  const resetProjectsList = () => {
+    setProjects([]);
+    setLoading(true);
+  };
+
+  const handleCountrySelected = (option) => {
+    const params = createParameters(searchKeyword, option);
+
+    resetProjectsList();
+    setQueryParams({ country: option });
+    getMoreProjects(params).then((projectItems) =>
+      setMoreProjects(projectItems, option, searchKeyword)
+    );
+  };
+
+  const handleSearchOnChange = debounce((searchItem) => {
+    const params = createParameters(searchItem, country);
+
+    resetProjectsList();
+    setSearchKeyword(searchItem);
+    getMoreProjects(params).then((projectItems) => {
+      setMoreProjects(projectItems, searchItem, country);
+    });
+  }, 1000);
+
+  const handleOnLoadMore = debounce(() => {
+    getMoreProjects({ page: pageNumber + 1, per_page: 21 }).then(
+      (projectItems) => {
+        if (projectItems) {
+          setProjects([...projectsList, ...projectItems]);
+          setPageNumber(pageNumber + 1);
+        }
+
+        if (pageNumber === totalPages - 1) {
+          setLoadMoreVisibility(false);
+        }
+      }
+    );
+  }, 100);
 
   return (
     <Fragment>
@@ -139,7 +247,11 @@ const GrantsProjectsSection = ({
             <TagsList title="Categories" tags={tags} onClick={setCategory} />
           </Column>
           <Column width={[1, 1 / 2, 1 / 3]}>
-            <Search placeholder="Search" input={search} onChange={setSearch} />
+            <Search
+              placeholder="Search"
+              onChange={handleSearchOnChange}
+              onSubmit={handleSearchOnChange}
+            />
           </Column>
         </Row>
         <Row className="project-cards">
@@ -171,12 +283,17 @@ const GrantsProjectsSection = ({
             );
           })}
 
-          {!projects?.length && (
+          {!projects?.length && !isLoading && (
             <NoContent
               className="no-projects"
               message="No projects for that search"
             />
           )}
+          <LoadMoreButton
+            isLoading={isLoading}
+            isVisible={isLoadMoreVisible}
+            onClickHandle={handleOnLoadMore}
+          />
         </Row>
       </div>
       <ProjectsModal
@@ -190,10 +307,12 @@ const GrantsProjectsSection = ({
 
 GrantsProjectsSection.propTypes = {
   country: PropTypes.string,
-  countries: PropTypes.array,
+  projectCountries: PropTypes.array,
+  allCountries: PropTypes.array,
   projects: PropTypes.array,
   projectsTexts: PropTypes.object,
   images: PropTypes.object,
+  totalPages: PropTypes.number,
 };
 
 export default GrantsProjectsSection;

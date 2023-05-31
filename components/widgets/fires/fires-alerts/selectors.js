@@ -53,58 +53,66 @@ export const getData = createSelector(
       },
       {}
     );
+
     const dataYears = Object.keys(hasAlertsByYears).filter(
       (key) => hasAlertsByYears[key] === true
     );
-    const minYear = Math.min(...dataYears.map((el) => parseInt(el, 10)));
-    const startYear =
-      minYear === moment().year() ? moment().year() - 1 : minYear;
-
-    const years = [];
+    const years = dataYears.map((item) => parseInt(item, 10));
+    const formattedData = [];
     const latestWeek = moment(latest);
     const lastWeek = {
       isoWeek: latestWeek.isoWeek(),
       year: latestWeek.year(),
     };
 
-    for (let i = startYear; i <= lastWeek.year; i += 1) {
-      years.push(i);
-    }
+    years.forEach((year) => {
+      const yearDataByWeek = groupBy(groupedByYear[year], 'week');
+      const lastWeekOfYearIso = moment(`${year}-12-31`).isoWeek();
+      const yearLength = { [year]: moment(`${year}-12-31`).isoWeek() };
 
-    const yearLengths = {};
-    years.forEach((y) => {
-      if (lastWeek.year === y) {
-        yearLengths[y] = lastWeek.isoWeek;
-      } else if (moment(`${y}-12-31`).isoWeek() === 1) {
-        yearLengths[y] = moment(`${y}-12-31`).subtract(1, 'week').isoWeek();
-      } else {
-        yearLengths[y] = moment(`${y}-12-31`).isoWeek();
+      if (lastWeek.year === year) {
+        yearLength[year] = lastWeek.isoWeek;
+      }
+
+      if (lastWeekOfYearIso === 1) {
+        yearLength[year] = moment(`${year}-12-31`)
+          .subtract(1, 'week')
+          .isoWeek();
+      }
+
+      for (let i = 1; i <= yearLength[year]; i += 1) {
+        const yearDataLength = yearDataByWeek[i]
+          ? yearDataByWeek[i].length - 1
+          : 0;
+
+        let objectsReduced = { count: 0, week: i, year: parseInt(year, 10) };
+
+        for (let index = 0; index <= yearDataLength; index += 1) {
+          if (yearDataByWeek[i]) {
+            objectsReduced = Object.assign(objectsReduced, {
+              ...yearDataByWeek[i][index],
+              count: objectsReduced.count + yearDataByWeek[i][index].count,
+            });
+          }
+        }
+
+        formattedData.push(objectsReduced);
       }
     });
 
-    const zeroFilledData = [];
-
-    years.forEach((d) => {
-      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
-      for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(
-          yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(d, 10) }
-        );
-      }
-    });
-    return zeroFilledData;
+    return formattedData;
   }
 );
 
 export const getStats = createSelector([getData, getLatest], (data, latest) => {
   if (!data || isEmpty(data)) return null;
+
   return getStatsData(data, moment(latest).format('YYYY-MM-DD'));
 });
 
 export const getDates = createSelector([getStats], (data) => {
   if (!data || isEmpty(data)) return null;
+
   return getDatesData(data);
 });
 
@@ -132,8 +140,8 @@ export const getStartEndIndexes = createSelector(
       };
     }
 
+    const end = currentData.length - 1;
     const start = startIndex;
-    const end = endIndex || currentData.length - 1;
 
     return {
       startIndex: start,
@@ -153,6 +161,7 @@ export const parseData = createSelector(
     const yearDifference = maxminYear.max - startYear;
 
     const compareStartYear = compareYear - yearDifference;
+
     const weekFound = !!data.find(
       (el) => el.year === compareStartYear && el.week === startWeek
     );

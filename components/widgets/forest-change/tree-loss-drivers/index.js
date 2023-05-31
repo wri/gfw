@@ -28,20 +28,24 @@ export default {
   },
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
-  caution: {
-    default: {
-      text:
-        'The methods behind this data have changed over time. Be cautious comparing old and new, data especially before/after 2015. {Read more here}.',
-      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-      linkText: 'Read more here',
-      link:
-        'https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/',
-    },
-    indonesia: {
-      text:
-        'Indonesia’s rates of deforestation have slowed significantly in recent years (2016-2021), largely due to reductions in commodity-driven expansion. Much of the primary forest loss from commodity-driven deforestation in Indonesia according to the GFW data actually took place in areas legally classified as secondary forests, not primary forests. Please note that ground verification is recommended before any hard conclusions are drawn about the type of forest affected, or cause of loss, in specific patches of loss on the GFW map.',
-      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-    },
+  alerts: {
+    default: [
+      {
+        id: 'tree-loss-drivers-alert-1',
+        text: `The methods behind this data have changed over time. Be cautious comparing old and new, data especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
+        icon: 'warning',
+        visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+      },
+    ],
+    indonesia: [
+      {
+        id: 'tree-loss-drivers-indonesia-alert-1',
+        text: `Indonesia’s rates of deforestation have slowed significantly in recent years (2016-2021), largely due to reductions in commodity-driven expansion. Much of the primary forest loss from commodity-driven deforestation in Indonesia according to the GFW data actually took place in areas legally classified as secondary forests, not primary forests. Please note that ground verification is recommended before any hard conclusions are drawn about the type of forest affected, or cause of loss, in specific patches of loss on the GFW map.`,
+        icon: 'warning',
+        visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+        areaWhitelist: ['IDN'],
+      },
+    ],
   },
   settingsConfig: [
     {

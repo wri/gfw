@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { Row, Column, Loader } from 'gfw-components';
+import { Row, Column, Loader } from '@worldresources/gfw-components';
 
 import ShareModal from 'components/modals/share';
 import LoginForm from 'components/forms/login';

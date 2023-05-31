@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { Row, Column } from 'gfw-components';
+import { Row, Column } from '@worldresources/gfw-components';
 
 import NewsletterForm from 'components/forms/newsletter';
 
