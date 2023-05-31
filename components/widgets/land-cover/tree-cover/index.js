@@ -64,18 +64,34 @@ export default {
     },
   ],
   sentence: {
-    globalInitial:
-      'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
-    // TODO: with indicators (global and others)
-    globalWithIndicator:
-      'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
-    initial:
-      'As of {year}, {percentage} of {location} was {threshold} tree cover.',
-
-    hasPlantations: ' was natural forest cover.',
-    noPlantations: ' was tree cover.',
-    hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
-    noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
+    default: {
+      global: {
+        treeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+      },
+      region: {
+        treeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+      },
+    },
+    withIndicator: {
+      global: {
+        treeCover:
+          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tropical tree cover.',
+      },
+      region: {
+        treeCover:
+          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover',
+      },
+    },
   },
   metaKey: {
     2000: 'widget_tree_cover',

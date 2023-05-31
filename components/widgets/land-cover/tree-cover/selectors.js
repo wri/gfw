@@ -11,9 +11,8 @@ const getColors = (state) => state.colors;
 const getSentence = (state) => state.sentence;
 const getTitle = (state) => state.title;
 const getLocationName = (state) => state.locationLabel;
-const getThreshold = (state) => state.optionsSelected.threshold;
-const getDecile = (state) => state.optionsSelected.decile;
 const getMetaKey = (state) => state.metaKey;
+const getAdminLevel = (state) => state.adminLevel;
 
 export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
@@ -85,8 +84,7 @@ export const parseSentence = createSelector(
     getLocationName,
     getIndicator,
     getSentence,
-    getThreshold,
-    getDecile,
+    getAdminLevel,
     isoHasPlantations,
   ],
   (
@@ -95,45 +93,40 @@ export const parseSentence = createSelector(
     locationName,
     indicator,
     sentences,
-    threshold,
-    decile,
+    admLevel,
     isoPlantations
   ) => {
     if (!data || !sentences) return null;
-    const {
-      initial,
-      initialWithIndicator,
-      hasPlantations,
-      noPlantations,
-      globalInitial,
-      globalWithIndicator,
-    } = sentences;
+
+    const { extentYear, threshold, decile } = settings;
+
+    const isTropicalTreeCover = extentYear === 2020;
+    const withIndicator = !!indicator;
+    const decileThreshold = isTropicalTreeCover ? decile : threshold;
+    const sentenceKey = withIndicator ? 'withIndicator' : 'default';
+    const sentenceSubkey = admLevel === 'global' ? 'global' : 'region';
+
+    const sentence = isTropicalTreeCover
+      ? sentences[sentenceKey][sentenceSubkey].tropicalTreeCover
+      : sentences[sentenceKey][sentenceSubkey].treeCover;
+
     const { cover, plantations, totalCover, totalArea } = data;
     const top = isoPlantations ? cover - plantations : cover;
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
-    const thresholdLabel = threshold?.label;
-    const decileLabel = decile?.label;
+
+    const formattedPercentage =
+      percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%';
+
+    const thresholdLabel = `> ${decileThreshold}%`;
+
     const params = {
-      year: settings.extentYear,
+      year: extentYear,
       location: locationName,
-      indicator: indicator && indicator.label,
-      percentage:
-        percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%',
-      value:
-        data.cover < 1
-          ? `${format('.3r')(data.cover)}ha`
-          : `t${format('.3s')(data.cover)}ha`,
-      threshold: thresholdLabel || decileLabel,
-      tropical: settings.extentYear === 2020 ? 'tropical ' : ' ',
+      percentage: formattedPercentage,
+      indicator: indicator?.label,
+      threshold: thresholdLabel,
     };
-    let sentence = indicator ? initialWithIndicator : initial;
-    sentence = isoPlantations
-      ? sentence + hasPlantations
-      : sentence + noPlantations;
-    if (locationName === 'global') {
-      sentence = indicator ? globalWithIndicator : globalInitial;
-    }
 
     return { sentence, params };
   }
