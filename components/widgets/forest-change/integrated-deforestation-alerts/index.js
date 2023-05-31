@@ -13,10 +13,12 @@ import {
   INTEGRATED_ALERTS_GLAD,
 } from 'data/layers';
 
-import { handleIntegratedMeta } from 'utils/gfw-meta';
+import { handleGfwParamsMeta } from 'utils/gfw-meta';
 
 import find from 'lodash/find';
 import sumBy from 'lodash/sumBy';
+
+import moment from 'moment';
 
 import { gte, lte, eq } from 'utils/sql';
 import OTF from 'services/otfv2';
@@ -31,36 +33,25 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
+const setStartDateByAlertSystem = (alertSystem, params, selectedDate) => {
+  const possibleStartDate =
+    alertSystem === 'glad_l' ? '2021-01-01' : '2019-01-01';
+  const possibleStartDateMoment = moment(possibleStartDate);
+  const startDateMoment = params?.startDate
+    ? moment(params?.startDate)
+    : possibleStartDateMoment;
+  const diff = possibleStartDateMoment.diff(startDateMoment, 'days');
+
+  return {
+    startDate: diff > 0 ? possibleStartDate : selectedDate,
+    possibleStartDate,
+  };
+};
+
 export default {
   widget: 'integratedDeforestationAlerts',
   published: true,
   title: 'Integrated Deforestation alerts in {location}',
-  // caution: {
-  //   text:
-  //     'GLAD-L: alerts updates are paused after Dec 2021. Stay updated via {this discussion forum post}.',
-  //   visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  //   linkText: 'this discussion forum post',
-  //   link:
-  //     'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
-  // },
-  // caution: [
-  //   {
-  //     system: 'glad_l',
-  //     text:
-  //       'GLAD-L: alerts updates are paused after Dec 2021. Stay updated via {this discussion forum post}.',
-  //     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  //     linkText: 'this discussion forum post',
-  //     link: 'https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I',
-  //   },
-  //   {
-  //     system: 'radd',
-  //     text:
-  //       'RADD: due to satellite malfunction, there is a decrease in alert frequency currently. Stay updated via {this discussion forum post}.',
-  //     visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-  //     linkText: 'this discussion forum post',
-  //     link: 'https://groups.google.com/g/globalforestwatch/c/w8--wwyKpgE',
-  //   },
-  // ],
   sentence: {
     initial:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
@@ -99,7 +90,7 @@ export default {
   dataType: 'integration_alerts',
   categories: ['summary', 'forest-change'],
   subcategories: ['forest-loss'],
-  types: ['country', 'geostore', 'wdpa', 'aoi', 'use'], // Country level only for now (no 'geostore', 'wdpa', 'aoi', 'use')
+  types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {
@@ -178,17 +169,25 @@ export default {
   },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
-    const GLAD = await handleIntegratedMeta(params); // 'true' means getting last update from integrated alerts API in GFW.org
+    const { GLAD } = await handleGfwParamsMeta(params); // 'true' means getting last update from integrated alerts API in GFW.org
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     // extract relevant metadata
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
-    const startDate = params?.startDate || defaultStartDate;
+    const selectedDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
+
     const isAoi = params?.locationType === 'aoi';
     const status = params?.status || 'unsaved';
     const isAnalysis = shouldQueryPrecomputedTables(params);
+
+    // overriding start date (FLAG-593)
+    const { startDate, possibleStartDate } = setStartDateByAlertSystem(
+      alertSystem,
+      params,
+      selectedDate
+    );
 
     // Decide if we are in Dashboards, AoI or Map page i.e. do we do OTF or not?
     // if is otf && isAoi && geostore is not saved, we do default analysis and not otf
@@ -215,7 +214,7 @@ export default {
               endDate,
             },
             options: {
-              minDate: '2015-01-01',
+              minDate: possibleStartDate,
               maxDate: defaultEndDate,
             },
           };
@@ -224,7 +223,10 @@ export default {
       });
     }
 
-    const geostoreId = params?.geostore?.hash;
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
 
     // Stop if geostoreId undefined
     if (geostoreId.length <= 0) return null;
@@ -446,7 +448,7 @@ export default {
         endDate,
       },
       options: {
-        minDate: '2015-01-01',
+        minDate: startDate,
         maxDate: defaultEndDate,
       },
     };
@@ -458,14 +460,20 @@ export default {
     entryKey: 'alert__count',
   },
   // Downloads
-  getDataURL: (params) => {
-    const { GLAD } = params.GFW_META.datasets;
+  getDataURL: async (params) => {
+    const { GLAD } = await handleGfwParamsMeta(params);
     const defaultStartDate = GLAD?.defaultStartDate;
     const defaultEndDate = GLAD?.defaultEndDate;
-    const startDate = params?.startDate || defaultStartDate;
+    const selectedDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
-    const isWDPA = params?.locationType === 'wdpa';
+
+    // overriding start date (FLAG-593)
+    const { startDate } = setStartDateByAlertSystem(
+      alertSystem,
+      params,
+      selectedDate
+    );
 
     let table = 'gfw_integrated_alerts';
     if (alertSystem === 'glad_l') {
@@ -478,10 +486,10 @@ export default {
       table = 'wur_radd_alerts';
     }
 
-    let geostoreId = params?.geostore?.hash;
-    if (isWDPA) {
-      geostoreId = params?.geostore?.id;
-    }
+    const {
+      geostore: { id, hash },
+    } = params;
+    const geostoreId = hash || id;
 
     return [
       fetchIntegratedAlerts({

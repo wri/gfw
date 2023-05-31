@@ -79,7 +79,7 @@ export const getGeodescriberTitle = createSelector(
     getActiveArea,
   ],
   (geodescriber, wdpaLocation, location, adminTitle, activeArea) => {
-    if (isEmpty(geodescriber)) return {};
+    if (isEmpty(geodescriber)) return null;
 
     if (
       (location.type === 'aoi' || location.areaId) &&
@@ -141,7 +141,7 @@ export const getGeodescriberDescription = createSelector(
     getAdminDescription,
   ],
   (geodescriber, location, wdpaLocation, adminSentence) => {
-    if (isEmpty(geodescriber)) return {};
+    if (isEmpty(geodescriber)) return null;
     if (location.type === 'wdpa' && wdpaLocation) {
       const status = wdpaLocation?.status;
       const marine = wdpaLocation?.marine;

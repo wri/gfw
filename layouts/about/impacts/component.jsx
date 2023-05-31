@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Carousel, Row, Column, Desktop, Mobile } from 'gfw-components';
+import {
+  Carousel,
+  Row,
+  Column,
+  Desktop,
+  Mobile,
+} from '@worldresources/gfw-components';
 
 import Card from 'components/ui/card';
 

@@ -19,6 +19,14 @@ const defaultConfig = {
   large: true,
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
+  alerts: [
+    {
+      id: 'regions-most-burned-areas-1',
+      text:
+        'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
+      visible: ['global', 'country', 'adm0', 'adm1', 'dashboard'],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',

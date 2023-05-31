@@ -223,6 +223,16 @@ export const getServerSideProps = async ({ params, query, req }) => {
       },
     };
   } catch (err) {
+    if (err?.response?.status === 504) {
+      return {
+        props: {
+          error: 504,
+          title: 'Network error | Global Forest Watch',
+          errorTitle: 'There was an error retrieving the data',
+        },
+      };
+    }
+
     if (err?.response?.status === 401) {
       return {
         props: {

@@ -18,7 +18,7 @@ import {
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import SentenceSelector from 'components/sentence-selector';
-import WidgetCaution from 'components/widget/components/widget-caution';
+import WidgetAlert from 'components/widget/components/widget-alert';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
@@ -65,14 +65,13 @@ const MapLegend = ({
               isSelectorLayer,
               isMultiLayer,
               isMultiSelectorLayer,
+              isToggleLayer,
               selectorLayerConfig,
               color,
               metadata,
               id,
               layers,
-              statementConfig,
               alerts,
-              caution,
               caution_gladL,
               caution_radd,
               name,
@@ -110,6 +109,7 @@ const MapLegend = ({
               decodeParamsSelectorConfig,
               moreInfo,
               timelineParams,
+              statementConfig,
             } = activeLayer || {};
             return (
               <LegendListItem
@@ -167,6 +167,18 @@ const MapLegend = ({
                   />
                 )}
 
+                {isToggleLayer && selectorLayerConfig && (
+                  <LayerSelectorMenu
+                    className="layer-selector"
+                    layerGroup={lg}
+                    name={name}
+                    multi={isMultiSelectorLayer}
+                    toggle={isToggleLayer}
+                    onChange={onChangeLayer}
+                    {...selectorLayerConfig}
+                  />
+                )}
+
                 {activeLayer &&
                   paramsSelectorConfig &&
                   params &&
@@ -178,10 +190,11 @@ const MapLegend = ({
                         className="param-selector"
                         {...paramConfig}
                         value={params[paramConfig.key] || paramConfig.default}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           onChangeParam(activeLayer, {
                             [paramConfig.key]: e,
-                          })}
+                          });
+                        }}
                       />
                     ) : null
                   )}
@@ -198,14 +211,16 @@ const MapLegend = ({
                         value={
                           decodeParams[paramConfig.key] || paramConfig.default
                         }
-                        onChange={(e) =>
+                        onChange={(e) => {
                           onChangeDecodeParam(activeLayer, {
                             [paramConfig.key]: parseInt(e, 10),
-                          })}
+                          });
+                        }}
                       />
                     ) : null
                   )}
                 {(isSelectorLayer || isMultiSelectorLayer) &&
+                  !isToggleLayer &&
                   selectorLayerConfig && (
                     <LayerSelectorMenu
                       className="layer-selector"
@@ -236,28 +251,11 @@ const MapLegend = ({
                     {...statementConfig}
                   />
                 )}
-                {caution && (
-                  <WidgetCaution
-                    locationType="map"
-                    caution={{
-                      text: caution,
-                      isCaution: true,
-                      visible: [
-                        'wdpa',
-                        'country',
-                        'aoi',
-                        'geostore',
-                        'dashboard',
-                        'map',
-                      ],
-                    }}
-                  />
-                )}
                 {alerts &&
                   alerts.map((a) => (
-                    <WidgetCaution
+                    <WidgetAlert
                       locationType="map"
-                      caution={{
+                      alert={{
                         ...a,
                         visible: [
                           'wdpa',
@@ -271,9 +269,9 @@ const MapLegend = ({
                     />
                   ))}
                 {warningLabel && (
-                  <WidgetCaution
+                  <WidgetAlert
                     locationType="map"
-                    caution={{
+                    alert={{
                       text: warningLabel,
                       visible: [
                         'wdpa',

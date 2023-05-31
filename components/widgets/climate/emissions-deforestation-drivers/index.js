@@ -28,10 +28,6 @@ export default {
     'Forest-related greenhouse gas emissions in {location} by dominant driver',
   admins: ['adm0', 'adm1'],
   types: ['country', 'aoi', 'wdpa'],
-  // caution: {
-  //   visible: ['wdpa', 'country', 'aoi'],
-  //   text: '2020 data coming soon.',
-  // },
   settingsConfig: [
     {
       key: 'tscDriverGroup',

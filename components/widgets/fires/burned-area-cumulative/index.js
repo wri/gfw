@@ -22,6 +22,14 @@ const defaultConfig = {
   large: true,
   dataType: 'fires',
   categories: ['summary', 'fires'],
+  alerts: [
+    {
+      id: 'cumulative-burned-areas-1',
+      text:
+        'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
+      visible: ['country', 'dashboard'],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',

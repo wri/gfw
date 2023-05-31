@@ -631,7 +631,7 @@ export const getWidgets = createSelector(
         title: title
           ? translateText(title)?.replace(
               '{location}',
-              locationLabelFull || '...'
+              locationLabelFull || 'selected area'
             )
           : '',
       };

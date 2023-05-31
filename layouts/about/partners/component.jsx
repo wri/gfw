@@ -1,4 +1,4 @@
-import { Row, Column } from 'gfw-components';
+import { Row, Column } from '@worldresources/gfw-components';
 
 import { foundingPartners, partnersCollaborators, funders } from './partners';
 
