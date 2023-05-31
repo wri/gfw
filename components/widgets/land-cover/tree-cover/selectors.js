@@ -103,12 +103,14 @@ export const parseSentence = createSelector(
     const isTropicalTreeCover = extentYear === 2020;
     const withIndicator = !!indicator;
     const decileThreshold = isTropicalTreeCover ? decile : threshold;
+
     const sentenceKey = withIndicator ? 'withIndicator' : 'default';
     const sentenceSubkey = admLevel === 'global' ? 'global' : 'region';
-
-    const sentence = isTropicalTreeCover
-      ? sentences[sentenceKey][sentenceSubkey].tropicalTreeCover
-      : sentences[sentenceKey][sentenceSubkey].treeCover;
+    const sentenceTreeCoverType = isTropicalTreeCover
+      ? 'tropicalTreeCover'
+      : 'treeCover';
+    const sentence =
+      sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
 
     const { cover, plantations, totalCover, totalArea } = data;
     const top = isoPlantations ? cover - plantations : cover;
