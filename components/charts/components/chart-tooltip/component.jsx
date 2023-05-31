@@ -10,51 +10,51 @@ class ChartTooltip extends PureComponent {
     const values = payload && payload.length > 0 && payload[0].payload;
 
     const data = parseData ? parseData({ settings, values }) : settings;
+    const filteredData = data?.filter((item) => item !== undefined) || [];
 
     return (
       <div>
-        {data &&
-          data.length && (
+        {data && data.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
-            {data.map(d => {
-              const label = d.labelFormat
-                ? d.labelFormat(d.label || values[d.labelKey])
-                : d.label || values[d.labelKey];
+            {filteredData.map((item) => {
+              const label = item.labelFormat
+                ? item.labelFormat(item.label || values[item.labelKey])
+                : item.label || values[item.labelKey];
 
-              const value = d.unitFormat
-                ? d.unitFormat(values[d.key])
-                : values[d.key];
+              const value = item.unitFormat
+                ? item.unitFormat(values[item.key])
+                : values[item.key];
 
               return hideZeros && (!values || !value) ? null : (
                 <div
-                  key={d.key || d.labelKey || d.label}
-                  className={`data-line ${d.position || ''}`}
+                  key={item.key || item.labelKey || item.label}
+                  className={`data-line ${item.position || ''}`}
                 >
                   {label && (
                     <div className="data-label">
-                      {d.color &&
-                          (d.dashline ? (
-                            <div
-                              className="data-color data-dash"
-                              style={{ borderColor: d.color }}
-                            />
-                          ) : (
-                            <div
-                              className="data-color"
-                              style={{ backgroundColor: d.color }}
-                            />
-                          ))}
-                      {d.key === 'break' ? (
-                        <span className="break-label">{d.label}</span>
+                      {item.color &&
+                        (item.dashline ? (
+                          <div
+                            className="data-color data-dash"
+                            style={{ borderColor: item.color }}
+                          />
+                        ) : (
+                          <div
+                            className="data-color"
+                            style={{ backgroundColor: item.color }}
+                          />
+                        ))}
+                      {item.key === 'break' ? (
+                        <span className="break-label">{item.label}</span>
                       ) : (
                         <span>{label}</span>
                       )}
                     </div>
                   )}
                   <div className="notranslate">
-                    {value !== null && d.unit && d.unitFormat
-                      ? `${value}${d.unit}`
-                      : d.nullValue || value}
+                    {value !== null && item.unit && item.unitFormat
+                      ? `${value}${item.unit}`
+                      : item.nullValue || value}
                   </div>
                 </div>
               );
@@ -71,7 +71,7 @@ ChartTooltip.propTypes = {
   settings: PropTypes.array,
   parseData: PropTypes.func,
   hideZeros: PropTypes.bool,
-  simple: PropTypes.bool
+  simple: PropTypes.bool,
 };
 
 export default ChartTooltip;
