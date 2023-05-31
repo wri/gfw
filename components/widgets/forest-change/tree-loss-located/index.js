@@ -16,7 +16,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2020;
+const MAX_YEAR = 2021;
 const MIN_YEAR = 2001;
 
 export default {
@@ -116,36 +116,44 @@ export default {
   getData: (params) =>
     all([getExtentGrouped(params), getLossGrouped(params)]).then(
       spread((extentGrouped, lossGrouped) => {
+        const extentData = extentGrouped.data.data || [];
+        const lossData = lossGrouped.data.data || [];
+        const { adm0, adm1 } = params;
+
         let groupKey = 'iso';
-        if (params.adm0) groupKey = 'adm1';
-        if (params.adm1) groupKey = 'adm2';
 
-        const extentData = extentGrouped.data.data;
-        let extentMappedData = {};
-        if (extentData && extentData.length) {
-          extentMappedData = extentData.map((d) => ({
-            id: groupKey === 'iso' ? d[groupKey] : parseInt(d[groupKey], 10),
-            extent: d.extent || 0,
-            percentage: d.extent ? (d.extent / d.total) * 100 : 0,
-          }));
-        }
-        const lossData = lossGrouped.data.data;
-        let lossMappedData = [];
-        if (lossData && lossData.length) {
-          const lossByRegion = groupBy(lossData, groupKey);
-          lossMappedData = Object.keys(lossByRegion).map((d) => {
-            const regionLoss = lossByRegion[d];
-            return {
-              id: groupKey === 'iso' ? d : parseInt(d, 10),
-              loss: regionLoss,
-            };
-          });
-        }
+        if (adm0) groupKey = 'adm1';
+        if (adm1) groupKey = 'adm2';
 
-        const { startYear, endYear, range } =
-          (lossMappedData[0] &&
-            getYearsRangeFromData(lossMappedData[0].loss)) ||
-          {};
+        const extentMappedData = extentData.map((extentItem) => {
+          const { extent = 0, total = 0 } = extentItem;
+          const extentGroupKey = extentItem[groupKey];
+
+          return {
+            id:
+              groupKey === 'iso'
+                ? extentGroupKey
+                : parseInt(extentGroupKey, 10),
+            extent,
+            percentage: (extent / total) * 100,
+          };
+        });
+
+        const lossByRegion = groupBy(lossData, groupKey);
+        const lossMappedData = Object.keys(lossByRegion).map((regionIndex) => ({
+          id: groupKey === 'iso' ? regionIndex : parseInt(regionIndex, 10),
+          loss: lossByRegion[regionIndex],
+        }));
+
+        /* lossItemReference is for reference of startYear, endYear and range. 
+          The perfect item should have all the years to set the variables */
+        const lossItemReference = lossMappedData.findIndex(({ loss }) =>
+          loss.find(({ umd_tree_cover_loss__year: year }) => year >= MAX_YEAR)
+        );
+
+        const { startYear, endYear, range } = getYearsRangeFromData(
+          lossMappedData[lossItemReference].loss
+        );
 
         return {
           lossByRegion: lossMappedData,

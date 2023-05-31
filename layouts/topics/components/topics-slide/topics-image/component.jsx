@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 import { loadAnimation, setQuality, destroy } from 'lottie-web';
 import { trackEvent } from 'utils/analytics';
 
-import { Button } from 'gfw-components';
+import { Button } from '@worldresources/gfw-components';
 
 import Icon from 'components/ui/icon';
 import infoIcon from 'assets/icons/info.svg?sprite';
@@ -145,7 +145,7 @@ class TopicsImage extends PureComponent {
                               category: 'Topics pages',
                               action: 'Use bubble to advance to advance',
                               label: `${topic}: ${p.content}`,
-                            })
+                            });
                           }}
                         >
                           {p.btnText}

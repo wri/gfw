@@ -3,7 +3,7 @@ import Head from 'next/head';
 import cx from 'classnames';
 import useRouter from 'utils/router';
 
-import { CookiesBanner } from 'gfw-components';
+import { CookiesBanner } from '@worldresources/gfw-components';
 
 import { trackEvent, initAnalytics, trackPage } from 'utils/analytics';
 import { getAgreedCookies, setAgreedCookies } from 'utils/cookies';

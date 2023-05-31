@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Button, Mobile, Desktop } from 'gfw-components';
+import { Button, Mobile, Desktop } from '@worldresources/gfw-components';
 
 import Icon from 'components/ui/icon';
 

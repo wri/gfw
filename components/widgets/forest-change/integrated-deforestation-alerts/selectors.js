@@ -178,8 +178,16 @@ export const parseSentence = createSelector(
     } = options;
     const { label: system, value: systemSlug } = deforestationAlertsDataset;
 
-    const startDate = settings.startDate;
+    const selectedDate = settings.startDate;
     const endDate = settings.endDate;
+
+    const possibleStartDate =
+      alertSystem === 'glad_l' ? '2021-01-01' : '2019-01-01';
+    const possibleStartDateMoment = moment(possibleStartDate);
+    const startDateMoment = moment(selectedDate);
+    const diff = possibleStartDateMoment.diff(startDateMoment, 'days');
+    const startDate = diff > 0 ? possibleStartDate : selectedDate;
+
     const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
     const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
 

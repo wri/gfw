@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { Button } from 'gfw-components';
+import { Button } from '@worldresources/gfw-components';
 
 import { logout } from 'services/user';
 

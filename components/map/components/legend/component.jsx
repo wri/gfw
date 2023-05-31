@@ -65,12 +65,12 @@ const MapLegend = ({
               isSelectorLayer,
               isMultiLayer,
               isMultiSelectorLayer,
+              isToggleLayer,
               selectorLayerConfig,
               color,
               metadata,
               id,
               layers,
-              statementConfig,
               alerts,
               caution_gladL,
               caution_radd,
@@ -109,6 +109,7 @@ const MapLegend = ({
               decodeParamsSelectorConfig,
               moreInfo,
               timelineParams,
+              statementConfig,
             } = activeLayer || {};
             return (
               <LegendListItem
@@ -166,6 +167,18 @@ const MapLegend = ({
                   />
                 )}
 
+                {isToggleLayer && selectorLayerConfig && (
+                  <LayerSelectorMenu
+                    className="layer-selector"
+                    layerGroup={lg}
+                    name={name}
+                    multi={isMultiSelectorLayer}
+                    toggle={isToggleLayer}
+                    onChange={onChangeLayer}
+                    {...selectorLayerConfig}
+                  />
+                )}
+
                 {activeLayer &&
                   paramsSelectorConfig &&
                   params &&
@@ -177,10 +190,11 @@ const MapLegend = ({
                         className="param-selector"
                         {...paramConfig}
                         value={params[paramConfig.key] || paramConfig.default}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           onChangeParam(activeLayer, {
                             [paramConfig.key]: e,
-                          })}
+                          });
+                        }}
                       />
                     ) : null
                   )}
@@ -197,14 +211,16 @@ const MapLegend = ({
                         value={
                           decodeParams[paramConfig.key] || paramConfig.default
                         }
-                        onChange={(e) =>
+                        onChange={(e) => {
                           onChangeDecodeParam(activeLayer, {
                             [paramConfig.key]: parseInt(e, 10),
-                          })}
+                          });
+                        }}
                       />
                     ) : null
                   )}
                 {(isSelectorLayer || isMultiSelectorLayer) &&
+                  !isToggleLayer &&
                   selectorLayerConfig && (
                     <LayerSelectorMenu
                       className="layer-selector"

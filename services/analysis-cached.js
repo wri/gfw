@@ -1,4 +1,4 @@
-import { tilesRequest, cartoRequest, dataRequest } from 'utils/request';
+import { cartoRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
@@ -2181,13 +2181,17 @@ export const fetchFiresWithin = (params) => {
 };
 
 export const fetchVIIRSLatest = () =>
-  tilesRequest
-    .get('/nasa_viirs_fire_alerts/v20220726/max_alert__date')
+  dataRequest
+    .get('dataset/nasa_viirs_fire_alerts/latest/')
     .then(({ data }) => {
-      const date = data && data.data && data.data.max_date;
+      const {
+        metadata: {
+          content_date_range: { end_date },
+        },
+      } = data;
 
       return {
-        date,
+        date: end_date,
       };
     })
     .catch(() => ({

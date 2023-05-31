@@ -1,4 +1,4 @@
-import { Row, Column, ContactUsForm } from 'gfw-components';
+import { Row, Column, ContactUsForm } from '@worldresources/gfw-components';
 
 import './styles.scss';
 

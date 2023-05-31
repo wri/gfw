@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import useRouter from 'utils/router';
 
-import { Header as HeaderComponent } from 'gfw-components';
+import { Header as HeaderComponent } from '@worldresources/gfw-components';
 
 import NavLink from 'components/nav-link';
 
