@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 const AxisLabel = ({ label, direction }) => (
   <>
-    <foreignObject className={`${direction}-label-container`}>
+    <foreignObject
+      width="100%"
+      height="100%"
+      className={`${direction}-label-container`}
+    >
       <div className={`${direction}-label`}>
         <span>{label}</span>
       </div>
