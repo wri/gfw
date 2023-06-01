@@ -33,8 +33,11 @@ export default {
     },
   ],
   pendingKeys: [],
+  settings: {
+    extentYear: 2020,
+  },
   refetchKeys: ['landCategory'],
-  dataType: 'density',
+  dataType: 'tropicalTreeCover',
   // TO-DO: Add metadata URL
   metaKey: 'wri_trees_in_mosaic_landscapes',
   datasets: [
