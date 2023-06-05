@@ -448,7 +448,7 @@ export default {
         endDate,
       },
       options: {
-        minDate: startDate,
+        minDate: possibleStartDate,
         maxDate: defaultEndDate,
       },
     };
