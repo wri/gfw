@@ -14,8 +14,6 @@ import card3 from './assets/card-2.png';
 import card3Webp from './assets/card-2.webp';
 import card4 from './assets/card-3.png';
 import card4Webp from './assets/card-3.webp';
-import card5 from './assets/card-4.png';
-import card5Webp from './assets/card-4.webp';
 import card6 from './assets/card-5.png';
 import card6Webp from './assets/card-5.webp';
 
@@ -44,9 +42,9 @@ export default {
         'View, analyze, and subscribe to get weekly GLAD deforestation alerts that show where tree cover loss is happening right now in the tropics.',
       buttons: [
         {
-          text: 'VIEW GLAD ALERTS',
+          text: 'VIEW DEFORESTATION ALERTS',
           link:
-            '/map?analysis=eyJzaG93QW5hbHlzaXMiOnRydWUsImhpZGRlbiI6ZmFsc2V9&map=eyJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjotNC4yMTQ5NDMxNDEzOTA2MzksImxuZyI6LTUuODAwNzgxMjUwMDAwMDAxfSwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
+            '/map/?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImludGVncmF0ZWQtZGVmb3Jlc3RhdGlvbi1hbGVydHMtOGJpdCIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJpbnRlZ3JhdGVkLWRlZm9yZXN0YXRpb24tYWxlcnRzLThiaXQiXX0seyJkYXRhc2V0IjoicG9saXRpY2FsLWJvdW5kYXJpZXMiLCJsYXllcnMiOlsiZGlzcHV0ZWQtcG9saXRpY2FsLWJvdW5kYXJpZXMiLCJwb2xpdGljYWwtYm91bmRhcmllcyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&mapMenu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UifQ%3D%3D',
         },
       ],
       image: card2,
@@ -64,19 +62,6 @@ export default {
       ],
       image: card3,
       webPImage: card3Webp,
-    },
-    {
-      title: 'A suite of tools',
-      summary:
-        'Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.',
-      buttons: [
-        {
-          text: 'BROWSE OUR APPS',
-          extLink: 'https://www.globalforestwatch.org/help',
-        },
-      ],
-      image: card5,
-      webPImage: card5Webp,
     },
     {
       title: 'Read about the latest updates',
