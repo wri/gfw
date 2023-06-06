@@ -647,7 +647,6 @@ export const getCarbonFlux = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
-      version: 'v20220721',
     })}${carbonFlux}`
       .replace(
         /{select_location}/g,
