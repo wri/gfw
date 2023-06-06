@@ -1,18 +1,33 @@
+import httpProxyMiddleware from 'next-http-proxy-middleware';
+
 import { GFW_METADATA_API, GFW_STAGING_METADATA_API } from 'utils/apis';
-import axios from 'axios';
+import { PROXIES } from 'utils/proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const GFW_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 
-export default async (req, res) => {
-  try {
-    const path = req.query.params.join('/');
-    const url = `${GFW_METADATA_API_URL}/${path}/`;
-    const response = await axios.get(url);
-
-    return res.status(200).json(response.data);
-  } catch (error) {
-    return res.status(400).end(error.message);
-  }
+// https://github.com/stegano/next-http-proxy-middleware/issues/32#issuecomment-1031015850
+export const config = {
+  api: {
+    externalResolver: true,
+    bodyParser: false,
+  },
 };
+
+export default (req, res) =>
+  httpProxyMiddleware(req, res, {
+    // You can use the `http-proxy` option
+    target: GFW_METADATA_API_URL,
+    // In addition, you can use the `pathRewrite` option provided by `next-http-proxy`,
+    pathRewrite: {
+      [`^/?${PROXIES.METADATA_API}`]: '/',
+    },
+    headers: {
+      'x-api-key': GFW_API_KEY,
+    },
+    followRedirects: true,
+  }).catch(async (error) => {
+    res.end(error.message);
+  });
