@@ -1,7 +1,8 @@
 import { rwRequest, dataRequest } from 'utils/request';
 
 const environmentString = () => {
-  const env = process.env.NEXT_PUBLIC_FEATURE_ENV;
+  // const env = process.env.NEXT_PUBLIC_FEATURE_ENV;
+  const env = 'staging';
   let envString = 'production';
   if (env === 'preproduction') {
     envString += ',preproduction';
