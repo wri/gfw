@@ -29,56 +29,6 @@ export default class MyDocument extends Document {
 
   render() {
     const spriteContent = sprite.stringify();
-    const googleTagManagerScripts = {};
-
-    if (isProduction) {
-      googleTagManagerScripts.head = (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-NXXKNZL');
-          `,
-          }}
-        />
-      );
-      googleTagManagerScripts.body = (
-        <noscript
-          dangerouslySetInnerHTML={{
-            __html: `
-              <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXKNZL" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-            `,
-          }}
-        />
-      );
-    } else {
-      // staging scripts
-      googleTagManagerScripts.head = (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=RMMtBOJR3X5oL-iJf1UvnQ&gtm_preview=env-7&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-NXXKNZL');
-            `,
-          }}
-        />
-      );
-      googleTagManagerScripts.body = (
-        <noscript
-          dangerouslySetInnerHTML={{
-            __html: `
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXKNZL&gtm_auth=RMMtBOJR3X5oL-iJf1UvnQ&gtm_preview=env-7&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-            `,
-          }}
-        />
-      );
-    }
 
     return (
       <Html lang="en">
@@ -134,7 +84,19 @@ export default class MyDocument extends Document {
             rel="preconnect"
           />
           {/* Google Tag Manager */}
-          {googleTagManagerScripts.head}
+          {isProduction && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-NXXKNZL');
+              `,
+              }}
+            />
+          )}
           {/* End Google Tag Manager */}
 
           <script
@@ -146,7 +108,15 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           {/* Google Tag Manager (noscript) */}
-          {googleTagManagerScripts.body}
+          {isProduction && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: `
+                  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXKNZL" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                `,
+              }}
+            />
+          )}
           {/* End Google Tag Manager (noscript) */}
           <div dangerouslySetInnerHTML={{ __html: spriteContent }} />
           <main id="maincontent">
