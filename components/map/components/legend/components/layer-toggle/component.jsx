@@ -102,6 +102,7 @@ class LayerToggle extends PureComponent {
                     })}
                 >
                   <Button
+                    id={`btn-${metadata}`}
                     className={`theme-button-tiny theme-button-grey-filled square info-button ${
                       !metadata ? '-help' : ''
                     }`}
