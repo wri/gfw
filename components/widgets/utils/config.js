@@ -352,7 +352,7 @@ export const getStatements = ({
   datasets,
 }) => {
   if (!settings) return null;
-  const { extentYear, threshold } = settings;
+  const { extentYear, threshold, decile } = settings;
 
   const isTropicalTreeCover = extentYear === 2020;
 
@@ -399,6 +399,13 @@ export const getStatements = ({
       ? translateText('>{threshold}% tree canopy{carbonGain}', {
           threshold,
           carbonGain,
+        })
+      : null,
+    // If we're using deciles, it means we're dealing with a TTC widget/dataset, which requires
+    // a slightly different footer.
+    decile
+      ? translateText('>{decile}% threshold', {
+          decile,
         })
       : null,
     dataType === 'loss'
