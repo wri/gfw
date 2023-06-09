@@ -87,9 +87,9 @@ export default {
       },
       region: {
         treeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover',
+          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover',
+          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover.',
       },
     },
   },
