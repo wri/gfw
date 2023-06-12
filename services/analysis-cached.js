@@ -80,6 +80,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   tropicalExtent:
     'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} HAVING SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) > 0 ORDER BY {location}',
+  treeCoverByLandCoverClass:
+    'SELECT {select_location}, umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
 };
 
 const ALLOWED_PARAMS = {
@@ -1027,6 +1029,44 @@ export const getTropicalExtentGrouped = (params) => {
       })),
     },
   }));
+};
+
+export const getTreeCoverByLandCoverClass = (params) => {
+  const { forestType, download, extentYear, landCategory, ifl } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230502',
+  });
+
+  if (!requestUrl) return new Promise(() => {});
+
+  const sqlQuery = SQL_QUERIES.treeCoverByLandCoverClass;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params }))
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{decile}', params?.decile)
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `tropical_treecover_extent_${extentYear}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => response?.data);
 };
 
 // Net Change

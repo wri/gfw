@@ -39,4 +39,8 @@
       font-size: rem(12px);
     }
   }
+
+  &.-auto-height {
+    min-height: rem(80px);
+  }
 }
