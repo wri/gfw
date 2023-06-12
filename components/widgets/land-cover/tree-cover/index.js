@@ -6,7 +6,7 @@ import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_EXTENT_DATASET,
-  TROPICAL_TREE_COVER,
+  TROPICAL_TREE_COVER_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
@@ -115,7 +115,7 @@ export default {
     },
     {
       dataset: {
-        2020: TROPICAL_TREE_COVER,
+        2020: TROPICAL_TREE_COVER_DATASET,
         2010: FOREST_EXTENT_DATASET,
         2000: FOREST_EXTENT_DATASET,
       },
