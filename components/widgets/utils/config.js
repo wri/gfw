@@ -362,7 +362,7 @@ export const getStatements = ({
   if (!settings) return null;
   const { extentYear, threshold, decile } = settings;
 
-  const tropicalLabel = extentYear === 2020 ? ' tropical' : '';
+  const isTropicalTreeCover = extentYear === 2020;
 
   const indicators = getNonGlobalIndicator({
     forestType,
@@ -391,10 +391,14 @@ export const getStatements = ({
     dataType !== 'lossPrimary' &&
     dataType !== 'fires' &&
     dataType !== 'gain'
-      ? translateText('{extentYear}{tropicalLabel} tree cover extent', {
-          extentYear,
-          tropicalLabel,
-        })
+      ? translateText(
+          `{extentYear}${
+            isTropicalTreeCover ? ' tropical' : ''
+          } tree cover extent`,
+          {
+            extentYear,
+          }
+        )
       : null,
     dataType === 'lossPrimary'
       ? translateText('2001 primary forest extent remaining')
