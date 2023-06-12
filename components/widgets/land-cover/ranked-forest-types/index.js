@@ -24,8 +24,8 @@ export default {
   categories: ['land-cover'],
   large: true,
   autoHeight: true,
+  dataType: 'tropicalExtent',
   colors: 'extent',
-  dataType: 'tropicalTreeCover',
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [

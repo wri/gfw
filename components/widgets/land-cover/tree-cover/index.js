@@ -102,7 +102,6 @@ export default {
   large: false,
   colors: 'extent',
   source: 'gadm',
-  dataType: 'extent',
   categories: ['summary', 'land-cover'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
@@ -137,9 +136,14 @@ export default {
     decile: 30,
     extentYear: 2000,
   },
+  getDataType: (params) => {
+    const { extentYear } = params;
+    const isTropicalTreeCover = extentYear === 2020;
+    return isTropicalTreeCover ? 'tropicalExtent' : 'extent';
+  },
   getSettingsConfig: (params) => {
     const { extentYear } = params;
-    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const isTropicalTreeCover = extentYear === 2020;
 
     return [
       {

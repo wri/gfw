@@ -36,6 +36,7 @@ export default {
   ],
   chartType: 'rankedList',
   colors: 'extent',
+
   metaKey: {
     2000: 'widget_tree_cover',
     2010: 'widget_tree_cover',
@@ -113,9 +114,14 @@ export default {
       indicator: 'current',
     },
   ],
+  getDataType: (params) => {
+    const { extentYear } = params;
+    const isTropicalTreeCover = extentYear === 2020;
+    return isTropicalTreeCover ? 'tropicalExtent' : 'extent';
+  },
   getSettingsConfig: (params) => {
     const { extentYear } = params;
-    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const isTropicalTreeCover = extentYear === 2020;
 
     return [
       {
