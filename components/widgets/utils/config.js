@@ -401,8 +401,6 @@ export const getStatements = ({
           carbonGain,
         })
       : null,
-    // If we're using deciles, it means we're dealing with a TTC widget/dataset, which requires
-    // a slightly different footer.
     decile
       ? translateText('>{decile}% threshold', {
           decile,
