@@ -448,7 +448,8 @@ export const getWidgets = createSelector(
         widget,
         pendingKeys,
         title: titleTemplate,
-        dataType,
+        dataType: dataTypeStr,
+        getDataType: dataTypeFn,
         settingsConfig: settingsConfigArr,
         getSettingsConfig: settingsConfigFn,
       } = w || {};
@@ -511,10 +512,9 @@ export const getWidgets = createSelector(
         ...(mergedSettings.forestType === 'primary_forest' && {
           extentYear: 2000,
         }),
-        ...(w?.dataType === 'tropicalTreeCover' && {
-          extentYear: w?.settings?.extentYear || '2020',
-        }),
       };
+
+      const dataType = dataTypeStr || (dataTypeFn && dataTypeFn(settings));
 
       const dataOptions = rawData && rawData.options;
 
@@ -558,6 +558,7 @@ export const getWidgets = createSelector(
 
       const settingConfigFilteredKeys =
         settingsConfigFiltered?.map((scf) => scf.key) || [];
+
       const allowedFooterSettings = Object.keys(settings)
         .filter((key) => settingConfigFilteredKeys.includes(key))
         .reduce((obj, key) => {
@@ -572,7 +573,10 @@ export const getWidgets = createSelector(
         type,
         dataType,
         active,
-        settings: allowedFooterSettings,
+        settings: {
+          ...defaultSettings,
+          ...allowedFooterSettings,
+        },
       });
 
       const props = {

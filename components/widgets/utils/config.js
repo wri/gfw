@@ -362,8 +362,6 @@ export const getStatements = ({
   if (!settings) return null;
   const { extentYear, threshold, decile } = settings;
 
-  const isTropicalTreeCover = extentYear === 2020;
-
   const indicators = getNonGlobalIndicator({
     forestType,
     landCategory,
@@ -384,32 +382,32 @@ export const getStatements = ({
           )
         : null
     );
+
   // @TODO: Extract this to widget configs
   const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
     extentYear &&
     dataType !== 'lossPrimary' &&
     dataType !== 'fires' &&
-    dataType !== 'gain'
-      ? translateText(
-          `{extentYear}${
-            isTropicalTreeCover ? ' tropical' : ''
-          } tree cover extent`,
-          {
-            extentYear,
-          }
-        )
+    dataType !== 'gain' &&
+    dataType !== 'tropicalExtent'
+      ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    dataType === 'tropicalExtent'
+      ? translateText('{extentYear} tropical tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'
       ? translateText('2001 primary forest extent remaining')
       : null,
-    (threshold || threshold === 0) && dataType !== 'gain'
+    (threshold || threshold === 0) &&
+    dataType !== 'gain' &&
+    dataType !== 'tropicalExtent'
       ? translateText('>{threshold}% tree canopy{carbonGain}', {
           threshold,
           carbonGain,
         })
       : null,
-    decile
+    (decile || decile === 0) && dataType === 'tropicalExtent'
       ? translateText('>{decile}% threshold', {
           decile,
         })
