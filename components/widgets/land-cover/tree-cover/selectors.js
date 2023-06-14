@@ -118,9 +118,9 @@ export const parseSentence = createSelector(
     const percentCover = (100 * top) / bottom;
 
     const formattedPercentage =
-      percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%';
+      percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%';
 
-    const thresholdLabel = `> ${decileThreshold}%`;
+    const thresholdLabel = `>${decileThreshold}%`;
 
     const params = {
       year: extentYear,
