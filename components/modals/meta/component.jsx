@@ -65,8 +65,8 @@ class ModalMeta extends PureComponent {
     const parsedCitation =
       citation &&
       citation
-        .replace('[selected area name]', locationName)
-        .replace('[date]', moment().format('DD/MM/YYYY'));
+        .replaceAll('[selected area name]', locationName)
+        .replaceAll('[date]', moment().format('DD/MM/YYYY'));
 
     return (
       <div className="modal-meta-content">
