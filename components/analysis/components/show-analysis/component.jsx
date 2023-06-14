@@ -196,6 +196,7 @@ class ShowAnalysis extends PureComponent {
                 Select a
                 {' '}
                 <button
+                  className="notranslate"
                   onClick={() =>
                     setMenuSettings({
                       menuSection: 'datasets',
