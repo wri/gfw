@@ -470,7 +470,6 @@ export const getTreeCoverLossByDriverType = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20220721',
   });
 
   if (!requestUrl) return new Promise(() => {});
