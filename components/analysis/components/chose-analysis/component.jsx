@@ -127,8 +127,8 @@ class ChoseAnalysis extends PureComponent {
             trackEvent({
               category: 'Map analysis',
               action: 'User drawn shape',
-              label: drawing ? 'Cancel' : 'Start'
-            })
+              label: drawing ? 'Cancel' : 'Start',
+            });
           }}
         >
           {drawing ? 'CANCEL' : 'START DRAWING'}
@@ -156,7 +156,7 @@ class ChoseAnalysis extends PureComponent {
           {!hasError && !uploading && (
             <Fragment>
               <p>
-                Drag and drop your
+                Drag and drop your 
                 {' '}
                 <b>polygon data file</b>
                 {' '}
@@ -256,7 +256,8 @@ class ChoseAnalysis extends PureComponent {
             </div>
           </button>
         </div>
-        {showDraw ? this.renderPolygonOption() : this.renderLayerOption()}
+        {showDraw && this.renderPolygonOption()}
+        {!showDraw && this.renderLayerOption()}
       </div>
     );
   }

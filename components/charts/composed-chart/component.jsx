@@ -20,10 +20,47 @@ import {
   Legend,
 } from 'recharts';
 
+import AxisLabel from './axis-label';
+
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
 import './styles.scss';
+
+const XAxisTickWithoutGap = ({ x, y, payload }) => {
+  const { offset, value } = payload;
+  const lastPercentageFromData = 90;
+
+  const Tick = () => (
+    <g transform={`translate(${x - offset + 6},${y})`}>
+      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#555555">
+        {value}
+      </text>
+    </g>
+  );
+
+  const ExtraTick = () => (
+    <g transform={`translate(${x + offset + 6},${y})`}>
+      <text fontSize="12px" x={0} y={0} dy={16} textAnchor="end" fill="#555555">
+        100
+      </text>
+    </g>
+  );
+
+  /* 
+    Work around to show number 100 in the end of X axis in the chart
+    since the Data API sends 0 to 90 percent in the tree cover density widget
+    0 stands to 0%-9% as 90 stands to 90%-99%
+  */
+  return value === lastPercentageFromData ? (
+    <>
+      <Tick />
+      <ExtraTick />
+    </>
+  ) : (
+    <Tick />
+  );
+};
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
@@ -133,13 +170,23 @@ class CustomComposedChart extends PureComponent {
     if (isVertical) rightMargin = 10;
     if (!simple && rightYAxis) rightMargin = 70;
 
+    const DEFAULT_BAR_GAP = '10%'; // default is 10% according to recharts docs
+    const { barGap = DEFAULT_BAR_GAP } = xAxis || {};
+    const hasLabels = xAxis?.label || yAxis?.label;
+
     return (
       <div
-        className={cx('c-composed-chart', className)}
-        style={{ height: simple ? 110 : height || 250 }}
+        className={cx('c-composed-chart', className, {
+          'overflow-x-visible': hasLabels,
+        })}
+        style={{
+          height: simple ? 110 : height || 250,
+          paddingLeft: config?.yAxis?.label ? '3%' : '0',
+        }}
       >
         <ResponsiveContainer width="99%">
           <ComposedChart
+            barCategoryGap={barGap || DEFAULT_BAR_GAP}
             data={data}
             margin={
               margin || {
@@ -177,13 +224,22 @@ class CustomComposedChart extends PureComponent {
               dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
-              tick={{
-                dy: 8,
-                fontSize: simple ? '10px' : '12px',
-                fill: '#555555',
-              }}
+              tick={
+                barGap !== DEFAULT_BAR_GAP ? (
+                  <XAxisTickWithoutGap />
+                ) : (
+                  {
+                    dy: 8,
+                    fontSize: simple ? '10px' : '12px',
+                    fill: '#555555',
+                  }
+                )
+              }
               interval="preserveStartEnd"
               {...xAxis}
+              {...(config?.xAxis?.label && {
+                label: <AxisLabel label={config?.xAxis?.label} direction="x" />,
+              })}
             />
             {(!simple || simpleNeedsAxis) && (
               <YAxis
@@ -212,6 +268,9 @@ class CustomComposedChart extends PureComponent {
                   />
                 )}
                 {...yAxis}
+                {...(config?.yAxis?.label && {
+                  label: <AxisLabel label={config.yAxis.label} direction="y" />,
+                })}
               />
             )}
             {(!simple || simpleNeedsAxis) && rightYAxis && (
@@ -344,6 +403,12 @@ CustomComposedChart.propTypes = {
   handleBrush: PropTypes.func,
   backgroundColor: PropTypes.string,
   barBackground: PropTypes.object,
+};
+
+XAxisTickWithoutGap.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  payload: PropTypes.object,
 };
 
 export default CustomComposedChart;

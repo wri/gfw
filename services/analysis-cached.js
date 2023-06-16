@@ -82,6 +82,8 @@ const SQL_QUERIES = {
     'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} HAVING SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) > 0 ORDER BY {location}',
   treeCoverByLandCoverClass:
     'SELECT {select_location}, umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
+  treeCoverDensity:
+    'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
 };
 
 const ALLOWED_PARAMS = {
@@ -2043,6 +2045,32 @@ export const fetchGladAlertsSumOTF = (params) => {
       })),
     },
   }));
+};
+
+// summed extent for single location
+export const getTreeCoverDensity = (params) => {
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230502',
+  });
+
+  if (!requestUrl) {
+    return Promise.reject();
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.treeCoverDensity}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  return dataRequest.get(url).then((response) => response.data);
 };
 
 // Fallback for Latest Dates Alerts
