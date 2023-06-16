@@ -37,8 +37,7 @@ export default {
     extentYear: 2020,
   },
   refetchKeys: ['landCategory'],
-  dataType: 'tropicalTreeCover',
-  // TO-DO: Add metadata URL
+  dataType: 'tropicalExtent',
   metaKey: 'wri_trees_in_mosaic_landscapes',
   datasets: [
     {
