@@ -24,6 +24,22 @@ export default {
     global: 'Global location of tree cover',
     initial: 'Location of tree cover in {location}',
   },
+  alerts: [
+    {
+      id: 'tree-cover-located-alert-1',
+      text:
+        'Datasets used here use different methodologies to measure tree cover as compared to the Tree cover 2000/2010 (UMD) data. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
+      visible: [
+        'global',
+        'country',
+        'geostore',
+        'aoi',
+        'wdpa',
+        'use',
+        'dashboard',
+      ],
+    },
+  ],
   categories: ['summary', 'land-cover'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
