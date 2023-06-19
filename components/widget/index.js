@@ -29,6 +29,7 @@ class WidgetContainer extends Component {
     dashboard: PropTypes.bool,
     embed: PropTypes.bool,
     analysis: PropTypes.bool,
+    isPlaceholderImage: PropTypes.func,
   };
 
   static defaultProps = {
@@ -107,6 +108,20 @@ class WidgetContainer extends Component {
     }
     return { downloadDisabled: false, maxSize };
   }
+
+  /**
+   * Not all widgets have the `isPlaceholderImage` property, actually only tree-loss-primary for now, hence the check for the undefined
+   * @returns {boolean} - weather it should display a static image or the widget itself
+   */
+  handleIsPlaceholderImage = (category) => {
+    const { location, isPlaceholderImage } = this.props;
+
+    if (isPlaceholderImage !== undefined) {
+      return isPlaceholderImage({ location, category });
+    }
+
+    return false;
+  };
 
   handleGetWidgetData = () => {
     const { location, settings } = this.props;
@@ -191,6 +206,7 @@ class WidgetContainer extends Component {
       ...this.state,
       handleRefetchData: this.handleRefetchData,
       handleDataHighlight: this.handleDataHighlight,
+      handleIsPlaceholderImage: this.handleIsPlaceholderImage,
     };
 
     return (
