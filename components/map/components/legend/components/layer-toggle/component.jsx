@@ -89,6 +89,7 @@ class LayerToggle extends PureComponent {
               {((!metadata && description) ||
                 (metadata && typeof metadata === 'string')) && (
                 <Tooltip
+                  className={`metadata-${layer}`}
                   theme="tip"
                   arrow
                   hideOnClick

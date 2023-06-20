@@ -44,7 +44,7 @@ export default class MyDocument extends Document {
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=n0mLnIj300jJ14M3bNz2sQ&gtm_preview=env-26&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=RMMtBOJR3X5oL-iJf1UvnQ&gtm_preview=env-7&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-NXXKNZL');
             `,
           }}
@@ -54,7 +54,7 @@ export default class MyDocument extends Document {
         <noscript
           dangerouslySetInnerHTML={{
             __html: `
-              <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXKNZL&gtm_auth=n0mLnIj300jJ14M3bNz2sQ&gtm_preview=env-26&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXXKNZL&gtm_auth=RMMtBOJR3X5oL-iJf1UvnQ&gtm_preview=env-7&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
             `,
           }}
         />

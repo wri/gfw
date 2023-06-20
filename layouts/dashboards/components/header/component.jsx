@@ -71,6 +71,7 @@ class Header extends PureComponent {
             value: 'open_map',
             component: (
               <Button
+                id="button-open-map"
                 theme={btnTheme}
                 link={activeArea && `/map/aoi/${activeArea.id}`}
               >
@@ -84,6 +85,7 @@ class Header extends PureComponent {
               value: 'edit_area',
               component: (
                 <Button
+                  id="button-edit-area"
                   theme={btnTheme}
                   tooltip={{
                     text: `Edit ${
@@ -104,6 +106,7 @@ class Header extends PureComponent {
             value: 'save_area',
             component: (
               <Button
+                id="button-save-area"
                 theme={btnTheme}
                 tooltip={{
                   text: 'Save as an area of interest',
@@ -120,6 +123,7 @@ class Header extends PureComponent {
             value: 'download_data',
             component: (
               <Button
+                id="button-download-data"
                 theme={btnTheme}
                 extLink={downloadLink}
                 tooltip={{
@@ -259,6 +263,7 @@ class Header extends PureComponent {
             )}
             <div className="share-buttons">
               <Button
+                id="button-share-dashboard"
                 className="area-share theme-button-small"
                 onClick={() => {
                   if (activeArea && !activeArea.userArea) {
