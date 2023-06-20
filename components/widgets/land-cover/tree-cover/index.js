@@ -164,9 +164,7 @@ export default {
         key: isTropicalTreeCover ? 'decile' : 'threshold',
         label: 'Tree cover',
         type: 'mini-select',
-        metaKey: isTropicalTreeCover
-          ? 'wri_trees_in_mosaic_landscapes'
-          : 'widget_canopy_density',
+        metaKey: 'widget_canopy_density',
       },
     ];
   },
