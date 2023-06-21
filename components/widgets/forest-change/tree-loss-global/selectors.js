@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sum from 'lodash/sum';
 import groupBy from 'lodash/groupBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import moment from 'moment';
 import { getColorPalette } from 'components/widgets/utils/colors';
 import sortBy from 'lodash/sortBy';
@@ -119,8 +119,8 @@ export const parseConfig = createSelector(
       {
         key: 'total',
         label: 'Total',
-        unit: 'ha',
-        unitFormat: (value) => format('.3s')(value),
+        unitFormat: (value) =>
+          formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       },
     ];
     tooltip = tooltip.concat(
@@ -131,9 +131,9 @@ export const parseConfig = createSelector(
           return {
             key,
             label: (country && country.label) || 'Other',
-            unit: 'ha',
             color: colorRange[i],
-            unitFormat: (value) => format('.3s')(value),
+            unitFormat: (value) =>
+              formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
           };
         })
         .reverse()
@@ -182,12 +182,13 @@ export const parseSentence = createSelector(
       location: locationLabel === 'global' ? 'globally' : locationLabel,
       startYear,
       endYear,
-      loss:
-        totalLoss < 1
-          ? `${format('.3s')(totalLoss)}ha`
-          : `${format('.3s')(totalLoss)}ha`,
-      percent: `${format('.2r')(percentageLoss)}%`,
-      emissions: `${format('.3s')(totalEmissions)}t`,
+      loss: formatNumber({ num: totalLoss, unit: 'ha', spaceUnit: true }),
+      percent: formatNumber({ num: percentageLoss, unit: '%' }),
+      emissions: formatNumber({
+        num: totalEmissions,
+        unit: 't',
+        spaceUnit: true,
+      }),
       extentYear,
     };
 
