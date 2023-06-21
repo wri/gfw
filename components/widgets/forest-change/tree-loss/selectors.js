@@ -1,7 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import {
   yearTicksFormatter,
@@ -82,7 +81,8 @@ const parseConfig = createSelector([getColors], (colors) => ({
     {
       key: 'area',
       label: 'Tree cover loss',
-      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      unitFormat: (value) =>
+        formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       color: colors.main,
     },
     {
@@ -144,9 +144,13 @@ const parseSentence = createSelector(
       location: locationLabel,
       startYear,
       endYear,
-      loss: formatNumber({ num: totalLoss, unit: 'ha' }),
-      percent: `${format('.2r')(percentageLoss)}%`,
-      emissions: `${format('.3s')(totalEmissions)}t`,
+      loss: formatNumber({ num: totalLoss, unit: 'ha', spaceUnit: true }),
+      percent: formatNumber({ num: percentageLoss, unit: '%' }),
+      emissions: formatNumber({
+        num: totalEmissions,
+        unit: 't',
+        spaceUnit: true,
+      }),
       extentYear,
     };
 
