@@ -143,7 +143,8 @@ const parseConfig = createSelector([getColors], (colors) => ({
     },
     {
       key: 'area',
-      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      unitFormat: (value) =>
+        formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       label: 'Primary forest loss',
       color: colors.primaryForestLoss,
     },
@@ -222,7 +223,11 @@ const parseSentence = createSelector(
         num: Math.abs(initialExtent - finalExtent),
         unit: '%',
       }),
-      loss: formatNumber({ num: totalLossPrimary, unit: 'ha' }),
+      loss: formatNumber({
+        num: totalLossPrimary,
+        unit: 'ha',
+        spaceUnit: true,
+      }),
       percent: formatNumber({ num: percentageLoss, unit: '%' }),
       component: {
         key: 'total tree cover loss',
