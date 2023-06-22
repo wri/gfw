@@ -9,12 +9,14 @@ import shareIcon from 'assets/icons/share.svg?sprite';
 class WidgetShareButton extends PureComponent {
   static propTypes = {
     handleShowShare: PropTypes.func.isRequired,
+    widget: PropTypes.string,
   };
 
   render() {
-    const { handleShowShare } = this.props;
+    const { handleShowShare, widget } = this.props;
     return (
       <Button
+        id={`widget-share-button-${widget}`}
         className="c-widget-share-btn theme-button-small square"
         onClick={handleShowShare}
         tooltip={{ text: 'Share or embed this widget' }}

@@ -13,13 +13,15 @@ class WidgetMapButton extends PureComponent {
   static propTypes = {
     active: PropTypes.bool,
     handleShowMap: PropTypes.func.isRequired,
+    widget: PropTypes.string,
   };
 
   render() {
-    const { active, handleShowMap } = this.props;
+    const { active, handleShowMap, widget } = this.props;
 
     return (
       <Button
+        id={`widget-map-button-${widget}`}
         className={cx('c-widget-map-button', { '-active': active })}
         theme={cx('theme-button-small small square')}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}

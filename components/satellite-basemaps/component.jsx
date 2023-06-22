@@ -157,6 +157,7 @@ const SatelliteBasemaps = ({
                   )}
                 >
                   <button
+                    id={`imagery-item-${basemap.value}`}
                     className="satellite-basemap--cta"
                     aria-label={`Activate ${basemap.label}`}
                     onClick={(e) => handleSetSatelliteBasemap(e, basemap.value)}

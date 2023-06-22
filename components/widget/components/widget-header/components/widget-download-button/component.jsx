@@ -267,7 +267,7 @@ class WidgetDownloadButton extends PureComponent {
   };
 
   render() {
-    const { areaTooLarge, disabled, disabledMessage } = this.props;
+    const { areaTooLarge, disabled, disabledMessage, widget } = this.props;
     const { disabled: localDisabled } = this.state;
 
     let tooltipText =
@@ -290,6 +290,7 @@ class WidgetDownloadButton extends PureComponent {
 
     return (
       <Button
+        id={`widget-download-button-${widget}`}
         className={cx('c-widget-download-button', {
           'small-download-button': this.props.simple,
         })}
