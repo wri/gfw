@@ -6,10 +6,12 @@ import './themes/large.scss';
 
 class Toggle extends PureComponent {
   render() {
-    const { color, onToggle, value, theme } = this.props;
+    const { color, layer, onToggle, value, theme } = this.props;
 
     return (
       <button
+        data-id={`toggle-${layer}`}
+        id={`toggle-${layer}`}
         role="switch"
         aria-label="toggle"
         aria-checked={value && value.toString()}
@@ -22,6 +24,7 @@ class Toggle extends PureComponent {
 }
 
 Toggle.propTypes = {
+  layer: PropTypes.string,
   color: PropTypes.string,
   onToggle: PropTypes.func,
   value: PropTypes.bool,
