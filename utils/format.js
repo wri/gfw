@@ -6,38 +6,74 @@ export const formatUSD = (value, minimize = true) =>
     .replace('M', minimize ? 'M' : ' million')
     .replace('K', minimize ? 'K' : ' thousand');
 
-export const formatNumber = ({
+const setDefaultSpecifier = (unit, precision) => {
+  let defaultSpecifier = '';
+  const numberOfDecimalDigits = unit === '%' ? '2' : '3';
+  const properPrecision = Number.isInteger(precision)
+    ? Math.abs(precision)
+    : numberOfDecimalDigits;
+
+  defaultSpecifier =
+    unit === '%' ? `.${properPrecision}r` : `.${properPrecision}s`;
+  defaultSpecifier = unit === 'counts' ? ',.0f' : defaultSpecifier;
+
+  return defaultSpecifier;
+};
+
+const formatWithProperSpecifier = ({
   num,
   unit,
   precision,
-  returnUnit = true,
-  spaceUnit = false,
+  specialSpecifier = null,
 }) => {
+  const defaultSpecifier = setDefaultSpecifier(unit, precision);
+  const threshold = unit === '%' ? 0.1 : 1;
+
+  // specialSpecifier is a different specifier passed through formatNumber parameter
+  // e.g formatNumber({ num: 12.345, specialSpecifier: value < 1 ? '.3r' : '.3s'; })
+  if (specialSpecifier) {
+    return format(specialSpecifier)(num);
+  }
+
+  if (num < threshold && num > 0) {
+    return `< ${threshold}`;
+  }
+
+  if (unit !== '%' && num < threshold && num > 0.01) {
+    return format('.3r')(num);
+  }
+
+  if (unit === 'ha' && num < 1000 && num > 0) {
+    return Math.round(num);
+  }
+
+  if (unit !== '%' && num > 0 && num < 0.01) {
+    return '<0.01';
+  }
+
+  return format(defaultSpecifier)(num);
+};
+
+export const formatNumber = (args) => {
+  const { num, unit, returnUnit = true, spaceUnit = false } = args;
+
   if (unit === '') return format('.2f')(num);
   if (unit === ',') return format(',')(num);
-  let p = unit === '%' ? '2' : '3';
   if (unit === 'tCO2') return `${format('.3s')(num)}tCO\u2082e`;
-  if (precision && Number.isInteger(precision)) p = Math.abs(precision);
-  let numFormat = unit === '%' ? `.${p}r` : `.${p}s`;
-  if (unit === 'counts') numFormat = ',.0f';
-  const thres = unit === '%' ? 0.1 : 1;
-  let formattedNum =
-    num < thres && num > 0 ? `< ${thres}` : format(numFormat)(num);
-  if (unit !== '%' && num < thres && num > 0.01) {
-    formattedNum = format('.3r')(num);
-  } else if (unit === 'ha' && num < 1000 && num > 0) {
-    formattedNum = Math.round(num);
-  } else if (num > 0 && num < 0.01 && unit !== '%') {
-    formattedNum = '<0.01';
-  }
+
+  let formattedNumber = formatWithProperSpecifier(args);
 
   if (spaceUnit) {
     // Capture group until first occurrence of a non digit or dot or comma.
     // and insert a space after the captured group.
-    formattedNum = String(formattedNum).replace(/([\d|.|,]+)/, '$1 ');
+    formattedNumber = String(formattedNumber).replace(/([\d|.|,]+)/, '$1 ');
   }
 
+<<<<<<< HEAD
   return `${formattedNum}${
+=======
+  return `${formattedNumber}${
+>>>>>>> fdf4c331fc (chore(format-number): refactor formatNumber method to improve readability and maintainability)
     returnUnit && unit && unit !== 'counts' && unit !== 'countsK' ? unit : ''
   }`;
 };
