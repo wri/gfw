@@ -69,11 +69,7 @@ export const formatNumber = (args) => {
     formattedNumber = String(formattedNumber).replace(/([\d|.|,]+)/, '$1 ');
   }
 
-<<<<<<< HEAD
-  return `${formattedNum}${
-=======
   return `${formattedNumber}${
->>>>>>> fdf4c331fc (chore(format-number): refactor formatNumber method to improve readability and maintainability)
     returnUnit && unit && unit !== 'counts' && unit !== 'countsK' ? unit : ''
   }`;
 };
