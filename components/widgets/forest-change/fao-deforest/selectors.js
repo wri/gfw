@@ -63,11 +63,24 @@ export const parseSentence = createSelector(
       sentence = humdef ? globalHuman : globalInitial;
     } else if (!deforest) sentence = noDeforest;
 
+    const rateFormat = rate < 1 ? '.3r' : '.3s';
+    const humanFormat = humdef < 1 ? '.3r' : '.3s';
+
     const params = {
       location: currentLabel,
       year: period,
-      rate: formatNumber({ num: rate, unit: 'ha', spaceUnit: true }),
-      human: formatNumber({ num: humdef, unit: 'ha', spaceUnit: true }),
+      rate: formatNumber({
+        num: rate,
+        unit: 'ha',
+        spaceUnit: true,
+        specialSpecifier: rateFormat,
+      }),
+      human: formatNumber({
+        num: humdef,
+        unit: 'ha',
+        spaceUnit: true,
+        specialSpecifier: humanFormat,
+      }),
     };
 
     return {
