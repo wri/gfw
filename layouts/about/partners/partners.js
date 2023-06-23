@@ -367,19 +367,9 @@ export const funders = [
     title: 'gef',
   },
   {
-    img: images('./generationhover.png'),
-    link: 'https://www.genfound.org/',
-    title: 'Generation Foundation',
-  },
-  {
     img: images('./hf.png'),
     link: 'https://www.hampshirefoundation.org/',
     title: 'Hampshire Foundation',
-  },
-  {
-    img: images('./idbhover.png'),
-    link: 'http://www.iadb.org/en/inter-american-development-bank,2837.html',
-    title: 'IDB',
   },
   {
     img: images('./idbinvesthover.png'),
