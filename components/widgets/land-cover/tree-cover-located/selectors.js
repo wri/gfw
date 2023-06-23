@@ -14,6 +14,7 @@ const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 const getTitle = (state) => state.title;
+const getMetaKey = (state) => state.metaKey;
 
 export const parseList = createSelector(
   [getData, getSettings, getLocationsMeta, getColors],
@@ -155,8 +156,14 @@ export const parseTitle = createSelector(
   }
 );
 
+export const parseMetaKey = createSelector(
+  [getMetaKey, getSettings],
+  (metaKey, settings) => metaKey[settings.extentYear]
+);
+
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
   title: parseTitle,
+  metaKey: parseMetaKey,
 });

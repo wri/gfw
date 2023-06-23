@@ -1,17 +1,19 @@
 import { all, spread } from 'axios';
-import { getExtent } from 'services/analysis-cached';
+import { getExtent, getTropicalExtent } from 'services/analysis-cached';
 import OTFAnalysis from 'services/otf-analysis';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_EXTENT_DATASET,
+  TROPICAL_TREE_COVER_DATASET,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
   FOREST_EXTENT,
   TREE_COVER,
+  TROPICAL_TREE_COVER_METERS,
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
@@ -45,23 +47,61 @@ export default {
     global: 'Global tree cover by type',
     withPlantations: 'Forest cover by type in {location}',
   },
+  alerts: [
+    {
+      id: 'tree-cover-alert-1',
+      text:
+        'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
+      visible: [
+        'global',
+        'country',
+        'geostore',
+        'aoi',
+        'wdpa',
+        'use',
+        'dashboard',
+      ],
+    },
+  ],
   sentence: {
-    globalInitial:
-      'As of {year}, {percentage} of {location} land cover was tree cover.',
-    globalWithIndicator:
-      'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
-    initial: 'As of {year}, {percentage} of {location}',
-    hasPlantations: ' was natural forest cover.',
-    noPlantations: ' was tree cover.',
-    hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
-    noPlantationsInd: "<b>'s</b> tree cover was in {indicator}.",
+    default: {
+      global: {
+        treeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+      },
+      region: {
+        treeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+      },
+    },
+    withIndicator: {
+      global: {
+        treeCover:
+          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tropical tree cover.',
+      },
+      region: {
+        treeCover:
+          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover.',
+        tropicalTreeCover:
+          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover.',
+      },
+    },
   },
-  metaKey: 'widget_tree_cover',
+  metaKey: {
+    2000: 'widget_tree_cover',
+    2010: 'widget_tree_cover',
+    2020: 'wri_trees_in_mosaic_landscapes',
+  },
   chartType: 'pieChart',
   large: false,
   colors: 'extent',
   source: 'gadm',
-  dataType: 'extent',
   categories: ['summary', 'land-cover'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
@@ -73,8 +113,13 @@ export default {
       boundary: true,
     },
     {
-      dataset: FOREST_EXTENT_DATASET,
+      dataset: {
+        2020: TROPICAL_TREE_COVER_DATASET,
+        2010: FOREST_EXTENT_DATASET,
+        2000: FOREST_EXTENT_DATASET,
+      },
       layers: {
+        2020: TROPICAL_TREE_COVER_METERS,
         2010: FOREST_EXTENT,
         2000: TREE_COVER,
       },
@@ -84,46 +129,73 @@ export default {
     summary: 4,
     landCover: 1,
   },
-  refetchKeys: ['threshold', 'extentYear', 'landCategory'],
-  pendingKeys: ['threshold', 'extentYear'],
-  settingsConfig: [
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true,
-    },
-    {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch',
-      border: true,
-    },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
-  ],
+  refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
+  pendingKeys: ['threshold', 'decile', 'extentYear'],
   settings: {
     threshold: 30,
+    decile: 30,
     extentYear: 2000,
   },
+  getDataType: (params) => {
+    const { extentYear } = params;
+    const isTropicalTreeCover = extentYear === 2020;
+    return isTropicalTreeCover ? 'tropicalExtent' : 'extent';
+  },
+  getSettingsConfig: (params) => {
+    const { extentYear } = params;
+    const isTropicalTreeCover = extentYear === 2020;
+
+    return [
+      {
+        key: 'extentYear',
+        label: 'Tree cover dataset',
+        type: 'select',
+        border: true,
+      },
+      {
+        key: 'landCategory',
+        label: 'Land Category',
+        type: 'select',
+        placeholder: 'All categories',
+        clearable: true,
+        border: true,
+      },
+      {
+        key: isTropicalTreeCover ? 'decile' : 'threshold',
+        label: 'Tree cover',
+        type: 'mini-select',
+        metaKey: 'widget_canopy_density',
+      },
+    ];
+  },
   getData: (params) => {
+    const { threshold, decile, ...filteredParams } = params;
+    const { extentYear } = filteredParams;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
+    const extentFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
+
     if (shouldQueryPrecomputedTables(params)) {
       return all([
-        getExtent(params),
-        getExtent({ ...params, forestType: '', landCategory: '' }),
-        getExtent({ ...params, forestType: 'plantations' }),
+        extentFn({ ...filteredParams, ...decileThreshold }),
+        extentFn({
+          ...filteredParams,
+          ...decileThreshold,
+          forestType: '',
+          landCategory: '',
+        }),
+        extentFn({
+          ...filteredParams,
+          ...decileThreshold,
+          forestType: 'plantations',
+        }),
       ]).then(
         spread((response, adminResponse, plantationsResponse) => {
           const extent = response.data && response.data.data;
           const adminExtent = adminResponse.data && adminResponse.data.data;
           const plantationsExtent =
             plantationsResponse.data && plantationsResponse.data.data;
+
           let totalArea = 0;
           let totalCover = 0;
           let cover = 0;
@@ -156,20 +228,27 @@ export default {
     return getOTFAnalysis(params);
   },
   getDataURL: (params) => {
-    const urlArr =
-      params.forestType || params.landCategory
-        ? [getExtent({ ...params, download: true })]
-        : [];
+    const { threshold, decile, ...filteredParams } = params;
+    const { extentYear } = filteredParams;
+    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
+    const downloadFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
+    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
+    const commonParams = {
+      ...filteredParams,
+      ...decileThreshold,
+      download: true,
+    };
 
-    return urlArr.concat([
-      getExtent({
-        ...params,
-        forestType: null,
-        landCategory: null,
-        download: true,
-      }),
-      getExtent({ ...params, forestType: 'plantations', download: true }),
-    ]);
+    const downloadArray = [
+      downloadFn({ ...commonParams, forestType: null, landCategory: null }),
+      downloadFn({ ...commonParams, forestType: 'plantations' }),
+    ];
+
+    if (filteredParams?.landCategory) {
+      downloadArray.push(downloadFn({ ...commonParams }));
+    }
+
+    return downloadArray;
   },
   getWidgetProps,
 };

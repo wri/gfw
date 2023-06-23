@@ -29,7 +29,7 @@ const testConfig = [
           '/map/geostore/211fca3fbea311473797cc967bc7a073/?analysis=eyJzaG93RHJhdyI6dHJ1ZX0%3D&mainMap=eyJzaG93QW5hbHlzaXMiOnRydWV9&map=eyJjZW50ZXIiOnsibGF0IjotOS43ODk4NTQ0NDk2NjI0OTIsImxuZyI6LTY3LjgxNDg0NzUzNTk4MzE2fSwiem9vbSI6MTMuMzc2NDA3MTg0NjQ0NzYsImNhbkJvdW5kIjpmYWxzZSwiZGF0YXNldHMiOlt7ImRhdGFzZXQiOiJ0cmVlLWNvdmVyIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbInRyZWUtY292ZXItMjAwMCJdfSx7ImRhdGFzZXQiOiJwb2xpdGljYWwtYm91bmRhcmllcyIsImxheWVycyI6WyJkaXNwdXRlZC1wb2xpdGljYWwtYm91bmRhcmllcyIsInBvbGl0aWNhbC1ib3VuZGFyaWVzIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XX0%3D&mapMenu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoibGFuZENvdmVyIn0%3D',
         test: 'sentence-treeCover2000',
         sentence:
-          'As of {year}, {percentage} of Area in Acre, Brazil was tree cover.',
+          'As of {year}, {percentage} of Area in Acre, Brazil land cover was {threshold} tree cover.',
       },
       // {
       //   slug: 'default',

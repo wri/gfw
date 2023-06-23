@@ -446,10 +446,12 @@ export const getWidgets = createSelector(
       const {
         settings: defaultSettings,
         widget,
-        settingsConfig,
         pendingKeys,
         title: titleTemplate,
-        dataType,
+        dataType: dataTypeStr,
+        getDataType: dataTypeFn,
+        settingsConfig: settingsConfigArr,
+        getSettingsConfig: settingsConfigFn,
       } = w || {};
       const active =
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
@@ -512,7 +514,18 @@ export const getWidgets = createSelector(
         }),
       };
 
+      const dataType = dataTypeStr || (dataTypeFn && dataTypeFn(settings));
+
       const dataOptions = rawData && rawData.options;
+
+      const settingsConfig =
+        settingsConfigArr ||
+        (settingsConfigFn &&
+          settingsConfigFn({
+            ...locationObj,
+            ...settings,
+          }));
+
       const settingsConfigParsed = getSettingsConfig({
         settingsConfig,
         dataOptions,
@@ -531,16 +544,6 @@ export const getWidgets = createSelector(
       const landCategory = optionsSelected && optionsSelected.landCategory;
       const indicator = getIndicator(forestType, landCategory);
 
-      const footerStatements = getStatements({
-        forestType,
-        landCategory,
-        settings,
-        datasets,
-        type,
-        dataType,
-        active,
-      });
-
       const { ifl } = settings || {};
 
       const settingsConfigFiltered =
@@ -552,6 +555,29 @@ export const getWidgets = createSelector(
               settings.forestType !== 'primary_forest' &&
               settings.forestType !== 'ifl')
         );
+
+      const settingConfigFilteredKeys =
+        settingsConfigFiltered?.map((scf) => scf.key) || [];
+
+      const allowedFooterSettings = Object.keys(settings)
+        .filter((key) => settingConfigFilteredKeys.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = settings[key];
+          return obj;
+        }, {});
+
+      const footerStatements = getStatements({
+        forestType,
+        landCategory,
+        datasets,
+        type,
+        dataType,
+        active,
+        settings: {
+          ...defaultSettings,
+          ...allowedFooterSettings,
+        },
+      });
 
       const props = {
         ...w,

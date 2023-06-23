@@ -78,6 +78,12 @@ const SQL_QUERIES = {
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
     'SELECT {select_location}, {select_location}_name, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
+  tropicalExtent:
+    'SELECT {select_location}, SUM(CASE WHEN wri_tropical_tree_cover__decile >= {decile} THEN wri_tropical_tree_cover_extent__ha END) AS tropical_tree_cover_extent_2020_ha, SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) AS area__ha FROM data {WHERE} GROUP BY {location} HAVING SUM(CASE WHEN wri_tropical_tree_cover__decile >= 0 THEN area__ha END) > 0 ORDER BY {location}',
+  treeCoverByLandCoverClass:
+    'SELECT {select_location}, umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
+  treeCoverDensity:
+    'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
 };
 
 const ALLOWED_PARAMS = {
@@ -118,6 +124,7 @@ const ALLOWED_PARAMS = {
     'landCategory',
     'confidence',
   ],
+  tropicalTreeCover: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType'],
 };
 
 //
@@ -345,7 +352,12 @@ export const getWHEREQuery = (params) => {
         } else {
           comparisonString = ' >= ';
         }
-        paramKey = 'umd_tree_cover_density_2000__threshold';
+
+        if (dataset === 'tropicalTreeCover') {
+          paramKey = 'wri_tropical_tree_cover__decile';
+        } else {
+          paramKey = 'umd_tree_cover_density_2000__threshold';
+        }
 
         // }
       }
@@ -922,6 +934,141 @@ export const getTreeCoverGainByPlantationType = (params) => {
       })),
     },
   }));
+};
+
+export const getTropicalExtent = (params) => {
+  const { forestType, landCategory, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230502',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace(/{decile}/g, params?.decile)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory);
+    return {
+      name: `tropicaltreecover_extent_${extentYear}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => {
+    return {
+      ...response,
+      data: {
+        data: response?.data?.map((d) => ({
+          ...d,
+          extent: d[`tropical_tree_cover_extent_${extentYear}_ha`],
+          total_area: d.area__ha,
+        })),
+      },
+    };
+  });
+};
+
+export const getTropicalExtentGrouped = (params) => {
+  const { forestType, landCategory, ifl, download, extentYear } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230502',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.tropicalExtent}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace(/{decile}/g, params?.decile)
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `tropical_treecover_extent_${extentYear}_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => ({
+    ...response,
+    data: {
+      data: response?.data?.map((d) => ({
+        ...d,
+        extent: d[`tropical_tree_cover_extent_${extentYear}_ha`],
+        total_area: d.area__ha,
+      })),
+    },
+  }));
+};
+
+export const getTreeCoverByLandCoverClass = (params) => {
+  const { forestType, download, extentYear, landCategory, ifl } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230502',
+  });
+
+  if (!requestUrl) return new Promise(() => {});
+
+  const sqlQuery = SQL_QUERIES.treeCoverByLandCoverClass;
+
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params }))
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{decile}', params?.decile)
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `tropical_treecover_extent_${extentYear}${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => response?.data);
 };
 
 // Net Change
@@ -1898,6 +2045,32 @@ export const fetchGladAlertsSumOTF = (params) => {
       })),
     },
   }));
+};
+
+// summed extent for single location
+export const getTreeCoverDensity = (params) => {
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20230502',
+  });
+
+  if (!requestUrl) {
+    return Promise.reject();
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.treeCoverDensity}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  return dataRequest.get(url).then((response) => response.data);
 };
 
 // Fallback for Latest Dates Alerts

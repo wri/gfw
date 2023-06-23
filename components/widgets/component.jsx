@@ -90,8 +90,9 @@ class Widgets extends PureComponent {
 
         {!loadingData && hasWidgets && (
           <>
-            {widgetGroups.map(({ id, label, widgets = [] }) => (
+            {widgetGroups.map(({ id, label, widgets = [] }, index) => (
               <div
+                key={index}
                 id={id}
                 className={cx(
                   'c-widgets',

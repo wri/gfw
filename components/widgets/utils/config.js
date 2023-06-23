@@ -70,6 +70,7 @@ export const getSettingsConfig = ({
     .map((o) => {
       const {
         key,
+        label,
         compareKey,
         startKey,
         endKey,
@@ -81,6 +82,9 @@ export const getSettingsConfig = ({
       } = o || {};
       let mergedOptions =
         (dataOptions && dataOptions[key]) || options || allOptions[key];
+      if (key === 'extentYear' && label === 'Tree cover dataset') {
+        mergedOptions = allOptions.treeCoverDatasets;
+      }
       if (key === 'forestType') {
         mergedOptions =
           mergedOptions &&
@@ -217,6 +221,10 @@ export const getWidgetDatasets = ({
             extentYear && !Array.isArray(d.layers)
               ? [d.layers[extentYear]]
               : d.layers,
+          dataset:
+            extentYear && typeof d.dataset !== 'string'
+              ? d.dataset[extentYear]
+              : d.dataset,
           ...(((startYear && endYear) || year) && {
             timelineParams: {
               startDate: `${startYear || year}-01-01`,
@@ -352,7 +360,7 @@ export const getStatements = ({
   datasets,
 }) => {
   if (!settings) return null;
-  const { extentYear, threshold } = settings;
+  const { extentYear, threshold, decile } = settings;
 
   const indicators = getNonGlobalIndicator({
     forestType,
@@ -374,22 +382,34 @@ export const getStatements = ({
           )
         : null
     );
+
   // @TODO: Extract this to widget configs
   const carbonGain = dataType === 'flux' ? ' and tree cover gain' : '';
   const statements = compact([
     extentYear &&
     dataType !== 'lossPrimary' &&
     dataType !== 'fires' &&
-    dataType !== 'gain'
+    dataType !== 'gain' &&
+    dataType !== 'tropicalExtent'
       ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    dataType === 'tropicalExtent'
+      ? translateText('{extentYear} tropical tree cover extent', { extentYear })
       : null,
     dataType === 'lossPrimary'
       ? translateText('2001 primary forest extent remaining')
       : null,
-    (threshold || threshold === 0) && dataType !== 'gain'
+    (threshold || threshold === 0) &&
+    dataType !== 'gain' &&
+    dataType !== 'tropicalExtent'
       ? translateText('>{threshold}% tree canopy{carbonGain}', {
           threshold,
           carbonGain,
+        })
+      : null,
+    (decile || decile === 0) && dataType === 'tropicalExtent'
+      ? translateText('>{decile}% threshold', {
+          decile,
         })
       : null,
     dataType === 'loss'
