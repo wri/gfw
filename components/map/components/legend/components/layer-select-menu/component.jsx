@@ -51,7 +51,10 @@ class LayerSelectMenu extends PureComponent {
                     }`}
                     key={`${l.id}-${l.name}`}
                   >
-                    <button onClick={() => this.handleClickLayer(l)}>
+                    <button
+                      id={`alerts-dropdown-${l.id}`}
+                      onClick={() => this.handleClickLayer(l)}
+                    >
                       <p>
                         {l.name}
                         <Tooltip

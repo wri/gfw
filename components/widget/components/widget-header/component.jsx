@@ -106,6 +106,7 @@ class WidgetHeader extends PureComponent {
               active={active}
               large={large}
               handleShowMap={handleShowMap}
+              widget={widget}
             />
           )}
           {showSettingsBtn && (
@@ -143,9 +144,15 @@ class WidgetHeader extends PureComponent {
               <WidgetInfoButton
                 square={simple}
                 handleOpenInfo={() => handleShowInfo(metaInfo)}
+                widget={widget}
               />
             )}
-            {!simple && <WidgetShareButton handleShowShare={handleShowShare} />}
+            {!simple && (
+              <WidgetShareButton
+                handleShowShare={handleShowShare}
+                widget={widget}
+              />
+            )}
           </div>
         </div>
       </div>

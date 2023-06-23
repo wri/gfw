@@ -9,7 +9,9 @@ import './styles.scss';
 const BoundarySentence = ({ sentence, onAnalyze }) => (
   <div className="c-boundary-sentence">
     <DynamicSentence className="sentence" sentence={sentence} />
-    <Button onClick={onAnalyze}>analyze</Button>
+    <Button id="button-analize" onClick={onAnalyze}>
+      analyze
+    </Button>
   </div>
 );
 

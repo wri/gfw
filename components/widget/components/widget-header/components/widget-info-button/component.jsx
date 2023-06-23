@@ -11,12 +11,14 @@ class WidgetInfoButton extends PureComponent {
   static propTypes = {
     square: PropTypes.bool,
     handleOpenInfo: PropTypes.func.isRequired,
+    widget: PropTypes.string,
   };
 
   render() {
-    const { handleOpenInfo, square } = this.props;
+    const { handleOpenInfo, square, widget } = this.props;
     return (
       <Button
+        id={`widget-info-button-${widget}`}
         className="c-widget-info-button"
         theme={cx('theme-button-small square', {
           'theme-button-grey-filled theme-button-xsmall': square,

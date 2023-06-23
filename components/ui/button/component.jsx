@@ -24,6 +24,7 @@ import './themes/button-full-width.scss'; //eslint-disable-line
 
 const Button = (props) => {
   const {
+    id = 'button',
     extLink,
     link,
     children,
@@ -36,7 +37,7 @@ const Button = (props) => {
     background,
     trackingData,
     target,
-    tooltipPosition = 'top'
+    tooltipPosition = 'top',
   } = props;
 
   const handleClick = (e) => {
@@ -53,6 +54,8 @@ const Button = (props) => {
   if (extLink) {
     button = (
       <a
+        data-id={id}
+        id={id}
         className={cx(
           'c-button',
           theme,
@@ -74,6 +77,8 @@ const Button = (props) => {
       <Link href={link}>
         <a>
           <button
+            data-id={id}
+            id={id}
             className={cx(
               'c-button',
               theme,
@@ -92,6 +97,8 @@ const Button = (props) => {
   } else {
     button = (
       <button
+        data-id={id}
+        id={id}
         className={cx(
           'c-button',
           theme,
@@ -127,6 +134,7 @@ const Button = (props) => {
 };
 
 Button.propTypes = {
+  id: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
   link: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -140,7 +148,7 @@ Button.propTypes = {
   buttonClicked: PropTypes.func,
   background: PropTypes.string,
   target: PropTypes.string,
-  tooltipPosition: PropTypes.string
+  tooltipPosition: PropTypes.string,
 };
 
 export default Button;

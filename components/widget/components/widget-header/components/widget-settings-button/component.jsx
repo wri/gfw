@@ -112,6 +112,7 @@ class WidgetSettingsButton extends PureComponent {
         )}
       >
         <Button
+          id={`widget-settings-button-${widget}`}
           theme="theme-button-small square"
           tooltip={{ text: 'Filter and customize the data' }}
         >
