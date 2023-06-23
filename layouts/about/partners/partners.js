@@ -367,6 +367,11 @@ export const funders = [
     title: 'gef',
   },
   {
+    img: images('./gordonandbettymoorefoundation.png'),
+    link: 'https://www.moore.org/',
+    title: 'Gordon and Betty Moore Foundation',
+  },
+  {
     img: images('./hf.png'),
     link: 'https://www.hampshirefoundation.org/',
     title: 'Hampshire Foundation',
@@ -385,6 +390,11 @@ export const funders = [
     img: images('./macarthurhover.png'),
     link: 'https://www.macfound.org/',
     title: 'MacArthur Foundation',
+  },
+  {
+    img: images('./neainsingapore.png'),
+    link: 'https://www.nea.gov.sg/',
+    title: 'National Environment Agency in Singapore',
   },
   {
     img: images('./norwegianministrihover.png'),
@@ -407,5 +417,10 @@ export const funders = [
     img: images('./usaidhover.png'),
     link: 'https://www.usaid.gov/',
     title: 'USAID',
+  },
+  {
+    img: images('./usforestservice.png'),
+    link: 'https://www.fs.usda.gov/',
+    title: 'US Forest Service',
   },
 ];
