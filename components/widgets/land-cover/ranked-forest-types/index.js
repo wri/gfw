@@ -64,7 +64,6 @@ export default {
   settings: {
     decile: 30,
     extentYear: 2020,
-    ifl: 2016,
   },
   getData: (params) => {
     return getTreeCoverByLandCoverClass(params);
