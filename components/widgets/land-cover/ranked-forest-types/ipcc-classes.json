@@ -1,0 +1,32 @@
+[
+  {
+    "ipccClass": "Forest",
+    "label": "Forest",
+    "icon": "ipccForest"
+  },
+  {
+    "ipccClass": "Grassland",
+    "label": "Grassland",
+    "icon": "ipccGrassland"
+  },
+  {
+    "ipccClass": "Settlements",
+    "label": "Settlement",
+    "icon": "ipccSettlement"
+  },
+  {
+    "ipccClass": "Wetlands",
+    "label": "Wetland",
+    "icon": "ipccWetland"
+  },
+  {
+    "ipccClass": "Cropland",
+    "label": "Cropland",
+    "icon": "ipccCropland"
+  },
+  {
+    "ipccClass": "Other",
+    "label": "Other",
+    "icon": "ipccOther"
+  }
+]

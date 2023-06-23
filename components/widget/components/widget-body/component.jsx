@@ -18,6 +18,7 @@ import WidgetListLegend from 'components/widget/components/widget-list-legend';
 import WidgetMapList from 'components/widget/components/widget-map-list';
 import WidgetSankey from 'components/widget/components/widget-sankey';
 import WidgetLollipop from 'components/widget/components/widget-lollipop';
+import WidgetInfoList from 'components/widget/components/widget-info-list';
 
 import './styles.scss';
 
@@ -32,6 +33,7 @@ const chartOptions = {
   sankey: WidgetSankey,
   listLegend: WidgetListLegend,
   lollipop: WidgetLollipop,
+  infoList: WidgetInfoList,
 };
 
 class WidgetBody extends PureComponent {
@@ -43,6 +45,9 @@ class WidgetBody extends PureComponent {
     metaLoading: PropTypes.bool,
     error: PropTypes.bool,
     simple: PropTypes.bool,
+    large: PropTypes.bool,
+    autoHeight: PropTypes.bool,
+    embed: PropTypes.bool,
     chartType: PropTypes.string,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     customComponent: PropTypes.string,
@@ -61,6 +66,7 @@ class WidgetBody extends PureComponent {
       metaLoading,
       error,
       simple,
+      autoHeight,
       locationName,
       sentence,
       data,
@@ -78,7 +84,9 @@ class WidgetBody extends PureComponent {
     const Component = chartOptions[chartType];
 
     return (
-      <div className={cx('c-widget-body', { simple })}>
+      <div
+        className={cx('c-widget-body', { simple, '-auto-height': autoHeight })}
+      >
         {(loading || metaLoading) && <Loader className="widget-loader" />}
         {!loading &&
           !metaLoading &&

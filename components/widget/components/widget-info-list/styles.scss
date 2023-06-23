@@ -1,0 +1,80 @@
+@import '~styles/settings.scss';
+
+.c-info-list-widget {
+  display: grid;
+  gap: 44px;
+  grid-template-columns: repeat(auto-fill, 200px);
+
+  &__item {
+    display: inline-flex;
+    gap: 20px;
+    align-items: center;
+
+    &-image {
+      color: $slate;
+      width: 64px;
+
+      img {
+        height: 64px;
+        width: 64px;
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    &-label {
+      color: $slate;
+      font-size: 0.8rem;
+    }
+
+    &-text {
+      color: $green-gfw;
+      font-size: 1.7rem;
+      line-height: 1.7rem;
+      font-weight: 500;
+    }
+
+    &-subText {
+      color: rgba($slate, 0.5);
+      font-size: 0.8rem;
+    }
+  }
+
+  &.-small {
+    grid-template-columns: repeat(2, 1fr);
+
+    .c-info-list-widget__item {
+      flex-direction: column;
+    }
+  }
+
+  &.-large {
+    grid-template-columns: repeat(3, 1fr);
+
+    .c-info-list-widget__item {
+      flex-direction: row;
+    }
+  }
+
+  &.-center-items {
+    .c-info-list-widget__item {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: $screen-m) {
+    &.-small,
+    &.-large {
+      grid-template-columns: repeat(2, 1fr);
+
+      .c-info-list-widget__item {
+        flex-direction: column;
+      }
+    }
+  }
+}

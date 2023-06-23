@@ -1,12 +1,14 @@
 import forestType from 'data/forest-types';
 import landCategory from 'data/land-categories';
 import threshold from 'data/thresholds.json';
+import decile from 'data/deciles.json';
 import firesThreshold from 'data/fires-thresholds.json';
 import unit from 'data/units.json';
 import gasesIncluded from 'data/emission-gases.json';
 import variable from 'data/variables.json';
 import period from 'data/periods.json';
 import extentYear from 'data/extent-years.json';
+import treeCoverDatasets from 'data/tree-cover-datasets.json';
 import tscDriverGroup from 'data/tsc-loss-groups.json';
 import type from 'data/types.json';
 import weeks from 'data/weeks.json';
@@ -21,11 +23,13 @@ export default {
   forestType: forestType.filter((f) => !f.hidden),
   landCategory: landCategory.filter((l) => !l.hidden),
   threshold,
+  decile,
   firesThreshold,
   unit,
   gasesIncluded,
   period,
   extentYear,
+  treeCoverDatasets,
   tscDriverGroup,
   type,
   bioTypes,
