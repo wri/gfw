@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { buildDateArray } from 'components/widgets/utils/dates';
@@ -97,7 +97,9 @@ export const parseConfig = createSelector(
           key: 'count',
           unit: '',
           unitFormat: (value) =>
-            Number.isInteger(value) ? format(',')(value) : value,
+            Number.isInteger(value)
+              ? formatNumber({ num: value, unit: ',' })
+              : value,
         },
       ],
     };
@@ -115,9 +117,9 @@ export const parseSentence = createSelector(
       location: currentLabel,
       count:
         typeof weekGladCount === 'number'
-          ? format(',')(weekGladCount)
+          ? formatNumber({ num: weekGladCount, unit: ',' })
           : weekGladCount,
-      weeklyMean: format(',')(averageGladCount),
+      weeklyMean: formatNumber({ num: averageGladCount, unit: ',' }),
     };
     return { sentence, params };
   }
