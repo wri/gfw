@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import uniqBy from 'lodash/uniqBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'components/widgets/utils/colors';
 import { zeroFillYears } from 'components/widgets/utils/data';
@@ -91,22 +90,22 @@ export const parseConfig = createSelector([getColors], (colors) => {
       {
         key: 'totalLoss',
         label: 'Total',
-        unit: 'ha',
-        unitFormat: (value) => format('.3s')(value),
+        unitFormat: (value) =>
+          formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       },
       {
         key: 'outsideAreaLoss',
         label: 'Natural forest',
         color: colorRange[1],
-        unit: 'ha',
-        unitFormat: (value) => format('.3s')(value),
+        unitFormat: (value) =>
+          formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       },
       {
         key: 'areaLoss',
         label: 'Plantations',
         color: colorRange[0],
-        unit: 'ha',
-        unitFormat: (value) => format('.3s')(value),
+        unitFormat: (value) =>
+          formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       },
     ],
   };
@@ -133,7 +132,11 @@ export const parseSentence = createSelector(
       startYear,
       endYear,
       lossPhrase,
-      value: `${format('.3s')(outsideEmissions)}t`,
+      value: formatNumber({
+        num: outsideEmissions,
+        unit: 't',
+        spaceUnit: true,
+      }),
       percentage: formatNumber({ num: percentage, unit: '%' }),
     };
 
