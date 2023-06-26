@@ -124,6 +124,7 @@ const SatelliteBasemaps = ({
           onClick={handleToggleActive}
         >
           <Checkbox
+            id="satellite-imagery-checkbox"
             className="satellite-basemap-checkbox"
             value={activeBasemap.active}
           />
