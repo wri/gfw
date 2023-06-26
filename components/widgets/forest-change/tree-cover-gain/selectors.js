@@ -145,7 +145,7 @@ export const parseSentence = createSelector(
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
-      gain: formatNumber({ num: gain, unit: 'ha' }),
+      gain: formatNumber({ num: gain, unit: 'ha', spaceUnit: 'true' }),
       indicator: (indicator && indicator.label) || 'region-wide',
       percent: formatNumber({ num: areaPercent, unit: '%' }),
       gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
