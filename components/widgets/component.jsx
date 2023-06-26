@@ -33,6 +33,7 @@ class Widgets extends PureComponent {
     handleClickWidget: PropTypes.func.isRequired,
     embed: PropTypes.bool,
     dashboard: PropTypes.bool,
+    analysis: PropTypes.bool,
     groupBySubcategory: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object,
@@ -61,6 +62,7 @@ class Widgets extends PureComponent {
       groupBySubcategory = false,
       embed,
       dashboard,
+      analysis,
       simple,
       modalClosing,
       noDataMessage,
@@ -114,6 +116,7 @@ class Widgets extends PureComponent {
                     active={activeWidget && activeWidget.widget === w.widget}
                     embed={embed}
                     dashboard={dashboard}
+                    analysis={analysis}
                     simple={simple}
                     location={location}
                     geostore={geostore}

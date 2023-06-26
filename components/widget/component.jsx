@@ -19,6 +19,7 @@ class Widget extends PureComponent {
     filterSelected: PropTypes.bool,
     maxSize: PropTypes.number,
     embed: PropTypes.bool,
+    analysis: PropTypes.bool,
     large: PropTypes.bool,
     autoHeight: PropTypes.bool,
     colors: PropTypes.object,
@@ -91,6 +92,7 @@ class Widget extends PureComponent {
       large,
       autoHeight,
       embed,
+      analysis,
       simple,
       datasets,
       settings,
@@ -203,6 +205,7 @@ class Widget extends PureComponent {
           large={large}
           autoHeight={autoHeight}
           embed={embed}
+          analysis={analysis}
           location={location}
           locationName={locationLabelFull}
           active={active}

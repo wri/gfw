@@ -20,7 +20,7 @@ const ICONS = {
   ipccOther: ipccOtherIcon,
 };
 
-export const WidgetInfoList = ({ data, large, embed }) => {
+export const WidgetInfoList = ({ data, large, embed, analysis }) => {
   if (!data) return null;
 
   const containsIcons =
@@ -29,8 +29,8 @@ export const WidgetInfoList = ({ data, large, embed }) => {
   return (
     <div
       className={cx('c-info-list-widget', {
-        '-large': large || embed,
-        '-small': !large && !embed,
+        '-large': (large || embed) && !analysis,
+        '-small': (!large && !embed) || analysis,
         '-center-items': !containsIcons,
       })}
     >
@@ -70,6 +70,7 @@ WidgetInfoList.propTypes = {
   ),
   large: PropTypes.bool,
   embed: PropTypes.bool,
+  analysis: PropTypes.bool,
 };
 
 export default WidgetInfoList;

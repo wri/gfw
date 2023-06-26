@@ -57,7 +57,7 @@ export default {
       layers: [TROPICAL_TREE_COVER_HECTARE],
     },
   ],
-  visible: ['dashboard'],
+  visible: ['dashboard', 'analysis'],
   sortOrder: {
     landCover: 2,
   },
