@@ -21,12 +21,9 @@ class MenuTile extends PureComponent {
     } = this.props;
 
     return (
-      <li
-        id={`li-menu-${label}`}
-        className={cx('c-map-menu-tile', { active }, { small }, className)}
-      >
+      <li className={cx('c-map-menu-tile', { active }, { small }, className)}>
         <button className="item-button" onClick={onClick} disabled={loading}>
-          <div className="button-wrapper">
+          <div id={`li-menu-${label}`} className="button-wrapper">
             <Icon icon={icon} className="tile-icon" />
             <span>{label}</span>
             {(!!layerCount || highlight) && (
