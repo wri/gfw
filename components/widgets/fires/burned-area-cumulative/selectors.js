@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
@@ -255,7 +255,8 @@ export const parseConfig = createSelector(
         unit: ` MODIS burned area`,
         color: colors.main,
         nullValue: 'No data available',
-        unitFormat: (value) => `${format('.3s')(value)}ha`,
+        unitFormat: (value) =>
+          formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       },
     ];
     const compareYearsLines = {};
@@ -282,7 +283,8 @@ export const parseConfig = createSelector(
           unit: ` MODIS burned area`,
           color: compareYears.length === 1 ? colors.compareYear : colorRange[i],
           nullValue: 'No data available',
-          unitFormat: (value) => `${format('.3s')(value)}ha`,
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
         });
         compareYearsLines[year] = {
           stroke:
@@ -494,12 +496,12 @@ export const parseSentence = createSelector(
       dataset_start_year: 2001,
       maxYear,
       maxTotal: {
-        value: maxTotal ? format(',')(maxTotal) : 0,
+        value: maxTotal ? formatNumber({ num: maxTotal, unit: ',' }) : 0,
         color: colors.main,
       },
       area: {
         value: totalCurrentYear
-          ? `${format('.2s')(totalCurrentYear)}ha`
+          ? formatNumber({ num: totalCurrentYear, unit: 'ha', spaceUnit: true })
           : '0ha',
         color: colors.main,
       },
@@ -508,7 +510,9 @@ export const parseSentence = createSelector(
         color: statusColor,
       },
       maxArea: {
-        value: maxTotal ? `${format('.2s')(maxTotal)}ha` : '0ha',
+        value: maxTotal
+          ? formatNumber({ num: maxTotal, unit: 'ha', spaceUnit: true })
+          : '0ha',
         color: colors.main,
       },
     };
