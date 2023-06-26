@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import orderBy from 'lodash/orderBy';
@@ -263,7 +263,8 @@ export const parseConfig = createSelector(
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
-        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
+        unitFormat: (value) =>
+          Number.isInteger(value) && formatNumber({ num: value, unit: ',' }),
       },
     ];
 
@@ -281,7 +282,8 @@ export const parseConfig = createSelector(
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: '#49b5e3',
         nullValue: 'No data available',
-        unitFormat: (value) => Number.isInteger(value) && format(',')(value),
+        unitFormat: (value) =>
+          Number.isInteger(value) && formatNumber({ num: value, unit: ',' }),
       });
     }
 
@@ -479,7 +481,7 @@ export const parseSentence = createSelector(
       dataset_start_year: dataset === 'viirs' ? 2012 : 2001,
       dataset: dataset.toUpperCase(),
       count: {
-        value: total ? format(',')(total) : 0,
+        value: total ? formatNumber({ num: total, unit: ',' }) : 0,
         color: colors.main,
       },
       status: {
