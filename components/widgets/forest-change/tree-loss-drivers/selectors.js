@@ -5,7 +5,7 @@ import sumBy from 'lodash/sumBy';
 import entries from 'lodash/entries';
 import groupBy from 'lodash/groupBy';
 import findIndex from 'lodash/findIndex';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import sortBy from 'lodash/sortBy';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
@@ -144,9 +144,8 @@ export const parseConfig = createSelector(
       {
         key: 'total',
         label: 'Total',
-        unit: 'ha',
         unitFormat: (value) =>
-          value < 1000 ? Math.round(value) : format('.3s')(value),
+          formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       },
     ];
     tooltip = tooltip.concat(
@@ -157,10 +156,9 @@ export const parseConfig = createSelector(
           return {
             key: `class_${d.driver}`,
             label,
-            unit: 'ha',
             color: categoryColors[d.driver],
             unitFormat: (value) =>
-              value < 1000 ? Math.round(value) : format('.3s')(value),
+              formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
           };
         })
         .reverse()
@@ -234,10 +232,7 @@ export const parseSentence = createSelector(
       location: locationName === 'global' ? 'Globally' : locationName,
       startYear,
       endYear,
-      permPercent:
-        permPercent && permPercent < 0.1
-          ? '< 0.1%'
-          : `${format('.2r')(permPercent)}%`,
+      permPercent: formatNumber({ num: permPercent, unit: '%' }),
       component: {
         key: 'deforestation',
         tooltip:
