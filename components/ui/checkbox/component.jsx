@@ -6,9 +6,9 @@ import './styles.scss';
 
 class Checkbox extends PureComponent {
   render() {
-    const { className, value } = this.props;
+    const { className, value, id = 'checkbox' } = this.props;
     return (
-      <div className={cx('c-checkbox', className)}>
+      <div id={id} className={cx('c-checkbox', className)}>
         <span className={cx('green-square', { checked: value })} />
       </div>
     );
@@ -16,8 +16,9 @@ class Checkbox extends PureComponent {
 }
 
 Checkbox.propTypes = {
+  id: PropTypes.string,
   className: PropTypes.string,
-  value: PropTypes.bool
+  value: PropTypes.bool,
 };
 
 export default Checkbox;
