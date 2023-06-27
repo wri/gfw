@@ -9,6 +9,7 @@ import RefreshButton from 'components/ui/refresh-button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 import CustomComponent from 'components/widget/components/widgets-custom';
 import WidgetComposedChart from 'components/widget/components/widget-composed-chart';
+import WidgetComposedChartAlt from 'components/widget/components/widget-composed-chart-alt';
 import WidgetHorizontalBarChart from 'components/widget/components/widget-horizontal-bar-chart';
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import WidgetPieChartLegend from 'components/widget/components/widget-pie-chart-legend';
@@ -24,6 +25,7 @@ import './styles.scss';
 
 const chartOptions = {
   composedChart: WidgetComposedChart,
+  composedChartAlt: WidgetComposedChartAlt,
   horizontalBarChart: WidgetHorizontalBarChart,
   rankedList: WidgetNumberedList,
   pieChart: WidgetPieChartLegend,

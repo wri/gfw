@@ -1,0 +1,35 @@
+@import '~styles/settings.scss';
+
+.c-composed-chart {
+  width: 100%;
+  overflow-x: hidden;
+
+  tspan {
+    font-family: $font-family-1;
+    background: $white;
+  }
+
+  .recharts-cartesian-axis-tick-line {
+    stroke: rgb(204, 204, 204);
+  }
+
+  .recharts-brush {
+    transform: translate(0, 20px);
+
+    .recharts-brush-texts {
+      text {
+        font-size: 12px;
+      }
+
+      text:first-child {
+        transform: translate(5px, 30px);
+        text-anchor: start;
+      }
+
+      text:last-child {
+        transform: translate(-5px, 30px);
+        text-anchor: end;
+      }
+    }
+  }
+}
