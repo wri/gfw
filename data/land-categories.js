@@ -119,7 +119,7 @@ export default [
         layers: [IND_PEAT_LANDS],
       },
     ],
-    hidden: false,
+    hidden: true, // FIXME: we are temporary hiding this option until further notice, see FLAG-827 for reference.
   },
   {
     label: 'Indonesia forest moratorium areas',

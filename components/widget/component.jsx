@@ -49,6 +49,8 @@ class Widget extends PureComponent {
     handleSetInteraction: PropTypes.func,
     handleDataHighlight: PropTypes.func,
     handleShowShare: PropTypes.func,
+    handleIsPlaceholderImage: PropTypes.func,
+    placeholderImageURL: PropTypes.string,
     parseInteraction: PropTypes.func,
     handleRefetchData: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
@@ -116,6 +118,8 @@ class Widget extends PureComponent {
       handleShowShare,
       handleRefetchData,
       handleDataHighlight,
+      handleIsPlaceholderImage,
+      placeholderImageURL,
       parseInteraction,
       preventCloseSettings,
       showAttributionLink,
@@ -139,9 +143,14 @@ class Widget extends PureComponent {
       chartDecorationConfig,
     } = this.props;
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+
     const { main } = colors || {};
     const toggleSettingsMenu = () =>
       this.setState({ shouldSettingsOpen: !this.state.shouldSettingsOpen });
+    const showPlaceholder = handleIsPlaceholderImage(category);
+
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
@@ -158,88 +167,93 @@ class Widget extends PureComponent {
         }}
         onClick={() => onClickWidget(this.props)}
       >
-        <WidgetHeader
-          widget={widget}
-          title={title}
-          large={large}
-          datasets={datasets}
-          authenticated={authenticated}
-          meta={meta}
-          active={active}
-          disableDownload={downloadDisabled}
-          filterSelected={filterSelected}
-          maxSize={maxSize}
-          embed={embed}
-          settingsConfig={settingsConfig}
-          metaKey={metaKey}
-          proxy={proxy}
-          proxyOn={proxyOn}
-          simple={simple}
-          status={status}
-          handleShowMap={handleShowMap}
-          handleShowInfo={handleShowInfo}
-          handleChangeSettings={handleChangeSettings}
-          handleShowShare={handleShowShare}
-          preventCloseSettings={preventCloseSettings}
-          getDataURL={getDataURL}
-          settings={settings}
-          parentData={parentData}
-          childData={childData}
-          adminLevel={adminLevel}
-          locationData={locationData}
-          location={location}
-          geostore={geostore}
-          shouldSettingsOpen={this.state.shouldSettingsOpen}
-          toggleSettingsMenu={toggleSettingsMenu}
-        />
+        {showPlaceholder && <img src={placeholderImageURL} alt="widget" />}
+        {!showPlaceholder && (
+          <>
+            <WidgetHeader
+              widget={widget}
+              title={title}
+              large={large}
+              datasets={datasets}
+              authenticated={authenticated}
+              meta={meta}
+              active={active}
+              disableDownload={downloadDisabled}
+              filterSelected={filterSelected}
+              maxSize={maxSize}
+              embed={embed}
+              settingsConfig={settingsConfig}
+              metaKey={metaKey}
+              proxy={proxy}
+              proxyOn={proxyOn}
+              simple={simple}
+              status={status}
+              handleShowMap={handleShowMap}
+              handleShowInfo={handleShowInfo}
+              handleChangeSettings={handleChangeSettings}
+              handleShowShare={handleShowShare}
+              preventCloseSettings={preventCloseSettings}
+              getDataURL={getDataURL}
+              settings={settings}
+              parentData={parentData}
+              childData={childData}
+              adminLevel={adminLevel}
+              locationData={locationData}
+              location={location}
+              geostore={geostore}
+              shouldSettingsOpen={this.state.shouldSettingsOpen}
+              toggleSettingsMenu={toggleSettingsMenu}
+            />
 
-        <WidgetBody
-          widget={widget}
-          chartType={chartType}
-          loading={loading}
-          metaLoading={metaLoading}
-          error={error}
-          simple={simple}
-          large={large}
-          autoHeight={autoHeight}
-          embed={embed}
-          location={location}
-          locationName={locationLabelFull}
-          active={active}
-          data={data}
-          legendData={legendData}
-          rawData={rawData}
-          originalData={originalData}
-          settings={settings}
-          chartSettings={chartSettings}
-          settingsConfig={settingsConfig}
-          preventRenderKeys={preventRenderKeys}
-          sentence={sentence}
-          config={config}
-          handleRefetchData={handleRefetchData}
-          handleDataHighlight={handleDataHighlight}
-          handleSetInteraction={handleSetInteraction}
-          handleChangeSettings={handleChangeSettings}
-          parseInteraction={parseInteraction}
-          toggleSettingsMenu={toggleSettingsMenu}
-          settingsBtnConfig={settingsBtnConfig}
-          customComponent={customComponent}
-        />
-        {sentence && data && (
-          <WidgetFooter
-            showAttributionLink={showAttributionLink}
-            statements={statements}
-            type={type}
-            locationType={location?.locationType}
-            alerts={alerts}
-            decorationMessage={
-              chartDecorationConfig?.locations.includes(locationLabel)
-                ? chartDecorationConfig?.message
-                : null
-            }
-            simple={simple}
-            alertSystem={rawData?.alerts?.alertSystem}
-          />
+            <WidgetBody
+              widget={widget}
+              chartType={chartType}
+              loading={loading}
+              metaLoading={metaLoading}
+              error={error}
+              simple={simple}
+              large={large}
+              autoHeight={autoHeight}
+              embed={embed}
+              location={location}
+              locationName={locationLabelFull}
+              active={active}
+              data={data}
+              legendData={legendData}
+              rawData={rawData}
+              originalData={originalData}
+              settings={settings}
+              chartSettings={chartSettings}
+              settingsConfig={settingsConfig}
+              preventRenderKeys={preventRenderKeys}
+              sentence={sentence}
+              config={config}
+              handleRefetchData={handleRefetchData}
+              handleDataHighlight={handleDataHighlight}
+              handleSetInteraction={handleSetInteraction}
+              handleChangeSettings={handleChangeSettings}
+              parseInteraction={parseInteraction}
+              toggleSettingsMenu={toggleSettingsMenu}
+              settingsBtnConfig={settingsBtnConfig}
+              customComponent={customComponent}
+            />
+            {sentence && data && (
+              <WidgetFooter
+                showAttributionLink={showAttributionLink}
+                statements={statements}
+                type={type}
+                locationType={location?.locationType}
+                alerts={alerts}
+                decorationMessage={
+                  chartDecorationConfig?.locations.includes(locationLabel)
+                    ? chartDecorationConfig?.message
+                    : null
+                }
+                simple={simple}
+                alertSystem={rawData?.alerts?.alertSystem}
+              />
+            )}
+          </>
         )}
       </div>
     );
