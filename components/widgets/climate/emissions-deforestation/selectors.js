@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 
 import { formatNumber } from 'utils/format';
@@ -79,13 +78,13 @@ export const parseConfig = createSelector(
         {
           key: 'emissions',
           label: emissionLabel,
-          unit: 't CO2e',
-          unitFormat: (value) => format('.3s')(value),
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: loss.main,
         },
       ],
-      unit: 't CO2e',
-      unitFormat: (value) => format('.2s')(value),
+      unitFormat: (value) =>
+        formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
     };
   }
 );
@@ -114,9 +113,17 @@ export const parseSentence = createSelector(
     const sentence = initial + emissionString;
 
     const params = {
-      value: `${formatNumber({ num: totalBiomass, unit: 't' })} of CO\u2082e`,
+      value: `${formatNumber({
+        num: totalBiomass,
+        unit: 't',
+        spaceUnit: true,
+      })} of CO\u2082e`,
       location: locationName,
-      annualAvg: formatNumber({ num: totalBiomass / data.length, unit: 't' }),
+      annualAvg: formatNumber({
+        num: totalBiomass / data.length,
+        unit: 't',
+        spaceUnit: true,
+      }),
       startYear,
       endYear,
       indicatorText,
