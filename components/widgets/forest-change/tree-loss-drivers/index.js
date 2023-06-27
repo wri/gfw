@@ -17,7 +17,7 @@ import { getExtent, getLoss } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2021;
+const MAX_YEAR = 2022;
 
 export default {
   ...treeLoss,

@@ -16,7 +16,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2021;
+const MAX_YEAR = 2022;
 const MIN_YEAR = 2001;
 
 export default {
@@ -145,7 +145,7 @@ export default {
           loss: lossByRegion[regionIndex],
         }));
 
-        /* lossItemReference is for reference of startYear, endYear and range. 
+        /* lossItemReference is for reference of startYear, endYear and range.
           The perfect item should have all the years to set the variables */
         const lossItemReference = lossMappedData.findIndex(({ loss }) =>
           loss.find(({ umd_tree_cover_loss__year: year }) => year >= MAX_YEAR)

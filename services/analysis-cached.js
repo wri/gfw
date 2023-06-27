@@ -482,7 +482,6 @@ export const getTreeCoverLossByDriverType = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20220721',
   });
 
   if (!requestUrl) return new Promise(() => {});
@@ -659,7 +658,6 @@ export const getCarbonFlux = (params) => {
       ...params,
       dataset: 'annual',
       datasetType: 'summary',
-      version: 'v20220721',
     })}${carbonFlux}`
       .replace(
         /{select_location}/g,
@@ -776,7 +774,6 @@ export const getLossFires = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'change',
-    version: 'v20220721',
   });
 
   if (!requestUrl) {
@@ -856,7 +853,6 @@ export const getLossFiresGrouped = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'change',
-    version: 'v20220721',
     grouped: true,
   });
 
