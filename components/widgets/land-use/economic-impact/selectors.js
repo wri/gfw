@@ -1,9 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
-import { formatUSD } from 'utils/format';
+import { formatUSD, formatNumber } from 'utils/format';
 
 // get list data
 const getData = (state) => state.data && state.data.data;
@@ -173,10 +172,7 @@ export const parseSentence = createSelector(
     const params = {
       location: `${locationObject && locationObject && locationObject.label}'s`,
       value: `${formatUSD(selectedFAO[0].net_usd, false)} USD`,
-      percentage:
-        selectedFAO[0].net_perc >= 0.1
-          ? `${format('2r')(selectedFAO[0].net_perc)}%`
-          : '< 0.1%',
+      percentage: formatNumber({ num: selectedFAO[0].net_perc, unit: '%' }),
       year: settings.year,
     };
 
