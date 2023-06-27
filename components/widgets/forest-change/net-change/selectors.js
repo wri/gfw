@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import meanBy from 'lodash/meanBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 
 // get list data
@@ -113,8 +112,8 @@ const parseSentence = createSelector(
       location: locationLabel,
       startYear,
       endYear,
-      netChange: formatNumber({ num: net, unit: 'ha' }),
-      netChangePerc: `${format('.2r')(change)}%`,
+      netChange: formatNumber({ num: net, unit: 'ha', spaceUnit: true }),
+      netChangePerc: formatNumber({ num: change, unit: '%' }),
     };
 
     return {
