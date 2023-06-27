@@ -4,18 +4,18 @@ import capitalize from 'lodash/capitalize';
 import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data && state.data.data;
-const getSettings = state => state.settings;
-const getLocationName = state => state.locationLabel;
-const getColors = state => state.colors;
-const getSentences = state => state.sentence;
+const getData = (state) => state.data && state.data.data;
+const getSettings = (state) => state.settings;
+const getLocationName = (state) => state.locationLabel;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentence;
 
 export const parseData = createSelector(
   [getData, getColors, getSettings],
   (data, colors, settings) => {
     if (isEmpty(data)) return null;
     const list = data.topNodes.targetNodes;
-    const rankedList = list.map(l => ({
+    const rankedList = list.map((l) => ({
       label: capitalize(l.name),
       value: settings.unit === 't' ? l.value : l.height * 100,
       id: l.id,
@@ -23,11 +23,11 @@ export const parseData = createSelector(
       percentage: l.height * 100,
       unit: settings.unit,
       iso: l.geo_id,
-      color: colors.main
+      color: colors.main,
     }));
     return {
       ...data,
-      rankedData: rankedList
+      rankedData: rankedList,
     };
   }
 );
@@ -43,19 +43,23 @@ export const parseSentence = createSelector(
       endYear,
       commodity: `${locationName} ${commodity.toLowerCase()}`,
       source: topLocation.label,
-      volume: formatNumber({ num: topLocation.volume, unit: 't' }),
+      volume: formatNumber({
+        num: topLocation.volume,
+        unit: 't',
+        spaceUnit: true,
+      }),
       percentage: formatNumber({ num: topLocation.percentage, unit: '%' }),
-      location: locationName
+      location: locationName,
     };
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });
