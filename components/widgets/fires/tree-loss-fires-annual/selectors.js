@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import maxBy from 'lodash/maxBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import {
   yearTicksFormatter,
@@ -113,14 +112,20 @@ const parseConfig = createSelector([getColors], (colors) => ({
     },
     {
       key: 'umd_tree_cover_loss__ha',
-      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      unitFormat: (value) =>
+        formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       label: 'Tree cover loss',
       color: colors.treeCoverLoss,
     },
     {
       key: 'umd_tree_cover_loss_from_fires__ha',
       label: 'Tree cover loss from fires',
-      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      unitFormat: (value) =>
+        formatNumber({
+          num: value,
+          unit: 'ha',
+          spaceUnit: true,
+        }),
       color: colors.main,
     },
   ],
@@ -170,19 +175,26 @@ const parseSentence = createSelector(
       location: locationLabel,
       startYear,
       endYear,
-      treeCoverLossFires: formatNumber({ num: treeCoverLossFires, unit: 'ha' }),
+      treeCoverLossFires: formatNumber({
+        num: treeCoverLossFires,
+        unit: 'ha',
+        spaceUnit: true,
+      }),
       treeCoverLossNotFires: formatNumber({
         num: treeCoverLossNotFires,
         unit: 'ha',
+        spaceUnit: true,
       }),
       highestYearFires: highestYearFires.year,
       highestYearFiresLossFires: formatNumber({
         num: highestYearFires.treeCoverLossFires,
         unit: 'ha',
+        spaceUnit: true,
       }),
-      highestYearFiresPercentageLossFires: `${format('.2r')(
-        highestYearFiresPercentageLossFires
-      )}%`,
+      highestYearFiresPercentageLossFires: formatNumber({
+        num: highestYearFiresPercentageLossFires,
+        unit: '%',
+      }),
     };
 
     return {
