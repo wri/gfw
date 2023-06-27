@@ -101,7 +101,11 @@ export const parseSentence = createSelector(
       const value =
         settings.variable === 'totalbiomass'
           ? formatNumber({ num: percent, unit: '%' })
-          : formatNumber({ num: avgBiomDensity, unit: 'tC/ha' });
+          : formatNumber({
+              num: avgBiomDensity,
+              unit: 'tC/ha',
+              spaceUnit: true,
+            });
 
       const labels = {
         biomassdensity: 'soil organic carbon density',
@@ -131,8 +135,16 @@ export const parseSentence = createSelector(
       sentence: sentences.initial,
       params: {
         location,
-        biomassDensity: formatNumber({ num: biomassdensity, unit: 'tC/ha' }),
-        totalBiomass: formatNumber({ num: totalbiomass, unit: 'tC' }),
+        biomassDensity: formatNumber({
+          num: biomassdensity,
+          unit: 'tC/ha',
+          spaceUnit: true,
+        }),
+        totalBiomass: formatNumber({
+          num: totalbiomass,
+          unit: 'tC',
+          spaceUnit: true,
+        }),
       },
     };
   }
