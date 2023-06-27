@@ -240,7 +240,11 @@ export const parseSentence = createSelector(
       },
       thresh: `${thresh}%`,
       topRegion,
-      topRegionCount: formatNumber({ num: topRegionCount, unit: 'ha' }),
+      topRegionCount: formatNumber({
+        num: topRegionCount,
+        unit: 'ha',
+        spaceUnit: true,
+      }),
       topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
       topRegionDensity: formatNumber({ num: topRegionDensity, unit: '%' }),
       location: locationName === 'global' ? 'globally' : locationName,
