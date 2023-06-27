@@ -14,10 +14,11 @@ import {
   FOREST_LOSS,
 } from 'data/layers';
 
+import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-2022.png';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2021;
+const MAX_YEAR = 2022;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -109,6 +110,7 @@ export default {
     extentYear: 2000,
     forestType: 'primary_forest',
   },
+  placeholderImageURL: indonesiaPlaceholder,
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
     const globalLocation = {
@@ -192,6 +194,24 @@ export default {
           download: true,
         }),
     ]);
+  },
+  /**
+   * set rules when the widget should only display a static image
+   * see FLAG-829 for reference.
+   * @param {{ adm0, adm1, adm2, locationType, pathname, type }, category }
+   */
+  // eslint-disable-next-line no-unused-vars
+  isPlaceholderImage: ({ location, category }) => {
+    return location.type === 'country' && location.adm0 === 'IDN';
+
+    // TODO: replace with the following snippet (next week)
+    /*
+    return (
+      location.type === 'country' &&
+      location.adm0 === 'IDN' &&
+      category === 'summary'
+    );
+    */
   },
   getWidgetProps,
 };

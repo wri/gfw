@@ -387,6 +387,11 @@ export const funders = [
     title: 'IDB | Invest',
   },
   {
+    img: images('./internationalclimateinitiative.png'),
+    link: 'https://www.international-climate-initiative.com/en',
+    title: 'International Climate Initiative',
+  },
+  {
     img: images('./macarthurhover.png'),
     link: 'https://www.macfound.org/',
     title: 'MacArthur Foundation',

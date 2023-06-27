@@ -437,15 +437,15 @@ class Header extends PureComponent {
                   <Fragment>
                     <p className="disclaimer">
                       *Much of the primary forest loss in Indonesia according to
-                      the GFW data is actually within areas that Indonesia
-                      classifies as secondary forest and thus outside forest
-                      that Indonesia classifies as primary. This is because the
-                      GFW primary forest definition is not consistent with
-                      Indonesia’s official primary forest definition and
-                      classification. GFW‘s statistics on loss of primary
-                      forests in Indonesia are therefore considerably higher
-                      than the official Indonesian statistics on deforestation
-                      in primary forests.
+                      the GFW analysis is actually within areas that Indonesia
+                      classifies as secondary forest and other land cover (e.g.,
+                      mixed dry land agriculture, estate crop, plantation
+                      forest, shrub and others). This is because the GFW primary
+                      forest definition is not consistent with Indonesia’s
+                      official primary forest definition and classification.
+                      GFW’s statistics on loss of primary forests in Indonesia
+                      are therefore considerably higher than the official
+                      Indonesian statistics on deforestation in primary forests.
                     </p>
                   </Fragment>
                 )}
