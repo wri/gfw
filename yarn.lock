@@ -3550,11 +3550,6 @@ array-map@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"
 
-array-move@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/array-move/-/array-move-2.1.0.tgz#b4e9fc8d6a580bc97dcad408e0539c61b4b7ed7e"
-  integrity sha512-BXEIud+F7/ech2HcSfo+6bpgSCRlNnVTqQhGKdMov9iJkHq+vu9IP9qRXDpZvQpc1WWpDLiEfjs6Lfvvac+fDA==
-
 array-reduce@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
@@ -17878,7 +17873,6 @@ vizzuality-components@^3.0.3:
   resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.3.tgz#ca93c266a3f8548edeef3c1060ea78232760b798"
   integrity sha512-0Ee1p9nnX8MpH4GXpbkMba7RUZ7bs1C+B7yvipUf2a1WiyhmjHzEipBjphdRmirA6+ShFxIyR5017F0zwYm2WA==
   dependencies:
-    array-move "^2.1.0"
     axios "^0.19.0"
     classnames "^2.2.6"
     layer-manager "^1.10.0"
