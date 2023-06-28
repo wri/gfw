@@ -1,0 +1,60 @@
+.c-legend-item-basic {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+
+  .name, .unit {
+    display: block;
+  }
+
+  .unit {
+    margin-left: 5px;
+  }
+
+  > .icon-square,
+  > .icon-line,
+  > .icon-circle,
+  > .icon-triangle,
+  .custom-icon {
+    display: block;
+    margin-right: 5px;
+    margin-top: 2px;
+  }
+
+  > .icon-square {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  > .icon-line {
+    height: 2px;
+  }
+
+  > .icon-circle {
+    border-radius: 100%;
+  }
+
+  > .icon-triangle {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 9px solid black;
+  }
+
+  .custom-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+
+    img {
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
