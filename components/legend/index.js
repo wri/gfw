@@ -143,7 +143,7 @@ class Legend extends PureComponent {
 }
 
 export default Legend;
-// export { default as LegendListItem } from './components/legend-list-item';
+export { default as LegendListItem } from './components/legend-list-item';
 export {
   default as LegendItemToolbar,
   LegendItemButtonBBox,
@@ -153,11 +153,3 @@ export {
   LegendItemButtonInfo,
   LegendItemButtonRemove,
 } from './components/legend-item-toolbar';
-
-// export {
-//   default as LegendItemTypes,
-//   LegendItemTypeBasic,
-//   LegendItemTypeChoropleth,
-//   LegendItemTypeGradient,
-//   LegendItemTypeProportional
-// } from './components/legend-item-types';
