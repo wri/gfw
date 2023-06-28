@@ -59,7 +59,7 @@ class LegendItemButtonRemove extends PureComponent {
       >
         <button
           type="button"
-          styleName="c-legend-button close"
+          className="c-legend-button close"
           onClick={() => this.props.onRemoveLayer(activeLayer)}
           aria-label="Remove"
         >

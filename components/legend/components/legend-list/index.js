@@ -54,7 +54,7 @@ class LegendList extends PureComponent {
     const { scrolling } = this.state;
 
     return (
-      <ul id="vizzuality-legend-list" styleName="c-legend-list" onScroll={this.onScroll}>
+      <ul id="vizzuality-legend-list" className="c-legend-list" onScroll={this.onScroll}>
         {React.Children.map(children, (child, index) =>
           React.cloneElement(child, {
             sortable,

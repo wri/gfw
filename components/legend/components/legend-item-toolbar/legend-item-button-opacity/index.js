@@ -134,7 +134,7 @@ class LegendItemButtonOpacity extends PureComponent {
         >
           <button
             type="button"
-            styleName={`c-legend-button opacity ${classnames({ '-disabled': !visibility })}`}
+            className={`c-legend-button opacity ${classnames({ '-disabled': !visibility })}`}
             aria-label="Change opacity"
           >
             <Icon name={icon || 'icon-opacity'} className="-small" style={iconStyle} />

@@ -119,7 +119,7 @@ class LegendItemButtonLayers extends PureComponent {
         >
           <button
             type="button"
-            styleName="c-legend-button layers"
+            className="c-legend-button layers"
             aria-label="Select other layer"
           >
             <Icon name={icon || 'icon-layers'} className="-small" style={visibilityHover || visibilityClick ? focusStyle : defaultStyle} />

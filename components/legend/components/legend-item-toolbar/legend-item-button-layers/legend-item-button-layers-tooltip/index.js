@@ -17,14 +17,14 @@ class LegendLayersTooltip extends PureComponent {
     const { layers, activeLayer } = this.props;
 
     return (
-      <div styleName="c-legend-item-button-layers-tooltip">
+      <div className="c-legend-item-button-layers-tooltip">
         Layers
 
-        <ul styleName="layers-list">
+        <ul className="layers-list">
           {layers.map(l => (
             <li
               key={l.id}
-              styleName={classnames({
+              className={classnames({
                 'layers-list-item': true,
                 '-active': l.id === activeLayer.id
               })}

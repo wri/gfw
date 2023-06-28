@@ -33,32 +33,29 @@ class LegendListItem extends PureComponent {
 
     return (
       <li
-        styleName={classnames({
+        className={classnames({
           'c-legend-item': true,
           '-sortable': sortable
         })}
       >
         <div
-          styleName={classnames({
+          className={classnames({
             'legend-item-container': true,
             '-sortable': sortable
           })}
         >
           {sortable &&
-            <LegendItemDrag />
-          }
+            <LegendItemDrag />}
 
-          <div styleName="legend-info">
-            <header styleName="legend-item-header">
+          <div className="legend-info">
+            <header className="legend-item-header">
               <h3>
                 {React.isValidElement(title) && typeof title.type !== 'string' ?
                   React.cloneElement(title, { ...props, layers, activeLayer }) :
-                  (activeLayer && activeLayer.name)
-                }
+                  (activeLayer && activeLayer.name)}
               </h3>
               {React.isValidElement(toolbar) && typeof toolbar.type !== 'string' &&
-                React.cloneElement(toolbar, { ...props, layers, activeLayer })
-              }
+                React.cloneElement(toolbar, { ...props, layers, activeLayer })}
             </header>
 
             {React.Children.map(children, child => (React.isValidElement(child) && typeof child.type !== 'string' ?
