@@ -89,7 +89,6 @@ class LayerToggle extends PureComponent {
               {((!metadata && description) ||
                 (metadata && typeof metadata === 'string')) && (
                 <Tooltip
-                  className={`metadata-${layer}`}
                   theme="tip"
                   arrow
                   hideOnClick
@@ -104,10 +103,10 @@ class LayerToggle extends PureComponent {
                     })}
                 >
                   <Button
+                    id={`metadata-${layer}`}
                     className={`theme-button-tiny theme-button-grey-filled square info-button ${
                       !metadata ? '-help' : ''
                     }`}
-                    id={`metadata-${layer}`}
                     onClick={metadata && (() => onInfoClick(metadata))}
                   >
                     <Icon icon={metadata ? infoIcon : helpIcon} />

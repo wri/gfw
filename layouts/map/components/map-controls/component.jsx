@@ -236,6 +236,7 @@ class MapControlsButtons extends PureComponent {
     return (
       <Fragment>
         <Button
+          id="map-zoom-out-button"
           className="map-control"
           theme="theme-button-map-control"
           onClick={() => {
@@ -252,6 +253,7 @@ class MapControlsButtons extends PureComponent {
           <Icon icon={minusIcon} className="minus-icon" />
         </Button>
         <Button
+          id="map-zoom-in-button"
           className="map-control"
           theme="theme-button-map-control"
           onClick={() => {
@@ -276,6 +278,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
+        id="map-full-screen-button"
         className="map-control"
         theme="theme-button-map-control"
         onClick={this.handleHidePanels}
@@ -294,6 +297,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
+        id="map-search-button"
         className="map-control"
         theme="theme-button-map-control"
         onClick={() => setMenuSettings({ menuSection: 'search' })}
@@ -309,6 +313,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
+        id="map-share-button"
         className="map-control -share"
         theme="theme-button-map-control"
         onClick={() =>
@@ -355,6 +360,7 @@ class MapControlsButtons extends PureComponent {
   renderMapOptions() {
     return (
       <Button
+        id="map-settings-button"
         className="map-control"
         theme="theme-button-map-control"
         tooltip={{ text: 'Map settings' }}
@@ -370,6 +376,7 @@ class MapControlsButtons extends PureComponent {
 
   renderMapTourBtn = () => (
     <Button
+      id="map-howto-button"
       className="map-control"
       theme="theme-button-map-control"
       tooltip={{ text: 'Map How-To Guide' }}

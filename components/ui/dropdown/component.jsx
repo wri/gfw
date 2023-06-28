@@ -163,6 +163,7 @@ class Dropdown extends PureComponent {
                     (o) =>
                       o && (
                         <option
+                          id={`option-${o.value}`}
                           key={`${o.value}-${o.label}`}
                           value={o.value}
                           disabled={o?.disabled || false}
