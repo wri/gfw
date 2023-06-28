@@ -3,7 +3,7 @@
   "version": "6.4.5",
   "description": "Global Forest Watch",
   "engines": {
-    "node": "12.16.2"
+    "node": "12.20.0"
   },
   "scripts": {
     "dev": "next",
@@ -81,7 +81,9 @@
     "@next/bundle-analyzer": "^10.0.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@wordpress/api-fetch": "^3.19.1",
+    "@worldresources/gfw-components": "^2.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "array-move": "^4.0.0",
     "aws-sdk": "^2.291.0",
     "axios": "^0.21.1",
     "chroma-js": "^2.1.0",
@@ -97,7 +99,6 @@
     "fast-redux": "^0.7.1",
     "file-saver": "^2.0.2",
     "final-form": "^4.18.7",
-    "@worldresources/gfw-components": "^2.0.1",
     "heroku-ssl-redirect": "^0.1.1",
     "html-react-parser": "^3.0.6",
     "image-trace-loader": "^1.0.2",
@@ -147,6 +148,7 @@
     "react-scroll": "^1.7.16",
     "react-simple-maps": "^2.0.0",
     "react-slick": "^0.25.2",
+    "react-sortable-hoc": "^2.0.0",
     "react-spring": "8.0.27",
     "react-stickynode": "1.4.1",
     "react-tagsinput": "^3.19.0",
