@@ -8,8 +8,6 @@ import {
   LegendItemTypes,
   LegendItemTypeBasic,
   LegendItemTypeProportional,
-  // LegendItemToolbar,
-  // LegendItemButtonOpacity,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
   Icons,

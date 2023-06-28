@@ -26,16 +26,16 @@ class LegendTypeGradient extends PureComponent {
     const gradient = items.map(item => item.color);
 
     return (
-      <div styleName="c-legend-type-gradient">
-        <div styleName="legend-gradient-icon">
+      <div className="c-legend-type-gradient">
+        <div className="legend-gradient-icon">
           {itemTransparent && (
             <div
               style={{ width: `${(1 / legendConfig.items.length) * 100}%` }}
-              styleName="icon-gradient-transparent"
+              className="icon-gradient-transparent"
             />
           )}
           <div
-            styleName="icon-gradient"
+            className="icon-gradient"
             style={{
               width: `${(items.length / legendConfig.items.length) * 100}%`,
               backgroundImage: `linear-gradient(to right, ${gradient.join(',')})`
@@ -45,7 +45,7 @@ class LegendTypeGradient extends PureComponent {
         <ul>
           {legendConfig.items.map(({ name, color, value }) => name || value ? (
             <li key={`legend-gradient-item-${color}-${value}-${name}`}>
-              <span styleName="name">
+              <span className="name">
                 {name || value}
               </span>
             </li>

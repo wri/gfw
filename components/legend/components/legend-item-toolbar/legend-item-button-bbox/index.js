@@ -60,7 +60,7 @@ class LegendItemButtonBBox extends PureComponent {
       >
         <button
           type="button"
-          styleName="c-legend-button"
+          className="c-legend-button"
           aria-label="Fit to bounds"
           onClick={() => this.props.onChangeBBox(activeLayer)}
         >

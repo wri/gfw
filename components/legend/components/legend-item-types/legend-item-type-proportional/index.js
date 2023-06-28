@@ -22,14 +22,14 @@ class LegendTypeGradient extends PureComponent {
     }
 
     return (
-      <ul styleName="c-legend-type-proportional">
+      <ul className="c-legend-type-proportional">
         {legendConfig.items.map(({ name, color, size }) => (
           <li key={`legend-proportional-item-${name}`}>
             <div
-              styleName="icon-proportional"
+              className="icon-proportional"
               style={{ backgroundColor: color, width: size, height: size }}
             />
-            <span styleName="name">
+            <span className="name">
               {name}
             </span>
           </li>

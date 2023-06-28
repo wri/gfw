@@ -64,7 +64,7 @@ class LegendItemButtonVisibility extends PureComponent {
       >
         <button
           type="button"
-          styleName="c-legend-button toggle"
+          className="c-legend-button toggle"
           onClick={() => this.props.onChangeVisibility(activeLayer, !visibility)}
           aria-label="Toggle the visibility"
         >

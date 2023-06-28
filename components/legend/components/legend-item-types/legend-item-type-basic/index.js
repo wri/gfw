@@ -25,14 +25,14 @@ export class LegendTypeBasic extends React.PureComponent {
     }
 
     return (
-      <div styleName="c-legend-type-basic">
-        <ul styleName={mode}>
+      <div className="c-legend-type-basic">
+        <ul className={mode}>
           {legendConfig.items.map(item => (
             <li key={`legend-basic-item-${item.name}`}>
               <LegendItem {...item} />
 
               {!!item.items && item.items.length && (
-                <ul styleName="legend-basic-group">
+                <ul className="legend-basic-group">
                   {item.items.map(it => (
                     <li key={`legend-basic-item-${it.name}`}>
                       <LegendItem style={{ borderBottom: 0 }} {...it} />

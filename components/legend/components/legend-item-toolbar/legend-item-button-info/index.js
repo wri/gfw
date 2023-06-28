@@ -59,7 +59,7 @@ class LegendItemButtonInfo extends PureComponent {
       >
         <button
           type="button"
-          styleName="c-legend-button"
+          className="c-legend-button"
           aria-label="More information"
           onClick={() => this.props.onChangeInfo(activeLayer)}
         >
