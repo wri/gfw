@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { arrayMoveImmutable } from 'array-move';
+import { arrayMoveImmutable } from 'utils/array-move';
 
 // Components
-import { Icon } from 'vizzuality-components'
+import { Icon } from 'vizzuality-components';
 import LegendList from './components/legend-list';
 
 import './styles.scss';
@@ -24,12 +24,12 @@ class Legend extends PureComponent {
     /** Should the legend be collapsable */
     collapsable: PropTypes.bool,
     /** `onChangeOrder = (layerGroupsIds) => {}`
-      * @arg {Array} layerGroupIds The new order
-    */
+     * @arg {Array} layerGroupIds The new order
+     */
     onChangeOrder: PropTypes.func,
     /** Children for render */
-    children: PropTypes.node
-  }
+    children: PropTypes.node,
+  };
 
   static defaultProps = {
     title: 'Legend',
@@ -39,31 +39,31 @@ class Legend extends PureComponent {
     maxWidth: null,
     maxHeight: null,
     children: [],
-    onChangeOrder: ids => console.info(ids)
-  }
+    onChangeOrder: (ids) => console.info(ids),
+  };
 
   constructor(props) {
     super(props);
     const { expanded } = props;
-    this.state = { expanded }
+    this.state = { expanded };
   }
 
   /**
    * UI EVENTS
    * onToggleLegend
    * onSortEnd
-  */
+   */
   onToggleLegend = (bool) => {
     this.setState({ expanded: bool });
-  }
+  };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { onChangeOrder, children } = this.props;
-    const layers = [...children.map(c => c.props.layerGroup.dataset)];
+    const layers = [...children.map((c) => c.props.layerGroup.dataset)];
     const layersDatasets = arrayMoveImmutable(layers, oldIndex, newIndex);
 
     onChangeOrder(layersDatasets);
-  }
+  };
 
   render() {
     const {
@@ -72,11 +72,10 @@ class Legend extends PureComponent {
       collapsable,
       maxWidth,
       maxHeight,
-      children
+      children,
     } = this.props;
 
     const { expanded } = this.state;
-
 
     if (!children || !React.Children.count(children)) {
       return null;
@@ -91,7 +90,11 @@ class Legend extends PureComponent {
         >
           {/* Toggle button */}
           {collapsable && (
-            <button type="button" styleName="toggle-legend" onClick={() => this.onToggleLegend(false)}>
+            <button
+              type="button"
+              styleName="toggle-legend"
+              onClick={() => this.onToggleLegend(false)}
+            >
               <Icon name="icon-arrow-down" className="-small" />
             </button>
           )}
@@ -99,8 +102,8 @@ class Legend extends PureComponent {
           {expanded && (
             <LegendList
               helperClass="c-legend-item -sortable"
-              onSortStart={(_, event) =>
-                event.preventDefault() // It fixes user select in Safari and IE
+              onSortStart={
+                (_, event) => event.preventDefault() // It fixes user select in Safari and IE
               }
               onSortEnd={this.onSortEnd}
               axis="y"
@@ -110,12 +113,11 @@ class Legend extends PureComponent {
               useDragHandle
               sortable={sortable}
             >
-              {React.Children.map(children, (child, index) => (
-                React.isValidElement(child) && child.type === 'LegendItemList' ?
-                React.cloneElement(child, { sortable, index })
-                :
-                child
-              ))}
+              {React.Children.map(children, (child, index) =>
+                React.isValidElement(child) && child.type === 'LegendItemList'
+                  ? React.cloneElement(child, { sortable, index })
+                  : child
+              )}
             </LegendList>
           )}
         </div>
@@ -149,7 +151,7 @@ export {
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
-  LegendItemButtonRemove
+  LegendItemButtonRemove,
 } from './components/legend-item-toolbar';
 
 // export {
