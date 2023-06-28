@@ -1,6 +1,6 @@
 import React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
-import Icon from 'components/icon';
+import { Icon } from 'vizzuality-components';
 import './styles.scss';
 
 const LegendItemDrag = () => (
