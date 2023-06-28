@@ -117,6 +117,7 @@ class ChoseAnalysis extends PureComponent {
           Draw in the map the area you want to analyze
         </div>
         <Button
+          id="draw-button"
           className="draw-menu-button"
           theme={drawing ? 'theme-button-light wide' : 'wide'}
           onClick={() => {
@@ -135,6 +136,7 @@ class ChoseAnalysis extends PureComponent {
         </Button>
         <div className="draw-menu-separator">or</div>
         <Dropzone
+          id="upload-dropzone"
           className={cx(
             'draw-menu-input',
             { error: error && errorMessage },
