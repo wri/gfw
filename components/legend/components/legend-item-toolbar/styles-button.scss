@@ -1,0 +1,22 @@
+@import '~styles/vizz-components-settings';
+
+.c-legend-button {
+  display: inline-block; // Needed to solve height issues
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+
+  &.-disabled {
+    cursor: not-allowed;
+  }
+
+  // Icons
+  // This is shit....we should have good icons instead of doing this
+  &.info { svg { width: 14px; } }
+  &.close { svg { width: 11px; } }
+  &.toggle { svg { width: 16px; } }
+  &.opacity { svg { width: 13px; } }
+  &.layers { svg { width: 15px; } }
+}

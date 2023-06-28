@@ -1,0 +1,12 @@
+@import 'settings';
+
+.c-legend-timestep {
+  margin-bottom: 0px;
+  margin-left: 6px;
+  width: calc(100% - 14px);
+
+  &.-can-play {
+    margin-left: -4px;
+    width: calc(100% - 4px);
+  }
+}

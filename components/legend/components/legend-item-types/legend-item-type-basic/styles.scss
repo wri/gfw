@@ -1,0 +1,49 @@
+.c-legend-type-basic {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &.columns {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 10px 0 0;
+
+      li {
+        flex: 0 0 50%;
+        margin: 3px 0;
+        padding: 0 10px 0 0;
+      }
+    }
+
+    &.horizontal {
+      display: flex;
+
+      li {
+        margin-right: 30px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    &.vertical {
+      li {
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .legend-basic-group {
+    padding: 8px 0 0 10px;
+  }
+
+  li {
+    padding: 0;
+  }
+}

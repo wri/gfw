@@ -8,12 +8,14 @@ import {
   LegendItemTypes,
   LegendItemTypeBasic,
   LegendItemTypeProportional,
-  LegendItemToolbar,
-  LegendItemButtonOpacity,
+  // LegendItemToolbar,
+  // LegendItemButtonOpacity,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
   Icons,
 } from 'vizzuality-components';
+
+import { LegendItemToolbar, LegendItemButtonOpacity } from 'components/legend'
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';

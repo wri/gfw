@@ -1,0 +1,31 @@
+.c-legend-type-proportional {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: flex-end;
+
+  > li {
+    padding: 0;
+    flex: 1 1 auto;
+  }
+
+  .name {
+    display: block;
+
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .icon-proportional {
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+
+    border-radius: 100%;
+  }
+}
