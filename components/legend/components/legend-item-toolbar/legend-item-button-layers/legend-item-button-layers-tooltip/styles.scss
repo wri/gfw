@@ -16,7 +16,7 @@
       cursor: pointer;
       padding-left: $space-1 * 2;
 
-      &:before {
+      &::before {
         display: none;
         content: "";
         position: absolute;
@@ -33,7 +33,7 @@
       }
 
       &.-active {
-        &:before {
+        &::before {
           display: block;
         }
       }

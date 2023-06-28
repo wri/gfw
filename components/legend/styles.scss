@@ -31,13 +31,13 @@
     border: 0;
     border-radius: 2px 2px 0 0;
     transform: translate(0, -1px);
-    background-color: rgba($color-dark-2, .8);
+    background-color: rgba($color-dark-2, 0.8);
     cursor: pointer;
 
     &:focus { outline: none; }
 
     &:hover {
-      background-color: rgba(darken($color-dark-2, 5%), .8);
+      background-color: rgba(darken($color-dark-2, 5%), 0.8);
     }
 
     svg {

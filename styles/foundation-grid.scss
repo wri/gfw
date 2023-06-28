@@ -1,14 +1,18 @@
 /* eslint-disable */
 @import "~styles/settings.scss";
+
 /**
  * Foundation for Sites by ZURB
  * Version 6.4.2
  * foundation.zurb.com
  * Licensed under MIT Open Source
  */
+
 /*! normalize-scss | MIT/GPLv2 License | bit.ly/normalize-scss */
+
 /* Document
        ========================================================================== */
+
 /**
 * 1. Change the default font family in all browsers (opinionated).
 * 2. Correct the line height in all browsers.
@@ -17,17 +21,22 @@
 */
 html {
   font-family: sans-serif;
+
   /* 1 */
   line-height: 1.15;
+
   /* 2 */
   -ms-text-size-adjust: 100%;
+
   /* 3 */
   -webkit-text-size-adjust: 100%;
+
   /* 3 */
 }
 
 /* Sections
         ========================================================================== */
+
 /**
 * Remove the margin in all browsers (opinionated).
 */
@@ -58,6 +67,7 @@ h1 {
 
 /* Grouping content
         ========================================================================== */
+
 /**
 * Add the correct display in IE 9-.
 */
@@ -79,10 +89,13 @@ figure {
       */
 hr {
   box-sizing: content-box;
+
   /* 1 */
   height: 0;
+
   /* 1 */
   overflow: visible;
+
   /* 2 */
 }
 
@@ -99,21 +112,26 @@ main {
       */
 pre {
   font-family: monospace, monospace;
+
   /* 1 */
   font-size: 1em;
+
   /* 2 */
 }
 
 /* Links
         ========================================================================== */
+
 /**
       * 1. Remove the gray background on active links in IE 10.
       * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
       */
 a {
   background-color: transparent;
+
   /* 1 */
   -webkit-text-decoration-skip: objects;
+
   /* 2 */
 }
 
@@ -128,16 +146,20 @@ a:hover {
 
 /* Text-level semantics
         ========================================================================== */
+
 /**
       * 1. Remove the bottom border in Firefox 39-.
       * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
       */
 abbr[title] {
   border-bottom: none;
+
   /* 1 */
   text-decoration: underline;
+
   /* 2 */
   text-decoration: underline dotted;
+
   /* 2 */
 }
 
@@ -165,8 +187,10 @@ code,
 kbd,
 samp {
   font-family: monospace, monospace;
+
   /* 1 */
   font-size: 1em;
+
   /* 2 */
 }
 
@@ -214,6 +238,7 @@ sup {
 
 /* Embedded content
         ========================================================================== */
+
 /**
       * Add the correct display in IE 9-.
       */
@@ -246,6 +271,7 @@ svg:not(:root) {
 
 /* Forms
         ========================================================================== */
+
 /**
       * 1. Change the font styles in all browsers (opinionated).
       * 2. Remove the margin in Firefox and Safari.
@@ -256,12 +282,16 @@ optgroup,
 select,
 textarea {
   font-family: sans-serif;
+
   /* 1 */
   font-size: 100%;
+
   /* 1 */
   line-height: 1.15;
+
   /* 1 */
   margin: 0;
+
   /* 2 */
 }
 
@@ -292,6 +322,7 @@ html [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+
   /* 2 */
 }
 
@@ -302,10 +333,12 @@ button,
   /**
         * Remove the inner border and padding in Firefox.
         */
+
   /**
         * Restore the focus styles unset by the previous rule.
         */
 }
+
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
@@ -313,6 +346,7 @@ button::-moz-focus-inner,
   border-style: none;
   padding: 0;
 }
+
 button:-moz-focusring,
 [type="button"]:-moz-focusring,
 [type="reset"]:-moz-focusring,
@@ -334,8 +368,10 @@ input {
 [type="checkbox"],
 [type="radio"] {
   box-sizing: border-box;
+
   /* 1 */
   padding: 0;
+
   /* 2 */
 }
 
@@ -353,13 +389,17 @@ input {
       */
 [type="search"] {
   -webkit-appearance: textfield;
+
   /* 1 */
   outline-offset: -2px;
+
   /* 2 */
+
   /**
         * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
         */
 }
+
 [type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
@@ -371,8 +411,10 @@ input {
       */
 ::-webkit-file-upload-button {
   -webkit-appearance: button;
+
   /* 1 */
   font: inherit;
+
   /* 2 */
 }
 
@@ -393,16 +435,22 @@ fieldset {
       */
 legend {
   box-sizing: border-box;
+
   /* 1 */
   display: table;
+
   /* 1 */
   max-width: 100%;
+
   /* 1 */
   padding: 0;
+
   /* 3 */
   color: inherit;
+
   /* 2 */
   white-space: normal;
+
   /* 1 */
 }
 
@@ -412,8 +460,10 @@ legend {
       */
 progress {
   display: inline-block;
+
   /* 1 */
   vertical-align: baseline;
+
   /* 2 */
 }
 
@@ -427,6 +477,7 @@ textarea {
 
 /* Interactive
         ========================================================================== */
+
 /*
       * Add the correct display in Edge, IE, and Firefox.
       */
@@ -450,6 +501,7 @@ menu {
 
 /* Scripting
         ========================================================================== */
+
 /**
       * Add the correct display in IE 9-.
       */
@@ -466,6 +518,7 @@ template {
 
 /* Hidden
         ========================================================================== */
+
 /**
       * Add the correct display in IE 10-.
       */
@@ -539,6 +592,7 @@ button {
   line-height: 1;
   cursor: auto;
 }
+
 [data-whatinput="mouse"] button {
   outline: 0;
 }
@@ -573,36 +627,44 @@ textarea {
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
 }
+
 .row .row {
   margin-right: -$mobile-gutter;
   margin-left: -$mobile-gutter;
   max-width: $max-width;
 }
+
 @media print, screen and (min-width: $screen-m) {
   .row .row {
     margin-right: -$desktop-gutter;
     margin-left: -$desktop-gutter;
   }
 }
+
 .row .row.collapse {
   margin-right: 0;
   margin-left: 0;
 }
+
 .row.expanded {
   max-width: none;
 }
+
 .row.expanded .row {
   margin-right: auto;
   margin-left: auto;
 }
+
 .row:not(.expanded) .row {
   max-width: none;
 }
+
 .row.collapse > .column,
 .row.collapse > .columns {
   padding-right: 0;
   padding-left: 0;
 }
+
 .row.is-collapse-child,
 .row.collapse > .column > .row,
 .row.collapse > .columns > .row {
@@ -612,12 +674,13 @@ textarea {
 
 .column,
 .columns {
-  -ms-flex: 1 1 0px;
-  flex: 1 1 0px;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
   padding-right: $mobile-gutter;
   padding-left: $mobile-gutter;
   min-width: 0;
 }
+
 @media print, screen and (min-width: $screen-m) {
   .column,
   .columns {
@@ -764,6 +827,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-1 > .column,
 .small-up-1 > .columns {
   -ms-flex: 0 0 100%;
@@ -775,6 +839,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-2 > .column,
 .small-up-2 > .columns {
   -ms-flex: 0 0 50%;
@@ -786,6 +851,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-3 > .column,
 .small-up-3 > .columns {
   -ms-flex: 0 0 33.33333%;
@@ -797,6 +863,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-4 > .column,
 .small-up-4 > .columns {
   -ms-flex: 0 0 25%;
@@ -808,6 +875,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-5 > .column,
 .small-up-5 > .columns {
   -ms-flex: 0 0 20%;
@@ -819,6 +887,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-6 > .column,
 .small-up-6 > .columns {
   -ms-flex: 0 0 16.66667%;
@@ -830,6 +899,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-7 > .column,
 .small-up-7 > .columns {
   -ms-flex: 0 0 14.28571%;
@@ -841,6 +911,7 @@ textarea {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
+
 .small-up-8 > .column,
 .small-up-8 > .columns {
   -ms-flex: 0 0 12.5%;
@@ -866,171 +937,210 @@ textarea {
     flex: 0 0 8.33333%;
     max-width: 8.33333%;
   }
+
   .medium-offset-0 {
     margin-left: 0%;
   }
+
   .medium-2 {
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
     max-width: 16.66667%;
   }
+
   .medium-offset-1 {
     margin-left: 8.33333%;
   }
+
   .medium-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .medium-offset-2 {
     margin-left: 16.66667%;
   }
+
   .medium-4 {
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
     max-width: 33.33333%;
   }
+
   .medium-offset-3 {
     margin-left: 25%;
   }
+
   .medium-5 {
     -ms-flex: 0 0 41.66667%;
     flex: 0 0 41.66667%;
     max-width: 41.66667%;
   }
+
   .medium-offset-4 {
     margin-left: 33.33333%;
   }
+
   .medium-6 {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
   }
+
   .medium-offset-5 {
     margin-left: 41.66667%;
   }
+
   .medium-7 {
     -ms-flex: 0 0 58.33333%;
     flex: 0 0 58.33333%;
     max-width: 58.33333%;
   }
+
   .medium-offset-6 {
     margin-left: 50%;
   }
+
   .medium-8 {
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
     max-width: 66.66667%;
   }
+
   .medium-offset-7 {
     margin-left: 58.33333%;
   }
+
   .medium-9 {
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
     max-width: 75%;
   }
+
   .medium-offset-8 {
     margin-left: 66.66667%;
   }
+
   .medium-10 {
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
     max-width: 83.33333%;
   }
+
   .medium-offset-9 {
     margin-left: 75%;
   }
+
   .medium-11 {
     -ms-flex: 0 0 91.66667%;
     flex: 0 0 91.66667%;
     max-width: 91.66667%;
   }
+
   .medium-offset-10 {
     margin-left: 83.33333%;
   }
+
   .medium-12 {
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%;
   }
+
   .medium-offset-11 {
     margin-left: 91.66667%;
   }
+
   .medium-up-1 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-1 > .column,
   .medium-up-1 > .columns {
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%;
   }
+
   .medium-up-2 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-2 > .column,
   .medium-up-2 > .columns {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
   }
+
   .medium-up-3 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-3 > .column,
   .medium-up-3 > .columns {
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
     max-width: 33.33333%;
   }
+
   .medium-up-4 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-4 > .column,
   .medium-up-4 > .columns {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .medium-up-5 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-5 > .column,
   .medium-up-5 > .columns {
     -ms-flex: 0 0 20%;
     flex: 0 0 20%;
     max-width: 20%;
   }
+
   .medium-up-6 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-6 > .column,
   .medium-up-6 > .columns {
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
     max-width: 16.66667%;
   }
+
   .medium-up-7 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-7 > .column,
   .medium-up-7 > .columns {
     -ms-flex: 0 0 14.28571%;
     flex: 0 0 14.28571%;
     max-width: 14.28571%;
   }
+
   .medium-up-8 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .medium-up-8 > .column,
   .medium-up-8 > .columns {
     -ms-flex: 0 0 12.5%;
@@ -1041,8 +1151,8 @@ textarea {
 
 @media print, screen and (min-width: $screen-m) and (min-width: $screen-m) {
   .medium-expand {
-    -ms-flex: 1 1 0px;
-    flex: 1 1 0px;
+    -ms-flex: 1 1 0;
+    flex: 1 1 0;
   }
 }
 
@@ -1051,11 +1161,12 @@ textarea {
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
 }
+
 @media print, screen and (min-width: $screen-m) {
   .row.medium-unstack > .column,
   .row.medium-unstack > .columns {
-    -ms-flex: 1 1 0px;
-    flex: 1 1 0px;
+    -ms-flex: 1 1 0;
+    flex: 1 1 0;
   }
 }
 
@@ -1065,6 +1176,7 @@ textarea {
     padding-right: 0;
     padding-left: 0;
   }
+
   .medium-uncollapse > .column,
   .medium-uncollapse > .columns {
     padding-right: $desktop-gutter;
@@ -1078,171 +1190,210 @@ textarea {
     flex: 0 0 8.33333%;
     max-width: 8.33333%;
   }
+
   .large-offset-0 {
     margin-left: 0%;
   }
+
   .large-2 {
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
     max-width: 16.66667%;
   }
+
   .large-offset-1 {
     margin-left: 8.33333%;
   }
+
   .large-3 {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .large-offset-2 {
     margin-left: 16.66667%;
   }
+
   .large-4 {
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
     max-width: 33.33333%;
   }
+
   .large-offset-3 {
     margin-left: 25%;
   }
+
   .large-5 {
     -ms-flex: 0 0 41.66667%;
     flex: 0 0 41.66667%;
     max-width: 41.66667%;
   }
+
   .large-offset-4 {
     margin-left: 33.33333%;
   }
+
   .large-6 {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
   }
+
   .large-offset-5 {
     margin-left: 41.66667%;
   }
+
   .large-7 {
     -ms-flex: 0 0 58.33333%;
     flex: 0 0 58.33333%;
     max-width: 58.33333%;
   }
+
   .large-offset-6 {
     margin-left: 50%;
   }
+
   .large-8 {
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
     max-width: 66.66667%;
   }
+
   .large-offset-7 {
     margin-left: 58.33333%;
   }
+
   .large-9 {
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
     max-width: 75%;
   }
+
   .large-offset-8 {
     margin-left: 66.66667%;
   }
+
   .large-10 {
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
     max-width: 83.33333%;
   }
+
   .large-offset-9 {
     margin-left: 75%;
   }
+
   .large-11 {
     -ms-flex: 0 0 91.66667%;
     flex: 0 0 91.66667%;
     max-width: 91.66667%;
   }
+
   .large-offset-10 {
     margin-left: 83.33333%;
   }
+
   .large-12 {
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%;
   }
+
   .large-offset-11 {
     margin-left: 91.66667%;
   }
+
   .large-up-1 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-1 > .column,
   .large-up-1 > .columns {
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%;
   }
+
   .large-up-2 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-2 > .column,
   .large-up-2 > .columns {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
   }
+
   .large-up-3 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-3 > .column,
   .large-up-3 > .columns {
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
     max-width: 33.33333%;
   }
+
   .large-up-4 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-4 > .column,
   .large-up-4 > .columns {
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .large-up-5 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-5 > .column,
   .large-up-5 > .columns {
     -ms-flex: 0 0 20%;
     flex: 0 0 20%;
     max-width: 20%;
   }
+
   .large-up-6 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-6 > .column,
   .large-up-6 > .columns {
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
     max-width: 16.66667%;
   }
+
   .large-up-7 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-7 > .column,
   .large-up-7 > .columns {
     -ms-flex: 0 0 14.28571%;
     flex: 0 0 14.28571%;
     max-width: 14.28571%;
   }
+
   .large-up-8 {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
+
   .large-up-8 > .column,
   .large-up-8 > .columns {
     -ms-flex: 0 0 12.5%;
@@ -1253,8 +1404,8 @@ textarea {
 
 @media print, screen and (min-width: $screen-l) and (min-width: $screen-l) {
   .large-expand {
-    -ms-flex: 1 1 0px;
-    flex: 1 1 0px;
+    -ms-flex: 1 1 0;
+    flex: 1 1 0;
   }
 }
 
@@ -1263,11 +1414,12 @@ textarea {
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
 }
+
 @media print, screen and (min-width: $screen-l) {
   .row.large-unstack > .column,
   .row.large-unstack > .columns {
-    -ms-flex: 1 1 0px;
-    flex: 1 1 0px;
+    -ms-flex: 1 1 0;
+    flex: 1 1 0;
   }
 }
 
@@ -1277,6 +1429,7 @@ textarea {
     padding-right: 0;
     padding-left: 0;
   }
+
   .large-uncollapse > .column,
   .large-uncollapse > .columns {
     padding-right: $desktop-gutter;
@@ -1293,6 +1446,7 @@ textarea {
 .column-block {
   margin-bottom: $desktop-gutter;
 }
+
 .column-block > :last-child {
   margin-bottom: 0;
 }
@@ -1413,22 +1567,27 @@ textarea {
     -ms-flex-order: 1;
     order: 1;
   }
+
   .medium-order-2 {
     -ms-flex-order: 2;
     order: 2;
   }
+
   .medium-order-3 {
     -ms-flex-order: 3;
     order: 3;
   }
+
   .medium-order-4 {
     -ms-flex-order: 4;
     order: 4;
   }
+
   .medium-order-5 {
     -ms-flex-order: 5;
     order: 5;
   }
+
   .medium-order-6 {
     -ms-flex-order: 6;
     order: 6;
@@ -1440,22 +1599,27 @@ textarea {
     -ms-flex-order: 1;
     order: 1;
   }
+
   .large-order-2 {
     -ms-flex-order: 2;
     order: 2;
   }
+
   .large-order-3 {
     -ms-flex-order: 3;
     order: 3;
   }
+
   .large-order-4 {
     -ms-flex-order: 4;
     order: 4;
   }
+
   .large-order-5 {
     -ms-flex-order: 5;
     order: 5;
   }
+
   .large-order-6 {
     -ms-flex-order: 6;
     order: 6;
@@ -1507,30 +1671,37 @@ textarea {
     display: -ms-flexbox;
     display: flex;
   }
+
   .medium-flex-child-auto {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
   }
+
   .medium-flex-child-grow {
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
   }
+
   .medium-flex-child-shrink {
     -ms-flex: 0 1 auto;
     flex: 0 1 auto;
   }
+
   .medium-flex-dir-row {
     -ms-flex-direction: row;
     flex-direction: row;
   }
+
   .medium-flex-dir-row-reverse {
     -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
   }
+
   .medium-flex-dir-column {
     -ms-flex-direction: column;
     flex-direction: column;
   }
+
   .medium-flex-dir-column-reverse {
     -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
@@ -1542,30 +1713,37 @@ textarea {
     display: -ms-flexbox;
     display: flex;
   }
+
   .large-flex-child-auto {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
   }
+
   .large-flex-child-grow {
     -ms-flex: 1 0 auto;
     flex: 1 0 auto;
   }
+
   .large-flex-child-shrink {
     -ms-flex: 0 1 auto;
     flex: 0 1 auto;
   }
+
   .large-flex-dir-row {
     -ms-flex-direction: row;
     flex-direction: row;
   }
+
   .large-flex-dir-row-reverse {
     -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
   }
+
   .large-flex-dir-column {
     -ms-flex-direction: column;
     flex-direction: column;
   }
+
   .large-flex-dir-column-reverse {
     -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
@@ -2043,30 +2221,33 @@ textarea {
 }
 
 .bounce-in {
-  transition-timing-function: cubic-bezier(
-    0.485,
-    0.155,
-    0.24,
-    1.245
-  ) !important;
+  transition-timing-function:
+    cubic-bezier(
+      0.485,
+      0.155,
+      0.24,
+      1.245
+    ) !important;
 }
 
 .bounce-out {
-  transition-timing-function: cubic-bezier(
-    0.485,
-    0.155,
-    0.515,
-    0.845
-  ) !important;
+  transition-timing-function:
+    cubic-bezier(
+      0.485,
+      0.155,
+      0.515,
+      0.845
+    ) !important;
 }
 
 .bounce-in-out {
-  transition-timing-function: cubic-bezier(
-    0.76,
-    -0.245,
-    0.24,
-    1.245
-  ) !important;
+  transition-timing-function:
+    cubic-bezier(
+      0.76,
+      -0.245,
+      0.24,
+      1.245
+    ) !important;
 }
 
 .short-delay {
@@ -2094,6 +2275,7 @@ textarea {
   90% {
     transform: translateX(7%);
   }
+
   5%,
   15%,
   25%,
@@ -2116,6 +2298,7 @@ textarea {
   0% {
     transform: rotate(-1turn);
   }
+
   100% {
     transform: rotate(0);
   }
@@ -2129,6 +2312,7 @@ textarea {
   0% {
     transform: rotate(0);
   }
+
   100% {
     transform: rotate(1turn);
   }
@@ -2144,12 +2328,14 @@ textarea {
   60% {
     transform: rotate(7deg);
   }
+
   35%,
   45%,
   55%,
   65% {
     transform: rotate(-7deg);
   }
+
   0%,
   30%,
   70%,
@@ -2202,12 +2388,13 @@ textarea {
 }
 
 .bounce-out {
-  animation-timing-function: cubic-bezier(
-    0.485,
-    0.155,
-    0.515,
-    0.845
-  ) !important;
+  animation-timing-function:
+    cubic-bezier(
+      0.485,
+      0.155,
+      0.515,
+      0.845
+    ) !important;
 }
 
 .bounce-in-out {
