@@ -8,10 +8,10 @@ import findIndex from 'lodash/findIndex';
 
 import { formatNumber } from 'utils/format';
 
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
 
 export const cleanData = createSelector(
   [getData, getSettings],
@@ -22,7 +22,7 @@ export const cleanData = createSelector(
     if (!source) source = 'ipcc';
     if (variable === 'changes_only') {
       return data.filter(
-        d => d[`from_class_${source}`] !== d[`to_class_${source}`]
+        (d) => d[`from_class_${source}`] !== d[`to_class_${source}`]
       );
     }
     return data;
@@ -42,7 +42,7 @@ export const parseData = createSelector(
         settlement: 'Settlement',
         cropland: 'Agriculture',
         grassland: 'Grassland',
-        wetland: 'Wetland'
+        wetland: 'Wetland',
       },
       nlcd: {
         deciduous_forest: 'Deciduous forest',
@@ -60,8 +60,8 @@ export const parseData = createSelector(
         emergent_herbaceous_wetlands: 'Emergent herbaceous wetlands',
         barren: 'Barren land (rock/sand/clay)',
         perennial_ice_snow: 'Perennial ice/snow',
-        open_water: 'Water Body'
-      }
+        open_water: 'Water Body',
+      },
     };
 
     // SANKEY NODES
@@ -73,7 +73,7 @@ export const parseData = createSelector(
           color: categories[source][key]
             ? colors.categories[categories[source][key]]
             : colors.categories.Other,
-          value: sumBy(group, 'area')
+          value: sumBy(group, 'area'),
         })
       ),
       'value',
@@ -87,35 +87,35 @@ export const parseData = createSelector(
       color: categories[source][key]
         ? colors.categories[categories[source][key]]
         : colors.categories.Other,
-      value: sumBy(group, 'area')
+      value: sumBy(group, 'area'),
     }));
     const endNodes = [
       // nodes already in startNodes
       ...startNodes
-        .map(startNode => ({
+        .map((startNode) => ({
           ...startNode,
-          key: startNode.key.replace('start', 'end')
+          key: startNode.key.replace('start', 'end'),
         }))
         .filter(
-          startNode => findIndex(uniqueEndNodes, { key: startNode.key }) >= 0
+          (startNode) => findIndex(uniqueEndNodes, { key: startNode.key }) >= 0
         ),
       // 'new' nodes
       ...uniqueEndNodes.filter(
-        endNode =>
+        (endNode) =>
           findIndex(startNodes, {
-            key: endNode.key.replace('end', 'start')
+            key: endNode.key.replace('end', 'start'),
           }) === -1
-      )
+      ),
     ];
 
     const nodes = [...startNodes, ...endNodes];
     // SANKEY LINKS
-    const allLinks = data.map(d => {
+    const allLinks = data.map((d) => {
       const sourceIndex = findIndex(nodes, {
-        key: `${d[`from_class_${source}`]}-start`
+        key: `${d[`from_class_${source}`]}-start`,
       });
       const targetIndex = findIndex(nodes, {
-        key: `${d[`to_class_${source}`]}-end`
+        key: `${d[`to_class_${source}`]}-end`,
       });
       return {
         source: sourceIndex,
@@ -123,21 +123,21 @@ export const parseData = createSelector(
         value: d.area,
         key: `${sourceIndex}_${targetIndex}`,
         startKey: d[`from_class_${source}`],
-        endKey: d[`to_class_${source}`]
+        endKey: d[`to_class_${source}`],
       };
     });
-    const links = Object.values(groupBy(allLinks, 'key')).map(group => {
+    const links = Object.values(groupBy(allLinks, 'key')).map((group) => {
       const link = group[0] || {};
       return {
         ...link,
-        value: sumBy(group, 'value')
+        value: sumBy(group, 'value'),
       };
     });
     const biggestLink = maxBy(links, 'value');
     const selectedElement = {
       ...biggestLink,
       source: nodes[biggestLink.source],
-      target: nodes[biggestLink.target]
+      target: nodes[biggestLink.target],
     };
 
     return { nodes, links, selectedElement };
@@ -152,10 +152,10 @@ export const parseDataConfig = createSelector(
     const { source } = settings;
     const threshold = 3;
     const topNNodes = [
-      ...nodes.filter(n => n.key.includes('start')).slice(0, threshold),
-      ...nodes.filter(n => n.key.includes('end')).slice(0, threshold)
+      ...nodes.filter((n) => n.key.includes('start')).slice(0, threshold),
+      ...nodes.filter((n) => n.key.includes('end')).slice(0, threshold),
     ];
-    const shouldShowLabel = node => {
+    const shouldShowLabel = (node) => {
       if (source === 'nlcd') {
         return findIndex(topNNodes, { key: node.key }) >= 0;
       }
@@ -184,46 +184,50 @@ export const parseSentence = createSelector(
       // nothing selected, init sentence
       firstCategory = selectedElement.source && selectedElement.source.name;
       secondCategory = selectedElement.target && selectedElement.target.name;
-      amount = formatNumber({ num: selectedElement.value, unit: 'ha' });
+      amount = formatNumber({
+        num: selectedElement.value,
+        unit: 'ha',
+        spaceUnit: true,
+      });
       percentage = formatNumber({
-        num: selectedElement.value / total * 100,
-        unit: '%'
+        num: (selectedElement.value / total) * 100,
+        unit: '%',
       });
     } else if (interaction.source && interaction.target) {
       // link selected
-      const link = links.find(l => l.key === interaction.key);
+      const link = links.find((l) => l.key === interaction.key);
       firstCategory = interaction.source.name;
       secondCategory = interaction.target.name;
       const change = link && link.value;
-      amount = formatNumber({ num: change, unit: 'ha' });
-      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+      amount = formatNumber({ num: change, unit: 'ha', spaceUnit: true });
+      percentage = formatNumber({ num: (change / total) * 100, unit: '%' });
     } else if (interaction.key && interaction.key.includes('start')) {
       // start node
-      const sourceNode = nodes.find(n => n.key === interaction.key);
+      const sourceNode = nodes.find((n) => n.key === interaction.key);
       firstCategory = sourceNode && sourceNode.name;
       secondCategory = 'other types';
       const change = sumBy(
         links.filter(
-          l =>
+          (l) =>
             `${l.startKey}-start` === sourceNode.key && l.startKey !== l.endKey
         ),
         'value'
       );
-      amount = formatNumber({ num: change, unit: 'ha' });
-      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+      amount = formatNumber({ num: change, unit: 'ha', spaceUnit: true });
+      percentage = formatNumber({ num: (change / total) * 100, unit: '%' });
     } else if (interaction.key && interaction.key.includes('end')) {
       // end node
-      const endNode = nodes.find(n => n.key === interaction.key);
+      const endNode = nodes.find((n) => n.key === interaction.key);
       firstCategory = 'other types';
       secondCategory = endNode && endNode.name;
       const change = sumBy(
         links.filter(
-          l => `${l.endKey}-end` === endNode.key && l.startKey !== l.endKey
+          (l) => `${l.endKey}-end` === endNode.key && l.startKey !== l.endKey
         ),
         'value'
       );
-      amount = formatNumber({ num: change, unit: 'ha' });
-      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+      amount = formatNumber({ num: change, unit: 'ha', spaceUnit: true });
+      percentage = formatNumber({ num: (change / total) * 100, unit: '%' });
     }
 
     const params = {
@@ -232,14 +236,14 @@ export const parseSentence = createSelector(
       firstCategory,
       secondCategory,
       amount,
-      percentage
+      percentage,
     };
 
     let sentence = isEmpty(interaction) ? initial : interactionSentence;
     if (firstCategory === secondCategory) sentence = noChange;
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -247,5 +251,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseDataConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });
