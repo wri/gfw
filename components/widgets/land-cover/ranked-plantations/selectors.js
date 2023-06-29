@@ -4,7 +4,7 @@ import maxBy from 'lodash/maxBy';
 import remove from 'lodash/remove';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import sortBy from 'lodash/sortBy';
 import endsWith from 'lodash/endsWith';
 
@@ -89,8 +89,7 @@ export const parseConfig = createSelector(
         key: item,
         label: item,
         color: colorsByType[item],
-        unit: '%',
-        unitFormat: (value) => format('.1f')(value),
+        unitFormat: (value) => formatNumber({ num: value, unit: '%' }),
       })),
     };
   }
@@ -117,7 +116,7 @@ export const parseSentence = createSelector(
       location: locationName,
       region: topRegion.region,
       topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
-      percentage: `${format('.2r')(data[0].total)}%`,
+      percentage: formatNumber({ num: data[0].total, unit: '%' }),
     };
 
     return {
