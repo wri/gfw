@@ -46,7 +46,8 @@ const parseConfig = createSelector([getColors], (colors) => ({
   tooltip: [
     {
       key: 'area',
-      unitFormat: (value) => formatNumber({ num: value, unit: 'ha' }),
+      unitFormat: (value) =>
+        formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
       label: 'Land area',
       color: colors.primaryForestLoss,
       dashline: true,
@@ -77,6 +78,7 @@ const parseSentence = createSelector(
       areasOverTenPercent: formatNumber({
         num: areasOverTenPercent,
         unit: 'ha',
+        spaceUnit: true,
       }),
       areaInPercent: `${areasOverTenPercentByTotalArea}%`,
     };
