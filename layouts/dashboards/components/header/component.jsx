@@ -437,15 +437,21 @@ class Header extends PureComponent {
                   <Fragment>
                     <p className="disclaimer">
                       *Much of the primary forest loss in Indonesia according to
-                      the GFW analysis is actually within areas that Indonesia
-                      classifies as secondary forest and other land cover (e.g.,
-                      mixed dry land agriculture, estate crop, plantation
-                      forest, shrub and others). This is because the GFW primary
-                      forest definition is not consistent with Indonesia’s
-                      official primary forest definition and classification.
-                      GFW’s statistics on loss of primary forests in Indonesia
-                      are therefore considerably higher than the official
-                      Indonesian statistics on deforestation in primary forests.
+                      the GFW analysis is within areas that Indonesia classifies
+                      as secondary forest and other land cover (e.g., mixed dry
+                      land agriculture, estate crop, plantation forest, shrub
+                      and others). This is because the GFW primary forest
+                      definition is different than Indonesia’s official primary
+                      forest definition and classification. GFW’s statistics on
+                      loss of primary forests in Indonesia are therefore
+                      considerably higher than the official Indonesian
+                      statistics on deforestation in primary forest. In 2022,
+                      approximately 107 thousand ha of primary forest loss was
+                      corroborated by joint preliminary analysis between
+                      Indonesia’s Ministry of Environment and Forestry (MoEF)
+                      and WRI as occurring within Indonesia’s official forest
+                      land cover classes with a patch size larger than two
+                      hectares.
                     </p>
                   </Fragment>
                 )}
