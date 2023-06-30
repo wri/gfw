@@ -22,7 +22,9 @@ class WidgetMapButton extends PureComponent {
     return (
       <Button
         id={`widget-map-button-${widget}`}
-        className={cx('c-widget-map-button', { '-active': active })}
+        className={cx('c-widget-map-button widget-control-button', {
+          '-active': active,
+        })}
         theme={cx('theme-button-small small square')}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
         onClick={handleShowMap}
