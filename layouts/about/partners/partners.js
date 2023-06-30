@@ -377,19 +377,9 @@ export const funders = [
     title: 'Hampshire Foundation',
   },
   {
-    img: images('./idbinvesthover.png'),
-    link: 'http://www.idbinvest.org/',
-    title: 'IDB | Invest',
-  },
-  {
     img: images('./internationalclimateinitiative.png'),
     link: 'https://www.international-climate-initiative.com/en',
     title: 'International Climate Initiative',
-  },
-  {
-    img: images('./macarthurhover.png'),
-    link: 'https://www.macfound.org/',
-    title: 'MacArthur Foundation',
   },
   {
     img: images('./neainsingapore.png'),
