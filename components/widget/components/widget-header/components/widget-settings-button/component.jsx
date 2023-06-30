@@ -113,7 +113,7 @@ class WidgetSettingsButton extends PureComponent {
       >
         <Button
           id={`widget-settings-button-${widget}`}
-          theme="theme-button-small square"
+          theme="theme-button-small square widget-settings-button"
           tooltip={{ text: 'Filter and customize the data' }}
         >
           <Icon icon={settingsIcon} className="settings-icon" />

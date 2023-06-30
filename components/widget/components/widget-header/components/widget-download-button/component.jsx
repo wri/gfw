@@ -291,7 +291,7 @@ class WidgetDownloadButton extends PureComponent {
     return (
       <Button
         id={`widget-download-button-${widget}`}
-        className={cx('c-widget-download-button', {
+        className={cx('c-widget-download-button widget-control-button', {
           'small-download-button': this.props.simple,
         })}
         theme={cx('theme-button-small square', {

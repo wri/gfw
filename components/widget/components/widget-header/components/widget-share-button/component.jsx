@@ -17,7 +17,7 @@ class WidgetShareButton extends PureComponent {
     return (
       <Button
         id={`widget-share-button-${widget}`}
-        className="c-widget-share-btn theme-button-small square"
+        className="c-widget-share-btn theme-button-small square widget-control-button"
         onClick={handleShowShare}
         tooltip={{ text: 'Share or embed this widget' }}
       >
