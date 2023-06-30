@@ -19,7 +19,7 @@ class WidgetInfoButton extends PureComponent {
     return (
       <Button
         id={`widget-info-button-${widget}`}
-        className="c-widget-info-button"
+        className="c-widget-info-button widget-info-button"
         theme={cx('theme-button-small square', {
           'theme-button-grey-filled theme-button-xsmall': square,
         })}
