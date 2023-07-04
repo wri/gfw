@@ -238,6 +238,11 @@ class Header extends PureComponent {
     const displaySentence =
       !sentence || isEmpty(sentence) ? globalSentence : sentence;
 
+    if (location && location.adm0 === 'IDN') {
+      displaySentence.sentence +=
+        ' 107 kha of this loss (equivalent to 82 Mt of CO2) was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares.';
+    }
+
     const countrySelectorData = this.getCountrySelectorData();
     const regionData = this.getAdm1SelectorData();
     const subRegionData = this.getAdm2SelectorData();
@@ -445,13 +450,7 @@ class Header extends PureComponent {
                       forest definition and classification. GFW’s statistics on
                       loss of primary forests in Indonesia are therefore
                       considerably higher than the official Indonesian
-                      statistics on deforestation in primary forest. In 2022,
-                      approximately 107 thousand ha of primary forest loss was
-                      corroborated by joint preliminary analysis between
-                      Indonesia’s Ministry of Environment and Forestry (MoEF)
-                      and WRI as occurring within Indonesia’s official forest
-                      land cover classes with a patch size larger than two
-                      hectares.
+                      statistics on deforestation in primary forest.
                     </p>
                   </Fragment>
                 )}
