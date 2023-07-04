@@ -240,7 +240,7 @@ class Header extends PureComponent {
 
     if (location && location.adm0 === 'IDN') {
       displaySentence.sentence +=
-        ' 107 kha of this loss (equivalent to 82 Mt of CO2) was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares.';
+        ' 107 kha of this loss was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares.';
     }
 
     const countrySelectorData = this.getCountrySelectorData();
