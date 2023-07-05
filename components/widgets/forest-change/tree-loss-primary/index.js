@@ -1,6 +1,8 @@
 import { all, spread } from 'axios';
 import compact from 'lodash/compact';
 
+import tropicalIsos from 'data/tropical-isos.json';
+
 import { getExtent, getLoss } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
@@ -109,6 +111,9 @@ export default {
     threshold: 30,
     extentYear: 2000,
     forestType: 'primary_forest',
+  },
+  whitelists: {
+    adm0: [tropicalIsos],
   },
   placeholderImageURL: indonesiaPlaceholder,
   getData: (params = {}) => {
