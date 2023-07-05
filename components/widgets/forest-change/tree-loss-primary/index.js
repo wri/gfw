@@ -113,7 +113,7 @@ export default {
     forestType: 'primary_forest',
   },
   whitelists: {
-    adm0: [tropicalIsos],
+    adm0: tropicalIsos,
   },
   placeholderImageURL: indonesiaPlaceholder,
   getData: (params = {}) => {
