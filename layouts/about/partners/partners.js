@@ -367,9 +367,9 @@ export const funders = [
     title: 'gef',
   },
   {
-    img: images('./generationhover.png'),
-    link: 'https://www.genfound.org/',
-    title: 'Generation Foundation',
+    img: images('./gordonandbettymoorefoundation.png'),
+    link: 'https://www.moore.org/',
+    title: 'Gordon and Betty Moore Foundation',
   },
   {
     img: images('./hf.png'),
@@ -377,24 +377,14 @@ export const funders = [
     title: 'Hampshire Foundation',
   },
   {
-    img: images('./idbhover.png'),
-    link: 'http://www.iadb.org/en/inter-american-development-bank,2837.html',
-    title: 'IDB',
-  },
-  {
-    img: images('./idbinvesthover.png'),
-    link: 'http://www.idbinvest.org/',
-    title: 'IDB | Invest',
-  },
-  {
     img: images('./internationalclimateinitiative.png'),
     link: 'https://www.international-climate-initiative.com/en',
     title: 'International Climate Initiative',
   },
   {
-    img: images('./macarthurhover.png'),
-    link: 'https://www.macfound.org/',
-    title: 'MacArthur Foundation',
+    img: images('./neainsingapore.png'),
+    link: 'https://www.nea.gov.sg/',
+    title: 'National Environment Agency in Singapore',
   },
   {
     img: images('./norwegianministrihover.png'),
@@ -417,5 +407,10 @@ export const funders = [
     img: images('./usaidhover.png'),
     link: 'https://www.usaid.gov/',
     title: 'USAID',
+  },
+  {
+    img: images('./usforestservice.png'),
+    link: 'https://www.fs.usda.gov/',
+    title: 'US Forest Service',
   },
 ];
