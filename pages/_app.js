@@ -233,7 +233,9 @@ import '../components/ui/search/themes/search-small.scss';
 
 import '../components/ui/switch/styles.scss';
 import '../components/ui/switch/react-toggle.scss';
+import '../components/ui/switch/themes/switch-small.scss';
 import '../components/ui/switch/themes/switch-light.scss';
+import '../components/ui/switch/themes/switch-light-alternate.scss';
 
 import '../components/ui/timeframe/styles.scss';
 import '../components/ui/tip/styles.scss';
