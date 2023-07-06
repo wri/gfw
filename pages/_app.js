@@ -40,6 +40,7 @@ import '../components/charts/sankey-chart/styles.scss';
 import '../components/charts/sankey-chart/sankey-link/styles.scss';
 import '../components/charts/sankey-chart/sankey-node/styles.scss';
 import '../components/charts/sankey-chart/sankey-tooltip/styles.scss';
+import 'components/charts/composed-chart-alt/styles.scss';
 
 // confirmation message
 import '../components/confirmation-message/styles.scss';
@@ -254,6 +255,7 @@ import '../components/widget/components/widget-header/components/widget-download
 import '../components/widget/components/widget-header/components/widget-map-button/styles.scss';
 import '../components/widget/components/widget-header/components/widget-settings/styles.scss';
 import '../components/widget/components/widget-header/components/widget-settings-button/styles.scss';
+import '../components/widget/components/widget-info-list/styles.scss';
 import '../components/widget/components/widget-list-legend/styles.scss';
 import '../components/widget/components/widget-lollipop/styles.scss';
 import '../components/widget/components/widget-map-list/styles.scss';
