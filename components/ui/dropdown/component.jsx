@@ -125,6 +125,7 @@ class Dropdown extends PureComponent {
     } = this.props;
     const dropdown = (
       <Downshift
+        id="dropdown"
         itemToString={(i) => i && i.label}
         onStateChange={handleStateChange}
         onOuterClick={checkModalClosing}
