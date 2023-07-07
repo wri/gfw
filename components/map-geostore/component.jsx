@@ -127,14 +127,27 @@ class MapGeostore extends Component {
       ...viewport,
     };
 
-    const { longitude, latitude, zoom } =
-      new WebMercatorViewport(v)?.fitBounds(
-        [
-          [bbox[0], bbox[1]],
-          [bbox[2], bbox[3]],
-        ],
-        { padding: this.props.padding }
-      ) || {};
+    let longitude = 0;
+    let latitude = 0;
+    let zoom = 1;
+
+    try {
+      const response =
+        new WebMercatorViewport(v)?.fitBounds(
+          [
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]],
+          ],
+          { padding: this.props.padding }
+        ) || {};
+
+      longitude = response.longitude;
+      latitude = response.latitude;
+      zoom = response.zoom;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
 
     if (this.mounted) {
       this.setState({
