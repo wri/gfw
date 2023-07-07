@@ -68,8 +68,8 @@ PieChartLegend.propTypes = {
   config: PropTypes.object,
   chartSettings: PropTypes.shape({
     size: PropTypes.oneOf(['small', 'x-small']),
-    legend: { style: PropTypes.object },
-    chart: { style: PropTypes.object },
+    legend: PropTypes.shape({ style: PropTypes.object }),
+    chart: PropTypes.shape({ style: PropTypes.object }),
   }),
   simple: PropTypes.bool,
   className: PropTypes.string,
