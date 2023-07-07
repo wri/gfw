@@ -54,9 +54,8 @@ TagsList.propTypes = {
   tags: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       active: PropTypes.bool,
-      // Link specific
       link: PropTypes.string,
       shallow: PropTypes.bool,
       replace: PropTypes.bool,
