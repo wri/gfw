@@ -20,10 +20,15 @@ class WidgetFooter extends PureComponent {
   renderAlert = (alerts, alertSystem, type, locationType) => {
     if (!alerts) return null;
 
-    return alerts.map((alert) => {
+    return alerts.map((alert, index) => {
       if (alert.system === alertSystem || alertSystem === 'all') {
         return (
-          <WidgetAlert type={type} alert={alert} locationType={locationType} />
+          <WidgetAlert
+            key={`alert-${index}`}
+            type={type}
+            alert={alert}
+            locationType={locationType}
+          />
         );
       }
       return null;
