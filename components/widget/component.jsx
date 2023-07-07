@@ -26,7 +26,7 @@ class Widget extends PureComponent {
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
     chartType: PropTypes.string,
-    metaKey: PropTypes.string,
+    metaKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     loading: PropTypes.bool,
     metaLoading: PropTypes.bool,
     error: PropTypes.bool,

@@ -24,7 +24,7 @@ class WidgetHeader extends PureComponent {
     active: PropTypes.bool,
     disableDownload: PropTypes.bool,
     filterSelected: PropTypes.bool,
-    metaKey: PropTypes.string,
+    metaKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     settingsConfig: PropTypes.array,
     settings: PropTypes.object,
     handleShowInfo: PropTypes.func,

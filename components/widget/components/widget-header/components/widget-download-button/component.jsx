@@ -32,7 +32,7 @@ class WidgetDownloadButton extends PureComponent {
     childData: PropTypes.object,
     location: PropTypes.object,
     adminLevel: PropTypes.string,
-    metaKey: PropTypes.string,
+    metaKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     simple: PropTypes.bool,
     widget: PropTypes.string,
     areaTooLarge: PropTypes.bool,
