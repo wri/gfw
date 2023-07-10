@@ -207,16 +207,11 @@ export default {
    */
   // eslint-disable-next-line no-unused-vars
   isPlaceholderImage: ({ location, category }) => {
-    return location.type === 'country' && location.adm0 === 'IDN';
-
-    // TODO: replace with the following snippet (next week)
-    /*
     return (
       location.type === 'country' &&
       location.adm0 === 'IDN' &&
       category === 'summary'
     );
-    */
   },
   getWidgetProps,
 };

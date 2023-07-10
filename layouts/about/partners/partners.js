@@ -382,11 +382,6 @@ export const funders = [
     title: 'International Climate Initiative',
   },
   {
-    img: images('./neainsingapore.png'),
-    link: 'https://www.nea.gov.sg/',
-    title: 'National Environment Agency in Singapore',
-  },
-  {
     img: images('./norwegianministrihover.png'),
     link:
       'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
