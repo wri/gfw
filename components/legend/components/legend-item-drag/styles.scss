@@ -1,10 +1,16 @@
-@import '~styles/vizz-components-settings';
+@import '~styles/settings.scss';
 
 .c-legend-handler {
   position: absolute;
   cursor: move;
-  top: 19px;
+  top: 18px;
   left: 8px;
 
-  svg { fill: $color-dark-1; }
+  svg {
+    fill: $warm-grey;
+
+    &:hover {
+      fill: $medium-grey;
+    }
+  }
 }

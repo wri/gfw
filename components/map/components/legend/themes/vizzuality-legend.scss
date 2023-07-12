@@ -28,18 +28,6 @@
     font-weight: 400 !important;
     color: $slate;
   }
-
-  .c-legend-handler {
-    top: 18px;
-  }
-
-  .c-legend-handler svg {
-    fill: $warm-grey;
-
-    &:hover {
-      fill: $medium-grey;
-    }
-  }
 }
 
 .c-legend-item-types {

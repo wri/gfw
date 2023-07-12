@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import  Tooltip  from 'components/tooltip';
-import  Icon  from 'components/ui/icon';
+import Tooltip from 'components/tooltip';
+import Icon from 'components/ui/icon';
 
 import '../styles-button.scss';
 
@@ -17,8 +17,8 @@ class LegendItemButtonVisibility extends PureComponent {
     defaultStyle: PropTypes.object,
     tooltipOpened: PropTypes.bool,
     tooltipText: PropTypes.string,
-    scrolling: PropTypes.bool
-  }
+    scrolling: PropTypes.bool,
+  };
 
   static defaultProps = {
     activeLayer: {},
@@ -31,12 +31,12 @@ class LegendItemButtonVisibility extends PureComponent {
     tooltipText: '',
     scrolling: false,
 
-    onChangeVisibility: () => {}
-  }
+    onChangeVisibility: () => {},
+  };
 
   state = {
-    visible: false
-  }
+    visible: false,
+  };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { scrolling } = nextProps;
@@ -47,7 +47,16 @@ class LegendItemButtonVisibility extends PureComponent {
   }
 
   render() {
-    const { activeLayer, visibility, tooltipOpened, iconShow, iconHide, focusStyle, defaultStyle, tooltipText } = this.props;
+    const {
+      activeLayer,
+      visibility,
+      tooltipOpened,
+      iconShow,
+      iconHide,
+      focusStyle,
+      defaultStyle,
+      tooltipText,
+    } = this.props;
     const { visible } = this.state;
 
     const showIcon = iconShow || 'icon-show';
@@ -62,16 +71,21 @@ class LegendItemButtonVisibility extends PureComponent {
         trigger={tooltipOpened ? '' : 'hover'}
         mouseLeaveDelay={0}
         destroyTooltipOnHide
-        onVisibleChange={v => this.setState({ visible: v })}
+        onVisibleChange={(v) => this.setState({ visible: v })}
         visible={visible}
       >
         <button
           type="button"
           className="c-legend-button toggle"
-          onClick={() => this.props.onChangeVisibility(activeLayer, !visibility)}
+          onClick={() =>
+            this.props.onChangeVisibility(activeLayer, !visibility)}
           aria-label="Toggle the visibility"
         >
-          <Icon icon={activeIcon} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <Icon
+            icon={activeIcon}
+            className="c-icon-small"
+            style={visible ? focusStyle : defaultStyle}
+          />
         </button>
       </Tooltip>
     );

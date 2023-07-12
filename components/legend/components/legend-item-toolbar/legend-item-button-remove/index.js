@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import  Tooltip  from 'components/tooltip';
-import  Icon  from 'components/ui/icon';
+import Tooltip from 'components/tooltip';
+import Icon from 'components/ui/icon';
 
 import '../styles-button.scss';
 
@@ -17,8 +17,8 @@ class LegendItemButtonRemove extends PureComponent {
     scrolling: PropTypes.bool,
 
     // ACTIONS
-    onRemoveLayer: PropTypes.func
-  }
+    onRemoveLayer: PropTypes.func,
+  };
 
   static defaultProps = {
     activeLayer: {},
@@ -30,12 +30,12 @@ class LegendItemButtonRemove extends PureComponent {
     scrolling: false,
 
     // ACTIONS
-    onRemoveLayer: () => {}
-  }
+    onRemoveLayer: () => {},
+  };
 
   state = {
-    visible: false
-  }
+    visible: false,
+  };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { scrolling } = nextProps;
@@ -46,7 +46,14 @@ class LegendItemButtonRemove extends PureComponent {
   }
 
   render() {
-    const { activeLayer, tooltipOpened, icon, focusStyle, defaultStyle, tooltipText } = this.props;
+    const {
+      activeLayer,
+      tooltipOpened,
+      icon,
+      focusStyle,
+      defaultStyle,
+      tooltipText,
+    } = this.props;
     const { visible } = this.state;
 
     return (
@@ -57,7 +64,7 @@ class LegendItemButtonRemove extends PureComponent {
         trigger={tooltipOpened ? '' : 'hover'}
         mouseLeaveDelay={0}
         destroyTooltipOnHide
-        onVisibleChange={v => this.setState({ visible: v })}
+        onVisibleChange={(v) => this.setState({ visible: v })}
         visible={visible}
       >
         <button
@@ -66,7 +73,11 @@ class LegendItemButtonRemove extends PureComponent {
           onClick={() => this.props.onRemoveLayer(activeLayer)}
           aria-label="Remove"
         >
-          <Icon icon={icon || 'icon-cross'} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <Icon
+            icon={icon || 'icon-cross'}
+            className="c-icon-small"
+            style={visible ? focusStyle : defaultStyle}
+          />
         </button>
       </Tooltip>
     );

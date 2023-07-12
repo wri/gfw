@@ -6,7 +6,7 @@ import './styles.scss';
 
 const LegendItemDrag = () => (
   <span className="c-legend-handler">
-    <Icon icon="icon-drag-dots" className="-small" />
+    <Icon icon="icon-drag-dots" className="c-icon-small" />
   </span>
 );
 

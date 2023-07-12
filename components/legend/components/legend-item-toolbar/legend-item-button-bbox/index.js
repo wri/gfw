@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import  Tooltip  from 'components/tooltip';
-import  Icon  from 'components/ui/icon';
+import Tooltip from 'components/tooltip';
+import Icon from 'components/ui/icon';
 
 import '../styles-button.scss';
 
@@ -15,8 +15,8 @@ class LegendItemButtonBBox extends PureComponent {
     defaultStyle: PropTypes.object,
     tooltipText: PropTypes.string,
     scrolling: PropTypes.bool,
-    onChangeBBox: PropTypes.func
-  }
+    onChangeBBox: PropTypes.func,
+  };
 
   static defaultProps = {
     activeLayer: {},
@@ -27,12 +27,12 @@ class LegendItemButtonBBox extends PureComponent {
     tooltipText: '',
     scrolling: false,
 
-    onChangeBBox: () => {}
-  }
+    onChangeBBox: () => {},
+  };
 
   state = {
-    visible: false
-  }
+    visible: false,
+  };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { scrolling } = nextProps;
@@ -42,9 +42,15 @@ class LegendItemButtonBBox extends PureComponent {
     }
   }
 
-
   render() {
-    const { activeLayer, tooltipOpened, icon, focusStyle, defaultStyle, tooltipText } = this.props;
+    const {
+      activeLayer,
+      tooltipOpened,
+      icon,
+      focusStyle,
+      defaultStyle,
+      tooltipText,
+    } = this.props;
     const { visible } = this.state;
     if (activeLayer.layerConfig && !activeLayer.layerConfig.bbox) {
       return null;
@@ -58,7 +64,7 @@ class LegendItemButtonBBox extends PureComponent {
         trigger={tooltipOpened ? '' : 'hover'}
         mouseLeaveDelay={0}
         destroyTooltipOnHide
-        onVisibleChange={v => this.setState({ visible: v })}
+        onVisibleChange={(v) => this.setState({ visible: v })}
         visible={visible}
       >
         <button
@@ -67,7 +73,11 @@ class LegendItemButtonBBox extends PureComponent {
           aria-label="Fit to bounds"
           onClick={() => this.props.onChangeBBox(activeLayer)}
         >
-          <Icon icon={icon || 'icon-bbox'} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <Icon
+            icon={icon || 'icon-bbox'}
+            className="c-icon-small"
+            style={visible ? focusStyle : defaultStyle}
+          />
         </button>
       </Tooltip>
     );
