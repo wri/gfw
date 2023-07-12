@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Tooltip } from 'vizzuality-components';
+
+import  Tooltip  from 'components/tooltip';
+import  Icon  from 'components/ui/icon';
+
 import '../styles-button.scss';
 
 class LegendItemButtonRemove extends PureComponent {
@@ -63,7 +66,7 @@ class LegendItemButtonRemove extends PureComponent {
           onClick={() => this.props.onRemoveLayer(activeLayer)}
           aria-label="Remove"
         >
-          <Icon name={icon || 'icon-cross'} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <Icon icon={icon || 'icon-cross'} className="-small" style={visible ? focusStyle : defaultStyle} />
         </button>
       </Tooltip>
     );

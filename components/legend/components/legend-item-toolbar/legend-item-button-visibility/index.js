@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Tooltip } from 'vizzuality-components';
+
+import  Tooltip  from 'components/tooltip';
+import  Icon  from 'components/ui/icon';
+
 import '../styles-button.scss';
 
 class LegendItemButtonVisibility extends PureComponent {
@@ -68,7 +71,7 @@ class LegendItemButtonVisibility extends PureComponent {
           onClick={() => this.props.onChangeVisibility(activeLayer, !visibility)}
           aria-label="Toggle the visibility"
         >
-          <Icon name={activeIcon} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <Icon icon={activeIcon} className="-small" style={visible ? focusStyle : defaultStyle} />
         </button>
       </Tooltip>
     );

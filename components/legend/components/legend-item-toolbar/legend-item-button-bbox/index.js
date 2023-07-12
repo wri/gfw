@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Tooltip } from 'vizzuality-components';
+
+import  Tooltip  from 'components/tooltip';
+import  Icon  from 'components/ui/icon';
+
 import '../styles-button.scss';
 
 class LegendItemButtonBBox extends PureComponent {
@@ -64,7 +67,7 @@ class LegendItemButtonBBox extends PureComponent {
           aria-label="Fit to bounds"
           onClick={() => this.props.onChangeBBox(activeLayer)}
         >
-          <Icon name={icon || 'icon-bbox'} className="-small" style={visible ? focusStyle : defaultStyle} />
+          <Icon icon={icon || 'icon-bbox'} className="-small" style={visible ? focusStyle : defaultStyle} />
         </button>
       </Tooltip>
     );

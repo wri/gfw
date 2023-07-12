@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {
-  Legend,
+import Icons from 'components/icons'
+import Legend, { 
+  LegendItemToolbar, 
+  LegendItemButtonOpacity, 
   LegendListItem,
   LegendItemTypes,
   LegendItemTypeBasic,

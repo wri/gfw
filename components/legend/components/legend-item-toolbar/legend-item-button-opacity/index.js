@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Icon, Tooltip } from 'vizzuality-components';
+
+import  Tooltip  from 'components/tooltip';
+import  Icon  from 'components/ui/icon';
+
 import LegendOpacityTooltip from './legend-item-button-opacity-tooltip';
 import styles from '../styles-button.scss';
 
 class LegendItemButtonOpacity extends PureComponent {
   static propTypes = {
     layers: PropTypes.arrayOf(PropTypes.shape({})),
-    activeLayer: PropTypes.shape({}),
+    activeLayer: PropTypes.object,
     visibility: PropTypes.bool,
     tooltipOpened: PropTypes.bool,
     icon: PropTypes.string,
@@ -137,7 +140,7 @@ class LegendItemButtonOpacity extends PureComponent {
             className={`c-legend-button opacity ${classnames({ '-disabled': !visibility })}`}
             aria-label="Change opacity"
           >
-            <Icon name={icon || 'icon-opacity'} className="-small" style={iconStyle} />
+            <Icon icon={icon || 'icon-opacity'} className="-small" style={iconStyle} />
           </button>
         </Tooltip>
 

@@ -3,31 +3,21 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { arrayMoveImmutable } from 'utils/array-move';
 
-// Components
-import { Icon } from 'vizzuality-components';
+import Icon from 'components/ui/icon';
+
 import LegendList from './components/legend-list';
 
 import './styles.scss';
 
 class Legend extends PureComponent {
   static propTypes = {
-    /** Title */
     title: PropTypes.string,
-    /** Sortable */
     sortable: PropTypes.bool,
-    /** Max width */
     maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /** Max height */
     maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /** Should the legend be expanded by default? */
     expanded: PropTypes.bool,
-    /** Should the legend be collapsable */
     collapsable: PropTypes.bool,
-    /** `onChangeOrder = (layerGroupsIds) => {}`
-     * @arg {Array} layerGroupIds The new order
-     */
     onChangeOrder: PropTypes.func,
-    /** Children for render */
     children: PropTypes.node,
   };
 
@@ -95,7 +85,7 @@ class Legend extends PureComponent {
               className="toggle-legend"
               onClick={() => this.onToggleLegend(false)}
             >
-              <Icon name="icon-arrow-down" className="-small" />
+              <Icon icon="icon-arrow-down" className="-small" />
             </button>
           )}
 
@@ -133,7 +123,7 @@ class Legend extends PureComponent {
 
             {/* Toggle button */}
             <div className="toggle-legend">
-              <Icon name="icon-arrow-up" className="-small" />
+              <Icon icon="icon-arrow-up" className="-small" />
             </div>
           </h1>
         </button>

@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
-import { Icon, Tooltip } from 'vizzuality-components';
+
+import  Tooltip  from 'components/tooltip';
+import  Icon  from 'components/ui/icon';
+
 import LegendLayersTooltip from './legend-item-button-layers-tooltip';
 import '../styles-button.scss';
 
@@ -122,7 +125,7 @@ class LegendItemButtonLayers extends PureComponent {
             className="c-legend-button layers"
             aria-label="Select other layer"
           >
-            <Icon name={icon || 'icon-layers'} className="-small" style={visibilityHover || visibilityClick ? focusStyle : defaultStyle} />
+            <Icon icon={icon || 'icon-layers'} className="-small" style={visibilityHover || visibilityClick ? focusStyle : defaultStyle} />
           </button>
         </Tooltip>
       </Tooltip>
