@@ -6,7 +6,7 @@ import startCase from 'lodash/startCase';
 import { trackEvent } from 'utils/analytics';
 import cx from 'classnames';
 
-import { Slider } from 'vizzuality-components';
+import { Slider } from 'components/slider';
 
 // import Slider from 'components/ui/slider';
 import Loader from 'components/ui/loader';

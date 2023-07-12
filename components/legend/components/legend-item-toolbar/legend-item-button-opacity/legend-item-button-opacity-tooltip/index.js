@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Slider } from 'vizzuality-components';
+
+import { Slider } from 'components/slider';
+
 import './styles.scss';
 
 class LegendOpacityTooltip extends PureComponent {
   static propTypes = {
     // Layers
-    activeLayer: PropTypes.shape({}).isRequired,
+    activeLayer: PropTypes.object.isRequired,
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
@@ -39,7 +41,7 @@ class LegendOpacityTooltip extends PureComponent {
     const { opacity: prevStateOpacity } = prevState;
 
     if (opacity !== prevOpacity && stateOpacity === prevStateOpacity) {
-      this.setState({ opacity });
+      this.setState({ opacity }); // eslint-disable-line
     }
   }
 

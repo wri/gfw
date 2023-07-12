@@ -29,7 +29,7 @@ class Legend extends PureComponent {
     maxWidth: null,
     maxHeight: null,
     children: [],
-    onChangeOrder: (ids) => console.info(ids),
+    onChangeOrder: (ids) => console.info(ids), // eslint-disable-line
   };
 
   constructor(props) {
@@ -141,5 +141,5 @@ export {
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
-  LegendItemButtonRemove,
+  LegendItemButtonRemove
 } from './components/legend-item-toolbar';

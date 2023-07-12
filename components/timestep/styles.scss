@@ -1,0 +1,40 @@
+@import '~/components/slider/styles';
+
+.c-timestep {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding-bottom: 10px;
+
+  .player-btn {
+    border-color: transparent;
+    border-style: none;
+    border-width: 0;
+    padding: 0;
+    cursor: pointer;
+    width: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    display: flex;
+
+    &:focus {
+      outline: none;
+    }
+
+    > svg {
+      fill: #4a4a4a;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .timestep-slider {
+    width: 100%;
+    cursor: pointer;
+
+    &.can-play {
+      width: calc(100% - 20px);
+      margin-left: 15px;
+    }
+  }
+}

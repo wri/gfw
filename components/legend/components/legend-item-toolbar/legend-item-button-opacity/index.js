@@ -50,7 +50,7 @@ class LegendItemButtonOpacity extends PureComponent {
     visibilityClick: false
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { scrolling } = nextProps;
 
     if (scrolling) {
