@@ -1,19 +1,19 @@
 @import '~styles/settings.scss';
 
 /* legend component styles */
-.vizzuality__c-legend-list {
+.c-legend-list {
   overflow-x: hidden !important;
 }
 
-.vizzuality__c-legend-item {
+.c-legend-item {
   z-index: unset !important;
 }
 
-.vizzuality__c-legend-item,
-.vizzuality__c-legend-item-basic {
+.c-legend-item,
+.c-legend-item-basic {
   font-family: inherit !important;
 
-  .vizzuality__custom-icon {
+  .custom-icon {
     width: 16px !important;
     height: 16px !important;
 
@@ -23,23 +23,17 @@
     }
   }
 
-  .vizzuality__icon-square {
-    margin-top: 3px;
-    margin-right: 11px;
-    border-radius: rem(6px);
-  }
-
-  .vizzuality__legend-item-header > h3 {
+  .legend-item-header > h3 {
     font-size: rem(14px);
     font-weight: 400 !important;
     color: $slate;
   }
 
-  .vizzuality__c-legend-handler {
+  .c-legend-handler {
     top: 18px;
   }
 
-  .vizzuality__c-legend-handler svg {
+  .c-legend-handler svg {
     fill: $warm-grey;
 
     &:hover {
@@ -48,14 +42,6 @@
   }
 }
 
-.vizzuality__c-legend-item-toolbar > * {
-  margin-right: 8px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-.vizzuality__c-legend-item-types {
+.c-legend-item-types {
   margin-bottom: rem(15px);
 }

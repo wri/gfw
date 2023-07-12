@@ -3,7 +3,6 @@
 .c-legend-map {
   position: relative;
   width: 100%;
-  // max-width: 400px;
   background: $color-white;
   z-index: 2;
   border: 1px solid $border-color-1;
@@ -91,7 +90,6 @@
       padding: 0;
       width: auto;
       height: auto;
-      padding: 0;
       background-color: $color-white;
 
       svg {

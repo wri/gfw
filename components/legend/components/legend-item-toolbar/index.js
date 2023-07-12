@@ -6,7 +6,6 @@ import LegendItemButtonOpacity from './legend-item-button-opacity';
 import LegendItemButtonVisibility from './legend-item-button-visibility';
 import LegendItemButtonInfo from './legend-item-button-info';
 import LegendItemButtonRemove from './legend-item-button-remove';
-import './styles.scss';
 
 class LegendItemToolbar extends PureComponent {
   static propTypes = {
@@ -23,41 +22,41 @@ class LegendItemToolbar extends PureComponent {
     onChangeOpacity: PropTypes.func,
     onChangeVisibility: PropTypes.func,
     onRemoveLayer: PropTypes.func,
-    onChangeInfo: PropTypes.func
-  }
+    onChangeInfo: PropTypes.func,
+  };
 
   static defaultProps = {
     // Props
     children: [],
     defaultStyle: {
-      fill: '#717171'
+      fill: '#717171',
     },
     enabledStyle: {
-      fill: '#2C75B0'
+      fill: '#2C75B0',
     },
     disabledStyle: {
-      fill: '#CACCD0'
+      fill: '#CACCD0',
     },
     focusStyle: {
-      fill: '#393f44'
+      fill: '#393f44',
     },
 
     // ACTIONS
-    onChangeBBox: l => console.info(l),
-    onChangeInfo: l => console.info(l),
-    onChangeLayer: l => console.info(l),
+    onChangeBBox: (l) => console.info(l),
+    onChangeInfo: (l) => console.info(l),
+    onChangeLayer: (l) => console.info(l),
     onChangeVisibility: (l, v) => console.info(l, v),
     onChangeOpacity: (l, o) => console.info(l, o),
-    onRemoveLayer: l => console.info(l)
-  }
+    onRemoveLayer: (l) => console.info(l),
+  };
 
   state = {
-    tooltipOpened: false
-  }
+    tooltipOpened: false,
+  };
 
   onTooltipVisibilityChange = (tooltipOpened) => {
     this.setState({ tooltipOpened });
-  }
+  };
 
   render() {
     const { children, ...rest } = this.props;
@@ -65,26 +64,33 @@ class LegendItemToolbar extends PureComponent {
     const props = {
       ...rest,
       tooltipOpened,
-      onTooltipVisibilityChange: this.onTooltipVisibilityChange
+      onTooltipVisibilityChange: this.onTooltipVisibilityChange,
     };
 
     return (
       <div className="c-legend-item-toolbar">
         {!!React.Children.count(children) &&
-          React.Children.map(children, child => (React.isValidElement(child) && typeof child.type !== 'string' ?
-            React.cloneElement(child, { ...props })
-            :
-            child
-        ))}
+          React.Children.map(children, (child) =>
+            React.isValidElement(child) && typeof child.type !== 'string'
+              ? React.cloneElement(child, { ...props })
+              : child
+          )}
 
         {/* If there is no children defined, let's use the components we had */}
         {!React.Children.count(children) && <LegendItemButtonBBox {...props} />}
-        {!React.Children.count(children) && <LegendItemButtonLayers {...props} />}
-        {!React.Children.count(children) && <LegendItemButtonOpacity {...props} />}
-        {!React.Children.count(children) && <LegendItemButtonVisibility {...props} />}
+        {!React.Children.count(children) && (
+          <LegendItemButtonLayers {...props} />
+        )}
+        {!React.Children.count(children) && (
+          <LegendItemButtonOpacity {...props} />
+        )}
+        {!React.Children.count(children) && (
+          <LegendItemButtonVisibility {...props} />
+        )}
         {!React.Children.count(children) && <LegendItemButtonInfo {...props} />}
-        {!React.Children.count(children) && <LegendItemButtonRemove {...props} /> }
-
+        {!React.Children.count(children) && (
+          <LegendItemButtonRemove {...props} />
+        )}
       </div>
     );
   }
@@ -97,5 +103,5 @@ export {
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
-  LegendItemButtonRemove
+  LegendItemButtonRemove,
 };
