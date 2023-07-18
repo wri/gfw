@@ -1,0 +1,70 @@
+@import '~styles/vizz-components-settings';
+
+.c-legend-item {
+  position: relative;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid $border-color-1;
+  background: rgba($color-white, 0.75);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .legend-item-container {
+    width: 100%;
+    padding: 15px;
+
+    &.-sortable {
+      padding-left: 28px;
+    }
+  }
+
+  .legend-info {
+    flex-grow: 1;
+
+    > * {
+      margin-top: $space-1;
+      &:first-child { margin-top: 0; }
+    }
+  }
+
+  .legend-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h3 {
+      font-size: $font-size-default;
+      color: $color-dark-1;
+      margin: 0;
+      margin-bottom: 3px;
+
+      &.-dark {
+        color: $color-dark-1;
+      }
+
+      .category {
+        font-weight: 400;
+        text-transform: capitalize;
+        padding: 0 8px 0 0;
+      }
+    }
+
+    > h3 {
+      color: $color-dark-1;
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+  }
+
+  &.-sort {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+  }
+}

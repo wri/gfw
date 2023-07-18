@@ -1,0 +1,42 @@
+@import '~styles/vizz-components-settings';
+
+.c-legend-item-button-layers-tooltip {
+  .layers-list {
+    margin: $space-1 0 0;
+    padding: 0;
+    list-style: none;
+
+    > * {
+      margin: $space-1 / 2 0 0;
+      &:first-child { margin: 0; }
+    }
+
+    .layers-list-item {
+      position: relative;
+      cursor: pointer;
+      padding-left: $space-1 * 2;
+
+      &::before {
+        display: none;
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 0;
+        width: $space-1;
+        height: $space-1;
+        background: $color-primary;
+        border-radius: 50%;
+      }
+
+      &:hover {
+        color: $color-primary;
+      }
+
+      &.-active {
+        &::before {
+          display: block;
+        }
+      }
+    }
+  }
+}

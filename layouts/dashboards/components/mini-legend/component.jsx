@@ -12,7 +12,8 @@ import SatelliteBasemaps from 'components/satellite-basemaps';
 
 import linkIcon from 'assets/icons/link.svg?sprite';
 
-import { LegendItemButtonOpacity, Icons } from 'vizzuality-components';
+import { LegendItemButtonOpacity } from 'components/legend';
+import Icons from 'components/icons';
 
 import LegendItemTypeChoropleth from 'components/map/components/legend/components/legend-item-type-choropleth';
 

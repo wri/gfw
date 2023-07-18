@@ -1,0 +1,54 @@
+// Colors
+$color-primary: #c32d7b;
+$color-secondary: #2c75b0;
+$color-tertiary: #fab72e;
+$color-white: #fff;
+$color-black: #000;
+
+$color-dark-1: #393f44;
+$color-dark-2: #717171;
+$color-dark-3: #caccd0;
+$color-dark-4: #f4f6f7;
+
+// Border
+$border-color-1: rgba(26, 28, 34, 0.1);
+$border-color-2: rgba(202, 204, 208, 0.85); // For inputs
+
+// Typography
+$font-size-extra-small: 12px;
+$font-size-small: 13px;
+$font-size-default: 14px;
+$font-size-medium: 16px;
+$font-size-big: 21px;
+
+$font-size-h1: 64px;
+$font-size-h2: 42px;
+$font-size-h3: 26px;
+$font-size-h4: 16px;
+
+// Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
+// Space
+$space-1: 8px;
+
+// Breakpoints
+$breakpoints: (
+  small: 400px
+);
+
+// Animation – timings
+$animation-time: 0.16s;
+$animation-time-2: 0.24s;
+$animation-time-3: 0.5s;
+$animation-time-4: 0.75s;
+
+// Animation – functions
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-in-sine: cubic-bezier(0.47, 0, 0.745, 0.715);
+$ease-out-sine: cubic-bezier(0.39, 0.575, 0.565, 1);
+$ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);

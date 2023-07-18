@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { LegendItemTypes } from 'vizzuality-components/dist/legend';
+import LegendItemTypes from 'components/legend/components/legend-item-types';
 import LayerToggle from '../layer-toggle';
 import LayerMoreInfo from '../layer-more-info';
 

@@ -1,0 +1,79 @@
+@import '~styles/vizz-components-settings';
+
+// ROTATE
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// DASH
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+.c-spinner {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: $color-white;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1000;
+
+  > .spinner-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > .spinner-icon {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      animation: rotate 1.25s infinite $ease-in-out-sine;
+
+      .spinner-circle {
+        stroke-dasharray: 5, 200;
+        stroke-dashoffset: 0;
+        stroke-linecap: round;
+        animation: dash 1.25s $ease-in-out-sine infinite, color 6s $ease-in-out-sine infinite;
+      }
+    }
+  }
+
+  // position
+  &.-absolute {
+    position: absolute;
+  }
+
+  &.-fixed {
+    position: fixed;
+  }
+
+  &.-relative {
+    position: relative;
+  }
+}

@@ -1,0 +1,101 @@
+@import '~styles/vizz-components-settings';
+
+.c-legend-map {
+  position: relative;
+  width: 100%;
+  background: $color-white;
+  z-index: 2;
+  border: 1px solid $border-color-1;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+
+  .legend-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 10px 15px;
+    text-transform: uppercase;
+    color: $color-dark-1;
+    font-weight: $font-weight-regular;
+    font-size: 11px;
+  }
+
+  .toggle-legend {
+    position: absolute;
+    right: -1px;
+    width: 40px;
+    height: 32px;
+    bottom: 100%;
+    border: 0;
+    border-radius: 2px 2px 0 0;
+    transform: translate(0, -1px);
+    background-color: rgba($color-dark-2, 0.8);
+    cursor: pointer;
+
+    &:focus { outline: none; }
+
+    &:hover {
+      background-color: rgba(darken($color-dark-2, 5%), 0.8);
+    }
+
+    svg {
+      margin-top: 4px;
+      fill: $color-white;
+    }
+  }
+
+  // OPENED LEGEND
+  .open-legend {
+    display: flex;
+    flex-flow: column;
+    // max-height: 300px;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    // Without an auto height, the legend looks a bit 💩
+    // but we can't animate the height if max-height is
+    // used
+    // I've prefered to remove the animation than having
+    // a legend too tall - Clément
+
+    &.-active {
+      height: auto;
+      opacity: 1;
+      overflow: auto;
+    }
+  }
+
+  // CLOSED LEGEND
+  .close-legend {
+    display: none;
+    width: 100%;
+    border-color: transparent;
+    border-style: none;
+    border-width: 0;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.-active {
+      display: inherit;
+      cursor: pointer;
+    }
+
+    .toggle-legend {
+      position: relative;
+      top: auto;
+      padding: 0;
+      width: auto;
+      height: auto;
+      background-color: $color-white;
+
+      svg {
+        margin-top: 0;
+        fill: $color-dark-1;
+      }
+    }
+  }
+}

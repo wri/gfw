@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
-class LegendTypeGradient extends PureComponent {
+class LegendItemTypeGradient extends PureComponent {
   static propTypes = {
-    // Props
     activeLayer: PropTypes.shape({
       legendConfig: PropTypes.shape({
         type: PropTypes.string,
@@ -14,7 +13,6 @@ class LegendTypeGradient extends PureComponent {
   };
 
   static defaultProps = {
-    // Props
     activeLayer: {},
   };
 
@@ -76,4 +74,4 @@ class LegendTypeGradient extends PureComponent {
   }
 }
 
-export default LegendTypeGradient;
+export default LegendItemTypeGradient;

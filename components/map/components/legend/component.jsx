@@ -2,23 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import {
-  Legend,
+import Icons from 'components/icons'
+import Legend, { 
+  LegendItemToolbar, 
+  LegendItemButtonOpacity, 
   LegendListItem,
-  LegendItemTypes,
-  LegendItemTypeBasic,
-  LegendItemTypeProportional,
-  LegendItemToolbar,
-  LegendItemButtonOpacity,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
-  Icons,
-} from 'vizzuality-components';
+} from 'components/legend'
+
+import LegendItemTypes, { 
+  LegendItemTypeBasic,
+  LegendItemTypeProportional
+} from 'components/legend/components/legend-item-types'
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import SentenceSelector from 'components/sentence-selector';
 import WidgetAlert from 'components/widget/components/widget-alert';
+
+import LegendItemTypeChoropleth from 'components/map/components/legend/components/legend-item-type-choropleth';
+import LegendItemTypeGradient from 'components/map/components/legend/components/legend-item-type-gradient';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
@@ -26,8 +30,6 @@ import LayerSelectMenu from './components/layer-select-menu';
 import LayerSelectorMenu from './components/layer-selector-menu';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
-import LegendItemTypeGradient from './components/legend-item-type-gradient';
-import LegendItemTypeChoropleth from './components/legend-item-type-choropleth';
 
 import './styles.scss';
 import './themes/vizzuality-legend.scss';

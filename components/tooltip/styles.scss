@@ -1,0 +1,438 @@
+@import '~styles/vizz-components-settings';
+
+:global {
+  .c-rc-tooltip {
+    position: absolute;
+    z-index: 1070;
+    display: block;
+    visibility: visible;
+    line-height: 1.5;
+    font-size: inherit;
+    background-color: transparent;
+    padding: 0;
+    opacity: 1;
+
+    &.rc-tooltip-zoom-enter {
+      display: block;
+    }
+
+    &.rc-tooltip-zoom-leave {
+      display: block;
+    }
+
+    &.-default {
+      .rc-tooltip-inner {
+        position: relative;
+        max-width: 200px;
+        padding: $space-1 $space-1 * 2;
+        color: $color-dark-1;
+        background: $color-white;
+        border: 1px solid rgba($border-color-1, 0.15);
+        border-radius: 4px;
+        box-shadow: 0 20px 30px 0 rgba($color-black, 0.1);
+        font-size: $font-size-small;
+        min-height: auto;
+        max-height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      &.rc-tooltip-placement-top .rc-tooltip-arrow {
+        border-top-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-topLeft .rc-tooltip-arrow {
+        border-top-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-topRight .rc-tooltip-arrow {
+        border-top-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-right .rc-tooltip-arrow {
+        border-right-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-rightTop .rc-tooltip-arrow {
+        border-right-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-rightBottom .rc-tooltip-arrow {
+        border-right-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-left .rc-tooltip-arrow {
+        border-left-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-leftTop .rc-tooltip-arrow {
+        border-left-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-leftBottom .rc-tooltip-arrow {
+        border-left-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-bottom .rc-tooltip-arrow {
+        border-bottom-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-bottomLeft .rc-tooltip-arrow {
+        border-bottom-color: $color-white;
+      }
+
+      &.rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
+        border-bottom-color: $color-white;
+      }
+    }
+  }
+}
+
+.rc-tooltip-zoom-enter {
+  opacity: 0;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation-play-state: paused;
+
+  &.rc-tooltip-zoom-enter-active {
+    animation-name: rcToolTipZoomIn;
+    animation-play-state: running;
+  }
+}
+
+.rc-tooltip-zoom-appear {
+  opacity: 0;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation-play-state: paused;
+
+  &.rc-tooltip-zoom-appear-active {
+    animation-name: rcToolTipZoomIn;
+    animation-play-state: running;
+  }
+}
+
+.rc-tooltip-zoom-leave {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.6, -0.3, 0.74, 0.05);
+  animation-play-state: paused;
+
+  &.rc-tooltip-zoom-leave-active {
+    animation-name: rcToolTipZoomOut;
+    animation-play-state: running;
+  }
+}
+
+@-webkit-keyframes rcToolTipZoomIn {
+  0% {
+    opacity: 0;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes rcToolTipZoomIn {
+  0% {
+    opacity: 0;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(1, 1);
+  }
+}
+
+@-webkit-keyframes rcToolTipZoomOut {
+  0% {
+    opacity: 1;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(1, 1);
+  }
+
+  100% {
+    opacity: 0;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(0, 0);
+  }
+}
+
+@keyframes rcToolTipZoomOut {
+  0% {
+    opacity: 1;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(1, 1);
+  }
+
+  100% {
+    opacity: 0;
+    //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
+    transform-origin: 50% 50%;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: scale(0, 0);
+  }
+}
+
+.rc-tooltip-hidden {
+  display: none;
+}
+
+.rc-tooltip-inner {
+  padding: 0;
+  color: $color-dark-1;
+  text-align: left;
+  text-decoration: none;
+  background-color: transparent;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 0;
+  min-height: 34px;
+  border: 0;
+}
+
+.rc-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.rc-tooltip-arrow-inner {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.rc-tooltip-placement-top {
+  .rc-tooltip-arrow {
+    bottom: -5px;
+    margin-left: -6px;
+    border-width: 6px 6px 0;
+    border-top-color: $border-color-2;
+    left: 50%;
+  }
+
+  .rc-tooltip-arrow-inner {
+    bottom: 1px;
+    margin-left: -6px;
+    border-width: 6px 6px 0;
+    border-top-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-topLeft {
+  .rc-tooltip-arrow {
+    bottom: -5px;
+    margin-left: -6px;
+    border-width: 6px 6px 0;
+    border-top-color: $border-color-2;
+    left: 10px;
+  }
+
+  .rc-tooltip-arrow-inner {
+    bottom: 1px;
+    margin-left: -6px;
+    border-width: 6px 6px 0;
+    border-top-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-topRight {
+  .rc-tooltip-arrow {
+    bottom: -5px;
+    margin-left: -6px;
+    border-width: 6px 6px 0;
+    border-top-color: $border-color-2;
+    right: 10px;
+  }
+
+  .rc-tooltip-arrow-inner {
+    bottom: 1px;
+    margin-left: -6px;
+    border-width: 6px 6px 0;
+    border-top-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-right {
+  .rc-tooltip-arrow {
+    left: -5px;
+    margin-top: -6px;
+    border-width: 6px 6px 6px 0;
+    border-right-color: $border-color-2;
+    top: 50%;
+  }
+
+  .rc-tooltip-arrow-inner {
+    left: 1px;
+    margin-top: -6px;
+    border-width: 6px 6px 6px 0;
+    border-right-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-rightTop {
+  .rc-tooltip-arrow {
+    left: -5px;
+    margin-top: -6px;
+    border-width: 6px 6px 6px 0;
+    border-right-color: $border-color-2;
+    top: 10px;
+    margin-top: 0;
+  }
+
+  .rc-tooltip-arrow-inner {
+    left: 1px;
+    margin-top: -6px;
+    border-width: 6px 6px 6px 0;
+    border-right-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-rightBottom {
+  .rc-tooltip-arrow {
+    left: -5px;
+    margin-top: -6px;
+    border-width: 6px 6px 6px 0;
+    border-right-color: $border-color-2;
+    bottom: 10px;
+  }
+
+  .rc-tooltip-arrow-inner {
+    left: 1px;
+    margin-top: -6px;
+    border-width: 6px 6px 6px 0;
+    border-right-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-left {
+  .rc-tooltip-arrow {
+    right: -5px;
+    margin-top: -6px;
+    border-width: 6px 0 6px 6px;
+    border-left-color: $border-color-2;
+    top: 50%;
+  }
+
+  .rc-tooltip-arrow-inner {
+    right: 1px;
+    margin-top: -6px;
+    border-width: 6px 0 6px 6px;
+    border-left-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-leftTop {
+  .rc-tooltip-arrow {
+    right: -5px;
+    margin-top: -6px;
+    border-width: 6px 0 6px 6px;
+    border-left-color: $border-color-2;
+    top: 10px;
+    margin-top: 0;
+  }
+
+  .rc-tooltip-arrow-inner {
+    right: 1px;
+    margin-top: -6px;
+    border-width: 6px 0 6px 6px;
+    border-left-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-leftBottom {
+  .rc-tooltip-arrow {
+    right: -5px;
+    margin-top: -6px;
+    border-width: 6px 0 6px 6px;
+    border-left-color: $border-color-2;
+    bottom: 10px;
+  }
+
+  .rc-tooltip-arrow-inner {
+    right: 1px;
+    margin-top: -6px;
+    border-width: 6px 0 6px 6px;
+    border-left-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-bottom {
+  .rc-tooltip-arrow {
+    top: -5px;
+    margin-left: -6px;
+    border-width: 0 6px 6px;
+    border-bottom-color: $border-color-2;
+    left: 50%;
+  }
+
+  .rc-tooltip-arrow-inner {
+    top: 1px;
+    margin-left: -6px;
+    border-width: 0 6px 6px;
+    border-bottom-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-bottomLeft {
+  .rc-tooltip-arrow {
+    top: -5px;
+    margin-left: -6px;
+    border-width: 0 6px 6px;
+    border-bottom-color: $border-color-2;
+    left: 10px;
+  }
+
+  .rc-tooltip-arrow-inner {
+    top: 1px;
+    margin-left: -6px;
+    border-width: 0 6px 6px;
+    border-bottom-color: $color-white;
+  }
+}
+
+.rc-tooltip-placement-bottomRight {
+  .rc-tooltip-arrow {
+    top: -5px;
+    margin-left: -6px;
+    border-width: 0 6px 6px;
+    border-bottom-color: $border-color-2;
+    right: 10px;
+  }
+
+  .rc-tooltip-arrow-inner {
+    top: 1px;
+    margin-left: -6px;
+    border-width: 0 6px 6px;
+    border-bottom-color: $color-white;
+  }
+}
