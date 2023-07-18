@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { LegendItemTimeStep } from 'vizzuality-components';
+import LegendItemTimeStep from 'components/legend/components/legend-item-timestep';
 
 import { trackEvent } from 'utils/analytics';
 

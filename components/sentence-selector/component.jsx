@@ -40,7 +40,7 @@ class SentenceSelector extends PureComponent {
     );
 
     return (
-      <div className={`c-sentence-selector notranslate ${className || ''}`}>
+      <div className={`c-sentence-selector ${className || ''}`}>
         {selectorRepl}
       </div>
     );
