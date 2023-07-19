@@ -4,7 +4,7 @@ import wriAPISerializer from 'wri-json-api-serializer';
 import {
   CARTO_API,
   MAPBOX_API,
-  RESOURCE_WATCH_API,
+  RESOURCE_WATCH_STAGING_API,
   GFW_DATA_API,
   GFW_STAGING_DATA_API,
   GFW_API,
@@ -16,14 +16,14 @@ import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
-const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
+const GFW_API_URL = GFW_STAGING_API;
 const GFW_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 // We never use the `staging-api.resourcewatch.org`.
-const RESOURCE_WATCH_API_URL = RESOURCE_WATCH_API;
+const RESOURCE_WATCH_API_URL = RESOURCE_WATCH_STAGING_API;
 
 // At the moment, the API key is the same
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
