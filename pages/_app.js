@@ -79,6 +79,7 @@ import '../components/legend/components/legend-item-drag/styles.scss';
 import '../components/legend/components/legend-item-timestep/styles.scss';
 import '../components/legend/components/legend-item-toolbar/legend-item-button-layers/legend-item-button-layers-tooltip/styles.scss';
 import '../components/legend/components/legend-item-toolbar/legend-item-button-opacity/legend-item-button-opacity-tooltip/styles.scss';
+import '../components/legend/components/legend-item-toolbar/styles-button.scss';
 import '../components/legend/components/legend-item-types/styles.scss';
 import '../components/legend/components/legend-item-types/legend-item-type-basic/styles.scss';
 import '../components/legend/components/legend-item-types/legend-item-type-basic/legend-item-type-basic-item/styles.scss';
@@ -191,7 +192,7 @@ import '../components/success-message/styles.scss';
 // tags list
 import '../components/tags-list/styles.scss';
 
-// timestamp
+// timestep
 import '../components/timestep/styles.scss';
 
 // tooltip

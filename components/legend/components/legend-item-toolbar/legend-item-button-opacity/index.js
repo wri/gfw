@@ -6,7 +6,6 @@ import Tooltip from 'components/tooltip';
 import Icon from 'components/ui/icon';
 
 import LegendOpacityTooltip from './legend-item-button-opacity-tooltip';
-import styles from '../styles-button.scss';
 
 class LegendItemButtonOpacity extends PureComponent {
   static propTypes = {
@@ -136,7 +135,6 @@ class LegendItemButtonOpacity extends PureComponent {
           trigger={tooltipOpened ? '' : 'hover'}
           onVisibleChange={(v) => this.setState({ visibilityHover: v })}
           destroyTooltipOnHide
-          style={styles.tooltip}
         >
           <button
             type="button"

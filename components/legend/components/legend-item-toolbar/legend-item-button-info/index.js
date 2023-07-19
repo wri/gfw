@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import Tooltip from 'components/tooltip';
 import Icon from 'components/ui/icon';
 
-import '../styles-button.scss';
-
 class LegendItemButtonInfo extends PureComponent {
   static propTypes = {
     activeLayer: PropTypes.object,
