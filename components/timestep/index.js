@@ -6,9 +6,6 @@ import classnames from 'classnames';
 import Icon from 'components/ui/icon';
 import Slider from 'components/slider';
 
-// styles
-import './styles.scss';
-
 class Timestep extends PureComponent {
   static propTypes = {
     customClass: PropTypes.string,

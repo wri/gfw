@@ -70,10 +70,23 @@ import '../components/forms/login/styles.scss';
 import '../components/forms/newsletter/styles.scss';
 import '../components/forms/profile/styles.scss';
 
-// Header
+// header
 import '../components/header/styles.scss';
 
-// Load More
+// legends
+import '../components/legend/styles.scss';
+import '../components/legend/components/legend-item-drag/styles.scss';
+import '../components/legend/components/legend-item-timestep/styles.scss';
+import '../components/legend/components/legend-item-toolbar/legend-item-button-layers/legend-item-button-layers-tooltip/styles.scss';
+import '../components/legend/components/legend-item-toolbar/legend-item-button-opacity/legend-item-button-opacity-tooltip/styles.scss';
+import '../components/legend/components/legend-item-types/styles.scss';
+import '../components/legend/components/legend-item-types/legend-item-type-basic/styles.scss';
+import '../components/legend/components/legend-item-types/legend-item-type-basic/legend-item-type-basic-item/styles.scss';
+import '../components/legend/components/legend-item-types/legend-item-type-proportional/styles.scss';
+import '../components/legend/components/legend-list/styles.scss';
+import '../components/legend/components/legend-list-item/styles.scss';
+
+// load More
 import '../components/load-more/styles.scss';
 
 // Maps
@@ -157,6 +170,12 @@ import '../components/satellite-basemaps/settings/planet-menu/styles.scss';
 // sentence selector
 import '../components/sentence-selector/styles.scss';
 
+// slider
+import '../components/slider/styles.scss';
+
+// spinner
+import '../components/spinner/styles.scss';
+
 // statement
 import '../components/statement/styles.scss';
 
@@ -171,6 +190,12 @@ import '../components/success-message/styles.scss';
 
 // tags list
 import '../components/tags-list/styles.scss';
+
+// timestamp
+import '../components/timestep/styles.scss';
+
+// tooltip
+import '../components/tooltip/styles.scss';
 
 // UI
 import '../components/ui/button/styles.scss';

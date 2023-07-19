@@ -15,30 +15,32 @@ import LegendItemTypeGradient from 'components/map/components/legend/components/
 import LegendItemTypeBasic from './legend-item-type-basic';
 import LegendItemTypeProportional from './legend-item-type-proportional';
 
-import './styles.scss';
-
 class LegendItemTypes extends PureComponent {
   static propTypes = {
     children: PropTypes.node,
-    activeLayer: PropTypes.object
-  }
+    activeLayer: PropTypes.object,
+  };
 
   static defaultProps = {
     children: [],
-    activeLayer: {}
-  }
+    activeLayer: {},
+  };
 
   state = {
     activeLayer: {},
-    loading: false
-  }
+    loading: false,
+  };
 
   componentDidMount() {
     const { activeLayer } = this.props;
     const { legendConfig } = activeLayer || {};
     const { params = {}, sqlParams = {} } = legendConfig || {};
 
-    const parsedConfig = replace(JSON.stringify(legendConfig), params, sqlParams);
+    const parsedConfig = replace(
+      JSON.stringify(legendConfig),
+      params,
+      sqlParams
+    );
     const { url } = JSON.parse(parsedConfig);
 
     if (url) {
@@ -49,15 +51,23 @@ class LegendItemTypes extends PureComponent {
   componentDidUpdate(prevProps) {
     const { activeLayer: prevActiveLayer } = prevProps;
     const { legendConfig: prevLegendConfig } = prevActiveLayer;
-    const { params: prevParams = {}, sqlParams: prevSqlParams = {} } = prevLegendConfig;
+    const { params: prevParams = {}, sqlParams: prevSqlParams = {} } =
+      prevLegendConfig;
 
     const { activeLayer: nextActiveLayer } = this.props;
     const { legendConfig: nextLegendConfig } = nextActiveLayer;
-    const { params: nextParams = {}, sqlParams: nextSqlParams = {} } = nextLegendConfig;
+    const { params: nextParams = {}, sqlParams: nextSqlParams = {} } =
+      nextLegendConfig;
 
-
-    if (!isEqual(nextParams, prevParams) || !isEqual(nextSqlParams, prevSqlParams)) {
-      const stringifyConfig = replace(JSON.stringify(nextLegendConfig), nextParams, nextSqlParams);
+    if (
+      !isEqual(nextParams, prevParams) ||
+      !isEqual(nextSqlParams, prevSqlParams)
+    ) {
+      const stringifyConfig = replace(
+        JSON.stringify(nextLegendConfig),
+        nextParams,
+        nextSqlParams
+      );
       const parsedConfig = JSON.parse(stringifyConfig);
       const { url } = parsedConfig || {};
 
@@ -78,19 +88,23 @@ class LegendItemTypes extends PureComponent {
         if (response.ok) return response.json();
       })
       .then((response) => {
-        const parsedActiveLayer = typeof dataParse === 'function' ? dataParse(activeLayer, response) : response;
+        const parsedActiveLayer =
+          typeof dataParse === 'function'
+            ? dataParse(activeLayer, response)
+            : response;
         this.setState({ activeLayer: parsedActiveLayer, loading: false });
       })
       .catch(() => {
         this.setState({ loading: false });
       });
-
-  }
+  };
 
   render() {
     const { children, activeLayer: propsActiveLayer } = this.props;
     const { loading, activeLayer: stateActiveLayer } = this.state;
-    const activeLayer = !isEmpty(stateActiveLayer) ? stateActiveLayer : propsActiveLayer;
+    const activeLayer = !isEmpty(stateActiveLayer)
+      ? stateActiveLayer
+      : propsActiveLayer;
 
     const { legendConfig } = activeLayer || {};
     const { url } = legendConfig || {};
@@ -98,28 +112,36 @@ class LegendItemTypes extends PureComponent {
 
     return (
       <div className="c-legend-item-types">
-        {(url && loading) && (
+        {url && loading && (
           <Spinner
             position="relative"
             style={{
-              box: { width: 20, height: 20 }
+              box: { width: 20, height: 20 },
             }}
           />
         )}
 
-        {shouldRender && !!React.Children.count(children) &&
-          React.Children.map(children, child => (React.isValidElement(child) && typeof child.type !== 'string' ?
-            React.cloneElement(child, { ...this.props })
-            :
-            child
-        ))}
+        {shouldRender &&
+          !!React.Children.count(children) &&
+          React.Children.map(children, (child) =>
+            React.isValidElement(child) && typeof child.type !== 'string'
+              ? React.cloneElement(child, { ...this.props })
+              : child
+          )}
 
         {/* If there is no children defined, let's use the components we have */}
-        {(shouldRender && !React.Children.count(children)) && <LegendItemTypeBasic {...this.props} />}
-        {(shouldRender && !React.Children.count(children)) && <LegendItemTypeChoropleth {...this.props} />}
-        {(shouldRender && !React.Children.count(children)) && <LegendItemTypeGradient {...this.props} />}
-        {(shouldRender && !React.Children.count(children)) && <LegendItemTypeProportional {...this.props} />}
-
+        {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeBasic {...this.props} />
+        )}
+        {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeChoropleth {...this.props} />
+        )}
+        {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeGradient {...this.props} />
+        )}
+        {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeProportional {...this.props} />
+        )}
       </div>
     );
   }
@@ -131,5 +153,5 @@ export {
   LegendItemTypeBasic,
   LegendItemTypeChoropleth,
   LegendItemTypeGradient,
-  LegendItemTypeProportional
+  LegendItemTypeProportional,
 };
