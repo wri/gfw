@@ -10,8 +10,6 @@ import Icon from 'components/ui/icon';
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
 
-import './styles.scss';
-
 class LayerSelectMenu extends PureComponent {
   state = {
     menuActive: false,

@@ -20,11 +20,7 @@ import Popup from './components/popup';
 import Draw from './components/draw';
 import Attributions from './components/attributions';
 
-// Components
 import LayerManagerWrapper from './components/layer-manager';
-
-// Styles
-import './styles.scss';
 
 class MapComponent extends Component {
   static propTypes = {

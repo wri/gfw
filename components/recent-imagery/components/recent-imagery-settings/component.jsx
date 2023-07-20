@@ -20,8 +20,6 @@ import BANDS from 'data/bands.json';
 
 import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
-import './styles.scss';
-
 class RecentImagerySettings extends PureComponent {
   state = {
     selected: null,
@@ -136,10 +134,7 @@ class RecentImagerySettings extends PureComponent {
                       .format('DD MMM YYYY')
                       .toUpperCase()}
                   </p>
-                  <p>
-                    {format('.0f')(selected.cloudScore)}
-                    % cloud coverage
-                  </p>
+                  <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
                   <p>{startCase(selected.instrument)}</p>
                 </div>
                 <Dropdown

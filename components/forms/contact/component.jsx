@@ -17,13 +17,10 @@ import { email } from 'components/forms/validations';
 
 import { topics, tools } from './config';
 
-import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class ContactForm extends PureComponent {
   static propTypes = {
-    // sendContactForm: PropTypes.func.isRequired,
     resetForm: PropTypes.func,
     initialValues: PropTypes.object,
   };
@@ -87,9 +84,10 @@ class ContactForm extends PureComponent {
               ) : (
                 <Fragment>
                   <p className="subtitle">
-                    For media inquiries, email
-                    {' '}
-                    <a href="mailto:Kaitlyn.Thayer@wri.org">Kaitlyn.Thayer@wri.org</a>
+                    For media inquiries, email{' '}
+                    <a href="mailto:Kaitlyn.Thayer@wri.org">
+                      Kaitlyn.Thayer@wri.org
+                    </a>
                   </p>
                   <form onSubmit={handleSubmit}>
                     <Input

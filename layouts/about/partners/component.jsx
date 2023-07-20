@@ -2,8 +2,6 @@ import { Row, Column } from '@worldresources/gfw-components';
 
 import { foundingPartners, partnersCollaborators, funders } from './partners';
 
-import './styles.scss';
-
 const AboutPartnersSection = () => (
   <section className="l-section-partners">
     <div className="logo-section">

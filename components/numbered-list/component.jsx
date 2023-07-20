@@ -7,8 +7,6 @@ import { formatNumber } from 'utils/format';
 
 import Paginate from 'components/paginate';
 
-import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class NumberedList extends PureComponent {

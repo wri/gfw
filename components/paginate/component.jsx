@@ -5,8 +5,6 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 
-import './styles.scss';
-
 class Paginate extends PureComponent {
   render() {
     const { settings, count, onClickChange, className } = this.props;

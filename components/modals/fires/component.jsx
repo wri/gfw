@@ -5,8 +5,6 @@ import Modal from 'components/modal';
 
 import { setModalFiresOpen, setContactUsOpen } from './actions';
 
-import './styles.scss';
-
 const ModalGFWFires = () => {
   const { query, pathname } = useRouter();
 

@@ -16,8 +16,6 @@ import polygonIcon from 'assets/icons/polygon.svg?sprite';
 
 import UploadShapeModal from './upload-shape-modal';
 
-import './styles.scss';
-
 class ChoseAnalysis extends PureComponent {
   static propTypes = {
     showDraw: PropTypes.bool,
@@ -45,12 +43,8 @@ class ChoseAnalysis extends PureComponent {
   };
 
   renderLayerOption = () => {
-    const {
-      boundaries,
-      activeBoundary,
-      selectBoundaries,
-      setMenuSettings,
-    } = this.props;
+    const { boundaries, activeBoundary, selectBoundaries, setMenuSettings } =
+      this.props;
     const selectedBoundaries = activeBoundary || (boundaries && boundaries[0]);
 
     return (

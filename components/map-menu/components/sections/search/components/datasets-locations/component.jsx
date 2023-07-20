@@ -11,8 +11,6 @@ import LayerToggle from 'components/map/components/legend/components/layer-toggl
 import locationIcon from 'assets/icons/location.svg?sprite';
 import layersIcon from 'assets/icons/layers.svg?sprite';
 
-import './styles.scss';
-
 class DatasetsLocationsSearch extends PureComponent {
   searchConditions() {
     const { datasets, locations, type } = this.props;
@@ -26,11 +24,8 @@ class DatasetsLocationsSearch extends PureComponent {
 
   searchIsEmpty() {
     const { loading, search } = this.props;
-    const {
-      hasDatasets,
-      hasLocations,
-      isLocationSearch,
-    } = this.searchConditions();
+    const { hasDatasets, hasLocations, isLocationSearch } =
+      this.searchConditions();
 
     return (
       !loading &&
@@ -62,10 +57,8 @@ class DatasetsLocationsSearch extends PureComponent {
         />
         <span>
           Use this to find
-          {isLocationSearch && ' any'}
-          {' '}
-          <b>{isLocationSearch ? 'location' : 'datasets'}</b>
-          {' '}
+          {isLocationSearch && ' any'}{' '}
+          <b>{isLocationSearch ? 'location' : 'datasets'}</b>{' '}
           {isLocationSearch &&
             'on the map. Search for political boundaries, landmarks and natural features.'}
           {!isLocationSearch && 'to add to the map.'}

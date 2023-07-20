@@ -50,12 +50,7 @@ const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
         </a>
       </div>
       <div className="links">
-        <span>
-          Map data ©
-          {currentYear}
-          {' '}
-          Google
-        </span>
+        <span>Map data ©{currentYear} Google</span>
         <a
           href="https://www.mapbox.com/about/maps/"
           rel="noopener noreferrer"

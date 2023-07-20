@@ -5,8 +5,6 @@ import { Row, Column, Button } from '@worldresources/gfw-components';
 
 import Icon from 'components/ui/icon';
 
-import './styles.scss';
-
 class CategoriesMenu extends PureComponent {
   render() {
     const { categories, onSelectCategory } = this.props;

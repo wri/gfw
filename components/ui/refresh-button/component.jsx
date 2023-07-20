@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
 
-import './styles.scss';
-
 const RefreshButton = ({ refetchFn }) => (
   <NoContent className="c-refresh-button">
     <span>

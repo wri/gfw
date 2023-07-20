@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.scss';
-
 class ChartTooltip extends PureComponent {
   render() {
     const { payload, settings, parseData, hideZeros, simple } = this.props;

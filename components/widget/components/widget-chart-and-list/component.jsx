@@ -5,8 +5,6 @@ import WidgetComposedChart from 'components/widget/components/widget-composed-ch
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import NoContent from 'components/ui/no-content';
 
-import './styles.scss';
-
 class WidgetChartAndList extends PureComponent {
   handleClick = (payload) => {
     const { setWidgetSettings, widget, parsePayload } = this.props;
@@ -59,12 +57,10 @@ class WidgetChartAndList extends PureComponent {
         ) : (
           <div className="widget-combined-list">
             <NoContent>
-              No data in the
-              {' '}
+              No data in the{' '}
               {settings && settings.percentile
                 ? settings.percentile
-                : 'selected'}
-              {' '}
+                : 'selected'}{' '}
               category
             </NoContent>
           </div>

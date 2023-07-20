@@ -8,8 +8,6 @@ import { composeValidators } from 'components/forms/validations';
 
 import FieldWrapper from 'components/forms/components/field-wrapper';
 
-import './styles.scss';
-
 class Input extends PureComponent {
   static propTypes = {
     type: PropTypes.string,
@@ -21,7 +19,7 @@ class Input extends PureComponent {
     required: PropTypes.bool,
     collapse: PropTypes.bool,
     infoClick: PropTypes.func,
-    className: PropTypes.string
+    className: PropTypes.string,
   };
 
   render() {
@@ -35,7 +33,7 @@ class Input extends PureComponent {
       required,
       infoClick,
       collapse,
-      className
+      className,
     } = this.props;
 
     return (

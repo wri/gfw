@@ -8,8 +8,6 @@ import Checkbox from 'components/ui/checkbox';
 
 import closeIcon from 'assets/icons/close.svg?sprite';
 
-import './styles.scss';
-
 class PromptTooltip extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -36,9 +34,7 @@ class PromptTooltip extends PureComponent {
           <Icon className="step-close-btn" icon={closeIcon} />
         </button>
         <div className="step-title">
-          {`${title}${
-          size > 1 ? ` · ${index + 1}/${size}` : ''
-        }`}
+          {`${title}${size > 1 ? ` · ${index + 1}/${size}` : ''}`}
         </div>
         <div className="step-content">
           {typeof content === 'string' ? content : content}

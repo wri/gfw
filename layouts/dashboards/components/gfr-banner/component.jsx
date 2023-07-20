@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import './styles.scss';
+
 import GFRLogoWebP from './assets/gfr-logo.webp';
 import GFRLogoPNG from './assets/gfr-logo.png';
 

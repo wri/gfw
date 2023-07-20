@@ -11,8 +11,6 @@ import Basemaps from 'components/basemaps';
 import DatasetSection from './dataset-section';
 import CategoriesMenu from './categories-menu';
 
-import './styles.scss';
-
 class Datasets extends PureComponent {
   render() {
     const {
@@ -83,8 +81,7 @@ class Datasets extends PureComponent {
                 <div className="no-datasets-legend">
                   <span className="legend-dot" />
                   <p className="no-datasets-message">
-                    No datasets available in
-                    {' '}
+                    No datasets available in{' '}
                     {countriesWithoutData.map((c, i, a) => {
                       let separator = ', ';
                       if (i === a.length - 2) separator = ' or ';
@@ -96,10 +93,8 @@ class Datasets extends PureComponent {
                         </Fragment>
                       );
                     })}
-                    for 
-                    {' '}
-                    {datasetCategory && datasetCategory.toLowerCase()}
-                    .
+                    for
+                    {datasetCategory && datasetCategory.toLowerCase()}.
                   </p>
                 </div>
               )}

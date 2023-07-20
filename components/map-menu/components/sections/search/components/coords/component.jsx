@@ -7,8 +7,6 @@ import { validateLatLng } from 'utils/geoms';
 import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
 
-import './styles.scss';
-
 class UTMCoords extends PureComponent {
   state = {
     error: false,
@@ -29,16 +27,8 @@ class UTMCoords extends PureComponent {
   };
 
   handleSubmit = () => {
-    const {
-      latDeg,
-      latMin,
-      latSec,
-      latCard,
-      lngDeg,
-      lngMin,
-      lngSec,
-      lngCard,
-    } = this.state;
+    const { latDeg, latMin, latSec, latCard, lngDeg, lngMin, lngSec, lngCard } =
+      this.state;
     const { setMapSettings } = this.props;
     const lat = this.convertDMSToDD(
       parseInt(latDeg, 10),

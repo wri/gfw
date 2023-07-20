@@ -6,8 +6,6 @@ import { useSetLanguage } from 'utils/lang';
 
 import Head from 'wrappers/head';
 
-import './styles.scss';
-
 const StaticWrapper = ({ children, title, description, noIndex, metaTags }) => {
   useTrackPage();
   useSetLanguage();

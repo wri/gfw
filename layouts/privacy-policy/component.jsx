@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Row, Column } from '@worldresources/gfw-components';
 
-import './styles.scss';
-
 const PrivacyPolicyPage = () => (
   <div className="l-privacy-page">
     <Row>
@@ -45,15 +43,13 @@ const PrivacyPolicyPage = () => (
                 Donor privacy: WRI and its affiliates do not sell, share, or
                 trade donors&apos; names or personal information with other
                 entities or send mailingson behalf of other organizations.
-              </b>
-              {' '}
+              </b>{' '}
               With your permission, on occasion, we may share information with
               related organizations in connection with a particular project or
               campaign you are interested in. For example, if we are co-hosting
               an event with a partner organization and you sign up to attend
               that event, we may ask your permission to share your contact
-              details with our partner.
-              {' '}
+              details with our partner.{' '}
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -299,11 +295,7 @@ const PrivacyPolicyPage = () => (
               Where necessary, we may need to transfer your personal information
               to another country. These transfers can take place within the WRI
               group but also may be made to selected third parties (as explained
-              in the 
-              {' '}
-              <b>Disclosure of information</b>
-              {' '}
-              section of this Privacy
+              in the <b>Disclosure of information</b> section of this Privacy
               Policy). Such transfers take place to enable us to provide you
               with our services and/or to communicate with you. Countries that
               we transfer your personal information to may not have the same
@@ -338,22 +330,18 @@ const PrivacyPolicyPage = () => (
             <address>
               World Resources Institute
               <br />
-              10 G Street NE, Suite 800 
-              {' '}
-              <br />
+              10 G Street NE, Suite 800 <br />
               Washington, DC 20002
               <br />
               Attn: General Counsel
             </address>
             <p>
               If you are resident in the European Economic Area, please also
-              read the
-              {' '}
+              read the{' '}
               <b>
                 Information for Individuals Located in the European Economic
                 Area
-              </b>
-              {' '}
+              </b>{' '}
               section of this Privacy Policy. You may have additional rights in
               relation to your personal information.
             </p>
@@ -365,19 +353,14 @@ const PrivacyPolicyPage = () => (
             <p>
               European Economic Area (“EEA”) data protection laws offer
               additional rights and protections for individuals located in the
-              EEA. Further to the information set out at the
-              {' '}
-              <b>Personal information access and deletion</b>
-              {' '}
-              section of this
+              EEA. Further to the information set out at the{' '}
+              <b>Personal information access and deletion</b> section of this
               Privacy Policy, the following additional information applies to
               you if you are located in the EEA:
             </p>
             <ul>
               <li>
-                <b>Basis of processing:</b>
-                {' '}
-                Where you make a donation to WRI and
+                <b>Basis of processing:</b> Where you make a donation to WRI and
                 give us your personal information to receive communications
                 related to your donation, we process your personal information
                 based on your consent. Likewise, when we collect device location
@@ -394,14 +377,9 @@ const PrivacyPolicyPage = () => (
                 you have requested);
               </li>
               <li>
-                <b>Personal information rights:</b>
-                {' '}
-                In addition to your right to
-                access personal information we hold about you (as set out at the
-                {' '}
-                <b>Personal information access and deletion</b>
-                {' '}
-                section of this
+                <b>Personal information rights:</b> In addition to your right to
+                access personal information we hold about you (as set out at the{' '}
+                <b>Personal information access and deletion</b> section of this
                 Privacy Policy), you have the right to have your personal
                 information rectified or erased, to object to its processing or
                 to restrict access to it. You also have the right to lodge a
@@ -433,8 +411,7 @@ const PrivacyPolicyPage = () => (
             </p>
             <p>
               WRI takes its donors&apos; privacy seriously. For more
-              information, please see our
-              {' '}
+              information, please see our{' '}
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -472,9 +449,7 @@ const PrivacyPolicyPage = () => (
               <br />
               World Resources Institute
               <br />
-              10 G Street NE, Suite 800 
-              {' '}
-              <br />
+              10 G Street NE, Suite 800 <br />
               Washington, DC 20002
               <br />
             </address>

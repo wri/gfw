@@ -21,9 +21,12 @@ export default (req, res) =>
     // You can use the `http-proxy` option
     target: GFW_API_URL,
     // In addition, you can use the `pathRewrite` option provided by `next-http-proxy`,
-    pathRewrite: {
-      [`^/?${PROXIES.GFW_API}`]: '/',
-    },
+    pathRewrite: [
+      {
+        patternStr: `^/?${PROXIES.GFW_API}`,
+        replaceStr: '/',
+      },
+    ],
     headers: {
       'x-api-key': GFW_API_KEY,
     },

@@ -15,7 +15,7 @@
     "basePath": false
   },
   {
-    "source": "/blog",
+    "source": "/blog/",
     "destination": "https://gfw-blog.herokuapp.com/blog",
     "basePath": false
   },

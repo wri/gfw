@@ -1,5 +1,6 @@
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import useRouter from 'utils/router';
+import PropTypes from 'prop-types';
 
 import { encodeQueryParams } from 'utils/url';
 
@@ -41,6 +42,11 @@ const URL = ({
   }, [queryParams]);
 
   return null;
+};
+
+URL.propTypes = {
+  queryParams: PropTypes.object,
+  options: PropTypes.object,
 };
 
 export default URL;

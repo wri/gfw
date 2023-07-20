@@ -6,8 +6,6 @@ import WidgetHeader from './components/widget-header';
 import WidgetBody from './components/widget-body';
 import WidgetFooter from './components/widget-footer';
 
-import './styles.scss';
-
 class Widget extends PureComponent {
   static propTypes = {
     forwardRef: PropTypes.func,
@@ -28,7 +26,7 @@ class Widget extends PureComponent {
     settings: PropTypes.object,
     settingsConfig: PropTypes.array,
     chartType: PropTypes.string,
-    metaKey: PropTypes.string,
+    metaKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     loading: PropTypes.bool,
     metaLoading: PropTypes.bool,
     error: PropTypes.bool,

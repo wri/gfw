@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Modal from 'components/modal';
 
-import './styles.scss';
-
 const WebhookModal = ({ open, onRequestClose }) => (
   <Modal
     open={open}
@@ -15,8 +13,8 @@ const WebhookModal = ({ open, onRequestClose }) => (
     <h3>What is this feature?</h3>
     <p>
       Webhooks are data sent on demand from one app (GFW) to another over
-      HTTP(S) instead of through the command line in your computer,
-      formatted in XML, JSON, or form-encoded serialization.
+      HTTP(S) instead of through the command line in your computer, formatted in
+      XML, JSON, or form-encoded serialization.
     </p>
     <h3>What does the payload look like?</h3>
     <pre>

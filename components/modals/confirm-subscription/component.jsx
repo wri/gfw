@@ -8,8 +8,6 @@ import { Loader, Button } from '@worldresources/gfw-components';
 
 import Modal from 'components/modal';
 
-import './styles.scss';
-
 class ConfirmSubscriptionModal extends PureComponent {
   static propTypes = {
     open: PropTypes.bool,

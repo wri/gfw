@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import Map from 'components/map';
 import MiniLegend from '../mini-legend';
 
-import './styles.scss';
-
 class MainMapComponent extends PureComponent {
   renderInfoTooltip = (string) => (
     <div>

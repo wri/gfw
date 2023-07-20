@@ -5,8 +5,6 @@ import ReactHtmlParser from 'react-html-parser';
 
 import WidgetAlert from 'components/widget/components/widget-alert';
 
-import './styles.scss';
-
 class WidgetFooter extends PureComponent {
   static propTypes = {
     type: PropTypes.string,
@@ -22,10 +20,15 @@ class WidgetFooter extends PureComponent {
   renderAlert = (alerts, alertSystem, type, locationType) => {
     if (!alerts) return null;
 
-    return alerts.map((alert) => {
+    return alerts.map((alert, index) => {
       if (alert.system === alertSystem || alertSystem === 'all') {
         return (
-          <WidgetAlert type={type} alert={alert} locationType={locationType} />
+          <WidgetAlert
+            key={`alert-${index}`}
+            type={type}
+            alert={alert}
+            locationType={locationType}
+          />
         );
       }
       return null;
@@ -62,8 +65,7 @@ class WidgetFooter extends PureComponent {
         )}
         {showAttributionLink && (
           <span>
-            Source:
-            {' '}
+            Source:{' '}
             <a
               target="_blank"
               rel="noopener noreferrer"

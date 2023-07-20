@@ -1,8 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import './styles.scss';
-
 function SankeyLink({
   sourceX,
   sourceY,
@@ -12,7 +10,7 @@ function SankeyLink({
   targetControlX,
   linkWidth,
   config,
-  payload
+  payload,
 }) {
   const minLinkWidth = 2;
   const updatedLinkWidth = linkWidth < minLinkWidth ? minLinkWidth : linkWidth;
@@ -22,8 +20,9 @@ function SankeyLink({
       className="c-sankey-link"
       d={`
         M${sourceX + linkStart},${sourceY}
-        C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${targetX -
-        linkStart},${targetY}
+        C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${
+        targetX - linkStart
+      },${targetY}
       `}
       fill="none"
       stroke={config.highlight && config.highlight(payload) ? '#444' : '#ddd'}
@@ -42,7 +41,7 @@ SankeyLink.propTypes = {
   targetControlX: PropTypes.number,
   linkWidth: PropTypes.number,
   config: PropTypes.object,
-  payload: PropTypes.object
+  payload: PropTypes.object,
 };
 
 SankeyLink.defaultProps = {
@@ -53,7 +52,7 @@ SankeyLink.defaultProps = {
   sourceControlX: null,
   targetControlX: null,
   linkWidth: null,
-  config: null
+  config: null,
 };
 
 export default SankeyLink;
