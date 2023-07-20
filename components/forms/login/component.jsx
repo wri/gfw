@@ -156,8 +156,7 @@ class LoginForm extends PureComponent {
                           target="_self"
                         >
                           <Button className={`social-btn -${s.value}`}>
-                            Login with
-                            {s.label}
+                            {`Login with ${s.label}`}
                           </Button>
                         </a>
                       ))}
