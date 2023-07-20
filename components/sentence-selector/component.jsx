@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import { translateText } from 'utils/lang';
 
 import Dropdown from 'components/ui/dropdown';
-
-import './styles.scss';
 
 class SentenceSelector extends PureComponent {
   static defaultProps = {

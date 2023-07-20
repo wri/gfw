@@ -20,13 +20,8 @@ const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
   componentDidMount = () => {
-    const {
-      active,
-      position,
-      dates,
-      settings,
-      getRecentImageryData,
-    } = this.props;
+    const { active, position, dates, settings, getRecentImageryData } =
+      this.props;
     if (this.getDataSource) {
       this.getDataSource.cancel();
     }
@@ -101,13 +96,8 @@ class RecentImageryContainer extends PureComponent {
   };
 
   handleUpdateTiles = debounce(() => {
-    const {
-      active,
-      dates,
-      settings,
-      getRecentImageryData,
-      position,
-    } = this.props;
+    const { active, dates, settings, getRecentImageryData, position } =
+      this.props;
     // get data if activated or new props
     if (this.getDataSource) {
       this.getDataSource.cancel(
@@ -188,7 +178,7 @@ RecentImageryContainer.propTypes = {
   recentImageryDataset: PropTypes.object,
   resetRecentImageryData: PropTypes.func,
   setRecentImagerySettings: PropTypes.func,
-  zoom: PropTypes.object,
+  zoom: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   center: PropTypes.object,
   // error: PropTypes.bool,
 };

@@ -8,13 +8,11 @@ import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import Input from 'components/forms/components/input';
 
-import './styles.scss';
-
 class Submit extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     submitting: PropTypes.bool,
-    children: PropTypes.node
+    children: PropTypes.node,
   };
 
   render() {

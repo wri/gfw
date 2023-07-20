@@ -25,7 +25,6 @@ import AxisLabel from './axis-label';
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
 import CustomBackground from './custom-background-component';
-import './styles.scss';
 
 const XAxisTickWithoutGap = ({ x, y, payload }) => {
   const { offset, value } = payload;

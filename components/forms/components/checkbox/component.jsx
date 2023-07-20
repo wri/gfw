@@ -9,8 +9,6 @@ import { composeValidators } from 'components/forms/validations';
 
 import FieldWrapper from 'components/forms/components/field-wrapper';
 
-import './styles.scss';
-
 class Checkbox extends PureComponent {
   static propTypes = {
     type: PropTypes.string,

@@ -7,8 +7,6 @@ import Switch from 'components/ui/switch';
 import Datepicker from 'components/ui/datepicker';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
-import './styles.scss';
-
 class WidgetSettings extends PureComponent {
   static propTypes = {
     settingsConfig: PropTypes.array.isRequired,

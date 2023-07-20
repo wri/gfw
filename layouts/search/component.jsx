@@ -18,8 +18,6 @@ import Icon from 'components/ui/icon';
 
 import treeImage from 'assets/icons/error.svg?sprite';
 
-import './styles.scss';
-
 const SearchPage = () => {
   const {
     query: { query },

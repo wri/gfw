@@ -8,8 +8,6 @@ import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import infoIcon from 'assets/icons/info.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
 
-import './styles.scss';
-
 const Item = (props) => {
   const {
     index,

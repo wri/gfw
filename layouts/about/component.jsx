@@ -20,8 +20,6 @@ import mailIcon from 'assets/icons/mail.svg?sprite';
 import bgImage from './background.jpg';
 import bgImageWebP from './background.webp';
 
-import './styles.scss';
-
 const sections = {
   how: {
     label: 'GFW in Action',

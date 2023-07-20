@@ -4,15 +4,13 @@ import cx from 'classnames';
 
 import Button from 'components/ui/button';
 
-import './styles.scss';
-
 class ChartLegend extends PureComponent {
   render() {
     const { config, className, simple, toggleSettingsMenu } = this.props;
 
     return (
       <ul className={cx('c-chart-legend', className, { simple })}>
-        {Object.keys(config).map(k => {
+        {Object.keys(config).map((k) => {
           const item = config[k];
 
           return (
@@ -20,7 +18,7 @@ class ChartLegend extends PureComponent {
               <div className="legend-title">
                 <span
                   style={{
-                    backgroundColor: item.color
+                    backgroundColor: item.color,
                   }}
                 />
                 <p>{item.label}</p>
@@ -46,7 +44,7 @@ ChartLegend.propTypes = {
   config: PropTypes.object,
   simple: PropTypes.bool,
   className: PropTypes.string,
-  toggleSettingsMenu: PropTypes.func
+  toggleSettingsMenu: PropTypes.func,
 };
 
 export default ChartLegend;

@@ -1,20 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
 
 class LegendItemTypeProportional extends PureComponent {
   static propTypes = {
     activeLayer: PropTypes.shape({
       legendConfig: PropTypes.shape({
         type: PropTypes.string,
-        items: PropTypes.arrayOf(PropTypes.shape({}))
-      })
-    })
-  }
+        items: PropTypes.arrayOf(PropTypes.shape({})),
+      }),
+    }),
+  };
 
   static defaultProps = {
-    activeLayer: {}
-  }
+    activeLayer: {},
+  };
 
   render() {
     const { activeLayer } = this.props;
@@ -32,9 +31,7 @@ class LegendItemTypeProportional extends PureComponent {
               className="icon-proportional"
               style={{ backgroundColor: color, width: size, height: size }}
             />
-            <span className="name">
-              {name}
-            </span>
+            <span className="name">{name}</span>
           </li>
         ))}
       </ul>

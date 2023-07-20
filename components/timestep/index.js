@@ -6,9 +6,6 @@ import classnames from 'classnames';
 import Icon from 'components/ui/icon';
 import Slider from 'components/slider';
 
-// styles
-import './styles.scss';
-
 class Timestep extends PureComponent {
   static propTypes = {
     customClass: PropTypes.string,
@@ -30,7 +27,9 @@ class Timestep extends PureComponent {
     minGap: PropTypes.any,
     maxGap: PropTypes.any,
 
-    trackStyle: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.array, PropTypes.object])),
+    trackStyle: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+    ),
     railStyle: PropTypes.shape({}),
     handleStyle: PropTypes.shape({}),
 
@@ -39,8 +38,8 @@ class Timestep extends PureComponent {
 
     handleOnChange: PropTypes.func,
     handleOnAfterChange: PropTypes.func,
-    handleOnPlay: PropTypes.func
-  }
+    handleOnPlay: PropTypes.func,
+  };
 
   static defaultProps = {
     customClass: null,
@@ -59,7 +58,7 @@ class Timestep extends PureComponent {
 
     trackStyle: {
       backgroundColor: '#c32d7b',
-      borderRadius: '0px'
+      borderRadius: '0px',
     },
     railStyle: { backgroundColor: '#d9d9d9' },
     handleStyle: {
@@ -67,7 +66,7 @@ class Timestep extends PureComponent {
       borderRadius: '10px',
       boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
       border: '0px',
-      zIndex: 2
+      zIndex: 2,
     },
 
     playing: undefined,
@@ -75,8 +74,8 @@ class Timestep extends PureComponent {
 
     handleOnChange: null,
     handleOnAfterChange: null,
-    handleOnPlay: null
-  }
+    handleOnPlay: null,
+  };
 
   constructor(props) {
     super(props);
@@ -92,17 +91,34 @@ class Timestep extends PureComponent {
 
   /* eslint-disable react/no-did-update-set-state */
   componentDidUpdate(prevProps, prevState) {
-    const { playing: statePlaying, start: stateStart, end: stateEnd, trim: stateTrim } = this.state;
-    const { playing: prevStatePlaying, start: prevStateStart, end: prevStateEnd, trim: prevStateTrim } = prevState;
+    const {
+      playing: statePlaying,
+      start: stateStart,
+      end: stateEnd,
+      trim: stateTrim,
+    } = this.state;
+    const {
+      playing: prevStatePlaying,
+      start: prevStateStart,
+      end: prevStateEnd,
+      trim: prevStateTrim,
+    } = prevState;
 
     const { playing, start, end, trim, minAbs, maxAbs } = this.props;
-    const { playing: prevPropsPlaying, start: prevPropsStart, end: prevPropsEnd, trim: prevPropsTrim, minAbs: prevPropsMinAbs, maxAbs: prevPropsMaxAbs } = prevProps;
+    const {
+      playing: prevPropsPlaying,
+      start: prevPropsStart,
+      end: prevPropsEnd,
+      trim: prevPropsTrim,
+      minAbs: prevPropsMinAbs,
+      maxAbs: prevPropsMaxAbs,
+    } = prevProps;
 
     if (playing !== prevPropsPlaying) {
-      this.setState({ playing })
+      this.setState({ playing });
     }
 
-    if ((statePlaying && statePlaying !== prevStatePlaying)) {
+    if (statePlaying && statePlaying !== prevStatePlaying) {
       this.startTimeline();
     } else if (!statePlaying && statePlaying !== prevStatePlaying) {
       this.stopTimeline();
@@ -110,23 +126,31 @@ class Timestep extends PureComponent {
       this.incrementTimeline();
     }
 
-    if (start !== prevPropsStart && start !== stateStart && prevStateStart === stateStart) {
+    if (
+      start !== prevPropsStart &&
+      start !== stateStart &&
+      prevStateStart === stateStart
+    ) {
       this.setState({
         start: start <= minAbs ? minAbs : start,
-        end: trim >= maxAbs ? maxAbs : trim
+        end: trim >= maxAbs ? maxAbs : trim,
       });
     }
 
     if (end !== prevPropsEnd && end !== stateEnd && prevStateEnd === stateEnd) {
       this.setState({
-        end: end >= maxAbs ? maxAbs : end
+        end: end >= maxAbs ? maxAbs : end,
       });
     }
 
-    if (trim !== prevPropsTrim && trim !== stateTrim && prevStateTrim === stateTrim) {
+    if (
+      trim !== prevPropsTrim &&
+      trim !== stateTrim &&
+      prevStateTrim === stateTrim
+    ) {
       this.setState({
         trim,
-        end: trim >= maxAbs ? maxAbs : trim
+        end: trim >= maxAbs ? maxAbs : trim,
       });
     }
 
@@ -134,9 +158,8 @@ class Timestep extends PureComponent {
       this.setState({
         start: start <= minAbs ? minAbs : start,
         trim: trim >= maxAbs ? maxAbs : trim,
-        end: end >= maxAbs ? maxAbs : end
+        end: end >= maxAbs ? maxAbs : end,
       });
-
     }
   }
 
@@ -183,13 +206,15 @@ class Timestep extends PureComponent {
               .map((g, j) => {
                 const first = j === 0;
                 const perc = ((g - start) / diff) * 100;
-                const index = stringKeys.findIndex(ix => ix === g);
+                const index = stringKeys.findIndex((ix) => ix === g);
 
                 if (first) {
                   return `${gradient[g]}`;
                 }
-                return `${gradient[stringKeys[index - 1]]} ${perc}%, ${gradient[g]} ${perc}%`;
-              })
+                return `${gradient[stringKeys[index - 1]]} ${perc}%, ${
+                  gradient[g]
+                } ${perc}%`;
+              });
           }
 
           // It could be better, no more neurons
@@ -205,24 +230,29 @@ class Timestep extends PureComponent {
               .map((g, j) => {
                 const first = j === 0;
                 const perc = ((g - end) / diff2) * 100;
-                const index = stringKeys.findIndex(ix => ix === g);
+                const index = stringKeys.findIndex((ix) => ix === g);
 
                 if (first) {
                   return `${gradient[g]}`;
                 }
 
-                return `${gradient[stringKeys[index - 1]]} ${perc}%, ${gradient[g]} ${perc}%`;
-              })
+                return `${gradient[stringKeys[index - 1]]} ${perc}%, ${
+                  gradient[g]
+                } ${perc}%`;
+              });
           }
 
           return {
             ...t,
-            background: stringArr.length > 1 ? `linear-gradient(to right, ${stringArr.join(',')})` : stringArr.toString()
-          }
+            background:
+              stringArr.length > 1
+                ? `linear-gradient(to right, ${stringArr.join(',')})`
+                : stringArr.toString(),
+          };
         }
 
         return t;
-      })
+      });
     }
 
     return trackStyle;
@@ -239,7 +269,9 @@ class Timestep extends PureComponent {
     }
   };
 
-  stopTimeline = () => { clearInterval(this.interval); };
+  stopTimeline = () => {
+    clearInterval(this.interval);
+  };
 
   incrementTimeline = () => {
     const { start, end, trim } = this.state;
@@ -271,9 +303,16 @@ class Timestep extends PureComponent {
     }
   };
 
-  checkRange = range => {
+  checkRange = (range) => {
     const { playing, start, end, trim } = this.state;
-    const { min: minProp, max: maxProp, minAbs, maxAbs, minGap, maxGap } = this.props;
+    const {
+      min: minProp,
+      max: maxProp,
+      minAbs,
+      maxAbs,
+      minGap,
+      maxGap,
+    } = this.props;
 
     if (!Array.isArray(range)) {
       return [start, range, trim];
@@ -284,7 +323,6 @@ class Timestep extends PureComponent {
 
     // If start is different from current state
     if (!playing && range[0] !== start) {
-
       if (minGap && max - min < minGap) {
         if (max === maxAbs || max === maxProp) {
           min = max - minGap;
@@ -294,7 +332,7 @@ class Timestep extends PureComponent {
       }
 
       if (maxGap) {
-        max = (max - min > maxGap) ? min + maxGap : max;
+        max = max - min > maxGap ? min + maxGap : max;
       }
 
       return [min, max, max];
@@ -302,7 +340,7 @@ class Timestep extends PureComponent {
 
     // If end is different from trim, and trim is different from current state
     if (!playing && range[1] !== range[2] && trim !== range[2]) {
-      if (minGap && (max - (min + minGap) < 0)) {
+      if (minGap && max - (min + minGap) < 0) {
         if (min === minAbs || min === minProp) {
           max = min + minGap;
         } else {
@@ -311,7 +349,7 @@ class Timestep extends PureComponent {
       }
 
       if (maxGap) {
-        min = (max - (min + maxGap) > 0) ? max - maxGap : min;
+        min = max - (min + maxGap) > 0 ? max - maxGap : min;
       }
 
       return [min, max, max];
@@ -321,17 +359,16 @@ class Timestep extends PureComponent {
     if (!playing && range[1] !== range[2] && end !== range[1]) {
       max = range[1] >= maxAbs ? maxAbs : range[1];
 
-      if (minGap && (max - (min + minGap) < 0)) {
+      if (minGap && max - (min + minGap) < 0) {
         if (min === minAbs || min === minProp) {
           max = min + minGap;
         } else {
           min = max - minGap;
         }
-
       }
 
       if (maxGap) {
-        min = (max - (min + maxGap) > 0) ? max - maxGap : min;
+        min = max - (min + maxGap) > 0 ? max - maxGap : min;
       }
 
       return [min, max, max];
@@ -339,7 +376,7 @@ class Timestep extends PureComponent {
 
     // If end is different from trim, and trim is different from current state
     if (!playing && trim !== range[0]) {
-      if (minGap && (max - (min + minGap) < 0)) {
+      if (minGap && max - (min + minGap) < 0) {
         if (min === minAbs || min === minProp) {
           max = min + minGap;
         } else {
@@ -348,9 +385,8 @@ class Timestep extends PureComponent {
       }
 
       if (maxGap) {
-        min = (max - (min + maxGap) > 0) ? max - maxGap : min;
+        min = max - (min + maxGap) > 0 ? max - maxGap : min;
       }
-
 
       return [min, max, max];
     }
@@ -358,21 +394,21 @@ class Timestep extends PureComponent {
     return range;
   };
 
-  handleOnChange = range => {
+  handleOnChange = (range) => {
     const { handleOnChange } = this.props;
     const newRange = this.checkRange(range);
 
     this.setState({
       start: newRange[0],
       end: newRange[1],
-      trim: newRange[2]
+      trim: newRange[2],
     });
 
     if (handleOnChange) handleOnChange(newRange);
   };
 
   /* eslint-disable-next-line */
-  handleOnAfterChange = range => {
+  handleOnAfterChange = (range) => {
     const { handleOnAfterChange } = this.props;
     const newRange = this.checkRange(range);
 
@@ -388,29 +424,28 @@ class Timestep extends PureComponent {
     this.setState({ playing: p });
 
     if (handleOnPlay) handleOnPlay(p);
-
   };
 
   renderPlay() {
     const { playing: statePlaying } = this.state;
 
-     const iconStatus = classnames({
+    const iconStatus = classnames({
       'icon-pause': statePlaying,
-      'icon-play': !statePlaying
+      'icon-play': !statePlaying,
     });
 
     return (
       <button
         type="button"
         className={classnames({
-          "player-btn": true,
-          "-playing": statePlaying
+          'player-btn': true,
+          '-playing': statePlaying,
         })}
         onClick={this.handleTogglePlay}
       >
         <Icon icon={iconStatus} />
       </button>
-    )
+    );
   }
 
   render() {
@@ -426,7 +461,7 @@ class Timestep extends PureComponent {
       handleStyle,
       range,
       pushable,
-      PlayButton
+      PlayButton,
     } = this.props;
 
     const { playing } = this.state;
@@ -449,9 +484,8 @@ class Timestep extends PureComponent {
             railStyle={railStyle}
             trackStyle={this.getTrackStyle()}
             handleStyle={handleStyle}
-            showTooltip={index => (playing && index === 1)}
+            showTooltip={(index) => playing && index === 1}
             pushable={pushable}
-
             onChange={this.handleOnChange}
             onAfterChange={this.handleOnAfterChange}
           />

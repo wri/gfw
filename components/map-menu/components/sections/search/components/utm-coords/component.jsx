@@ -8,15 +8,13 @@ import { validateLatLng } from 'utils/geoms';
 import Button from 'components/ui/button';
 import Dropdown from 'components/ui/dropdown';
 
-import './styles.scss';
-
 class UTMCoords extends PureComponent {
   state = {
     error: false,
     east: '',
     north: '',
     zone: '',
-    hemisphere: 'north'
+    hemisphere: 'north',
   };
 
   handleSubmit = () => {
@@ -37,7 +35,7 @@ class UTMCoords extends PureComponent {
     }
   };
 
-  handleKeyPress = e => {
+  handleKeyPress = (e) => {
     if (e.keyCode === 13 && !this.state.error) {
       this.handleSubmit();
     }
@@ -51,21 +49,24 @@ class UTMCoords extends PureComponent {
         <span className="label">East:</span>
         <input
           value={east}
-          onChange={e => this.setState({ east: e.target.value, error: false })}
+          onChange={(e) =>
+            this.setState({ east: e.target.value, error: false })}
           onKeyDown={this.handleKeyPress}
           className={cx('coord-input', { error: east && error })}
         />
         <span className="label">North:</span>
         <input
           value={north}
-          onChange={e => this.setState({ north: e.target.value, error: false })}
+          onChange={(e) =>
+            this.setState({ north: e.target.value, error: false })}
           className={cx('coord-input', { error: north && error })}
           onKeyDown={this.handleKeyPress}
         />
         <span className="label">Zone:</span>
         <input
           value={zone}
-          onChange={e => this.setState({ zone: e.target.value, error: false })}
+          onChange={(e) =>
+            this.setState({ zone: e.target.value, error: false })}
           className={cx('coord-input', { error: zone && error })}
           onKeyDown={this.handleKeyPress}
         />
@@ -77,14 +78,14 @@ class UTMCoords extends PureComponent {
           options={[
             {
               label: 'N',
-              value: 'north'
+              value: 'north',
             },
             {
               label: 'S',
-              value: 'south'
-            }
+              value: 'south',
+            },
           ]}
-          onChange={value => this.setState({ hemisphere: value.value })}
+          onChange={(value) => this.setState({ hemisphere: value.value })}
         />
         <Button
           onClick={this.handleSubmit}
@@ -99,7 +100,7 @@ class UTMCoords extends PureComponent {
 }
 
 UTMCoords.propTypes = {
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
 };
 
 export default UTMCoords;

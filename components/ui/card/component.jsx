@@ -7,9 +7,6 @@ import cx from 'classnames';
 import Icon from 'components/ui/icon';
 
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-import './styles.scss';
-import './themes/card-small.scss';
-import './themes/card-dark.scss';
 
 class Card extends PureComponent {
   static propTypes = {
@@ -58,8 +55,8 @@ class Card extends PureComponent {
           {image && (
             <picture className="image">
               {webPImage && <source srcSet={webPImage} type="image/webp" />}
-              <source srcSet={image} type="image/png" />
-              <img src={image} alt={title} />
+              <source srcSet={image || image} type="image/png" />
+              <img src={image || image} alt={title} />
             </picture>
           )}
 

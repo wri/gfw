@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import tree from 'assets/icons/tree.png';
 
-import './styles.scss';
-
 const NoContent = ({ className, message, icon, children }) => (
   <div className={`c-no-content ${className}`}>
     <p className="message">
@@ -18,11 +16,11 @@ NoContent.propTypes = {
   icon: PropTypes.bool,
   className: PropTypes.string,
   message: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 NoContent.defaultProps = {
-  icon: false
+  icon: false,
 };
 
 export default NoContent;

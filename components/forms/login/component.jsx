@@ -15,8 +15,6 @@ import { email } from 'components/forms/validations';
 
 import { GFW_API } from 'utils/apis';
 
-import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 const AUTH_URL = `${GFW_API}/auth`;
@@ -105,9 +103,8 @@ class LoginForm extends PureComponent {
       },
     };
 
-    const { submit, submitFunc, altView, altLabel, confirmation } = formMeta[
-      showForm
-    ];
+    const { submit, submitFunc, altView, altLabel, confirmation } =
+      formMeta[showForm];
 
     return (
       <Form onSubmit={submitFunc} initialValues={initialValues}>
@@ -159,9 +156,7 @@ class LoginForm extends PureComponent {
                           target="_self"
                         >
                           <Button className={`social-btn -${s.value}`}>
-                            Login with 
-                            {' '}
-                            {s.label}
+                            {`Login with ${s.label}`}
                           </Button>
                         </a>
                       ))}

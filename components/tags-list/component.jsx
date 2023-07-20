@@ -3,8 +3,6 @@ import Link from 'next/link';
 
 import cx from 'classnames';
 
-import './styles.scss';
-
 const TagsList = ({ title, tags, onClick }) => (
   <div className="c-tags-list">
     {title && <h5>{title}</h5>}
@@ -56,9 +54,8 @@ TagsList.propTypes = {
   tags: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       active: PropTypes.bool,
-      // Link specific
       link: PropTypes.string,
       shallow: PropTypes.bool,
       replace: PropTypes.bool,

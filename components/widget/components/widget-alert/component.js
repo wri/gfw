@@ -5,8 +5,6 @@ import Markdown from 'marked-react';
 import Icon from 'components/ui/icon';
 import warningIcon from 'assets/icons/warning-nofill.svg?sprite';
 
-import './styles.scss';
-
 class WidgetAlert extends PureComponent {
   static propTypes = {
     alert: PropTypes.object,

@@ -9,8 +9,6 @@ import WidgetInfoButton from './components/widget-info-button';
 import WidgetShareButton from './components/widget-share-button';
 import WidgetDownloadButton from './components/widget-download-button';
 
-import './styles.scss';
-
 class WidgetHeader extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -26,7 +24,7 @@ class WidgetHeader extends PureComponent {
     active: PropTypes.bool,
     disableDownload: PropTypes.bool,
     filterSelected: PropTypes.bool,
-    metaKey: PropTypes.string,
+    metaKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     settingsConfig: PropTypes.array,
     settings: PropTypes.object,
     handleShowInfo: PropTypes.func,

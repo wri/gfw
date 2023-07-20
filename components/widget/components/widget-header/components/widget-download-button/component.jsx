@@ -15,8 +15,6 @@ import Icon from 'components/ui/icon';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import { GFW_API } from 'utils/apis';
 
-import './styles.scss';
-
 const GLAD_ALERTS_WIDGET = 'gladAlerts';
 
 const isServer = typeof window === 'undefined';
@@ -34,7 +32,7 @@ class WidgetDownloadButton extends PureComponent {
     childData: PropTypes.object,
     location: PropTypes.object,
     adminLevel: PropTypes.string,
-    metaKey: PropTypes.string,
+    metaKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     simple: PropTypes.bool,
     widget: PropTypes.string,
     areaTooLarge: PropTypes.bool,

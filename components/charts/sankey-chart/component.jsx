@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 import { Surface, Layer, Tooltip, Rectangle } from 'recharts';
 
-import { shallowEqual } from 'recharts/lib/util/PureRender';
+import { shallowEqual } from 'recharts/lib/util/ShallowEqual';
 import { getValueByDataKey } from 'recharts/lib/util/ChartUtils';
 import {
   PRESENTATION_ATTRIBUTES,
@@ -447,15 +447,8 @@ class Sankey extends PureComponent {
    * @return {Object} Whole new state
    */
   static createDefaultState(props) {
-    const {
-      data,
-      width,
-      height,
-      margin,
-      iterations,
-      nodeWidth,
-      nodePadding,
-    } = props;
+    const { data, width, height, margin, iterations, nodeWidth, nodePadding } =
+      props;
     const contentWidth =
       width - ((margin && margin.left) || 0) - ((margin && margin.right) || 0);
     const contentHeight =

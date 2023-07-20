@@ -2,13 +2,11 @@ import PropTypes from 'prop-types';
 
 import Dropdown from 'components/ui/dropdown';
 
-import './styles.scss';
-
 export const LandsatMenu = ({
   year,
   defaultYear,
   availableYears,
-  setMapBasemap
+  setMapBasemap,
 }) => (
   <div className="c-planet-menu">
     <h6>period</h6>

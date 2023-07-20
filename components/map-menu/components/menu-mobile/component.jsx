@@ -4,8 +4,6 @@ import cx from 'classnames';
 
 import MenuTile from '../menu-tile';
 
-import './styles.scss';
-
 class MenuMobile extends PureComponent {
   render() {
     const { className, sections, onToggleMenu } = this.props;

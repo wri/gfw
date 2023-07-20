@@ -7,8 +7,6 @@ import Icon from 'components/ui/icon';
 
 import LegendList from './components/legend-list';
 
-import './styles.scss';
-
 class Legend extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
@@ -56,14 +54,8 @@ class Legend extends PureComponent {
   };
 
   render() {
-    const {
-      title,
-      sortable,
-      collapsable,
-      maxWidth,
-      maxHeight,
-      children,
-    } = this.props;
+    const { title, sortable, collapsable, maxWidth, maxHeight, children } =
+      this.props;
 
     const { expanded } = this.state;
 
@@ -141,5 +133,5 @@ export {
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
-  LegendItemButtonRemove
+  LegendItemButtonRemove,
 } from './components/legend-item-toolbar';

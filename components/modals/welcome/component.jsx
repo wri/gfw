@@ -6,8 +6,6 @@ import Button from 'components/ui/button';
 import Checkbox from 'components/ui/checkbox';
 import Modal from 'components/modal';
 
-import './styles.scss';
-
 class ModalWelcome extends PureComponent {
   getContent() {
     const {
@@ -70,8 +68,7 @@ class ModalWelcome extends PureComponent {
         )}
         <div className="outro">
           <p>
-            Not finding what you want?
-            {' '}
+            Not finding what you want?{' '}
             <Button
               theme="theme-button-inline"
               onClick={() => {
@@ -89,14 +86,11 @@ class ModalWelcome extends PureComponent {
               }}
             >
               Take a tour of the map
-            </Button>
-            {' '}
-            or
-            {' '}
+            </Button>{' '}
+            or{' '}
             <a href="https://www.globalforestwatch.org/help/">
               visit the Help Center
-            </a>
-            {' '}
+            </a>{' '}
             for tutorials.
           </p>
           <button

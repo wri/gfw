@@ -13,7 +13,6 @@ import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 
 import WORLD_GEOGRAPHIES from 'data/WORLD.topo.json';
-import './style.scss';
 
 class WorldMap extends React.PureComponent {
   static buildCurves(start, end, arc) {

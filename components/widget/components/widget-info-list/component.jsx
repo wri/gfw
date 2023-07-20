@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import './styles.scss';
-
 import ipccForestIcon from 'assets/icons/widgets/ipcc/ipcc-forest.svg';
 import ipccGrasslandIcon from 'assets/icons/widgets/ipcc/ipcc-grassland.svg';
 import ipccSettlementIcon from 'assets/icons/widgets/ipcc/ipcc-settlement.svg';

@@ -6,7 +6,6 @@ import Tooltip from 'components/tooltip';
 import Icon from 'components/ui/icon';
 
 import LegendLayersTooltip from './legend-item-button-layers-tooltip';
-import '../styles-button.scss';
 
 class LegendItemButtonLayers extends PureComponent {
   static propTypes = {

@@ -19,8 +19,6 @@ import Climate from './config/climate';
 import Water from './config/water';
 import Fires from './config/fires';
 
-import './styles.scss';
-
 const anchors = ['intro', 'slides', 'footer'];
 const isServer = typeof window === 'undefined';
 const TOPICS_CONFIGS = {

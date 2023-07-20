@@ -4,8 +4,6 @@ import { Row, Column } from '@worldresources/gfw-components';
 
 import SuccessMessage from 'components/success-message';
 
-import './styles.scss';
-
 class ThankyouPage extends PureComponent {
   render() {
     return (

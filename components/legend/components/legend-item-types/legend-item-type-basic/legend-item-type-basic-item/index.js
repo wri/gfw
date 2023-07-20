@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
 
 class LegendItem extends React.PureComponent {
   static propTypes = {
@@ -8,7 +7,7 @@ class LegendItem extends React.PureComponent {
     color: PropTypes.string,
     name: PropTypes.string,
     icon: PropTypes.string, // triangle, circle, square, line
-    hideIcon: PropTypes.bool
+    hideIcon: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -16,7 +15,7 @@ class LegendItem extends React.PureComponent {
     color: 'transparent',
     name: '',
     icon: 'square',
-    hideIcon: false
+    hideIcon: false,
   };
 
   getIconHtml = (iconName) => {
@@ -31,17 +30,22 @@ class LegendItem extends React.PureComponent {
         <div
           className={`icon-${icon}`}
           style={{
-            boderRightWidth: (size / 2),
-            boderLeftWidth: (size / 2),
+            boderRightWidth: size / 2,
+            boderLeftWidth: size / 2,
             boderBottomWidth: size,
-            borderBottomColor: color
+            borderBottomColor: color,
           }}
         />
       );
     }
 
     if (iconName === 'line') {
-      return (<div className={`icon-${icon}`} style={{ width: size, backgroundColor: color }} />);
+      return (
+        <div
+          className={`icon-${icon}`}
+          style={{ width: size, backgroundColor: color }}
+        />
+      );
     }
 
     if (iconName === 'square' || iconName === 'circle') {
@@ -67,9 +71,7 @@ class LegendItem extends React.PureComponent {
       <div className="c-legend-item-basic">
         {this.getIconHtml(icon)}
 
-        <span className="name">
-          {name}
-        </span>
+        <span className="name">{name}</span>
       </div>
     );
   }

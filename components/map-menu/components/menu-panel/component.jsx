@@ -10,8 +10,6 @@ import closeIcon from 'assets/icons/close.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import posed, { PoseGroup } from 'react-pose';
 
-import './styles.scss';
-
 const PanelMobile = posed.div({
   enter: {
     y: 0,

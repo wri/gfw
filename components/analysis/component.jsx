@@ -8,8 +8,6 @@ import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
 import ShowAnalysis from 'components/analysis/components/show-analysis';
 
-import './styles.scss';
-
 const isServer = typeof window === 'undefined';
 
 class AnalysisComponent extends PureComponent {
@@ -80,31 +78,33 @@ class AnalysisComponent extends PureComponent {
           {loading && (
             <Loader className={cx('analysis-loader', { fetching: loading })} />
           )}
-          {location.type && location.adm0 && (loading || (!loading && error)) && (
-            <div className={cx('cancel-analysis', { fetching: loading })}>
-              {!loading && error && !geostoreError && (
+          {location.type &&
+            location.adm0 &&
+            (loading || (!loading && error)) && (
+              <div className={cx('cancel-analysis', { fetching: loading })}>
+                {!loading && error && !geostoreError && (
+                  <Button
+                    className="refresh-analysis-btn"
+                    onClick={() => handleFetchAnalysis(endpoints)}
+                  >
+                    REFRESH ANALYSIS
+                  </Button>
+                )}
                 <Button
-                  className="refresh-analysis-btn"
-                  onClick={() => handleFetchAnalysis(endpoints)}
+                  className="cancel-analysis-btn"
+                  onClick={handleCancelAnalysis}
                 >
-                  REFRESH ANALYSIS
+                  CANCEL ANALYSIS
                 </Button>
-              )}
-              <Button
-                className="cancel-analysis-btn"
-                onClick={handleCancelAnalysis}
-              >
-                CANCEL ANALYSIS
-              </Button>
-              {!loading && error && (
-                <p className="error-message">
-                  {geostoreError
-                    ? 'We are having trouble getting the selected geometry. Please try again later.'
-                    : error}
-                </p>
-              )}
-            </div>
-          )}
+                {!loading && error && (
+                  <p className="error-message">
+                    {geostoreError
+                      ? 'We are having trouble getting the selected geometry. Please try again later.'
+                      : error}
+                  </p>
+                )}
+              </div>
+            )}
           {location.type && location.adm0 && !error && (
             <ShowAnalysis
               clearAnalysis={clearAnalysis}
@@ -157,8 +157,7 @@ class AnalysisComponent extends PureComponent {
                 disabled={areaTooLarge}
                 {...(areaTooLarge && {
                   tooltip: {
-                    text:
-                      'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).',
+                    text: 'Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).',
                   },
                 })}
               >

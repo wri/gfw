@@ -9,7 +9,6 @@ import ChartToolTip from '../components/chart-tooltip';
 import Sankey from './component';
 import SankeyLink from './sankey-link';
 import SankeyNode from './sankey-node';
-import styles from './styles.scss';
 
 function SankeyChart({
   width,
@@ -48,7 +47,7 @@ function SankeyChart({
           <Sankey
             width={width}
             data={data}
-            className={styles.sankey}
+            className="sankey"
             nodeWidth={nodeWidth}
             nodePadding={nodePadding}
             margin={margin}
