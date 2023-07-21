@@ -21,7 +21,7 @@ export default {
     },
     {
       label: 'Blog',
-      href: '/blog',
+      href: '/blog/',
     },
     { label: 'About', href: '/about/' },
     { label: 'Help', href: '/help/' },
