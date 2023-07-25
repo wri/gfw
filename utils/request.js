@@ -31,7 +31,7 @@ const GFW_METADATA_API_KEY = GFW_API_KEY;
 const DATA_API_KEY = GFW_API_KEY;
 const RESOURCE_WATCH_API_KEY = GFW_API_KEY;
 
-const isServer = typeof window === 'undefined';
+const isServer = true;
 
 const defaultRequestConfig = {
   timeout: 30 * 1000,
