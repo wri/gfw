@@ -8620,15 +8620,26 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-layer-manager@^3.0.8:
-  version "3.0.11"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-3.0.11.tgz#365069d156af6f64a50e6285c5f23cac65ff34ad"
-  integrity sha512-e6PVUjG27+d1F4b8vqxHaJMVf8dc3v0ToXQE4cdu97KLw6zI1Z1SFlQR3qVnBU+2iOpUDST+INDcNj/aTO++Aw==
+layer-manager@3.1.0-wri-gfw:
+  version "3.1.0-wri-gfw"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-3.1.0-wri-gfw.tgz#18aa29f16b909fdf36c6a92e566786a9912fe447"
+  integrity sha512-5xgjnLSvLrJl+qFBhPjtOdHvrjDi9rhfESvVnO0kjuEdn/gVa9lMAV67kuX6dUz/Ndnguk/E7CI6yevIeewxpQ==
   dependencies:
     axios "^0.19.0"
     lodash "^4.17.15"
     prop-types "^15.7.2"
     supercluster "^4.1.1"
+
+layer-manager@^1.10.0:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.15.2.tgz#45f3003cd4dc60420d8ff37c035722f5fc8d6eb2"
+  integrity sha512-cmm/3CTy9stXIUI8OjOh5Fbi2PuDv+Hi3jh8v8ejnQHdn6uo40821+scHSBcJmeOA1Hf4Bz3GY6RGTqOTs0OYQ==
+  dependencies:
+    axios "^0.18.0"
+    lodash "^4.17.11"
+    prop-types "^15.6.2"
+    supercluster "^4.1.1"
+    wri-json-api-serializer "^1.0.1"
 
 lazy-ass@1.6.0, lazy-ass@^1.6.0:
   version "1.6.0"
