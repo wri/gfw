@@ -8,7 +8,7 @@ export default {
     statementPlain: 'Tree cover loss',
     statementHighlight: ' is not always deforestation.',
     tooltipDesc:
-      'Loss of tree cover may occur for many reasons, including deforestation, fire, and logging within the course of sustainable forestry operations. In sustainably managed forests, the “loss” will eventually show up as “gain”, as young trees get large enough to achieve canopy closure.',
+      'Tree cover loss is not always deforestation, which typically refers to human-caused, permanent removal of natural forest cover. Tree cover loss is defined as the complete removal of tree cover for any reason. It includes both human-caused loss and natural disturbances, and loss that is permanent or temporary. Examples of tree cover loss that may not meet the definition of deforestation include loss from logging within production forests, fire, disease or storm damage.',
   },
   mosaicLandscapes: {
     statementPlain:
