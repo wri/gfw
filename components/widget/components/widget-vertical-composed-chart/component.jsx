@@ -6,7 +6,7 @@ import ComposedChart from 'components/charts/composed-chart-alt';
 import Brush from 'components/charts/brush-chart';
 import Legend from 'components/charts/components/chart-legend';
 
-class WidgetComposedChart extends Component {
+class WidgetVerticalComposedChart extends Component {
   static propTypes = {
     originalData: PropTypes.array,
     data: PropTypes.array,
@@ -112,4 +112,4 @@ class WidgetComposedChart extends Component {
   }
 }
 
-export default WidgetComposedChart;
+export default WidgetVerticalComposedChart;
