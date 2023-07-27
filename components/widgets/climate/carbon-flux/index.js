@@ -38,7 +38,7 @@ export default {
   categories: ['climate'],
   types: ['geostore', 'global', 'country', 'aoi', 'use', 'wdpa'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  chartType: 'composedChartAlt',
+  chartType: 'verticalComposedChart',
   settingsConfig: [
     {
       key: 'forestType',
