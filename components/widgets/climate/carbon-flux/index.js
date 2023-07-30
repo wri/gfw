@@ -1,4 +1,4 @@
-import { getCarbonFlux, getCarbonFluxOTF } from 'services/analysis-cached';
+import { getCarbonFlux } from 'services/analysis-cached';
 
 // import OTFAnalysis from 'services/otf-analysis';
 
@@ -23,8 +23,6 @@ import {
   CARBON_REMOVALS_TEST,
   CARBON_EMISSIONS_TEST,
 } from 'data/layers';
-
-import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
@@ -137,22 +135,8 @@ export default {
   },
   whitelists: {},
   getData: (params) => {
-    if (shouldQueryPrecomputedTables(params)) {
-      return getCarbonFlux(params).then((flux) => {
-        if (!flux || !flux.length) return [];
-        return flux;
-      });
-    }
-    // use OTF
-    const geostoreId = params?.geostore?.hash;
-    return getCarbonFluxOTF({
-      ...params,
-      geostoreId,
-      staticStatement: {
-        // overrides tables and/or sql
-        table: 'gfw_forest_carbon_net_flux',
-      },
-    }).then((flux) => {
+    // TODO: wrap inside an if (shouldQueryPrecomputedTables(params)) after OTF query is fixed, see: GTC-2474, https://github.com/wri/gfw/pull/4650/files
+    return getCarbonFlux(params).then((flux) => {
       if (!flux || !flux.length) return [];
       return flux;
     });
