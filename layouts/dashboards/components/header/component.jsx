@@ -15,7 +15,6 @@ import AreaOfInterestModal from 'components/modals/area-of-interest';
 
 import editIcon from 'assets/icons/edit.svg?sprite';
 import hiddenIcon from 'assets/icons/hidden.svg?sprite';
-import dashboardIcon from 'assets/icons/dashboard.svg?sprite';
 import tagIcon from 'assets/icons/tag.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
@@ -65,19 +64,6 @@ class Header extends PureComponent {
         onChange={this.handleAreaActions}
         theme={cx('theme-button-medium theme-dropdown-no-border small square')}
         options={[
-          {
-            value: 'open_map',
-            component: (
-              <Button
-                id="button-open-map"
-                theme={btnTheme}
-                link={activeArea && `/map/aoi/${activeArea.id}`}
-              >
-                <Icon icon={dashboardIcon} />
-                Open Map
-              </Button>
-            ),
-          },
           activeArea &&
             activeArea.userArea && {
               value: 'edit_area',
