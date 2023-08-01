@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Icons from 'components/icons'
-import Legend, { 
-  LegendItemToolbar, 
-  LegendItemButtonOpacity, 
+import Icons from 'components/icons';
+import Legend, {
+  LegendItemToolbar,
+  LegendItemButtonOpacity,
   LegendListItem,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
-} from 'components/legend'
+} from 'components/legend';
 
-import LegendItemTypes, { 
+import LegendItemTypes, {
   LegendItemTypeBasic,
-  LegendItemTypeProportional
-} from 'components/legend/components/legend-item-types'
+  LegendItemTypeProportional,
+} from 'components/legend/components/legend-item-types';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -115,6 +115,7 @@ const MapLegend = ({
                 index={i}
                 key={id}
                 layerGroup={lg}
+                layerId={id}
                 toolbar={(
                   <LegendItemToolbar
                     {...rest}

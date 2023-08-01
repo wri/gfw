@@ -14,6 +14,7 @@ class LegendListItem extends PureComponent {
     children: PropTypes.node,
     toolbar: PropTypes.node,
     title: PropTypes.node,
+    layerId: PropTypes.string,
   };
 
   static defaultProps = {
@@ -26,14 +27,17 @@ class LegendListItem extends PureComponent {
   };
 
   render() {
-    const { layers, sortable, children, toolbar, title, ...props } = this.props;
+    const { layers, sortable, children, toolbar, title, layerId, ...props } =
+      this.props;
     const activeLayer = layers.find((l) => l.active) || layers[0];
 
     return (
       <li
+        data-layer-id={layerId}
         className={classnames({
           'c-legend-item': true,
           '-sortable': sortable,
+          'map-widget': true,
         })}
       >
         <div

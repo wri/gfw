@@ -39,7 +39,10 @@ class LayerToggle extends PureComponent {
 
     return (
       <div
-        className={`c-layer-toggle ${small ? '-small' : ''} ${className || ''}`}
+        className={`c-layer-toggle ${small ? '-small' : ''} ${
+          className || ''
+        } layer-picker`}
+        data-layer-id={layer}
       >
         <Toggle
           layer={layer}
