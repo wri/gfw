@@ -2,12 +2,31 @@
 import React from 'react';
 import Document, { Html, Main, NextScript, Head } from 'next/document';
 import sprite from 'svg-sprite-loader/runtime/sprite.build';
-
 import { mediaStyles } from '@worldresources/gfw-components';
+import { staging, production } from '../newrelic/script';
+
+const newrelic = require('newrelic');
 
 const isProduction = process.env.NEXT_PUBLIC_FEATURE_ENV === 'production';
+const newRelicScript = isProduction ? production : staging;
 
 export default class MyDocument extends Document {
+  /**
+   * https://newrelic.com/blog/how-to-relic/nextjs-monitor-application-data
+   */
+  static async getInitialProps(context) {
+    const initialProps = await Document.getInitialProps(context);
+
+    const browserTimingHeader = newrelic.getBrowserTimingHeader({
+      hasToRemoveScriptWrapper: true,
+    });
+
+    return {
+      ...initialProps,
+      browserTimingHeader,
+    };
+  }
+
   render() {
     const spriteContent = sprite.stringify();
     const googleTagManagerScripts = {};
@@ -76,6 +95,8 @@ export default class MyDocument extends Document {
             content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak"
           />
 
+          {/* New Relic Browser Agent */}
+          <script dangerouslySetInnerHTML={{ __html: newRelicScript }} />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -115,6 +136,13 @@ export default class MyDocument extends Document {
           {/* Google Tag Manager */}
           {googleTagManagerScripts.head}
           {/* End Google Tag Manager */}
+
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: this.props.browserTimingHeader,
+            }}
+          />
         </Head>
         <body>
           {/* Google Tag Manager (noscript) */}
