@@ -47,9 +47,8 @@ class Header extends PureComponent {
     firstArea: PropTypes.object,
   };
 
-  renderAreaActions({ isCountryDashboard, isAreaAndCountryDashboard }) {
+  renderAreaActions() {
     const {
-      downloadLink,
       locationNames,
       setAreaOfInterestModalSettings,
       activeArea,
@@ -115,42 +114,6 @@ class Header extends PureComponent {
               >
                 <Icon icon={saveUserIcon} />
                 Save area
-              </Button>
-            ),
-          },
-          (isCountryDashboard || isAreaAndCountryDashboard) && {
-            value: 'download_data',
-            component: (
-              <Button
-                id="button-download-data"
-                theme={btnTheme}
-                extLink={downloadLink}
-                tooltip={{
-                  text: `Download the data${
-                    locationNames.adm0
-                      ? ` for ${
-                          locationNames &&
-                          locationNames.adm0 &&
-                          locationNames.adm0.label
-                        }`
-                      : ''
-                  }`,
-                  position: 'bottom',
-                }}
-                onClick={() => {
-                  trackEvent({
-                    category: 'Dashboards page',
-                    action: 'Download page',
-                    label:
-                      (locationNames &&
-                        locationNames.adm0 &&
-                        locationNames.adm0.label) ||
-                      'Global',
-                  });
-                }}
-              >
-                <Icon icon={downloadIcon} />
-                Download data
               </Button>
             ),
           },
@@ -278,10 +241,42 @@ class Header extends PureComponent {
               >
                 {shareMeta}
               </Button>
-              {this.renderAreaActions({
-                isCountryDashboard,
-                isAreaAndCountryDashboard,
-              })}
+
+              {(isCountryDashboard || isAreaAndCountryDashboard) && (
+                <Button
+                  id="button-download-data"
+                  theme="theme-button-small"
+                  extLink={this.props.downloadLink}
+                  tooltip={{
+                    text: `Download the data${
+                      this.props.locationNames.adm0
+                        ? ` for ${
+                            this.locationNames &&
+                            this.props.locationNames.adm0 &&
+                            this.props.locationNames.adm0.label
+                          }`
+                        : ''
+                    }`,
+                    position: 'bottom',
+                  }}
+                  onClick={() => {
+                    trackEvent({
+                      category: 'Dashboards page',
+                      action: 'Download page',
+                      label:
+                        (this.props.locationNames &&
+                          this.props.locationNames.adm0 &&
+                          this.props.locationNames.adm0.label) ||
+                        'Global',
+                    });
+                  }}
+                >
+                  <Icon icon={downloadIcon} />
+                  Download data
+                </Button>
+              )}
+
+              {this.renderAreaActions()}
             </div>
           </div>
         )}
