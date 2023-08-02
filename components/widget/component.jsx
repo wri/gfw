@@ -154,7 +154,13 @@ class Widget extends PureComponent {
       <div
         ref={this.props.forwardRef}
         id={widget}
-        className={cx('c-widget', { large }, { embed }, { simple })}
+        className={cx(
+          'c-widget',
+          { large },
+          { embed },
+          { simple },
+          { 'dashboard-widget': true }
+        )}
         style={{
           ...(active &&
             !simple &&
