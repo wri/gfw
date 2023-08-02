@@ -146,6 +146,7 @@ class Header extends PureComponent {
       setShareModal,
       shareData,
       location: runtimeLocation,
+      locationNames,
       handleSSRLocation,
       forestAtlasLink,
       globalSentence,
@@ -235,11 +236,11 @@ class Header extends PureComponent {
                   extLink={this.props.downloadLink}
                   tooltip={{
                     text: `Download the data${
-                      this.props.locationNames.adm0
+                      locationNames.adm0
                         ? ` for ${
-                            this.locationNames &&
-                            this.props.locationNames.adm0 &&
-                            this.props.locationNames.adm0.label
+                            locationNames &&
+                            locationNames.adm0 &&
+                            locationNames.adm0.label
                           }`
                         : ''
                     }`,
@@ -250,9 +251,9 @@ class Header extends PureComponent {
                       category: 'Dashboards page',
                       action: 'Download page',
                       label:
-                        (this.props.locationNames &&
-                          this.props.locationNames.adm0 &&
-                          this.props.locationNames.adm0.label) ||
+                        (locationNames &&
+                          locationNames.adm0 &&
+                          locationNames.adm0.label) ||
                         'Global',
                     });
                   }}
