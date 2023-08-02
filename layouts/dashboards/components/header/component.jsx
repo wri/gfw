@@ -262,7 +262,8 @@ class Header extends PureComponent {
                 </Button>
               )}
 
-              {this.renderAreaActions()}
+              {(activeArea || runtimeLocation?.type === 'country') &&
+                this.renderAreaActions()}
             </div>
           </div>
         )}
