@@ -34,10 +34,10 @@ class LegendListItem extends PureComponent {
     return (
       <li
         data-layer-id={layerId}
+        data-component-type="map-widget"
         className={classnames({
           'c-legend-item': true,
           '-sortable': sortable,
-          'map-widget': true,
         })}
       >
         <div
