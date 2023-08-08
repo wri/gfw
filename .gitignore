@@ -43,3 +43,6 @@ yarn-error.log*
 
 # vscode
 .vscode
+
+# new relic agent
+newrelic_agent.log
