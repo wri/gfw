@@ -17,6 +17,16 @@ const Error = ({ statusCode }) => {
 };
 
 Error.getInitialProps = ({ res, err }) => {
+  // notice error to new relic
+  if (typeof window === 'undefined') {
+    // eslint-disable-next-line global-require
+    const newrelic = require('newrelic');
+
+    newrelic.noticeError(err);
+  } else {
+    window.newrelic.noticeError(err);
+  }
+
   // eslint-disable-next-line no-nested-ternary
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
