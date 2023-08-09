@@ -29,6 +29,7 @@ export default (req, res) =>
     ],
     headers: {
       'x-api-key': GFW_API_KEY,
+      'x-foo': 'bar',
     },
     followRedirects: true,
   }).catch(async (error) => {
