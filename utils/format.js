@@ -35,6 +35,10 @@ const formatWithProperSpecifier = ({
     return format(specialSpecifier)(num);
   }
 
+  if (unit === 'tCO2') {
+    return format('.3s')(num);
+  }
+
   if (num < threshold && num > 0) {
     return `< ${threshold}`;
   }
@@ -59,9 +63,12 @@ export const formatNumber = (args) => {
 
   if (unit === '') return format('.2f')(num);
   if (unit === ',') return format(',')(num);
-  if (unit === 'tCO2') return `${format('.3s')(num)}tCO\u2082e`;
 
   let formattedNumber = formatWithProperSpecifier(args);
+
+  if (unit === 'tCO2') {
+    formattedNumber = `${formattedNumber}tCO\u2082e`;
+  }
 
   if (spaceUnit) {
     // Capture group until first occurrence of a non digit or dot or comma.
@@ -70,6 +77,12 @@ export const formatNumber = (args) => {
   }
 
   return `${formattedNumber}${
-    returnUnit && unit && unit !== 'counts' && unit !== 'countsK' ? unit : ''
+    returnUnit &&
+    unit &&
+    unit !== 'counts' &&
+    unit !== 'tCO2' &&
+    unit !== 'countsK'
+      ? unit
+      : ''
   }`;
 };
