@@ -15,8 +15,7 @@ const SQL_QUERIES = {
     'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   lossTsc:
     'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
-  loss:
-    'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
+  loss: 'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFires:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(umd_tree_cover_loss_from_fires__ha) AS "umd_tree_cover_loss_from_fires__ha" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFiresOTF:
@@ -32,12 +31,10 @@ const SQL_QUERIES = {
   carbonFluxOTF: `SELECT SUM("gfw_forest_carbon_net_flux__Mg_CO2e"), SUM("gfw_forest_carbon_gross_removals__Mg_CO2e"), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} OR is__umd_tree_cover_gain = 'true'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  gain:
-    'SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  gain: 'SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
-  glad:
-    'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
+  glad: 'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
   integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
   integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
   integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -346,12 +343,8 @@ export const getWHEREQuery = (params) => {
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') {
-        if (dataset === 'annual') {
-          //   paramKey = 'umd_tree_cover_density__threshold';
-          comparisonString = ' = ';
-        } else {
-          comparisonString = ' >= ';
-        }
+        //   paramKey = 'umd_tree_cover_density__threshold';
+        comparisonString = ' = ';
 
         if (dataset === 'tropicalTreeCover') {
           paramKey = 'wri_tropical_tree_cover__decile';
@@ -1445,11 +1438,8 @@ export const fetchHistoricalAlerts = (params) => {
     endDate,
     dataset,
   } = params || {};
-  const {
-    alertsDaily,
-    alertsWeekly,
-    historicalIntegratedAlertsDaily,
-  } = SQL_QUERIES;
+  const { alertsDaily, alertsWeekly, historicalIntegratedAlertsDaily } =
+    SQL_QUERIES;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1780,9 +1770,8 @@ export const getIntegratedAlertsRanked = (params) => {
     radd: 'wur_radd_alerts',
   };
 
-  const alertTypeColumn = datasetMapping[deforestationAlertsDataset].concat(
-    '__date'
-  );
+  const alertTypeColumn =
+    datasetMapping[deforestationAlertsDataset].concat('__date');
 
   if (!download) {
     requestUrl = getRequestUrl({
@@ -1892,9 +1881,8 @@ export const fetchGladAlertsDaily = (params) => {
   };
 
   const dateString = `alert`.concat('__date');
-  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
-    '__confidence'
-  );
+  const confidenceString =
+    datasetMapping[deforestationAlertsDataset].concat('__confidence');
 
   // Replace base url params and encode
   const url = encodeURI(
@@ -1946,9 +1934,8 @@ export const fetchGladAlertsDailyRanked = (params) => {
   };
 
   const dateString = `alert`.concat('__date');
-  const confidenceString = datasetMapping[deforestationAlertsDataset].concat(
-    '__confidence'
-  );
+  const confidenceString =
+    datasetMapping[deforestationAlertsDataset].concat('__confidence');
 
   // Replace base url params and encode
   const url = encodeURI(
@@ -2186,8 +2173,13 @@ export const fetchBurnedArea = (params) => {
 };
 
 export const fetchBurnedAreaGrouped = (params) => {
-  const { forestType, landCategory, ifl, download, firesThreshold: threshold } =
-    params || {};
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    firesThreshold: threshold,
+  } = params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
