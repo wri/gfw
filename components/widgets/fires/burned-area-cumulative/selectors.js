@@ -502,7 +502,7 @@ export const parseSentence = createSelector(
       area: {
         value: totalCurrentYear
           ? formatNumber({ num: totalCurrentYear, unit: 'ha', spaceUnit: true })
-          : '0ha',
+          : '0 ha',
         color: colors.main,
       },
       status: {
@@ -512,7 +512,7 @@ export const parseSentence = createSelector(
       maxArea: {
         value: maxTotal
           ? formatNumber({ num: maxTotal, unit: 'ha', spaceUnit: true })
-          : '0ha',
+          : '0 ha',
         color: colors.main,
       },
     };
