@@ -175,7 +175,9 @@ export const parseConfig = createSelector(
       xAxis: {
         tickFormatter: yearTicksFormatter,
       },
-      unit: 't CO2e',
+      unitFormat: (value) =>
+        formatNumber({ num: value, specialSpecifier: '.2s', spaceUnit: true }),
+      unit: 'tCO2e',
       tooltip,
     };
   }
