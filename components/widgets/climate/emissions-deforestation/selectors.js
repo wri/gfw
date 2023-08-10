@@ -84,7 +84,8 @@ export const parseConfig = createSelector(
         },
       ],
       unitFormat: (value) =>
-        formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
+        formatNumber({ num: value, specialSpecifier: '.2s', spaceUnit: true }),
+      unit: 'tCO2e',
     };
   }
 );
