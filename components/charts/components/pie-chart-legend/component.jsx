@@ -20,7 +20,7 @@ class PieChartLegend extends PureComponent {
         `${formatNumber({
           num: item[config.key],
           unit: item.unit ? item.unit : config.unit,
-          spaceUnit: item.unit !== '%',
+          spaceUnit: item.unit !== '%' && config.unit !== 'countsK',
         })}`?.length > 9
     );
 
@@ -34,7 +34,7 @@ class PieChartLegend extends PureComponent {
             const value = `${formatNumber({
               num: item[config.key],
               unit: item.unit ? item.unit : config.unit,
-              spaceUnit: item.unit !== '%',
+              spaceUnit: item.unit !== '%' && config.unit !== 'countsK',
             })}`;
             return (
               <li className="legend-item" key={index.toString()}>
