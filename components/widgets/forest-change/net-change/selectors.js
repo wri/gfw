@@ -93,12 +93,8 @@ const parseSentence = createSelector(
   [parseData, getSettings, getLocationLabel, getIndicator, getSentence],
   (data, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
-    const {
-      globalInitial,
-      globalWithIndicator,
-      initial,
-      withIndicator,
-    } = sentences;
+    const { globalInitial, globalWithIndicator, initial, withIndicator } =
+      sentences;
     const { startYear, endYear } = settings;
     const { change, net } = data;
 
