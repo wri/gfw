@@ -205,4 +205,16 @@
     margin-bottom: rem(20px);
     max-width: rem(200px);
   }
+
+  #button-download-data {
+    color: #fff;
+    background-color: transparent;
+
+    svg {
+      margin-right: 0.3125rem;
+      margin-top: 0;
+      width: 1.0625rem;
+      height: 1.0625rem;
+    }
+  }
 }

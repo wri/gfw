@@ -15,7 +15,6 @@ import AreaOfInterestModal from 'components/modals/area-of-interest';
 
 import editIcon from 'assets/icons/edit.svg?sprite';
 import hiddenIcon from 'assets/icons/hidden.svg?sprite';
-import dashboardIcon from 'assets/icons/dashboard.svg?sprite';
 import tagIcon from 'assets/icons/tag.svg?sprite';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
@@ -47,9 +46,8 @@ class Header extends PureComponent {
     firstArea: PropTypes.object,
   };
 
-  renderAreaActions({ isCountryDashboard, isAreaAndCountryDashboard }) {
+  renderAreaActions() {
     const {
-      downloadLink,
       locationNames,
       setAreaOfInterestModalSettings,
       activeArea,
@@ -66,19 +64,6 @@ class Header extends PureComponent {
         onChange={this.handleAreaActions}
         theme={cx('theme-button-medium theme-dropdown-no-border small square')}
         options={[
-          {
-            value: 'open_map',
-            component: (
-              <Button
-                id="button-open-map"
-                theme={btnTheme}
-                link={activeArea && `/map/aoi/${activeArea.id}`}
-              >
-                <Icon icon={dashboardIcon} />
-                Open Map
-              </Button>
-            ),
-          },
           activeArea &&
             activeArea.userArea && {
               value: 'edit_area',
@@ -115,42 +100,6 @@ class Header extends PureComponent {
               >
                 <Icon icon={saveUserIcon} />
                 Save area
-              </Button>
-            ),
-          },
-          (isCountryDashboard || isAreaAndCountryDashboard) && {
-            value: 'download_data',
-            component: (
-              <Button
-                id="button-download-data"
-                theme={btnTheme}
-                extLink={downloadLink}
-                tooltip={{
-                  text: `Download the data${
-                    locationNames.adm0
-                      ? ` for ${
-                          locationNames &&
-                          locationNames.adm0 &&
-                          locationNames.adm0.label
-                        }`
-                      : ''
-                  }`,
-                  position: 'bottom',
-                }}
-                onClick={() => {
-                  trackEvent({
-                    category: 'Dashboards page',
-                    action: 'Download page',
-                    label:
-                      (locationNames &&
-                        locationNames.adm0 &&
-                        locationNames.adm0.label) ||
-                      'Global',
-                  });
-                }}
-              >
-                <Icon icon={downloadIcon} />
-                Download data
               </Button>
             ),
           },
@@ -197,6 +146,7 @@ class Header extends PureComponent {
       setShareModal,
       shareData,
       location: runtimeLocation,
+      locationNames,
       handleSSRLocation,
       forestAtlasLink,
       globalSentence,
@@ -278,10 +228,42 @@ class Header extends PureComponent {
               >
                 {shareMeta}
               </Button>
-              {this.renderAreaActions({
-                isCountryDashboard,
-                isAreaAndCountryDashboard,
-              })}
+
+              {(isCountryDashboard || isAreaAndCountryDashboard) && (
+                <Button
+                  id="button-download-data"
+                  theme="theme-button-small"
+                  extLink={this.props.downloadLink}
+                  tooltip={{
+                    text: `Download the data${
+                      locationNames.adm0
+                        ? ` for ${
+                            locationNames &&
+                            locationNames.adm0 &&
+                            locationNames.adm0.label
+                          }`
+                        : ''
+                    }`,
+                    position: 'bottom',
+                  }}
+                  onClick={() => {
+                    trackEvent({
+                      category: 'Dashboards page',
+                      action: 'Download page',
+                      label:
+                        (locationNames &&
+                          locationNames.adm0 &&
+                          locationNames.adm0.label) ||
+                        'Global',
+                    });
+                  }}
+                >
+                  <Icon icon={downloadIcon} />
+                </Button>
+              )}
+
+              {(activeArea || runtimeLocation?.type === 'country') &&
+                this.renderAreaActions()}
             </div>
           </div>
         )}
