@@ -215,19 +215,22 @@ export const parseConfig = createSelector(
         {
           key: 'removals',
           label: 'Removals',
-          unitFormat: (value) => formatNumber({ num: value, unit: 'tCO2' }),
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: removals,
         },
         {
           key: 'emissions',
           label: 'Emissions',
-          unitFormat: (value) => formatNumber({ num: value, unit: 'tCO2' }),
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: emissions,
         },
         {
           key: 'flux',
           label: netFluxData > 0 ? 'Net emissions' : 'Net removals',
-          unitFormat: (value) => formatNumber({ num: value, unit: 'tCO2' }),
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: netFluxData > 0 ? netEmissions : netRemovals,
         },
       ],
@@ -247,12 +250,8 @@ export const parseSentence = createSelector(
   (data, sentences, indicator, locationName, settings, adminLevel) => {
     if (!data || isEmpty(data)) return null;
 
-    const {
-      globalInitial,
-      globalWithIndicator,
-      initial,
-      withIndicator,
-    } = sentences;
+    const { globalInitial, globalWithIndicator, initial, withIndicator } =
+      sentences;
     const { startYear, endYear, sentence: sentenceSettings } = settings;
     const { netCarbonFlux: netCarbonFluxWording } = sentenceSettings;
 
