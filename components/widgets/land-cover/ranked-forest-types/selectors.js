@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import maxBy from 'lodash/maxBy';
 
@@ -59,7 +58,12 @@ export const parseData = createSelector([getData], (data) => {
       label,
       // extentPercent is not needed for the infoList; we'll use it to mitigate percentage
       // sum above 100% later on.
-      extentPercent: Number(format('.2r')(extentPercent)),
+      extentPercent: Number(
+        formatNumber({
+          num: extentPercent,
+          specialSpecifier: '.2r',
+        })
+      ),
       text: `${formatNumber({
         num: extentPercent,
         unit: '%',
@@ -85,9 +89,11 @@ export const parseData = createSelector([getData], (data) => {
     const extraPercentage = percentagesSum - 100;
     const highestPercentEntry = maxBy(ipccClassesDetails, 'extentPercent');
 
-    highestPercentEntry.text = `${format('.2r')(
-      highestPercentEntry.extentPercent - extraPercentage
-    )}%`;
+    highestPercentEntry.text = formatNumber({
+      num: highestPercentEntry.extentPercent - extraPercentage,
+      unit: '%',
+      specialSpecifier: '.2r',
+    });
   }
 
   // Return only the properties the infoList actually needs, to prevent future confusion.

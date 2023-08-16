@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getLoss = (state) => state.data && state.data.loss;
@@ -95,7 +95,10 @@ const parseSentence = createSelector(
       location: locationLabel,
       startYear,
       endYear,
-      lossFiresPercentage: `${format('.2r')(lossFiresPercentage)}%`,
+      lossFiresPercentage: formatNumber({
+        num: lossFiresPercentage,
+        unit: '%',
+      }),
     };
 
     return {

@@ -471,7 +471,7 @@ export const parseSentence = createSelector(
       dataset_start_year: 2001,
       dataset: 'MODIS',
       area: {
-        value: total ? `${format('.2s')(total)}ha` : '0ha',
+        value: total ? `${format('.2s')(total)}ha` : '0 ha',
         color: colors.main,
       },
       status: {

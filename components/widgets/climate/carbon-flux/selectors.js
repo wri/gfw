@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 
@@ -53,7 +52,10 @@ export const parseConfig = createSelector(
 
     // format numbers to operate with array (it's just to make operations more simple, it'll get changed back after operations)
     const tickFormatter = (value) =>
-      format('.2r')(value * `1e-${maxValueDigits}`);
+      formatNumber({
+        num: value * `1e-${maxValueDigits}`,
+        specialSpecifier: '.2r',
+      });
 
     // make ticks multiple of 0.5 (client request a step of 0.5 within ticks)
     const tick = Math.ceil(tickFormatter(maxValue) / 0.5) * 0.5;
@@ -101,7 +103,8 @@ export const parseConfig = createSelector(
         domain: [ticks[0], ticks[ticks.length - 1]],
         allowDecimals: false,
         ticks,
-        tickFormatter: (value) => format('.2r')(value * 1e-9),
+        tickFormatter: (value) =>
+          formatNumber({ num: value * 1e-9, specialSpecifier: '.2r' }),
         label: {
           value: 'GtCO\u2082e/year',
           fontSize: 14,
@@ -212,19 +215,22 @@ export const parseConfig = createSelector(
         {
           key: 'removals',
           label: 'Removals',
-          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: removals,
         },
         {
           key: 'emissions',
           label: 'Emissions',
-          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: emissions,
         },
         {
           key: 'flux',
           label: netFluxData > 0 ? 'Net emissions' : 'Net removals',
-          unitFormat: (value) => `${format('.3s')(value)}tCO\u2082e`,
+          unitFormat: (value) =>
+            formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
           color: netFluxData > 0 ? netEmissions : netRemovals,
         },
       ],
@@ -244,12 +250,8 @@ export const parseSentence = createSelector(
   (data, sentences, indicator, locationName, settings, adminLevel) => {
     if (!data || isEmpty(data)) return null;
 
-    const {
-      globalInitial,
-      globalWithIndicator,
-      initial,
-      withIndicator,
-    } = sentences;
+    const { globalInitial, globalWithIndicator, initial, withIndicator } =
+      sentences;
     const { startYear, endYear, sentence: sentenceSettings } = settings;
     const { netCarbonFlux: netCarbonFluxWording } = sentenceSettings;
 
@@ -270,14 +272,17 @@ export const parseSentence = createSelector(
       totalEmissions: formatNumber({
         num: emissions / yearTotal,
         unit: 'tCO2',
+        spaceUnit: true,
       }),
       totalRemovals: formatNumber({
         num: removals / yearTotal,
         unit: 'tCO2',
+        spaceUnit: true,
       }),
       totalFlux: formatNumber({
         num: flux / yearTotal,
         unit: 'tCO2',
+        spaceUnit: true,
       }),
     };
 

@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = (state) => state.data;
@@ -117,8 +117,7 @@ export const parseSentence = createSelector(
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
 
-    const formattedPercentage =
-      percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%';
+    const formattedPercentage = formatNumber({ num: percentCover, unit: '%' });
 
     const thresholdLabel = `>${decileThreshold}%`;
 

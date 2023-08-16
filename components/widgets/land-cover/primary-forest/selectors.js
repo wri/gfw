@@ -1,14 +1,14 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings;
-const getLocationName = state => state.locationLabel;
-const getIndicator = state => state.indicator;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
+const getData = (state) => state.data;
+const getSettings = (state) => state.settings;
+const getLocationName = (state) => state.locationLabel;
+const getIndicator = (state) => state.indicator;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
 
 // get lists selected
 export const parseData = createSelector(
@@ -22,20 +22,20 @@ export const parseData = createSelector(
         label: 'Primary Forest',
         value: extent,
         color: colors.primaryForest,
-        percentage: extent / totalArea * 100
+        percentage: (extent / totalArea) * 100,
       },
       {
         label: 'Other Tree Cover',
         value: secondaryExtent,
         color: colors.otherCover,
-        percentage: secondaryExtent / totalArea * 100
+        percentage: (secondaryExtent / totalArea) * 100,
       },
       {
         label: 'Non-Forest',
         value: totalArea - totalExtent,
         color: colors.nonForest,
-        percentage: (totalArea - totalExtent) / totalArea * 100
-      }
+        percentage: ((totalArea - totalExtent) / totalArea) * 100,
+      },
     ];
     return parsedData;
   }
@@ -47,34 +47,31 @@ export const parseSentence = createSelector(
     if (!parsedData || !locationName) return null;
     const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
-      .filter(d => d.label !== 'Non-Forest')
-      .map(d => d.value)
+      .filter((d) => d.label !== 'Non-Forest')
+      .map((d) => d.value)
       .reduce((sum, d) => sum + d);
-    const primaryData = parsedData.find(d => d.label === 'Primary Forest')
+    const primaryData = parsedData.find((d) => d.label === 'Primary Forest')
       .value;
-    const primaryPercentage = primaryData && primaryData / totalExtent * 100;
+    const primaryPercentage = primaryData && (primaryData / totalExtent) * 100;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
 
     const params = {
       location: `${locationName}'s`,
       indicator: indicatorLabel,
-      percentage:
-        primaryPercentage < 0.1
-          ? '< 0.1%'
-          : `${format('.2r')(primaryPercentage)}%`,
-      extentYear: settings.extentYear
+      percentage: formatNumber({ num: primaryPercentage, unit: '%' }),
+      extentYear: settings.extentYear,
     };
     const sentence = indicator ? withIndicator : initial;
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
 
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

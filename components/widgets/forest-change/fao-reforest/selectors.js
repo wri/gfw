@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 const getData = (state) => state.data || null;
 const getAdm0 = (state) => state.adm0 || null;
@@ -74,7 +74,12 @@ export const parseSentence = createSelector(
     const params = {
       location: locationName,
       year: period,
-      rate: `${format(formatType)(rate)}ha`,
+      rate: formatNumber({
+        num: rate,
+        unit: 'ha',
+        spaceUnit: true,
+        specialSpecifier: formatType,
+      }),
     };
 
     return {

@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import sumBy from 'lodash/sumBy';
 
 // get list data
@@ -84,15 +84,10 @@ export const parseSentence = createSelector(
     const params = {
       extentYear: settings.extentYear,
       location: locationObject.label,
-      extent:
-        extent < 1
-          ? `${format('.3r')(extent)}ha`
-          : `${format('.3s')(extent)}ha`,
+      extent: formatNumber({ num: extent, unit: 'ha', spaceUnit: true }),
       indicator: indicator && indicator.label,
-      landPercentage:
-        landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '< 0.1%',
-      globalPercentage:
-        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '< 0.1%',
+      landPercentage: formatNumber({ num: landPercent, unit: '%' }),
+      globalPercentage: formatNumber({ num: globalPercent, unit: '%' }),
     };
 
     let sentence = indicator ? withInd : initial;

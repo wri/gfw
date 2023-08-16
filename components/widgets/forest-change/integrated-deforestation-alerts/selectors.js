@@ -197,7 +197,11 @@ export const parseSentence = createSelector(
       system,
       totalArea: !totalArea
         ? ' '
-        : `covering a total of ${formatNumber({ num: totalArea, unit: 'ha' })}`,
+        : `covering a total of ${formatNumber({
+            num: totalArea,
+            unit: 'ha',
+            spaceUnit: true,
+          })}`,
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
       highConfPerc:
         highAlertPercentage === 0

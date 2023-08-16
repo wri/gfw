@@ -141,6 +141,8 @@ export const getGeodescriberDescription = createSelector(
     getAdminDescription,
   ],
   (geodescriber, location, wdpaLocation, adminSentence) => {
+    const { description, description_params } = geodescriber;
+
     if (isEmpty(geodescriber)) return null;
     if (location.type === 'wdpa' && wdpaLocation) {
       const status = wdpaLocation?.status;
@@ -160,9 +162,18 @@ export const getGeodescriberDescription = createSelector(
     }
     // if not an admin we can use geodescriber
     if (!['global', 'country'].includes(location.type)) {
+      // adding space between number and unit
+      const areaFormatted = description_params?.area_0.replace(
+        /([\d|.|,]+)/,
+        '$1 '
+      );
+
       return {
-        sentence: geodescriber.description,
-        params: geodescriber.description_params,
+        sentence: description,
+        params: {
+          ...description_params,
+          area_0: areaFormatted,
+        },
       };
     }
 

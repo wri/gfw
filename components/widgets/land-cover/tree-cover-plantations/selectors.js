@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import endsWith from 'lodash/endsWith';
 
 // get list data
@@ -52,17 +52,11 @@ export const parseSentence = createSelector(
       firstSpecies: top[0].label.toLowerCase(),
       secondSpecies: top.length > 1 && top[1].label.toLowerCase(),
       type: settings.type === 'bound2' ? 'species' : 'type',
-      extent:
-        topExtent < 1
-          ? `${format('.3r')(topExtent)}ha`
-          : `${format('.3s')(topExtent)}ha`,
-      other:
-        otherExtent < 1
-          ? `${format('.3r')(otherExtent)}ha`
-          : `${format('.3s')(otherExtent)}ha`,
+      extent: formatNumber({ num: topExtent, unit: 'ha', spaceUnit: true }),
+      other: formatNumber({ num: otherExtent, unit: 'ha', spaceUnit: true }),
       count: data.length - top.length,
       topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
-      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '< 0.1%',
+      percent: formatNumber({ num: areaPerc, unit: '%' }),
     };
     const sentence =
       settings.type === 'bound1'

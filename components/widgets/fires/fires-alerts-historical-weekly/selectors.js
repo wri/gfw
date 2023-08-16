@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
@@ -151,7 +151,9 @@ export const parseConfig = createSelector(
         unit: ' VIIRS alerts',
         color: colors.main,
         unitFormat: (value) =>
-          Number.isInteger(value) ? format(',')(value) : value,
+          Number.isInteger(value)
+            ? formatNumber({ num: value, unit: ',' })
+            : value,
       },
     ];
 
@@ -246,7 +248,7 @@ export const parseSentence = createSelector(
       end_date: moment(endDate).format('Do of MMMM YYYY'),
       dataset: dataset && dataset.label,
       total_alerts: {
-        value: total ? format(',')(total) : 0,
+        value: total ? formatNumber({ num: total, unit: ',' }) : 0,
         color: colors.main,
       },
     };

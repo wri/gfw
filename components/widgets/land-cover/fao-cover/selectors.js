@@ -71,7 +71,7 @@ export const parseSentence = createSelector(
         : (extent / area_ha) * 100;
     const params = {
       location: locationName === 'global' ? 'globally' : locationName,
-      extent: formatNumber({ num: extent, unit: 'ha' }),
+      extent: formatNumber({ num: extent, unit: 'ha', spaceUnit: true }),
       primaryPercent: formatNumber({ num: primaryPercent, unit: '%' }),
     };
     let sentence = forest_primary > 0 ? initial : noPrimary;
