@@ -1,8 +1,5 @@
 import { getCarbonFlux, getCarbonFluxOTF } from 'services/analysis-cached';
 
-// import OTFAnalysis from 'services/otf-analysis';
-
-// TODO: carbon flux layer&dataset
 import {
   POLITICAL_BOUNDARIES_DATASET,
   CARBON_FLUX_DATASET,

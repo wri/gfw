@@ -128,7 +128,7 @@ export const parseSentence = createSelector(
     const params = {
       location: locationName,
       carbonStored: allGround > soil ? 'biomass' : 'soil',
-      carbonValue: formatNumber({ num: total, unit: 't' }),
+      carbonValue: formatNumber({ num: total, unit: 't', spaceUnit: true }),
     };
 
     return {

@@ -163,13 +163,14 @@ export const parseSentence = createSelector(
         topRegionData &&
         formatNumber({ num: topRegionData.percentage, unit: '%' }),
       topLocationLoss:
-        topRegionData && formatNumber({ num: topRegionData.loss, unit: 'ha' }),
+        topRegionData &&
+        formatNumber({ num: topRegionData.loss, unit: 'ha', spaceUnit: true }),
       location:
         location.label === 'global' ? 'globally' : location && location.label,
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss: formatNumber({ num: lossArea, unit: 'ha' }),
+      loss: formatNumber({ num: lossArea, unit: 'ha', spaceUnit: true }),
       localPercent: formatNumber({ num: areaPercent, unit: '%' }),
       globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
       extentYear: settings.extentYear,

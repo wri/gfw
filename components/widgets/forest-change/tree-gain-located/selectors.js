@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getGain = (state) => state.data && state.data.gain;
@@ -92,17 +92,36 @@ export const parseSentence = createSelector(
     const params = {
       indicator: indicator && indicator.label,
       location: locationName,
-      topGain: `${format('.2r')(topGain)}%`,
+      topGain: formatNumber({
+        num: topGain,
+        unit: '%',
+      }),
       percentileLength: percentileLength || '0',
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 0 && settings.unit === '%'
-          ? `${format('.2r')(topRegion.percentage)}%`
-          : `${format(valueFormat)(topRegion.gain)}ha`,
+          ? formatNumber({
+              num: topRegion.percentage,
+              unit: '%',
+            })
+          : formatNumber({
+              num: topRegion.gain,
+              unit: 'ha',
+              spaceUnit: true,
+              specialSpecifier: valueFormat,
+            }),
       average:
         topRegion.percentage > 0 && settings.unit === '%'
-          ? `${format('.2r')(avgGainPercentage)}%`
-          : `${format(aveFormat)(avgGain)}ha`,
+          ? formatNumber({
+              num: avgGainPercentage,
+              unit: '%',
+            })
+          : formatNumber({
+              num: avgGain,
+              unit: 'ha',
+              spaceUnit: true,
+              specialSpecifier: aveFormat,
+            }),
     };
 
     return {

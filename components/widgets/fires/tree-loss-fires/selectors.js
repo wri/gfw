@@ -96,7 +96,8 @@ export const parseSentence = createSelector(
         topRegionData &&
         formatNumber({ num: topRegionData.percentage, unit: '%' }),
       topLocationLoss:
-        topRegionData && formatNumber({ num: topRegionData.loss, unit: 'ha' }),
+        topRegionData &&
+        formatNumber({ num: topRegionData.loss, unit: 'ha', spaceUnit: true }),
       topLocationLossAverage:
         topRegionData &&
         formatNumber({
@@ -105,6 +106,7 @@ export const parseSentence = createSelector(
               ? topRegionData.loss / topRegionData.numberOfYears
               : 0,
           unit: 'ha',
+          spaceUnit: true,
         }),
       location:
         location.label === 'global' ? 'globally' : location && location.label,

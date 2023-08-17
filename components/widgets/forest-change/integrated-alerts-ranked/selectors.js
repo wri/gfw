@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 
@@ -70,7 +70,7 @@ export const parseList = createSelector(
         return {
           id: k,
           color: colors.main,
-          percentage: `${format('.2r')(countsAreaPerc)}%`,
+          percentage: formatNumber({ num: countsAreaPerc, unit: '%' }),
           countsPerHa,
           count: counts,
           area: countsArea,
@@ -117,9 +117,14 @@ export const parseSentence = createSelector(
 
     const params = {
       timeframe: timeFrame && timeFrame.label,
-      count: format(',')(totalCount),
-      area: `${format(formatType)(countArea)}ha`,
-      topPercent: `${format('.2r')(topCount)}%`,
+      count: formatNumber({ num: totalCount, unit: ',' }),
+      area: formatNumber({
+        num: countArea,
+        unit: 'ha',
+        specialSpecifier: formatType,
+        spaceUnit: true,
+      }),
+      topPercent: formatNumber({ num: topCount, unit: '%' }),
       topRegions:
         percentileLength === 1
           ? `${percentileLength} region`

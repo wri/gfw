@@ -4,7 +4,6 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 import { formatNumber } from 'utils/format';
-import { format } from 'd3-format';
 
 // get list data
 const getLoss = (state) => state.data && state.data.lossByRegion;
@@ -119,17 +118,17 @@ export const parseSentence = createSelector(
       location: locationName,
       startYear,
       endYear,
-      topLoss: `${format('.2r')(topLoss)}%`,
+      topLoss: formatNumber({ num: topLoss, unit: '%' }),
       percentileLength,
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 0 && settings.unit === '%'
           ? formatNumber({ num: topRegion.percentage, unit: '%' })
-          : formatNumber({ num: topRegion.loss, unit: 'ha' }),
+          : formatNumber({ num: topRegion.loss, unit: 'ha', spaceUnit: true }),
       average:
         topRegion.percentage > 0 && settings.unit === '%'
           ? formatNumber({ num: avgLossPercentage, unit: '%' })
-          : formatNumber({ num: avgLoss, unit: 'ha' }),
+          : formatNumber({ num: avgLoss, unit: 'ha', spaceUnit: true }),
     };
 
     return {

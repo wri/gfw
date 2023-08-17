@@ -90,8 +90,16 @@ export const parseSentence = createSelector(
     const topExtent =
       (totalExtent > 0 && (percentileExtent / totalExtent) * 100) || 0;
 
-    const topRegionExtent = formatNumber({ num: topRegion.extent, unit: 'ha' });
-    const aveRegionExtent = formatNumber({ num: avgExtent, unit: 'ha' });
+    const topRegionExtent = formatNumber({
+      num: topRegion.extent,
+      unit: 'ha',
+      spaceUnit: true,
+    });
+    const aveRegionExtent = formatNumber({
+      num: avgExtent,
+      unit: 'ha',
+      spaceUnit: true,
+    });
     const topRegionPercent = formatNumber({
       num: topRegion.percentage,
       unit: '%',

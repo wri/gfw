@@ -1,14 +1,14 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data;
-const getLocationName = state => state.locationLabel;
-const getIndicator = state => state.indicator;
-const getColors = state => state.colors;
-const getSentences = state => state.sentences;
-const getTitle = state => state.title;
+const getData = (state) => state.data;
+const getLocationName = (state) => state.locationLabel;
+const getIndicator = (state) => state.indicator;
+const getColors = (state) => state.colors;
+const getSentences = (state) => state.sentences;
+const getTitle = (state) => state.title;
 
 // get lists selected
 export const parseData = createSelector(
@@ -21,20 +21,20 @@ export const parseData = createSelector(
         label: 'Intact Forest',
         value: extent,
         color: colors.intactForest,
-        percentage: extent / totalArea * 100
+        percentage: (extent / totalArea) * 100,
       },
       {
         label: 'Other Tree Cover',
         value: totalExtent - extent,
         color: colors.otherCover,
-        percentage: (totalExtent - extent) / totalArea * 100
+        percentage: ((totalExtent - extent) / totalArea) * 100,
       },
       {
         label: 'Non-Forest',
         value: totalArea - totalExtent,
         color: colors.nonForest,
-        percentage: (totalArea - totalExtent) / totalArea * 100
-      }
+        percentage: ((totalArea - totalExtent) / totalArea) * 100,
+      },
     ];
     return parsedData;
   }
@@ -48,24 +48,22 @@ export const parseSentence = createSelector(
       initial,
       withIndicator,
       noIntact,
-      noIntactWithIndicator
+      noIntactWithIndicator,
     } = sentences;
     const totalExtent = parsedData
-      .filter(d => d.label !== 'Non-Forest')
-      .map(d => d.value)
+      .filter((d) => d.label !== 'Non-Forest')
+      .map((d) => d.value)
       .reduce((sum, d) => sum + d);
-    const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
-    const intactPercentage = intactData && intactData / totalExtent * 100;
+    const intactData = parsedData.find((d) => d.label === 'Intact Forest')
+      .value;
+    const intactPercentage = intactData && (intactData / totalExtent) * 100;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
 
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
       indicator: indicatorLabel,
-      percentage:
-        intactPercentage < 0.1
-          ? '< 0.1%'
-          : `${format('.2r')(intactPercentage)}%`
+      percentage: formatNumber({ num: intactPercentage, unit: '%' }),
     };
 
     let sentence = indicator ? withIndicator : initial;
@@ -75,7 +73,7 @@ export const parseSentence = createSelector(
 
     return {
       sentence,
-      params
+      params,
     };
   }
 );
@@ -94,5 +92,5 @@ export const parseTitle = createSelector(
 export default createStructuredSelector({
   data: parseData,
   sentence: parseSentence,
-  title: parseTitle
+  title: parseTitle,
 });

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
@@ -69,9 +69,13 @@ class WidgetPieChart extends PureComponent {
                 ? [
                     {
                       key: 'value',
-                      unit: 'ha',
                       labelKey: 'label',
-                      unitFormat: (value) => format('.3s')(value),
+                      unitFormat: (value) =>
+                        formatNumber({
+                          num: value,
+                          unit: 'ha',
+                          spaceUnit: true,
+                        }),
                     },
                   ]
                 : [
@@ -79,7 +83,8 @@ class WidgetPieChart extends PureComponent {
                       key: 'percentage',
                       unit: '%',
                       labelKey: 'label',
-                      unitFormat: (value) => format('.1f')(value),
+                      unitFormat: (value) =>
+                        formatNumber({ num: value, specialSpecifier: '.1f' }),
                     },
                   ]
             }

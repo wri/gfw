@@ -1,20 +1,20 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 
 import { getChartConfig } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data;
-const getColors = state => state.colors || null;
-const getStartDate = state => state.settings.startDate;
-const getEndDate = state => state.settings.endDate;
-const getSentences = state => state.sentences || null;
-const getLocationObject = state => state.location;
-const getOptionsSelected = state => state.optionsSelected;
-const getIndicator = state => state.indicator;
+const getAlerts = (state) => state.data;
+const getColors = (state) => state.colors || null;
+const getStartDate = (state) => state.settings.startDate;
+const getEndDate = (state) => state.settings.endDate;
+const getSentences = (state) => state.sentences || null;
+const getLocationObject = (state) => state.location;
+const getOptionsSelected = (state) => state.optionsSelected;
+const getIndicator = (state) => state.indicator;
 
 const zeroFillDays = (startDate, endDate) => {
   const start = moment(startDate);
@@ -23,7 +23,7 @@ const zeroFillDays = (startDate, endDate) => {
 
   return [
     startDate,
-    ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD'))
+    ...dates.map(() => start.add(1, 'days').format('YYYY-MM-DD')),
   ];
 };
 
@@ -32,11 +32,11 @@ export const getData = createSelector(
   (data, startDate, endDate) => {
     if (!data || isEmpty(data)) return null;
 
-    const zeroFilledData = zeroFillDays(startDate, endDate).map(date => ({
+    const zeroFilledData = zeroFillDays(startDate, endDate).map((date) => ({
       date,
       alert__count: 0,
       count: 0,
-      ...data.find(d => d.alert__date === date)
+      ...data.find((d) => d.alert__date === date),
     }));
 
     return sortBy(zeroFilledData, 'date');
@@ -48,17 +48,19 @@ export const parseConfig = createSelector(
   (colors, startDate, endDate) => {
     const tooltip = [
       {
-        label: 'Fire alerts'
+        label: 'Fire alerts',
       },
       {
         key: 'count',
         labelKey: 'alert__date',
-        labelFormat: value => moment(value).format('MMM DD YYYY'),
+        labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ' VIIRS alerts',
         color: colors.main,
-        unitFormat: value =>
-          (Number.isInteger(value) ? format(',')(value) : value)
-      }
+        unitFormat: (value) =>
+          Number.isInteger(value)
+            ? formatNumber({ num: value, unit: ',' })
+            : value,
+      },
     ];
 
     return {
@@ -69,8 +71,8 @@ export const parseConfig = createSelector(
         ticks: [startDate, endDate],
         interval: 0,
         padding: { left: 20, right: 20 },
-        tickFormatter: t => moment(t).format('MMM YYYY')
-      }
+        tickFormatter: (t) => moment(t).format('MMM YYYY'),
+      },
     };
   }
 );
@@ -84,7 +86,7 @@ export const parseSentence = createSelector(
     getStartDate,
     getEndDate,
     getOptionsSelected,
-    getIndicator
+    getIndicator,
   ],
   (
     data,
@@ -115,9 +117,9 @@ export const parseSentence = createSelector(
       end_date: moment(endDate).format('Do of MMMM YYYY'),
       dataset: dataset && dataset.label,
       total_alerts: {
-        value: total ? format(',')(total) : 0,
-        color: colors.main
-      }
+        value: total ? formatNumber({ num: total, unit: ',' }) : 0,
+        color: colors.main,
+      },
     };
     return { sentence, params };
   }
@@ -126,5 +128,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: getData,
   config: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
 });

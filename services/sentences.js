@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
@@ -35,8 +35,7 @@ export const adminSentences = {
   withPlantationLoss:
     'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
   countrySpecific: {
-    IDN:
-      'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
+    IDN: 'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
   },
   co2Emissions: ', equivalent to {emissions} of CO\u2082 emissions.',
   end: '.',
@@ -190,52 +189,94 @@ export const parseSentence = (
   const { area: areaPlantations, emissions: emissionsPlantations } =
     plantationsLoss || {};
   const { area: areaPrimary, emissions: emissionsPrimary } = primaryLoss || {};
+  const extentSubtractByPlantationsExtent = extent - plantationsExtent;
 
-  const extentFormatted =
-    extent < 1 ? format('.3r')(extent) : format('.3s')(extent);
-  const naturalForest =
-    extent - plantationsExtent < 1
-      ? format('.3r')(extent - plantationsExtent)
-      : format('.3s')(extent - plantationsExtent);
-  const primaryForest =
-    primaryExtent < 1
-      ? format('.3r')(primaryExtent)
-      : format('.3s')(primaryExtent);
+  const extentFormatted = formatNumber({
+    num: extent,
+    unit: 'ha',
+    spaceUnit: true,
+  });
+
+  const naturalForest = formatNumber({
+    num: extentSubtractByPlantationsExtent,
+    unit: 'ha',
+    spaceUnit: true,
+  });
+
+  const primaryForest = formatNumber({
+    num: primaryExtent,
+    unit: 'ha',
+    spaceUnit: true,
+  });
+
   const percentageCover =
-    extent && totalArea ? format('.2r')((extent / totalArea) * 100) : 0;
-  const percentageNatForest = format('.2r')(
-    ((extent - plantationsExtent) / totalArea) * 100
-  );
-  const percentagePrimaryForest = format('.2r')(
-    (primaryExtent / totalArea) * 100
-  );
-  const naturalLoss = format('.3s')((area || 0) - (areaPlantations || 0));
-  const emissionsNaturalForest = format('.3s')(
-    (emissions || 0) - (emissionsPlantations || 0)
-  );
-  const emissionsFormatted = format('.3s')(emissions);
-  const emissionsPrimaryFormatted = format('.3s')(emissionsPrimary || 0);
-  const primaryLossFormatted = format('.3s')(areaPrimary || 0);
-  const loss = format('.3s')(area || 0);
+    extent && totalArea
+      ? formatNumber({ num: (extent / totalArea) * 100, unit: '%' })
+      : 0;
+
+  const percentageNatForest = formatNumber({
+    num: ((extent - plantationsExtent) / totalArea) * 100,
+    unit: '%',
+  });
+
+  const percentagePrimaryForest = formatNumber({
+    num: (primaryExtent / totalArea) * 100,
+    unit: '%',
+  });
+
+  const naturalLoss = formatNumber({
+    num: (area || 0) - (areaPlantations || 0),
+    unit: 'ha',
+    spaceUnit: true,
+  });
+
+  const emissionsNaturalForest = formatNumber({
+    num: (emissions || 0) - (emissionsPlantations || 0),
+    unit: 't',
+    spaceUnit: true,
+  });
+
+  const emissionsFormatted = formatNumber({
+    num: emissions,
+    unit: 't',
+    spaceUnit: true,
+  });
+  const emissionsPrimaryFormatted = formatNumber({
+    num: emissionsPrimary || 0,
+    unit: 't',
+    spaceUnit: true,
+  });
+
+  const primaryLossFormatted = formatNumber({
+    num: areaPrimary || 0,
+    unit: 'ha',
+    spaceUnit: true,
+  });
+
+  const loss = formatNumber({
+    num: area || 0,
+    unit: 'ha',
+    spaceUnit: true,
+  });
   const location = locationNames && locationNames.label;
   const { adm0 } = locationObj || {};
 
   const params = {
-    extent: `${extentFormatted}ha`,
-    naturalForest: `${naturalForest}ha`,
-    primaryForest: `${primaryForest}ha`,
+    extent: `${extentFormatted}`,
+    naturalForest: `${naturalForest}`,
+    primaryForest: `${primaryForest}`,
     location: location || 'the world',
-    percentage: `${percentageCover}%`,
-    percentageNatForest: `${percentageNatForest}%`,
-    percentagePrimaryForest: `${percentagePrimaryForest}%`,
-    loss: `${loss}ha`,
-    emissions: `${emissionsNaturalForest}t`,
-    emissionsTreeCover: `${emissionsFormatted}t`,
-    emissionsPrimary: `${emissionsPrimaryFormatted}t`,
+    percentage: `${percentageCover}`,
+    percentageNatForest: `${percentageNatForest}`,
+    percentagePrimaryForest: `${percentagePrimaryForest}`,
+    loss: `${loss}`,
+    emissions: `${emissionsNaturalForest}`,
+    emissionsTreeCover: `${emissionsFormatted}`,
+    emissionsPrimary: `${emissionsPrimaryFormatted}`,
     year,
-    treeCoverLoss: `${loss}ha`,
-    primaryLoss: `${primaryLossFormatted}ha`,
-    naturalLoss: `${naturalLoss}ha`,
+    treeCoverLoss: `${loss}`,
+    primaryLoss: `${primaryLossFormatted}`,
+    naturalLoss: `${naturalLoss}`,
   };
 
   let sentence = adminSentences.default;
