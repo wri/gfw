@@ -117,7 +117,6 @@
     "moment": "2.24.0",
     "newrelic": "^10.6.1",
     "next": "11",
-    "next-compose-plugins": "^2.2.0",
     "next-http-proxy-middleware": "^1.0.10",
     "next-optimized-images": "^2.6.2",
     "next-sitemap": "^1.2.22",
