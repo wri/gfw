@@ -73,6 +73,7 @@
     "identity-obj-proxy": "^3.0.0",
     "istanbul-lib-coverage": "^3.0.0",
     "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "lint-staged": "^10.0.8",
     "nyc": "^15.0.0",
     "postcss-preset-env": "^7.0.0",
