@@ -40,7 +40,7 @@
     "*.{js,jsx}": [
       "prettier --parser flow --write --single-quote",
       "eslint --ext .js --ext .jsx --fix",
-      "jest --bail --findRelatedTests"
+      "jest --bail --findRelatedTests --coverage"
     ]
   },
   "nyc": {
