@@ -40,7 +40,7 @@
     "*.{js,jsx}": [
       "prettier --parser flow --write --single-quote",
       "eslint --ext .js --ext .jsx --fix",
-      "yarn test"
+      "jest --bail --findRelatedTests"
     ]
   },
   "nyc": {
@@ -196,7 +196,7 @@
     "cypress": "^5.5.0",
     "node-forge": "^0.10.0",
     "serialize-javascript": "^3.1.0",
-    "yargs-parser": "^13.1.2",
+    "yargs-parser": "21.1.1",
     "npm-user-validate": "^1.0.1",
     "@luma.gl/core": "7.3.2"
   },
