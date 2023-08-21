@@ -22,8 +22,6 @@ import {
 import PageLayout from 'wrappers/page';
 import Dashboards from 'layouts/dashboards';
 
-import DashboardsUrlProvider from 'providers/dashboards-url-provider';
-
 import { setCountriesSSR } from 'providers/country-data-provider/actions';
 
 import {
@@ -58,8 +56,9 @@ const isServer = typeof window === 'undefined';
 function getLabel(location, countryData) {
   let country;
   if (location.adm0) {
-    country = countryData?.countries.find((c) => c.value === location.adm0)
-      ?.label;
+    country = countryData?.countries.find(
+      (c) => c.value === location.adm0
+    )?.label;
   }
 
   if (location.adm2) {
@@ -334,7 +333,6 @@ const DashboardsPage = (props) => {
       <Head>
         <link rel="canonical" href={getCanonical(props, query)} />
       </Head>
-      <DashboardsUrlProvider />
       <Dashboards
         basePath={basePath}
         ssrLocation={handleSSRLocation}
