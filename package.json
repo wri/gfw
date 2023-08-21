@@ -18,7 +18,7 @@
     "pree2e": "NODE_OPTIONS=--openssl-legacy-provider rm -rf .nyc_output coverage .next || true",
     "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
     "lint": "eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** -c .eslintrc.json --ext js,jsx",
-    "test": "jest --watch"
+    "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
