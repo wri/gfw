@@ -40,8 +40,7 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   alerts: [
     {
-      text:
-        'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
+      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
     },
   ],
@@ -208,9 +207,10 @@ export default {
   // eslint-disable-next-line no-unused-vars
   isPlaceholderImage: ({ location, category }) => {
     return (
-      location.type === 'country' &&
-      location.adm0 === 'IDN' &&
-      category === 'summary'
+      (location.type === 'country' &&
+        location.adm0 === 'IDN' &&
+        category === 'summary') ||
+      !category
     );
   },
   getWidgetProps,
