@@ -1,4 +1,3 @@
-const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -19,7 +18,8 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins(
-  [[optimizedImages], [withBundleAnalyzer]],
-  nextConfig
-);
+module.exports = () => {
+  const plugins = [withBundleAnalyzer, optimizedImages];
+  const config = plugins.reduce((acc, next) => next(acc), { ...nextConfig });
+  return config;
+};

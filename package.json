@@ -11,13 +11,15 @@
     "build": "NODE_OPTIONS=\"--max_old_space_size=8192 --openssl-legacy-provider\" next build",
     "postbuild": "NODE_OPTIONS=--openssl-legacy-provider next-sitemap",
     "start": "NODE_OPTIONS=--openssl-legacy-provider node server.js -p $PORT",
-    "test": "NODE_OPTIONS=--openssl-legacy-provider start-test dev 3000 cy:open",
+    "cy:test": "NODE_OPTIONS=--openssl-legacy-provider start-test dev 3000 cy:open",
     "cy:record": "NODE_OPTIONS=--openssl-legacy-provider cypress run --env RECORD=1",
     "cy:open": "NODE_OPTIONS=--openssl-legacy-provider cypress open",
     "cy:run": "NODE_OPTIONS=--openssl-legacy-provider cypress run",
     "pree2e": "NODE_OPTIONS=--openssl-legacy-provider rm -rf .nyc_output coverage .next || true",
     "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100",
-    "lint": "eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** -c .eslintrc.json --ext js,jsx"
+    "lint": "eslint ./components/** ./pages/** ./layouts/** ./providers/** ./redux/** ./services/** ./utils/** -c .eslintrc.json --ext js,jsx",
+    "test": "jest --watchAll",
+    "test:ci": "jest --bail --passWithNoTests"
   },
   "repository": {
     "type": "git",
@@ -38,7 +40,8 @@
     "*.scss": "stylelint --config .stylelintrc.json",
     "*.{js,jsx}": [
       "prettier --parser flow --write --single-quote",
-      "eslint --ext .js --ext .jsx --fix"
+      "eslint --ext .js --ext .jsx --fix",
+      "jest --bail --findRelatedTests --coverage --passWithNoTests"
     ]
   },
   "nyc": {
@@ -47,9 +50,13 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.22.10",
     "@cypress/code-coverage": "^3.8.1",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^14.0.0",
     "autoprefixer": "^9.7.5",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^29.6.2",
     "babel-plugin-istanbul": "^6.0.0",
     "cypress": "^7.6.0",
     "cypress-audit": "^0.2.3",
@@ -65,7 +72,10 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "eslint-plugin-security": "^1.4.0",
     "husky": "^4.2.3",
+    "identity-obj-proxy": "^3.0.0",
     "istanbul-lib-coverage": "^3.0.0",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "lint-staged": "^10.0.8",
     "nyc": "^15.0.0",
     "postcss-preset-env": "^7.0.0",
@@ -117,7 +127,6 @@
     "moment": "2.24.0",
     "newrelic": "^10.6.1",
     "next": "11",
-    "next-compose-plugins": "^2.2.0",
     "next-http-proxy-middleware": "^1.0.10",
     "next-optimized-images": "^2.6.2",
     "next-sitemap": "^1.2.22",
@@ -188,7 +197,7 @@
     "cypress": "^5.5.0",
     "node-forge": "^0.10.0",
     "serialize-javascript": "^3.1.0",
-    "yargs-parser": "^13.1.2",
+    "yargs-parser": "21.1.1",
     "npm-user-validate": "^1.0.1",
     "@luma.gl/core": "7.3.2"
   },
