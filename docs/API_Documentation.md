@@ -5,11 +5,11 @@ Generic documentation about how to make get, post, patch and del requests to the
 
 ## Dataset Syntax
 
-Syntax utilised by the front-end which dictate the appearance and behaviour of child layers in the application.
+Syntax utilised by the front-end which dictates the appearance and behaviour of child layers in the application.
 
 ### Vocabulary Tags
 
-Datasets with `application` containing `gfw` may have the vocabulary: `categoryTab`. This vocabulary contaings the field `tags` which is an array of values used to categorise the dataset (and hence, it's attributed layers). The definition used here is that the first element of the `tags` array is the category tab it belongs to, and the second element is the subcategory. E.g. the VIIRS Alerts dataset has a vocabulary `categoryTab` with `tag: ['forestChange', 'fireAlerts']` and hence will be found in the *Forest Chanege* tab under the *Fire Alerts* subcategory.
+Datasets with `application` containing `gfw` may have the vocabulary: `categoryTab`. This vocabulary contains the field `tags` which is an array of values used to categorise the dataset (and hence, its attributed layers). The definition used here is that the first element of the `tags` array is the category tab it belongs to, and the second element is the subcategory. E.g. the VIIRS Alerts dataset has a vocabulary `categoryTab` with `tag: ['forestChange', 'fireAlerts']` and hence will be found in the *Forest Change* tab under the *Fire Alerts* subcategory.
 
 Note, the subcategories are defined in the GFW codebase - adding a new tag (e.g. [`forestChange`, `myNewTag`]) to a layer will not add a new item to the menu without an update to the corresponding GFW code also.
 
@@ -38,7 +38,7 @@ Syntax that defines how the layer should behave. Specifically: the legend, layer
 
 ### iso
 
-At the top layer, the `iso` key conatins an array of iso3 codes of countries that relate to this layer. If empty (or contains a single element: 'global') then the layer is a global layer. This can be used to search and filter layers by location
+At the top layer, the `iso` key contains an array of iso3 codes of countries that relate to this layer. If empty (or contains a single element: 'global') then the layer is a global layer. This can be used to search and filter layers by location
 
 ### applicationConfig
 
@@ -47,7 +47,7 @@ This is an object with open schema and is thus used to define how the layer shou
 - `default` - (bool)
 - `global` - is the layer a global layer? (bool)
 - `active` - should the layer be displayed? (bool)
-- `moreInfo` - an object which definds external links in the legend:
+- `moreInfo` - an object which defines external links in the legend:
     - `moreInfo.linkUrl` - external URL
     - `moreInfo.linkText` - the text for that URL
     - `moreInfo.text` - any additional text or description
