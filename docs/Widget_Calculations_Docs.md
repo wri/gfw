@@ -7,7 +7,7 @@ This document outlines the various mathematical and statistical calculations tha
 
 The following describes calculations used to generate the standard deviation bands in the GLAD and Fires Seasonal widgets, as well as the Fires Cumulative widget.
 
-Using $y$ years of raw, weekly aggregated data; the goal of the opertations is calculate the mean ($\bar {c}$) and standard deviation (${\pm \sigma}$) of the number of alert counts ($c_w$) that occur in each week ($w_i$) of the year versus similar weeks in previous years - thus, removing seasonal affects from the data.
+Using $y$ years of raw, weekly aggregated data; the goal of the operations is to calculate the mean ($\bar {c}$) and standard deviation (${\pm \sigma}$) of the number of alert counts ($c_w$) that occur in each week ($w_i$) of the year versus similar weeks in previous years - thus, removing seasonal affects from the data.
 
 ### 1a. Data Preparation
 
@@ -112,7 +112,7 @@ Taking advantage of the cyclical nature of the raw data, we can append additiona
 
 To the left of **Table 1**, we can add an additional 6 isoweek columns by taking values from the _final_ weeks of the preceding year. For example, for the row where $y=2015$, we would take the isoweeks 47 to 52 from the $y=2014$ row and append them to the left (in cases where the preceding year has 53 isoweeks, we take weeks 48 to 53 instead).
 
-Likewise, to the right of **Table 1**, we append additional isoweeks by taking values from the _first_ weeks of the _proceding_ year e.g. for $y=2015$, we would take the isoweeks 1 to 6 from the $y=2016$. In cases where the current year has 53 isoweeks, we take weeks 1 to 5 instead, as we require less additional data.
+Likewise, to the right of **Table 1**, we append additional isoweeks by taking values from the _first_ weeks of the _preceding_ year e.g. for $y=2015$, we would take the isoweeks 1 to 6 from the $y=2016$. In cases where the current year has 53 isoweeks, we take weeks 1 to 5 instead, as we require less additional data.
 
 Note that there are two exceptions: columns $w_{-6}$ to $w_{-1}$ of the first year and columns $w_{53}$ to $w_{58}$ of the last year. Here values are set to `null` as no values exists before/after the start/end of the historical data.
 
@@ -140,7 +140,7 @@ where $v_w$ is the smoothed value (mean, or std) for week $w$.
 
 #### 1d.ii. Windowed Smoothing
 
-In the case of the cumulative Fires widget, we cannot exploit the cyclic nature of the data, since each year's cumulative data is independant of all others. Here we must employ a windowed smoothing method (or, [Boxcar](https://en.wikipedia.org/wiki/Boxcar_function) smoothing).
+In the case of the cumulative Fires widget, we cannot exploit the cyclic nature of the data, since each year's cumulative data is independent of all others. Here we must employ a windowed smoothing method (or, [Boxcar](https://en.wikipedia.org/wiki/Boxcar_function) smoothing).
 
 Here an average is taken at every isoweek, with the slice size ($b%) changing as we iterate over the array so that the smoothing is weakest towards both ends of the array.
 
@@ -180,7 +180,7 @@ If the isoweek of the current week is $w_n$, then we simply slice the array on $
 
 ## 2. Dynamic Sentence Maths
 
-Some widgets have custom logic and calculations in ordder to produce human-readable statements about the chart data.
+Some widgets have custom logic and calculations in order to produce human-readable statements about the chart data.
 
 ### 2a. Peak Fire Season
 
@@ -198,7 +198,7 @@ where the full-width half-maximum counts ($c_{fwhm}$ ) is:
 
 Using the FWHM allows us to account for locations where there are fires in every week of the year (mostly larger location such as ISO-level countries etc).
 
->> Note that FWHM was chosen rather arbitrarily; and we could, if we wished, define some other threshold to denote the bgining of the fire season (e.g. 30% of the peak). There is a danger that the lower the thresold, the more prone to mis-calculatioon this method becomes, since multi-modal data may cross the threshold more than once per year.
+>> Note that FWHM was chosen rather arbitrarily; and we could, if we wished, define some other threshold to denote the beginning of the fire season (e.g. 30% of the peak). There is a danger that the lower the thresold, the more prone to mis-calculatioon this method becomes, since multi-modal data may cross the threshold more than once per year.
 
 This value is $w_{peak}$ is then used to generate the human-readable estimate of the start date such as:
 
@@ -232,7 +232,7 @@ In the simple case (GLAD widget), where the period is a single week - we calcula
 
 > $\delta_w$ = $\frac{c_w-\bar{c}_w}{\sigma_w}$
 
-Now, if the distance from the mean is between $\pm1$, that week's value is within a single standard deviate and can be considered a 'normal' or 'average' nnumber of alerts for that particular week.
+Now, if the distance from the mean is between $\pm1$, that week's value is within a single standard deviate and can be considered a 'normal' or 'average' number of alerts for that particular week.
 
 Outside of this the number of counts can be considered statistically significantly different from the norm, and is categorised as follows:
 
