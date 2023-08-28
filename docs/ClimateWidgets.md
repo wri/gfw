@@ -23,7 +23,7 @@ To do the latter in one step we have available the `agBiomass2TotalBiomass` func
 
 ## Calculating Carbon Stocks
 
-Carbon stock is again a derived value. In general, we can calculate a carbon stock value using it's biomass equivalent using:
+Carbon stock is again a derived value. In general, we can calculate a carbon stock value using its biomass equivalent using:
 
 M<sub>Carbon</sub> = 0.5 x M<sub>biomass</sub>
 
@@ -34,9 +34,9 @@ While mathematically you can go from *Above Ground Biomass* to *Below Ground Car
  - AGB -> BGB -> BGC 
  - AGB -> AGC -> BGC
   
-they actually give slightly different results computationally due to rounding errors which incrase with the startiing values. The biologically correct way to get from *Above Ground Biomass* to *Below Ground Carbon* is to do the former: AGB -> BGB -> BGC. 
+they actually give slightly different results computationally due to rounding errors which increase with the starting values. The biologically correct way to get from *Above Ground Biomass* to *Below Ground Carbon* is to do the former: AGB -> BGB -> BGC. 
 
-Therefre, so that we are consistent, we have the following functions defined:
+Therefore, so that we are consistent, we have the following functions defined:
 
 - `agBiomass2bgCarbon`, where:
 
