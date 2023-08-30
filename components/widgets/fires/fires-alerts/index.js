@@ -94,7 +94,7 @@ const defaultConfig = {
     fires: 1,
   },
   settings: {
-    dataset: 'viirs',
+    dataset: 'modis',
     confidence: 'h',
   },
   sentences: {
@@ -359,13 +359,13 @@ export default {
   proxy: true,
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
-    // called when settings changes
     if (!widgetSettings || !widgetSettings.dataset) {
       return defaultConfig;
     }
     if (widgetSettings.dataset === 'modis_burned_area') {
       return burnedAreaStats;
     }
+
     return defaultConfig;
   },
 };

@@ -1,12 +1,5 @@
 [
   {
-    "label": "VIIRS Alerts",
-    "value": "viirs",
-    "unit": "alerts",
-    "metaKey": null,
-    "infoText": "VIIRS alerts have a higher resolution, but are less performant in cloudy areas than MODIS alerts"
-  },
-  {
     "label": "MODIS Alerts",
     "value": "modis",
     "unit": "alerts",
