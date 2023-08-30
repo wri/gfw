@@ -33,6 +33,9 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {isProduction && (
+            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/9ed60354-c199-4e89-92c8-047b83aa65a3/osano.js" />
+          )}
           <style
             type="text/css"
             dangerouslySetInnerHTML={{ __html: mediaStyles }}
