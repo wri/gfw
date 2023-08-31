@@ -25,8 +25,7 @@ const defaultConfig = {
   alerts: [
     {
       id: 'cumulative-burned-areas-1',
-      text:
-        'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
+      text: 'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
       visible: ['country', 'dashboard'],
     },
   ],
@@ -99,7 +98,7 @@ const defaultConfig = {
     fires: 3,
   },
   settings: {
-    dataset: 'modis_burned_area',
+    dataset: 'modis',
     firesThreshold: 0,
   },
   sentences: {
@@ -152,12 +151,10 @@ export default {
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
     // called when settings changes
-    if (!widgetSettings || !widgetSettings.dataset) {
-      return defaultConfig;
-    }
-    if (widgetSettings.dataset !== 'modis_burned_area') {
+    if (widgetSettings?.dataset !== 'modis_burned_area') {
       return firesAlertsCumulative;
     }
+
     return defaultConfig;
   },
 };
