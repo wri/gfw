@@ -22,8 +22,7 @@ const defaultConfig = {
   alerts: [
     {
       id: 'regions-most-burned-areas-1',
-      text:
-        'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
+      text: 'We are preparing to remove MODIS Burned Areas from the Global Forest Watch site and will not be updating the data going forward. Please e-mail gfw@wri.org with any requests to keep this dataset or with suggestions for new fire-related data sets.',
       visible: ['global', 'country', 'adm0', 'adm1', 'dashboard'],
     },
   ],
@@ -119,7 +118,7 @@ const defaultConfig = {
     page: 0,
     period: 'week',
     weeks: 4,
-    dataset: 'modis_burned_area',
+    dataset: 'modis',
     layerStartDate: null,
     layerEndDate: null,
     firesThreshold: 0,
@@ -164,12 +163,10 @@ export default {
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
     // called when settings changes
-    if (!widgetSettings || !widgetSettings.dataset) {
-      return defaultConfig;
-    }
-    if (widgetSettings.dataset !== 'modis_burned_area') {
+    if (widgetSettings?.dataset !== 'modis_burned_area') {
       return firesRanked;
     }
+
     return defaultConfig;
   },
 };

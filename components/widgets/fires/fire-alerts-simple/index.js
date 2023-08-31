@@ -108,7 +108,7 @@ export default {
   },
   // initial settings
   settings: {
-    dataset: 'viirs',
+    dataset: 'modis',
   },
   getData: async (params) => {
     const { VIIRS } = await handleGfwParamsMeta(params);

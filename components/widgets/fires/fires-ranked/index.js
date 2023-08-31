@@ -101,7 +101,7 @@ export default {
     page: 0,
     period: 'week',
     weeks: 4,
-    dataset: 'viirs',
+    dataset: 'modis',
     layerStartDate: null,
     layerEndDate: null,
   },

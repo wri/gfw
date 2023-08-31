@@ -62,7 +62,7 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_alert_location',
   settings: {
-    dataset: 'viirs',
+    dataset: 'modis',
     minDate: '2000-01-01',
     confidence: '',
   },
