@@ -19,7 +19,7 @@ const SQL_QUERIES = {
   lossFires:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM(umd_tree_cover_loss_from_fires__ha) AS "umd_tree_cover_loss_from_fires__ha" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   lossFiresOTF:
-    'SELECT umd_tree_cover_loss__year, sum(umd_tree_cover_loss__ha), sum(umd_tree_cover_loss_from_fires__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year',
+    'SELECT umd_tree_cover_loss__year, sum(umd_tree_cover_loss__ha), sum(umd_tree_cover_loss_from_fires__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= 30 GROUP BY umd_tree_cover_loss__year',
   emissions:
     'SELECT {select_location}, umd_tree_cover_loss__year, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg", SUM("gfw_full_extent_gross_emissions_non_CO2__Mg_CO2e") AS "gfw_gross_emissions_co2e_non_co2__Mg", SUM("gfw_full_extent_gross_emissions_CO2_only__Mg_CO2") AS "gfw_gross_emissions_co2e_co2_only__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
   emissionsLossOTF:
@@ -817,7 +817,6 @@ export const getLossFiresOTF = (params) => {
     geostore,
     startYear,
     endYear,
-    threshold,
   } = params || {};
 
   const geostoreId = geostore.id || adm0;
@@ -828,7 +827,6 @@ export const getLossFiresOTF = (params) => {
     `${urlBase + sql}&geostore_id=${geostoreId}`
       .replace('{startYear}', startYear)
       .replace('{endYear}', endYear)
-      .replace('{threshold}', threshold)
   );
 
   if (download) {
