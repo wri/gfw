@@ -19,9 +19,6 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2022;
-const MIN_YEAR = 2001;
-
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
   adm1: params.type === 'global' ? null : params.adm1,
@@ -638,9 +635,11 @@ export default {
   settings: {
     threshold: 30,
     ifl: 2000,
+    startYear: 2001,
+    endYear: 2022,
   },
   getData: (params = {}) => {
-    const { adm0, adm1, adm2, type } = params || {};
+    const { adm0, adm1, adm2, type, startYear, endYear } = params || {};
 
     const globalLocation = {
       adm0: type === 'global' ? null : adm0,
@@ -666,19 +665,17 @@ export default {
         };
       }
 
-      const { startYear, endYear, range } = getYearsRangeFromMinMax(
-        MIN_YEAR,
-        MAX_YEAR
-      );
+      const { range: yearsRange } = getYearsRangeFromMinMax(startYear, endYear);
+
       return {
         ...data,
         settings: {
           startYear,
           endYear,
-          yearsRange: range,
+          yearsRange,
         },
         options: {
-          years: range,
+          years: yearsRange,
         },
       };
     });
