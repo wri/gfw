@@ -177,6 +177,7 @@ class CustomComposedChart extends PureComponent {
       <div
         className={cx('c-composed-chart', className, {
           'overflow-x-visible': hasLabels,
+          'no-padding': simple,
         })}
         style={{
           height: simple ? 110 : height || 250,
@@ -237,7 +238,13 @@ class CustomComposedChart extends PureComponent {
               interval="preserveStartEnd"
               {...xAxis}
               {...(config?.xAxis?.label && {
-                label: <AxisLabel label={config?.xAxis?.label} direction="x" />,
+                label: (
+                  <AxisLabel
+                    label={config?.xAxis?.label}
+                    direction="x"
+                    isSimple={simple}
+                  />
+                ),
               })}
             />
             {(!simple || simpleNeedsAxis) && (
