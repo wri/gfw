@@ -23,6 +23,7 @@ const FullScreenWrapper = ({
   error,
   errorTitle,
   errorDescription,
+  notifications,
 }) => {
   useTrackPage();
   useSetLanguage();
@@ -40,7 +41,7 @@ const FullScreenWrapper = ({
         metaTags={metaTags}
       />
       <div className="l-fullscreen-page">
-        <Header slim />
+        <Header slim notifications={notifications} />
         <div className={cx('content-wrapper', { '-error': error })}>
           {isFallback && <Loader />}
           {!isFallback && error && (
@@ -70,6 +71,7 @@ FullScreenWrapper.propTypes = {
   error: PropTypes.number,
   errorTitle: PropTypes.string,
   errorDescription: PropTypes.string,
+  notifications: PropTypes.array,
 };
 
 export default FullScreenWrapper;

@@ -25,6 +25,7 @@ const PageWrapper = ({
   error,
   errorTitle,
   errorDescription,
+  notifications,
 }) => {
   useTrackPage();
   useSetLanguage();
@@ -42,7 +43,7 @@ const PageWrapper = ({
         metaTags={metaTags}
       />
       <div className="l-page">
-        <Header />
+        <Header notifications={notifications} />
         <div className={cx('content-wrapper', { '-error': error })}>
           {isFallback && <Loader />}
           {!isFallback && error && (
@@ -74,6 +75,7 @@ PageWrapper.propTypes = {
   error: PropTypes.number,
   errorTitle: PropTypes.string,
   errorDescription: PropTypes.string,
+  notifications: PropTypes.array,
 };
 
 PageWrapper.defaultProps = {

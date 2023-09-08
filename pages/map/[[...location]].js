@@ -6,6 +6,7 @@ import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
 
 import { getLocationData } from 'services/location';
+import { getPublishedNotifications } from 'services/notifications';
 
 import FullscreenLayout from 'wrappers/fullscreen';
 import Map from 'layouts/map';
@@ -31,6 +32,8 @@ const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
 export const getServerSideProps = async ({ req, params }) => {
   const [type] = params?.location || [];
   let userToken = null;
+  const notifications = await getPublishedNotifications();
+
   try {
     userToken = parse(req.headers.cookie)['gfw-token'];
     // XXX: FB/Google token hack
@@ -43,7 +46,10 @@ export const getServerSideProps = async ({ req, params }) => {
 
   if (type && !ALLOWED_TYPES.includes(type)) {
     return {
-      props: notFoundProps,
+      props: {
+        ...notFoundProps,
+        notifications: notifications || [],
+      },
     };
   }
 
@@ -53,6 +59,7 @@ export const getServerSideProps = async ({ req, params }) => {
         title: 'Interactive World Forest Map & Tree Cover Change Data | GFW',
         description:
           'Explore the state of forests worldwide by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
+        notifications: notifications || [],
       },
     };
   }
@@ -63,7 +70,10 @@ export const getServerSideProps = async ({ req, params }) => {
 
     if (!locationName) {
       return {
-        props: notFoundProps,
+        props: {
+          ...notFoundProps,
+          notifications: notifications || [],
+        },
       };
     }
 
@@ -78,6 +88,7 @@ export const getServerSideProps = async ({ req, params }) => {
         title,
         description,
         noIndex,
+        notifications: notifications || [],
       },
     };
   } catch (err) {
@@ -95,34 +106,19 @@ export const getServerSideProps = async ({ req, params }) => {
           error: 401,
           title: 'Area is private | Global Forest Watch',
           errorTitle: 'Area is private',
+          notifications: notifications || [],
         },
       };
     }
 
     return {
-      props: notFoundProps,
+      props: {
+        ...notFoundProps,
+        notifications: notifications || [],
+      },
     };
   }
 };
-
-// export const getStaticPaths = async () => {
-//   const countryData = await getCountriesProvider();
-//   const { rows: countries } = countryData?.data || {};
-//   const countryPaths = countries.map((c) => ({
-//     params: {
-//       location: ['country', c.iso],
-//     },
-//   }));
-
-//   return {
-//     paths: [
-//       { params: { location: [] } },
-//       { params: { location: ['global'] } },
-//       ...countryPaths,
-//     ],
-//     fallback: true,
-//   };
-// };
 
 const MapPage = (props) => {
   const dispatch = useDispatch();

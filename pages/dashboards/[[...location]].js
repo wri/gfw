@@ -11,6 +11,7 @@ import { parseGadm36Id } from 'utils/gadm';
 import { parseStringWithVars } from 'utils/strings';
 
 import { getLocationData } from 'services/location';
+import { getPublishedNotifications } from 'services/notifications';
 import {
   // getCountriesProvider,
   getRegionsProvider,
@@ -107,6 +108,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
   }
 
   let countryData = await getCategorisedCountries(true);
+  const notifications = await getPublishedNotifications();
 
   if (!type || type === 'global') {
     // get global data
@@ -126,6 +128,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
         description,
+        notifications: notifications || [],
       },
     };
   }
@@ -136,7 +139,10 @@ export const getServerSideProps = async ({ params, query, req }) => {
 
     if (!locationName) {
       return {
-        props: notFoundProps,
+        props: {
+          ...notFoundProps,
+          notifications: notifications || [],
+        },
       };
     }
 
@@ -219,6 +225,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
         geodescriber: JSON.stringify(data),
         countryData: JSON.stringify(countryData),
         noIndex,
+        notifications: notifications || [],
       },
     };
   } catch (err) {
@@ -228,6 +235,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
           error: 504,
           title: 'Network error | Global Forest Watch',
           errorTitle: 'There was an error retrieving the data',
+          notifications: notifications || [],
         },
       };
     }
@@ -238,12 +246,16 @@ export const getServerSideProps = async ({ params, query, req }) => {
           error: 401,
           title: 'Area is private | Global Forest Watch',
           errorTitle: 'Area is private',
+          notifications: notifications || [],
         },
       };
     }
 
     return {
-      props: notFoundProps,
+      props: {
+        ...notFoundProps,
+        notifications: notifications || [],
+      },
     };
   }
 };
