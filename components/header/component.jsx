@@ -7,7 +7,7 @@ import NavLink from 'components/nav-link';
 
 import config from './config';
 
-const Header = ({ setModalContactUsOpen, fullScreen, slim }) => {
+const Header = ({ setModalContactUsOpen, fullScreen, slim, notifications }) => {
   const { push, pushQuery, asPath, query } = useRouter();
 
   return (
@@ -21,6 +21,7 @@ const Header = ({ setModalContactUsOpen, fullScreen, slim }) => {
             <a className={className}>{headerChildren}</a>
           </NavLink>
         ) : null}
+      notifications={notifications}
       openContactUsModal={() => setModalContactUsOpen(true)}
       setQueryToUrl={(search) => push(`/search/?query=${search}`)}
       fullScreen={fullScreen}
@@ -39,6 +40,7 @@ Header.propTypes = {
   fullScreen: PropTypes.bool,
   href: PropTypes.string,
   slim: PropTypes.bool,
+  notifications: PropTypes.array,
 };
 
 export default Header;
