@@ -19,7 +19,7 @@ export default {
   types: ['country', 'wdpa', 'aoi'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
-  visible: ['dashboard'],
+  visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
   colors: 'density',
   settingsConfig: [
