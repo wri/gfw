@@ -52,7 +52,12 @@ class LegendItem extends React.PureComponent {
       return (
         <div
           className={`icon-${icon}`}
-          style={{ width: size, height: size, backgroundColor: color }}
+          style={{
+            width: size,
+            height: size,
+            backgroundColor: color,
+            minWidth: size,
+          }}
         />
       );
     }
