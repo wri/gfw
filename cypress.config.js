@@ -1,31 +1,30 @@
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
+import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor';
+import createBundler from '@bahmutov/cypress-esbuild-preprocessor';
+import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild';
+
+async function setupNodeEvents(on, config) {
+  await addCucumberPreprocessorPlugin(on, config);
+
+  on(
+    'file:preprocessor',
+    createBundler({
+      plugins: [createEsbuildPlugin(config)],
+    })
+  );
+
+  // Make sure to return the config object as it might have been modified by the plugin.
+  return config;
+}
 
 module.exports = defineConfig({
   defaultCommandTimeout: 100000,
   responseTimeout: 100000,
-  env: {
-    codeCoverage: {
-      url: '/api/__coverage__',
-    },
-  },
-  retries: {
-    runMode: 2,
-    openMode: 0,
-  },
+  supportFile: 'cypress/support/e2e.ts',
   video: false,
-  lighthouse: {
-    performance: 0,
-    accessibility: 50,
-    'best-practices': 85,
-    seo: 85,
-    pwa: 0,
-  },
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config); // eslint-disable-line
-    },
+    specPattern: '**/*.feature',
+    setupNodeEvents,
     baseUrl: 'http://localhost:3000',
   },
 });
