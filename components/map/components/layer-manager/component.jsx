@@ -32,7 +32,7 @@ class LayerManagerComponent extends PureComponent {
           }
         : null;
 
-    const allLayers = layers.filter((l) => l);
+    const allLayers = [basemapLayer, ...layers].filter((l) => l);
 
     return (
       <LayerManager
@@ -69,9 +69,6 @@ class LayerManagerComponent extends PureComponent {
           },
         }}
       >
-        {basemapLayer && (
-          <Layer key="basemap" {...basemapLayer} {...basemapLayer?.config} />
-        )}
         {allLayers &&
           allLayers.map((l) => {
             const config = l.config ? l.config : l.layerConfig;
