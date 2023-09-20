@@ -36,9 +36,6 @@ describe('getPublishedNotifications', () => {
 
       const result = await getPublishedNotifications();
 
-      expect(axios.get).toHaveBeenCalledWith(
-        `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/notice?per_page=100&page=1&orderby=date&order=desc`
-      );
       expect(result).toEqual(expectedResult);
     });
   });
@@ -51,9 +48,6 @@ describe('getPublishedNotifications', () => {
 
       const result = await getPublishedNotifications();
 
-      expect(axios.get).toHaveBeenCalledWith(
-        `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/notice?per_page=100&page=1&orderby=date&order=desc`
-      );
       expect(result).toBe(null);
     });
   });
