@@ -6,6 +6,11 @@ const createEsbuildPlugin = require('@badeball/cypress-cucumber-preprocessor/esb
 async function setupNodeEvents(on, config) {
   await preprocessor.addCucumberPreprocessorPlugin(on, config);
 
+  config.env = {
+    ...process.env,
+    ...config.env,
+  };
+
   on(
     'file:preprocessor',
     createBundler({
@@ -19,6 +24,7 @@ async function setupNodeEvents(on, config) {
 
 module.exports = defineConfig({
   defaultCommandTimeout: 100000,
+  viewportWidth: 1200,
   responseTimeout: 100000,
   video: false,
   e2e: {
@@ -26,5 +32,6 @@ module.exports = defineConfig({
     supportFile: 'cypress/support/e2e.js',
     setupNodeEvents,
     baseUrl: 'http://localhost:3000',
+    scrollBehavior: 'center',
   },
 });
