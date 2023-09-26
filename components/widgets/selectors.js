@@ -68,10 +68,7 @@ const isAuthenticated = (state) => state?.myGfw?.data?.loggedIn || false;
 
 export const selectLocation = (state) =>
   state.location && state.location.payload;
-
-export const getCategory = (state) =>
-  state.location && state?.location?.query?.category;
-
+export const getCategory = (state) => state?.widgets?.category;
 export const selectIsTrase = (state) => state.location?.query?.trase;
 export const selectRouteType = (state) =>
   state.location && state.location.pathname;
@@ -107,9 +104,7 @@ export const selectPolynameWhitelist = (state) =>
 export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
 export const selectAnalysis = (state, { analysis }) => analysis;
-export const selectCategory = (state) =>
-  (state.location && state.location.query && state.location.query.category) ||
-  'summary';
+export const selectCategory = (state) => state?.widgets?.category || 'summary';
 export const selectModalClosing = (state) =>
   state.modalMeta && state.modalMeta.closing;
 export const selectNonGlobalDatasets = (state) =>
