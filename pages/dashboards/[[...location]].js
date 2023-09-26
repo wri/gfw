@@ -345,11 +345,13 @@ const DashboardsPage = (props) => {
       <Head>
         <link rel="canonical" href={getCanonical(props, query)} />
       </Head>
-      <Dashboards
-        basePath={basePath}
-        ssrLocation={handleSSRLocation}
-        globalSentence={globalSentence}
-      />
+      {ready && (
+        <Dashboards
+          basePath={basePath}
+          ssrLocation={handleSSRLocation}
+          globalSentence={globalSentence}
+        />
+      )}
     </PageLayout>
   );
 };
