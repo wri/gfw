@@ -17,7 +17,7 @@ const MyGfwPage = (props) => (
 );
 
 export const getStaticProps = async () => {
-  const notifications = await getPublishedNotifications();
+  const notifications = await getPublishedNotifications({});
 
   return {
     props: {

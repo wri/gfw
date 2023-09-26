@@ -32,7 +32,7 @@ const ALLOWED_TYPES = ['global', 'country', 'wdpa', 'use', 'geostore', 'aoi'];
 export const getServerSideProps = async ({ req, params }) => {
   const [type] = params?.location || [];
   let userToken = null;
-  const notifications = await getPublishedNotifications();
+  const notifications = await getPublishedNotifications({});
 
   try {
     userToken = parse(req.headers.cookie)['gfw-token'];
