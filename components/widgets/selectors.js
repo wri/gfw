@@ -175,8 +175,11 @@ export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (locationObj, allLocationData, polynamesWhitelist) => {
     const { type, adminLevel, locationLabel, adm0, adm1, areaId } = locationObj;
-    const { adm0: adm0Data, adm1: adm1Data, adm2: adm2Data } =
-      allLocationData || {};
+    const {
+      adm0: adm0Data,
+      adm1: adm1Data,
+      adm2: adm2Data,
+    } = allLocationData || {};
 
     let parent = {};
     let parentData = adm0Data;
@@ -649,8 +652,9 @@ export const getWidgets = createSelector(
 export const getWidgetsGroupedBySubcategory = createSelector(
   [getCategory, getWidgets],
   (category, widgets) => {
-    const subcategories = CATEGORIES.find(({ value }) => value === category)
-      ?.subcategories;
+    const subcategories = CATEGORIES.find(
+      ({ value }) => value === category
+    )?.subcategories;
 
     if (!widgets || !subcategories) return [];
 
