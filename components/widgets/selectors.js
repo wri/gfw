@@ -66,6 +66,8 @@ const handleWidgetProxy = (widgets, settings) => {
 
 const isAuthenticated = (state) => state?.myGfw?.data?.loggedIn || false;
 
+export const selectGroupBySubcategory = (state, { groupBySubcategory }) =>
+  groupBySubcategory;
 export const selectLocation = (state) =>
   state.location && state.location.payload;
 export const getCategory = (state) => state?.widgets?.category;
@@ -665,10 +667,20 @@ export const getWidgetsGroupedBySubcategory = createSelector(
 );
 
 export const getActiveWidget = createSelector(
-  [getWidgets, selectActiveWidget, selectAnalysis],
-  (widgets, activeWidgetKey, analysis) => {
+  [
+    getWidgets,
+    getWidgetsGroupedBySubcategory,
+    selectActiveWidget,
+    selectAnalysis,
+    selectGroupBySubcategory,
+  ],
+  (widgets, widgetGroups, activeWidgetKey, analysis, groupBySubcategory) => {
     if (!widgets || analysis) return null;
-    if (!activeWidgetKey) return widgets[0];
+
+    if (!activeWidgetKey) {
+      return groupBySubcategory ? widgetGroups[0]?.widgets[0] : widgets[0];
+    }
+
     return widgets.find((w) => w.widget === activeWidgetKey);
   }
 );
