@@ -61,7 +61,7 @@ export default {
     fires: 2,
   },
   settings: {
-    dataset: 'modis',
+    dataset: 'viirs',
     confidence: 'h',
   },
   sentences: {
