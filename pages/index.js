@@ -31,6 +31,7 @@ export const getStaticProps = async () => {
       news: newsArticles || [],
       notifications: notifications || [],
     },
+    revalidate: 10,
   };
 };
 

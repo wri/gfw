@@ -23,6 +23,7 @@ export const getStaticProps = async () => {
     props: {
       notifications: notifications || [],
     },
+    revalidate: 10,
   };
 };
 
