@@ -361,21 +361,10 @@ export const getWidgetCategories = createSelector(
     )
 );
 
-export const getActiveCategory = createSelector(
-  [selectCategory, getWidgetCategories],
-  (activeCategory, widgetCats) => {
-    if (!widgetCats) {
-      return null;
-    }
-
-    return widgetCats.includes(activeCategory) ? activeCategory : 'summary';
-  }
-);
-
 export const filterWidgetsByCategory = createSelector(
   [
     filterWidgetsByLocation,
-    getActiveCategory,
+    selectCategory,
     selectAnalysis,
     selectEmbed,
     selectActiveWidget,
@@ -685,7 +674,7 @@ export const getActiveWidget = createSelector(
 );
 
 export const getNoDataMessage = createSelector(
-  [getGeodescriberTitleFull, getActiveCategory],
+  [getGeodescriberTitleFull, selectCategory],
   (title, category) => {
     if (!title || !category) return 'No data available';
     if (!category) return `No data available for ${title}`;
