@@ -93,7 +93,7 @@ class WidgetsContainer extends PureComponent {
 
     if (!isEqual(category, prevProps.category)) {
       setActiveWidget(null);
-      setWidgetsCategory(category || 'summary');
+      setWidgetsCategory(category);
     }
 
     if (location.type === 'global' && prevProps.location?.type !== 'global') {
@@ -155,7 +155,7 @@ class WidgetsContainer extends PureComponent {
       allDatasets = [...allDatasets, ...widgetDatasets];
     }
 
-    setWidgetsCategory(this.props?.category || 'summary');
+    setWidgetsCategory(this.props?.category);
 
     setMapSettings({
       datasets: allDatasets,

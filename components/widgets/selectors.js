@@ -104,7 +104,7 @@ export const selectPolynameWhitelist = (state) =>
 export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
 export const selectAnalysis = (state, { analysis }) => analysis;
-export const selectCategory = (state) => state?.widgets?.category || 'summary';
+export const selectCategory = (state) => state?.widgets?.category;
 export const selectModalClosing = (state) =>
   state.modalMeta && state.modalMeta.closing;
 export const selectNonGlobalDatasets = (state) =>
