@@ -338,7 +338,7 @@ const DashboardsPage = (props) => {
     if (!ready) {
       setReady(true);
     }
-  });
+  }, []);
 
   return (
     <PageLayout {...props}>
