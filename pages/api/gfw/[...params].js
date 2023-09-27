@@ -3,7 +3,16 @@ import httpProxyMiddleware from 'next-http-proxy-middleware';
 import { GFW_API } from 'utils/apis';
 import { PROXIES } from 'utils/proxies';
 
-const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const {
+  NEXT_PUBLIC_FEATURE_ENV: ENVIRONMENT,
+  NEXT_PUBLIC_GFW_API_KEY,
+  NEXT_PUBLIC_GFW_API_KEY_STG,
+} = process.env;
+
+const GFW_API_KEY =
+  ENVIRONMENT === 'staging'
+    ? NEXT_PUBLIC_GFW_API_KEY_STG
+    : NEXT_PUBLIC_GFW_API_KEY;
 
 // We never use the `staging-api.resourcewatch.org`
 const GFW_API_URL = GFW_API;

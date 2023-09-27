@@ -14,7 +14,11 @@ import {
 } from 'utils/apis';
 import { PROXIES } from './proxies';
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const {
+  NEXT_PUBLIC_FEATURE_ENV: ENVIRONMENT,
+  NEXT_PUBLIC_GFW_API_KEY,
+  NEXT_PUBLIC_GFW_API_KEY_STG,
+} = process.env;
 
 const GFW_API_URL = ENVIRONMENT === 'staging' ? GFW_STAGING_API : GFW_API;
 const GFW_METADATA_API_URL =
@@ -25,8 +29,10 @@ const DATA_API_URL =
 // We never use the `staging-api.resourcewatch.org`.
 const RESOURCE_WATCH_API_URL = RESOURCE_WATCH_API;
 
-// At the moment, the API key is the same
-const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const GFW_API_KEY =
+  ENVIRONMENT === 'staging'
+    ? NEXT_PUBLIC_GFW_API_KEY_STG
+    : NEXT_PUBLIC_GFW_API_KEY;
 const GFW_METADATA_API_KEY = GFW_API_KEY;
 const DATA_API_KEY = GFW_API_KEY;
 const RESOURCE_WATCH_API_KEY = GFW_API_KEY;
