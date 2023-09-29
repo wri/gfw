@@ -98,7 +98,7 @@ const defaultConfig = {
     fires: 3,
   },
   settings: {
-    dataset: 'modis',
+    dataset: 'modis_burned_area',
     firesThreshold: 0,
   },
   sentences: {
@@ -151,10 +151,12 @@ export default {
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
     // called when settings changes
-    if (widgetSettings?.dataset !== 'modis_burned_area') {
+    if (!widgetSettings || !widgetSettings.dataset) {
+      return defaultConfig;
+    }
+    if (widgetSettings.dataset !== 'modis_burned_area') {
       return firesAlertsCumulative;
     }
-
     return defaultConfig;
   },
 };

@@ -86,7 +86,7 @@ export default {
     fires: 1,
   },
   settings: {
-    dataset: 'modis',
+    dataset: 'modis_burned_area',
     firesThreshold: 0,
   },
   sentences: {
