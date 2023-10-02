@@ -94,7 +94,7 @@
     "@next/bundle-analyzer": "^10.0.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@wordpress/api-fetch": "^3.19.1",
-    "@worldresources/gfw-components": "^3.2.2",
+    "@worldresources/gfw-components": "^3.4.0",
     "aws-sdk": "^2.291.0",
     "axios": "^0.21.1",
     "chroma-js": "^2.1.0",
