@@ -75,7 +75,7 @@ export default {
   settings: {
     period: 'week',
     weeks: 13,
-    dataset: 'modis',
+    dataset: 'viirs',
     confidence: 'h',
   },
   settingsBtnConfig: {
