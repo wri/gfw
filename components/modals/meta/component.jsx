@@ -15,6 +15,7 @@ class ModalMeta extends PureComponent {
     setModalMetaClosed: PropTypes.func,
     metaData: PropTypes.object,
     getModalMetaData: PropTypes.func,
+    metaType: PropTypes.string,
     metakey: PropTypes.string,
     tableData: PropTypes.object,
     loading: PropTypes.bool,
@@ -23,16 +24,16 @@ class ModalMeta extends PureComponent {
   };
 
   componentDidMount() {
-    const { getModalMetaData, metakey } = this.props;
+    const { getModalMetaData, metakey, metaType } = this.props;
     if (metakey) {
-      getModalMetaData(metakey);
+      getModalMetaData({metakey, metaType});
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { getModalMetaData, metakey, metaData } = this.props;
+    const { getModalMetaData, metakey, metaData, metaType } = this.props;
     if (metakey && metakey !== prevProps.metakey) {
-      getModalMetaData(metakey);
+      getModalMetaData({metakey, metaType});
     }
 
     if (
