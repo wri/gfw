@@ -96,7 +96,7 @@ class MainMapComponent extends PureComponent {
         )}
         <RecentImagery active={recentActive} />
         <ShareModal />
-        <MetaModal />
+        <MetaModal metaType="layer" />
         <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <ClimateModal />
         <FiresModal />
