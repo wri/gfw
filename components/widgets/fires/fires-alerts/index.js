@@ -94,7 +94,7 @@ const defaultConfig = {
     fires: 1,
   },
   settings: {
-    dataset: 'modis',
+    dataset: 'viirs',
     confidence: 'h',
   },
   sentences: {

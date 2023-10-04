@@ -32,7 +32,7 @@ export default {
   colors: 'fires',
   metaKey: 'widget_fire_alert_location',
   settings: {
-    dataset: 'modis',
+    dataset: 'viirs',
   },
   datasets: [
     {
