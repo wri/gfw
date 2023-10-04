@@ -66,12 +66,11 @@ const handleWidgetProxy = (widgets, settings) => {
 
 const isAuthenticated = (state) => state?.myGfw?.data?.loggedIn || false;
 
+export const selectGroupBySubcategory = (state, { groupBySubcategory }) =>
+  groupBySubcategory;
 export const selectLocation = (state) =>
   state.location && state.location.payload;
-
-export const getCategory = (state) =>
-  state.location && state?.location?.query?.category;
-
+export const getCategory = (state) => state?.widgets?.category;
 export const selectIsTrase = (state) => state.location?.query?.trase;
 export const selectRouteType = (state) =>
   state.location && state.location.pathname;
@@ -107,9 +106,7 @@ export const selectPolynameWhitelist = (state) =>
 export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
 export const selectAnalysis = (state, { analysis }) => analysis;
-export const selectCategory = (state) =>
-  (state.location && state.location.query && state.location.query.category) ||
-  'summary';
+export const selectCategory = (state) => state?.widgets?.category;
 export const selectModalClosing = (state) =>
   state.modalMeta && state.modalMeta.closing;
 export const selectNonGlobalDatasets = (state) =>
@@ -175,8 +172,11 @@ export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (locationObj, allLocationData, polynamesWhitelist) => {
     const { type, adminLevel, locationLabel, adm0, adm1, areaId } = locationObj;
-    const { adm0: adm0Data, adm1: adm1Data, adm2: adm2Data } =
-      allLocationData || {};
+    const {
+      adm0: adm0Data,
+      adm1: adm1Data,
+      adm2: adm2Data,
+    } = allLocationData || {};
 
     let parent = {};
     let parentData = adm0Data;
@@ -363,21 +363,10 @@ export const getWidgetCategories = createSelector(
     )
 );
 
-export const getActiveCategory = createSelector(
-  [selectCategory, getWidgetCategories],
-  (activeCategory, widgetCats) => {
-    if (!widgetCats) {
-      return null;
-    }
-
-    return widgetCats.includes(activeCategory) ? activeCategory : 'summary';
-  }
-);
-
 export const filterWidgetsByCategory = createSelector(
   [
     filterWidgetsByLocation,
-    getActiveCategory,
+    selectCategory,
     selectAnalysis,
     selectEmbed,
     selectActiveWidget,
@@ -649,8 +638,9 @@ export const getWidgets = createSelector(
 export const getWidgetsGroupedBySubcategory = createSelector(
   [getCategory, getWidgets],
   (category, widgets) => {
-    const subcategories = CATEGORIES.find(({ value }) => value === category)
-      ?.subcategories;
+    const subcategories = CATEGORIES.find(
+      ({ value }) => value === category
+    )?.subcategories;
 
     if (!widgets || !subcategories) return [];
 
@@ -677,16 +667,26 @@ export const getWidgetsGroupedBySubcategory = createSelector(
 );
 
 export const getActiveWidget = createSelector(
-  [getWidgets, selectActiveWidget, selectAnalysis],
-  (widgets, activeWidgetKey, analysis) => {
+  [
+    getWidgets,
+    getWidgetsGroupedBySubcategory,
+    selectActiveWidget,
+    selectAnalysis,
+    selectGroupBySubcategory,
+  ],
+  (widgets, widgetGroups, activeWidgetKey, analysis, groupBySubcategory) => {
     if (!widgets || analysis) return null;
-    if (!activeWidgetKey) return widgets[0];
+
+    if (!activeWidgetKey) {
+      return groupBySubcategory ? widgetGroups[0]?.widgets[0] : widgets[0];
+    }
+
     return widgets.find((w) => w.widget === activeWidgetKey);
   }
 );
 
 export const getNoDataMessage = createSelector(
-  [getGeodescriberTitleFull, getActiveCategory],
+  [getGeodescriberTitleFull, selectCategory],
   (title, category) => {
     if (!title || !category) return 'No data available';
     if (!category) return `No data available for ${title}`;

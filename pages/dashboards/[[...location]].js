@@ -282,18 +282,18 @@ const DashboardsPage = (props) => {
     countryData,
   } = props;
 
-  useEffect(() => {
-    const {
-      map,
-      modalMeta,
-      dashboardPrompts,
-      category,
-      areaOfInterestModal,
-      showMap,
-      widget,
-      ...widgets
-    } = decodeQueryParams(query) || {};
+  const {
+    map,
+    modalMeta,
+    dashboardPrompts,
+    category,
+    areaOfInterestModal,
+    showMap,
+    widget,
+    ...widgets
+  } = decodeQueryParams(query) || {};
 
+  useEffect(() => {
     if (map) {
       dispatch(setMapSettings(map));
     }
@@ -308,10 +308,6 @@ const DashboardsPage = (props) => {
 
     if (widgets) {
       dispatch(setWidgetsSettings(widgets));
-    }
-
-    if (category) {
-      dispatch(setWidgetsCategory(category));
     }
 
     if (showMap) {
@@ -332,24 +328,30 @@ const DashboardsPage = (props) => {
     }
   }, [fullPathname, isFallback]);
 
+  useEffect(() => {
+    dispatch(setWidgetsCategory(category));
+  }, [category]);
+
   // when setting the query params from the URL we need to make sure we don't render the map
   // on the server otherwise the DOM will be out of sync
   useEffect(() => {
     if (!ready) {
       setReady(true);
     }
-  });
+  }, []);
 
   return (
     <PageLayout {...props}>
       <Head>
         <link rel="canonical" href={getCanonical(props, query)} />
       </Head>
-      <Dashboards
-        basePath={basePath}
-        ssrLocation={handleSSRLocation}
-        globalSentence={globalSentence}
-      />
+      {ready && (
+        <Dashboards
+          basePath={basePath}
+          ssrLocation={handleSSRLocation}
+          globalSentence={globalSentence}
+        />
+      )}
     </PageLayout>
   );
 };
