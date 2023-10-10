@@ -6,7 +6,7 @@ import { encodeQueryParams } from 'utils/url';
 import {
   filterWidgetsByLocation,
   getWidgetCategories,
-  getActiveCategory,
+  selectCategory,
 } from 'components/widgets/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
@@ -17,9 +17,6 @@ const selectShowMap = (state) => state.widgets?.showMap;
 const selectLocation = (state) => state.location;
 const selectLocationType = (state) =>
   state.location && state.location.payload && state.location.payload.type;
-const selectCategory = (state) =>
-  (state.location && state.location.query && state.location.query.category) ||
-  'summary';
 export const selectQuery = (state) => state.location && state.location.query;
 
 export const getEmbed = createSelector(
@@ -44,7 +41,7 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getLinks = createSelector(
-  [getWidgetCategories, getActiveCategory, selectLocation],
+  [getWidgetCategories, selectCategory, selectLocation],
   (widgetCats, activeCategory, location) => {
     const serializePayload = Object.values(location.payload).filter(
       (p) => p && p.toString().length
@@ -59,6 +56,8 @@ export const getLinks = createSelector(
         ...(category.value === 'summary' && {
           category: undefined,
         }),
+        widget: null,
+        scrollTo: null,
       });
       return encodedQueryString.length > 0 ? `?${encodedQueryString}` : '';
     }
@@ -96,7 +95,7 @@ export const getLinks = createSelector(
 
 export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
-  category: getActiveCategory,
+  category: selectCategory,
   links: getLinks,
   widgetAnchor: getWidgetAnchor,
   noWidgetsMessage: getNoWidgetsMessage,

@@ -1,6 +1,6 @@
 import { createStructuredSelector } from 'reselect';
 
-import { getActiveCategory } from 'components/widgets/selectors';
+import { selectCategory } from 'components/widgets/selectors';
 
 import {
   selectLocation,
@@ -12,5 +12,5 @@ export const getGlobalSentenceProps = createStructuredSelector({
   loading: selectLoading,
   location: selectLocation,
   locationNames: getAdminsSelected,
-  category: getActiveCategory,
+  category: selectCategory,
 });
