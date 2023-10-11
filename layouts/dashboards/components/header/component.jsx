@@ -187,7 +187,12 @@ class Header extends PureComponent {
     const displaySentence =
       !sentence || isEmpty(sentence) ? globalSentence : sentence;
 
-    if (location && location.adm0 === 'IDN') {
+    if (
+      location &&
+      location.adm0 === 'IDN' &&
+      !location.adm1 &&
+      !location.adm2
+    ) {
       displaySentence.sentence +=
         ' <b>107 kha</b> of this loss was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares according to MoEF-WRI analysis.';
     }
