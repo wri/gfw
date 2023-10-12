@@ -28,7 +28,7 @@ export const getServerSideProps = async ({ query }) => {
     };
   }
 
-  const notifications = await getPublishedNotifications({});
+  const notifications = await getPublishedNotifications();
 
   if (query?.section === 'projects') {
     const pageTexts = await getSGFPage();

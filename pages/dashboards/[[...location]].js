@@ -108,7 +108,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
   }
 
   let countryData = await getCategorisedCountries(true);
-  const notifications = await getPublishedNotifications({});
+  const notifications = await getPublishedNotifications();
 
   if (!type || type === 'global') {
     // get global data

@@ -24,7 +24,7 @@ const HomePage = (props) => (
 
 export const getStaticProps = async () => {
   const newsArticles = await getNewsArticles();
-  const notifications = await getPublishedNotifications({});
+  const notifications = await getPublishedNotifications();
 
   return {
     props: {

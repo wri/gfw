@@ -5,7 +5,7 @@ import { NOTIFICATIONS_RESPONSE } from '../../fixtures/notifications';
 // eslint-disable-next-line no-undef
 jest.mock('axios');
 
-describe.skip('getPublishedNotifications', () => {
+describe('getPublishedNotifications', () => {
   describe('when API call is successful', () => {
     it('should return a list of notifications', async () => {
       const response = NOTIFICATIONS_RESPONSE;
@@ -34,8 +34,11 @@ describe.skip('getPublishedNotifications', () => {
 
       axios.get.mockResolvedValueOnce(response);
 
-      const result = await getPublishedNotifications({});
+      const result = await getPublishedNotifications();
 
+      expect(axios.get).toHaveBeenCalledWith(
+        `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/notice?per_page=100&page=1&orderby=date&order=desc`
+      );
       expect(result).toEqual(expectedResult);
     });
   });
@@ -46,8 +49,11 @@ describe.skip('getPublishedNotifications', () => {
 
       axios.get.mockRejectedValueOnce(new Error(message));
 
-      const result = await getPublishedNotifications({});
+      const result = await getPublishedNotifications();
 
+      expect(axios.get).toHaveBeenCalledWith(
+        `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/notice?per_page=100&page=1&orderby=date&order=desc`
+      );
       expect(result).toBe(null);
     });
   });

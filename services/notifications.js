@@ -1,4 +1,3 @@
-import apiFetch from '@wordpress/api-fetch';
 import axios from 'axios';
 
 const mapResponseToNotification = ({
@@ -20,28 +19,11 @@ const mapResponseToNotification = ({
   };
 };
 
-apiFetch.setFetchHandler(async (options) => {
-  const headers = { 'Content-Type': 'application/json' };
-  const { url, path, data, method, params } = options;
-
-  return axios({
-    headers,
-    url: url || path,
-    method,
-    data,
-    params,
-  });
-});
-
-export const getPublishedNotifications = async ({ cancelToken }) => {
+export const getPublishedNotifications = async () => {
   try {
-    const notificationsData = await apiFetch({
-      url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/notice?per_page=100&page=1&orderby=date&order=desc`,
-      params: {
-        _embed: true,
-      },
-      cancelToken,
-    });
+    const notificationsData = await axios.get(
+      `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/notice?per_page=100&page=1&orderby=date&order=desc`
+    );
 
     return notificationsData?.data.map((item) =>
       mapResponseToNotification(item)
