@@ -588,11 +588,26 @@ const decodes = {
         alpha = 1.;
       }
     }
-
     color.r = red;
     color.g = green;
     color.b = blue; 
   `,
+  treeGain: `
+  float red = color.r;
+  float green = color.g;
+  float blue = color.b;
+
+  if (zoom < 12.) {
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      alpha = alpha * 2.;
+    }
+  }
+  color.r = red;
+  color.g = green;
+  color.b = blue; 
+`,
   newCarbonFlux: `
     float red = color.r;
     float green = color.g;
@@ -1058,4 +1073,5 @@ export default {
   cumulativeCarbonGain: decodes.cumulativeCarbonGain,
   netGHGFlux: decodes.netCarbonFlux,
   formaAlerts: decodes.forma,
+  treeGain: decodes.treeGain,
 };
