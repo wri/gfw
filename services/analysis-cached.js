@@ -85,6 +85,14 @@ const SQL_QUERIES = {
 
 const ALLOWED_PARAMS = {
   annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
+  treeCoverDensity: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+  ],
   integrated_alerts: [
     'adm0',
     'adm1',
@@ -340,6 +348,8 @@ export const getWHEREQuery = (params) => {
         (!isNaN(value) && !['adm0', 'confidence'].includes(p))
       );
 
+      const isTreeCoverDensity = dataset === 'treeCoverDensity';
+
       let paramKey = p;
       if (p === 'confidence') paramKey = 'confidence__cat';
       if (p === 'threshold') {
@@ -386,12 +396,12 @@ export const getWHEREQuery = (params) => {
             }`
           : ''
       }${
-        !isPolyname
-          ? `${paramKey}${comparisonString}${
+        !isPolyname && isTreeCoverDensity && p === 'threshold'
+          ? ''
+          : `${paramKey}${comparisonString}${
               isNumericValue ? value : `'${value}'`
             }`
-          : ''
-      }${isLast ? '' : ' AND '}`;
+      }${isLast || isTreeCoverDensity ? '' : ' AND '}`;
 
       paramString = paramString.concat(polynameString);
     });
@@ -2065,7 +2075,10 @@ export const getTreeCoverDensity = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...params, dataset: 'treeCoverDensity' })
+      )
   );
 
   return dataRequest.get(url).then((response) => response.data);
