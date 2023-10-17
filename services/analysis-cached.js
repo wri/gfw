@@ -313,101 +313,123 @@ const getLocationSelect = ({
   );
 };
 
+const isNumber = (value) => !!(typeof value === 'number' || !isNaN(value));
+
+const translateParameterKey = (parameterKey, { type, dataset }) => {
+  let paramKey = '';
+
+  if (parameterKey === 'confidence') paramKey = 'confidence__cat';
+  if (parameterKey === 'adm0' && type === 'country') paramKey = 'iso';
+  if (parameterKey === 'adm1' && type === 'country') paramKey = 'adm1';
+  if (parameterKey === 'adm2' && type === 'country') paramKey = 'adm2';
+  if (parameterKey === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
+  if (parameterKey === 'adm0' && type === 'wdpa')
+    paramKey = 'wdpa_protected_area__id';
+
+  if (parameterKey === 'threshold') {
+    if (dataset === 'tropicalTreeCover') {
+      paramKey = 'wri_tropical_tree_cover__decile';
+    } else {
+      paramKey = 'umd_tree_cover_density_2000__threshold';
+    }
+  }
+
+  return paramKey;
+};
+
 // build {where} statement for query
-export const getWHEREQuery = (params) => {
-  const allPolynames = forestTypes.concat(landCategories);
-  const paramKeys = params && Object.keys(params);
-  const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
-  const paramKeysFiltered = paramKeys.filter(
-    (p) => (params[p] || p === 'threshold') && allowedParams.includes(p)
-  );
+export const getWHEREQuery = (params = {}) => {
   const { type, dataset } = params || {};
-  let comparisonString = ' = ';
-  if (paramKeysFiltered && paramKeysFiltered.length) {
-    let paramString = 'WHERE ';
-    paramKeysFiltered.forEach((p, i) => {
-      const isLast = paramKeysFiltered.length - 1 === i;
-      const isPolyname = ['forestType', 'landCategory'].includes(p);
-      const value = isPolyname ? 1 : params[p];
-      const polynameMeta = allPolynames.find(
-        (pname) => pname.value === params[p]
-      );
-      const tableKey =
+
+  const allFilterOptions = forestTypes.concat(landCategories);
+  const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
+  const isTreeCoverDensity = dataset === 'treeCoverDensity';
+  const comparisonString = ' = ';
+
+  let paramString = 'WHERE ';
+  let paramKeys = Object.keys(params).filter((parameterName) => {
+    return (
+      (params[parameterName] || parameterName === 'threshold') &&
+      allowedParams.includes(parameterName)
+    );
+  });
+
+  if (!paramKeys?.length) {
+    return '';
+  }
+
+  /*
+   * Removing threshold from Tree Cover Density request
+   * Tree Cover Density has a default threshold >=10
+   */
+  if (isTreeCoverDensity && paramKeys.includes('threshold')) {
+    paramKeys = paramKeys.filter((item) => item !== 'threshold');
+  }
+
+  paramKeys.forEach((parameter, index) => {
+    const isLastParameter = paramKeys.length - 1 === index;
+    const hasFilterOption = ['forestType', 'landCategory'].includes(parameter);
+    const value = hasFilterOption ? 1 : params[parameter];
+    const polynameMeta = allFilterOptions.find(
+      (pname) => pname.value === params[parameter]
+    );
+    const tableKey =
+      polynameMeta &&
+      (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
+    let isNumericValue = isNumber(value);
+
+    const paramKey = translateParameterKey(parameter, params);
+
+    if (parameter === 'adm0' && type === 'wdpa') {
+      isNumericValue = false;
+    }
+
+    if (dataset === 'net_change') {
+      isNumericValue = false;
+    }
+
+    const hasPrefixIs__ = hasFilterOption && tableKey.includes('is__');
+    let WHERE = '';
+
+    if (hasFilterOption) {
+      if (hasPrefixIs__) {
+        WHERE = `${WHERE}${tableKey} = 'true'`;
+      }
+
+      if (!hasPrefixIs__) {
+        WHERE = `${WHERE}${tableKey} IS NOT NULL`;
+      }
+
+      if (
         polynameMeta &&
-        (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
-
-      /* TODO
-       perform better casting / allow to configure types:
-       AS for example wdpa_protected_area__id needs to be a string,
-       even that it evaluates AS a number.
-       Note that the postgres tables will allow us to cast at the query level.
-      */
-      // const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
-      let isNumericValue = !!(
-        typeof value === 'number' ||
-        (!isNaN(value) && !['adm0', 'confidence'].includes(p))
-      );
-
-      const isTreeCoverDensity = dataset === 'treeCoverDensity';
-
-      let paramKey = p;
-      if (p === 'confidence') paramKey = 'confidence__cat';
-      if (p === 'threshold') {
-        //   paramKey = 'umd_tree_cover_density__threshold';
-        comparisonString = ' = ';
-
-        if (dataset === 'tropicalTreeCover') {
-          paramKey = 'wri_tropical_tree_cover__decile';
-        } else {
-          paramKey = 'umd_tree_cover_density_2000__threshold';
-        }
-
-        // }
-      }
-      if (p === 'adm0' && type === 'country') paramKey = 'iso';
-      if (p === 'adm1' && type === 'country') paramKey = 'adm1';
-      if (p === 'adm2' && type === 'country') paramKey = 'adm2';
-      if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
-      if (p === 'adm0' && type === 'wdpa') {
-        paramKey = 'wdpa_protected_area__id';
-        isNumericValue = false;
-      }
-      if (dataset === 'net_change') {
-        isNumericValue = false;
-      }
-
-      const polynameString = `
-        ${
-          isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
-        }${
-        isPolyname && !tableKey.includes('is__')
-          ? `${tableKey} IS NOT NULL`
-          : ''
-      }${
-        isPolyname &&
-        polynameMeta &&
-        !tableKey.includes('is__') &&
+        !hasPrefixIs__ &&
         polynameMeta.default &&
         polynameMeta.categories
-          ? ` AND ${tableKey} ${polynameMeta.comparison || '='} ${
-              polynameMeta?.dataType === 'keyword'
-                ? `'${polynameMeta?.default}'`
-                : `${polynameMeta?.default}`
-            }`
-          : ''
-      }${
-        !isPolyname && isTreeCoverDensity && p === 'threshold'
-          ? ''
-          : `${paramKey}${comparisonString}${
-              isNumericValue ? value : `'${value}'`
-            }`
-      }${isLast || isTreeCoverDensity ? '' : ' AND '}`;
+      ) {
+        WHERE = `${WHERE} AND ${tableKey} ${polynameMeta.comparison || '='} ${
+          polynameMeta?.dataType === 'keyword'
+            ? `'${polynameMeta?.default}'`
+            : `${polynameMeta?.default}`
+        }`;
+      }
+    }
 
-      paramString = paramString.concat(polynameString);
-    });
-    return paramString;
-  }
-  return '';
+    if (!hasFilterOption) {
+      WHERE = `${WHERE}${paramKey}${comparisonString}${
+        isNumericValue ? value : `'${value}'`
+      }`;
+    }
+
+    if (isLastParameter) {
+      WHERE = `${WHERE} `;
+    } else {
+      WHERE = `${WHERE} AND `;
+    }
+
+    paramString = paramString.concat(WHERE);
+  });
+
+  return paramString;
 };
 
 export const getDatesFilter = ({ startDate }) => {
