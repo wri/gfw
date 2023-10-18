@@ -12,11 +12,5 @@
     "unit": "alerts",
     "metaKey": null,
     "infoText": "MODIS alerts perform better in cloudy areas, but are coarser resolution than VIIRS alerts"
-  },{
-    "label": "MODIS Burned Area",
-    "value": "modis_burned_area",
-    "unit": "ha",
-    "metaKey": null,
-    "infoText": "MODIS burned area dataset gives an indication of the total area affected by fires"
   }
 ]
