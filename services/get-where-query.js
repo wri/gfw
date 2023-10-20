@@ -39,12 +39,13 @@ export const getWHEREQuery = (params = {}) => {
     const isLastParameter = paramKeys.length - 1 === index;
     const hasFilterOption = ['forestType', 'landCategory'].includes(parameter);
     const value = hasFilterOption ? 1 : params[parameter];
-    const polynameMeta = allFilterOptions.find(
+    const filterOption = allFilterOptions.find(
       (pname) => pname.value === params[parameter]
     );
+
     const tableKey =
-      polynameMeta &&
-      (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
+      filterOption &&
+      (filterOption.tableKey || filterOption.tableKeys[dataset || 'annual']);
     let isNumericValue = isNumber(value);
 
     const paramKey = translateParameterKey(parameter, params);
@@ -70,15 +71,15 @@ export const getWHEREQuery = (params = {}) => {
       }
 
       if (
-        polynameMeta &&
+        filterOption &&
         !hasPrefixIs__ &&
-        polynameMeta.default &&
-        polynameMeta.categories
+        filterOption.default &&
+        filterOption.categories
       ) {
-        WHERE = `${WHERE} AND ${tableKey} ${polynameMeta.comparison || '='} ${
-          polynameMeta?.dataType === 'keyword'
-            ? `'${polynameMeta?.default}'`
-            : `${polynameMeta?.default}`
+        WHERE = `${WHERE} AND ${tableKey} ${filterOption.comparison || '='} ${
+          filterOption?.dataType === 'keyword'
+            ? `'${filterOption?.default}'`
+            : `${filterOption?.default}`
         }`;
       }
     }
