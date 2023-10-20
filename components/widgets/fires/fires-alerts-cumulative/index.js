@@ -2,6 +2,8 @@ import { all, spread } from 'axios';
 import uniq from 'lodash/uniq';
 import moment from 'moment';
 import { fetchVIIRSAlerts, fetchVIIRSLatest } from 'services/analysis-cached';
+import { FIRES_VIIRS_DATASET } from 'data/datasets';
+import { FIRES_ALERTS_VIIRS } from 'data/layers';
 
 import getWidgetProps from './selectors';
 
@@ -10,6 +12,12 @@ export default {
   title: 'Cumulative Fire Alerts in {location}',
   large: true,
   categories: ['summary', 'fires'],
+  datasets: [
+    {
+      dataset: FIRES_VIIRS_DATASET,
+      layers: [FIRES_ALERTS_VIIRS],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',
