@@ -285,9 +285,9 @@ const decodes = {
       }
       // get high and highest confidence alerts
       float confidenceValue = 0.;
-      if (confirmedOnly > 0.) {
-        confidenceValue = 255.;
-      }
+     // if (confirmedOnly > 0.) {
+     //   confidenceValue = 255.;
+      //}
 
       if (agreementValue == 4. || agreementValue == 16. || agreementValue == 64.) {
         // ONE ALERT LOW CONF: 4,8,16,32,64,128 i.e. 2**(2+n) for n<8

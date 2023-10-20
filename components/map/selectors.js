@@ -198,7 +198,7 @@ export const getActiveDatasets = createSelector(
   [selectDatasets, getActiveDatasetIds],
   (datasets, datasetIds) => {
     if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
-    return datasets.filter((d) => datasetIds.includes(d.id));
+    return datasets.filter((dataset) => datasetIds.includes(dataset.id));
   }
 );
 
@@ -219,10 +219,11 @@ export const getDatasetsWithConfig = createSelector(
     latestMetadata
   ) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
-
-    return datasets.map((d) => {
+    // console.log('hey it is here getDatasetsWithConfig')
+    return datasets.map((dataset) => {
       const layerConfig =
-        activeDatasetsState.find((l) => l.dataset === d.id) || {};
+        activeDatasetsState.find((l) => l.dataset === dataset.id) || {};
+
       const {
         params,
         sqlParams,
@@ -234,25 +235,27 @@ export const getDatasetsWithConfig = createSelector(
         bbox,
         citation = null,
       } = layerConfig || {};
-
+      // console.log('layerConfig', layerConfig)
       return {
-        ...d,
+        ...dataset,
         ...layerConfig,
-        ...(d.selectorLayerConfig && {
+        ...(dataset.selectorLayerConfig && {
           selectorLayerConfig: {
-            ...d.selectorLayerConfig,
-            selected: d.selectorLayerConfig.options.find(
+            ...dataset.selectorLayerConfig,
+            selected: dataset.selectorLayerConfig.options.find(
               (l) => l.value === layers[0]
             ),
           },
         }),
-        layers: d.layers.map((l) => {
+        layers: dataset.layers.map((l) => {
           const {
+            hasParamsToggle,
             hasParamsTimeline,
             hasDecodeTimeline,
             timelineConfig: timelineConfigInit,
             id,
           } = l;
+
           return handleDynamicTimeline(
             l,
             datasetMetadata,
@@ -323,7 +326,7 @@ export const getDatasetsWithConfig = createSelector(
                 ...(citation && {
                   citation,
                 }),
-                color: d.color,
+                color: dataset.color,
                 active: layers && layers.length && layers.includes(l.id),
                 ...(!isEmpty(layerParams) && {
                   params: {
@@ -341,6 +344,10 @@ export const getDatasetsWithConfig = createSelector(
                     ...(maxDate && {
                       maxDate,
                     }),
+                    ...(hasParamsToggle &&
+                      {
+                        // something here?
+                      }),
                   },
                 }),
                 ...(!isEmpty(l.sqlParams) && {
@@ -408,11 +415,15 @@ export const getDatasetsWithConfig = createSelector(
 export const getLayerGroups = createSelector(
   [getDatasetsWithConfig, getActiveDatasetsFromState],
   (datasets, activeDatasetsState) => {
-    if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
+    if (isEmpty(datasets) || isEmpty(activeDatasetsState)) {
+      return null;
+    }
 
     return activeDatasetsState
       .map((layer) => {
-        const dataset = datasets.find((d) => d.id === layer.dataset);
+        const dataset = datasets.find(
+          (datasetItem) => datasetItem.id === layer.dataset
+        );
         const { metadata } =
           (dataset && dataset.layers.find((l) => l.active)) || {};
         const newMetadata = metadata || (dataset && dataset.metadata);
@@ -456,7 +467,9 @@ export const getActiveLayers = createSelector(
   [getAllLayers, selectGeostore, selectLocation, getActiveArea],
   (layers, geostore, location, activeArea) => {
     if (isEmpty(layers)) return [];
+    console.log('hey it is here getActiveLayers');
     const filteredLayers = layers.filter((l) => !l.confirmedOnly);
+    console.log('filteredLayers', filteredLayers);
     if (!geostore || !geostore.id) return filteredLayers;
     const { type, adm0 } = location || {};
     const isAoI = type === 'aoi' && adm0;

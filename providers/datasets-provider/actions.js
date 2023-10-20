@@ -107,6 +107,7 @@ export const fetchDatasets = createThunkAction(
                         decode_config,
                         sql_config,
                         timeline_config,
+                        confidence_config,
                         source, // v3
                         decode_function, // v3
                       } = layerConfig;
@@ -140,6 +141,18 @@ export const fetchDatasets = createThunkAction(
                           },
                         ],
                       };
+
+                      // check if has a confidence toggle
+                      const toggleConfidenceConfig = confidence_config && {
+                        ...confidence_config,
+                      };
+
+                      // toogle params
+                      const hasParamsToggle =
+                        params_config &&
+                        params_config
+                          .map((p) => p.key)
+                          .includes('confidenceToggle');
 
                       // get params
                       const params =
@@ -196,6 +209,10 @@ export const fetchDatasets = createThunkAction(
                         timelineConfig,
                         hasParamsTimeline,
                         hasDecodeTimeline,
+
+                        // toggle confidence params,
+                        toggleConfidenceConfig,
+                        hasParamsToggle,
                         // params for tile url
                         ...(params && {
                           params: {
@@ -215,7 +232,7 @@ export const fetchDatasets = createThunkAction(
                             ...(p.key.includes('thresh') && {
                               sentence:
                                 p.sentence ||
-                                'Displaying {name} with {selector} canopy density',
+                                'Displaying {name} with {selector} canopy densityx',
                               options: p.options || thresholdOptions,
                             }),
                             ...(p.min &&
