@@ -1,11 +1,15 @@
 import { cartoRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
+
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import DATASETS_VERSIONS from 'data/analysis-datasets-versions.json';
+
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
+
+import { getWHEREQuery } from './get-where-query';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -82,51 +86,6 @@ const SQL_QUERIES = {
   treeCoverDensity:
     'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
 };
-
-const ALLOWED_PARAMS = {
-  annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
-  integrated_alerts: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'forestType',
-    'landCategory',
-    'is__confirmed_alert',
-  ],
-  glad: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'forestType',
-    'landCategory',
-    'is__confirmed_alert',
-  ],
-  viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
-  modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
-  modis_burned_area: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'threshold',
-    'forestType',
-    'landCategory',
-    'confidence',
-  ],
-  net_change: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'threshold',
-    'forestType',
-    'landCategory',
-    'confidence',
-  ],
-  tropicalTreeCover: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType'],
-};
-
-//
-// function for building analysis table queries from params
-//
 
 const typeByGrouped = {
   global: {
@@ -303,101 +262,6 @@ const getLocationSelect = ({
     download,
     staticStatement
   );
-};
-
-// build {where} statement for query
-export const getWHEREQuery = (params) => {
-  const allPolynames = forestTypes.concat(landCategories);
-  const paramKeys = params && Object.keys(params);
-  const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
-  const paramKeysFiltered = paramKeys.filter(
-    (p) => (params[p] || p === 'threshold') && allowedParams.includes(p)
-  );
-  const { type, dataset } = params || {};
-  let comparisonString = ' = ';
-  if (paramKeysFiltered && paramKeysFiltered.length) {
-    let paramString = 'WHERE ';
-    paramKeysFiltered.forEach((p, i) => {
-      const isLast = paramKeysFiltered.length - 1 === i;
-      const isPolyname = ['forestType', 'landCategory'].includes(p);
-      const value = isPolyname ? 1 : params[p];
-      const polynameMeta = allPolynames.find(
-        (pname) => pname.value === params[p]
-      );
-      const tableKey =
-        polynameMeta &&
-        (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
-
-      /* TODO
-       perform better casting / allow to configure types:
-       AS for example wdpa_protected_area__id needs to be a string,
-       even that it evaluates AS a number.
-       Note that the postgres tables will allow us to cast at the query level.
-      */
-      // const zeroString = polynameMeta?.dataType === 'keyword' ? "'0'" : '0';
-      let isNumericValue = !!(
-        typeof value === 'number' ||
-        (!isNaN(value) && !['adm0', 'confidence'].includes(p))
-      );
-
-      let paramKey = p;
-      if (p === 'confidence') paramKey = 'confidence__cat';
-      if (p === 'threshold') {
-        //   paramKey = 'umd_tree_cover_density__threshold';
-        comparisonString = ' = ';
-
-        if (dataset === 'tropicalTreeCover') {
-          paramKey = 'wri_tropical_tree_cover__decile';
-        } else {
-          paramKey = 'umd_tree_cover_density_2000__threshold';
-        }
-
-        // }
-      }
-      if (p === 'adm0' && type === 'country') paramKey = 'iso';
-      if (p === 'adm1' && type === 'country') paramKey = 'adm1';
-      if (p === 'adm2' && type === 'country') paramKey = 'adm2';
-      if (p === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
-      if (p === 'adm0' && type === 'wdpa') {
-        paramKey = 'wdpa_protected_area__id';
-        isNumericValue = false;
-      }
-      if (dataset === 'net_change') {
-        isNumericValue = false;
-      }
-
-      const polynameString = `
-        ${
-          isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
-        }${
-        isPolyname && !tableKey.includes('is__')
-          ? `${tableKey} IS NOT NULL`
-          : ''
-      }${
-        isPolyname &&
-        polynameMeta &&
-        !tableKey.includes('is__') &&
-        polynameMeta.default &&
-        polynameMeta.categories
-          ? ` AND ${tableKey} ${polynameMeta.comparison || '='} ${
-              polynameMeta?.dataType === 'keyword'
-                ? `'${polynameMeta?.default}'`
-                : `${polynameMeta?.default}`
-            }`
-          : ''
-      }${
-        !isPolyname
-          ? `${paramKey}${comparisonString}${
-              isNumericValue ? value : `'${value}'`
-            }`
-          : ''
-      }${isLast ? '' : ' AND '}`;
-
-      paramString = paramString.concat(polynameString);
-    });
-    return paramString;
-  }
-  return '';
 };
 
 export const getDatesFilter = ({ startDate }) => {
@@ -2065,7 +1929,10 @@ export const getTreeCoverDensity = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...params, dataset: 'treeCoverDensity' })
+      )
   );
 
   return dataRequest.get(url).then((response) => response.data);
