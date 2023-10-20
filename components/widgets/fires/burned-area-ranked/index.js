@@ -163,12 +163,10 @@ export default {
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
     // called when settings changes
-    if (!widgetSettings || !widgetSettings.dataset) {
-      return defaultConfig;
-    }
     if (widgetSettings?.dataset !== 'modis_burned_area') {
       return firesRanked;
     }
+
     return defaultConfig;
   },
 };
