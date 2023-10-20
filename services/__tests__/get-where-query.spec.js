@@ -33,7 +33,9 @@ describe('getWHEREQuery', () => {
 
     const query = getWHEREQuery(params);
     const expected = "WHERE iso = 'PER' ";
+    const notExpected = 'AND umd_tree_cover_density_2000__threshold = 40 ';
 
     expect(query).toEqual(expected);
+    expect(query).not.toEqual(notExpected);
   });
 });
