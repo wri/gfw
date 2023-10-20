@@ -1,11 +1,15 @@
 import { cartoRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
+
 import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import DATASETS_VERSIONS from 'data/analysis-datasets-versions.json';
+
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
+
+import { getWHEREQuery } from './get-where-query';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -82,59 +86,6 @@ const SQL_QUERIES = {
   treeCoverDensity:
     'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
 };
-
-const ALLOWED_PARAMS = {
-  annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
-  treeCoverDensity: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'threshold',
-    'forestType',
-    'landCategory',
-  ],
-  integrated_alerts: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'forestType',
-    'landCategory',
-    'is__confirmed_alert',
-  ],
-  glad: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'forestType',
-    'landCategory',
-    'is__confirmed_alert',
-  ],
-  viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
-  modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
-  modis_burned_area: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'threshold',
-    'forestType',
-    'landCategory',
-    'confidence',
-  ],
-  net_change: [
-    'adm0',
-    'adm1',
-    'adm2',
-    'threshold',
-    'forestType',
-    'landCategory',
-    'confidence',
-  ],
-  tropicalTreeCover: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType'],
-};
-
-//
-// function for building analysis table queries from params
-//
 
 const typeByGrouped = {
   global: {
@@ -311,125 +262,6 @@ const getLocationSelect = ({
     download,
     staticStatement
   );
-};
-
-const isNumber = (value) => !!(typeof value === 'number' || !isNaN(value));
-
-const translateParameterKey = (parameterKey, { type, dataset }) => {
-  let paramKey = '';
-
-  if (parameterKey === 'confidence') paramKey = 'confidence__cat';
-  if (parameterKey === 'adm0' && type === 'country') paramKey = 'iso';
-  if (parameterKey === 'adm1' && type === 'country') paramKey = 'adm1';
-  if (parameterKey === 'adm2' && type === 'country') paramKey = 'adm2';
-  if (parameterKey === 'adm0' && type === 'geostore') paramKey = 'geostore__id';
-  if (parameterKey === 'adm0' && type === 'wdpa')
-    paramKey = 'wdpa_protected_area__id';
-
-  if (parameterKey === 'threshold') {
-    if (dataset === 'tropicalTreeCover') {
-      paramKey = 'wri_tropical_tree_cover__decile';
-    } else {
-      paramKey = 'umd_tree_cover_density_2000__threshold';
-    }
-  }
-
-  return paramKey;
-};
-
-// build {where} statement for query
-export const getWHEREQuery = (params = {}) => {
-  const { type, dataset } = params || {};
-
-  const allFilterOptions = forestTypes.concat(landCategories);
-  const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
-  const isTreeCoverDensity = dataset === 'treeCoverDensity';
-  const comparisonString = ' = ';
-
-  let paramString = 'WHERE ';
-  let paramKeys = Object.keys(params).filter((parameterName) => {
-    return (
-      (params[parameterName] || parameterName === 'threshold') &&
-      allowedParams.includes(parameterName)
-    );
-  });
-
-  if (!paramKeys?.length) {
-    return '';
-  }
-
-  /*
-   * Removing threshold from Tree Cover Density request
-   * Tree Cover Density has a default threshold >=10
-   */
-  if (isTreeCoverDensity && paramKeys.includes('threshold')) {
-    paramKeys = paramKeys.filter((item) => item !== 'threshold');
-  }
-
-  paramKeys.forEach((parameter, index) => {
-    const isLastParameter = paramKeys.length - 1 === index;
-    const hasFilterOption = ['forestType', 'landCategory'].includes(parameter);
-    const value = hasFilterOption ? 1 : params[parameter];
-    const polynameMeta = allFilterOptions.find(
-      (pname) => pname.value === params[parameter]
-    );
-    const tableKey =
-      polynameMeta &&
-      (polynameMeta.tableKey || polynameMeta.tableKeys[dataset || 'annual']);
-    let isNumericValue = isNumber(value);
-
-    const paramKey = translateParameterKey(parameter, params);
-
-    if (parameter === 'adm0' && type === 'wdpa') {
-      isNumericValue = false;
-    }
-
-    if (dataset === 'net_change') {
-      isNumericValue = false;
-    }
-
-    const hasPrefixIs__ = hasFilterOption && tableKey.includes('is__');
-    let WHERE = '';
-
-    if (hasFilterOption) {
-      if (hasPrefixIs__) {
-        WHERE = `${WHERE}${tableKey} = 'true'`;
-      }
-
-      if (!hasPrefixIs__) {
-        WHERE = `${WHERE}${tableKey} IS NOT NULL`;
-      }
-
-      if (
-        polynameMeta &&
-        !hasPrefixIs__ &&
-        polynameMeta.default &&
-        polynameMeta.categories
-      ) {
-        WHERE = `${WHERE} AND ${tableKey} ${polynameMeta.comparison || '='} ${
-          polynameMeta?.dataType === 'keyword'
-            ? `'${polynameMeta?.default}'`
-            : `${polynameMeta?.default}`
-        }`;
-      }
-    }
-
-    if (!hasFilterOption) {
-      WHERE = `${WHERE}${paramKey}${comparisonString}${
-        isNumericValue ? value : `'${value}'`
-      }`;
-    }
-
-    if (isLastParameter) {
-      WHERE = `${WHERE} `;
-    } else {
-      WHERE = `${WHERE} AND `;
-    }
-
-    paramString = paramString.concat(WHERE);
-  });
-
-  return paramString;
 };
 
 export const getDatesFilter = ({ startDate }) => {

@@ -1,0 +1,50 @@
+const ALLOWED_PARAMS = {
+  annual: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType', 'landCategory'],
+  treeCoverDensity: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+  ],
+  integrated_alerts: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'is__confirmed_alert',
+  ],
+  glad: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'forestType',
+    'landCategory',
+    'is__confirmed_alert',
+  ],
+  viirs: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
+  modis: ['adm0', 'adm1', 'adm2', 'forestType', 'landCategory', 'confidence'],
+  modis_burned_area: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+    'confidence',
+  ],
+  net_change: [
+    'adm0',
+    'adm1',
+    'adm2',
+    'threshold',
+    'forestType',
+    'landCategory',
+    'confidence',
+  ],
+  tropicalTreeCover: ['adm0', 'adm1', 'adm2', 'threshold', 'forestType'],
+};
+
+export default ALLOWED_PARAMS;
