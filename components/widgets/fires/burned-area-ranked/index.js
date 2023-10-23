@@ -118,7 +118,7 @@ const defaultConfig = {
     page: 0,
     period: 'week',
     weeks: 4,
-    dataset: 'modis_burned_area',
+    dataset: 'viirs',
     layerStartDate: null,
     layerEndDate: null,
     firesThreshold: 0,
@@ -163,12 +163,10 @@ export default {
   refetchKeys: ['dataset'],
   getWidget: (widgetSettings) => {
     // called when settings changes
-    if (!widgetSettings || !widgetSettings.dataset) {
-      return defaultConfig;
-    }
-    if (widgetSettings.dataset !== 'modis_burned_area') {
+    if (widgetSettings?.dataset !== 'modis_burned_area') {
       return firesRanked;
     }
+
     return defaultConfig;
   },
 };
