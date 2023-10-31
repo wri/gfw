@@ -1,4 +1,4 @@
-const FAOCountries = [
+export const EuropeFAOCountries = [
   'ALB',
   'AND',
   'AUT',
@@ -51,4 +51,4 @@ const FAOCountries = [
   'GBR',
 ];
 
-export default FAOCountries;
+export default EuropeFAOCountries;

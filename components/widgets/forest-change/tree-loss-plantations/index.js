@@ -14,7 +14,7 @@ import {
   TREE_PLANTATIONS,
 } from 'data/layers';
 
-import FAOCountries from 'utils/fao-countries';
+import { EuropeFAOCountries } from 'utils/fao-countries';
 
 import getWidgetProps from './selectors';
 
@@ -76,7 +76,7 @@ export default {
     checkStatus: true,
   },
   blacklists: {
-    adm0: FAOCountries,
+    adm0: EuropeFAOCountries,
   },
   settings: {
     threshold: 30,
