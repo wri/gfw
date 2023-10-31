@@ -14,6 +14,8 @@ import {
   TREE_PLANTATIONS,
 } from 'data/layers';
 
+import FAOCountries from 'utils/fao-countries';
+
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2013;
@@ -72,6 +74,9 @@ export default {
   whitelists: {
     indicators: ['plantations'],
     checkStatus: true,
+  },
+  blacklists: {
+    adm0: FAOCountries,
   },
   settings: {
     threshold: 30,
