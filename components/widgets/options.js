@@ -18,6 +18,7 @@ import confidence from 'data/confidence.json';
 import bioTypes from 'data/biodiversity-int.json';
 import ifl from 'data/ifl.json';
 import source from 'data/sources.json';
+import faoYear from 'data/fao-cover-years.json';
 
 export default {
   forestType: forestType.filter((f) => !f.hidden),
@@ -25,6 +26,7 @@ export default {
   threshold,
   decile,
   firesThreshold,
+  faoYear,
   unit,
   gasesIncluded,
   period,
