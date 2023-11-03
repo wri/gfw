@@ -100,7 +100,7 @@ export const parseSentence = createSelector(
   ) => {
     if (!data) return null;
     const { initial, withInd, highConfidence } = sentences;
-    const { confidence, dataset } = options;
+    const { confidence = { value: 'h' }, dataset } = options;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const total = sumBy(data, 'alert__count');

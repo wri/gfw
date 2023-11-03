@@ -401,7 +401,6 @@ export const parseSentence = createSelector(
     getDataset,
     getLocationName,
     getStartIndex,
-    // getEndIndex,
     getOptionsSelected,
     getIndicator,
   ],
@@ -413,7 +412,6 @@ export const parseSentence = createSelector(
     dataset,
     location,
     startIndex,
-    // endIndex //broken?
     options,
     indicator
   ) => {
@@ -424,7 +422,7 @@ export const parseSentence = createSelector(
       highConfidenceWithInd,
       allAlertsWithInd,
     } = sentences;
-    const { confidence } = options;
+    const { confidence = { value: 'h' } } = options;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const start = startIndex;
