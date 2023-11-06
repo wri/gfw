@@ -16,9 +16,11 @@ export default {
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
-      key: 'period',
+      key: 'yearRange',
       label: 'period',
       type: 'select',
+      clearable: false,
+      border: true,
     },
   ],
   chartType: 'rankedList',
@@ -28,20 +30,20 @@ export default {
   sortOrder: {
     forestChange: 5,
   },
-  refetchKeys: ['period'],
+  refetchKeys: ['yearRange'],
   sentences: {
     globalInitial:
-      'According to the FAO, the {location} rate of deforestation in {year} was {rate} per year.',
+      'According to the FAO, the {location} rate of deforestation in between {yearStart} and {yearEnd} was {rate} per year.',
     globalHuman:
       'According to the FAO, the {location} rate of deforestation in {year} was {rate} per year, of which {human} per year was due to human activity.',
     initial:
-      'According to the FAO, the rate of deforestation in {location} was {rate} per year in {year}.',
+      'According to the FAO, the rate of deforestation in {location} was {rate} per year between {yearStart} and {yearEnd}.',
     humanDeforest:
       'According to the FAO, the rate of deforestation in {location} was {rate} per year in {year}, of which {human} per year was due to human activity.',
     noDeforest: 'No deforestation data in {location}.',
   },
   settings: {
-    period: 2010,
+    yearRange: '2015-2020',
     unit: 'ha/year',
     pageSize: 5,
     page: 0,
@@ -49,7 +51,7 @@ export default {
   getData: (params) =>
     all([getFAODeforest(params), getFAODeforestRank(params)]).then(
       spread((getFAODeforestResponse, getFAODeforestRankResponse) => {
-        const fao = getFAODeforestResponse.data.rows;
+        const fao = getFAODeforestResponse.data;
         const rank = getFAODeforestRankResponse.data.rows;
         return {
           fao,
