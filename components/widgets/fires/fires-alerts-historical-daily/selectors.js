@@ -11,6 +11,7 @@ const getAlerts = (state) => state.data;
 const getColors = (state) => state.colors || null;
 const getStartDate = (state) => state.settings.startDate;
 const getEndDate = (state) => state.settings.endDate;
+const getSettings = (state) => state.settings;
 const getSentences = (state) => state.sentences || null;
 const getLocationObject = (state) => state.location;
 const getOptionsSelected = (state) => state.optionsSelected;
@@ -87,6 +88,7 @@ export const parseSentence = createSelector(
     getEndDate,
     getOptionsSelected,
     getIndicator,
+    getSettings,
   ],
   (
     data,
@@ -96,11 +98,13 @@ export const parseSentence = createSelector(
     startDate,
     endDate,
     options,
-    indicator
+    indicator,
+    settings
   ) => {
     if (!data) return null;
     const { initial, withInd, highConfidence } = sentences;
-    const { confidence = { value: 'h' }, dataset } = options;
+    const { confidence = { value: settings.confidence }, dataset } = options;
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const total = sumBy(data, 'alert__count');
