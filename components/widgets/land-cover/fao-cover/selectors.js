@@ -15,23 +15,10 @@ export const parseData = createSelector(
   [getData, getColors],
   (data, colors) => {
     if (isEmpty(data)) return null;
-    const {
-      area_ha,
-      extent,
-      planted_forest,
-      forest_primary,
-      forest_regenerated,
-    } = data;
-    const otherCover =
-      extent - (forest_regenerated + forest_primary + planted_forest);
+    const { area_ha, extent, planted_forest, forest_primary } = data;
+    const otherCover = extent - (forest_primary + planted_forest);
     const nonForest = area_ha - extent;
     return [
-      {
-        label: 'Naturally Regenerated Forest',
-        value: forest_regenerated,
-        percentage: (forest_regenerated / area_ha) * 100,
-        color: colors.naturalForest,
-      },
       {
         label: 'Primary Forest',
         value: forest_primary || 0,
