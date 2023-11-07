@@ -37,45 +37,22 @@ export const getWHEREQuery = (params = {}) => {
   }
 
   /*
-   * Removing confidence_cat = 'false' from VIIRS request
+   * Removing confidence_cat = 'all' from VIIRS request
    * if the user selects 'all alerts' on the VIIRS layer,
    * we don't want to add a new parameter to the query
    */
-  if (isVIIRS) {
-    if (
-      typeof params?.confidence === 'boolean' &&
-      params?.confidence === false
-    ) {
-      paramKeys = paramKeys.filter((item) => item !== 'confidence');
-    }
 
-    if (params?.confidence === 'false' || params?.confidence === 'true') {
-      paramKeys = paramKeys.filter((item) => item !== 'confidence');
-    }
+  if (isVIIRS && params?.confidence === 'all') {
+    paramKeys = paramKeys.filter((item) => item !== 'confidence');
   }
 
   paramKeys.forEach((parameter, index) => {
     const isLastParameter = paramKeys.length - 1 === index;
     const hasFilterOption = ['forestType', 'landCategory'].includes(parameter);
-    let value = hasFilterOption ? 1 : params[parameter];
+    const value = hasFilterOption ? 1 : params[parameter];
     const filterOption = allFilterOptions.find(
       (pname) => pname.value === params[parameter]
     );
-
-    /*
-     * when the user selects high confidence on VIIRS Layer
-     * the confidence option returns a string 'true'
-     * the right value should be 'h'
-     * Until we fix this return, we need to validate the parameter
-     */
-    if (isVIIRS && parameter === 'confidence') {
-      if (
-        typeof params?.confidence === 'boolean' &&
-        params?.confidence === true
-      ) {
-        value = 'h';
-      }
-    }
 
     const tableKey =
       filterOption &&
