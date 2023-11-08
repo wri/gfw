@@ -13,6 +13,7 @@ export const getWHEREQuery = (params = {}) => {
   const allFilterOptions = forestTypes.concat(landCategories);
   const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
   const isTreeCoverDensity = dataset === 'treeCoverDensity';
+  const isVIIRS = dataset === 'viirs';
   const comparisonString = ' = ';
 
   let paramString = 'WHERE ';
@@ -35,6 +36,15 @@ export const getWHEREQuery = (params = {}) => {
     paramKeys = paramKeys.filter((item) => item !== 'threshold');
   }
 
+  /*
+   * Removing confidence_cat = 'false' from VIIRS request
+   * if the user selects 'all alerts' on the VIIRS layer,
+   * we don't want to add a new parameter to the query
+   */
+  if (isVIIRS && !params?.confidenceToggle === 'false') {
+    paramKeys = paramKeys.filter((item) => item !== 'confidence');
+  }
+
   paramKeys.forEach((parameter, index) => {
     const isLastParameter = paramKeys.length - 1 === index;
     const hasFilterOption = ['forestType', 'landCategory'].includes(parameter);
@@ -46,15 +56,12 @@ export const getWHEREQuery = (params = {}) => {
     const tableKey =
       filterOption &&
       (filterOption.tableKey || filterOption.tableKeys[dataset || 'annual']);
+
     let isNumericValue = isNumber(value);
 
     const paramKey = translateParameterKey(parameter, params);
 
-    if (parameter === 'adm0' && type === 'wdpa') {
-      isNumericValue = false;
-    }
-
-    if (dataset === 'net_change') {
+    if ((parameter === 'adm0' && type === 'wdpa') || dataset === 'net_change') {
       isNumericValue = false;
     }
 

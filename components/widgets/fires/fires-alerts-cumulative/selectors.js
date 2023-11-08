@@ -32,6 +32,7 @@ const getSentences = (state) => state.sentences || null;
 const getLocationName = (state) => state.locationLabel;
 const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
+const getSettings = (state) => state.settings;
 
 export const getCompareYears = createSelector(
   [getCompareYear, getAllYears],
@@ -401,9 +402,9 @@ export const parseSentence = createSelector(
     getDataset,
     getLocationName,
     getStartIndex,
-    // getEndIndex,
     getOptionsSelected,
     getIndicator,
+    getSettings,
   ],
   (
     raw_data,
@@ -413,18 +414,29 @@ export const parseSentence = createSelector(
     dataset,
     location,
     startIndex,
-    // endIndex //broken?
     options,
-    indicator
+    indicator,
+    settings
   ) => {
     if (!data || isEmpty(data)) return null;
+
     const {
       highConfidence,
       allAlerts,
       highConfidenceWithInd,
       allAlertsWithInd,
     } = sentences;
-    const { confidence } = options;
+    const { confidenceToggle } = settings;
+    let { confidence } = options;
+
+    /*
+      Validation for the Analysis
+    */
+    if (confidenceToggle) {
+      confidence =
+        confidenceToggle === 'true' ? { value: 'h' } : { value: 'all' };
+    }
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const start = startIndex;
