@@ -426,7 +426,7 @@ export const parseSentence = createSelector(
       highConfidenceWithInd,
       allAlertsWithInd,
     } = sentences;
-    const { confidenceToggle = true } = settings;
+    const { confidenceToggle } = settings;
     let { confidence } = options;
 
     /*

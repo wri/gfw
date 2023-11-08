@@ -103,7 +103,7 @@ export const parseSentence = createSelector(
   ) => {
     if (!data) return null;
     const { initial, withInd, highConfidence } = sentences;
-    const { confidenceToggle = true } = settings;
+    const { confidenceToggle } = settings;
     const { dataset } = options;
 
     let { confidence } = options;
