@@ -37,12 +37,11 @@ export const getWHEREQuery = (params = {}) => {
   }
 
   /*
-   * Removing confidence_cat = 'all' from VIIRS request
+   * Removing confidence_cat = 'false' from VIIRS request
    * if the user selects 'all alerts' on the VIIRS layer,
    * we don't want to add a new parameter to the query
    */
-
-  if (isVIIRS && params?.confidence === 'all') {
+  if (isVIIRS && !params?.confidenceToggle === 'false') {
     paramKeys = paramKeys.filter((item) => item !== 'confidence');
   }
 

@@ -103,7 +103,18 @@ export const parseSentence = createSelector(
   ) => {
     if (!data) return null;
     const { initial, withInd, highConfidence } = sentences;
-    const { confidence = { value: settings.confidence }, dataset } = options;
+    const { confidenceToggle = true } = settings;
+    const { dataset } = options;
+
+    let { confidence } = options;
+
+    /*
+      Validation for the Analysis
+    */
+    if (confidenceToggle) {
+      confidence =
+        confidenceToggle === 'true' ? { value: 'h' } : { value: 'all' };
+    }
 
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;

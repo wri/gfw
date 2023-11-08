@@ -419,13 +419,24 @@ export const parseSentence = createSelector(
     settings
   ) => {
     if (!data || isEmpty(data)) return null;
+
     const {
       highConfidence,
       allAlerts,
       highConfidenceWithInd,
       allAlertsWithInd,
     } = sentences;
-    const { confidence = { value: settings.confidence } } = options;
+    const { confidenceToggle = true } = settings;
+    let { confidence } = options;
+
+    /*
+      Validation for the Analysis
+    */
+    if (confidenceToggle) {
+      confidence =
+        confidenceToggle === 'true' ? { value: 'h' } : { value: 'all' };
+    }
+
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
     const start = startIndex;
