@@ -1,4 +1,5 @@
-import { rwRequest, dataRequest } from 'utils/request';
+import { dataRequest } from 'utils/request';
+import axios from 'axios';
 
 const environmentString = () => {
   const env = process.env.NEXT_PUBLIC_FEATURE_ENV;
@@ -13,9 +14,9 @@ const environmentString = () => {
 };
 
 export const getDatasets = () =>
-  rwRequest
+  axios
     .get(
-      `/dataset?application=gfw&includes=metadata,vocabulary,layer&published=true&page[size]=9999&env=${environmentString()}${
+      `https://api.resourcewatch.org/dataset?application=gfw&includes=metadata,vocabulary,layer&published=true&page[size]=9999&env=${environmentString()}${
         environmentString() === 'staging'
           ? `&filterIncludesByEnv=true&refresh=${new Date()}`
           : ''
@@ -24,8 +25,8 @@ export const getDatasets = () =>
     .then((res) => res?.data);
 
 export const getDatasetMeta = () =>
-  rwRequest
-    .get('glad-alerts/latest/')
+  axios
+    .get('https://api.resourcewatch.org/glad-alerts/latest/')
     .then((res) => res?.data)
     .then((data) => {
       const latestDate = data?.data[0]?.attributes?.date;

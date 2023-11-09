@@ -1,10 +1,9 @@
 // GFW API
-export const GFW_API = 'https://staging-api.resourcewatch.org';
+export const GFW_API = 'https://api.resourcewatch.org';
 export const GFW_STAGING_API = 'https://staging-api.resourcewatch.org';
 
 // GFW METADATA API
-export const GFW_METADATA_API =
-  'https://staging-api.resourcewatch.org/v1/gfw-metadata';
+export const GFW_METADATA_API = 'https://api.resourcewatch.org/v1/gfw-metadata';
 export const GFW_STAGING_METADATA_API =
   'https://staging-api.resourcewatch.org/v1/gfw-metadata';
 
@@ -14,7 +13,7 @@ export const GFW_STAGING_DATA_API =
   'https://staging-data-api.globalforestwatch.org';
 
 // RESOURCE WATCH API
-export const RESOURCE_WATCH_API = 'https://staging-api.resourcewatch.org/v1';
+export const RESOURCE_WATCH_API = 'https://api.resourcewatch.org/v1';
 export const RESOURCE_WATCH_STAGING_API =
   'https://staging-api.resourcewatch.org/v1';
 
