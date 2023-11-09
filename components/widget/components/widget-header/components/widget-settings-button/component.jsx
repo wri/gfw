@@ -54,7 +54,6 @@ class WidgetSettingsButton extends PureComponent {
       proxyOn,
       embed,
       active,
-      shouldSettingsOpen,
       toggleSettingsMenu,
     } = this.props;
     const { tooltipOpen } = this.state;
@@ -105,7 +104,6 @@ class WidgetSettingsButton extends PureComponent {
             proxyOn={proxyOn}
             handleChangeSettings={handleChangeSettings}
             handleShowInfo={handleShowInfo}
-            showYears={shouldSettingsOpen}
           />
         )}
       >

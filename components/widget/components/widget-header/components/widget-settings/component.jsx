@@ -116,18 +116,21 @@ class WidgetSettings extends PureComponent {
             />
           </div>
         );
-      case 'datepicker':
+      case 'datepicker': {
+        const loadingDatepicker = !startValue || !minDate || !maxDate;
+
         return (
-          <div className={cx('widget-settings-selector', type)}>
+          <div className={cx("widget-settings-selector", type)}>
             <div className="datepicker-selector">
               <div>
                 <span className="label">From</span>
                 <Datepicker
                   {...popperSettings}
+                  loading={loadingDatepicker}
                   selected={new Date(startValue)}
                   onChange={(change) =>
                     propagateChange({
-                      [startKey]: moment(change).format('YYYY-MM-DD'),
+                      [startKey]: moment(change).format("YYYY-MM-DD"),
                     })}
                   minDate={new Date(minDate)}
                   maxDate={new Date(maxDate)}
@@ -139,10 +142,11 @@ class WidgetSettings extends PureComponent {
                 <span className="label">To</span>
                 <Datepicker
                   {...popperSettings}
+                  loading={loadingDatepicker}
                   selected={new Date(endValue)}
                   onChange={(change) =>
                     propagateChange({
-                      [endKey]: moment(change).format('YYYY-MM-DD'),
+                      [endKey]: moment(change).format("YYYY-MM-DD"),
                     })}
                   minDate={new Date(minDate)}
                   maxDate={new Date(maxDate)}
@@ -153,6 +157,7 @@ class WidgetSettings extends PureComponent {
             </div>
           </div>
         );
+      }
       default:
         return (
           options &&

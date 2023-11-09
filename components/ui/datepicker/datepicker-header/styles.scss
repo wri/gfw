@@ -39,3 +39,12 @@
     }
   }
 }
+
+.c-datepicker {
+  .datepicker-input {
+    &.loading {
+      width: 86px;
+      height: 1.3rem;
+    }
+  }
+}
