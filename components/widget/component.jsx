@@ -174,6 +174,7 @@ class Widget extends PureComponent {
           <>
             <WidgetHeader
               widget={widget}
+              loading={loading}
               title={title}
               large={large}
               datasets={datasets}
