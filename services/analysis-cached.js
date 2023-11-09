@@ -2288,20 +2288,37 @@ export const fetchVIIRSAlertsSumOTF = (params) => {
 
 export const fetchVIIRSAlertsSum = (params) => {
   const { startDate, endDate, dataset } = params || {};
+  /*
+   * Removing confidence parameter from VIIRS layer options
+   * for Fire Alerts widget, we always fetch all alerts
+   * and calculate the values directly on the selector.js
+   */
+  const paramKeys = Object.keys(params).filter(
+    (param) => param !== 'confidence'
+  );
+  const paramsWithoutConfidenceAlert = {};
+
+  paramKeys.forEach((parameter) => {
+    paramsWithoutConfidenceAlert[parameter] = params[parameter];
+  });
+
   const url = encodeURI(
     `${getRequestUrl({
-      ...params,
+      ...paramsWithoutConfidenceAlert,
       dataset,
       datasetType: 'daily',
     })}${SQL_QUERIES.firesDailySum}`
       .replace(
         /{select_location}/g,
-        getLocationSelect({ ...params, cast: false })
+        getLocationSelect({ ...paramsWithoutConfidenceAlert, cast: false })
       )
-      .replace(/{location}/g, getLocationSelect(params))
+      .replace(/{location}/g, getLocationSelect(paramsWithoutConfidenceAlert))
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'viirs' }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...paramsWithoutConfidenceAlert, dataset: 'viirs' })
+      )
   );
 
   return dataRequest.get(url).then((response) => ({
