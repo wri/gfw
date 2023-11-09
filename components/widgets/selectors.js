@@ -262,8 +262,8 @@ export const filterWidgetsByLocation = createSelector(
       const {
         types,
         admins,
-        whitelists,
-        blacklists,
+        whitelists: allowedList,
+        blacklists: deniedList,
         source,
         datasets,
         visible,
@@ -293,37 +293,40 @@ export const filterWidgetsByLocation = createSelector(
         admins &&
         admins.includes(adminLevel);
 
-      const adminWhitelist =
-        type === 'country' && whitelists && whitelists.adm0;
+      const adminAllowedList =
+        type === 'country' && allowedList && allowedList.adm0;
 
-      const adminBlacklist =
-        type === 'country' && blacklists && blacklists[adminLevel];
-      const notInBlacklist =
-        !adminBlacklist || !adminBlacklist.includes(adminLevel);
+      const matchesAllowedList =
+        !adminAllowedList || adminAllowedList.includes(location.adm0);
+
+      const adminDeniedList =
+        type === 'country' && deniedList && deniedList.adm0;
+
+      const notInDeniedList =
+        !adminDeniedList || !adminDeniedList?.includes(location.adm0);
 
       const isFAOCountry =
         source !== 'fao' || (fao && fao.find((f) => f.value === location.adm0));
-      const matchesAdminWhitelist =
-        !adminWhitelist || adminWhitelist.includes(location.adm0);
+
       const polynameIntersection =
-        whitelists &&
-        whitelists.indicators &&
+        allowedList &&
+        allowedList.indicators &&
         intersection(
           polynameWhitelist?.[
             w.whitelistType || w?.settings?.dataset || 'annual'
           ],
-          whitelists.indicators
+          allowedList.indicators
         );
       const matchesPolynameWhitelist =
         type === 'global' ||
-        !whitelists ||
-        !whitelists.indicators ||
+        !allowedList ||
+        !allowedList.indicators ||
         (polynameIntersection && polynameIntersection.length);
       const isWidgetDataPending =
         // for geostore shapes sometimes the data is not ready (no cached tables)
-        !whitelists ||
+        !allowedList ||
         (status && status !== 'pending') ||
-        !whitelists.checkStatus;
+        !allowedList.checkStatus;
 
       const isWidgetVisible =
         (!showAnalysis && !visible) ||
@@ -341,11 +344,11 @@ export const filterWidgetsByLocation = createSelector(
 
       return (
         hasLocation &&
-        matchesAdminWhitelist &&
+        matchesAllowedList &&
         matchesPolynameWhitelist &&
         isFAOCountry &&
         isWidgetVisible &&
-        notInBlacklist &&
+        notInDeniedList &&
         isWidgetDataPending &&
         published
       );
