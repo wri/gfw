@@ -601,7 +601,7 @@ const decodes = {
     if (red == 0. && green == 0. && blue == 0.) {
       alpha = 0.;
     } else {
-      alpha = alpha * 8.;
+      alpha = alpha * 7.;
     }
   }
   color.r = red;
