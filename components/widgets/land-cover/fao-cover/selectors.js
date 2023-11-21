@@ -56,9 +56,9 @@ export const parseSentence = createSelector(
     const { faoYear } = settings;
     const primaryPercent =
       forest_primary > 0
-        ? (forest_primary / area_ha) * 100
-        : (extent / area_ha) * 100;
-    const percent = (planted_forest / area_ha) * 100;
+        ? (forest_primary / extent) * 100
+        : (planted_forest / extent) * 100;
+    const percent = (extent / area_ha) * 100;
     const params = {
       location: locationName === 'global' ? 'globally' : locationName,
       extent: formatNumber({ num: extent, unit: 'ha', spaceUnit: true }),
@@ -66,7 +66,7 @@ export const parseSentence = createSelector(
       year: faoYear,
       percent: formatNumber({ num: percent, unit: '%' }),
       amountInHectares: formatNumber({
-        num: area_ha,
+        num: extent,
         unit: 'ha',
         spaceUnit: true,
       }),
