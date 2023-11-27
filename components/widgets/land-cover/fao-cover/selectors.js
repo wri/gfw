@@ -14,11 +14,15 @@ const getSettings = (state) => state.settings;
 export const parseData = createSelector(
   [getData, getColors],
   (data, colors) => {
-    if (isEmpty(data)) return null;
+    if (isEmpty(data)) {
+      return null;
+    }
+
     const { area_ha, extent, planted_forest, forest_primary } = data;
     const otherCover = extent - (forest_primary + planted_forest);
     const nonForest = area_ha - extent;
-    return [
+
+    const chartItems = [
       {
         label: 'Primary Forest',
         value: forest_primary || 0,
@@ -44,6 +48,12 @@ export const parseData = createSelector(
         color: colors.nonForest,
       },
     ];
+
+    if (forest_primary === null) {
+      return chartItems.slice(1, chartItems.length);
+    }
+
+    return chartItems;
   }
 );
 
@@ -51,13 +61,16 @@ export const parseSentence = createSelector(
   [getData, getLocationName, getSentences, getSettings],
   (data, locationName, sentences, settings) => {
     if (isEmpty(data)) return null;
+
     const { initial, noPrimary, globalInitial, globalNoPrimary } = sentences;
-    const { area_ha, extent, forest_primary, planted_forest } = data;
+    const { area_ha, extent, forest_primary } = data;
     const { faoYear } = settings;
+
     const primaryPercent =
       forest_primary > 0
         ? (forest_primary / extent) * 100
-        : (planted_forest / extent) * 100;
+        : (extent / area_ha) * 100;
+
     const percent = (extent / area_ha) * 100;
     const params = {
       location: locationName === 'global' ? 'globally' : locationName,
