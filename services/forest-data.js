@@ -160,7 +160,9 @@ export const getFAODeforestRank = ({ yearRange = '2015-2020', download }) => {
   if (download) {
     return {
       name: 'fao_treecover_deforestation_rank',
-      url: `${CARTO_API}${url}&format=csv`,
+      url: new URL(
+        `${window.location.origin}${PROXIES.DATA_API}${url}`
+      ).toString(),
     };
   }
 
