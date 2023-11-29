@@ -34,7 +34,7 @@ export default {
     initial:
       'According to the FAO, in {year}, {percent} ({amountInHectares}) of {country} was covered by forest. {primaryPercent} of that forest was classified as primary forest.',
     noPrimary:
-      'According to the FAO, in {year},{primaryPercent} ({extent}) of {location} was covered by forest.',
+      'According to the FAO, in {year},{primaryPercent} ({extent}) of {location} was covered by forest. <b>0%</b> of that forest was classified as primary forest.',
   },
   getSettingsConfig: () => {
     return [
