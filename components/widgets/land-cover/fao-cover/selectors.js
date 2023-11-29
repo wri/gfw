@@ -62,7 +62,7 @@ export const parseSentence = createSelector(
   (data, locationName, sentences, settings) => {
     if (isEmpty(data)) return null;
 
-    const { initial, noPrimary, globalInitial, globalNoPrimary } = sentences;
+    const { initial, noPrimary, globalInitial } = sentences;
     const { area_ha, extent, forest_primary } = data;
     const { faoYear } = settings;
 
@@ -85,10 +85,13 @@ export const parseSentence = createSelector(
       }),
       country: locationName,
     };
+
     let sentence = forest_primary > 0 ? initial : noPrimary;
+
     if (locationName === 'global') {
-      sentence = forest_primary > 0 ? globalInitial : globalNoPrimary;
+      sentence = globalInitial;
     }
+
     return {
       sentence,
       params,

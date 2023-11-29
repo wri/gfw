@@ -31,8 +31,6 @@ export default {
   sentences: {
     globalInitial:
       'According to the FAO, in {year}, {percent} ({amountInHectares}) of the globe was covered by forest. {primaryPercent} of that forest was classified as primary forest.',
-    globalNoPrimary:
-      'According to the FAO, in {year},{primaryPercent} ({extent}) of the world was covered by forest.',
     initial:
       'According to the FAO, in {year}, {percent} ({amountInHectares}) of {country} was covered by forest. {primaryPercent} of that forest was classified as primary forest.',
     noPrimary:
