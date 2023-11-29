@@ -30,13 +30,13 @@ export default {
   refetchKeys: ['faoYear'],
   sentences: {
     globalInitial:
-      'According to the FAO, in {year}, {percent} ({amountInHectares}) of the globe was covered by forest. Of this, {primaryPercent} was primary forest.',
+      'According to the FAO, in {year}, {percent} ({amountInHectares}) of the globe was covered by forest. {primaryPercent} of that forest was classified as primary forest.',
     globalNoPrimary:
-      'FAO data from 2015 shows that there are {extent} of forest {location}, which occupies {primaryPercent} of the world.',
+      'According to the FAO, in {year},{primaryPercent} ({extent}) of the world was covered by forest.',
     initial:
-      'According to the FAO, in {year}, {percent} ({amountInHectares}) of {country} was covered by forest. Of this, {primaryPercent} was primary forest.',
+      'According to the FAO, in {year}, {percent} ({amountInHectares}) of {country} was covered by forest. {primaryPercent} of that forest was classified as primary forest.',
     noPrimary:
-      'FAO data from 2015 shows that {location} contains {extent} of forest, which occupies {primaryPercent} of the country.',
+      'According to the FAO, in {year},{primaryPercent} ({extent}) of {location} was covered by forest.',
   },
   getSettingsConfig: () => {
     return [
