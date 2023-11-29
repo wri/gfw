@@ -18,8 +18,15 @@ export const parseData = createSelector(
     const { rank } = data;
 
     let dataTrimmed = rank;
+
+    dataTrimmed = dataTrimmed.map((d, i) => ({
+      ...d,
+      rank: i + 1,
+    }));
+
     if (adm0) {
       const locationIndex = findIndex(rank, (d) => d.iso === adm0);
+
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
 
@@ -33,7 +40,7 @@ export const parseData = createSelector(
         trimEnd = rank.length;
       }
 
-      dataTrimmed = rank.slice(trimStart, trimEnd);
+      dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
 
     return dataTrimmed.map((d) => ({
@@ -60,7 +67,7 @@ export const parseSentence = createSelector(
     const endYearRange = yearRangeSeparated[1];
 
     const { deforest } = topFAOByDeforestation[0] || {};
-    const totalDeforest = sumBy(data.rank, 'deforest') || 0;
+    const totalDeforest = sumBy(data.rank, 'def_per_year') || 0;
     const rate = currentLabel === 'global' ? totalDeforest : deforest;
     const rateFormat = rate < 1 ? '.3r' : '.3s';
 
