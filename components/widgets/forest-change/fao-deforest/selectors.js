@@ -17,7 +17,7 @@ export const parseData = createSelector(
     if (!data || !data.rank) return null;
     const { rank } = data;
 
-    let dataTrimmed = [];
+    let dataTrimmed = rank;
     if (adm0) {
       const locationIndex = findIndex(rank, (d) => d.iso === adm0);
       let trimStart = locationIndex - 2;
