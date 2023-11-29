@@ -34,12 +34,8 @@ export default {
   sentences: {
     globalInitial:
       'According to the FAO, the {location} rate of deforestation in between {yearRange} was {rate} per year.',
-    globalHuman:
-      'According to the FAO, the {location} rate of deforestation in {year} was {rate} per year, of which {human} per year was due to human activity.',
     initial:
       'According to the FAO, the rate of deforestation in {location} was {rate} per year between {yearRange}.',
-    humanDeforest:
-      'According to the FAO, the rate of deforestation in {location} was {rate} per year in {year}, of which {human} per year was due to human activity.',
     noDeforest: 'No deforestation data in {location}.',
   },
   settings: {

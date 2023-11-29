@@ -49,24 +49,27 @@ export const parseSentence = createSelector(
   [getData, getLocationName, getSettings, getSentences],
   (data, currentLabel, settings, sentences) => {
     if (!data || !data.fao) return null;
-    const { initial, noDeforest, humanDeforest, globalInitial, globalHuman } =
-      sentences;
+
+    const { initial, noDeforest, globalInitial } = sentences;
 
     const topFAOByDeforestation = data.fao.rows
       ?.filter((regionData) => regionData.year === settings.yearRange)
       .sort((a, b) => Number(b.deforest) - Number(a.deforest));
 
-    const { deforest, humdef } = topFAOByDeforestation[0] || {};
+    const { deforest } = topFAOByDeforestation[0] || {};
     const totalDeforest = sumBy(data.rank, 'deforest') || 0;
     const rate = currentLabel === 'global' ? totalDeforest : deforest;
-
-    let sentence = humdef ? humanDeforest : initial;
-    if (currentLabel === 'global') {
-      sentence = humdef ? globalHuman : globalInitial;
-    } else if (!deforest) sentence = noDeforest;
-
     const rateFormat = rate < 1 ? '.3r' : '.3s';
-    const humanFormat = humdef < 1 ? '.3r' : '.3s';
+
+    let sentence = initial;
+
+    if (currentLabel === 'global') {
+      sentence = globalInitial;
+    }
+
+    if (!deforest) {
+      sentence = noDeforest;
+    }
 
     const params = {
       location: currentLabel,
@@ -77,12 +80,6 @@ export const parseSentence = createSelector(
         unit: 'ha',
         spaceUnit: true,
         specialSpecifier: rateFormat,
-      }),
-      human: formatNumber({
-        num: humdef,
-        unit: 'ha',
-        spaceUnit: true,
-        specialSpecifier: humanFormat,
       }),
     };
 
