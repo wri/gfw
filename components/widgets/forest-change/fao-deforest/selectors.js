@@ -51,10 +51,13 @@ export const parseSentence = createSelector(
     if (!data || !data.fao) return null;
 
     const { initial, noDeforest, globalInitial } = sentences;
-
     const topFAOByDeforestation = data.fao.rows
       ?.filter((regionData) => regionData.year === settings.yearRange)
       .sort((a, b) => Number(b.deforest) - Number(a.deforest));
+
+    const yearRangeSeparated = settings.yearRange.split('-');
+    const startYearRange = yearRangeSeparated[0];
+    const endYearRange = yearRangeSeparated[1];
 
     const { deforest } = topFAOByDeforestation[0] || {};
     const totalDeforest = sumBy(data.rank, 'deforest') || 0;
@@ -74,7 +77,8 @@ export const parseSentence = createSelector(
     const params = {
       location: currentLabel,
       year: settings.yearRange,
-      yearRange: settings.yearRange,
+      startYearRange,
+      endYearRange,
       rate: formatNumber({
         num: rate,
         unit: 'ha',

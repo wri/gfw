@@ -33,9 +33,9 @@ export default {
   refetchKeys: ['yearRange'],
   sentences: {
     globalInitial:
-      'According to the FAO, the {location} rate of deforestation in between {yearRange} was {rate} per year.',
+      'According to the FAO, the {location} rate of deforestation in between {startYearRange} and {endYearRange} was {rate} per year.',
     initial:
-      'According to the FAO, the rate of deforestation in {location} was {rate} per year between {yearRange}.',
+      'According to the FAO, the rate of deforestation in {location} was {rate} per year between {startYearRange} and {endYearRange}.',
     noDeforest: 'No deforestation data in {location}.',
   },
   settings: {
