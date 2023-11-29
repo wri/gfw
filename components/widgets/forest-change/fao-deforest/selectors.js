@@ -53,8 +53,8 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocationName, getSettings, getSentences],
-  (data, currentLabel, settings, sentences) => {
+  [getData, getLocationName, getSettings, getSentences, getAdm0],
+  (data, currentLabel, settings, sentences, adm0) => {
     if (!data || !data.fao) return null;
 
     const { initial, noDeforest, globalInitial } = sentences;
@@ -67,8 +67,12 @@ export const parseSentence = createSelector(
     const endYearRange = yearRangeSeparated[1];
 
     const { deforest } = topFAOByDeforestation[0] || {};
-    const totalDeforest = sumBy(data.rank, 'def_per_year') || 0;
-    const rate = currentLabel === 'global' ? totalDeforest : deforest;
+    const globalDeforestation = sumBy(data.rank, 'def_per_year') || 0;
+    const countryDeforestation = data.rank.filter(
+      (country) => country.iso === adm0
+    )[0].def_per_year;
+    const rate =
+      currentLabel === 'global' ? globalDeforestation : countryDeforestation;
     const rateFormat = rate < 1 ? '.3r' : '.3s';
 
     let sentence = initial;
