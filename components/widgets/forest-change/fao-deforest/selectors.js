@@ -70,9 +70,11 @@ export const parseSentence = createSelector(
     const globalDeforestation = sumBy(data.rank, 'def_per_year') || 0;
     const countryDeforestation = data.rank.filter(
       (country) => country.iso === adm0
-    )[0].def_per_year;
+    )[0];
     const rate =
-      currentLabel === 'global' ? globalDeforestation : countryDeforestation;
+      currentLabel === 'global'
+        ? globalDeforestation
+        : countryDeforestation?.def_per_year;
     const rateFormat = rate < 1 ? '.3r' : '.3s';
 
     let sentence = initial;
