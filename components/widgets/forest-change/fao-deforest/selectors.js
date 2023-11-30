@@ -58,15 +58,10 @@ export const parseSentence = createSelector(
     if (!data || !data.fao) return null;
 
     const { initial, noDeforest, globalInitial } = sentences;
-    const topFAOByDeforestation = data.fao.rows
-      ?.filter((regionData) => regionData.year === settings.yearRange)
-      .sort((a, b) => Number(b.deforest) - Number(a.deforest));
-
     const yearRangeSeparated = settings.yearRange.split('-');
     const startYearRange = yearRangeSeparated[0];
     const endYearRange = yearRangeSeparated[1];
 
-    const { deforest } = topFAOByDeforestation[0] || {};
     const globalDeforestation = sumBy(data.rank, 'def_per_year') || 0;
     const countryDeforestation = data.rank.filter(
       (country) => country.iso === adm0
@@ -83,7 +78,7 @@ export const parseSentence = createSelector(
       sentence = globalInitial;
     }
 
-    if (!deforest) {
+    if (currentLabel !== 'global' && !countryDeforestation) {
       sentence = noDeforest;
     }
 
