@@ -55,9 +55,9 @@ export default {
         };
       })
     ),
-  getDataURL: (params) => [
-    getFAODeforest({ ...params, download: true }),
-    getFAODeforestRank({ ...params, download: true }),
+  getDataURL: async (params) => [
+    await getFAODeforest({ ...params, download: true }),
+    await getFAODeforestRank({ ...params, download: true }),
   ],
   getWidgetProps,
 };
