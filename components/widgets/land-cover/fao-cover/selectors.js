@@ -86,7 +86,7 @@ export const parseSentence = createSelector(
       country: locationName,
     };
 
-    let sentence = forest_primary > 0 ? initial : noPrimary;
+    let sentence = forest_primary !== null ? initial : noPrimary;
 
     if (locationName === 'global') {
       sentence = globalInitial;
