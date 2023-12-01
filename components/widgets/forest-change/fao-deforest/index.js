@@ -16,9 +16,11 @@ export default {
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
-      key: 'period',
+      key: 'yearRange',
       label: 'period',
       type: 'select',
+      clearable: false,
+      border: true,
     },
   ],
   chartType: 'rankedList',
@@ -28,20 +30,16 @@ export default {
   sortOrder: {
     forestChange: 5,
   },
-  refetchKeys: ['period'],
+  refetchKeys: ['yearRange'],
   sentences: {
     globalInitial:
-      'According to the FAO, the {location} rate of deforestation in {year} was {rate} per year.',
-    globalHuman:
-      'According to the FAO, the {location} rate of deforestation in {year} was {rate} per year, of which {human} per year was due to human activity.',
+      'According to the FAO, the {location} rate of deforestation in between {startYearRange} and {endYearRange} was {rate} per year.',
     initial:
-      'According to the FAO, the rate of deforestation in {location} was {rate} per year in {year}.',
-    humanDeforest:
-      'According to the FAO, the rate of deforestation in {location} was {rate} per year in {year}, of which {human} per year was due to human activity.',
-    noDeforest: 'No deforestation data in {location}.',
+      'According to the FAO, the rate of deforestation in {location} was {rate} per year between {startYearRange} and {endYearRange}.',
+    noDeforest: 'No FAO deforestation data in {location}.',
   },
   settings: {
-    period: 2010,
+    yearRange: '2015-2020',
     unit: 'ha/year',
     pageSize: 5,
     page: 0,
@@ -49,7 +47,7 @@ export default {
   getData: (params) =>
     all([getFAODeforest(params), getFAODeforestRank(params)]).then(
       spread((getFAODeforestResponse, getFAODeforestRankResponse) => {
-        const fao = getFAODeforestResponse.data.rows;
+        const fao = getFAODeforestResponse.data;
         const rank = getFAODeforestRankResponse.data.rows;
         return {
           fao,
@@ -57,9 +55,9 @@ export default {
         };
       })
     ),
-  getDataURL: (params) => [
-    getFAODeforest({ ...params, download: true }),
-    getFAODeforestRank({ ...params, download: true }),
+  getDataURL: async (params) => [
+    await getFAODeforest({ ...params, download: true }),
+    await getFAODeforestRank({ ...params, download: true }),
   ],
   getWidgetProps,
 };

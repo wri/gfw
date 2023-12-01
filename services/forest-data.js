@@ -11,9 +11,9 @@ const NEW_SQL_QUERIES = {
   faoReforest:
     'SELECT country AS iso, name, year, reforest * 1000 AS reforestation__rate, forest*1000 AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY reforestation__rate DESC',
   faoDeforest:
-    'SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS fao_treecover_deforest__ha, fao.humdef, fao.year FROM table_1_forest_area_and_characteristics as fao {location}',
+    'SELECT iso, country as name, "deforestation (ha per year)" as fao_treecover_deforest__ha, "reforestation (ha per year)" as fao_reforestation__ha, "forest expansion (ha per year)" as fao_expansion__ha, year FROM data where year = {yearRange}',
   faoDeforestRank:
-    'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest as fao_treecover_deforest__ha from rank',
+    'SELECT iso, country, "deforestation (ha per year)" as def_per_year FROM mytable WHERE "deforestation (ha per year)" IS NOT NULL AND year = {yearRange} ORDER BY def_per_year DESC',
   faoEcoLive:
     'SELECT fao.country as iso, fao.forempl as total_forest_employees, fao.femempl as female_forest_employees, fao.usdrev as revenue__usd, fao.usdexp as expenditure__usd, fao.gdpusd2012 as gdp_2012__usd, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
@@ -113,49 +113,63 @@ export const getFAOReforest = ({ period, download }) => {
   }));
 };
 
-export const getFAODeforest = ({ adm0, download }) => {
-  const url = `/sql?q=${NEW_SQL_QUERIES.faoDeforest}`.replace(
-    '{location}',
-    adm0 ? `WHERE fao.country = '${adm0}'` : ''
-  );
+export const getFAODeforest = async ({
+  adm0,
+  yearRange = '2015-2020',
+  download,
+}) => {
+  const target = download ? 'download/csv' : 'query/json';
+  const url =
+    `/dataset/fao_forest_change/v2020/${target}?sql=${NEW_SQL_QUERIES.faoDeforest}`
+      .replace(/{yearRange}/g, `'${yearRange}'`)
+      .replace(/{location}/g, adm0 ? `AND iso = '${adm0}'` : '');
 
   if (download) {
     return {
       name: 'fao_treecover_deforestation__ha',
-      url: `${CARTO_API}${url}&format=csv`,
+      url: new URL(
+        `${window.location.origin}${PROXIES.DATA_API}${url}`
+      ).toString(),
     };
   }
 
-  return cartoRequest.get(url).then((response) => ({
-    ...response,
+  const response = await dataRequest.get(url);
+
+  const widgetData = {
     data: {
-      rows: response.data.rows.map((o) => {
+      rows: response.data.map((o) => {
         delete Object.assign(o, { country: o.iso }).iso;
         delete Object.assign(o, { deforest: o.fao_treecover_deforest__ha })
           .fao_treecover_deforest__ha;
         return o;
       }),
     },
-  }));
+  };
+
+  return widgetData;
 };
 
-export const getFAODeforestRank = ({ period, download }) => {
-  const url = `/sql?q=${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
-    '{year}',
-    period
-  );
+export const getFAODeforestRank = ({ yearRange = '2015-2020', download }) => {
+  const target = download ? 'download/csv' : 'query/json';
+  const url =
+    `/dataset/fao_forest_change/v2020/${target}?sql=${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
+      /{yearRange}/g,
+      `'${yearRange}'`
+    );
 
   if (download) {
     return {
       name: 'fao_treecover_deforestation_rank',
-      url: `${CARTO_API}${url}&format=csv`,
+      url: new URL(
+        `${window.location.origin}${PROXIES.DATA_API}${url}`
+      ).toString(),
     };
   }
 
-  return cartoRequest.get(url).then((response) => ({
+  return dataRequest.get(url).then((response) => ({
     ...response,
     data: {
-      rows: response.data.rows.map((o) => {
+      rows: response.data.map((o) => {
         delete Object.assign(o, { deforest: o.fao_treecover_deforest__ha })
           .fao_treecover_deforest__ha;
         return o;
