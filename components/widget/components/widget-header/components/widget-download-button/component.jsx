@@ -207,7 +207,7 @@ class WidgetDownloadButton extends PureComponent {
           filename = filename.concat('.csv');
         }
       } catch (error) {
-        filename = `file ${index + 1}.csv`;
+        filename = `error.csv`;
       }
 
       zip.file(filename, urlToPromise(url), { binary: true });

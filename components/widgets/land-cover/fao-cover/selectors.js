@@ -8,29 +8,21 @@ const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 const getTitle = (state) => state.title;
+const getSettings = (state) => state.settings;
 
 // get lists selected
 export const parseData = createSelector(
   [getData, getColors],
   (data, colors) => {
-    if (isEmpty(data)) return null;
-    const {
-      area_ha,
-      extent,
-      planted_forest,
-      forest_primary,
-      forest_regenerated,
-    } = data;
-    const otherCover =
-      extent - (forest_regenerated + forest_primary + planted_forest);
+    if (isEmpty(data)) {
+      return null;
+    }
+
+    const { area_ha, extent, planted_forest, forest_primary } = data;
+    const otherCover = extent - (forest_primary + planted_forest);
     const nonForest = area_ha - extent;
-    return [
-      {
-        label: 'Naturally Regenerated Forest',
-        value: forest_regenerated,
-        percentage: (forest_regenerated / area_ha) * 100,
-        color: colors.naturalForest,
-      },
+
+    const chartItems = [
       {
         label: 'Primary Forest',
         value: forest_primary || 0,
@@ -56,28 +48,50 @@ export const parseData = createSelector(
         color: colors.nonForest,
       },
     ];
+
+    if (forest_primary === null) {
+      return chartItems.slice(1, chartItems.length);
+    }
+
+    return chartItems;
   }
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocationName, getSentences],
-  (data, locationName, sentences) => {
+  [getData, getLocationName, getSentences, getSettings],
+  (data, locationName, sentences, settings) => {
     if (isEmpty(data)) return null;
-    const { initial, noPrimary, globalInitial, globalNoPrimary } = sentences;
+
+    const { initial, noPrimary, globalInitial } = sentences;
     const { area_ha, extent, forest_primary } = data;
+    const { faoYear } = settings;
+
     const primaryPercent =
       forest_primary > 0
-        ? (forest_primary / area_ha) * 100
+        ? (forest_primary / extent) * 100
         : (extent / area_ha) * 100;
+
+    const percent = (extent / area_ha) * 100;
     const params = {
       location: locationName === 'global' ? 'globally' : locationName,
       extent: formatNumber({ num: extent, unit: 'ha', spaceUnit: true }),
       primaryPercent: formatNumber({ num: primaryPercent, unit: '%' }),
+      year: faoYear,
+      percent: formatNumber({ num: percent, unit: '%' }),
+      amountInHectares: formatNumber({
+        num: extent,
+        unit: 'ha',
+        spaceUnit: true,
+      }),
+      country: locationName,
     };
-    let sentence = forest_primary > 0 ? initial : noPrimary;
+
+    let sentence = forest_primary !== null ? initial : noPrimary;
+
     if (locationName === 'global') {
-      sentence = forest_primary > 0 ? globalInitial : globalNoPrimary;
+      sentence = globalInitial;
     }
+
     return {
       sentence,
       params,
