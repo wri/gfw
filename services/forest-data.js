@@ -1,4 +1,5 @@
-import { cartoRequest } from 'utils/request';
+import { cartoRequest, dataRequest } from 'utils/request';
+import { PROXIES } from 'utils/proxies';
 
 import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 
@@ -6,7 +7,7 @@ import { CARTO_API } from 'utils/apis';
 
 const NEW_SQL_QUERIES = {
   faoExtent:
-    'SELECT country AS iso, name, plantfor * 1000 AS planted_forest__ha, primfor * 1000 AS primary_forest__ha, natregfor * 1000 AS regenerated_forest__ha, forest * 1000 AS fao_treecover__ha, totarea as area_ha FROM table_1_forest_area_and_characteristics WHERE {location} AND year = 2015',
+    'SELECT iso, country, "planted forest (ha)" AS planted_forest__ha, "primary (ha)" AS primary_forest__ha, "naturally regenerating forest (ha)" AS regenerated_forest__ha, "forest (ha)" AS fao_treecover__ha, "total land area (ha)" as area_ha FROM data WHERE {location} AND year = {year}',
   faoReforest:
     'SELECT country AS iso, name, year, reforest * 1000 AS reforestation__rate, forest*1000 AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY reforestation__rate DESC',
   faoDeforest:
@@ -44,23 +45,28 @@ const getLocationQuery = (adm0, adm1, adm2) =>
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const getFAOExtent = ({ adm0, download }) => {
-  const url = `/sql?q=${NEW_SQL_QUERIES.faoExtent}`.replace(
-    '{location}',
-    adm0 ? `country = '${adm0}'` : '1 = 1'
-  );
+export const getFAOExtent = async ({ adm0, faoYear = 2020, download }) => {
+  const target = download ? 'download/csv' : 'query/json';
+
+  const url =
+    `/dataset/fao_forest_extent/v2020/${target}?sql=${NEW_SQL_QUERIES.faoExtent}`
+      .replace(/{location}/g, adm0 ? `iso = '${adm0}'` : '1 = 1')
+      .replace(/{year}/g, faoYear);
 
   if (download) {
     return {
       name: 'fao_treecover_extent__ha',
-      url: `${CARTO_API}${url}&format=csv`,
+      url: new URL(
+        `${window.location.origin}${PROXIES.DATA_API}${url}`
+      ).toString(),
     };
   }
 
-  return cartoRequest.get(url).then((response) => ({
-    ...response,
+  const response = await dataRequest.get(url);
+
+  const widgetData = {
     data: {
-      rows: response.data.rows.map((o) => {
+      rows: response.data.map((o) => {
         // delete old key, replace it with new
         // delete Object.assign(o, {[newKey]: o[oldKey] })[oldKey]
         delete Object.assign(o, { planted_forest: o.planted_forest__ha })
@@ -75,7 +81,9 @@ export const getFAOExtent = ({ adm0, download }) => {
         return o;
       }),
     },
-  }));
+  };
+
+  return widgetData;
 };
 
 export const getFAOReforest = ({ period, download }) => {
