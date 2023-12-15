@@ -9,7 +9,7 @@ const NEW_SQL_QUERIES = {
   faoExtent:
     'SELECT iso, country, "planted forest (ha)" AS planted_forest__ha, "primary (ha)" AS primary_forest__ha, "naturally regenerating forest (ha)" AS regenerated_forest__ha, "forest (ha)" AS fao_treecover__ha, "total land area (ha)" as area_ha FROM data WHERE {location} AND year = {year}',
   faoReforest:
-    'SELECT country AS iso, name, year, reforest * 1000 AS reforestation__rate, forest*1000 AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY reforestation__rate DESC',
+    'SELECT country AS iso, year, "reforestation (ha per year)" AS reforestation__rate, "forest expansion (ha per year)" AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {yearRange} AND "reforestation (ha per year)" > 0 ORDER BY reforestation__rate DESC',
   faoDeforest:
     'SELECT iso, country as name, "deforestation (ha per year)" as fao_treecover_deforest__ha, "reforestation (ha per year)" as fao_reforestation__ha, "forest expansion (ha per year)" as fao_expansion__ha, year FROM data where year = {yearRange}',
   faoDeforestRank:
@@ -86,21 +86,26 @@ export const getFAOExtent = async ({ adm0, faoYear = 2020, download }) => {
   return widgetData;
 };
 
-export const getFAOReforest = ({ period, download }) => {
-  const url = `/sql?q=${NEW_SQL_QUERIES.faoReforest}`.replace(
-    '{period}',
-    period
-  );
+export const getFAOReforest = async ({ yearRange = '2015-2020', download }) => {
+  const target = download ? 'download/csv' : 'query/json';
+  const url =
+    `/dataset/fao_forest_change/v2020/${target}?sql=${NEW_SQL_QUERIES.faoReforest}`.replace(
+      /{yearRange}/g,
+      `'${yearRange}'`
+    );
 
   if (download) {
     return {
       name: 'fao_treecover_reforestation__ha',
-      url: `${CARTO_API}${url}&format=csv`,
+      url: new URL(
+        `${window.location.origin}${PROXIES.DATA_API}${url}`
+      ).toString(),
     };
   }
 
-  return cartoRequest.get(url).then((response) => ({
-    ...response,
+  const response = await dataRequest.get(url);
+
+  const widgetData = {
     data: {
       rows: response.data.rows.map((o) => {
         delete Object.assign(o, { rate: o.reforestation__rate })
@@ -110,7 +115,9 @@ export const getFAOReforest = ({ period, download }) => {
         return o;
       }),
     },
-  }));
+  };
+
+  return widgetData;
 };
 
 export const getFAODeforest = async ({
