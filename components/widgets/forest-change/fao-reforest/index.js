@@ -1,3 +1,4 @@
+import { all, spread } from 'axios';
 import { getFAOReforest } from 'services/forest-data';
 
 import getWidgetProps from './selectors';
@@ -43,11 +44,13 @@ export default {
     page: 0,
   },
   getData: (params) =>
-    getFAOReforest({ ...params }).then((response) => {
-      const data = response.data.rows;
-      const hasCountryData = (data.length && data.find((d) => d.iso)) || null;
-      return hasCountryData ? data : {};
-    }),
+    all([getFAOReforest(params)]).then(
+      spread((getFAOReforestResponse) => {
+        const fao = getFAOReforestResponse;
+
+        return { fao };
+      })
+    ),
   getDataURL: (params) => [getFAOReforest({ ...params, download: true })],
   getWidgetProps,
 };
