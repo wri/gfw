@@ -14,9 +14,11 @@ export default {
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
-      key: 'period',
+      key: 'yearRange',
       label: 'period',
       type: 'select',
+      clearable: false,
+      border: true,
     },
   ],
   chartType: 'rankedList',
@@ -25,7 +27,7 @@ export default {
   sortOrder: {
     forestChange: 8,
   },
-  refetchKeys: ['period'],
+  refetchKeys: ['yearRange'],
   colors: 'gain',
   sentences: {
     globalInitial:
@@ -35,7 +37,7 @@ export default {
     noReforest: 'No reforestation data in {location}.',
   },
   settings: {
-    period: 2010,
+    yearRange: '2015-2020',
     unit: 'ha/year',
     pageSize: 5,
     page: 0,
