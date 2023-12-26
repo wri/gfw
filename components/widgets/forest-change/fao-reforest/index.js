@@ -32,9 +32,9 @@ export default {
   colors: 'gain',
   sentences: {
     globalInitial:
-      'According to the FAO, the {location} rate of reforestation in {year} was {rate} per year.',
+      'According to the FAO, the {location} rate of reforestation in between {startYearRange} and {endYearRange} was {rate} per year.',
     initial:
-      'According to the FAO, the rate of reforestation in {location} was {rate} per year in {year}.',
+      'According to the FAO, the rate of reforestation in {location} was {rate} per year between {startYearRange} and {endYearRange}.',
     noReforest: 'No reforestation data in {location}.',
   },
   settings: {
