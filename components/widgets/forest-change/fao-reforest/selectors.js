@@ -26,9 +26,7 @@ export const getSortedData = createSelector([getData], (data) => {
 export const parseData = createSelector(
   [getData, getAdm0, getColors],
   (data, adm0, colors) => {
-    // if (!data || !data.length) return null;
-
-    console.log(data);
+    if (!data || !data.length) return null;
 
     let dataTrimmed = data;
 
@@ -50,11 +48,9 @@ export const parseData = createSelector(
       dataTrimmed = data?.slice(trimStart, trimEnd);
     }
 
-    console.log('data trimmed', dataTrimmed);
-
     return dataTrimmed?.map((d) => ({
       ...d,
-      label: d.name,
+      label: d.iso,
       color: colors.main,
       value: d.rate,
     }));

@@ -107,7 +107,7 @@ export const getFAOReforest = async ({ yearRange = '2015-2020', download }) => {
 
   const widgetData = {
     data: {
-      rows: response.data.rows.map((o) => {
+      rows: response.data.map((o) => {
         delete Object.assign(o, { rate: o.reforestation__rate })
           .reforestation__rate;
         delete Object.assign(o, { extent: o.fao_treecover_reforest__ha })
