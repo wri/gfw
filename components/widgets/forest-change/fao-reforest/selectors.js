@@ -50,7 +50,7 @@ export const parseData = createSelector(
 
     return dataTrimmed?.map((d) => ({
       ...d,
-      label: d.iso,
+      label: d.name,
       color: colors.main,
       value: d.rate,
     }));

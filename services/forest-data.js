@@ -9,7 +9,7 @@ const NEW_SQL_QUERIES = {
   faoExtent:
     'SELECT iso, country, "planted forest (ha)" AS planted_forest__ha, "primary (ha)" AS primary_forest__ha, "naturally regenerating forest (ha)" AS regenerated_forest__ha, "forest (ha)" AS fao_treecover__ha, "total land area (ha)" as area_ha FROM data WHERE {location} AND year = {year}',
   faoReforest:
-    'SELECT country AS iso, year, "reforestation (ha per year)" AS reforestation__rate, "forest expansion (ha per year)" AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {yearRange} AND "reforestation (ha per year)" > 0 ORDER BY reforestation__rate DESC',
+    'SELECT iso, country AS name, year, "reforestation (ha per year)" AS reforestation__rate, "forest expansion (ha per year)" AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {yearRange} AND "reforestation (ha per year)" > 0 ORDER BY reforestation__rate DESC',
   faoDeforest:
     'SELECT iso, country as name, "deforestation (ha per year)" as fao_treecover_deforest__ha, "reforestation (ha per year)" as fao_reforestation__ha, "forest expansion (ha per year)" as fao_expansion__ha, year FROM data where year = {yearRange}',
   faoDeforestRank:
