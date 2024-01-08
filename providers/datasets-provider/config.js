@@ -598,12 +598,13 @@ const decodes = {
   float blue = color.b;
 
   if (zoom < 12.) {
-    if (red == 0. && green == 0. && blue == 0.) {
+    if (color.r == 0. && color.g == 0. && color.b == 0.) {
       alpha = 0.;
     } else {
-      alpha = alpha * 6.;
+      alpha = 1.- (1.1 * pow(8. , -(12. * alpha / zoom)));
     }
   }
+  
   color.r = red;
   color.g = green;
   color.b = blue; 
