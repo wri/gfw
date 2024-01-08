@@ -593,21 +593,17 @@ const decodes = {
     color.b = blue; 
   `,
   treeGain: `
-  float red = color.r;
-  float green = color.g;
-  float blue = color.b;
-
-  if (zoom < 12.) {
-    if (color.r == 0. && color.g == 0. && color.b == 0.) {
-      alpha = 0.;
-    } else {
-      alpha = 1.- (1.1 * pow(8. , -(12. * alpha / zoom)));
+    // Multiply alpha (opacity) by a function that drops super low opacity
+    // pixels and scales the rest to higher values
+    // TODO: Explain the various coefficients and how they effect alpha
+    
+    if (zoom < 12.) {
+      if (color.r == 0. && color.g == 0. && color.b == 0.) {
+        alpha = 0.;
+      } else {
+        alpha = 1.- (1.1 * pow(8. , -(12. * alpha / zoom)));
+      }
     }
-  }
-  
-  color.r = red;
-  color.g = green;
-  color.b = blue; 
 `,
   newCarbonFlux: `
     float red = color.r;
