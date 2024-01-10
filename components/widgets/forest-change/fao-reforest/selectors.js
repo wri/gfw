@@ -24,10 +24,9 @@ export const getSortedData = createSelector([getData], (data) => {
 });
 
 export const parseData = createSelector(
-  [getData, getAdm0, getColors],
+  [getSortedData, getAdm0, getColors],
   (data, adm0, colors) => {
     if (!data || !data.length) return null;
-
     let dataTrimmed = data;
 
     if (adm0) {
