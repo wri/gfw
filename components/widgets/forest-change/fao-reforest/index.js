@@ -49,6 +49,8 @@ export default {
 
       return hasCountryData ? data : {};
     }),
-  getDataURL: (params) => [getFAOReforest({ ...params, download: true })],
+  getDataURL: async (params) => [
+    await getFAOReforest({ ...params, download: true }),
+  ],
   getWidgetProps,
 };
