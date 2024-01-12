@@ -33,22 +33,7 @@ export default {
   alerts: [
     {
       id: 'net-change-alert-1',
-      text:
-        'The loss total is different from annual tree cover loss, as this data was created using a different method and forest definition. For gross or annual loss information, please see the tree cover loss widget.',
-      visible: [
-        'country',
-        'geostore',
-        'aoi',
-        'wdpa',
-        'use',
-        'dashboard',
-        'global',
-      ],
-    },
-    {
-      id: 'net-change-alert-2',
-      text:
-        'Would you like to **help us understand** how to present this data in more helpful ways? [Click here to fill out a survey](https://survey.alchemer.com/s3/7062032/Provide-feedback-for-Global-Forest-Watch-s-Net-Change-in-Tree-Cover-data-layer)',
+      text: 'The loss total is different from annual tree cover loss, as this data was created using a different method and forest definition. For gross or annual loss information, please see the tree cover loss widget.',
       visible: [
         'country',
         'geostore',
