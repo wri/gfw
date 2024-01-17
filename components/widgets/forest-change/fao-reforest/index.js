@@ -14,9 +14,11 @@ export default {
   admins: ['global', 'adm0'],
   settingsConfig: [
     {
-      key: 'period',
+      key: 'yearRange',
       label: 'period',
       type: 'select',
+      clearable: false,
+      border: true,
     },
   ],
   chartType: 'rankedList',
@@ -25,17 +27,17 @@ export default {
   sortOrder: {
     forestChange: 8,
   },
-  refetchKeys: ['period'],
+  refetchKeys: ['yearRange'],
   colors: 'gain',
   sentences: {
     globalInitial:
-      'According to the FAO, the {location} rate of reforestation in {year} was {rate} per year.',
+      'According to the FAO, the {location} rate of reforestation in between {startYearRange} and {endYearRange} was {rate} per year.',
     initial:
-      'According to the FAO, the rate of reforestation in {location} was {rate} per year in {year}.',
+      'According to the FAO, the rate of reforestation in {location} was {rate} per year between {startYearRange} and {endYearRange}.',
     noReforest: 'No reforestation data in {location}.',
   },
   settings: {
-    period: 2010,
+    yearRange: '2015-2020',
     unit: 'ha/year',
     pageSize: 5,
     page: 0,
@@ -44,8 +46,11 @@ export default {
     getFAOReforest({ ...params }).then((response) => {
       const data = response.data.rows;
       const hasCountryData = (data.length && data.find((d) => d.iso)) || null;
+
       return hasCountryData ? data : {};
     }),
-  getDataURL: (params) => [getFAOReforest({ ...params, download: true })],
+  getDataURL: async (params) => [
+    await getFAOReforest({ ...params, download: true }),
+  ],
   getWidgetProps,
 };
