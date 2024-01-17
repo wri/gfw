@@ -10,6 +10,8 @@ const NEW_SQL_QUERIES = {
     'SELECT iso, country, "planted forest (ha)" AS planted_forest__ha, "primary (ha)" AS primary_forest__ha, "naturally regenerating forest (ha)" AS regenerated_forest__ha, "forest (ha)" AS fao_treecover__ha, "total land area (ha)" as area_ha FROM data WHERE {location} AND year = {year}',
   faoReforest:
     'SELECT iso, country AS name, year, "reforestation (ha per year)" AS reforestation__rate, "forest expansion (ha per year)" AS fao_treecover_reforest__ha FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {yearRange} AND "reforestation (ha per year)" > 0 ORDER BY reforestation__rate DESC',
+  faoReforestDownload:
+    'SELECT iso, country AS name, year, "reforestation (ha per year)" AS reforestation__rate  FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {yearRange} AND "reforestation (ha per year)" > 0 ORDER BY reforestation__rate DESC',
   faoDeforest:
     'SELECT iso, country as name, "deforestation (ha per year)" as fao_treecover_deforest__ha, "reforestation (ha per year)" as fao_reforestation__ha, "forest expansion (ha per year)" as fao_expansion__ha, year FROM data where year = {yearRange}',
   faoDeforestRank:
@@ -88,11 +90,13 @@ export const getFAOExtent = async ({ adm0, faoYear = 2020, download }) => {
 
 export const getFAOReforest = async ({ yearRange = '2015-2020', download }) => {
   const target = download ? 'download/csv' : 'query/json';
-  const url =
-    `/dataset/fao_forest_change/v2020/${target}?sql=${NEW_SQL_QUERIES.faoReforest}`.replace(
-      /{yearRange}/g,
-      `'${yearRange}'`
-    );
+  const query = download
+    ? NEW_SQL_QUERIES.faoReforestDownload
+    : NEW_SQL_QUERIES.faoReforest;
+  const url = `/dataset/fao_forest_change/v2020/${target}?sql=${query}`.replace(
+    /{yearRange}/g,
+    `'${yearRange}'`
+  );
 
   if (download) {
     return {
