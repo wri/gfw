@@ -588,11 +588,23 @@ const decodes = {
         alpha = 1.;
       }
     }
-
     color.r = red;
     color.g = green;
     color.b = blue; 
   `,
+  treeGain: `
+    // Multiply alpha (opacity) by a function that drops super low opacity
+    // pixels and scales the rest to higher values
+    // TODO: Explain the various coefficients and how they effect alpha
+    
+    if (zoom < 12.) {
+      if (color.r == 0. && color.g == 0. && color.b == 0.) {
+        alpha = 0.;
+      } else {
+        alpha = 1.- (1.1 * pow(8. , -(12. * alpha / zoom)));
+      }
+    }
+`,
   newCarbonFlux: `
     float red = color.r;
     float green = color.g;
@@ -1058,4 +1070,5 @@ export default {
   cumulativeCarbonGain: decodes.cumulativeCarbonGain,
   netGHGFlux: decodes.netCarbonFlux,
   formaAlerts: decodes.forma,
+  treeGain: decodes.treeGain,
 };
