@@ -14,6 +14,8 @@ const getPrimaryLoss = (state) => state.data && state.data.primaryLoss;
 const getAdminLoss = (state) => state.data && state.data.adminLoss;
 const getSettings = (state) => state.settings;
 const getLocationLabel = (state) => state.locationLabel;
+const getAlerts = (state) => state.alerts || [];
+const getAdm0 = (state) => state.adm0;
 const getIndicator = (state) => state.indicator;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state && state.sentence;
@@ -162,6 +164,37 @@ export const parseTitle = createSelector(
   }
 );
 
+export const parseAlerts = createSelector(
+  [getAlerts, getLocationLabel, getAdm0],
+  (alerts, locationLabel, adm0) => {
+    const countriesWithNewWarningText = [
+      'CMR',
+      'CIV',
+      'COD',
+      'GNQ',
+      'GAB',
+      'GHA',
+      'GIN',
+      'GNB',
+      'LBR',
+      'MDG',
+      'COG',
+      'SLE',
+    ];
+
+    if (countriesWithNewWarningText.includes(adm0)) {
+      return [
+        {
+          text: `The methods behind this data have changed over time, resulting in an underreporting of tree cover loss in ${locationLabel} prior to 2015. We advise against comparing the data before/after 2015 in ${locationLabel}. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
+          visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+        },
+      ];
+    }
+
+    return alerts;
+  }
+);
+
 const parseSentence = createSelector(
   [
     parseData,
@@ -249,4 +282,5 @@ export default createStructuredSelector({
   config: parseConfig,
   sentence: parseSentence,
   title: parseTitle,
+  alerts: parseAlerts,
 });

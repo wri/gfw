@@ -20,6 +20,7 @@ const getSentences = (state) => state.sentences;
 const getAlerts = (state) => state.alerts;
 const getTitle = (state) => state.title;
 const getAdm0 = (state) => state.adm0;
+const getLocationLabel = (state) => state.locationLabel;
 
 export const getPermCats = createSelector([], () =>
   tscLossCategories.filter((x) => x.permanent).map((el) => el.value.toString())
@@ -259,8 +260,34 @@ export const parseTitle = createSelector(
 );
 
 export const parseAlerts = createSelector(
-  [getAlerts, getAdm0],
-  (alerts, adm0) => (adm0 === 'IDN' ? alerts.indonesia : alerts.default)
+  [getAlerts, getAdm0, getLocationLabel],
+  (alerts, adm0, locationLabel) => {
+    const countriesWithNewWarningText = [
+      'CMR',
+      'CIV',
+      'COD',
+      'GNQ',
+      'GAB',
+      'GHA',
+      'GIN',
+      'GNB',
+      'LBR',
+      'MDG',
+      'COG',
+      'SLE',
+    ];
+
+    if (countriesWithNewWarningText.includes(adm0)) {
+      return [
+        {
+          text: `The methods behind this data have changed over time, resulting in an underreporting of tree cover loss in ${locationLabel} prior to 2015. We advise against comparing the data before/after 2015 in ${locationLabel}. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
+          visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+        },
+      ];
+    }
+
+    return adm0 === 'IDN' ? alerts.indonesia : alerts.default;
+  }
 );
 
 export default createStructuredSelector({
