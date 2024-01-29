@@ -36,13 +36,16 @@ export const getData = createSelector(
   [getAlerts, getLatest],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
+
     const parsedData = data.map((d) => ({
       ...d,
       count: d.alert__count || d.area_ha,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
+
     const groupedByYear = groupBy(sortBy(parsedData, ['year', 'week']), 'year');
+
     const hasAlertsByYears = Object.values(groupedByYear).reduce(
       (acc, next) => {
         const { year } = next[0];
@@ -57,9 +60,11 @@ export const getData = createSelector(
     const dataYears = Object.keys(hasAlertsByYears).filter(
       (key) => hasAlertsByYears[key] === true
     );
+
     const years = dataYears.map((item) => parseInt(item, 10));
     const formattedData = [];
     const latestWeek = moment(latest);
+
     const lastWeek = {
       isoWeek: latestWeek.isoWeek(),
       year: latestWeek.year(),
@@ -81,6 +86,10 @@ export const getData = createSelector(
       }
 
       for (let i = 1; i <= yearLength[year]; i += 1) {
+        if (Object.keys(yearDataByWeek).length < i) {
+          return;
+        }
+
         const yearDataLength = yearDataByWeek[i]
           ? yearDataByWeek[i].length - 1
           : 0;
@@ -159,7 +168,6 @@ export const parseData = createSelector(
     // @TODO: better compare year parsing
     const { year: startYear, week: startWeek } = currentData[0];
     const yearDifference = maxminYear.max - startYear;
-
     const compareStartYear = compareYear - yearDifference;
 
     const weekFound = !!data.find(
@@ -167,19 +175,18 @@ export const parseData = createSelector(
     );
 
     const findWeek = weekFound ? startWeek : 1;
-    const findYear = weekFound ? compareStartYear : compareStartYear + 1;
-
+    const findYear = compareStartYear + 1;
     const compareStartIndex = data.findIndex(
       (el) => el.year === findYear && el.week === findWeek
     );
 
     const parsedData = currentData.map((d, i) => {
       if (compareYear) {
-        const parsedCompareYear = compareYear - yearDifference;
         const compareWeek = data[compareStartIndex + i];
+
         return {
           ...d,
-          compareYear: parsedCompareYear,
+          compareYear,
           compareCount: compareWeek ? compareWeek.count : null,
         };
       }
@@ -196,7 +203,6 @@ export const parseBrushedData = createSelector(
     if (!data || isEmpty(data)) return null;
 
     const { startIndex, endIndex } = indexes;
-
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
 
@@ -222,7 +228,7 @@ export const getLegend = createSelector(
       ...(compareYear && {
         compare: {
           label: `${moment(first.date)
-            .set('year', first.compareYear)
+            .set('year', first.compareYear - 1) // the last 12 months of the year selected
             .format('MMM YYYY')}–${moment(end.date)
             .set('year', end.compareYear)
             .format('MMM YYYY')}`,

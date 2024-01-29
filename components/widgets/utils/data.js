@@ -185,13 +185,13 @@ export const getStatsData = (data, latest) => {
 
   const latestWeek = moment(latest);
 
-  const lastYear = data.filter(
+  const pastTwelveMonths = data.filter(
     (item) =>
       item.year === latestWeek.year() ||
-      (item.week >= latestWeek.isoWeek() && item.year >= latestWeek.year() - 1) // 52 weeks ago, including latestWeek
-  );
+      (item.week >= latestWeek.isoWeek() && item.year === latestWeek.year() - 1)
+  ); // 52 weeks ago, including latestWeek
 
-  const parsedData = lastYear.map((d, i) => {
+  const parsedData = pastTwelveMonths.map((d, i) => {
     const weekMean = (translatedMeans && translatedMeans[i]) || 0;
     const stdDev = (translatedStds && translatedStds[i]) || 0;
 
