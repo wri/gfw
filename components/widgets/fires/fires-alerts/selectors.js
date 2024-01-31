@@ -175,7 +175,7 @@ export const parseData = createSelector(
     );
 
     const findWeek = weekFound ? startWeek : 1;
-    const findYear = compareStartYear + 1;
+    const findYear = weekFound ? compareStartYear : compareStartYear + 1;
     const compareStartIndex = data.findIndex(
       (el) => el.year === findYear && el.week === findWeek
     );
