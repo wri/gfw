@@ -27,9 +27,7 @@ const RESOURCE_WATCH_API_URL = RESOURCE_WATCH_API;
 
 // At the moment, the API key is the same
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
-const GFW_METADATA_API_KEY = GFW_API_KEY;
 const DATA_API_KEY = GFW_API_KEY;
-const RESOURCE_WATCH_API_KEY = GFW_API_KEY;
 
 const isServer = typeof window === 'undefined';
 
@@ -65,9 +63,6 @@ export const metadataRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {
     baseURL: GFW_METADATA_API_URL,
-    headers: {
-      'x-api-key': GFW_METADATA_API_KEY,
-    },
   }),
   ...(!isServer && {
     baseURL: PROXIES.METADATA_API,
@@ -78,9 +73,6 @@ export const rwRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {
     baseURL: RESOURCE_WATCH_API_URL,
-    headers: {
-      'x-api-key': RESOURCE_WATCH_API_KEY,
-    },
   }),
   ...(!isServer && {
     baseURL: PROXIES.RESOURCE_WATCH_API,
@@ -94,7 +86,6 @@ export const apiAuthRequest = axios.create({
     baseURL: GFW_API,
     headers: {
       'content-type': 'application/json',
-      'x-api-key': GFW_API_KEY,
     },
   }),
   ...(!isServer && {
