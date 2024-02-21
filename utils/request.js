@@ -41,9 +41,6 @@ export const apiRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {
     baseURL: GFW_API_URL,
-    headers: {
-      'x-api-key': GFW_API_KEY,
-    },
   }),
   ...(!isServer && {
     baseURL: PROXIES.GFW_API,
