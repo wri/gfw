@@ -151,10 +151,11 @@ class NewsletterForm extends PureComponent {
                     placeholder="Select a sector"
                     required
                   />
-                  <Checkbox
+                  <Select
                     name="interest"
                     label="I'm interested in (check all that apply)"
                     options={interestsOptions}
+                    multiple
                   />
                   <Error
                     valid={valid}
