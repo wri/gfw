@@ -71,6 +71,8 @@ class NewsletterForm extends PureComponent {
   render() {
     const { countries, initialValues } = this.props;
 
+    const countriesOptions = countries.map(({ label }) => ({ label, value: label }));
+
     return (
       <Fragment>
         <Form
@@ -113,7 +115,7 @@ class NewsletterForm extends PureComponent {
                   <Select
                     name="country"
                     label="country"
-                    options={countries}
+                    options={countriesOptions}
                     placeholder="Select a country"
                     required
                   />
