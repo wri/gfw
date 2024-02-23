@@ -15,6 +15,20 @@ import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
 
+const sectors = [
+  "Government",
+  "Donor Institution/Agency",
+  "Local NGO (National or Subnational)",
+  "International NGO",
+  "UN or International Organization",
+  "Academic/Research Organization",
+  "Journalist/Media Organization",
+  "Indigenous or Community-Based Organization",
+  "Private Sector",
+  "No Affiliation",
+  "Other"
+];
+
 const subscriptions = [
   { label: 'Innovations in Monitoring', value: 'monitoring' },
   { label: 'Fires', value: 'fires' },
@@ -39,6 +53,7 @@ class NewsletterForm extends PureComponent {
       organization,
       city,
       country,
+      sector,
       comments,
       gfwInterests,
     } = values;
@@ -51,6 +66,7 @@ class NewsletterForm extends PureComponent {
       company: organization,
       city,
       country,
+      sector,
       gfw_interests: gfwInterests,
       pardot_extra_field: comments,
     };
@@ -72,6 +88,7 @@ class NewsletterForm extends PureComponent {
     const { countries, initialValues } = this.props;
 
     const countriesOptions = countries.map(({ label }) => ({ label, value: label }));
+    const sectorsOptions = sectors.map((sector) => ({ label: sector, value: sector }));
 
     return (
       <Fragment>
@@ -117,6 +134,13 @@ class NewsletterForm extends PureComponent {
                     label="country"
                     options={countriesOptions}
                     placeholder="Select a country"
+                    required
+                  />
+                  <Select
+                    name="sector"
+                    label="sector"
+                    options={sectorsOptions}
+                    placeholder="Select a sector"
                     required
                   />
                   <Checkbox
