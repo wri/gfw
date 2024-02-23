@@ -51,12 +51,7 @@ class NewsletterForm extends PureComponent {
       company: organization,
       city,
       country,
-      gfw_interests: gfwInterests
-        ? Object.entries(gfwInterests)
-            .filter(([, val]) => val)
-            .map(([key]) => key)
-            .join(', ')
-        : '',
+      gfw_interests: gfwInterests,
       pardot_extra_field: comments,
     };
 
