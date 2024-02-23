@@ -49,6 +49,8 @@ class GlobalSentence extends PureComponent {
 
     let sentenceProps;
 
+    console.log('locationNames.adm0: ', locationNames?.adm0);
+
     sentenceProps = {
       ...(locationNames?.adm0?.label && {
         location: locationNames?.adm0?.label,
@@ -61,6 +63,9 @@ class GlobalSentence extends PureComponent {
       }),
       ...(locationNames?.adm0?.label && {
         area: locationNames?.adm0?.label,
+      }),
+      ...(locationNames?.adm0?.value && {
+        countryCode: locationNames?.adm0?.value,
       }),
     };
 

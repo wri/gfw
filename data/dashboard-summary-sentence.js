@@ -13,7 +13,7 @@ export default {
   },
   country: {
     summary:
-      'Explore interactive charts and maps that summarize key statistics about forests in {location}. Statistics – including rates of forest change, forest extent, drivers of deforestation, and deforestation and fire alerts – can be customized, easily shared and downloaded for offline use.',
+      'Explore interactive charts and maps that summarize key statistics about forests in {location}. Statistics – including rates of forest change, forest extent, drivers of deforestation, and deforestation and fire alerts – can be customized, easily shared and downloaded for offline use. <a href="/tcl-download-{countryCode}">Download file for {location}</a>',
     'land-cover':
       'Explore interactive charts and maps that summarize forest extent in {location}. Statistics – including rankings of regions with the most forest – can be customized, easily shared and downloaded for offline use.',
     'forest-change':
