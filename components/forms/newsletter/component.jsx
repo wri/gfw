@@ -29,6 +29,14 @@ const sectors = [
   "Other"
 ];
 
+const preferredLanguages = [
+  "English",
+  "Français",
+  "Español",
+  "Português",
+  "Bahasa Indonesia"
+];
+
 const interests = [
   "Innovations in Monitoring",
   "Fires",
@@ -97,6 +105,10 @@ class NewsletterForm extends PureComponent {
       label: interest,
       value: interest,
     }));
+    const preferredLanguageOptions = preferredLanguages.map((preferredLanguage) => ({
+      label: preferredLanguage,
+      value: preferredLanguage,
+    }));
 
     return (
       <Fragment>
@@ -153,7 +165,12 @@ class NewsletterForm extends PureComponent {
                   />
                   <Select
                     name="interest"
-                    label="I'm interested in (check all that apply)"
+                    label="Preferred Language"
+                    options={preferredLanguageOptions}
+                  />
+                  <Select
+                    name="interest"
+                    label="I'm interested in"
                     options={interestsOptions}
                     multiple
                   />
