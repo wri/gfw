@@ -114,7 +114,7 @@ class NewsletterForm extends PureComponent {
                   <Input name="lastName" label="last name" required />
                   <Input name="jobTitle" label="job title" />
                   <Input name="organization" label="organization" required />
-                  <Input name="city" label="city" required />
+                  <Input name="city" label="city" />
                   <Select
                     name="country"
                     label="country"
