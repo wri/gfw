@@ -35,6 +35,7 @@ class NewsletterForm extends PureComponent {
       email,
       firstName,
       lastName,
+      jobTitle,
       organization,
       city,
       country,
@@ -46,6 +47,7 @@ class NewsletterForm extends PureComponent {
       email,
       first_name: firstName,
       last_name: lastName,
+      job_title: jobTitle,
       company: organization,
       city,
       country,
@@ -110,6 +112,7 @@ class NewsletterForm extends PureComponent {
                   />
                   <Input name="firstName" label="first name" required />
                   <Input name="lastName" label="last name" required />
+                  <Input name="jobTitle" label="job title" />
                   <Input name="organization" label="organization" />
                   <Input name="city" label="city" required />
                   <Select
