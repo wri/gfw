@@ -32,9 +32,9 @@ class NewsletterForm extends PureComponent {
 
   saveNewsletterSubscription = (values) => {
     const {
+      email,
       firstName,
       lastName,
-      email,
       organization,
       city,
       country,
@@ -43,9 +43,9 @@ class NewsletterForm extends PureComponent {
     } = values;
 
     const postData = {
+      email,
       first_name: firstName,
       last_name: lastName,
-      email,
       company: organization,
       city,
       country,
@@ -100,8 +100,6 @@ class NewsletterForm extends PureComponent {
                     Subscribe to monthly GFW newsletters and updates based on
                     your interests.
                   </h3>
-                  <Input name="firstName" label="first name" required />
-                  <Input name="lastName" label="last name" required />
                   <Input
                     name="email"
                     type="email"
@@ -110,6 +108,8 @@ class NewsletterForm extends PureComponent {
                     validate={[validateEmail]}
                     required
                   />
+                  <Input name="firstName" label="first name" required />
+                  <Input name="lastName" label="last name" required />
                   <Input name="organization" label="organization" />
                   <Input name="city" label="city" required />
                   <Select
