@@ -29,13 +29,17 @@ const sectors = [
   "Other"
 ];
 
-const subscriptions = [
-  { label: 'Innovations in Monitoring', value: 'monitoring' },
-  { label: 'Fires', value: 'fires' },
-  { label: 'Forest Watcher Mobile App', value: 'fwapp' },
-  { label: 'Climate and Biodiversity', value: 'climate' },
-  { label: 'Agricultural Supply Chains', value: 'supplychains' },
-  { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' },
+const interests = [
+  "Innovations in Monitoring",
+  "Fires",
+  "Forest Watcher Mobile App",
+  "Climate and Carbon",
+  "Biodiversity",
+  "Agricultural Supply Chains",
+  "Small Grants Fund and Tech Fellowship",
+  "Landscape Restoration",
+  "GFW Users in Action",
+  "Places to Watch alerts",
 ];
 
 class NewsletterForm extends PureComponent {
@@ -55,7 +59,7 @@ class NewsletterForm extends PureComponent {
       country,
       sector,
       comments,
-      gfwInterests,
+      interest,
     } = values;
 
     const postData = {
@@ -66,8 +70,8 @@ class NewsletterForm extends PureComponent {
       company: organization,
       city,
       country,
-      sector,
-      gfw_interests: gfwInterests,
+      sectors: sector,
+      interests: interest,
       pardot_extra_field: comments,
     };
 
@@ -89,6 +93,10 @@ class NewsletterForm extends PureComponent {
 
     const countriesOptions = countries.map(({ label }) => ({ label, value: label }));
     const sectorsOptions = sectors.map((sector) => ({ label: sector, value: sector }));
+    const interestsOptions = interests.map((interest) => ({
+      label: interest,
+      value: interest,
+    }));
 
     return (
       <Fragment>
@@ -144,9 +152,9 @@ class NewsletterForm extends PureComponent {
                     required
                   />
                   <Checkbox
-                    name="gfwInterests"
+                    name="interest"
                     label="I'm interested in (check all that apply)"
-                    options={subscriptions}
+                    options={interestsOptions}
                   />
                   <Error
                     valid={valid}
