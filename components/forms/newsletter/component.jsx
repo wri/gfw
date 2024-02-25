@@ -15,38 +15,38 @@ import Error from 'components/forms/components/error';
 import { email as validateEmail } from 'components/forms/validations';
 
 const sectors = [
-  "Government",
-  "Donor Institution/Agency",
-  "Local NGO (National or Subnational)",
-  "International NGO",
-  "UN or International Organization",
-  "Academic/Research Organization",
-  "Journalist/Media Organization",
-  "Indigenous or Community-Based Organization",
-  "Private Sector",
-  "No Affiliation",
-  "Other"
+  'Government',
+  'Donor Institution/Agency',
+  'Local NGO (National or Subnational)',
+  'International NGO',
+  'UN or International Organization',
+  'Academic/Research Organization',
+  'Journalist/Media Organization',
+  'Indigenous or Community-Based Organization',
+  'Private Sector',
+  'No Affiliation',
+  'Other',
 ];
 
 const preferredLanguages = [
-  "English",
-  "Français",
-  "Español",
-  "Português",
-  "Bahasa Indonesia"
+  'English',
+  'Français',
+  'Español',
+  'Português',
+  'Bahasa Indonesia',
 ];
 
 const interests = [
-  "Innovations in Monitoring",
-  "Fires",
-  "Forest Watcher Mobile App",
-  "Climate and Carbon",
-  "Biodiversity",
-  "Agricultural Supply Chains",
-  "Small Grants Fund and Tech Fellowship",
-  "Landscape Restoration",
-  "GFW Users in Action",
-  "Places to Watch alerts",
+  'Innovations in Monitoring',
+  'Fires',
+  'Forest Watcher Mobile App',
+  'Climate and Carbon',
+  'Biodiversity',
+  'Agricultural Supply Chains',
+  'Small Grants Fund and Tech Fellowship',
+  'Landscape Restoration',
+  'GFW Users in Action',
+  'Places to Watch alerts',
 ];
 
 class NewsletterForm extends PureComponent {
@@ -65,7 +65,6 @@ class NewsletterForm extends PureComponent {
       city,
       country,
       sector,
-      comments,
       interest,
     } = values;
 
@@ -79,7 +78,6 @@ class NewsletterForm extends PureComponent {
       country,
       sectors: sector,
       interests: interest,
-      pardot_extra_field: comments,
     };
 
     return submitNewsletterSubscription(postData)
@@ -98,16 +96,24 @@ class NewsletterForm extends PureComponent {
   render() {
     const { countries, initialValues } = this.props;
 
-    const countriesOptions = countries.map(({ label }) => ({ label, value: label }));
-    const sectorsOptions = sectors.map((sector) => ({ label: sector, value: sector }));
+    const countriesOptions = countries.map(({ label }) => ({
+      label,
+      value: label,
+    }));
+    const sectorsOptions = sectors.map((sector) => ({
+      label: sector,
+      value: sector,
+    }));
     const interestsOptions = interests.map((interest) => ({
       label: interest,
       value: interest,
     }));
-    const preferredLanguageOptions = preferredLanguages.map((preferredLanguage) => ({
-      label: preferredLanguage,
-      value: preferredLanguage,
-    }));
+    const preferredLanguageOptions = preferredLanguages.map(
+      (preferredLanguage) => ({
+        label: preferredLanguage,
+        value: preferredLanguage,
+      })
+    );
 
     return (
       <Fragment>
