@@ -8,7 +8,6 @@ import { submitNewsletterSubscription } from 'services/forms';
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
-import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
 import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
