@@ -73,11 +73,11 @@ class NewsletterForm extends PureComponent {
       first_name: firstName,
       last_name: lastName,
       job_title: jobTitle,
-      company: organization,
+      organization,
       city,
       country,
-      sectors: sector,
-      interests: interest,
+      sector,
+      interest,
     };
 
     return submitNewsletterSubscription(postData)
