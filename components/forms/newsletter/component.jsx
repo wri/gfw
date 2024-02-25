@@ -131,8 +131,8 @@ class NewsletterForm extends PureComponent {
             <form className="c-newsletter-form" onSubmit={handleSubmit}>
               {submitSucceeded ? (
                 <SuccessMessage
-                  title="Thank you for subscribing to Global Forest Watch newsletters and updates!"
-                  description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
+                  title="Thank you!<br />You aren't done yet."
+                  description="<p>Please check your inbox for an email<br /> and click the button to confirm your subscription.</p><p>You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data.</p>"
                 />
               ) : (
                 <Fragment>

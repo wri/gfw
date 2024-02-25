@@ -16,10 +16,10 @@ class Thankyou extends PureComponent {
     return (
       <div className="c-success-message">
         <img src={treeImage} alt="success-tree" />
-        <h1>{title}</h1>
+        <h1>{ReactHtmlParser(title)}</h1>
         {description && (
           <>
-            {description.includes('<p>') ? (
+            {description.includes("<p>") ? (
               ReactHtmlParser(description)
             ) : (
               <p>{ReactHtmlParser(description)}</p>
