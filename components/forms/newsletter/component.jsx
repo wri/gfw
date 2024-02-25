@@ -171,12 +171,12 @@ class NewsletterForm extends PureComponent {
                   <Select
                     name="interest"
                     label="Preferred Language"
+                    description="Please note that most communications will be sent in English."
                     options={preferredLanguageOptions}
                   />
                   <Select
                     name="interest"
                     label="I'm interested in"
-                    description="Please note that most communications will be sent in English."
                     options={interestsOptions}
                     multiple
                   />
