@@ -74,7 +74,7 @@ class Select extends PureComponent {
               </p>
             )}
             {description && (
-              <p>{description}</p>
+              <p className="input-field-description">{description}</p>
             )}
             <select
               className={cx('c-form-select', { multiple })}
