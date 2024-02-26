@@ -55,7 +55,11 @@ class NewsletterForm extends PureComponent {
     initialValues: PropTypes.object,
   };
 
-  saveNewsletterSubscription = (values) => {
+  saveNewsletterSubscription = async (values) => {
+    const ipAddress = await fetch('https://api.ipify.org/?format=json')
+      .then((response) => response.json())
+      .then((data) => data?.ip);
+
     const {
       email,
       firstName,
@@ -79,6 +83,7 @@ class NewsletterForm extends PureComponent {
       sector,
       interest,
       person_source_details: 'https://www.globalforestwatch.org',
+      ip_address: ipAddress,
     };
 
     return submitNewsletterSubscription(postData)
