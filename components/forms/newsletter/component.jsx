@@ -78,6 +78,7 @@ class NewsletterForm extends PureComponent {
       country,
       sector,
       interest,
+      person_source_details: 'https://www.globalforestwatch.org',
     };
 
     return submitNewsletterSubscription(postData)
