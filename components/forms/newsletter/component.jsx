@@ -13,6 +13,7 @@ import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
+import Checkbox from '../components/checkbox/component';
 
 const sectors = [
   'Government',
@@ -180,11 +181,10 @@ class NewsletterForm extends PureComponent {
                     placeholder="Select a preferred language"
                     options={preferredLanguageOptions}
                   />
-                  <Select
+                  <Checkbox
                     name="interest"
                     label="I'm interested in"
                     options={interestsOptions}
-                    multiple
                   />
                   <Error
                     valid={valid}
