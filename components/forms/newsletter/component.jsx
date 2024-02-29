@@ -30,11 +30,11 @@ const sectors = [
 ];
 
 const preferredLanguages = [
-  { label: 'English', value :'EN' },
-  { label: 'Français', value: 'FE' },
+  { label: 'English', value: 'en' },
+  { label: 'Français', value: 'fr' },
   { label: 'Español', value: 'es' },
-  { label: 'Português', value: 'PT' },
-  { label: 'Bahasa Indonesia', value: 'ID' },
+  { label: 'Português', value: 'pt' },
+  { label: 'Bahasa Indonesia', value: 'id' },
 ];
 
 const interests = [
