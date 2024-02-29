@@ -180,6 +180,7 @@ class NewsletterForm extends PureComponent {
                     name="language"
                     label="Preferred Language"
                     description="Please note that most communications will be sent in English."
+                    placeholder="Select a preferred language"
                     options={preferredLanguageOptions}
                   />
                   <Select
