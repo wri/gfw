@@ -69,6 +69,7 @@ class NewsletterForm extends PureComponent {
       city,
       country,
       sector,
+      language,
       interest,
     } = values;
 
@@ -81,6 +82,7 @@ class NewsletterForm extends PureComponent {
       city,
       country,
       sector,
+      language,
       interest,
       person_source_details: 'https://www.globalforestwatch.org',
       ip_address: ipAddress,
@@ -175,7 +177,7 @@ class NewsletterForm extends PureComponent {
                     required
                   />
                   <Select
-                    name="interest"
+                    name="language"
                     label="Preferred Language"
                     description="Please note that most communications will be sent in English."
                     options={preferredLanguageOptions}
