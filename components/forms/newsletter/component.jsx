@@ -29,11 +29,11 @@ const sectors = [
 ];
 
 const preferredLanguages = [
-  'English',
-  'Français',
-  'Español',
-  'Português',
-  'Bahasa Indonesia',
+  { label: 'English', value :'EN' },
+  { label: 'Français', value: 'FE' },
+  { label: 'Español', value: 'es' },
+  { label: 'Português', value: 'PT' },
+  { label: 'Bahasa Indonesia', value: 'ID' },
 ];
 
 const interests = [
@@ -117,10 +117,7 @@ class NewsletterForm extends PureComponent {
       value: interest,
     }));
     const preferredLanguageOptions = preferredLanguages.map(
-      (preferredLanguage) => ({
-        label: preferredLanguage,
-        value: preferredLanguage,
-      })
+      ({ label, value }) => ({ label, value })
     );
 
     return (
