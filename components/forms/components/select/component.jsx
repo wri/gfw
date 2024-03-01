@@ -22,6 +22,7 @@ class Select extends PureComponent {
     required: PropTypes.bool,
     multiple: PropTypes.bool,
     selectInput: PropTypes.bool,
+    description: PropTypes.string,
   };
 
   render() {
@@ -35,6 +36,7 @@ class Select extends PureComponent {
       required,
       multiple,
       selectInput,
+      description,
     } = this.props;
 
     const parsedOptions =
@@ -70,6 +72,9 @@ class Select extends PureComponent {
                 Select all that apply; select multiple by holding
                 shift/selecting other options.
               </p>
+            )}
+            {description && (
+              <p className="input-field-description">{description}</p>
             )}
             <select
               className={cx('c-form-select', { multiple })}

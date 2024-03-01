@@ -41,6 +41,10 @@
 
   .input-field {
     width: 100%;
+
+    .input-field-description {
+      font-style: italic;
+    }
   }
 
   &.hidden {

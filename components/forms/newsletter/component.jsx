@@ -8,20 +8,46 @@ import { submitNewsletterSubscription } from 'services/forms';
 import CountryDataProvider from 'providers/country-data-provider';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
-import Checkbox from 'components/forms/components/checkbox';
 import Submit from 'components/forms/components/submit';
 import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
 
 import { email as validateEmail } from 'components/forms/validations';
+import Checkbox from '../components/checkbox/component';
 
-const subscriptions = [
-  { label: 'Innovations in Monitoring', value: 'monitoring' },
-  { label: 'Fires', value: 'fires' },
-  { label: 'Forest Watcher Mobile App', value: 'fwapp' },
-  { label: 'Climate and Biodiversity', value: 'climate' },
-  { label: 'Agricultural Supply Chains', value: 'supplychains' },
-  { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' },
+const sectors = [
+  'Government',
+  'Donor Institution/Agency',
+  'Local NGO (National or Subnational)',
+  'International NGO',
+  'UN or International Organization',
+  'Academic/Research Organization',
+  'Journalist/Media Organization',
+  'Indigenous or Community-Based Organization',
+  'Private Sector',
+  'No Affiliation',
+  'Other',
+];
+
+const preferredLanguages = [
+  { label: 'English', value: 'en' },
+  { label: 'Français', value: 'fr' },
+  { label: 'Español', value: 'es' },
+  { label: 'Português', value: 'pt' },
+  { label: 'Bahasa Indonesia', value: 'id' },
+];
+
+const interests = [
+  'Innovations in Monitoring',
+  'Fires',
+  'Forest Watcher Mobile App',
+  'Climate and Carbon',
+  'Biodiversity',
+  'Agricultural Supply Chains',
+  'Small Grants Fund and Tech Fellowship',
+  'Landscape Restoration',
+  'GFW Users in Action',
+  'Places to Watch alerts',
 ];
 
 class NewsletterForm extends PureComponent {
@@ -30,32 +56,37 @@ class NewsletterForm extends PureComponent {
     initialValues: PropTypes.object,
   };
 
-  saveNewsletterSubscription = (values) => {
+  saveNewsletterSubscription = async (values) => {
+    const ipAddress = await fetch('https://api.ipify.org/?format=json')
+      .then((response) => response.json())
+      .then((data) => data?.ip);
+
     const {
+      email,
       firstName,
       lastName,
-      email,
+      jobTitle,
       organization,
       city,
       country,
-      comments,
-      gfwInterests,
+      sector,
+      language,
+      interest,
     } = values;
 
     const postData = {
+      email,
       first_name: firstName,
       last_name: lastName,
-      email,
-      company: organization,
+      job_title: jobTitle,
+      organization,
       city,
       country,
-      gfw_interests: gfwInterests
-        ? Object.entries(gfwInterests)
-            .filter(([, val]) => val)
-            .map(([key]) => key)
-            .join(', ')
-        : '',
-      pardot_extra_field: comments,
+      sector,
+      preferred_language: language,
+      interest,
+      person_source_details: 'https://www.globalforestwatch.org',
+      ip_address: ipAddress,
     };
 
     return submitNewsletterSubscription(postData)
@@ -74,6 +105,22 @@ class NewsletterForm extends PureComponent {
   render() {
     const { countries, initialValues } = this.props;
 
+    const countriesOptions = countries.map(({ label }) => ({
+      label,
+      value: label,
+    }));
+    const sectorsOptions = sectors.map((sector) => ({
+      label: sector,
+      value: sector,
+    }));
+    const interestsOptions = interests.map((interest) => ({
+      label: interest,
+      value: interest,
+    }));
+    const preferredLanguageOptions = preferredLanguages.map(
+      ({ label, value }) => ({ label, value })
+    );
+
     return (
       <Fragment>
         <Form
@@ -90,8 +137,8 @@ class NewsletterForm extends PureComponent {
             <form className="c-newsletter-form" onSubmit={handleSubmit}>
               {submitSucceeded ? (
                 <SuccessMessage
-                  title="Thank you for subscribing to Global Forest Watch newsletters and updates!"
-                  description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
+                  title="Thank you!<br />You aren't done yet."
+                  description="<p>Please check your inbox for an email<br /> and click the button to confirm your subscription.</p><p>You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data.</p>"
                 />
               ) : (
                 <Fragment>
@@ -100,8 +147,6 @@ class NewsletterForm extends PureComponent {
                     Subscribe to monthly GFW newsletters and updates based on
                     your interests.
                   </h3>
-                  <Input name="firstName" label="first name" required />
-                  <Input name="lastName" label="last name" required />
                   <Input
                     name="email"
                     type="email"
@@ -110,19 +155,36 @@ class NewsletterForm extends PureComponent {
                     validate={[validateEmail]}
                     required
                   />
-                  <Input name="organization" label="organization" />
-                  <Input name="city" label="city" required />
+                  <Input name="firstName" label="first name" required />
+                  <Input name="lastName" label="last name" required />
+                  <Input name="jobTitle" label="job title" />
+                  <Input name="organization" label="organization" required />
+                  <Input name="city" label="city" />
                   <Select
                     name="country"
                     label="country"
-                    options={countries}
+                    options={countriesOptions}
                     placeholder="Select a country"
                     required
                   />
+                  <Select
+                    name="sector"
+                    label="sector"
+                    options={sectorsOptions}
+                    placeholder="Select a sector"
+                    required
+                  />
+                  <Select
+                    name="language"
+                    label="Preferred Language"
+                    description="Please note that most communications will be sent in English."
+                    placeholder="Select a preferred language"
+                    options={preferredLanguageOptions}
+                  />
                   <Checkbox
-                    name="gfwInterests"
-                    label="I'm interested in (check all that apply)"
-                    options={subscriptions}
+                    name="interest"
+                    label="I'm interested in"
+                    options={interestsOptions}
                   />
                   <Error
                     valid={valid}
