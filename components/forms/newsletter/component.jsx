@@ -84,7 +84,7 @@ class NewsletterForm extends PureComponent {
       country,
       sector,
       preferred_language: language,
-      interest,
+      interest: (interest || []).join(),
       person_source_details: 'https://www.globalforestwatch.org',
       ip_address: ipAddress,
     };
