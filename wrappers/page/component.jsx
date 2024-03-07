@@ -11,11 +11,11 @@ import { useSetLanguage } from 'utils/lang';
 import Head from 'wrappers/head';
 import Cookies from 'wrappers/cookies';
 
-import Footer from 'components/footer';
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
 
 const Header = dynamic(() => import('components/header'), { ssr: false });
+const Footer = dynamic(() => import('components/footer'), { ssr: false });
 
 const PageWrapper = ({
   children,
