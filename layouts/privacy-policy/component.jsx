@@ -8,7 +8,7 @@ const PrivacyPolicyPage = () => (
       <Column width={[1, 1 / 12]} />
       <Column width={[1, 5 / 6]}>
         <div className="privacy-container">
-          <div>
+          <div id="intro">
             <h1>World Resources Institute - Privacy Policy</h1>
             <i>Last revised: October 30, 2023</i>
             <p>
@@ -60,7 +60,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="personal-information">
             <h2>Personal Information We Collect</h2>
             <p>
               We collect different kinds of information from you, depending on
@@ -156,7 +156,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="information-use">
             <h2>Our Use of Your Information</h2>
             <p>
               We use the personal information we collect about you for any of
@@ -203,7 +203,7 @@ const PrivacyPolicyPage = () => (
             </ul>
           </div>
 
-          <div>
+          <div id="outreach-communications">
             <h2>Outreach and Communications</h2>
             <p>
               Where you consent, we use your personal information to provide you
@@ -239,7 +239,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="information-disclosure">
             <h2>Disclosure of Information</h2>
             <p>Personal information is disclosed to the following parties:</p>
             <ul>
@@ -284,7 +284,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="security-quality">
             <h2>Security and Quality</h2>
             <p>
               WRI takes reasonable steps to protect the personal information
@@ -314,13 +314,13 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="transfers">
             <h2>Transfers</h2>
             <p>
               Where necessary, we may need to transfer your personal information
               to another country. These transfers can take place within the WRI
               group but also may be made to selected third parties (as explained
-              in the ‘<u>Disclosure of information</u>‘ section of this Privacy
+              in the ‘<a href="#information-disclosure">Disclosure of information</a>‘ section of this Privacy
               Policy). Such transfers take place to enable us to provide you
               with our services and/or to communicate with you. Countries that
               we transfer your personal information to may not have the same
@@ -329,7 +329,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="external-links">
             <h2>Links to External Websites</h2>
             <p>
               WRI&apos;s Services may contain links to other websites belonging
@@ -341,7 +341,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="information-access-deletion">
             <h2>Personal information Access and Deletion</h2>
             <p>
               You may request a copy of the personal information we hold about
@@ -371,16 +371,16 @@ const PrivacyPolicyPage = () => (
             <p>
               If you are resident in the European Economic Area, please also
               read the ‘
-              <u>
+              <a href="#info-individuals-eea">
                 Information for Individuals Located in the European Economic
                 Area
-              </u>
+              </a>
               ’ section of this Privacy Policy. You may have additional rights
               in relation to your personal information.
             </p>
           </div>
 
-          <div>
+          <div id="info-individuals-eea">
             <h2>
               Information for individuals located in the European Economic Area
             </h2>
@@ -388,7 +388,7 @@ const PrivacyPolicyPage = () => (
               European Economic Area (“EEA”) data protection laws offer
               additional rights and protections for individuals located in the
               EEA. Further to the information set out at the ‘
-              <u>Personal information access and deletion</u>’ section of this
+              <a href="#information-access-deletion">Personal information access and deletion</a>’ section of this
               Privacy Policy, the following additional information applies to
               you if you are located in the EEA:
             </p>
@@ -413,7 +413,8 @@ const PrivacyPolicyPage = () => (
               <li>
                 <b>Personal information rights:</b> In addition to your right to
                 access personal information we hold about you (as set out at the
-                ‘<u>Personal information access and deletion</u>‘ section of
+                ‘<a href="#information-access-deletion">Personal information access and deletion</a>‘{" "}
+                section of
                 this Privacy Policy), you have the right to have your personal
                 information rectified or erased, to object to its processing or
                 to restrict access to it. You also have the right to lodge a
@@ -426,7 +427,7 @@ const PrivacyPolicyPage = () => (
             </ul>
           </div>
 
-          <div>
+          <div id="donation-processing">
             <h2>Donation processing partner</h2>
             <p>
               WRI has partnered with a third-party service provider, iATS
@@ -464,7 +465,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="changes-oversight-questions">
             <h2>Changes, Oversight and Questions</h2>
             <p>
               WRI welcomes comments and questions on this Privacy Policy. We are
@@ -481,7 +482,7 @@ const PrivacyPolicyPage = () => (
             </p>
           </div>
 
-          <div>
+          <div id="contact-us">
             <h2>Contact Us</h2>
             <p>
               If you have any questions about this Privacy Policy or our privacy
