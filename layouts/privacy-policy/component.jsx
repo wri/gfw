@@ -10,7 +10,7 @@ const PrivacyPolicyPage = () => (
         <div className="privacy-container">
           <div id="intro">
             <h1>World Resources Institute - Privacy Policy</h1>
-            <i>Last revised: October 30, 2023</i>
+            <i className="last-revised">Last revised: October 30, 2023</i>
             <p>
               We are World Resources Institute, a global research nonprofit
               headquartered at 10 G Street NE Suite 800, Washington, D.C. 20002,
