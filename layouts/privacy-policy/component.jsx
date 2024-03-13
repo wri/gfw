@@ -88,11 +88,11 @@ const PrivacyPolicyPage = () => (
                 collect aggregate site usage reports that do not identify you
                 individually, optimize site users’ experience on the Services,
                 and for marketing purposes.{" "}
-                <b>
+                {/* <b>
                   Please use the “Manage Cookie Preferences” link and the List
                   of Cookies below if you wish to learn more and control which
                   cookies and third-party technology are in use on the site.
-                </b>{" "}
+                </b>{" "} */}
                 The information we collect includes:
                 <ul>
                   <li>
@@ -139,13 +139,13 @@ const PrivacyPolicyPage = () => (
                 C.V.) that you may provide if you apply for a job at WRI;
               </li>
             </ul>
-            <p>
+            {/* <p>
               <a href="#" onClick={(e) => e.preventDefault()}>
                 Manage Cookie Preferences
               </a>{" "}
               (some privacy tools or ad blockers might prevent this tool from
               running).
-            </p>
+            </p> */}
             <p>
               Offline collection: We also collect personal information from you
               when you provide us with it at conferences or similar events or
@@ -278,9 +278,9 @@ const PrivacyPolicyPage = () => (
             <p>
               We also may disclose online information about you to third
               parties, including social media companies like Facebook, Google,
-              LinkedIn (Microsoft) and X for outreach and marketing purposes.{" "}
-              See the <b>“Manage Cookie Preferences”</b> link above to adjust
-              your relevant settings.
+              LinkedIn (Microsoft) and X for outreach and marketing purposes.
+              {/* See the <b>“Manage Cookie Preferences”</b> link above to adjust
+              your relevant settings. */}
             </p>
           </div>
 
