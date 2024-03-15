@@ -6,7 +6,7 @@ import Icon from 'components/ui/icon';
 
 import treeImageError from 'assets/icons/error.svg?sprite';
 
-class Thankyou extends PureComponent {
+class ErrorMessage extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
@@ -33,4 +33,4 @@ class Thankyou extends PureComponent {
   }
 }
 
-export default Thankyou;
+export default ErrorMessage;
