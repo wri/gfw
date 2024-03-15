@@ -246,6 +246,10 @@ export const getServerSideProps = async ({ params, query, req }) => {
           error: 401,
           title: 'Area is private | Global Forest Watch',
           errorTitle: 'Area is private',
+          debugErrors: userToken && {
+            token: userToken?.slice(-5) || '',
+            errors: err?.response?.data?.errors
+          },
           notifications: notifications || [],
         },
       };
