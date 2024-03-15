@@ -19,7 +19,7 @@ class ErrorMessage extends PureComponent {
     const errorCode = btoa(
       JSON.stringify({
         datetime: new Date(),
-        errors,
+        info: errors,
       })
     );
 

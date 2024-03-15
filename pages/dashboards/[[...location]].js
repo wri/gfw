@@ -63,8 +63,8 @@ const serverErrors = {
     error: 504,
     title: 'Network error | Global Forest Watch',
     errorTitle: 'There was an error retrieving the data',
-  }
-}
+  },
+};
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
 
@@ -247,7 +247,9 @@ export const getServerSideProps = async ({ params, query, req }) => {
     };
   } catch (err) {
     let errorStatusCode = err?.response?.status;
-    if (!errorStatusCode) { errorStatusCode = 500 };
+    if (!errorStatusCode) {
+      errorStatusCode = 500;
+    }
 
     let propsResponse = serverErrors[errorStatusCode];
 
@@ -256,9 +258,9 @@ export const getServerSideProps = async ({ params, query, req }) => {
         ...propsResponse,
         debugErrors: userToken && {
           token: userToken?.slice(-5) || '',
-          errors: err?.response?.data?.errors
+          errors: err?.response?.data?.errors,
         },
-      }
+      };
     }
 
     return {
