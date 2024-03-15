@@ -27,6 +27,7 @@ const PageWrapper = ({
   error,
   errorTitle,
   errorDescription,
+  debugErrors,
   notifications,
 }) => {
   useTrackPage();
@@ -55,6 +56,7 @@ const PageWrapper = ({
                 errorDescription ||
                 'You may have mistyped the address or the page may have moved.'
               }
+              errors={debugErrors}
             />
           )}
           {!isFallback && !error && children}
@@ -77,6 +79,7 @@ PageWrapper.propTypes = {
   error: PropTypes.number,
   errorTitle: PropTypes.string,
   errorDescription: PropTypes.string,
+  debugErrors: PropTypes.array || PropTypes.object,
   notifications: PropTypes.array,
 };
 
