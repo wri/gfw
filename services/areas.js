@@ -1,10 +1,10 @@
-import { apiAuthRequest, apiRequest } from 'utils/request';
+import { apiAuthRequest } from 'utils/request';
 import { trackEvent } from 'utils/analytics';
 
 const REQUEST_URL = '/v2/area';
 
 export const getArea = (id, userToken = null) =>
-  apiRequest
+  apiAuthRequest
     .get(`${REQUEST_URL}/${id}`, {
       headers: {
         ...(userToken && {
