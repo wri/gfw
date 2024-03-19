@@ -45,7 +45,7 @@ class Timestep extends PureComponent {
     customClass: null,
     range: true,
     pushable: 0,
-    canPlay: false,
+    canPlay: true,
 
     trim: null,
 
