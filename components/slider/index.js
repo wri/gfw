@@ -23,6 +23,10 @@ export class Slider extends PureComponent {
     railStyle: PropTypes.shape({}),
     dotStyle: PropTypes.shape({}),
     pushable: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    disableStartHandle: PropTypes.bool,
+    disableEndHandle: PropTypes.bool,
+    playing: PropTypes.bool,
+    onChange: PropTypes.func,
   };
 
   static defaultProps = {
@@ -44,13 +48,32 @@ export class Slider extends PureComponent {
     railStyle: { backgroundColor: '#d9d9d9' },
     dotStyle: { visibility: 'hidden', border: '0px' },
     pushable: true,
+    disableStartHandle: false,
+    disableEndHandle: false,
+    playing: false,
+    onChange: () => { },
   };
 
   renderHandle = (props) => {
-    const { formatValue, showTooltip } = this.props;
+    const { formatValue, showTooltip, playing, disableStartHandle, disableEndHandle } = this.props;
     const { value, dragging, index, ...restProps } = props;
     const formattedValue = formatValue ? formatValue(value) : value;
     const tooltipVisible = showTooltip ? showTooltip(index) : false;
+
+    // Start handle
+    if (disableStartHandle && props?.index === 0) {
+      return null;
+    }
+
+    // End handle
+    if (disableEndHandle && props?.index === 2) {
+      return null;
+    }
+
+    // Vertical line that indicates the current position, when playing
+    if (!playing && props?.index === 1) {
+      return null;
+    }
 
     return (
       <Tooltip
@@ -68,8 +91,33 @@ export class Slider extends PureComponent {
     );
   };
 
+  handleOnChange = (newValue) => {
+    const { value, disableStartHandle, disableEndHandle, onChange } = this.props;
+
+    // Both handles are disabled, no possible changes can be made.
+    if (disableStartHandle && disableEndHandle) {
+      return null;
+    }
+
+    // Start handle disabled. We allow trim and end value, but keep the start value the same.
+    if (disableStartHandle) {
+      onChange([value[0], newValue[1], newValue[2]])
+      return null;
+    }
+
+    // End handle disabled. We allow the start value, but keep the same trim and end value.
+    if (disableEndHandle) {
+      onChange([newValue[0], value[1], value[2]])
+      return null;
+    }
+
+    // Full functionality, pass the new values along.
+    onChange(newValue);
+    return null;
+  }
+
   render() {
-    const { customClass, range, handleStyle, value, ...rest } = this.props;
+    const { customClass, range, handleStyle, value, onChange, ...rest } = this.props;
 
     const Component = range ? Range : RCSlider;
     const handleNum = Array.isArray(value) ? value.length : 1;
@@ -98,6 +146,7 @@ export class Slider extends PureComponent {
           handle={this.renderHandle}
           handleStyle={handleStyles}
           value={value}
+          onChange={this.handleOnChange}
           {...rest}
         />
       </div>
