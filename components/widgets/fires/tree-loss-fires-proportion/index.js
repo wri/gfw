@@ -133,6 +133,12 @@ export default {
         };
       }
 
+      // removing 2023 from data
+      // see comment in: https://gfw.atlassian.net/browse/FLAG-1070
+      if (data.loss.length !== 0) {
+        data.loss.splice(data.loss.length - 1, 1);
+      }
+
       const { startYear, endYear, range } =
         (data.loss && getYearsRangeFromData(data.loss)) || {};
 
