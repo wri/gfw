@@ -143,7 +143,6 @@ export default {
 
       // removing 2023 from data
       // see comment in: https://gfw.atlassian.net/browse/FLAG-1070
-      // debugging the content of data.loss, I found that from position 4376 onwards, contain data from 2023
       const filteredData = data.loss.filter((item) => item.year < 2023);
       const { startYear, endYear, range } =
         (filteredData && getYearsRangeFromData(filteredData)) || {};
