@@ -16,7 +16,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2022;
+const MAX_YEAR = 2023;
 const MIN_YEAR = 2001;
 
 export default {

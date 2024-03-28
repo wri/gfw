@@ -75,12 +75,8 @@ export const parseSentence = createSelector(
   (data, settings, indicator, location, sentences) => {
     if (!data || !data.length || !location) return null;
     const { startYear, endYear } = settings;
-    const {
-      initial,
-      initialPercent,
-      withIndicator,
-      withIndicatorPercent,
-    } = sentences;
+    const { initial, initialPercent, withIndicator, withIndicatorPercent } =
+      sentences;
     const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
