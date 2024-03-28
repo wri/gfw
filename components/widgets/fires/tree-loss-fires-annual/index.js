@@ -636,7 +636,7 @@ export default {
     threshold: 30,
     ifl: 2000,
     startYear: 2001,
-    endYear: 2022,
+    endYear: 2023,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type, startYear, endYear } = params || {};
