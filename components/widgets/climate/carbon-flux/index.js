@@ -131,7 +131,7 @@ export default {
     threshold: 30,
     includesGainPixels: true,
     startYear: 2001,
-    endYear: 2022,
+    endYear: 2023,
     sentence: {
       netCarbonFlux: {
         positive: 'net carbon source',
