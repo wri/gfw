@@ -19,7 +19,7 @@ import { EuropeFAOCountries } from 'utils/fao-countries';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2013;
-const MAX_YEAR = 2022;
+const MAX_YEAR = 2023;
 
 export default {
   widget: 'treeLossPlantations',
