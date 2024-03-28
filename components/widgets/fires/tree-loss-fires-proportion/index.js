@@ -143,9 +143,8 @@ export default {
 
       // removing 2023 from data
       // see comment in: https://gfw.atlassian.net/browse/FLAG-1070
-      if (data.loss.length !== 0) {
-        data.loss.splice(data.loss.length - 1, 1);
-      }
+      // debugging the content of data.loss, I found that from position 4376 onwards, contain data from 2023
+      data.loss.splice(4376);
 
       const { startYear, endYear, range } =
         (data.loss && getYearsRangeFromData(data.loss)) || {};
