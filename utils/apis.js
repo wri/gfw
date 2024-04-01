@@ -7,6 +7,10 @@ export const GFW_METADATA_API = 'https://api.resourcewatch.org/v1/gfw-metadata';
 export const GFW_STAGING_METADATA_API =
   'https://staging-api.resourcewatch.org/v1/gfw-metadata';
 
+// NEW GFW METADATA API
+export const GFW_NEW_METADATA_API =
+  'http://production-api.globalforestwatch.org/v1/gfw-metadata';
+
 // GFW DATA API
 export const GFW_DATA_API = 'https://data-api.globalforestwatch.org';
 export const GFW_STAGING_DATA_API =

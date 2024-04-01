@@ -11,6 +11,7 @@ import {
   GFW_STAGING_API,
   GFW_METADATA_API,
   GFW_STAGING_METADATA_API,
+  GFW_NEW_METADATA_API,
 } from 'utils/apis';
 import { PROXIES } from './proxies';
 
@@ -66,6 +67,17 @@ export const metadataRequest = axios.create({
   }),
   ...(!isServer && {
     baseURL: PROXIES.METADATA_API,
+  }),
+});
+
+// only for TCL layers
+export const newMetadataRequest = axios.create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: GFW_NEW_METADATA_API,
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.NEW_METADATA_API,
   }),
 });
 
