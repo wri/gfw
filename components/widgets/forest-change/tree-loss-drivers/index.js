@@ -86,7 +86,7 @@ export default {
       layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER],
     },
   ],
-  metaKey: 'widget_tsc_drivers',
+  metaKey: 'tsc_tree_cover_loss_drivers_v2023',
   sortOrder: {
     summary: 1,
     forestChange: 1,
