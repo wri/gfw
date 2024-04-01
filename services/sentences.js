@@ -295,11 +295,7 @@ export const parseSentence = (
   // removing last part of paragraph
   // see: https://gfw.atlassian.net/browse/FLAG-1070
   sentence = sentence.replace(
-    'In {year}, it lost {naturalLoss} of natural forest, equivalent to {emissions} of CO₂ emissions.',
-    ''
-  );
-  sentence = sentence.replace(
-    'In {year}, it lost {loss} of tree cover, equivalent to {emissions} of CO₂ emissions.',
+    ', equivalent to {emissions} of CO₂ emissions',
     ''
   );
 
