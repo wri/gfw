@@ -467,11 +467,11 @@ export const getWidgets = createSelector(
         (layerParams && layerParams.startDate) ||
         (decodeParams && decodeParams.startDate);
       const startYear =
-        startDate && parseInt(moment(startDate).format('YYYY'), 10);
+        defaultSettings?.startYear || (startDate && parseInt(moment(startDate).format('YYYY'), 10));
       const endDate =
         (layerParams && layerParams.endDate) ||
         (decodeParams && decodeParams.endDate);
-      const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
+      const endYear = defaultSettings?.endYear || (endDate && parseInt(moment(endDate).format('YYYY'), 10));
 
       const widgetQuerySettings = widgetSettings && widgetSettings[widget];
       const widgetInteraction = interactions && interactions[widget];
