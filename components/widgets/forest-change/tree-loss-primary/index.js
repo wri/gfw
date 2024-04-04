@@ -16,7 +16,7 @@ import {
   FOREST_LOSS,
 } from 'data/layers';
 
-import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-2022.png';
+import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-2023.png';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
