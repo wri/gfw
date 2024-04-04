@@ -668,8 +668,10 @@ export default {
     return lossFetch.then((loss) => {
       let data = {};
       if (loss && loss.data) {
+        const filteredLoss = loss.data.data.filter((item) => item.year < 2023);
+
         data = {
-          loss: loss.data.data,
+          loss: filteredLoss,
         };
       }
 
