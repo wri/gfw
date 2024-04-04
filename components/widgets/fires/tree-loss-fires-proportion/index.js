@@ -33,6 +33,14 @@ export default {
   categories: ['fires'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
+  alerts: [
+    {
+      id: 'tree-loss-fires-proportion-1',
+      text: `2023 loss data is currently available only for specific analyses. Note that this widget does not reflect updated data. [Click here](https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary.xlsx) to access a file with country-level 2023 loss data.`,
+      icon: 'warning',
+      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+    },
+  ],
   large: false,
   visible: ['dashboard', 'analysis'],
   chartType: 'pieChart',
@@ -133,11 +141,14 @@ export default {
         };
       }
 
+      // removing 2023 from data
+      // see comment in: https://gfw.atlassian.net/browse/FLAG-1070
+      const filteredData = data.loss.filter((item) => item.year < 2023);
       const { startYear, endYear, range } =
-        (data.loss && getYearsRangeFromData(data.loss)) || {};
+        (filteredData && getYearsRangeFromData(filteredData)) || {};
 
       return {
-        ...data,
+        loss: filteredData,
         settings: {
           startYear,
           endYear,

@@ -19,7 +19,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2022;
+const MAX_YEAR = 2023;
 const MIN_YEAR = 2001;
 
 const getGlobalLocation = (params) => ({
@@ -39,10 +39,11 @@ const getOTFAnalysis = async (params) => {
 
   return analysis.getData().then((response) => {
     const { loss, extent } = response;
-    const { startYear, endYear, range: yearsRange } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
+    const {
+      startYear,
+      endYear,
+      range: yearsRange,
+    } = getYearsRangeFromMinMax(MIN_YEAR, MAX_YEAR);
 
     return {
       loss: loss.map((d) => ({
@@ -70,8 +71,7 @@ export default {
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   alerts: [
     {
-      text:
-        'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
+      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
       visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
     },
   ],
