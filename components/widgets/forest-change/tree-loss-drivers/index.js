@@ -150,7 +150,13 @@ export default {
       })
     ),
   getDataURL: (params) => [
-    getLoss({ ...params, landCategory: 'tsc', lossTsc: true, download: true }),
+    getLoss({
+      ...params,
+      landCategory: 'tsc',
+      lossTsc: true,
+      download: true,
+      widgetId: 'treeLossTsc',
+    }),
     getExtent({ ...params, download: true }),
   ],
   getWidgetProps,
