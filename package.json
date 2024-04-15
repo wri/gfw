@@ -94,7 +94,7 @@
     "@next/bundle-analyzer": "^10.0.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@wordpress/api-fetch": "^3.19.1",
-    "@worldresources/gfw-components": "^3.5.4",
+    "@worldresources/gfw-components": "wri/gfw-components#feat/new-gfw-logo-FLAG-1033",
     "aws-sdk": "^2.291.0",
     "axios": "1.6.7",
     "chroma-js": "^2.1.0",
