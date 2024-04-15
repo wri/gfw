@@ -194,7 +194,7 @@ class Header extends PureComponent {
       !location.adm2
     ) {
       displaySentence.sentence +=
-        ' <b>107 kha</b> of this loss was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares according to MoEF-WRI analysis.';
+        ' <b>144 kha</b> of this loss was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares according to MoEF-WRI analysis.';
     }
 
     const countrySelectorData = this.getCountrySelectorData();
