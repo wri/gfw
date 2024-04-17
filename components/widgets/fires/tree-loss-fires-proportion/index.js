@@ -143,14 +143,11 @@ export default {
         };
       }
 
-      // removing 2023 from data
-      // see comment in: https://gfw.atlassian.net/browse/FLAG-1070
-      const filteredData = data.loss.filter((item) => item.year < 2023);
       const { startYear, endYear, range } =
-        (filteredData && getYearsRangeFromData(filteredData)) || {};
+        (data.loss && getYearsRangeFromData(data.loss)) || {};
 
       return {
-        loss: filteredData,
+        ...data,
         settings: {
           startYear,
           endYear,
