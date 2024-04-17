@@ -110,7 +110,7 @@ export default {
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
-  metaKey: 'gfw_widget_forest_carbon_net_flux',
+  metaKey: 'gfw_widget_forest_carbon_net_flux_v20240308',
   dataType: 'flux',
   colors: 'climate',
   sortOrder: {
