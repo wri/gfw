@@ -1,90 +1,62 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
 
-// get list data
 const getData = (state) => state.data;
-const getSettings = (state) => state.settings;
-const getLocationObject = (state) => state.location;
 const getColors = (state) => state.colors;
+const getLocation = (state) => state.location;
 const getSentences = (state) => state.sentences;
-
-// get lists selected
-export const getFilteredData = createSelector(
-  [getData, getLocationObject],
-  (data, locationObject) => {
-    if (isEmpty(data) || !locationObject) return null;
-    return data
-      .filter(
-        (item) => item.country === locationObject.value && item.year !== 9999
-      )
-      .map((item) => ({
-        male: item.femempl
-          ? (item.forempl - item.femempl) * 1000
-          : item.forempl * 1000,
-        female: item.femempl ? item.femempl * 1000 : null,
-        year: item.year,
-      }));
-  }
-);
+const getSettings = (state) => state.settings;
 
 export const parseData = createSelector(
-  [getFilteredData, getSettings, getColors],
-  (data, settings, colors) => {
-    if (isEmpty(data)) return null;
+  [getData, getColors, getSettings],
+  (data, colors, settings) => {
+    const yearData = data?.filter(({ year }) => year === settings?.year);
+    const dataUngendered = yearData?.find(({ gender }) => gender === null);
+    const dataAll = yearData?.find(({ gender }) => gender === 'all');
 
-    const { year } = settings;
-    const selectedFAO = data.filter((item) => item.year === year);
-    const { male, female } =
-      selectedFAO && selectedFAO.length && selectedFAO[0];
-    if (!female) return null;
+    if (!dataUngendered || !dataAll) return null;
 
-    const total = male + female;
-    const formatedData = [
-      {
-        label: 'Male',
-        value: male,
-        color: colors.male,
-        percentage: (male / total) * 100,
-      },
-      {
-        label: 'Female',
-        value: female,
-        color: colors.female,
-        percentage: (female / total) * 100,
-      },
-    ];
-    return formatedData;
+    const items = {
+      logging: 'Logging',
+      gathering: 'Gathering of non-wood products',
+      support: 'Support services to forestry',
+      silviculture: 'Silviculture and other forestry activities',
+    };
+
+    const formattedData = Object.keys(items).reduce((acc, key) => {
+      const label = items[key];
+      const value = dataUngendered[key];
+      const percentage = (100 * value) / dataAll?.all;
+      const color = colors[key];
+
+      if (!value) return acc;
+      return [...acc, { label, value: percentage, percentage, color }];
+    }, []);
+
+    return formattedData;
   }
 );
 
 export const parseSentence = createSelector(
-  [getFilteredData, getSettings, getLocationObject, getSentences],
-  (data, settings, locationObject, sentences) => {
-    if (!data) return null;
-    const { year } = settings;
-    const { initial, withFemales } = sentences;
-    const selectedFAO = data.find((item) => item.year === year);
-    let employees = 0;
-    let females = 0;
-    if (selectedFAO) {
-      employees = selectedFAO.female
-        ? selectedFAO.male + selectedFAO.female
-        : selectedFAO.male;
-      females = parseInt(selectedFAO.female, 10);
-    }
-    const percentage = (100 * females) / employees;
+  [getSentences, getData, getSettings, getLocation],
+  (sentences, data, settings, location) => {
+    const yearData = data?.filter(({ year }) => year === settings?.year);
+    const dataFemale = yearData?.find(({ gender }) => gender === 'female');
+    const dataAll = yearData?.find(({ gender }) => gender === 'all');
 
-    const params = {
-      location: `${locationObject && locationObject && locationObject.label}'s`,
-      value: `${employees ? formatNumber({ num: employees }) : 'no'}`,
-      percent: formatNumber({ num: percentage, unit: '%' }),
-      year,
-    };
+    const sentence = dataFemale?.all ? sentences.withFemales : sentences.initial;
+    const femalePercentage = (dataFemale?.all * 100) / dataAll?.all;
+
+    if (!dataAll?.all) return null;
 
     return {
-      sentence: females ? withFemales : initial,
-      params,
+      sentence,
+      params: {
+        numPeople: formatNumber({ num: dataAll?.all, unit: 'countsK' }),
+        year: settings?.year,
+        femalePercent: formatNumber({ num: femalePercentage, unit: '%' }),
+        location: location?.label
+      },
     };
   }
 );

@@ -85,13 +85,13 @@ export const chartData = createSelector(
         ...data[0],
         name: 'Expenditure',
         value: data[0].exp,
-        color: colors.male,
+        color: colors.expenditure,
       },
       {
         ...data[0],
         name: 'Revenue',
         value: data[0].rev,
-        color: colors.female,
+        color: colors.revenue,
       },
     ];
   }
