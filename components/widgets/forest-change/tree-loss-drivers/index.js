@@ -149,7 +149,6 @@ export default {
       landCategory: 'tsc',
       lossTsc: true,
       download: true,
-      widgetId: 'treeLossTsc',
     }),
     getExtent({ ...params, download: true }),
   ],
