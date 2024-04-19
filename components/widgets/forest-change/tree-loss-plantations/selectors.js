@@ -140,17 +140,8 @@ export const parseSentence = createSelector(
       percentage: formatNumber({ num: percentage, unit: '%' }),
     };
 
-    let finalSentence = sentence;
-
-    if (endYear === 2023) {
-      finalSentence = sentence.replace(
-        ' The total loss within natural forest was equivalent to {value} of CO\u2082e emissions.',
-        ''
-      );
-    }
-
     return {
-      sentence: finalSentence,
+      sentence,
       params,
     };
   }

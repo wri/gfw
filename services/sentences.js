@@ -291,14 +291,6 @@ export const parseSentence = (
     sentence = countrySpecific[adm0];
   }
 
-  // 2023 TCL MVP
-  // removing last part of paragraph
-  // see: https://gfw.atlassian.net/browse/FLAG-1070
-  sentence = sentence.replace(
-    ', equivalent to {emissions} of CO₂ emissions',
-    ''
-  );
-
   return {
     sentence,
     params,

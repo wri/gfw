@@ -8,7 +8,7 @@ const isNumber = (value) => !!(typeof value === 'number' || !isNaN(value));
 
 // build {where} statement for query
 export const getWHEREQuery = (params = {}) => {
-  const { type, dataset, widgetId } = params || {};
+  const { type, dataset } = params || {};
 
   const allFilterOptions = forestTypes.concat(landCategories);
   const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
@@ -95,12 +95,6 @@ export const getWHEREQuery = (params = {}) => {
       WHERE = `${WHERE}${paramKey}${comparisonString}${
         isNumericValue ? value : `'${value}'`
       }`;
-    }
-
-    // this is a temporary patch, it should be removed soon for the full TCL release!!
-    // see https://gfw.atlassian.net/browse/FLAG-1077
-    if (widgetId === 'treeLossTsc') {
-      WHERE = `${WHERE} AND umd_tree_cover_loss__year < 2023 `;
     }
 
     if (isLastParameter) {
