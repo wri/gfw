@@ -31,12 +31,6 @@ export default {
   alerts: {
     default: [
       {
-        id: 'tree-loss-drivers-alert-2',
-        text: `2023 loss data is currently available only for specific analyses. Note that this widget does not reflect updated data. [Click here](https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary.xlsx) to access a file with country-level 2023 loss data.`,
-        icon: 'warning',
-        visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-      },
-      {
         id: 'tree-loss-drivers-alert-1',
         text: `The methods behind this data have changed over time. Be cautious comparing old and new, data especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
         icon: 'warning',
