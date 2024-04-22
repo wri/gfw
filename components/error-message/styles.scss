@@ -43,4 +43,13 @@
   b {
     font-weight: 500;
   }
+
+  &__error-code {
+    text-align: center;
+    color: $grey-dark;
+    font-size: 12px;
+    margin-top: 40px;
+    max-width: 30vw;
+    word-wrap: break-word;
+  }
 }

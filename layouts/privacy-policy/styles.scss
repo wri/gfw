@@ -4,24 +4,51 @@
   padding: rem(50px) 0;
 
   .privacy-container {
-    // overflow: hidden;
-    // height: 100vh;
     position: relative;
+
+    b {
+      font-weight: 500;
+    }
 
     p {
       font-size: 1rem;
       margin: 1rem 0;
+
+      & + ul {
+        margin-top: -0.5rem;
+      }
     }
 
     ul {
       margin: 1rem 0;
     }
 
+    h2 {
+      font-size: 2rem;
+      margin-top: 4rem;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+
     li {
       display: list-item;
       list-style: disc;
       font-size: 1rem;
+      margin-left: 2.4rem;
+      margin-top: 0.2rem;
+    }
+
+    address {
+      font-size: 1rem;
       margin-left: 1rem;
+    }
+
+    .last-revised {
+      display: block;
+      font-size: 1.2rem;
+      padding-bottom: 2rem;
     }
   }
 }

@@ -6,14 +6,22 @@ import Icon from 'components/ui/icon';
 
 import treeImageError from 'assets/icons/error.svg?sprite';
 
-class Thankyou extends PureComponent {
+class ErrorMessage extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
+    errors: PropTypes.array || PropTypes.object,
   };
 
   render() {
-    const { title, description } = this.props;
+    const { title, description, errors } = this.props;
+
+    const errorCode = btoa(
+      JSON.stringify({
+        datetime: new Date(),
+        info: errors,
+      })
+    );
 
     return (
       <div className="c-error-message">
@@ -28,9 +36,14 @@ class Thankyou extends PureComponent {
             )}
           </>
         )}
+        {errors && (
+          <div className="c-error-message__error-code">
+            Error code:<div>{errorCode}</div>
+          </div>
+        )}
       </div>
     );
   }
 }
 
-export default Thankyou;
+export default ErrorMessage;
