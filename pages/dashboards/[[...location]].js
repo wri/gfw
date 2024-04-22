@@ -43,10 +43,27 @@ import {
   setActiveWidget,
 } from 'components/widgets/actions';
 
-const notFoundProps = {
-  error: 404,
-  title: 'Dashboard Not Found | Global Forest Watch',
-  errorTitle: 'Dashboard Not Found',
+const serverErrors = {
+  401: {
+    error: 401,
+    title: 'Area is private | Global Forest Watch',
+    errorTitle: 'Area is private',
+  },
+  404: {
+    error: 404,
+    title: 'Area Not Found | Global Forest Watch',
+    errorTitle: 'Area Not Found',
+  },
+  500: {
+    error: 500,
+    title: 'Internal Server Error | Global Forest Watch',
+    errorTitle: 'There was an error retrieving the data',
+  },
+  504: {
+    error: 504,
+    title: 'Network error | Global Forest Watch',
+    errorTitle: 'There was an error retrieving the data',
+  },
 };
 
 const ALLOWED_TYPES = ['global', 'country', 'aoi'];
@@ -103,7 +120,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
 
   if (type && !ALLOWED_TYPES.includes(type)) {
     return {
-      props: notFoundProps,
+      props: serverErrors[404],
     };
   }
 
@@ -140,7 +157,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
     if (!locationName) {
       return {
         props: {
-          ...notFoundProps,
+          ...serverErrors[404],
           notifications: notifications || [],
         },
       };
@@ -229,31 +246,26 @@ export const getServerSideProps = async ({ params, query, req }) => {
       },
     };
   } catch (err) {
-    if (err?.response?.status === 504) {
-      return {
-        props: {
-          error: 504,
-          title: 'Network error | Global Forest Watch',
-          errorTitle: 'There was an error retrieving the data',
-          notifications: notifications || [],
-        },
-      };
+    let errorStatusCode = err?.response?.status;
+    if (!errorStatusCode) {
+      errorStatusCode = 500;
     }
 
-    if (err?.response?.status === 401) {
-      return {
-        props: {
-          error: 401,
-          title: 'Area is private | Global Forest Watch',
-          errorTitle: 'Area is private',
-          notifications: notifications || [],
+    let propsResponse = serverErrors[errorStatusCode];
+
+    if (errorStatusCode === 401) {
+      propsResponse = {
+        ...propsResponse,
+        debugErrors: userToken && {
+          token: userToken?.slice(-5) || '',
+          errors: err?.response?.data?.errors,
         },
       };
     }
 
     return {
       props: {
-        ...notFoundProps,
+        ...propsResponse,
         notifications: notifications || [],
       },
     };
