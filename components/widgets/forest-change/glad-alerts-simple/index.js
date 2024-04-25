@@ -102,8 +102,7 @@ export default {
   alerts: [
     {
       id: 'glad-alerts-simple-alert-1',
-      text:
-        'GLAD-L alert updates have been paused due to maintenance. Stay updated via the [discussion forum](https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I) or email [gfw@wri.org](mailto:gfw@wri.org) with any questions.',
+      text: 'GLAD-L alert updates have been paused due to maintenance. Stay updated via the [discussion forum](https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I) or email [gfw@wri.org](mailto:gfw@wri.org) with any questions.',
       visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
     },
   ],
@@ -138,7 +137,7 @@ export default {
         return data;
       });
     }
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
     return fetchGladAlertsSumOTF({
       ...params,
       startDate,
@@ -191,7 +190,7 @@ export default {
     const defaultEndDate = GLAD?.defaultEndDate;
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
     return [
       fetchGladAlertsSum({
         ...params,

@@ -175,11 +175,7 @@ export const parseSentence = createSelector(
     const percentageLoss =
       (totalLoss && totalExtent && (totalLoss / totalExtent) * 100) || 0;
 
-    let sentence = indicator ? withInd : initial;
-
-    if (endYear === 2023) {
-      sentence = sentence.replace(' and {emissions} of CO₂ emissions', '');
-    }
+    const sentence = indicator ? withInd : initial;
 
     const params = {
       indicator: indicator && indicator.label,
