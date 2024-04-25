@@ -37,7 +37,7 @@ export const adminSentences = {
   countrySpecific: {
     IDN: 'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
   },
-  co2Emissions: ', equivalent to {emissions} of CO\u2082 emissions.',
+  co2Emissions: ', equivalent to {emissionsTreeCover} of CO\u2082 emissions.',
   end: '.',
 };
 
