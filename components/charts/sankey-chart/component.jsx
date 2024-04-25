@@ -13,7 +13,6 @@ import { shallowEqual } from 'recharts/lib/util/ShallowEqual';
 import { getValueByDataKey } from 'recharts/lib/util/ChartUtils';
 import {
   PRESENTATION_ATTRIBUTES,
-  getPresentationAttributes,
   EVENT_ATTRIBUTES,
   filterSvgElements,
   validateWidthHeight,
@@ -534,7 +533,6 @@ class Sankey extends PureComponent {
       targetY,
       targetControlX,
       linkWidth,
-      ...others
     } = props;
 
     return (
@@ -548,7 +546,6 @@ class Sankey extends PureComponent {
         stroke="#333"
         strokeWidth={linkWidth}
         strokeOpacity="0.2"
-        {...getPresentationAttributes(others)}
       />
     );
   }
@@ -588,7 +585,6 @@ class Sankey extends PureComponent {
             linkWidth,
             index: i,
             payload: { ...link, source, target },
-            ...getPresentationAttributes(linkContent),
           };
           const events = {
             onMouseEnter: this.handleMouseEnter.bind(this, linkProps, 'link'),
@@ -634,7 +630,6 @@ class Sankey extends PureComponent {
         {nodes.map((node, i) => {
           const { x, y, dx, dy } = node;
           const nodeProps = {
-            ...getPresentationAttributes(nodeContent),
             x: x + left,
             y: y + top,
             width: dx,
@@ -691,7 +686,6 @@ class Sankey extends PureComponent {
 
     const { width, height, className, style, children, ...others } = this.props;
     const { links, nodes } = this.state;
-    const attrs = getPresentationAttributes(others);
 
     return (
       <div
@@ -704,7 +698,7 @@ class Sankey extends PureComponent {
           height,
         }}
       >
-        <Surface {...attrs} width={width} height={height}>
+        <Surface {...others} width={width} height={height}>
           {filterSvgElements(children)}
           {this.renderLinks(links, nodes)}
           {this.renderNodes(nodes)}
