@@ -127,7 +127,8 @@ export default {
       });
     }
     // Run OTF analysis
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
+
     return getEmissionsLossOTF({
       ...params,
       startYear,

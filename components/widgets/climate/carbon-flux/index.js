@@ -141,7 +141,7 @@ export default {
       });
     }
     // use OTF
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
     return getCarbonFluxOTF({
       ...params,
       geostoreId,
