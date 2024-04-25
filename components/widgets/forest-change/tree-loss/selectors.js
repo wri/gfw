@@ -136,7 +136,7 @@ const parseSentence = createSelector(
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
-    if (tropical && totalLoss > 0 && endYear !== 2023) {
+    if (tropical && totalLoss > 0) {
       sentence = `${sentence}, ${co2Emissions}`;
     }
     sentence = `${sentence}.`;

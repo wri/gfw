@@ -19,7 +19,7 @@ import { getEmissions } from 'services/analysis-cached';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2022;
+const MAX_YEAR = 2023;
 
 export default {
   ...emissionsDeforestation,
@@ -58,7 +58,7 @@ export default {
       layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER],
     },
   ],
-  metaKey: 'widget_forest_carbon_emissions_by_driver',
+  metaKey: 'widget_forest_carbon_emissions_by_driver_v20240308',
   colors: 'climate',
   sortOrder: {
     climate: 3,

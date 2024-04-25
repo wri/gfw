@@ -12,7 +12,7 @@ import {
 } from 'providers/areas-provider/selectors';
 
 const isServer = typeof window === 'undefined';
-const DOWNLOAD_VERSION = '2022';
+const DOWNLOAD_VERSION = '2023';
 
 // get list data
 export const selectLocation = (state) =>

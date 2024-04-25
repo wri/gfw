@@ -15,7 +15,7 @@ import { FOREST_GAIN, FOREST_LOSS } from 'data/layers';
 
 const gainID = FOREST_GAIN;
 const lossID = FOREST_LOSS;
-const DOWNLOAD_VERSION = '2022';
+const DOWNLOAD_VERSION = '2023';
 
 const selectLocation = (state) => state.location && state.location.payload;
 const selectData = (state) => state.analysis && state.analysis.data;

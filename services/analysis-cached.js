@@ -468,6 +468,7 @@ export const getEmissions = (params) => {
 export const getEmissionsLossOTF = (params) => {
   const { download, threshold, geostoreId, startYear, endYear } = params || {};
   const { emissionsLossOTF } = SQL_QUERIES;
+
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',

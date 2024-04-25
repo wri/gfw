@@ -94,7 +94,7 @@ const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       location: locationLabel,
       startYear,
-      endYear: endYear === 2023 ? endYear - 1 : endYear, // TODO: Remove this for TCL 2023 update full release!!,
+      endYear,
       lossFiresPercentage: formatNumber({
         num: lossFiresPercentage,
         unit: '%',

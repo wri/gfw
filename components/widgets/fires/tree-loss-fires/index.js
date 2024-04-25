@@ -15,7 +15,7 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2022;
+const MAX_YEAR = 2023;
 const MIN_YEAR = 2001;
 
 export default {
@@ -27,14 +27,6 @@ export default {
   categories: ['fires'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1'],
-  alerts: [
-    {
-      id: 'tree-loss-fires-1',
-      text: `2023 loss data is currently available only for specific analyses. Note that this widget does not reflect updated data. [Click here](https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary.xlsx) to access a file with country-level 2023 loss data.`,
-      icon: 'warning',
-      visible: ['global', 'country'],
-    },
-  ],
   settingsConfig: [
     {
       key: 'forestType',
@@ -136,13 +128,9 @@ export default {
         });
       }
 
-      // removing 2023 from data
-      // see comment in: https://gfw.atlassian.net/browse/FLAG-1070
-      const filteredData = lossMappedData[0].loss.filter(
-        (item) => item.year < 2023
-      );
       const { startYear, endYear, range } =
-        (lossMappedData[0] && getYearsRangeFromData(filteredData)) || {};
+        (lossMappedData[0] && getYearsRangeFromData(lossMappedData[0].loss)) ||
+        {};
 
       return {
         lossFires: lossMappedData,

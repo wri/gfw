@@ -35,14 +35,6 @@ export default {
   categories: ['climate'],
   types: ['geostore', 'global', 'country', 'aoi', 'use', 'wdpa'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  alerts: [
-    {
-      id: 'carbon-flux-1',
-      text: `2023 loss data is currently available only for specific analyses. Note that this widget does not reflect updated data. [Click here](https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary.xlsx) to access a file with country-level 2023 loss data.`,
-      icon: 'warning',
-      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
-    },
-  ],
   chartType: 'verticalComposedChart',
   settingsConfig: [
     {
@@ -110,7 +102,7 @@ export default {
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
-  metaKey: 'gfw_widget_forest_carbon_net_flux',
+  metaKey: 'gfw_widget_forest_carbon_net_flux_v20240308',
   dataType: 'flux',
   colors: 'climate',
   sortOrder: {
@@ -131,7 +123,7 @@ export default {
     threshold: 30,
     includesGainPixels: true,
     startYear: 2001,
-    endYear: 2022,
+    endYear: 2023,
     sentence: {
       netCarbonFlux: {
         positive: 'net carbon source',
@@ -149,7 +141,7 @@ export default {
       });
     }
     // use OTF
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
     return getCarbonFluxOTF({
       ...params,
       geostoreId,

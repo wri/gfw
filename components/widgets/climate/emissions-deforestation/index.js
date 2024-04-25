@@ -21,7 +21,7 @@ import treeLoss from 'components/widgets/forest-change/tree-loss';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2022;
+const MAX_YEAR = 2023;
 
 export default {
   ...treeLoss,
@@ -31,14 +31,6 @@ export default {
   categories: ['climate'],
   types: ['geostore', 'country', 'aoi', 'use', 'wdpa'],
   admins: ['adm0', 'adm1', 'adm2'],
-  alerts: [
-    {
-      id: 'emissions-deforestation-1',
-      text: `2023 loss data is currently available only for specific analyses. Note that this widget does not reflect updated data. [Click here](https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary.xlsx) to access a file with country-level 2023 loss data.`,
-      icon: 'warning',
-      visible: ['geostore', 'country', 'aoi', 'use', 'wdpa'],
-    },
-  ],
   chartType: 'composedChart',
   settingsConfig: [
     {
@@ -92,7 +84,7 @@ export default {
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
-  metaKey: 'widget_gfw_forest_carbon_emissions',
+  metaKey: 'widget_gfw_forest_carbon_emissions_v20240308',
   dataType: 'flux',
   colors: 'climate',
   sortOrder: {
@@ -135,7 +127,8 @@ export default {
       });
     }
     // Run OTF analysis
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
+
     return getEmissionsLossOTF({
       ...params,
       startYear,

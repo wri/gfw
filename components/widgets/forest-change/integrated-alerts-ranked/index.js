@@ -136,7 +136,7 @@ export default {
     // extract relevant metadata
     const { weeks } = params;
     const { startDate, endDate } = getWeeksRange(weeks);
-    const geostoreId = params?.geostore?.hash;
+    const geostoreId = params?.geostore?.hash || params?.geostore?.id;
     const alertSystem = params?.deforestationAlertsDataset;
 
     if (shouldQueryPrecomputedTables(params)) {
