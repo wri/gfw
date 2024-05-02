@@ -75,7 +75,7 @@ export default {
   pendingKeys: ['threshold', 'years'],
   refetchKeys: ['landCategory', 'threshold'],
   dataType: 'lossPrimary',
-  metaKey: '641b158b-f5be-40ae-9b13-8c5c35925b59',
+  metaKey: 'widget_primary_forest_loss',
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
