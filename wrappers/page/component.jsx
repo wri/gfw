@@ -9,7 +9,6 @@ import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'wrappers/head';
-import Cookies from 'wrappers/cookies';
 
 import Footer from 'components/footer';
 import ContactUsModal from 'components/modals/contact-us';
@@ -62,7 +61,6 @@ const PageWrapper = ({
           {!isFallback && !error && children}
         </div>
         {showFooter && <Footer />}
-        <Cookies />
         <ContactUsModal />
       </div>
     </MediaContextProvider>

@@ -361,7 +361,6 @@ import '../layouts/topics/components/topics-slide/styles.scss';
 import '../layouts/topics/styles.scss';
 
 // WRAPPERS
-import '../wrappers/cookies/styles.scss';
 import '../wrappers/embed/styles.scss';
 import '../wrappers/fullscreen/styles.scss';
 import '../wrappers/page/styles.scss';

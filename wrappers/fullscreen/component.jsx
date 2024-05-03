@@ -9,7 +9,6 @@ import { useTrackPage } from 'utils/analytics';
 import { useSetLanguage } from 'utils/lang';
 
 import Head from 'wrappers/head';
-import Cookies from 'wrappers/cookies';
 
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
@@ -57,7 +56,6 @@ const FullScreenWrapper = ({
           )}
           {!isFallback && !error && children}
         </div>
-        <Cookies />
         <ContactUsModal />
       </div>
     </MediaContextProvider>
