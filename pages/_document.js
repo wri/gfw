@@ -8,6 +8,7 @@ import { staging, production } from '../newrelic/script';
 const newrelic = require('newrelic');
 
 const isProduction = process.env.NEXT_PUBLIC_FEATURE_ENV === 'production';
+const isOsanoEnabled = process.env.NEXT_PUBLIC_OSANO_ENABLED === 'true';
 const newRelicScript = isProduction ? production : staging;
 
 export default class MyDocument extends Document {
@@ -33,8 +34,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {isProduction && (
-            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/9ed60354-c199-4e89-92c8-047b83aa65a3/osano.js" />
+          {isOsanoEnabled && (
+            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/bbd879ba-792b-4caf-9a92-a17b920706f7/osano.js" />
           )}
           <style
             type="text/css"
@@ -108,6 +109,27 @@ export default class MyDocument extends Document {
               __html: this.props.browserTimingHeader,
             }}
           />
+
+          {/* Osano Cookie preference drawer link */}
+          {isOsanoEnabled && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                var elements = document.getElementsByClassName("osano-cookie-preference-link");
+
+                var showOsanaDialog = function(e) {
+                  e.preventDefault();
+                  Osano.cm.showDrawer('osano-cm-dom-info-dialog-open');
+                };
+
+                for (var i = 0; i < elements.length; i++) {
+                  elements[i].addEventListener('click', showOsanaDialog, false);
+                }
+                `,
+              }}
+            />
+          )}
+          {/* END Osano Cookie preference drawer link */}
         </Head>
         <body>
           {/* Google Tag Manager (noscript) */}
@@ -125,6 +147,15 @@ export default class MyDocument extends Document {
           <main id="maincontent">
             <Main />
           </main>
+          {isOsanoEnabled && (
+            <a
+              href=""
+              className="osano-cookie-preference-link"
+              title="Manage privacy and cookie preferences"
+            >
+              Cookie Preferences
+            </a>
+          )}
           <NextScript />
         </body>
       </Html>
