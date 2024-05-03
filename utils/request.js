@@ -17,7 +17,7 @@ const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
 // We never use the staging api
 const GFW_API_URL = GFW_API;
-const GFW_METADATA_API_URL =
+const GFW_WIDGET_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
@@ -62,10 +62,20 @@ export const dataRequest = axios.create({
 export const metadataRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {
-    baseURL: GFW_METADATA_API_URL,
+    baseURL: DATA_API_URL,
   }),
   ...(!isServer && {
     baseURL: PROXIES.METADATA_API,
+  }),
+});
+
+export const metadataWidgetRequest = axios.create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: GFW_WIDGET_METADATA_API_URL,
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.WIDGET_METADATA_API,
   }),
 });
 
