@@ -35,7 +35,11 @@ class DownloadData extends PureComponent {
           downloadUrls.map((d) => this.renderDownloadLinks(d))}
         <p className="terms">
           By downloading data you agree to the{' '}
-          <a href="/terms" target="_blank">
+          <a
+            href="https://www.wri.org/about/wri-data-platforms-tos"
+            target="_blank"
+            rel="noopenner noreferrer"
+          >
             GFW Terms of Service
           </a>
         </p>
