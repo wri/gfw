@@ -16,7 +16,7 @@ import MyGFWProvider from 'providers/mygfw-provider';
 import MetaProvider from 'providers/meta-provider';
 
 import ModalWelcome from 'components/modals/welcome';
-import MetaModal from 'components/modals/meta';
+import ModalMeta from 'components/modals/meta';
 import ShareModal from 'components/modals/share';
 import AreaOfInterestModal from 'components/modals/area-of-interest';
 import ClimateModal from 'components/modals/climate';
@@ -96,7 +96,7 @@ class MainMapComponent extends PureComponent {
         )}
         <RecentImagery active={recentActive} />
         <ShareModal />
-        <MetaModal metaType="layer" />
+        <ModalMeta metaType="layer" />
         <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
         <ClimateModal />
         <FiresModal />
