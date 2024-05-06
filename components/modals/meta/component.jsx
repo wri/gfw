@@ -26,14 +26,14 @@ class ModalMeta extends PureComponent {
   componentDidMount() {
     const { getModalMetaData, metakey, metaType } = this.props;
     if (metakey) {
-      getModalMetaData({metakey, metaType});
+      getModalMetaData({ metakey, metaType });
     }
   }
 
   componentDidUpdate(prevProps) {
     const { getModalMetaData, metakey, metaData, metaType } = this.props;
     if (metakey && metakey !== prevProps.metakey) {
-      getModalMetaData({metakey, metaType});
+      getModalMetaData({ metakey, metaType });
     }
 
     if (
@@ -51,15 +51,8 @@ class ModalMeta extends PureComponent {
 
   getContent() {
     const { metaData, tableData, loading, error, locationName } = this.props;
-    const {
-      subtitle,
-      overview,
-      citation,
-      map_service,
-      learn_more,
-      download_data,
-      amazon_link,
-    } = metaData || {};
+    const { subtitle, overview, citation, learn_more, download_data } =
+      metaData || {};
 
     const parsedCitation =
       citation &&
@@ -109,7 +102,7 @@ class ModalMeta extends PureComponent {
                 <div className="body">{this.parseContent(parsedCitation)}</div>
               </div>
             )}
-            {(learn_more || download_data || map_service || amazon_link) && (
+            {(learn_more || download_data) && (
               <div className="ext-actions">
                 {learn_more && (
                   <a
@@ -127,15 +120,6 @@ class ModalMeta extends PureComponent {
                     rel="noopener noreferrer"
                   >
                     <Button size="medium">DOWNLOAD DATA</Button>
-                  </a>
-                )}
-                {(map_service || amazon_link) && (
-                  <a
-                    href={map_service || amazon_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button size="medium">OPEN IN ARCGIS</Button>
                   </a>
                 )}
               </div>
