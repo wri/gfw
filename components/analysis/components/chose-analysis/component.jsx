@@ -58,8 +58,7 @@ class ChoseAnalysis extends PureComponent {
           native
         />
         <div className="layer-description">
-          Analysis is also available by default for most data layers under the
-          {' '}
+          Analysis is also available by default for most data layers under the{' '}
           <button
             onClick={() =>
               setMenuSettings({
@@ -68,10 +67,8 @@ class ChoseAnalysis extends PureComponent {
               })}
           >
             land use
-          </button>
-          {' '}
-          and
-          {' '}
+          </button>{' '}
+          and{' '}
           <button
             onClick={() =>
               setMenuSettings({
@@ -80,8 +77,7 @@ class ChoseAnalysis extends PureComponent {
               })}
           >
             biodiversity
-          </button>
-          {' '}
+          </button>{' '}
           tabs.
         </div>
       </div>
@@ -152,11 +148,7 @@ class ChoseAnalysis extends PureComponent {
           {!hasError && !uploading && (
             <Fragment>
               <p>
-                Drag and drop your 
-                {' '}
-                <b>polygon data file</b>
-                {' '}
-                or click here to
+                Drag and drop your <b>polygon data file</b> or click here to
                 upload
               </p>
               <p className="small-text">{'Recommended file size < 1 MB'}</p>
@@ -203,9 +195,12 @@ class ChoseAnalysis extends PureComponent {
             </Button>
           </div>
           <p>
-            By uploading data you agree to the
-            {' '}
-            <a href="/terms" target="_blank" rel="noopenner nofollower">
+            By uploading data you agree to the{' '}
+            <a
+              href="https://www.wri.org/about/wri-data-platforms-tos"
+              target="_blank"
+              rel="noopenner noreferrer"
+            >
               GFW Terms of Service
             </a>
           </p>
