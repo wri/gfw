@@ -74,8 +74,12 @@ const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
         </a>
         {(isDesktop || isModal) && (
           <>
-            <a href="/terms" rel="noopener noreferrer" target="_blank">
-              Terms of use
+            <a
+              href="https://www.wri.org/about/wri-data-platforms-tos"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Terms of Service
             </a>
             <a href="/privacy-policy" rel="noopener noreferrer" target="_blank">
               Privacy policy
