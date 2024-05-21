@@ -35,7 +35,28 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {isOsanoEnabled && (
-            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/bbd879ba-792b-4caf-9a92-a17b920706f7/osano.js" />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('consent','default',{
+                    'ad_storage':'denied',
+                    'analytics_storage':'denied',
+                    'ad_user_data':'denied',
+                    'ad_personalization':'denied',
+                    'personalization_storage':'denied',
+                    'functionality_storage':'granted',
+                    'security_storage':'granted',
+                    'wait_for_update': 500
+                  });
+                  gtag("set", "ads_data_redaction", true);
+                `,
+              }}
+            />
+          )}
+          {isOsanoEnabled && (
+            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/9ed60354-c199-4e89-92c8-047b83aa65a3/osano.js" />
           )}
           <style
             type="text/css"
