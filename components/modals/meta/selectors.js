@@ -10,8 +10,6 @@ const META_FIELDS = [
   'overview',
   'learn_more',
   'download_data',
-  'map_service',
-  'amazon_link',
 ];
 const TABLE_FIELDS = [
   'function',
