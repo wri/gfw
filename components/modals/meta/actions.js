@@ -17,7 +17,6 @@ export const getModalMetaData = createThunkAction(
 
         getMetadata(metakey, metaType)
           .then((response) => {
-            console.log('XPTO', response);
             if (metaType === 'widget') {
               dispatch(setModalMetaData(response.data));
             } else {

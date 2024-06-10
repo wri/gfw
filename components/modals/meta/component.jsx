@@ -31,7 +31,6 @@ class ModalMeta extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('componentDidUpdate', this.props);
     const { getModalMetaData, metakey, metaData, metaType } = this.props;
     if (metakey && metakey !== prevProps.metakey) {
       getModalMetaData({ metakey, metaType });
