@@ -16,8 +16,8 @@ const TABLE_FIELDS = [
   'resolution',
   'geographic_coverage',
   'source',
-  'frequency_of_updates',
-  'date_of_content',
+  'content_date',
+  'update_frequency',
   'cautions',
   'license',
 ];
