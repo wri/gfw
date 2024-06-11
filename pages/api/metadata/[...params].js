@@ -16,13 +16,24 @@ export default async (req, res) => {
       `${GFW_METADATA_API_URL}/dataset/gfw_integrated_alerts/v20240605/metadata`
     );
 
+    const dataVersionMetadataObject = datasetVersionMetadata.data.data;
+
     const response = {
       ...datasetMetadata.data.data,
       metadata: {
         ...datasetMetadata.data.data.metadata,
-        ...datasetVersionMetadata.data.data,
       },
     };
+
+    /*
+     * Merging the metadata from the second request
+     * avoiding overwrite the object properties with null value
+     */
+    Object.keys(dataVersionMetadataObject).forEach((key) => {
+      if (dataVersionMetadataObject[key] !== null) {
+        response.metadata[key] = dataVersionMetadataObject[key];
+      }
+    });
 
     return res.status(200).json(response);
   } catch (error) {
