@@ -84,7 +84,7 @@ class ModalMeta extends PureComponent {
                         dangerouslySetInnerHTML={{ __html: lowerCase(key) }} // eslint-disable-line
                       />
                       <div className="description-column">
-                        {this.parseContent(tableData[key])}
+                        <p>{this.parseMarkdownURLToHTML(tableData[key])}</p>
                       </div>
                     </div>
                   ) : null
@@ -93,13 +93,17 @@ class ModalMeta extends PureComponent {
             {overview && (
               <div className="overview">
                 <h4>Overview</h4>
-                <div className="body">{this.parseContent(overview)}</div>
+                <div className="body">
+                  <p>{this.parseMarkdownURLToHTML(overview)}</p>
+                </div>
               </div>
             )}
             {parsedCitation && (
               <div className="citation">
                 <h5>Citation</h5>
-                <div className="body">{this.parseContent(parsedCitation)}</div>
+                <div className="body">
+                  <p>{this.parseMarkdownURLToHTML(parsedCitation)}</p>
+                </div>
               </div>
             )}
             {(learn_more || download_data) && (
@@ -130,26 +134,15 @@ class ModalMeta extends PureComponent {
     );
   }
 
-  parseContent = (html) => {
-    return (
-      <div>
-        {ReactHtmlParser(html, {
-          transform: (node) =>
-            node.name === 'a' ? (
-              <a
-                key={node.attribs.href}
-                href={node.attribs.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {node.children[0].data}
-              </a>
-            ) : (
-              ''
-            ),
-        })}
-      </div>
+  parseMarkdownURLToHTML = (markdown) => {
+    const markdownRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+    const htmlAnchor = markdown.replace(
+      markdownRegex,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
     );
+
+    return <>{ReactHtmlParser(htmlAnchor)}</>;
   };
 
   render() {
