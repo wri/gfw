@@ -1,10 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
-import {
-  agBiomass2agCarbon,
-  agBiomass2bgCarbon,
-} from 'components/widgets/utils/calculations';
 
 const getData = (state) => state.data;
 const getLocationName = (state) => state.locationLabel;
@@ -18,14 +14,14 @@ export const calculateData = createSelector(
   (data, settings) => {
     if (isEmpty(data)) return null;
     const { variable } = settings;
-
     const extent = (data && data.extent) || 0;
-    const aboveGroundBiomass = (data && data.biomass) || 0;
-    const soil = (data && data.soilCarbon) || 0;
+    const soil = (data && data.gfw_soil_carbon_stocks_2000__mg_c) || 0;
     const soilDensity = (data && data.soilCarbonDensity) || 0;
 
-    const aboveGroundCarbon = agBiomass2agCarbon(aboveGroundBiomass);
-    const belowGroundCarbon = agBiomass2bgCarbon(aboveGroundBiomass);
+    const aboveGroundCarbon =
+      (data && data.gfw_aboveground_carbon_stocks_2000__mg_c) || 0;
+    const belowGroundCarbon =
+      (data && data.gfw_belowground_carbon_stocks_2000__mg_c) || 0;
 
     const aboveGroundCarbonDensity =
       extent > 0 ? aboveGroundCarbon / extent : 0;
