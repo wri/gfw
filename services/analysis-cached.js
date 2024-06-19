@@ -1,4 +1,5 @@
-import { cartoRequest, dataRequest } from 'utils/request';
+import qs from 'qs';
+import { cartoRequest, dataMartRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 
 import forestTypes from 'data/forest-types';
@@ -941,30 +942,32 @@ export const getTreeCoverByLandCoverClass = (params) => {
 };
 
 // Net Change
-export const getNetChange = (params) => {
-  const { forestType, landCategory, ifl, download, adm1 } = params || {};
+export const getNetChange = async (params) => {
+  const { forestType, landCategory, ifl, type, adm0, adm1, adm2, download } =
+    params || {};
 
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset: 'net_change',
-    datasetType: 'umd',
-    version: 'v202209',
-  });
-
-  if (!requestUrl) {
-    return new Promise(() => {});
-  }
-
-  const sqlQuery = adm1 ? SQL_QUERIES.netChange : SQL_QUERIES.netChangeIso;
-
-  const url = encodeURI(
-    `${requestUrl}${sqlQuery}`
-      .replace(
-        /{select_location}/g,
-        getLocationSelect({ ...params, dataset: 'net_change', cast: false })
-      )
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'net_change' }))
+  const requestParams = qs.stringify(
+    {
+      type,
+      adm0,
+      adm1,
+      adm2,
+      download,
+    },
+    { arrayFormat: 'comma' }
   );
+
+  const url = `/net-change/?${requestParams}`;
+
+  /**
+   * localhost:3000/api/datamart/net-change/?
+   * &iso=MEX
+   * &adm1=9
+   * &adm2=3
+   * &download=true
+   */
+
+  const response = await dataMartRequest.get(url);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -972,18 +975,15 @@ export const getNetChange = (params) => {
       name: `net_tree_cover_change_from_height${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: getDownloadUrl(url),
+      url: `${window.location.origin}${PROXIES.DATA_API}${response.data?.url}`,
     };
   }
 
-  return dataRequest.get(url).then((response) => ({
-    ...response,
+  return {
     data: {
-      data: response?.data?.map((d) => ({
-        ...d,
-      })),
+      data: response.data,
     },
-  }));
+  };
 };
 
 // summed extent for single location
