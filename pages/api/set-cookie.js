@@ -10,7 +10,7 @@ export default async function cookieHandler(req, res) {
         serialize('gfw-token', body.token, {
           path: '/',
           httpOnly: true,
-          maxAge: 2592000,
+          maxAge: 31536000, // expires in 1 year
         })
       );
       res.status(200).end('ok');
