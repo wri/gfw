@@ -2,7 +2,6 @@ import PageLayout from 'wrappers/page';
 import MyGfw from 'layouts/my-gfw';
 
 import PropTypes from 'prop-types';
-import { parse } from 'cookie';
 
 import { getPublishedNotifications } from 'services/notifications';
 
@@ -17,17 +16,14 @@ const MyGfwPage = (props) => (
   </PageLayout>
 );
 
-export const getServerSideProps = async (context) => {
+export const getStaticProps = async () => {
   const notifications = await getPublishedNotifications();
-
-  const cookies = context.req.headers.cookie || null;
-
-  console.log('cookies', (cookies && parse(cookies)['gfw-token']) || 'empty');
 
   return {
     props: {
       notifications: notifications || [],
     },
+    revalidate: 10,
   };
 };
 
