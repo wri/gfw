@@ -91,12 +91,6 @@ export default {
   categories: ['summary', 'forest-change'],
   subcategories: ['forest-loss'],
   types: ['country', 'geostore', 'wdpa', 'aoi', 'use'],
-  alerts: [
-    {
-      text: `We are collecting user feedback for how we can improve the integrated deforestation alerts. Please provide your feedback through this [survey](https://survey.alchemer.com/s3/7460286/give-feedback-on-GFW-integrated-deforestation-alerts) or email us at [gfw@wri.org](mailto:gfw@wri.org)!`,
-      visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
-    },
-  ],
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {
