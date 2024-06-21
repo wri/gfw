@@ -11,7 +11,7 @@ export const setMyGFW = createAction('setMyGFW');
 export const getUserProfile = createThunkAction(
   'getUserProfile',
   (urlToken) => (dispatch) => {
-    const token = !isServer && (urlToken || localStorage.getItem('userToken'));
+    const token = !isServer && urlToken;
     if (token) {
       dispatch(setMyGFWLoading({ loading: true, error: false }));
       checkLoggedIn(token)
