@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import orderBy from 'lodash/orderBy';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
+import toArray from 'lodash/toArray';
 import max from 'lodash/max';
 import min from 'lodash/min';
 
@@ -71,7 +72,7 @@ export const getData = createSelector(
     };
 
     years.forEach((year) => {
-      const yearDataByWeek = groupBy(groupedByYear[year], 'week');
+      const yearDataByWeek = toArray(groupBy(groupedByYear[year], 'week'));
       const lastWeekOfYearIso = moment(`${year}-12-31`).isoWeek();
       const yearLength = { [year]: moment(`${year}-12-31`).isoWeek() };
 
@@ -86,7 +87,7 @@ export const getData = createSelector(
       }
 
       for (let i = 1; i <= yearLength[year]; i += 1) {
-        if (Object.keys(yearDataByWeek).length < i) {
+        if (yearDataByWeek.length < i) {
           return;
         }
 
@@ -94,13 +95,13 @@ export const getData = createSelector(
           ? yearDataByWeek[i].length - 1
           : 0;
 
-        let objectsReduced = { count: 0, week: i, year: parseInt(year, 10) };
+        let objectsReduced = {};
 
         for (let index = 0; index <= yearDataLength; index += 1) {
           if (yearDataByWeek[i]) {
             objectsReduced = Object.assign(objectsReduced, {
               ...yearDataByWeek[i][index],
-              count: objectsReduced.count + yearDataByWeek[i][index].count,
+              count: yearDataByWeek[i][index].count,
             });
           }
         }
@@ -193,6 +194,7 @@ export const parseData = createSelector(
 
       return d;
     });
+
     return parsedData;
   }
 );
