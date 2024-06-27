@@ -19,7 +19,16 @@ export const setUserToken = (token) => {
     if (token?.endsWith('#')) {
       serializedToken = token.replace(/#$/, '');
     }
+
+    const expirationDate = new Date();
+    expirationDate.setUTCFullYear(expirationDate.getFullYear() + 1);
+
     localStorage.setItem('userToken', serializedToken);
+    localStorage.setItem(
+      'userTokenExpirationDate',
+      expirationDate.toISOString()
+    ); // 1 year
+
     apiAuthRequest.defaults.headers.Authorization = `Bearer ${serializedToken}`;
   }
 };
@@ -78,6 +87,7 @@ export const logout = () =>
   apiAuthRequest.get('/auth/logout').then((response) => {
     if (response.status < 400 && !isServer) {
       localStorage.removeItem('userToken');
+      localStorage.removeItem('userTokenExpirationDate');
       removeServerCookie();
       window.location.reload();
     }
