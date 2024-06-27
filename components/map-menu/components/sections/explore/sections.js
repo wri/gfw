@@ -58,7 +58,7 @@ export const stories = {
       {
         text: 'READ MORE',
         theme: 'theme-button-light theme-button-small',
-        link: '/stories',
+        extLink: 'https://news.mongabay.com/series/forest-trackers/',
       },
       {
         text: 'VIEW ON MAP',

@@ -28,8 +28,7 @@ export const foundingPartners = [
   },
   {
     img: images('./esrihover.png'),
-    link:
-      'http://www.esri.com/landing-pages/fight-against-deforestation/global-forest-watch',
+    link: 'http://www.esri.com/landing-pages/fight-against-deforestation/global-forest-watch',
     title: 'ESRI',
   },
   {
@@ -59,8 +58,7 @@ export const foundingPartners = [
   },
   {
     img: images('./norwegianministrihover.png'),
-    link:
-      'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
+    link: 'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
     title: 'Norwegian Ministry',
   },
   {
@@ -105,8 +103,7 @@ export const foundingPartners = [
   },
   {
     img: images('./ukaidhover.png'),
-    link:
-      'https://www.gov.uk/government/organisations/department-for-international-development',
+    link: 'https://www.gov.uk/government/organisations/department-for-international-development',
     title: 'UKAID',
   },
   {
@@ -159,8 +156,7 @@ export const partnersCollaborators = [
   },
   {
     img: images('./beihover.png'),
-    link:
-      'http://www.cisl.cam.ac.uk/business-action/sustainable-finance/banking-environment-initiative',
+    link: 'http://www.cisl.cam.ac.uk/business-action/sustainable-finance/banking-environment-initiative',
     title: 'Banking Environment Initiative',
   },
   {
@@ -383,19 +379,17 @@ export const funders = [
   },
   {
     img: images('./norwegianministrihover.png'),
-    link:
-      'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
+    link: 'https://www.regjeringen.no/en/topics/climate-and-environment/climate/climate-and-forest-initiative/id2000712/',
     title: 'Norwegian Ministry',
   },
   {
-    img: images('./sv_postkodstiftelsen.png'),
+    img: images('./swedishpostcodefoundation.png'),
     link: 'https://postkodstiftelsen.se/en/about-the-postcode-foundation/',
     title: 'Swedish Postcode Foundation',
   },
   {
     img: images('./ukaidhover.png'),
-    link:
-      'https://www.gov.uk/government/organisations/department-for-international-development',
+    link: 'https://www.gov.uk/government/organisations/department-for-international-development',
     title: 'UKAID',
   },
   {
