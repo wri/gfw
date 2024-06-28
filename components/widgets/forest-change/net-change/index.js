@@ -130,9 +130,11 @@ export default {
       };
     });
   },
-  getDataURL: (params) => {
+  getDataURL: async (params) => {
     const globalLocation = getGlobalLocation(params);
-    return [getNetChange({ ...params, ...globalLocation, download: true })];
+    return [
+      await getNetChange({ ...params, ...globalLocation, download: true }),
+    ];
   },
   getWidgetProps,
 };
