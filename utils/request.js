@@ -31,6 +31,8 @@ const DATA_API_KEY = GFW_API_KEY;
 
 const isServer = typeof window === 'undefined';
 
+const userToken = !isServer && localStorage.getItem('userToken');
+
 const defaultRequestConfig = {
   timeout: 30 * 1000,
 };
@@ -92,7 +94,9 @@ export const apiAuthRequest = axios.create({
     baseURL: PROXIES.GFW_API,
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+      ...(userToken && {
+        Authorization: `Bearer ${userToken}`,
+      }),
     },
   }),
 });

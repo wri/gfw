@@ -11,8 +11,15 @@ export const setMyGFW = createAction('setMyGFW');
 export const getUserProfile = createThunkAction(
   'getUserProfile',
   (urlToken) => (dispatch) => {
+    let isTokenExpired = false;
+    const tokenExpiration = localStorage.getItem('userTokenExpirationDate');
     const token = !isServer && (urlToken || localStorage.getItem('userToken'));
-    if (token) {
+
+    if (!tokenExpiration || new Date(tokenExpiration) <= new Date()) {
+      isTokenExpired = true;
+    }
+
+    if (token && !isTokenExpired) {
       dispatch(setMyGFWLoading({ loading: true, error: false }));
       checkLoggedIn(token)
         .then((authResponse) => {
