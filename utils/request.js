@@ -61,6 +61,20 @@ export const dataRequest = axios.create({
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
+export const dataMartRequest = axios.create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: DATA_API_URL,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.DATAMART_API,
+  }),
+  transformResponse: [(data) => JSON.parse(data)?.data],
+});
+
 export const metadataRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {

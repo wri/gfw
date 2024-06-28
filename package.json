@@ -136,6 +136,7 @@
     "proj4": "^2.5.0",
     "promise.prototype.finally": "^3.1.2",
     "prop-types": "^15.7.2",
+    "qs": "^6.12.1",
     "query-string": "^6.11.1",
     "rc-slider": "8.6.3",
     "rc-tooltip": "3.7.0",
