@@ -15,6 +15,8 @@ const mapStateToProps = (
     startDate,
     endDate,
     trimEndDate,
+    step,
+    matchLegend,
     dynamicTimeline,
     ...props
   }
@@ -28,7 +30,8 @@ const mapStateToProps = (
     dynamicTimeline,
   };
   return {
-    marks: getMarks({ dates, dynamicTimeline }),
+    marks: getMarks({ dates, step, matchLegend, dynamicTimeline }),
+    step,
     ...props,
   };
 };
