@@ -192,6 +192,7 @@ export default class MyDocument extends Document {
           </main>
           {isOsanoEnabled && (
             <a
+              style={{ display: 'none' }}
               href=""
               className="osano-cookie-preference-link"
               title="Manage privacy and cookie preferences"
