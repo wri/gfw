@@ -15,8 +15,6 @@ import Icon from 'components/ui/icon';
 import downloadIcon from 'assets/icons/download.svg?sprite';
 import { GFW_API } from 'utils/apis';
 
-const GLAD_ALERTS_WIDGET = 'gladAlerts';
-
 const isServer = typeof window === 'undefined';
 
 class WidgetDownloadButton extends PureComponent {
@@ -229,11 +227,6 @@ class WidgetDownloadButton extends PureComponent {
     });
   };
 
-  isGladAlertsWidget = () => {
-    const { widget } = this.props;
-    return widget === GLAD_ALERTS_WIDGET;
-  };
-
   isCustomShape = () => {
     const { location, status } = this.props;
     return location && location.type === 'geostore' && status !== 'saved';
@@ -247,7 +240,7 @@ class WidgetDownloadButton extends PureComponent {
 
     this.setState({ disabled: true });
 
-    if (this.isGladAlertsWidget() && this.isCustomShape()) {
+    if (this.isCustomShape()) {
       const csvFile = `${GFW_API}${gladAlertsDownloadUrls.csv}`;
       saveAs(csvFile, 'download');
     } else {
@@ -268,10 +261,9 @@ class WidgetDownloadButton extends PureComponent {
     const { areaTooLarge, disabled, disabledMessage, widget } = this.props;
     const { disabled: localDisabled } = this.state;
 
-    let tooltipText =
-      this.isGladAlertsWidget() && this.isCustomShape()
-        ? 'Download data. Please add .csv to the filename if extension is missing.'
-        : 'Download data.';
+    let tooltipText = this.isCustomShape()
+      ? 'Download data. Please add .csv to the filename if extension is missing.'
+      : 'Download data.';
 
     if (areaTooLarge) {
       tooltipText =
