@@ -129,10 +129,7 @@ class WidgetHeader extends PureComponent {
             {showDownloadBtn && (
               <WidgetDownloadButton
                 disabled={
-                  disableDownloadBtn ||
-                  widget === 'gladAlerts' ||
-                  widget === 'gladRanked' ||
-                  widget === 'integratedAlertsRanked'
+                  disableDownloadBtn || widget === 'integratedAlertsRanked'
                 }
                 disabledMessage={disabledMessageString}
                 {...this.props}
