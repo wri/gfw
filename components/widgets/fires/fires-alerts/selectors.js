@@ -1,5 +1,13 @@
 /* eslint-disable prefer-destructuring */
 import { createSelector, createStructuredSelector } from 'reselect';
+import {
+  isWithinInterval,
+  startOfWeek,
+  endOfWeek,
+  eachWeekOfInterval,
+  getYear,
+  getWeek,
+} from 'date-fns';
 import moment from 'moment';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
@@ -33,8 +41,85 @@ const getIndicator = (state) => state.indicator;
 
 const MINGAP = 4;
 
+const generateYearWeekArray = (startDate, endDate) => {
+  const weeks = eachWeekOfInterval(
+    {
+      start: startOfWeek(startDate, { weekStartsOn: 1 }),
+      end: endOfWeek(endDate, { weekStartsOn: 1 }),
+    },
+    { weekStartsOn: 1 }
+  );
+
+  return weeks.map((date) => ({
+    year: getYear(date),
+    week: getWeek(date, { weekStartsOn: 1 }),
+  }));
+};
+
+const getAllAlerts = createSelector([getAlerts], (alerts) => {
+  if (!alerts) return null;
+
+  const filler = { iso: alerts[0]?.iso, alert__count: 0 };
+  const minYear = '2012';
+  const maxYear = new Date();
+
+  const yearProperty = 'alert__year';
+  const weekProperty = 'alert__week';
+
+  const start = new Date(minYear?.toString());
+  const end = new Date(maxYear?.toString());
+  const completeYearWeekArray = generateYearWeekArray(start, end);
+
+  // Create a set of existing year-week combinations for quick lookup
+  const existingAlerts = new Set(
+    alerts.map((alert) => `${alert[yearProperty]}-${alert[weekProperty]}`)
+  );
+
+  // Iterate through the complete array and add missing values
+  const mockedAlerts = completeYearWeekArray.map((item) => {
+    const weekStartDate = startOfWeek(
+      new Date(item.year, 0, (item.week - 1) * 7),
+      { weekStartsOn: 1 }
+    );
+    const weekEndDate = endOfWeek(new Date(item.year, 0, (item.week - 1) * 7), {
+      weekStartsOn: 1,
+    });
+
+    if (
+      isWithinInterval(weekStartDate, { start, end }) ||
+      isWithinInterval(weekEndDate, { start, end })
+    ) {
+      const key = `${item.year}-${item.week}`;
+
+      if (!existingAlerts.has(key)) {
+        const mockedAlert = {
+          [yearProperty]: item.year,
+          [weekProperty]: item.week,
+          ...filler,
+        };
+
+        return mockedAlert;
+      }
+    }
+
+    return null;
+  });
+
+  const allAlerts = [...alerts, ...mockedAlerts.filter((item) => !!item)];
+
+  // Sort the array again by year and week properties to maintain order
+  allAlerts.sort((a, b) => {
+    if (a[yearProperty] === b[yearProperty]) {
+      return a[weekProperty] - b[weekProperty];
+    }
+    return a[yearProperty] - b[yearProperty];
+  });
+
+  return allAlerts;
+});
+
 export const getData = createSelector(
-  [getAlerts, getLatest],
+  [getAllAlerts, getLatest],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
 
@@ -272,7 +357,7 @@ export const parseConfig = createSelector(
         unit: ` ${dataset.toUpperCase()} alerts`,
         color: colors.main,
         unitFormat: (value) =>
-          Number.isInteger(value) && formatNumber({ num: value, unit: ',' }),
+          Number.isInteger(value) ? formatNumber({ num: value, unit: ',' }) : 0,
       },
     ];
 
@@ -291,7 +376,7 @@ export const parseConfig = createSelector(
         color: '#49b5e3',
         nullValue: 'No data available',
         unitFormat: (value) =>
-          Number.isInteger(value) && formatNumber({ num: value, unit: ',' }),
+          Number.isInteger(value) ? formatNumber({ num: value, unit: ',' }) : 0,
       });
     }
 
