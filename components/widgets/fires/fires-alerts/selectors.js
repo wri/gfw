@@ -383,10 +383,10 @@ export const parseConfig = createSelector(
     return {
       ...getChartConfig(colors, moment(latest), {}, ''),
       xAxis: {
+        dataKey: 'month',
         tickCount: 12,
-        interval: 4,
-        scale: 'point',
-        tickFormatter: (t) => moment(t).format('MMM'),
+        interval: 0,
+        tickFormatter: (t) => t.charAt(0).toUpperCase() + t.slice(1),
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
           endIndex - startIndex < 10 && {
