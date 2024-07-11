@@ -7,6 +7,7 @@ import minBy from 'lodash/minBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 import range from 'lodash/range';
+import upperCase from 'lodash';
 
 const translateMeans = (means, latest) => {
   if (!means || !means.length) return null;
@@ -317,7 +318,7 @@ export const getDatesData = (data) =>
     return {
       ...d,
       ...((firstDayOfWeek.date() <= 7 || index === 0) && {
-        month: moment().year(d.year).isoWeek(d.week).format('MMM'),
+        monthLabel: moment().year(d.year).isoWeek(d.week).format('MMM'),
       }),
       date: d.date
         ? moment(d.date).format('YYYY-MM-DD')
@@ -326,6 +327,7 @@ export const getDatesData = (data) =>
             .isoWeek(d.week)
             .startOf('isoWeek')
             .format('YYYY-MM-DD'),
+      month: upperCase(moment().year(d.year).isoWeek(d.week).format('MMM')),
     };
   });
 

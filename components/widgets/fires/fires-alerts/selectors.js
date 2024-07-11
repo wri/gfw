@@ -383,7 +383,7 @@ export const parseConfig = createSelector(
     return {
       ...getChartConfig(colors, moment(latest), {}, ''),
       xAxis: {
-        dataKey: 'month',
+        dataKey: 'monthLabel',
         tickCount: 12,
         interval: 0,
         tickFormatter: (t) => t.charAt(0).toUpperCase() + t.slice(1),
