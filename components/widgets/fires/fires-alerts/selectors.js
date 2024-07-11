@@ -125,7 +125,7 @@ export const getData = createSelector(
 
     const parsedData = data.map((d) => ({
       ...d,
-      count: d.alert__count || d.area_ha,
+      count: d.alert__count || d.area_ha || 0,
       week: parseInt(d.alert__week, 10),
       year: parseInt(d.alert__year, 10),
     }));
@@ -273,7 +273,7 @@ export const parseData = createSelector(
         return {
           ...d,
           compareYear,
-          compareCount: compareWeek ? compareWeek.count : null,
+          compareCount: compareWeek ? compareWeek.count : 0,
         };
       }
 
