@@ -317,9 +317,10 @@ export const getDatesData = (data) =>
 
     return {
       ...d,
-      ...((firstDayOfWeek.date() <= 7 || index === 0) && {
-        monthLabel: moment().year(d.year).isoWeek(d.week).format('MMM'),
-      }),
+      ...((firstDayOfWeek.date() <= 7 || index === 0) &&
+        d?.confidence__cat === 'h' && {
+          monthLabel: moment().year(d.year).isoWeek(d.week).format('MMM'),
+        }),
       date: d.date
         ? moment(d.date).format('YYYY-MM-DD')
         : moment()

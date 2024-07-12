@@ -59,7 +59,7 @@ const generateYearWeekArray = (startDate, endDate) => {
 const getAllAlerts = createSelector([getAlerts], (alerts) => {
   if (!alerts) return null;
 
-  const filler = { iso: alerts[0]?.iso, alert__count: 0 };
+  const filler = { iso: alerts[0]?.iso, alert__count: 0, confidence__cat: 'h' };
   const minYear = '2012';
   const maxYear = new Date();
 
@@ -180,18 +180,11 @@ export const getData = createSelector(
           ? yearDataByWeek[i].length - 1
           : 0;
 
-        let objectsReduced = {};
-
         for (let index = 0; index <= yearDataLength; index += 1) {
           if (yearDataByWeek[i]) {
-            objectsReduced = Object.assign(objectsReduced, {
-              ...yearDataByWeek[i][index],
-              count: yearDataByWeek[i][index].count,
-            });
+            formattedData.push(yearDataByWeek[i][index]);
           }
         }
-
-        formattedData.push(objectsReduced);
       }
     });
 
