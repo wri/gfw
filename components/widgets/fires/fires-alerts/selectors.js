@@ -119,10 +119,10 @@ const getAllAlerts = createSelector([getAlerts], (alerts) => {
 });
 
 export const getData = createSelector(
-  [getAllAlerts, getLatest],
-  (data, latest) => {
+  [getAllAlerts, getLatest, getOptionsSelected],
+  (data, latest, options) => {
     if (!data || isEmpty(data)) return null;
-
+    const { confidence } = options;
     const parsedData = data.map((d) => ({
       ...d,
       count: d.alert__count || d.area_ha || 0,
@@ -176,14 +176,33 @@ export const getData = createSelector(
           return;
         }
 
+        const alerts = [];
         const yearDataLength = yearDataByWeek[i]
           ? yearDataByWeek[i].length - 1
           : 0;
 
         for (let index = 0; index <= yearDataLength; index += 1) {
           if (yearDataByWeek[i]) {
-            formattedData.push(yearDataByWeek[i][index]);
+            alerts.push(yearDataByWeek[i][index]);
           }
+        }
+
+        if (confidence.value === 'h') {
+          formattedData.push(...alerts);
+        } else {
+          const allConfidencesAggregated = alerts.reduce(
+            (acc, curr) => {
+              return {
+                ...curr,
+                confidence__cat: '', // high, low and normal
+                alert__count: acc?.alert__count + curr?.alert__count,
+                count: acc?.alert__count + curr?.alert__count,
+              };
+            },
+            { alert__count: 0 }
+          );
+
+          formattedData.push(allConfidencesAggregated);
         }
       }
     });
