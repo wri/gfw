@@ -12,7 +12,7 @@ export default {
     {
       key: 'year',
       label: 'year',
-      options: [1990, 2000, 2005, 2010].map((y) => ({ label: y, value: y })),
+      options: [2000, 2010].map((y) => ({ label: y, value: y })),
       type: 'select',
     },
   ],
