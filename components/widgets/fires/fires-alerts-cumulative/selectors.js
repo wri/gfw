@@ -115,7 +115,6 @@ export const getData = createSelector(
           (acc, curr) => {
             return {
               ...curr,
-              confidence__cat: '', // high, low and normal
               alert__count: acc?.alert__count + curr?.alert__count,
               count: acc?.alert__count + curr?.alert__count,
             };
