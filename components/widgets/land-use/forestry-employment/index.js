@@ -34,6 +34,6 @@ export default {
       'According to the FAO, there were {numPeople} people employed in {location} Forestry sector in {year}, of which {femalePercent} were female.',
   },
   getData: (params) => getFAOEmployment(params),
-  getDataURL: (params) => getFAOEmployment({ ...params, download: true }),
+  getDataURL: (params) => [getFAOEmployment({ ...params, download: true })],
   getWidgetProps,
 };
