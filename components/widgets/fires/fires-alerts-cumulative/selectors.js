@@ -45,8 +45,8 @@ export const getCompareYears = createSelector(
 );
 
 export const getData = createSelector(
-  [getAlerts, getLatest, getOptionsSelected],
-  (data, latest, { confidence }) => {
+  [getAlerts, getLatest],
+  (data, latest) => {
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
@@ -96,71 +96,48 @@ export const getData = createSelector(
     const zeroFilledData = [];
 
     years.forEach((year) => {
-      let acc1 = 0;
-      let acc2 = 0;
-      const yearDataByWeek = groupBy(groupedByYear[year], 'week'); // data by Week with all array items
+      let countAcc = 0;
+      const yearDataByWeek = groupBy(groupedByYear[year], 'week');
 
-      if (confidence.value === 'h') {
-        for (let i = 1; i <= yearLengths[year]; i += 1) {
-          const weekData = yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(year, 10) };
-          acc1 += weekData.count;
-          if (parseInt(year, 10) === lastWeek.year && i > lastWeek.isoWeek) {
-            zeroFilledData.push({
-              ...weekData,
-              count: null,
-            });
-          } else {
-            zeroFilledData.push({
-              ...weekData,
-              count: acc1,
-            });
+      for (let i = 1; i <= yearLengths[year]; i += 1) {
+        const alerts = [];
+        const yearDataLength = yearDataByWeek[i]
+          ? yearDataByWeek[i].length - 1
+          : 0;
+
+        for (let index = 0; index <= yearDataLength; index += 1) {
+          if (yearDataByWeek[i]) {
+            alerts.push(yearDataByWeek[i][index]);
           }
         }
-      }
 
-      if (confidence.value === '') {
-        for (let i = 1; i <= yearLengths[year]; i += 1) {
-          const alerts = [];
-          const yearDataLength = yearDataByWeek[i]
-            ? yearDataByWeek[i].length - 1
-            : 0;
+        const allConfidencesAggregated = alerts.reduce(
+          (acc, curr) => {
+            return {
+              ...curr,
+              confidence__cat: '', // high, low and normal
+              alert__count: acc?.alert__count + curr?.alert__count,
+              count: acc?.alert__count + curr?.alert__count,
+            };
+          },
+          { alert__count: 0 }
+        );
 
-          for (let index = 0; index <= yearDataLength; index += 1) {
-            if (yearDataByWeek[i]) {
-              alerts.push(yearDataByWeek[i][index]);
-            }
-          }
+        const weekData = yearDataByWeek[i]
+          ? allConfidencesAggregated
+          : { count: 0, week: i, year: parseInt(year, 10), alert__count: 0 };
+        countAcc += weekData.count;
 
-          const allConfidencesAggregated = alerts.reduce(
-            (acc, curr) => {
-              return {
-                ...curr,
-                confidence__cat: '', // high, low and normal
-                alert__count: acc?.alert__count + curr?.alert__count,
-                count: acc?.alert__count + curr?.alert__count,
-              };
-            },
-            { alert__count: 0 }
-          );
-
-          const weekData = yearDataByWeek[i]
-            ? allConfidencesAggregated
-            : { count: 0, week: i, year: parseInt(year, 10) };
-          acc2 += weekData.count;
-
-          if (parseInt(year, 10) === lastWeek.year && i > lastWeek.isoWeek) {
-            zeroFilledData.push({
-              ...weekData,
-              count: null,
-            });
-          } else {
-            zeroFilledData.push({
-              ...weekData,
-              count: acc2,
-            });
-          }
+        if (parseInt(year, 10) === lastWeek.year && i > lastWeek.isoWeek) {
+          zeroFilledData.push({
+            ...weekData,
+            count: null,
+          });
+        } else {
+          zeroFilledData.push({
+            ...weekData,
+            count: countAcc,
+          });
         }
       }
     });
