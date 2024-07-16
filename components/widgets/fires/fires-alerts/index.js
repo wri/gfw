@@ -327,26 +327,24 @@ const defaultConfig = {
         const maxYear = Math.max(...years);
         const latestDate = latest && latest.date;
 
-        return (
-          {
-            alerts: data,
-            latest: latestDate,
-            options: {
-              compareYear: years
-                .filter((y) => y !== maxYear)
-                .map((y) => ({
-                  label: y,
-                  value: y,
-                })),
-            },
-            settings: {
-              startDateAbsolute: moment(latestDate)
-                .add(-3, 'month')
-                .format('YYYY-MM-DD'),
-              endDateAbsolute: latestDate,
-            },
-          } || {}
-        );
+        return {
+          alerts: data,
+          latest: latestDate,
+          options: {
+            compareYear: years
+              .filter((y) => y !== maxYear)
+              .map((y) => ({
+                label: y,
+                value: y,
+              })),
+          },
+          settings: {
+            startDateAbsolute: moment(latestDate)
+              .add(-3, 'month')
+              .format('YYYY-MM-DD'),
+            endDateAbsolute: latestDate,
+          },
+        };
       })
     );
   },

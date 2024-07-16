@@ -5,9 +5,9 @@ import concat from 'lodash/concat';
 import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
 import sumBy from 'lodash/sumBy';
-import upperCase from 'lodash/upperCase';
 import moment from 'moment';
 import range from 'lodash/range';
+import upperCase from 'lodash';
 
 const translateMeans = (means, latest) => {
   if (!means || !means.length) return null;
@@ -309,17 +309,28 @@ export const getCumulativeStatsData = (data) => {
 };
 
 export const getDatesData = (data) =>
-  data.map((d) => ({
-    ...d,
-    date: d.date
-      ? moment(d.date).format('YYYY-MM-DD')
-      : moment()
-          .year(d.year)
-          .isoWeek(d.week)
-          .startOf('isoWeek')
-          .format('YYYY-MM-DD'),
-    month: upperCase(moment().year(d.year).isoWeek(d.week).format('MMM')),
-  }));
+  data.map((d, index) => {
+    const firstDayOfWeek = moment()
+      .year(d.year)
+      .isoWeek(d.week)
+      .startOf('isoWeek');
+
+    return {
+      ...d,
+      ...((firstDayOfWeek.date() <= 7 || index === 0) &&
+        d?.confidence__cat === 'h' && {
+          monthLabel: moment().year(d.year).isoWeek(d.week).format('MMM'),
+        }),
+      date: d.date
+        ? moment(d.date).format('YYYY-MM-DD')
+        : moment()
+            .year(d.year)
+            .isoWeek(d.week)
+            .startOf('isoWeek')
+            .format('YYYY-MM-DD'),
+      month: upperCase(moment().year(d.year).isoWeek(d.week).format('MMM')),
+    };
+  });
 
 export const getChartConfig = (
   colors,
