@@ -45,8 +45,8 @@ export const getCompareYears = createSelector(
 );
 
 export const getData = createSelector(
-  [getAlerts, getLatest],
-  (data, latest) => {
+  [getAlerts, getLatest, getOptionsSelected],
+  (data, latest, { confidence }) => {
     if (!data || isEmpty(data)) return null;
     const parsedData = data.map((d) => ({
       ...d,
@@ -95,27 +95,52 @@ export const getData = createSelector(
 
     const zeroFilledData = [];
 
-    years.forEach((d) => {
+    years.forEach((year) => {
       let acc = 0;
-      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
-      for (let i = 1; i <= yearLengths[d]; i += 1) {
-        const weekData = yearDataByWeek[i]
-          ? yearDataByWeek[i][0]
-          : { count: 0, week: i, year: parseInt(d, 10) };
-        acc += weekData.count;
-        if (parseInt(d, 10) === lastWeek.year && i > lastWeek.isoWeek) {
-          zeroFilledData.push({
-            ...weekData,
-            count: null,
-          });
-        } else {
-          zeroFilledData.push({
-            ...weekData,
-            count: acc,
-          });
+      const yearDataByWeek = groupBy(groupedByYear[year], 'week'); // data by Week with all array items
+
+      if (confidence.value === 'h') {
+        for (let i = 1; i <= yearLengths[year]; i += 1) {
+          const weekData = yearDataByWeek[i]
+            ? yearDataByWeek[i][0]
+            : { count: 0, week: i, year: parseInt(year, 10) };
+          acc += weekData.count;
+          if (parseInt(year, 10) === lastWeek.year && i > lastWeek.isoWeek) {
+            zeroFilledData.push({
+              ...weekData,
+              count: null,
+            });
+          } else {
+            zeroFilledData.push({
+              ...weekData,
+              count: acc,
+            });
+          }
+        }
+      }
+
+      if (confidence.value === '') {
+        for (let i = 1; i <= yearLengths[year]; i += 1) {
+          const weekData = yearDataByWeek[i]
+            ? yearDataByWeek[i][0]
+            : { count: 0, week: i, year: parseInt(year, 10) };
+          acc += weekData.count;
+
+          if (parseInt(year, 10) === lastWeek.year && i > lastWeek.isoWeek) {
+            zeroFilledData.push({
+              ...weekData,
+              count: null,
+            });
+          } else {
+            zeroFilledData.push({
+              ...weekData,
+              count: acc,
+            });
+          }
         }
       }
     });
+
     return zeroFilledData;
   }
 );
