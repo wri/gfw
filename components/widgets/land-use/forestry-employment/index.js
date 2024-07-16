@@ -23,7 +23,7 @@ export default {
     landUse: 3,
   },
   settings: {
-    year: 2010,
+    year: 2015,
     unit: '%',
   },
   colors: 'forestryEmployment',
