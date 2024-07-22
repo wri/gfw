@@ -95,15 +95,39 @@ export const getData = createSelector(
 
     const zeroFilledData = [];
 
-    years.forEach((d) => {
-      let acc = 0;
-      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
-      for (let i = 1; i <= yearLengths[d]; i += 1) {
+    years.forEach((year) => {
+      let countAcc = 0;
+      const yearDataByWeek = groupBy(groupedByYear[year], 'week');
+
+      for (let i = 1; i <= yearLengths[year]; i += 1) {
+        const alerts = [];
+        const yearDataLength = yearDataByWeek[i]
+          ? yearDataByWeek[i].length - 1
+          : 0;
+
+        for (let index = 0; index <= yearDataLength; index += 1) {
+          if (yearDataByWeek[i]) {
+            alerts.push(yearDataByWeek[i][index]);
+          }
+        }
+
+        const allConfidencesAggregated = alerts.reduce(
+          (acc, curr) => {
+            return {
+              ...curr,
+              alert__count: acc?.alert__count + curr?.alert__count,
+              count: acc?.alert__count + curr?.alert__count,
+            };
+          },
+          { alert__count: 0 }
+        );
+
         const weekData = yearDataByWeek[i]
-          ? yearDataByWeek[i][0]
-          : { count: 0, week: i, year: parseInt(d, 10) };
-        acc += weekData.count;
-        if (parseInt(d, 10) === lastWeek.year && i > lastWeek.isoWeek) {
+          ? allConfidencesAggregated
+          : { count: 0, week: i, year: parseInt(year, 10), alert__count: 0 };
+        countAcc += weekData.count;
+
+        if (parseInt(year, 10) === lastWeek.year && i > lastWeek.isoWeek) {
           zeroFilledData.push({
             ...weekData,
             count: null,
@@ -111,11 +135,12 @@ export const getData = createSelector(
         } else {
           zeroFilledData.push({
             ...weekData,
-            count: acc,
+            count: countAcc,
           });
         }
       }
     });
+
     return zeroFilledData;
   }
 );
