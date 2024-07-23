@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import filter from 'lodash/filter';
 import { formatNumber } from 'utils/format';
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 import moment from 'moment';
 
@@ -15,6 +16,7 @@ const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
 const getOptionsSelected = (state) => state.optionsSelected;
+const getLanguage = (state) => state.lang;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (!data || isEmpty(data)) return null;
@@ -159,8 +161,9 @@ export const parseSentence = createSelector(
     getIndicator,
     getLocationName,
     getOptionsSelected,
+    getLanguage,
   ],
-  (data, settings, sentences, indicator, currentLabel, options) => {
+  (data, settings, sentences, indicator, currentLabel, options, language) => {
     if (!data || isEmpty(data)) return null;
     // TODO explore why the getOptionsSelected is returning null
 
@@ -188,8 +191,8 @@ export const parseSentence = createSelector(
     const diff = possibleStartDateMoment.diff(startDateMoment, 'days');
     const startDate = diff > 0 ? possibleStartDate : selectedDate;
 
-    const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
-    const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
+    const formattedStartDate = localizeWidgetSentenceDate(startDate, language);
+    const formattedEndDate = localizeWidgetSentenceDate(endDate, language);
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
