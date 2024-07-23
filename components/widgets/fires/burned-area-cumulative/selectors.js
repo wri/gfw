@@ -16,6 +16,7 @@ import {
   getDatesData,
   getChartConfig,
 } from 'components/widgets/utils/data';
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 const getAlerts = (state) => state.data && state.data.alerts;
 const getLatest = (state) => state.data && state.data.latest;
@@ -32,6 +33,7 @@ const getSentences = (state) => state.sentences || null;
 const getLocationName = (state) => state.locationLabel;
 const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
+const getLanguage = (state) => state.lang;
 
 export const getCompareYears = createSelector(
   [getCompareYear, getAllYears],
@@ -405,6 +407,7 @@ export const parseSentence = createSelector(
     getStartIndex,
     getOptionsSelected,
     getIndicator,
+    getLanguage,
   ],
   (
     raw_data,
@@ -414,7 +417,8 @@ export const parseSentence = createSelector(
     location,
     startIndex,
     options,
-    indicator
+    indicator,
+    language
   ) => {
     if (!data || isEmpty(data)) return null;
     const { allBurnWithInd, allBurn, thresholdStatement } = sentences;
@@ -486,12 +490,12 @@ export const parseSentence = createSelector(
       thresh && thresh > 0
         ? sentence + thresholdStatement
         : sentence.concat('.');
-    const formattedData = moment(date).format('Do of MMMM YYYY');
+
     const params = {
       location,
       indicator: indicatorLabel,
       thresh: `${thresh}%`,
-      date: formattedData,
+      date: localizeWidgetSentenceDate(date, language),
       latestYear,
       dataset_start_year: 2001,
       maxYear,
