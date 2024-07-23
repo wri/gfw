@@ -6,6 +6,8 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
+
 import { getChartConfig, getDatesData } from 'components/widgets/utils/data';
 
 const getAlerts = (state) => state.data && state.data.alerts;
@@ -17,6 +19,7 @@ const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
 const getStartIndex = (state) => state.settings.startIndex;
 const getEndIndex = (state) => state.settings.endIndex || null;
+const getLanguage = (state) => state.lang;
 
 const INITIAL_WINDOW_WEEKS = 3 * 52 + 1;
 
@@ -223,8 +226,9 @@ export const parseSentence = createSelector(
     getLocationObject,
     getOptionsSelected,
     getIndicator,
+    getLanguage,
   ],
-  (data, colors, sentences, location, options, indicator) => {
+  (data, colors, sentences, location, options, indicator, language) => {
     if (!data || !data.length) return null;
     const { initial, withInd, highConfidence } = sentences;
     const { confidence, dataset } = options;
@@ -244,8 +248,8 @@ export const parseSentence = createSelector(
     const params = {
       location: location.label || '',
       indicator: indicatorLabel,
-      start_date: moment(startDate).format('Do of MMMM YYYY'),
-      end_date: moment(endDate).format('Do of MMMM YYYY'),
+      start_date: localizeWidgetSentenceDate(startDate, language),
+      end_date: localizeWidgetSentenceDate(endDate, language),
       dataset: dataset && dataset.label,
       total_alerts: {
         value: total ? formatNumber({ num: total, unit: ',' }) : 0,
