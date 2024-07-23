@@ -2,8 +2,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
-
-import moment from 'moment';
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 // get list data
 const selectAlerts = (state) => state.data && state.data.alerts;
@@ -13,6 +12,7 @@ const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
 const getDataset = (state) => state.settings.dataset || null;
+const getLanguage = (state) => state.lang;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (isEmpty(data)) return null;
@@ -89,13 +89,14 @@ export const parseSentence = createSelector(
     selectSentences,
     getIndicator,
     getLocationName,
+    getLanguage,
   ],
-  (data, dataset, settings, sentences, indicator, location) => {
+  (data, dataset, settings, sentences, indicator, location, language) => {
     if (!data) return null;
     const startDate = settings.startDate;
     const endDate = settings.endDate;
-    const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
-    const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
+    const formattedStartDate = localizeWidgetSentenceDate(startDate, language);
+    const formattedEndDate = localizeWidgetSentenceDate(endDate, language);
     const params = {
       indicator: indicator && indicator.label,
       location,
