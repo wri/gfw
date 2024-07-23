@@ -10,6 +10,8 @@ import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 import min from 'lodash/min';
 
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
+
 import {
   getStatsData,
   getDatesData,
@@ -29,6 +31,7 @@ const getLocationName = (state) => state.locationLabel;
 const getLang = (state) => state.lang || null;
 const getOptionsSelected = (state) => state.optionsSelected;
 const getIndicator = (state) => state.indicator;
+const getLanguage = (state) => state.lang;
 
 const MINGAP = 4;
 
@@ -357,6 +360,7 @@ export const parseSentence = createSelector(
     getOptionsSelected,
     getLang,
     getIndicator,
+    getLanguage,
   ],
   (
     raw_data,
@@ -368,7 +372,8 @@ export const parseSentence = createSelector(
     indexes,
     options,
     lang,
-    indicator
+    indicator,
+    language
   ) => {
     if (!data || isEmpty(data)) return null;
     const {
@@ -458,16 +463,15 @@ export const parseSentence = createSelector(
         ? sentence + thresholdStatement
         : sentence.concat('.');
 
-    const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
       location,
       indicator: indicatorLabel,
       thresh: `${thresh}%`,
-      date: formattedData,
+      date: localizeWidgetSentenceDate(date, language),
       fires_season_start: seasonStatement,
       fire_season_length: sortedPeakWeeks.length,
-      start_date: moment(firstDate.date).format('Do of MMMM YYYY'),
-      end_date: moment(lastDate.date).format('Do of MMMM YYYY'),
+      start_date: localizeWidgetSentenceDate(firstDate.date, language),
+      end_date: localizeWidgetSentenceDate(lastDate.date, language),
       dataset_start_year: 2001,
       dataset: 'MODIS',
       area: {
