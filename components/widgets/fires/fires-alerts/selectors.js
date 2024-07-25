@@ -10,6 +10,7 @@ import {
 } from 'date-fns';
 import moment from 'moment';
 import { formatNumber } from 'utils/format';
+import { translateText } from 'utils/lang';
 import { localizeDate, localizeWidgetSentenceDate } from 'utils/localize-date';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
@@ -535,11 +536,11 @@ export const parseSentence = createSelector(
       10
     );
 
-    let seasonStatement = `late ${seasonMonth}`;
+    let seasonStatement = translateText('late {seasonMonth}', { seasonMonth });
     if (seasonDay <= 10) {
-      seasonStatement = `early ${seasonMonth}`;
+      seasonStatement = translateText('early {seasonMonth}', { seasonMonth });
     } else if (seasonDay > 10 && seasonDay <= 20) {
-      seasonStatement = `mid-${seasonMonth}`;
+      seasonStatement = translateText('mid-{seasonMonth}', { seasonMonth });
     }
 
     const total = sumBy(slicedData, 'count');
@@ -547,18 +548,18 @@ export const parseSentence = createSelector(
     let statusColor = colorRange[8];
     const { date } = lastDate || {};
 
-    let status = 'unusually low';
+    let status = translateText('unusually low');
     if (variance > 2) {
-      status = 'unusually high';
+      status = translateText('unusually high');
       statusColor = colorRange[0];
     } else if (variance <= 2 && variance > 1) {
-      status = 'high';
+      status = translateText('high');
       statusColor = colorRange[2];
     } else if (variance <= 1 && variance > -1) {
-      status = 'normal';
+      status = translateText('normal');
       statusColor = colorRange[4];
     } else if (variance <= -1 && variance > -2) {
-      status = 'low';
+      status = translateText('low');
       statusColor = colorRange[6];
     }
 
