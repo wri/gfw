@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import filter from 'lodash/filter';
 import { formatNumber } from 'utils/format';
+import { translateText } from 'utils/lang';
 import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 import moment from 'moment';
@@ -176,9 +177,8 @@ export const parseSentence = createSelector(
       highestAlertPercentage,
     } = data;
 
-    const {
-      deforestationAlertsDataset = { label: null, value: null },
-    } = options;
+    const { deforestationAlertsDataset = { label: null, value: null } } =
+      options;
     const { label: system, value: systemSlug } = deforestationAlertsDataset;
 
     const selectedDate = settings.startDate;
@@ -200,11 +200,12 @@ export const parseSentence = createSelector(
       system,
       totalArea: !totalArea
         ? ' '
-        : `covering a total of ${formatNumber({
+        : translateText('covering a total of {area}', {
+          area: formatNumber({
             num: totalArea,
             unit: 'ha',
             spaceUnit: true,
-          })}`,
+          })}),
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
       highConfPerc:
         highAlertPercentage === 0
