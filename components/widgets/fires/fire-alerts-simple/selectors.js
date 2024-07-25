@@ -2,6 +2,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
+import { translateText } from 'utils/lang';
 import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 // get list data
@@ -53,11 +54,15 @@ export const parseConfig = createSelector(
       highConfidenceAlertPercentage,
     } = data;
     const alertsLabel = indicator
-      ? `Other alerts in ${indicator.label}`
-      : 'Other alerts';
+      ? translateText('Other alerts in {indicatorLabel}', {
+          indicatorLabel: indicator.label,
+        })
+      : translateText('Other alerts');
     const highConfidenceAlertsLabel = indicator
-      ? `High confidence alerts in ${indicator.label}`
-      : 'High confidence alerts';
+      ? translateText('High confidence alerts in {indicatorLabel}', {
+          indicatorLabel: indicator.label,
+        })
+      : translateText('High confidence alerts');
 
     const highConfidenceColour = colors.main;
     const otherColour = colors.otherColor; // hslShift(mainColour)
