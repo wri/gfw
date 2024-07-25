@@ -51,11 +51,17 @@ export class Slider extends PureComponent {
     disableStartHandle: false,
     disableEndHandle: false,
     playing: false,
-    onChange: () => { },
+    onChange: () => {},
   };
 
   renderHandle = (props) => {
-    const { formatValue, showTooltip, playing, disableStartHandle, disableEndHandle } = this.props;
+    const {
+      formatValue,
+      showTooltip,
+      playing,
+      disableStartHandle,
+      disableEndHandle,
+    } = this.props;
     const { value, dragging, index, ...restProps } = props;
     const formattedValue = formatValue ? formatValue(value) : value;
     const tooltipVisible = showTooltip ? showTooltip(index) : false;
@@ -91,8 +97,13 @@ export class Slider extends PureComponent {
     );
   };
 
-  handleOnChange = (newValue) => {
-    const { value, disableStartHandle, disableEndHandle, onChange } = this.props;
+  handleOnChange = (newSliderPositions) => {
+    const {
+      value: sliderPositions,
+      disableStartHandle,
+      disableEndHandle,
+      onChange,
+    } = this.props;
 
     // Both handles are disabled, no possible changes can be made.
     if (disableStartHandle && disableEndHandle) {
@@ -101,23 +112,28 @@ export class Slider extends PureComponent {
 
     // Start handle disabled. We allow trim and end value, but keep the start value the same.
     if (disableStartHandle) {
-      onChange([value[0], newValue[1], newValue[2]])
+      onChange([
+        sliderPositions[0],
+        newSliderPositions[1],
+        newSliderPositions[2],
+      ]);
       return null;
     }
 
     // End handle disabled. We allow the start value, but keep the same trim and end value.
     if (disableEndHandle) {
-      onChange([newValue[0], value[1], value[2]])
+      onChange([newSliderPositions[0], sliderPositions[1], sliderPositions[2]]);
       return null;
     }
 
     // Full functionality, pass the new values along.
-    onChange(newValue);
+    onChange(newSliderPositions);
     return null;
-  }
+  };
 
   render() {
-    const { customClass, range, handleStyle, value, onChange, ...rest } = this.props;
+    const { customClass, range, handleStyle, value, onChange, ...rest } =
+      this.props;
 
     const Component = range ? Range : RCSlider;
     const handleNum = Array.isArray(value) ? value.length : 1;
