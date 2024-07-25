@@ -19,7 +19,7 @@ const NEW_SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country as iso, fao.forempl as total_forest_employees, fao.femempl as female_forest_employees, fao.usdrev as revenue__usd, fao.usdexp as expenditure__usd, fao.gdpusd2012 as gdp_2012__usd, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   faoEmployment:
-    'SELECT iso, year, "all (FTE)" AS all, "gender (FTE)" AS gender, "logging (FTE)" AS logging, "gathering (FTE)" AS gathering, "support (FTE)" AS support, "silviculture and other (FTE)" AS silviculture FROM data WHERE {location}',
+    'SELECT iso, year, "all (FTE)" AS all, "female (FTE)" AS female, "logging (FTE)" AS logging, "gathering (FTE)" AS gathering, "support (FTE)" AS support, "silviculture and other (FTE)" AS silviculture FROM data WHERE {location}',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   globalLandCoverURL: `SELECT
   cartodb_id,
@@ -196,7 +196,7 @@ export const getFAOEmployment = (params) => {
   const target = download ? 'download/csv' : 'query';
 
   const url = `/dataset/fao_forestry_employment/v2020/${target}?sql=${NEW_SQL_QUERIES.faoEmployment}`
-    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2));
 
   if (download) {
     return {

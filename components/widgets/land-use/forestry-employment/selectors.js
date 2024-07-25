@@ -10,11 +10,9 @@ const getSettings = (state) => state.settings;
 export const parseData = createSelector(
   [getData, getColors, getSettings],
   (data, colors, settings) => {
-    const yearData = data?.filter(({ year }) => year === settings?.year);
-    const dataUngendered = yearData?.find(({ gender }) => gender === null);
-    const dataAll = yearData?.find(({ gender }) => gender === 'all');
+    if (!data?.length) return null;
 
-    if (!dataUngendered || !dataAll) return null;
+    const yearData = data.find((entry) => entry?.year === settings?.year)
 
     const items = {
       logging: 'Logging',
@@ -25,8 +23,8 @@ export const parseData = createSelector(
 
     const formattedData = Object.keys(items).reduce((acc, key) => {
       const label = items[key];
-      const value = dataUngendered[key];
-      const percentage = (100 * value) / dataAll?.all;
+      const value = yearData[key];
+      const percentage = (100 * value) / yearData?.all;
       const color = colors[key];
 
       if (!value) return acc;
@@ -40,19 +38,16 @@ export const parseData = createSelector(
 export const parseSentence = createSelector(
   [getSentences, getData, getSettings, getLocation],
   (sentences, data, settings, location) => {
-    const yearData = data?.filter(({ year }) => year === settings?.year);
-    const dataFemale = yearData?.find(({ gender }) => gender === 'female');
-    const dataAll = yearData?.find(({ gender }) => gender === 'all');
+    if (!data?.length) return null;
 
-    const sentence = dataFemale?.all ? sentences.withFemales : sentences.initial;
-    const femalePercentage = (dataFemale?.all * 100) / dataAll?.all;
-
-    if (!dataAll?.all) return null;
+    const yearData = data.find((entry) => entry?.year === settings?.year)
+    const sentence = yearData?.female ? sentences.withFemales : sentences.initial;
+    const femalePercentage = (yearData?.female * 100) / yearData?.all;
 
     return {
       sentence,
       params: {
-        numPeople: formatNumber({ num: dataAll?.all, unit: 'countsK' }),
+        numPeople: formatNumber({ num: yearData?.all, unit: 'countsK' }),
         year: settings?.year,
         femalePercent: formatNumber({ num: femalePercentage, unit: '%' }),
         location: location?.label
