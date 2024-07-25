@@ -7,6 +7,7 @@ import { getDataLocation, buildFullLocationName } from 'utils/location';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import { parseSentence } from 'services/sentences';
+import { translateGeodescriberParams } from 'utils/translate-geodescriber-params';
 
 export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
@@ -98,9 +99,12 @@ export const getGeodescriberTitle = createSelector(
 
     // if not an admin we can use geodescriber
     if (!['global', 'country'].includes(location.type)) {
+      // geodescriber params need to be translated as well
+      const translatedParams = translateGeodescriberParams(geodescriber.title_params);
+
       return {
         sentence: geodescriber.title,
-        params: geodescriber.title_params,
+        params: translatedParams,
       };
     }
 
@@ -168,10 +172,13 @@ export const getGeodescriberDescription = createSelector(
         '$1 '
       );
 
+      // geodescriber params need to be translated as well
+      const translatedParams = translateGeodescriberParams(description_params);
+
       return {
         sentence: description,
         params: {
-          ...description_params,
+          ...translatedParams,
           area_0: areaFormatted,
         },
       };
