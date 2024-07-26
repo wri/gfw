@@ -12,7 +12,9 @@ export const parseData = createSelector(
   (data, colors, settings) => {
     if (!data?.length) return null;
 
-    const yearData = data.find((entry) => entry?.year === settings?.year)
+    const yearData = data.find((entry) => entry?.year === settings?.year);
+
+    if (yearData?.all === null) return null;
 
     const items = {
       logging: 'Logging',
@@ -40,9 +42,13 @@ export const parseSentence = createSelector(
   (sentences, data, settings, location) => {
     if (!data?.length) return null;
 
-    const yearData = data.find((entry) => entry?.year === settings?.year)
-    const sentence = yearData?.female ? sentences.withFemales : sentences.initial;
+    const yearData = data.find((entry) => entry?.year === settings?.year);
+    const sentence = yearData?.female
+      ? sentences.withFemales
+      : sentences.initial;
     const femalePercentage = (yearData?.female * 100) / yearData?.all;
+
+    if (yearData?.all === null) return null;
 
     return {
       sentence,
@@ -50,7 +56,7 @@ export const parseSentence = createSelector(
         numPeople: formatNumber({ num: yearData?.all, unit: 'countsK' }),
         year: settings?.year,
         femalePercent: formatNumber({ num: femalePercentage, unit: '%' }),
-        location: location?.label
+        location: location?.label,
       },
     };
   }
