@@ -27,7 +27,7 @@ export default {
   ],
   chartType: 'chartList',
   dataType: 'fao',
-  colors: 'employment',
+  colors: 'economicImpact',
   metaKey: 'widget_economic_impact',
   sortOrder: {
     landUse: 2
