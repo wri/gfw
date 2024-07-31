@@ -7,7 +7,7 @@ import { getDataLocation, buildFullLocationName } from 'utils/location';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import { parseSentence } from 'services/sentences';
-import { translateGeodescriberParams } from 'utils/translate-geodescriber-params';
+import { isGeodescriberLocation, dynamicGeodescriberSentence } from 'utils/geodescriber';
 
 export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
@@ -80,6 +80,8 @@ export const getGeodescriberTitle = createSelector(
     getActiveArea,
   ],
   (geodescriber, wdpaLocation, location, adminTitle, activeArea) => {
+    const { title, title_params } = geodescriber;
+
     if (isEmpty(geodescriber)) return null;
 
     if (
@@ -97,17 +99,9 @@ export const getGeodescriberTitle = createSelector(
       };
     }
 
-    // if not an admin we can use geodescriber
-    if (!['global', 'country'].includes(location.type)) {
-      // geodescriber params need to be translated as well
-      const translatedTitleParams = translateGeodescriberParams({
-        params: geodescriber.title_params,
-      });
-
-      return {
-        sentence: geodescriber.title,
-        params: translatedTitleParams,
-      };
+    // if not an admin we'll parse the geodescriber information
+    if (isGeodescriberLocation(location)) {
+      return dynamicGeodescriberSentence(title, title_params);
     }
 
     return {
@@ -166,29 +160,10 @@ export const getGeodescriberDescription = createSelector(
         },
       };
     }
-    // if not an admin we can use geodescriber
-    if (!['global', 'country'].includes(location.type)) {
-      // adding space between number and unit
-      const areaFormatted = description_params?.area_0.replace(
-        /([\d|.|,]+)/,
-        '$1 '
-      );
 
-      // geodescriber params need to be translated as well
-      // area_0 is a known area value that is formatted above, so we'll not translate that one as to prevent
-      // cluttering transifex with area values.
-      const translatedDescriptionParams = translateGeodescriberParams({
-        params: description_params,
-        excludeKeys: ['area_0'],
-      });
-
-      return {
-        sentence: description,
-        params: {
-          ...translatedDescriptionParams,
-          area_0: areaFormatted,
-        },
-      };
+    // if not an admin we'll parse the geodescriber information
+    if (isGeodescriberLocation(location)) {
+      return dynamicGeodescriberSentence(description, description_params)
     }
 
     // if an admin we needs to calculate the params
