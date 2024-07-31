@@ -1,4 +1,4 @@
-import { getFAOEcoLive } from 'services/forest-data';
+import { getFAOEmployment } from 'services/forest-data';
 
 import getWidgetProps from './selectors';
 
@@ -12,7 +12,7 @@ export default {
     {
       key: 'year',
       label: 'year',
-      options: [1990, 2000, 2005, 2010].map((y) => ({ label: y, value: y })),
+      options: [2000, 2010, 2015].map((y) => ({ label: y, value: y })),
       type: 'select',
     },
   ],
@@ -23,18 +23,17 @@ export default {
     landUse: 3,
   },
   settings: {
-    year: 2010,
-    unit: 'countsK',
+    year: 2015,
+    unit: '%',
   },
-  colors: 'employment',
+  colors: 'forestryEmployment',
   sentences: {
     initial:
-      'According to the FAO there were {value} people employed in {location} Forestry sector in {year}.',
+      'According to the FAO there were {numPeople} people employed in {location} Forestry sector in {year}.',
     withFemales:
-      'According to the FAO there were {value} people employed in {location} Forestry sector in {year}, of which {percent} were female.',
+      'According to the FAO, there were {numPeople} people employed in {location} Forestry sector in {year}, of which {femalePercent} were female.',
   },
-  getData: (params) =>
-    getFAOEcoLive(params.token).then((response) => response.data.rows),
-  getDataURL: () => [getFAOEcoLive({ download: true })],
+  getData: (params) => getFAOEmployment(params),
+  getDataURL: (params) => [getFAOEmployment({ ...params, download: true })],
   getWidgetProps,
 };
