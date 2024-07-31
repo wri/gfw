@@ -100,11 +100,13 @@ export const getGeodescriberTitle = createSelector(
     // if not an admin we can use geodescriber
     if (!['global', 'country'].includes(location.type)) {
       // geodescriber params need to be translated as well
-      const translatedParams = translateGeodescriberParams({ params: geodescriber.title_params });
+      const translatedTitleParams = translateGeodescriberParams({
+        params: geodescriber.title_params,
+      });
 
       return {
         sentence: geodescriber.title,
-        params: translatedParams,
+        params: translatedTitleParams,
       };
     }
 
@@ -175,12 +177,15 @@ export const getGeodescriberDescription = createSelector(
       // geodescriber params need to be translated as well
       // area_0 is a known area value that is formatted above, so we'll not translate that one as to prevent
       // cluttering transifex with area values.
-      const translatedParams = translateGeodescriberParams({ params: description_params, excludeKeys: ['area_0'] });
+      const translatedDescriptionParams = translateGeodescriberParams({
+        params: description_params,
+        excludeKeys: ['area_0'],
+      });
 
       return {
         sentence: description,
         params: {
-          ...translatedParams,
+          ...translatedDescriptionParams,
           area_0: areaFormatted,
         },
       };

@@ -1,17 +1,17 @@
 import { translateText } from './lang';
 
-export const translateGeodescriberParams = ({params = {}, excludeKeys = []}) => {
+export const translateGeodescriberParams = ({ params = {}, excludeKeys = [] }) => {
   const paramsKeys = Object.keys(params);
 
   if (!paramsKeys.length) return {};
 
-  return paramsKeys.reduce((translatedParams, key) => {
-    const paramValue = params[key];
-    const shouldTranslate = !excludeKeys.includes(key);
+  return paramsKeys.reduce((translatedParams, paramKey) => {
+    const paramValue = params[paramKey];
+    const shouldTranslateParam = !excludeKeys.includes(paramKey);
 
     return {
       ...translatedParams,
-      [key]: shouldTranslate ? translateText(paramValue) : paramValue,
+      [paramKey]: shouldTranslateParam ? translateText(paramValue) : paramValue,
     }
   }, {});
 };
