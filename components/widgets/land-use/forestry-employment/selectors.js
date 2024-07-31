@@ -30,7 +30,10 @@ export const parseData = createSelector(
       const color = colors[key];
 
       if (!value) return acc;
-      return [...acc, { label, value: percentage, percentage, color }];
+      return [
+        ...acc,
+        { label, value: percentage, percentage, color, unit: '%' },
+      ];
     }, []);
 
     return formattedData;
