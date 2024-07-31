@@ -1,6 +1,10 @@
 import { translateText } from './lang';
 
-const translateGeodescriberParams = ({ params = {}, excludeKeys = [] }) => {
+const isGeodescriberLocation = (location) => {
+  return !['global', 'country'].includes(location?.type);
+}
+
+const translateSentenceParams = ({ params = {}, excludeKeys = [] }) => {
   const paramsKeys = Object.keys(params);
 
   if (!paramsKeys.length) return {};
@@ -16,29 +20,39 @@ const translateGeodescriberParams = ({ params = {}, excludeKeys = [] }) => {
   }, {});
 };
 
-const isGeodescriberLocation = (location) => {
-  return !['global', 'country'].includes(location?.type);
-}
+const formatAreaParams = ({ params, includeKeys = [] }) => {
+  const paramsKeys = Object.keys(params);
+
+  if (!paramsKeys.length) return {};
+
+  return paramsKeys.reduce((translatedParams, paramKey) => {
+    const paramValue = params[paramKey];
+    const shouldFormatParam = includeKeys.includes(paramKey);
+
+    return {
+      ...translatedParams,
+      // We're not using the formatNumber utility here because this comes as a string from the endpoint.
+      // It'd require complicated processing to know the actual unit (ha, kha, etc), pull out the number, then
+      // use the formatNumber utility when we can just use regex to add the space between number and units.
+      [paramKey]: shouldFormatParam ? params?.[paramKey]?.replace(/([\d|.|,]+)/, '$1 ') : paramValue,
+    };
+  }, {});
+};
 
 const dynamicGeodescriberSentence = (sentence, params) => {
-  // adding space between number and unit for area_0, if it exists
-  const areaFormatted = params?.area_0?.replace(
-    /([\d|.|,]+)/,
-    '$1 '
-  );
+  const translatedSentenceParams = translateSentenceParams({
+    params, excludeKeys: ['area_0'], // we know this is always an area, let's not clutter Transifex
+  });
 
-  // geodescriber params need to be translated as well
-  // area_0 is a known area value that is formatted above, so we'll not translate that one as to prevent
-  // cluttering transifex with area values.
-  const translatedDescriptionParams = translateGeodescriberParams({
-    params, excludeKeys: ['area_0'],
+  const formattedAreaParams = formatAreaParams({
+    params, includeKeys: ['area_0'], // we know this is always an area, we just need to add a space between number and unit
   });
 
   return {
     sentence,
     params: {
-      ...translatedDescriptionParams,
-      area_0: areaFormatted,
+      ...translatedSentenceParams,
+      ...formattedAreaParams,
     },
   };
 };
