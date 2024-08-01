@@ -20,7 +20,7 @@ const translateSentenceParams = ({ params = {}, excludeKeys = [] }) => {
   }, {});
 };
 
-const formatAreaParams = ({ params, includeKeys = [] }) => {
+const formatAreaParams = ({ params = {}, includeKeys = [] }) => {
   const paramsKeys = Object.keys(params);
 
   if (!paramsKeys.length) return {};
