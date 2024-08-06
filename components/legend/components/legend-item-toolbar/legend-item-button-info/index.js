@@ -65,6 +65,7 @@ class LegendItemButtonInfo extends PureComponent {
         visible={visible}
       >
         <button
+          data-action-type="info"
           type="button"
           className="c-legend-button"
           aria-label="More information"
@@ -75,6 +76,7 @@ class LegendItemButtonInfo extends PureComponent {
             className="c-icon-small"
             style={visible ? focusStyle : defaultStyle}
           />
+          <span />
         </button>
       </Tooltip>
     );
