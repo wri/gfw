@@ -22,7 +22,8 @@ class DynamicSentence extends PureComponent {
 
   render() {
     const { className, testId, handleMouseOver, handleMouseOut } = this.props;
-    const { sentence, params } = this.props.sentence;
+    const sentence = this.props.sentence?.sentence;
+    const params = this.props.sentence?.params;
     const { component } = params || {};
     const sentenceParams = {
       ...(params && params),

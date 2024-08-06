@@ -15,7 +15,7 @@ The GFW web app is built with [Nextjs](https://nextjs.org/), [React](https://rea
 Clone the repo:
 
 ```bash
-$ git clone https://github.com/Vizzuality/gfw.git
+$ git clone https://github.com/wri/gfw.git
 ```
 
 Installing dependencies:
