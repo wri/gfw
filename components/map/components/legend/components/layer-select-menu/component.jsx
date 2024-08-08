@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { trackEvent } from 'utils/analytics';
+import { translateText } from 'utils/lang';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -32,8 +33,10 @@ class LayerSelectMenu extends PureComponent {
       <div className={`c-layer-select-menu ${className || ''}`}>
         <div className="selector">
           <button onClick={() => this.setState({ menuActive: !menuActive })}>
-            {activeLayer.name}
-            <span className="citation">{activeLayer.citation}</span>
+            {translateText(activeLayer.name)}
+            <span className="citation">
+              {translateText(activeLayer.citation)}
+            </span>
             <Icon
               icon={arrowDownIcon}
               className={`icon-arrow ${menuActive ? 'reverse' : ''}`}

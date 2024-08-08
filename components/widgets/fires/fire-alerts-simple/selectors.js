@@ -2,8 +2,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
-
-import moment from 'moment';
+import { translateText } from 'utils/lang';
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 // get list data
 const selectAlerts = (state) => state.data && state.data.alerts;
@@ -13,6 +13,7 @@ const getIndicator = (state) => state.indicator || null;
 const getSettings = (state) => state.settings || null;
 const getLocationName = (state) => state.locationLabel;
 const getDataset = (state) => state.settings.dataset || null;
+const getLanguage = (state) => state.lang;
 
 export const parseData = createSelector([selectAlerts], (data) => {
   if (isEmpty(data)) return null;
@@ -53,11 +54,15 @@ export const parseConfig = createSelector(
       highConfidenceAlertPercentage,
     } = data;
     const alertsLabel = indicator
-      ? `Other alerts in ${indicator.label}`
-      : 'Other alerts';
+      ? translateText('Other alerts in {indicatorLabel}', {
+          indicatorLabel: indicator.label,
+        })
+      : translateText('Other alerts');
     const highConfidenceAlertsLabel = indicator
-      ? `High confidence alerts in ${indicator.label}`
-      : 'High confidence alerts';
+      ? translateText('High confidence alerts in {indicatorLabel}', {
+          indicatorLabel: indicator.label,
+        })
+      : translateText('High confidence alerts');
 
     const highConfidenceColour = colors.main;
     const otherColour = colors.otherColor; // hslShift(mainColour)
@@ -89,13 +94,14 @@ export const parseSentence = createSelector(
     selectSentences,
     getIndicator,
     getLocationName,
+    getLanguage,
   ],
-  (data, dataset, settings, sentences, indicator, location) => {
+  (data, dataset, settings, sentences, indicator, location, language) => {
     if (!data) return null;
     const startDate = settings.startDate;
     const endDate = settings.endDate;
-    const formattedStartDate = moment(startDate).format('Do of MMMM YYYY');
-    const formattedEndDate = moment(endDate).format('Do of MMMM YYYY');
+    const formattedStartDate = localizeWidgetSentenceDate(startDate, language);
+    const formattedEndDate = localizeWidgetSentenceDate(endDate, language);
     const params = {
       indicator: indicator && indicator.label,
       location,
