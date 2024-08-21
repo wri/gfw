@@ -86,6 +86,10 @@ const SQL_QUERIES = {
     'SELECT {select_location}, umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
   treeCoverDensity:
     'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
+  treeLossOTF:
+    'SELECT umd_tree_cover_loss__year, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year&geostore_id={geostoreId}',
+  treeLossOTFExtent:
+    'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
 };
 
 const typeByGrouped = {
@@ -671,6 +675,62 @@ export const getLossFires = (params) => {
       })),
     },
   }));
+};
+
+export const getTreeLossOTF = async (params) => {
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    adm0,
+    geostore,
+    startYear,
+    endYear,
+    threshold,
+  } = params || {};
+
+  const geostoreId = geostore.id || adm0;
+  const urlBase = '/dataset/umd_tree_cover_gain/latest/query';
+  const sqlLoss = `?sql=${SQL_QUERIES.treeLossOTF}`;
+  const sqlExtent = `?sql=${SQL_QUERIES.treeLossOTFExtent}`;
+
+  const urlLoss = encodeURI(
+    `${urlBase + sqlLoss}`
+      .replace('{geostoreId}', geostoreId)
+      .replace('{startYear}', startYear)
+      .replace('{endYear}', endYear)
+      .replace('{threshold}', threshold)
+  );
+  const urlExtent = encodeURI(
+    `${urlBase + sqlExtent}`
+      .replace('{geostoreId}', geostoreId)
+      .replace('{startYear}', startYear)
+      .replace('{endYear}', endYear)
+      .replace('{threshold}', threshold)
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_from_fires_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(urlLoss),
+    };
+  }
+
+  const treeLoss = await dataRequest.get(urlLoss);
+  const extent = await dataRequest.get(urlExtent);
+
+  return {
+    loss: treeLoss?.data?.map((d) => ({
+      ...d,
+      area: d.area__ha,
+      year: d.umd_tree_cover_loss__year,
+    })),
+    extent: extent?.data?.[0]?.area__ha,
+  };
 };
 
 export const getLossFiresOTF = (params) => {
