@@ -76,6 +76,9 @@ const SQL_QUERIES = {
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
+  treeCoverOTF:
+    'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
+  treeCoverOTFExtent: 'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -730,6 +733,43 @@ export const getTreeLossOTF = async (params) => {
       year: d.umd_tree_cover_loss__year,
     })),
     extent: extent?.data?.[0]?.area__ha,
+  };
+};
+
+export const getTreeCoverOTF = async (params) => {
+  const { download, adm0, geostore, threshold } = params || {};
+
+  const geostoreId = geostore.id || adm0;
+  const urlBaseCover = '/dataset/umd_tree_cover_density_2000/latest/query';
+  const urlBaseExtent = '/dataset/gfw_pixel_area/latest/query';
+  const sqlCover = `?sql=${SQL_QUERIES.treeCoverOTF}`;
+  const sqlExtent = `?sql=${SQL_QUERIES.treeCoverOTFExtent}`;
+
+  const urlCover = encodeURI(
+    `${urlBaseCover + sqlCover}`
+      .replace('{threshold}', threshold)
+      .replace('{geostoreId}', geostoreId)
+  );
+
+  const urlExtent = encodeURI(
+    `${urlBaseExtent + sqlExtent}`.replace('{geostoreId}', geostoreId)
+  );
+
+  if (download) {
+    return {
+      name: `treecover_loss`,
+      url: getDownloadUrl(urlCover),
+    };
+  }
+
+  const treeCover = await dataRequest.get(urlCover);
+  const extent = await dataRequest.get(urlExtent);
+
+  return {
+    totalArea: extent.data[0]?.area__ha,
+    totalCover: treeCover.data[0]?.area__ha,
+    cover: treeCover.data[0]?.area__ha,
+    plantations: 0,
   };
 };
 

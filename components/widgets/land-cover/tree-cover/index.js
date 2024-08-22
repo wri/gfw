@@ -1,6 +1,9 @@
 import { all, spread } from 'axios';
-import { getExtent, getTropicalExtent } from 'services/analysis-cached';
-import OTFAnalysis from 'services/otf-analysis';
+import {
+  getExtent,
+  getTreeCoverOTF,
+  getTropicalExtent,
+} from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import {
@@ -18,28 +21,6 @@ import {
 
 import getWidgetProps from './selectors';
 
-const getOTFAnalysis = async (params) => {
-  const analysis = new OTFAnalysis(params.geostore.id);
-  analysis.setDates({
-    startDate: params.startDate,
-    endDate: params.endDate,
-  });
-  analysis.setData(['areaHa', 'extent'], params);
-
-  return analysis.getData().then((response) => {
-    const { areaHa, extent } = response;
-    const totalArea = areaHa?.[0]?.area__ha;
-    const totalCover = extent?.[0]?.area__ha;
-
-    return {
-      totalArea,
-      totalCover,
-      cover: totalCover,
-      plantations: 0,
-    };
-  });
-};
-
 export default {
   widget: 'treeCover',
   title: {
@@ -50,8 +31,7 @@ export default {
   alerts: [
     {
       id: 'tree-cover-alert-1',
-      text:
-        'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
+      text: 'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
       visible: [
         'global',
         'country',
@@ -225,7 +205,7 @@ export default {
       );
     }
 
-    return getOTFAnalysis(params);
+    return getTreeCoverOTF(params);
   },
   getDataURL: (params) => {
     const { threshold, decile, ...filteredParams } = params;
