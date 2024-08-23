@@ -79,6 +79,8 @@ const SQL_QUERIES = {
   treeCoverOTF:
     'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
   treeCoverOTFExtent: 'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
+  treeCoverGainSimpleOTF:
+    'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -770,6 +772,22 @@ export const getTreeCoverOTF = async (params) => {
     totalCover: treeCover.data[0]?.area__ha,
     cover: treeCover.data[0]?.area__ha,
     plantations: 0,
+  };
+};
+
+export const getTreeCoverGainOTF = async (params) => {
+  const { adm0, geostore } = params || {};
+  const geostoreId = geostore.id || adm0;
+  const urlBase = '/dataset/umd_tree_cover_gain/latest/query';
+  const sql = `?sql=${SQL_QUERIES.treeCoverGainSimpleOTF}`;
+
+  const url = encodeURI(`${urlBase + sql}`.replace('{geostoreId}', geostoreId));
+
+  const response = await dataRequest.get(url);
+
+  return {
+    gain: response.data[0]?.area__ha,
+    extent: params?.geostore?.areaHa || 0,
   };
 };
 

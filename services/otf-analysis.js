@@ -4,6 +4,7 @@ import { dataRequest } from 'utils/request';
 
 import otfData from 'data/otf-data';
 
+// TODO: the use of /analysis/zonal is deorecated, removing this file soon
 // Perform a OTF(on the fly) analysis for un-cached widgets
 // https://data-api.globalforestwatch.org/#tag/Analysis
 class OTFAnalysis {
@@ -117,14 +118,8 @@ class OTFAnalysis {
   }
 
   buildQuery(sumFields = null, groupFields = null, filters = null) {
-    const {
-      endpoint,
-      path,
-      geostoreId,
-      geostoreOrigin,
-      startDate,
-      endDate,
-    } = this;
+    const { endpoint, path, geostoreId, geostoreOrigin, startDate, endDate } =
+      this;
     let url = '';
     if (!sumFields) {
       this.throwError(

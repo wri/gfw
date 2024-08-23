@@ -1,5 +1,4 @@
-import { getGain } from 'services/analysis-cached';
-import OTFAnalysis from 'services/otf-analysis';
+import { getGain, getTreeCoverGainOTF } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -14,26 +13,6 @@ import {
 } from 'data/layers';
 
 import getWidgetProps from './selectors';
-
-const getOTFAnalysis = async (params) => {
-  const analysis = new OTFAnalysis(params.geostore.id);
-  analysis.setDates({
-    startDate: params.startDate,
-    endDate: params.endDate,
-  });
-  analysis.setData(['gain'], params);
-
-  return analysis.getData().then((response) => {
-    const { gain } = response;
-    const totalGain = gain?.[0]?.area__ha;
-    const totalExtent = params?.geostore?.areaHa || 0;
-
-    return {
-      gain: totalGain,
-      extent: totalExtent,
-    };
-  });
-};
 
 export default {
   widget: 'treeCoverGainSimple',
@@ -85,7 +64,7 @@ export default {
       });
     }
 
-    return getOTFAnalysis(params);
+    return getTreeCoverGainOTF(params);
   },
   getDataURL: (params) => {
     return [getGain({ ...params, download: true })];
