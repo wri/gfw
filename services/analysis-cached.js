@@ -94,7 +94,7 @@ const SQL_QUERIES = {
   treeLossOTF:
     'SELECT umd_tree_cover_loss__year, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year&geostore_id={geostoreId}',
   treeLossOTFExtent:
-    'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
+    'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
 };
 
 const typeByGrouped = {
@@ -696,22 +696,21 @@ export const getTreeLossOTF = async (params) => {
   } = params || {};
 
   const geostoreId = geostore.id || adm0;
-  const urlBase = '/dataset/umd_tree_cover_gain/latest/query';
+  const urlForList = '/dataset/umd_tree_cover_loss/latest/query';
+  const urlForExtent = '/dataset/umd_tree_cover_density_2000/latest/query';
   const sqlLoss = `?sql=${SQL_QUERIES.treeLossOTF}`;
   const sqlExtent = `?sql=${SQL_QUERIES.treeLossOTFExtent}`;
 
   const urlLoss = encodeURI(
-    `${urlBase + sqlLoss}`
+    `${urlForList + sqlLoss}`
       .replace('{geostoreId}', geostoreId)
       .replace('{startYear}', startYear)
       .replace('{endYear}', endYear)
       .replace('{threshold}', threshold)
   );
   const urlExtent = encodeURI(
-    `${urlBase + sqlExtent}`
+    `${urlForExtent + sqlExtent}`
       .replace('{geostoreId}', geostoreId)
-      .replace('{startYear}', startYear)
-      .replace('{endYear}', endYear)
       .replace('{threshold}', threshold)
   );
 
