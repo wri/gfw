@@ -69,6 +69,7 @@ class Widget extends PureComponent {
     customComponent: PropTypes.string,
     authenticated: PropTypes.bool,
     chartDecorationConfig: PropTypes.object,
+    adm0: PropTypes.string,
   };
 
   state = {
@@ -139,6 +140,7 @@ class Widget extends PureComponent {
       customComponent,
       authenticated,
       chartDecorationConfig,
+      adm0,
     } = this.props;
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -242,6 +244,8 @@ class Widget extends PureComponent {
             />
             {sentence && data && (
               <WidgetFooter
+                adm0={adm0}
+                admLevel={adminLevel}
                 showAttributionLink={showAttributionLink}
                 statements={statements}
                 type={type}
