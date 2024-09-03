@@ -76,6 +76,11 @@ const SQL_QUERIES = {
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
+  treeCoverOTF:
+    'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
+  treeCoverOTFExtent: 'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
+  treeCoverGainSimpleOTF:
+    'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -86,6 +91,10 @@ const SQL_QUERIES = {
     'SELECT {select_location}, umd_global_land_cover__ipcc_class, SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= {decile} AND umd_global_land_cover__ipcc_class IS NOT NULL GROUP BY {location}, umd_global_land_cover__ipcc_class ORDER BY {location}, umd_global_land_cover__ipcc_class',
   treeCoverDensity:
     'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
+  treeLossOTF:
+    'SELECT umd_tree_cover_loss__year, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year&geostore_id={geostoreId}',
+  treeLossOTFExtent:
+    'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
 };
 
 const typeByGrouped = {
@@ -671,6 +680,114 @@ export const getLossFires = (params) => {
       })),
     },
   }));
+};
+
+export const getTreeLossOTF = async (params) => {
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    adm0,
+    geostore,
+    startYear,
+    endYear,
+    threshold,
+  } = params || {};
+
+  const geostoreId = geostore.id || adm0;
+  const urlForList = '/dataset/umd_tree_cover_loss/latest/query';
+  const urlForExtent = '/dataset/umd_tree_cover_density_2000/latest/query';
+  const sqlLoss = `?sql=${SQL_QUERIES.treeLossOTF}`;
+  const sqlExtent = `?sql=${SQL_QUERIES.treeLossOTFExtent}`;
+
+  const urlLoss = encodeURI(
+    `${urlForList + sqlLoss}`
+      .replace('{geostoreId}', geostoreId)
+      .replace('{startYear}', startYear)
+      .replace('{endYear}', endYear)
+      .replace('{threshold}', threshold)
+  );
+  const urlExtent = encodeURI(
+    `${urlForExtent + sqlExtent}`
+      .replace('{geostoreId}', geostoreId)
+      .replace('{threshold}', threshold)
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `treecover_loss_from_fires_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(urlLoss),
+    };
+  }
+
+  const treeLoss = await dataRequest.get(urlLoss);
+  const extent = await dataRequest.get(urlExtent);
+
+  return {
+    loss: treeLoss?.data?.map((d) => ({
+      ...d,
+      area: d.area__ha,
+      year: d.umd_tree_cover_loss__year,
+    })),
+    extent: extent?.data?.[0]?.area__ha,
+  };
+};
+
+export const getTreeCoverOTF = async (params) => {
+  const { download, adm0, geostore, threshold } = params || {};
+
+  const geostoreId = geostore.id || adm0;
+  const urlBaseCover = '/dataset/umd_tree_cover_density_2000/latest/query';
+  const urlBaseExtent = '/dataset/gfw_pixel_area/latest/query';
+  const sqlCover = `?sql=${SQL_QUERIES.treeCoverOTF}`;
+  const sqlExtent = `?sql=${SQL_QUERIES.treeCoverOTFExtent}`;
+
+  const urlCover = encodeURI(
+    `${urlBaseCover + sqlCover}`
+      .replace('{threshold}', threshold)
+      .replace('{geostoreId}', geostoreId)
+  );
+
+  const urlExtent = encodeURI(
+    `${urlBaseExtent + sqlExtent}`.replace('{geostoreId}', geostoreId)
+  );
+
+  if (download) {
+    return {
+      name: `treecover_loss`,
+      url: getDownloadUrl(urlCover),
+    };
+  }
+
+  const treeCover = await dataRequest.get(urlCover);
+  const extent = await dataRequest.get(urlExtent);
+
+  return {
+    totalArea: extent.data[0]?.area__ha,
+    totalCover: treeCover.data[0]?.area__ha,
+    cover: treeCover.data[0]?.area__ha,
+    plantations: 0,
+  };
+};
+
+export const getTreeCoverGainOTF = async (params) => {
+  const { adm0, geostore } = params || {};
+  const geostoreId = geostore.id || adm0;
+  const urlBase = '/dataset/umd_tree_cover_gain/latest/query';
+  const sql = `?sql=${SQL_QUERIES.treeCoverGainSimpleOTF}`;
+
+  const url = encodeURI(`${urlBase + sql}`.replace('{geostoreId}', geostoreId));
+
+  const response = await dataRequest.get(url);
+
+  return {
+    gain: response.data[0]?.area__ha,
+    extent: params?.geostore?.areaHa || 0,
+  };
 };
 
 export const getLossFiresOTF = (params) => {
