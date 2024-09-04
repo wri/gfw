@@ -2,6 +2,7 @@ import { stringify } from 'query-string';
 import isEmpty from 'lodash/isEmpty';
 
 import legacyIds from 'data/legacy-ids.json';
+import urlParam from 'utils/url-param';
 
 const idToSlugDict = legacyIds.reduce(
   (obj, item) => ({
@@ -44,10 +45,7 @@ export const decodeQueryParams = (params) => {
     try {
       return {
         ...obj,
-        // we use Buffer as atob is node native to node for SSR
-        [key]: JSON.parse(
-          Buffer.from(params[key], 'base64').toString('binary')
-        ),
+        [key]: urlParam.decode(params[key]),
       };
     } catch (err) {
       try {
@@ -82,7 +80,7 @@ export const encodeQueryParams = (params, options) => {
       typeof params[key] === 'object' &&
       !isEmpty(params[key])
     ) {
-      return { ...obj, [key]: btoa(JSON.stringify(params[key])) };
+      return { ...obj, [key]: urlParam.encode(params[key]) };
     }
     // if params is a valid key and not falsey
     if (typeof params[key] !== 'object' && params[key]) {
