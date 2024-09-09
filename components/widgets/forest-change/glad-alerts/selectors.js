@@ -13,6 +13,7 @@ import {
   getDatesData,
   getChartConfig,
 } from 'components/widgets/utils/data';
+import { localizeWidgetSentenceDate } from 'utils/localize-date';
 
 // get list data
 const selectAlerts = (state) => state.data && state.data.alerts;
@@ -21,8 +22,8 @@ const selectColors = (state) => state.colors;
 const selectInteraction = (state) => state.interaction;
 const selectWeeks = (state) => state.settings && state.settings.weeks;
 const selectSentences = (state) => state.sentence;
-const selectLang = (state) => state.lang;
 const getIndicator = (state) => state.indicator || null;
+const getLanguage = (state) => state.lang;
 
 export const parsePayload = (payload) => {
   const payloadData = payload && payload.find((p) => p.name === 'count');
@@ -153,9 +154,9 @@ export const parseSentence = createSelector(
     selectInteraction,
     selectSentences,
     getIndicator,
-    selectLang,
+    getLanguage,
   ],
-  (data, colors, interaction, sentences, indicator) => {
+  (data, colors, interaction, sentences, indicator, language) => {
     if (!data) return null;
 
     let lastDate = data[data.length - 1] || {};
@@ -201,10 +202,10 @@ export const parseSentence = createSelector(
       status = 'low';
       statusColor = colorRange[3];
     }
-    const formattedDate = moment(date).format('Do of MMMM YYYY');
+
     const params = {
       indicator: indicator && indicator.label,
-      date: formattedDate,
+      date: localizeWidgetSentenceDate(date, language),
       count: {
         value: lastDate.count ? format(',')(lastDate.count) : 0,
         color: colors.main,
