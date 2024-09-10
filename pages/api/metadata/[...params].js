@@ -7,14 +7,10 @@ const GFW_METADATA_API_URL =
 
 export default async (req, res) => {
   try {
-    // const path = req.query.params.join('/');
-    // const url = `${GFW_METADATA_API_URL}/${path}`; // ${path}
-    const url = `${GFW_METADATA_API_URL}/dataset/birdlife_endemic_bird_areas`;
+    const path = req.query.params.join('/');
+    const url = `${GFW_METADATA_API_URL}/${path}`;
     const datasetMetadata = await axios.get(url);
-    // const datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
-    const datasetVersionMetadata = await axios.get(
-      `${GFW_METADATA_API_URL}/dataset/gfw_integrated_alerts/v20240605/metadata`
-    );
+    const datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
 
     const dataVersionMetadataObject = datasetVersionMetadata.data.data;
 
