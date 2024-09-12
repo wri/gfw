@@ -19,7 +19,7 @@ const UploadShapeModal = ({ open, onRequestClose }) => (
       NOTE: This feature counts alerts or hectares inside of polygons;
       therefore, <strong>only polygon data is supported,</strong> not point and
       line data. Please ensure that your file only contains polygon data. A
-      maximum of 1,000 feautures can be analysed in a single upload, contained
+      maximum of 1,000 features can be analysed in a single upload, contained
       within a single layer. Multiple layers are not supported.
     </p>
     <p>
