@@ -2,7 +2,7 @@ import request, { apiRequest } from 'utils/request';
 import qs from 'query-string';
 
 export const submitContactForm = (formData) =>
-  apiRequest.post('/form/contact-us', { ...formData });
+  apiRequest.post('/v1/form/contact-us', { ...formData });
 
 export const submitNewsletterSubscription = (data) =>
   request({
