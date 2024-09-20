@@ -28,7 +28,7 @@ const getWDPAGeostore = ({ id, token }) =>
     })
   );
 
-export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
+export const getGeostoreOLD = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
   let thresh = adm1 ? 0.0005 : 0.005;
@@ -60,12 +60,36 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
     .get(`${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data?.data || {};
+
+      console.log('GEOSTORE', geostore);
       return {
         ...geostore,
         id: geostore?.hash,
         bbox: BBOXS[adm0] || geostore?.bbox,
       };
     });
+};
+
+export const getGeostore = ({ type, adm0, token }) => {
+  if (!type || !adm0) return null;
+
+  // const id = adm2 || adm1 || adm0; // We still need to implement other adm levels, this commit is just for testing adm0
+
+  return getDatasetQuery({
+    dataset: 'gadm_administrative_boundaries',
+    sql: `SELECT country, gfw_bbox, gfw_area__ha, gfw_geostore_id, gfw_geojson, encode(ST_AsTWKB(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.001), 0.001)), 'base64') FROM data AS simplified_encoded_twkb WHERE adm_level='0' and gid_0='${adm0}'`,
+    version: 'v4.1',
+    token,
+  }).then((data) => {
+    const { gfw_bbox, gfw_geostore_id, gfw_area__ha, gfw_geojson } = data?.[0];
+
+    return {
+      areaHa: gfw_area__ha,
+      id: gfw_geostore_id,
+      bbox: BBOXS[adm0] || gfw_bbox,
+      geojson: gfw_geojson,
+    };
+  });
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
