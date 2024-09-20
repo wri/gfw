@@ -92,7 +92,7 @@ const SQL_QUERIES = {
   treeCoverDensity:
     'SELECT {select_location}, wri_tropical_tree_cover__decile,  SUM(wri_tropical_tree_cover_extent__ha) AS wri_tropical_tree_cover_extent__ha FROM data {WHERE} AND wri_tropical_tree_cover__decile >= 0 GROUP BY {location}, wri_tropical_tree_cover__decile ORDER BY {location}, wri_tropical_tree_cover__decile',
   treeLossOTF:
-    'SELECT umd_tree_cover_loss__year, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_2000__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year&geostore_id={geostoreId}',
+    'SELECT umd_tree_cover_loss__year, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_{extentYear}__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year&geostore_id={geostoreId}',
   treeLossOTFExtent:
     'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
 };
@@ -692,6 +692,7 @@ export const getTreeLossOTF = async (params) => {
     geostore,
     startYear,
     endYear,
+    extentYear,
     threshold,
   } = params || {};
 
@@ -707,6 +708,7 @@ export const getTreeLossOTF = async (params) => {
       .replace('{startYear}', startYear)
       .replace('{endYear}', endYear)
       .replace('{threshold}', threshold)
+      .replace('{extentYear}', extentYear)
   );
   const urlExtent = encodeURI(
     `${urlForExtent + sqlExtent}`
