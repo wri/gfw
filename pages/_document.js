@@ -131,27 +131,6 @@ export default class MyDocument extends Document {
             }}
           />
 
-          {/* Osano Cookie preference drawer link */}
-          {isOsanoEnabled && (
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                var elements = document.getElementsByClassName("osano-cookie-preference-link");
-
-                var showOsanaDialog = function(e) {
-                  e.preventDefault();
-                  Osano.cm.showDrawer('osano-cm-dom-info-dialog-open');
-                };
-
-                for (var i = 0; i < elements.length; i++) {
-                  elements[i].addEventListener('click', showOsanaDialog, false);
-                }
-                `,
-              }}
-            />
-          )}
-          {/* END Osano Cookie preference drawer link */}
-
           {/* Start VWO Async SmartCode */}
           <link
             rel="preconnect"
@@ -191,14 +170,15 @@ export default class MyDocument extends Document {
             <Main />
           </main>
           {isOsanoEnabled && (
-            <a
-              style={{ display: 'none' }}
-              href=""
-              className="osano-cookie-preference-link"
-              title="Manage privacy and cookie preferences"
-            >
-              Cookie Preferences
-            </a>
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
+                  .osano-cm-widget {
+                    display: none;
+                  }
+                `,
+              }}
+            />
           )}
           <NextScript />
         </body>
