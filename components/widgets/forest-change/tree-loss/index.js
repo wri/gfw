@@ -120,6 +120,8 @@ export default {
     threshold: 30,
     extentYear: 2000,
     ifl: 2000,
+    startYear: MIN_YEAR,
+    endYear: MAX_YEAR,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type } = params || {};
