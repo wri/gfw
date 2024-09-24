@@ -136,6 +136,7 @@ class WidgetContainer extends Component {
       dashboard,
       embed,
       analysis,
+      status,
     } = this.props;
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
@@ -147,6 +148,9 @@ class WidgetContainer extends Component {
       dashboard,
       embed,
       analysis,
+      // Needed for widgets that will decide whether to use precalculated tables
+      // (when status is 'saved') or OTF (when the nightly run has not occurred yet)
+      status,
     })
       .then((data) => {
         setWidgetData(data);
