@@ -1,14 +1,19 @@
-import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+import { GFW_DATA_API } from 'utils/apis';
 import axios from 'axios';
 
-const ENVIRONMENT = process.env.NEXT_PUBLIC_RW_FEATURE_ENV;
-const GFW_METADATA_API_URL =
-  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
+import METADATA_LIST from '../../../data/metadata.json';
 
 export default async (req, res) => {
   try {
-    const path = req.query.params.join('/');
-    const url = `${GFW_METADATA_API_URL}/${path}`;
+    const userPath = req.query.params[1];
+    const safePath = METADATA_LIST.includes(userPath);
+
+    if (!safePath) {
+      return res.status(400).end('Invalid path');
+    }
+
+    const url = `${GFW_DATA_API}/dataset/${userPath}`;
+
     const datasetMetadata = await axios.get(url);
     const datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
 
