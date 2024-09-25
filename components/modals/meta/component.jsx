@@ -136,6 +136,7 @@ class ModalMeta extends PureComponent {
 
   parseMarkdownURLToHTML = (markdown) => {
     const markdownRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    if (typeof markdown !== 'string') return markdown;
 
     const htmlAnchor = markdown.replace(
       markdownRegex,
