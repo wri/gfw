@@ -5,7 +5,7 @@ export const getMetadata = (slug, metaType) => {
     return metadataWidgetRequest.get(slug);
   }
 
-  return metadataRequest.get(`dataset/${slug}`);
+  return metadataRequest.get(slug);
 };
 
 export default {
