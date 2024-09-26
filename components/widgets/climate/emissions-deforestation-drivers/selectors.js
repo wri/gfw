@@ -161,6 +161,23 @@ export const parseConfig = createSelector(
         })
         .reverse()
     );
+
+    const chartLegend = {
+      columns: [
+        {
+          items: ['Wildfire', 'Forestry', 'Shifting agriculture']?.map(
+            (name) => ({ label: name, color: categoryColors[name] })
+          ),
+        },
+        {
+          title: 'Drivers of permanent deforestation',
+          items: ['Commodity driven deforestation', 'Urbanization']?.map(
+            (name) => ({ label: name, color: categoryColors[name] })
+          ),
+        },
+      ],
+    };
+
     const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
     if (insertIndex > -1) {
       tooltip.splice(insertIndex, 0, {
@@ -181,6 +198,7 @@ export const parseConfig = createSelector(
         formatNumber({ num: value, specialSpecifier: '.2s', spaceUnit: true }),
       unit: 'tCO2e',
       tooltip,
+      chartLegend,
     };
   }
 );
