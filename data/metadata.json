@@ -39,6 +39,7 @@
   "landmark_indigenous_and_community_lands",
   "landmark_natural_resource_rights",
   "licadho_khm_economic_land_concessions",
+  "khm_protected_areas",
   "haka_idn_leuser",
   "idn_forest_area",
   "idn_forest_moratorium",
@@ -54,5 +55,7 @@
   "birdlife_alliance_for_zero_extinction_sites",
   "birdlife_key_biodiversity_areas",
   "ci_biodiversity_hotspots",
-  "birdlife_endemic_bird_areas"
+  "birdlife_endemic_bird_areas",
+  "osm_logging_roads",
+  "per_protected_areas"
 ]
