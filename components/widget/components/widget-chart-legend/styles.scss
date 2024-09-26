@@ -1,0 +1,61 @@
+@import '~styles/settings.scss';
+
+.c-widget-chart-legend {
+  display: flex;
+  margin: 20px 0 0;
+  width: 100%;
+  gap: 40px;
+
+  &__column {
+    &-title {
+      font-weight: 500;
+      font-size: rem(12px);
+      margin-top: -rem(8px);
+    }
+
+    &-items {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      &.padded {
+        padding-top: rem(26px);
+      }
+    }
+
+    &-item {
+      font-size: rem(12px);
+      display: flex;
+
+      &--circle,
+      &--dashline {
+        display: inline-block;
+        width: rem(12px);
+        min-width: rem(12px);
+        min-height: rem(12px);
+        height: rem(12px);
+        margin-right: rem(7px);
+      }
+
+      &--circle {
+        border-radius: 100%;
+        align-self: flex-start;
+        margin-top: 1px;
+      }
+
+      &--dashline {
+        border-radius: 0;
+        border: none;
+        border-top: 2px dotted;
+        align-self: center;
+        transform: translateY(4px);
+      }
+
+      p {
+        color: $slate;
+        font-size: rem(12px);
+        line-height: 1.4;
+      }
+    }
+  }
+}

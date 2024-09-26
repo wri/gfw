@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 import ComposedChart from 'components/charts/composed-chart';
 import Brush from 'components/charts/brush-chart';
 import Legend from 'components/charts/components/chart-legend';
+import ChartLegend from '../widget-chart-legend';
 
 class WidgetComposedChart extends Component {
   static propTypes = {
@@ -72,7 +73,7 @@ class WidgetComposedChart extends Component {
       barBackground,
       toggleSettingsMenu,
     } = this.props;
-    const { brush, legend } = config;
+    const { brush, legend, chartLegend } = config;
     const showLegendSettingsBtn =
       settingsConfig &&
       settingsConfig.some((conf) => conf.key === 'compareYear');
@@ -106,6 +107,10 @@ class WidgetComposedChart extends Component {
             data={originalData}
             onBrushEnd={this.handleBrushEnd}
           />
+        )}
+
+        { chartLegend && (
+          <ChartLegend data={chartLegend} />
         )}
       </div>
     );
