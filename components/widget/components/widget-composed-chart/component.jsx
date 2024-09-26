@@ -9,6 +9,7 @@ import ChartLegend from '../widget-chart-legend';
 
 class WidgetComposedChart extends Component {
   static propTypes = {
+    analysis: PropTypes.bool,
     originalData: PropTypes.array,
     data: PropTypes.array,
     config: PropTypes.object,
@@ -64,6 +65,7 @@ class WidgetComposedChart extends Component {
 
   render() {
     const {
+      analysis,
       originalData,
       data,
       config,
@@ -109,9 +111,7 @@ class WidgetComposedChart extends Component {
           />
         )}
 
-        { chartLegend && (
-          <ChartLegend data={chartLegend} />
-        )}
+        {chartLegend && <ChartLegend data={chartLegend} vertical={analysis} />}
       </div>
     );
   }
