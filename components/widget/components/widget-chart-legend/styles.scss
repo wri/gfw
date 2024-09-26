@@ -59,4 +59,23 @@
       }
     }
   }
+
+  &.vertical {
+    flex-direction: column;
+    gap: 5px;
+
+    .c-widget-chart-legend {
+      &__column {
+        &-title {
+          margin-top: rem(8px);
+        }
+
+        &-items {
+          &.padded {
+            padding-top: 0;
+          }
+        }
+      }
+    }
+  }
 }
