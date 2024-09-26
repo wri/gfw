@@ -4,13 +4,14 @@
   display: flex;
   margin: 20px 0 0;
   width: 100%;
-  gap: 40px;
+  gap: 60px;
 
   &__column {
     &-title {
+      display: block;
       font-weight: 500;
-      font-size: rem(12px);
-      margin-top: -rem(8px);
+      font-size: rem(13px);
+      margin: 0 0 rem(10px) 0;
     }
 
     &-items {
@@ -19,7 +20,7 @@
       gap: 5px;
 
       &.padded {
-        padding-top: rem(26px);
+        padding-top: rem(20px);
       }
     }
 
