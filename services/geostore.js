@@ -77,9 +77,8 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   switch (type) {
     case 'country':
       return fetchGeostore({
-        url: `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
-          adm2 ? `/${adm2}` : ''
-        }`,
+        url: `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''
+          }`,
         queryParams: `${queryParams}&${threshold}`,
         token,
       });
