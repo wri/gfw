@@ -2,9 +2,7 @@ import { apiRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
-import BBOXS from 'data/bboxs.json';
-
-const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
+// const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
 
 const getWDPAGeostore = ({ id, token }) =>
   getDatasetQuery({
@@ -28,24 +26,11 @@ const getWDPAGeostore = ({ id, token }) =>
     })
   );
 
-export const getGeostoreOLD = ({ type, adm0, adm1, adm2, token }) => {
+export const getGeostore = ({ type, adm0, token }) => {
   if (!type || !adm0) return null;
 
-  let thresh = adm1 ? 0.0005 : 0.005;
-  let url = '/v2/geostore';
-
   switch (type) {
-    case 'country':
-      thresh = LARGE_ISOS.includes(adm0) ? 0.05 : 0.005;
-      url = url.concat(
-        `/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`
-      );
-      break;
     case 'use':
-      url = url.concat(`/use/${adm0}/${adm1}`);
-      break;
-    case 'geostore':
-      url = url.concat(`/${adm0}`);
       break;
     case 'wdpa':
       return getWDPAGeostore({
@@ -56,38 +41,31 @@ export const getGeostoreOLD = ({ type, adm0, adm1, adm2, token }) => {
       return false;
   }
 
-  return apiRequest
-    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
-    .then((response) => {
-      const { attributes: geostore } = response?.data?.data || {};
-
-      console.log('GEOSTORE', geostore);
-      return {
-        ...geostore,
-        id: geostore?.hash,
-        bbox: BBOXS[adm0] || geostore?.bbox,
-      };
-    });
-};
-
-export const getGeostore = ({ type, adm0, token }) => {
-  if (!type || !adm0) return null;
-
-  // const id = adm2 || adm1 || adm0; // We still need to implement other adm levels, this commit is just for testing adm0
-
   return getDatasetQuery({
     dataset: 'gadm_administrative_boundaries',
-    sql: `SELECT country, gfw_bbox, gfw_area__ha, gfw_geostore_id, gfw_geojson, encode(ST_AsTWKB(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.001), 0.001)), 'base64') FROM data AS simplified_encoded_twkb WHERE adm_level='0' and gid_0='${adm0}'`,
+    sql: `SELECT country, gfw_bbox, gfw_geostore_id, ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.005), 0.005)) AS gfw_geojson FROM gadm_administrative_boundaries WHERE adm_level='0' AND gid_0='${adm0}' limit 1`,
     version: 'v4.1',
     token,
   }).then((data) => {
-    const { gfw_bbox, gfw_geostore_id, gfw_area__ha, gfw_geojson } = data?.[0];
+    const { gfw_bbox, gfw_geostore_id, gfw_geojson } = data?.[0];
+    const parsed_gfw_geojson = JSON.parse(gfw_geojson);
 
     return {
-      areaHa: gfw_area__ha,
       id: gfw_geostore_id,
-      bbox: BBOXS[adm0] || gfw_bbox,
-      geojson: gfw_geojson,
+      bbox: gfw_bbox,
+      geojson: {
+        crs: {},
+        features: [
+          {
+            geometry: {
+              ...parsed_gfw_geojson,
+            },
+            properties: null,
+            type: 'Feature',
+          },
+        ],
+        type: 'FeatureCollection',
+      },
     };
   });
 };
