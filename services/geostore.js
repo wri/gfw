@@ -26,24 +26,27 @@ const getWDPAGeostore = ({ id, token }) =>
     })
   );
 
-export const getGeostore = ({ type, adm0, token }) => {
-  if (!type || !adm0) return null;
+/**
+ * @deprecated This method must be removed as soon as we migrate the other cases for geGeostore method.
+ *
+ */
+const fetchGeostoreFromRWApi = (url, token) =>
+  apiRequest
+    .get(`${url}?thresh=0.005`, { cancelToken: token })
+    .then((response) => {
+      const { attributes: geostore } = response?.data?.data || {};
 
-  switch (type) {
-    case 'use':
-      break;
-    case 'wdpa':
-      return getWDPAGeostore({
-        id: adm0,
-        token,
-      });
-    default:
-      return false;
-  }
+      return {
+        geojson: geostore?.geojson,
+        id: geostore?.hash,
+        bbox: geostore?.bbox,
+      };
+    });
 
-  return getDatasetQuery({
+const fetchGeostoreFromDataApi = (adm0, adm1, adm2, token) =>
+  getDatasetQuery({
     dataset: 'gadm_administrative_boundaries',
-    sql: `SELECT country, gfw_bbox, gfw_geostore_id, ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.005), 0.005)) AS gfw_geojson FROM gadm_administrative_boundaries WHERE adm_level='0' AND gid_0='${adm0}' limit 1`,
+    sql: `SELECT country, gfw_bbox, gfw_geostore_id, ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.05), 0.05)) AS gfw_geojson FROM gadm_administrative_boundaries WHERE adm_level='0' AND gid_0='${adm0}' limit 1`,
     version: 'v4.1',
     token,
   }).then((data) => {
@@ -68,6 +71,36 @@ export const getGeostore = ({ type, adm0, token }) => {
       },
     };
   });
+
+export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
+  if (!type || !adm0) return null;
+
+  switch (type) {
+    case 'country':
+      return fetchGeostoreFromDataApi({
+        adm0,
+        adm1,
+        adm2,
+        token,
+      });
+    case 'use':
+      return fetchGeostoreFromRWApi({
+        url: `/v2/geostore/use/${adm0}/${adm1}`,
+        token,
+      });
+    case 'geostore':
+      return fetchGeostoreFromRWApi({
+        url: `/v2/geostore/use/${adm0}`,
+        token,
+      });
+    case 'wdpa':
+      return getWDPAGeostore({
+        id: adm0,
+        token,
+      });
+    default:
+      return false;
+  }
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
