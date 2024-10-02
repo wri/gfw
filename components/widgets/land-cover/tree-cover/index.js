@@ -107,7 +107,7 @@ export default {
   ],
   sortOrder: {
     summary: 4,
-    landCover: 1,
+    landCover: 2,
   },
   refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
   pendingKeys: ['threshold', 'decile', 'extentYear'],

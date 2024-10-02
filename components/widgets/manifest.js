@@ -29,6 +29,7 @@ import treeCoverLossFiresAnnual from 'components/widgets/fires/tree-loss-fires-a
 import treeCoverLossFiresProportion from 'components/widgets/fires/tree-loss-fires-proportion';
 
 // land cover
+import naturalForest from 'components/widgets/land-cover/natural-forest';
 import treeCover from 'components/widgets/land-cover/tree-cover';
 import treeCover2000 from 'components/widgets/land-cover/tree-cover-2000';
 import treeCover2010 from 'components/widgets/land-cover/tree-cover-2010';
@@ -90,6 +91,7 @@ export default {
   treeCoverLossFiresProportion,
 
   // land cover
+  naturalForest,
   treeCover,
   treeCover2000,
   treeCover2010,
