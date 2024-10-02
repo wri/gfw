@@ -170,12 +170,12 @@ export default class MyDocument extends Document {
             <Main />
           </main>
           {isOsanoEnabled && (
-            <style
+            <script
               dangerouslySetInnerHTML={{
                 __html: `
-                  .osano-cm-widget {
-                    display: none;
-                  }
+                  document.addEventListener('DOMContentLoaded', function(event) {
+                    document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
+                  });
                 `,
               }}
             />
