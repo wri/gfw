@@ -27,10 +27,10 @@ const getWDPAGeostore = ({ id, token }) =>
   );
 
 /**
- * @deprecated This method must be removed as soon as we migrate the other cases for geGeostore method.
+ * This method must be removed as soon as we migrate the other cases for geGeostore method.
  *
  */
-const fetchGeostoreFromRWApi = (url, token) =>
+const fetchGeostoreFromRWApi = ({ url, token }) =>
   apiRequest
     .get(`${url}?thresh=0.005`, { cancelToken: token })
     .then((response) => {
@@ -43,10 +43,19 @@ const fetchGeostoreFromRWApi = (url, token) =>
       };
     });
 
-const fetchGeostoreFromDataApi = (adm0, adm1, adm2, token) =>
-  getDatasetQuery({
+const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
+  const COUNTRY = adm0 ? `gid_0='${adm0}'` : '';
+  const REGION = adm1 ? `AND gid_1='${adm1}_1'` : '';
+  const SUBREGION = adm2 ? `AND gid_2='${adm2}_1'` : '';
+
+  const query = `SELECT country, gfw_bbox, gfw_geostore_id, 
+    ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.05), 0.05)) AS gfw_geojson 
+    FROM gadm_administrative_boundaries 
+    WHERE ${COUNTRY} ${REGION} ${SUBREGION} limit 1`;
+
+  return getDatasetQuery({
     dataset: 'gadm_administrative_boundaries',
-    sql: `SELECT country, gfw_bbox, gfw_geostore_id, ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.05), 0.05)) AS gfw_geojson FROM gadm_administrative_boundaries WHERE adm_level='0' AND gid_0='${adm0}' limit 1`,
+    sql: query,
     version: 'v4.1',
     token,
   }).then((data) => {
@@ -71,6 +80,7 @@ const fetchGeostoreFromDataApi = (adm0, adm1, adm2, token) =>
       },
     };
   });
+};
 
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
