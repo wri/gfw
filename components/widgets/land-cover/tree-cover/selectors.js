@@ -28,21 +28,23 @@ export const isoHasPlantations = createSelector(
 );
 
 export const parseData = createSelector(
-  [getData, getColors, getIndicator, isoHasPlantations],
-  (data, colors, indicator, hasPlantations) => {
+  [getData, getColors, getIndicator],
+  (data, colors, indicator) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalCover, cover, plantations } = data;
     const otherCover = indicator ? totalCover - cover : 0;
-    const plantationsCover = hasPlantations ? plantations : 0;
+    const plantationsCover = plantations || 0;
     const label = indicator ? ` in ${indicator.label}` : '';
+    const indicators = indicator?.value?.split('__') || [];
+    const hasPlantations = indicators.includes('plantations');
+
     const parsedData = [
       {
-        label: hasPlantations
-          ? 'Natural Forest'.concat(label)
-          : 'Tree Cover'.concat(label),
-        value: cover - plantationsCover,
+        label: 'Tree Cover'.concat(label),
+        value: hasPlantations ? plantationsCover : cover - plantationsCover,
         color: colors.naturalForest,
-        percentage: ((cover - plantationsCover) / totalArea) * 100,
+        percentage:
+          ((hasPlantations ? plantationsCover : cover) / totalArea) * 100,
       },
       {
         label: 'Other Land Cover',
@@ -51,21 +53,16 @@ export const parseData = createSelector(
         percentage: ((totalArea - cover - otherCover) / totalArea) * 100,
       },
     ];
-    if (indicator) {
+
+    if (hasPlantations) {
       parsedData.splice(1, 0, {
-        label: hasPlantations ? 'Other forest cover' : 'Other tree cover',
+        label: 'Other tree cover',
         value: otherCover,
         color: colors.otherCover,
         percentage: (otherCover / totalArea) * 100,
       });
-    } else if (!indicator && hasPlantations) {
-      parsedData.splice(1, 0, {
-        label: 'Plantations',
-        value: plantations,
-        color: colors.plantedForest,
-        percentage: (plantations / totalArea) * 100,
-      });
     }
+
     return parsedData;
   }
 );
