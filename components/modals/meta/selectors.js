@@ -10,16 +10,14 @@ const META_FIELDS = [
   'overview',
   'learn_more',
   'download_data',
-  'map_service',
-  'amazon_link',
 ];
 const TABLE_FIELDS = [
   'function',
   'resolution',
   'geographic_coverage',
   'source',
-  'frequency_of_updates',
-  'date_of_content',
+  'content_date',
+  'update_frequency',
   'cautions',
   'license',
 ];
