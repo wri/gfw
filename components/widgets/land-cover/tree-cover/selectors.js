@@ -82,17 +82,8 @@ export const parseSentence = createSelector(
     getIndicator,
     getSentence,
     getAdminLevel,
-    isoHasPlantations,
   ],
-  (
-    data,
-    settings,
-    locationName,
-    indicator,
-    sentences,
-    admLevel,
-    isoPlantations
-  ) => {
+  (data, settings, locationName, indicator, sentences, admLevel) => {
     if (!data || !sentences) return null;
 
     const { extentYear, threshold, decile } = settings;
@@ -108,9 +99,11 @@ export const parseSentence = createSelector(
       : 'treeCover';
     const sentence =
       sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
+    const indicators = indicator?.value?.split('__') || [];
+    const hasPlantations = indicators.includes('plantations');
 
     const { cover, plantations, totalCover, totalArea } = data;
-    const top = isoPlantations ? cover - plantations : cover;
+    const top = !hasPlantations ? cover - plantations : plantations;
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
 
