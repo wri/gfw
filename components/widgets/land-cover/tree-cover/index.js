@@ -24,9 +24,8 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'treeCover',
   title: {
-    default: 'Tree Cover by type in {location}',
-    global: 'Global tree cover by type',
-    withPlantations: 'Forest cover by type in {location}',
+    default: 'Tree Cover in {location}',
+    global: 'Global tree cover',
   },
   alerts: [
     {
