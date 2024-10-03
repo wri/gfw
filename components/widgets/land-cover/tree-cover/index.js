@@ -108,7 +108,13 @@ export default {
     summary: 4,
     landCover: 1,
   },
-  refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
+  refetchKeys: [
+    'threshold',
+    'decile',
+    'extentYear',
+    'landCategory',
+    'forestType',
+  ],
   pendingKeys: ['threshold', 'decile', 'extentYear'],
   settings: {
     threshold: 30,
@@ -138,6 +144,14 @@ export default {
         placeholder: 'All categories',
         clearable: true,
         border: true,
+      },
+      {
+        key: 'forestType',
+        whitelist: ['plantations'],
+        label: 'Forest Type',
+        type: 'select',
+        placeholder: 'All tree cover',
+        clearable: true,
       },
       {
         key: isTropicalTreeCover ? 'decile' : 'threshold',
