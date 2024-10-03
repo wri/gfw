@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
+import { Remark } from 'react-remark';
+
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import moment from 'moment';
-import ReactHtmlParser from 'react-html-parser';
 import { trackEvent } from 'utils/analytics';
 
 import { Button, NoContent } from '@worldresources/gfw-components';
@@ -84,7 +85,7 @@ class ModalMeta extends PureComponent {
                         dangerouslySetInnerHTML={{ __html: lowerCase(key) }} // eslint-disable-line
                       />
                       <div className="description-column">
-                        <p>{this.parseMarkdownURLToHTML(tableData[key])}</p>
+                        <Remark>{tableData[key]}</Remark>
                       </div>
                     </div>
                   ) : null
@@ -94,7 +95,7 @@ class ModalMeta extends PureComponent {
               <div className="overview">
                 <h4>Overview</h4>
                 <div className="body">
-                  <p>{this.parseMarkdownURLToHTML(overview)}</p>
+                  <Remark>{overview}</Remark>
                 </div>
               </div>
             )}
@@ -102,7 +103,7 @@ class ModalMeta extends PureComponent {
               <div className="citation">
                 <h5>Citation</h5>
                 <div className="body">
-                  <p>{this.parseMarkdownURLToHTML(parsedCitation)}</p>
+                  <Remark>{parsedCitation}</Remark>
                 </div>
               </div>
             )}
@@ -133,18 +134,6 @@ class ModalMeta extends PureComponent {
       </div>
     );
   }
-
-  parseMarkdownURLToHTML = (markdown) => {
-    const markdownRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    if (typeof markdown !== 'string') return markdown;
-
-    const htmlAnchor = markdown.replace(
-      markdownRegex,
-      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
-    );
-
-    return <>{ReactHtmlParser(htmlAnchor)}</>;
-  };
 
   render() {
     const { metakey, setModalMetaClosed, metaData, loading } = this.props;

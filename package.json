@@ -158,6 +158,7 @@
     "react-portal": "^4.2.1",
     "react-pose": "^3.3.6",
     "react-redux": "^7.2.2",
+    "react-remark": "^2.1.0",
     "react-scroll": "^1.7.16",
     "react-simple-maps": "^2.0.0",
     "react-slick": "^0.25.2",
