@@ -17,7 +17,7 @@
     "intactForest": "#6b8729",
     "primaryForest": "#84a637",
     "plantedForest": "#a0c746",
-    "otherCover": "#c7e67c",
+    "otherCover": "#a0c746",
     "nonForest": "#e7e5a4"
   },
   "loss": {
