@@ -174,7 +174,9 @@ export default class MyDocument extends Document {
               dangerouslySetInnerHTML={{
                 __html: `
                   document.addEventListener('DOMContentLoaded', function(event) {
-                    document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
+                    setTimeout(() => {
+                      document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
+                    }, 100);
                   });
                 `,
               }}
