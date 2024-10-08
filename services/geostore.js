@@ -2,8 +2,6 @@ import { apiRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
-// const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
-
 const getWDPAGeostore = ({ id, token }) =>
   getDatasetQuery({
     dataset: 'wdpa_protected_areas',
@@ -45,13 +43,13 @@ const fetchGeostoreFromRWApi = ({ url, token }) =>
 
 const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
   const COUNTRY = adm0 ? `gid_0='${adm0}'` : '';
-  const REGION = adm1 ? `AND gid_1='${adm1}_1'` : '';
-  const SUBREGION = adm2 ? `AND gid_2='${adm2}_1'` : '';
+  const REGION = adm1 ? ` AND gid_1 LIKE '${adm0}.${adm1}_%'` : '';
+  const SUBREGION = adm2 ? ` AND gid_2 LIKE '${adm0}.${adm1}.${adm2}_%'` : '';
 
-  const query = `SELECT country, gfw_bbox, gfw_geostore_id, 
-    ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.05), 0.05)) AS gfw_geojson 
-    FROM gadm_administrative_boundaries 
-    WHERE ${COUNTRY} ${REGION} ${SUBREGION} limit 1`;
+  const admLevel = (adm1 && adm2 ? 2 : 1) || 0;
+  const query = `SELECT gfw_bbox, gfw_geostore_id,
+    ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.005), 0.005)) AS gfw_geojson
+    FROM gadm_administrative_boundaries WHERE adm_level='${admLevel}' AND ${COUNTRY}${REGION}${SUBREGION} limit 1`;
 
   return getDatasetQuery({
     dataset: 'gadm_administrative_boundaries',
@@ -66,17 +64,15 @@ const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
       id: gfw_geostore_id,
       bbox: gfw_bbox,
       geojson: {
-        crs: {},
+        type: 'FeatureCollection',
         features: [
           {
+            type: 'Feature',
             geometry: {
               ...parsed_gfw_geojson,
             },
-            properties: null,
-            type: 'Feature',
           },
         ],
-        type: 'FeatureCollection',
       },
     };
   });
