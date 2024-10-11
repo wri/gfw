@@ -43,8 +43,8 @@ const fetchGeostoreFromRWApi = ({ url, token }) =>
 
 const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
   const COUNTRY = adm0 ? `gid_0='${adm0}'` : '';
-  const REGION = adm1 ? ` AND gid_1 LIKE '${adm0}.${adm1}_%'` : '';
-  const SUBREGION = adm2 ? ` AND gid_2 LIKE '${adm0}.${adm1}.${adm2}_%'` : '';
+  const REGION = adm1 ? ` AND gid_1 LIKE '${adm0}.${adm1}__'` : '';
+  const SUBREGION = adm2 ? ` AND gid_2 LIKE '${adm0}.${adm1}.${adm2}__'` : '';
 
   const admLevel = (adm1 && adm2 ? 2 : 1) || 0;
   const query = `SELECT gfw_bbox, gfw_geostore_id,
