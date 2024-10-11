@@ -176,6 +176,12 @@ export default class MyDocument extends Document {
                   document.addEventListener('DOMContentLoaded', function(event) {
                     setTimeout(() => {
                       document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
+
+                      const items = document.getElementsByClassName('osano-cm-drawer-item osano-cm-list__list-item osano-cm-list-item');
+
+                      if (items.length > 4) {
+                        items[4].style.display = 'none';
+                      }
                     }, 100);
                   });
                 `,
