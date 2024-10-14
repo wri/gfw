@@ -2,10 +2,6 @@ import { apiRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
-import BBOXS from 'data/bboxs.json';
-
-const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
-
 const getWDPAGeostore = ({ id, token }) =>
   getDatasetQuery({
     dataset: 'wdpa_protected_areas',
@@ -28,25 +24,81 @@ const getWDPAGeostore = ({ id, token }) =>
     })
   );
 
+/**
+ * This method must be removed as soon as we migrate the other cases for geGeostore method.
+ *
+ */
+const fetchGeostoreFromRWApi = ({ url, token }) =>
+  apiRequest
+    .get(`${url}?thresh=0.005`, { cancelToken: token })
+    .then((response) => {
+      const { attributes: geostore } = response?.data?.data || {};
+
+      return {
+        geojson: geostore?.geojson,
+        id: geostore?.hash,
+        bbox: geostore?.bbox,
+      };
+    });
+
+const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
+  const COUNTRY = adm0 ? `gid_0='${adm0}'` : '';
+  const REGION = adm1 ? ` AND gid_1 LIKE '${adm0}.${adm1}__'` : '';
+  const SUBREGION = adm2 ? ` AND gid_2 LIKE '${adm0}.${adm1}.${adm2}__'` : '';
+
+  const admLevel = (adm1 && adm2 ? 2 : 1) || 0;
+  const query = `SELECT gfw_bbox, gfw_geostore_id,
+    ST_AsGeoJSON(ST_SimplifyPreserveTopology(ST_RemoveRepeatedPoints(geom, 0.005), 0.005)) AS gfw_geojson
+    FROM gadm_administrative_boundaries WHERE adm_level='${admLevel}' AND ${COUNTRY}${REGION}${SUBREGION} limit 1`;
+
+  return getDatasetQuery({
+    dataset: 'gadm_administrative_boundaries',
+    sql: query,
+    version: 'v4.1',
+    token,
+  }).then((data) => {
+    const { gfw_bbox, gfw_geostore_id, gfw_geojson } = data?.[0];
+    const parsed_gfw_geojson = JSON.parse(gfw_geojson);
+
+    return {
+      id: gfw_geostore_id,
+      bbox: gfw_bbox,
+      geojson: {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              ...parsed_gfw_geojson,
+            },
+          },
+        ],
+      },
+    };
+  });
+};
+
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
-  let thresh = adm1 ? 0.0005 : 0.005;
-  let url = '/v2/geostore';
-
   switch (type) {
     case 'country':
-      thresh = LARGE_ISOS.includes(adm0) ? 0.05 : 0.005;
-      url = url.concat(
-        `/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`
-      );
-      break;
+      return fetchGeostoreFromDataApi({
+        adm0,
+        adm1,
+        adm2,
+        token,
+      });
     case 'use':
-      url = url.concat(`/use/${adm0}/${adm1}`);
-      break;
+      return fetchGeostoreFromRWApi({
+        url: `/v2/geostore/use/${adm0}/${adm1}`,
+        token,
+      });
     case 'geostore':
-      url = url.concat(`/${adm0}`);
-      break;
+      return fetchGeostoreFromRWApi({
+        url: `/v2/geostore/use/${adm0}`,
+        token,
+      });
     case 'wdpa':
       return getWDPAGeostore({
         id: adm0,
@@ -55,17 +107,6 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
     default:
       return false;
   }
-
-  return apiRequest
-    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
-    .then((response) => {
-      const { attributes: geostore } = response?.data?.data || {};
-      return {
-        ...geostore,
-        id: geostore?.hash,
-        bbox: BBOXS[adm0] || geostore?.bbox,
-      };
-    });
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
