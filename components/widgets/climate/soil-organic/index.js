@@ -1,4 +1,4 @@
-import { getSoilOrganicCarbon } from 'services/climate';
+import { getOrganicSoilCarbonGrouped } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -23,10 +23,10 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
-      key: 'variable',
-      label: 'variable',
+      key: 'unit',
+      label: 'unit',
       type: 'switch',
-      whitelist: ['totalbiomass', 'biomassdensity'],
+      whitelist: ['totalBiomass', 'biomassDensity'],
     },
   ],
   datasets: [
@@ -35,13 +35,12 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // soil organis carbon
     {
       dataset: SOIL_CARBON_DENSITY_DATASET,
       layers: [SOIL_CARBON_DENSITY],
     },
   ],
-  refetchKeys: ['variable'],
+  refetchKeys: ['unit'],
   chartType: 'rankedList',
   visible: ['dashboard', 'analysis'],
   colors: 'climate',
@@ -55,18 +54,50 @@ export default {
     endYear: 2018,
     pageSize: 5,
     page: 0,
-    variable: 'totalbiomass',
+    unit: 'totalBiomass',
   },
   sentences: {
-    initial:
+    region:
       'In 2000, {location} had a soil organic carbon density of {biomassDensity}, and a total carbon storage of {totalBiomass}.',
-    totalbiomass:
+    globalBiomass:
       'Around {value} of the world’s {label} is contained in the top 5 countries.',
-    biomassdensity:
+    globalDensity:
       'The average {label} of the world’s top 5 countries is {value}.',
   },
-  getData: (params) =>
-    getSoilOrganicCarbon(params).then((res) => res.data && res.data.rows),
-  getDataURL: (params) => [getSoilOrganicCarbon({ ...params, download: true })],
+  getData: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
+    const location =
+      type === 'country'
+        ? {
+          type,
+          adm0: adm0 && !adm1 ? null : adm0,
+          adm1: adm1 && !adm2 ? null : adm1,
+          adm2: null,
+        }
+        : {
+          type,
+          adm0,
+          adm1,
+          adm2,
+        };
+
+    return getOrganicSoilCarbonGrouped({ ...rest, ...location });
+  },
+  getDataURL: ({ type, adm0, adm1, adm2, ...rest } = {}) => {
+    const location =
+      type === 'country'
+        ? {
+          type,
+          adm0: adm0 && !adm1 ? null : adm0,
+          adm1: adm1 && !adm2 ? null : adm1,
+          adm2: null,
+        }
+        : {
+          type,
+          adm0,
+          adm1,
+          adm2,
+        };
+    return [getOrganicSoilCarbonGrouped({ ...rest, ...location, download: true })];
+  },
   getWidgetProps,
 };

@@ -1,147 +1,169 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
+import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
-import { formatNumber } from 'utils/format';
+import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = (state) => state.data;
-const getLocationName = (state) => state.locationLabel;
-const getAdm0 = (state) => state.adm0;
-const getLocationDict = (state) =>
-  state.adm0 ? state.locationData : state.childData;
-const getLocationObject = (state) => state.location;
-const getSentences = (state) => state.sentences;
-const getTitle = (state) => state.title;
-const getColors = (state) => state.colors;
 const getSettings = (state) => state.settings;
+const getLocationData = (state) => state.locationData;
+const getLocation = (state) => state.location;
+const getColors = (state) => state.colors;
+const getAdm0 = (state) => state.adm0;
+const getAdm1 = (state) => state.adm1;
+const getAdm2 = (state) => state.adm2;
+const getSentences = (state) => state && state.sentences;
+const getTitle = (state) => state.title;
+const getLocationName = (state) => state.locationLabel;
 
-const getSortedData = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
+export const getSortedData = createSelector(
+  [getData, getSettings, getAdm1, getAdm2],
+  (data, settings, adm1, adm2) => {
     if (isEmpty(data)) return null;
-    return sortBy(data, settings.variable).reverse();
+    // console.log('soil-organic', { data, settings })
+    let regionKey = 'iso';
+    if (adm1) regionKey = 'adm1';
+    if (adm2) regionKey = 'adm2';
+    const mappedData = data.map((d) => ({
+      id: adm1 ? parseInt(d[regionKey], 10) : d[regionKey],
+      ...d,
+    }));
+    return sortBy(
+      uniqBy(mappedData, 'id'),
+      settings.unit === 'totalBiomass' ? 'biomass' : 'biomassDensity'
+    )
+      .reverse()
+      .map((d, i) => ({
+        ...d,
+        rank: i + 1,
+      }));
   }
 );
 
 export const parseData = createSelector(
   [
     getSortedData,
-    getColors,
-    getAdm0,
-    getLocationDict,
-    getLocationObject,
     getSettings,
+    getAdm0,
+    getLocation,
+    getLocationData,
+    getColors,
   ],
-  (data, colors, adm0, locationsDict, locationObj, settings) => {
-    if (isEmpty(data) || !locationsDict) return null;
+  (data, settings, adm0, location, parentData, colors) => {
+    if (isEmpty(data)) return null;
+    let dataTrimmed = [];
+    data.forEach((d) => {
+      const locationMeta = parentData && parentData[d.id];
 
-    let dataTrimmed = data.map((d, i) => ({
+      if (locationMeta) {
+        dataTrimmed.push({
+          ...d,
+          label: locationMeta.label,
+          path: locationMeta.path,
+        });
+      }
+    });
+    dataTrimmed = dataTrimmed.map((d, i) => ({
       ...d,
       rank: i + 1,
     }));
-
-    let key;
-    if (data[0].admin_2) key = 'admin_2';
-    else if (data[0].admin_1) key = 'admin_1';
-    else key = 'iso';
-
     if (adm0) {
-      const locationIndex = locationObj
-        ? findIndex(data, (d) => d[key] === locationObj.value)
-        : -1;
-      if (locationIndex === -1) return null;
-
+      const locationIndex = findIndex(
+        dataTrimmed,
+        (d) => d.id === (location && location.value)
+      );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
       if (locationIndex < 2) {
         trimStart = 0;
         trimEnd = 5;
       }
-      if (locationIndex > data.length - 3) {
-        trimStart = data.length - 5;
-        trimEnd = data.length;
+      if (locationIndex > dataTrimmed.length - 3) {
+        trimStart = dataTrimmed.length - 5;
+        trimEnd = dataTrimmed.length;
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-
-    return dataTrimmed.map((d, i) => ({
+    return dataTrimmed.map((d) => ({
       ...d,
-      label: locationsDict[d[key]] && locationsDict[d[key]].label,
-      path: locationsDict[d[key]] && locationsDict[d[key]].path,
       color: colors.carbon[0],
-      id: `${d.iso}-${i}`,
-      value: d[settings.variable],
-      unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha',
+      unit: settings.unit === 'totalBiomass' ? 't' : 't/ha',
+      value: settings.unit === 'totalBiomass' ? d.biomass : d.biomassDensity,
     }));
   }
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocationName, getSentences, getSettings, getLocationObject],
-  (data, location, sentences, settings, locationObj) => {
+  [getSortedData, getSettings, getLocation, getSentences],
+  (data, settings, location, sentences) => {
     if (!sentences || isEmpty(data)) return null;
 
-    if (location === 'global') {
-      const sorted = sortBy(data, settings.variable).reverse();
-
+    // When looking at global data, it is processed differently;
+    // There are two sentences to choose from depending on the settings.
+    if (location && location.label === 'global') {
       let biomTop5 = 0;
       let densTop5 = 0;
-      const biomTotal = sorted.reduce((acc, next, i) => {
+
+      const biomTotal = data.reduce((acc, next, i) => {
         if (i < 5) {
-          biomTop5 += next.totalbiomass;
-          densTop5 += next.biomassdensity;
+          biomTop5 += next.biomass;
+          densTop5 += next.biomassDensity;
         }
-        return acc + next.totalbiomass;
+        return acc + next.biomass;
       }, 0);
 
       const percent = (biomTop5 / biomTotal) * 100;
       const avgBiomDensity = densTop5 / 5;
 
       const value =
-        settings.variable === 'totalbiomass'
+        settings.unit === 'totalBiomass'
           ? formatNumber({ num: percent, unit: '%' })
           : formatNumber({
-              num: avgBiomDensity,
-              unit: 'tC/ha',
-              spaceUnit: true,
-            });
+            num: avgBiomDensity,
+            unit: 'tC/ha',
+            spaceUnit: true,
+          });
 
       const labels = {
-        biomassdensity: 'soil organic carbon density',
-        totalbiomass: 'total carbon storage',
+        globalDensity: 'soil organic carbon density',
+        globalBiomass: 'total carbon storage',
       };
 
+      // Properties defined for labels and sentences are named in a way that relates with the display
+      // but the units are somewhat fixed, due to their dependency on the whitelists for settings dropdowns.
+      // We map them here.
+      const sentenceLabelProperty = settings.unit === 'totalBiomass' ? 'globalBiomass' : 'globalDensity';
+      const sentence = sentences[sentenceLabelProperty];
+      const label = labels[sentenceLabelProperty]
+
       return {
-        sentence: sentences[settings.variable],
+        sentence,
         params: {
-          label: labels[settings.variable],
+          label,
           value,
         },
       };
-    }
-    const iso = locationObj && locationObj.value;
-    const region =
-      data &&
-      data.find((item) => {
-        if (item.admin_2) return item.admin_2 === iso;
-        if (item.admin_1) return item.admin_1 === iso;
-        return item.iso === iso;
-      });
+    };
+
+    // Standard processing for adm1 and adm2 areas, same sentence, same formatting.
+    const location_id = location && location.value;
+    const region = data && data.find((item) => item.id === location_id);
+
     if (!region) return null;
 
-    const { biomassdensity, totalbiomass } = region;
     return {
-      sentence: sentences.initial,
+      sentence: sentences.region,
       params: {
-        location,
+        location: location && location.label,
         biomassDensity: formatNumber({
-          num: biomassdensity,
+          num: region.biomassDensity,
           unit: 'tC/ha',
           spaceUnit: true,
         }),
         totalBiomass: formatNumber({
-          num: totalbiomass,
+          num: region.biomass,
           unit: 'tC',
           spaceUnit: true,
         }),
