@@ -46,7 +46,7 @@ const XAxisTickWithoutGap = ({ x, y, payload }) => {
     </g>
   );
 
-  /* 
+  /*
     Work around to show number 100 in the end of X axis in the chart
     since the Data API sends 0 to 90 percent in the tree cover density widget
     0 stands to 0%-9% as 90 stands to 90%-99%
