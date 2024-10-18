@@ -5,11 +5,11 @@ import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = (state) => state.data;
+const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
 const getLocationData = (state) => state.locationData;
 const getLocation = (state) => state.location;
@@ -26,29 +26,35 @@ export const getSummedByYearsData = createSelector(
   [getData, getSettings, getAdm1, getAdm2],
   (data, settings, adm1, adm2) => {
     if (isEmpty(data)) return null;
+
     const { loss, extent } = data;
     const filteredByYears = loss.filter(
       (d) => d.year >= settings.startYear && d.year <= settings.endYear
     );
+
     let regionKey = 'iso';
     if (adm1) regionKey = 'adm1';
     if (adm2) regionKey = 'adm2';
+
     const groupedByRegion = groupBy(filteredByYears, regionKey);
     const regions = Object.keys(groupedByRegion);
-    const mappedData = regions.map((i) => {
-      const isoLoss = Math.round(sumBy(groupedByRegion[i], 'loss')) || 0;
-      const regionExtent = extent.find((e) => e[regionKey] === i);
-      const isoExtent = (regionExtent && regionExtent.extent) || 1;
+    const mappedData = regions.map((region) => {
+      const isoLoss = Math.round(sumBy(groupedByRegion[region], 'loss')) || 0;
+      const regionExtent = extent.find((e) => {
+        return e[regionKey].toString() === region.toString(); // iso is string while adm1 and 2 are numbers
+      });
+      const isoExtent = (regionExtent && regionExtent.extent) || 0;
       const percentageLoss =
         isoExtent && isoLoss ? (100 * isoLoss) / isoExtent : 0;
 
       return {
-        id: adm1 ? parseInt(i, 10) : i,
+        id: adm1 ? parseInt(region, 10) : region,
         loss: isoLoss,
         extent: isoExtent,
         percentage: percentageLoss > 100 ? 100 : percentageLoss,
       };
     });
+
     return sortBy(
       uniqBy(mappedData, 'id'),
       settings.unit === 'ha' ? 'loss' : 'percentage'
@@ -119,13 +125,14 @@ export const parseData = createSelector(
 export const parseSentence = createSelector(
   [
     sortData,
+    getExtent,
     getSettings,
     getIndicator,
     getLocation,
     getSentences,
     getLocationData,
   ],
-  (data, settings, indicator, location, sentences, meta) => {
+  (data, extent, settings, indicator, location, sentences, meta) => {
     if (!data || !data.length || !location) return null;
     const { startYear, endYear } = settings;
     const {
@@ -136,42 +143,35 @@ export const parseSentence = createSelector(
       noLoss,
     } = sentences;
     const locationData = location && data.find((l) => l.id === location.value);
-
-    const loss = locationData && locationData.loss;
-    const globalLoss = sumBy(data, 'loss') || 0;
-    const globalExtent = sumBy(data, 'extent') || 0;
-    const lossArea = location.label === 'global' ? globalLoss : loss;
-    const areaPercent =
-      location.label === 'global'
-        ? (100 * globalLoss) / globalExtent
-        : (locationData && format('.1f')(locationData.percentage)) || 0;
-    const lossPercent = loss && locationData ? (100 * loss) / globalLoss : 0;
-    const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
-    let sentence = !indicator ? initial : withIndicator;
-    if (location.label === 'global') {
-      sentence = !indicator ? globalInitial : globalWithIndicator;
-    }
-    if (loss === 0) sentence = noLoss;
-
+    const isGlobal = location.label === 'global';
+    const loss = locationData?.loss;
     const topRegionData = data[0];
     const topRegion = meta && topRegionData && meta[topRegionData.id];
+    const globalLoss = sumBy(data, 'loss') || 0;
+    const lossArea = isGlobal ? globalLoss : loss;
+    const lossPercent = loss ? (100 * loss) / globalLoss : 0;
+    const indicatorName = !indicator ? 'region-wide' : `${indicator.label}`;
+
+    let sentence = !indicator ? initial : withIndicator;
+
+    if (isGlobal) sentence = !indicator ? globalInitial : globalWithIndicator;
+    if (loss === 0) sentence = noLoss;
 
     const params = {
       indicator: indicatorName,
-      topLocationLabel: topRegion && topRegion.label,
+      topLocationLabel: topRegion?.label,
       topLocationPerc:
         topRegionData &&
         formatNumber({ num: topRegionData.percentage, unit: '%' }),
       topLocationLoss:
         topRegionData &&
         formatNumber({ num: topRegionData.loss, unit: 'ha', spaceUnit: true }),
-      location:
-        location.label === 'global' ? 'globally' : location && location.label,
+      location: isGlobal ? 'globally' : location?.label,
       indicator_alt: indicatorName,
       startYear,
       endYear,
       loss: formatNumber({ num: lossArea, unit: 'ha', spaceUnit: true }),
-      localPercent: formatNumber({ num: areaPercent, unit: '%' }),
+      localPercent: formatNumber({ num: locationData?.percentage, unit: '%' }),
       globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
       extentYear: settings.extentYear,
     };
