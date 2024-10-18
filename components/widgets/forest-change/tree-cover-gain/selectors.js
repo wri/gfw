@@ -112,6 +112,7 @@ export const parseSentence = createSelector(
     getSentences,
     getAdminLevel,
     getParentLabel,
+    getSettings,
   ],
   (
     data,
@@ -120,7 +121,8 @@ export const parseSentence = createSelector(
     currentLabel,
     sentences,
     adminLevel,
-    parentLabel
+    parentLabel,
+    settings
   ) => {
     if (
       !data ||
@@ -150,6 +152,7 @@ export const parseSentence = createSelector(
       percent: formatNumber({ num: areaPercent, unit: '%' }),
       gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
       parent: parentLabel || null,
+      baselineYear: settings?.baselineYear || 2000,
     };
 
     let sentence = indicator ? withIndicator : initial;
