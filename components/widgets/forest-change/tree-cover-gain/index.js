@@ -34,6 +34,13 @@ export default {
       clearable: true,
     },
     {
+      key: 'baselineYear',
+      label: 'Baseline Year',
+      type: 'select',
+      placeholder: '2000',
+      clearable: true,
+    },
+    {
       key: 'landCategory',
       label: 'Land Category',
       type: 'select',
@@ -41,7 +48,7 @@ export default {
       clearable: true,
     },
   ],
-  refetchKeys: ['forestType', 'landCategory', 'threshold'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold', 'baselineYear'],
   chartType: 'rankedList',
   colors: 'gain',
   metaKey: 'umd_tree_cover_gain_from_height',
@@ -65,20 +72,21 @@ export default {
   },
   sentences: {
     globalInitial:
-      'From 2000 to 2020, {gain} of tree cover was gained {location}.',
+      'From {baselineYear} to 2020, {gain} of tree cover was gained {location}.',
     globalWithIndicator:
-      'From 2000 to 2020, {gain} of tree cover was gained within {indicator} {location}.',
+      'From {baselineYear} to 2020, {gain} of tree cover was gained within {indicator} {location}.',
     initial:
-      'From 2000 to 2020, {location} gained {gain} of tree cover equal to {gainPercent} of the global total.',
+      'From {baselineYear} to 2020, {location} gained {gain} of tree cover equal to {gainPercent} of the global total.',
     withIndicator:
-      'From 2000 to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of the global total.',
+      'From {baselineYear} to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of the global total.',
     regionInitial:
-      'From 2000 to 2020, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
+      'From {baselineYear} to 2020, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
     regionWithIndicator:
-      'From 2000 to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
+      'From {baselineYear} to 2020, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
   },
   settings: {
     threshold: 0,
+    baselineYear: 2000,
     unit: 'ha',
     pageSize: 5,
     page: 0,
