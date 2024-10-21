@@ -9,7 +9,6 @@ import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = (state) => state.data;
-const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
 const getLocationData = (state) => state.locationData;
 const getLocation = (state) => state.location;
@@ -21,6 +20,7 @@ const getAdm2 = (state) => state.adm2;
 const getSentences = (state) => state && state.sentence;
 const getTitle = (state) => state.title;
 const getLocationName = (state) => state.locationLabel;
+const getParent = (state) => state.parent;
 
 export const getSummedByYearsData = createSelector(
   [getData, getSettings, getAdm1, getAdm2],
@@ -125,14 +125,14 @@ export const parseData = createSelector(
 export const parseSentence = createSelector(
   [
     sortData,
-    getExtent,
     getSettings,
     getIndicator,
     getLocation,
     getSentences,
     getLocationData,
+    getParent,
   ],
-  (data, extent, settings, indicator, location, sentences, meta) => {
+  (data, settings, indicator, location, sentences, meta, parent) => {
     if (!data || !data.length || !location) return null;
     const { startYear, endYear } = settings;
     const {
@@ -174,6 +174,7 @@ export const parseSentence = createSelector(
       localPercent: formatNumber({ num: locationData?.percentage, unit: '%' }),
       globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
       extentYear: settings.extentYear,
+      parent: parent?.label || null,
     };
 
     return {
