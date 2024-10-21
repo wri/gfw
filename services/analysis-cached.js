@@ -83,6 +83,8 @@ const SQL_QUERIES = {
   treeCoverOTFExtent: 'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
   treeCoverGainSimpleOTF:
     'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
+  naturalForest:
+    'SELECT {location}, sbtn_natural_forests__class, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location}, sbtn_natural_forests__class',
   netChangeIso:
     'SELECT {select_location}, stable, loss, gain, disturb, net, change, gfw_area__ha FROM data {WHERE}',
   netChange:
@@ -1022,6 +1024,37 @@ export const getTropicalExtentGrouped = (params) => {
       })),
     },
   }));
+};
+
+export const getNaturalForest = async (params) => {
+  const { download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    version: 'v20240815',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.naturalForest}`
+      .replace(/{location}/g, getLocationSelect({ ...params, cast: false }))
+      .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    return {
+      name: `natural_forest_2020__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url);
 };
 
 export const getTreeCoverByLandCoverClass = (params) => {

@@ -440,6 +440,10 @@ export const getStatements = ({
     ...(indicatorStatements || []),
   ]);
 
+  if (dataType === 'naturalForest') {
+    return [];
+  }
+
   return statements;
 };
 

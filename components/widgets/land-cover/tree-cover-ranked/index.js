@@ -76,7 +76,7 @@ export default {
   ],
   sortOrder: {
     summary: 1,
-    landCover: 1,
+    landCover: 1.1,
   },
   refetchKeys: ['threshold', 'extentYear', 'forestType', 'landCategory'],
   settings: {

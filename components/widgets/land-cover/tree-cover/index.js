@@ -106,7 +106,7 @@ export default {
   ],
   sortOrder: {
     summary: 4,
-    landCover: 1,
+    landCover: 1.5,
   },
   refetchKeys: [
     'threshold',
