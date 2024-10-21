@@ -60,3 +60,4 @@ export const PRIMARY_FOREST = 'primary-forests-2001';
 export const MANGROVE_FORESTS = 'mangrove-forests-1996';
 export const TROPICAL_TREE_COVER_HECTARE = 'tropical-tree-cover-hectare';
 export const TROPICAL_TREE_COVER_METERS = 'tropical-tree-cover-meters';
+export const NATURAL_FOREST_2020 = 'natural-forests-2020';
