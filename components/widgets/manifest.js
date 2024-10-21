@@ -42,6 +42,7 @@ import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
 import USLandCover from 'components/widgets/land-cover/us-land-cover';
 import rankedForestTypes from 'components/widgets/land-cover/ranked-forest-types';
 import treeCoverDensity from 'components/widgets/land-cover/tree-cover-density';
+import naturalForest from 'components/widgets/land-cover/natural-forest';
 
 // Climate
 import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
@@ -103,6 +104,7 @@ export default {
   treeCoverLocated,
   rankedForestTypes,
   treeCoverDensity,
+  naturalForest,
 
   // climate
   // emissions,

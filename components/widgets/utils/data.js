@@ -477,6 +477,28 @@ export const zeroFillYears = (data, startYear, endYear, years, fillObj) => {
   return zeroFilledData;
 };
 
+export const zeroFillYearsFilter = (
+  data,
+  startYear,
+  endYear,
+  years,
+  fillObj
+) => {
+  const zeroFilledData = [];
+  if (years) {
+    years
+      .filter((year) => year >= startYear && year <= endYear)
+      .forEach((year) => {
+        const yearData = data.filter((o) => o.year === year) || {
+          ...fillObj,
+          year,
+        };
+        zeroFilledData.push(yearData);
+      });
+  }
+  return zeroFilledData;
+};
+
 export const getWeeksRange = (weeks) => {
   const endDate = moment().format('YYYY-MM-DD');
   const startDate = moment(endDate)
