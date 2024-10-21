@@ -22,55 +22,15 @@ import {
 import getWidgetProps from './selectors';
 
 export default {
-  widget: 'treeCover',
+  widget: 'naturalForest',
   title: {
-    default: 'Tree Cover by type in {location}',
-    global: 'Global tree cover by type',
-    withPlantations: 'Forest cover by type in {location}',
+    default: 'Natural forest in {location}',
+    global: 'Global natural forest',
   },
-  alerts: [
-    {
-      id: 'tree-cover-alert-1',
-      text: 'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
-      visible: [
-        'global',
-        'country',
-        'geostore',
-        'aoi',
-        'wdpa',
-        'use',
-        'dashboard',
-      ],
-    },
-  ],
   sentence: {
     default: {
-      global: {
-        treeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
-        tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
-      },
-      region: {
-        treeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
-        tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
-      },
-    },
-    withIndicator: {
-      global: {
-        treeCover:
-          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tree cover.',
-        tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tropical tree cover.',
-      },
-      region: {
-        treeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover.',
-        tropicalTreeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover.',
-      },
+      global: ``,
+      region: ``,
     },
   },
   metaKey: {
@@ -82,7 +42,7 @@ export default {
   large: false,
   colors: 'extent',
   source: 'gadm',
-  categories: ['summary', 'land-cover'],
+  categories: ['land-cover', 'summary'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   visible: ['dashboard'],
@@ -106,8 +66,8 @@ export default {
     },
   ],
   sortOrder: {
-    summary: 4,
-    landCover: 1.5,
+    summary: 6,
+    landCover: 1,
   },
   refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
   pendingKeys: ['threshold', 'decile', 'extentYear'],
