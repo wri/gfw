@@ -27,30 +27,32 @@ export const isoHasPlantations = createSelector(
 );
 
 export const parseData = createSelector(
-  [getData, getColors, getIndicator, isoHasPlantations],
-  (data, colors, indicator, hasPlantations) => {
-    if (isEmpty(data)) return null;
-    const { totalArea, totalCover, cover, plantations } = data;
-    const otherCover = indicator ? totalCover - cover : 0;
-    const plantationsCover = hasPlantations ? plantations : 0;
+  [getData, getColors],
+  (data, colors) => {
+    if (isEmpty(data)) {
+      return null;
+    }
+
+    const { totalNaturalForest, unknown, totalNonNaturalTreeCover, totalArea } =
+      data;
     const parsedData = [
       {
         label: 'Natural forests',
-        value: cover - plantationsCover,
+        value: totalNaturalForest,
         color: colors.naturalForest,
-        percentage: ((cover - plantationsCover) / totalArea) * 100,
+        percentage: (totalNaturalForest / totalArea) * 100,
       },
       {
         label: 'Non-natural tree cover',
-        value: totalArea - cover - otherCover,
+        value: totalNonNaturalTreeCover,
         color: colors.nonForest,
-        percentage: ((totalArea - cover - otherCover) / totalArea) * 100,
+        percentage: (totalNonNaturalTreeCover / totalArea) * 100,
       },
       {
         label: 'Other land cover',
-        value: otherCover,
+        value: unknown,
         color: colors.otherCover,
-        percentage: (otherCover / totalArea) * 100,
+        percentage: (unknown / totalArea) * 100,
       },
     ];
 
@@ -73,46 +75,38 @@ export const parseSentence = createSelector(
     getIndicator,
     getSentence,
     getAdminLevel,
-    isoHasPlantations,
   ],
-  (
-    data,
-    settings,
-    locationName,
-    indicator,
-    sentences,
-    admLevel,
-    isoPlantations
-  ) => {
+  (data, settings, locationName, indicator, sentences, admLevel) => {
     if (!data || !sentences) return null;
 
     const { extentYear, threshold, decile } = settings;
 
     const isTropicalTreeCover = extentYear === 2020;
-    const withIndicator = !!indicator;
     const decileThreshold = isTropicalTreeCover ? decile : threshold;
-
-    const sentenceKey = withIndicator ? 'withIndicator' : 'default';
     const sentenceSubkey = admLevel === 'global' ? 'global' : 'region';
-    const sentenceTreeCoverType = isTropicalTreeCover
-      ? 'tropicalTreeCover'
-      : 'treeCover';
-    const sentence =
-      sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
+    const sentence = sentences.default[sentenceSubkey];
 
-    const { cover, plantations, totalCover, totalArea } = data;
-    const top = isoPlantations ? cover - plantations : cover;
-    const bottom = indicator ? totalCover : totalArea;
-    const percentCover = (100 * top) / bottom;
+    const { totalNaturalForest, totalNonNaturalTreeCover, totalArea } = data;
+    const percentNaturalForest = (100 * totalNaturalForest) / totalArea;
+    const percentNonNaturalForest =
+      (100 * totalNonNaturalTreeCover) / totalArea;
 
-    const formattedPercentage = formatNumber({ num: percentCover, unit: '%' });
+    const formattedNaturalForestPercentage = formatNumber({
+      num: percentNaturalForest,
+      unit: '%',
+    });
+    const formattedNonNaturalForestPercentage = formatNumber({
+      num: percentNonNaturalForest,
+      unit: '%',
+    });
 
     const thresholdLabel = `>${decileThreshold}%`;
 
     const params = {
       year: extentYear,
       location: locationName,
-      percentage: formattedPercentage,
+      naturalForestPercentage: formattedNaturalForestPercentage,
+      nonNaturalForestPercentage: formattedNonNaturalForestPercentage,
       indicator: indicator?.label,
       threshold: thresholdLabel,
     };

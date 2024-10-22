@@ -1,11 +1,4 @@
-import { all, spread } from 'axios';
-import {
-  getExtent,
-  getTreeCoverOTF,
-  getTropicalExtent,
-} from 'services/analysis-cached';
-
-import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
+import { getNaturalForest } from 'services/analysis-cached';
 import {
   POLITICAL_BOUNDARIES_DATASET,
   FOREST_EXTENT_DATASET,
@@ -29,8 +22,8 @@ export default {
   },
   sentence: {
     default: {
-      global: ``,
-      region: ``,
+      global: `As of 2020, {naturalForestPercentage} of global land cover was natural forests and {nonNaturalForestPercentage} was non-natural tree cover.`,
+      region: `As of 2020, {naturalForestPercentage} of land cover in {area} was natural forests and {nonNaturalForestPercentage} was non-natural tree cover.`,
     },
   },
   metaKey: {
@@ -81,17 +74,8 @@ export default {
     const isTropicalTreeCover = extentYear === 2020;
     return isTropicalTreeCover ? 'tropicalExtent' : 'extent';
   },
-  getSettingsConfig: (params) => {
-    const { extentYear } = params;
-    const isTropicalTreeCover = extentYear === 2020;
-
+  getSettingsConfig: () => {
     return [
-      {
-        key: 'extentYear',
-        label: 'Tree cover dataset',
-        type: 'select',
-        border: true,
-      },
       {
         key: 'landCategory',
         label: 'Land Category',
@@ -100,78 +84,50 @@ export default {
         clearable: true,
         border: true,
       },
-      {
-        key: isTropicalTreeCover ? 'decile' : 'threshold',
-        label: 'Tree cover',
-        type: 'mini-select',
-        metaKey: 'widget_canopy_density',
-      },
     ];
   },
   getData: (params) => {
     const { threshold, decile, ...filteredParams } = params;
-    const { extentYear } = filteredParams;
-    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
-    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
-    const extentFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
 
-    if (shouldQueryPrecomputedTables(params)) {
-      return all([
-        extentFn({ ...filteredParams, ...decileThreshold }),
-        extentFn({
-          ...filteredParams,
-          ...decileThreshold,
-          forestType: '',
-          landCategory: '',
-        }),
-        extentFn({
-          ...filteredParams,
-          ...decileThreshold,
-          forestType: 'plantations',
-        }),
-      ]).then(
-        spread((response, adminResponse, plantationsResponse) => {
-          const extent = response.data && response.data.data;
-          const adminExtent = adminResponse.data && adminResponse.data.data;
-          const plantationsExtent =
-            plantationsResponse.data && plantationsResponse.data.data;
+    return getNaturalForest({ ...filteredParams }).then((response) => {
+      const extent = response.data;
 
-          let totalArea = 0;
-          let totalCover = 0;
-          let cover = 0;
-          let plantations = 0;
-          let data = {};
-          if (extent && extent.length) {
-            // Sum values
-            totalArea = adminExtent.reduce(
-              (total, d) => total + d.total_area,
-              0
-            );
-            cover = extent.reduce((total, d) => total + d.extent, 0);
-            totalCover = adminExtent.reduce((total, d) => total + d.extent, 0);
-            plantations = plantationsExtent.reduce(
-              (total, d) => total + d.extent,
-              0
-            );
-            data = {
-              totalArea,
-              totalCover,
-              cover,
-              plantations,
-            };
+      let totalNaturalForest = 0;
+      let totalNonNaturalTreeCover = 0;
+      let unknown = 0;
+
+      let data = {};
+      if (extent && extent.length) {
+        // Sum values
+        extent.forEach((item) => {
+          switch (item.sbtn_natural_forests__class) {
+            case 'Natural Forest':
+              totalNaturalForest += item.area__ha;
+              break;
+            case 'Non-Natural Forest':
+              totalNonNaturalTreeCover += item.area__ha;
+              break;
+            default:
+              // 'Unknown'
+              unknown += item.area__ha;
           }
-          return data;
-        })
-      );
-    }
+        });
 
-    return getTreeCoverOTF(params);
+        data = {
+          totalNaturalForest,
+          unknown,
+          totalNonNaturalTreeCover,
+          totalArea: totalNaturalForest + unknown + totalNonNaturalTreeCover,
+        };
+      }
+
+      return data;
+    });
   },
   getDataURL: (params) => {
     const { threshold, decile, ...filteredParams } = params;
     const { extentYear } = filteredParams;
     const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
-    const downloadFn = isTropicalTreeCover ? getTropicalExtent : getExtent;
     const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
     const commonParams = {
       ...filteredParams,
@@ -180,13 +136,12 @@ export default {
     };
 
     const downloadArray = [
-      downloadFn({ ...commonParams, forestType: null, landCategory: null }),
-      downloadFn({ ...commonParams, forestType: 'plantations' }),
+      getNaturalForest({
+        ...commonParams,
+        forestType: null,
+        landCategory: null,
+      }),
     ];
-
-    if (filteredParams?.landCategory) {
-      downloadArray.push(downloadFn({ ...commonParams }));
-    }
 
     return downloadArray;
   },
