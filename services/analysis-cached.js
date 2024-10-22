@@ -1226,7 +1226,7 @@ export const getGain = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{baselineYear}', baselineYear)
+      .replace('{baselineYear}', baselineYear || 2000)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -1275,7 +1275,7 @@ export const getGainGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: false })
       )
-      .replace('{baselineYear}', baselineYear)
+      .replace('{baselineYear}', baselineYear || 2000)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
