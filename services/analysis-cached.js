@@ -36,7 +36,7 @@ const SQL_QUERIES = {
   carbonFluxOTF: `SELECT SUM("gfw_forest_carbon_net_flux__Mg_CO2e"), SUM("gfw_forest_carbon_gross_removals__Mg_CO2e"), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} OR is__umd_tree_cover_gain = 'true'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  gain: 'SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  gain: `SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} AND umd_tree_cover_gain__period >= '{baselineYear}' GROUP BY {location} ORDER BY {location}`,
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad: 'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
@@ -1206,7 +1206,8 @@ export const getExtentGrouped = (params) => {
 
 // summed gain for single location
 export const getGain = (params) => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, baselineYear } =
+    params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1225,6 +1226,7 @@ export const getGain = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
+      .replace('{baselineYear}', baselineYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -1252,7 +1254,8 @@ export const getGain = (params) => {
 
 // disaggregated gain for child of location
 export const getGainGrouped = (params) => {
-  const { forestType, landCategory, ifl, download } = params || {};
+  const { forestType, landCategory, ifl, download, baselineYear } =
+    params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1272,6 +1275,7 @@ export const getGainGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: false })
       )
+      .replace('{baselineYear}', baselineYear)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
