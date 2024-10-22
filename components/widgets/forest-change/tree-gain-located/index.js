@@ -37,8 +37,15 @@ export default {
       clearable: true,
       border: true,
     },
+    {
+      key: 'baselineYear',
+      label: 'Baseline Year',
+      type: 'select',
+      placeholder: '2000',
+      clearable: true,
+    },
   ],
-  refetchKeys: ['forestType', 'landCategory'],
+  refetchKeys: ['forestType', 'landCategory', 'baselineYear'],
   chartType: 'rankedList',
   colors: 'gain',
   datasets: [
@@ -60,13 +67,13 @@ export default {
   },
   sentences: {
     initial:
-      'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2000 and 2020. {region} had the most tree cover gain at {value} compared to an average of {average}.',
+      'In {location}, the top {percentileLength} were responsible for {topGain}% of all tree cover gain between {baselineYear} and 2020. {region} had the most tree cover gain at {value} compared to an average of {average} in that time period.',
     withIndicator:
-      'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2000 and 2020. {region} had the most tree cover gain at {value} compared to an average of {average}.',
+      'For {indicator} in {location}, the top {percentileLength} were responsible for {topGain}% of all tree cover gain between {baselineYear} and 2020. {region} had the most tree cover gain at {value} compared to an average of {average} in that time period.',
     initialPercent:
-      'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2000 and 2020. {region} had the most relative tree cover gain at {value} compared to an average of {average}.',
+      'In {location}, the top {percentileLength} were responsible for {topGain}% of all tree cover gain between {baselineYear} and 2020. {region} had the most tree cover gain at {value} compared to an average of {average} in that time period.',
     withIndicatorPercent:
-      'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain between 2000 and 2020. {region} had the most relative tree cover gain at {value} compared to an average of {average}.',
+      'For {indicator} in {location}, the top {percentileLength} were responsible for {topGain}% of all tree cover gain between {baselineYear} and 2020. {region} had the most tree cover gain at {value} compared to an average of {average} in that time period.',
   },
   settings: {
     threshold: 0,
@@ -75,6 +82,7 @@ export default {
     page: 0,
     extentYear: 2000,
     ifl: 2000,
+    baselineYear: 2000,
   },
   getData: (params) =>
     all([getExtentGrouped(params), getGainGrouped(params)]).then(
