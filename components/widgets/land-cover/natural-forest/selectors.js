@@ -6,7 +6,6 @@ const getData = (state) => state.data;
 const getSettings = (state) => state.settings;
 const getIndicator = (state) => state.indicator;
 const getWhitelist = (state) => state.polynamesWhitelist;
-const getColors = (state) => state.colors;
 const getSentence = (state) => state.sentence;
 const getTitle = (state) => state.title;
 const getLocationName = (state) => state.locationLabel;
@@ -26,39 +25,36 @@ export const isoHasPlantations = createSelector(
   }
 );
 
-export const parseData = createSelector(
-  [getData, getColors],
-  (data, colors) => {
-    if (isEmpty(data)) {
-      return null;
-    }
-
-    const { totalNaturalForest, unknown, totalNonNaturalTreeCover, totalArea } =
-      data;
-    const parsedData = [
-      {
-        label: 'Natural forests',
-        value: totalNaturalForest,
-        color: colors.naturalForest,
-        percentage: (totalNaturalForest / totalArea) * 100,
-      },
-      {
-        label: 'Non-natural tree cover',
-        value: totalNonNaturalTreeCover,
-        color: colors.nonForest,
-        percentage: (totalNonNaturalTreeCover / totalArea) * 100,
-      },
-      {
-        label: 'Other land cover',
-        value: unknown,
-        color: colors.otherCover,
-        percentage: (unknown / totalArea) * 100,
-      },
-    ];
-
-    return parsedData;
+export const parseData = createSelector([getData], (data) => {
+  if (isEmpty(data)) {
+    return null;
   }
-);
+
+  const { totalNaturalForest, unknown, totalNonNaturalTreeCover, totalArea } =
+    data;
+  const parsedData = [
+    {
+      label: 'Natural forests',
+      value: totalNaturalForest,
+      color: '#2C6639',
+      percentage: (totalNaturalForest / totalArea) * 100,
+    },
+    {
+      label: 'Non-natural tree cover',
+      value: totalNonNaturalTreeCover,
+      color: '#A8DDB5',
+      percentage: (totalNonNaturalTreeCover / totalArea) * 100,
+    },
+    {
+      label: 'Other land cover',
+      value: unknown,
+      color: '#D3D3D3',
+      percentage: (unknown / totalArea) * 100,
+    },
+  ];
+
+  return parsedData;
+});
 
 export const parseTitle = createSelector(
   [getTitle, getLocationName],
