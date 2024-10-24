@@ -69,11 +69,6 @@ export default {
     decile: 30,
     extentYear: 2000,
   },
-  getDataType: (params) => {
-    const { extentYear } = params;
-    const isTropicalTreeCover = extentYear === 2020;
-    return isTropicalTreeCover ? 'tropicalExtent' : 'extent';
-  },
   getSettingsConfig: () => {
     return [
       {
@@ -125,25 +120,7 @@ export default {
     });
   },
   getDataURL: (params) => {
-    const { threshold, decile, ...filteredParams } = params;
-    const { extentYear } = filteredParams;
-    const isTropicalTreeCover = !(extentYear === 2000 || extentYear === 2010);
-    const decileThreshold = isTropicalTreeCover ? { decile } : { threshold };
-    const commonParams = {
-      ...filteredParams,
-      ...decileThreshold,
-      download: true,
-    };
-
-    const downloadArray = [
-      getNaturalForest({
-        ...commonParams,
-        forestType: null,
-        landCategory: null,
-      }),
-    ];
-
-    return downloadArray;
+    return [getNaturalForest({ ...params, download: true })];
   },
   getWidgetProps,
 };

@@ -1025,10 +1025,8 @@ export const getTropicalExtentGrouped = (params) => {
 };
 
 export const getNaturalForest = async (params) => {
-  // eslint-disable-next-line no-unused-vars
-  const { download, extentYear } = params || {};
+  const { download } = params || {};
 
-  // eslint-disable-next-line no-unused-vars
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
@@ -1049,7 +1047,7 @@ export const getNaturalForest = async (params) => {
 
   if (download) {
     return {
-      name: `natural_forest_${extentYear}__ha`,
+      name: `natural_forest_2020__ha`,
       url: getDownloadUrl(url),
     };
   }
