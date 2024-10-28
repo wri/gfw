@@ -15,7 +15,7 @@ const BoundarySentence = ({ sentence, onAnalyze }) => (
 
 BoundarySentence.propTypes = {
   data: PropTypes.shape({
-    level: PropTypes.number,
+    adm_level: PropTypes.number,
   }),
   sentence: PropTypes.shape({
     sentence: PropTypes.string,
