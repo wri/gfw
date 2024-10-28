@@ -18,7 +18,7 @@ export const clearGeostore = createAction('clearGeostore');
 export const fetchGeostore = createThunkAction(
   'fetchGeostore',
   (params) => (dispatch) => {
-    const { type, adm0, adm1 = 25, adm2 = 390, token } = params;
+    const { type, adm0, adm1, adm2, token } = params;
 
     if (type && adm0) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
