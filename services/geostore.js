@@ -30,6 +30,7 @@ const getWDPAGeostore = ({ id, token }) =>
  * @param {string} token - Optional token for axios cancelToken
  * @return {object} - An object with area id, geojson and bbox objects
  *
+ * @deprecated This method must be removed as soon as we migrate the other scenarios for geGeostore method.
  */
 const fetchGeostore = ({ url, token }) =>
   dataRequest
