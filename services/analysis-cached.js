@@ -2564,7 +2564,7 @@ export const getOrganicSoilCarbonGrouped = (params) => {
   });
 
   if (!requestUrl) {
-    return new Promise(() => { });
+    return new Promise(() => {});
   }
 
   const url = encodeURI(
@@ -2580,8 +2580,9 @@ export const getOrganicSoilCarbonGrouped = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `whrc_biomass_by_region${indicator ? `_in_${snakeCase(indicator.label)}` : ''
-        }__ha`,
+      name: `soil_organic_carbon_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
       url: getDownloadUrl(url),
     };
   }
@@ -2591,7 +2592,7 @@ export const getOrganicSoilCarbonGrouped = (params) => {
       ...d,
       biomass: d.gfw_soil_carbon_stocks_2000__Mg_C,
       biomassDensity: d.soil_carbon_density__t_ha,
-    }))
+    }));
   });
 };
 
