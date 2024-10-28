@@ -31,8 +31,6 @@ class Popup extends Component {
   componentDidUpdate(prevProps) {
     const { interactionsOptions, activeDatasets } = this.props;
 
-    console.log('this.props', this.props)
-
     if (
       isEmpty(interactionsOptions) &&
       !isEqual(activeDatasets?.length, prevProps.activeDatasets?.length)
