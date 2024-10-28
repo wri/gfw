@@ -276,6 +276,7 @@ import '../components/widget/styles.scss';
 import '../components/widgets/styles.scss';
 import '../components/widget/components/widget-alert/styles.scss';
 import '../components/widget/components/widget-body/styles.scss';
+import '../components/widget/components/widget-chart-legend/styles.scss';
 import '../components/widget/components/widget-chart-and-list/styles.scss';
 import '../components/widget/components/widget-chart-list/styles.scss';
 import '../components/widget/components/widget-footer/styles.scss';

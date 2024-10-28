@@ -13,6 +13,7 @@ class Widget extends PureComponent {
     title: PropTypes.string.isRequired,
     type: PropTypes.string,
     active: PropTypes.bool,
+    analysis: PropTypes.bool,
     downloadDisabled: PropTypes.bool,
     filterSelected: PropTypes.bool,
     maxSize: PropTypes.number,
@@ -85,6 +86,7 @@ class Widget extends PureComponent {
       colors,
       type,
       active,
+      analysis,
       downloadDisabled,
       filterSelected,
       maxSize,
@@ -218,6 +220,7 @@ class Widget extends PureComponent {
               large={large}
               autoHeight={autoHeight}
               embed={embed}
+              analysis={analysis}
               location={location}
               locationName={locationLabelFull}
               active={active}
