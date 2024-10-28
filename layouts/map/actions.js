@@ -6,6 +6,15 @@ import useRouter from 'utils/router';
 
 export const setMainMapSettings = createAction('setMainMapSettings');
 
+/**
+ * Push the parameters from the area clicked to the URL query
+ * @param {function} createThunkAction - A string with the area's  description
+ * @see https://redux.js.org/usage/writing-logic-thunks for implementation details
+ * @param {string} setMainMapAnalysisView - Action name
+ * @param {function} - Arrow function
+  * @param {object} data - area data (adm_level, gid_0, country, ...) 
+  * @param {object} layer - political boundaries obejct from Layer API 
+ */
 export const setMainMapAnalysisView = createThunkAction(
   'setMainMapAnalysisView',
   ({ data, layer }) => () => {
@@ -14,7 +23,6 @@ export const setMainMapAnalysisView = createThunkAction(
     const { query, pushQuery } = useRouter();
     const { map, mainMap } = query || {};
 
-    // get location payload based on layer type
     let payload = {};
     if (data) {
       if (analysisEndpoint === 'admin') {
