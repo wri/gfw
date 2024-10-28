@@ -25,9 +25,14 @@ const getWDPAGeostore = ({ id, token }) =>
   );
 
 /**
- * This method must be removed as soon as we migrate the other cases for geGeostore method.
+ * Push the parameters from the area clicked to the URL query
+ * @param {string} url - Url with the Resource Watch endpoint
+ * @param {string} token - Optional token for axios cancelToken
+ * @return {object} - An object with geojson and bbox objects and area id
  *
+ * @deprecated This method must be removed as soon as we migrate the other scenarios for geGeostore method.
  */
+
 const fetchGeostoreFromRWApi = ({ url, token }) =>
   apiRequest
     .get(`${url}?thresh=0.005`, { cancelToken: token })
@@ -40,6 +45,15 @@ const fetchGeostoreFromRWApi = ({ url, token }) =>
         bbox: geostore?.bbox,
       };
     });
+
+/**
+ * Push the parameters from the area clicked to the URL query
+ * @param {string} adm0 - administrative level for countries
+ * @param {string} adm1 - administrative level for states
+ * @param {string} adm2 - administrative level for cities
+ * @param {string} token - Optional token for axios cancelToken
+ * @return {object} - An object with geojson and bbox objects and area id
+ */
 
 const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
   const COUNTRY = adm0 ? `gid_0='${adm0}'` : '';
