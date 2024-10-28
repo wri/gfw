@@ -151,6 +151,23 @@ const parseConfig = createSelector([getColors], (colors) => ({
       color: colors.primaryForestLoss,
     },
   ],
+  chartLegend: {
+    columns: [
+      {
+        items: [
+          {
+            label: 'Area of tree cover loss within 2001 primary forest extent',
+            color: colors.primaryForestLoss,
+          },
+          {
+            label: 'Percent of primary forest area in 2001 remaining',
+            color: colors.primaryForestExtent,
+            dashline: true,
+          },
+        ],
+      },
+    ],
+  },
 }));
 
 export const parseTitle = createSelector(
