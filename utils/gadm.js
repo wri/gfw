@@ -18,6 +18,11 @@ export const parseGadm36Id = (gid) => {
   };
 };
 
+/**
+ * @param {string} adm_level - The administrative level
+ * @param {object} location - Location object from user's clicked area
+ * @return {object} - Object with area type, location and gadm properties
+ */
 export const getGadmLocationByLevel = ({ adm_level, ...location }) => ({
   type: 'country',
   ...(location?.gid_0 && {

@@ -80,7 +80,11 @@ const fetchGeostoreFromDataApi = ({ adm0, adm1, adm2, token }) => {
 
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
-
+  // console.log('type', type)
+  // console.log('adm0', adm0)
+  // console.log('adm1', adm1)
+  // console.log('adm2', adm2)
+  // console.log('token', token)
   switch (type) {
     case 'country':
       return fetchGeostoreFromDataApi({
