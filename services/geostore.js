@@ -49,6 +49,7 @@ const setThreshold = (iso, adm1, adm2) => {
  * @param {string} queryParams - Optional query parameters
  * @return {object} - An object with area id, geojson and bbox objects
  *
+ * @deprecated This method must be removed as soon as we migrate the other scenarios for geGeostore method.
  */
 const fetchGeostore = ({ url, token, queryParams = '' }) => {
   return dataRequest
