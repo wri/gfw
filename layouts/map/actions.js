@@ -25,6 +25,7 @@ export const setMainMapAnalysisView = createThunkAction(
       const { map, mainMap } = query || {};
 
       let payload = {};
+
       if (data) {
         if (analysisEndpoint === 'admin') {
           payload = {
