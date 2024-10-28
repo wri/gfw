@@ -5,10 +5,11 @@ import { translateText } from 'utils/lang';
 const getInteractionData = (state, { data }) => data;
 
 /**
- * Returns an object with the selected location name and its area.
+ * Returns an object with the selected location name, its area and a sentence do be displayed.
  * @param {method} createSelector - return a memoized outut selector.
  * @see https://reselect.js.org/introduction/getting-started/#output-selector for implementation details
  * @param {selector} getInteractionData - data from the area clicked by user
+ * @return {object} sentence, location name and area.
  */
 export const getSentence = createSelector(
   [getInteractionData],
