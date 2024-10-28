@@ -7,10 +7,19 @@ export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
 export const clearGeostore = createAction('clearGeostore');
 
+/**
+ * Push the parameters from the area clicked to the URL query
+ * @param {function} createThunkAction - A string with the area's  description
+ * @see https://redux.js.org/usage/writing-logic-thunks for implementation details
+ * @param {string} fetchGeostore - Action name
+ * @param {function} - Arrow function
+ * @param {object} params - Url query parameters
+ */
 export const fetchGeostore = createThunkAction(
   'fetchGeostore',
   (params) => (dispatch) => {
-    const { type, adm0, adm1, adm2, token } = params;
+    const { type, adm0, adm1 = 25, adm2 = 390, token } = params;
+    console.log('params', params)
     if (type && adm0) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
       getGeostore({ type, adm0, adm1, adm2, token })
