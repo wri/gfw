@@ -160,7 +160,7 @@ const parseConfig = createSelector([getColors], (colors) => ({
             color: colors.primaryForestLoss,
           },
           {
-            label: 'Percent of primary forest area in 2001 remaining',
+            label: 'Percent of 2001 primary forest area extent remaining',
             color: colors.primaryForestExtent,
             dashline: true,
           },
