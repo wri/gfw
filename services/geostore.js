@@ -30,7 +30,6 @@ const getWDPAGeostore = ({ id, token }) =>
  * @param {string} token - Optional token for axios cancelToken
  * @return {object} - An object with area id, geojson and bbox objects
  *
- * @deprecated This method must be removed as soon as we migrate the other scenarios for geGeostore method.
  */
 const fetchGeostore = ({ url, token }) =>
   dataRequest
@@ -53,8 +52,9 @@ const fetchGeostore = ({ url, token }) =>
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
-  const adminURL = `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''
-    }`;
+  const adminURL = `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
+    adm2 ? `/${adm2}` : ''
+  }`;
 
   switch (type) {
     case 'country':
