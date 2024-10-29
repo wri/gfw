@@ -26,7 +26,7 @@ export const getSentence = createSelector(
 
     let locationNames = [locationNameTranslated];
 
-    if (adm_level === 2) {
+    if (Number(adm_level) === 2) {
       locationNames = [
         locationNameTranslated,
         translateText(name_1),
@@ -34,7 +34,7 @@ export const getSentence = createSelector(
       ];
     }
 
-    if (adm_level === 1) {
+    if (Number(adm_level) === '1') {
       locationNames = [locationNameTranslated, translateText(country)];
     }
 
