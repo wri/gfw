@@ -27,7 +27,7 @@ export const parseData = createSelector(
         .map((d) => ({
           label: d.plantations.toLowerCase(),
           value: d.intersection_area,
-          color: allColors[d.plantations],
+          color: allColors[d.plantations.toLowerCase()],
           percentage: (d.intersection_area / totalPlantations) * 100,
         })),
       'value'
