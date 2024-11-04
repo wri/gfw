@@ -46,29 +46,29 @@ export default {
     default: {
       global: {
         treeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
       region: {
         treeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
     },
     withIndicator: {
       global: {
         treeCover:
-          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tree cover.',
+          'As of {year}, {percentage} of {location} land cover in {indicator} was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {location} land cover in {indicator} was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
       region: {
         treeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover.',
+          'As of {year}, {percentage} of {indicator} in {location} was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {indicator} in {location} was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
     },
   },
