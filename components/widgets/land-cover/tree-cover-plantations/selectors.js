@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 import { formatNumber } from 'utils/format';
-import endsWith from 'lodash/endsWith';
 
 // get list data
 const getData = (state) => state.data;
@@ -26,7 +25,7 @@ export const parseData = createSelector(
       plantations
         .filter((d) => d.intersection_area)
         .map((d) => ({
-          label: d.plantations,
+          label: d.plantations.toLowerCase(),
           value: d.intersection_area,
           color: allColors[d.plantations],
           percentage: (d.intersection_area / totalPlantations) * 100,
@@ -48,7 +47,9 @@ export const parseSentence = createSelector(
     const params = {
       location: locationName,
       extent: formatNumber({ num: topExtent, unit: 'ha', spaceUnit: true }),
-      topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
+      topType: `${top[0].label.charAt(0).toUpperCase()}${top[0].label.slice(
+        1
+      )}`,
       percent: formatNumber({ num: areaPerc, unit: '%' }),
     };
     const sentence = initial;
