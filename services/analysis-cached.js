@@ -75,6 +75,8 @@ const SQL_QUERIES = {
     'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha, SUM("gfw_aboveground_carbon_stocks_2000__Mg_C") as gfw_aboveground_carbon_stocks_2000__Mg_C, SUM("gfw_belowground_carbon_stocks_2000__Mg_C") as gfw_belowground_carbon_stocks_2000__Mg_C, SUM("gfw_soil_carbon_stocks_2000__Mg_C") as gfw_soil_carbon_stocks_2000__Mg_C FROM data {WHERE}',
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  organicSoilCarbonGrouped:
+    'SELECT {select_location}, CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") END AS "gfw_soil_carbon_stocks_2000__Mg_C", CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") END AS soil_carbon_density__t_ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
   treeCoverOTF:
     'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
@@ -2548,6 +2550,50 @@ export const getBiomassStock = (params) => {
       })),
     },
   }));
+};
+
+// organic soil carbon grouped by location
+export const getOrganicSoilCarbonGrouped = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+    grouped: true,
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.organicSoilCarbonGrouped}`
+      .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, grouped: true, cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `soil_organic_carbon_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => {
+    return response?.data?.map((d) => ({
+      ...d,
+      biomass: d.gfw_soil_carbon_stocks_2000__Mg_C,
+      biomassDensity: d.soil_carbon_density__t_ha,
+    }));
+  });
 };
 
 // Additional conditional fetches for providing context for queries.
