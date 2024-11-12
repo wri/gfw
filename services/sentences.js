@@ -1,16 +1,11 @@
-import { all, spread } from 'axios';
 import { formatNumber } from 'utils/format';
-
-import sortBy from 'lodash/sortBy';
-import groupBy from 'lodash/groupBy';
-import sumBy from 'lodash/sumBy';
-import max from 'lodash/max';
-import reverse from 'lodash/reverse';
 import isEmpty from 'lodash/isEmpty';
-
 import tropicalIsos from 'data/tropical-isos.json';
 
-import { getExtent, getLoss } from 'services/analysis-cached';
+import {
+  getExtentNaturalForest,
+  getLossNaturalForest,
+} from 'services/analysis-cached';
 
 const ADMINS = {
   adm0: null,
@@ -27,13 +22,13 @@ const GLOBAL_LOCATION = {
 
 export const adminSentences = {
   default:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area.',
   withLoss:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
   globalInitial:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover.',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
   withPlantationLoss:
-    'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
+    'In 2020, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
   countrySpecific: {
     IDN: 'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
   },
@@ -41,105 +36,71 @@ export const adminSentences = {
   end: '.',
 };
 
-export const getSentenceData = (params = GLOBAL_LOCATION) =>
-  all([
-    getExtent(params),
-    getExtent({ ...params, forestType: 'plantations' }),
-    getExtent({
+export const getSentenceData = async (params = GLOBAL_LOCATION) => {
+  try {
+    const extentNaturalForestResponse = await getExtentNaturalForest(params);
+    const lossNaturalForestResponse = await getLossNaturalForest({
       ...params,
-      forestType: 'primary_forest',
-      extentYear: 2000,
-    }),
-    getLoss(params),
-    getLoss({ ...params, forestType: 'plantations' }),
-    getLoss({ ...params, forestType: 'primary_forest' }),
-  ]).then(
-    spread(
-      (
-        totalExtent,
-        totalPlantationsExtent,
-        totalPrimaryExtent,
-        totalLoss,
-        totalPlantationsLoss,
-        totalPrimaryLoss
-      ) => {
-        const extent = totalExtent.data.data;
-        const loss = totalLoss.data.data;
-        const plantationsLoss = totalPlantationsLoss.data.data;
-        const plantationsExtent = totalPlantationsExtent.data.data;
-        const primaryExtent = totalPrimaryExtent.data.data;
+      umd_tree_cover_loss__year: 2023,
+      isNaturalForest: true,
+    });
 
-        // group over years
-        const groupedLoss = plantationsLoss && groupBy(loss, 'year');
-        const groupedPlantationsLoss =
-          plantationsLoss && groupBy(plantationsLoss, 'year');
+    let extent = 0;
+    let totalArea = 0;
 
-        const primaryLoss = totalPrimaryLoss.data.data;
-        const latestYear = max(Object.keys(groupedLoss));
+    extentNaturalForestResponse.data.data.forEach((item) => {
+      totalArea += item.area__ha;
 
-        const latestPlantationLoss = groupedPlantationsLoss[latestYear] || null;
-        const latestLoss = groupedLoss[latestYear] || null;
+      if (item.sbtn_natural_forests__class === 'Natural Forest')
+        extent += item.area__ha;
+    });
 
-        // sum over different bound1 within year
-        const summedPlantationsLoss =
-          latestPlantationLoss &&
-          latestPlantationLoss.length &&
-          latestPlantationLoss[0].area
-            ? sumBy(latestPlantationLoss, 'area')
-            : 0;
-        const summedPlantationsEmissions =
-          latestPlantationLoss &&
-          latestPlantationLoss.length &&
-          latestPlantationLoss[0].emissions
-            ? sumBy(latestPlantationLoss, 'emissions')
-            : 0;
-        const summedLoss =
-          latestLoss && latestLoss.length && latestLoss[0].area
-            ? sumBy(latestLoss, 'area')
-            : 0;
-        const summedEmissions =
-          latestLoss && latestLoss.length && latestLoss[0].emissions
-            ? sumBy(latestLoss, 'emissions')
-            : 0;
+    let lossArea = 0;
+    let emissions = 0;
 
-        const data = {
-          totalArea:
-            extent && extent.length && extent[0].total_area
-              ? sumBy(extent, 'total_area')
-              : 0,
-          extent:
-            extent && extent.length && extent[0].extent
-              ? sumBy(extent, 'extent')
-              : 0,
-          plantationsExtent:
-            plantationsExtent &&
-            plantationsExtent.length &&
-            plantationsExtent[0].extent
-              ? sumBy(plantationsExtent, 'extent')
-              : 0,
-          primaryExtent:
-            primaryExtent && primaryExtent.length && primaryExtent[0].extent
-              ? sumBy(primaryExtent, 'extent')
-              : 0,
-          totalLoss: {
-            area: summedLoss || 0,
-            year: latestYear || 0,
-            emissions: summedEmissions || 0,
-          },
-          plantationsLoss: {
-            area: summedPlantationsLoss || 0,
-            emissions: summedPlantationsEmissions || 0,
-          },
-          primaryLoss:
-            primaryLoss && primaryLoss.length
-              ? reverse(sortBy(primaryLoss, 'year'))[0]
-              : {},
-        };
+    lossNaturalForestResponse.data.data.forEach((item) => {
+      emissions += item.gfw_gross_emissions_co2e_all_gases__mg;
 
-        return data;
+      if (item.sbtn_natural_forests__class === 'Natural Forest') {
+        lossArea += item.area;
       }
-    )
-  );
+    });
+
+    return {
+      totalArea,
+      extent,
+      plantationsExtent: 0,
+      primaryExtent: 0,
+      totalLoss: {
+        area: lossArea,
+        year: 2023,
+        emissions,
+      },
+      plantationsLoss: {
+        area: 0,
+        emissions: 0,
+      },
+      primaryLoss: {},
+    };
+  } catch (error) {
+    return {
+      totalArea: 0,
+      extent: 0,
+      plantationsExtent: 0,
+      primaryExtent: 0,
+      totalLoss: {
+        area: 0,
+        year: 0,
+        emissions: 0,
+      },
+      plantationsLoss: {
+        area: 0,
+        emissions: 0,
+      },
+      primaryLoss: {},
+    };
+  }
+};
 
 export const getContextSentence = (location, geodescriber, adminSentence) => {
   if (isEmpty(geodescriber)) return {};
