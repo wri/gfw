@@ -7,6 +7,10 @@
   font-size: 20px;
   color: $slate;
 
+  .no-bold {
+    font-weight: 300 !important;
+  }
+
   strong,
   b,
   span {
