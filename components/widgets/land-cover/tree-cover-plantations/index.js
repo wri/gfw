@@ -44,7 +44,7 @@ export default {
   },
   sentences: {
     initial:
-      'In {location}, the largest type of plantation area is {topType}, spanning {extent} and {percent} <strong>of</strong> land area.',
+      'In {location}, the largest type of plantation area is {topType}, spanning {extent} and {percent} of land area.',
   },
   whitelists: {
     indicators: ['plantations'],
