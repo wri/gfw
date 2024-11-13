@@ -31,17 +31,20 @@ class PieChartLegend extends PureComponent {
       >
         <ul className={cx({ simple, sizeClass })}>
           {data.map((item, index) => {
+            const PLACEHOLDER = new RegExp(`\\bPLACEHOLDER\\b`, 'g');
+            const label = item.label.replace(PLACEHOLDER, `and`);
             const value = `${formatNumber({
               num: item[config.key],
               unit: item.unit ? item.unit : config.unit,
               spaceUnit: item.unit !== '%' && config.unit !== 'countsK',
             })}`;
+
             return (
               <li className="legend-item" key={index.toString()}>
                 <div className="legend-title">
                   <span style={{ backgroundColor: item.color }}>{}</span>
                   <p>
-                    {item.label}
+                    {label}
                     {sizeClass === 'x-small' && `- ${value}`}
                   </p>
                 </div>
