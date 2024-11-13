@@ -50,13 +50,13 @@ class DynamicSentence extends PureComponent {
           } else {
             // eslint-disable-next-line security/detect-non-literal-regexp
             const DYNAMIC_PARAMETERS = new RegExp(`{${p}}`, 'g');
-            const AND = new RegExp(`\\band\\b`, 'g'); // regex to remove the bold from the word 'and' between indicators
+            const PLACEHOLDER = new RegExp(`\\bPLACEHOLDER\\b`, 'g'); // regex to remove the bold from the word 'and' between indicators
 
             formattedSentence =
               formattedSentence &&
               formattedSentence
                 .replace(DYNAMIC_PARAMETERS, `<b>${translateText(param)}</b>`)
-                .replace(AND, `<span class="no-bold">and</span>`);
+                .replace(PLACEHOLDER, `<span class="no-bold">and</span>`);
           }
         }
       });
