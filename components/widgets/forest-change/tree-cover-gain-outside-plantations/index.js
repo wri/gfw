@@ -43,8 +43,15 @@ export default {
       clearable: true,
       blacklist: ['wdpa'],
     },
+    {
+      key: 'baselineYear',
+      label: 'Baseline Year',
+      type: 'select',
+      placeholder: '2000',
+      clearable: true,
+    },
   ],
-  refetchKeys: ['forestType', 'landCategory'],
+  refetchKeys: ['forestType', 'landCategory', 'baselineYear'],
   chartType: 'pieChart',
   colors: 'gainWithinOutsidePlantations',
   metaKey: 'widget_tree_cover_gain_outside_plantations',
@@ -70,19 +77,20 @@ export default {
   },
   sentences: {
     globalInitial:
-      'Globally between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'Globally between {baselineYear} and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     globalWithIndicator:
-      'Globally between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
+      'Globally between {baselineYear} and 2020, {gainPercent} of tree cover within {indicator} gain occurred outside of plantations.',
     regionInitial:
-      'In {location} between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'In {location} between {baselineYear} and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     regionWithIndicator:
-      'In {location} between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
+      'In {location} between {baselineYear} and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations. ',
   },
   blacklists: {
     adm0: EuropeFAOCountries,
   },
   settings: {
     threshold: 0,
+    baselineYear: 2000,
   },
   getData: (params) => {
     return getTreeCoverGainByPlantationType(params).then((response) => {

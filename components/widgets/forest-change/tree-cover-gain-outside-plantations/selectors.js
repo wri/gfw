@@ -46,6 +46,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label,
       startYear: settings.startYear,
       endYear: settings.endYear,
+      baselineYear: settings?.baselineYear || 2000,
       gainPercent: formatNumber({
         num: (100 * data?.areaOutsidePlantations) / data?.totalArea,
         unit: '%',
