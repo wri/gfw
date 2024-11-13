@@ -86,7 +86,7 @@ export const parseSentence = createSelector(
     const aveFormat = avgGain < 1 ? '.3r' : '.3s';
 
     const params = {
-      baselineYear: settings?.baselineYear || 2000,
+      baselineYear: (settings?.baselineYear) || 2000,
       indicator: indicator && indicator.label,
       location: locationName,
       topGain: formatNumber({

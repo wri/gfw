@@ -19,7 +19,7 @@ export const parseSentence = createSelector(
       gain: formatNumber({ num: gain, unit: 'ha', spaceUnit: true }),
       gainPercent: formatNumber({ num: gainPerc, unit: '%' }),
       location,
-      baselineYear: settings?.baselineYear || 2000,
+      baselineYear: (settings?.baselineYear) || 2000,
     };
 
     return {
