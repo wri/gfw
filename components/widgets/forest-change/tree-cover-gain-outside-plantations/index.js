@@ -96,6 +96,8 @@ export default {
     return getTreeCoverGainByPlantationType(params).then((response) => {
       const { data } = (response && response.data) || {};
 
+      if (data?.length === 0) return null;
+
       const totalArea = data.reduce(
         (prev, curr) => prev + curr?.gain_area_ha,
         0
