@@ -1,6 +1,5 @@
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
-import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   getExtentNaturalForest,
@@ -22,7 +21,7 @@ const GLOBAL_LOCATION = {
 
 export const adminSentences = {
   default:
-    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area.',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area',
   withLoss:
     'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
   globalInitial:
@@ -135,7 +134,6 @@ export const parseSentence = (
     globalInitial,
     countrySpecific,
     co2Emissions,
-    end,
   } = adminSentences;
   const {
     extent,
@@ -244,13 +242,13 @@ export const parseSentence = (
   if (extent > 0 && totalLoss.area) {
     sentence = areaPlantations && location ? withPlantationLoss : withLoss;
   }
-  sentence = tropicalIsos.includes(adm0)
-    ? sentence + co2Emissions
-    : sentence + end;
+
   if (!location) sentence = globalInitial;
   if (adm0 in countrySpecific) {
     sentence = countrySpecific[adm0];
   }
+
+  sentence += co2Emissions;
 
   return {
     sentence,
