@@ -79,7 +79,7 @@ export default {
     globalInitial:
       'Globally between {baselineYear} and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     globalWithIndicator:
-      'Globally between {baselineYear} and 2020, {gainPercent} of tree cover within {indicator} gain occurred outside of plantations.',
+      'Globally between {baselineYear} and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
     regionInitial:
       'In {location} between {baselineYear} and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     regionWithIndicator:

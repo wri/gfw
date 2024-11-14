@@ -77,7 +77,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   organicSoilCarbonGrouped:
     'SELECT {select_location}, CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") END AS "gfw_soil_carbon_stocks_2000__Mg_C", CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") END AS soil_carbon_density__t_ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} GROUP BY gfw_planted_forests__type`,
+  treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} AND umd_tree_cover_gain__period >= '{baselineYear}' GROUP BY gfw_planted_forests__type`,
   treeCoverOTF:
     'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
   treeCoverOTFExtent: 'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
@@ -890,13 +890,12 @@ export const getLossFiresGrouped = (params) => {
 };
 
 export const getTreeCoverGainByPlantationType = (params) => {
-  const { forestType, landCategory, ifl, download } = params;
+  const { forestType, landCategory, ifl, download, baselineYear } = params;
 
   const requestUrl = getRequestUrl({
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20221012',
   });
 
   if (!requestUrl) return new Promise(() => {});
@@ -904,7 +903,9 @@ export const getTreeCoverGainByPlantationType = (params) => {
   const sqlQuery = SQL_QUERIES.treeCoverGainByPlantationType;
 
   const url = encodeURI(
-    `${requestUrl}${sqlQuery}`.replace('{WHERE}', getWHEREQuery({ ...params }))
+    `${requestUrl}${sqlQuery}`
+      .replace('{baselineYear}', baselineYear || 2000)
+      .replace('{WHERE}', getWHEREQuery({ ...params }))
   );
 
   if (download) {
