@@ -2,11 +2,6 @@ import { apiRequest, dataRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
 
-<<<<<<< HEAD
-=======
-// const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
-
->>>>>>> f376d35565 (feat(metadata): add new geostore query for admin level 0)
 const getWDPAGeostore = ({ id, token }) =>
   getDatasetQuery({
     dataset: 'wdpa_protected_areas',
