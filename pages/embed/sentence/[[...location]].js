@@ -6,7 +6,6 @@ import { parseGadm36Id } from 'utils/gadm';
 
 import { getLocationData } from 'services/location';
 import {
-  // getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
@@ -151,21 +150,6 @@ export const getServerSideProps = async ({ params }) => {
     };
   }
 };
-//
-// export const getStaticPaths = async () => {
-//   const countryData = await getCountriesProvider();
-//   const { rows: countries } = countryData?.data || {};
-//   const countryPaths = countries.map((c) => ({
-//     params: {
-//       location: ['country', c.iso],
-//     },
-//   }));
-//
-//   return {
-//     paths: ['/embed/sentence/', ...countryPaths] || [],
-//     fallback: true,
-//   };
-// };
 
 const getSentenceClientSide = async (
   locationNames = null,
