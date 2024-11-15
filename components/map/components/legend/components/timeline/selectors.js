@@ -3,7 +3,15 @@ import moment from 'moment';
 import range from 'lodash/range';
 
 const getDates = (state) => state.dates;
-export const getMarks = createSelector(getDates, (dates) => {
+const getSliderStep = (state) => state.step;
+const getMatchLegend = (state) => state.matchLegend;
+
+const getTicksStep = (numOfYears, sliderStep, matchLegend) => {
+  if (matchLegend && numOfYears && sliderStep) return numOfYears / sliderStep;
+  return (numOfYears > 6 ? 6 : numOfYears);
+}
+
+export const getMarks = createSelector(getDates, getSliderStep, getMatchLegend, (dates, sliderStep, matchLegend) => {
   if (!dates) return null;
   const { minDate, maxDate, dynamicTimeline = false } = dates;
   const numOfYears = moment(maxDate).diff(minDate, 'years');
@@ -12,11 +20,12 @@ export const getMarks = createSelector(getDates, (dates) => {
   if (!numOfYears || maxDays <= 365) return null;
 
   const marks = {};
+  const ticksStep = getTicksStep(numOfYears, sliderStep, matchLegend);
 
   let ticks = range(
     0,
     maxDays + 1,
-    maxDays / (numOfYears > 6 ? 6 : numOfYears)
+    maxDays / ticksStep
   );
 
   if (dynamicTimeline) {
