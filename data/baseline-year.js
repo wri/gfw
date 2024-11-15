@@ -15,8 +15,4 @@ export default [
     label: '2015',
     value: 2015,
   },
-  {
-    label: '2020',
-    value: 2020,
-  },
 ];
