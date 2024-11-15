@@ -47,7 +47,7 @@ export const getRegions = createThunkAction(
     getRegionsProvider(country)
       .then((response) => {
         const parsedResponse = [];
-        uniqBy(response.data.rows).forEach((row) => {
+        uniqBy(response.data).forEach((row) => {
           parsedResponse.push({
             id: parseGadm36Id(row.id).adm1,
             name: row.name,
