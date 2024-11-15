@@ -13,7 +13,6 @@ import { parseStringWithVars } from 'utils/strings';
 import { getLocationData } from 'services/location';
 import { getPublishedNotifications } from 'services/notifications';
 import {
-  // getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
