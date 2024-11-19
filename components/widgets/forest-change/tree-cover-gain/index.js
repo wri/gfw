@@ -14,6 +14,8 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2000;
+
 export default {
   widget: 'treeCoverGain',
   title: {
@@ -44,7 +46,7 @@ export default {
       key: 'baselineYear',
       label: 'Baseline Year',
       type: 'select',
-      placeholder: '2000',
+      placeholder: MIN_YEAR,
       clearable: true,
     },
   ],
@@ -86,7 +88,7 @@ export default {
   },
   settings: {
     threshold: 0,
-    baselineYear: 2000,
+    baselineYear: MIN_YEAR,
     unit: 'ha',
     pageSize: 5,
     page: 0,
@@ -99,6 +101,7 @@ export default {
       adm1: adm1 && !adm2 ? null : adm1,
       adm2: null,
     };
+
     return all([getGainGrouped({ ...rest, ...parentLocation })]).then(
       spread((gainResponse) => {
         let groupKey = 'iso';

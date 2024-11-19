@@ -1255,7 +1255,7 @@ export const getGain = (params) => {
 
 // disaggregated gain for child of location
 export const getGainGrouped = (params) => {
-  const { forestType, landCategory, ifl, download, baselineYear } =
+  const { forestType, landCategory, ifl, download, baselineYear, startYear } =
     params || {};
 
   const requestUrl = getRequestUrl({
@@ -1276,7 +1276,7 @@ export const getGainGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: false })
       )
-      .replace('{baselineYear}', baselineYear || 2000)
+      .replace('{baselineYear}', startYear || baselineYear || 2000)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
