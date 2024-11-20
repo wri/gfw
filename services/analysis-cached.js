@@ -890,7 +890,7 @@ export const getLossFiresGrouped = (params) => {
 };
 
 export const getTreeCoverGainByPlantationType = (params) => {
-  const { forestType, landCategory, ifl, download, baselineYear } = params;
+  const { forestType, landCategory, ifl, download, startYear } = params;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -904,7 +904,7 @@ export const getTreeCoverGainByPlantationType = (params) => {
 
   const url = encodeURI(
     `${requestUrl}${sqlQuery}`
-      .replace('{baselineYear}', baselineYear || 2000)
+      .replace('{baselineYear}', startYear || 2000)
       .replace('{WHERE}', getWHEREQuery({ ...params }))
   );
 
@@ -1207,8 +1207,7 @@ export const getExtentGrouped = (params) => {
 
 // summed gain for single location
 export const getGain = (params) => {
-  const { forestType, landCategory, ifl, download, baselineYear } =
-    params || {};
+  const { forestType, landCategory, ifl, download, startYear } = params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1227,7 +1226,7 @@ export const getGain = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{baselineYear}', baselineYear || 2000)
+      .replace('{baselineYear}', startYear || 2000)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 

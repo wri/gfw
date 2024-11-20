@@ -47,18 +47,11 @@ export default {
       label: 'Baseline Year',
       type: 'baseline-select',
       startKey: 'startYear',
-      endKey: 2020,
       placeholder: MIN_YEAR,
       clearable: true,
     },
   ],
-  refetchKeys: [
-    'forestType',
-    'landCategory',
-    'threshold',
-    'baselineYear',
-    'startYear',
-  ],
+  refetchKeys: ['forestType', 'landCategory', 'threshold', 'startYear'],
   chartType: 'rankedList',
   colors: 'gain',
   metaKey: 'umd_tree_cover_gain_from_height',
@@ -97,7 +90,7 @@ export default {
   settings: {
     threshold: 0,
     startYear: MIN_YEAR,
-    endYear: 2020,
+    endYear: 2020, // reference to display the correct data on the map
     unit: 'ha',
     pageSize: 5,
     page: 0,

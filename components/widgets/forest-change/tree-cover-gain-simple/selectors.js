@@ -14,12 +14,14 @@ export const parseSentence = createSelector(
   (gain, extent, sentence, location, settings) => {
     if (!gain && !extent) return null;
     const gainPerc = (gain && extent && (gain / extent) * 100) || 0;
+    const { baselineYear: dateFromDashboard, startYear: dateFromMapLayer } =
+      settings;
 
     const params = {
       gain: formatNumber({ num: gain, unit: 'ha', spaceUnit: true }),
       gainPercent: formatNumber({ num: gainPerc, unit: '%' }),
       location,
-      baselineYear: (settings?.baselineYear) || 2000,
+      baselineYear: dateFromMapLayer || dateFromDashboard || 2000,
     };
 
     return {

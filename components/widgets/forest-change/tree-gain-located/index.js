@@ -13,6 +13,8 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2000;
+
 export default {
   widget: 'treeGainLocated',
   title: 'Location of tree cover gain in {location}',
@@ -40,12 +42,13 @@ export default {
     {
       key: 'baselineYear',
       label: 'Baseline Year',
-      type: 'select',
-      placeholder: '2000',
+      type: 'baseline-select',
+      startKey: 'startYear',
+      placeholder: MIN_YEAR,
       clearable: true,
     },
   ],
-  refetchKeys: ['forestType', 'landCategory', 'baselineYear'],
+  refetchKeys: ['forestType', 'landCategory', 'startYear'],
   chartType: 'rankedList',
   colors: 'gain',
   datasets: [
@@ -82,7 +85,8 @@ export default {
     page: 0,
     extentYear: 2000,
     ifl: 2000,
-    baselineYear: 2000,
+    startYear: MIN_YEAR,
+    endYear: 2020, // reference to display the correct data on the map
   },
   getData: (params) =>
     all([getExtentGrouped(params), getGainGrouped(params)]).then(

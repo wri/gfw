@@ -14,6 +14,8 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2000;
+
 export default {
   widget: 'treeCoverGainSimple',
   title: 'Tree cover gain in {location}',
@@ -24,7 +26,7 @@ export default {
   metaKey: 'umd_tree_cover_gain_from_height',
   dataType: 'gain',
   pendingKeys: ['threshold'],
-  refetchKeys: ['threshold', 'baselineYear'],
+  refetchKeys: ['threshold', 'startYear'],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -45,7 +47,8 @@ export default {
   settings: {
     threshold: 0,
     extentYear: 2000,
-    baselineYear: 2000,
+    startYear: MIN_YEAR,
+    endYear: 2020, // reference to display the correct data on the map
   },
   chartType: 'listLegend',
   colors: 'gain',
@@ -55,8 +58,9 @@ export default {
     {
       key: 'baselineYear',
       label: 'Baseline Year',
-      type: 'select',
-      placeholder: '2000',
+      type: 'baseline-select',
+      startKey: 'startYear',
+      placeholder: MIN_YEAR,
       clearable: true,
     },
   ],

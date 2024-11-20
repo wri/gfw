@@ -16,6 +16,8 @@ import { EuropeFAOCountries } from 'utils/fao-countries';
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2000;
+
 export default {
   widget: 'treeCoverGainOutsidePlantations',
   title: {
@@ -46,12 +48,13 @@ export default {
     {
       key: 'baselineYear',
       label: 'Baseline Year',
-      type: 'select',
-      placeholder: '2000',
+      type: 'baseline-select',
+      startKey: 'startYear',
+      placeholder: MIN_YEAR,
       clearable: true,
     },
   ],
-  refetchKeys: ['forestType', 'landCategory', 'baselineYear'],
+  refetchKeys: ['forestType', 'landCategory', 'startYear'],
   chartType: 'pieChart',
   colors: 'gainWithinOutsidePlantations',
   metaKey: 'widget_tree_cover_gain_outside_plantations',
@@ -90,7 +93,8 @@ export default {
   },
   settings: {
     threshold: 0,
-    baselineYear: 2000,
+    startYear: MIN_YEAR,
+    endYear: 2020, // reference to display the correct data on the map
   },
   getData: (params) => {
     return getTreeCoverGainByPlantationType(params).then((response) => {
