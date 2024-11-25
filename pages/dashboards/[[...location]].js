@@ -13,7 +13,6 @@ import { parseStringWithVars } from 'utils/strings';
 import { getLocationData } from 'services/location';
 import { getPublishedNotifications } from 'services/notifications';
 import {
-  // getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
@@ -183,7 +182,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
       const countryLinks = await getCountryLinksSerialized();
       countryData = {
         ...countryData,
-        regions: uniqBy(regions.data.rows).map((row) => ({
+        regions: uniqBy(regions.data).map((row) => ({
           id: parseGadm36Id(row.id).adm1,
           value: parseGadm36Id(row.id).adm1,
           label: row.name,
@@ -197,7 +196,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
       const subRegions = await getSubRegionsProvider(adm0, adm1);
       countryData = {
         ...countryData,
-        subRegions: uniqBy(subRegions.data.rows).map((row) => ({
+        subRegions: uniqBy(subRegions.data).map((row) => ({
           id: parseGadm36Id(row.id).adm2,
           value: parseGadm36Id(row.id).adm2,
           label: row.name,
