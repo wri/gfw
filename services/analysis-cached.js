@@ -36,7 +36,7 @@ const SQL_QUERIES = {
   carbonFluxOTF: `SELECT SUM("gfw_forest_carbon_net_flux__Mg_CO2e"), SUM("gfw_forest_carbon_gross_removals__Mg_CO2e"), SUM("gfw_forest_carbon_gross_emissions__Mg_CO2e") FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold} OR is__umd_tree_cover_gain = 'true'&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   extent:
     'SELECT {select_location}, SUM(umd_tree_cover_extent_{extentYear}__ha) AS umd_tree_cover_extent_{extentYear}__ha, SUM(area__ha) AS area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  gain: `SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} AND umd_tree_cover_gain__period >= '{baselineYear}' GROUP BY {location} ORDER BY {location}`,
+  gain: `SELECT {select_location}, SUM("umd_tree_cover_gain__ha") AS "umd_tree_cover_gain__ha", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} AND umd_tree_cover_gain__period in ({baselineYear}) GROUP BY {location} ORDER BY {location}`,
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad: 'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
@@ -77,7 +77,7 @@ const SQL_QUERIES = {
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   organicSoilCarbonGrouped:
     'SELECT {select_location}, CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") END AS "gfw_soil_carbon_stocks_2000__Mg_C", CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") END AS soil_carbon_density__t_ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} AND umd_tree_cover_gain__period >= '{baselineYear}' GROUP BY gfw_planted_forests__type`,
+  treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} AND umd_tree_cover_gain__period in ({baselineYear}) GROUP BY gfw_planted_forests__type`,
   treeCoverOTF:
     'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
   treeCoverOTFExtent: 'SELECT SUM(area__ha) FROM data&geostore_id={geostoreId}',
@@ -110,7 +110,7 @@ const typeByGrouped = {
   },
   adm1: {
     default: 'adm1',
-    grouped: 'adm2',
+    grouped: 'adm1',
   },
   adm2: {
     default: 'adm2',
@@ -890,7 +890,8 @@ export const getLossFiresGrouped = (params) => {
 };
 
 export const getTreeCoverGainByPlantationType = (params) => {
-  const { forestType, landCategory, ifl, download, startYear } = params;
+  const { forestType, landCategory, ifl, download, startYear, endYear } =
+    params;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -902,9 +903,21 @@ export const getTreeCoverGainByPlantationType = (params) => {
 
   const sqlQuery = SQL_QUERIES.treeCoverGainByPlantationType;
 
+  const baselineYearQuery = [];
+  let year = startYear;
+
+  while (year < endYear) {
+    const nextYear = year + 5;
+    baselineYearQuery.push(`${year}-${nextYear}`);
+    year = nextYear;
+  }
+
   const url = encodeURI(
     `${requestUrl}${sqlQuery}`
-      .replace('{baselineYear}', startYear || 2000)
+      .replace(
+        '{baselineYear}',
+        `'${baselineYearQuery.join("', '")}'` || '2000-2020'
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params }))
   );
 
@@ -1207,7 +1220,8 @@ export const getExtentGrouped = (params) => {
 
 // summed gain for single location
 export const getGain = (params) => {
-  const { forestType, landCategory, ifl, download, startYear } = params || {};
+  const { forestType, landCategory, ifl, download, startYear, endYear } =
+    params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1219,6 +1233,15 @@ export const getGain = (params) => {
     return new Promise(() => {});
   }
 
+  const baselineYearQuery = [];
+  let year = startYear;
+
+  while (year < endYear) {
+    const nextYear = year + 5;
+    baselineYearQuery.push(`${year}-${nextYear}`);
+    year = nextYear;
+  }
+
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.gain}`
       .replace(
@@ -1226,7 +1249,10 @@ export const getGain = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{baselineYear}', startYear || 2000)
+      .replace(
+        '{baselineYear}',
+        `'${baselineYearQuery.join("', '")}'` || '2000-2020'
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -1254,7 +1280,8 @@ export const getGain = (params) => {
 
 // disaggregated gain for child of location
 export const getGainGrouped = (params) => {
-  const { forestType, landCategory, ifl, download, startYear } = params || {};
+  const { forestType, landCategory, ifl, download, startYear, endYear } =
+    params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1267,6 +1294,15 @@ export const getGainGrouped = (params) => {
     return new Promise(() => {});
   }
 
+  const baselineYearQuery = [];
+  let year = parseInt(startYear, 10);
+
+  while (year < parseInt(endYear, 10)) {
+    const nextYear = year + 5;
+    baselineYearQuery.push(`${year}-${nextYear}`);
+    year = nextYear;
+  }
+
   const url = encodeURI(
     `${requestUrl}${SQL_QUERIES.gain}`
       .replace(/{location}/g, getLocationSelect({ ...params, grouped: true }))
@@ -1274,7 +1310,10 @@ export const getGainGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: false })
       )
-      .replace('{baselineYear}', startYear || 2000)
+      .replace(
+        '{baselineYear}',
+        `'${baselineYearQuery.join("', '")}'` || '2000-2020'
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
