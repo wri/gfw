@@ -890,8 +890,14 @@ export const getLossFiresGrouped = (params) => {
 };
 
 export const getTreeCoverGainByPlantationType = (params) => {
-  const { forestType, landCategory, ifl, download, startYear, endYear } =
-    params;
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    startYear = 2000,
+    endYear,
+  } = params;
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -904,12 +910,12 @@ export const getTreeCoverGainByPlantationType = (params) => {
   const sqlQuery = SQL_QUERIES.treeCoverGainByPlantationType;
 
   const baselineYearQuery = [];
-  let year = parseInt(startYear, 10) || 2000;
+  let startYearRef = parseInt(startYear, 10);
 
-  while (year < endYear) {
-    const nextYear = year + 5;
-    baselineYearQuery.push(`${year}-${nextYear}`);
-    year = nextYear;
+  while (startYearRef < endYear) {
+    const nextYear = startYearRef + 5;
+    baselineYearQuery.push(`${startYearRef}-${nextYear}`);
+    startYearRef = nextYear;
   }
 
   const url = encodeURI(
@@ -921,7 +927,7 @@ export const getTreeCoverGainByPlantationType = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `tree_cover_gain_by_plantation_type${
+      name: `tree_cover_gain_by_plantation_type_${startYear}-2020${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
@@ -1217,8 +1223,14 @@ export const getExtentGrouped = (params) => {
 
 // summed gain for single location
 export const getGain = (params) => {
-  const { forestType, landCategory, ifl, download, startYear, endYear } =
-    params || {};
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    startYear = 2000,
+    endYear,
+  } = params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1231,12 +1243,12 @@ export const getGain = (params) => {
   }
 
   const baselineYearQuery = [];
-  let year = parseInt(startYear, 10) || 2000;
+  let startYearRef = parseInt(startYear, 10);
 
-  while (year < endYear) {
-    const nextYear = year + 5;
-    baselineYearQuery.push(`${year}-${nextYear}`);
-    year = nextYear;
+  while (startYearRef < endYear) {
+    const nextYear = startYearRef + 5;
+    baselineYearQuery.push(`${startYearRef}-${nextYear}`);
+    startYearRef = nextYear;
   }
 
   const url = encodeURI(
@@ -1253,7 +1265,7 @@ export const getGain = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_gain_2000-2020${
+      name: `treecover_gain_${startYear}-2020${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
@@ -1274,8 +1286,14 @@ export const getGain = (params) => {
 
 // disaggregated gain for child of location
 export const getGainGrouped = (params) => {
-  const { forestType, landCategory, ifl, download, startYear, endYear } =
-    params || {};
+  const {
+    forestType,
+    landCategory,
+    ifl,
+    download,
+    startYear = 2000,
+    endYear,
+  } = params || {};
 
   const requestUrl = getRequestUrl({
     ...params,
@@ -1289,12 +1307,12 @@ export const getGainGrouped = (params) => {
   }
 
   const baselineYearQuery = [];
-  let year = parseInt(startYear, 10) || 2000;
+  let startYearRef = parseInt(startYear, 10);
 
-  while (year < parseInt(endYear, 10)) {
-    const nextYear = year + 5;
-    baselineYearQuery.push(`${year}-${nextYear}`);
-    year = nextYear;
+  while (startYearRef < parseInt(endYear, 10)) {
+    const nextYear = startYearRef + 5;
+    baselineYearQuery.push(`${startYearRef}-${nextYear}`);
+    startYearRef = nextYear;
   }
 
   const url = encodeURI(
@@ -1311,7 +1329,7 @@ export const getGainGrouped = (params) => {
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
     return {
-      name: `treecover_gain_2000-2020_by_region${
+      name: `treecover_gain_${startYear}-2020_by_region${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
       url: getDownloadUrl(url),
