@@ -904,7 +904,7 @@ export const getTreeCoverGainByPlantationType = (params) => {
   const sqlQuery = SQL_QUERIES.treeCoverGainByPlantationType;
 
   const baselineYearQuery = [];
-  let year = startYear;
+  let year = parseInt(startYear, 10) || 2000;
 
   while (year < endYear) {
     const nextYear = year + 5;
@@ -914,10 +914,7 @@ export const getTreeCoverGainByPlantationType = (params) => {
 
   const url = encodeURI(
     `${requestUrl}${sqlQuery}`
-      .replace(
-        '{baselineYear}',
-        `'${baselineYearQuery.join("', '")}'` || '2000-2020'
-      )
+      .replace('{baselineYear}', `'${baselineYearQuery.join("', '")}'`)
       .replace('{WHERE}', getWHEREQuery({ ...params }))
   );
 
@@ -1234,7 +1231,7 @@ export const getGain = (params) => {
   }
 
   const baselineYearQuery = [];
-  let year = startYear;
+  let year = parseInt(startYear, 10) || 2000;
 
   while (year < endYear) {
     const nextYear = year + 5;
@@ -1249,10 +1246,7 @@ export const getGain = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace(
-        '{baselineYear}',
-        `'${baselineYearQuery.join("', '")}'` || '2000-2020'
-      )
+      .replace('{baselineYear}', `'${baselineYearQuery.join("', '")}'`)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
@@ -1295,7 +1289,7 @@ export const getGainGrouped = (params) => {
   }
 
   const baselineYearQuery = [];
-  let year = parseInt(startYear, 10);
+  let year = parseInt(startYear, 10) || 2000;
 
   while (year < parseInt(endYear, 10)) {
     const nextYear = year + 5;
@@ -1310,10 +1304,7 @@ export const getGainGrouped = (params) => {
         /{select_location}/g,
         getLocationSelect({ ...params, grouped: true, cast: false })
       )
-      .replace(
-        '{baselineYear}',
-        `'${baselineYearQuery.join("', '")}'` || '2000-2020'
-      )
+      .replace('{baselineYear}', `'${baselineYearQuery.join("', '")}'`)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
   );
 
