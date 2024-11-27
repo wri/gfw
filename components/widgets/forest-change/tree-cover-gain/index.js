@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 
-import { getGainGrouped } from 'services/analysis-cached';
+import { getGain } from 'services/analysis-cached';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
@@ -104,7 +104,7 @@ export default {
       adm2: null,
     };
 
-    return all([getGainGrouped({ ...rest, ...parentLocation })]).then(
+    return all([getGain({ ...rest, ...parentLocation })]).then(
       spread((gainResponse) => {
         let groupKey = 'iso';
         if (adm1) groupKey = 'adm1';
@@ -130,6 +130,6 @@ export default {
       })
     );
   },
-  getDataURL: (params) => [getGainGrouped({ ...params, download: true })],
+  getDataURL: (params) => [getGain({ ...params, download: true })],
   getWidgetProps,
 };
