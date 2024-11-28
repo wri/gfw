@@ -13,10 +13,12 @@ const META_FIELDS = [
 ];
 const TABLE_FIELDS = [
   'function',
-  'resolution',
+  'resolution_description',
   'geographic_coverage',
   'source',
   'content_date',
+  'content_date_description',
+  'content_date_range',
   'update_frequency',
   'cautions',
   'license',
