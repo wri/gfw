@@ -50,6 +50,31 @@ class ModalMeta extends PureComponent {
     }
   }
 
+  /**
+   * We have 3 different properties to display the content date:
+   * content_date_description, content_date_range and content_date, in this order of priority
+   * @returns An object cointaing metadata rows with the correct content_date
+   */
+  setContentDate() {
+    const {
+      tableData: { content_date_range, content_date_description, ...rest },
+    } = this.props;
+
+    if (content_date_description) {
+      return { ...rest, content_date: content_date_description };
+    }
+
+    if (content_date_description && content_date_range) {
+      const { start_date, end_date } = content_date_range;
+      return {
+        ...rest,
+        content_date: `${start_date.slice(0, 4)}-${end_date.slice(0, 4)}`,
+      };
+    }
+
+    return rest;
+  }
+
   getContent() {
     const { metaData, tableData, loading, error, locationName } = this.props;
     const { subtitle, overview, citation, learn_more, download_data } =
@@ -60,6 +85,8 @@ class ModalMeta extends PureComponent {
       citation
         .replaceAll('[selected area name]', locationName)
         .replaceAll('[date]', moment().format('DD/MM/YYYY'));
+
+    const tableDataWithContentDate = this.setContentDate(tableData);
 
     return (
       <div className="modal-meta-content">
@@ -76,16 +103,16 @@ class ModalMeta extends PureComponent {
               dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
             />
             <div className="meta-table element-fullwidth">
-              {tableData &&
-                Object.keys(tableData).map((key) =>
-                  tableData[key] ? (
+              {tableDataWithContentDate &&
+                Object.keys(tableDataWithContentDate).map((key) =>
+                  tableDataWithContentDate[key] ? (
                     <div key={key} className="table-row">
                       <div
                         className="title-column"
                         dangerouslySetInnerHTML={{ __html: lowerCase(key) }} // eslint-disable-line
                       />
                       <div className="description-column">
-                        <Remark>{tableData[key]}</Remark>
+                        <Remark>{tableDataWithContentDate[key]}</Remark>
                       </div>
                     </div>
                   ) : null
