@@ -1,6 +1,10 @@
 import { getNaturalForest } from 'services/analysis-cached';
-import { NATURAL_FOREST } from 'data/datasets';
-import { NATURAL_FOREST_2020 } from 'data/layers';
+import { NATURAL_FOREST, POLITICAL_BOUNDARIES_DATASET } from 'data/datasets';
+import {
+  NATURAL_FOREST_2020,
+  DISPUTED_POLITICAL_BOUNDARIES,
+  POLITICAL_BOUNDARIES,
+} from 'data/layers';
 
 import getWidgetProps from './selectors';
 
@@ -32,12 +36,16 @@ export default {
   categories: ['land-cover', 'summary'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  visible: ['dashboard'],
+  visible: ['dashboard', 'analysis'],
   datasets: [
+    {
+      dataset: POLITICAL_BOUNDARIES_DATASET,
+      layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
+      boundary: true,
+    },
     {
       dataset: NATURAL_FOREST,
       layers: [NATURAL_FOREST_2020],
-      boundary: true,
     },
   ],
   dataType: 'naturalForest',
