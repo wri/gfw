@@ -547,6 +547,50 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  distAlerts: `
+  // values for creating power scale, domain (input), and range (output)
+    float confidenceValue = 0.;
+    if (confirmedOnly > 0.) {
+      confidenceValue = 1.;
+    }
+
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float b = color.b * 255.;
+
+    // **** CHECK THIS
+    // 1461 = days from 2019/01/01 to 2014/12/31
+    // 1870 = days from 2020/02/14 to 2014/12/31
+    float day = (r * 255.) + g;
+
+    float confidence = floor(b / 100.);
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex  &&
+      confidence >= confidenceValue
+    ) {
+      // get intensity
+      float intensity = mod(b, 100.) * 50.;
+      // float intensity = 255.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      if (confidence < 2.) {
+        color.r = 238. / 255.;
+        color.g = 177. / 255.;
+        color.b = 177. / 255.;
+        alpha = intensity / 255.;
+      } else {
+        color.r = 137. / 255.;
+        color.g = 82. / 255.;
+        color.b = 119. / 255.;
+        alpha = intensity / 255.;
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
   RADDsCoverage: `
     float red = color.r;
     float green = color.g;
@@ -1058,6 +1102,7 @@ export default {
   GLADs: decodes.GLADs,
   RADDs: decodes.RADDs,
   RADDs2yearsTimeline: decodes.RADDs2yearsTimeline,
+  distAlerts: decodes.distAlerts,
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
   staticRemapAlpha: decodes.staticRemapAlpha,
