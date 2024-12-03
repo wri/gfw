@@ -8,9 +8,12 @@ import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 import isEmpty from 'lodash/isEmpty';
 
-import tropicalIsos from 'data/tropical-isos.json';
-
-import { getExtent, getLoss } from 'services/analysis-cached';
+import {
+  getExtentNaturalForest,
+  getLossNaturalForest,
+  getExtent,
+  getLoss,
+} from 'services/analysis-cached';
 
 const ADMINS = {
   adm0: null,
@@ -27,13 +30,13 @@ const GLOBAL_LOCATION = {
 
 export const adminSentences = {
   default:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area',
   withLoss:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
   globalInitial:
-    'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover.',
+    'In 2020, {location} had {extent} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
   withPlantationLoss:
-    'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
+    'In 2020, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
   countrySpecific: {
     IDN: 'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
   },
@@ -41,7 +44,7 @@ export const adminSentences = {
   end: '.',
 };
 
-export const getSentenceData = (params = GLOBAL_LOCATION) =>
+const getSentenceDataForIdn = (params = GLOBAL_LOCATION) =>
   all([
     getExtent(params),
     getExtent({ ...params, forestType: 'plantations' }),
@@ -141,6 +144,80 @@ export const getSentenceData = (params = GLOBAL_LOCATION) =>
     )
   );
 
+const getNaturalForestSentenceData = async (params = GLOBAL_LOCATION) => {
+  try {
+    const extentNaturalForestResponse = await getExtentNaturalForest(params);
+    const lossNaturalForestResponse = await getLossNaturalForest({
+      ...params,
+      umd_tree_cover_loss__year: 2023,
+      isNaturalForest: true,
+    });
+
+    let extent = 0;
+    let totalArea = 0;
+
+    extentNaturalForestResponse.data.data.forEach((item) => {
+      totalArea += item.area__ha;
+
+      if (item.sbtn_natural_forests__class === 'Natural Forest')
+        extent += item.area__ha;
+    });
+
+    let lossArea = 0;
+    let emissions = 0;
+
+    lossNaturalForestResponse.data.data.forEach((item) => {
+      emissions += item.gfw_gross_emissions_co2e_all_gases__mg;
+
+      if (item.sbtn_natural_forests__class === 'Natural Forest') {
+        lossArea += item.area;
+      }
+    });
+
+    return {
+      totalArea,
+      extent,
+      plantationsExtent: 0,
+      primaryExtent: 0,
+      totalLoss: {
+        area: lossArea,
+        year: 2023,
+        emissions,
+      },
+      plantationsLoss: {
+        area: 0,
+        emissions: 0,
+      },
+      primaryLoss: {},
+    };
+  } catch (error) {
+    return {
+      totalArea: 0,
+      extent: 0,
+      plantationsExtent: 0,
+      primaryExtent: 0,
+      totalLoss: {
+        area: 0,
+        year: 0,
+        emissions: 0,
+      },
+      plantationsLoss: {
+        area: 0,
+        emissions: 0,
+      },
+      primaryLoss: {},
+    };
+  }
+};
+
+export const getSentenceData = async (params = GLOBAL_LOCATION) => {
+  if (params.adm0 === 'IDN') {
+    return getSentenceDataForIdn(params);
+  }
+
+  return getNaturalForestSentenceData(params);
+};
+
 export const getContextSentence = (location, geodescriber, adminSentence) => {
   if (isEmpty(geodescriber)) return {};
 
@@ -174,7 +251,6 @@ export const parseSentence = (
     globalInitial,
     countrySpecific,
     co2Emissions,
-    end,
   } = adminSentences;
   const {
     extent,
@@ -283,12 +359,14 @@ export const parseSentence = (
   if (extent > 0 && totalLoss.area) {
     sentence = areaPlantations && location ? withPlantationLoss : withLoss;
   }
-  sentence = tropicalIsos.includes(adm0)
-    ? sentence + co2Emissions
-    : sentence + end;
+
   if (!location) sentence = globalInitial;
   if (adm0 in countrySpecific) {
     sentence = countrySpecific[adm0];
+  }
+
+  if (adm0 !== 'IDN') {
+    sentence += co2Emissions;
   }
 
   return {

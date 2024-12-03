@@ -102,7 +102,7 @@ export const parseConfig = createSelector([getColors], (colors) => {
       },
       {
         key: 'areaLoss',
-        label: 'Plantations',
+        label: 'Non-natural forest',
         color: colorRange[0],
         unitFormat: (value) =>
           formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
@@ -138,6 +138,7 @@ export const parseSentence = createSelector(
         spaceUnit: true,
       }),
       percentage: formatNumber({ num: percentage, unit: '%' }),
+      totalLoss: formatNumber({ num: totalLoss, unit: 'ha' }),
     };
 
     return {
