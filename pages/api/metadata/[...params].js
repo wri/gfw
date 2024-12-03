@@ -2,7 +2,7 @@ import { GFW_DATA_API, GFW_METADATA_API } from 'utils/apis';
 import axios from 'axios';
 
 import METADATA_LIST from '../../../data/metadata.json';
-import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadatas that aren't on Data API
+import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadata that isn't on Data API
 
 export default async (req, res) => {
   try {
