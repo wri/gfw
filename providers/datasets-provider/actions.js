@@ -14,7 +14,7 @@ export const setDatasets = createAction('setDatasets');
 export const setDatasetsWithMetadata = createAction('setDatasetsWithMetadata');
 
 const handleFeatureEnvLock = (env) => {
-  const currEnv = process.env.NEXT_PUBLIC_FEATURE_ENV;
+  const currEnv = process.env.NEXT_PUBLIC_RW_FEATURE_ENV;
   const MIXED_ENV = 'preproduction-staging';
   if (env === MIXED_ENV && currEnv !== 'production') {
     return true;
