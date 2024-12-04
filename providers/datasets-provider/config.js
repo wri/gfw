@@ -568,7 +568,8 @@ const decodes = {
       day > 0. &&
       day >= startDayIndex &&
       day <= endDayIndex  &&
-      confidence >= confidenceValue
+      confidence >= confidenceValue &&
+      alpha > 0.
     ) {
       // get intensity
       float intensity = mod(b, 100.) * 50.;
