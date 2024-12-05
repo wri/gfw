@@ -56,8 +56,6 @@ export default {
   refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
   pendingKeys: ['threshold', 'decile', 'extentYear'],
   settings: {
-    threshold: 30,
-    decile: 30,
     extentYear: 2000,
   },
   getSettingsConfig: () => {
