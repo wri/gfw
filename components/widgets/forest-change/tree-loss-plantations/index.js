@@ -73,7 +73,6 @@ export default {
   sentence:
     'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was {totalLoss} equivalent to {value} of CO\u2082e emissions.',
   whitelists: {
-    indicators: ['plantations'],
     checkStatus: true,
     adm0: [
       'ZAF',
