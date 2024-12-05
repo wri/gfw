@@ -39,13 +39,15 @@ class Timestep extends PureComponent {
     handleOnChange: PropTypes.func,
     handleOnAfterChange: PropTypes.func,
     handleOnPlay: PropTypes.func,
+    disableStartHandle: PropTypes.bool,
+    disableEndHandle: PropTypes.bool,
   };
 
   static defaultProps = {
     customClass: null,
     range: true,
     pushable: 0,
-    canPlay: false,
+    canPlay: true,
 
     trim: null,
 
@@ -75,6 +77,8 @@ class Timestep extends PureComponent {
     handleOnChange: null,
     handleOnAfterChange: null,
     handleOnPlay: null,
+    disableStartHandle: false,
+    disableEndHandle: false,
   };
 
   constructor(props) {
@@ -462,6 +466,8 @@ class Timestep extends PureComponent {
       range,
       pushable,
       PlayButton,
+      disableStartHandle,
+      disableEndHandle,
     } = this.props;
 
     const { playing } = this.state;
@@ -488,6 +494,9 @@ class Timestep extends PureComponent {
             pushable={pushable}
             onChange={this.handleOnChange}
             onAfterChange={this.handleOnAfterChange}
+            disableStartHandle={disableStartHandle}
+            disableEndHandle={disableEndHandle}
+            playing={playing}
           />
         </div>
       </div>
