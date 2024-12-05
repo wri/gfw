@@ -403,7 +403,10 @@ export const getLossNaturalForest = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect(params))
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...params, dataset: 'annual', threshold: 0 })
+      )
   );
 
   if (download) {
@@ -1093,7 +1096,10 @@ export const getNaturalForest = async (params) => {
     `${requestUrl}${SQL_QUERIES.naturalForest}`
       .replace(/{location}/g, getLocationSelect({ ...params, cast: false }))
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...params, dataset: 'annual', threshold: 0 })
+      )
   );
 
   if (download) {
@@ -1210,7 +1216,10 @@ export const getExtentNaturalForest = (params) => {
         getLocationSelect({ ...params, cast: false })
       )
       .replace(/{location}/g, getLocationSelect({ ...params }))
-      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+      .replace(
+        '{WHERE}',
+        getWHEREQuery({ ...params, dataset: 'annual', threshold: 0 })
+      )
   );
 
   if (download) {
