@@ -107,7 +107,7 @@ export const datasetsSections = compact([
     subCategories: [
       {
         slug: 'deforestationAlerts',
-        title: 'Deforestation Alerts',
+        title: 'Disturbance Alerts',
       },
       {
         slug: 'fireAlerts',

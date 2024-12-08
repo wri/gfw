@@ -8,7 +8,9 @@ const isNumber = (value) => !!(typeof value === 'number' || !isNaN(value));
 
 // build {where} statement for query
 export const getWHEREQuery = (params = {}) => {
-  const { type, dataset } = params || {};
+  // umd_tree_cover_loss__year is being added for the dashboard sentences for natural forest
+  const { type, dataset, umd_tree_cover_loss__year, isNaturalForest } =
+    params || {};
 
   const allFilterOptions = forestTypes.concat(landCategories);
   const allowedParams = ALLOWED_PARAMS[params.dataset || 'annual'];
@@ -98,7 +100,11 @@ export const getWHEREQuery = (params = {}) => {
     }
 
     if (isLastParameter) {
-      WHERE = `${WHERE} `;
+      if (isNaturalForest) {
+        WHERE = `${WHERE} AND umd_tree_cover_loss__year=${umd_tree_cover_loss__year}`;
+      } else {
+        WHERE = `${WHERE} `;
+      }
     } else {
       WHERE = `${WHERE} AND `;
     }
