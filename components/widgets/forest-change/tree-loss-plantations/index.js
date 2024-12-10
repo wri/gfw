@@ -82,23 +82,12 @@ export default {
     extentYear: 2010,
   },
   getData: (params) =>
-    all([
-      getLossNaturalForest({ ...params, forestType: 'plantations' }),
-      getLossNaturalForest({ ...params, forestType: '' }),
-    ]).then(
-      spread((plantationsloss, gadmLoss) => {
+    all([getLossNaturalForest(params)]).then(
+      spread((gadmLoss) => {
         let data = {};
-        const lossPlantations =
-          plantationsloss.data && plantationsloss.data.data;
         const totalLoss = gadmLoss.data && gadmLoss.data.data;
-        if (
-          lossPlantations &&
-          totalLoss &&
-          lossPlantations.length &&
-          totalLoss.length
-        ) {
+        if (totalLoss && totalLoss.length) {
           data = {
-            lossPlantations,
             totalLoss,
           };
         }
@@ -122,10 +111,8 @@ export default {
   getDataURL: (params) => [
     getLossNaturalForest({
       ...params,
-      forestType: 'plantations',
       download: true,
     }),
-    getLossNaturalForest({ ...params, forestType: '', download: true }),
   ],
   getWidgetProps,
 };
