@@ -14,8 +14,6 @@ import {
   NATURAL_FOREST_2020,
 } from 'data/layers';
 
-import { EuropeFAOCountries } from 'utils/fao-countries';
-
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2021;
@@ -72,9 +70,6 @@ export default {
   },
   sentence:
     'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was {totalLoss} equivalent to {value} of CO\u2082e emissions.',
-  blacklists: {
-    adm0: EuropeFAOCountries,
-  },
   settings: {
     threshold: 30,
     startYear: MIN_YEAR,
