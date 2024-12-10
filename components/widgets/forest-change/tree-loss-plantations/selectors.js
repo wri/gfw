@@ -37,11 +37,11 @@ export const parseData = createSelector(
     const mappedData = zeroFilledData.map((list) => {
       return {
         iso: list[0].iso,
-        outsideAreaLoss: list[1].area,
-        outsideCo2Loss: list[1].emissions,
+        outsideAreaLoss: list[1].area || 0,
+        outsideCo2Loss: list[1].emissions || 0,
         areaLoss: list[0].area,
         co2Loss: list[0].emissions,
-        totalLoss: list[0].area + list[1].area + list[2].area,
+        totalLoss: list[0].area || 0 + list[1].area || 0 + list[2].area || 0,
         year: list[0].year,
       };
     });
