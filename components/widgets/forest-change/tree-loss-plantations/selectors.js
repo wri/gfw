@@ -35,14 +35,25 @@ export const parseData = createSelector(
     );
 
     const mappedData = zeroFilledData.map((list) => {
+      const naturalForest = list.find(
+        (item) => item.sbtn_natural_forests__class === 'Natural Forest'
+      );
+      const nonNaturalForest = list.find(
+        (item) => item.sbtn_natural_forests__class === 'Non-Natural Forest'
+      );
+      // eslint-disable-next-line no-unused-vars
+      const unknown = list.find(
+        (item) => item.sbtn_natural_forests__class === 'Unknown'
+      );
+
       return {
-        iso: list[0].iso,
-        outsideAreaLoss: list[1].area || 0,
-        outsideCo2Loss: list[1].emissions || 0,
-        areaLoss: list[0].area,
-        co2Loss: list[0].emissions,
-        totalLoss: list[0].area || 0 + list[1].area || 0 + list[2].area || 0,
-        year: list[0].year,
+        iso: nonNaturalForest?.iso,
+        outsideAreaLoss: naturalForest?.area || 0,
+        outsideCo2Loss: naturalForest?.emissions || 0,
+        areaLoss: nonNaturalForest?.area || 0,
+        co2Loss: nonNaturalForest?.emissions || 0,
+        totalLoss: (nonNaturalForest?.area || 0) + (naturalForest?.area || 0),
+        year: nonNaturalForest?.year,
       };
     });
 
@@ -89,7 +100,7 @@ export const parseConfig = createSelector([getColors], (colors) => {
       },
       {
         key: 'areaLoss',
-        label: 'Non-natural forest',
+        label: 'Non-natural tree cover',
         color: colorRange[0],
         unitFormat: (value) =>
           formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
@@ -124,7 +135,7 @@ export const parseSentence = createSelector(
         spaceUnit: true,
       }),
       percentage: formatNumber({ num: percentage, unit: '%' }),
-      totalLoss: formatNumber({ num: totalLoss, unit: 'ha' }),
+      totalLoss: formatNumber({ num: outsideLoss, unit: 'ha' }), // using outsideLoss (natural forest) value based on Michelle's feedback
     };
 
     return {
