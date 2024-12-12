@@ -114,16 +114,12 @@ export const parseSentence = createSelector(
   (data, settings, locationName, sentence) => {
     if (!data) return null;
     const { startYear, endYear } = settings;
-    const plantationsLoss = sumBy(data, 'areaLoss') || 0;
     const totalLoss = sumBy(data, 'totalLoss') || 0;
     const outsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
     const outsideEmissions = sumBy(data, 'outsideCo2Loss') || 0;
 
     const lossPhrase = 'natural forest';
-    const percentage =
-      plantationsLoss > outsideLoss
-        ? (100 * plantationsLoss) / totalLoss
-        : (100 * outsideLoss) / totalLoss;
+    const percentage = (100 * outsideLoss) / totalLoss;
     const params = {
       location: locationName,
       startYear,

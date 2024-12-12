@@ -36,7 +36,7 @@ export default {
   categories: ['land-cover', 'summary'],
   types: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  visible: ['dashboard', 'analysis'],
+  visible: ['dashboard'],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
