@@ -47,7 +47,7 @@ export const parseSentence = createSelector(
     const params = {
       location: locationName,
       extent: formatNumber({ num: topExtent, unit: 'ha', spaceUnit: true }),
-      topType: top[0].label,
+      topType: top[0].label.toLowerCase(),
       percent: formatNumber({ num: areaPerc, unit: '%' }),
     };
     const sentence = initial;
