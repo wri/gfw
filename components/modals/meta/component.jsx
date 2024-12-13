@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Remark } from 'react-remark';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
@@ -57,22 +58,32 @@ class ModalMeta extends PureComponent {
    */
   setContentDate() {
     const {
-      tableData: { content_date_range, content_date_description, ...rest },
+      tableData: {
+        resolution_description,
+        content_date_range,
+        content_date_description,
+        ...rest
+      },
     } = this.props;
 
     if (content_date_description) {
-      return { ...rest, content_date: content_date_description };
+      return {
+        resolution: resolution_description,
+        content_date: content_date_description,
+        ...rest,
+      };
     }
 
     if (content_date_description && content_date_range) {
       const { start_date, end_date } = content_date_range;
       return {
-        ...rest,
+        resolution: resolution_description,
         content_date: `${start_date.slice(0, 4)}-${end_date.slice(0, 4)}`,
+        ...rest,
       };
     }
 
-    return rest;
+    return { resolution: resolution_description, ...rest };
   }
 
   getContent() {
@@ -112,7 +123,9 @@ class ModalMeta extends PureComponent {
                         dangerouslySetInnerHTML={{ __html: lowerCase(key) }} // eslint-disable-line
                       />
                       <div className="description-column">
-                        <Remark>{tableDataWithContentDate[key]}</Remark>
+                        <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                          {tableDataWithContentDate[key]}
+                        </ReactMarkdown>
                       </div>
                     </div>
                   ) : null
@@ -122,7 +135,9 @@ class ModalMeta extends PureComponent {
               <div className="overview">
                 <h4>Overview</h4>
                 <div className="body">
-                  <Remark>{overview}</Remark>
+                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                    {overview}
+                  </ReactMarkdown>
                 </div>
               </div>
             )}
@@ -130,7 +145,9 @@ class ModalMeta extends PureComponent {
               <div className="citation">
                 <h5>Citation</h5>
                 <div className="body">
-                  <Remark>{parsedCitation}</Remark>
+                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                    {parsedCitation}
+                  </ReactMarkdown>
                 </div>
               </div>
             )}
