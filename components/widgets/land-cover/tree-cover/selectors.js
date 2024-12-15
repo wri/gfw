@@ -30,9 +30,7 @@ export const parseData = createSelector(
         value: hasPlantations ? plantationsCover : cover,
         color: colors.naturalForest,
         percentage:
-          ((hasPlantations ? plantationsCover : cover - plantationsCover) /
-            totalArea) *
-          100,
+          ((hasPlantations ? plantationsCover : cover) / totalArea) * 100,
       },
       {
         label: 'Other Land Cover',
