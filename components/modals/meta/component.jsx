@@ -62,6 +62,7 @@ class ModalMeta extends PureComponent {
         resolution_description,
         content_date_range,
         content_date_description,
+        content_date,
         ...rest
       },
     } = this.props;
@@ -74,16 +75,18 @@ class ModalMeta extends PureComponent {
       };
     }
 
-    if (content_date_description && content_date_range) {
+    if (content_date_range) {
       const { start_date, end_date } = content_date_range;
+      const date = `${start_date.slice(0, 4)}-${end_date.slice(0, 4)}`;
+
       return {
         resolution: resolution_description,
-        content_date: `${start_date.slice(0, 4)}-${end_date.slice(0, 4)}`,
+        content_date: date,
         ...rest,
       };
     }
 
-    return { resolution: resolution_description, ...rest };
+    return { resolution: resolution_description, content_date, ...rest };
   }
 
   getContent() {
