@@ -64,25 +64,26 @@ export const getRegions = createThunkAction(
 
 export const getSubRegions = createThunkAction(
   'getSubRegions',
-  ({ adm0, adm1, token }) => (dispatch) => {
-    dispatch(setSubRegionsLoading(true));
-    getSubRegionsProvider(adm0, adm1, token)
-      .then((subRegions) => {
-        const { rows } = subRegions.data;
-        const parsedResponse = [];
-        uniqBy(rows).forEach((row) => {
-          parsedResponse.push({
-            id: parseGadm36Id(row.id).adm2,
-            name: row.name,
+  ({ adm0, adm1, token }) =>
+    (dispatch) => {
+      dispatch(setSubRegionsLoading(true));
+      getSubRegionsProvider(adm0, adm1, token)
+        .then((subRegions) => {
+          const { rows } = subRegions.data;
+          const parsedResponse = [];
+          uniqBy(rows).forEach((row) => {
+            parsedResponse.push({
+              id: parseGadm36Id(row.id).adm2,
+              name: row.name,
+            });
           });
+          dispatch(setSubRegions(uniqBy(parsedResponse, 'id')));
+          dispatch(setSubRegionsLoading(false));
+        })
+        .catch(() => {
+          dispatch(setSubRegionsLoading(false));
         });
-        dispatch(setSubRegions(uniqBy(parsedResponse, 'id')));
-        dispatch(setSubRegionsLoading(false));
-      })
-      .catch(() => {
-        dispatch(setSubRegionsLoading(false));
-      });
-  }
+    }
 );
 
 export const getCountryLinks = createThunkAction(
@@ -92,8 +93,9 @@ export const getCountryLinks = createThunkAction(
     getCountryLinksProvider()
       .then((response) => {
         const data = {};
-        if (response.data && response.data.rows.length) {
-          response.data.rows.forEach((d) => {
+
+        if (response?.rows?.length) {
+          response.rows.forEach((d) => {
             data[d.iso] = JSON.parse(d.external_links);
           });
         }

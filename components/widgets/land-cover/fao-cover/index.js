@@ -1,10 +1,7 @@
-import { all, spread } from 'axios';
 import sumBy from 'lodash/sumBy';
 import omit from 'lodash/omit';
 
 import { getFAOExtent } from 'services/forest-data';
-import { getRanking } from 'services/country';
-
 import getWidgetProps from './selectors';
 
 export default {
@@ -48,30 +45,26 @@ export default {
     ];
   },
   getData: (params) => {
-    return all([getFAOExtent({ ...params }), getRanking({ ...params })]).then(
-      spread((getFAOResponse, getRankingResponse) => {
-        let data = {};
-        const fao = getFAOResponse.data.rows;
-        const ranking = getRankingResponse.data.rows;
+    return getFAOExtent({ ...params }).then((getFAOResponse) => {
+      let data = {};
+      const fao = getFAOResponse.data.rows;
 
-        if (fao.length && ranking.length) {
-          let faoData = fao[0];
+      if (fao.length) {
+        let faoData = fao[0];
 
-          if (fao.length > 1) {
-            faoData = {};
-            Object.keys(omit(fao[0], ['iso', 'country'])).forEach((k) => {
-              faoData[k] = sumBy(fao, k) || 0;
-            });
-          }
-
-          data = {
-            ...faoData,
-            rank: ranking[0].rank || 0,
-          };
+        if (fao.length > 1) {
+          faoData = {};
+          Object.keys(omit(fao[0], ['iso', 'country'])).forEach((k) => {
+            faoData[k] = sumBy(fao, k) || 0;
+          });
         }
-        return data;
-      })
-    );
+
+        data = {
+          ...faoData,
+        };
+      }
+      return data;
+    });
   },
   getDataURL: async (params) => [
     await getFAOExtent({ ...params, download: true }),
