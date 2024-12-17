@@ -162,15 +162,6 @@ class ModalMeta extends PureComponent {
                     <Button size="medium">LEARN MORE</Button>
                   </a>
                 )}
-                {download_data && (
-                  <a
-                    href={download_data}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button size="medium">DOWNLOAD DATA</Button>
-                  </a>
-                )}
               </div>
             )}
           </div>
