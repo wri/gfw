@@ -67,26 +67,22 @@ class ModalMeta extends PureComponent {
       },
     } = this.props;
 
+    let contentDate = content_date;
+
     if (content_date_description) {
-      return {
-        resolution: resolution_description,
-        content_date: content_date_description,
-        ...rest,
-      };
+      contentDate = content_date_description;
     }
 
     if (content_date_range) {
       const { start_date, end_date } = content_date_range;
-      const date = `${start_date.slice(0, 4)}-${end_date.slice(0, 4)}`;
-
-      return {
-        resolution: resolution_description,
-        content_date: date,
-        ...rest,
-      };
+      contentDate = `${start_date.slice(0, 4)}-${end_date.slice(0, 4)}`;
     }
 
-    return { resolution: resolution_description, content_date, ...rest };
+    const entries = Object.entries(rest);
+    entries.splice(1, 0, ['resolution', resolution_description]);
+    entries.splice(-2, 0, ['content_date', contentDate]);
+
+    return Object.fromEntries(entries);
   }
 
   getContent() {
