@@ -1,6 +1,6 @@
 import { all, spread } from 'axios';
 
-import { cartoRequest } from 'utils/request';
+import { cartoRequest, dataRequest } from 'utils/request';
 import { getGadm36Id } from 'utils/gadm';
 
 import countryLinks from './country-links.json';
@@ -9,7 +9,7 @@ const SQL_QUERIES = {
   getCountries:
     "SELECT iso, name_engli as name FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY name",
   getFAOCountries:
-    'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
+    'SELECT iso, country AS name FROM data WHERE 1 = 1 AND year = 2020',
   getRegions:
     "SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '{iso}' ORDER BY name ",
   getSubRegions:
@@ -25,8 +25,8 @@ export const getCountriesProvider = () => {
 };
 
 export const getFAOCountriesProvider = () => {
-  const url = `/sql?q=${SQL_QUERIES.getFAOCountries}`;
-  return cartoRequest.get(url);
+  const url = `dataset/fao_forest_extent/v2020/query/json?sql=${SQL_QUERIES.getFAOCountries}`;
+  return dataRequest.get(url);
 };
 
 export const getRegionsProvider = ({ adm0, token }) => {
