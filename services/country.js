@@ -3,6 +3,8 @@ import { all, spread } from 'axios';
 import { cartoRequest } from 'utils/request';
 import { getGadm36Id } from 'utils/gadm';
 
+import countryLinks from './country-links.json';
+
 const SQL_QUERIES = {
   getCountries:
     "SELECT iso, name_engli as name FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY name",
@@ -12,8 +14,6 @@ const SQL_QUERIES = {
     "SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '{iso}' ORDER BY name ",
   getSubRegions:
     "SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND gid_1 = '{adm1}' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name",
-  getCountryLinks:
-    'SELECT iso, external_links FROM external_links_gfw WHERE forest_atlas is true',
 };
 
 const convertToOptions = (countries) =>
@@ -41,16 +41,19 @@ export const getSubRegionsProvider = (adm0, adm1, token) => {
   return cartoRequest.get(url, { cancelToken: token });
 };
 
-export const getCountryLinksProvider = (token) => {
-  const url = `/sql?q=${SQL_QUERIES.getCountryLinks}`;
-  return cartoRequest.get(url, { cancelToken: token });
+export const getCountryLinksProvider = () => {
+  // hard coded list
+  return new Promise((resolve) => {
+    resolve(countryLinks);
+  });
 };
 
 export const getCountryLinksSerialized = async () => {
   const response = await getCountryLinksProvider();
-  if (response.data && response.data.rows.length) {
+
+  if (response?.rows?.length) {
     const data = {};
-    response.data.rows.forEach((d) => {
+    response.rows.forEach((d) => {
       data[d.iso] = JSON.parse(d.external_links);
     });
     return data;
