@@ -18,9 +18,14 @@ export const parseGadm36Id = (gid) => {
   };
 };
 
-export const getGadmLocationByLevel = ({ level, ...location }) => ({
+/**
+ * @param {string} adm_level - The administrative level
+ * @param {object} location - Location object from user's clicked area
+ * @return {object} - Object with area type, location and gadm properties
+ */
+export const getGadmLocationByLevel = ({ adm_level, ...location }) => ({
   type: 'country',
   ...(location?.gid_0 && {
-    ...parseGadm36Id(location[`gid_${level || '0'}`]),
+    ...parseGadm36Id(location[`gid_${adm_level || '0'}`]),
   }),
 });
