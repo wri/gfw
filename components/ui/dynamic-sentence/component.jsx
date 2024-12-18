@@ -49,13 +49,14 @@ class DynamicSentence extends PureComponent {
             }
           } else {
             // eslint-disable-next-line security/detect-non-literal-regexp
-            const regex = new RegExp(`{${p}}`, 'g');
+            const DYNAMIC_PARAMETERS = new RegExp(`{${p}}`, 'g');
+            const PLACEHOLDER = new RegExp(`\\bPLACEHOLDER\\b`, 'g'); // regex to remove the bold from the word 'and' between indicators
+
             formattedSentence =
               formattedSentence &&
-              formattedSentence.replace(
-                regex,
-                `<b>${translateText(param)}</b>`
-              );
+              formattedSentence
+                .replace(DYNAMIC_PARAMETERS, `<b>${translateText(param)}</b>`)
+                .replace(PLACEHOLDER, `<span class="no-bold">and</span>`);
           }
         }
       });

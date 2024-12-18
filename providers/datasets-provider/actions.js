@@ -270,7 +270,6 @@ export const fetchDatasets = createThunkAction(
                               minDate: decodeParams.startDate,
                               maxDate: decodeParams.endDate,
                               trimEndDate: decodeParams.endDate,
-                              canPlay: true,
                             }),
                           },
                         }),

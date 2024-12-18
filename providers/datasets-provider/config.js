@@ -55,6 +55,39 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  treeCoverGain5y: `
+  // values for creating power scale, domain (input), and range (output)
+  float domainMin = 0.;
+  float domainMax = 255.;
+  float rangeMin = 0.;
+  float rangeMax = 255.;
+
+  float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+  float intensity = color.r * 255.;
+
+  // get the min, max, and current values on the power scale
+  float minPow = pow(domainMin, exponent - domainMin);
+  float maxPow = pow(domainMax, exponent);
+  float currentPow = pow(intensity, exponent);
+
+  // get intensity value mapped to range
+  float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+  // a value between 0 and 255
+  alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
+
+  float year = 1999.0 + ((color.b * 5.) * 255.);
+  // map to years
+  // Old colors: 109, 72, 33
+  // New colors: 19, 3, 255
+  if (year >= startYear && year <= endYear && year >= 2001.) {
+    color.r = 19. / 255.;
+    color.g = (72. - zoom + 3. - scaleIntensity / zoom) / 255.;
+    color.b = (33. - zoom + 255. - intensity / zoom) / 255.;
+    alpha = (8. * intensity) / 255.;
+  } else {
+    alpha = 0.;
+  }
+`,
   treeCoverLossFire: `
   // values for creating power scale, domain (input), and range (output)
   float domainMin = 0.;
@@ -1096,6 +1129,7 @@ const decodes = {
 export default {
   treeCover: decodes.treeCover,
   treeCoverLoss: decodes.treeCoverLoss,
+  treeCoverGain5y: decodes.treeCoverGain5y,
   treeCoverLossFire: decodes.treeCoverLossFire,
   treeLossByDriver: decodes.treeLossByDriver,
   integratedAlerts8Bit: decodes.integratedAlerts8Bit,

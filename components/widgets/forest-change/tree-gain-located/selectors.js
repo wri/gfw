@@ -57,16 +57,16 @@ export const parseSentence = createSelector(
   ],
   (data, sortedData, settings, indicator, locationName, sentences) => {
     if (!data || !locationName) return null;
-    const {
-      initial,
-      withIndicator,
-      initialPercent,
-      withIndicatorPercent,
-    } = sentences;
+
+    const { initial, withIndicator, initialPercent, withIndicatorPercent } =
+      sentences;
     const totalGain = sumBy(data, 'gain') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
     const avgGainPercentage = sumBy(data, 'percentage') || 0 / data.length;
     const avgGain = (sumBy(data, 'gain') || 0) / data.length;
+    const { baselineYear: dateFromDashboard, startYear: dateFromMapLayer } =
+      settings;
+
     let percentileGain = 0;
     let percentileLength = 0;
 
@@ -90,6 +90,7 @@ export const parseSentence = createSelector(
     const aveFormat = avgGain < 1 ? '.3r' : '.3s';
 
     const params = {
+      baselineYear: dateFromMapLayer || dateFromDashboard || 2000,
       indicator: indicator && indicator.label,
       location: locationName,
       topGain: formatNumber({

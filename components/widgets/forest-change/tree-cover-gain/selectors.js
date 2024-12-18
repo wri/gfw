@@ -112,6 +112,7 @@ export const parseSentence = createSelector(
     getSentences,
     getAdminLevel,
     getParentLabel,
+    getSettings,
   ],
   (
     data,
@@ -120,7 +121,8 @@ export const parseSentence = createSelector(
     currentLabel,
     sentences,
     adminLevel,
-    parentLabel
+    parentLabel,
+    settings
   ) => {
     if (
       !data ||
@@ -142,6 +144,8 @@ export const parseSentence = createSelector(
     const gain = locationData ? locationData.gain : sumBy(data, 'gain') || 0;
     const gainPercent = gain ? (100 * gain) / sumBy(data, 'gain') || 0 : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
+    const { baselineYear: dateFromDashboard, startYear: dateFromMapLayer } =
+      settings;
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
@@ -150,6 +154,7 @@ export const parseSentence = createSelector(
       percent: formatNumber({ num: areaPercent, unit: '%' }),
       gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
       parent: parentLabel || null,
+      baselineYear: dateFromMapLayer || dateFromDashboard || 2000,
     };
 
     let sentence = indicator ? withIndicator : initial;

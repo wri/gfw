@@ -98,7 +98,29 @@ class WidgetSettings extends PureComponent {
             />
           </div>
         );
-
+      case 'baseline-select':
+        return (
+          options &&
+          !!options.length && (
+            <Dropdown
+              className={cx('widget-settings-selector', type)}
+              theme={cx('theme-select-light', {
+                'theme-dropdown-button': type === 'mini-select',
+              })}
+              label={label}
+              value={startValue}
+              options={options}
+              onChange={(change) =>
+                propagateChange({ [startKey]: change && change.value })}
+              disabled={loading}
+              clearable={clearable}
+              infoAction={metaKey ? () => handleShowInfo(metaKey) : null}
+              optionsAction={handleShowInfo}
+              optionsActionKey="metaKey"
+              noSelectedValue={placeholder}
+            />
+          )
+        );
       case 'compare-select':
         return (
           <div className={cx('widget-settings-selector', type)}>
@@ -120,7 +142,7 @@ class WidgetSettings extends PureComponent {
         const loadingDatepicker = !startValue || !minDate || !maxDate;
 
         return (
-          <div className={cx("widget-settings-selector", type)}>
+          <div className={cx('widget-settings-selector', type)}>
             <div className="datepicker-selector">
               <div>
                 <span className="label">From</span>
@@ -130,7 +152,7 @@ class WidgetSettings extends PureComponent {
                   selected={new Date(startValue)}
                   onChange={(change) =>
                     propagateChange({
-                      [startKey]: moment(change).format("YYYY-MM-DD"),
+                      [startKey]: moment(change).format('YYYY-MM-DD'),
                     })}
                   minDate={new Date(minDate)}
                   maxDate={new Date(maxDate)}
@@ -146,7 +168,7 @@ class WidgetSettings extends PureComponent {
                   selected={new Date(endValue)}
                   onChange={(change) =>
                     propagateChange({
-                      [endKey]: moment(change).format("YYYY-MM-DD"),
+                      [endKey]: moment(change).format('YYYY-MM-DD'),
                     })}
                   minDate={new Date(minDate)}
                   maxDate={new Date(maxDate)}
