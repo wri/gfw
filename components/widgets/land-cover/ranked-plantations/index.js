@@ -55,11 +55,15 @@ export default {
   },
   getData: (params) =>
     all([
-      getExtentGrouped(params),
+      getExtentGrouped({
+        ...params,
+        version: 'v20240815',
+      }),
       getAreaIntersectionGrouped({
         ...params,
         forestType: 'plantations',
         summary: true,
+        version: 'v20240815',
       }),
     ]).then(
       spread((extentGrouped, plantationsExtentResponse) => {
@@ -78,12 +82,17 @@ export default {
       })
     ),
   getDataURL: (params) => [
-    getExtentGrouped({ ...params, download: true }),
+    getExtentGrouped({
+      ...params,
+      download: true,
+      version: 'v20240815',
+    }),
     getAreaIntersectionGrouped({
       ...params,
       forestType: 'plantations',
       download: true,
       summary: true,
+      version: 'v20240815',
     }),
   ],
   getWidgetProps,

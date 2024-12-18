@@ -43,12 +43,8 @@ export default {
     extentYear: 2010,
   },
   sentences: {
-    initialSpecies:
-      'In {location}, {firstSpecies} and {secondSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
-    singleSpecies:
-      'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
-    initialTypes:
-      'In {location}, the largest plantation area by type is {topType}, spanning {extent} and {percent} of land area.',
+    initial:
+      'In {location}, the largest type of plantation area is {topType}, spanning {extent} and {percent} of land area.',
   },
   whitelists: {
     indicators: ['plantations'],

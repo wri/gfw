@@ -6,7 +6,6 @@ import { formatNumber } from 'utils/format';
 const getData = (state) => state.data;
 const getSettings = (state) => state.settings;
 const getIndicator = (state) => state.indicator;
-const getWhitelist = (state) => state.polynamesWhitelist;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state.sentence;
 const getTitle = (state) => state.title;
@@ -14,35 +13,24 @@ const getLocationName = (state) => state.locationLabel;
 const getMetaKey = (state) => state.metaKey;
 const getAdminLevel = (state) => state.adminLevel;
 
-export const isoHasPlantations = createSelector(
-  [getWhitelist, getLocationName],
-  (whitelist, name) => {
-    const hasPlantations =
-      name === 'global'
-        ? true
-        : whitelist &&
-          whitelist.annual &&
-          whitelist.annual.includes('plantations');
-    return hasPlantations;
-  }
-);
-
 export const parseData = createSelector(
-  [getData, getColors, getIndicator, isoHasPlantations],
-  (data, colors, indicator, hasPlantations) => {
+  [getData, getColors, getIndicator],
+  (data, colors, indicator) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalCover, cover, plantations } = data;
     const otherCover = indicator ? totalCover - cover : 0;
-    const plantationsCover = hasPlantations ? plantations : 0;
+    const plantationsCover = plantations || 0;
     const label = indicator ? ` in ${indicator.label}` : '';
+    const indicators = indicator?.value?.split('__') || [];
+    const hasPlantations = indicators.includes('plantations');
+
     const parsedData = [
       {
-        label: hasPlantations
-          ? 'Natural Forest'.concat(label)
-          : 'Tree Cover'.concat(label),
-        value: cover - plantationsCover,
+        label: 'Tree Cover'.concat(label),
+        value: hasPlantations ? plantationsCover : cover,
         color: colors.naturalForest,
-        percentage: ((cover - plantationsCover) / totalArea) * 100,
+        percentage:
+          ((hasPlantations ? plantationsCover : cover) / totalArea) * 100,
       },
       {
         label: 'Other Land Cover',
@@ -51,21 +39,16 @@ export const parseData = createSelector(
         percentage: ((totalArea - cover - otherCover) / totalArea) * 100,
       },
     ];
-    if (indicator) {
+
+    if (hasPlantations) {
       parsedData.splice(1, 0, {
-        label: hasPlantations ? 'Other forest cover' : 'Other tree cover',
-        value: otherCover,
+        label: 'Other tree cover',
+        value: totalCover - plantationsCover,
         color: colors.otherCover,
-        percentage: (otherCover / totalArea) * 100,
-      });
-    } else if (!indicator && hasPlantations) {
-      parsedData.splice(1, 0, {
-        label: 'Plantations',
-        value: plantations,
-        color: colors.plantedForest,
-        percentage: (plantations / totalArea) * 100,
+        percentage: ((totalCover - plantationsCover) / totalArea) * 100,
       });
     }
+
     return parsedData;
   }
 );
@@ -85,17 +68,8 @@ export const parseSentence = createSelector(
     getIndicator,
     getSentence,
     getAdminLevel,
-    isoHasPlantations,
   ],
-  (
-    data,
-    settings,
-    locationName,
-    indicator,
-    sentences,
-    admLevel,
-    isoPlantations
-  ) => {
+  (data, settings, locationName, indicator, sentences, admLevel) => {
     if (!data || !sentences) return null;
 
     const { extentYear, threshold, decile } = settings;
@@ -111,9 +85,11 @@ export const parseSentence = createSelector(
       : 'treeCover';
     const sentence =
       sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
+    const indicators = indicator?.value?.split('__') || [];
+    const hasPlantations = indicators.includes('plantations');
 
     const { cover, plantations, totalCover, totalArea } = data;
-    const top = isoPlantations ? cover - plantations : cover;
+    const top = !hasPlantations ? cover - plantations : plantations;
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
 

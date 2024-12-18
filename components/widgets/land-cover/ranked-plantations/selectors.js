@@ -52,11 +52,14 @@ export const parseData = createSelector(
       const totalArea = regionExtent && regionExtent.total_area;
       plantationKeys.forEach((key) => {
         const labelFromKey =
-          regionGroup && regionGroup.find((p) => p.plantations === key);
+          regionGroup &&
+          regionGroup.find(
+            (p) => p.plantations.toLowerCase() === key.toLowerCase()
+          );
         const pExtent = labelFromKey && labelFromKey.intersection_area;
         const pPercentage = (pExtent / totalRegionPlantations) * 100;
-        yKeys[key] = pPercentage || 0;
-        yKeys[`${key} label`] = key;
+        yKeys[key.toLowerCase()] = pPercentage || 0;
+        yKeys[`${key.toLowerCase()} label`] = key.toLowerCase();
       });
 
       return {
@@ -83,12 +86,12 @@ export const parseConfig = createSelector(
       colors: colorsByType,
       unit: '%',
       xKey: 'region',
-      yKeys: dataKeys,
+      yKeys: dataKeys.map((item) => item.toLowerCase()),
       yAxisDotFill: '#d4d4d4',
       tooltip: dataKeys.map((item) => ({
-        key: item,
+        key: item.toLowerCase(),
         label: item,
-        color: colorsByType[item],
+        color: colorsByType[item.toLowerCase()],
         unitFormat: (value) => formatNumber({ num: value, unit: '%' }),
       })),
     };
