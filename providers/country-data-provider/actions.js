@@ -47,7 +47,7 @@ export const getRegions = createThunkAction(
     getRegionsProvider(country)
       .then((response) => {
         const parsedResponse = [];
-        uniqBy(response.data.rows).forEach((row) => {
+        uniqBy(response.data).forEach((row) => {
           parsedResponse.push({
             id: parseGadm36Id(row.id).adm1,
             name: row.name,
@@ -64,25 +64,26 @@ export const getRegions = createThunkAction(
 
 export const getSubRegions = createThunkAction(
   'getSubRegions',
-  ({ adm0, adm1, token }) => (dispatch) => {
-    dispatch(setSubRegionsLoading(true));
-    getSubRegionsProvider(adm0, adm1, token)
-      .then((subRegions) => {
-        const { rows } = subRegions.data;
-        const parsedResponse = [];
-        uniqBy(rows).forEach((row) => {
-          parsedResponse.push({
-            id: parseGadm36Id(row.id).adm2,
-            name: row.name,
+  ({ adm0, adm1, token }) =>
+    (dispatch) => {
+      dispatch(setSubRegionsLoading(true));
+      getSubRegionsProvider(adm0, adm1, token)
+        .then((subRegions) => {
+          const { rows } = subRegions.data;
+          const parsedResponse = [];
+          uniqBy(rows).forEach((row) => {
+            parsedResponse.push({
+              id: parseGadm36Id(row.id).adm2,
+              name: row.name,
+            });
           });
+          dispatch(setSubRegions(uniqBy(parsedResponse, 'id')));
+          dispatch(setSubRegionsLoading(false));
+        })
+        .catch(() => {
+          dispatch(setSubRegionsLoading(false));
         });
-        dispatch(setSubRegions(uniqBy(parsedResponse, 'id')));
-        dispatch(setSubRegionsLoading(false));
-      })
-      .catch(() => {
-        dispatch(setSubRegionsLoading(false));
-      });
-  }
+    }
 );
 
 export const getCountryLinks = createThunkAction(
