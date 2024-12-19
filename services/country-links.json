@@ -1,0 +1,38 @@
+{ "rows": [
+    {
+        "iso": "CMR",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas of Cameroon\",  \"url\": \"http://cmr.forest-atlas.org/\"}]"
+    },
+    {
+        "iso": "CAF",
+        "external_links": "[{ \"title\": \"Interactive Forest Atlas of Central African Republic\",  \"url\": \"http://caf.forest-atlas.org/\"}]"
+    },
+    {
+        "iso": "LBR",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas of Liberia\",  \"url\": \"https://lbr.forest-atlas.org/\"}]"
+    },
+    {
+        "iso": "MDG",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas of Madagascar\",  \"url\": \"http://mdg.forest-atlas.org\"}]"
+    },
+    {
+        "iso": "GEO",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas of Georgia\",  \"url\": \"http://geo.forest-atlas.org\"}]"
+    },
+    {
+        "iso": "GAB",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas for Gabon\",  \"url\": \"http://gab.forest-atlas.org/\"}]"
+    },
+    {
+        "iso": "COG",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas of Congo\",  \"url\": \"http://cog.forest-atlas.org/\"}, {  \"title\": \"OSFAC\",  \"url\": \"http://osfac.net/index.php?lang=en\"}]"
+    },
+    {
+        "iso": "COD",
+        "external_links": "[{\"title\": \"Interactive Forest Atlas for Democratic Republic of Congo\",  \"url\": \"http://cod.forest-atlas.org/\"}, {  \"title\": \"Moabi\",  \"url\": \"http://drc.moabi.org/\"}, {  \"title\": \"National Forest Monitoring System: DRC\",  \"url\": \"http://www.rdc-snsf.org/\"}, {  \"title\": \"OSFAC\",  \"url\": \"http://osfac.net/index.php?lang=en\"}]"
+    },
+    {
+        "iso": "GNQ",
+        "external_links": "[{  \"title\": \"Interactive Forest Atlas of Equatorial Guinea\",  \"url\": \"http://gnq.forest-atlas.org/\"}]"
+    }
+]}
