@@ -69,8 +69,8 @@ export const getCategorisedCountries = (asOptions = false) =>
           ? convertToOptions(gadm36Countries.data.rows)
           : gadm36Countries.data.rows,
         faoCountries: asOptions
-          ? convertToOptions(faoCountries.data.rows)
-          : faoCountries.data.rows,
+          ? convertToOptions(faoCountries.data)
+          : faoCountries.data,
         countries: asOptions
           ? convertToOptions(gadm36Countries.data.rows)
           : gadm36Countries.data.rows,
