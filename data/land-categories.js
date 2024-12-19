@@ -93,6 +93,7 @@ export default [
   },
   {
     label: 'Indigenous and Community Lands',
+    preserveString: true,
     value: 'landmark',
     dataType: 'keyword',
     metaKey: 'landmark_icls_2020',

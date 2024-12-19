@@ -12,8 +12,6 @@ import {
   TREE_PLANTATIONS,
 } from 'data/layers';
 
-import { EuropeFAOCountries } from 'utils/fao-countries';
-
 import getWidgetProps from './selectors';
 
 export default {
@@ -77,9 +75,6 @@ export default {
       'In {location} between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     regionWithIndicator:
       'In {location} between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
-  },
-  blacklists: {
-    adm0: EuropeFAOCountries,
   },
   settings: {
     threshold: 0,
