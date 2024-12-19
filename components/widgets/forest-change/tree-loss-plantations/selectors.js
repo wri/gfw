@@ -54,7 +54,8 @@ export const parseData = createSelector(
             areaLoss: summedPlatationsLoss || 0,
             totalLoss: totalLossForYear.area || 0,
             outsideCo2Loss:
-              totalLossByYear[d.year][0].emissions - summedPlatationsEmissions,
+              totalLossByYear[d.year]?.[0]?.emissions -
+              summedPlatationsEmissions,
             co2Loss: summedPlatationsEmissions || 0,
           };
           return returnData;

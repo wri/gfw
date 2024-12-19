@@ -162,6 +162,21 @@ export const parseConfig = createSelector(
         .reverse()
     );
 
+    const forestryIndex = tooltip.findIndex(
+      (element) => element.key === 'class_Forestry'
+    );
+    const agricultureIndex = tooltip.findIndex(
+      (element) => element.key === 'class_Shifting agriculture'
+    );
+
+    const rearrengedTooltips = [...tooltip];
+
+    delete rearrengedTooltips[forestryIndex];
+    delete rearrengedTooltips[agricultureIndex];
+
+    rearrengedTooltips.splice(2, 0, tooltip[forestryIndex]);
+    rearrengedTooltips.splice(3, 0, tooltip[agricultureIndex]);
+
     // Example on how to add columns & titles to the Chart Legend
     // See: https://gfw.atlassian.net/browse/FLAG-1145
     // const chartLegend = {
@@ -180,9 +195,11 @@ export const parseConfig = createSelector(
     //   ],
     // };
 
-    const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
+    const insertIndex = findIndex(rearrengedTooltips, {
+      key: 'class_Urbanization',
+    });
     if (insertIndex > -1) {
-      tooltip.splice(insertIndex, 0, {
+      rearrengedTooltips.splice(insertIndex, 0, {
         key: 'break',
         label: 'Drivers of permanent deforestation:',
       });
@@ -199,7 +216,7 @@ export const parseConfig = createSelector(
       unitFormat: (value) =>
         formatNumber({ num: value, specialSpecifier: '.2s', spaceUnit: true }),
       unit: 'tCO2e',
-      tooltip,
+      tooltip: rearrengedTooltips,
       // chartLegend,
     };
   }
