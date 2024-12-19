@@ -3,11 +3,9 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import sortBy from 'lodash/sortBy';
 import { formatNumber } from 'utils/format';
-import endsWith from 'lodash/endsWith';
 
 // get list data
 const getData = (state) => state.data;
-const getSettings = (state) => state.settings;
 const getLocatonName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
@@ -29,7 +27,7 @@ export const parseData = createSelector(
         .map((d) => ({
           label: d.plantations,
           value: d.intersection_area,
-          color: allColors[d.plantations],
+          color: allColors[d.plantations.toLowerCase()],
           percentage: (d.intersection_area / totalPlantations) * 100,
         })),
       'value'
@@ -38,30 +36,21 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, parseData, getSettings, getLocatonName, getSentences],
-  (rawData, data, settings, locationName, sentences) => {
+  [getData, parseData, getLocatonName, getSentences],
+  (rawData, data, locationName, sentences) => {
     if (isEmpty(data) || !sentences) return null;
-    const { initialSpecies, singleSpecies, initialTypes } = sentences;
-    const top =
-      settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
+
+    const { initial } = sentences;
+    const top = data.slice(0, 1);
     const areaPerc = (100 * (sumBy(top, 'value') || 0)) / rawData.totalArea;
     const topExtent = sumBy(top, 'value') || 0;
-    const otherExtent = sumBy(data.slice(2), 'value') || 0;
     const params = {
       location: locationName,
-      firstSpecies: top[0].label.toLowerCase(),
-      secondSpecies: top.length > 1 && top[1].label.toLowerCase(),
-      type: settings.type === 'bound2' ? 'species' : 'type',
       extent: formatNumber({ num: topExtent, unit: 'ha', spaceUnit: true }),
-      other: formatNumber({ num: otherExtent, unit: 'ha', spaceUnit: true }),
-      count: data.length - top.length,
-      topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
+      topType: top[0].label.toLowerCase(),
       percent: formatNumber({ num: areaPerc, unit: '%' }),
     };
-    const sentence =
-      settings.type === 'bound1'
-        ? initialTypes
-        : `${top.length > 1 ? initialSpecies : singleSpecies}`;
+    const sentence = initial;
 
     return {
       sentence,

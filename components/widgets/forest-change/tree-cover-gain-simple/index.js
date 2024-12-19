@@ -14,6 +14,8 @@ import {
 
 import getWidgetProps from './selectors';
 
+const MIN_YEAR = 2000;
+
 export default {
   widget: 'treeCoverGainSimple',
   title: 'Tree cover gain in {location}',
@@ -24,7 +26,7 @@ export default {
   metaKey: 'umd_tree_cover_gain_from_height',
   dataType: 'gain',
   pendingKeys: ['threshold'],
-  refetchKeys: ['threshold'],
+  refetchKeys: ['threshold', 'startYear'],
   datasets: [
     {
       dataset: POLITICAL_BOUNDARIES_DATASET,
@@ -45,11 +47,23 @@ export default {
   settings: {
     threshold: 0,
     extentYear: 2000,
+    startYear: MIN_YEAR,
+    endYear: 2020, // reference to display the correct data on the map
   },
   chartType: 'listLegend',
   colors: 'gain',
   sentence:
-    'From 2000 to 2020, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent.',
+    'From {baselineYear} to 2020, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent in that time period.',
+  settingsConfig: [
+    {
+      key: 'baselineYear',
+      label: 'Baseline Year',
+      type: 'baseline-select',
+      startKey: 'startYear',
+      placeholder: MIN_YEAR,
+      clearable: true,
+    },
+  ],
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
       return getGain(params).then((response) => {

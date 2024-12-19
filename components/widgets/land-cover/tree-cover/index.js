@@ -24,9 +24,8 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'treeCover',
   title: {
-    default: 'Tree Cover by type in {location}',
-    global: 'Global tree cover by type',
-    withPlantations: 'Forest cover by type in {location}',
+    default: 'Tree Cover in {location}',
+    global: 'Global tree cover',
   },
   alerts: [
     {
@@ -47,29 +46,29 @@ export default {
     default: {
       global: {
         treeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
       region: {
         treeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {location} land cover was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
     },
     withIndicator: {
       global: {
         treeCover:
-          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tree cover.',
+          'As of {year}, {percentage} of {location} land cover in {indicator} was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {location} land cover in {indicator} was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {location} land cover in {indicator} was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
       region: {
         treeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tree cover.',
+          'As of {year}, {percentage} of {indicator} in {location} was <strong>tree cover</strong> with {threshold} canopy density.',
         tropicalTreeCover:
-          'As of {year}, {percentage} of {indicator} in {location} was {threshold} tropical tree cover.',
+          'As of {year}, {percentage} of {indicator} in {location} was <strong>tropical tree cover</strong> with {threshold} canopy density.',
       },
     },
   },
@@ -107,9 +106,15 @@ export default {
   ],
   sortOrder: {
     summary: 4,
-    landCover: 1,
+    landCover: 1.5,
   },
-  refetchKeys: ['threshold', 'decile', 'extentYear', 'landCategory'],
+  refetchKeys: [
+    'threshold',
+    'decile',
+    'extentYear',
+    'landCategory',
+    'forestType',
+  ],
   pendingKeys: ['threshold', 'decile', 'extentYear'],
   settings: {
     threshold: 30,
@@ -139,6 +144,14 @@ export default {
         placeholder: 'All categories',
         clearable: true,
         border: true,
+      },
+      {
+        key: 'forestType',
+        whitelist: ['plantations'],
+        label: 'Forest Type',
+        type: 'select',
+        placeholder: 'All tree cover',
+        clearable: true,
       },
       {
         key: isTropicalTreeCover ? 'decile' : 'threshold',

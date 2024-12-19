@@ -12,9 +12,9 @@ import {
   TREE_PLANTATIONS,
 } from 'data/layers';
 
-import { EuropeFAOCountries } from 'utils/fao-countries';
-
 import getWidgetProps from './selectors';
+
+const MIN_YEAR = 2000;
 
 export default {
   widget: 'treeCoverGainOutsidePlantations',
@@ -43,8 +43,16 @@ export default {
       clearable: true,
       blacklist: ['wdpa'],
     },
+    {
+      key: 'baselineYear',
+      label: 'Baseline Year',
+      type: 'baseline-select',
+      startKey: 'startYear',
+      placeholder: MIN_YEAR,
+      clearable: true,
+    },
   ],
-  refetchKeys: ['forestType', 'landCategory'],
+  refetchKeys: ['forestType', 'landCategory', 'startYear'],
   chartType: 'pieChart',
   colors: 'gainWithinOutsidePlantations',
   metaKey: 'widget_tree_cover_gain_outside_plantations',
@@ -70,23 +78,24 @@ export default {
   },
   sentences: {
     globalInitial:
-      'Globally between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'Globally between {baselineYear} and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     globalWithIndicator:
-      'Globally between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
+      'Globally between {baselineYear} and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
     regionInitial:
-      'In {location} between 2000 and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
+      'In {location} between {baselineYear} and 2020, {gainPercent} of tree cover gain occurred outside of plantations.',
     regionWithIndicator:
-      'In {location} between 2000 and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations.',
-  },
-  blacklists: {
-    adm0: EuropeFAOCountries,
+      'In {location} between {baselineYear} and 2020, {gainPercent} of tree cover gain within {indicator} occurred outside of plantations. ',
   },
   settings: {
     threshold: 0,
+    startYear: MIN_YEAR,
+    endYear: 2020, // reference to display the correct data on the map
   },
   getData: (params) => {
     return getTreeCoverGainByPlantationType(params).then((response) => {
       const { data } = (response && response.data) || {};
+
+      if (data?.length === 0) return null;
 
       const totalArea = data.reduce(
         (prev, curr) => prev + curr?.gain_area_ha,

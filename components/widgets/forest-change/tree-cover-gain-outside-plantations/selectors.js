@@ -41,11 +41,15 @@ export const parseSentence = createSelector(
       }
     })();
 
+    const { baselineYear: dateFromDashboard, startYear: dateFromMapLayer } =
+      settings;
+
     const params = {
       location: locationName,
       indicator: indicator && indicator.label,
       startYear: settings.startYear,
       endYear: settings.endYear,
+      baselineYear: dateFromMapLayer || dateFromDashboard || 2000,
       gainPercent: formatNumber({
         num: (100 * data?.areaOutsidePlantations) / data?.totalArea,
         unit: '%',
