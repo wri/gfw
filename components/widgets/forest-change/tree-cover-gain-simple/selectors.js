@@ -7,17 +7,21 @@ const getExtent = (state) => state.data && state.data.extent;
 const getSentence = (state) => state.sentence;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
+const getSettings = (state) => state.settings;
 
 export const parseSentence = createSelector(
-  [getGain, getExtent, getSentence, getLocationName],
-  (gain, extent, sentence, location) => {
+  [getGain, getExtent, getSentence, getLocationName, getSettings],
+  (gain, extent, sentence, location, settings) => {
     if (!gain && !extent) return null;
     const gainPerc = (gain && extent && (gain / extent) * 100) || 0;
+    const { baselineYear: dateFromDashboard, startYear: dateFromMapLayer } =
+      settings;
 
     const params = {
       gain: formatNumber({ num: gain, unit: 'ha', spaceUnit: true }),
       gainPercent: formatNumber({ num: gainPerc, unit: '%' }),
       location,
+      baselineYear: dateFromMapLayer || dateFromDashboard || 2000,
     };
 
     return {

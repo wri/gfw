@@ -1,5 +1,6 @@
 import forestType from 'data/forest-types';
 import landCategory from 'data/land-categories';
+import baselineYear from 'data/baseline-year';
 import threshold from 'data/thresholds.json';
 import decile from 'data/deciles.json';
 import firesThreshold from 'data/fires-thresholds.json';
@@ -24,6 +25,7 @@ import yearRange from 'data/year-range.json';
 export default {
   forestType: forestType.filter((f) => !f.hidden),
   landCategory: landCategory.filter((l) => !l.hidden),
+  baselineYear,
   threshold,
   decile,
   firesThreshold,
