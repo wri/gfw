@@ -7,7 +7,7 @@ import minBy from 'lodash/minBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 import range from 'lodash/range';
-import upperCase from 'lodash';
+import { startOfISOWeekYear, addWeeks, setDay, format } from 'date-fns';
 
 const translateMeans = (means, latest) => {
   if (!means || !means.length) return null;
@@ -308,6 +308,23 @@ export const getCumulativeStatsData = (data) => {
   return parsedData;
 };
 
+/**
+ * Create a date from a given year and ISO week number.
+ * @param {number} year - The year (e.g. 2024).
+ * @param {number} isoWeek - The ISO week number (e.g. 1, 5, 12).
+ * @returns {Date} - The date of the Monday of the given ISO week.
+ */
+function getDateFromIsoWeek(year, isoWeek) {
+  // Get the first day of the given year in the ISO calendar (Monday of the first ISO week)
+  const firstDayOfYear = startOfISOWeekYear(new Date(year, 0, 1));
+
+  // Add (isoWeek - 1) weeks to the first day of the ISO year
+  const targetDate = addWeeks(firstDayOfYear, isoWeek - 1);
+
+  // Set the date to Monday of that week (this is redundant as startOfISOYear already gives Monday)
+  return setDay(targetDate, 1); // 1 represents Monday
+}
+
 export const getDatesData = (data) =>
   data.map((d, index) => {
     const firstDayOfWeek = moment()
@@ -323,12 +340,8 @@ export const getDatesData = (data) =>
         }),
       date: d.date
         ? moment(d.date).format('YYYY-MM-DD')
-        : moment()
-            .year(d.year)
-            .isoWeek(d.week)
-            .startOf('isoWeek')
-            .format('YYYY-MM-DD'),
-      month: upperCase(moment().year(d.year).isoWeek(d.week).format('MMM')),
+        : format(getDateFromIsoWeek(d.year, d.week), 'yyyy-MM-dd'),
+      month: format(getDateFromIsoWeek(d.year, d.week), 'MMM'),
     };
   });
 
