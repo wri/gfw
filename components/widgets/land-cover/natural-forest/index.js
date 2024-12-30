@@ -34,7 +34,9 @@ export default {
   colors: 'extent',
   source: 'gadm',
   categories: ['land-cover', 'summary'],
-  types: ['global', 'country'], // this array dictates where do we want to show the widget in the map (i.e.: "only for countries but not for custom areas")
+  // NOTE: this `types` array dictates where do we want to show the widget in the map (i.e.: "only for countries but not for custom areas")
+  // see components/analysis/selectors.js getLayerEndpoints function since I had to do a workaround because it was showing an empty container
+  types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   visible: ['dashboard', 'analysis'],
   datasets: [
