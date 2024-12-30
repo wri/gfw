@@ -93,6 +93,15 @@ export const getLayerEndpoints = createSelector(
   (layers, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
 
+    // NOTE: this is a horrible code smell but it was the only workaround
+    // I was able to find to avoid showing the Natural Forest data without widget in the map.
+    const naturalForest = layers.find(
+      (layer) => layer.dataset === 'natural-forests'
+    );
+    if (naturalForest) {
+      return null;
+    }
+
     const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find((l) => l.metadata === 'tree_cover_loss');
