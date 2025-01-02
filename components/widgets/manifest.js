@@ -45,11 +45,11 @@ import treeCoverDensity from 'components/widgets/land-cover/tree-cover-density';
 
 // Climate
 import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
-// import soilBiomass from 'components/widgets/climate/soil-organic';
+import soilBiomass from 'components/widgets/climate/soil-organic';
 import carbonFlux from 'components/widgets/climate/carbon-flux';
 import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
 import emissionsDeforestationDrivers from 'components/widgets/climate/emissions-deforestation-drivers';
-// import carbonStock from 'components/widgets/climate/carbon-stock';
+import carbonStock from 'components/widgets/climate/carbon-stock';
 
 // Land Use
 import economicImpact from 'components/widgets/land-use/economic-impact';
@@ -110,8 +110,8 @@ export default {
   emissionsDeforestation,
   emissionsDeforestationDrivers,
   woodyBiomass,
-  // soilBiomass,
-  // carbonStock,
+  soilBiomass,
+  carbonStock,
 
   // land use
   economicImpact,
