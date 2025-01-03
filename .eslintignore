@@ -3,3 +3,4 @@
 /cypress/support
 /cypress/plugins
 /newrelic
+/services/country-links.json

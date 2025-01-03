@@ -110,7 +110,7 @@ const typeByGrouped = {
   },
   adm1: {
     default: 'adm1',
-    grouped: 'adm1',
+    grouped: 'adm2',
   },
   adm2: {
     default: 'adm2',
