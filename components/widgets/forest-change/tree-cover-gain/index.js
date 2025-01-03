@@ -107,25 +107,27 @@ export default {
     return all([getGain({ ...rest, ...parentLocation })]).then(
       spread((gainResponse) => {
         let groupKey = 'iso';
-        if (adm1) groupKey = 'adm1';
-        if (adm2) groupKey = 'adm2';
+
+        if (adm1) groupKey = adm1;
+        if (adm2) groupKey = adm2;
+
         const gainData = gainResponse.data.data;
         let mappedData = [];
+
         if (gainData && gainData.length) {
           mappedData = gainData.map((item) => {
             const gain = item.gain || 0;
             const extent = item.extent || 0;
+
             return {
-              id:
-                groupKey !== 'iso'
-                  ? parseInt(item[groupKey], 10)
-                  : item[groupKey],
+              id: groupKey !== 'iso' ? parseInt(groupKey, 10) : item[groupKey],
               gain,
               extent,
               percentage: extent ? (100 * gain) / extent : 0,
             };
           });
         }
+
         return mappedData;
       })
     );
