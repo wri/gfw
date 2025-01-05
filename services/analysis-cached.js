@@ -77,6 +77,8 @@ const SQL_QUERIES = {
     'SELECT SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha, SUM("gfw_aboveground_carbon_stocks_2000__Mg_C") as gfw_aboveground_carbon_stocks_2000__Mg_C, SUM("gfw_belowground_carbon_stocks_2000__Mg_C") as gfw_belowground_carbon_stocks_2000__Mg_C, SUM("gfw_soil_carbon_stocks_2000__Mg_C") as gfw_soil_carbon_stocks_2000__Mg_C FROM data {WHERE}',
   biomassStockGrouped:
     'SELECT {select_location}, SUM("whrc_aboveground_biomass_stock_2000__Mg") AS "whrc_aboveground_biomass_stock_2000__Mg", SUM("whrc_aboveground_co2_stock_2000__Mg") AS "whrc_aboveground_co2_stock_2000__Mg", SUM(umd_tree_cover_extent_2000__ha) AS umd_tree_cover_extent_2000__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  organicSoilCarbon:
+    'SELECT {location}, SUM("gfw_soil_carbon_stocks_2000__Mg_C") as gfw_soil_carbon_stocks_2000__Mg_C, SUM("gfw_soil_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") as gfw_soil_carbon_density__t_C_per_ha, SUM("gfw_aboveground_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") AS gfw_aboveground_carbon_stocks_2000__t_C_per_ha, SUM("gfw_belowground_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") as gfw_belowground_carbon_stocks_2000__t_C_per_ha FROM data {WHERE} GROUP BY {location}',
   organicSoilCarbonGrouped:
     'SELECT {select_location}, CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") END AS "gfw_soil_carbon_stocks_2000__Mg_C", CASE WHEN SUM("umd_tree_cover_extent_2000__ha") = 0 THEN NULL ELSE SUM("gfw_soil_carbon_stocks_2000__Mg_C") / SUM("umd_tree_cover_extent_2000__ha") END AS soil_carbon_density__t_ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   treeCoverGainByPlantationType: `SELECT CASE WHEN gfw_planted_forests__type IS NULL THEN 'Outside of Plantations' ELSE gfw_planted_forests__type END AS plantation_type, SUM(umd_tree_cover_gain__ha) as gain_area_ha FROM data {WHERE} AND umd_tree_cover_gain__period in ({baselineYear}) GROUP BY gfw_planted_forests__type`,
@@ -2744,6 +2746,55 @@ export const getBiomassStock = (params) => {
         carbon: d.whrc_aboveground_co2_stock_2000__Mg,
       })),
     },
+  }));
+};
+
+export const getSoilOrganicCarbon = (params) => {
+  const { forestType, landCategory, ifl, download } = params || {};
+
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'annual',
+    datasetType: 'summary',
+  });
+
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const url = encodeURI(
+    `${requestUrl}${SQL_QUERIES.organicSoilCarbon}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, cast: false })
+      )
+      .replace(/{location}/g, getLocationSelect(params))
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'annual' }))
+  );
+
+  if (download) {
+    const indicator = getIndicator(forestType, landCategory, ifl);
+    return {
+      name: `soil_organic_carbon_by_region${
+        indicator ? `_in_${snakeCase(indicator.label)}` : ''
+      }__ha`,
+      url: getDownloadUrl(url),
+    };
+  }
+
+  return dataRequest.get(url).then((response) => ({
+    ...response,
+    data: response.data.map((d) => ({
+      iso: d.iso,
+      soil_carbon__t: d.gfw_soil_carbon_stocks_2000__mg_c,
+      soil_carbon_density__t_ha: d.gfw_soil_carbon_density__t_c_per_ha,
+      totalbiomass: d.gfw_soil_carbon_stocks_2000__mg_c,
+      biomassdensity: d.gfw_soil_carbon_density__t_c_per_ha,
+      gfw_aboveground_carbon_stocks_2000__mg_c:
+        d.gfw_aboveground_carbon_stocks_2000__t_c_per_ha,
+      gfw_belowground_carbon_stocks_2000__mg_c:
+        d.gfw_belowground_carbon_stocks_2000__t_c_per_ha,
+    })),
   }));
 };
 
