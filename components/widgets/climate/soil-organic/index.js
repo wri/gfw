@@ -27,6 +27,13 @@ export default {
       label: 'unit',
       type: 'switch',
       whitelist: ['totalBiomass', 'biomassDensity'],
+      border: true,
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density',
     },
   ],
   datasets: [
@@ -40,7 +47,7 @@ export default {
       layers: [SOIL_CARBON_DENSITY],
     },
   ],
-  refetchKeys: ['unit'],
+  refetchKeys: ['unit', 'threshold'],
   chartType: 'rankedList',
   visible: ['dashboard', 'analysis'],
   colors: 'climate',
@@ -55,10 +62,11 @@ export default {
     pageSize: 5,
     page: 0,
     unit: 'totalBiomass',
+    threshold: 30,
   },
   sentences: {
     region:
-      'In 2000, {location} had a soil organic carbon density of {biomassDensity}, and a total carbon storage of {totalBiomass}.',
+      'In 2000, {location} had a soil organic carbon density of {biomassDensity}, and a total soil carbon storage of {totalBiomass}.',
     globalBiomass:
       'Around {value} of the world’s {label} is contained in the top 5 countries.',
     globalDensity:
@@ -68,17 +76,17 @@ export default {
     const location =
       type === 'country'
         ? {
-          type,
-          adm0: adm0 && !adm1 ? null : adm0,
-          adm1: adm1 && !adm2 ? null : adm1,
-          adm2: null,
-        }
+            type,
+            adm0: adm0 && !adm1 ? null : adm0,
+            adm1: adm1 && !adm2 ? null : adm1,
+            adm2: null,
+          }
         : {
-          type,
-          adm0,
-          adm1,
-          adm2,
-        };
+            type,
+            adm0,
+            adm1,
+            adm2,
+          };
 
     return getOrganicSoilCarbonGrouped({ ...rest, ...location });
   },
@@ -86,18 +94,20 @@ export default {
     const location =
       type === 'country'
         ? {
-          type,
-          adm0: adm0 && !adm1 ? null : adm0,
-          adm1: adm1 && !adm2 ? null : adm1,
-          adm2: null,
-        }
+            type,
+            adm0: adm0 && !adm1 ? null : adm0,
+            adm1: adm1 && !adm2 ? null : adm1,
+            adm2: null,
+          }
         : {
-          type,
-          adm0,
-          adm1,
-          adm2,
-        };
-    return [getOrganicSoilCarbonGrouped({ ...rest, ...location, download: true })];
+            type,
+            adm0,
+            adm1,
+            adm2,
+          };
+    return [
+      getOrganicSoilCarbonGrouped({ ...rest, ...location, download: true }),
+    ];
   },
   getWidgetProps,
 };
